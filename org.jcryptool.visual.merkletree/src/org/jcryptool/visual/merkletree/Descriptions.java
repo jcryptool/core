@@ -19,8 +19,9 @@ public class Descriptions extends NLS {
 	public static String CompositeDescriptionMerkleTree;
 
 	public static String CompositeDescriptionXMSS;
+	
+	public static String CompositeDescriptionXMSS_MT;
 
-	public static String PlugInDescription;
 
 	public static String MerkleTreeView_0;
 	public static String MerkleTreeView_1; 
@@ -39,12 +40,7 @@ public class Descriptions extends NLS {
 	public static String TestLabelProvider_5;
 	public static String TestLabelProvider_6;
 
-	public static String MerkleTreeSeed_0;
-	public static String MerkleTreeSeedButton;
-	public static String MerkleTreeKeyButton;
-	public static String MerkleTreeKey_Label_0;
 	public static String MerkleTreeKey_Label_1;
-	public static String MerkleTreeKeydesc;
 	public static String MerkleTreeKey_column_0;
 	public static String MerkleTreeKey_column_1;
 	public static String MerkleTreeKey_column_2;
@@ -66,11 +62,61 @@ public class Descriptions extends NLS {
 	public static String MerkleTreeVerify_4;
 	
 	public static String MerkleTree_Signature_Generation_Info;
+
+	public static class MSS{
+
+		public static String Tab0_Head0;
+		public static String Tab0_Head1;
+		public static String Tab0_Head2;
+		
+		public static String Tab0_Txt0;
+		public static String Tab0_Txt2;
+		
+		public static String Tab0_Button1;
+		public static String Tab0_Button2;
+
+	}
 	
+	public static class XMSS{
+		
+
+		public static String Tab0_Head0;
+		public static String Tab0_Head1;
+		public static String Tab0_Head2;
+		
+		public static String Tab0_Txt0;
+		public static String Tab0_Txt1;
+		public static String Tab0_Txt2;
+		
+		public static String Tab0_Button0;
+		public static String Tab0_Button1;
+		public static String Tab0_Button2;
+
+	}
+	
+	public static class XMSS_MT{
+		
+
+		public static String Tab0_Head0;
+		public static String Tab0_Head1;
+		public static String Tab0_Head2;
+		
+		public static String Tab0_Txt0;
+		public static String Tab0_Txt1;
+		public static String Tab0_Txt2;
+		
+		public static String Tab0_Button0;
+		public static String Tab0_Button1;
+		public static String Tab0_Button2;
+
+	}
+
 
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Descriptions.class);
+		NLS.initializeMessages("org.jcryptool.visual.merkletree.descriptionsMSS", Descriptions.MSS.class);
+		NLS.initializeMessages("org.jcryptool.visual.merkletree.descriptionsXMSS", Descriptions.XMSS.class);
 	}
 
 	private Descriptions() {

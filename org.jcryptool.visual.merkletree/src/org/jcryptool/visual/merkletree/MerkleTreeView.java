@@ -20,6 +20,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
 import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
+import org.jcryptool.visual.merkletree.ui.MerkleConst;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeComposite;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeKeyPairs;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeSeed;
@@ -84,8 +85,8 @@ public class MerkleTreeView extends ViewPart {
 
 		tabFolder = new TabFolder(scrolledComposite, SWT.NONE);
 
-		TabItem tbtmParameter = new TabItem(tabFolder, SWT.NONE);
-		tbtmParameter.setText(Descriptions.MerkleTreeView_0);
+		TabItem tbtmParameter0 = new TabItem(tabFolder, SWT.NONE);
+		tbtmParameter0.setText(Descriptions.MerkleTreeView_0);
 		tabFolder.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) {
@@ -214,30 +215,30 @@ public class MerkleTreeView extends ViewPart {
 		// 1));
 
 		
-		TabItem tbtmParameter2 = new TabItem(tabFolder, SWT.NONE);
-		tbtmParameter2.setText(Descriptions.MerkleTreeView_1);
+		TabItem tbtmParameter1 = new TabItem(tabFolder, SWT.NONE);
+		tbtmParameter1.setText(Descriptions.MerkleTreeView_1);
 		// Composite compositeTree = new Composite(tabFolder, SWT.NONE);
 		// composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
 		// 1, 1));
 
 		// Hier soll der Baum bereits fertig sein! ACHTUNG BUG !!!!!
 		// mtZ=new MerkleTreeZestComposite(tabFolder, SWT.NONE);
-		tbtmParameter2.setControl(mtZ);
+		tbtmParameter1.setControl(mtZ);
+		
+		TabItem tbtmParameter2 = new TabItem(tabFolder,SWT.NONE);
+		tbtmParameter2.setText(Descriptions.MerkleTreeView_2);
+		mtS=new MerkleTreeSignatureComposite(tabFolder,SWT.NONE,merkle);
+		tbtmParameter2.setControl(mtS);
 		
 		TabItem tbtmParameter3 = new TabItem(tabFolder,SWT.NONE);
-		tbtmParameter3.setText(Descriptions.MerkleTreeView_2);
-		mtS=new MerkleTreeSignatureComposite(tabFolder,SWT.NONE,merkle);
-		tbtmParameter3.setControl(mtS);
-		
-		TabItem tbtmParameter4 = new TabItem(tabFolder,SWT.NONE);
-		tbtmParameter4.setText(Descriptions.MerkleTreeView_3);
-		tbtmParameter4.setControl(mtV);
+		tbtmParameter3.setText(Descriptions.MerkleTreeView_3);
+		tbtmParameter3.setControl(mtV);
 		
 		mtC = new MerkleTreeComposite(tabFolder, SWT.NONE, this);
-		tbtmParameter.setControl(mtC);
+		tbtmParameter0.setControl(mtC);
 
 		scrolledComposite.setContent(tabFolder);
-		scrolledComposite.setMinSize(tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		scrolledComposite.setMinSize(MerkleConst.PLUGIN_WIDTH,MerkleConst.PLUGIN_HEIGTH);
 
 		// makes the connection to the help of the plug-in
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(),

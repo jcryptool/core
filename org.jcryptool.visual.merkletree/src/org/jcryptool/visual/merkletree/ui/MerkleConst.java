@@ -48,11 +48,11 @@ public abstract class MerkleConst {
 
 	// height of the plug-in as a whole (this is important for the scrolling of
 	// the plug-in)
-	public static final int PLUGIN_HEIGTH = 1100;
+	public static final int PLUGIN_HEIGTH = 768;
 
 	// width of the plug-in as a whole (this is important for the scrolling of
 	// the plug-in)
-	public static final int PLUGIN_WIDTH = 1800;
+	public static final int PLUGIN_WIDTH = 1024;
 
 	// height of one row in the main layout of the plug-in
 	public static final int PLUGIN_ROW_HEIGHT = 70;
@@ -112,4 +112,7 @@ public abstract class MerkleConst {
 	// number of characters in 16 byte hexadecimal
 	public static final int HEXLEN = 32;
 
+	public enum SUIT{
+		MSS, XMSS, XMSS_MT
+	}
 }

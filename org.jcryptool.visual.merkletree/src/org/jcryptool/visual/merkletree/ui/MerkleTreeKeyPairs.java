@@ -21,6 +21,7 @@ import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.MerkleTreeView;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
+import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 /**
  * Class for the Composite with the KeyPair generation in Tabpage 1
@@ -44,7 +45,7 @@ public class MerkleTreeKeyPairs extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public MerkleTreeKeyPairs(Composite parent, int style, boolean extended, ViewPart masterView) {
+	public MerkleTreeKeyPairs(Composite parent, int style, SUIT verfahren, ViewPart masterView) {
 		super(parent, style);
 		this.parent = parent;
 		this.masterView = masterView;
@@ -52,13 +53,13 @@ public class MerkleTreeKeyPairs extends Composite {
 
 		createLabel = new Label(this, SWT.NONE);
 		createLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
-		createLabel.setText(Descriptions.MerkleTreeKey_Label_0);
+		
 
 		descText = new StyledText(this, SWT.WRAP | SWT.BORDER);
 		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 2));
 		descText.setCaret(null);
-		descText.setText(Descriptions.MerkleTreeKeydesc);
-		descText.setEditable(false);
+		
+
 
 		Label keysum = new Label(this, SWT.NONE);
 		keysum.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
@@ -70,7 +71,7 @@ public class MerkleTreeKeyPairs extends Composite {
 		spinnerValue = 2;
 		spinnerkeysum.setSelection(0);
 		spinnerkeysum.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
-
+		
 		//spinner for power of two
 		spinnerkeysum.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -93,7 +94,32 @@ public class MerkleTreeKeyPairs extends Composite {
 		buttonCreateKeys = new Button(this, SWT.NONE);
 		buttonCreateKeys.setEnabled(false);
 		buttonCreateKeys.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 3, 1));
-		buttonCreateKeys.setText(Descriptions.MerkleTreeKeyButton);
+		
+		//TEXT
+				switch(verfahren){
+				case MSS:
+					createLabel.setText(Descriptions.MSS.Tab0_Head2);
+					descText.setText(Descriptions.MSS.Tab0_Txt2);
+					buttonCreateKeys.setText(Descriptions.MSS.Tab0_Button2);
+					break;
+				case XMSS:
+					createLabel.setText(Descriptions.XMSS.Tab0_Head2);
+					descText.setText(Descriptions.XMSS.Tab0_Txt2);
+					buttonCreateKeys.setText(Descriptions.XMSS.Tab0_Button2);
+					break;
+				case XMSS_MT:
+					createLabel.setText(Descriptions.XMSS_MT.Tab0_Head2);
+					descText.setText(Descriptions.XMSS_MT.Tab0_Txt2);
+					buttonCreateKeys.setText(Descriptions.XMSS_MT.Tab0_Button2);
+					break;
+				default:
+					createLabel.setText(Descriptions.MSS.Tab0_Head2);
+					descText.setText(Descriptions.MSS.Tab0_Txt2);
+					buttonCreateKeys.setText(Descriptions.MSS.Tab0_Button2);
+					break;
+				}
+
+				descText.setEditable(false);
 
 		/*
 		 * Table table = new Table(this, SWT.MULTI | SWT.BORDER |

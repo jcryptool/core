@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.Descriptions;
+import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 /**
  * Class for the Composite with the Seed in Tabpage 1
@@ -28,14 +29,14 @@ public class MerkleTreeSeed extends Composite {
 	Button createSeed;
 	Label prng;
 	Text textSeed;
-
+	
 	/**
 	 * Create the composite.
 	 * Including Seed content and KeyPairComposite
 	 * @param parent
 	 * @param style
 	 */
-	public MerkleTreeSeed(Composite parent, int style, boolean extended, ViewPart masterView) {
+	public MerkleTreeSeed(Composite parent, int style, SUIT verfahren, ViewPart masterView) {
 		super(parent, SWT.NONE);
 
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
@@ -45,18 +46,36 @@ public class MerkleTreeSeed extends Composite {
 		
 		prng = new Label(testComp, SWT.NONE);
 		prng.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
-		prng.setText(Descriptions.MerkleTreeSeed_0);
 
 		textSeed = new Text(testComp, SWT.BORDER | SWT.RIGHT);
 		textSeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 
 		createSeed = new Button(testComp, SWT.NONE);
 		createSeed.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 2, 1));
-		createSeed.setText(Descriptions.MerkleTreeSeedButton);
 
-		keyPairc = new MerkleTreeKeyPairs(this, SWT.WRAP | SWT.BORDER | SWT.LEFT, extended, masterView);
+
+		//TEXTgeneration
+		switch(verfahren){
+		
+		case XMSS:
+			prng.setText(Descriptions.XMSS.Tab0_Head1);
+			createSeed.setText(Descriptions.XMSS.Tab0_Button1);
+			break;
+		case XMSS_MT:
+			prng.setText(Descriptions.XMSS_MT.Tab0_Head1);
+			createSeed.setText(Descriptions.XMSS_MT.Tab0_Button1);
+			break;
+		case MSS:
+		default:
+			prng.setText(Descriptions.MSS.Tab0_Head1);
+			createSeed.setText(Descriptions.MSS.Tab0_Button1);
+			break;
+		
+		}
+		
+		keyPairc = new MerkleTreeKeyPairs(this, SWT.WRAP | SWT.BORDER | SWT.LEFT, verfahren, masterView);
 		keyPairc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
-
+		
 		createSeed.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
