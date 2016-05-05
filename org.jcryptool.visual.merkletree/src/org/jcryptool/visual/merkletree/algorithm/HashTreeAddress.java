@@ -1,5 +1,7 @@
 package org.jcryptool.visual.merkletree.algorithm;
 
+import org.jcryptool.visual.merkletree.files.ByteUtils;
+
 public class HashTreeAddress extends Address {
 	byte layerAddress;
 	byte[] treeAddress = new byte[5];
@@ -11,74 +13,86 @@ public class HashTreeAddress extends Address {
 
 	@Override
 	public void setHashAdress(int i) {
-		// TODO Auto-generated method stub
+		// do nothing, not needed
 
 	}
 
 	@Override
 	public void setKeyBit(int i) {
-		// TODO Auto-generated method stub
+		if(i == 0) {
+			blockKeyBit -= 1; //set keyBit (bit nr. 0) to 0
+		} else {
+			blockKeyBit += 1; //set keyBit (bit nr. 0) to 1
+		}
 
 	}
 
 	@Override
 	public void setChainAddress(int i) {
-		// TODO Auto-generated method stub
+		// do nothing, not needed
 
 	}
 
 	@Override
 	public void setBlockBit(int i) {
-		// TODO Auto-generated method stub
+		if(i == 0) {
+			blockKeyBit -= 2; //set blockBit (bit nr. 1) to 0
+		} else {
+			blockKeyBit += 2; //set blockBit (bit nr. 1) to 1
+		}
 
 	}
 
 	@Override
 	public void setTreeHeight(int i) {
-		// TODO Auto-generated method stub
+		treeHeight[3] = (byte) i;
 
 	}
 
 	@Override
 	public void setTreeIndex(int i) {
-		// TODO Auto-generated method stub
-
+		treeIndex[0] = (byte)(i >> 24);
+		treeIndex[1] = (byte)(i >> 16);
+		treeIndex[2] = (byte)(i >> 8);
+		treeIndex[3] = (byte)(i);
 	}
 
 	@Override
 	public int getTreeHeight() {
-		// TODO Auto-generated method stub
-		return 0;
+		return treeHeight[3];
 	}
 
 	@Override
 	public void setOTSBit(int i) {
-		// TODO Auto-generated method stub
+		otsBit = (byte)i;
 
 	}
 
 	@Override
 	public void setOTSAddress(int i) {
-		// TODO Auto-generated method stub
+		// do nothing, not needed
 
 	}
 
 	@Override
 	public void setLTreeBit(int i) {
-		// TODO Auto-generated method stub
+		if(i == 0) {
+			lTreeBit -= 1; //set lTreeBit (bit nr. 0) to 0
+		} else {
+			lTreeBit += 1; //set lTreeBit (bit nr. 0) to 1
+		}
 
 	}
 
 	@Override
 	public void setLTreeAddress(int i) {
-		// TODO Auto-generated method stub
+		// do nothing, not needed
 
 	}
 
 	@Override
 	public void setLayerAddress(int i) {
-		// TODO Auto-generated method stub
-
+		layerAddress = (byte) i;
 	}
 
 	@Override
@@ -86,5 +100,20 @@ public class HashTreeAddress extends Address {
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	/**
+	 * @return Address construct as in the rfc
+	 */
+	public byte[] getAddress(){
+		byte[] temp = ByteUtils.concatenate(layerAddress, treeAddress);
+		ByteUtils.concatenate(temp, otsBit);
+		ByteUtils.concatenate(temp, lTreeBit);
+		ByteUtils.concatenate(temp, treeHeight);
+		ByteUtils.concatenate(temp, treeIndex);
+		ByteUtils.concatenate(temp, blockKeyBit);
+		return temp;
+		//
+		}
 
 }
