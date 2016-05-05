@@ -151,7 +151,7 @@ public class XMSSTree implements ISimpleMerkle {
 			for (int i = 0; i < Math.floor(len / 2); i = i + 1) {
 				lAdrs.setTreeIndex(i);
 				//zuck: Hashing der leaves/nodes				
-				pubKeys[i] = this.rand_hash(pubKeys[2 * i], pubKeys[2 * i + 1], this.privateSeed);
+				pubKeys[i] = this.rand_hash(pubKeys[2 * i], pubKeys[2 * i + 1], this.privateSeed, lAdrs);
 			}
 			if (len % 2 == 1) {
 				//zuck: Nachrücken der ungeraden Node 
@@ -164,7 +164,7 @@ public class XMSSTree implements ISimpleMerkle {
 		return pubKeys[0];
 	}
 
-	public byte[] rand_hash(byte[] pKey, byte[] pKey2, byte[] seed) {
+	public byte[] rand_hash(byte[] pKey, byte[] pKey2, byte[] seed, Address lAdrs) {
 		
 		int len = pKey.length;
 		byte[] bitmk_0, bitmk_1, bitmk, key;
