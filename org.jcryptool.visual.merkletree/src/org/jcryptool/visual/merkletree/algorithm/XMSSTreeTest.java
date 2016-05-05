@@ -105,9 +105,7 @@ public class XMSSTreeTest {
 
 	@Test
 	public void testGetTreeHeight() {
-		/**
-		 * Test not finished yet -> method is not called correctly
-		 */
+
 		ArrayList<Node> leaves = new ArrayList<Node>();
 		byte[] content = { 0, 0, 0, 0, 0 };
 		Node leafNode1 = new Node(content, true, 1);
@@ -133,7 +131,6 @@ public class XMSSTreeTest {
 		
 		height = Integer.bitCount(Integer.highestOneBit(leaves.size() - 1) * 2 - 1);
 		assertEquals(height, 3);
-
 	}
 
 	@Test

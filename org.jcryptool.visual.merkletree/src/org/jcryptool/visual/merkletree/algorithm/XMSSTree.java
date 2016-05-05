@@ -9,11 +9,9 @@ import org.jcryptool.visual.merkletree.files.ByteUtils;
 
 public class XMSSTree implements ISimpleMerkle {
 
-	WOTSPlusXMSS wot;
 	// ArrayList<byte[]>pubKeys = new ArrayList<byte[]>();
 	int leafCounter = 0;
 	int leafNumber = 0;
-	int keylength;
 	int keyIndex;
 	byte[] privateSeed;
 	byte[] publicSeed;
@@ -40,10 +38,9 @@ public class XMSSTree implements ISimpleMerkle {
 	XMSSTree(byte[] privateSeed, byte[] publicSeed, int leafCounter) {
 		this.privateSeed = privateSeed;
 		this.publicSeed = publicSeed;
+		this.leafCounter = leafCounter;
 		this.treeGenerated = false;
 		this.keyIndex = 0;
-		this.leafCounter = leafCounter;
-		this.wot = new WOTSPlusXMSS(16, "SHA256", privateSeed);
 	}
 	/**
 	 * Constructor for XMSS-Tree
@@ -75,7 +72,11 @@ public class XMSSTree implements ISimpleMerkle {
 
 	@Override
 	/**
-	 * Adds a new Leaf to the tree with given content LeafConten and given public key
+	 * @author christoph
+	 * Adds a new Leaf to the leaf ArrayList
+	 * leafNode Name is the Content
+	 * leafNode Code is the Public Key
+	 * leafNumber is increased by 1
 	 */
 	public void addTreeLeaf(byte[] LeafContent, String pubKey) {
 		Node leafNode = new Node(LeafContent, true, ++this.leafNumber);
@@ -96,8 +97,6 @@ public class XMSSTree implements ISimpleMerkle {
 			}
 		}
 		return null;
-		//should be working -> need to test this line of code
-		// return merkleTreeHeight.get(getTreeHeight()).get(0).getContent();
 	}
 
 	@Override
@@ -117,6 +116,10 @@ public class XMSSTree implements ISimpleMerkle {
 	}
 
 	@Override
+	/**
+	 * @author christoph
+	 * returns the number of leafs
+	 */
 	public int getLeafCounter() {
 		return leafCounter;
 	}
@@ -127,8 +130,12 @@ public class XMSSTree implements ISimpleMerkle {
 	}
 
 	@Override
+	/**
+	 * @author christoph
+	 * Returns the content of an given node index
+	 * getName() -> Content is stored in the name field of the array list
+	 */
 	public byte[] getNodeContentbyIndex(int index) {
-		//warum Name und nicht in Content????
 		return tree.get(index).getName();
 	}
 
