@@ -250,6 +250,13 @@ public class XMSSTree implements ISimpleMerkle {
 		return mDigest.digest(toHash);
 	}
 
+	/**
+	 * append two given Byte Arrays
+	 * used in the method hashing content
+	 * @param array1 -> Node 1
+	 * @param array2 -> Node 2
+	 * @return -> appended Nodes as byte[] array
+	 */
 	byte[] appendByteArrays(byte[] array1, byte[] array2) {
 		byte[] appended;
 		String String1 = array1.toString();
@@ -263,14 +270,11 @@ public class XMSSTree implements ISimpleMerkle {
 	
 	/**
 	 * returns the height of the tree
+	 * Tree with only one Node has height 0
+	 * Tree with 4 Nodes has height 2
 	 */
 	public int getTreeHeight() {
-		//should not be working -> need to test
-		//Tree height 4 -> 8 Leafes
-		//(this.leaves.size() - 1) = 7
-		//Integer.highestOneBit(this.leaves.size() - 1) = 3 or 2????
 		return Integer.bitCount(Integer.highestOneBit(this.leaves.size() - 1) * 2 - 1);
-
 	}
 
 	@Override
