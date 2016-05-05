@@ -28,6 +28,13 @@ public class XMSSTree implements ISimpleMerkle {
 	ArrayList<byte[][]> privKeys = new ArrayList<byte[][]>();
 	ArrayList<byte[][]> publicKeys = new ArrayList<byte[][]>();
 
+	/**
+	 * Constructor for XMSS-Tree
+	 * @param privateSeed
+	 * @param publicSeed
+	 * @param keyLength
+	 * @param leafCounter
+	 */
 	XMSSTree(byte[] privateSeed, byte[] publicSeed, int keyLength, int leafCounter) {
 		this.privateSeed = privateSeed;
 		this.publicSeed = publicSeed;
@@ -37,6 +44,12 @@ public class XMSSTree implements ISimpleMerkle {
 		this.leafCounter = leafCounter;
 		this.wot = new WOTSPlusXMSS(16, "SHA256", privateSeed);
 	}
+	/**
+	 * Constructor for XMSS-Tree
+	 * no private and public Seed set -> use default values
+	 * @param keyLength
+	 * @param leafCounter
+	 */
 
 	XMSSTree(int keyLength, int leafCounter) {
 		this.keyLength = keyLength;
@@ -45,17 +58,25 @@ public class XMSSTree implements ISimpleMerkle {
 	}
 
 	@Override
+	/**
+	 * Set the private seed
+	 */
 	public void addPrivateSeed(byte[] privateSeed) {
 		this.privateSeed = privateSeed;
 
 	}
-
+	/**
+	 * Set the public seed
+	 */
 	@Override
 	public void addPublicSeed(byte[] publicSeed) {
 		this.publicSeed = publicSeed;
 	}
 
 	@Override
+	/**
+	 * Adds a new Leaf to the tree with given content LeafConten and given public key
+	 */
 	public void addTreeLeaf(byte[] LeafContent, String pubKey) {
 		Node leafNode = new Node(LeafContent, true, ++this.leafNumber);
 		leafNode.setCode(pubKey);
@@ -63,6 +84,9 @@ public class XMSSTree implements ISimpleMerkle {
 	}
 
 	@Override
+	/**
+	 * returns the root node of the MerkleTree
+	 */
 	public byte[] getMerkleRoot() {
 
 		for (int i = 0; i < tree.size(); i++) {
@@ -167,7 +191,7 @@ public class XMSSTree implements ISimpleMerkle {
 			// this.pubKeys = new ArrayList<byte[]>(); ......
 			this.addTreeLeaf(this.generateLTree(c), "L-Tree_Keys");
 		}
-		int height = Integer.bitCount(Integer.highestOneBit(this.leaves.size() - 1) * 2 - 1);
+		int height = getTreeHeight();
 
 		if (height == 0) {
 			return;
@@ -254,20 +278,12 @@ public class XMSSTree implements ISimpleMerkle {
 
 		return appended;
 	}
-
+	
+	/**
+	 * returns the height of the tree
+	 */
 	public int getTreeHeight() {
-		/*
-		 * int height = 1; double helper = (double) Leaves.size();
-		 * 
-		 * if(helper == 0){ return 0; }
-		 * 
-		 * 
-		 * do { height++;
-		 * 
-		 * }while ((Math.ceil(helper /= 2)) > 1);
-		 * 
-		 * return height;
-		 */
+		//returns 
 		return Integer.bitCount(Integer.highestOneBit(this.leaves.size() - 1) * 2 - 1);
 
 	}
