@@ -401,6 +401,7 @@ public class XMSSTree implements ISimpleMerkle {
 			this.leafNumber++;
 			leaf.setCode(d1pubKey.toString());
 			this.leaves.add(leaf);
+			
 		}
 	}
 
