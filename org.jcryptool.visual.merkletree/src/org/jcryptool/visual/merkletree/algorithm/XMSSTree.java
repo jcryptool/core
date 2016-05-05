@@ -144,14 +144,14 @@ public class XMSSTree implements ISimpleMerkle {
 	//TODO zuck: address nach rfc einfügen
 	public byte[] generateLTree(int index) {
 		double len = publicKeys.get(index).length;
-		byte[][] pubKeys = publicKeys.get(index);
+		byte[][] pubKeys = publicKeys.get(index);		
 		lAdrs.setTreeHeight(0);
 
 		while (len > 1) {
 			for (int i = 0; i < Math.floor(len / 2); i = i + 1) {
 				lAdrs.setTreeIndex(i);
 				//zuck: Hashing der leaves/nodes				
-				pubKeys[i] = this.hashLTree(pubKeys[2 * i], pubKeys[2 * i + 1], this.privateSeed);
+				pubKeys[i] = this.rand_hash(pubKeys[2 * i], pubKeys[2 * i + 1], this.privateSeed);
 			}
 			if (len % 2 == 1) {
 				//zuck: Nachrücken der ungeraden Node 
@@ -164,7 +164,7 @@ public class XMSSTree implements ISimpleMerkle {
 		return pubKeys[0];
 	}
 
-	public byte[] hashLTree(byte[] pKey, byte[] pKey2, byte[] seed) {
+	public byte[] rand_hash(byte[] pKey, byte[] pKey2, byte[] seed) {
 		
 		int len = pKey.length;
 		byte[] bitmk_0, bitmk_1, bitmk, key;
