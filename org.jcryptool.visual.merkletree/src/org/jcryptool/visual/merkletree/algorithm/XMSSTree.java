@@ -17,6 +17,8 @@ public class XMSSTree implements ISimpleMerkle {
 	byte[] publicSeed;
 	boolean treeGenerated;
 	OTS otsAlgo;
+	Address lAdrs = new LTreeAddress();
+	Address hAdrs = new HashTreeAddress();
 
 	// ArrayList<MerkleTreeNode> leaves = new ArrayList<>();
 	// ArrayList<ArrayList<MerkleTreeNode>> merkleTreeHeight;
@@ -143,13 +145,13 @@ public class XMSSTree implements ISimpleMerkle {
 	public byte[] generateLTree(int index) {
 		double len = publicKeys.get(index).length;
 		byte[][] pubKeys = publicKeys.get(index);
-		//adrs.setTreeHeight(0);
+		lAdrs.setTreeHeight(0);
 
 		while (len > 1) {
 			for (int i = 0; i < Math.floor(len / 2); i = i + 1) {
-				//adrs.setTreeIndex(i);
+				lAdrs.setTreeIndex(i);
 				//zuck: Hashing der leaves/nodes				
-				pubKeys[i] = this.hashLTree(pubKeys[2 * i], pubKeys[2 * i + 1], null, this.privateSeed);
+				pubKeys[i] = this.hashLTree(pubKeys[2 * i], pubKeys[2 * i + 1], this.privateSeed);
 			}
 			if (len % 2 == 1) {
 				//zuck: Nachrücken der ungeraden Node 
@@ -157,24 +159,24 @@ public class XMSSTree implements ISimpleMerkle {
 			}
 			//zuck: Anpassen der Anzahl an Nodes bzw. setzen der Anzahl der Nodes auf der neuen Höhe
 			len = Math.ceil((len / 2));
-			//adrs.setTreeHeight(adrs.getTreeHeight() + 1);
+			lAdrs.setTreeHeight(lAdrs.getTreeHeight() + 1);
 			}
 		return pubKeys[0];
 	}
 
-	public byte[] hashLTree(byte[] pKey, byte[] pKey2, byte[] adrs, byte[] seed) {
+	public byte[] hashLTree(byte[] pKey, byte[] pKey2, byte[] seed) {
 		
 		int len = pKey.length;
 		byte[] bitmk_0, bitmk_1, bitmk, key;
-		byte[] message = this.appendByteArrays(pKey, pKey2);		
-		//adrs.setKeyBit(0);
-		//adrs.setBlockBit(0);
-		bitmk_0 = randomGenerator(seed, adrs, len);
-		//adrs.setBlockBit(1);
-		bitmk_1 = randomGenerator(seed, adrs, len);
-		//adrs.setKeyBit(1);
-		//adrs.setBlockBit(0);
-		key = randomGenerator(seed, adrs, len);
+		byte[] message = this.appendByteArrays(pKey, pKey2);
+		lAdrs.setKeyBit(0);
+		lAdrs.setBlockBit(0);
+		bitmk_0 = randomGenerator(seed, lAdrs.getAddress(), len);
+		lAdrs.setBlockBit(1);
+		bitmk_1 = randomGenerator(seed, lAdrs.getAddress(), len);
+		lAdrs.setKeyBit(1);
+		lAdrs.setBlockBit(0);
+		key = randomGenerator(seed, lAdrs.getAddress(), len);
 		bitmk = ByteUtils.concatenate(bitmk_0, bitmk_1);
 		for (int i = 0; i < message.length; i++) {
 			//XOR message with bitmask
@@ -185,7 +187,6 @@ public class XMSSTree implements ISimpleMerkle {
 		return mDigest.digest(tohash.getBytes());
 		}
 
-	//zuck: hashNode müsste überflüssig sein; selbe wie hashLTree
 	public byte[] hashNode(byte[] pKey, byte[] pKey2, byte[] adrs, byte[] seed) {
 
 		// get Bitmasken and Keysecret
