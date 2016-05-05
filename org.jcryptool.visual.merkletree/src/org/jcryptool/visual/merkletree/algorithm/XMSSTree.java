@@ -10,7 +10,7 @@ public class XMSSTree implements ISimpleMerkle {
 	// ArrayList<byte[]>pubKeys = new ArrayList<byte[]>();
 	int leafCounter = 0;
 	int leafNumber = 0;
-	int keyLength;
+	int keylength;
 	int keyIndex;
 	byte[] privateSeed;
 	byte[] publicSeed;
@@ -32,13 +32,11 @@ public class XMSSTree implements ISimpleMerkle {
 	 * Constructor for XMSS-Tree
 	 * @param privateSeed
 	 * @param publicSeed
-	 * @param keyLength
-	 * @param leafCounter
+	 * @param leafCounter -> Anzahl der Blätter des Baums
 	 */
-	XMSSTree(byte[] privateSeed, byte[] publicSeed, int keyLength, int leafCounter) {
+	XMSSTree(byte[] privateSeed, byte[] publicSeed, int leafCounter) {
 		this.privateSeed = privateSeed;
 		this.publicSeed = publicSeed;
-		this.keyLength = keyLength;
 		this.treeGenerated = false;
 		this.keyIndex = 0;
 		this.leafCounter = leafCounter;
@@ -51,8 +49,7 @@ public class XMSSTree implements ISimpleMerkle {
 	 * @param leafCounter
 	 */
 
-	XMSSTree(int keyLength, int leafCounter) {
-		this.keyLength = keyLength;
+	XMSSTree(int leafCounter) {
 		this.leafCounter = leafCounter;
 		this.treeGenerated = false;
 	}
@@ -114,11 +111,6 @@ public class XMSSTree implements ISimpleMerkle {
 	public byte[] getPublicSeed() {
 		return publicSeed;
 
-	}
-	
-	@Override
-	public int getKeyLength() {
-		return keyLength;
 	}
 
 	@Override

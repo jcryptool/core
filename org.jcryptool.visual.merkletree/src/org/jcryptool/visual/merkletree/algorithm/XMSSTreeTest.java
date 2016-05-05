@@ -162,11 +162,6 @@ public class XMSSTreeTest {
 	}
 
 	@Test
-	public void testIsGenerated() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testGetOneTimeSignatureAlgorithm() {
 		fail("Not yet implemented");
 	}
