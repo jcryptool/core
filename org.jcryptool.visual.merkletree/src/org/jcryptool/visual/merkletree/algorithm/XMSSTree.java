@@ -132,7 +132,7 @@ public class XMSSTree implements ISimpleMerkle {
 		return tree.get(index).getName();
 	}
 
-	//TODO address nach rfc einfügen
+	//TODO zuck: address nach rfc einfügen
 	public byte[] generateLTree(int index) {
 		double len = publicKeys.get(index).length;
 		byte[][] pubKeys = publicKeys.get(index);
@@ -141,14 +141,14 @@ public class XMSSTree implements ISimpleMerkle {
 		while (len > 1) {
 			for (int i = 0; i < Math.floor(len / 2); i = i + 1) {
 				//adrs.setTreeIndex(i);
-				// Hashing der leaves/nodes				
+				//zuck: Hashing der leaves/nodes				
 				pubKeys[i] = this.hashLTree(pubKeys[2 * i], pubKeys[2 * i + 1], null, this.privateSeed);
 			}
 			if (len % 2 == 1) {
-				//Nachrücken der ungeraden Node 
+				//zuck: Nachrücken der ungeraden Node 
 				pubKeys[(int) (Math.floor(len / 2))] = pubKeys[(int) len -1 ];
 			}
-			//Anpassen der Anzahl an Nodes bzw. setzen der Anzahl der Nodes auf der neuen Höhe
+			//zuck: Anpassen der Anzahl an Nodes bzw. setzen der Anzahl der Nodes auf der neuen Höhe
 			len = Math.ceil((len / 2));
 			//adrs.setTreeHeight(adrs.getTreeHeight() + 1);
 			}
@@ -156,9 +156,7 @@ public class XMSSTree implements ISimpleMerkle {
 	}
 
 	public byte[] hashLTree(byte[] pKey, byte[] pKey2, byte[] adrs, byte[] seed) {
-
-		//TODO get Bitmask and Keysecret
-		//byte[] ksecret = { 0, 0, 0, 0, 0 }; ??
+		
 		int len = pKey.length;
 		byte[] bitmk_0, bitmk_1, bitmk, key;
 		byte[] message = this.appendByteArrays(pKey, pKey2);		
@@ -173,7 +171,6 @@ public class XMSSTree implements ISimpleMerkle {
 		bitmk = ByteUtils.concatenate(bitmk_0, bitmk_1);
 		for (int i = 0; i < message.length; i++) {
 			//XOR message with bitmask
-			//bitmk[0] sollte eigentlich bitmk[i] sein?????
 			message[i] ^= bitmk[i];
 		}
 		//Formatiert den ksecret und message zu einem 512 Byte hexadezimalen Wert
@@ -435,6 +432,7 @@ public class XMSSTree implements ISimpleMerkle {
 	}
 	
 	/**
+	 * @author zuck
 	 * PRNG used to generate the bitmasks and the key for hashing
 	 * @param seed
 	 * 		seed for the PRNG
@@ -447,11 +445,11 @@ public class XMSSTree implements ISimpleMerkle {
 		try {
 			rnd = SecureRandom.getInstance("SHA1PRNG");
 		} catch(NoSuchAlgorithmException e) {
-			//Der Algo existiert!
+			//zuck: Der Algo existiert!
 		}
 		seed = ByteUtils.concatenate(seed, address);
-		rnd.setSeed(seed);	//setzen des seeds seed+address für den PRNG
-		rnd.nextBytes(res); //befüllen des byte[]
+		rnd.setSeed(seed);	//zuck: setzen des seeds seed+address für den PRNG
+		rnd.nextBytes(res); //zuck: befüllen des byte[]
 		return res;
 	}
 }
