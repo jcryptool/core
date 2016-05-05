@@ -431,7 +431,7 @@ public class XMSSTree implements ISimpleMerkle {
 	 * @param address
 	 * 		address of left/right node
 	 */
-	private byte[] randomGenerator(byte[] seed, byte[] address, int len) {
+	public byte[] randomGenerator(byte[] seed, byte[] address, int len) {
 		byte[] res = new byte[len];	//erstellen des zu befüllenden arrays
 		SecureRandom rnd = null;
 		try {
