@@ -256,7 +256,6 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 				e.printStackTrace();
 			}
 		}
-		this.generateKeyPairsAndLeaves();
 	}
 
 	@Override
@@ -363,7 +362,7 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 
 		
 	}
-	private void generateKeyPairsAndLeaves() {
+	public void generateKeyPairsAndLeaves() {
 		Node leaf;
 		byte[] d1pubKey;
 		String code;

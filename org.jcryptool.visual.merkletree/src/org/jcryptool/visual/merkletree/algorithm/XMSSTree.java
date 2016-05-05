@@ -86,15 +86,17 @@ public class XMSSTree implements ISimpleMerkle {
 	@Override
 	/**
 	 * returns the root node of the MerkleTree
+	 * while i is smaller then the tree size and there is a parent -> i++
+	 * when parent == null -> return the current position of i -> this is the root node
 	 */
 	public byte[] getMerkleRoot() {
-
 		for (int i = 0; i < tree.size(); i++) {
 			if (tree.get(i).getParent() == null) {
 				return tree.get(i).getName();
 			}
 		}
 		return null;
+		//should be working -> need to test this line of code
 		// return merkleTreeHeight.get(getTreeHeight()).get(0).getContent();
 	}
 
@@ -184,19 +186,28 @@ public class XMSSTree implements ISimpleMerkle {
 
 	@Override
 	public void generateMerkleTree() {
-
+		/**
+		 * Generate the leafs
+		 */
+		
+		//creates a new node list for the tree
 		tree = new ArrayList<Node>();
 
+		//leafcounter is defined in the constructor -> add the amount of defined leafs
 		for (int c = 0; c < this.leafCounter; c++) {
-			// this.pubKeys = new ArrayList<byte[]>(); ......
+			//for every tree leaf add an leave -> with the value of LeaveContent and public Key
+			//not working yet -> "L-Tree_Keys"
 			this.addTreeLeaf(this.generateLTree(c), "L-Tree_Keys");
 		}
+		
+		/**
+		 * Generate the tree
+		 */
 		int height = getTreeHeight();
-
 		if (height == 0) {
 			return;
 		}
-		// tree.addAll(leaves);
+
 		Node helperNode;
 		ArrayList<Node> treeLevel = new ArrayList<Node>();
 		int index = 0;
@@ -254,7 +265,10 @@ public class XMSSTree implements ISimpleMerkle {
 	 * returns the height of the tree
 	 */
 	public int getTreeHeight() {
-		//returns 
+		//should not be working -> need to test
+		//Tree height 4 -> 8 Leafes
+		//(this.leaves.size() - 1) = 7
+		//Integer.highestOneBit(this.leaves.size() - 1) = 3 or 2????
 		return Integer.bitCount(Integer.highestOneBit(this.leaves.size() - 1) * 2 - 1);
 
 	}
@@ -279,6 +293,8 @@ public class XMSSTree implements ISimpleMerkle {
 	@Override
 	/**
 	 * Selects the Signature Algorithm
+	 * defautl Algorithm is the WOTSPlus Algorithm
+	 * after the Algorithm is selected the method -> generateKeyPairsAndLeaves() is called
 	 */
 	public void selectOneTimeSignatureAlgorithm(String hash, String algo) {
 		switch (algo) {
@@ -300,11 +316,13 @@ public class XMSSTree implements ISimpleMerkle {
 				e.printStackTrace();
 			}
 		}
-		this.generateKeyPairsAndLeaves();
-
 	}
 
 	@Override
+	/**
+	 * signs the given Message String using the the defined OTS Algorithm
+	 * returns the Signature
+	 */
 	public String sign(String message) {
 		String tmpSignature;
 		int keyIndex = this.keyIndex;
@@ -359,19 +377,23 @@ public class XMSSTree implements ISimpleMerkle {
 	@Override
 	/**
 	 * Verifys the Signature of an given index and return true or false
+	 * NOT IMPLEMENTED YET!!!!!!!
 	 */
 	public boolean verify(String message, String signature, int keyIndex) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	private void generateKeyPairsAndLeaves() {
+	public void generateKeyPairsAndLeaves() {
 		Node leaf;
 		byte[] d1pubKey;
 		for (int i = 0; i < this.leafCounter; i++) {
+			//generates a new WOTS/ WOTSPlus Keypair (public and secret key)
 			this.otsAlgo.generateKeyPair();
+			//adds the private Key of the generated keypair to the private key list of privKeys
 			this.privKeys.add(this.otsAlgo.getPrivateKey());
 			this.publicKeys.add(this.otsAlgo.getPublicKey());
+			
 			// Frage byte[][] zu byte[] ?????
 			d1pubKey = org.jcryptool.visual.merkletree.files.Converter._hexStringToByte(
 					org.jcryptool.visual.merkletree.files.Converter._2dByteToHex(this.otsAlgo.getPublicKey()));
