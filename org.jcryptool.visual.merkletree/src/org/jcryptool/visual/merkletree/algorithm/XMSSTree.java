@@ -137,34 +137,39 @@ public class XMSSTree implements ISimpleMerkle {
 		return tree.get(index).getName();
 	}
 
+	//TODO address nach rfc einfügen
 	public byte[] generateLTree(int index) {
-
 		double len = publicKeys.get(index).length;
 		byte[][] pubKeys = publicKeys.get(index);
+		//adrs.setTreeHeight(0);
 
 		while (len > 1) {
 			for (int i = 0; i < Math.floor(len / 2); i = i + 1) {
-				// Hashing mit (0^n || K || M xor B)
+				//adrs.setTreeIndex(i);
+				// Hashing der leaves/nodes				
 				pubKeys[i] = this.hashLTree(pubKeys[2 * i], pubKeys[2 * i + 1], null, this.privateSeed);
 			}
 			if (len % 2 == 1) {
-				pubKeys[(int) (Math.floor(len / 2) + 1)] = pubKeys[(int) len];
+				//Nachrücken der ungeraden Node 
+				pubKeys[(int) (Math.floor(len / 2))] = pubKeys[(int) len -1 ];
 			}
+			//Anpassen der Anzahl an Nodes bzw. setzen der Anzahl der Nodes auf der neuen Höhe
 			len = Math.ceil((len / 2));
-		}
+			//adrs.setTreeHeight(adrs.getTreeHeight() + 1);
+			}
 		return pubKeys[0];
 	}
 
 	public byte[] hashLTree(byte[] pKey, byte[] pKey2, byte[] adrs, byte[] seed) {
 
-		// get Bitmask and Keysecret
+		//TODO get Bitmask and Keysecret
 		byte[] ksecret = { 0, 0, 0, 0, 0 };
 		byte[] bitmk = { 0, 0, 0, 0, 0 };
 		byte[] message = this.appendByteArrays(pKey, pKey2);
 		for (int i = 0; i < message.length; i++) {
 			//XOR message with bitmask
 			//bitmk[0] sollte eigentlich bitmk[i] sein?????
-			message[i] ^= bitmk[0];
+			message[i] ^= bitmk[i];
 		}
 		//Formatiert den ksecret und message zu einem 512 Byte hexadezimalen Wert
 		String tohash = String.format("%512s", (ksecret.toString() + message.toString()));
