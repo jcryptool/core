@@ -61,7 +61,7 @@ public class MerkleTreeView extends ViewPart {
 	public void createPartControl(final Composite parent) {
 		this.parent = parent;
 		extended = false;
-		merkle = new SimpleMerkleTree(null, null, 0, 0);
+		merkle = new SimpleMerkleTree(null, null, 0);
 		// provides horizontal and vertical scrolling for the plug-in
 		// scroll = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
 		// scroll.setExpandHorizontal(true);
@@ -129,8 +129,9 @@ public class MerkleTreeView extends ViewPart {
 					if(!Arrays.equals(seedCheck, merkle.getPrivateSeed()) || keyCheck != merkle.getLeafCounter()) {
 						
 						//merkle neu zuweisen
-						merkle = new SimpleMerkleTree(seedCheck,seedCheck,128,keyCheck);
+						merkle = new SimpleMerkleTree(seedCheck,seedCheck,keyCheck);
 						merkle.selectOneTimeSignatureAlgorithm("SHA-256","WOTSPlus");
+						merkle.generateKeyPairsAndLeaves();
 						merkle.generateMerkleTree();
 						if (tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_2)) {
 							tabFolder.getSelection()[0].setControl(mtS);

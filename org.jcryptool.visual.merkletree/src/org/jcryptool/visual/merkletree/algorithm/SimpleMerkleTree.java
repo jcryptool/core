@@ -7,8 +7,6 @@ import java.util.Arrays;
 
 public class SimpleMerkleTree implements ISimpleMerkle {
 
-	int keyLength;
-
 	int keyIndex;
 	byte[] privateSeed;
 	byte[] publicSeed;
@@ -30,16 +28,14 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 	int leafCounter = 0;
 	int leafNumber = 0;
 
-	SimpleMerkleTree(int keyLength, int leafCounter) {
-		this.keyLength = keyLength;
+	SimpleMerkleTree(int leafCounter) {
 		this.leafCounter = leafCounter;
 		this.treeGenerated = false;
 	}
 
-	public SimpleMerkleTree(byte[] privateSeed, byte[] publicSeed, int keyLength, int leafCounter) {
+	public SimpleMerkleTree(byte[] privateSeed, byte[] publicSeed, int leafCounter) {
 		this.privateSeed = privateSeed;
 		this.publicSeed = publicSeed;
-		this.keyLength = keyLength;
 		this.treeGenerated = false;
 		this.keyIndex = 0;
 		this.leafCounter = leafCounter;
@@ -85,11 +81,6 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 	public byte[] getPublicSeed() {
 		// TODO Auto-generated method stub
 		return publicSeed;
-	}
-
-	@Override
-	public int getKeyLength() {
-		return keyLength;
 	}
 
 	@Override

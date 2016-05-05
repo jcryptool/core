@@ -16,8 +16,6 @@ public interface ISimpleMerkle {
 	public byte[] getPrivateSeed();
 
 	public byte[] getPublicSeed();
-	
-	public int getKeyLength();
 
 	public int getLeafCounter();
 
@@ -26,6 +24,8 @@ public interface ISimpleMerkle {
 	public Node getTreeLeaf(int treeLeaveNumber);
 
 	public byte[] getNodeContentbyIndex(int index);
+	
+	public void generateKeyPairsAndLeaves();
 
 	public ArrayList<Node> getTree();
 

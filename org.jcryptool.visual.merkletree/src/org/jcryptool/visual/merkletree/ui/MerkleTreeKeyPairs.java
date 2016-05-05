@@ -125,7 +125,7 @@ public class MerkleTreeKeyPairs extends Composite {
 						
 					}
 				}
-				ISimpleMerkle merkle = new SimpleMerkleTree(seedArray, seedArray, 128, spinnerkeysum.getSelection());
+				ISimpleMerkle merkle = new SimpleMerkleTree(seedArray, seedArray, spinnerkeysum.getSelection());
 				merkle.selectOneTimeSignatureAlgorithm("SHA-256", "WOTSPlus");
 				merkle.generateMerkleTree();
 				MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);

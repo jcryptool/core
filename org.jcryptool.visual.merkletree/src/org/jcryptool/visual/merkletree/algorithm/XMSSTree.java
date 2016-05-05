@@ -13,7 +13,7 @@ public class XMSSTree implements ISimpleMerkle {
 	// ArrayList<byte[]>pubKeys = new ArrayList<byte[]>();
 	int leafCounter = 0;
 	int leafNumber = 0;
-	int keyLength;
+	int keylength;
 	int keyIndex;
 	byte[] privateSeed;
 	byte[] publicSeed;
@@ -35,13 +35,11 @@ public class XMSSTree implements ISimpleMerkle {
 	 * Constructor for XMSS-Tree
 	 * @param privateSeed
 	 * @param publicSeed
-	 * @param keyLength
-	 * @param leafCounter
+	 * @param leafCounter -> Anzahl der Blätter des Baums
 	 */
-	XMSSTree(byte[] privateSeed, byte[] publicSeed, int keyLength, int leafCounter) {
+	XMSSTree(byte[] privateSeed, byte[] publicSeed, int leafCounter) {
 		this.privateSeed = privateSeed;
 		this.publicSeed = publicSeed;
-		this.keyLength = keyLength;
 		this.treeGenerated = false;
 		this.keyIndex = 0;
 		this.leafCounter = leafCounter;
@@ -54,8 +52,7 @@ public class XMSSTree implements ISimpleMerkle {
 	 * @param leafCounter
 	 */
 
-	XMSSTree(int keyLength, int leafCounter) {
-		this.keyLength = keyLength;
+	XMSSTree(int leafCounter) {
 		this.leafCounter = leafCounter;
 		this.treeGenerated = false;
 	}
@@ -117,11 +114,6 @@ public class XMSSTree implements ISimpleMerkle {
 	public byte[] getPublicSeed() {
 		return publicSeed;
 
-	}
-	
-	@Override
-	public int getKeyLength() {
-		return keyLength;
 	}
 
 	@Override
@@ -268,6 +260,13 @@ public class XMSSTree implements ISimpleMerkle {
 		return mDigest.digest(toHash);
 	}
 
+	/**
+	 * append two given Byte Arrays
+	 * used in the method hashing content
+	 * @param array1 -> Node 1
+	 * @param array2 -> Node 2
+	 * @return -> appended Nodes as byte[] array
+	 */
 	byte[] appendByteArrays(byte[] array1, byte[] array2) {
 		byte[] appended;
 		String String1 = array1.toString();
@@ -281,14 +280,11 @@ public class XMSSTree implements ISimpleMerkle {
 	
 	/**
 	 * returns the height of the tree
+	 * Tree with only one Node has height 0
+	 * Tree with 4 Nodes has height 2
 	 */
 	public int getTreeHeight() {
-		//should not be working -> need to test
-		//Tree height 4 -> 8 Leafes
-		//(this.leaves.size() - 1) = 7
-		//Integer.highestOneBit(this.leaves.size() - 1) = 3 or 2????
 		return Integer.bitCount(Integer.highestOneBit(this.leaves.size() - 1) * 2 - 1);
-
 	}
 
 	@Override
