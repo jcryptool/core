@@ -168,7 +168,7 @@ public class XMSSTree implements ISimpleMerkle {
 		
 		int len = pKey.length;
 		byte[] bitmk_0, bitmk_1, bitmk, key;
-		byte[] message = this.appendByteArrays(pKey, pKey2);
+		byte[] message = ByteUtils.concatenate(pKey, pKey2);
 		lAdrs.setKeyBit(0);
 		lAdrs.setBlockBit(0);
 		bitmk_0 = randomGenerator(seed, lAdrs.getAddress(), len);
@@ -194,7 +194,7 @@ public class XMSSTree implements ISimpleMerkle {
 		// get Bitmasken and Keysecret
 		byte[] ksecret = { 0, 0, 0, 0, 0 };
 		byte[] bitmk = { 0, 0, 0, 0, 0 };
-		byte[] message = this.appendByteArrays(pKey, pKey2);
+		byte[] message = ByteUtils.concatenate(pKey, pKey2);
 		for (int i = 0; i < message.length; i++) {
 			message[i] ^= bitmk[0];
 		}
@@ -213,9 +213,8 @@ public class XMSSTree implements ISimpleMerkle {
 
 		//leafcounter is defined in the constructor -> add the amount of defined leafs
 		for (int c = 0; c < this.leafCounter; c++) {
-			//for every tree leaf add an leave -> with the value of LeaveContent and public Key
-			//not working yet -> "L-Tree_Keys"
-			this.addTreeLeaf(this.generateLTree(c), "L-Tree_Keys");
+			//for every tree leaf add an lTreeRoot
+			this.addTreeLeaf(this.generateLTree(c), "L-Tree-Keys");
 		}
 		
 		/**
@@ -263,27 +262,9 @@ public class XMSSTree implements ISimpleMerkle {
 	}
 
 	byte[] hashingContent(MerkleTreeNode a, MerkleTreeNode b) {
-		byte[] toHash = appendByteArrays(a.getContent(), b.getContent());
+		byte[] toHash = ByteUtils.concatenate(a.getContent(), b.getContent());
 
 		return mDigest.digest(toHash);
-	}
-
-	/**
-	 * append two given Byte Arrays
-	 * used in the method hashing content
-	 * @param array1 -> Node 1
-	 * @param array2 -> Node 2
-	 * @return -> appended Nodes as byte[] array
-	 */
-	byte[] appendByteArrays(byte[] array1, byte[] array2) {
-		byte[] appended;
-		String String1 = array1.toString();
-		String String2 = array2.toString();
-		String String3 = String1 + String2;
-
-		appended = String3.getBytes();
-
-		return appended;
 	}
 	
 	/**
@@ -387,7 +368,7 @@ public class XMSSTree implements ISimpleMerkle {
 		verifier = otsAlgo.verify();
 		if (verifier) {
 			if (keyIndex % 2 == 0)
-				this.appendByteArrays(leaves.get(keyIndex).getName(), signer[1].getBytes());
+				ByteUtils.concatenate(leaves.get(keyIndex).getName(), signer[1].getBytes());
 			for (int i = 1; i < signer.length; i++) {
 				// TODO: GenerateRootKey
 
