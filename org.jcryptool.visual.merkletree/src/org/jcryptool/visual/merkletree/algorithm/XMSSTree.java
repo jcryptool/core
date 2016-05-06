@@ -19,6 +19,7 @@ public class XMSSTree implements ISimpleMerkle {
 	boolean treeGenerated;
 	OTS otsAlgo;
 	Address hAdrs = new HashTreeAddress();
+	byte[] bitmask;
 
 	// ArrayList<MerkleTreeNode> leaves = new ArrayList<>();
 	// ArrayList<ArrayList<MerkleTreeNode>> merkleTreeHeight;
@@ -37,12 +38,13 @@ public class XMSSTree implements ISimpleMerkle {
 	 * @param publicSeed
 	 * @param leafCounter -> Anzahl der Blätter des Baums
 	 */
-	XMSSTree(byte[] privateSeed, byte[] publicSeed, int leafCounter) {
+	XMSSTree(byte[] privateSeed, byte[] publicSeed, int leafCounter, byte[] bitmask) {
 		this.privateSeed = privateSeed;
 		this.publicSeed = publicSeed;
 		this.leafCounter = leafCounter;
 		this.treeGenerated = false;
 		this.keyIndex = 0;
+		this.bitmask = bitmask;
 	}
 	/**
 	 * Constructor for XMSS-Tree
@@ -167,17 +169,17 @@ public class XMSSTree implements ISimpleMerkle {
 	public byte[] rand_hash(byte[] pKey, byte[] pKey2, byte[] seed, Address lAdrs) {
 		
 		int len = pKey.length;
-		byte[] bitmk_0, bitmk_1, bitmk, key;
+		byte[] bitmk, key;
 		byte[] message = ByteUtils.concatenate(pKey, pKey2);
-		lAdrs.setKeyBit(false);
-		lAdrs.setBlockBit(false);
-		bitmk_0 = randomGenerator(seed, lAdrs.getAddress(), len);
-		lAdrs.setBlockBit(true);
-		bitmk_1 = randomGenerator(seed, lAdrs.getAddress(), len);
+		if(bitmask == null){
+			bitmk =generateBitmask(seed, len, lAdrs);
+			
+		} else {
+			bitmk = bitmask;
+		}
 		lAdrs.setKeyBit(true);
 		lAdrs.setBlockBit(false);
 		key = randomGenerator(seed, lAdrs.getAddress(), len);
-		bitmk = ByteUtils.concatenate(bitmk_0, bitmk_1);
 		for (int i = 0; i < message.length; i++) {
 			//XOR message with bitmask
 			message[i] ^= bitmk[i];
@@ -480,5 +482,16 @@ public class XMSSTree implements ISimpleMerkle {
 		seed = ByteUtils.concatenate(seed, address);
 		res = hash.digest(seed);
 		return res;
+	}
+	
+	public byte[] generateBitmask(byte[] seed, int len, Address lAdrs){
+		byte[] bitmk_0, bitmk_1, bitmk;
+		lAdrs.setKeyBit(false);		
+		lAdrs.setBlockBit(false);
+		bitmk_0 = randomGenerator(seed, lAdrs.getAddress(), len);
+		lAdrs.setBlockBit(true);
+		bitmk_1 = randomGenerator(seed, lAdrs.getAddress(), len);
+		bitmk = ByteUtils.concatenate(bitmk_0, bitmk_1);
+		return bitmk;
 	}
 }
