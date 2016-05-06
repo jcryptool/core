@@ -113,7 +113,6 @@ public class HashTreeAddress extends Address {
 		ByteUtils.concatenate(temp, treeIndex);
 		ByteUtils.concatenate(temp, blockKeyBit);
 		return temp;
-		//
 		}
 
 }
