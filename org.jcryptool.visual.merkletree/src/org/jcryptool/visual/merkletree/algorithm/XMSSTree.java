@@ -65,6 +65,10 @@ public class XMSSTree implements ISimpleMerkle {
 	public void setLeafCount(int i) {
 		leafCounter = i;
 	}
+	
+	public void setPublicSeed(byte[] seed) {
+		publicSeed = seed;
+	}
 
 	@Override
 	/**
@@ -617,6 +621,7 @@ public class XMSSTree implements ISimpleMerkle {
 		SecureRandom rnd = new SecureRandom();
 		byte[] seed = new byte[len];
 		rnd.nextBytes(seed);
+		publicSeed = seed;
 		return seed;		
 	}
 	
