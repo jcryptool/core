@@ -2,6 +2,7 @@ package org.jcryptool.visual.merkletree.algorithm;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -28,6 +29,8 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 	int leafCounter = 0;
 	int leafNumber = 0;
 
+	
+	/* 
 	SimpleMerkleTree(int leafCounter) {
 		this.leafCounter = leafCounter;
 		this.treeGenerated = false;
@@ -40,7 +43,7 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 		this.keyIndex = 0;
 		this.leafCounter = leafCounter;
 	}
-
+	*/
 	@Override
 	public void addPrivateSeed(byte[] privateSeed) {
 		this.privateSeed = privateSeed;
@@ -379,5 +382,22 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 	@Override
 	public OTS getOneTimeSignatureAlgorithm() {
 		return this.otsAlgo;
+	}
+	
+	public byte[] generateSeed(int len) {
+		SecureRandom rnd = new SecureRandom();
+		byte[] seed = new byte[len];
+		rnd.nextBytes(seed);
+		publicSeed = seed;
+		privateSeed = seed;
+		return seed;		
+	}
+	
+	public void setLeafCount(int i) {
+		leafCounter = i;
+	}
+	
+	public void setPublicSeed(byte[] seed) {
+		publicSeed = seed;
 	}
 }
