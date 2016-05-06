@@ -15,11 +15,11 @@ public abstract class Address {
 	
 	public abstract void setHashAdress(int i);
 	
-	public abstract void setKeyBit(int i);
+	public abstract void setKeyBit(boolean bit);
 	
 	public abstract void setChainAddress(int i);
 	
-	public abstract void setBlockBit(int i);
+	public abstract void setBlockBit(boolean bit);
 	
 	public abstract void setTreeHeight(int i);
 	
@@ -27,11 +27,11 @@ public abstract class Address {
 	
 	public abstract int getTreeHeight();
 	
-	public abstract void setOTSBit(int i);
+	public abstract void setOTSBit(boolean bit);
 	
 	public abstract void setOTSAddress(int i);
 	
-	public abstract void setLTreeBit(int i);
+	public abstract void setLTreeBit(boolean bit);
 	
 	public abstract void setLTreeAddress(int i);
 	

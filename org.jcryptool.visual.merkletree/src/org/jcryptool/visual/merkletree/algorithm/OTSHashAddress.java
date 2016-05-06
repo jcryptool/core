@@ -17,11 +17,11 @@ public class OTSHashAddress extends Address {
 	}
 
 	@Override
-	public void setKeyBit(int i) {
-		if(i == 0) {
-			keyBit -= 1; //set keyBit (bit nr. 0) to 0
-		} else {
-			keyBit += 1; //set keyBit (bit nr. 0) to 1
+	public void setKeyBit(boolean bit) {
+		if(bit == true) {
+			keyBit = 1; //set keyBit (bit nr. 0) to 1
+		} else{
+			keyBit = 0; //set keyBit (bit nr. 0) to 0
 		}
 	}
 
@@ -32,7 +32,7 @@ public class OTSHashAddress extends Address {
 	}
 
 	@Override
-	public void setBlockBit(int i) {
+	public void setBlockBit(boolean bit) {
 		// do nothing, not needed
 
 	}
@@ -56,8 +56,12 @@ public class OTSHashAddress extends Address {
 	}
 
 	@Override
-	public void setOTSBit(int i) {
-		otsBit = (byte)i;
+	public void setOTSBit(boolean bit) {
+		if(bit == true) {
+			otsBit = 1; //set otsBit (bit nr. 1) to 1
+		} else {
+			otsBit = 0; //set otsBit (bit nr. 1) to 0
+		}
 
 	}
 
@@ -70,7 +74,7 @@ public class OTSHashAddress extends Address {
 	}
 
 	@Override
-	public void setLTreeBit(int i) {
+	public void setLTreeBit(boolean bit) {
 		// do nothing, not needed
 
 	}

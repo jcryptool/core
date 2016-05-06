@@ -9,7 +9,8 @@ public class HashTreeAddress extends Address {
 	byte lTreeBit;
 	byte[] treeHeight = new byte[4];
 	byte[] treeIndex = new byte[3];
-	byte blockKeyBit;
+	byte blockBit;
+	byte keyBit;
 
 	@Override
 	public void setHashAdress(int i) {
@@ -18,13 +19,12 @@ public class HashTreeAddress extends Address {
 	}
 
 	@Override
-	public void setKeyBit(int i) {
-		if(i == 0) {
-			blockKeyBit -= 1; //set keyBit (bit nr. 0) to 0
-		} else {
-			blockKeyBit += 1; //set keyBit (bit nr. 0) to 1
+	public void setKeyBit(boolean bit) {
+		if(bit == true) {
+			keyBit = 1; //set keyBit (bit nr. 0) to 1
+		} else{
+			keyBit = 0; //set keyBit (bit nr. 0) to 0
 		}
-
 	}
 
 	@Override
@@ -34,14 +34,15 @@ public class HashTreeAddress extends Address {
 	}
 
 	@Override
-	public void setBlockBit(int i) {
-		if(i == 0) {
-			blockKeyBit -= 2; //set blockBit (bit nr. 1) to 0
+	public void setBlockBit(boolean bit) {
+		if(bit == true) {
+			blockBit = 1; //set blockBit (bit nr. 1) to 1
 		} else {
-			blockKeyBit += 2; //set blockBit (bit nr. 1) to 1
+			blockBit = 0; //set blockBit (bit nr. 1) to 0
 		}
 
 	}
+
 
 	@Override
 	public void setTreeHeight(int i) {
@@ -62,8 +63,12 @@ public class HashTreeAddress extends Address {
 	}
 
 	@Override
-	public void setOTSBit(int i) {
-		otsBit = (byte)i;
+	public void setOTSBit(boolean bit) {
+		if(bit == true) {
+			otsBit = 1; //set otsBit (bit nr. 1) to 1
+		} else {
+			otsBit = 0; //set otsBit (bit nr. 1) to 0
+		}
 
 	}
 
@@ -74,11 +79,11 @@ public class HashTreeAddress extends Address {
 	}
 
 	@Override
-	public void setLTreeBit(int i) {
-		if(i == 0) {
-			lTreeBit -= 1; //set lTreeBit (bit nr. 0) to 0
+	public void setLTreeBit(boolean bit) {
+		if(bit == true) {
+			lTreeBit = 1; //set otsBit (bit nr. 1) to 1
 		} else {
-			lTreeBit += 1; //set lTreeBit (bit nr. 0) to 1
+			lTreeBit = 0; //set otsBit (bit nr. 1) to 0
 		}
 
 	}
@@ -106,11 +111,13 @@ public class HashTreeAddress extends Address {
 	 */
 	public byte[] getAddress(){
 		byte[] temp = ByteUtils.concatenate(layerAddress, treeAddress);
+		//geht hier nicht noch Padding ab??
 		ByteUtils.concatenate(temp, otsBit);
 		ByteUtils.concatenate(temp, lTreeBit);
 		ByteUtils.concatenate(temp, treeHeight);
 		ByteUtils.concatenate(temp, treeIndex);
-		ByteUtils.concatenate(temp, blockKeyBit);
+		ByteUtils.concatenate(temp, blockBit);
+		ByteUtils.concatenate(temp, keyBit);
 		return temp;
 		}
 	

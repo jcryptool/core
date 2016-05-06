@@ -170,13 +170,13 @@ public class XMSSTree implements ISimpleMerkle {
 		int len = pKey.length;
 		byte[] bitmk_0, bitmk_1, bitmk, key;
 		byte[] message = ByteUtils.concatenate(pKey, pKey2);
-		lAdrs.setKeyBit(0);
-		lAdrs.setBlockBit(0);
+		lAdrs.setKeyBit(false);
+		lAdrs.setBlockBit(false);
 		bitmk_0 = randomGenerator(seed, lAdrs.getAddress(), len);
-		lAdrs.setBlockBit(1);
+		lAdrs.setBlockBit(true);
 		bitmk_1 = randomGenerator(seed, lAdrs.getAddress(), len);
-		lAdrs.setKeyBit(1);
-		lAdrs.setBlockBit(0);
+		lAdrs.setKeyBit(true);
+		lAdrs.setBlockBit(false);
 		key = randomGenerator(seed, lAdrs.getAddress(), len);
 		bitmk = ByteUtils.concatenate(bitmk_0, bitmk_1);
 		for (int i = 0; i < message.length; i++) {
@@ -208,14 +208,14 @@ public class XMSSTree implements ISimpleMerkle {
 		
 		for( int i = 0; i < Math.pow(2, t); i++) {
 			Address otsAdrs = new OTSHashAddress();
-			otsAdrs.setOTSBit(1);
+			otsAdrs.setOTSBit(true);
 			otsAdrs.setOTSAddress(s+i);
 			pKey = WOTS_genPK(privKeys.get(s+i), seed, otsAdrs); //TODO implement WOTS_genPK or change wots+; return byte[]
-			otsAdrs.setOTSBit(0);
-			otsAdrs.setLTreeBit(1);
+			otsAdrs.setOTSBit(false);
+			otsAdrs.setLTreeBit(true);
 			otsAdrs.setLTreeAddress(s+i);
 			node = generateLTree(pKey, seed, otsAdrs); //TODO take the byte[] and put it into a node
-			otsAdrs.setLTreeBit(0);
+			otsAdrs.setLTreeBit(false);
 			otsAdrs.setTreeHeight(0);
 			otsAdrs.setTreeIndex(i+s);
 			if(!stack.empty()){
