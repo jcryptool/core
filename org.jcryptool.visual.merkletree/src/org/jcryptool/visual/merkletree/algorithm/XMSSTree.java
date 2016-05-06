@@ -38,7 +38,7 @@ public class XMSSTree implements ISimpleMerkle {
 	 * @param publicSeed
 	 * @param leafCounter -> Anzahl der Blätter des Baums
 	 */
-	XMSSTree(byte[] privateSeed, byte[] publicSeed, int leafCounter, byte[] bitmask) {
+	XMSSTree(byte[] privateSeed, byte[] publicSeed, int leafCounter, byte[] bitmask) { //privateSeed unnötig? bleiben bis auf weiters bei publicSeed
 		this.privateSeed = privateSeed;
 		this.publicSeed = publicSeed;
 		this.leafCounter = leafCounter;
@@ -198,7 +198,7 @@ public class XMSSTree implements ISimpleMerkle {
 	 * @param seed seed
 	 * @return root node of a tree of height t
 	 */
-	public XMSSNode treeHash(byte[] SK, int s, int t, byte[] seed) {
+	public XMSSNode treeHash(int s, int t, byte[] seed) {
 		
 		XMSSNode node; //TODO make new Node class
 		Stack<XMSSNode> stack = new Stack<XMSSNode>();
@@ -484,6 +484,13 @@ public class XMSSTree implements ISimpleMerkle {
 		return res;
 	}
 	
+	/**
+	 * Generates the bitmask if not set by user
+	 * @param seed
+	 * @param len	length of half the bitmask
+	 * @param lAdrs	the address construct
+	 * @return	a bitmask
+	 */
 	public byte[] generateBitmask(byte[] seed, int len, Address lAdrs){
 		byte[] bitmk_0, bitmk_1, bitmk;
 		lAdrs.setKeyBit(false);		
@@ -493,5 +500,29 @@ public class XMSSTree implements ISimpleMerkle {
 		bitmk_1 = randomGenerator(seed, lAdrs.getAddress(), len);
 		bitmk = ByteUtils.concatenate(bitmk_0, bitmk_1);
 		return bitmk;
+	}
+	
+	/**
+	 * Generates the public key of the XMSS
+	 */
+	public byte[] xmss_genPK() {
+		XMSSNode root;
+		byte[] xPubKey;
+		root = treeHash(0, getTreeHeight(), publicSeed);
+		xPubKey = ByteUtils.concatenate(root.getContent(), publicSeed);
+		return xPubKey;
+	}
+	
+	/**
+	 * Generates an authentication path as array list with authentication nodes
+	 * @param i	index of the WOTS+ key pair
+	 */
+	public ArrayList<XMSSNode> buildAuth(int i,byte[] seed) {
+		ArrayList<XMSSNode> auth = new ArrayList<XMSSNode>();
+		for(int j = 0; j < getTreeHeight(); j++) {
+			int k = ((int)Math.floor(i / (1 << j))) ^ 1;
+			auth.add(j,treeHash(k* (1 << j),j, seed));
+		}
+		return auth;
 	}
 }
