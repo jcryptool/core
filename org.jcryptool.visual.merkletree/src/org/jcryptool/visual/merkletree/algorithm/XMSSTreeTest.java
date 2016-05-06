@@ -2,6 +2,7 @@ package org.jcryptool.visual.merkletree.algorithm;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.Test;
@@ -27,17 +28,32 @@ public class XMSSTreeTest {
 
 	@Test
 	public void testAddTreeLeaf() {
-		fail("Not yet implemented");
+		XMSSTree merkle = new XMSSTree(null, null, 0);
+		//Leaves List has to be empty
+		assertEquals(merkle.leaves.size(), 0);
+		//add first Leaf
+		merkle.addTreeLeaf(null , null);
+		assertNull(merkle.getTreeLeaf(0).getName());
+		assertNull(merkle.getTreeLeaf(0).getCode());
+		//add second Leaf
+		byte[] temp = {1,2,3,4};
+		merkle.addTreeLeaf(temp , "Test");
+		assertEquals(merkle.getTreeLeaf(1).getName(), temp);
+		assertEquals(merkle.getTreeLeaf(1).getCode(), "Test");
+		//check Leaves size
+		assertEquals(merkle.leaves.size(), 2);
 	}
 
 	@Test
 	public void testGetMerkleRoot() {
+		/**
+		 * Not finished yet
+		 */
 		XMSSTree merkle = new XMSSTree(null, null, 16);
 		merkle.selectOneTimeSignatureAlgorithm("SHA-256","WOTS");
 		merkle.generateKeyPairsAndLeaves();
 		merkle.generateMerkleTree();
 		byte[] root = merkle.getMerkleRoot();
-		System.out.println(root);
 	}
 
 	@Test
@@ -53,7 +69,11 @@ public class XMSSTreeTest {
 
 	@Test
 	public void testGetTree() {
-		fail("Not yet implemented");
+		/*
+		 * wenn generateTree ausprogrammiert ist hier noch Tree bauen und überprüfen
+		 */
+		XMSSTree merkle = new XMSSTree(null, null, 0);
+		assertTrue(merkle.getTree() instanceof ArrayList);
 	}
 
 	@Test
@@ -81,7 +101,21 @@ public class XMSSTreeTest {
 
 	@Test
 	public void testGetTreeLeaf() {
-		fail("Not yet implemented");
+		XMSSTree merkle = new XMSSTree(null, null, 0);
+		//add two Leaves
+		merkle.addTreeLeaf(null , null);
+		byte[] temp = {1,2,3,4};
+		merkle.addTreeLeaf(temp , "Test");
+		
+		//check if get function is correct
+		Node node = merkle.getTreeLeaf(0);
+		assertEquals(node.getName(), null);
+		assertEquals(node.getCode(), null);
+		
+		node = merkle.getTreeLeaf(1);
+		assertEquals(node.getName(), temp);
+		assertEquals(node.getCode(), "Test");
+
 	}
 
 	@Test
@@ -121,6 +155,7 @@ public class XMSSTreeTest {
 		merkle.selectOneTimeSignatureAlgorithm("SHA-256","WOTS");
 		merkle.generateKeyPairsAndLeaves();
 		merkle.generateMerkleTree();
+		System.out.println(merkle.getTreeHeight());
 		assertEquals(merkle.getTreeHeight(),1);
 		
 		merkle = new XMSSTree(null, null, 8);
