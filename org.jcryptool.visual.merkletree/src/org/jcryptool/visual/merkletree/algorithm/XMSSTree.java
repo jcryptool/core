@@ -1,5 +1,6 @@
 package org.jcryptool.visual.merkletree.algorithm;
 
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -20,6 +21,8 @@ public class XMSSTree implements ISimpleMerkle {
 	OTS otsAlgo;
 	Address hAdrs = new HashTreeAddress();
 	byte[] bitmask;
+	String xPrivKey;
+	String xPubKey;
 
 	// ArrayList<MerkleTreeNode> leaves = new ArrayList<>();
 	// ArrayList<ArrayList<MerkleTreeNode>> merkleTreeHeight;
@@ -35,16 +38,16 @@ public class XMSSTree implements ISimpleMerkle {
 	/**
 	 * Constructor for XMSS-Tree
 	 * @param privateSeed
-	 * @param publicSeed
+	 * @param publicSeed	set to null if no user input
 	 * @param leafCounter -> Anzahl der Blätter des Baums
 	 */
 	XMSSTree(byte[] privateSeed, byte[] publicSeed, int leafCounter, byte[] bitmask) { //privateSeed unnötig? bleiben bis auf weiters bei publicSeed
 		this.privateSeed = privateSeed;
-		this.publicSeed = publicSeed;
 		this.leafCounter = leafCounter;
 		this.treeGenerated = false;
 		this.keyIndex = 0;
 		this.bitmask = bitmask;
+		this.publicSeed = publicSeed;
 	}
 	/**
 	 * Constructor for XMSS-Tree
@@ -88,19 +91,12 @@ public class XMSSTree implements ISimpleMerkle {
 		leaves.add(leafNode);
 	}
 
-	@Override
+	
 	/**
 	 * returns the root node of the MerkleTree
-	 * while i is smaller then the tree size and there is a parent -> i++
-	 * when parent == null -> return the current position of i -> this is the root node
 	 */
-	public byte[] getMerkleRoot() {
-		for (int i = 0; i < tree.size(); i++) {
-			if (tree.get(i).getParent() == null) {
-				return tree.get(i).getName();
-			}
-		}
-		return null;
+	public XMSSNode getRoot() {
+		return treeHash(0, getTreeHeight(), publicSeed);
 	}
 
 	@Override
@@ -203,6 +199,7 @@ public class XMSSTree implements ISimpleMerkle {
 		XMSSNode node; //TODO make new Node class
 		Stack<XMSSNode> stack = new Stack<XMSSNode>();
 		Address otsAdrs = new OTSHashAddress();
+		byte[][] pKey;
 		
 		if(s % (1 << t) != 0){
 			return null;
@@ -211,7 +208,8 @@ public class XMSSTree implements ISimpleMerkle {
 		for( int i = 0; i < (1 << t); i++) { // i < 2^t
 			otsAdrs.setOTSBit(true);
 			otsAdrs.setOTSAddress(s+i);
-			pKey = WOTS_genPK(privKeys.get(s+i), seed, otsAdrs); //TODO implement WOTS_genPK or change wots+; return byte[][]
+			//pKey = WOTS_genPK(privKeys.get(s+i), seed, otsAdrs); //TODO implement WOTS_genPK or change wots+; return byte[][]
+			pKey = publicKeys.get(s+i);
 			otsAdrs.setOTSBit(false);
 			otsAdrs.setLTreeBit(true);
 			otsAdrs.setLTreeAddress(s+i);
@@ -366,7 +364,28 @@ public class XMSSTree implements ISimpleMerkle {
 	 */
 	public String sign(String message) {
 		String tmpSignature;
-		int keyIndex = this.keyIndex;
+		int index = getIndex(xPrivKey);
+		ArrayList<XMSSNode> auth = buildAuth(index, publicSeed);
+		byte[] r = randomGenerator(getSK_Seed(),message, message.length());
+		//index || r as seed for hashing the message
+		byte[] hashedMessage = randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(index).toByteArray(),r), message.getBytes(), message.length());
+		Address otsAdrs = new OTSHashAddress();
+		otsAdrs.setOTSBit(true);
+		otsAdrs.setOTSAddress(index);
+		this.otsAlgo.setPrivateKey(this.privKeys.get(this.keyIndex));
+		this.otsAlgo.setPublicKey(this.publicKeys.get(this.keyIndex));
+		this.otsAlgo.setMessage(message.getBytes());
+		this.otsAlgo.sign();
+		byte[] ots_sig = otsAlgo.getSignature();
+		String signature = Integer.toString(index) + "|" + new String(r) + "|" + new String(ots_sig);
+		for(int i = 0; i < auth.size(); i++){
+			signature = signature + "|" + new String(auth.get(i).getContent());
+		}
+		setIndex(xPrivKey, index + 1);
+		return signature;	
+		
+		/*Vorgängerzeugs
+		
 		int iHeight = 0;
 		int treeHeight = getTreeHeight();
 
@@ -374,7 +393,8 @@ public class XMSSTree implements ISimpleMerkle {
 		this.otsAlgo.setPublicKey(this.publicKeys.get(this.keyIndex));
 		this.otsAlgo.setMessage(message.getBytes());
 		this.otsAlgo.sign();
-
+		
+		
 		tmpSignature = this.otsAlgo.getSignature().toString();// to-be-done
 
 		while (iHeight < treeHeight) {
@@ -390,8 +410,10 @@ public class XMSSTree implements ISimpleMerkle {
 		tmpSignature += '|' + Integer.toString(this.keyIndex);
 		this.keyIndex++;
 		return tmpSignature; // OTS Signatur+tmpSignature to byte array
+		*/
 	}
 
+	
 	@Override
 	/**
 	 * Verifys the Signature and return true or false
@@ -399,20 +421,38 @@ public class XMSSTree implements ISimpleMerkle {
 	public boolean verify(String message, String signature) {
 		String[] signer = signature.split("|");
 		boolean verifier;
-		int keyIndex = Integer.parseInt(signer[signer.length - 1]);
-		byte[][] curPubKey = this.publicKeys.get(keyIndex);
+		int keyIndex = Integer.parseInt(signer[0]); //get the index from the signature
+		byte[][] curPubKey = this.publicKeys.get(keyIndex - 1); //get the used pub key
+		Address lAdrs = new LTreeAddress();
+		XMSSNode[] nodes = new XMSSNode[2];
+		
 		otsAlgo.setPublicKey(curPubKey);
-		otsAlgo.setSignature(signer[0].getBytes());
+		otsAlgo.setSignature(signer[2].getBytes());
 		verifier = otsAlgo.verify();
 		if (verifier) {
-			if (keyIndex % 2 == 0)
-				ByteUtils.concatenate(leaves.get(keyIndex).getName(), signer[1].getBytes());
-			for (int i = 1; i < signer.length; i++) {
-				// TODO: GenerateRootKey
-
+			lAdrs.setOTSBit(false);
+			lAdrs.setLTreeBit(true);
+			lAdrs.setLTreeAddress(keyIndex);
+			nodes[0] = new XMSSNode(generateLTree(curPubKey, publicSeed, lAdrs));
+			lAdrs.setLTreeBit(false);
+			lAdrs.setTreeIndex(keyIndex);
+			for(int k = 0; k < getTreeHeight(); k++){
+				lAdrs.setTreeHeight(k);
+				if(Math.floor(keyIndex / (1 << k)) % 2 == 0){
+					lAdrs.setTreeIndex(lAdrs.getTreeIndex() / 2);
+					nodes[1] = new XMSSNode(rand_hash(nodes[0].getContent(), signer[3 +k].getBytes(), publicSeed, lAdrs));
+				}else {
+					lAdrs.setTreeIndex((lAdrs.getTreeIndex() - 1)/ 2);
+					nodes[1] = new XMSSNode(rand_hash(signer[3 +k].getBytes(),nodes[0].getContent(), publicSeed, lAdrs));
+				}
+				nodes[0] = nodes[1];
 			}
 		}
-		return verifier;
+		if(nodes[0].getContent() == getRoot()){
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 	@Override
@@ -435,6 +475,7 @@ public class XMSSTree implements ISimpleMerkle {
 			this.privKeys.add(this.otsAlgo.getPrivateKey());
 			this.publicKeys.add(this.otsAlgo.getPublicKey());
 			
+			/* dead code?
 			// Frage byte[][] zu byte[] ?????
 			d1pubKey = org.jcryptool.visual.merkletree.files.Converter._hexStringToByte(
 					org.jcryptool.visual.merkletree.files.Converter._2dByteToHex(this.otsAlgo.getPublicKey()));
@@ -442,7 +483,7 @@ public class XMSSTree implements ISimpleMerkle {
 			this.leafNumber++;
 			leaf.setCode(d1pubKey.toString());
 			this.leaves.add(leaf);
-			
+			*/
 		}
 	}
 
@@ -505,12 +546,18 @@ public class XMSSTree implements ISimpleMerkle {
 	/**
 	 * Generates the public key of the XMSS
 	 */
-	public byte[] xmss_genPK() {
+	public void xmss_genPK() {
 		XMSSNode root;
-		byte[] xPubKey;
-		root = treeHash(0, getTreeHeight(), publicSeed);
-		xPubKey = ByteUtils.concatenate(root.getContent(), publicSeed);
-		return xPubKey;
+		byte[] seed;
+		
+		if(publicSeed == null){
+			seed = generateSeed(32); //welche größe hat der seed? 
+		}else{
+			seed = publicSeed;
+		}
+		
+		root = treeHash(0, getTreeHeight(), seed);
+		xPubKey = root.getContent() + "|" + new String(seed);
 	}
 	
 	/**
@@ -525,4 +572,72 @@ public class XMSSTree implements ISimpleMerkle {
 		}
 		return auth;
 	}
+	
+	public void xmss_genSK() {
+		int index = 0; //index of the next unused wots+ key
+		byte[] key;	//random key for PRNG
+		byte[][] iterator;
+		key = generateSeed(32); //welche größe hat der key?
+		xPrivKey = Integer.toString(index) + "|" + new String(key);
+		for(int i = 0; i < privKeys.size(); i++) {			
+			iterator = privKeys.get(i); //gets the i-th n byte wots+ priv key
+			xPrivKey += "|";
+			for(int j = 0; j < iterator[i].length; j++) {
+				xPrivKey += new String(iterator[i]); 
+			}
+		}		
+	}
+	
+	public int getIndex(String xPrivKey) {
+		String[] splitted = xPrivKey.split("|");	//splits the xmss private key in its components
+		int index = Integer.parseInt(splitted[0]);	//index is the first part of the private key
+		return index;
+	}
+	
+	public byte[] generateSeed(int len) {
+		SecureRandom rnd = new SecureRandom();
+		byte[] seed = new byte[len];
+		rnd.nextBytes(seed);
+		return seed;		
+	}
+	
+	public byte[] randomGenerator(byte[] seed, String message, int len) {
+		byte[] res = new byte[len+32];	//erstellen des zu befüllenden arrays
+		byte[] padding = new byte[32];
+		MessageDigest hash = null;
+		try {
+			hash = MessageDigest.getInstance("SHA-256");
+		} catch(NoSuchAlgorithmException e) {
+			//zuck: Der Algo existiert!
+		}
+		seed = ByteUtils.concatenate(padding, seed);
+		seed = ByteUtils.concatenate(seed, message.getBytes());
+		res = hash.digest(seed);
+		return res;
+	}
+	
+	public void setIndex(String xPrivKey, int index){
+		String[] splitted = xPrivKey.split("|");	//splits the xmss private key in its components
+		splitted[0]	= Integer.toString(index);	//index is the first part of the private key
+		this.xPrivKey = splitted.toString();
+		keyIndex++;
+	}
+	
+	public byte[] getSK_Seed() {
+		String[] splitted = xPrivKey.split("|");	//splits the xmss private key in its components
+		return splitted[1].getBytes();	//private key seed is always second
+	}
+	
+	public XMSSNode rootFromSig(String message, String signature){
+		String[] splitted = signature.split("|");	//split the signature in its components
+		byte[] r = splitted[1].getBytes();	//seed is always second in signature
+		int index = Integer.parseInt(splitted[0]);	//index is always first in signature
+		Address otsAdrs = new OTSHashAddress();
+		//index || r as seed for hashing the message
+		byte[] hashedMessage = randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(index).toByteArray(),r), message.getBytes(), message.length());
+		otsAdrs.setOTSBit(true);
+		otsAdrs.setOTSAddress(index);
+		
+	}
+	
 }
