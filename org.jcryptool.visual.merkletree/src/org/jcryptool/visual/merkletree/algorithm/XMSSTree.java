@@ -242,7 +242,7 @@ public class XMSSTree implements ISimpleMerkle {
 	public void generateMerkleTree() {
 		/**
 		 * Generate the leafs
-		 */
+		 *
 		
 		//creates a new node list for the tree
 		tree = new ArrayList<Node>();
@@ -255,7 +255,7 @@ public class XMSSTree implements ISimpleMerkle {
 		
 		/**
 		 * Generate the tree
-		 */
+		 *
 		int height = getTreeHeight();
 		if (height == 0) {
 			return;
@@ -301,6 +301,7 @@ public class XMSSTree implements ISimpleMerkle {
 		byte[] toHash = ByteUtils.concatenate(a.getContent(), b.getContent());
 
 		return mDigest.digest(toHash);
+		*/
 	}
 	
 	/**
