@@ -40,14 +40,8 @@ public class XMSSTree implements ISimpleMerkle {
 	 * @param privateSeed
 	 * @param publicSeed	set to null if no user input
 	 * @param leafCounter -> Anzahl der Blätter des Baums
-	 
+	 *
 	XMSSTree(byte[] privateSeed, byte[] publicSeed, int leafCounter, byte[] bitmask) { //privateSeed unnötig? bleiben bis auf weiters bei publicSeed
-		this.privateSeed = privateSeed;
-		this.leafCounter = leafCounter;
-		this.treeGenerated = false;
-		this.keyIndex = 0;
-		this.bitmask = bitmask;
-		this.publicSeed = publicSeed;
 	}
 	/**
 	 * Constructor for XMSS-Tree
@@ -120,7 +114,7 @@ public class XMSSTree implements ISimpleMerkle {
 
 	@Override
 	public byte[] getPublicSeed() {
-		return generateSeed(32); //dummy wert
+		return publicSeed; //dummy wert
 		//return publicSeed;
 
 	}
