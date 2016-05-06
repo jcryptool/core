@@ -142,27 +142,26 @@ public class XMSSTree implements ISimpleMerkle {
 	}
 
 	//TODO add parameter pubKey, seed, adrs
-	public byte[] generateLTree(int index) {
-		double len = publicKeys.get(index).length;
-		byte[][] pubKeys = publicKeys.get(index);
-		Address lAdrs = new LTreeAddress();
+	public byte[] generateLTree(byte[][] pubKey, byte[] seed, Address adrs) {
+		double len = pubKey.length;
+		Address lAdrs = adrs;
 		lAdrs.setTreeHeight(0);
 
 		while (len > 1) {
 			for (int i = 0; i < Math.floor(len / 2); i = i + 1) {
 				lAdrs.setTreeIndex(i);
 				//zuck: Hashing der leaves/nodes				
-				pubKeys[i] = this.rand_hash(pubKeys[2 * i], pubKeys[2 * i + 1], this.privateSeed, lAdrs);
+				pubKey[i] = rand_hash(pubKey[2 * i], pubKey[2 * i + 1], seed, lAdrs);
 			}
 			if (len % 2 == 1) {
 				//zuck: Nachrücken der ungeraden Node 
-				pubKeys[(int) (Math.floor(len / 2))] = pubKeys[(int) len -1 ];
+				pubKey[(int) (Math.floor(len / 2))] = pubKey[(int) len -1 ];
 			}
 			//zuck: Anpassen der Anzahl an Nodes bzw. setzen der Anzahl der Nodes auf der neuen Höhe
 			len = Math.ceil((len / 2));
 			lAdrs.setTreeHeight(lAdrs.getTreeHeight() + 1);
 			}
-		return pubKeys[0];
+		return pubKey[0];
 	}
 
 	public byte[] rand_hash(byte[] pKey, byte[] pKey2, byte[] seed, Address lAdrs) {
@@ -190,52 +189,55 @@ public class XMSSTree implements ISimpleMerkle {
 	
 
 	/**
-	 * 
+	 * @author zuck
 	 * @param SK XMSS secret key
 	 * @param s start index
 	 * @param t target node height
 	 * @param seed seed
 	 * @return root node of a tree of height t
 	 */
-	public Node treeHash(byte[] SK, int s, int t, byte[] seed) {
+	public XMSSNode treeHash(byte[] SK, int s, int t, byte[] seed) {
 		
-		Node node = new Node(); //TODO make new Node class
-		Stack<Node> stack = new Stack<Node>();
+		XMSSNode node; //TODO make new Node class
+		Stack<XMSSNode> stack = new Stack<XMSSNode>();
+		Address otsAdrs = new OTSHashAddress();
 		
 		if(s % (1 << t) != 0){
 			return null;
 		}		
 		
-		for( int i = 0; i < Math.pow(2, t); i++) {
-			Address otsAdrs = new OTSHashAddress();
+		for( int i = 0; i < (1 << t); i++) { // i < 2^t
 			otsAdrs.setOTSBit(true);
 			otsAdrs.setOTSAddress(s+i);
-			pKey = WOTS_genPK(privKeys.get(s+i), seed, otsAdrs); //TODO implement WOTS_genPK or change wots+; return byte[]
+			pKey = WOTS_genPK(privKeys.get(s+i), seed, otsAdrs); //TODO implement WOTS_genPK or change wots+; return byte[][]
 			otsAdrs.setOTSBit(false);
 			otsAdrs.setLTreeBit(true);
 			otsAdrs.setLTreeAddress(s+i);
-			node = generateLTree(pKey, seed, otsAdrs); //TODO take the byte[] and put it into a node
+			node = new XMSSNode(generateLTree(pKey, seed, otsAdrs)); //TODO take the byte[] and put it into a node
 			otsAdrs.setLTreeBit(false);
 			otsAdrs.setTreeHeight(0);
 			otsAdrs.setTreeIndex(i+s);
+			//if the stack is empty the first node will be put into the stack
+			//if the current node and the next node on the stack have the same height hash them and put the new one pack with height+1
 			if(!stack.empty()){
 				while(stack.peek().getHeight() == node.getHeight()) {
 					otsAdrs.setTreeIndex((otsAdrs.getTreeIndex() -1) / 2);
-					node = rand_hash(stack.pop(),node, seed, otsAdrs);
-					otsAdrs.setTreeHeight(otsAdrs.getTreeHeight());
+					node = new XMSSNode(rand_hash(stack.pop().getContent(), node.getContent(), seed, otsAdrs));
+					otsAdrs.setTreeHeight(otsAdrs.getTreeHeight() + 1);
+					node.setHeight(node.getHeight() + 1);
 				}
 			}
 			stack.push(node);
 		}
+		//result will be root of the tree or subtree
 		return stack.pop();
 		/*
 		String tohash = String.format("%1024s", (ksecret.toString() + message.toString()));
 		return mDigest.digest(tohash.getBytes());
 		*/
 	}
-	
-	public 
 
+	//TODO Änderungen anpassen
 	@Override
 	public void generateMerkleTree() {
 		/**
