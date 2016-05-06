@@ -168,12 +168,9 @@ public class XMSSTree implements ISimpleMerkle {
 		int len = pKey.length;
 		byte[] bitmk, key;
 		byte[] message = ByteUtils.concatenate(pKey, pKey2);
-		if(bitmask == null){
-			bitmk =generateBitmask(seed, lAdrs);
-			
-		} else {
-			bitmk = bitmask;
-		}
+		
+		bitmk =generateBitmask(seed, lAdrs);		
+		
 		lAdrs.setKeyBit(true);
 		lAdrs.setBlockBit(false);
 		key = randomGenerator(seed, lAdrs.getAddress(), len);
@@ -651,7 +648,7 @@ public class XMSSTree implements ISimpleMerkle {
 		if(bitmask.length == otsAlgo.getLength()) {
 			return true;
 		}else{
-			return true;
+			return false;
 		}
 	}
 		
