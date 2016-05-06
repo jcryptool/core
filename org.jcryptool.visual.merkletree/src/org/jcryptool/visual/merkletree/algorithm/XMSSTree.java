@@ -243,6 +243,7 @@ public class XMSSTree implements ISimpleMerkle {
 	public void generateMerkleTree() {
 		
 		treeHash(0, getTreeHeight(), publicSeed);
+		treeGenerated = true;
 		/**
 		 * Generate the leafs
 		 *
