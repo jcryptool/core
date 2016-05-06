@@ -218,11 +218,12 @@ public class XMSSTree implements ISimpleMerkle {
 			otsAdrs.setLTreeBit(0);
 			otsAdrs.setTreeHeight(0);
 			otsAdrs.setTreeIndex(i+s);
-			
-			while() {
-				otsAdrs.setTreeIndex((otsAdrs.getTreeIndex() -1) / 2);
-				node = rand_hash(stack.pop(),node, seed, otsAdrs);
-				otsAdrs.setTreeHeight(otsAdrs.getTreeHeight());
+			if(!stack.empty()){
+				while(stack.peek().getHeight() == node.getHeight()) {
+					otsAdrs.setTreeIndex((otsAdrs.getTreeIndex() -1) / 2);
+					node = rand_hash(stack.pop(),node, seed, otsAdrs);
+					otsAdrs.setTreeHeight(otsAdrs.getTreeHeight());
+				}
 			}
 			stack.push(node);
 		}
