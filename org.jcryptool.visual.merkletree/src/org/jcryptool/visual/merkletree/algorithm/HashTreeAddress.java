@@ -3,14 +3,13 @@ package org.jcryptool.visual.merkletree.algorithm;
 import org.jcryptool.visual.merkletree.files.ByteUtils;
 
 public class HashTreeAddress extends Address {
-	byte layerAddress = 0;
-	byte[] treeAddress = {0,0,0,0,0};
-	byte otsBit;
-	byte lTreeBit;
-	byte[] treeHeight = new byte[4];
-	byte[] treeIndex = new byte[3];
-	byte blockBit;
-	byte keyBit;
+	byte layerAddress = 0;	//8 bit layer address
+	byte[] treeAddress = {0,0,0,0,0};	//40 Bit layer address
+	byte otsBit;	//7bit padding with otsbit
+	byte lTreeBit;	//7bit padding with lTreeBit 
+	byte[] treeHeight = new byte[4];	//24bit padding with 8bit tree height
+	byte[] treeIndex = new byte[3];	//24bit tree index
+	byte blockKeyBit;	//6 bit padding with 1bit block bit and 1 bit key
 
 	@Override
 	public void setHashAdress(int i) {
@@ -21,9 +20,9 @@ public class HashTreeAddress extends Address {
 	@Override
 	public void setKeyBit(boolean bit) {
 		if(bit == true) {
-			keyBit = 1; //set keyBit (bit nr. 0) to 1
+			blockKeyBit += 1; //set keyBit (bit nr. 0) to 1
 		} else{
-			keyBit = 0; //set keyBit (bit nr. 0) to 0
+			blockKeyBit -= 1; //set keyBit (bit nr. 0) to 0
 		}
 	}
 
@@ -36,9 +35,9 @@ public class HashTreeAddress extends Address {
 	@Override
 	public void setBlockBit(boolean bit) {
 		if(bit == true) {
-			blockBit = 1; //set blockBit (bit nr. 1) to 1
+			blockKeyBit += 2; //set blockBit (bit nr. 1) to 1
 		} else {
-			blockBit = 0; //set blockBit (bit nr. 1) to 0
+			blockKeyBit -= 2; //set blockBit (bit nr. 1) to 0
 		}
 
 	}
@@ -111,13 +110,11 @@ public class HashTreeAddress extends Address {
 	 */
 	public byte[] getAddress(){
 		byte[] temp = ByteUtils.concatenate(layerAddress, treeAddress);
-		//geht hier nicht noch Padding ab??
 		ByteUtils.concatenate(temp, otsBit);
 		ByteUtils.concatenate(temp, lTreeBit);
 		ByteUtils.concatenate(temp, treeHeight);
 		ByteUtils.concatenate(temp, treeIndex);
-		ByteUtils.concatenate(temp, blockBit);
-		ByteUtils.concatenate(temp, keyBit);
+		ByteUtils.concatenate(temp, blockKeyBit);
 		return temp;
 		}
 	
