@@ -2,20 +2,14 @@ package org.jcryptool.visual.merkletree.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.MerkleTreeView;
@@ -38,6 +32,7 @@ public class MerkleTreeKeyPairs extends Composite {
 	StyledText descText;
 	private byte[] seedArray;
 	private int spinnerValue;
+	private int treeValue;
 
 	/**
 	 * Create the composite.
@@ -47,6 +42,7 @@ public class MerkleTreeKeyPairs extends Composite {
 	 */
 	public MerkleTreeKeyPairs(Composite parent, int style, SUIT verfahren, ViewPart masterView) {
 		super(parent, style);
+		treeValue = 0;
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
 
 		createLabel = new Label(this, SWT.NONE);
@@ -64,7 +60,7 @@ public class MerkleTreeKeyPairs extends Composite {
 
 
 		Spinner spinnerkeysum = new Spinner(this, SWT.BORDER);
-		spinnerkeysum.setMaximum(1073741824);
+		spinnerkeysum.setMaximum(1024);
 		spinnerkeysum.setMinimum(2);
 		spinnerValue = 2;
 		spinnerkeysum.setSelection(0);
@@ -86,6 +82,7 @@ public class MerkleTreeKeyPairs extends Composite {
 					}
 					spinnerValue = spinner.getSelection();
 				}
+				((MerkleTreeView)masterView).updateElement();
 			}
 		});
 		
@@ -102,12 +99,19 @@ public class MerkleTreeKeyPairs extends Composite {
 			Label trees = new Label(this, SWT.NONE);
 			trees.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
 			trees.setText(Descriptions.XMSS_MT.Tab0_Lable2);
-
+			
 			Spinner treespinner = new Spinner(this, SWT.BORDER);
 			treespinner.setMaximum(1073741824);
 			treespinner.setMinimum(2);
 			treespinner.setSelection(0);
 			treespinner.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
+			treespinner.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					((MerkleTreeView)masterView).updateElement();
+					treeValue = treespinner.getSelection();
+				}
+			});
 		}
 		
 		
@@ -128,6 +132,12 @@ public class MerkleTreeKeyPairs extends Composite {
 		}
 		descText.setEditable(false);
 		
+		
+		
+		
+		
+		
+		
 		//TODO: treegeneration? HOW
 		buttonCreateKeys.addSelectionListener(new SelectionAdapter() {
 			/* (non-Javadoc)
@@ -138,30 +148,19 @@ public class MerkleTreeKeyPairs extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				MerkleTreeSeed mts = (MerkleTreeSeed)parent;
 				seedArray = mts.getSeed();
-				/* comment by Lindi
-				Control[] controls = parent.getChildren();
-				for (int i = 0; i < controls.length; i++) {
-					if (controls[i] instanceof Composite && !(controls[i] instanceof MerkleTreeKeyPairs)) {
-						for(Control control : ((Composite) controls[i]).getChildren()) {
-							if(control instanceof Text)
-								 = ((Text) control).getText().getBytes();
-						}
-						
-					}
-				}
-				*/
-				//key generation!?!!  
-				ISimpleMerkle merkle = new SimpleMerkleTree(seedArray, seedArray, spinnerkeysum.getSelection());
-				merkle.selectOneTimeSignatureAlgorithm("SHA-256", "WOTSPlus");
-				merkle.generateMerkleTree();
 				
-//XXX: brauch ma de MSG box? 
+				ISimpleMerkle merkle = new SimpleMerkleTree();
+				merkle.selectOneTimeSignatureAlgorithm("SHA-256", "WOTSPlus");
+				merkle.generateKeyPairsAndLeaves();
+				merkle.generateMerkleTree();
+				((MerkleTreeView) masterView).setAlgorithm(merkle, verfahren);
+				
+				/* Lindi no need
 				MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
 				messageBox.setMessage(Descriptions.MerkleTreeKey_Message);
 				messageBox.setText("Info");
 				messageBox.open();
-				MerkleTreeView view = (MerkleTreeView) masterView;
-				view.setAlgorithm(merkle, verfahren);
+				*/
 			}
 		});
 
@@ -187,6 +186,13 @@ public class MerkleTreeKeyPairs extends Composite {
 
 	}
 
+	public int getKeyAmmount(){
+		return spinnerValue;
+	}
+	public int getTreeAmmount(){
+		return treeValue;
+		
+	}
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
