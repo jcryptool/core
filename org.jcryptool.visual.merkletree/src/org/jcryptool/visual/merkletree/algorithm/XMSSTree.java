@@ -111,7 +111,8 @@ public class XMSSTree implements ISimpleMerkle {
 
 	@Override
 	public byte[] getPublicSeed() {
-		return publicSeed;
+		return generateSeed(32); //dummy wert
+		//return publicSeed;
 
 	}
 
@@ -168,7 +169,7 @@ public class XMSSTree implements ISimpleMerkle {
 		byte[] bitmk, key;
 		byte[] message = ByteUtils.concatenate(pKey, pKey2);
 		if(bitmask == null){
-			bitmk =generateBitmask(seed, len, lAdrs);
+			bitmk =generateBitmask(seed, lAdrs);
 			
 		} else {
 			bitmk = bitmask;
@@ -545,8 +546,9 @@ public class XMSSTree implements ISimpleMerkle {
 	 * @param lAdrs	the address construct
 	 * @return	a bitmask
 	 */
-	public byte[] generateBitmask(byte[] seed, int len, Address lAdrs){
+	public byte[] generateBitmask(byte[] seed, Address lAdrs){
 		byte[] bitmk_0, bitmk_1, bitmk;
+		int len = otsAlgo.getLength();
 		lAdrs.setKeyBit(false);		
 		lAdrs.setBlockBit(false);
 		bitmk_0 = randomGenerator(seed, lAdrs.getAddress(), len);
@@ -644,5 +646,14 @@ public class XMSSTree implements ISimpleMerkle {
 	public byte[] getMerkleRoot() {
 		return getRoot().getContent();
 	}
+	
+	public boolean checkBitmask(byte[] bitmask){
+		if(bitmask.length == otsAlgo.getLength()) {
+			return true;
+		}else{
+			return true;
+		}
+	}
+		
 	
 }
