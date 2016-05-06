@@ -3,15 +3,16 @@ package org.jcryptool.visual.merkletree.algorithm;
 import org.jcryptool.visual.merkletree.files.ByteUtils;
 
 public class LTreeAddress extends Address {
-	byte layerAddress;
-	byte[] treeAddress = new byte[5];
+	byte layerAddress = 0;
+	byte[] treeAddress = {0,0,0,0,0};
 	byte otsBit;
 	byte lTreeBit;
 	byte[] lTreeAddress = new byte[3];
 	byte treeHeight;
 	byte[] treeIndex = new byte[3];
 	byte blockKeyBit;
-
+	
+	
 	@Override
 	public void setHashAdress(int i) {
 		// do nothing, not needed
@@ -52,10 +53,9 @@ public class LTreeAddress extends Address {
 
 	@Override
 	public void setTreeIndex(int i) {
-		treeIndex[0] = (byte)(i >> 24);
-		treeIndex[1] = (byte)(i >> 16);
-		treeIndex[2] = (byte)(i >> 8);
-		treeIndex[3] = (byte)(i);
+		treeIndex[0] = (byte)(i >> 16);
+		treeIndex[1] = (byte)(i >> 8);
+		treeIndex[2] = (byte)(i);
 
 	}
 
@@ -87,10 +87,9 @@ public class LTreeAddress extends Address {
 
 	@Override
 	public void setLTreeAddress(int i) {
-		lTreeAddress[0] = (byte)(i >> 24);
-		lTreeAddress[1] = (byte)(i >> 16);
-		lTreeAddress[2] = (byte)(i >> 8);
-		lTreeAddress[3] = (byte)(i);
+		lTreeAddress[0] = (byte)(i >> 16);
+		lTreeAddress[1] = (byte)(i >> 8);
+		lTreeAddress[2] = (byte)(i);
 	}
 
 	@Override
@@ -119,6 +118,14 @@ public class LTreeAddress extends Address {
 		ByteUtils.concatenate(temp, blockKeyBit);
 		return temp;
 		
+	}
+	
+	public int getTreeIndex() {
+		int res = 0;
+		res += treeIndex[0] << 16;
+		res += treeIndex[1] << 8;
+		res += treeIndex[2];
+		return res;
 	}
 
 }

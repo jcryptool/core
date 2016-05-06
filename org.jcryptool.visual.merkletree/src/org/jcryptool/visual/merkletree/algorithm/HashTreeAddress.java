@@ -3,8 +3,8 @@ package org.jcryptool.visual.merkletree.algorithm;
 import org.jcryptool.visual.merkletree.files.ByteUtils;
 
 public class HashTreeAddress extends Address {
-	byte layerAddress;
-	byte[] treeAddress = new byte[5];
+	byte layerAddress = 0;
+	byte[] treeAddress = {0,0,0,0,0};
 	byte otsBit;
 	byte lTreeBit;
 	byte[] treeHeight = new byte[4];
@@ -51,10 +51,9 @@ public class HashTreeAddress extends Address {
 
 	@Override
 	public void setTreeIndex(int i) {
-		treeIndex[0] = (byte)(i >> 24);
-		treeIndex[1] = (byte)(i >> 16);
-		treeIndex[2] = (byte)(i >> 8);
-		treeIndex[3] = (byte)(i);
+		treeIndex[0] = (byte)(i >> 16);
+		treeIndex[1] = (byte)(i >> 8);
+		treeIndex[2] = (byte)(i);
 	}
 
 	@Override
@@ -114,5 +113,13 @@ public class HashTreeAddress extends Address {
 		ByteUtils.concatenate(temp, blockKeyBit);
 		return temp;
 		}
+	
+	public int getTreeIndex() {
+		int res = 0;
+		res += treeIndex[0] << 16;
+		res += treeIndex[1] << 8;
+		res += treeIndex[2];
+		return res;
+	}
 
 }

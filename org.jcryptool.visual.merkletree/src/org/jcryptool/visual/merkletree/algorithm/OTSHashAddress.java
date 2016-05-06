@@ -3,8 +3,8 @@ package org.jcryptool.visual.merkletree.algorithm;
 import org.jcryptool.visual.merkletree.files.ByteUtils;
 
 public class OTSHashAddress extends Address {
-	byte layerAddress;
-	byte[] treeAddress = new byte[5];
+	byte layerAddress = 0;
+	byte[] treeAddress = {0,0,0,0,0};
 	byte otsBit;
 	byte[] otsAddress = new byte[3];
 	byte[] chainAddress = new byte[2];
@@ -103,8 +103,12 @@ public class OTSHashAddress extends Address {
 		ByteUtils.concatenate(temp, chainAddress);
 		ByteUtils.concatenate(temp, hashAddress);
 		ByteUtils.concatenate(temp, keyBit);
-		return temp;
-		
+		return temp;	
+	}
+	
+	public int getTreeIndex() {
+		// do nothing, not needed
+		return 0;
 	}
 
 }

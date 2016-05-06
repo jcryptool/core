@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Stack;
 
 import org.jcryptool.visual.merkletree.files.ByteUtils;
 
@@ -17,7 +18,6 @@ public class XMSSTree implements ISimpleMerkle {
 	byte[] publicSeed;
 	boolean treeGenerated;
 	OTS otsAlgo;
-	Address lAdrs = new LTreeAddress();
 	Address hAdrs = new HashTreeAddress();
 
 	// ArrayList<MerkleTreeNode> leaves = new ArrayList<>();
@@ -141,10 +141,11 @@ public class XMSSTree implements ISimpleMerkle {
 		return tree.get(index).getName();
 	}
 
-	//TODO zuck: address nach rfc einfügen
+	//TODO add parameter pubKey, seed, adrs
 	public byte[] generateLTree(int index) {
 		double len = publicKeys.get(index).length;
-		byte[][] pubKeys = publicKeys.get(index);		
+		byte[][] pubKeys = publicKeys.get(index);
+		Address lAdrs = new LTreeAddress();
 		lAdrs.setTreeHeight(0);
 
 		while (len > 1) {
@@ -185,22 +186,54 @@ public class XMSSTree implements ISimpleMerkle {
 		//Formatiert den ksecret und message zu einem 512 Byte hexadezimalen Wert
 		String tohash = String.format("%512s", (key.toString() + message.toString()));
 		return mDigest.digest(tohash.getBytes());
-		}
+		}	
 	
-	
-	//TODO müsste algo 9 aus dem rfc sein
-	public byte[] hashNode(byte[] pKey, byte[] pKey2, byte[] adrs, byte[] seed) {
 
-		// get Bitmasken and Keysecret
-		byte[] ksecret = { 0, 0, 0, 0, 0 };
-		byte[] bitmk = { 0, 0, 0, 0, 0 };
-		byte[] message = ByteUtils.concatenate(pKey, pKey2);
-		for (int i = 0; i < message.length; i++) {
-			message[i] ^= bitmk[0];
+	/**
+	 * 
+	 * @param SK XMSS secret key
+	 * @param s start index
+	 * @param t target node height
+	 * @param seed seed
+	 * @return root node of a tree of height t
+	 */
+	public Node treeHash(byte[] SK, int s, int t, byte[] seed) {
+		
+		Node node = new Node(); //TODO make new Node class
+		Stack<Node> stack = new Stack<Node>();
+		
+		if(s % (1 << t) != 0){
+			return null;
+		}		
+		
+		for( int i = 0; i < Math.pow(2, t); i++) {
+			Address otsAdrs = new OTSHashAddress();
+			otsAdrs.setOTSBit(1);
+			otsAdrs.setOTSAddress(s+i);
+			pKey = WOTS_genPK(privKeys.get(s+i), seed, otsAdrs); //TODO implement WOTS_genPK or change wots+; return byte[]
+			otsAdrs.setOTSBit(0);
+			otsAdrs.setLTreeBit(1);
+			otsAdrs.setLTreeAddress(s+i);
+			node = generateLTree(pKey, seed, otsAdrs); //TODO take the byte[] and put it into a node
+			otsAdrs.setLTreeBit(0);
+			otsAdrs.setTreeHeight(0);
+			otsAdrs.setTreeIndex(i+s);
+			
+			while() {
+				otsAdrs.setTreeIndex((otsAdrs.getTreeIndex() -1) / 2);
+				node = rand_hash(stack.pop(),node, seed, otsAdrs);
+				otsAdrs.setTreeHeight(otsAdrs.getTreeHeight());
+			}
+			stack.push(node);
 		}
+		return stack.pop();
+		/*
 		String tohash = String.format("%1024s", (ksecret.toString() + message.toString()));
 		return mDigest.digest(tohash.getBytes());
+		*/
 	}
+	
+	public 
 
 	@Override
 	public void generateMerkleTree() {
@@ -432,16 +465,17 @@ public class XMSSTree implements ISimpleMerkle {
 	 * 		address of left/right node
 	 */
 	public byte[] randomGenerator(byte[] seed, byte[] address, int len) {
-		byte[] res = new byte[len];	//erstellen des zu befüllenden arrays
-		SecureRandom rnd = null;
+		byte[] res = new byte[len+32];	//erstellen des zu befüllenden arrays
+		byte[] padding = new byte[32];
+		MessageDigest hash = null;
 		try {
-			rnd = SecureRandom.getInstance("SHA1PRNG");
+			hash = MessageDigest.getInstance("SHA-256");
 		} catch(NoSuchAlgorithmException e) {
 			//zuck: Der Algo existiert!
 		}
+		seed = ByteUtils.concatenate(padding, seed);
 		seed = ByteUtils.concatenate(seed, address);
-		rnd.setSeed(seed);	//zuck: setzen des seeds seed+address für den PRNG
-		rnd.nextBytes(res); //zuck: befüllen des byte[]
+		res = hash.digest(seed);
 		return res;
 	}
 }

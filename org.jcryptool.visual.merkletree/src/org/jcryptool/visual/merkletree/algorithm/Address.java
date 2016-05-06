@@ -41,4 +41,6 @@ public abstract class Address {
 	
 	public abstract byte[] getAddress();
 
+	public abstract int getTreeIndex();
+	
 }
