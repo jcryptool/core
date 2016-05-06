@@ -448,7 +448,7 @@ public class XMSSTree implements ISimpleMerkle {
 				nodes[0] = nodes[1];
 			}
 		}
-		if(nodes[0].getContent() == getRoot()){
+		if(nodes[0].getContent() == getRoot().getContent()){
 			return true;
 		}else {
 			return false;
@@ -527,6 +527,18 @@ public class XMSSTree implements ISimpleMerkle {
 	
 	/**
 	 * Generates the bitmask if not set by user
+	
+	public XMSSNode rootFromSig(String message, String signature){
+		String[] splitted = signature.split("|");	//split the signature in its components
+		byte[] r = splitted[1].getBytes();	//seed is always second in signature
+		int index = Integer.parseInt(splitted[0]);	//index is always first in signature
+		Address otsAdrs = new OTSHashAddress();
+		//index || r as seed for hashing the message
+		byte[] hashedMessage = randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(index).toByteArray(),r), message.getBytes(), message.length());
+		otsAdrs.setOTSBit(true);
+		otsAdrs.setOTSAddress(index);
+		
+	}
 	 * @param seed
 	 * @param len	length of half the bitmask
 	 * @param lAdrs	the address construct
@@ -627,17 +639,9 @@ public class XMSSTree implements ISimpleMerkle {
 		String[] splitted = xPrivKey.split("|");	//splits the xmss private key in its components
 		return splitted[1].getBytes();	//private key seed is always second
 	}
-	
-	public XMSSNode rootFromSig(String message, String signature){
-		String[] splitted = signature.split("|");	//split the signature in its components
-		byte[] r = splitted[1].getBytes();	//seed is always second in signature
-		int index = Integer.parseInt(splitted[0]);	//index is always first in signature
-		Address otsAdrs = new OTSHashAddress();
-		//index || r as seed for hashing the message
-		byte[] hashedMessage = randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(index).toByteArray(),r), message.getBytes(), message.length());
-		otsAdrs.setOTSBit(true);
-		otsAdrs.setOTSAddress(index);
-		
+	@Override
+	public byte[] getMerkleRoot() {
+		return getRoot().getContent();
 	}
 	
 }
