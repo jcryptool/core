@@ -347,10 +347,10 @@ public class XMSSTree implements ISimpleMerkle {
 			this.otsAlgo = new WinternitzOTS(16, hash);
 			break;
 		case "WOTSPlus":
-			this.otsAlgo = new WOTSPlusXMSS(16, hash, publicSeed);
+			this.otsAlgo = new WOTSPlusMerkle(16, hash, publicSeed);
 			break;
 		default:
-			this.otsAlgo = new WOTSPlusXMSS(16, hash, publicSeed);
+			this.otsAlgo = new WOTSPlusMerkle(16, hash, publicSeed);
 			break;
 		}
 		if (this.mDigest == null) {
