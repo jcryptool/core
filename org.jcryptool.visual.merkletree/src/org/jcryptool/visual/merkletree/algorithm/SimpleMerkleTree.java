@@ -311,7 +311,7 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 		otsAlgo.setPrivateKey(this.privKeys.get(keyIndex));		
 		otsAlgo.setPublicKey(publicKeys.get(keyIndex));
 		otsAlgo.setSignature(org.jcryptool.visual.merkletree.files.Converter
-				._hexStringToByte(signer[0]));
+				._hexStringToByte(signer[1]));
 		otsAlgo.setMessage(messageHash.getBytes());
 		
 		
