@@ -316,6 +316,7 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 		
 		
 		verifier = otsAlgo.verify();
+		//wozu wird das gemacht? wird doch eh nur am ende verfier zurückgegeben
 		int iHigh=keyIndex;
 		//String currentAuthPath="";
 		byte[] currentNode=leaves.get(keyIndex).getName();

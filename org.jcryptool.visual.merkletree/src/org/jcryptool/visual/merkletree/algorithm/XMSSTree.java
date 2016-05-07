@@ -389,11 +389,11 @@ public class XMSSTree implements ISimpleMerkle {
 		otsAdrs.setOTSBit(true);
 		otsAdrs.setOTSAddress(index);
 		//TODO wots+ fixen und ots.algo zeugs löschen
-		this.otsAlgo.hashMessage(message);
+		String messageHash = Converter._byteToHex(this.otsAlgo.hashMessage(message));
 		this.otsAlgo.initB();
-		this.otsAlgo.setPrivateKey(this.privKeys.get(this.keyIndex));
-		this.otsAlgo.setPublicKey(this.publicKeys.get(this.keyIndex));
-		this.otsAlgo.setMessage(message.getBytes());
+		this.otsAlgo.setPrivateKey(this.privKeys.get(index));
+		this.otsAlgo.setPublicKey(this.publicKeys.get(index));
+		this.otsAlgo.setMessage(messageHash.getBytes());
 		this.otsAlgo.sign();
 		byte[] ots_sig = otsAlgo.getSignature();
 		String signature = Integer.toString(index) + "|" + Converter._byteToHex(r) + "|" + Converter._byteToHex(ots_sig);
@@ -438,16 +438,21 @@ public class XMSSTree implements ISimpleMerkle {
 	 * Verifys the Signature and return true or false
 	 */
 	public boolean verify(String message, String signature) {
-		String[] signer = signature.split("|");
+		String[] signer = signature.split("\\|");
 		boolean verifier;
 		int keyIndex = Integer.parseInt(signer[0]); //get the index from the signature
-		byte[][] curPubKey = this.publicKeys.get(keyIndex - 1); //get the used pub key
+		byte[][] curPubKey = this.publicKeys.get(keyIndex); //get the used pub key
 		LTreeAddress lAdrs = new LTreeAddress();
 		Node[] nodes = new XMSSNode[2];
+		//altes wots+
+		String messageHash = Converter._byteToHex(this.otsAlgo.hashMessage(message));
 		
-		otsAlgo.setPublicKey(curPubKey);
-		otsAlgo.setSignature(signer[2].getBytes());
+		otsAlgo.setPrivateKey(this.privKeys.get(keyIndex));		
+		otsAlgo.setPublicKey(publicKeys.get(keyIndex));
+		otsAlgo.setSignature(Converter._hexStringToByte(signer[2]));
+		otsAlgo.setMessage(messageHash.getBytes());
 		verifier = otsAlgo.verify();
+		/* erst mit neuem wots+ benutzbar
 		if (verifier) {
 			lAdrs.setOTSBit(false);
 			lAdrs.setLTreeBit(true);
@@ -471,7 +476,8 @@ public class XMSSTree implements ISimpleMerkle {
 			return true;
 		}else {
 			return false;
-		}
+		}*/
+		return verifier;
 	}
 	
 	@Override
@@ -479,9 +485,14 @@ public class XMSSTree implements ISimpleMerkle {
 	 * Verifys the Signature of an given index and return true or false
 	 * NOT IMPLEMENTED YET!!!!!!!
 	 */
-	public boolean verify(String message, String signature, int keyIndex) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean verify(String message, String signature, int markedLeafIndex) {
+		String[] signer = signature.split("\\|");
+		int keyIndex = Integer.parseInt(signer[0]);
+		if(markedLeafIndex != keyIndex) {
+			return false;
+		}
+		else
+			return this.verify(message, signature);
 	}
 
 	public void generateKeyPairsAndLeaves() {
@@ -546,9 +557,9 @@ public class XMSSTree implements ISimpleMerkle {
 	
 	/**
 	 * Generates the bitmask if not set by user
-	
+	*
 	public XMSSNode rootFromSig(String message, String signature){
-		String[] splitted = signature.split("|");	//split the signature in its components
+		String[] splitted = signature.split("\\|");	//split the signature in its components
 		byte[] r = splitted[1].getBytes();	//seed is always second in signature
 		int index = Integer.parseInt(splitted[0]);	//index is always first in signature
 		Address otsAdrs = new OTSHashAddress();
@@ -617,7 +628,7 @@ public class XMSSTree implements ISimpleMerkle {
 	}
 	
 	public int getIndex(String xPrivKey) {
-		String[] splitted = xPrivKey.split("|");	//splits the xmss private key in its components
+		String[] splitted = xPrivKey.split("\\|");	//splits the xmss private key in its components
 		int index = Integer.parseInt(splitted[0]);	//index is the first part of the private key
 		return index;
 	}
@@ -653,7 +664,7 @@ public class XMSSTree implements ISimpleMerkle {
 	}
 	
 	public byte[] getSK_Seed() {
-		String[] splitted = xPrivKey.split("|");	//splits the xmss private key in its components
+		String[] splitted = xPrivKey.split("\\|");	//splits the xmss private key in its components
 		return splitted[1].getBytes();	//private key seed is always second
 	}
 	@Override
