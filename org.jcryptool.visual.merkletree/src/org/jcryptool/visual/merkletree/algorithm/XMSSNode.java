@@ -3,6 +3,8 @@ package org.jcryptool.visual.merkletree.algorithm;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jcryptool.visual.merkletree.files.Converter;
+
 public class XMSSNode implements Node{
 
 	private byte[] content; //the hash value of the node
@@ -109,7 +111,7 @@ public class XMSSNode implements Node{
 
 	@Override
 	public String getCode() {
-		return getContent().toString();
+		return Converter._byteToHex(getContent());
 	}
 
 	@Override
