@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
@@ -32,7 +33,8 @@ public class XMSSTree implements ISimpleMerkle {
 	// ArrayList<ArrayList<MerkleTreeNode>> merkleTreeHeight;
 	// ArrayList<MerkleTreeNode> merkleTreeRow = null;
 
-	ArrayList<Node> tree = new ArrayList<Node>();
+	ArrayList<Node> tree;
+	Node[] treeArray;
 	ArrayList<Node> leaves = new ArrayList<Node>();
 
 	MessageDigest mDigest;
@@ -228,7 +230,7 @@ public class XMSSTree implements ISimpleMerkle {
 				hAdrs.setTreeIndex((hAdrs.getTreeIndex() -1) / 2);
 				node = new XMSSNode(rand_hash(stack.pop().getContent(), node.getContent(), seed, hAdrs));
 				hAdrs.setTreeHeight(hAdrs.getTreeHeight() + 1);
-				node.setHeight(node.getHeight() + 1);
+				node.setHeight( hAdrs.getTreeHeight());
 				saveNodeInfos(node, hAdrs.getTreeIndex()); //save nodes on higher heights
 			}
 			
@@ -246,8 +248,9 @@ public class XMSSTree implements ISimpleMerkle {
 	//TODO Änderungen anpassen
 	@Override
 	public void generateMerkleTree() {
-		
+		treeArray = new Node[(1 << (getTreeHeight()+1)) - 1];
 		treeHash(0, getTreeHeight(), publicSeed);
+		tree = new ArrayList<Node>(Arrays.asList(treeArray));
 		setConnections();
 		treeGenerated = true;
 		/**
@@ -660,12 +663,14 @@ public class XMSSTree implements ISimpleMerkle {
 		}
 	}
 	
-	public void saveNodeInfos(Node node, int index) {	
-		for(int i = 1; i <= node.getHeight(); i++){
-			index = index + leafCounter / i;
+	public void saveNodeInfos(Node node, int ix) {	
+		int index = 0;
+		for(int i = 0; i < node.getHeight(); i++){
+			index += leafCounter / (1 << i);
 		}
+		index = index + ix;
 		node.setIndex(index);
-		tree.add(node);
+		treeArray[index] = node;
 	}
 		
 	public void setNeighbors(){
