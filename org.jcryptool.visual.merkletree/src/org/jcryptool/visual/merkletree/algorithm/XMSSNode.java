@@ -1,24 +1,133 @@
 package org.jcryptool.visual.merkletree.algorithm;
 
-public class XMSSNode {
+import java.util.ArrayList;
+import java.util.List;
+
+public class XMSSNode implements Node{
 
 	private byte[] content; //the hash value of the node
 	private int height;
+	private int index;
+	private Node left;
+	private Node right;
+	private Node parent;
+	private List<Node> connections = new ArrayList<Node>();	
+	
 	
 	public XMSSNode(byte[] content){
 		this.content = content;
 		height = 0;
 	}
 	
+	@Override
 	public void setHeight(int i) {
 		height=i;
 	}
 	
+	@Override
 	public int getHeight() {
 		return height;
 	}
 	
+	@Override
 	public byte[] getContent(){
 		return content;
 	}
+
+	@Override
+	public int getIndex() {
+		return index;
+	}
+	
+	@Override
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
+	@Override
+	public Node getLeft() {
+		return left;
+	}
+
+	@Override
+	public void setLeft(Node left) {
+		this.left = left;
+	}
+
+	@Override
+	public Node getRight() {
+		return right;
+	}
+
+	@Override
+	public void setRight(Node right) {
+		this.right = right;
+	}
+
+	@Override
+	public Node getParent() {
+		return parent;
+	}
+
+	@Override
+	public void setParent(Node parent) {
+		this.parent = parent;
+	}
+
+	@Override
+	public boolean isLeaf() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setLeaf(boolean leaf) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public byte[] getName() {
+		return getContent();
+	}
+
+	@Override
+	public String getNameAsString() {
+		return getCode();
+	}
+
+	@Override
+	public void setName(byte[] name) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Node> getConnectedTo() {
+		return connections;
+	}
+
+	@Override
+	public String getCode() {
+		return getContent().toString();
+	}
+
+	@Override
+	public void setCode(String code) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setLeafNumber(int leafNumber) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getLeafNumber() {
+		return index;
+	}
+	
+	
 }

@@ -63,7 +63,7 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 
 	@Override
 	public void addTreeLeaf(byte[] LeafContent, String pubKey) {
-		Node leafNode = new Node(LeafContent, true, ++this.leafNumber);
+		Node leafNode = new SimpleNode(LeafContent, true, ++this.leafNumber);
 		leafNode.setCode(pubKey);
 		leaves.add(leafNode);
 	}
@@ -144,23 +144,25 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 			for (index = 0; index < NodeLevelCounter; index++, treeIndex += 2) {
 				if (treeIndex + 1 < tree.size()) {
 					byte[] content = hashingContent(tree.get(treeIndex), tree.get(treeIndex + 1));
-					helperNode = new Node(content, tree.get(treeIndex), tree.get(treeIndex + 1));
+					helperNode = new SimpleNode(content, tree.get(treeIndex), tree.get(treeIndex + 1));
 					treeLevel.add(helperNode);
 					treeLevel.get(index).getConnectedTo().add(tree.get(treeIndex));
 					treeLevel.get(index).getConnectedTo().add(tree.get(treeIndex + 1));
 					tree.get(treeIndex).setParent(treeLevel.get(index));
 					tree.get(treeIndex + 1).setParent(treeLevel.get(index));
+					
+				//zuck: deadcode/falsch?
 				} else {
 					byte[] content = hashingContent(tree.get(treeIndex), tree.get(treeIndex));
-					helperNode = new Node(content, false, 0);
+					helperNode = new SimpleNode(content, false, 0);
 					helperNode.setLeft(tree.get(treeIndex));
 					treeLevel.add(helperNode);
 					treeLevel.get(index).getConnectedTo().add(tree.get(treeIndex));
 					tree.get(treeIndex).setParent(treeLevel.get(index));
-				}
+				}				
 
 			}
-			treeIndex = tree.size();
+			treeIndex = tree.size(); //unnütz
 			tree.addAll(treeLevel);
 		}
 		/*
@@ -373,7 +375,7 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 			// Frage byte[][] zu byte[] ?????
 			d1pubKey = org.jcryptool.visual.merkletree.files.Converter._hexStringToByte(
 					org.jcryptool.visual.merkletree.files.Converter._2dByteToHex(this.otsAlgo.getPublicKey()));
-			leaf = new Node(this.mDigest.digest(d1pubKey), true, i);
+			leaf = new SimpleNode(this.mDigest.digest(d1pubKey), true, i);
 			this.leafNumber++;
 			code= org.jcryptool.visual.merkletree.files.Converter
 					._byteToHex(d1pubKey).substring(0, 5);

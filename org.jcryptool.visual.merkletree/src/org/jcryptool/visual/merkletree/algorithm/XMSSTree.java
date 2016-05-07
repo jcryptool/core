@@ -5,9 +5,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 import org.jcryptool.visual.merkletree.files.ByteUtils;
+import org.jcryptool.visual.merkletree.files.MathUtils;
 
 public class XMSSTree implements ISimpleMerkle {
 
@@ -91,7 +93,7 @@ public class XMSSTree implements ISimpleMerkle {
 	 * leafNumber is increased by 1
 	 */
 	public void addTreeLeaf(byte[] LeafContent, String pubKey) {
-		Node leafNode = new Node(LeafContent, true, ++this.leafNumber);
+		Node leafNode = new SimpleNode(LeafContent, true, ++this.leafNumber);
 		leafNode.setCode(pubKey);
 		leaves.add(leafNode);
 	}
@@ -100,7 +102,7 @@ public class XMSSTree implements ISimpleMerkle {
 	/**
 	 * returns the root node of the MerkleTree
 	 */
-	public XMSSNode getRoot() {
+	public Node getRoot() {
 		return treeHash(0, getTreeHeight(), publicSeed);
 	}
 
@@ -142,7 +144,7 @@ public class XMSSTree implements ISimpleMerkle {
 	 * getName() -> Content is stored in the name field of the array list
 	 */
 	public byte[] getNodeContentbyIndex(int index) {
-		return tree.get(index).getName();
+		return tree.get(index).getContent();
 	}
 
 	//TODO add parameter pubKey, seed, adrs
@@ -197,10 +199,10 @@ public class XMSSTree implements ISimpleMerkle {
 	 * @param seed seed
 	 * @return root node of a tree of height t
 	 */
-	public XMSSNode treeHash(int s, int t, byte[] seed) {
+	public Node treeHash(int s, int t, byte[] seed) {
 		
-		XMSSNode node; //TODO make new Node class
-		Stack<XMSSNode> stack = new Stack<XMSSNode>();
+		Node node; //TODO make new Node class
+		Stack<Node> stack = new Stack<Node>();
 		byte[][] pKey;
 		
 		if(s % (1 << t) != 0){
@@ -219,16 +221,18 @@ public class XMSSTree implements ISimpleMerkle {
 			hAdrs.setLTreeBit(false);
 			hAdrs.setTreeHeight(0);
 			hAdrs.setTreeIndex(i+s);
+			saveNodeInfos(node, hAdrs.getTreeIndex());
 			//if the stack is empty the first node will be put into the stack
-			//if the current node and the next node on the stack have the same height hash them and put the new one pack with height+1
-			if(!stack.empty()){
-				while(stack.peek().getHeight() == node.getHeight()) {
-					otsAdrs.setTreeIndex((otsAdrs.getTreeIndex() -1) / 2);
-					node = new XMSSNode(rand_hash(stack.pop().getContent(), node.getContent(), seed, hAdrs));
-					otsAdrs.setTreeHeight(otsAdrs.getTreeHeight() + 1);
-					node.setHeight(node.getHeight() + 1);
-				}
+			//if the current node and the next node on the stack have the same height hash them and put the new one back with height+1			
+			while(!stack.empty() && stack.peek().getHeight() == node.getHeight()) {					
+				hAdrs.setTreeIndex((hAdrs.getTreeIndex() -1) / 2);
+				node = new XMSSNode(rand_hash(stack.pop().getContent(), node.getContent(), seed, hAdrs));
+				hAdrs.setTreeHeight(hAdrs.getTreeHeight() + 1);
+				node.setHeight(node.getHeight() + 1);
+				saveNodeInfos(node, hAdrs.getTreeIndex()); //save nodes on higher heights
 			}
+			
+			
 			stack.push(node);
 		}
 		//result will be root of the tree or subtree
@@ -244,6 +248,7 @@ public class XMSSTree implements ISimpleMerkle {
 	public void generateMerkleTree() {
 		
 		treeHash(0, getTreeHeight(), publicSeed);
+		setConnections();
 		treeGenerated = true;
 		/**
 		 * Generate the leafs
@@ -315,7 +320,7 @@ public class XMSSTree implements ISimpleMerkle {
 	 * Tree with 4 Nodes has height 2
 	 */
 	public int getTreeHeight() {
-		return (int)Math.ceil(leafCounter / 2) - 1;
+		return MathUtils.log2nlz(leafCounter);
 	}
 
 	@Override
@@ -357,7 +362,6 @@ public class XMSSTree implements ISimpleMerkle {
 			try {
 				mDigest = MessageDigest.getInstance(hash);
 			} catch (NoSuchAlgorithmException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -371,7 +375,7 @@ public class XMSSTree implements ISimpleMerkle {
 	public String sign(String message) {
 		String tmpSignature;
 		int index = getIndex(xPrivKey);
-		ArrayList<XMSSNode> auth = buildAuth(index, publicSeed);
+		ArrayList<Node> auth = buildAuth(index, publicSeed);
 		byte[] r = randomGenerator(getSK_Seed(),message, message.length());
 		//index || r as seed for hashing the message
 		byte[] hashedMessage = randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(index).toByteArray(),r), message.getBytes(), message.length());
@@ -430,7 +434,7 @@ public class XMSSTree implements ISimpleMerkle {
 		int keyIndex = Integer.parseInt(signer[0]); //get the index from the signature
 		byte[][] curPubKey = this.publicKeys.get(keyIndex - 1); //get the used pub key
 		LTreeAddress lAdrs = new LTreeAddress();
-		XMSSNode[] nodes = new XMSSNode[2];
+		Node[] nodes = new XMSSNode[2];
 		
 		otsAlgo.setPublicKey(curPubKey);
 		otsAlgo.setSignature(signer[2].getBytes());
@@ -566,7 +570,7 @@ public class XMSSTree implements ISimpleMerkle {
 	 * Generates the public key of the XMSS
 	 */
 	public void xmss_genPK() {
-		XMSSNode root;
+		Node root;
 		byte[] seed;
 		seed = publicSeed;
 		
@@ -579,8 +583,8 @@ public class XMSSTree implements ISimpleMerkle {
 	 * Generates an authentication path as array list with authentication nodes
 	 * @param i	index of the WOTS+ key pair
 	 */
-	public ArrayList<XMSSNode> buildAuth(int i,byte[] seed) {
-		ArrayList<XMSSNode> auth = new ArrayList<XMSSNode>();
+	public ArrayList<Node> buildAuth(int i,byte[] seed) {
+		ArrayList<Node> auth = new ArrayList<Node>();
 		for(int j = 0; j < getTreeHeight(); j++) {
 			int k = ((int)Math.floor(i / (1 << j))) ^ 1;
 			auth.add(j,treeHash(k* (1 << j),j, seed));
@@ -655,6 +659,42 @@ public class XMSSTree implements ISimpleMerkle {
 			return false;
 		}
 	}
-		
 	
+	public void saveNodeInfos(Node node, int index) {	
+		for(int i = 1; i <= node.getHeight(); i++){
+			index = index + leafCounter / i;
+		}
+		node.setIndex(index);
+		tree.add(node);
+	}
+		
+	public void setNeighbors(){
+		Node left, right;
+		for(int i = 0; i < tree.size() -1; i = i+2){				
+					left = tree.get(i);
+					right = tree.get(i+1);
+					left.setLeft(left);
+					left.setRight(right);
+					right.setLeft(left);
+					right.setRight(right);
+			}
+	}
+	
+	public void setConnections(){
+		Node left, right, parent;
+		List<Node> connections;
+		for(int i = 0; i < tree.size()-1; i = i+2) {			
+			left = tree.get(i);
+			right = tree.get(i+1);
+			parent = tree.get(i/2 + leafCounter);
+			connections = parent.getConnectedTo();
+			parent.setLeft(left);
+			parent.setRight(right);
+			left.setParent(parent);
+			right.setParent(parent);
+			connections.add(left);
+			connections.add(right);
+			
+		}
+	}
 }

@@ -215,26 +215,39 @@ public class WOTSPlusXMSS {
 	 * @return Signature of the message
 	 */
 	
-	public void sign() {
+	public void sign(byte[][] message, byte[] seed, OTSHashAddress otsAdrs) {
 
-		byte[][] tmpSignature = new byte[l][n];
-
-		// Hash + xor with ri each part bi times
-		for (int i = 0; i < l; i++) {
-
-			System.arraycopy(privateKey[i], 0, tmpSignature[i], 0, tmpSignature[i].length);
-			// tmpSignature[i] = this.privateKey[i];
-
-			for (int j = 0; j < (b[i] & 0xFF); j++) {
-
-				for (int k = 0; k < tmpSignature[i].length; k++)
-					tmpSignature[i][k] = (byte) (tmpSignature[i][k] ^ publicKey[j][k]);
-
-				tmpSignature[i] = calcHash(tmpSignature[i]);
-			}
+		byte[][] signature = new byte[l][n];
+		int csum = 0;	//checksum is byte[] for compatibility with basew method
+		int l2_bytes;
+		
+		for(int i = 0; i < message.length; i++){
+			message[i] = convertToBaseW(message[i], w);
 		}
-		signature = org.jcryptool.visual.merkletree.files.Converter
-				._hexStringToByte(org.jcryptool.visual.merkletree.files.Converter._2dByteToHex(tmpSignature));
+		//compute checksum
+		/*TODO: bugfix
+		for( int i = 0; i < message.length; i++) {
+			csum = csum + w - 1 - message[i];
+			
+		}
+		*/
+		//convert csum to base w
+		csum = csum << ( 8 -( ( l2 * MathUtils.log2nlz(w) ) % 8 ));
+		l2_bytes = (int)Math.ceil( ( l2 * MathUtils.log2nlz(w)) / 8);
+		byte[] csum_bytes = new byte[l2_bytes];
+		//copnvert csum to byte[]
+		for(int i = l2_bytes-1; i > 0 ; i--){
+				csum_bytes[i - l2_bytes] = (byte)(csum >> i * 8);			
+		}
+		csum_bytes[l2_bytes-1] = (byte)csum;
+		message = ByteUtils.concatenate(message, convertToBaseW(csum_bytes, w));
+		for (int i = 0; i < l; i++){
+			otsAdrs.setChainAddress(i);
+			sig
+		}
+		
+		
+
 	}
 
 	/**
