@@ -19,7 +19,9 @@ public class XMSSTree implements ISimpleMerkle {
 	byte[] publicSeed;
 	boolean treeGenerated;
 	OTS otsAlgo;
-	Address hAdrs = new HashTreeAddress();
+	HashTreeAddress hAdrs = new HashTreeAddress();
+	OTSHashAddress otsAdrs = new OTSHashAddress();
+	LTreeAddress lAdrs = new LTreeAddress();
 	byte[] bitmask;
 	String xPrivKey;
 	String xPubKey;
@@ -144,8 +146,8 @@ public class XMSSTree implements ISimpleMerkle {
 	}
 
 	//TODO add parameter pubKey, seed, adrs
-	public byte[] generateLTree(byte[][] pubKey, byte[] seed, Address adrs) {
-		double len = pubKey.length;
+	public byte[] generateLTree(byte[][] pubKey, byte[] seed, LTreeAddress adrs) {
+		int len = pubKey.length;
 		Address lAdrs = adrs;
 		lAdrs.setTreeHeight(0);
 
@@ -160,23 +162,23 @@ public class XMSSTree implements ISimpleMerkle {
 				pubKey[(int) (Math.floor(len / 2))] = pubKey[(int) len -1 ];
 			}
 			//zuck: Anpassen der Anzahl an Nodes bzw. setzen der Anzahl der Nodes auf der neuen Höhe
-			len = Math.ceil((len / 2));
+			len = (int)Math.ceil((len / 2));
 			lAdrs.setTreeHeight(lAdrs.getTreeHeight() + 1);
 			}
 		return pubKey[0];
 	}
 
-	public byte[] rand_hash(byte[] pKey, byte[] pKey2, byte[] seed, Address lAdrs) {
+	public byte[] rand_hash(byte[] pKey, byte[] pKey2, byte[] seed, Address adrs) {
 		
 		int len = pKey.length;
 		byte[] bitmk, key;
 		byte[] message = ByteUtils.concatenate(pKey, pKey2);
 		
-		bitmk =generateBitmask(seed, lAdrs);		
+		bitmk =generateBitmask(seed, adrs);		
 		
-		lAdrs.setKeyBit(true);
-		lAdrs.setBlockBit(false);
-		key = randomGenerator(seed, lAdrs.getAddress(), len);
+		adrs.setKeyBit(true);
+		adrs.setBlockBit(false);
+		key = randomGenerator(seed, adrs.getAddress(), len);
 		for (int i = 0; i < message.length; i++) {
 			//XOR message with bitmask
 			message[i] ^= bitmk[i];
@@ -199,7 +201,6 @@ public class XMSSTree implements ISimpleMerkle {
 		
 		XMSSNode node; //TODO make new Node class
 		Stack<XMSSNode> stack = new Stack<XMSSNode>();
-		Address otsAdrs = new OTSHashAddress();
 		byte[][] pKey;
 		
 		if(s % (1 << t) != 0){
@@ -211,19 +212,19 @@ public class XMSSTree implements ISimpleMerkle {
 			otsAdrs.setOTSAddress(s+i);
 			//pKey = WOTS_genPK(privKeys.get(s+i), seed, otsAdrs); //TODO implement WOTS_genPK or change wots+; return byte[][]
 			pKey = publicKeys.get(s+i);
-			otsAdrs.setOTSBit(false);
-			otsAdrs.setLTreeBit(true);
-			otsAdrs.setLTreeAddress(s+i);
-			node = new XMSSNode(generateLTree(pKey, seed, otsAdrs)); //TODO take the byte[] and put it into a node
-			otsAdrs.setLTreeBit(false);
-			otsAdrs.setTreeHeight(0);
-			otsAdrs.setTreeIndex(i+s);
+			lAdrs.setOTSBit(false);
+			lAdrs.setLTreeBit(true);
+			lAdrs.setLTreeAddress(s+i);
+			node = new XMSSNode(generateLTree(pKey, seed, lAdrs));
+			hAdrs.setLTreeBit(false);
+			hAdrs.setTreeHeight(0);
+			hAdrs.setTreeIndex(i+s);
 			//if the stack is empty the first node will be put into the stack
 			//if the current node and the next node on the stack have the same height hash them and put the new one pack with height+1
 			if(!stack.empty()){
 				while(stack.peek().getHeight() == node.getHeight()) {
 					otsAdrs.setTreeIndex((otsAdrs.getTreeIndex() -1) / 2);
-					node = new XMSSNode(rand_hash(stack.pop().getContent(), node.getContent(), seed, otsAdrs));
+					node = new XMSSNode(rand_hash(stack.pop().getContent(), node.getContent(), seed, hAdrs));
 					otsAdrs.setTreeHeight(otsAdrs.getTreeHeight() + 1);
 					node.setHeight(node.getHeight() + 1);
 				}
@@ -314,7 +315,7 @@ public class XMSSTree implements ISimpleMerkle {
 	 * Tree with 4 Nodes has height 2
 	 */
 	public int getTreeHeight() {
-		return Integer.bitCount(Integer.highestOneBit(this.leaves.size() - 1) * 2 - 1);
+		return (int)Math.ceil(leafCounter / 2) - 1;
 	}
 
 	@Override
@@ -346,10 +347,10 @@ public class XMSSTree implements ISimpleMerkle {
 			this.otsAlgo = new WinternitzOTS(16, hash);
 			break;
 		case "WOTSPlus":
-			this.otsAlgo = new WOTSPlusXMSS(16, hash, this.privateSeed);
+			this.otsAlgo = new WOTSPlusXMSS(16, hash, publicSeed);
 			break;
 		default:
-			this.otsAlgo = new WOTSPlusXMSS(16, hash, this.privateSeed);
+			this.otsAlgo = new WOTSPlusXMSS(16, hash, publicSeed);
 			break;
 		}
 		if (this.mDigest == null) {
@@ -374,7 +375,7 @@ public class XMSSTree implements ISimpleMerkle {
 		byte[] r = randomGenerator(getSK_Seed(),message, message.length());
 		//index || r as seed for hashing the message
 		byte[] hashedMessage = randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(index).toByteArray(),r), message.getBytes(), message.length());
-		Address otsAdrs = new OTSHashAddress();
+		OTSHashAddress otsAdrs = new OTSHashAddress();
 		otsAdrs.setOTSBit(true);
 		otsAdrs.setOTSAddress(index);
 		this.otsAlgo.setPrivateKey(this.privKeys.get(this.keyIndex));
@@ -428,7 +429,7 @@ public class XMSSTree implements ISimpleMerkle {
 		boolean verifier;
 		int keyIndex = Integer.parseInt(signer[0]); //get the index from the signature
 		byte[][] curPubKey = this.publicKeys.get(keyIndex - 1); //get the used pub key
-		Address lAdrs = new LTreeAddress();
+		LTreeAddress lAdrs = new LTreeAddress();
 		XMSSNode[] nodes = new XMSSNode[2];
 		
 		otsAlgo.setPublicKey(curPubKey);
@@ -549,14 +550,14 @@ public class XMSSTree implements ISimpleMerkle {
 	 * @param lAdrs	the address construct
 	 * @return	a bitmask
 	 */
-	public byte[] generateBitmask(byte[] seed, Address lAdrs){
+	public byte[] generateBitmask(byte[] seed, Address adrs){
 		byte[] bitmk_0, bitmk_1, bitmk;
 		int len = otsAlgo.getLength();
-		lAdrs.setKeyBit(false);		
-		lAdrs.setBlockBit(false);
-		bitmk_0 = randomGenerator(seed, lAdrs.getAddress(), len);
-		lAdrs.setBlockBit(true);
-		bitmk_1 = randomGenerator(seed, lAdrs.getAddress(), len);
+		adrs.setKeyBit(false);		
+		adrs.setBlockBit(false);
+		bitmk_0 = randomGenerator(seed, adrs.getAddress(), len);
+		adrs.setBlockBit(true);
+		bitmk_1 = randomGenerator(seed, adrs.getAddress(), len);
 		bitmk = ByteUtils.concatenate(bitmk_0, bitmk_1);
 		return bitmk;
 	}
