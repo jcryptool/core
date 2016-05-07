@@ -181,13 +181,13 @@ public class MerkleTreeView extends ViewPart {
 						case 3:
 							if(!mtS.getSignatureFromForm().isEmpty()) {
 								String signature=mtS.getSignatureFromForm();
-								String[]splittedSign = signature.split("\r\n");
+								String[]splittedSign = signature.split("\\|");
 								String keyIndex = "";
 								String message;
 								message=mtS.getMessageFromForm();
 								if(splittedSign.length> 1){
 									//otSign =splittedSign[0];
-									keyIndex =splittedSign[1];
+									keyIndex =splittedSign[0];
 								}
 								mtV=new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle, Integer.parseInt(keyIndex),signature,message);
 								tabFolder.getSelection()[0].setControl(mtV);

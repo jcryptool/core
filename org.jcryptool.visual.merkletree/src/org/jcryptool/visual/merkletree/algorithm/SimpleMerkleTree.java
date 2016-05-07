@@ -277,11 +277,12 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 			this.otsAlgo.setPublicKey(this.publicKeys.get(this.keyIndex));
 			this.otsAlgo.setMessage(messageHash.getBytes());
 			this.otsAlgo.sign();
-	
-			tmpSignature = org.jcryptool.visual.merkletree.files.Converter
+			
+			tmpSignature = Integer.toString(this.keyIndex)+"|";
+			tmpSignature += org.jcryptool.visual.merkletree.files.Converter
 					._byteToHex(this.otsAlgo.getSignature());// to-be-done
 
-			tmpSignature += "\r\n" + Integer.toString(this.keyIndex)+"\r\n";
+			
 			
 			while (iHeight < treeHeight-1) {
 				if(this.tree.get(iHeight).getParent().getLeft().equals(this.tree.get(iHeight))) {
@@ -299,9 +300,9 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 
 	@Override
 	public boolean verify(String message, String signature) {
-		String[] signer = signature.split("\r\n");
+		String[] signer = signature.split("\\|");
 		boolean verifier=true;
-		int keyIndex = Integer.parseInt(signer[1]);
+		int keyIndex = Integer.parseInt(signer[0]);
 		byte[][] curPubKey = this.publicKeys.get(keyIndex);	
 		//set OTS Algorithm values
 		String messageHash = org.jcryptool.visual.merkletree.files.Converter
@@ -348,8 +349,8 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 		return verifier;
 	}
 	public boolean verify(String message, String signature,int markedLeafIndex) {
-		String[] signer = signature.split("\r\n");
-		int keyIndex = Integer.parseInt(signer[1]);
+		String[] signer = signature.split("\\|");
+		int keyIndex = Integer.parseInt(signer[0]);
 		if(markedLeafIndex != keyIndex) {
 			return false;
 		}

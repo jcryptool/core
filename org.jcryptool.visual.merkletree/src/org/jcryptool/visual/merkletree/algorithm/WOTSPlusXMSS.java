@@ -116,7 +116,7 @@ public class WOTSPlusXMSS {
 		long total = 0; //unsigned int in RFC thus long
 		int bits = 0;
 		int consumed;
-		ArrayList<Byte> basew = new ArrayList<Byte>();
+		byte[] basew = new byte[(8 * input.length) / MathUtils.log2nlz(w)];
 		
 		for(consumed = 0; consumed < 8 * input.length; consumed += MathUtils.log2nlz(base)) {
 			if(bits == 0) {
@@ -125,17 +125,11 @@ public class WOTSPlusXMSS {
 				bits += 8;
 			}
 			bits -= MathUtils.log2nlz(base);
-			basew.add(out, (byte)( (total >> bits) & (w-1) ) );
+			basew[out] = (byte)((total >> bits) & (w-1) );
 			out++;
-		}
-		// convert Byte[] to byte[]
-		Byte[] temp = basew.toArray(new Byte[basew.size()]);
-		byte[] result = new byte[temp.length];
-		for(int i = 0; i < temp.length; i++) {
-			result[i] = temp[i];
-		}
+		}		
 		
-		return result;
+		return basew;
 	}
 	
 	/**
@@ -218,19 +212,20 @@ public class WOTSPlusXMSS {
 	public void sign(byte[][] message, byte[] seed, OTSHashAddress otsAdrs) {
 
 		byte[][] signature = new byte[l][n];
-		int csum = 0;	//checksum is byte[] for compatibility with basew method
+		long csum = 0;	//checksum is byte[] for compatibility with basew method
 		int l2_bytes;
+		byte[][] messageW = new byte[l][]; 
 		
 		for(int i = 0; i < message.length; i++){
-			message[i] = convertToBaseW(message[i], w);
+			messageW[i] = convertToBaseW(message[i], w);
 		}
 		//compute checksum
-		/*TODO: bugfix
 		for( int i = 0; i < message.length; i++) {
-			csum = csum + w - 1 - message[i];
-			
+			for(int j = 0; j < message[i].length; j++){
+				csum = csum + w - 1 - messageW[i][j];
+			}
 		}
-		*/
+		
 		//convert csum to base w
 		csum = csum << ( 8 -( ( l2 * MathUtils.log2nlz(w) ) % 8 ));
 		l2_bytes = (int)Math.ceil( ( l2 * MathUtils.log2nlz(w)) / 8);
@@ -240,10 +235,13 @@ public class WOTSPlusXMSS {
 				csum_bytes[i - l2_bytes] = (byte)(csum >> i * 8);			
 		}
 		csum_bytes[l2_bytes-1] = (byte)csum;
-		message = ByteUtils.concatenate(message, convertToBaseW(csum_bytes, w));
+		messageW = Arrays.copyOf(messageW, messageW.length + 1 );
+		messageW[messageW.length-1] = convertToBaseW(csum_bytes, w);
 		for (int i = 0; i < l; i++){
 			otsAdrs.setChainAddress(i);
-			sig
+			for(int i = 0; i < messageW.length; i++){
+				signature[i] = chain(privateKey[i], 0, messageW[i], seed, otsAdrs);
+			}
 		}
 		
 		
