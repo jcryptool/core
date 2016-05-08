@@ -2,6 +2,10 @@ sudo: false
 language: java
 jdk:
   - oraclejdk8
+branches:
+  only:
+    - master
+    - develop
 before_install: 
   - git clone https://github.com/jcryptool/crypto.git ~/build/jcryptool/crypto
   - echo "MAVEN_OPTS=-Xmx2048m" > ~/.mavenrc
