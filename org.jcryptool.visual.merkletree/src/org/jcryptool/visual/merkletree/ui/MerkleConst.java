@@ -7,6 +7,7 @@ package org.jcryptool.visual.merkletree.ui;
  * @author Kevin Muehlboeck
  */
 public abstract class MerkleConst {
+	//TODO: Ausmisten und Kommentare ändern
  
 	// Identifies a key data vector, as well as a wizard for key changing
 	public static final int KEY = 1;

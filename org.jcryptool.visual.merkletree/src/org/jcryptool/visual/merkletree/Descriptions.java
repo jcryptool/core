@@ -85,10 +85,8 @@ public class Descriptions extends NLS {
 		public static String Tab0_Head2;
 		
 		public static String Tab0_Txt0;
-		public static String Tab0_Txt1;
 		public static String Tab0_Txt2;
 		
-		public static String Tab0_Button0;
 		public static String Tab0_Button1;
 		public static String Tab0_Button2;
 
@@ -102,11 +100,9 @@ public class Descriptions extends NLS {
 		public static String Tab0_Head2;
 		
 		public static String Tab0_Txt0;
-		public static String Tab0_Txt1;
 		public static String Tab0_Txt2;
 		
-		public static String Tab0_Button0;
-		public static String Tab0_Button1;
+	    public static String Tab0_Button1;
 		public static String Tab0_Button2;
 
 	}

@@ -23,20 +23,21 @@ import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
+//TODO: MAXI Kommentare
 /**
  * Class for the Composite with the KeyPair generation in Tabpage 1
  * @author Fabian Mayer
  *
  */
 public class MerkleTreeKeyPairs extends Composite {
-	private Composite parent;
+	//private Composite parent;
 	Button buttonCreateKeys;
 	Label createLabel;
 	StyledText descText;
 	private byte[] seedArray;
-	private int leafcounter;
-	private Spinner spinnerkeysum;
-	private ViewPart masterView;
+	//private int leafcounter;
+	//private Spinner spinnerkeysum;
+	//private ViewPart masterView;
 	private int spinnerValue;
 
 	/**
@@ -47,8 +48,8 @@ public class MerkleTreeKeyPairs extends Composite {
 	 */
 	public MerkleTreeKeyPairs(Composite parent, int style, SUIT verfahren, ViewPart masterView) {
 		super(parent, style);
-		this.parent = parent;
-		this.masterView = masterView;
+		//this.parent = parent;
+		//this.masterView = masterView;
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
 
 		createLabel = new Label(this, SWT.NONE);
@@ -96,12 +97,9 @@ public class MerkleTreeKeyPairs extends Composite {
 		buttonCreateKeys.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 3, 1));
 		
 		//TEXT
+		//TODO: switch XMMSMT/MSS
+		
 				switch(verfahren){
-				case MSS:
-					createLabel.setText(Descriptions.MSS.Tab0_Head2);
-					descText.setText(Descriptions.MSS.Tab0_Txt2);
-					buttonCreateKeys.setText(Descriptions.MSS.Tab0_Button2);
-					break;
 				case XMSS:
 					createLabel.setText(Descriptions.XMSS.Tab0_Head2);
 					descText.setText(Descriptions.XMSS.Tab0_Txt2);
@@ -112,6 +110,7 @@ public class MerkleTreeKeyPairs extends Composite {
 					descText.setText(Descriptions.XMSS_MT.Tab0_Txt2);
 					buttonCreateKeys.setText(Descriptions.XMSS_MT.Tab0_Button2);
 					break;
+				case MSS:
 				default:
 					createLabel.setText(Descriptions.MSS.Tab0_Head2);
 					descText.setText(Descriptions.MSS.Tab0_Txt2);

@@ -19,7 +19,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
-import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
+//import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
 import org.jcryptool.visual.merkletree.ui.MerkleConst;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeComposite;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeKeyPairs;
@@ -41,15 +41,14 @@ public class MerkleTreeView extends ViewPart {
 	private Composite parent;
 	
 	//new
-	private TabFolder headFolder;
-	private TabItem headCodeTable;
+	//private TabFolder headFolder;
+    //private TabItem headCodeTable;
 	//_
 
 	// for this scrolling
-	private ScrolledComposite scroll;
+	//private ScrolledComposite scroll;
 	private TabFolder tabFolder;
-	private TabItem tbtmCodeTable;
-	private Boolean extended;
+	//private TabItem tbtmCodeTable;
 
 	// this composite is what actually holds the plug-in contents
 	private MerkleTreeComposite mtC;
@@ -66,7 +65,6 @@ public class MerkleTreeView extends ViewPart {
 	@Override
 	public void createPartControl(final Composite parent) {
 		this.parent = parent;
-		extended = false;
 		merkle = new SimpleMerkleTree(null, null, 0);
 		// provides horizontal and vertical scrolling for the plug-in
 		// scroll = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
@@ -184,12 +182,12 @@ public class MerkleTreeView extends ViewPart {
 					if(!mtS.getSignatureFromForm().isEmpty()) {
 						String signature=mtS.getSignatureFromForm();
 						String[]splittedSign = signature.split("\r\n");
-						String otSign = "";
+						//String otSign = "";
 						String keyIndex = "";
 						String message;
 						message=mtS.getMessageFromForm();
 						if(splittedSign.length> 1){
-							otSign =splittedSign[0];
+							//otSign =splittedSign[0];
 							keyIndex =splittedSign[1];
 						}
 						mtV=new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle, Integer.parseInt(keyIndex),signature,message);
@@ -255,13 +253,6 @@ public class MerkleTreeView extends ViewPart {
 	 * @param merkle
 	 */
 	public void setAlgorithm(ISimpleMerkle merkle) {
-		if (merkle.getClass() == SimpleMerkleTree.class) {
-			this.merkle = merkle;
-			extended = false;
-		} else if (merkle.getClass() == XMSSTree.class) {
-			this.merkle = merkle;
-			extended = true;
-		}else
 			this.merkle = merkle;
 	}
 
