@@ -523,7 +523,7 @@ public class XMSSTree implements ISimpleMerkle {
 	*/
 	public XMSSNode rootFromSig(String message, String signature){
 		String[] splitted = signature.split("\\|");	//split the signature in its components
-		byte[] r = splitted[1].getBytes();	//seed is always second in signature
+		byte[] r = Converter._hexStringToByte(splitted[1]);	//seed is always second in signature
 		int index = Integer.parseInt(splitted[0]);	//index is always first in signature
 		OTSHashAddress otsAdrs = new OTSHashAddress();
 		byte[][] pk_ots;

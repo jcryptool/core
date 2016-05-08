@@ -271,10 +271,7 @@ public class WOTSPlusXMSS implements OTS{
 		l2_bytes = (int)Math.ceil( ( l2 * MathUtils.log2nlz(w)) / 8.0);
 		byte[] csum_bytes = new byte[l2_bytes];
 		//copnvert csum to byte[]
-		for(int i = l2_bytes-1; i > 0 ; i--){
-				csum_bytes[l2_bytes-i] = (byte)(csum >>> (i * 8));			
-		}
-		csum_bytes[l2_bytes-1] = (byte)csum;
+		csum_bytes = BigInteger.valueOf(csum).toByteArray();
 		csum_bytes = convertToBaseW(csum_bytes, w);
 		messageW = ByteUtils.concatenate(messageW, csum_bytes);
 		for (int i = 0; i < l; i++){
