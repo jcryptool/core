@@ -6,7 +6,7 @@ The **JCrypTool Core** repository contains all plug-ins required to run JCrypToo
 This core platform is extended by the crypto plug-ins available in the [JCrypTool Crypto](https://github.com/jcryptool/crypto) repository.
 
 ##Contributing
-Every developer is welcome to join the JCrypTool community. Have a look at our [wiki](https://github.com/jcryptool/core/wiki) to see how you can join.
+Every developer is welcome to join the JCrypTool community. Have a look at our [wiki](https://github.com/jcryptool/core/wiki) to see how you can join our growing community.
 
 ## More Information
 Have a look at our [wiki](https://github.com/jcryptool/core/wiki) for more information, especially the [Getting started as a JCrypTool Developer](https://github.com/jcryptool/core/wiki/Getting-started-as-a-JCrypTool-Developer) page. Feel free to ask any question you might have in our [developers group](http://groups.google.com/group/jcryptool-developers).
