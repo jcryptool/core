@@ -117,6 +117,8 @@ public class Descriptions extends NLS {
 		NLS.initializeMessages(BUNDLE_NAME, Descriptions.class);
 		NLS.initializeMessages("org.jcryptool.visual.merkletree.descriptionsMSS", Descriptions.MSS.class);
 		NLS.initializeMessages("org.jcryptool.visual.merkletree.descriptionsXMSS", Descriptions.XMSS.class);
+		NLS.initializeMessages("org.jcryptool.visual.merkletree.descriptionsXMSS_MT", Descriptions.XMSS_MT.class);
+
 	}
 
 	private Descriptions() {
