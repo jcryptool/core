@@ -55,23 +55,23 @@ public class MerkleTreeSeed extends Composite {
 
 
 		//TEXTgeneration
+		//TODO: switch between XMSS/MSS/MT seedgeneration, und auswahl preconfigured seeed
 		switch(verfahren){
-		
-		case XMSS:
-			prng.setText(Descriptions.XMSS.Tab0_Head1);
-			createSeed.setText(Descriptions.XMSS.Tab0_Button1);
-			break;
-		case XMSS_MT:
-			prng.setText(Descriptions.XMSS_MT.Tab0_Head1);
-			createSeed.setText(Descriptions.XMSS_MT.Tab0_Button1);
-			break;
-		case MSS:
-		default:
-			prng.setText(Descriptions.MSS.Tab0_Head1);
-			createSeed.setText(Descriptions.MSS.Tab0_Button1);
-			break;
-		
+			case XMSS:
+				prng.setText(Descriptions.XMSS.Tab0_Head1);
+				createSeed.setText(Descriptions.XMSS.Tab0_Button1);
+				break;
+			case XMSS_MT:
+				prng.setText(Descriptions.XMSS_MT.Tab0_Head1);
+				createSeed.setText(Descriptions.XMSS_MT.Tab0_Button1);
+				break;
+			case MSS:
+			default:
+				prng.setText(Descriptions.MSS.Tab0_Head1);
+				createSeed.setText(Descriptions.MSS.Tab0_Button1);
+				break;
 		}
+		
 		
 		keyPairc = new MerkleTreeKeyPairs(this, SWT.WRAP | SWT.BORDER | SWT.LEFT, verfahren, masterView);
 		keyPairc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
