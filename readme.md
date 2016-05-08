@@ -5,7 +5,7 @@ The **JCrypTool Crypto** repository contains all crypto plug-ins for JCrypTool: 
 
 These projects require the plug-ins from the [JCrypTool Core](https://github.com/jcryptool/core) repository to compile and to run.
 
-##Participation
+##Contributing
 Every developer is welcome to join the JCrypTool community. Have a look at our [wiki](https://github.com/jcryptool/core/wiki) to see how you can join.
 
 ## More Information
