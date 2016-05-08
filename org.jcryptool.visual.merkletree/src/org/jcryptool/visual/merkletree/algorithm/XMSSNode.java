@@ -130,6 +130,16 @@ public class XMSSNode implements Node{
 	public int getLeafNumber() {
 		return index;
 	}
+
+	
+	public boolean equals(XMSSNode arg0) {
+		if(arg0.getContent() == content) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	
 	
 }
