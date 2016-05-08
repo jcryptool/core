@@ -1,6 +1,7 @@
 package org.jcryptool.visual.merkletree.algorithm;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.jcryptool.visual.merkletree.files.Converter;
@@ -132,8 +133,8 @@ public class XMSSNode implements Node{
 	}
 
 	
-	public boolean equals(XMSSNode arg0) {
-		if(arg0.getContent() == content) {
+	public boolean equals(Node arg0) {
+		if(Arrays.equals(arg0.getContent(), content)) {
 			return true;
 		} else {
 			return false;

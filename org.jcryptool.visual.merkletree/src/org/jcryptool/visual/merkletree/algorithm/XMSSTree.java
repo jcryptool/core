@@ -152,23 +152,24 @@ public class XMSSTree implements ISimpleMerkle {
 	}
 
 	//TODO add parameter pubKey, seed, adrs
-	public byte[] generateLTree(byte[][] pubKey, byte[] seed, LTreeAddress adrs) {
+	public byte[] generateLTree(byte[][] pKey, byte[] seed, LTreeAddress adrs) {
+		byte[][] pubKey = pKey.clone();
 		int len = pubKey.length;
-		Address lAdrs = adrs;
+		Address lAdrs = adrs;		
 		lAdrs.setTreeHeight(0);
 
 		while (len > 1) {
-			for (int i = 0; i < Math.floor(len / 2); i = i + 1) {
+			for (int i = 0; i < Math.floor(len / 2.0); i = i + 1) {
 				lAdrs.setTreeIndex(i);
 				//zuck: Hashing der leaves/nodes				
 				pubKey[i] = rand_hash(pubKey[2 * i], pubKey[2 * i + 1], seed, lAdrs);
 			}
 			if (len % 2 == 1) {
 				//zuck: Nachrücken der ungeraden Node 
-				pubKey[(int) (Math.floor(len / 2))] = pubKey[(int) len -1 ];
+				pubKey[(int) (Math.floor(len / 2.0))] = pubKey[(int) len -1 ];
 			}
 			//zuck: Anpassen der Anzahl an Nodes bzw. setzen der Anzahl der Nodes auf der neuen Höhe
-			len = (int)Math.ceil((len / 2));
+			len = (int)Math.ceil((len / 2.0));
 			lAdrs.setTreeHeight(lAdrs.getTreeHeight() + 1);
 			}
 		return pubKey[0];
@@ -189,9 +190,8 @@ public class XMSSTree implements ISimpleMerkle {
 			//XOR message with bitmask
 			message[i] ^= bitmk[i];
 		}
-		//Formatiert den ksecret und message zu einem 512 Byte hexadezimalen Wert
-		String tohash = String.format("%512s", (key.toString() + message.toString()));
-		return mDigest.digest(tohash.getBytes());
+		byte[] tohash = ByteUtils.concatenate(key, message);
+		return mDigest.digest(tohash);
 		}	
 	
 
@@ -389,6 +389,8 @@ public class XMSSTree implements ISimpleMerkle {
 		OTSHashAddress otsAdrs = new OTSHashAddress();		
 		otsAdrs.setOTSBit(true);
 		otsAdrs.setOTSAddress(index);
+		otsAlgo.setPrivateKey(privKeys.get(index));
+		otsAlgo.setPublicKey(publicKeys.get(index));
 		byte[][] ots_sig = ((WOTSPlusXMSS) otsAlgo).sign(hashedMessage, publicSeed, otsAdrs);		
 		String signature = Integer.toString(index) + "|" + Converter._byteToHex(r) + "|" + Converter._2dByteToHex(ots_sig);
 		for(int i = 0; i < auth.size(); i++){
@@ -526,12 +528,15 @@ public class XMSSTree implements ISimpleMerkle {
 		byte[] r = Converter._hexStringToByte(splitted[1]);	//seed is always second in signature
 		int index = Integer.parseInt(splitted[0]);	//index is always first in signature
 		OTSHashAddress otsAdrs = new OTSHashAddress();
+		LTreeAddress lAdrs = new LTreeAddress();
 		byte[][] pk_ots;
 		WOTSPlusXMSS wots = (WOTSPlusXMSS) this.otsAlgo;
 		//index || r as seed for hashing the message
 		byte[] hashedMessage = randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(index).toByteArray(),r), message.getBytes(), message.length());
 		otsAdrs.setOTSBit(true);
 		otsAdrs.setOTSAddress(index);
+		wots.setPrivateKey(privKeys.get(index));
+		wots.setPublicKey(publicKeys.get(index));
 		pk_ots = wots.pkFromSig(splitted[2], hashedMessage, publicSeed, otsAdrs);
 		lAdrs.setOTSBit(false);
 		lAdrs.setLTreeBit(true);
@@ -542,7 +547,7 @@ public class XMSSTree implements ISimpleMerkle {
 		lAdrs.setTreeIndex(index);
 		for(int k = 0; k < getTreeHeight(); k++) {
 			lAdrs.setTreeHeight(k);
-			if(Math.floor(index / 1<<k) % 2 == 0) {
+			if(Math.floor((double)index / (1<<k)) % 2 == 0) {
 				lAdrs.setTreeIndex(lAdrs.getTreeIndex() / 2);
 				node[1] = new XMSSNode(rand_hash(node[0].getContent(), Converter._hexStringToByte(splitted[3+k]), publicSeed, lAdrs));	//splitted[3] is auth[0] in signature				
 			} else {
@@ -592,7 +597,7 @@ public class XMSSTree implements ISimpleMerkle {
 	public ArrayList<Node> buildAuth(int i,byte[] seed) {
 		ArrayList<Node> auth = new ArrayList<Node>();
 		for(int j = 0; j < getTreeHeight(); j++) {
-			int k = ((int)Math.floor(i / (1 << j))) ^ 1;
+			int k = ((int)Math.floor((double)i / (1 << j))) ^ 1;
 			auth.add(j,treeHash(k* (1 << j),j, seed));
 		}
 		return auth;

@@ -156,7 +156,8 @@ public class WOTSPlusXMSS implements OTS{
 	 * @return
 	 * 			the s times hashed input
 	 */
-	public byte[] chain(byte[] input, int i, int s, byte[] seed, OTSHashAddress otsAdrs){
+	public byte[] chain(byte[] x, int i, int s, byte[] seed, OTSHashAddress otsAdrs){
+		byte[] input = x.clone();
 		byte[] tmp = new byte[input.length];
 		byte[] bitmask = new byte[input.length];
 		byte[] key = new byte[input.length];
@@ -524,11 +525,10 @@ public class WOTSPlusXMSS implements OTS{
 	 * @return
 	 */
 	private byte[] calcHash(byte[] tmp) {
-
-		String base = org.jcryptool.visual.merkletree.files.Converter._byteToHex(tmp);
+		
 
 		try {
-			byte[] hash = digest.digest(base.getBytes("UTF-8"));
+			byte[] hash = digest.digest(tmp);
 			StringBuffer hexString = new StringBuffer();
 
 			for (int i = 0; i < hash.length; i++) {
@@ -538,7 +538,7 @@ public class WOTSPlusXMSS implements OTS{
 				hexString.append(hex);
 			}
 
-			return org.jcryptool.visual.merkletree.files.Converter._hexStringToByte(hexString.toString());
+			return Converter._hexStringToByte(hexString.toString());
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}
