@@ -39,6 +39,11 @@ public class MerkleTreeView extends ViewPart {
 	}
 
 	private Composite parent;
+	
+	//new
+	private TabFolder headFolder;
+	private TabItem headCodeTable;
+	//_
 
 	// for this scrolling
 	private ScrolledComposite scroll;
@@ -256,7 +261,8 @@ public class MerkleTreeView extends ViewPart {
 		} else if (merkle.getClass() == XMSSTree.class) {
 			this.merkle = merkle;
 			extended = true;
-		}
+		}else
+			this.merkle = merkle;
 	}
 
 	/**

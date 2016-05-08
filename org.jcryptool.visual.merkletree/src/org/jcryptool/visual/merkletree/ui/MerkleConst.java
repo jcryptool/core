@@ -48,11 +48,11 @@ public abstract class MerkleConst {
 
 	// height of the plug-in as a whole (this is important for the scrolling of
 	// the plug-in)
-	public static final int PLUGIN_HEIGTH = 768;
+	public static final int PLUGIN_HEIGTH = 600;
 
 	// width of the plug-in as a whole (this is important for the scrolling of
 	// the plug-in)
-	public static final int PLUGIN_WIDTH = 1024;
+	public static final int PLUGIN_WIDTH = 800;
 
 	// height of one row in the main layout of the plug-in
 	public static final int PLUGIN_ROW_HEIGHT = 70;
