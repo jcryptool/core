@@ -18,7 +18,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.swt.graphics.Point;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.algorithm.AbstractAlgorithm;
 import org.jcryptool.core.operations.algorithm.AbstractAlgorithmHandler;
