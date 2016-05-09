@@ -208,6 +208,9 @@ public class XMSSTree implements ISimpleMerkle {
 		Node node; //TODO make new Node class
 		Stack<Node> stack = new Stack<Node>();
 		byte[][] pKey;
+		OTSHashAddress otsAdrs = new OTSHashAddress();
+		LTreeAddress lAdrs = new LTreeAddress();
+		HashTreeAddress hAdrs = new HashTreeAddress();
 		
 		if(s % (1 << t) != 0){
 			return null;

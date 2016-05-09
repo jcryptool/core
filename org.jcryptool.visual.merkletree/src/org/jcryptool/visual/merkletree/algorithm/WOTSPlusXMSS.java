@@ -296,8 +296,7 @@ public class WOTSPlusXMSS implements OTS{
 	
 	public boolean verify() {
 
-		byte[][] tmpSignature = org.jcryptool.visual.merkletree.files.Converter
-				._hexStringTo2dByte((org.jcryptool.visual.merkletree.files.Converter._byteToHex(signature)), l);
+		byte[][] tmpSignature = Converter._hexStringTo2dByte((Converter._byteToHex(signature)), l);
 
 		// Hash + xor each part w-1-bi times and verifies it with public Key
 		for (int i = 0; i < l; i++) {
@@ -550,9 +549,9 @@ public class WOTSPlusXMSS implements OTS{
 		byte[] bCount = ByteBuffer.allocate(4).putInt(seedCount).array();
 		byte[] keyAdrs = new byte[256 - this.seed.length - bCount.length];
 		Arrays.fill(keyAdrs, (byte) 0);
-		byte[] merge = org.jcryptool.visual.merkletree.files.ByteUtils.concatenate(this.seed, keyAdrs);
+		byte[] merge = ByteUtils.concatenate(this.seed, keyAdrs);
 
-		byte[] hash = sDigest.digest(org.jcryptool.visual.merkletree.files.ByteUtils.concatenate(merge, bCount));
+		byte[] hash = sDigest.digest(ByteUtils.concatenate(merge, bCount));
 		this.seedCount++;
 		return hash;
 	}

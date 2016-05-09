@@ -116,7 +116,7 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 					/*if(((Node)con.getSource().getData()).getLeafNumber()>=0) {
 						currentLeaf=((Node)con.getSource().getData()).getLeafNumber();
 					}*/
-					if(((Node)con.getDestination().getData()).getLeafNumber() >=0) {
+					if(((Node)con.getDestination().getData()).isLeaf()) {
 						currentLeaf=((Node)con.getDestination().getData()).getLeafNumber();
 					}
 					/*if(((Node)con.getData()).getLeafNumber() >= 0) {
