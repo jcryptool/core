@@ -43,11 +43,11 @@ public class MerkleTreeSeed extends Composite {
 		Composite testComp = new Composite(this,SWT.NONE | SWT.BORDER);
 		testComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,8,SWT.FILL));
 		testComp.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN,true));
-		
+
 		prng = new Label(testComp, SWT.NONE);
 		prng.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
 
-		textSeed = new Text(testComp, SWT.BORDER | SWT.RIGHT);
+		textSeed = new Text(testComp, SWT.BORDER | SWT.CENTER);
 		textSeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 
 		createSeed = new Button(testComp, SWT.NONE);
@@ -72,7 +72,11 @@ public class MerkleTreeSeed extends Composite {
 				break;
 		}
 		
-		
+		if(verfahren != SUIT.MSS){
+			MerkleTreeBitmask bitMask;
+			bitMask = new MerkleTreeBitmask(this, SWT.WRAP | SWT.BORDER | SWT.LEFT, verfahren, masterView);
+			bitMask.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
+		}
 		keyPairc = new MerkleTreeKeyPairs(this, SWT.WRAP | SWT.BORDER | SWT.LEFT, verfahren, masterView);
 		keyPairc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
 		

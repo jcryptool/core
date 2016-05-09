@@ -73,6 +73,8 @@ public class MerkleTreeKeyPairs extends Composite {
 		spinnerkeysum.setSelection(0);
 		spinnerkeysum.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
 		
+		
+		
 		//spinner for power of two
 		spinnerkeysum.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -91,6 +93,8 @@ public class MerkleTreeKeyPairs extends Composite {
 				}
 			}
 		});
+		
+		
 
 		buttonCreateKeys = new Button(this, SWT.NONE);
 		buttonCreateKeys.setEnabled(false);
@@ -98,6 +102,18 @@ public class MerkleTreeKeyPairs extends Composite {
 		
 		//TEXT
 		//TODO: switch XMMSMT/MSS
+if(verfahren == SUIT.XMSS_MT){
+			
+			Label trees = new Label(this, SWT.NONE);
+			trees.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
+			trees.setText(Descriptions.XMSS_MT.Tab0_Lable2);
+
+			Spinner treespinner = new Spinner(this, SWT.BORDER);
+			treespinner.setMaximum(1073741824);
+			treespinner.setMinimum(2);
+			treespinner.setSelection(0);
+			treespinner.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
+		}
 		
 				switch(verfahren){
 				case XMSS:
