@@ -140,6 +140,13 @@ public class XMSSNode implements Node{
 			return false;
 		}
 	}
+		
+	public String getBinary(){
+		return Integer.toBinaryString(index);
+		
+	}
+	
+	
 	
 	
 	
