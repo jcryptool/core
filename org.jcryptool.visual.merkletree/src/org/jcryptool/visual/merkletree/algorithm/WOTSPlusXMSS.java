@@ -295,25 +295,7 @@ public class WOTSPlusXMSS implements OTS{
 	 */
 	
 	public boolean verify() {
-
-		byte[][] tmpSignature = Converter._hexStringTo2dByte((Converter._byteToHex(signature)), l);
-
-		// Hash + xor each part w-1-bi times and verifies it with public Key
-		for (int i = 0; i < l; i++) {
-
-			for (int j = 0; j < (w - 1 - (b[i] & 0xFF)); j++) {
-
-				for (int k = 0; k < tmpSignature[i].length; k++)
-					tmpSignature[i][k] = (byte) (tmpSignature[i][k] ^ publicKey[j + (b[i] & 0xFF)][k]);
-
-				tmpSignature[i] = calcHash(tmpSignature[i]);
-			}
-
-			// Compare sigma_i with pk_i
-			if (!Arrays.equals(tmpSignature[i], publicKey[i + w - 1])) {
-				return false;
-			}
-		}
+		//deadcode
 		return true;
 	}
 
@@ -327,35 +309,6 @@ public class WOTSPlusXMSS implements OTS{
 		l2 = (int) Math.floor(MathUtils.log2nlz(l1 * (w - 1)) / (double)MathUtils.log2nlz(w)) + 1;
 		l = l1 + l2;
 	}
-
-	/**
-	 * Calculate the exponent b (b_1, ..., b_l).
-	 *
-	 * @param message
-	 *            Message
-	 * @return Exponent b
-	 */
-	private void calculateExponentB() {
-
-		// Convert message to base w representation
-		byte[] mBaseW = convertToBaseW(messageHash, l1);
-
-		// Calculate checksum c
-		BigInteger checksum = BigInteger.ZERO;
-		for (int i = 0; i < l1; i++) {
-			checksum = checksum.add(BigInteger.valueOf(w - 1 - (mBaseW[i] & 0xFF)));
-		}
-
-		// Convert checksum to base w representation
-		byte[] checksumBaseW = convertToBaseW(checksum.toByteArray(), l2);
-
-		// Concatenate message and checksum
-		byte[] b = ByteUtils.concatenate(mBaseW, checksumBaseW);
-
-		this.b = b;
-	}
-
-
 
 	/**
 	 * Returns the private key.
@@ -376,45 +329,6 @@ public class WOTSPlusXMSS implements OTS{
 	public byte[][] getPublicKey() {
 		return publicKey;
 	}
-
-	/**
-	 * Returns the length l.
-	 * 
-	 * @return Length l
-	 */
-	
-	public int getLength() {
-		return l;
-	}
-
-	/**
-	 * returns public key length of WOTS+
-	 */
-	
-	public int getPublicKeyLength() {
-		return l + w - 1;
-	}
-
-	/**
-	 * Returns the message length.
-	 *
-	 * @return Message length
-	 */
-	
-	public int getMessageLength() {
-		return m;
-	}
-
-	/**
-	 * returns Bitstring bi
-	 * 
-	 * @return
-	 */
-	
-	public byte[] getBi() {
-		return b;
-	}
-
 	/**
 	 * returns the signature
 	 */
@@ -422,31 +336,7 @@ public class WOTSPlusXMSS implements OTS{
 	public byte[] getSignature() {
 		return signature;
 	}
-
-	/**
-	 * returns hashed message
-	 */
 	
-	public byte[] getMessageHash() {
-		return this.messageHash;
-	}
-
-	/**
-	 * returns blocklength n
-	 */
-	
-	public int getN() {
-		return n;
-	}
-
-	/**
-	 * returns l
-	 */
-	
-	public int getL() {
-		return l;
-	}
-
 	/**
 	 * Allows to set a custom Private Key
 	 * 
@@ -468,39 +358,6 @@ public class WOTSPlusXMSS implements OTS{
 	}
 
 	/**
-	 * hashes message and set as new message
-	 */
-	
-	public void setMessage(byte[] message) {
-		this.messageHash = message;
-	}
-
-	/**
-	 * sets new bi
-	 */
-	
-	public void setBi(byte[] b) {
-		this.b = b;
-	}
-
-	/**
-	 * sets new signature
-	 */
-	
-	public void setSignature(byte[] signature) {
-		this.signature = signature;
-	}
-
-	/**
-	 * sets new w and calculates new lengths
-	 */
-	
-	public void setW(int w) {
-		this.w = w;
-		calculateLengths();
-	}
-
-	/**
 	 * hashes message and returns hash
 	 */
 	
@@ -510,51 +367,11 @@ public class WOTSPlusXMSS implements OTS{
 	}
 
 	/**
-	 * returns new calculated Bitstring bi
-	 */
-	
-	public byte[] initB() {
-		calculateExponentB();
-		return b;
-	}
-
-	/**
 	 * Generates a hash-String to a given String
 	 * 
 	 * @return
 	 */
-	private byte[] calcHash(byte[] tmp) {
-		
-
-		try {
-			byte[] hash = digest.digest(tmp);
-			StringBuffer hexString = new StringBuffer();
-
-			for (int i = 0; i < hash.length; i++) {
-				String hex = Integer.toHexString(0xff & hash[i]);
-				if (hex.length() == 1)
-					hexString.append('0');
-				hexString.append(hex);
-			}
-
-			return Converter._hexStringToByte(hexString.toString());
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}
-	}
-
-	private byte[] generateSeed() {
-
-		// Seed||Keyadresse||counter
-		byte[] bCount = ByteBuffer.allocate(4).putInt(seedCount).array();
-		byte[] keyAdrs = new byte[256 - this.seed.length - bCount.length];
-		Arrays.fill(keyAdrs, (byte) 0);
-		byte[] merge = ByteUtils.concatenate(this.seed, keyAdrs);
-
-		byte[] hash = sDigest.digest(ByteUtils.concatenate(merge, bCount));
-		this.seedCount++;
-		return hash;
-	}
+	
 	
 	public byte[] randomGenerator(byte[] seed, byte[] adrs, int len) {
 		byte[] res = new byte[len+32];	//erstellen des zu befüllenden arrays
@@ -571,14 +388,87 @@ public class WOTSPlusXMSS implements OTS{
 		return res;
 	}
 
+	//ab hier zeugs wegen interface
 	@Override
 	public void sign() {
-		// TODO Auto-generated method stub
+		// weil interface
 		
 	}
 
 	@Override
 	public byte[] hashMessage(String message) {
+		// weil interface
+		return null;
+	}
+
+	@Override
+	public int getLength() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getMessageLength() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public byte[] getBi() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getPublicKeyLength() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getN() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getL() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public byte[] getMessageHash() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setMessage(byte[] message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setBi(byte[] b) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setSignature(byte[] signature) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setW(int w) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public byte[] initB() {
 		// TODO Auto-generated method stub
 		return null;
 	}
