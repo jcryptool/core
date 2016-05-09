@@ -36,6 +36,7 @@ import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.Node;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
+import org.jcryptool.visual.merkletree.algorithm.XMSSNode;
 import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
 
 /**
@@ -184,7 +185,7 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 					if (n.isLeaf()) {
 						styledTextTree.setForeground(new Color(null, new RGB(1, 70, 122)));
 			
-						binaryValue.setText(n.getCode() + ") = " + n.getNameAsString());
+						binaryValue.setText(n.getCode() + ") = " + n.getAuthPath());
 
 						if (markedConnectionList.size() == 0) {
 							markBranch(node);

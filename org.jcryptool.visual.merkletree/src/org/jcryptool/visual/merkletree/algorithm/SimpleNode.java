@@ -271,4 +271,16 @@ public class SimpleNode implements Node{
 		
 	}
 
+	@Override
+	public void setAuthPath(int treeHeight) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getAuthPath() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

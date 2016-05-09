@@ -471,6 +471,9 @@ public class XMSSTree implements ISimpleMerkle {
 		index = index + ix;
 		node.setIndex(index);
 		treeArray[index] = node;
+		if(node instanceof XMSSNode){
+			((XMSSNode)node).setAuthPath(getTreeHeight());
+		}
 	}
 		
 	public void setNeighbors(){

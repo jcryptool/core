@@ -16,6 +16,7 @@ public class XMSSNode implements Node{
 	private Node parent;
 	private List<Node> connections = new ArrayList<Node>();	
 	private boolean leaf;
+	private String authPath;
 	
 	
 	public XMSSNode(byte[] content){
@@ -140,10 +141,14 @@ public class XMSSNode implements Node{
 			return false;
 		}
 	}
+	
+	public void setAuthPath(int treeHeight){
+		authPath = Integer.toBinaryString(~index);
+		authPath = authPath.substring(authPath.length() - treeHeight);		
+	}
 		
-	public String getBinary(){
-		return Integer.toBinaryString(index);
-		
+	public String getAuthPath(){
+		return authPath;
 	}
 	
 	
