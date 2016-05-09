@@ -62,7 +62,7 @@ public abstract class MerkleConst {
 	public static final String PATH_TO_XOR_IMAGE = "/icons/xor.png";
 
 	// the relative path to the arrow image
-	public static final String PATH_TO_ARROW_IMAGE = "/icons/arrow.png";
+	//public static final String PATH_TO_ARROW_IMAGE = "/icons/arrow.png";
 
 	// the color which is used to highlight changes
 	// public static final Color VECTOR_HIGHLIGHT = ColorService.GREEN;
