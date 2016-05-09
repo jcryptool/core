@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
-	<context id="view" title="Merkle Signatur">
+	<context id="view" title="Merkle Signature">
 		<description>Diese Virtualisierung veranschaulicht das Merkle Tree Signaturverfahren</description>
-		<topic href="$nl$/content/index.html" label="Merkle Signatur" />
+		<topic href="$nl$/content/index.html" label="Merkle Signature" />
 	</context>
 
 </contexts>

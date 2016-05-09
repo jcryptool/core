@@ -81,12 +81,11 @@ public class MerkleTreeSignatureComposite extends Composite {
 		SingatureExpl.setText(Descriptions.MerkleTreeSign_3);
 		
 		styledTextSign = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
-		//gd_styledTextTree.widthHint = 960;
-		//gd_styledTextTree.heightHint = 40;;
 		GridData gd_textTextSign = new GridData(SWT.FILL,SWT.FILL,true,true,MerkleConst.H_SPAN_MAIN,1);
 		styledTextSign.setLayoutData(gd_textTextSign);
-		
 		createSign.addSelectionListener(new SelectionAdapter() {
+			
+			
 			/* (non-Javadoc)
 			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
 			 * Event to create a Signature
@@ -96,24 +95,13 @@ public class MerkleTreeSignatureComposite extends Composite {
 				if( textSign.getText()!= "") {
 				String signature = merkle.sign(textSign.getText());
 				usedText=textSign.getText();
-				String[]splittedSign = signature.split("\r\n");
-//				String otSign = "";
-				String keyIndex = "";
-				if(splittedSign.length> 1){
-//					otSign = splittedSign[0];
-					keyIndex = splittedSign[1];
-					styledTextKeyNumber.setText(keyIndex);
-				}
-//				styledTextSignSize.setText(Integer
-//						.toString(org.jcryptool.visual.merkletree.files.Converter._stringToByte(otSign).length / 2)	
-//						+ "/" + (merkle.getOneTimeSignatureAlgorithm().getN() * merkle.getOneTimeSignatureAlgorithm().getL()) + " Bytes");
 
-				//if(signature == "") {
-				//	styledTextSign.setText(Descriptions.MerkleTreeSign_4);
-				//}
-				//else
-				//styledTextSign.setText("looooool");
+				/**
+				 * updated the field of the Signature, KeyIndex and SignatureLength
+				 */
 				styledTextSign.setText(signature);
+				styledTextSignSize.setText(getSignatureLength(signature) +" Byte");
+				styledTextKeyNumber.setText(getKeyIndex(signature));
 				}
 				else {
 					styledTextSign.setText("lol");
@@ -148,6 +136,37 @@ public class MerkleTreeSignatureComposite extends Composite {
 	}
 	public String getMessageFromForm() {
 		return usedText;
+	}
+	
+	/**
+	 * @author christoph sonnberger
+	 * returns the Length of the Siganture as String
+	 * used for styledTextSignSize in GUI
+	 * @param signature
+	 * @return length of the Signature
+	 */
+	public String getSignatureLength(String signature){
+		int length = signature.length();
+		//divide by 2 to get the length in bytes
+		length = length/2;
+		StringBuilder sb = new StringBuilder();
+		sb.append("");
+		sb.append(length);
+		String sigLength = sb.toString();
+		return sigLength;
+	}
+	
+	/**
+	 * @author christoph sonnberger
+	 * returns the Index of a given signature as String
+	 * the Index is the first Letter of the signature
+	 * @param signature
+	 * @return index
+	 */
+	public String getKeyIndex(String signature){
+		int iend = signature.indexOf("|");
+		String subString= signature.substring(0 , iend);
+		return subString;
 	}
 
 	/**
