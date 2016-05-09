@@ -160,7 +160,7 @@ public class XMSSTree implements ISimpleMerkle {
 			lAdrs.setOTSBit(false);
 			lAdrs.setLTreeBit(true);
 			lAdrs.setLTreeAddress(s+i);
-			node = new XMSSNode(generateLTree(pKey, seed, lAdrs));
+			node = new XMSSNode(generateLTree(pKey, bitmaskSeed, lAdrs));
 			hAdrs.setLTreeBit(false);
 			hAdrs.setTreeHeight(0);
 			hAdrs.setTreeIndex(i+s);
@@ -169,7 +169,7 @@ public class XMSSTree implements ISimpleMerkle {
 			//if the current node and the next node on the stack have the same height hash them and put the new one back with height+1			
 			while(!stack.empty() && stack.peek().getHeight() == node.getHeight()) {					
 				hAdrs.setTreeIndex((hAdrs.getTreeIndex() -1) / 2);
-				node = new XMSSNode(rand_hash(stack.pop().getContent(), node.getContent(), seed, hAdrs));
+				node = new XMSSNode(rand_hash(stack.pop().getContent(), node.getContent(), bitmaskSeed, hAdrs));
 				hAdrs.setTreeHeight(hAdrs.getTreeHeight() + 1);
 				node.setHeight( hAdrs.getTreeHeight());
 				saveNodeInfos(node, hAdrs.getTreeIndex()); //save nodes on higher heights
@@ -379,16 +379,16 @@ public class XMSSTree implements ISimpleMerkle {
 		lAdrs.setLTreeBit(true);
 		lAdrs.setLTreeAddress(index);
 		XMSSNode[] node = new XMSSNode[2];
-		node[0] = new XMSSNode(generateLTree(pk_ots, seed, lAdrs));
+		node[0] = new XMSSNode(generateLTree(pk_ots, bitmaskSeed, lAdrs));
 		lAdrs.setLTreeBit(false);
 		lAdrs.setTreeIndex(index);
 		for(int k = 0; k < getTreeHeight(); k++) {
 			lAdrs.setTreeHeight(k);
 			if(Math.floor((double)index / (1<<k)) % 2 == 0) {
 				lAdrs.setTreeIndex(lAdrs.getTreeIndex() / 2);
-				node[1] = new XMSSNode(rand_hash(node[0].getContent(), Converter._hexStringToByte(splitted[3+k]), seed, lAdrs));	//splitted[3] is auth[0] in signature				
+				node[1] = new XMSSNode(rand_hash(node[0].getContent(), Converter._hexStringToByte(splitted[3+k]), bitmaskSeed, lAdrs));	//splitted[3] is auth[0] in signature				
 			} else {
-				node[1] = new XMSSNode(rand_hash(Converter._hexStringToByte(splitted[3+k]), node[0].getContent(), seed, lAdrs));
+				node[1] = new XMSSNode(rand_hash(Converter._hexStringToByte(splitted[3+k]), node[0].getContent(), bitmaskSeed, lAdrs));
 			}
 			node[0] = node[1];
 		}
