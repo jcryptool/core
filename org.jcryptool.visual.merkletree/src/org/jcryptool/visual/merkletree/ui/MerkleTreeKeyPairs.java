@@ -23,21 +23,20 @@ import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
-//TODO: MAXI Kommentare
+
 /**
  * Class for the Composite with the KeyPair generation in Tabpage 1
  * @author Fabian Mayer
+ * TODO: Kommentare
+ * TODO: Keygeneration
  *
  */
 public class MerkleTreeKeyPairs extends Composite {
-	//private Composite parent;
+
 	Button buttonCreateKeys;
 	Label createLabel;
 	StyledText descText;
 	private byte[] seedArray;
-	//private int leafcounter;
-	//private Spinner spinnerkeysum;
-	//private ViewPart masterView;
 	private int spinnerValue;
 
 	/**
@@ -48,8 +47,6 @@ public class MerkleTreeKeyPairs extends Composite {
 	 */
 	public MerkleTreeKeyPairs(Composite parent, int style, SUIT verfahren, ViewPart masterView) {
 		super(parent, style);
-		//this.parent = parent;
-		//this.masterView = masterView;
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
 
 		createLabel = new Label(this, SWT.NONE);
@@ -73,9 +70,7 @@ public class MerkleTreeKeyPairs extends Composite {
 		spinnerkeysum.setSelection(0);
 		spinnerkeysum.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
 		
-		
-		
-		//spinner for power of two
+		//spinner power of 2 amount of keys
 		spinnerkeysum.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -101,8 +96,7 @@ public class MerkleTreeKeyPairs extends Composite {
 		buttonCreateKeys.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 3, 1));
 		
 		
-		//TEXT
-		//TODO: switch XMMSMT/MSS
+		// if MT -> Anzahl ebenen
 		if(verfahren == SUIT.XMSS_MT){
 			
 			Label trees = new Label(this, SWT.NONE);
@@ -136,6 +130,7 @@ public class MerkleTreeKeyPairs extends Composite {
 				
 				
 
+		//TODO: was steht da? @alte gruppe
 		/*
 		 * Table table = new Table(this, SWT.MULTI | SWT.BORDER |
 		 * SWT.FULL_SELECTION); table.setLayoutData(new GridData(SWT.CENTER,
@@ -149,6 +144,8 @@ public class MerkleTreeKeyPairs extends Composite {
 		 * column.setText(Descriptions.MerkleTreeKey_column_2);table.
 		 * setHeaderVisible(true);
 		 */
+		
+		//TODO: treegeneration? HOW
 		buttonCreateKeys.addSelectionListener(new SelectionAdapter() {
 			/* (non-Javadoc)
 			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
@@ -178,6 +175,7 @@ public class MerkleTreeKeyPairs extends Composite {
 			}
 		});
 
+		//spinner power of 2? 
 		spinnerkeysum.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {

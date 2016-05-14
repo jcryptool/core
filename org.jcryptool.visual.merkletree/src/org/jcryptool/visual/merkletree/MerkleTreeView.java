@@ -19,7 +19,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
-//import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
 import org.jcryptool.visual.merkletree.ui.MerkleConst;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeComposite;
@@ -34,22 +33,19 @@ import org.jcryptool.visual.merkletree.ui.MerkleTreeZestComposite;
  * of its tool.
  * 
  * @author Kevin Muehlboeck
+ * 
+ * TODO: Kommentare
+ * 
  */
 public class MerkleTreeView extends ViewPart {
+	
 	public MerkleTreeView() {
+		
 	}
 
 	private Composite parent;
-	
-	//new
-	//private TabFolder headFolder;
-    //private TabItem headCodeTable;
-	//_
 
-	// for this scrolling
-	//private ScrolledComposite scroll;
 	private TabFolder tabFolder;
-	//private TabItem tbtmCodeTable;
 
 	// this composite is what actually holds the plug-in contents
 	private MerkleTreeComposite mtC;
@@ -59,6 +55,10 @@ public class MerkleTreeView extends ViewPart {
 	private ISimpleMerkle merkle;
 	private SUIT verfahren;
 
+	//bei tabwechsel, wenn true -> msg Box (y|n) "achtung" änderungen wurden nicht in neuen Tree übertragen, bitte neuen Key Erzeugen!
+	//TODO: if abfrage bei Tabwechsel einbauen
+	private Boolean unsavedChanges;
+	
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
@@ -68,20 +68,9 @@ public class MerkleTreeView extends ViewPart {
 	public void createPartControl(final Composite parent) {
 		this.parent = parent;
 		merkle = new SimpleMerkleTree(null, null, 0);
-		// provides horizontal and vertical scrolling for the plug-in
-		// scroll = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
-		// scroll.setExpandHorizontal(true);
-		// scroll.setExpandVertical(true);
-		// grid layout is used, because currently it seems to be the only layout
-		// provided by SWT
-		// that is capable of
-		// dealing with 4K monitors
-		// scroll.setLayout(new GridLayout(1, true));
-		// scroll.setMinSize(tabFolder.computeSize(MerkleConst.PLUGIN_WIDTH,
-		// MerkleConst.PLUGIN_HEIGTH));
-		// scroll.setContent(tabFolder);
+		
 		parent.setLayout(new GridLayout(1, false));
-
+		
 		ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		scrolledComposite.setExpandHorizontal(true);
@@ -90,14 +79,38 @@ public class MerkleTreeView extends ViewPart {
 
 		tabFolder = new TabFolder(scrolledComposite, SWT.NONE);
 
+		//Key-generation
 		TabItem tbtmParameter0 = new TabItem(tabFolder, SWT.NONE);
 		tbtmParameter0.setText(Descriptions.MerkleTreeView_0);
+		mtC = new MerkleTreeComposite(tabFolder, this);
+		tbtmParameter0.setControl(mtC);
+		
+		//TreeView
+		TabItem tbtmParameter1 = new TabItem(tabFolder, SWT.NONE);
+		tbtmParameter1.setText(Descriptions.MerkleTreeView_1);
+		//FIXME: Geht des?  keine zuweisung von <mtZ>
+		tbtmParameter1.setControl(mtZ);
+		
+		//Signing
+		TabItem tbtmParameter2 = new TabItem(tabFolder,SWT.NONE);
+		tbtmParameter2.setText(Descriptions.MerkleTreeView_2);
+		mtS=new MerkleTreeSignatureComposite(tabFolder,SWT.NONE,merkle);
+		tbtmParameter2.setControl(mtS);
+		
+		//Verification
+		TabItem tbtmParameter3 = new TabItem(tabFolder,SWT.NONE);
+		tbtmParameter3.setText(Descriptions.MerkleTreeView_3);
+		tbtmParameter3.setControl(mtV);
+		
+		
+		
 		tabFolder.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) {
 				
 				//Changing Content on the first tab should automatically redraw the merkleTree
-				//Fabian, 28.01.2016, getting content from first tab
+				//TODO: verstehen hier passiert viel KÄSE
+				//<--sinnlos?
 				byte[] seedCheck = new byte[(byte)0x00];
 				int keyCheck = 0;
 				Control[] controlView = mtC.getChildren();
@@ -130,7 +143,9 @@ public class MerkleTreeView extends ViewPart {
 						}
 					}
 				}
+				//>
 				//Kevin, 29.01.2016 generate new merkleTree
+				//passiert doch bei generate keypairs?
 				if(seedCheck.length > 0) {
 					if(!Arrays.equals(seedCheck, merkle.getPrivateSeed()) || keyCheck != merkle.getLeafCounter()) {
 						
@@ -216,31 +231,7 @@ public class MerkleTreeView extends ViewPart {
 				
 			}
 		});
-		// mtC.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,
-		// 1));
 
-		
-		TabItem tbtmParameter1 = new TabItem(tabFolder, SWT.NONE);
-		tbtmParameter1.setText(Descriptions.MerkleTreeView_1);
-		// Composite compositeTree = new Composite(tabFolder, SWT.NONE);
-		// composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
-		// 1, 1));
-
-		// Hier soll der Baum bereits fertig sein! ACHTUNG BUG !!!!!
-		// mtZ=new MerkleTreeZestComposite(tabFolder, SWT.NONE);
-		tbtmParameter1.setControl(mtZ);
-		
-		TabItem tbtmParameter2 = new TabItem(tabFolder,SWT.NONE);
-		tbtmParameter2.setText(Descriptions.MerkleTreeView_2);
-		mtS=new MerkleTreeSignatureComposite(tabFolder,SWT.NONE,merkle);
-		tbtmParameter2.setControl(mtS);
-		
-		TabItem tbtmParameter3 = new TabItem(tabFolder,SWT.NONE);
-		tbtmParameter3.setText(Descriptions.MerkleTreeView_3);
-		tbtmParameter3.setControl(mtV);
-		
-		mtC = new MerkleTreeComposite(tabFolder, SWT.NONE, this);
-		tbtmParameter0.setControl(mtC);
 
 		scrolledComposite.setContent(tabFolder);
 		scrolledComposite.setMinSize(MerkleConst.PLUGIN_WIDTH,MerkleConst.PLUGIN_HEIGTH);
@@ -257,6 +248,7 @@ public class MerkleTreeView extends ViewPart {
 	public void setAlgorithm(ISimpleMerkle merkle, SUIT verfahren) {
 			this.merkle = merkle;
 			this.verfahren = verfahren;
+			unsavedChanges = false;
 	}
 
 	/**
@@ -289,4 +281,7 @@ public class MerkleTreeView extends ViewPart {
 		parent.layout();
 	}
 
+	public void updateElement(){
+		unsavedChanges = true;
+	}
 }

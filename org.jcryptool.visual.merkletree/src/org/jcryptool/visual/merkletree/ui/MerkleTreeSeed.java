@@ -21,6 +21,9 @@ import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 /**
  * Class for the Composite with the Seed in Tabpage 1
  * @author Fabian Mayer
+ *TODO: Kommentare
+ *TODO: Key auslesen aus TXTBox
+ *TODO: Key auto generieren
  *
  */
 public class MerkleTreeSeed extends Composite {
@@ -54,11 +57,9 @@ public class MerkleTreeSeed extends Composite {
 		createSeed.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 2, 1));
 
 
-		//TEXTgeneration
-		//TODO: switch between XMSS/MSS/MT seedgeneration, und auswahl preconfigured seeed
+
 		prng.setText(Descriptions.Tab0_Head1);
 		createSeed.setText(Descriptions.Tab0_Button1);
-		
 		if(verfahren != SUIT.MSS){
 			MerkleTreeBitmask bitMask;
 			bitMask = new MerkleTreeBitmask(this, SWT.WRAP | SWT.BORDER | SWT.LEFT, verfahren, masterView);
@@ -67,6 +68,7 @@ public class MerkleTreeSeed extends Composite {
 		keyPairc = new MerkleTreeKeyPairs(this, SWT.WRAP | SWT.BORDER | SWT.LEFT, verfahren, masterView);
 		keyPairc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
 		
+		//TODO: sec.Rand.gen falsch Methode getSeed()!
 		createSeed.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -102,9 +104,12 @@ public class MerkleTreeSeed extends Composite {
 		});
 	}
 
+	/* wird nie verwendet^^
+	 * TODO: verwenden!
 	public byte[] getSeed() {
 		return textSeed.getText().getBytes();
 	}
+	*/
 
 	@Override
 	protected void checkSubclass() {

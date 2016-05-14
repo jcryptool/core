@@ -11,29 +11,13 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
-//import org.eclipse.swt.SWT;
-//import org.eclipse.swt.custom.StyledText;
-//import org.eclipse.swt.events.ModifyEvent;
-//import org.eclipse.swt.events.ModifyListener;
-//import org.eclipse.swt.events.SelectionAdapter;
-//import org.eclipse.swt.events.SelectionEvent;
-//import org.eclipse.swt.layout.GridData;
-//import org.eclipse.swt.layout.GridLayout;
-//import org.eclipse.swt.widgets.Button;
-//import org.eclipse.swt.widgets.Composite;
-//import org.eclipse.swt.widgets.Control;
-//import org.eclipse.swt.widgets.Label;
-//import org.eclipse.swt.widgets.MessageBox;
-//import org.eclipse.swt.widgets.Shell;
-//import org.eclipse.swt.widgets.Spinner;
-//import org.eclipse.swt.widgets.Text;
-//import org.eclipse.ui.part.ViewPart;
-//import org.jcryptool.visual.merkletree.Descriptions;
-//import org.jcryptool.visual.merkletree.MerkleTreeView;
-//import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
-//import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
-//import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
+/**
+ * 
+ * @author VmHost
+ * TODO: Kommentare
+ * XXX: Fertig
+ */
 public class MerkleTreeBitmask extends Composite{
 	
 	Button buttonCreateKeys;
