@@ -92,7 +92,7 @@ public class MerkleTreeKeyPairs extends Composite {
 		
 
 		buttonCreateKeys = new Button(this, SWT.NONE);
-		buttonCreateKeys.setEnabled(false);
+		buttonCreateKeys.setEnabled(true);
 		buttonCreateKeys.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 3, 1));
 		
 		
