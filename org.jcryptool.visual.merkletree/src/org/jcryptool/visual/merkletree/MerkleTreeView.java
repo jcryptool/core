@@ -21,6 +21,7 @@ import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
 //import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
 import org.jcryptool.visual.merkletree.ui.MerkleConst;
+import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeComposite;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeKeyPairs;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeSeed;
@@ -56,6 +57,7 @@ public class MerkleTreeView extends ViewPart {
 	private MerkleTreeSignatureComposite mtS;
 	private MerkleTreeVerifikationComposite mtV;
 	private ISimpleMerkle merkle;
+	private SUIT verfahren;
 
 
 	/* (non-Javadoc)
@@ -155,7 +157,7 @@ public class MerkleTreeView extends ViewPart {
 					tabFolder.setSelection(0);
 				} else if (tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_1)
 						&& merkle.isGenerated()) {
-					mtZ = new MerkleTreeZestComposite(tabFolder, SWT.NONE, merkle);
+					mtZ = new MerkleTreeZestComposite(tabFolder, SWT.NONE, merkle,verfahren);
 					tabFolder.getSelection()[0].setControl(mtZ);
 				}
 				if(tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_2) && !merkle.isGenerated()){
@@ -252,8 +254,9 @@ public class MerkleTreeView extends ViewPart {
 	 * This method synchronizes the merkleTree
 	 * @param merkle
 	 */
-	public void setAlgorithm(ISimpleMerkle merkle) {
+	public void setAlgorithm(ISimpleMerkle merkle, SUIT verfahren) {
 			this.merkle = merkle;
+			this.verfahren = verfahren;
 	}
 
 	/**

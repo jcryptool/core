@@ -81,7 +81,7 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 		});
 		// the heading of the description; is not selectable by mouse
 		Label descLabel = new Label(compositeTree, SWT.NONE);
-		descLabel.setText(Descriptions.MerkleTreeView_3);
+		descLabel.setText("tabxHead0");
 		//descLabel.setFont(FontService.getHeaderFont());
 
 		// this divide has been made to allow selection of text in this section
@@ -147,6 +147,7 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 
 		Graph graph = viewer.getGraphControl();
 		
+		@SuppressWarnings("unchecked")
 		List<GraphNode> gNodes = graph.getNodes();
 		for(GraphNode gnode : gNodes) {
 			if(((Node)gnode.getData()).getLeafNumber() == leafNumber) {
@@ -225,6 +226,7 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 	 * @param leaf
 	 *            - the leaf node of the branch
 	 */
+	@SuppressWarnings("unchecked")
 	private void markBranch(GraphNode leaf) {
 		ArrayList<GraphItem> items = new ArrayList<GraphItem>();
 		
@@ -252,7 +254,6 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 			items.add(connection.getDestination());
 
 			markedConnectionList.add(connection);
-
 			l = connection.getSource().getTargetConnections();
 		}
 		}catch(IndexOutOfBoundsException ex) {
@@ -265,7 +266,7 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 	 * Unmark a previous marked branch
 	 * 
 	 * @param markedConnectionList
-	 *            - Contains marked elements
+	 *            
 	 */
 	private void unmarkBranch(List<GraphConnection> markedConnectionList) {
 		GraphConnection authPath;

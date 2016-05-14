@@ -7,31 +7,32 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.ui.part.ViewPart;
-import org.jcryptool.visual.merkletree.Descriptions;
-import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.Descriptions;
-import org.jcryptool.visual.merkletree.MerkleTreeView;
-import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
-import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
+//import org.eclipse.swt.SWT;
+//import org.eclipse.swt.custom.StyledText;
+//import org.eclipse.swt.events.ModifyEvent;
+//import org.eclipse.swt.events.ModifyListener;
+//import org.eclipse.swt.events.SelectionAdapter;
+//import org.eclipse.swt.events.SelectionEvent;
+//import org.eclipse.swt.layout.GridData;
+//import org.eclipse.swt.layout.GridLayout;
+//import org.eclipse.swt.widgets.Button;
+//import org.eclipse.swt.widgets.Composite;
+//import org.eclipse.swt.widgets.Control;
+//import org.eclipse.swt.widgets.Label;
+//import org.eclipse.swt.widgets.MessageBox;
+//import org.eclipse.swt.widgets.Shell;
+//import org.eclipse.swt.widgets.Spinner;
+//import org.eclipse.swt.widgets.Text;
+//import org.eclipse.ui.part.ViewPart;
+//import org.jcryptool.visual.merkletree.Descriptions;
+//import org.jcryptool.visual.merkletree.MerkleTreeView;
+//import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
+//import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
+//import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 public class MerkleTreeBitmask extends Composite{
 	
@@ -44,7 +45,7 @@ public class MerkleTreeBitmask extends Composite{
 	public MerkleTreeBitmask(Composite parent, int style, SUIT verfahren, ViewPart masterView) {
 		super(parent, style);
 		
-		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
+		this.setLayout(new GridLayout(2, true));
 
 		createLabel = new Label(this, SWT.NONE);
 		createLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
@@ -60,18 +61,16 @@ public class MerkleTreeBitmask extends Composite{
 		buttonCreateKeys.setEnabled(false);
 		buttonCreateKeys.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 3, 1));
 		
+		createLabel.setText(Descriptions.XMSS.Tab0_Head3);
+		buttonCreateKeys.setText(Descriptions.XMSS.Tab0_Button3);
 		switch(verfahren){
 		case XMSS_MT:
-			createLabel.setText(Descriptions.XMSS_MT.Tab0_Head3);
 			descText.setText(Descriptions.XMSS_MT.Tab0_Txt3);
-			buttonCreateKeys.setText(Descriptions.XMSS_MT.Tab0_Button3);
 			break;
 		case XMSS:
 		case MSS:
 		default:
-			createLabel.setText(Descriptions.XMSS.Tab0_Head3);
 			descText.setText(Descriptions.XMSS.Tab0_Txt3);
-			buttonCreateKeys.setText(Descriptions.XMSS.Tab0_Button3);
 			break;
 		}
 		descText.setEditable(false);

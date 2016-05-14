@@ -64,7 +64,7 @@ public class MerkleTreeKeyPairs extends Composite {
 
 		Label keysum = new Label(this, SWT.NONE);
 		keysum.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
-		keysum.setText(Descriptions.MerkleTreeKey_Label_1);
+
 
 		Spinner spinnerkeysum = new Spinner(this, SWT.BORDER);
 		spinnerkeysum.setMaximum(1073741824);
@@ -100,9 +100,10 @@ public class MerkleTreeKeyPairs extends Composite {
 		buttonCreateKeys.setEnabled(false);
 		buttonCreateKeys.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 3, 1));
 		
+		
 		//TEXT
 		//TODO: switch XMMSMT/MSS
-if(verfahren == SUIT.XMSS_MT){
+		if(verfahren == SUIT.XMSS_MT){
 			
 			Label trees = new Label(this, SWT.NONE);
 			trees.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
@@ -115,26 +116,25 @@ if(verfahren == SUIT.XMSS_MT){
 			treespinner.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
 		}
 		
-				switch(verfahren){
-				case XMSS:
-					createLabel.setText(Descriptions.XMSS.Tab0_Head2);
-					descText.setText(Descriptions.XMSS.Tab0_Txt2);
-					buttonCreateKeys.setText(Descriptions.XMSS.Tab0_Button2);
-					break;
-				case XMSS_MT:
-					createLabel.setText(Descriptions.XMSS_MT.Tab0_Head2);
-					descText.setText(Descriptions.XMSS_MT.Tab0_Txt2);
-					buttonCreateKeys.setText(Descriptions.XMSS_MT.Tab0_Button2);
-					break;
-				case MSS:
-				default:
-					createLabel.setText(Descriptions.MSS.Tab0_Head2);
-					descText.setText(Descriptions.MSS.Tab0_Txt2);
-					buttonCreateKeys.setText(Descriptions.MSS.Tab0_Button2);
-					break;
-				}
-
-				descText.setEditable(false);
+		
+		keysum.setText(Descriptions.Tab0_Lable1);
+		createLabel.setText(Descriptions.Tab0_Head2);
+		buttonCreateKeys.setText(Descriptions.Tab0_Button2);
+		switch(verfahren){
+			case XMSS:
+				descText.setText(Descriptions.XMSS.Tab0_Txt2);
+				break;
+			case XMSS_MT:
+				descText.setText(Descriptions.XMSS_MT.Tab0_Txt2);
+				break;
+			case MSS:
+			default:
+				descText.setText(Descriptions.MSS.Tab0_Txt2);
+				break;
+		}
+		descText.setEditable(false);
+				
+				
 
 		/*
 		 * Table table = new Table(this, SWT.MULTI | SWT.BORDER |
@@ -174,7 +174,7 @@ if(verfahren == SUIT.XMSS_MT){
 				messageBox.setText("Info");
 				messageBox.open();
 				MerkleTreeView view = (MerkleTreeView) masterView;
-				view.setAlgorithm(merkle);
+				view.setAlgorithm(merkle, verfahren);
 			}
 		});
 

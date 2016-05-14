@@ -111,20 +111,19 @@ public class MerkleTreeComposite extends Composite {
 		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2));
 		descText.setCaret(null);
 		descText.setEditable(false);
-		
 		switch(verfahren){
 		case XMSS:
-			descText.setText(Descriptions.XMSS.Tab0_Txt0);
 			descLabel.setText(Descriptions.XMSS.Tab0_Head0);
+			descText.setText(Descriptions.XMSS.Tab0_Txt0);
 			break;
 		case XMSS_MT:
-			descText.setText(Descriptions.XMSS_MT.Tab0_Txt0);
 			descLabel.setText(Descriptions.XMSS_MT.Tab0_Head0);
+			descText.setText(Descriptions.XMSS_MT.Tab0_Txt0);
 			break;
 		case MSS:
 		default:
-			descText.setText(Descriptions.MSS.Tab0_Txt0);
 			descLabel.setText(Descriptions.MSS.Tab0_Head0);
+			descText.setText(Descriptions.MSS.Tab0_Txt0);
 			break;
 		
 		}
