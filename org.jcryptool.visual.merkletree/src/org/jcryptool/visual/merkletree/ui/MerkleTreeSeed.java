@@ -21,7 +21,7 @@ import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 /**
  * Class for the Composite with the Seed in Tabpage 1
  * @author Fabian Mayer
- *TODO: Kommentare
+ * 
  *TODO: Key auslesen aus TXTBox
  *TODO: Key auto generieren
  *
@@ -29,6 +29,7 @@ import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 public class MerkleTreeSeed extends Composite {
 	private MerkleTreeKeyPairs keyPairc;
 	public byte[] seedarray;
+	private MerkleTreeBitmask bitMask;
 	Button createSeed;
 	Label prng;
 	Text textSeed;
@@ -47,23 +48,26 @@ public class MerkleTreeSeed extends Composite {
 		testComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,8,SWT.FILL));
 		testComp.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN,true));
 
+		//Seed Lable
 		prng = new Label(testComp, SWT.NONE);
 		prng.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
-
+		prng.setText(Descriptions.Tab0_Head1);
+		
+		//textbox - seed
 		textSeed = new Text(testComp, SWT.BORDER | SWT.CENTER);
 		textSeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 
+		//button
 		createSeed = new Button(testComp, SWT.NONE);
 		createSeed.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 2, 1));
-
-
-
-		prng.setText(Descriptions.Tab0_Head1);
 		createSeed.setText(Descriptions.Tab0_Button1);
+		
+		//for xmss|xmss^MT a Bitmask-Field is injected
 		if(verfahren != SUIT.MSS){
-			MerkleTreeBitmask bitMask;
 			bitMask = new MerkleTreeBitmask(this, SWT.WRAP | SWT.BORDER | SWT.LEFT, verfahren, masterView);
 			bitMask.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
+		}else{
+			bitMask = null;
 		}
 		keyPairc = new MerkleTreeKeyPairs(this, SWT.WRAP | SWT.BORDER | SWT.LEFT, verfahren, masterView);
 		keyPairc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
@@ -87,6 +91,10 @@ public class MerkleTreeSeed extends Composite {
 				textSeed.setText(String.valueOf(value));
 			}
 		});
+		
+
+		/* not Nessasary? seed = empty => seed = 0 ?
+		 * XXX: Frage
 		textSeed.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
@@ -102,14 +110,16 @@ public class MerkleTreeSeed extends Composite {
 				}
 			}
 		});
+		*/
 	}
-
-	/* wird nie verwendet^^
-	 * TODO: verwenden!
+	
+	/***
+	 * geter methode
+	 * @return seed as bytearray
+	 */
 	public byte[] getSeed() {
 		return textSeed.getText().getBytes();
 	}
-	*/
 
 	@Override
 	protected void checkSubclass() {

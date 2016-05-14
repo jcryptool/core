@@ -18,7 +18,7 @@ import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 /**
  * Class for the Composite with the Descriptions in Tabpage 1
  * @author Kevin Muehlboeck
- * @author <i>revised by:</i>
+ * @author <i>revised by</i>
  * @author Maximilian Lindpointner
  * 
  */
@@ -54,7 +54,7 @@ public class MerkleTreeComposite extends Composite {
 		combo.add(Descriptions.CompositeDescriptionXMSS);
 		combo.add(Descriptions.CompositeDescriptionXMSS_MT);
 		combo.setEnabled(true);
-		combo.select(1);
+		combo.select(0);
 		
 		
 		//listener if another SUIT is selected

@@ -127,23 +127,6 @@ public class MerkleTreeKeyPairs extends Composite {
 				break;
 		}
 		descText.setEditable(false);
-				
-				
-
-		//TODO: was steht da? @alte gruppe
-		/*
-		 * Table table = new Table(this, SWT.MULTI | SWT.BORDER |
-		 * SWT.FULL_SELECTION); table.setLayoutData(new GridData(SWT.CENTER,
-		 * SWT.CENTER, true, true, MerkleConst.H_SPAN_MAIN, 1));
-		 * 
-		 * TableColumn column = new TableColumn(table, SWT.NONE);
-		 * column.setText(Descriptions.MerkleTreeKey_column_0); column = new
-		 * TableColumn(table, SWT.NULL);
-		 * column.setText(Descriptions.MerkleTreeKey_column_1); column = new
-		 * TableColumn(table, SWT.NULL);
-		 * column.setText(Descriptions.MerkleTreeKey_column_2);table.
-		 * setHeaderVisible(true);
-		 */
 		
 		//TODO: treegeneration? HOW
 		buttonCreateKeys.addSelectionListener(new SelectionAdapter() {
@@ -153,19 +136,26 @@ public class MerkleTreeKeyPairs extends Composite {
 			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				MerkleTreeSeed mts = (MerkleTreeSeed)parent;
+				seedArray = mts.getSeed();
+				/* comment by Lindi
 				Control[] controls = parent.getChildren();
 				for (int i = 0; i < controls.length; i++) {
 					if (controls[i] instanceof Composite && !(controls[i] instanceof MerkleTreeKeyPairs)) {
 						for(Control control : ((Composite) controls[i]).getChildren()) {
 							if(control instanceof Text)
-								seedArray = ((Text) control).getText().getBytes();
+								 = ((Text) control).getText().getBytes();
 						}
 						
 					}
 				}
+				*/
+				//key generation!?!!  
 				ISimpleMerkle merkle = new SimpleMerkleTree(seedArray, seedArray, spinnerkeysum.getSelection());
 				merkle.selectOneTimeSignatureAlgorithm("SHA-256", "WOTSPlus");
 				merkle.generateMerkleTree();
+				
+//XXX: brauch ma de MSG box? 
 				MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
 				messageBox.setMessage(Descriptions.MerkleTreeKey_Message);
 				messageBox.setText("Info");
@@ -175,7 +165,8 @@ public class MerkleTreeKeyPairs extends Composite {
 			}
 		});
 
-		//spinner power of 2? 
+		//spinner power of 2 if empty (possible?) 
+		/* Not Possible empty @Lindi
 		spinnerkeysum.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
@@ -192,6 +183,7 @@ public class MerkleTreeKeyPairs extends Composite {
 				}
 			}
 		});
+		*/
 
 	}
 
