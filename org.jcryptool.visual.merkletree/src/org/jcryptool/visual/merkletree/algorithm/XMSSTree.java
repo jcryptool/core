@@ -566,12 +566,8 @@ public class XMSSTree implements ISimpleMerkle {
 	public void xmss_genPK() {
 		XMSSNode root;
 		byte[] seed;
+		seed = publicSeed;
 		
-		if(publicSeed == null){
-			seed = generateSeed(32); //welche größe hat der seed? 
-		}else{
-			seed = publicSeed;
-		}
 		
 		root = treeHash(0, getTreeHeight(), seed);
 		xPubKey = root.getContent() + "|" + new String(seed);
