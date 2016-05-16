@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.Descriptions;
+import org.jcryptool.visual.merkletree.MerkleTreeView;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 /**
@@ -30,9 +31,9 @@ public class MerkleTreeSeed extends Composite {
 	private MerkleTreeKeyPairs keyPairc;
 	public byte[] seedarray;
 	private MerkleTreeBitmask bitMask;
-	Button createSeed;
-	Label prng;
-	Text textSeed;
+	private Button createSeed;
+	private Label prng;
+	private Text textSeed;
 	
 	/**
 	 * Create the composite.
@@ -92,25 +93,15 @@ public class MerkleTreeSeed extends Composite {
 			}
 		});
 		
-
-		/* not Nessasary? seed = empty => seed = 0 ?
-		 * XXX: Frage
 		textSeed.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
-				Control[] controls = keyPairc.getChildren();
-				for (int i = 0; i < controls.length; i++) {
-					if (controls[i] instanceof Button) {
-						if (textSeed.getText().length() > 0) {
-							((Button) controls[i]).setEnabled(true);
-						} else {
-							((Button) controls[i]).setEnabled(false);
-						}
-					}
+				if(!textSeed.getText().getBytes().equals(seedarray)){
+					seedarray = textSeed.getText().getBytes();
+					((MerkleTreeView)masterView).updateElement();
 				}
 			}
 		});
-		*/
 	}
 	
 	/***
@@ -118,11 +109,18 @@ public class MerkleTreeSeed extends Composite {
 	 * @return seed as bytearray
 	 */
 	public byte[] getSeed() {
-		return textSeed.getText().getBytes();
+		//return textSeed.getText().getBytes();
+		return seedarray;
 	}
 
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
+	}
+	public MerkleTreeKeyPairs getMTKP(){
+		return keyPairc;
+	}
+	public MerkleTreeBitmask getMTB(){
+		return bitMask;
 	}
 }

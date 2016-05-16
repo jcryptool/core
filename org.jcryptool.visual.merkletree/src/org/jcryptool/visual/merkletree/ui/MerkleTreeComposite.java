@@ -124,4 +124,8 @@ public class MerkleTreeComposite extends Composite {
 		
 		}
 	}
+	
+	public MerkleTreeSeed getMTS(){
+		return seedc;
+	}
 }

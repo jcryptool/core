@@ -67,7 +67,8 @@ public class MerkleTreeView extends ViewPart {
 	@Override
 	public void createPartControl(final Composite parent) {
 		this.parent = parent;
-		merkle = new SimpleMerkleTree(null, null, 0);
+		merkle = null;
+		unsavedChanges = false;
 		
 		parent.setLayout(new GridLayout(1, false));
 		
@@ -105,6 +106,12 @@ public class MerkleTreeView extends ViewPart {
 		
 		
 		tabFolder.addSelectionListener(new SelectionAdapter() {
+			/* (non-Javadoc)
+			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+			 */
+			/* (non-Javadoc)
+			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+			 */
 			@Override
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) {
 				
@@ -113,6 +120,7 @@ public class MerkleTreeView extends ViewPart {
 				//<--sinnlos?
 				byte[] seedCheck = new byte[(byte)0x00];
 				int keyCheck = 0;
+				/*
 				Control[] controlView = mtC.getChildren();
 				for (int i = 0; i < controlView.length; i++) {
 					if ((controlView[i] instanceof Composite)) {
@@ -143,90 +151,160 @@ public class MerkleTreeView extends ViewPart {
 						}
 					}
 				}
+				keyCheck = mtC.getMTS().getMTKP().getKeyAmmount();
+				seedCheck = mtC.getMTS().getSeed();
+				*/
 				//>
-				//Kevin, 29.01.2016 generate new merkleTree
-				//passiert doch bei generate keypairs?
-				if(seedCheck.length > 0) {
-					if(!Arrays.equals(seedCheck, merkle.getPrivateSeed()) || keyCheck != merkle.getLeafCounter()) {
-						
-						//merkle neu zuweisen
-						merkle = new SimpleMerkleTree(seedCheck,seedCheck,keyCheck);
-						merkle.selectOneTimeSignatureAlgorithm("SHA-256","WOTSPlus");
-						merkle.generateKeyPairsAndLeaves();
-						merkle.generateMerkleTree();
-						if (tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_2)) {
-							tabFolder.getSelection()[0].setControl(mtS);
-						}
-						if (tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_1)) {
-							tabFolder.getSelection()[0].setControl(mtZ);
-						}
-					}
-				}	
 
-				if (tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_1)
-						&& !merkle.isGenerated()) {
+				if(unsavedChanges){
+					MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
+					messageBox.setMessage("unsaved");
+					messageBox.setText("Info");
+					messageBox.open();
+				}
+				
+				
+				
+				if(merkle != null && merkle.isGenerated()){
+					switch(tabFolder.getSelectionIndex()){
+						case 1:
+							mtZ = new MerkleTreeZestComposite(tabFolder, SWT.NONE, merkle,verfahren);
+							tbtmParameter1.setControl(mtZ);
+							break;
+						case 2:
+							if(!mtS.getMerkleFromForm().equals(merkle)){
+								mtS = new MerkleTreeSignatureComposite(tabFolder,SWT.NONE,merkle);
+							}
+							break;
+						case 3:
+							if(!mtS.getSignatureFromForm().isEmpty()) {
+								String signature=mtS.getSignatureFromForm();
+								String[]splittedSign = signature.split("\r\n");
+								String keyIndex = "";
+								String message;
+								message=mtS.getMessageFromForm();
+								if(splittedSign.length> 1){
+									//otSign =splittedSign[0];
+									keyIndex =splittedSign[1];
+								}
+								mtV=new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle, Integer.parseInt(keyIndex),signature,message);
+								tabFolder.getSelection()[0].setControl(mtV);
+								
+							}else
+								{
+								MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
+								messageBox.setMessage(Descriptions.MerkleTree_Signature_Generation_Info);
+								messageBox.setText("Info");
+								messageBox.open();
+								tabFolder.setSelection(2);
+							}
+								
+								
+								
+								
+								
+							break;
+						case 0:
+						default:
+							
+							
+							break;
+					}
+				}else{
 					MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
 					messageBox.setMessage(Descriptions.MerkleTree_Generation_Info);
 					messageBox.setText("Info");
 					messageBox.open();
 					tabFolder.setSelection(0);
-				} else if (tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_1)
-						&& merkle.isGenerated()) {
-					mtZ = new MerkleTreeZestComposite(tabFolder, SWT.NONE, merkle,verfahren);
-					tabFolder.getSelection()[0].setControl(mtZ);
 				}
-				if(tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_2) && !merkle.isGenerated()){
-					MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
-					messageBox.setMessage(Descriptions.MerkleTree_Generation_Info);
-					messageBox.setText("Info");
-					messageBox.open();
-					tabFolder.setSelection(0);
-				} else if (tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_2)
-						&& merkle.isGenerated()) {
-					if(!mtS.getMerkleFromForm().equals(merkle)){
-						mtS = new MerkleTreeSignatureComposite(tabFolder,SWT.NONE,merkle);
-						
-					}
-					/*if(mtS.getSignatureFromForm().equals(Descriptions.MerkleTreeSign_3)
-							|| mtS.getSignatureFromForm().equals(Descriptions.MerkleTreeSign_4)
-							|| mtS.getSignatureFromForm().equals(Descriptions.MerkleTreeSign_5)) {
-						//mtS.setSignatureFromForm(Descriptions.MerkleTreeSign_3);
-						mtZ=mtZ;
-					}*/
-					tabFolder.getSelection()[0].setControl(mtS);
-				}
-				if (tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_3) && merkle.isGenerated()) {
-					if(!mtS.getSignatureFromForm().isEmpty()) {
-						String signature=mtS.getSignatureFromForm();
-						String[]splittedSign = signature.split("\r\n");
-						//String otSign = "";
-						String keyIndex = "";
-						String message;
-						message=mtS.getMessageFromForm();
-						if(splittedSign.length> 1){
-							//otSign =splittedSign[0];
-							keyIndex =splittedSign[1];
-						}
-						mtV=new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle, Integer.parseInt(keyIndex),signature,message);
-						tabFolder.getSelection()[0].setControl(mtV);
-						
-					}
-					else
-					{
-						MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
-						messageBox.setMessage(Descriptions.MerkleTree_Signature_Generation_Info);
-						messageBox.setText("Info");
-						messageBox.open();
-						tabFolder.setSelection(0);
-					}
-				}
-				else if(tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_3) && !merkle.isGenerated()){
-					MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
-					messageBox.setMessage(Descriptions.MerkleTree_Generation_Info);
-					messageBox.setText("Info");
-					messageBox.open();
-					tabFolder.setSelection(0);
-				}
+				
+				
+				
+				
+//				//Kevin, 29.01.2016 generate new merkleTree
+//				//passiert doch bei generate keypairs?
+//				if(seedCheck.length > 0) {
+//					if(!Arrays.equals(seedCheck, merkle.getPrivateSeed()) || keyCheck != merkle.getLeafCounter()) {
+//						
+//						//merkle neu zuweisen
+//						merkle = new SimpleMerkleTree(seedCheck,seedCheck,keyCheck);
+//						merkle.selectOneTimeSignatureAlgorithm("SHA-256","WOTSPlus");
+//						merkle.generateKeyPairsAndLeaves();
+//						merkle.generateMerkleTree();
+//						if (tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_2)) {
+//							tabFolder.getSelection()[0].setControl(mtS);
+//						}
+//						if (tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_1)) {
+//							tabFolder.getSelection()[0].setControl(mtZ);
+//						}
+//					}
+	//				}	
+	//
+	//				if (tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_1)
+	//						&& !merkle.isGenerated()) {
+	//					MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
+	//					messageBox.setMessage(Descriptions.MerkleTree_Generation_Info);
+	//					messageBox.setText("Info");
+	//					messageBox.open();
+	//					tabFolder.setSelection(0);
+	//				} else if (tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_1)
+	//						&& merkle.isGenerated()) {
+	//					mtZ = new MerkleTreeZestComposite(tabFolder, SWT.NONE, merkle,verfahren);
+	//					tabFolder.getSelection()[0].setControl(mtZ);
+	//				}
+	//				if(tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_2) && !merkle.isGenerated()){
+	//					MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
+	//					messageBox.setMessage(Descriptions.MerkleTree_Generation_Info);
+	//					messageBox.setText("Info");
+	//					messageBox.open();
+	//					tabFolder.setSelection(0);
+	//				} else if (tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_2)
+	//						&& merkle.isGenerated()) {
+	//					if(!mtS.getMerkleFromForm().equals(merkle)){
+	//						mtS = new MerkleTreeSignatureComposite(tabFolder,SWT.NONE,merkle);
+	//						
+	//					}
+//					/*if(mtS.getSignatureFromForm().equals(Descriptions.MerkleTreeSign_3)
+//							|| mtS.getSignatureFromForm().equals(Descriptions.MerkleTreeSign_4)
+//							|| mtS.getSignatureFromForm().equals(Descriptions.MerkleTreeSign_5)) {
+//						//mtS.setSignatureFromForm(Descriptions.MerkleTreeSign_3);
+//						mtZ=mtZ;
+//					}*/
+//					tabFolder.getSelection()[0].setControl(mtS);
+//				}
+//				if (tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_3) && merkle.isGenerated()) {
+//					if(!mtS.getSignatureFromForm().isEmpty()) {
+//						String signature=mtS.getSignatureFromForm();
+//						String[]splittedSign = signature.split("\r\n");
+//						//String otSign = "";
+//						String keyIndex = "";
+//						String message;
+//						message=mtS.getMessageFromForm();
+//						if(splittedSign.length> 1){
+//							//otSign =splittedSign[0];
+//							keyIndex =splittedSign[1];
+//						}
+//						mtV=new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle, Integer.parseInt(keyIndex),signature,message);
+//						tabFolder.getSelection()[0].setControl(mtV);
+//						
+//					}
+//					else
+//					{
+//						MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
+//						messageBox.setMessage(Descriptions.MerkleTree_Signature_Generation_Info);
+//						messageBox.setText("Info");
+//						messageBox.open();
+//						tabFolder.setSelection(0);
+//					}
+//				}
+//				else if(tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_3) && !merkle.isGenerated()){
+//					MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
+//					messageBox.setMessage(Descriptions.MerkleTree_Generation_Info);
+//					messageBox.setText("Info");
+//					messageBox.open();
+//					tabFolder.setSelection(0);
+//				}
+				
 				
 				
 			}
