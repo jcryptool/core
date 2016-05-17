@@ -19,6 +19,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
+import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
 import org.jcryptool.visual.merkletree.ui.MerkleConst;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeComposite;
@@ -155,15 +156,49 @@ public class MerkleTreeView extends ViewPart {
 				//>
 
 				if(unsavedChanges){
-					MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
-					messageBox.setMessage("unsaved");
+					MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION |SWT.YES|SWT.NO|SWT.CANCEL);
+					messageBox.setMessage(Descriptions.UnsavedChanges);
 					messageBox.setText("Info");
-					messageBox.open();
+					switch(messageBox.open()){
+						case SWT.YES:
+							switch(verfahren){
+								case XMSS:
+									merkle = new XMSSTree();
+									break;
+								case XMSS_MT:
+									//new XMSS_MT_TREE
+									//break;
+								case MSS:
+								default:
+									merkle = new SimpleMerkleTree();
+									break;
+							}
+							merkle.setLeafCount(mtC.getMTS().getMTKP().getKeyAmmount());
+							merkle.setPublicSeed(mtC.getMTS().getSeed());
+							merkle.selectOneTimeSignatureAlgorithm("SHA-256", "WOTSPlus");
+							merkle.generateKeyPairsAndLeaves();
+							merkle.generateMerkleTree();
+							unsavedChanges = false;
+						case SWT.NO:
+							Control[] mtsC = mtC.getMTS().getChildren();
+							for(int i = 0; i < mtsC.length; i++){
+								if(mtsC[i] instanceof Text){
+									((Text)mtsC[i]).setText(merkle.getPublicSeed().toString());
+								}
+							}
+							Control[] mtkC = mtC.getMTS().getMTKP().getChildren();
+							for(int i = 0; i < mtkC.length; i++){
+								if(mtkC[i] instanceof Spinner){
+									((Spinner)mtkC[i]).setSelection(merkle.getLeafCounter());
+								}
+							}
+							unsavedChanges = false;
+						case SWT.CANCEL:
+						default:
+							break;
+					}
 				}
-				
-				
-				
-				if(merkle != null && merkle.isGenerated()){
+				if(merkle != null && merkle.isGenerated() && !unsavedChanges){
 					switch(tabFolder.getSelectionIndex()){
 						case 1:
 							mtZ = new MerkleTreeZestComposite(tabFolder, SWT.NONE, merkle,verfahren);
@@ -196,11 +231,6 @@ public class MerkleTreeView extends ViewPart {
 								messageBox.open();
 								tabFolder.setSelection(2);
 							}
-								
-								
-								
-								
-								
 							break;
 						case 0:
 						default:

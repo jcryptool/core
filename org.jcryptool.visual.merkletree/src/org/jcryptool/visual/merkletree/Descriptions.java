@@ -32,6 +32,7 @@ public class Descriptions extends NLS {
 
 	//<- MSG Box - wenn kein Key vorhanden
 	public static String MerkleTree_Generation_Info;
+	public static String UnsavedChanges;
 	//>
 	
 	//<- BaumBeschriftung

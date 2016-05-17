@@ -608,11 +608,11 @@ public class XMSSTree implements ISimpleMerkle {
 		return index;
 	}
 	
+	//FIXME: brauche des unabhängig von ana merkleTree instanz -> static
 	public byte[] generateSeed(int len) {
 		SecureRandom rnd = new SecureRandom();
 		byte[] seed = new byte[len];
 		rnd.nextBytes(seed);
-		publicSeed = seed;
 		return seed;		
 	}
 	
