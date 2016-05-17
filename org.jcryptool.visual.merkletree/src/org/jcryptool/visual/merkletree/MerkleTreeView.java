@@ -89,8 +89,6 @@ public class MerkleTreeView extends ViewPart {
 		//TreeView
 		TabItem tbtmParameter1 = new TabItem(tabFolder, SWT.NONE);
 		tbtmParameter1.setText(Descriptions.MerkleTreeView_1);
-		//FIXME: Geht des?  keine zuweisung von <mtZ>
-		tbtmParameter1.setControl(mtZ);
 		
 		//Signing
 		TabItem tbtmParameter2 = new TabItem(tabFolder,SWT.NONE);
@@ -118,8 +116,8 @@ public class MerkleTreeView extends ViewPart {
 				//Changing Content on the first tab should automatically redraw the merkleTree
 				//TODO: verstehen hier passiert viel KÄSE
 				//<--sinnlos?
-				byte[] seedCheck = new byte[(byte)0x00];
-				int keyCheck = 0;
+				//byte[] seedCheck = new byte[(byte)0x00];
+				//int keyCheck = 0;
 				/*
 				Control[] controlView = mtC.getChildren();
 				for (int i = 0; i < controlView.length; i++) {
@@ -212,7 +210,7 @@ public class MerkleTreeView extends ViewPart {
 					}
 				}else{
 					MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
-					messageBox.setMessage(Descriptions.MerkleTree_Generation_Info);
+					messageBox.setMessage(Descriptions.MerkleTree_Generation_Info + merkle.isGenerated());
 					messageBox.setText("Info");
 					messageBox.open();
 					tabFolder.setSelection(0);

@@ -15,6 +15,7 @@ import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.MerkleTreeView;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
+import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 
@@ -30,7 +31,6 @@ public class MerkleTreeKeyPairs extends Composite {
 	Button buttonCreateKeys;
 	Label createLabel;
 	StyledText descText;
-	private byte[] seedArray;
 	private int spinnerValue;
 	private int treeValue;
 
@@ -101,7 +101,7 @@ public class MerkleTreeKeyPairs extends Composite {
 			trees.setText(Descriptions.XMSS_MT.Tab0_Lable2);
 			
 			Spinner treespinner = new Spinner(this, SWT.BORDER);
-			treespinner.setMaximum(1073741824);
+			treespinner.setMaximum(64);
 			treespinner.setMinimum(2);
 			treespinner.setSelection(0);
 			treespinner.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
@@ -132,13 +132,7 @@ public class MerkleTreeKeyPairs extends Composite {
 		}
 		descText.setEditable(false);
 		
-		
-		
-		
-		
-		
-		
-		//TODO: treegeneration? HOW
+
 		buttonCreateKeys.addSelectionListener(new SelectionAdapter() {
 			/* (non-Javadoc)
 			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
@@ -146,21 +140,27 @@ public class MerkleTreeKeyPairs extends Composite {
 			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				MerkleTreeSeed mts = (MerkleTreeSeed)parent;
-				seedArray = mts.getSeed();
+				ISimpleMerkle merkle;
 				
-				ISimpleMerkle merkle = new SimpleMerkleTree();
+				switch(verfahren){
+				case XMSS:
+					merkle = new XMSSTree();
+					break;
+				case XMSS_MT:
+					//new XMSS_MT_TREE
+					//break;
+				case MSS:
+				default:
+					merkle = new SimpleMerkleTree();
+					break;
+				}
+				merkle.setPublicSeed(((MerkleTreeSeed)parent).getSeed());
+				merkle.setLeafCount(spinnerValue);
 				merkle.selectOneTimeSignatureAlgorithm("SHA-256", "WOTSPlus");
 				merkle.generateKeyPairsAndLeaves();
 				merkle.generateMerkleTree();
 				((MerkleTreeView) masterView).setAlgorithm(merkle, verfahren);
 				
-				/* Lindi no need
-				MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
-				messageBox.setMessage(Descriptions.MerkleTreeKey_Message);
-				messageBox.setText("Info");
-				messageBox.open();
-				*/
 			}
 		});
 

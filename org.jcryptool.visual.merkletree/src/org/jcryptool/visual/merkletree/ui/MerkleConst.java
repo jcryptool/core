@@ -119,6 +119,6 @@ public abstract class MerkleConst {
 	public static final int DESC_HEIGHT = 4;
 
 	public enum SUIT{
-		MSS, XMSS, XMSS_MT
+		XMSS, XMSS_MT, MSS
 	}
 }
