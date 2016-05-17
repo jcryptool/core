@@ -44,6 +44,12 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 		this.leafCounter = leafCounter;
 	}
 	*/
+	//TODO:
+	//keyindex =0, eingefügt sonst bug? -> Lindi
+	public SimpleMerkleTree(){
+		this.treeGenerated = false;
+		this.keyIndex = 0;
+	}
 	@Override
 	public void addPrivateSeed(byte[] privateSeed) {
 		this.privateSeed = privateSeed;
@@ -397,7 +403,10 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 		leafCounter = i;
 	}
 	
+	//private seed, gesetzt. wird der verwendent? (ohne gehts nicht9 @Lindi
+	//TODO:
 	public void setPublicSeed(byte[] seed) {
 		publicSeed = seed;
+		privateSeed=seed;
 	}
 }
