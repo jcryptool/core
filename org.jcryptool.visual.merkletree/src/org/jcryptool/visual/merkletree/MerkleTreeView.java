@@ -68,7 +68,6 @@ public class MerkleTreeView extends ViewPart {
 	@Override
 	public void createPartControl(final Composite parent) {
 		this.parent = parent;
-		merkle = null;
 		unsavedChanges = false;
 		
 		parent.setLayout(new GridLayout(1, false));
@@ -113,53 +112,15 @@ public class MerkleTreeView extends ViewPart {
 			 */
 			@Override
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) {
-				
-				//Changing Content on the first tab should automatically redraw the merkleTree
-				//TODO: verstehen hier passiert viel KÄSE
-				//<--sinnlos?
-				//byte[] seedCheck = new byte[(byte)0x00];
-				//int keyCheck = 0;
-				/*
-				Control[] controlView = mtC.getChildren();
-				for (int i = 0; i < controlView.length; i++) {
-					if ((controlView[i] instanceof Composite)) {
-						Control[] controlComposite = ((Composite)controlView[i]).getChildren();
-						for(int j = 0;j<controlComposite.length;j++) {
-							if((controlComposite[j] instanceof MerkleTreeSeed)){
-								Control[] controlSeed = ((Composite)controlComposite[j]).getChildren();
-								for(int m = 0;m<controlSeed.length;m++){
-									if((controlSeed[m] instanceof MerkleTreeKeyPairs)){
-										Control[] controlKey = ((Composite)controlSeed[m]).getChildren();
-										for(int n=0;n<controlKey.length;n++){
-											if(controlKey[n] instanceof Spinner){
-												keyCheck=((Spinner)controlKey[n]).getSelection();
-											}
-										}
-									}else if((controlSeed[m] instanceof Composite)&& !(controlSeed[m] instanceof MerkleTreeSeed)){
-										Control[] seedHelp = ((Composite)controlSeed[m]).getChildren();
-										for(int k=0;k<seedHelp.length;k++){
-											if(seedHelp[k] instanceof Text){
-												if(((Text)seedHelp[k]).getText().length()!=0){
-														seedCheck = ((Text) seedHelp[k]).getText().getBytes();
-												}
-											}
-										}	
-									}
-								}
-							}		
-						}
-					}
-				}
-				keyCheck = mtC.getMTS().getMTKP().getKeyAmmount();
-				seedCheck = mtC.getMTS().getSeed();
-				*/
-				//>
-
-				if(unsavedChanges){
+				if(unsavedChanges == true){
+					int select = tabFolder.getSelectionIndex();
+					tabFolder.setSelection(0);
 					MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION |SWT.YES|SWT.NO|SWT.CANCEL);
 					messageBox.setMessage(Descriptions.UnsavedChanges);
 					messageBox.setText("Info");
 					switch(messageBox.open()){
+						
+					
 						case SWT.YES:
 							switch(verfahren){
 								case XMSS:
@@ -179,6 +140,8 @@ public class MerkleTreeView extends ViewPart {
 							merkle.generateKeyPairsAndLeaves();
 							merkle.generateMerkleTree();
 							unsavedChanges = false;
+							
+							break;
 						case SWT.NO:
 							Control[] mtsC = mtC.getMTS().getChildren();
 							for(int i = 0; i < mtsC.length; i++){
@@ -193,12 +156,21 @@ public class MerkleTreeView extends ViewPart {
 								}
 							}
 							unsavedChanges = false;
+							break;
 						case SWT.CANCEL:
 						default:
-							break;
+							select = 0;
 					}
+					tabFolder.setSelection(select);
 				}
-				if(merkle != null && merkle.isGenerated() && !unsavedChanges){
+				
+				if(merkle == null){
+					tabFolder.setSelection(0);
+					MessageBox messageBoxx = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
+					messageBoxx.setMessage(Descriptions.MerkleTree_Generation_Info);
+					messageBoxx.setText("Info");
+					messageBoxx.open();
+				} else {
 					switch(tabFolder.getSelectionIndex()){
 						case 1:
 							mtZ = new MerkleTreeZestComposite(tabFolder, SWT.NONE, merkle,verfahren);
@@ -225,116 +197,18 @@ public class MerkleTreeView extends ViewPart {
 								
 							}else
 								{
-								MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
-								messageBox.setMessage(Descriptions.MerkleTree_Signature_Generation_Info);
-								messageBox.setText("Info");
-								messageBox.open();
+								MessageBox messageBoxx = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
+								messageBoxx.setMessage(Descriptions.MerkleTree_Signature_Generation_Info);
+								messageBoxx.setText("Info");
+								messageBoxx.open();
 								tabFolder.setSelection(2);
 							}
 							break;
 						case 0:
 						default:
-							
-							
 							break;
 					}
-				}else{
-					MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
-					messageBox.setMessage(Descriptions.MerkleTree_Generation_Info + merkle.isGenerated());
-					messageBox.setText("Info");
-					messageBox.open();
-					tabFolder.setSelection(0);
 				}
-				
-				
-				
-				
-//				//Kevin, 29.01.2016 generate new merkleTree
-//				//passiert doch bei generate keypairs?
-//				if(seedCheck.length > 0) {
-//					if(!Arrays.equals(seedCheck, merkle.getPrivateSeed()) || keyCheck != merkle.getLeafCounter()) {
-//						
-//						//merkle neu zuweisen
-//						merkle = new SimpleMerkleTree(seedCheck,seedCheck,keyCheck);
-//						merkle.selectOneTimeSignatureAlgorithm("SHA-256","WOTSPlus");
-//						merkle.generateKeyPairsAndLeaves();
-//						merkle.generateMerkleTree();
-//						if (tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_2)) {
-//							tabFolder.getSelection()[0].setControl(mtS);
-//						}
-//						if (tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_1)) {
-//							tabFolder.getSelection()[0].setControl(mtZ);
-//						}
-//					}
-	//				}	
-	//
-	//				if (tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_1)
-	//						&& !merkle.isGenerated()) {
-	//					MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
-	//					messageBox.setMessage(Descriptions.MerkleTree_Generation_Info);
-	//					messageBox.setText("Info");
-	//					messageBox.open();
-	//					tabFolder.setSelection(0);
-	//				} else if (tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_1)
-	//						&& merkle.isGenerated()) {
-	//					mtZ = new MerkleTreeZestComposite(tabFolder, SWT.NONE, merkle,verfahren);
-	//					tabFolder.getSelection()[0].setControl(mtZ);
-	//				}
-	//				if(tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_2) && !merkle.isGenerated()){
-	//					MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
-	//					messageBox.setMessage(Descriptions.MerkleTree_Generation_Info);
-	//					messageBox.setText("Info");
-	//					messageBox.open();
-	//					tabFolder.setSelection(0);
-	//				} else if (tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_2)
-	//						&& merkle.isGenerated()) {
-	//					if(!mtS.getMerkleFromForm().equals(merkle)){
-	//						mtS = new MerkleTreeSignatureComposite(tabFolder,SWT.NONE,merkle);
-	//						
-	//					}
-//					/*if(mtS.getSignatureFromForm().equals(Descriptions.MerkleTreeSign_3)
-//							|| mtS.getSignatureFromForm().equals(Descriptions.MerkleTreeSign_4)
-//							|| mtS.getSignatureFromForm().equals(Descriptions.MerkleTreeSign_5)) {
-//						//mtS.setSignatureFromForm(Descriptions.MerkleTreeSign_3);
-//						mtZ=mtZ;
-//					}*/
-//					tabFolder.getSelection()[0].setControl(mtS);
-//				}
-//				if (tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_3) && merkle.isGenerated()) {
-//					if(!mtS.getSignatureFromForm().isEmpty()) {
-//						String signature=mtS.getSignatureFromForm();
-//						String[]splittedSign = signature.split("\r\n");
-//						//String otSign = "";
-//						String keyIndex = "";
-//						String message;
-//						message=mtS.getMessageFromForm();
-//						if(splittedSign.length> 1){
-//							//otSign =splittedSign[0];
-//							keyIndex =splittedSign[1];
-//						}
-//						mtV=new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle, Integer.parseInt(keyIndex),signature,message);
-//						tabFolder.getSelection()[0].setControl(mtV);
-//						
-//					}
-//					else
-//					{
-//						MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
-//						messageBox.setMessage(Descriptions.MerkleTree_Signature_Generation_Info);
-//						messageBox.setText("Info");
-//						messageBox.open();
-//						tabFolder.setSelection(0);
-//					}
-//				}
-//				else if(tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_3) && !merkle.isGenerated()){
-//					MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
-//					messageBox.setMessage(Descriptions.MerkleTree_Generation_Info);
-//					messageBox.setText("Info");
-//					messageBox.open();
-//					tabFolder.setSelection(0);
-//				}
-				
-				
-				
 			}
 		});
 
