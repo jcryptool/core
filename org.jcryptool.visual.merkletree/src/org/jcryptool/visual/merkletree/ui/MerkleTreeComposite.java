@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.Descriptions;
+import org.jcryptool.visual.merkletree.MerkleTreeView;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 
@@ -73,12 +74,14 @@ public class MerkleTreeComposite extends Composite {
 					verfahren = SUIT.MSS;
 					break;
 				}
+				((MerkleTreeView) masterView).setAlgorithm(null, verfahren);
 				//clear actual frame
 				Control[] children = descr.getChildren();
 				for (Control control : children) {
 					if(control.getClass() != Combo.class)
 						control.dispose();
 				}
+				
 				//generates new view:
 				//main-descriptions
 				MerkleTreeDescription(descr, verfahren);

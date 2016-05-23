@@ -93,8 +93,6 @@ public class MerkleTreeView extends ViewPart {
 		//Signing
 		TabItem tbtmParameter2 = new TabItem(tabFolder,SWT.NONE);
 		tbtmParameter2.setText(Descriptions.MerkleTreeView_2);
-		mtS=new MerkleTreeSignatureComposite(tabFolder,SWT.NONE,merkle);
-		tbtmParameter2.setControl(mtS);
 		
 		//Verification
 		TabItem tbtmParameter3 = new TabItem(tabFolder,SWT.NONE);
@@ -177,9 +175,8 @@ public class MerkleTreeView extends ViewPart {
 							tbtmParameter1.setControl(mtZ);
 							break;
 						case 2:
-							if(!mtS.getMerkleFromForm().equals(merkle)){
-								mtS = new MerkleTreeSignatureComposite(tabFolder,SWT.NONE,merkle);
-							}
+							mtS = new MerkleTreeSignatureComposite(tabFolder,SWT.NONE,merkle);
+							tbtmParameter2.setControl(mtS);
 							break;
 						case 3:
 							if(!mtS.getSignatureFromForm().isEmpty()) {

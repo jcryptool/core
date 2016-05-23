@@ -92,26 +92,27 @@ public class MerkleTreeSignatureComposite extends Composite {
 				String signature = merkle.sign(textSign.getText());
 				usedText=textSign.getText();
 				String[]splittedSign = signature.split("\r\n");
-				String otSign = "";
+//				String otSign = "";
 				String keyIndex = "";
 				if(splittedSign.length> 1){
-					otSign =splittedSign[0];
-					keyIndex =splittedSign[1];
+//					otSign = splittedSign[0];
+					keyIndex = splittedSign[1];
+					styledTextKeyNumber.setText(keyIndex);
 				}
-				styledTextSignSize.setText(Integer
-						.toString(org.jcryptool.visual.merkletree.files.Converter._stringToByte(otSign).length / 2)
-						+ "/" + (merkle.getOneTimeSignatureAlgorithm().getN() * merkle.getOneTimeSignatureAlgorithm().getL()) + " Bytes");
-				styledTextKeyNumber.setText(keyIndex);
-				if(signature == "") {
-					styledTextSign.setText(Descriptions.MerkleTreeSign_4);
-				}
-				else
-					styledTextSign.setText(signature);
+//				styledTextSignSize.setText(Integer
+//						.toString(org.jcryptool.visual.merkletree.files.Converter._stringToByte(otSign).length / 2)	
+//						+ "/" + (merkle.getOneTimeSignatureAlgorithm().getN() * merkle.getOneTimeSignatureAlgorithm().getL()) + " Bytes");
+
+				//if(signature == "") {
+				//	styledTextSign.setText(Descriptions.MerkleTreeSign_4);
+				//}
+				//else
+				//styledTextSign.setText("looooool");
+				styledTextSign.setText(signature);
 				}
 				else {
-					styledTextSign.setText(Descriptions.MerkleTreeSign_5);
+					styledTextSign.setText("lol");
 				}
-				
 			}
 		});
 		textSign.addModifyListener(new ModifyListener() {
