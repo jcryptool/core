@@ -2,11 +2,11 @@ package org.jcryptool.visual.merkletree.algorithm;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SimpleMerkleTree implements ISimpleMerkle {
-
-	int keyLength;
 
 	int keyIndex;
 	byte[] privateSeed;
@@ -29,21 +29,27 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 	int leafCounter = 0;
 	int leafNumber = 0;
 
-	SimpleMerkleTree(int keyLength, int leafCounter) {
-		this.keyLength = keyLength;
+	
+	/* 
+	SimpleMerkleTree(int leafCounter) {
 		this.leafCounter = leafCounter;
 		this.treeGenerated = false;
 	}
 
-	public SimpleMerkleTree(byte[] privateSeed, byte[] publicSeed, int keyLength, int leafCounter) {
+	public SimpleMerkleTree(byte[] privateSeed, byte[] publicSeed, int leafCounter) {
 		this.privateSeed = privateSeed;
 		this.publicSeed = publicSeed;
-		this.keyLength = keyLength;
 		this.treeGenerated = false;
 		this.keyIndex = 0;
 		this.leafCounter = leafCounter;
 	}
-
+	*/
+	//TODO:
+	//keyindex =0, eingefügt sonst bug? -> Lindi
+	public SimpleMerkleTree(){
+		this.treeGenerated = false;
+		this.keyIndex = 0;
+	}
 	@Override
 	public void addPrivateSeed(byte[] privateSeed) {
 		this.privateSeed = privateSeed;
@@ -57,7 +63,7 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 
 	@Override
 	public void addTreeLeaf(byte[] LeafContent, String pubKey) {
-		Node leafNode = new Node(LeafContent, true, ++this.leafNumber);
+		Node leafNode = new SimpleNode(LeafContent, true, ++this.leafNumber);
 		leafNode.setCode(pubKey);
 		leaves.add(leafNode);
 	}
@@ -84,11 +90,6 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 	public byte[] getPublicSeed() {
 		// TODO Auto-generated method stub
 		return publicSeed;
-	}
-
-	@Override
-	public int getKeyLength() {
-		return keyLength;
 	}
 
 	@Override
@@ -143,23 +144,25 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 			for (index = 0; index < NodeLevelCounter; index++, treeIndex += 2) {
 				if (treeIndex + 1 < tree.size()) {
 					byte[] content = hashingContent(tree.get(treeIndex), tree.get(treeIndex + 1));
-					helperNode = new Node(content, tree.get(treeIndex), tree.get(treeIndex + 1));
+					helperNode = new SimpleNode(content, tree.get(treeIndex), tree.get(treeIndex + 1));
 					treeLevel.add(helperNode);
 					treeLevel.get(index).getConnectedTo().add(tree.get(treeIndex));
 					treeLevel.get(index).getConnectedTo().add(tree.get(treeIndex + 1));
 					tree.get(treeIndex).setParent(treeLevel.get(index));
 					tree.get(treeIndex + 1).setParent(treeLevel.get(index));
+					
+				//zuck: deadcode/falsch?
 				} else {
 					byte[] content = hashingContent(tree.get(treeIndex), tree.get(treeIndex));
-					helperNode = new Node(content, false, 0);
+					helperNode = new SimpleNode(content, false, 0);
 					helperNode.setLeft(tree.get(treeIndex));
 					treeLevel.add(helperNode);
 					treeLevel.get(index).getConnectedTo().add(tree.get(treeIndex));
 					tree.get(treeIndex).setParent(treeLevel.get(index));
-				}
+				}				
 
 			}
-			treeIndex = tree.size();
+			treeIndex = tree.size(); //unnütz
 			tree.addAll(treeLevel);
 		}
 		/*
@@ -218,7 +221,7 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 	}
 
 	@Override
-	public void selectHashAlgorithmus(String hAlgo) {
+	public void selectHashAlgorithm(String hAlgo) {
 		try {
 			mDigest = MessageDigest.getInstance(hAlgo);
 		} catch (NoSuchAlgorithmException e) {
@@ -235,7 +238,7 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 	}
 
 	@Override
-	public void selectOneTimeSignatureAlgorithmus(String hash, String algo) {
+	public void selectOneTimeSignatureAlgorithm(String hash, String algo) {
 		switch (algo) {
 		case "WOTS":
 			this.otsAlgo = new WinternitzOTS(16, hash);
@@ -255,7 +258,6 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 				e.printStackTrace();
 			}
 		}
-		this.generateKeyPairsAndLeaves();
 	}
 
 	@Override
@@ -273,13 +275,14 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 			
 			this.otsAlgo.setPrivateKey(this.privKeys.get(this.keyIndex));
 			this.otsAlgo.setPublicKey(this.publicKeys.get(this.keyIndex));
-			this.otsAlgo.setMessage(message.getBytes());
+			this.otsAlgo.setMessage(messageHash.getBytes());
 			this.otsAlgo.sign();
-	
-			tmpSignature = org.jcryptool.visual.merkletree.files.Converter
+			
+			tmpSignature = Integer.toString(this.keyIndex)+"|";
+			tmpSignature += org.jcryptool.visual.merkletree.files.Converter
 					._byteToHex(this.otsAlgo.getSignature());// to-be-done
 
-			tmpSignature += "\r\n" + Integer.toString(this.keyIndex)+"\r\n";
+			
 			
 			while (iHeight < treeHeight-1) {
 				if(this.tree.get(iHeight).getParent().getLeft().equals(this.tree.get(iHeight))) {
@@ -297,25 +300,73 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 
 	@Override
 	public boolean verify(String message, String signature) {
-		String[] signer = signature.split("|");
-		boolean verifier;
-		int keyIndex = Integer.parseInt(signer[signer.length - 1]);
-		byte[][] curPubKey = this.publicKeys.get(keyIndex);
-		otsAlgo.setPublicKey(curPubKey);
-		otsAlgo.setSignature(signer[0].getBytes());
+		String[] signer = signature.split("\\|");
+		boolean verifier=true;
+		int keyIndex = Integer.parseInt(signer[0]);
+		byte[][] curPubKey = this.publicKeys.get(keyIndex);	
+		//set OTS Algorithm values
+		String messageHash = org.jcryptool.visual.merkletree.files.Converter
+				._byteToHex(this.otsAlgo.hashMessage(message));
+		
+		otsAlgo.setPrivateKey(this.privKeys.get(keyIndex));		
+		otsAlgo.setPublicKey(publicKeys.get(keyIndex));
+		otsAlgo.setSignature(org.jcryptool.visual.merkletree.files.Converter
+				._hexStringToByte(signer[1]));
+		otsAlgo.setMessage(messageHash.getBytes());
+		
+		
 		verifier = otsAlgo.verify();
+		//wozu wird das gemacht? wird doch eh nur am ende verfier zurückgegeben
+		int iHigh=keyIndex;
+		//String currentAuthPath="";
+		byte[] currentNode=leaves.get(keyIndex).getName();
+		int treeHigh=tree.size();
 		if (verifier) {
-			if (keyIndex % 2 == 0)
-				this.appendByteArrays(leaves.get(keyIndex).getName(), signer[1].getBytes());
-			for (int i = 1; i < signer.length; i++) {
-				// TODO: GenerateRootKey
-
+			while (iHigh < treeHigh-1) {
+				if(this.tree.get(iHigh).getParent().getLeft().equals(this.tree.get(iHigh))) {
+					//currentAuthPath=this.tree.get(iHigh).getParent().getRight().getNameAsString();
+					currentNode=this.createNode(currentNode,this.tree.get(iHigh).getParent().getRight().getName());
+					
+					if(!Arrays.equals(currentNode,this.tree.get(iHigh).getParent().getName())) {
+						return false;
+					}
+					else {
+						currentNode=this.tree.get(iHigh).getParent().getName();
+					}
+				}
+				else if (this.tree.get(iHigh).getParent().getRight().equals(this.tree.get(iHigh))) {
+					//currentAuthPath = this.tree.get(iHigh).getParent().getLeft().getNameAsString();
+					currentNode=this.createNode(this.tree.get(iHigh).getParent().getLeft().getName(),currentNode);
+					if(!Arrays.equals(currentNode,this.tree.get(iHigh).getParent().getName())) {
+						return false;
+					}
+					else {
+						currentNode=this.tree.get(iHigh).getParent().getName();
+					}
+				}
+				iHigh=this.tree.lastIndexOf(this.tree.get(iHigh).getParent());
 			}
 		}
 		return verifier;
 	}
+	public boolean verify(String message, String signature,int markedLeafIndex) {
+		String[] signer = signature.split("\\|");
+		int keyIndex = Integer.parseInt(signer[0]);
+		if(markedLeafIndex != keyIndex) {
+			return false;
+		}
+		else
+			return this.verify(message, signature);
+		
+	}
+	public byte[] createNode(byte[]node1,byte[]node2) {
+		byte[] toHash = appendByteArrays(node1, node2);
 
-	private void generateKeyPairsAndLeaves() {
+		return mDigest.digest(toHash);
+
+		
+	}
+	public void generateKeyPairsAndLeaves() {
 		Node leaf;
 		byte[] d1pubKey;
 		String code;
@@ -326,7 +377,7 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 			// Frage byte[][] zu byte[] ?????
 			d1pubKey = org.jcryptool.visual.merkletree.files.Converter._hexStringToByte(
 					org.jcryptool.visual.merkletree.files.Converter._2dByteToHex(this.otsAlgo.getPublicKey()));
-			leaf = new Node(this.mDigest.digest(d1pubKey), true, i);
+			leaf = new SimpleNode(this.mDigest.digest(d1pubKey), true, i);
 			this.leafNumber++;
 			code= org.jcryptool.visual.merkletree.files.Converter
 					._byteToHex(d1pubKey).substring(0, 5);
@@ -339,7 +390,27 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 		
 	}
 	@Override
-	public OTS getOneTimeSignatureAlgorithmus() {
+	public OTS getOneTimeSignatureAlgorithm() {
 		return this.otsAlgo;
+	}
+	
+	public byte[] generateSeed(int len) {
+		SecureRandom rnd = new SecureRandom();
+		byte[] seed = new byte[len];
+		rnd.nextBytes(seed);
+		publicSeed = seed;
+		privateSeed = seed;
+		return seed;		
+	}
+	
+	public void setLeafCount(int i) {
+		leafCounter = i;
+	}
+	
+	//private seed, gesetzt. wird der verwendent? (ohne gehts nicht9 @Lindi
+	//TODO:
+	public void setPublicSeed(byte[] seed) {
+		publicSeed = seed;
+		privateSeed=seed;
 	}
 }
