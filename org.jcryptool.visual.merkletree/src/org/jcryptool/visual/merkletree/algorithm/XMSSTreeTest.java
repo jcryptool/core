@@ -12,7 +12,7 @@ public class XMSSTreeTest {
 
 	@Test
 	public void testAddPrivateSeed() {
-		XMSSTree merkle = new XMSSTree(null, null, 0);
+		XMSSTree merkle = new XMSSTree();
 		byte[] privateS = {1, 2, 3, 4};
 		merkle.addPrivateSeed(privateS);
 		assertEquals(merkle.getPrivateSeed(), privateS);	
@@ -20,7 +20,7 @@ public class XMSSTreeTest {
 
 	@Test
 	public void testAddPublicSeed() {
-		XMSSTree merkle = new XMSSTree(null, null, 0);
+		XMSSTree merkle = new XMSSTree();
 		byte[] publicS = {1, 2, 3, 4};
 		merkle.addPublicSeed(publicS);
 		assertEquals(merkle.getPublicSeed(), publicS);
@@ -28,7 +28,7 @@ public class XMSSTreeTest {
 
 	@Test
 	public void testAddTreeLeaf() {
-		XMSSTree merkle = new XMSSTree(null, null, 0);
+		XMSSTree merkle = new XMSSTree();
 		//Leaves List has to be empty
 		assertEquals(merkle.leaves.size(), 0);
 		//add first Leaf
@@ -46,54 +46,17 @@ public class XMSSTreeTest {
 
 	@Test
 	public void testGetMerkleRoot() {
-		/**
-		 * Not finished yet
-		 */
-		XMSSTree merkle = new XMSSTree(null, null, 16);
-		merkle.selectOneTimeSignatureAlgorithm("SHA-256","WOTS");
-		merkle.generateKeyPairsAndLeaves();
-		merkle.generateMerkleTree();
-		byte[] root = merkle.getMerkleRoot();
 	}
 
-	@Test
-	public void testGetPrivateSeed() {
-		//Generate Merkle Tree
-		XMSSTree merkle = new XMSSTree(null, null, 0);
-		assertEquals(merkle.getPrivateSeed(), null);
-		
-		byte[] privateS = {1, 2, 3, 4, 5 };
-		merkle = new XMSSTree(privateS, null, 0);
-		assertEquals(merkle.getPrivateSeed(), privateS);
-	}
-
-	@Test
-	public void testGetTree() {
-		/*
-		 * wenn generateTree ausprogrammiert ist hier noch Tree bauen und überprüfen
-		 */
-		XMSSTree merkle = new XMSSTree(null, null, 0);
-		assertTrue(merkle.getTree() instanceof ArrayList);
-	}
-
-	@Test
-	public void testGetPublicSeed() {
-		//Generate Merkle Tree
-		XMSSTree merkle = new XMSSTree(null, null, 0);
-		assertEquals(merkle.getPublicSeed(), null);
-		
-		byte[] publicS = {1, 2, 3, 4, 5 };
-		merkle = new XMSSTree(null, publicS, 0);
-		assertEquals(merkle.getPublicSeed(), publicS);
-		
-	}
 
 	@Test
 	public void testGetLeafCounter() {
-		XMSSTree merkle = new XMSSTree(null, null, 0);
+		XMSSTree merkle = new XMSSTree();
 		assertEquals(merkle.getLeafCounter(), 0);
 		
-		merkle = new XMSSTree(null, null, 2);
+		merkle = new XMSSTree();
+		merkle.addTreeLeaf(null, null);
+		merkle.addTreeLeaf(null, null);
 		assertEquals(merkle.getLeafCounter(), 2);
 
 
@@ -101,7 +64,7 @@ public class XMSSTreeTest {
 
 	@Test
 	public void testGetTreeLeaf() {
-		XMSSTree merkle = new XMSSTree(null, null, 0);
+		XMSSTree merkle = new XMSSTree();
 		//add two Leaves
 		merkle.addTreeLeaf(null , null);
 		byte[] temp = {1,2,3,4};
@@ -151,20 +114,20 @@ public class XMSSTreeTest {
 	@Test
 	public void testGetTreeHeight() {
 		
-		XMSSTree merkle = new XMSSTree(null, null, 2);
+		XMSSTree merkle = new XMSSTree();
 		merkle.selectOneTimeSignatureAlgorithm("SHA-256","WOTS");
 		merkle.generateKeyPairsAndLeaves();
 		merkle.generateMerkleTree();
 		System.out.println(merkle.getTreeHeight());
 		assertEquals(merkle.getTreeHeight(),1);
 		
-		merkle = new XMSSTree(null, null, 8);
+		merkle = new XMSSTree();
 		merkle.selectOneTimeSignatureAlgorithm("SHA-256","WOTS");
 		merkle.generateKeyPairsAndLeaves();
 		merkle.generateMerkleTree();
 		assertEquals(merkle.getTreeHeight(),3);
 
-		merkle = new XMSSTree(null, null, 16);
+		merkle = new XMSSTree();
 		merkle.selectOneTimeSignatureAlgorithm("SHA-256","WOTS");
 		merkle.generateKeyPairsAndLeaves();
 		merkle.generateMerkleTree();
@@ -203,7 +166,7 @@ public class XMSSTreeTest {
 
 	@Test
 	public void testIsGenerated() {
-		XMSSTree merkle = new XMSSTree(null, null, 0);
+		XMSSTree merkle = new XMSSTree();
 		assertEquals(merkle.isGenerated(), false);
 		merkle.generateMerkleTree();
 		assertEquals(merkle.isGenerated(), true);
@@ -216,7 +179,7 @@ public class XMSSTreeTest {
 
 	@Test
 	public void TestrandomGenerator(){
-		XMSSTree merkle = new XMSSTree(null, null, 0);
+		XMSSTree merkle = new XMSSTree();
 		byte[] address = {1,2,3,4};
 		byte[] seed1 = {4,5,6,7,8};
 		byte[] seed2 = {7,5,6,7,8};
