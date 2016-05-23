@@ -96,7 +96,8 @@ public class WOTSPlusXMSS {
 	
 	public void generateKeyPair() {
 		generatePrivateKey();
-		generatePublicKey();
+		// FIXME
+//		generatePublicKey();
 	}
 
 	
@@ -237,12 +238,13 @@ public class WOTSPlusXMSS {
 		csum_bytes[l2_bytes-1] = (byte)csum;
 		messageW = Arrays.copyOf(messageW, messageW.length + 1 );
 		messageW[messageW.length-1] = convertToBaseW(csum_bytes, w);
-		for (int i = 0; i < l; i++){
-			otsAdrs.setChainAddress(i);
-			for(int i = 0; i < messageW.length; i++){
-				signature[i] = chain(privateKey[i], 0, messageW[i], seed, otsAdrs);
-			}
-		}
+        // FIXME
+//		for (int i = 0; i < l; i++){
+//			otsAdrs.setChainAddress(i);
+//			for(int i = 0; i < messageW.length; i++){
+//				signature[i] = chain(privateKey[i], 0, messageW[i], seed, otsAdrs);
+//			}
+//		}
 		
 		
 
