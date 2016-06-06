@@ -79,11 +79,18 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 				viewer.applyLayout();
 			}
 		});
+		
+		/**
+		 * @author christoph
+		 * not needed, can be removed
+
 		// the heading of the description; is not selectable by mouse
 		Label descLabel = new Label(compositeTree, SWT.NONE);
 		descLabel.setText("tabxHead0");
 		//descLabel.setFont(FontService.getHeaderFont());
-
+		 */
+		
+		
 		// this divide has been made to allow selection of text in this section
 		// but not of the
 		// heading
@@ -118,9 +125,9 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 				}
 				if(currentLeaf >= 0) {
 					if(merkle.verify(message, signature,currentLeaf))
-						styledTextTree.setText("Signatur wurde mit ausgew\u00E4hlten Knoten erfolgreich verifiziert!");
+						styledTextTree.setText(Descriptions.MerkleTreeVerify_2);
 					else
-						styledTextTree.setText("Signatur konnte mit dem gew\u00E4hlten Knoten nicht erfolgreich verifiziert werden!");
+						styledTextTree.setText(Descriptions.MerkleTreeVerify_3);
 				}
 				else {
 					styledTextTree.setText("Bitte wählen Sie ein Blatt aus um die Signatur zu verifizieren. Ein Knoten kann nicht als gültiger öffentlicher Schlüssel verwendet werden!");
