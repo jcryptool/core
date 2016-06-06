@@ -140,7 +140,7 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 						styledTextTree.setForeground(new Color(null, new RGB(1, 70, 122)));
 						// styledTextTree.setFont(FontService.getHugeFont());
 						styledTextTree.setText(
-								Descriptions.ZestLabelProvider_5 + " " + n.getCode() + ") = " + n.getNameAsString()); //$NON-NLS-1$ //$NON-NLS-2$
+								Descriptions.ZestLabelProvider_5 + " " + n.getLeafNumber() + " = " + n.getNameAsString()); //$NON-NLS-1$ //$NON-NLS-2$
 
 						if (markedConnectionList.size() == 0) {
 							markBranch(node);
@@ -161,7 +161,6 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 						}
 						styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
 						styledTextTree.setAlignment(SWT.LEFT);
-						// styledTextTree.setFont(FontService.getNormalFont());
 						styledTextTree.setText(Descriptions.ZestLabelProvider_6 + n.getNameAsString());
 					}
 
