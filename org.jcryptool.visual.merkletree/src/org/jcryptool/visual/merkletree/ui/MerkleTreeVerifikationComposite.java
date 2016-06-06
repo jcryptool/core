@@ -125,6 +125,9 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 				}
 				if(currentLeaf >= 0) {
 					if(merkle.verify(message, signature,currentLeaf)){
+						//set the Screen color based on the result
+						//green if verification success
+						//red if verification fails
 						Color green = getDisplay().getSystemColor(SWT.COLOR_GREEN);
 						styledTextTree.setBackground(green);
 						styledTextTree.setText(Descriptions.MerkleTreeVerify_2);
