@@ -124,10 +124,16 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 					}*/
 				}
 				if(currentLeaf >= 0) {
-					if(merkle.verify(message, signature,currentLeaf))
+					if(merkle.verify(message, signature,currentLeaf)){
+						Color green = getDisplay().getSystemColor(SWT.COLOR_GREEN);
+						styledTextTree.setBackground(green);
 						styledTextTree.setText(Descriptions.MerkleTreeVerify_2);
-					else
+					}
+					else{
+						Color red = getDisplay().getSystemColor(SWT.COLOR_RED);
+						styledTextTree.setBackground(red);
 						styledTextTree.setText(Descriptions.MerkleTreeVerify_3);
+					}
 				}
 				else {
 					styledTextTree.setText("Bitte wählen Sie ein Blatt aus um die Signatur zu verifizieren. Ein Knoten kann nicht als gültiger öffentlicher Schlüssel verwendet werden!");
