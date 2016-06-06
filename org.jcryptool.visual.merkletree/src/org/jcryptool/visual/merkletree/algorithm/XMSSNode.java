@@ -14,6 +14,7 @@ public class XMSSNode implements Node{
 	private Node right;
 	private Node parent;
 	private List<Node> connections = new ArrayList<Node>();	
+	private boolean leaf;
 	
 	
 	public XMSSNode(byte[] content){
@@ -78,13 +79,12 @@ public class XMSSNode implements Node{
 
 	@Override
 	public boolean isLeaf() {
-		// TODO Auto-generated method stub
-		return false;
+		return leaf;
 	}
 
 	@Override
 	public void setLeaf(boolean leaf) {
-		// TODO Auto-generated method stub
+		this.leaf = leaf;
 		
 	}
 

@@ -671,6 +671,9 @@ public class XMSSTree implements ISimpleMerkle {
 		for(int i = 0; i < node.getHeight(); i++){
 			index += leafCounter / (1 << i);
 		}
+		if(node.getHeight() == 0){
+			node.setLeaf(true);
+		}
 		index = index + ix;
 		node.setIndex(index);
 		treeArray[index] = node;
