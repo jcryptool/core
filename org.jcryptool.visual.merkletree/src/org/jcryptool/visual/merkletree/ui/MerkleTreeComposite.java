@@ -48,9 +48,11 @@ public class MerkleTreeComposite extends Composite {
 		descr.setLayout(new GridLayout(1, true));
 		
 		
-		//Bombobox, to switch the different SUIT's (MSS,XMSS,XMSS_MT)
+		//Combobox, to switch the different SUIT's (MSS,XMSS,XMSS_MT)
 		Combo combo = new Combo(descr, SWT.NONE);
-		combo.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 0, 1));
+		GridData gd_combo = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 0, 1);
+		gd_combo.widthHint = 340;
+		combo.setLayoutData(gd_combo);
 		combo.add(Descriptions.CompositeDescriptionMerkleTree);
 		combo.add(Descriptions.CompositeDescriptionXMSS);
 		combo.add(Descriptions.CompositeDescriptionXMSS_MT);

@@ -38,6 +38,8 @@ public class MerkleTreeSignatureComposite extends Composite {
 	StyledText styledTextSignSize;
 	Label lSignaturSize;
 	Label lkeyNumber;
+	Label SingatureExpl;
+
 	StyledText styledTextKeyNumber;
 	ISimpleMerkle merkle;
 	private String usedText;
@@ -74,8 +76,11 @@ public class MerkleTreeSignatureComposite extends Composite {
 		styledTextSignSize.setLayoutData(new GridData(SWT.FILL,SWT.CENTER,true,false,MerkleConst.H_SPAN_MAIN/5,1));
 		styledTextSignSize.setText("");
 		
+		SingatureExpl = new Label(this, SWT.NONE);
+		SingatureExpl.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
+		SingatureExpl.setText(Descriptions.MerkleTreeSign_3);
+		
 		styledTextSign = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
-		styledTextSign.setText(Descriptions.MerkleTreeSign_3);
 		//gd_styledTextTree.widthHint = 960;
 		//gd_styledTextTree.heightHint = 40;;
 		GridData gd_textTextSign = new GridData(SWT.FILL,SWT.FILL,true,true,MerkleConst.H_SPAN_MAIN,1);

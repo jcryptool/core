@@ -161,7 +161,7 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 						}
 						styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
 						styledTextTree.setAlignment(SWT.LEFT);
-						styledTextTree.setText(Descriptions.ZestLabelProvider_6 + n.getNameAsString());
+						styledTextTree.setText(Descriptions.ZestLabelProvider_6 + " = " + n.getNameAsString());
 					}
 
 					/*
