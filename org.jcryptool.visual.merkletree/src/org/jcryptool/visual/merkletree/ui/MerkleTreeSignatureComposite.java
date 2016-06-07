@@ -164,8 +164,9 @@ public class MerkleTreeSignatureComposite extends Composite {
 	 * @return index
 	 */
 	public String getKeyIndex(String signature){
-		signature = signature.substring(0, 1);
-		return signature;
+		int iend = signature.indexOf("|");
+		String subString= signature.substring(0 , iend);
+		return subString;
 	}
 
 	/**
