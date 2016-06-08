@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-
-	<extension 
-		point="org.eclipse.ui.views">
+	<extension point="org.eclipse.ui.views">
 		<view
 			category="org.jcryptool.visual"
 			class="org.jcryptool.visual.merkletree.MerkleTreeView"
 			id="org.jcryptool.visual.merkletree.view"
-			name="%view.name.0">
+			name="%visual.name"
+			restorable="true">
 		</view>
+	</extension>
+	<extension point="org.jcryptool.core.operations.visuals">
+		<Visual
+			contextHelpId="org.jcryptool.visual.merkletree.MerkleTreeView"
+			name="%visual.name"
+			viewId="org.jcryptool.visual.merkletree.view">
+		</Visual>
 	</extension>
 	<extension point="org.eclipse.help.toc">
 		<toc
@@ -23,19 +29,18 @@
 	<extension point="org.eclipse.ui.handlers">
 		<handler
 			class="org.jcryptool.visual.merkletree.handlers.RestartHandler"
-			commandId="org.jcryptool.visual.merkletree.command.Restart">
+			commandId="org.jcryptool.visual.merkletree.restartCommand">
 		</handler>
 	</extension>
-	<extension 
-		point="org.eclipse.ui.commands">
+	<extension point="org.eclipse.ui.commands">
 		<command
-			id="org.jcryptool.visual.merkletree.command.Restart"
+			id="org.jcryptool.visual.merkletree.restartCommand"
 			name="%restart.command.name">
 		</command>
 	</extension>
 	<extension point="org.eclipse.ui.menus">
 		<menuContribution
-			locationURI="toolbar:org.jcryptool.visual.merkletree.MerkleTreeView">
+			locationURI="toolbar:org.jcryptool.visual.merkletree.view">
 			<command
 				commandId="org.jcryptool.visual.merkletree.restartCommand"
 				icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
@@ -43,11 +48,4 @@
 			</command>
 		</menuContribution>
 	</extension>
- <extension
-       point="org.jcryptool.core.operations.visuals">
-    <Visual
-          name="%Visual.name.0"
-          viewId="org.jcryptool.visual.merkletree.view">
-    </Visual>
- </extension>
 </plugin>

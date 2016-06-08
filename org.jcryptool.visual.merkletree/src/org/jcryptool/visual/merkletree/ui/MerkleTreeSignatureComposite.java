@@ -17,10 +17,14 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
+import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
+import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
+import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 /**
  * Composite for the Tabpage "Signatur"
  * @author Kevin Muehlboeck
+ * @author Christoph Sonnberger
  *
  */
 public class MerkleTreeSignatureComposite extends Composite {
@@ -78,7 +82,21 @@ public class MerkleTreeSignatureComposite extends Composite {
 		
 		SingatureExpl = new Label(this, SWT.NONE);
 		SingatureExpl.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
-		SingatureExpl.setText(Descriptions.MerkleTreeSign_3);
+		
+		/**
+		 * @author Christoph Sonnberger
+		 * The Text is based on the used suite
+		 * if there will implemented an other suite, just add an else if and type the name of the instance
+		 * Example for MultiTree -> merkle instanceof XMSSMT
+		 */
+		if(merkle instanceof XMSSTree){
+			SingatureExpl.setText(Descriptions.XMSS.Tab2_Txt0);
+			SingatureExpl.setText(Descriptions.XMSS.Tab2_Txt0);
+		}
+		else if(merkle instanceof SimpleMerkleTree){
+			SingatureExpl.setText(Descriptions.MSS.Tab2_Txt0);
+			SingatureExpl.setText(Descriptions.MSS.Tab2_Txt0);
+		}
 		
 		styledTextSign = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
 		GridData gd_textTextSign = new GridData(SWT.FILL,SWT.FILL,true,true,MerkleConst.H_SPAN_MAIN,1);
@@ -127,13 +145,14 @@ public class MerkleTreeSignatureComposite extends Composite {
 	 * @return Signature
 	 */
 	public String getSignatureFromForm() {
-		if (this.styledTextSign.getText().equals(Descriptions.MerkleTreeSign_3) ||
+		if (this.styledTextSign.getText().equals(Descriptions.MSS.Tab2_Txt0) ||
 				this.styledTextSign.getText().equals(Descriptions.MerkleTreeSign_4) ||
 				this.styledTextSign.getText().equals(Descriptions.MerkleTreeSign_5))
 			return "";
 		
 		return this.styledTextSign.getText();
 	}
+	
 	public String getMessageFromForm() {
 		return usedText;
 	}

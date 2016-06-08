@@ -35,6 +35,8 @@ import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
 import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.Node;
+import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
+import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
 
 /**
  * Class for the Composite of Tabpage "MerkleTree"
@@ -49,7 +51,6 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 	private GraphViewer viewer;
 
 	private StyledText styledTextTree;
-
 	private int layoutCounter = 1;
 	// private Composite compositeCT;
 	private ArrayList<GraphConnection> markedConnectionList;
@@ -64,8 +65,6 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 	public MerkleTreeVerifikationComposite(Composite parent, int style, ISimpleMerkle merkle, int leafNumber, String signature, String message) {
 		super(parent, style);
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
-		//this.merkle = merkle;
-		//this.parent = parent;
 		markedConnectionList = new ArrayList<GraphConnection>();
 		// to make the text wrap lines automatically
 
@@ -80,35 +79,26 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 			}
 		});
 		
-		/**
-		 * @author christoph
-		 * not needed, can be removed
-
-		// the heading of the description; is not selectable by mouse
-		Label descLabel = new Label(compositeTree, SWT.NONE);
-		descLabel.setText("tabxHead0");
-		//descLabel.setFont(FontService.getHeaderFont());
-		 */
-		
-		
 		// this divide has been made to allow selection of text in this section
 		// but not of the
 		// heading
 		// while not allowing modification of either section
-		StyledText descText = new StyledText(compositeTree, SWT.WRAP);
+		Label descText = new Label(compositeTree, SWT.WRAP);
 		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		descText.setCaret(null);
+		//descText.setCaret(null);
 		descText.setText(Descriptions.MerkleTreeVerify_0);
-		descText.setEditable(false);
-		compositeTree.setLayout(new GridLayout(1, true));
+		//descText.setEditable(false);
+		compositeTree.setLayout(new GridLayout(1, true));		
+		styledTextTree = new StyledText(compositeTree, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
+		styledTextTree.setText(Descriptions.MerkleTreeVerify_4);
+		
+		/**
+		 * Verify Button
+		 */
 		Button bt_Verify = new Button(compositeTree,SWT.WRAP);
 		bt_Verify.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		bt_Verify.setText(Descriptions.MerkleTreeVerify_1);
 		bt_Verify.addSelectionListener(new SelectionAdapter() {
-			/* (non-Javadoc)
-			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-			 * Event to verify a signature
-			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				int currentLeaf=-1;
@@ -143,13 +133,12 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 				}
 			}
 		});
-		styledTextTree = new StyledText(compositeTree, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.H_SCROLL);
-		styledTextTree.setText(Descriptions.MerkleTreeVerify_4+signature);
-		// styledTextTree.setFont(FontService.getNormalFont());
-
+		
+		
 		GridData gd_styledTextTree = new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1);
+		//sets the layout of the Textbox for the signature
 		gd_styledTextTree.widthHint = 960;
-		gd_styledTextTree.heightHint = 40;
+		gd_styledTextTree.heightHint = 20;
 		styledTextTree.setLayoutData(gd_styledTextTree);
 
 		viewer = new GraphViewer(compositeTree, SWT.NONE);
@@ -237,7 +226,7 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 	}
 
 	/**
-	 * Marks the whole branch begining from the leaf node
+	 * Marks the whole branch beginning from the leaf node
 	 * 
 	 * @param leaf
 	 *            - the leaf node of the branch

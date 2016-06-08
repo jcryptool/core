@@ -45,7 +45,7 @@ Das Plug-in lässt sich über das Menü <b>Visualisierungen</b> oder über den K
 <p>
 
 <h4>Einleitung</h4>
-<p>Das eXtended-Merkle-Signature-Scheme-Verfahren (XMSS) basiert auf dem Merkle-Signature-Scheme (MSS) und erweitert dieses. Die Hauptunterschiede zum MSS-Verfahren sind der Einsatz einer Bitmaske und eines sogenannten L-Trees. Durch den Einsatz von Bitmasken und des L-Trees kann auf eine kollisionsresistente Hashfunktion verzichtet und durch eine second-preeimage-resistente Hashfunktion ersetzt werden. Der Vorteil hierbei ist, dass eine second-preeimage-resistente Hashfunktion eine schächere Annahme ist, und somit schwerer zu brechen ist. Ein weiterer Vorteil, der sich aus dem Verzicht einer kollisionsresisten Hashfunktion ergibt ist, dass die erstellte Signatur kleiner ist. XMSS benutzt als One-Time-Signature (OTS) Winternitz OTS (WOTS). Es können insgesammt 2^h Nachrichten mit einre Länge von m-Bytes signiert werden.</p>
+<p>Das eXtended-Merkle-Signature-Scheme-Verfahren (XMSS) basiert auf dem Merkle-Signature-Scheme (MSS) und erweitert dieses. Die Hauptunterschiede zum MSS-Verfahren sind der Einsatz einer Bitmaske und eines sogenannten L-Trees. Durch den Einsatz von Bitmasken und des L-Trees kann auf eine kollisionsresistente Hashfunktion verzichtet und durch eine second-preeimage-resistente Hashfunktion ersetzt werden. Der Vorteil hierbei ist, dass eine second-preeimage-resistente Hashfunktion eine schwächere Annahme ist, und somit schwerer zu brechen ist. Ein weiterer Vorteil, der sich aus dem Verzicht einer kollisionsresisten Hashfunktion ergibt ist, dass die erstellte Signatur kleiner ist. XMSS benutzt als One-Time-Signature (OTS) Winternitz-OTS (WOTS). Es können insgesammt 2^h Nachrichten mit einer Länge von m-Bytes signiert werden.</p>
 
 <h4>Bitmaske</h4>
 
@@ -53,7 +53,7 @@ Das Plug-in lässt sich über das Menü <b>Visualisierungen</b> oder über den K
 
 <h4>L-Tree</h4>
 
-<p>Bei den L-Trees werden die selben Hashfunktionen wie beim XMSS-Baum verwendet, jedoch eine andere Bitmaske. Die verwendete Bitmaske ist wiederrum bei jedem L-Tree die selbe.</p>
+<p>Bei den L-Trees werden dieselben Hashfunktionen wie beim XMSS-Baum verwendet, jedoch eine andere Bitmaske. Die verwendete Bitmaske ist wiederum bei jedem L-Tree dieselbe.</p>
 
 
 <h4>Aufbau</h4>
@@ -83,7 +83,7 @@ Das Plug-in lässt sich über das Menü <b>Visualisierungen</b> oder über den K
 	
 <img src="img/page2.png" alt="MerkleTree" width="1200"/>
 	
-<p>In diesem Tab kann der Merklebaum inspiziert werden. Der Baum besteht aus den Leafs (Unterste Ebene), den Nodes und dem Root-Node, auch Merkle-Public-Key genannt. Es kann auf die einzelnen Nodes geklickt werden, dann wird in Gelb der Pfad zur Wurzel angezeigt. In Rot wird der Verifizierungspfad angezeigt, welcher ein Teil der Signatur ist. Des Weiteren wird, wenn man einen Node bezwiehungsweise Leaf anklickt, der Hash des ausgewählten Node angezeigt.</p>
+<p>In diesem Tab kann der Merklebaum inspiziert werden. Der Baum besteht aus den Leafs (Unterste Ebene), den Nodes und dem Root-Node, auch Merkle-Public-Key genannt. Es kann auf die einzelnen Nodes geklickt werden, dann wird in Gelb der Pfad zur Wurzel angezeigt. In Rot wird der Verifizierungspfad angezeigt, welcher ein Teil der Signatur ist. Des Weiteren wird, wenn man einen Node beziehungsweise Leaf anklickt, der Hash des ausgewählten Node angezeigt.</p>
 	
 <h4>Tab: Signierung</h4>
 	
