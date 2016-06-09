@@ -97,7 +97,8 @@ public class MerkleTreeView extends ViewPart {
 		//Verification
 		TabItem tbtmParameter3 = new TabItem(tabFolder,SWT.NONE);
 		tbtmParameter3.setText(Descriptions.MerkleTreeView_3);
-		tbtmParameter3.setControl(mtV);
+		//christoph: doesnt seem to do anything -> removed because of the reset button
+		//tbtmParameter3.setControl(mtV);
 		
 		
 		

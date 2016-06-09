@@ -102,6 +102,7 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				int currentLeaf=-1;
+				
 				for(GraphConnection con : markedConnectionList) {
 					/*if(((Node)con.getSource().getData()).getLeafNumber()>=0) {
 						currentLeaf=((Node)con.getSource().getData()).getLeafNumber();
@@ -118,13 +119,11 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 						//set the Screen color based on the result
 						//green if verification success
 						//red if verification fails
-						Color green = getDisplay().getSystemColor(SWT.COLOR_GREEN);
-						styledTextTree.setBackground(green);
+						styledTextTree.setBackground(ColorConstants.green);
 						styledTextTree.setText(Descriptions.MerkleTreeVerify_2);
 					}
 					else{
-						Color red = getDisplay().getSystemColor(SWT.COLOR_RED);
-						styledTextTree.setBackground(red);
+						styledTextTree.setBackground(ColorConstants.red);
 						styledTextTree.setText(Descriptions.MerkleTreeVerify_3);
 					}
 				}
@@ -144,7 +143,8 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 		viewer = new GraphViewer(compositeTree, SWT.NONE);
 		viewer.setContentProvider(new ZestNodeContentProvider());
 		viewer.setLabelProvider(new ZestLabelProvider());
-		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_DIRECTED);
+		//select the layout of the connections -> CONNECTIONS_DIRECTED would be a ->
+		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_SOLID);
 		linkMerkleTree(merkle);
 
 		Control control = viewer.getControl();
@@ -276,19 +276,18 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 	private void unmarkBranch(List<GraphConnection> markedConnectionList) {
 		GraphConnection authPath;
 		for (GraphConnection connection : markedConnectionList) {
+			
+			//set the line color to gray and Root and Leaf to green
 			connection.setLineColor(ColorConstants.lightGray);
-			connection.getSource().setBackgroundColor(viewer.getGraphControl().LIGHT_BLUE);
-			Node leaf = (Node) connection.getDestination().getData();
+			connection.getSource().setBackgroundColor(ColorConstants.lightGreen);
+			connection.getDestination().setBackgroundColor(ColorConstants.lightGreen);
+			
+			//set the rest of the authentication path to green
 			authPath = (GraphConnection) connection.getSource().getSourceConnections().get(0);
 			authPath.getDestination().setBackgroundColor(ColorConstants.lightGreen);
 			authPath = (GraphConnection) connection.getSource().getSourceConnections().get(1);
 			authPath.getDestination().setBackgroundColor(ColorConstants.lightGreen);
 
-			if (leaf.isLeaf()) {
-				connection.getDestination().setBackgroundColor(ColorConstants.lightGreen);
-			} else {
-				connection.getDestination().setBackgroundColor(ColorConstants.lightGreen); // viewer.getGraphControl().LIGHT_BLUE
-			}
 		}
 	}
 

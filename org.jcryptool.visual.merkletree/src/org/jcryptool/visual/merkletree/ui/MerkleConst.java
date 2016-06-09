@@ -102,7 +102,7 @@ public abstract class MerkleConst {
 	
 	// width of the plug-in as a whole (this is important for the scrolling of
 	// the plug-in)
-	public static final int PLUGIN_WIDTH = 800;
+	public static final int PLUGIN_WIDTH = 400;
 	
 	// this is used for the layout of the plug-in and has to be even, because
 	// the xor is placed at

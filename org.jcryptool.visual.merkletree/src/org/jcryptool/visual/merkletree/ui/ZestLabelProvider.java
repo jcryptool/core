@@ -96,6 +96,7 @@ public class ZestLabelProvider extends LabelProvider implements IEntityStyleProv
 			if (n.getCode() != "") {
 				return ColorConstants.lightGreen;
 			}
+			
 		}
 		return null;
 	}
@@ -115,6 +116,13 @@ public class ZestLabelProvider extends LabelProvider implements IEntityStyleProv
 		if (entity instanceof Node) {
 			Node n = (Node) entity;
 
+			IFigure tooltip1 = new Label("Hash(" + n.getCode() + ")", null);
+			return tooltip1;
+			
+			/**
+			 * @author christoph
+			 * show tooltip with every node!
+			 * can be removed
 			if (n.isLeaf()) {
 				IFigure tooltip1 = new Label("Hash(" + n.getCode() + ")", null);
 				return tooltip1;
@@ -128,6 +136,7 @@ public class ZestLabelProvider extends LabelProvider implements IEntityStyleProv
 				IFigure tooltip1 = new Label(Descriptions.ZestLabelProvider_1, null);
 				return tooltip1;
 			}
+			*/
 		}
 		return null;
 	}
