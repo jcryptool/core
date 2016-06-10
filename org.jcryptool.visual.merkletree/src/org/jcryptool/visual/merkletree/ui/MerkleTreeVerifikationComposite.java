@@ -142,7 +142,7 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 
 		viewer = new GraphViewer(compositeTree, SWT.NONE);
 		viewer.setContentProvider(new ZestNodeContentProvider());
-		viewer.setLabelProvider(new ZestLabelProvider());
+		viewer.setLabelProvider(new ZestLabelProvider(ColorConstants.white));
 		//select the layout of the connections -> CONNECTIONS_DIRECTED would be a ->
 		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_SOLID);
 		linkMerkleTree(merkle);
@@ -279,14 +279,14 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 			
 			//set the line color to gray and Root and Leaf to green
 			connection.setLineColor(ColorConstants.lightGray);
-			connection.getSource().setBackgroundColor(ColorConstants.lightGreen);
-			connection.getDestination().setBackgroundColor(ColorConstants.lightGreen);
+			connection.getSource().setBackgroundColor(ColorConstants.white);
+			connection.getDestination().setBackgroundColor(ColorConstants.white);
 			
 			//set the rest of the authentication path to green
 			authPath = (GraphConnection) connection.getSource().getSourceConnections().get(0);
-			authPath.getDestination().setBackgroundColor(ColorConstants.lightGreen);
+			authPath.getDestination().setBackgroundColor(ColorConstants.white);
 			authPath = (GraphConnection) connection.getSource().getSourceConnections().get(1);
-			authPath.getDestination().setBackgroundColor(ColorConstants.lightGreen);
+			authPath.getDestination().setBackgroundColor(ColorConstants.white);
 
 		}
 	}

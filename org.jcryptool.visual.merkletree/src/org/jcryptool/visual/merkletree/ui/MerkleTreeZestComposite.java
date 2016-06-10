@@ -97,7 +97,7 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 
 		viewer = new GraphViewer(compositeTree, SWT.NONE);
 		viewer.setContentProvider(new ZestNodeContentProvider());
-		viewer.setLabelProvider(new ZestLabelProvider());
+		viewer.setLabelProvider(new ZestLabelProvider(ColorConstants.lightGreen));
 		//select the layout of the connections -> CONNECTIONS_DIRECTED would be a ->
 		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_SOLID);
 		linkMerkleTree(merkle);

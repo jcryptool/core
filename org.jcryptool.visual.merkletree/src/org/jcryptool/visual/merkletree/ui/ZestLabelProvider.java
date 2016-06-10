@@ -21,6 +21,19 @@ public class ZestLabelProvider extends LabelProvider implements IEntityStyleProv
 	 * @see org.eclipse.jface.viewers.LabelProvider#getText(java.lang.Object)
 	 * Declares the Content of the Node
 	 */
+
+	Color backgroundColor;
+	
+	/**
+	 * @author Christoph Sonnberger
+	 * Constructor for the Class ZestLabelProvider
+	 * @param backgroundColor: sets the backgroundColor of the Nodes used in the Tree
+	 * 
+	 */
+	public ZestLabelProvider(Color backgroundColor){
+		this.backgroundColor = backgroundColor;
+	}
+	
 	@Override
 	public String getText(Object element) {
 		if (element instanceof Node) {
@@ -94,7 +107,7 @@ public class ZestLabelProvider extends LabelProvider implements IEntityStyleProv
 		if (entity instanceof Node) {
 			Node n = (Node) entity;
 			if (n.getCode() != "") {
-				return ColorConstants.lightGreen;
+				return backgroundColor;
 			}
 			
 		}
