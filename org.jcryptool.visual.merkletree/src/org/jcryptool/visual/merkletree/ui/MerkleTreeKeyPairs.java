@@ -159,7 +159,7 @@ public class MerkleTreeKeyPairs extends Composite {
 				}
 				
 				
-				merkle.setPublicSeed(((MerkleTreeSeed)parent).getSeed());
+				merkle.setSeed(((MerkleTreeSeed)parent).getSeed());
 				/*
 				 * if the generated Tree is a XMSSTree -> the Bitmaskseed is also needed
 				 */

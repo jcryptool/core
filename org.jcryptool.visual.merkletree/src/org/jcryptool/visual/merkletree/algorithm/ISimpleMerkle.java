@@ -5,17 +5,11 @@ import java.util.ArrayList;
 public interface ISimpleMerkle {
 	// Variablen
 
-	public void addPrivateSeed(byte[] privateSeed);
-
-	public void addPublicSeed(byte[] publiSeed);
-
-	public void addTreeLeaf(byte[] LeafContent, String pubKey);
+	public void setSeed(byte[] seed);
 
 	public byte[] getMerkleRoot();
 
-	public byte[] getPrivateSeed();
-
-	public byte[] getPublicSeed();
+	public byte[] getSeed();
 
 	public int getLeafCounter();
 
@@ -45,5 +39,4 @@ public interface ISimpleMerkle {
 		
 	public void setLeafCount(int i);
 	
-	public void setPublicSeed(byte[] seed);
 }

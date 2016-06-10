@@ -133,7 +133,7 @@ public class MerkleTreeView extends ViewPart {
 									break;
 							}
 							merkle.setLeafCount(mtC.getMTS().getMTKP().getKeyAmmount());
-							merkle.setPublicSeed(mtC.getMTS().getSeed());
+							merkle.setSeed(mtC.getMTS().getSeed());
 							
 							/*
 							 * if the generated Tree is a XMSSTree -> the Bitmaskseed is also needed
@@ -151,7 +151,7 @@ public class MerkleTreeView extends ViewPart {
 							Control[] mtsC = mtC.getMTS().getChildren();
 							for(int i = 0; i < mtsC.length; i++){
 								if(mtsC[i] instanceof Text){
-									((Text)mtsC[i]).setText(merkle.getPublicSeed().toString());
+									((Text)mtsC[i]).setText(merkle.getSeed().toString());
 								}
 							}
 							
