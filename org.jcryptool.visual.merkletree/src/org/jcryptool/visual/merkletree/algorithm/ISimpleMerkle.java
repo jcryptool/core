@@ -42,9 +42,7 @@ public interface ISimpleMerkle {
 	public void selectOneTimeSignatureAlgorithm(String hash, String algo);
 	
 	public OTS getOneTimeSignatureAlgorithm();
-	
-	public byte[] generateSeed(int len);
-	
+		
 	public void setLeafCount(int i);
 	
 	public void setPublicSeed(byte[] seed);

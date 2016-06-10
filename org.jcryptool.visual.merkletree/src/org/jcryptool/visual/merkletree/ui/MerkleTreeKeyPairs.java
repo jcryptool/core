@@ -40,7 +40,7 @@ public class MerkleTreeKeyPairs extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public MerkleTreeKeyPairs(Composite parent, int style, SUIT verfahren, ViewPart masterView) {
+	public MerkleTreeKeyPairs(Composite parent, int style, SUIT mode, ViewPart masterView) {
 		super(parent, style);
 		treeValue = 0;
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
@@ -94,7 +94,7 @@ public class MerkleTreeKeyPairs extends Composite {
 		
 		
 		// if MT -> Anzahl ebenen
-		if(verfahren == SUIT.XMSS_MT){
+		if(mode == SUIT.XMSS_MT){
 			
 			Label trees = new Label(this, SWT.NONE);
 			trees.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
@@ -118,7 +118,7 @@ public class MerkleTreeKeyPairs extends Composite {
 		keysum.setText(Descriptions.Tab0_Lable1);
 		createLabel.setText(Descriptions.Tab0_Head2);
 		buttonCreateKeys.setText(Descriptions.Tab0_Button2);
-		switch(verfahren){
+		switch(mode){
 			case XMSS:
 				descText.setText(Descriptions.XMSS.Tab0_Txt2);
 				break;
@@ -142,7 +142,10 @@ public class MerkleTreeKeyPairs extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				ISimpleMerkle merkle;
 				
-				switch(verfahren){
+				/*
+				 * select the type of scheme
+				 */
+				switch(mode){
 				case XMSS:
 					merkle = new XMSSTree();
 					break;
@@ -154,12 +157,20 @@ public class MerkleTreeKeyPairs extends Composite {
 					merkle = new SimpleMerkleTree();
 					break;
 				}
+				
+				
 				merkle.setPublicSeed(((MerkleTreeSeed)parent).getSeed());
+				/*
+				 * if the generated Tree is a XMSSTree -> the Bitmaskseed is also needed
+				 */
+				if(merkle instanceof XMSSTree){
+					((XMSSTree) merkle).setBitmaskSeed(((MerkleTreeSeed)parent).getBitmaskSeed());	
+				}
 				merkle.setLeafCount(spinnerValue);
 				merkle.selectOneTimeSignatureAlgorithm("SHA-256", "WOTSPlus");
 				merkle.generateKeyPairsAndLeaves();
 				merkle.generateMerkleTree();
-				((MerkleTreeView) masterView).setAlgorithm(merkle, verfahren);
+				((MerkleTreeView) masterView).setAlgorithm(merkle, mode);
 				
 			}
 		});

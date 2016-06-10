@@ -487,14 +487,6 @@ public class XMSSTree implements ISimpleMerkle {
 		return index;
 	}
 	
-	//FIXME: brauche des unabhängig von ana merkleTree instanz -> static
-	public byte[] generateSeed(int len) {
-		SecureRandom rnd = new SecureRandom();
-		byte[] seed = new byte[len];
-		rnd.nextBytes(seed);
-		return seed;		
-	}
-	
 	public byte[] randomGenerator(byte[] seed, String message, int len) {
 		byte[] res = new byte[len+32];	//erstellen des zu befüllenden arrays
 		byte[] padding = new byte[32];
@@ -582,6 +574,10 @@ public class XMSSTree implements ISimpleMerkle {
 		bitmaskSeed = seed;
 	}
 
+	public byte[] getBitmaskSeed() {
+		return bitmaskSeed;
+	}
+	
 	@Override
 	public void addPrivateSeed(byte[] privateSeed) {
 		// TODO Auto-generated method stub

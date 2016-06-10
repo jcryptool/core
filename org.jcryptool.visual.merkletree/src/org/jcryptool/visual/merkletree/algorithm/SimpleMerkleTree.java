@@ -394,15 +394,6 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 		return this.otsAlgo;
 	}
 	
-	public byte[] generateSeed(int len) {
-		SecureRandom rnd = new SecureRandom();
-		byte[] seed = new byte[len];
-		rnd.nextBytes(seed);
-		publicSeed = seed;
-		privateSeed = seed;
-		return seed;		
-	}
-	
 	public void setLeafCount(int i) {
 		leafCounter = i;
 	}

@@ -44,14 +44,10 @@ import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 public class MerkleTreeZestComposite extends Composite implements IZoomableWorkbenchPart {
 
 	private Composite compositeTree;
-
 	private GraphViewer viewer;
-
 	private StyledText styledTextTree;
-
 	private int layoutCounter = 1;
 	private ArrayList<GraphConnection> markedConnectionList;
-
 
 	/**
 	 * Create the composite.
@@ -67,7 +63,7 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 
 		compositeTree = new Composite(this, SWT.WRAP | SWT.BORDER | SWT.LEFT | SWT.FILL);
 		compositeTree.setLayoutData(
-				new GridData(SWT.FILL, SWT.FILL, true, true, MerkleConst.H_SPAN_MAIN+5, MerkleConst.DESC_HEIGHT+1));
+		new GridData(SWT.FILL, SWT.FILL, true, true, MerkleConst.H_SPAN_MAIN+5, MerkleConst.DESC_HEIGHT+1));
 		compositeTree.setLayout(new GridLayout(1, true));
 		compositeTree.addControlListener(new ControlAdapter() {
 			@Override
@@ -235,12 +231,13 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 		for (GraphConnection connection : markedConnectionList) {
 			connection.setLineColor(ColorConstants.lightGray);
 			connection.getSource().setBackgroundColor(viewer.getGraphControl().LIGHT_BLUE);
-			Node leaf = (Node) connection.getDestination().getData();
 			authPath = (GraphConnection) connection.getSource().getSourceConnections().get(0);
 			authPath.getDestination().setBackgroundColor(ColorConstants.lightGreen);
 			authPath = (GraphConnection) connection.getSource().getSourceConnections().get(1);
 			authPath.getDestination().setBackgroundColor(ColorConstants.lightGreen);
-
+			
+			//color the nodes back to light green
+			Node leaf = (Node) connection.getDestination().getData();
 			if (leaf.isLeaf()) {
 				connection.getDestination().setBackgroundColor(ColorConstants.lightGreen);
 			} else {
