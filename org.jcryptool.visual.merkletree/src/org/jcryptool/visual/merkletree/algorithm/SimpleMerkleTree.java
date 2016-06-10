@@ -93,11 +93,6 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 	}
 
 	@Override
-	public byte[] getNodeContentbyIndex(int index) {
-		return tree.get(index).getName();
-	}
-
-	@Override
 	public void generateMerkleTree() {
 
 		int height = getTreeHeight();
@@ -195,23 +190,6 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 		 */
 
 		return Integer.bitCount(Integer.highestOneBit(this.leafCounter - 1) * 2 - 1);
-
-	}
-
-	@Override
-	public void selectHashAlgorithm(String hAlgo) {
-		try {
-			mDigest = MessageDigest.getInstance(hAlgo);
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Do stuff with it!
-			e.printStackTrace();
-			try {
-				mDigest = MessageDigest.getInstance("SHA256");
-			} catch (NoSuchAlgorithmException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
 
 	}
 
@@ -366,10 +344,6 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 			this.leaves.add(leaf);
 		}
 		
-	}
-	@Override
-	public OTS getOneTimeSignatureAlgorithm() {
-		return this.otsAlgo;
 	}
 	
 	public void setLeafCount(int i) {

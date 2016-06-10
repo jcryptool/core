@@ -186,7 +186,6 @@ public class WOTSPlusXMSS implements OTS{
 	 */
 	
 	public void generatePrivateKey() {
-
 		byte[][] privateKey = new byte[l][n];
 		Random sRandom = new Random();
 		for(int i = 0; i < privateKey.length; i++) {

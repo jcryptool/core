@@ -3,13 +3,11 @@ package org.jcryptool.visual.merkletree.algorithm;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
-import org.jcryptool.visual.merkletree.Descriptions.XMSS_MT;
 import org.jcryptool.visual.merkletree.files.ByteUtils;
 import org.jcryptool.visual.merkletree.files.Converter;
 import org.jcryptool.visual.merkletree.files.MathUtils;
@@ -65,7 +63,7 @@ public class XMSSTree implements ISimpleMerkle {
 
 	@Override
 	/**
-	 * @author christoph
+	 * @author Christoph Sonnberger
 	 * returns the number of leafs
 	 */
 	public int getLeafCounter() {
@@ -77,21 +75,11 @@ public class XMSSTree implements ISimpleMerkle {
 		return leaves.get(treeLeafNumber);
 	}
 
-	@Override
-	/**deadcode
-	 * @author christoph
-	 * Returns the content of an given node index
-	 * getName() -> Content is stored in the name field of the array list
-	 */
-	public byte[] getNodeContentbyIndex(int index) {
-		return tree.get(index).getContent();
-	}
-
 	//TODO add parameter pubKey, seed, adrs
 	public byte[] generateLTree(byte[][] pKey, byte[] seed, LTreeAddress adrs) {
 		byte[][] pubKey = pKey.clone();
 		int len = pubKey.length;
-		Address lAdrs = adrs;		
+		Address lAdrs = adrs;
 		lAdrs.setTreeHeight(0);
 
 		while (len > 1) {
@@ -205,26 +193,6 @@ public class XMSSTree implements ISimpleMerkle {
 
 	@Override
 	/**
-	 * deadcode
-	 */
-	public void selectHashAlgorithm(String hAlgo) {
-		try {
-			mDigest = MessageDigest.getInstance(hAlgo);
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Do stuff with it!
-			e.printStackTrace();
-			try {
-				mDigest = MessageDigest.getInstance("SHA256");
-			} catch (NoSuchAlgorithmException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-
-	}
-
-	@Override
-	/**
 	 * Selects the Signature Algorithm
 	 * defautl Algorithm is the WOTSPlus Algorithm
 	 * after the Algorithm is selected the method -> generateKeyPairsAndLeaves() is called
@@ -324,14 +292,6 @@ public class XMSSTree implements ISimpleMerkle {
 	 */
 	public boolean isGenerated() {
 		return treeGenerated;
-	}
-	
-	@Override
-	/**deadcode
-	 * returns the used One Time Signature Algorithm including the public key, secret key, message
-	 */
-	public OTS getOneTimeSignatureAlgorithm() {
-		return this.otsAlgo;
 	}
 	
 	/**
@@ -553,7 +513,6 @@ public class XMSSTree implements ISimpleMerkle {
 	
 	@Override
 	public byte[] getSeed() {
-		// TODO Auto-generated method stub
-		return null;
+		return seed;
 	}
 }

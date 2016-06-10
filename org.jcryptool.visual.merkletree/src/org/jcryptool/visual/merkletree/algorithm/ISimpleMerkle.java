@@ -16,8 +16,6 @@ public interface ISimpleMerkle {
 	public boolean isGenerated();
 
 	public Node getTreeLeaf(int treeLeaveNumber);
-
-	public byte[] getNodeContentbyIndex(int index);
 	
 	public void generateKeyPairsAndLeaves();
 
@@ -31,12 +29,9 @@ public interface ISimpleMerkle {
 
 	public boolean verify(String message, String signature, int keyIndex);
 	// Options
-	public void selectHashAlgorithm(String hAlgo);
 
 	public void selectOneTimeSignatureAlgorithm(String hash, String algo);
-	
-	public OTS getOneTimeSignatureAlgorithm();
-		
+			
 	public void setLeafCount(int i);
 	
 }

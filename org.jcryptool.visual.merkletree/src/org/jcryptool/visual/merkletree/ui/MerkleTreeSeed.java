@@ -11,7 +11,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
@@ -128,15 +127,18 @@ public class MerkleTreeSeed extends Composite {
 		});
 	}
 	
-	/***
-	 * geter methode
-	 * @return seed as bytearray
+	/**
+	 * @author Christoph Sonnberger
+	 * @return seed
 	 */
 	public byte[] getSeed() {
-		//return textSeed.getText().getBytes();
 		return seedarray;
 	}
 	
+	/**
+	 * @author Christoph Sonnberger
+	 * @return bitmaskSeed
+	 */
 	public byte[] getBitmaskSeed(){
 		return bitmaskSeedarray;
 	}

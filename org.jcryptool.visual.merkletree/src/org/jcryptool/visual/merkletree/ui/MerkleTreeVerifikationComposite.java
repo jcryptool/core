@@ -49,7 +49,7 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 	private Composite compositeTree;
 
 	private GraphViewer viewer;
-
+	private StyledText binaryValue;
 	private StyledText styledTextTree;
 	private int layoutCounter = 1;
 	// private Composite compositeCT;
@@ -87,9 +87,10 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		//descText.setCaret(null);
 		descText.setText(Descriptions.MerkleTreeVerify_0);
-		//descText.setEditable(false);
-		compositeTree.setLayout(new GridLayout(1, true));		
+		compositeTree.setLayout(new GridLayout(1, true));	
+		
 		styledTextTree = new StyledText(compositeTree, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
+		styledTextTree.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 		styledTextTree.setText(Descriptions.MerkleTreeVerify_4);
 		
 		/**
@@ -133,19 +134,19 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 			}
 		});
 		
-		
-		GridData gd_styledTextTree = new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1);
-		//sets the layout of the Textbox for the signature
-		gd_styledTextTree.widthHint = 960;
-		gd_styledTextTree.heightHint = 20;
-		styledTextTree.setLayoutData(gd_styledTextTree);
-
 		viewer = new GraphViewer(compositeTree, SWT.NONE);
 		viewer.setContentProvider(new ZestNodeContentProvider());
 		viewer.setLabelProvider(new ZestLabelProvider(ColorConstants.white));
 		//select the layout of the connections -> CONNECTIONS_DIRECTED would be a ->
 		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_SOLID);
 		linkMerkleTree(merkle);
+		
+		/*
+		 * Text field for the binary representation of the node
+		 */
+		binaryValue = new StyledText(compositeTree, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
+		binaryValue.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
+		binaryValue.setText("Test");
 
 		Control control = viewer.getControl();
 		control.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -182,10 +183,9 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 
 					if (n.isLeaf()) {
 						styledTextTree.setForeground(new Color(null, new RGB(1, 70, 122)));
-						// styledTextTree.setFont(FontService.getHugeFont());
-						/*styledTextTree.setText(
-								Descriptions.ZestLabelProvider_5 + " " + n.getCode() + ") = " + n.getNameAsString()); //$NON-NLS-1$ //$NON-NLS-2$
-						*/
+			
+						binaryValue.setText(n.getCode() + ") = " + n.getNameAsString());
+
 						if (markedConnectionList.size() == 0) {
 							markBranch(node);
 							markAuthPath(markedConnectionList);
@@ -205,8 +205,6 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 						}
 						styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
 						styledTextTree.setAlignment(SWT.LEFT);
-						// styledTextTree.setFont(FontService.getNormalFont());
-						// styledTextTree.setText(Descriptions.ZestLabelProvider_6 + n.getNameAsString());
 					}
 
 					/*
