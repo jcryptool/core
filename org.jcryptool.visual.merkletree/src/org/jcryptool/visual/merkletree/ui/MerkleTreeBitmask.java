@@ -10,13 +10,11 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.Descriptions;
-import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 /**
- * 
- * @author VmHost
- * TODO: Kommentare
- * XXX: Fertig
+ * Class for the Composite with the Bitmask generation in Tabpage 1
+ * Only used in XMSS and XMSS^MT
+ * @author Maximilian Lindpointner
  */
 public class MerkleTreeBitmask extends Composite{
 	

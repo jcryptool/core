@@ -21,6 +21,8 @@ import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 /**
  * Class for the Composite with the Seed in Tabpage 1
  * @author Fabian Mayer
+ * @author <i>revised by</i>
+ * @author Maximilian Lindpointner
  * 
  *TODO: Key auslesen aus TXTBox
  *TODO: Key auto generieren
@@ -58,9 +60,12 @@ public class MerkleTreeSeed extends Composite {
 		
 		/*
 		 * Textbox for seed
+		 * initiates textbox with a seed
 		 */
 		textSeed = new Text(testComp, SWT.BORDER | SWT.CENTER);
 		textSeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
+		textSeed.setText(String.valueOf(generateNewSeed()));
+		seedarray = textSeed.getText().getBytes();
 
 		/*
 		 * Button generate new Seed
@@ -80,6 +85,9 @@ public class MerkleTreeSeed extends Composite {
 			 */
 			bitMask = new MerkleTreeBitmask(this, SWT.WRAP | SWT.BORDER | SWT.LEFT, masterView);
 			bitMask.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
+			//initial random Bitmask
+			bitMask.textSeed.setText(String.valueOf(generateNewSeed()));
+			bitmaskSeedarray = bitMask.textSeed.getText().getBytes();
 
 			/*
 			 * add Listeners for button and for manual text changes
@@ -105,8 +113,13 @@ public class MerkleTreeSeed extends Composite {
 		}else{
 			bitMask = null;
 		}
+		
+		/*
+		 * Create sub-Frame for the Key Text/Create-Button
+		 */
 		keyPairc = new MerkleTreeKeyPairs(this, SWT.WRAP | SWT.BORDER | SWT.LEFT, mode, masterView);
 		keyPairc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
+		
 		
 		//TODO: sec.Rand.gen falsch Methode getSeed()!
 		buttonCreateSeed.addSelectionListener(new SelectionAdapter() {
@@ -115,7 +128,9 @@ public class MerkleTreeSeed extends Composite {
 				textSeed.setText(String.valueOf(generateNewSeed()));
 			}
 		});
-		
+		/*
+		 * event listener if seed get changed
+		 */
 		textSeed.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
@@ -128,7 +143,6 @@ public class MerkleTreeSeed extends Composite {
 	}
 	
 	/**
-	 * @author Christoph Sonnberger
 	 * @return seed
 	 */
 	public byte[] getSeed() {
@@ -136,26 +150,35 @@ public class MerkleTreeSeed extends Composite {
 	}
 	
 	/**
-	 * @author Christoph Sonnberger
 	 * @return bitmaskSeed
 	 */
 	public byte[] getBitmaskSeed(){
-		return bitmaskSeedarray;
+		if(bitMask != null )
+			return bitmaskSeedarray;
+		else
+			return null;
 	}
 
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
 	}
+	/**
+	 * returns Key-Frame
+	 * @return MerkleTreeKeyPairs (Composite)
+	 */
 	public MerkleTreeKeyPairs getMTKP(){
 		return keyPairc;
 	}
+	/**
+	 *  returns Bitmask-Frame
+	 * @return MerkleTreeBitmask (Composite)
+	 */
 	public MerkleTreeBitmask getMTB(){
 		return bitMask;
 	}
 	
 	/**
-	 * @author Christoph Sonnberger
 	 * generates a new random seed
 	 * @return random seed
 	 */

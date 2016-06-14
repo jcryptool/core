@@ -22,8 +22,9 @@ import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 /**
  * Class for the Composite with the KeyPair generation in Tabpage 1
  * @author Fabian Mayer
- * TODO: Kommentare
- * TODO: Keygeneration
+ * @author <i>revised by</i>
+ * @author Maximilian Lindpointner
+ * 
  *
  */
 public class MerkleTreeKeyPairs extends Composite {
@@ -45,20 +46,21 @@ public class MerkleTreeKeyPairs extends Composite {
 		treeValue = 0;
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
 
+		//headline
 		createLabel = new Label(this, SWT.NONE);
 		createLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
 		
-
+		//text
 		descText = new StyledText(this, SWT.WRAP | SWT.BORDER);
 		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 2));
 		descText.setCaret(null);
 		
-
-
+		//text - for the spinner
 		Label keysum = new Label(this, SWT.NONE);
 		keysum.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
 
 
+		//spinner for the key-ammount
 		Spinner spinnerkeysum = new Spinner(this, SWT.BORDER);
 		spinnerkeysum.setMaximum(1024);
 		spinnerkeysum.setMinimum(2);
@@ -66,7 +68,7 @@ public class MerkleTreeKeyPairs extends Composite {
 		spinnerkeysum.setSelection(0);
 		spinnerkeysum.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
 		
-		//spinner power of 2 amount of keys
+		//set the spinner-value only to values of the power of 2
 		spinnerkeysum.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -86,14 +88,13 @@ public class MerkleTreeKeyPairs extends Composite {
 			}
 		});
 		
-		
-
+		//'create button'
 		buttonCreateKeys = new Button(this, SWT.NONE);
 		buttonCreateKeys.setEnabled(true);
 		buttonCreateKeys.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 3, 1));
 		
 		
-		// if MT -> Anzahl ebenen
+		//if the Mode is MultiTree there is an extra spinner for the amount of Trees (Tree-Layers)
 		if(mode == SUIT.XMSS_MT){
 			
 			Label trees = new Label(this, SWT.NONE);
@@ -114,7 +115,7 @@ public class MerkleTreeKeyPairs extends Composite {
 			});
 		}
 		
-		
+		//setting the text's depending on the actual suite
 		keysum.setText(Descriptions.Tab0_Lable1);
 		createLabel.setText(Descriptions.Tab0_Head2);
 		buttonCreateKeys.setText(Descriptions.Tab0_Button2);
@@ -132,7 +133,7 @@ public class MerkleTreeKeyPairs extends Composite {
 		}
 		descText.setEditable(false);
 		
-
+		//event-listener for the 'create button'
 		buttonCreateKeys.addSelectionListener(new SelectionAdapter() {
 			/* (non-Javadoc)
 			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
@@ -143,7 +144,7 @@ public class MerkleTreeKeyPairs extends Composite {
 				ISimpleMerkle merkle;
 				
 				/*
-				 * select the type of scheme
+				 * select the type of suite
 				 */
 				switch(mode){
 				case XMSS:
@@ -157,12 +158,10 @@ public class MerkleTreeKeyPairs extends Composite {
 					merkle = new SimpleMerkleTree();
 					break;
 				}
-				
-				
 				merkle.setSeed(((MerkleTreeSeed)parent).getSeed());
-				/*
-				 * if the generated Tree is a XMSSTree -> the Bitmaskseed is also needed
-				 */
+				
+				//if the generated Tree is a XMSSTree -> the Bitmaskseed is also needed
+				//TODO: if XMSS^MT
 				if(merkle instanceof XMSSTree){
 					((XMSSTree) merkle).setBitmaskSeed(((MerkleTreeSeed)parent).getBitmaskSeed());	
 				}
@@ -171,35 +170,21 @@ public class MerkleTreeKeyPairs extends Composite {
 				merkle.generateKeyPairsAndLeaves();
 				merkle.generateMerkleTree();
 				((MerkleTreeView) masterView).setAlgorithm(merkle, mode);
-				
 			}
 		});
-
-		//spinner power of 2 if empty (possible?) 
-		/* Not Possible empty @Lindi
-		spinnerkeysum.addModifyListener(new ModifyListener() {
-			@Override
-			public void modifyText(ModifyEvent e) {
-
-				Control[] controls = parent.getChildren();
-				for (int i = 0; i < controls.length; i++) {
-					if (controls[i] instanceof Text) {
-						if (((Text) controls[i]).getText().length() == 0) {
-							buttonCreateKeys.setEnabled(false);
-						} else {
-							buttonCreateKeys.setEnabled(true);
-						}
-					}
-				}
-			}
-		});
-		*/
-
 	}
 
+
+	/**
+	 * @return sipnner value (ammount of keys)
+	 */
 	public int getKeyAmmount(){
 		return spinnerValue;
 	}
+	/**
+	 * if XMSS^MT
+	 * @return ammount of Trees (Tree-Layers)
+	 */
 	public int getTreeAmmount(){
 		return treeValue;
 		

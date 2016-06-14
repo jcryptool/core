@@ -305,14 +305,11 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 	 */
 	private void linkMerkleTree(ISimpleMerkle merkle) {
 		if (merkle.getMerkleRoot() != null) {
-			//this.merkle = merkle;
 			viewer.setInput(merkle.getTree());
 
 			LayoutAlgorithm layout = new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);
 			viewer.setLayoutAlgorithm(layout, true);
 			viewer.applyLayout();
-			//MAxi
-			//styledTextTree.setText(Descriptions.ZestLabelProvider_7);
 		}
 
 	}
