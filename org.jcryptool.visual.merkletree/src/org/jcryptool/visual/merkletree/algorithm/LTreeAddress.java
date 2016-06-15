@@ -21,24 +21,25 @@ public class LTreeAddress extends Address {
 	@Override
 	public void setKeyBit(boolean bit) {
 		if(bit == true) {
-			blockKeyBit += 1; //set keyBit (bit nr. 0) to 1
+			blockKeyBit |= 1; //set keyBit (bit nr. 0) to 1
 		} else{
-			blockKeyBit -= 1; //set keyBit (bit nr. 0) to 0
+			blockKeyBit &= 0; //set keyBit (bit nr. 0) to 0
 		}
 	}
 
 	@Override
 	public void setChainAddress(int i) {
 		// do nothing, not needed
+		
 
 	}
 
 	@Override
 	public void setBlockBit(boolean bit) {
 		if(bit == true) {
-			blockKeyBit += 2; //set blockBit (bit nr. 1) to 1
+			blockKeyBit |= 2; //set blockBit (bit nr. 1) to 1
 		} else {
-			blockKeyBit -= 2; //set blockBit (bit nr. 1) to 0
+			blockKeyBit &= 1; //set blockBit (bit nr. 1) to 0
 		}
 
 	}

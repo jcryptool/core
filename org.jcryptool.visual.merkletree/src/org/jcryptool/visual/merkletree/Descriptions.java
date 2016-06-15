@@ -59,7 +59,6 @@ public class Descriptions extends NLS {
 	public static String MerkleTreeSign_0;
 	public static String MerkleTreeSign_1;
 	public static String MerkleTreeSign_2;
-	public static String MerkleTreeSign_3;
 	public static String MerkleTreeSign_4;
 	public static String MerkleTreeSign_5;
 	public static String MerkleTreeSign_6;
@@ -80,9 +79,13 @@ public class Descriptions extends NLS {
 	
 	public static String Tab0_Head1;
 	public static String Tab0_Head2;
+	public static String Tab0_Head3;
+	public static String Tab0_Head4;
 	public static String Tab0_Button1;
 	public static String Tab0_Button2;
+	public static String Tab0_Button3;
 	public static String Tab0_Lable1;
+	public static String Tab0_Txt3;
 
 	public static class MSS{
 		
@@ -93,6 +96,8 @@ public class Descriptions extends NLS {
 		public static String Tab1_Head0;
 		public static String Tab1_Txt0;
 		public static String Tab1_Txt1;
+		
+		public static String Tab2_Txt0;
 	}
 	
 	public static class XMSS{
@@ -100,13 +105,13 @@ public class Descriptions extends NLS {
 		public static String Tab0_Head0;
 		public static String Tab0_Txt0;
 		public static String Tab0_Txt2;
-		public static String Tab0_Txt3;
-		public static String Tab0_Head3;
-		public static String Tab0_Button3;
+
 		
 		public static String Tab1_Head0;
 		public static String Tab1_Txt0;
 		public static String Tab1_Txt1;
+		
+		public static String Tab2_Txt0;
 	}
 	
 	public static class XMSS_MT{
@@ -114,7 +119,6 @@ public class Descriptions extends NLS {
 		public static String Tab0_Head0;
 		public static String Tab0_Txt0;
 		public static String Tab0_Txt2;
-		public static String Tab0_Txt3;
 		public static String Tab0_Lable2;
 		
 		public static String Tab1_Head0;

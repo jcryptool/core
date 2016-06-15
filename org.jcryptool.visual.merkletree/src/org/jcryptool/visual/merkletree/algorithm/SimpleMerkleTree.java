@@ -9,8 +9,7 @@ import java.util.Arrays;
 public class SimpleMerkleTree implements ISimpleMerkle {
 
 	int keyIndex;
-	byte[] privateSeed;
-	byte[] publicSeed;
+	byte[] seed;
 	boolean treeGenerated;
 	OTS otsAlgo;
 
@@ -36,8 +35,8 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 		this.treeGenerated = false;
 	}
 
-	public SimpleMerkleTree(byte[] privateSeed, byte[] publicSeed, int leafCounter) {
-		this.privateSeed = privateSeed;
+	public SimpleMerkleTree(byte[] seed, byte[] publicSeed, int leafCounter) {
+		this.seed = seed;
 		this.publicSeed = publicSeed;
 		this.treeGenerated = false;
 		this.keyIndex = 0;
@@ -51,26 +50,18 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 		this.keyIndex = 0;
 	}
 	@Override
-	public void addPrivateSeed(byte[] privateSeed) {
-		this.privateSeed = privateSeed;
+	public void setSeed(byte[] seed) {
+		this.seed = seed;
 
 	}
-
+	
 	@Override
-	public void addPublicSeed(byte[] publicSeed) {
-		this.publicSeed = publicSeed;
-	}
-
-	@Override
-	public void addTreeLeaf(byte[] LeafContent, String pubKey) {
-		Node leafNode = new SimpleNode(LeafContent, true, ++this.leafNumber);
-		leafNode.setCode(pubKey);
-		leaves.add(leafNode);
+	public byte[] getSeed() {
+		return seed;
 	}
 
 	@Override
 	public byte[] getMerkleRoot() {
-
 		for (int i = 0; i < tree.size(); i++) {
 			if (tree.get(i).getParent() == null) {
 				return tree.get(i).getName();
@@ -80,17 +71,6 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 		// return merkleTreeHeight.get(getTreeHeight()).get(0).getContent();
 	}
 
-	@Override
-	public byte[] getPrivateSeed() {
-		// TODO Auto-generated method stub
-		return privateSeed;
-	}
-
-	@Override
-	public byte[] getPublicSeed() {
-		// TODO Auto-generated method stub
-		return publicSeed;
-	}
 
 	@Override
 	public int getLeafCounter() {
@@ -109,14 +89,7 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 
 	@Override
 	public Node getTreeLeaf(int treeLeafNumber) {
-
 		return leaves.get(treeLeafNumber);
-	}
-
-	@Override
-	public byte[] getNodeContentbyIndex(int index) {
-
-		return tree.get(index).getName();
 	}
 
 	@Override
@@ -221,33 +194,16 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 	}
 
 	@Override
-	public void selectHashAlgorithm(String hAlgo) {
-		try {
-			mDigest = MessageDigest.getInstance(hAlgo);
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Do stuff with it!
-			e.printStackTrace();
-			try {
-				mDigest = MessageDigest.getInstance("SHA256");
-			} catch (NoSuchAlgorithmException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-
-	}
-
-	@Override
 	public void selectOneTimeSignatureAlgorithm(String hash, String algo) {
 		switch (algo) {
 		case "WOTS":
 			this.otsAlgo = new WinternitzOTS(16, hash);
 			break;
 		case "WOTSPlus":
-			this.otsAlgo = new WOTSPlusMerkle(16, hash, this.privateSeed);
+			this.otsAlgo = new WOTSPlusMerkle(16, hash, this.seed);
 			break;
 		default:
-			this.otsAlgo = new WOTSPlusMerkle(16, hash, this.privateSeed);
+			this.otsAlgo = new WOTSPlusMerkle(16, hash, this.seed);
 			break;
 		}
 		if (this.mDigest == null) {
@@ -389,28 +345,9 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 		}
 		
 	}
-	@Override
-	public OTS getOneTimeSignatureAlgorithm() {
-		return this.otsAlgo;
-	}
-	
-	public byte[] generateSeed(int len) {
-		SecureRandom rnd = new SecureRandom();
-		byte[] seed = new byte[len];
-		rnd.nextBytes(seed);
-		publicSeed = seed;
-		privateSeed = seed;
-		return seed;		
-	}
 	
 	public void setLeafCount(int i) {
 		leafCounter = i;
 	}
 	
-	//private seed, gesetzt. wird der verwendent? (ohne gehts nicht9 @Lindi
-	//TODO:
-	public void setPublicSeed(byte[] seed) {
-		publicSeed = seed;
-		privateSeed=seed;
-	}
 }
