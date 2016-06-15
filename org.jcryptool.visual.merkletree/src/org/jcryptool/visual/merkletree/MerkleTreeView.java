@@ -54,7 +54,7 @@ public class MerkleTreeView extends ViewPart {
 	private MerkleTreeSignatureComposite mtS;
 	private MerkleTreeVerifikationComposite mtV;
 	private ISimpleMerkle merkle;
-	private SUIT verfahren;
+	private SUIT mode;
 
 	//bei tabwechsel, wenn true -> msg Box (y|n) "achtung" änderungen wurden nicht in neuen Tree übertragen, bitte neuen Key Erzeugen!
 	//TODO: if abfrage bei Tabwechsel einbauen
@@ -97,7 +97,8 @@ public class MerkleTreeView extends ViewPart {
 		//Verification
 		TabItem tbtmParameter3 = new TabItem(tabFolder,SWT.NONE);
 		tbtmParameter3.setText(Descriptions.MerkleTreeView_3);
-		tbtmParameter3.setControl(mtV);
+		//christoph: doesnt seem to do anything -> removed because of the reset button
+		//tbtmParameter3.setControl(mtV);
 		
 		
 		
@@ -118,9 +119,8 @@ public class MerkleTreeView extends ViewPart {
 					messageBox.setText("Info");
 					switch(messageBox.open()){
 						
-					
 						case SWT.YES:
-							switch(verfahren){
+							switch(mode){
 								case XMSS:
 									merkle = new XMSSTree();
 									break;
@@ -133,7 +133,14 @@ public class MerkleTreeView extends ViewPart {
 									break;
 							}
 							merkle.setLeafCount(mtC.getMTS().getMTKP().getKeyAmmount());
-							merkle.setPublicSeed(mtC.getMTS().getSeed());
+							merkle.setSeed(mtC.getMTS().getSeed());
+							
+							/*
+							 * if the generated Tree is a XMSSTree -> the Bitmaskseed is also needed
+							 */
+							if(merkle instanceof XMSSTree){
+								((XMSSTree) merkle).setBitmaskSeed(mtC.getMTS().getBitmaskSeed());
+							}	
 							merkle.selectOneTimeSignatureAlgorithm("SHA-256", "WOTSPlus");
 							merkle.generateKeyPairsAndLeaves();
 							merkle.generateMerkleTree();
@@ -144,9 +151,17 @@ public class MerkleTreeView extends ViewPart {
 							Control[] mtsC = mtC.getMTS().getChildren();
 							for(int i = 0; i < mtsC.length; i++){
 								if(mtsC[i] instanceof Text){
-									((Text)mtsC[i]).setText(merkle.getPublicSeed().toString());
+									((Text)mtsC[i]).setText(merkle.getSeed().toString());
 								}
 							}
+							
+							Control[] mtbC = mtC.getMTS().getChildren();
+							for(int i = 0; i < mtbC.length; i++){
+								if(mtbC[i] instanceof Text){
+									((Text)mtbC[i]).setText(((XMSSTree) merkle).getBitmaskSeed().toString());
+								}
+							}
+							
 							Control[] mtkC = mtC.getMTS().getMTKP().getChildren();
 							for(int i = 0; i < mtkC.length; i++){
 								if(mtkC[i] instanceof Spinner){
@@ -171,7 +186,7 @@ public class MerkleTreeView extends ViewPart {
 				} else {
 					switch(tabFolder.getSelectionIndex()){
 						case 1:
-							mtZ = new MerkleTreeZestComposite(tabFolder, SWT.NONE, merkle,verfahren);
+							mtZ = new MerkleTreeZestComposite(tabFolder, SWT.NONE, merkle,mode);
 							tbtmParameter1.setControl(mtZ);
 							break;
 						case 2:
@@ -222,9 +237,9 @@ public class MerkleTreeView extends ViewPart {
 	 * This method synchronizes the merkleTree
 	 * @param merkle
 	 */
-	public void setAlgorithm(ISimpleMerkle merkle, SUIT verfahren) {
+	public void setAlgorithm(ISimpleMerkle merkle, SUIT mode) {
 			this.merkle = merkle;
-			this.verfahren = verfahren;
+			this.mode = mode;
 			unsavedChanges = false;
 	}
 

@@ -44,14 +44,10 @@ import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 public class MerkleTreeZestComposite extends Composite implements IZoomableWorkbenchPart {
 
 	private Composite compositeTree;
-
 	private GraphViewer viewer;
-
 	private StyledText styledTextTree;
-
 	private int layoutCounter = 1;
 	private ArrayList<GraphConnection> markedConnectionList;
-
 
 	/**
 	 * Create the composite.
@@ -67,7 +63,7 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 
 		compositeTree = new Composite(this, SWT.WRAP | SWT.BORDER | SWT.LEFT | SWT.FILL);
 		compositeTree.setLayoutData(
-				new GridData(SWT.FILL, SWT.FILL, true, true, MerkleConst.H_SPAN_MAIN+5, MerkleConst.DESC_HEIGHT+1));
+		new GridData(SWT.FILL, SWT.FILL, true, true, MerkleConst.H_SPAN_MAIN+5, MerkleConst.DESC_HEIGHT+1));
 		compositeTree.setLayout(new GridLayout(1, true));
 		compositeTree.addControlListener(new ControlAdapter() {
 			@Override
@@ -97,8 +93,9 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 
 		viewer = new GraphViewer(compositeTree, SWT.NONE);
 		viewer.setContentProvider(new ZestNodeContentProvider());
-		viewer.setLabelProvider(new ZestLabelProvider());
-		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_DIRECTED);
+		viewer.setLabelProvider(new ZestLabelProvider(ColorConstants.lightGreen));
+		//select the layout of the connections -> CONNECTIONS_DIRECTED would be a ->
+		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_SOLID);
 		linkMerkleTree(merkle);
 
 		Control control = viewer.getControl();
@@ -140,7 +137,7 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 						styledTextTree.setForeground(new Color(null, new RGB(1, 70, 122)));
 						// styledTextTree.setFont(FontService.getHugeFont());
 						styledTextTree.setText(
-								Descriptions.ZestLabelProvider_5 + " " + n.getCode() + ") = " + n.getNameAsString()); //$NON-NLS-1$ //$NON-NLS-2$
+								Descriptions.ZestLabelProvider_5 + " " + n.getLeafNumber() + " = " + n.getNameAsString()); //$NON-NLS-1$ //$NON-NLS-2$
 
 						if (markedConnectionList.size() == 0) {
 							markBranch(node);
@@ -161,8 +158,7 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 						}
 						styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
 						styledTextTree.setAlignment(SWT.LEFT);
-						// styledTextTree.setFont(FontService.getNormalFont());
-						styledTextTree.setText(Descriptions.ZestLabelProvider_6 + n.getNameAsString());
+						styledTextTree.setText(Descriptions.ZestLabelProvider_6 + " = " + n.getNameAsString());
 					}
 
 					/*
@@ -235,12 +231,13 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 		for (GraphConnection connection : markedConnectionList) {
 			connection.setLineColor(ColorConstants.lightGray);
 			connection.getSource().setBackgroundColor(viewer.getGraphControl().LIGHT_BLUE);
-			Node leaf = (Node) connection.getDestination().getData();
 			authPath = (GraphConnection) connection.getSource().getSourceConnections().get(0);
 			authPath.getDestination().setBackgroundColor(ColorConstants.lightGreen);
 			authPath = (GraphConnection) connection.getSource().getSourceConnections().get(1);
 			authPath.getDestination().setBackgroundColor(ColorConstants.lightGreen);
-
+			
+			//color the nodes back to light green
+			Node leaf = (Node) connection.getDestination().getData();
 			if (leaf.isLeaf()) {
 				connection.getDestination().setBackgroundColor(ColorConstants.lightGreen);
 			} else {
@@ -308,14 +305,11 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 	 */
 	private void linkMerkleTree(ISimpleMerkle merkle) {
 		if (merkle.getMerkleRoot() != null) {
-			//this.merkle = merkle;
 			viewer.setInput(merkle.getTree());
 
 			LayoutAlgorithm layout = new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);
 			viewer.setLayoutAlgorithm(layout, true);
 			viewer.applyLayout();
-			//MAxi
-			//styledTextTree.setText(Descriptions.ZestLabelProvider_7);
 		}
 
 	}

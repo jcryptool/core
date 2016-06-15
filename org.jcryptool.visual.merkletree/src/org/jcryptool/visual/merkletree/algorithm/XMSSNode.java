@@ -1,6 +1,7 @@
 package org.jcryptool.visual.merkletree.algorithm;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.jcryptool.visual.merkletree.files.Converter;
@@ -14,6 +15,8 @@ public class XMSSNode implements Node{
 	private Node right;
 	private Node parent;
 	private List<Node> connections = new ArrayList<Node>();	
+	private boolean leaf;
+	private String authPath;
 	
 	
 	public XMSSNode(byte[] content){
@@ -78,13 +81,12 @@ public class XMSSNode implements Node{
 
 	@Override
 	public boolean isLeaf() {
-		// TODO Auto-generated method stub
-		return false;
+		return leaf;
 	}
 
 	@Override
 	public void setLeaf(boolean leaf) {
-		// TODO Auto-generated method stub
+		this.leaf = leaf;
 		
 	}
 
@@ -130,6 +132,27 @@ public class XMSSNode implements Node{
 	public int getLeafNumber() {
 		return index;
 	}
+
+	
+	public boolean equals(Node arg0) {
+		if(Arrays.equals(arg0.getContent(), content)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public void setAuthPath(int treeHeight){
+		authPath = Integer.toBinaryString(~index);
+		authPath = authPath.substring(authPath.length() - treeHeight);		
+	}
+		
+	public String getAuthPath(){
+		return authPath;
+	}
+	
+	
+	
 	
 	
 }
