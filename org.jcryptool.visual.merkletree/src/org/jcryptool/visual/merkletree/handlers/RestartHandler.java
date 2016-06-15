@@ -10,10 +10,6 @@ import org.jcryptool.visual.merkletree.MerkleTreeView;;
  * @author Miray Inel
  */
 public class RestartHandler extends AbstractHandler {
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
-	 * Handler to reset the View
-	 */
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		if (HandlerUtil.getActivePart(event) instanceof MerkleTreeView) {

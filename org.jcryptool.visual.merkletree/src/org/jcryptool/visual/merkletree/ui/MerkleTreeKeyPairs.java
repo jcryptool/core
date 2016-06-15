@@ -2,41 +2,37 @@ package org.jcryptool.visual.merkletree.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.MerkleTreeView;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
+import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
+import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
+
 
 /**
  * Class for the Composite with the KeyPair generation in Tabpage 1
  * @author Fabian Mayer
+ * TODO: Kommentare
+ * TODO: Keygeneration
  *
  */
 public class MerkleTreeKeyPairs extends Composite {
-	private Composite parent;
+
 	Button buttonCreateKeys;
 	Label createLabel;
 	StyledText descText;
-	private byte[] seedArray;
-	private int leafcounter;
-	private Spinner spinnerkeysum;
-	private ViewPart masterView;
 	private int spinnerValue;
+	private int treeValue;
 
 	/**
 	 * Create the composite.
@@ -44,34 +40,33 @@ public class MerkleTreeKeyPairs extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public MerkleTreeKeyPairs(Composite parent, int style, boolean extended, ViewPart masterView) {
+	public MerkleTreeKeyPairs(Composite parent, int style, SUIT verfahren, ViewPart masterView) {
 		super(parent, style);
-		this.parent = parent;
-		this.masterView = masterView;
+		treeValue = 0;
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
 
 		createLabel = new Label(this, SWT.NONE);
 		createLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
-		createLabel.setText(Descriptions.MerkleTreeKey_Label_0);
+		
 
 		descText = new StyledText(this, SWT.WRAP | SWT.BORDER);
 		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 2));
 		descText.setCaret(null);
-		descText.setText(Descriptions.MerkleTreeKeydesc);
-		descText.setEditable(false);
+		
+
 
 		Label keysum = new Label(this, SWT.NONE);
 		keysum.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
-		keysum.setText(Descriptions.MerkleTreeKey_Label_1);
+
 
 		Spinner spinnerkeysum = new Spinner(this, SWT.BORDER);
-		spinnerkeysum.setMaximum(1073741824);
+		spinnerkeysum.setMaximum(1024);
 		spinnerkeysum.setMinimum(2);
 		spinnerValue = 2;
 		spinnerkeysum.setSelection(0);
 		spinnerkeysum.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
-
-		//spinner for power of two
+		
+		//spinner power of 2 amount of keys
 		spinnerkeysum.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -87,27 +82,57 @@ public class MerkleTreeKeyPairs extends Composite {
 					}
 					spinnerValue = spinner.getSelection();
 				}
+				((MerkleTreeView)masterView).updateElement();
 			}
 		});
+		
+		
 
 		buttonCreateKeys = new Button(this, SWT.NONE);
-		buttonCreateKeys.setEnabled(false);
+		buttonCreateKeys.setEnabled(true);
 		buttonCreateKeys.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 3, 1));
-		buttonCreateKeys.setText(Descriptions.MerkleTreeKeyButton);
+		
+		
+		// if MT -> Anzahl ebenen
+		if(verfahren == SUIT.XMSS_MT){
+			
+			Label trees = new Label(this, SWT.NONE);
+			trees.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
+			trees.setText(Descriptions.XMSS_MT.Tab0_Lable2);
+			
+			Spinner treespinner = new Spinner(this, SWT.BORDER);
+			treespinner.setMaximum(64);
+			treespinner.setMinimum(2);
+			treespinner.setSelection(0);
+			treespinner.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
+			treespinner.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					((MerkleTreeView)masterView).updateElement();
+					treeValue = treespinner.getSelection();
+				}
+			});
+		}
+		
+		
+		keysum.setText(Descriptions.Tab0_Lable1);
+		createLabel.setText(Descriptions.Tab0_Head2);
+		buttonCreateKeys.setText(Descriptions.Tab0_Button2);
+		switch(verfahren){
+			case XMSS:
+				descText.setText(Descriptions.XMSS.Tab0_Txt2);
+				break;
+			case XMSS_MT:
+				descText.setText(Descriptions.XMSS_MT.Tab0_Txt2);
+				break;
+			case MSS:
+			default:
+				descText.setText(Descriptions.MSS.Tab0_Txt2);
+				break;
+		}
+		descText.setEditable(false);
+		
 
-		/*
-		 * Table table = new Table(this, SWT.MULTI | SWT.BORDER |
-		 * SWT.FULL_SELECTION); table.setLayoutData(new GridData(SWT.CENTER,
-		 * SWT.CENTER, true, true, MerkleConst.H_SPAN_MAIN, 1));
-		 * 
-		 * TableColumn column = new TableColumn(table, SWT.NONE);
-		 * column.setText(Descriptions.MerkleTreeKey_column_0); column = new
-		 * TableColumn(table, SWT.NULL);
-		 * column.setText(Descriptions.MerkleTreeKey_column_1); column = new
-		 * TableColumn(table, SWT.NULL);
-		 * column.setText(Descriptions.MerkleTreeKey_column_2);table.
-		 * setHeaderVisible(true);
-		 */
 		buttonCreateKeys.addSelectionListener(new SelectionAdapter() {
 			/* (non-Javadoc)
 			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
@@ -115,28 +140,32 @@ public class MerkleTreeKeyPairs extends Composite {
 			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Control[] controls = parent.getChildren();
-				for (int i = 0; i < controls.length; i++) {
-					if (controls[i] instanceof Composite && !(controls[i] instanceof MerkleTreeKeyPairs)) {
-						for(Control control : ((Composite) controls[i]).getChildren()) {
-							if(control instanceof Text)
-								seedArray = ((Text) control).getText().getBytes();
-						}
-						
-					}
+				ISimpleMerkle merkle;
+				
+				switch(verfahren){
+				case XMSS:
+					merkle = new XMSSTree();
+					break;
+				case XMSS_MT:
+					//new XMSS_MT_TREE
+					//break;
+				case MSS:
+				default:
+					merkle = new SimpleMerkleTree();
+					break;
 				}
-				ISimpleMerkle merkle = new SimpleMerkleTree(seedArray, seedArray, 128, spinnerkeysum.getSelection());
-				merkle.selectOneTimeSignatureAlgorithmus("SHA-256", "WOTSPlus");
+				merkle.setPublicSeed(((MerkleTreeSeed)parent).getSeed());
+				merkle.setLeafCount(spinnerValue);
+				merkle.selectOneTimeSignatureAlgorithm("SHA-256", "WOTSPlus");
+				merkle.generateKeyPairsAndLeaves();
 				merkle.generateMerkleTree();
-				MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
-				messageBox.setMessage(Descriptions.MerkleTreeKey_Message);
-				messageBox.setText("Info");
-				messageBox.open();
-				MerkleTreeView view = (MerkleTreeView) masterView;
-				view.setAlgorithm(merkle);
+				((MerkleTreeView) masterView).setAlgorithm(merkle, verfahren);
+				
 			}
 		});
 
+		//spinner power of 2 if empty (possible?) 
+		/* Not Possible empty @Lindi
 		spinnerkeysum.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
@@ -153,9 +182,17 @@ public class MerkleTreeKeyPairs extends Composite {
 				}
 			}
 		});
+		*/
 
 	}
 
+	public int getKeyAmmount(){
+		return spinnerValue;
+	}
+	public int getTreeAmmount(){
+		return treeValue;
+		
+	}
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components

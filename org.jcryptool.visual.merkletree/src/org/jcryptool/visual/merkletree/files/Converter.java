@@ -93,4 +93,6 @@ public class Converter {
 	public static byte[] _stringToByte(String input) {
 		return input.getBytes(Charset.forName("UTF-8"));
 	}
+	
+	
 }

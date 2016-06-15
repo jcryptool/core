@@ -16,47 +16,64 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.Descriptions;
+import org.jcryptool.visual.merkletree.MerkleTreeView;
+import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 /**
  * Class for the Composite with the Seed in Tabpage 1
  * @author Fabian Mayer
+ * 
+ *TODO: Key auslesen aus TXTBox
+ *TODO: Key auto generieren
  *
  */
 public class MerkleTreeSeed extends Composite {
 	private MerkleTreeKeyPairs keyPairc;
 	public byte[] seedarray;
-	Button createSeed;
-	Label prng;
-	Text textSeed;
-
+	private MerkleTreeBitmask bitMask;
+	private Button createSeed;
+	private Label prng;
+	private Text textSeed;
+	
 	/**
 	 * Create the composite.
 	 * Including Seed content and KeyPairComposite
 	 * @param parent
 	 * @param style
 	 */
-	public MerkleTreeSeed(Composite parent, int style, boolean extended, ViewPart masterView) {
+	public MerkleTreeSeed(Composite parent, int style, SUIT verfahren, ViewPart masterView) {
 		super(parent, SWT.NONE);
 
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
 		Composite testComp = new Composite(this,SWT.NONE | SWT.BORDER);
 		testComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,8,SWT.FILL));
 		testComp.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN,true));
-		
+
+		//Seed Lable
 		prng = new Label(testComp, SWT.NONE);
 		prng.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
-		prng.setText(Descriptions.MerkleTreeSeed_0);
-
-		textSeed = new Text(testComp, SWT.BORDER | SWT.RIGHT);
+		prng.setText(Descriptions.Tab0_Head1);
+		
+		//textbox - seed
+		textSeed = new Text(testComp, SWT.BORDER | SWT.CENTER);
 		textSeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 
+		//button
 		createSeed = new Button(testComp, SWT.NONE);
 		createSeed.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 2, 1));
-		createSeed.setText(Descriptions.MerkleTreeSeedButton);
-
-		keyPairc = new MerkleTreeKeyPairs(this, SWT.WRAP | SWT.BORDER | SWT.LEFT, extended, masterView);
+		createSeed.setText(Descriptions.Tab0_Button1);
+		
+		//for xmss|xmss^MT a Bitmask-Field is injected
+		if(verfahren != SUIT.MSS){
+			bitMask = new MerkleTreeBitmask(this, SWT.WRAP | SWT.BORDER | SWT.LEFT, verfahren, masterView);
+			bitMask.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
+		}else{
+			bitMask = null;
+		}
+		keyPairc = new MerkleTreeKeyPairs(this, SWT.WRAP | SWT.BORDER | SWT.LEFT, verfahren, masterView);
 		keyPairc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
-
+		
+		//TODO: sec.Rand.gen falsch Methode getSeed()!
 		createSeed.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -75,29 +92,35 @@ public class MerkleTreeSeed extends Composite {
 				textSeed.setText(String.valueOf(value));
 			}
 		});
+		
 		textSeed.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
-				Control[] controls = keyPairc.getChildren();
-				for (int i = 0; i < controls.length; i++) {
-					if (controls[i] instanceof Button) {
-						if (textSeed.getText().length() > 0) {
-							((Button) controls[i]).setEnabled(true);
-						} else {
-							((Button) controls[i]).setEnabled(false);
-						}
-					}
+				if(!textSeed.getText().getBytes().equals(seedarray)){
+					seedarray = textSeed.getText().getBytes();
+					((MerkleTreeView)masterView).updateElement();
 				}
 			}
 		});
 	}
-
+	
+	/***
+	 * geter methode
+	 * @return seed as bytearray
+	 */
 	public byte[] getSeed() {
-		return textSeed.getText().getBytes();
+		//return textSeed.getText().getBytes();
+		return seedarray;
 	}
 
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
+	}
+	public MerkleTreeKeyPairs getMTKP(){
+		return keyPairc;
+	}
+	public MerkleTreeBitmask getMTB(){
+		return bitMask;
 	}
 }

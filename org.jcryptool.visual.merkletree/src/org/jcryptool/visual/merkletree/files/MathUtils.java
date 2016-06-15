@@ -1,14 +1,17 @@
 package org.jcryptool.visual.merkletree.files;
 
 public class MathUtils {
+	
 	/**
-	 * Calculates the log base 2 of x.
-	 *
-	 * @param x
-	 *            Value x
-	 * @return Log base 2 of x
+	 * 
+	 * @param number
+	 * 			Number of which ld is calculated
+	 * @return ld(number)
 	 */
-	public static double log2(int x) {
-		return (Math.log10(x) / Math.log10(2)); 
+	public static int log2nlz( int number )
+	{
+	    if( number == 0 )
+	        return 0; // or throw exception
+	    return 31 - Integer.numberOfLeadingZeros( number );
 	}
 }

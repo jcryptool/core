@@ -1,6 +1,6 @@
 package org.jcryptool.visual.merkletree.ui;
 
-import java.security.SecureRandom;
+//import java.security.SecureRandom;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
@@ -12,7 +12,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
+//import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.visual.merkletree.Descriptions;
@@ -40,6 +40,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 	Label lkeyNumber;
 	StyledText styledTextKeyNumber;
 	ISimpleMerkle merkle;
+	private String usedText;
 	public MerkleTreeSignatureComposite(Composite parent, int style, ISimpleMerkle merkle) {
 		super(parent, SWT.NONE);
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
@@ -89,27 +90,29 @@ public class MerkleTreeSignatureComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				if( textSign.getText()!= "") {
 				String signature = merkle.sign(textSign.getText());
-				String[]splittedSign = signature.split("\n");
-				String otSign = "";
+				usedText=textSign.getText();
+				String[]splittedSign = signature.split("\r\n");
+//				String otSign = "";
 				String keyIndex = "";
 				if(splittedSign.length> 1){
-					otSign =splittedSign[0];
-					keyIndex =splittedSign[1];
+//					otSign = splittedSign[0];
+					keyIndex = splittedSign[1];
+					styledTextKeyNumber.setText(keyIndex);
 				}
-				styledTextSignSize.setText(Integer
-						.toString(org.jcryptool.visual.merkletree.files.Converter._stringToByte(otSign).length / 2)
-						+ "/" + (merkle.getOneTimeSignatureAlgorithmus().getN() * merkle.getOneTimeSignatureAlgorithmus().getL()) + " Bytes");
-				styledTextKeyNumber.setText(keyIndex);
-				if(signature == "") {
-					styledTextSign.setText(Descriptions.MerkleTreeSign_4);
-				}
-				else
-					styledTextSign.setText(signature);
+//				styledTextSignSize.setText(Integer
+//						.toString(org.jcryptool.visual.merkletree.files.Converter._stringToByte(otSign).length / 2)	
+//						+ "/" + (merkle.getOneTimeSignatureAlgorithm().getN() * merkle.getOneTimeSignatureAlgorithm().getL()) + " Bytes");
+
+				//if(signature == "") {
+				//	styledTextSign.setText(Descriptions.MerkleTreeSign_4);
+				//}
+				//else
+				//styledTextSign.setText("looooool");
+				styledTextSign.setText(signature);
 				}
 				else {
-					styledTextSign.setText(Descriptions.MerkleTreeSign_5);
+					styledTextSign.setText("lol");
 				}
-				
 			}
 		});
 		textSign.addModifyListener(new ModifyListener() {
@@ -131,7 +134,15 @@ public class MerkleTreeSignatureComposite extends Composite {
 	 * @return Signature
 	 */
 	public String getSignatureFromForm() {
+		if (this.styledTextSign.getText().equals(Descriptions.MerkleTreeSign_3) ||
+				this.styledTextSign.getText().equals(Descriptions.MerkleTreeSign_4) ||
+				this.styledTextSign.getText().equals(Descriptions.MerkleTreeSign_5))
+			return "";
+		
 		return this.styledTextSign.getText();
+	}
+	public String getMessageFromForm() {
+		return usedText;
 	}
 
 	/**

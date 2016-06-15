@@ -236,8 +236,8 @@ public class WOTSPlusMerkle implements OTS {
 	private void calculateLengths() {
 
 		m = digest.getDigestLength() * 8;
-		l1 = (int) Math.ceil(m / MathUtils.log2(w));
-		l2 = (int) Math.floor(MathUtils.log2(l1 * (w - 1)) / MathUtils.log2(w)) + 1;
+		l1 = (int) Math.ceil(m / MathUtils.log2nlz(w));
+		l2 = (int) Math.floor(MathUtils.log2nlz(l1 * (w - 1)) / MathUtils.log2nlz(w)) + 1;
 		l = l1 + l2;
 	}
 
