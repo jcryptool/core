@@ -489,9 +489,9 @@ public class WOTSPlusMerkle implements OTS {
 		byte[] bCount = ByteBuffer.allocate(4).putInt(seedCount).array();
 		byte[] keyAdrs = new byte[256 - this.seed.length - bCount.length];
 		Arrays.fill(keyAdrs, (byte) 0);
-		byte[] merge = org.jcryptool.visual.merkletree.files.ByteUtils.concatenate(this.seed, keyAdrs);
+		byte[] merge = ByteUtils.concatenate(this.seed, keyAdrs);
 
-		byte[] hash = sDigest.digest(org.jcryptool.visual.merkletree.files.ByteUtils.concatenate(merge, bCount));
+		byte[] hash = sDigest.digest(ByteUtils.concatenate(merge, bCount));
 		this.seedCount++;
 		return hash;
 	}

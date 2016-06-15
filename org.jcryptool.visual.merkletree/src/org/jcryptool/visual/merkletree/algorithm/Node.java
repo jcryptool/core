@@ -47,4 +47,8 @@ public interface Node {
 	public int getIndex();
 	
 	public void setIndex(int index);
+	
+	public void setAuthPath(int treeHeight);
+	
+	public String getAuthPath();
 }

@@ -28,7 +28,7 @@ public class MerkleTreeComposite extends Composite {
 
 	private Composite descr;
 	private MerkleTreeSeed seedc;
-	private SUIT verfahren;
+	private SUIT mode;
 
 	/**
 	 * Create the composite.
@@ -40,7 +40,7 @@ public class MerkleTreeComposite extends Composite {
 		super(parent, SWT.NONE);
 		
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
-		verfahren = SUIT.MSS;
+		mode = SUIT.MSS;
 		
 		// to make the text wrap lines automatically
 		descr = new Composite(this, SWT.WRAP | SWT.BORDER | SWT.LEFT);
@@ -48,9 +48,11 @@ public class MerkleTreeComposite extends Composite {
 		descr.setLayout(new GridLayout(1, true));
 		
 		
-		//Bombobox, to switch the different SUIT's (MSS,XMSS,XMSS_MT)
+		//Combobox, to switch the different SUIT's (MSS,XMSS,XMSS_MT)
 		Combo combo = new Combo(descr, SWT.NONE);
-		combo.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 0, 1));
+		GridData gd_combo = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 0, 1);
+		gd_combo.widthHint = 340;
+		combo.setLayoutData(gd_combo);
 		combo.add(Descriptions.CompositeDescriptionMerkleTree);
 		combo.add(Descriptions.CompositeDescriptionXMSS);
 		combo.add(Descriptions.CompositeDescriptionXMSS_MT);
@@ -64,17 +66,17 @@ public class MerkleTreeComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				switch(combo.getSelectionIndex()){
 				case 1:
-					verfahren = SUIT.XMSS;
+					mode = SUIT.XMSS;
 					break;
 				case 2:
-					verfahren = SUIT.XMSS_MT;
+					mode = SUIT.XMSS_MT;
 					break;
 				case 0:
 				default:
-					verfahren = SUIT.MSS;
+					mode = SUIT.MSS;
 					break;
 				}
-				((MerkleTreeView) masterView).setAlgorithm(null, verfahren);
+				((MerkleTreeView) masterView).setAlgorithm(null, mode);
 				//clear actual frame
 				Control[] children = descr.getChildren();
 				for (Control control : children) {
@@ -84,48 +86,34 @@ public class MerkleTreeComposite extends Composite {
 				
 				//generates new view:
 				//main-descriptions
-				MerkleTreeDescription(descr, verfahren);
+				MerkleTreeDescription(descr, mode);
 				//seed-description (->key and bitmask)
-				seedc = new MerkleTreeSeed(descr, SWT.WRAP | SWT.BORDER | SWT.LEFT, verfahren, masterView);
+				seedc = new MerkleTreeSeed(descr, SWT.WRAP | SWT.BORDER | SWT.LEFT, mode, masterView);
 				seedc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));		
 				descr.layout();
 			}
 		});
 		
 		//initial MSS - Layout
-		MerkleTreeDescription(descr, verfahren);
-		seedc = new MerkleTreeSeed(descr, SWT.WRAP | SWT.BORDER | SWT.LEFT, verfahren, masterView);
+		MerkleTreeDescription(descr, mode);
+		seedc = new MerkleTreeSeed(descr, SWT.WRAP | SWT.BORDER | SWT.LEFT, mode, masterView);
 		seedc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));	
 	}
 	/**
 	 * Generates the main description for the first tab
 	 * @param descr Parent Composite
-	 * @param verfahren SUIT { MSS, XMSS or XMSS_MT }
+	 * @param mode SUIT { MSS, XMSS or XMSS_MT }
 	 * @author Maximilian Lindpointner
 	 */
-	private void MerkleTreeDescription(Composite descr, SUIT verfahren){
+	private void MerkleTreeDescription(Composite descr, SUIT mode){
 		
 		Label descLabel = new Label(descr, SWT.NONE);
 		StyledText descText = new StyledText(descr, SWT.WRAP | SWT.BORDER);
 		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2));
 		descText.setCaret(null);
 		descText.setEditable(false);
-		switch(verfahren){
-		case XMSS:
-			descLabel.setText(Descriptions.XMSS.Tab0_Head0);
-			descText.setText(Descriptions.XMSS.Tab0_Txt0);
-			break;
-		case XMSS_MT:
-			descLabel.setText(Descriptions.XMSS_MT.Tab0_Head0);
-			descText.setText(Descriptions.XMSS_MT.Tab0_Txt0);
-			break;
-		case MSS:
-		default:
-			descLabel.setText(Descriptions.MSS.Tab0_Head0);
-			descText.setText(Descriptions.MSS.Tab0_Txt0);
-			break;
-		
-		}
+		descLabel.setText(Descriptions.XMSS.Tab0_Head0);
+		descText.setText(Descriptions.XMSS.Tab0_Txt0);
 	}
 	
 	public MerkleTreeSeed getMTS(){

@@ -1,20 +1,15 @@
 package org.jcryptool.visual.merkletree.algorithm;
 
 import java.math.BigInteger;
-import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 import org.jcryptool.visual.merkletree.files.ByteUtils;
+import org.jcryptool.visual.merkletree.files.Converter;
 import org.jcryptool.visual.merkletree.files.MathUtils;
 
-
-
-public class WOTSPlusXMSS {
+public class WOTSPlusXMSS implements OTS{
 	// Lengths
 	private int m, l, l1, l2;
 	// Winternitz parameter
@@ -39,6 +34,8 @@ public class WOTSPlusXMSS {
 	private int seedCount;
 	// Seed digest
 	private MessageDigest sDigest;
+	
+	private OTSHashAddress otsAdrs;
 
 	/**
 	 * Creates a new Winternitz OTS.
@@ -62,6 +59,7 @@ public class WOTSPlusXMSS {
 		// Set Private Seed + Counter
 		this.seed = seed;
 		this.seedCount = 0;
+		
 		// Calculate m, l, l1, l2
 		calculateLengths();
 	}
@@ -86,6 +84,10 @@ public class WOTSPlusXMSS {
 		// Update lengths
 		calculateLengths();
 	}
+	
+	public void setAddress(OTSHashAddress otsAdrs){
+		this.otsAdrs = otsAdrs;
+	}
 
 	/**
 	 * Generates a key pair.
@@ -95,9 +97,9 @@ public class WOTSPlusXMSS {
 	 */
 	
 	public void generateKeyPair() {
+		
 		generatePrivateKey();
-		// FIXME
-//		generatePublicKey();
+		generatePublicKey();
 	}
 
 	
@@ -148,7 +150,8 @@ public class WOTSPlusXMSS {
 	 * @return
 	 * 			the s times hashed input
 	 */
-	public byte[] chain(byte[] input, int i, int s, byte[] seed, OTSHashAddress otsAdrs){
+	public byte[] chain(byte[] x, int i, int s, byte[] seed, OTSHashAddress otsAdrs){
+		byte[] input = x.clone();
 		byte[] tmp = new byte[input.length];
 		byte[] bitmask = new byte[input.length];
 		byte[] key = new byte[input.length];
@@ -162,7 +165,7 @@ public class WOTSPlusXMSS {
 		bitmask = randomGenerator(seed, otsAdrs.getAddress(), tmp.length);
 		otsAdrs.setKeyBit(true);
 		key = randomGenerator(seed, otsAdrs.getAddress(), tmp.length);
-		for(int j = 0; j < tmp.length; i++){
+		for(int j = 0; j < tmp.length; j++){
 			tmp[j] ^= bitmask[j]; 
 		}
 		tmp = hashMessage(key, tmp);
@@ -176,14 +179,13 @@ public class WOTSPlusXMSS {
 	 * 		returns a secret key
 	 */
 	
-	public byte[][] generatePrivateKey() {
-
+	public void generatePrivateKey() {
 		byte[][] privateKey = new byte[l][n];
 		Random sRandom = new Random();
 		for(int i = 0; i < privateKey.length; i++) {
 			sRandom.nextBytes(privateKey[i]);
 		}
-		return privateKey;
+		this.privateKey = privateKey;
 	}
 		
 
@@ -192,14 +194,14 @@ public class WOTSPlusXMSS {
 	 *
 	 */
 	
-	public byte[][] generatePublicKey(byte[][] secretKey, byte[] seed, OTSHashAddress otsAdrs) {
+	public void generatePublicKey() {
 		byte[][] publicKey = new byte[l][n];
 		
-		for( int i = 0; i < secretKey.length; i++) {
+		for( int i = 0; i < privateKey.length; i++) {
 			otsAdrs.setChainAddress(i);
-			publicKey[i] = chain(secretKey[i], 0, w-1, seed, otsAdrs);			
+			publicKey[i] = chain(privateKey[i], 0, w-1, seed, otsAdrs);			
 		}
-		return publicKey;
+		this.publicKey = publicKey;
 	}
 
 	/**
@@ -210,44 +212,69 @@ public class WOTSPlusXMSS {
 	 * @return Signature of the message
 	 */
 	
-	public void sign(byte[][] message, byte[] seed, OTSHashAddress otsAdrs) {
+	public byte[][]sign(byte[] message, byte[] seed, OTSHashAddress otsAdrs) {
 
 		byte[][] signature = new byte[l][n];
 		long csum = 0;	//checksum is byte[] for compatibility with basew method
 		int l2_bytes;
-		byte[][] messageW = new byte[l][]; 
+		byte[] messageW = new byte[l]; 
 		
-		for(int i = 0; i < message.length; i++){
-			messageW[i] = convertToBaseW(message[i], w);
-		}
+		
+		messageW = convertToBaseW(message, w);
+		
 		//compute checksum
-		for( int i = 0; i < message.length; i++) {
-			for(int j = 0; j < message[i].length; j++){
-				csum = csum + w - 1 - messageW[i][j];
-			}
+		for( int i = 0; i < messageW.length; i++) {
+			csum = csum + w - 1 - messageW[i];
 		}
 		
 		//convert csum to base w
 		csum = csum << ( 8 -( ( l2 * MathUtils.log2nlz(w) ) % 8 ));
-		l2_bytes = (int)Math.ceil( ( l2 * MathUtils.log2nlz(w)) / 8);
+		l2_bytes = (int)Math.ceil( ( l2 * MathUtils.log2nlz(w)) / 8.0);
 		byte[] csum_bytes = new byte[l2_bytes];
 		//copnvert csum to byte[]
-		for(int i = l2_bytes-1; i > 0 ; i--){
-				csum_bytes[i - l2_bytes] = (byte)(csum >> i * 8);			
+		csum_bytes = BigInteger.valueOf(csum).toByteArray();
+		csum_bytes = convertToBaseW(csum_bytes, w);
+		messageW = ByteUtils.concatenate(messageW, csum_bytes);
+		for (int i = 0; i < l; i++){
+			otsAdrs.setChainAddress(i);
+			signature[i] = chain(privateKey[i], 0, messageW[i], seed, otsAdrs);
+			
 		}
-		csum_bytes[l2_bytes-1] = (byte)csum;
-		messageW = Arrays.copyOf(messageW, messageW.length + 1 );
-		messageW[messageW.length-1] = convertToBaseW(csum_bytes, w);
-        // FIXME
-//		for (int i = 0; i < l; i++){
-//			otsAdrs.setChainAddress(i);
-//			for(int i = 0; i < messageW.length; i++){
-//				signature[i] = chain(privateKey[i], 0, messageW[i], seed, otsAdrs);
-//			}
-//		}
-		
-		
+		return signature;
+	}
+	
+	
+	public byte[][] pkFromSig(String sig, byte[] message, byte[] seed, OTSHashAddress otsAdrs) {
 
+		byte[][] pk = new byte[l][n];
+		long csum = 0;	//checksum is byte[] for compatibility with basew method
+		int l2_bytes;
+		byte[] messageW = new byte[l]; 
+		byte[][] signature = Converter._hexStringTo2dByte(sig, l);
+		
+		messageW = convertToBaseW(message, w);		
+		//compute checksum
+		for( int i = 0; i < messageW.length; i++) {
+		
+			csum = csum + w - 1 - messageW[i];
+			
+		}
+		
+		//convert csum to base w
+		csum = csum << ( 8 -( ( l2 * MathUtils.log2nlz(w) ) % 8 ));
+		l2_bytes = (int)Math.ceil( ( l2 * MathUtils.log2nlz(w)) / 8.0);
+		byte[] csum_bytes = new byte[l2_bytes];
+		//copnvert csum to byte[]
+		csum_bytes = BigInteger.valueOf(csum).toByteArray();
+		csum_bytes = convertToBaseW(csum_bytes, w);
+		messageW = ByteUtils.concatenate(messageW, csum_bytes);
+		for (int i = 0; i < l; i++){
+			otsAdrs.setChainAddress(i);
+			pk[i] = chain(signature[i], messageW[i], w-1-messageW[i], seed, otsAdrs);		//BIgInteger is used to convert byte[] to integer
+			
+		}
+		return pk;
+		
 	}
 
 	/**
@@ -261,26 +288,7 @@ public class WOTSPlusXMSS {
 	 */
 	
 	public boolean verify() {
-
-		byte[][] tmpSignature = org.jcryptool.visual.merkletree.files.Converter
-				._hexStringTo2dByte((org.jcryptool.visual.merkletree.files.Converter._byteToHex(signature)), l);
-
-		// Hash + xor each part w-1-bi times and verifies it with public Key
-		for (int i = 0; i < l; i++) {
-
-			for (int j = 0; j < (w - 1 - (b[i] & 0xFF)); j++) {
-
-				for (int k = 0; k < tmpSignature[i].length; k++)
-					tmpSignature[i][k] = (byte) (tmpSignature[i][k] ^ publicKey[j + (b[i] & 0xFF)][k]);
-
-				tmpSignature[i] = calcHash(tmpSignature[i]);
-			}
-
-			// Compare sigma_i with pk_i
-			if (!Arrays.equals(tmpSignature[i], publicKey[i + w - 1])) {
-				return false;
-			}
-		}
+		//deadcode
 		return true;
 	}
 
@@ -290,39 +298,10 @@ public class WOTSPlusXMSS {
 	private void calculateLengths() {
 
 		m = digest.getDigestLength() * 8;
-		l1 = (int) Math.ceil(m / MathUtils.log2nlz(w));
-		l2 = (int) Math.floor(MathUtils.log2nlz(l1 * (w - 1)) / MathUtils.log2nlz(w)) + 1;
+		l1 = (int) Math.ceil((double)m / MathUtils.log2nlz(w));
+		l2 = (int) Math.floor(MathUtils.log2nlz(l1 * (w - 1)) / (double)MathUtils.log2nlz(w)) + 1;
 		l = l1 + l2;
 	}
-
-	/**
-	 * Calculate the exponent b (b_1, ..., b_l).
-	 *
-	 * @param message
-	 *            Message
-	 * @return Exponent b
-	 */
-	private void calculateExponentB() {
-
-		// Convert message to base w representation
-		byte[] mBaseW = convertToBaseW(messageHash, l1);
-
-		// Calculate checksum c
-		BigInteger checksum = BigInteger.ZERO;
-		for (int i = 0; i < l1; i++) {
-			checksum = checksum.add(BigInteger.valueOf(w - 1 - (mBaseW[i] & 0xFF)));
-		}
-
-		// Convert checksum to base w representation
-		byte[] checksumBaseW = convertToBaseW(checksum.toByteArray(), l2);
-
-		// Concatenate message and checksum
-		byte[] b = ByteUtils.concatenate(mBaseW, checksumBaseW);
-
-		this.b = b;
-	}
-
-
 
 	/**
 	 * Returns the private key.
@@ -343,45 +322,6 @@ public class WOTSPlusXMSS {
 	public byte[][] getPublicKey() {
 		return publicKey;
 	}
-
-	/**
-	 * Returns the length l.
-	 * 
-	 * @return Length l
-	 */
-	
-	public int getLength() {
-		return l;
-	}
-
-	/**
-	 * returns public key length of WOTS+
-	 */
-	
-	public int getPublicKeyLength() {
-		return l + w - 1;
-	}
-
-	/**
-	 * Returns the message length.
-	 *
-	 * @return Message length
-	 */
-	
-	public int getMessageLength() {
-		return m;
-	}
-
-	/**
-	 * returns Bitstring bi
-	 * 
-	 * @return
-	 */
-	
-	public byte[] getBi() {
-		return b;
-	}
-
 	/**
 	 * returns the signature
 	 */
@@ -389,31 +329,7 @@ public class WOTSPlusXMSS {
 	public byte[] getSignature() {
 		return signature;
 	}
-
-	/**
-	 * returns hashed message
-	 */
 	
-	public byte[] getMessageHash() {
-		return this.messageHash;
-	}
-
-	/**
-	 * returns blocklength n
-	 */
-	
-	public int getN() {
-		return n;
-	}
-
-	/**
-	 * returns l
-	 */
-	
-	public int getL() {
-		return l;
-	}
-
 	/**
 	 * Allows to set a custom Private Key
 	 * 
@@ -435,40 +351,7 @@ public class WOTSPlusXMSS {
 	}
 
 	/**
-	 * hashes message and set as new message
-	 */
-	
-	public void setMessage(byte[] message) {
-		this.messageHash = message;
-	}
-
-	/**
-	 * sets new bi
-	 */
-	
-	public void setBi(byte[] b) {
-		this.b = b;
-	}
-
-	/**
-	 * sets new signature
-	 */
-	
-	public void setSignature(byte[] signature) {
-		this.signature = signature;
-	}
-
-	/**
-	 * sets new w andd calculates new lengths
-	 */
-	
-	public void setW(int w) {
-		this.w = w;
-		calculateLengths();
-	}
-
-	/**
-	 * hashes message, set as new message and returns hash
+	 * hashes message and returns hash
 	 */
 	
 	public byte[] hashMessage(byte[] key, byte[] value) {
@@ -477,52 +360,11 @@ public class WOTSPlusXMSS {
 	}
 
 	/**
-	 * returns new calculated Bitstring bi
-	 */
-	
-	public byte[] initB() {
-		calculateExponentB();
-		return b;
-	}
-
-	/**
 	 * Generates a hash-String to a given String
 	 * 
 	 * @return
 	 */
-	private byte[] calcHash(byte[] tmp) {
-
-		String base = org.jcryptool.visual.merkletree.files.Converter._byteToHex(tmp);
-
-		try {
-			byte[] hash = digest.digest(base.getBytes("UTF-8"));
-			StringBuffer hexString = new StringBuffer();
-
-			for (int i = 0; i < hash.length; i++) {
-				String hex = Integer.toHexString(0xff & hash[i]);
-				if (hex.length() == 1)
-					hexString.append('0');
-				hexString.append(hex);
-			}
-
-			return org.jcryptool.visual.merkletree.files.Converter._hexStringToByte(hexString.toString());
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}
-	}
-
-	private byte[] generateSeed() {
-
-		// Seed||Keyadresse||counter
-		byte[] bCount = ByteBuffer.allocate(4).putInt(seedCount).array();
-		byte[] keyAdrs = new byte[256 - this.seed.length - bCount.length];
-		Arrays.fill(keyAdrs, (byte) 0);
-		byte[] merge = org.jcryptool.visual.merkletree.files.ByteUtils.concatenate(this.seed, keyAdrs);
-
-		byte[] hash = sDigest.digest(org.jcryptool.visual.merkletree.files.ByteUtils.concatenate(merge, bCount));
-		this.seedCount++;
-		return hash;
-	}
+	
 	
 	public byte[] randomGenerator(byte[] seed, byte[] adrs, int len) {
 		byte[] res = new byte[len+32];	//erstellen des zu befüllenden arrays
@@ -537,6 +379,91 @@ public class WOTSPlusXMSS {
 		seed = ByteUtils.concatenate(seed, adrs);
 		res = hash.digest(seed);
 		return res;
+	}
+
+	//ab hier zeugs wegen interface
+	@Override
+	public void sign() {
+		// weil interface
+		
+	}
+
+	@Override
+	public byte[] hashMessage(String message) {
+		// weil interface
+		return null;
+	}
+
+	@Override
+	public int getLength() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getMessageLength() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public byte[] getBi() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getPublicKeyLength() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getN() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getL() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public byte[] getMessageHash() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setMessage(byte[] message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setBi(byte[] b) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setSignature(byte[] signature) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setW(int w) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public byte[] initB() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
