@@ -358,5 +358,5 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 		}
 
 	}
-
+	
 }

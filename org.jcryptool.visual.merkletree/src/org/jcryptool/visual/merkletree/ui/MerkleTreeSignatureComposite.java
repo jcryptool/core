@@ -19,7 +19,6 @@ import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
 import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
-import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 /**
  * Composite for the Tabpage "Signatur"
@@ -43,14 +42,15 @@ public class MerkleTreeSignatureComposite extends Composite {
 	Label lSignaturSize;
 	Label lkeyNumber;
 	Label SingatureExpl;
-
+	String signature = null;
+	
 	StyledText styledTextKeyNumber;
 	ISimpleMerkle merkle;
 	private String usedText;
 	public MerkleTreeSignatureComposite(Composite parent, int style, ISimpleMerkle merkle) {
 		super(parent, SWT.NONE);
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
-		
+
 		this.merkle=merkle;
 		sign = new Label(this, SWT.NONE);
 		sign.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
@@ -101,6 +101,14 @@ public class MerkleTreeSignatureComposite extends Composite {
 		styledTextSign = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
 		GridData gd_textTextSign = new GridData(SWT.FILL,SWT.FILL,true,true,MerkleConst.H_SPAN_MAIN,1);
 		styledTextSign.setLayoutData(gd_textTextSign);
+		
+		/*
+		 * only print if there is a signature
+		 */
+		if(signature != null){
+			styledTextSign.setText(signature);
+		}
+
 		createSign.addSelectionListener(new SelectionAdapter() {
 			
 			
@@ -111,7 +119,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if( textSign.getText()!= "") {
-				String signature = merkle.sign(textSign.getText());
+				signature = merkle.sign(textSign.getText());
 				usedText=textSign.getText();
 
 				/**
@@ -144,16 +152,16 @@ public class MerkleTreeSignatureComposite extends Composite {
 	 * Synchronizes Signature with the other Tabpages
 	 * @return Signature
 	 */
-	public String getSignatureFromForm() {
-		if (this.styledTextSign.getText().equals(Descriptions.MSS.Tab2_Txt0) ||
-				this.styledTextSign.getText().equals(Descriptions.MerkleTreeSign_4) ||
-				this.styledTextSign.getText().equals(Descriptions.MerkleTreeSign_5))
-			return "";
-		
-		return this.styledTextSign.getText();
+	public String getSignature() {
+		return signature;
 	}
-	
-	public String getMessageFromForm() {
+
+
+	/**
+	 * Return the used Message necessary for tab sync -> verification tab
+	 * @return usedText
+	 */
+	public String getMessage() {
 		return usedText;
 	}
 	
@@ -195,6 +203,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 	public ISimpleMerkle getMerkleFromForm(){
 		return this.merkle;
 	}
+	
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components

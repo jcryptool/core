@@ -55,6 +55,8 @@ public class MerkleTreeView extends ViewPart {
 	private MerkleTreeVerifikationComposite mtV;
 	private ISimpleMerkle merkle;
 	private SUIT mode;
+	
+	boolean sync = false;
 
 	//bei tabwechsel, wenn true -> msg Box (y|n) "achtung" änderungen wurden nicht in neuen Tree übertragen, bitte neuen Key Erzeugen!
 	//TODO: if abfrage bei Tabwechsel einbauen
@@ -67,6 +69,8 @@ public class MerkleTreeView extends ViewPart {
 	 */
 	@Override
 	public void createPartControl(final Composite parent) {
+		
+		
 		this.parent = parent;
 		unsavedChanges = false;
 		
@@ -190,20 +194,29 @@ public class MerkleTreeView extends ViewPart {
 							tbtmParameter1.setControl(mtZ);
 							break;
 						case 2:
-							mtS = new MerkleTreeSignatureComposite(tabFolder,SWT.NONE,merkle);
-							tbtmParameter2.setControl(mtS);
+							/*
+							 * only create a new SignatureComposite at the first time
+							 * if synced == true -> dont create a new SignatureComposite
+							 * necessary for tab changes
+							 */
+							if(sync == false){
+								mtS = new MerkleTreeSignatureComposite(tabFolder,SWT.NONE,merkle);
+								tbtmParameter2.setControl(mtS);
+							}
 							break;
 						case 3:
-							if(!mtS.getSignatureFromForm().isEmpty()) {
-								String signature=mtS.getSignatureFromForm();
+							if(mtS.getSignature() != null) {
+								sync = true;
+								String signature=mtS.getSignature();
 								String[]splittedSign = signature.split("\\|");
 								String keyIndex = "";
 								String message;
-								message=mtS.getMessageFromForm();
+								message=mtS.getMessage();
 								if(splittedSign.length> 1){
 									//otSign =splittedSign[0];
 									keyIndex =splittedSign[0];
 								}
+
 								mtV=new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle, Integer.parseInt(keyIndex),signature,message);
 								tabFolder.getSelection()[0].setControl(mtV);
 								
