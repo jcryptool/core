@@ -24,8 +24,6 @@ import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
  * @author <i>revised by</i>
  * @author Maximilian Lindpointner
  * 
- *TODO: Key auslesen aus TXTBox
- *TODO: Key auto generieren
  *
  */
 public class MerkleTreeSeed extends Composite {

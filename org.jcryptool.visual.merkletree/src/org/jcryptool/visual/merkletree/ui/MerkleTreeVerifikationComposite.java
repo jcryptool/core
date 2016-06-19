@@ -31,14 +31,9 @@ import org.eclipse.zest.layouts.LayoutStyles;
 import org.eclipse.zest.layouts.algorithms.HorizontalTreeLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.RadialLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
-//import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.Node;
-import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
-import org.jcryptool.visual.merkletree.algorithm.XMSSNode;
-import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
-
 /**
  * Class for the Composite of Tabpage "MerkleTree"
  * @author Kevin Muehlboeck
@@ -46,16 +41,13 @@ import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
  */
 public class MerkleTreeVerifikationComposite extends Composite implements IZoomableWorkbenchPart {
 
-	//private Composite parent;
 	private Composite compositeTree;
 
 	private GraphViewer viewer;
 	private StyledText binaryValue;
 	private StyledText styledTextTree;
 	private int layoutCounter = 1;
-	// private Composite compositeCT;
 	private ArrayList<GraphConnection> markedConnectionList;
-	//private ISimpleMerkle merkle;
 
 	/**
 	 * Create the composite.
@@ -67,11 +59,9 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 		super(parent, style);
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
 		markedConnectionList = new ArrayList<GraphConnection>();
-		// to make the text wrap lines automatically
 
 		compositeTree = new Composite(this, SWT.WRAP | SWT.BORDER | SWT.LEFT | SWT.FILL);
-		compositeTree.setLayoutData(
-				new GridData(SWT.FILL, SWT.FILL, true, true, MerkleConst.H_SPAN_MAIN+5, MerkleConst.DESC_HEIGHT+1));
+		compositeTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, MerkleConst.H_SPAN_MAIN+5, MerkleConst.DESC_HEIGHT+1));
 		compositeTree.setLayout(new GridLayout(1, true));
 		compositeTree.addControlListener(new ControlAdapter() {
 			@Override
@@ -86,7 +76,6 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 		// while not allowing modification of either section
 		Label descText = new Label(compositeTree, SWT.WRAP);
 		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		//descText.setCaret(null);
 		descText.setText(Descriptions.MerkleTreeVerify_0);
 		compositeTree.setLayout(new GridLayout(1, true));	
 		

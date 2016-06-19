@@ -30,7 +30,6 @@ import org.eclipse.zest.layouts.LayoutStyles;
 import org.eclipse.zest.layouts.algorithms.HorizontalTreeLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.RadialLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
-//import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.Node;
@@ -39,6 +38,7 @@ import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 /**
  * Class for the Composite of Tabpage "MerkleTree"
  * @author Kevin Muehlboeck
+ * @author Maximilian Lindpointner
  *
  */
 public class MerkleTreeZestComposite extends Composite implements IZoomableWorkbenchPart {

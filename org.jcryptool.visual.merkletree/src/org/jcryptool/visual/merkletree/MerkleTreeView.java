@@ -1,6 +1,5 @@
 package org.jcryptool.visual.merkletree;
 
-import java.util.Arrays;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -23,8 +22,6 @@ import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
 import org.jcryptool.visual.merkletree.ui.MerkleConst;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeComposite;
-import org.jcryptool.visual.merkletree.ui.MerkleTreeKeyPairs;
-import org.jcryptool.visual.merkletree.ui.MerkleTreeSeed;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeSignatureComposite;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeVerifikationComposite;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeZestComposite;
@@ -34,8 +31,9 @@ import org.jcryptool.visual.merkletree.ui.MerkleTreeZestComposite;
  * of its tool.
  * 
  * @author Kevin Muehlboeck
+ * @author <i>revised by</i>
+ * @author Maximilian Lindpointner
  * 
- * TODO: Kommentare
  * 
  */
 public class MerkleTreeView extends ViewPart {
@@ -101,10 +99,7 @@ public class MerkleTreeView extends ViewPart {
 		//Verification
 		TabItem tbtmParameter3 = new TabItem(tabFolder,SWT.NONE);
 		tbtmParameter3.setText(Descriptions.MerkleTreeView_3);
-		//christoph: doesnt seem to do anything -> removed because of the reset button
-		//tbtmParameter3.setControl(mtV);
-		
-		
+			
 		
 		tabFolder.addSelectionListener(new SelectionAdapter() {
 			/* (non-Javadoc)

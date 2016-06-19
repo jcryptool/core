@@ -7,14 +7,11 @@ import org.eclipse.osgi.util.NLS;
  * plug-in; the actual texts are found in "messages_de.properties" and
  * "messages_en.properties"
  * 
- * @author Kevin M�hlb�ck
+ * @author Maximilian Lindpointner
  */
 public class Descriptions extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.visual.merkletree";
 
-	// public static String WizardPageDescriptionKey;
-
-	// public static String WizardPageDescriptionPlain;
 
 	//<-dropdown
 	public static String CompositeDescriptionMerkleTree;
@@ -73,10 +70,6 @@ public class Descriptions extends NLS {
 	public static String MerkleTree_Signature_Generation_Info;
 
 	
-	
-	
-	//BEGINN Lindi
-	
 	public static String Tab0_Head1;
 	public static String Tab0_Head2;
 	public static String Tab0_Head3;
@@ -127,16 +120,13 @@ public class Descriptions extends NLS {
 
 	}
 
-
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME + ".descriptions", Descriptions.class);
 		NLS.initializeMessages(BUNDLE_NAME+".descriptionsMSS", Descriptions.MSS.class);
 		NLS.initializeMessages(BUNDLE_NAME+".descriptionsXMSS", Descriptions.XMSS.class);
 		NLS.initializeMessages(BUNDLE_NAME+".descriptionsXMSS_MT", Descriptions.XMSS_MT.class);
-
 	}
-
 	private Descriptions() {
 	}
 
