@@ -136,7 +136,7 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 		 */
 		binaryValue = new StyledText(compositeTree, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
 		binaryValue.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
-		binaryValue.setText("Test");
+		//binaryValue.setText("Test");
 
 		Control control = viewer.getControl();
 		control.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -174,7 +174,7 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 					if (n.isLeaf()) {
 						styledTextTree.setForeground(new Color(null, new RGB(1, 70, 122)));
 			
-						binaryValue.setText(n.getCode() + ") = " + n.getAuthPath());
+						binaryValue.setText("Authentifizierungspfad des Knoten: " + n.getAuthPath());
 
 						if (markedConnectionList.size() == 0) {
 							markBranch(node);

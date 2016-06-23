@@ -144,6 +144,7 @@ public class MerkleTreeView extends ViewPart {
 							merkle.generateKeyPairsAndLeaves();
 							merkle.generateMerkleTree();
 							unsavedChanges = false;
+							sync = false;
 							
 							break;
 						case SWT.NO:
@@ -200,8 +201,8 @@ public class MerkleTreeView extends ViewPart {
 							}
 							break;
 						case 3:
+							sync = true;
 							if(mtS.getSignature() != null) {
-								sync = true;
 								String signature=mtS.getSignature();
 								String[]splittedSign = signature.split("\\|");
 								String keyIndex = "";
@@ -249,6 +250,8 @@ public class MerkleTreeView extends ViewPart {
 			this.merkle = merkle;
 			this.mode = mode;
 			unsavedChanges = false;
+			//set sync back to false -> needed if the verification tab was clicked before
+			sync = false;
 	}
 
 	/**
