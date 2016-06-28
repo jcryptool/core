@@ -146,7 +146,6 @@ public class XMSSTree implements ISimpleMerkle {
 		for( int i = 0; i < (1 << t); i++) { // i < 2^t
 			otsAdrs.setOTSBit(true);
 			otsAdrs.setOTSAddress(s+i);
-			//pKey = WOTS_genPK(privKeys.get(s+i), seed, otsAdrs); //TODO implement WOTS_genPK or change wots+; return byte[][]
 			pKey = publicKeys.get(s+i);
 			lAdrs.setOTSBit(false);
 			lAdrs.setLTreeBit(true);
@@ -408,15 +407,11 @@ public class XMSSTree implements ISimpleMerkle {
 	public void xmss_genSK() {
 		int index = 0; //index of the next unused wots+ key
 		byte[] key;	//random key for PRNG
-		byte[][] iterator;
 		xPrivKey = Integer.toString(index) + "|" + Converter._byteToHex(seed);
-		for(int i = 0; i < privKeys.size(); i++) {			
-			iterator = privKeys.get(i); //gets the i-th n byte wots+ priv key
+		for(int i = 0; i < privKeys.size(); i++) {
 			xPrivKey += "|";
-			for(int j = 0; j < iterator[i].length; j++) {
-				xPrivKey += Converter._byteToHex(iterator[i]); 
-			}
-		}		
+			xPrivKey += Converter._2dByteToHex(privKeys.get(i));
+			}		
 	}
 	
 	public int getIndex(String xPrivKey) {
@@ -486,19 +481,10 @@ public class XMSSTree implements ISimpleMerkle {
 			((XMSSNode)node).setAuthPath(getTreeHeight());
 		}
 	}
-		
-	public void setNeighbors(){
-		Node left, right;
-		for(int i = 0; i < tree.size() -1; i = i+2){				
-					left = tree.get(i);
-					right = tree.get(i+1);
-					left.setLeft(left);
-					left.setRight(right);
-					right.setLeft(left);
-					right.setRight(right);
-			}
-	}
 	
+	/**
+	 * Fills the connections list in the node for the GUI
+	 */
 	public void setConnections(){
 		Node left, right, parent;
 		List<Node> connections;
@@ -512,8 +498,7 @@ public class XMSSTree implements ISimpleMerkle {
 			left.setParent(parent);
 			right.setParent(parent);
 			connections.add(left);
-			connections.add(right);
-			
+			connections.add(right);			
 		}
 	}
 	

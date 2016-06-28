@@ -1,6 +1,7 @@
 package org.jcryptool.visual.merkletree.algorithm;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.jcryptool.visual.merkletree.files.Converter;
@@ -31,6 +32,8 @@ public class SimpleNode implements Node{
 	private int index=-1;
 	// Representation of the Public Key (ONLY LEAFS!!!)
 	private String code;
+
+	private String authPath;
 
 	/**
 	 * Creates a node
@@ -271,16 +274,22 @@ public class SimpleNode implements Node{
 		
 	}
 
-	@Override
-	public void setAuthPath(int treeHeight) {
-		// TODO Auto-generated method stub
-		
+	public void setAuthPath(int treeHeight){
+		authPath = Integer.toBinaryString(~index);
+		authPath = authPath.substring(authPath.length() - treeHeight);		
 	}
-
-	@Override
-	public String getAuthPath() {
-		// TODO Auto-generated method stub
-		return null;
+		
+	public String getAuthPath(){
+		return authPath;
+	}
+	
+	
+	public boolean equals(Node arg0) {
+		if(Arrays.equals(arg0.getContent(), content)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

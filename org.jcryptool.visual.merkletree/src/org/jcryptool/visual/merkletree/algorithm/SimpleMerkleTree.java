@@ -339,6 +339,7 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 			code+= org.jcryptool.visual.merkletree.files.Converter
 					._byteToHex(d1pubKey).substring(d1pubKey.length-5, d1pubKey.length);
 			leaf.setCode(code);
+			leaf.setAuthPath(getTreeHeight());
 			this.leaves.add(leaf);
 		}
 		
