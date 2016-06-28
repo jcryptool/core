@@ -46,15 +46,15 @@ public class WOTSPlusXMSS implements OTS{
 	/**
 	 * Creates a new Winternitz OTS.
 	 *
-	 * @param w
-	 *            Winternitz parameter w
+	 * @param w		Winternitz parameter w
+	 * @param hash	the hash algorithm
+	 * @param seed	the seed to use for key generation
 	 */
 	public WOTSPlusXMSS(int w, String hash, byte[] seed) {
 
 		// Try to set up hash-function
 		try {
 			digest = MessageDigest.getInstance(hash);
-			this.sDigest = MessageDigest.getInstance("SHA-256");
 		} catch (NoSuchAlgorithmException e) {
 			throw new RuntimeException(e);
 		}

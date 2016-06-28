@@ -1,10 +1,13 @@
 package org.jcryptool.visual.merkletree.algorithm;
 
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import org.jcryptool.visual.merkletree.files.ByteUtils;
 
 public class SimpleMerkleTree implements ISimpleMerkle {
 
@@ -27,6 +30,8 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 	ArrayList<byte[][]> publicKeys = new ArrayList<byte[][]>();
 	int leafCounter = 0;
 	int leafNumber = 0;
+	
+	OTSHashAddress otsAdrs = new OTSHashAddress();
 
 	
 	/* 
@@ -200,10 +205,10 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 			this.otsAlgo = new WinternitzOTS(16, hash);
 			break;
 		case "WOTSPlus":
-			this.otsAlgo = new WOTSPlusMerkle(16, hash, this.seed);
+			this.otsAlgo = new WOTSPlusXMSS(16, hash, this.seed);
 			break;
 		default:
-			this.otsAlgo = new WOTSPlusMerkle(16, hash, this.seed);
+			this.otsAlgo = new WOTSPlusXMSS(16, hash, this.seed);
 			break;
 		}
 		if (this.mDigest == null) {
@@ -224,19 +229,15 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 		
 		if(this.keyIndex < this.privKeys.size()) {
 			
-			String messageHash = org.jcryptool.visual.merkletree.files.Converter
-					._byteToHex(this.otsAlgo.hashMessage(message));
-			String b = org.jcryptool.visual.merkletree.files.Converter
-					._byteToHex(this.otsAlgo.initB());
-			
+			byte[] messageHash = randomGenerator(BigInteger.valueOf(keyIndex).toByteArray(), message.getBytes(), message.length());		
 			this.otsAlgo.setPrivateKey(this.privKeys.get(this.keyIndex));
 			this.otsAlgo.setPublicKey(this.publicKeys.get(this.keyIndex));
-			this.otsAlgo.setMessage(messageHash.getBytes());
-			this.otsAlgo.sign();
+
+			byte[][] ots_sig = ((WOTSPlusXMSS) otsAlgo).sign(messageHash, seed, otsAdrs);
 			
 			tmpSignature = Integer.toString(this.keyIndex)+"|";
 			tmpSignature += org.jcryptool.visual.merkletree.files.Converter
-					._byteToHex(this.otsAlgo.getSignature());// to-be-done
+					._2dByteToHex(ots_sig);
 
 			
 			
@@ -261,23 +262,14 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 		int keyIndex = Integer.parseInt(signer[0]);
 		byte[][] curPubKey = this.publicKeys.get(keyIndex);	
 		//set OTS Algorithm values
-		String messageHash = org.jcryptool.visual.merkletree.files.Converter
-				._byteToHex(this.otsAlgo.hashMessage(message));
+		byte[] messageHash = randomGenerator(BigInteger.valueOf(keyIndex).toByteArray(), message.getBytes(), message.length());		
+		this.otsAlgo.setPrivateKey(this.privKeys.get(this.keyIndex));
+		this.otsAlgo.setPublicKey(this.publicKeys.get(this.keyIndex));
 		
-		otsAlgo.setPrivateKey(this.privKeys.get(keyIndex));		
-		otsAlgo.setPublicKey(publicKeys.get(keyIndex));
-		otsAlgo.setSignature(org.jcryptool.visual.merkletree.files.Converter
-				._hexStringToByte(signer[1]));
-		otsAlgo.setMessage(messageHash.getBytes());
-		
-		
-		verifier = otsAlgo.verify();
-		//wozu wird das gemacht? wird doch eh nur am ende verfier zurückgegeben
 		int iHigh=keyIndex;
 		//String currentAuthPath="";
 		byte[] currentNode=leaves.get(keyIndex).getName();
 		int treeHigh=tree.size();
-		if (verifier) {
 			while (iHigh < treeHigh-1) {
 				if(this.tree.get(iHigh).getParent().getLeft().equals(this.tree.get(iHigh))) {
 					//currentAuthPath=this.tree.get(iHigh).getParent().getRight().getNameAsString();
@@ -302,9 +294,11 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 				}
 				iHigh=this.tree.lastIndexOf(this.tree.get(iHigh).getParent());
 			}
+			return true;
 		}
-		return verifier;
-	}
+		
+	
+
 	public boolean verify(String message, String signature,int markedLeafIndex) {
 		String[] signer = signature.split("\\|");
 		int keyIndex = Integer.parseInt(signer[0]);
@@ -327,6 +321,10 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 		byte[] d1pubKey;
 		String code;
 		for (int i = 0; i < this.leafCounter; i++) {
+			//generates a new WOTS/ WOTSPlus Keypair (public and secret key)
+			if(otsAlgo instanceof WOTSPlusXMSS){
+				((WOTSPlusXMSS) otsAlgo).setAddress(otsAdrs);
+			}
 			this.otsAlgo.generateKeyPair();
 			this.privKeys.add(this.otsAlgo.getPrivateKey());
 			this.publicKeys.add(this.otsAlgo.getPublicKey());
@@ -348,6 +346,29 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 	
 	public void setLeafCount(int i) {
 		leafCounter = i;
+	}
+	
+	/**
+	 * @author zuck
+	 * PRNG used to generate the bitmasks and the key for hashing
+	 * @param seed
+	 * 		seed for the PRNG
+	 * @param address
+	 * 		address of left/right node
+	 */
+	public byte[] randomGenerator(byte[] seed, byte[] address, int len) {
+		byte[] res = new byte[len+32];	//erstellen des zu befüllenden arrays
+		byte[] padding = new byte[32];
+		MessageDigest hash = null;
+		try {
+			hash = MessageDigest.getInstance("SHA-256");
+		} catch(NoSuchAlgorithmException e) {
+			//zuck: Der Algo existiert!
+		}
+		seed = ByteUtils.concatenate(padding, seed);
+		seed = ByteUtils.concatenate(seed, address);
+		res = hash.digest(seed);
+		return res;
 	}
 	
 }

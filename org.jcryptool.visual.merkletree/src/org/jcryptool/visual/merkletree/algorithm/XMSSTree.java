@@ -69,13 +69,7 @@ public class XMSSTree implements ISimpleMerkle {
 	public int getLeafCounter() {
 		return leafCounter;
 	}
-
-	@Override
-	public Node getTreeLeaf(int treeLeafNumber) {
-		return leaves.get(treeLeafNumber);
-	}
-
-	//TODO add parameter pubKey, seed, adrs
+	
 	public byte[] generateLTree(byte[][] pKey, byte[] seed, LTreeAddress adrs) {
 		byte[][] pubKey = pKey.clone();
 		int len = pubKey.length;
@@ -99,6 +93,15 @@ public class XMSSTree implements ISimpleMerkle {
 		return pubKey[0];
 	}
 
+	
+	/**
+	 * XORs two nodes and hashes them with a salt
+	 * 
+	 * @param pKey	first node
+	 * @param pKey2	second node
+	 * @param seed	the seed for the bitmask generator
+	 * @param adrs	lAdress construct used for bitmask generator
+	 */
 	public byte[] rand_hash(byte[] pKey, byte[] pKey2, byte[] seed, Address adrs) {
 		
 		int len = pKey.length;
@@ -170,7 +173,9 @@ public class XMSSTree implements ISimpleMerkle {
 		return stack.pop();
 	}
 
-	//TODO Änderungen anpassen
+	/**
+	 * Initialises the tree. Requires seed, bitmaskSeed and  leafCounter to be set beforehand and then the execution of generateKeyPairsAndLeaves() 
+	 */
 	@Override
 	public void generateMerkleTree() {
 		treeArray = new Node[(1 << (getTreeHeight()+1)) - 1];
@@ -460,6 +465,12 @@ public class XMSSTree implements ISimpleMerkle {
 		}
 	}
 	
+	/**
+	 * Defines the node as leaf if it is and set the index of the node. Also adds the node into the treeArray list and sets the binary presentation of the authentication path
+	 * 
+	 * @param node	The node which infos are to set
+	 * @param ix	The index of the node in the current height in the tree
+	 */
 	public void saveNodeInfos(Node node, int ix) {	
 		int index = 0;
 		for(int i = 0; i < node.getHeight(); i++){
@@ -517,5 +528,11 @@ public class XMSSTree implements ISimpleMerkle {
 	@Override
 	public byte[] getSeed() {
 		return seed;
+	}
+
+	@Override
+	public Node getTreeLeaf(int treeLeaveNumber) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
