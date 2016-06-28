@@ -1,5 +1,6 @@
 package org.jcryptool.visual.merkletree.algorithm;
 
+import java.util.Arrays;
 import java.util.List;
 
 public interface Node {
@@ -51,4 +52,7 @@ public interface Node {
 	public void setAuthPath(int treeHeight);
 	
 	public String getAuthPath();
+	
+	public boolean equals(Node arg0);
+	
 }
