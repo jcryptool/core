@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.jcryptool.visual.merkletree.files.Converter;
-
 /**
  * 
  * @author Kevin Muehlboeck

@@ -207,10 +207,10 @@ public class XMSSTree implements ISimpleMerkle {
 			this.otsAlgo = new WinternitzOTS(16, hash);
 			break;
 		case "WOTSPlus":
-			this.otsAlgo = new WOTSPlusXMSS(16, hash, seed);
+			this.otsAlgo = new WOTSPlus(16, hash, seed);
 			break;
 		default:
-			this.otsAlgo = new WOTSPlusXMSS(16, hash, seed);
+			this.otsAlgo = new WOTSPlus(16, hash, seed);
 			break;
 		}
 		if (this.mDigest == null) {
@@ -228,7 +228,6 @@ public class XMSSTree implements ISimpleMerkle {
 	 * returns the Signature
 	 */
 	public String sign(String message) {
-		String tmpSignature;
 		int index = getIndex(xPrivKey);
 		ArrayList<Node> auth = buildAuth(index, seed);
 		byte[] r = randomGenerator(getSK_Seed(),message, message.length());
@@ -239,7 +238,7 @@ public class XMSSTree implements ISimpleMerkle {
 		otsAdrs.setOTSAddress(index);
 		otsAlgo.setPrivateKey(privKeys.get(index));
 		otsAlgo.setPublicKey(publicKeys.get(index));
-		byte[][] ots_sig = ((WOTSPlusXMSS) otsAlgo).sign(hashedMessage, seed, otsAdrs);		
+		byte[][] ots_sig = ((WOTSPlus) otsAlgo).sign(hashedMessage, seed, otsAdrs);		
 		String signature = Integer.toString(index) + "|" + Converter._byteToHex(r) + "|" + Converter._2dByteToHex(ots_sig);
 		for(int i = 0; i < auth.size(); i++){
 			signature = signature + "|" + Converter._byteToHex(auth.get(i).getContent());
@@ -280,8 +279,8 @@ public class XMSSTree implements ISimpleMerkle {
 	public void generateKeyPairsAndLeaves() {
 		for (int i = 0; i < this.leafCounter; i++) {
 			//generates a new WOTS/ WOTSPlus Keypair (public and secret key)
-			if(otsAlgo instanceof WOTSPlusXMSS){
-				((WOTSPlusXMSS) otsAlgo).setAddress(otsAdrs);
+			if(otsAlgo instanceof WOTSPlus){
+				((WOTSPlus) otsAlgo).setAddress(otsAdrs);
 			}
 			this.otsAlgo.generateKeyPair();
 			//adds the private Key of the generated keypair to the private key list of privKeys
@@ -331,7 +330,7 @@ public class XMSSTree implements ISimpleMerkle {
 		OTSHashAddress otsAdrs = new OTSHashAddress();
 		LTreeAddress lAdrs = new LTreeAddress();
 		byte[][] pk_ots;
-		WOTSPlusXMSS wots = (WOTSPlusXMSS) this.otsAlgo;
+		WOTSPlus wots = (WOTSPlus) this.otsAlgo;
 		//index || r as seed for hashing the message
 		byte[] hashedMessage = randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(index).toByteArray(),r), message.getBytes(), message.length());
 		otsAdrs.setOTSBit(true);

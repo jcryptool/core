@@ -15,7 +15,7 @@ import org.jcryptool.visual.merkletree.files.MathUtils;
 
 
 
-public class WOTSPlusXMSS implements OTS{
+public class WOTSPlus implements OTS{
 	// Lengths
 	private int m, l, l1, l2;
 	// Winternitz parameter
@@ -50,7 +50,7 @@ public class WOTSPlusXMSS implements OTS{
 	 * @param hash	the hash algorithm
 	 * @param seed	the seed to use for key generation
 	 */
-	public WOTSPlusXMSS(int w, String hash, byte[] seed) {
+	public WOTSPlus(int w, String hash, byte[] seed) {
 
 		// Try to set up hash-function
 		try {

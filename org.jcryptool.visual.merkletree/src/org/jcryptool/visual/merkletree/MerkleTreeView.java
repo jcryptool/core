@@ -206,8 +206,7 @@ public class MerkleTreeView extends ViewPart {
 								String signature=mtS.getSignature();
 								String[]splittedSign = signature.split("\\|");
 								String keyIndex = "";
-								String message;
-								message=mtS.getMessage();
+								String message=mtS.getMessage();
 								if(splittedSign.length> 1){
 									//otSign =splittedSign[0];
 									keyIndex =splittedSign[0];

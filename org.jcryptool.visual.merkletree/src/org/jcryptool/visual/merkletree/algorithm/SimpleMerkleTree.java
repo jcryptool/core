@@ -205,10 +205,10 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 			this.otsAlgo = new WinternitzOTS(16, hash);
 			break;
 		case "WOTSPlus":
-			this.otsAlgo = new WOTSPlusXMSS(16, hash, this.seed);
+			this.otsAlgo = new WOTSPlus(16, hash, this.seed);
 			break;
 		default:
-			this.otsAlgo = new WOTSPlusXMSS(16, hash, this.seed);
+			this.otsAlgo = new WOTSPlus(16, hash, this.seed);
 			break;
 		}
 		if (this.mDigest == null) {
@@ -223,35 +223,29 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 
 	@Override
 	public String sign(String message) {
-		String tmpSignature="";
+		//String tmpSignature="";
 		int iHeight = this.keyIndex;
 		int treeHeight = tree.size();
-		
-		if(this.keyIndex < this.privKeys.size()) {
-			
-			byte[] messageHash = randomGenerator(BigInteger.valueOf(keyIndex).toByteArray(), message.getBytes(), message.length());		
-			this.otsAlgo.setPrivateKey(this.privKeys.get(this.keyIndex));
-			this.otsAlgo.setPublicKey(this.publicKeys.get(this.keyIndex));
+					
+		byte[] messageHash = randomGenerator(BigInteger.valueOf(keyIndex).toByteArray(), message.getBytes(), message.length());		
+		this.otsAlgo.setPrivateKey(this.privKeys.get(this.keyIndex));
+		this.otsAlgo.setPublicKey(this.publicKeys.get(this.keyIndex));
 
-			byte[][] ots_sig = ((WOTSPlusXMSS) otsAlgo).sign(messageHash, seed, otsAdrs);
+		byte[][] ots_sig = ((WOTSPlus) otsAlgo).sign(messageHash, seed, otsAdrs);
 			
-			tmpSignature = Integer.toString(this.keyIndex)+"|";
-			tmpSignature += org.jcryptool.visual.merkletree.files.Converter
-					._2dByteToHex(ots_sig);
+		String tmpSignature = Integer.toString(this.keyIndex)+"|";
+		tmpSignature += org.jcryptool.visual.merkletree.files.Converter._2dByteToHex(ots_sig);
 
-			
-			
-			while (iHeight < treeHeight-1) {
-				if(this.tree.get(iHeight).getParent().getLeft().equals(this.tree.get(iHeight))) {
-					tmpSignature= tmpSignature+ '|'+this.tree.get(iHeight).getParent().getRight().getNameAsString();
-				}
-				else if (this.tree.get(iHeight).getParent().getRight().equals(this.tree.get(iHeight))) {
-					tmpSignature = tmpSignature + '|' + this.tree.get(iHeight).getParent().getLeft().getNameAsString();
-				}
-				iHeight=this.tree.lastIndexOf(this.tree.get(iHeight).getParent());
+		while (iHeight < treeHeight-1) {
+			if(this.tree.get(iHeight).getParent().getLeft().equals(this.tree.get(iHeight))) {
+				tmpSignature= tmpSignature+ '|'+this.tree.get(iHeight).getParent().getRight().getNameAsString();
 			}
-			this.keyIndex++;
+			else if (this.tree.get(iHeight).getParent().getRight().equals(this.tree.get(iHeight))) {
+				tmpSignature = tmpSignature + '|' + this.tree.get(iHeight).getParent().getLeft().getNameAsString();
+			}
+			iHeight=this.tree.lastIndexOf(this.tree.get(iHeight).getParent());
 		}
+		this.keyIndex++;
 		return tmpSignature; // OTS Signatur+tmpSignature to byte array
 	}
 
@@ -322,8 +316,8 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 		String code;
 		for (int i = 0; i < this.leafCounter; i++) {
 			//generates a new WOTS/ WOTSPlus Keypair (public and secret key)
-			if(otsAlgo instanceof WOTSPlusXMSS){
-				((WOTSPlusXMSS) otsAlgo).setAddress(otsAdrs);
+			if(otsAlgo instanceof WOTSPlus){
+				((WOTSPlus) otsAlgo).setAddress(otsAdrs);
 			}
 			this.otsAlgo.generateKeyPair();
 			this.privKeys.add(this.otsAlgo.getPrivateKey());

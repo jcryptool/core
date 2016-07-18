@@ -43,11 +43,11 @@ import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
  */
 public class MerkleTreeZestComposite extends Composite implements IZoomableWorkbenchPart {
 
-	private Composite compositeTree;
 	private GraphViewer viewer;
 	private StyledText styledTextTree;
 	private int layoutCounter = 1;
 	private ArrayList<GraphConnection> markedConnectionList;
+	Label descLabel;
 
 	/**
 	 * Create the composite.
@@ -61,11 +61,9 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 		
 		markedConnectionList = new ArrayList<GraphConnection>();
 
-		compositeTree = new Composite(this, SWT.WRAP | SWT.BORDER | SWT.LEFT | SWT.FILL);
-		compositeTree.setLayoutData(
-		new GridData(SWT.FILL, SWT.FILL, true, true, MerkleConst.H_SPAN_MAIN+5, MerkleConst.DESC_HEIGHT+1));
-		compositeTree.setLayout(new GridLayout(1, true));
-		compositeTree.addControlListener(new ControlAdapter() {
+		this.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, MerkleConst.H_SPAN_MAIN+5, MerkleConst.DESC_HEIGHT+1));
+		this.setLayout(new GridLayout(1, true));
+		this.addControlListener(new ControlAdapter() {
 			@Override
 			public void controlResized(ControlEvent e) {
 				viewer.applyLayout();
@@ -73,25 +71,29 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 		});
 		
 
-		Label descLabel = new Label(compositeTree, SWT.NONE);
+		/*
+		 * the description label for the chosen mode
+		 */
+		descLabel = new Label(this, SWT.NONE);
+		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
 
-		StyledText descText = new StyledText(compositeTree, SWT.WRAP);
+		/*
+		 * description text of the chosen mode
+		 */
+		StyledText descText = new StyledText(this, SWT.WRAP);
 		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2));
 		descText.setCaret(null);
-
 		descText.setEditable(false);
-		compositeTree.setLayout(new GridLayout(1, true));
+		this.setLayout(new GridLayout(1, true));
 
-		styledTextTree = new StyledText(compositeTree, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
-
-		// styledTextTree.setFont(FontService.getNormalFont());
+		styledTextTree = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
 
 		GridData gd_styledTextTree = new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1);
 		gd_styledTextTree.widthHint = 960;
 		gd_styledTextTree.heightHint = 40;
 		styledTextTree.setLayoutData(gd_styledTextTree);
 
-		viewer = new GraphViewer(compositeTree, SWT.NONE);
+		viewer = new GraphViewer(this, SWT.NONE);
 		viewer.setContentProvider(new ZestNodeContentProvider());
 		viewer.setLabelProvider(new ZestLabelProvider(ColorConstants.lightGreen));
 		//select the layout of the connections -> CONNECTIONS_DIRECTED would be a ->
@@ -160,18 +162,6 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 						styledTextTree.setAlignment(SWT.LEFT);
 						styledTextTree.setText(Descriptions.ZestLabelProvider_6 + " = " + n.getNameAsString());
 					}
-
-					/*
-					 * Table table = (Table) compositeCT.getChildren()[2];
-					 * TableItem[] tmpItem = table.getItems(); for (int i = 0; i
-					 * < tmpItem.length; i++) { if
-					 * (n.getNameAsString().compareTo(tmpItem[i].getText(0)) ==
-					 * 0) { table.setSelection(tmpItem[i]);
-					 * table.showSelection(); break; } else {
-					 * table.showItem(table.getItem(0)); table.deselectAll(); }
-					 * }
-					 */
-
 				}
 			}
 		});

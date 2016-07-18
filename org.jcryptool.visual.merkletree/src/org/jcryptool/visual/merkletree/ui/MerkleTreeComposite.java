@@ -55,7 +55,11 @@ public class MerkleTreeComposite extends Composite {
 		combo.setLayoutData(gd_combo);
 		combo.add(Descriptions.CompositeDescriptionMerkleTree);
 		combo.add(Descriptions.CompositeDescriptionXMSS);
-		combo.add(Descriptions.CompositeDescriptionXMSS_MT);
+		/**
+		 * uncomment to add the XMSS MultiTree View in first Tab
+		 */
+		//combo.add(Descriptions.CompositeDescriptionXMSS_MT);
+		
 		combo.setEnabled(true);
 		combo.select(0);
 		

@@ -38,9 +38,15 @@ public class Descriptions extends NLS {
 	public static String ZestLabelProvider_2;
 	public static String ZestLabelProvider_3;
 	
-	public static String TestLabelProvider_5;
-	public static String TestLabelProvider_6;
+	public static String ZestLabelProvider_7;
+	public static String ZestLabelProvider_8;
 	//>
+
+	
+	//<- Mouse over
+	public static String ZestLabelProvider_4;	
+	//>
+
 
 	//<- Ausgewählter Knoten TXT
 	public static String ZestLabelProvider_5;
@@ -66,6 +72,7 @@ public class Descriptions extends NLS {
 	public static String MerkleTreeVerify_2;
 	public static String MerkleTreeVerify_3;
 	public static String MerkleTreeVerify_4;
+	public static String MerkleTreeVerify_5;
 	
 	public static String MerkleTree_Signature_Generation_Info;
 

@@ -42,16 +42,20 @@ public class MerkleTreeSignatureComposite extends Composite {
 	Label lSignaturSize;
 	Label lkeyNumber;
 	Label SingatureExpl;
+	Label descLabel;
 	String signature = null;
 	
 	StyledText styledTextKeyNumber;
 	ISimpleMerkle merkle;
-	private String usedText;
 	public MerkleTreeSignatureComposite(Composite parent, int style, ISimpleMerkle merkle) {
 		super(parent, SWT.NONE);
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
 
 		this.merkle=merkle;
+		
+		descLabel = new Label(this, SWT.NONE);
+		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
+
 		sign = new Label(this, SWT.NONE);
 		sign.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
 		sign.setText(Descriptions.MerkleTreeSign_0);
@@ -92,22 +96,18 @@ public class MerkleTreeSignatureComposite extends Composite {
 		if(merkle instanceof XMSSTree){
 			SingatureExpl.setText(Descriptions.XMSS.Tab2_Txt0);
 			SingatureExpl.setText(Descriptions.XMSS.Tab2_Txt0);
+			descLabel.setText(Descriptions.XMSS.Tab1_Head0);
 		}
 		else if(merkle instanceof SimpleMerkleTree){
 			SingatureExpl.setText(Descriptions.MSS.Tab2_Txt0);
 			SingatureExpl.setText(Descriptions.MSS.Tab2_Txt0);
+			descLabel.setText(Descriptions.MSS.Tab1_Head0);
+
 		}
 		
 		styledTextSign = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
 		GridData gd_textTextSign = new GridData(SWT.FILL,SWT.FILL,true,true,MerkleConst.H_SPAN_MAIN,1);
 		styledTextSign.setLayoutData(gd_textTextSign);
-		
-		/*
-		 * only print if there is a signature
-		 */
-		if(signature != null){
-			styledTextSign.setText(signature);
-		}
 
 		createSign.addSelectionListener(new SelectionAdapter() {
 			
@@ -118,19 +118,21 @@ public class MerkleTreeSignatureComposite extends Composite {
 			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if( textSign.getText()!= "") {
-				signature = merkle.sign(textSign.getText());
-				usedText=textSign.getText();
-
-				/**
-				 * updated the field of the Signature, KeyIndex and SignatureLength
+				/*
+				 * store signature in temp string, to verify it
 				 */
-				styledTextSign.setText(signature);
-				styledTextSignSize.setText(getSignatureLength(signature) +" Byte");
-				styledTextKeyNumber.setText(getKeyIndex(signature));
+				String temp = merkle.sign(textSign.getText());
+				if(temp != ""){
+					signature = temp;
+					/**
+					 * updated the field of the Signature, KeyIndex and SignatureLength
+					 */
+					styledTextSign.setText(signature);
+					styledTextSignSize.setText(getSignatureLength(signature) +" Byte");
+					styledTextKeyNumber.setText(getKeyIndex(signature));
 				}
 				else {
-					styledTextSign.setText("lol");
+					styledTextSign.setText("No more Keypairs available");
 				}
 			}
 		});
@@ -162,7 +164,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 	 * @return usedText
 	 */
 	public String getMessage() {
-		return usedText;
+		return textSign.getText();
 	}
 	
 	/**

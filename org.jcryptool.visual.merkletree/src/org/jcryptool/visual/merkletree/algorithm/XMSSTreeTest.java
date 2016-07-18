@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
-import org.hamcrest.CoreMatchers;
 import org.jcryptool.visual.merkletree.files.Converter;
 
 import static org.hamcrest.CoreMatchers.*;

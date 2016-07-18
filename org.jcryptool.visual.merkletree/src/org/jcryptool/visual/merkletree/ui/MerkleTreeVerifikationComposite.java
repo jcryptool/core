@@ -34,6 +34,8 @@ import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
 import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.Node;
+import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
+import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
 /**
  * Class for the Composite of Tabpage "MerkleTree"
  * @author Kevin Muehlboeck
@@ -41,13 +43,13 @@ import org.jcryptool.visual.merkletree.algorithm.Node;
  */
 public class MerkleTreeVerifikationComposite extends Composite implements IZoomableWorkbenchPart {
 
-	private Composite compositeTree;
-
 	private GraphViewer viewer;
 	private StyledText binaryValue;
 	private StyledText styledTextTree;
 	private int layoutCounter = 1;
 	private ArrayList<GraphConnection> markedConnectionList;
+	Label descLabel;
+	Label descText;
 
 	/**
 	 * Create the composite.
@@ -57,74 +59,49 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 	 */
 	public MerkleTreeVerifikationComposite(Composite parent, int style, ISimpleMerkle merkle, int leafNumber, String signature, String message) {
 		super(parent, style);
+		
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
 		markedConnectionList = new ArrayList<GraphConnection>();
 
-		compositeTree = new Composite(this, SWT.WRAP | SWT.BORDER | SWT.LEFT | SWT.FILL);
-		compositeTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, MerkleConst.H_SPAN_MAIN+5, MerkleConst.DESC_HEIGHT+1));
-		compositeTree.setLayout(new GridLayout(1, true));
-		compositeTree.addControlListener(new ControlAdapter() {
+		this.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, MerkleConst.H_SPAN_MAIN+5, MerkleConst.DESC_HEIGHT+1));
+		this.addControlListener(new ControlAdapter() {
 			@Override
 			public void controlResized(ControlEvent e) {
 				viewer.applyLayout();
 			}
 		});
 		
-		// this divide has been made to allow selection of text in this section
-		// but not of the
-		// heading
-		// while not allowing modification of either section
-		Label descText = new Label(compositeTree, SWT.WRAP);
+		/*
+		 * The Text is based on the used suite
+		 * if there will implemented an other suite, just add an else if and type the name of the instance
+		 * Example for MultiTree -> merkle instanceof XMSSMT
+		 */
+		descLabel = new Label(this, SWT.NONE);
+		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
+		
+		if(merkle instanceof XMSSTree){
+			descLabel.setText(Descriptions.XMSS.Tab1_Head0);
+		}
+		else if(merkle instanceof SimpleMerkleTree){
+
+			descLabel.setText(Descriptions.MSS.Tab1_Head0);
+
+		}
+
+		/*
+		 * The Description Text for the Verificaiton
+		 */
+		descText = new Label(this, SWT.WRAP);
 		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		descText.setText(Descriptions.MerkleTreeVerify_0);
-		compositeTree.setLayout(new GridLayout(1, true));	
+		this.setLayout(new GridLayout(1, true));	
 		
-		styledTextTree = new StyledText(compositeTree, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
+		styledTextTree = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
 		styledTextTree.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 		styledTextTree.setText(Descriptions.MerkleTreeVerify_4);
+
 		
-		/**
-		 * Verify Button
-		 */
-		Button bt_Verify = new Button(compositeTree,SWT.WRAP);
-		bt_Verify.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		bt_Verify.setText(Descriptions.MerkleTreeVerify_1);
-		bt_Verify.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				int currentLeaf=-1;
-				
-				for(GraphConnection con : markedConnectionList) {
-					/*if(((Node)con.getSource().getData()).getLeafNumber()>=0) {
-						currentLeaf=((Node)con.getSource().getData()).getLeafNumber();
-					}*/
-					if(((Node)con.getDestination().getData()).isLeaf()) {
-						currentLeaf=((Node)con.getDestination().getData()).getLeafNumber();
-					}
-					/*if(((Node)con.getData()).getLeafNumber() >= 0) {
-						currentLeaf=((Node)con.getData()).getLeafNumber();
-					}*/
-				}
-				if(currentLeaf >= 0) {
-					if(merkle.verify(message, signature,currentLeaf)){
-						//set the Screen color based on the result
-						//green if verification success
-						//red if verification fails
-						styledTextTree.setBackground(ColorConstants.green);
-						styledTextTree.setText(Descriptions.MerkleTreeVerify_2);
-					}
-					else{
-						styledTextTree.setBackground(ColorConstants.red);
-						styledTextTree.setText(Descriptions.MerkleTreeVerify_3);
-					}
-				}
-				else {
-					styledTextTree.setText("Bitte wählen Sie ein Blatt aus um die Signatur zu verifizieren. Ein Knoten kann nicht als gültiger öffentlicher Schlüssel verwendet werden!");
-				}
-			}
-		});
-		
-		viewer = new GraphViewer(compositeTree, SWT.NONE);
+		viewer = new GraphViewer(this, SWT.NONE);
 		viewer.setContentProvider(new ZestNodeContentProvider());
 		viewer.setLabelProvider(new ZestLabelProvider(ColorConstants.white));
 		//select the layout of the connections -> CONNECTIONS_DIRECTED would be a ->
@@ -134,9 +111,9 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 		/*
 		 * Text field for the binary representation of the node
 		 */
-		binaryValue = new StyledText(compositeTree, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
+		binaryValue = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
 		binaryValue.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
-		//binaryValue.setText("Test");
+		binaryValue.setText("Test");
 
 		Control control = viewer.getControl();
 		control.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -173,8 +150,10 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 
 					if (n.isLeaf()) {
 						styledTextTree.setForeground(new Color(null, new RGB(1, 70, 122)));
-			
-						binaryValue.setText("Authentifizierungspfad des Knoten: " + n.getAuthPath());
+						/*
+						 * Update the Binary Value description when clicking on an other leaf
+						 */
+						binaryValue.setText(Descriptions.MerkleTreeVerify_5 + n.getAuthPath());
 
 						if (markedConnectionList.size() == 0) {
 							markBranch(node);
@@ -196,28 +175,54 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 						styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
 						styledTextTree.setAlignment(SWT.LEFT);
 					}
-
-					/*
-					 * Table table = (Table) compositeCT.getChildren()[2];
-					 * TableItem[] tmpItem = table.getItems(); for (int i = 0; i
-					 * < tmpItem.length; i++) { if
-					 * (n.getNameAsString().compareTo(tmpItem[i].getText(0)) ==
-					 * 0) { table.setSelection(tmpItem[i]);
-					 * table.showSelection(); break; } else {
-					 * table.showItem(table.getItem(0)); table.deselectAll(); }
-					 * }
-					 */
-
 				}
 			}
 		});
+		
+		
+		/**
+		 * Verify Button
+		 */
+		Button bt_Verify = new Button(this,SWT.WRAP);
+		bt_Verify.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		bt_Verify.setText(Descriptions.MerkleTreeVerify_1);
+		bt_Verify.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				int currentLeaf=-1;
+				
+				for(GraphConnection con : markedConnectionList) {
+					if(((Node)con.getDestination().getData()).isLeaf()) {
+						currentLeaf=((Node)con.getDestination().getData()).getLeafNumber();
+					}
+				}
+				if(currentLeaf >= 0) {
+					if(merkle.verify(message, signature,currentLeaf)){
+						//set the Screen color based on the result
+						//green if verification success
+						//red if verification fails
+						styledTextTree.setBackground(ColorConstants.green);
+						styledTextTree.setText(Descriptions.MerkleTreeVerify_2);
+					}
+					else{
+						styledTextTree.setBackground(ColorConstants.red);
+						styledTextTree.setText(Descriptions.MerkleTreeVerify_3);
+					}
+				}
+				else {
+					styledTextTree.setText("Bitte wählen Sie ein Blatt aus um die Signatur zu verifizieren. Ein Knoten kann nicht als gültiger öffentlicher Schlüssel verwendet werden!");
+				}
+			}
+		});
+		
 	}
 
+	
+	
+	
 	/**
 	 * Marks the whole branch beginning from the leaf node
-	 * 
-	 * @param leaf
-	 *            - the leaf node of the branch
+	 * @param leaf - the leaf node of the branch
 	 */
 	@SuppressWarnings("unchecked")
 	private void markBranch(GraphNode leaf) {
@@ -257,7 +262,6 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 
 	/**
 	 * Unmark a previous marked branch
-	 * 
 	 * @param markedConnectionList
 	 *            
 	 */
@@ -281,8 +285,7 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 
 	/**
 	 * Marks the authentification path of the leaf
-	 * @param markedConnectionList 
-	 * 				- Contains marked elements of the Changing Path
+	 * @param markedConnectionList - Contains marked elements of the Changing Path
 	 */
 	private void markAuthPath(List<GraphConnection> markedConnectionList) {
 		GraphConnection authPath;
@@ -338,7 +341,6 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 	 */
 	private void linkMerkleTree(ISimpleMerkle merkle) {
 		if (merkle.getMerkleRoot() != null) {
-			//this.merkle = merkle;
 			viewer.setInput(merkle.getTree());
 
 			LayoutAlgorithm layout = new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);

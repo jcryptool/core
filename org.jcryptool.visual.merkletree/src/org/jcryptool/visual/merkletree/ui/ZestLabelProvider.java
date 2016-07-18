@@ -67,11 +67,11 @@ public class ZestLabelProvider extends LabelProvider implements IEntityStyleProv
 			Node rightNode = sourceNode.getRight();
 
 			if (leftNode != null && destNode == leftNode) {
-				return Descriptions.TestLabelProvider_5; //1
+				return Descriptions.ZestLabelProvider_7; //1
 			}
 
 			if (rightNode != null && destNode == rightNode) {
-				return Descriptions.TestLabelProvider_6; //2
+				return Descriptions.ZestLabelProvider_8; //2
 			}
 		}
 		throw new RuntimeException("Wrong type: " + element.getClass().toString()); //$NON-NLS-1$
@@ -134,7 +134,7 @@ public class ZestLabelProvider extends LabelProvider implements IEntityStyleProv
 		if (entity instanceof Node) {
 			Node n = (Node) entity;
 
-			IFigure tooltip1 = new Label("Hash = (" + n.getNameAsString() +")", null);
+			IFigure tooltip1 = new Label(Descriptions.ZestLabelProvider_4 + " " + n.getNameAsString() +")", null);
 			return tooltip1;
 		}
 		return null;
