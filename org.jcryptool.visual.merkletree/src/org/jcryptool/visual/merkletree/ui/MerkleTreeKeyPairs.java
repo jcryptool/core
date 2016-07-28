@@ -31,6 +31,7 @@ public class MerkleTreeKeyPairs extends Composite {
 
 	Button buttonCreateKeys;
 	Label createLabel;
+	StyledText createdKey;
 	StyledText descText;
 	private int spinnerValue;
 	private int treeValue;
@@ -64,9 +65,9 @@ public class MerkleTreeKeyPairs extends Composite {
 		Spinner spinnerkeysum = new Spinner(this, SWT.BORDER);
 		spinnerkeysum.setMaximum(1024);
 		spinnerkeysum.setMinimum(2);
-		spinnerValue = 2;
 		spinnerkeysum.setSelection(0);
 		spinnerkeysum.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
+		spinnerValue = 2;
 		
 		//set the spinner-value only to values of the power of 2
 		spinnerkeysum.addSelectionListener(new SelectionAdapter() {
@@ -94,6 +95,11 @@ public class MerkleTreeKeyPairs extends Composite {
 		buttonCreateKeys.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 3, 1));
 		
 		
+		//Text box with generated key info
+		createdKey = new StyledText(this, SWT.WRAP | SWT.BORDER);
+		createdKey.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 2));
+		
+	
 		//if the Mode is MultiTree there is an extra spinner for the amount of Trees (Tree-Layers)
 		if(mode == SUIT.XMSS_MT){
 			
@@ -133,7 +139,10 @@ public class MerkleTreeKeyPairs extends Composite {
 		}
 		descText.setEditable(false);
 		
-		//event-listener for the 'create button'
+		/**
+		 * Event Listener for the generate keys button
+		 * if this button is pressed a new merkle tree is generated
+		 */
 		buttonCreateKeys.addSelectionListener(new SelectionAdapter() {
 			/* (non-Javadoc)
 			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
@@ -158,32 +167,40 @@ public class MerkleTreeKeyPairs extends Composite {
 					merkle = new SimpleMerkleTree();
 					break;
 				}
-				merkle.setSeed(((MerkleTreeSeed)parent).getSeed());
 				
-				//if the generated Tree is a XMSSTree -> the Bitmaskseed is also needed
+				/*
+				 * create the merkle tree with the chosen values
+				 */
+				//if the generated Tree is a XMSSTree -> the bitmaskseed is also needed
 				//TODO: if XMSS^MT
 				if(merkle instanceof XMSSTree){
 					((XMSSTree) merkle).setBitmaskSeed(((MerkleTreeSeed)parent).getBitmaskSeed());	
 				}
+				merkle.setSeed(((MerkleTreeSeed)parent).getSeed());
 				merkle.setLeafCount(spinnerValue);
 				merkle.selectOneTimeSignatureAlgorithm("SHA-256", "WOTSPlus");
 				merkle.generateKeyPairsAndLeaves();
 				merkle.generateMerkleTree();
 				((MerkleTreeView) masterView).setAlgorithm(merkle, mode);
+				
+				//set or update the key information
+				createdKey.setText(merkle.getPrivateKeys());
+				
+				
 			}
 		});
 	}
 
 
 	/**
-	 * @return sipnner value (ammount of keys)
+	 * @return spinner value (amount of keys)
 	 */
 	public int getKeyAmmount(){
 		return spinnerValue;
 	}
 	/**
 	 * if XMSS^MT
-	 * @return ammount of Trees (Tree-Layers)
+	 * @return amount of Trees (Tree-Layers)
 	 */
 	public int getTreeAmmount(){
 		return treeValue;

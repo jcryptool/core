@@ -2,6 +2,7 @@ package org.jcryptool.visual.merkletree.files;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 
 //import org.jcryptool.visual.merkletree.files.ByteUtils;
 

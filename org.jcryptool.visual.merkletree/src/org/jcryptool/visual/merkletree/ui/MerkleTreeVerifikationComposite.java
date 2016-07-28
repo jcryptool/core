@@ -71,14 +71,16 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 			}
 		});
 		
+
 		/*
 		 * The Text is based on the used suite
 		 * if there will implemented an other suite, just add an else if and type the name of the instance
 		 * Example for MultiTree -> merkle instanceof XMSSMT
 		 */
+		
 		descLabel = new Label(this, SWT.NONE);
 		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
-		
+
 		if(merkle instanceof XMSSTree){
 			descLabel.setText(Descriptions.XMSS.Tab1_Head0);
 		}
@@ -89,7 +91,7 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 		}
 
 		/*
-		 * The Description Text for the Verificaiton
+		 * The Description Text for the verification
 		 */
 		descText = new Label(this, SWT.WRAP);
 		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -109,11 +111,11 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 		linkMerkleTree(merkle);
 		
 		/*
-		 * Text field for the binary representation of the node
+		 * Text field for the binary representation of the node this
+		 * The textbox is filled in the method markAuthPath()
 		 */
 		binaryValue = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
 		binaryValue.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
-		binaryValue.setText("Test");
 
 		Control control = viewer.getControl();
 		control.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -150,11 +152,6 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 
 					if (n.isLeaf()) {
 						styledTextTree.setForeground(new Color(null, new RGB(1, 70, 122)));
-						/*
-						 * Update the Binary Value description when clicking on an other leaf
-						 */
-						binaryValue.setText(Descriptions.MerkleTreeVerify_5 + n.getAuthPath());
-
 						if (markedConnectionList.size() == 0) {
 							markBranch(node);
 							markAuthPath(markedConnectionList);
@@ -198,9 +195,11 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 				}
 				if(currentLeaf >= 0) {
 					if(merkle.verify(message, signature,currentLeaf)){
-						//set the Screen color based on the result
-						//green if verification success
-						//red if verification fails
+						/*
+						 *set the Screen color based on the result
+						 *green if verification success
+						 *red if verification fails
+						 */
 						styledTextTree.setBackground(ColorConstants.green);
 						styledTextTree.setText(Descriptions.MerkleTreeVerify_2);
 					}
@@ -210,7 +209,11 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 					}
 				}
 				else {
-					styledTextTree.setText("Bitte wählen Sie ein Blatt aus um die Signatur zu verifizieren. Ein Knoten kann nicht als gültiger öffentlicher Schlüssel verwendet werden!");
+					/*
+					 * if selected item is a node then show message that node cant be used to verify signature
+					 */
+					styledTextTree.setBackground(ColorConstants.red);
+					styledTextTree.setText(Descriptions.MerkleTreeVerify_6);
 				}
 			}
 		});
@@ -284,16 +287,21 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 	}
 
 	/**
-	 * Marks the authentification path of the leaf
+	 * Marks the authentication path of the leaf and set the binary path to root in the textbox
 	 * @param markedConnectionList - Contains marked elements of the Changing Path
 	 */
 	private void markAuthPath(List<GraphConnection> markedConnectionList) {
 		GraphConnection authPath;
-		// List<GraphConnection> connections = leaf.getTargetConnections();
 		for (GraphConnection connect : markedConnectionList) {
 			Node myNode = (Node) connect.getDestination().getData();
 			Node parentNode = (Node) connect.getSource().getData();
-
+			
+			/*
+			 * Set the Binary Value of the Leaf and update if clicked on an other Leaf
+			 */	
+			if(myNode.isLeaf() == true){
+			binaryValue.setText(Descriptions.MerkleTreeVerify_5 + myNode.getAuthPath());
+			}
 			if (myNode.equals(parentNode.getLeft())) {
 				authPath = (GraphConnection) connect.getSource().getSourceConnections().get(1);
 				authPath.getDestination().setBackgroundColor(ColorConstants.red);

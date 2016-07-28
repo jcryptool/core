@@ -29,10 +29,6 @@ public class XMSSTree implements ISimpleMerkle {
 	String xPrivKey;
 	String xPubKey;
 
-	// ArrayList<MerkleTreeNode> leaves = new ArrayList<>();
-	// ArrayList<ArrayList<MerkleTreeNode>> merkleTreeHeight;
-	// ArrayList<MerkleTreeNode> merkleTreeRow = null;
-
 	ArrayList<Node> tree;
 	Node[] treeArray;
 	ArrayList<Node> leaves = new ArrayList<Node>();
@@ -41,6 +37,14 @@ public class XMSSTree implements ISimpleMerkle {
 	ArrayList<byte[][]> privKeys = new ArrayList<byte[][]>();
 	ArrayList<byte[][]> publicKeys = new ArrayList<byte[][]>();
 
+	public String getPublicKeys(){
+		return publicKeys.toString();
+	}
+	
+	public String getPrivateKeys(){
+		return publicKeys.toString();
+	}
+	
 	public void setLeafCount(int i) {
 		leafCounter = i;
 	}
@@ -405,7 +409,6 @@ public class XMSSTree implements ISimpleMerkle {
 	
 	public void xmss_genSK() {
 		int index = 0; //index of the next unused wots+ key
-		byte[] key;	//random key for PRNG
 		xPrivKey = Integer.toString(index) + "|" + Converter._byteToHex(seed);
 		for(int i = 0; i < privKeys.size(); i++) {
 			xPrivKey += "|";

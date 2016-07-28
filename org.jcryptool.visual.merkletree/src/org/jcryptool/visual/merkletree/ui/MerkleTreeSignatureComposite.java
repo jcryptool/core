@@ -112,8 +112,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 		createSign.addSelectionListener(new SelectionAdapter() {
 			
 			
-			/* (non-Javadoc)
-			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+			/*
 			 * Event to create a Signature
 			 */
 			@Override

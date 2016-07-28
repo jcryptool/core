@@ -73,6 +73,8 @@ public class Descriptions extends NLS {
 	public static String MerkleTreeVerify_3;
 	public static String MerkleTreeVerify_4;
 	public static String MerkleTreeVerify_5;
+	public static String MerkleTreeVerify_6;
+
 	
 	public static String MerkleTree_Signature_Generation_Info;
 

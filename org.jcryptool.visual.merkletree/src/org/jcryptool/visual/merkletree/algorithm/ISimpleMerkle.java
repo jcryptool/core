@@ -6,6 +6,11 @@ public interface ISimpleMerkle {
 	// Variablen
 
 	public void setSeed(byte[] seed);
+	
+	public String getPublicKeys();
+	
+	public String getPrivateKeys();
+	
 
 	public byte[] getMerkleRoot();
 
