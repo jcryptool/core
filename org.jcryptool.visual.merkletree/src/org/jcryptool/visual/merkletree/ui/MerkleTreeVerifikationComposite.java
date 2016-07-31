@@ -49,7 +49,7 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 	private int layoutCounter = 1;
 	private ArrayList<GraphConnection> markedConnectionList;
 	Label descLabel;
-	Label descText;
+	StyledText descText;
 
 	/**
 	 * Create the composite.
@@ -93,7 +93,7 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 		/*
 		 * The Description Text for the verification
 		 */
-		descText = new Label(this, SWT.WRAP);
+		descText = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
 		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		descText.setText(Descriptions.MerkleTreeVerify_0);
 		this.setLayout(new GridLayout(1, true));	

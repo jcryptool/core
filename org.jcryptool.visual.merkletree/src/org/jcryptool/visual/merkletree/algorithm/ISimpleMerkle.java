@@ -7,11 +7,6 @@ public interface ISimpleMerkle {
 
 	public void setSeed(byte[] seed);
 	
-	public String getPublicKeys();
-	
-	public String getPrivateKeys();
-	
-
 	public byte[] getMerkleRoot();
 
 	public byte[] getSeed();
@@ -38,5 +33,8 @@ public interface ISimpleMerkle {
 	public void selectOneTimeSignatureAlgorithm(String hash, String algo);
 			
 	public void setLeafCount(int i);
+	
+	public String getKeyLength();
+
 	
 }

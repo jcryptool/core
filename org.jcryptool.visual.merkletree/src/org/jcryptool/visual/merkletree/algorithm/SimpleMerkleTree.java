@@ -33,15 +33,6 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 		this.keyIndex = 0;
 	}
 	
-	public String getPublicKeys(){
-		return publicKeys.toString();
-	}
-	
-	public String getPrivateKeys(){
-		return publicKeys.toString();
-	}
-	
-	
 	@Override
 	public void setSeed(byte[] seed) {
 		this.seed = seed;
@@ -317,5 +308,36 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 		res = hash.digest(seed);
 		return res;
 	}
+	
+	/**
+	 * Calculate the Key lenght of the created Keys in Byte
+	 */
+	public String getKeyLength(){	
+		/*
+		 * Convert the Keys to a String and concanate them
+		 */
+		String keys = "";
+		for(int i = 0; i < privKeys.size(); i++){
+			keys += (ByteUtils.toHexString(privKeys.get(i)));
+		}
+
+		for(int i = 0; i < publicKeys.size(); i++){
+			keys += (ByteUtils.toHexString(publicKeys.get(i)));
+		}
+		
+		/*
+		 * calculate the lenght of the Keys 
+		 */
+		
+		int length = keys.length();
+		length = length/2;
+		StringBuilder sb = new StringBuilder();
+		sb.append("");
+		sb.append(length);
+		String keyLength = sb.toString();
+		return keyLength;
+		
+	}
+	
 	
 }

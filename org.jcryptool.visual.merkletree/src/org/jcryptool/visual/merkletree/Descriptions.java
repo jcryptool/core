@@ -59,6 +59,10 @@ public class Descriptions extends NLS {
 	public static String MerkleTreeKey_column_2;
 	public static String MerkleTreeKey_Message;
 	
+	public static String MerkleTreeKey_1;
+	public static String MerkleTreeKey_2;
+	public static String MerkleTreeKey_3;
+	
 	public static String MerkleTreeSign_0;
 	public static String MerkleTreeSign_1;
 	public static String MerkleTreeSign_2;

@@ -98,6 +98,7 @@ public class MerkleTreeKeyPairs extends Composite {
 		//Text box with generated key info
 		createdKey = new StyledText(this, SWT.WRAP | SWT.BORDER);
 		createdKey.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 2));
+		createdKey.setText(Descriptions.MerkleTreeKey_1);
 		
 	
 		//if the Mode is MultiTree there is an extra spinner for the amount of Trees (Tree-Layers)
@@ -184,8 +185,7 @@ public class MerkleTreeKeyPairs extends Composite {
 				((MerkleTreeView) masterView).setAlgorithm(merkle, mode);
 				
 				//set or update the key information
-				createdKey.setText(merkle.getPrivateKeys());
-				
+				createdKey.setText(Descriptions.MerkleTreeKey_2 +" " + merkle.getKeyLength() + " " + Descriptions.MerkleTreeKey_3);
 				
 			}
 		});
