@@ -26,16 +26,16 @@ public class XMSSTree implements ISimpleMerkle {
 	OTSHashAddress otsAdrs = new OTSHashAddress();
 	LTreeAddress lAdrs = new LTreeAddress();
 	byte[] bitmask;
-	String xPrivKey;
-	String xPubKey;
+	public String xPrivKey;
+	public String xPubKey;
 
 	ArrayList<Node> tree;
 	Node[] treeArray;
 	ArrayList<Node> leaves = new ArrayList<Node>();
 
 	MessageDigest mDigest;
-	ArrayList<byte[][]> privKeys = new ArrayList<byte[][]>();
-	ArrayList<byte[][]> publicKeys = new ArrayList<byte[][]>();
+	public ArrayList<byte[][]> privKeys = new ArrayList<byte[][]>();
+	public ArrayList<byte[][]> publicKeys = new ArrayList<byte[][]>();
 
 
 	public void setLeafCount(int i) {

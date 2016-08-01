@@ -80,11 +80,11 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 		/*
 		 * description text of the chosen mode
 		 */
-		StyledText descText = new StyledText(this, SWT.WRAP);
-		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2));
-		descText.setCaret(null);
-		descText.setEditable(false);
+		StyledText descText = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
+		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		this.setLayout(new GridLayout(1, true));
+		
+		
 
 		styledTextTree = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
 
