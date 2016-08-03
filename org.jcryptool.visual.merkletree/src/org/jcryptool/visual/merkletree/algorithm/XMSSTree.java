@@ -519,25 +519,11 @@ public class XMSSTree implements ISimpleMerkle {
 	/**
 	 * Calculate the Key lenght of the created Keys in Byte
 	 */
-	public String getKeyLength(){	
-		/*
-		 * Convert the Keys to a String and concanate them
-		 */
-		String keys = "";
-		for(int i = 0; i < privKeys.size(); i++){
-			keys += (ByteUtils.toHexString(privKeys.get(i)));
-		}
-
-		for(int i = 0; i < publicKeys.size(); i++){
-			keys += (ByteUtils.toHexString(publicKeys.get(i)));
-		}
+	public String getKeyLength(){
 		
-		/*
-		 * calculate the lenght of the Keys 
-		 */
-		
-		int length = keys.length();
-		length = length/2;
+		int privLength = xPrivKey.length();
+		int pubLength = xPubKey.length();
+		int length = privLength + pubLength;
 		StringBuilder sb = new StringBuilder();
 		sb.append("");
 		sb.append(length);
