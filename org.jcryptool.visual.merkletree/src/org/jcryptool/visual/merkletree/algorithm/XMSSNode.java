@@ -143,7 +143,8 @@ public class XMSSNode implements Node{
 	}
 	
 	public void setAuthPath(int treeHeight){
-		authPath = Integer.toBinaryString(index);
+		authPath = "00000000000000000000000000000000";
+		authPath = authPath.substring(0, 32 - Integer.toBinaryString(index).length()) + Integer.toBinaryString(index);	//add leading zeros
 		authPath = authPath.substring(authPath.length() - treeHeight);		
 	}
 		
