@@ -517,7 +517,7 @@ public class XMSSTree implements ISimpleMerkle {
 	}
 	
 	/**
-	 * Calculate the Key lenght of the created Keys in Byte
+	 * Calculate the Key length of the created Keys in Byte
 	 */
 	public String getKeyLength(){
 		
