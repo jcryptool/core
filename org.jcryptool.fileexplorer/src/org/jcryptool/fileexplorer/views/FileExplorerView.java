@@ -2,8 +2,8 @@
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool Team and Contributors
  *
- * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
- * Public License v1.0 which accompanies this distribution, and is available at
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -34,10 +34,10 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSourceAdapter;
 import org.eclipse.swt.dnd.DragSourceEvent;
-import org.eclipse.swt.dnd.DragSourceListener;
+import org.eclipse.swt.dnd.DropTargetAdapter;
 import org.eclipse.swt.dnd.DropTargetEvent;
-import org.eclipse.swt.dnd.DropTargetListener;
 import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
@@ -75,7 +75,7 @@ public class FileExplorerView extends ViewPart {
     private TreeViewer viewer;
     private IHandler cryptoHandler;
     private CryptoContributionItem cryptoContributionItem;
-    public static final String EDITOR_ID_HEX = IOperationsConstants.ID_HEX_EDITOR; //$NON-NLS-1$
+    public static final String EDITOR_ID_HEX = IOperationsConstants.ID_HEX_EDITOR; // $NON-NLS-1$
     /** The system clipboard. */
     private Clipboard clipboard = null;
 
@@ -111,18 +111,15 @@ public class FileExplorerView extends ViewPart {
         configureToolBar(mgr);
         getViewSite().getActionBars().updateActionBars();
 
-        PlatformUI.getWorkbench().getHelpSystem()
-                .setHelp(viewer.getControl(), "org.jcryptool.fileexplorer.fileExplorerView"); //$NON-NLS-1$
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(),
+                "org.jcryptool.fileexplorer.fileExplorerView"); //$NON-NLS-1$
     }
 
     private void setupDragNDrop() {
-        viewer.addDragSupport(DND.DROP_MOVE, new Transfer[] {FileTransfer.getInstance()}, new DragSourceListener() {
-            public void dragFinished(DragSourceEvent event) {
-            }
-
+        viewer.addDragSupport(DND.DROP_MOVE, new Transfer[] { FileTransfer.getInstance() }, new DragSourceAdapter() {
             public void dragSetData(DragSourceEvent event) {
                 TreeItem[] selection = viewer.getTree().getSelection();
-                event.data = new String[] {((IFileStore) selection[0].getData()).toString()};
+                event.data = new String[] { ((IFileStore) selection[0].getData()).toString() };
             }
 
             public void dragStart(DragSourceEvent event) {
@@ -134,19 +131,9 @@ public class FileExplorerView extends ViewPart {
                     event.doit = false;
                 }
             };
-
         });
 
-        viewer.addDropSupport(DND.DROP_MOVE, new Transfer[] {TextTransfer.getInstance()}, new DropTargetListener() {
-            public void dragEnter(DropTargetEvent event) {
-            }
-
-            public void dragLeave(DropTargetEvent event) {
-            }
-
-            public void dragOperationChanged(DropTargetEvent event) {
-            }
-
+        viewer.addDropSupport(DND.DROP_MOVE, new Transfer[] { TextTransfer.getInstance() }, new DropTargetAdapter() {
             public void dragOver(DropTargetEvent event) {
                 if (event.item != null && event.item.getData() instanceof IFileStore) {
                     String url = ((IFileStore) event.item.getData()).toString();
@@ -170,19 +157,15 @@ public class FileExplorerView extends ViewPart {
                 }
                 if (openFile(url))
                     AlgorithmView.doAction(algorithm);
-
-            }
-
-            public void dropAccept(DropTargetEvent event) {
-
             }
         });
     }
 
     /**
-     * Expands the tree to the given element. Used protocol is <code>file</code> since this view is only able to display
-     * the local file system. In case the given element does not exist (any more) the root directory is expanded as
-     * fallback. After expanding the given element is selected in the tree.
+     * Expands the tree to the given element. Used protocol is <code>file</code> since this view is
+     * only able to display the local file system. In case the given element does not exist (any
+     * more) the root directory is expanded as fallback. After expanding the given element is
+     * selected in the tree.
      *
      * @param element The element to expand
      */
@@ -190,8 +173,8 @@ public class FileExplorerView extends ViewPart {
         try {
             viewer.expandToLevel(EFS.getStore(new File(element).toURI()), 1);
             if (viewer.getExpandedElements().length > 0) {
-                viewer.setSelection(new StructuredSelection(
-                        viewer.getExpandedElements()[viewer.getExpandedElements().length - 1]));
+                viewer.setSelection(
+                        new StructuredSelection(viewer.getExpandedElements()[viewer.getExpandedElements().length - 1]));
             }
         } catch (Exception ex) {
             viewer.getTree().getItem(0).setExpanded(true);
@@ -254,7 +237,8 @@ public class FileExplorerView extends ViewPart {
                                 viewer.collapseToLevel(((IStructuredSelection) event.getSelection()).getFirstElement(),
                                         1);
                             } else {
-                                viewer.expandToLevel(((IStructuredSelection) event.getSelection()).getFirstElement(), 1);
+                                viewer.expandToLevel(((IStructuredSelection) event.getSelection()).getFirstElement(),
+                                        1);
                             }
                         }
                     }
@@ -350,42 +334,46 @@ public class FileExplorerView extends ViewPart {
         }
 
         getViewSite().getActionBars().getMenuManager().addMenuListener(new IMenuListener() {
-			public void menuAboutToShow(IMenuManager manager) {
+            public void menuAboutToShow(IMenuManager manager) {
                 if (!menuButtonInitialized) {
                     try {
                         IContributionItem[] items = getViewSite().getActionBars().getMenuManager().getItems();
                         for (IContributionItem item : items) {
                             if ("org.jcryptool.fileexplorer.invisibleToggle".equals(item.getId())) {
-                            	if(item instanceof CommandContributionItem) {
-                            		CommandContributionItem invisibleToggle = (CommandContributionItem) item;
-                                	State state = invisibleToggle.getCommand().getCommand().getState(RegistryToggleState.STATE_ID);
-                                	if (state == null)
-                                    	throw new UnsupportedOperationException(
-                                            	"The 'show invisible files' command does not have a toggle state"); //$NON-NLS-1$
-                                	else if (!(state.getValue() instanceof Boolean))
-                                    	throw new UnsupportedOperationException(
-                                            	"The 'show invisible files' command's toggle state doesn't contain a boolean value"); //$NON-NLS-1$
-                                	else {
-                                    	state.setValue(!isHideInvisible());
-                                	}
-                            	} else if(item instanceof HandledContributionItem) {
-                            		HandledContributionItem invisibleToggle = (HandledContributionItem) item;
-                            		// The MCommand's element ID seems to be the command ID
-                            		// Knowing the command ID, we can retrieve the Command (not MCommand!)
-                            		// from the ECommandService
-                            		String commandId = invisibleToggle.getModel().getCommand().getElementId();
-                            		ECommandService commandService = (ECommandService)PlatformUI.getWorkbench().getService(ECommandService.class);
-                                	State state = commandService.getCommand(commandId).getState(RegistryToggleState.STATE_ID);
-                                	if (state == null)
-                                    	throw new UnsupportedOperationException(
-                                            	"The 'show invisible files' command does not have a toggle state"); //$NON-NLS-1$
-                                	else if (!(state.getValue() instanceof Boolean))
-                                    	throw new UnsupportedOperationException(
-                                            	"The 'show invisible files' command's toggle state doesn't contain a boolean value"); //$NON-NLS-1$
-                                	else {
-                                    	state.setValue(!isHideInvisible());
-                                	}
-                            	}
+                                if (item instanceof CommandContributionItem) {
+                                    CommandContributionItem invisibleToggle = (CommandContributionItem) item;
+                                    State state = invisibleToggle.getCommand().getCommand()
+                                            .getState(RegistryToggleState.STATE_ID);
+                                    if (state == null)
+                                        throw new UnsupportedOperationException(
+                                                "The 'show invisible files' command does not have a toggle state"); //$NON-NLS-1$
+                                    else if (!(state.getValue() instanceof Boolean))
+                                        throw new UnsupportedOperationException(
+                                                "The 'show invisible files' command's toggle state doesn't contain a boolean value"); //$NON-NLS-1$
+                                    else {
+                                        state.setValue(!isHideInvisible());
+                                    }
+                                } else if (item instanceof HandledContributionItem) {
+                                    HandledContributionItem invisibleToggle = (HandledContributionItem) item;
+                                    // The MCommand's element ID seems to be the command ID
+                                    // Knowing the command ID, we can retrieve the Command (not
+                                    // MCommand!)
+                                    // from the ECommandService
+                                    String commandId = invisibleToggle.getModel().getCommand().getElementId();
+                                    ECommandService commandService = (ECommandService) PlatformUI.getWorkbench()
+                                            .getService(ECommandService.class);
+                                    State state = commandService.getCommand(commandId)
+                                            .getState(RegistryToggleState.STATE_ID);
+                                    if (state == null)
+                                        throw new UnsupportedOperationException(
+                                                "The 'show invisible files' command does not have a toggle state"); //$NON-NLS-1$
+                                    else if (!(state.getValue() instanceof Boolean))
+                                        throw new UnsupportedOperationException(
+                                                "The 'show invisible files' command's toggle state doesn't contain a boolean value"); //$NON-NLS-1$
+                                    else {
+                                        state.setValue(!isHideInvisible());
+                                    }
+                                }
                             }
                         }
 

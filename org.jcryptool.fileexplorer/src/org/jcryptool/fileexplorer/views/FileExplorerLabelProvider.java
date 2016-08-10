@@ -9,6 +9,7 @@
 package org.jcryptool.fileexplorer.views;
 
 import org.eclipse.core.filesystem.IFileStore;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.resource.ColorDescriptor;
 import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -29,7 +30,6 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.ui.IEditorRegistry;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.internal.util.Util;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 import org.eclipse.ui.model.IWorkbenchAdapter2;
 
@@ -39,9 +39,7 @@ import org.eclipse.ui.model.IWorkbenchAdapter2;
  * disposed. This class provides a facility for subclasses to define annotations on the labels and
  * icons of adaptable objects.
  */
-@SuppressWarnings("restriction")
-public class FileExplorerLabelProvider extends LabelProvider implements IColorProvider,
-        IFontProvider {
+public class FileExplorerLabelProvider extends LabelProvider implements IColorProvider, IFontProvider {
 
     /**
      * Returns a workbench label provider that is hooked up to the decorator mechanism.
@@ -50,8 +48,8 @@ public class FileExplorerLabelProvider extends LabelProvider implements IColorPr
      *   new <code>WorkbenchLabelProvider</code>
      */
     public static ILabelProvider getDecoratingWorkbenchLabelProvider() {
-        return new DecoratingLabelProvider(new FileExplorerLabelProvider(), PlatformUI
-                .getWorkbench().getDecoratorManager().getLabelDecorator());
+        return new DecoratingLabelProvider(new FileExplorerLabelProvider(),
+                PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator());
     }
 
     /**
@@ -61,8 +59,7 @@ public class FileExplorerLabelProvider extends LabelProvider implements IColorPr
     private IPropertyListener editorRegistryListener = new IPropertyListener() {
         public void propertyChanged(Object source, int propId) {
             if (propId == IEditorRegistry.PROP_CONTENTS) {
-                fireLabelProviderChanged(new LabelProviderChangedEvent(
-                        FileExplorerLabelProvider.this));
+                fireLabelProviderChanged(new LabelProviderChangedEvent(FileExplorerLabelProvider.this));
             }
         }
     };
@@ -109,8 +106,7 @@ public class FileExplorerLabelProvider extends LabelProvider implements IColorPr
      * (non-Javadoc) Method declared on ILabelProvider
      */
     public void dispose() {
-        PlatformUI.getWorkbench().getEditorRegistry()
-                .removePropertyListener(editorRegistryListener);
+        PlatformUI.getWorkbench().getEditorRegistry().removePropertyListener(editorRegistryListener);
         resourceManager.dispose();
         resourceManager = null;
         super.dispose();
@@ -124,7 +120,14 @@ public class FileExplorerLabelProvider extends LabelProvider implements IColorPr
      *         not adaptable.
      */
     protected final IWorkbenchAdapter getAdapter(Object o) {
-        return (IWorkbenchAdapter) Util.getAdapter(o, IWorkbenchAdapter.class);
+        if (!(o instanceof IAdaptable)) {
+            return null;
+        }
+        IWorkbenchAdapter adapter = (IWorkbenchAdapter) ((IAdaptable) o).getAdapter(IWorkbenchAdapter.class);
+        if (adapter == null)
+            return null;
+
+        return adapter;
     }
 
     /**
@@ -135,7 +138,14 @@ public class FileExplorerLabelProvider extends LabelProvider implements IColorPr
      *         not adaptable.
      */
     protected final IWorkbenchAdapter2 getAdapter2(Object o) {
-        return (IWorkbenchAdapter2) Util.getAdapter(o, IWorkbenchAdapter2.class);
+        if (!(o instanceof IAdaptable)) {
+            return null;
+        }
+        IWorkbenchAdapter2 adapter = (IWorkbenchAdapter2) ((IAdaptable) o).getAdapter(IWorkbenchAdapter2.class);
+        if (adapter == null)
+            return null;
+
+        return adapter;
     }
 
     /*
@@ -217,8 +227,7 @@ public class FileExplorerLabelProvider extends LabelProvider implements IColorPr
         if (adapter == null) {
             return null;
         }
-        RGB descriptor = forground ? adapter.getForeground(element) : adapter
-                .getBackground(element);
+        RGB descriptor = forground ? adapter.getForeground(element) : adapter.getBackground(element);
         if (descriptor == null) {
             return null;
         }
