@@ -50,12 +50,12 @@
             locationURI="toolbar:org.jcryptool.visual.merkleHellman.views.MerkleHellmanView">
          <command
                commandId="org.jcryptool.visual.merkleHellman.command.Restart"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
                style="push">
          </command>
          <command
                commandId="org.jcryptool.visual.merkleHellman.command.Reset"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/clear.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/clear.png"
                style="push">
          </command>
       </menuContribution>

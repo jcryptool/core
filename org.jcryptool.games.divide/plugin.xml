@@ -24,12 +24,12 @@
             locationURI="toolbar:org.jcryptool.games.divide.views.DivideView">
          <command
                commandId="org.jcryptool.games.divide.newGameCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
                style="push">
          </command>
          <command
                commandId="org.jcryptool.games.divide.saveGameCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/save_edit.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/save_edit.png"
                style="push">
          </command>
          <separator
@@ -38,12 +38,12 @@
          </separator>
          <command
                commandId="org.jcryptool.games.divide.undoCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/undo_edit.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/undo_edit.png"
                style="push">
          </command>
          <command
                commandId="org.jcryptool.games.divide.redoCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/redo_edit.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/redo_edit.png"
                style="push">
          </command>
          <separator
@@ -52,7 +52,7 @@
          </separator>
          <command
                commandId="org.jcryptool.games.divide.helpCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png"
                style="push">
          </command>
       </menuContribution>

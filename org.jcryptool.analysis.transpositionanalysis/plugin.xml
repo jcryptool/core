@@ -39,7 +39,7 @@
             locationURI="toolbar:org.jcryptool.analysis.transpositionanalysis.views.TranspAnalysisView">
          <command
                commandId="org.jcryptool.analysis.transpositionanalysis.helpCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png"
                style="push"
                tooltip="%help.command.tooltip">
          </command>
@@ -48,7 +48,7 @@
             locationURI="menu:org.jcryptool.analysis.transpositionanalysis.views.TranspAnalysisView">
          <command
                commandId="org.jcryptool.analysis.transpositionanalysis.helpCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png"
                style="push">
          </command>
       </menuContribution>

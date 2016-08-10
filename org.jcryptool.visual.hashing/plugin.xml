@@ -46,7 +46,7 @@
             locationURI="toolbar:org.jcryptool.visual.hashing.views.HashingView">
          <command
                commandId="org.jcryptool.visual.hashing.command.Restart"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
                style="push">
          </command>
       </menuContribution>

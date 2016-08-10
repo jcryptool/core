@@ -50,12 +50,12 @@
             locationURI="toolbar:org.jcryptool.visual.huffmanCoding.views.HuffmanCodingView">
          <command
                commandId="org.jcryptool.visual.huffmanCoding.command.Restart"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
                style="push">
          </command>
          <command
                commandId="org.jcryptool.visual.huffmanCoding.command.ChangeLayout"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/obj16/generic_elements.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/obj16/generic_elements.png"
                style="push"
                tooltip="%changeLayout.comand.tooltip">
          </command>

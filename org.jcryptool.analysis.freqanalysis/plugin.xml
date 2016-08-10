@@ -39,16 +39,16 @@
             locationURI="toolbar:org.jcryptool.analysis.freqanalysis.views.FreqAnalysisView">
          <command
                commandId="org.jcryptool.analysis.freqanalysis.helpCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png"
                style="push"
                tooltip="%help.command.tooltip">
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif">
+            locationURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png">
          <command
                commandId="org.jcryptool.analysis.freqanalysis.helpCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/save_edit.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/save_edit.png"
                style="push">
          </command>
       </menuContribution>
