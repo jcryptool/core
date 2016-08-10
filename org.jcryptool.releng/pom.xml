@@ -215,7 +215,7 @@ The categorized p2 repository is generated in org.jcryptool.product/target/repos
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>3.0.3</version>
+				<version>3.0.4</version>
 				<configuration>
 					<effort>Max</effort>
 					<threshold>Low</threshold>
