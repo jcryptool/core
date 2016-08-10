@@ -19,7 +19,6 @@ import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
 import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
-import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 /**
  * Composite for the Tabpage "Signatur"

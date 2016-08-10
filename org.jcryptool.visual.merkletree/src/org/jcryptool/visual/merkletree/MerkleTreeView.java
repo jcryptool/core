@@ -1,7 +1,5 @@
 package org.jcryptool.visual.merkletree;
 
-import java.util.Arrays;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -23,8 +21,6 @@ import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
 import org.jcryptool.visual.merkletree.ui.MerkleConst;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeComposite;
-import org.jcryptool.visual.merkletree.ui.MerkleTreeKeyPairs;
-import org.jcryptool.visual.merkletree.ui.MerkleTreeSeed;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeSignatureComposite;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeVerifikationComposite;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeZestComposite;

@@ -3,8 +3,6 @@ package org.jcryptool.visual.merkletree.algorithm;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jcryptool.visual.merkletree.files.Converter;
-
 /**
  * 
  * @author Kevin Muehlboeck

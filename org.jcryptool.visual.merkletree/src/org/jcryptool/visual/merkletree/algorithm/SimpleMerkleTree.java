@@ -2,7 +2,6 @@ package org.jcryptool.visual.merkletree.algorithm;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 
