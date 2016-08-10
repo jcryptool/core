@@ -42,12 +42,12 @@ The categorized p2 repository is generated in org.jcryptool.product/target/repos
 
 	<repositories>
 		<repository>
-			<id>eclipse-mars</id>
+			<id>eclipse-neon</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/releases/mars</url>
+			<url>http://download.eclipse.org/releases/neon</url>
 		</repository>
 		<repository>
-			<id>eclipse-babel-mars</id>
+			<id>eclipse-babel-neon</id>
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/technology/babel/update-site/R0.13.1/mars</url>
 		</repository>

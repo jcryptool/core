@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="JCrypTool RCP" sequenceNumber="25">
+<?pde version="3.8"?><target name="JCrypTool RCP" sequenceNumber="27">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 <unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="4.5.0.v20151128060001"/>
 <repository location="http://download.eclipse.org/technology/babel/update-site/R0.13.1/mars"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
-<unit id="org.eclipse.equinox.p2.user.ui.source.feature.group" version="2.2.102.v20160129-0947"/>
-<unit id="org.eclipse.rcp.feature.group" version="4.5.2.v20160212-1500"/>
-<unit id="org.eclipse.rcp.sdk.id" version="4.5.2.M20160212-1500"/>
-<unit id="org.eclipse.sdk.ide" version="4.5.2.M20160212-1500"/>
-<unit id="org.eclipse.gef.feature.group" version="3.10.1.201508170204"/>
-<unit id="org.eclipse.rcp.source.feature.group" version="4.5.2.v20160212-1500"/>
-<unit id="org.eclipse.zest.sdk.feature.group" version="1.6.1.201508170204"/>
-<unit id="org.eclipse.equinox.sdk.feature.group" version="3.11.2.v20160202-2102"/>
-<repository location="http://download.eclipse.org/releases/mars/"/>
+<unit id="org.eclipse.rcp.sdk.id" version="4.6.0.I20160606-1100"/>
+<unit id="org.eclipse.equinox.core.sdk.feature.group" version="3.12.0.v20160603-1336"/>
+<unit id="org.eclipse.zest.sdk.feature.group" version="1.7.0.201606061308"/>
+<unit id="org.eclipse.gef.feature.group" version="3.11.0.201606061308"/>
+<unit id="org.eclipse.equinox.p2.sdk.feature.group" version="3.9.200.v20160606-1311"/>
+<unit id="org.eclipse.rcp.feature.group" version="4.6.0.v20160606-1342"/>
+<unit id="org.eclipse.sdk.ide" version="4.6.0.I20160606-1100"/>
+<repository location="http://download.eclipse.org/releases/neon"/>
 </location>
 </locations>
 <launcherArgs>
