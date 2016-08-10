@@ -44,7 +44,6 @@ import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
  *
  */
 public class MerkleTreeVerifikationComposite extends Composite implements IZoomableWorkbenchPart {
-
     private GraphViewer viewer;
     private StyledText binaryValue;
     private StyledText styledTextTree;

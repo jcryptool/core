@@ -29,17 +29,8 @@ import org.jcryptool.visual.merkletree.ui.MerkleTreeZestComposite;
  * This class holds everything that you see on the screen; It provides the Tabs of its tool.
  * 
  * @author Kevin Muehlboeck
- * @author <i>revised by</i>
- * @author Maximilian Lindpointner
- * 
- * 
  */
 public class MerkleTreeView extends ViewPart {
-
-    public MerkleTreeView() {
-
-    }
-
     private Composite parent;
 
     private TabFolder tabFolder;

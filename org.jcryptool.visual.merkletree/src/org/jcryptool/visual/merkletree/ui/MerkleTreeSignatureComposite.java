@@ -1,7 +1,5 @@
 package org.jcryptool.visual.merkletree.ui;
 
-// import java.security.SecureRandom;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ModifyEvent;
@@ -27,13 +25,6 @@ import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
  *
  */
 public class MerkleTreeSignatureComposite extends Composite {
-
-    /**
-     * Create the composite. Includes Message definition, Signature generation and Signature content
-     * 
-     * @param parent
-     * @param style
-     */
     Label sign;
     Text textSign;
     Button createSign;
