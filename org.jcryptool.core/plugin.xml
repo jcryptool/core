@@ -55,14 +55,14 @@
 
    <extension point="org.eclipse.ui.menus">
       <menuContribution locationURI="toolbar:org.jcryptool.core.toolbar?after=additions">
-         <command commandId="org.jcryptool.core.commands.showHelp" icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif" style="push" tooltip="%command.tooltip"/>
+         <command commandId="org.jcryptool.core.commands.showHelp" icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png" style="push" tooltip="%command.tooltip"/>
       </menuContribution>
       <menuContribution allPopups="false" locationURI="menu:org.eclipse.ui.main.menu">
          <menu id="org.jcryptool.menu.help" label="%menu.label">
             <command commandId="org.eclipse.ui.help.quickStartAction" icon="icons/icon_16.gif" style="push"/>
             <separator name="org.jcryptool.core.help.separator.1" visible="true"/>
-            <command commandId="org.eclipse.ui.help.helpContents" icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif" style="push"/>
-            <command commandId="org.eclipse.ui.help.helpSearch" icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_search.gif" style="push"/>
+            <command commandId="org.eclipse.ui.help.helpContents" icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png" style="push"/>
+            <command commandId="org.eclipse.ui.help.helpSearch" icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_search.png" style="push"/>
             <command commandId="org.eclipse.ui.help.dynamicHelp" style="push"/>
             <separator name="org.jcryptool.core.help.separator.2" visible="true"/>
             <command commandId="org.eclipse.ui.cheatsheets.openCheatSheet" label="%command.label.1" style="push"/>
