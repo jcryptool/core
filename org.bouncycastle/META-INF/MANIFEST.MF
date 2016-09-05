@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.bouncycastle;singleton:=true
-Bundle-Version: 1.54.0
+Bundle-Version: 1.55.0
 Bundle-Activator: org.bouncycastle.BouncyCastlePlugin
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0"
@@ -38,6 +38,7 @@ Export-Package: org.bouncycastle,
  org.bouncycastle.asn1.ocsp,
  org.bouncycastle.asn1.oiw,
  org.bouncycastle.asn1.pkcs,
+ org.bouncycastle.asn1.rosstandart,
  org.bouncycastle.asn1.sec,
  org.bouncycastle.asn1.smime,
  org.bouncycastle.asn1.teletrust,
@@ -77,6 +78,7 @@ Export-Package: org.bouncycastle,
  org.bouncycastle.crypto.util,
  org.bouncycastle.i18n,
  org.bouncycastle.i18n.filter,
+ org.bouncycastle.iana,
  org.bouncycastle.jcajce,
  org.bouncycastle.jcajce.io,
  org.bouncycastle.jcajce.provider.asymmetric,
@@ -120,12 +122,17 @@ Export-Package: org.bouncycastle,
  org.bouncycastle.pqc.crypto.gmss,
  org.bouncycastle.pqc.crypto.gmss.util,
  org.bouncycastle.pqc.crypto.mceliece,
+ org.bouncycastle.pqc.crypto.newhope,
  org.bouncycastle.pqc.crypto.rainbow,
  org.bouncycastle.pqc.crypto.rainbow.util,
+ org.bouncycastle.pqc.crypto.sphincs,
+ org.bouncycastle.pqc.jcajce.interfaces,
  org.bouncycastle.pqc.jcajce.provider,
  org.bouncycastle.pqc.jcajce.provider.gmss,
  org.bouncycastle.pqc.jcajce.provider.mceliece,
+ org.bouncycastle.pqc.jcajce.provider.newhope,
  org.bouncycastle.pqc.jcajce.provider.rainbow,
+ org.bouncycastle.pqc.jcajce.provider.sphincs,
  org.bouncycastle.pqc.jcajce.provider.util,
  org.bouncycastle.pqc.jcajce.spec,
  org.bouncycastle.pqc.math.linearalgebra,
@@ -139,6 +146,6 @@ Export-Package: org.bouncycastle,
  org.bouncycastle.x509.util
 Bundle-ClassPath: .,
  src/org/bouncycastle/,
- libs/bcprov-jdk15on-154.jar
+ libs/bcprov-jdk15on-155.jar
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.providers
