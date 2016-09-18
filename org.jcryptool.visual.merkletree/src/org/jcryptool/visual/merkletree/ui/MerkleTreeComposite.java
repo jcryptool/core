@@ -129,6 +129,7 @@ public class MerkleTreeComposite extends Composite {
             descLabel.setText(Descriptions.MSS.Tab0_Head0);
             descText.setText(Descriptions.MSS.Tab0_Txt0);
         }
+
     }
 
     public MerkleTreeSeed getMTS() {

@@ -35,4 +35,5 @@ public interface ISimpleMerkle {
     public void setLeafCount(int i);
 
     public String getKeyLength();
+
 }

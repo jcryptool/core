@@ -53,4 +53,5 @@ public interface Node {
     public String getAuthPath();
 
     public boolean equals(Node arg0);
+
 }

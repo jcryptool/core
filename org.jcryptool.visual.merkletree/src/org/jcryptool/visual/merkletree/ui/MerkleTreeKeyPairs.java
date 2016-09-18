@@ -185,6 +185,7 @@ public class MerkleTreeKeyPairs extends Composite {
                 // set or update the key information
                 createdKey.setText(Descriptions.MerkleTreeKey_2 + " " + merkle.getKeyLength() + " "
                         + Descriptions.MerkleTreeKey_3);
+
             }
         });
     }
