@@ -10,13 +10,13 @@ import org.jcryptool.visual.merkletree.MerkleTreeView;;
  * @author Miray Inel
  */
 public class RestartHandler extends AbstractHandler {
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		if (HandlerUtil.getActivePart(event) instanceof MerkleTreeView) {
-			MerkleTreeView view = ((MerkleTreeView) HandlerUtil.getActivePart(event));
+    @Override
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        if (HandlerUtil.getActivePart(event) instanceof MerkleTreeView) {
+            MerkleTreeView view = ((MerkleTreeView) HandlerUtil.getActivePart(event));
 
-			view.resetView();
-		}
-		return null;
-	}
+            view.resetView();
+        }
+        return null;
+    }
 }

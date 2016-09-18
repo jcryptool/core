@@ -24,7 +24,7 @@
 		</toc>
 	</extension>
 	<extension point="org.eclipse.help.contexts">
-		<contexts file="$nl$/context.xml"></contexts>
+		<contexts file="$nl$/contexts.xml"></contexts>
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 		<handler
@@ -43,7 +43,7 @@
 			locationURI="toolbar:org.jcryptool.visual.merkletree.view">
 			<command
 				commandId="org.jcryptool.visual.merkletree.restartCommand"
-				icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+				icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
 				style="push">
 			</command>
 		</menuContribution>

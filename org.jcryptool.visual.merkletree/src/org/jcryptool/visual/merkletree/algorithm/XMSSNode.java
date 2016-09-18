@@ -6,153 +6,150 @@ import java.util.List;
 
 import org.jcryptool.visual.merkletree.files.Converter;
 
-public class XMSSNode implements Node{
+public class XMSSNode implements Node {
 
-	private byte[] content; //the hash value of the node
-	private int height;
-	private int index;
-	private Node left;
-	private Node right;
-	private Node parent;
-	private List<Node> connections = new ArrayList<Node>();	
-	private boolean leaf;
-	private String authPath;
-	
-	
-	public XMSSNode(byte[] content){
-		this.content = content;
-		height = 0;
-	}
-	
-	@Override
-	public void setHeight(int i) {
-		height=i;
-	}
-	
-	@Override
-	public int getHeight() {
-		return height;
-	}
-	
-	@Override
-	public byte[] getContent(){
-		return content;
-	}
+    private byte[] content; // the hash value of the node
+    private int height;
+    private int index;
+    private Node left;
+    private Node right;
+    private Node parent;
+    private List<Node> connections = new ArrayList<Node>();
+    private boolean leaf;
+    private String authPath;
 
-	@Override
-	public int getIndex() {
-		return index;
-	}
-	
-	@Override
-	public void setIndex(int index) {
-		this.index = index;
-	}
+    public XMSSNode(byte[] content) {
+        this.content = content;
+        height = 0;
+    }
 
-	@Override
-	public Node getLeft() {
-		return left;
-	}
+    @Override
+    public void setHeight(int i) {
+        height = i;
+    }
 
-	@Override
-	public void setLeft(Node left) {
-		this.left = left;
-	}
+    @Override
+    public int getHeight() {
+        return height;
+    }
 
-	@Override
-	public Node getRight() {
-		return right;
-	}
+    @Override
+    public byte[] getContent() {
+        return content;
+    }
 
-	@Override
-	public void setRight(Node right) {
-		this.right = right;
-	}
+    @Override
+    public int getIndex() {
+        return index;
+    }
 
-	@Override
-	public Node getParent() {
-		return parent;
-	}
+    @Override
+    public void setIndex(int index) {
+        this.index = index;
+    }
 
-	@Override
-	public void setParent(Node parent) {
-		this.parent = parent;
-	}
+    @Override
+    public Node getLeft() {
+        return left;
+    }
 
-	@Override
-	public boolean isLeaf() {
-		return leaf;
-	}
+    @Override
+    public void setLeft(Node left) {
+        this.left = left;
+    }
 
-	@Override
-	public void setLeaf(boolean leaf) {
-		this.leaf = leaf;
-		
-	}
+    @Override
+    public Node getRight() {
+        return right;
+    }
 
-	@Override
-	public byte[] getName() {
-		return getContent();
-	}
+    @Override
+    public void setRight(Node right) {
+        this.right = right;
+    }
 
-	@Override
-	public String getNameAsString() {
-		return getCode();
-	}
+    @Override
+    public Node getParent() {
+        return parent;
+    }
 
-	@Override
-	public void setName(byte[] name) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void setParent(Node parent) {
+        this.parent = parent;
+    }
 
-	@Override
-	public List<Node> getConnectedTo() {
-		return connections;
-	}
+    @Override
+    public boolean isLeaf() {
+        return leaf;
+    }
 
-	@Override
-	public String getCode() {
-		return Converter._byteToHex(getContent());
-	}
+    @Override
+    public void setLeaf(boolean leaf) {
+        this.leaf = leaf;
 
-	@Override
-	public void setCode(String code) {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void setLeafNumber(int leafNumber) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public byte[] getName() {
+        return getContent();
+    }
 
-	@Override
-	public int getLeafNumber() {
-		return index;
-	}
+    @Override
+    public String getNameAsString() {
+        return getCode();
+    }
 
-	
-	public boolean equals(Node arg0) {
-		if(Arrays.equals(arg0.getContent(), content)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	public void setAuthPath(int treeHeight){
-		authPath = Integer.toBinaryString(~index);
-		authPath = authPath.substring(authPath.length() - treeHeight);		
-	}
-		
-	public String getAuthPath(){
-		return authPath;
-	}
-	
-	
-	
-	
-	
+    @Override
+    public void setName(byte[] name) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public List<Node> getConnectedTo() {
+        return connections;
+    }
+
+    @Override
+    public String getCode() {
+        return Converter._byteToHex(getContent());
+    }
+
+    @Override
+    public void setCode(String code) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void setLeafNumber(int leafNumber) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public int getLeafNumber() {
+        return index;
+    }
+
+    public boolean equals(Node arg0) {
+        if (Arrays.equals(arg0.getContent(), content)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void setAuthPath(int treeHeight) {
+        authPath = "00000000000000000000000000000000";
+        authPath = authPath.substring(0, 32 - Integer.toBinaryString(index).length()) + Integer.toBinaryString(index); // add
+                                                                                                                       // leading
+                                                                                                                       // zeros
+        authPath = authPath.substring(authPath.length() - treeHeight);
+    }
+
+    public String getAuthPath() {
+        return authPath;
+    }
+
 }

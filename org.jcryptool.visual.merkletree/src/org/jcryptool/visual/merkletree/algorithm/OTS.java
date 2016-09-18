@@ -6,52 +6,52 @@ package org.jcryptool.visual.merkletree.algorithm;
  */
 public interface OTS {
 
-	public void generateKeyPair();
+    public void generateKeyPair();
 
-	public void generatePrivateKey();
+    public void generatePrivateKey();
 
-	public void generatePublicKey();
+    public void generatePublicKey();
 
-	public void sign();
+    public void sign();
 
-	public boolean verify();
+    public boolean verify();
 
-	public byte[][] getPrivateKey();
+    public byte[][] getPrivateKey();
 
-	public byte[][] getPublicKey();
+    public byte[][] getPublicKey();
 
-	public int getLength();
+    public int getLength();
 
-	public int getMessageLength();
+    public int getMessageLength();
 
-	public byte[] getSignature();
+    public byte[] getSignature();
 
-	public byte[] getBi();
+    public byte[] getBi();
 
-	public int getPublicKeyLength();
+    public int getPublicKeyLength();
 
-	public int getN();
+    public int getN();
 
-	public int getL();
+    public int getL();
 
-	public byte[] getMessageHash();
+    public byte[] getMessageHash();
 
-	public void setMessage(byte[] message);
+    public void setMessage(byte[] message);
 
-	public void setBi(byte[] b);
+    public void setBi(byte[] b);
 
-	public void setSignature(byte[] signature);
+    public void setSignature(byte[] signature);
 
-	public void setW(int w);
+    public void setW(int w);
 
-	public byte[] hashMessage(String message);
+    public byte[] hashMessage(String message);
 
-	public byte[] initB();
+    public byte[] initB();
 
-	public void setPrivateKey(byte[][] p);
+    public void setPrivateKey(byte[][] p);
 
-	public void setPublicKey(byte[][] p);
+    public void setPublicKey(byte[][] p);
 
-	public void setMessageDigest(String digest);
+    public void setMessageDigest(String digest);
 
 }
