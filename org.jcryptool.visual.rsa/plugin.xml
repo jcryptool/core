@@ -53,7 +53,7 @@
             locationURI="menu:org.jcryptool.visual.rsa.view">
          <command
                commandId="org.jcryptool.visual.rsa.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
                style="push">
          </command>
       </menuContribution>
@@ -61,7 +61,7 @@
             locationURI="toolbar:org.jcryptool.visual.rsa.view">
          <command
                commandId="org.jcryptool.visual.rsa.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
                style="push">
          </command>
       </menuContribution>

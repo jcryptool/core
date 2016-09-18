@@ -37,7 +37,7 @@
             locationURI="toolbar:org.jcryptool.games.numbershark.NumberSharkView">
          <command
                commandId="org.jcryptool.games.numbershark.newGameCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
                style="push"
                tooltip="%command.tooltip.2">
          </command>
@@ -47,13 +47,13 @@
          </separator>
          <command
                commandId="org.jcryptool.games.numbershark.undoCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/undo_edit.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/undo_edit.png"
                style="push"
                tooltip="%command.tooltip.0">
          </command>
          <command
                commandId="org.jcryptool.games.numbershark.redoCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/redo_edit.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/redo_edit.png"
                style="push"
                tooltip="%command.tooltip.3">
          </command>
@@ -69,7 +69,7 @@
          </command>
          <command
                commandId="org.jcryptool.games.numbershark.hintCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_search.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_search.png"
                style="push"
                tooltip="%command.tooltip.1">
          </command>
@@ -95,7 +95,7 @@
          </separator>
          <command
                commandId="org.jcryptool.games.numbershark.helpCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png"
                style="push"
                tooltip="%help.command.tooltip">
          </command>
@@ -104,7 +104,7 @@
             locationURI="menu:org.jcryptool.games.numbershark.NumberSharkView">
          <command
                commandId="org.jcryptool.games.numbershark.newGameCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
                style="push">
          </command>
          <separator
@@ -113,12 +113,12 @@
          </separator>
          <command
                commandId="org.jcryptool.games.numbershark.undoCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/undo_edit.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/undo_edit.png"
                style="push">
          </command>
          <command
                commandId="org.jcryptool.games.numbershark.redoCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/redo_edit.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/redo_edit.png"
                style="push">
          </command>
          <separator
@@ -132,7 +132,7 @@
          </command>
          <command
                commandId="org.jcryptool.games.numbershark.hintCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_search.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_search.png"
                style="push">
          </command>
          <separator
@@ -155,7 +155,7 @@
          </separator>
          <command
                commandId="org.jcryptool.games.numbershark.helpCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png"
                style="push">
          </command>
       </menuContribution>

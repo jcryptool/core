@@ -39,7 +39,7 @@
             locationURI="menu:org.jcryptool.visual.grille.view">
          <command
                commandId="org.jcryptool.visual.grille.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
                style="push">
          </command>
       </menuContribution>
@@ -47,7 +47,7 @@
             locationURI="toolbar:org.jcryptool.visual.grille.view">
          <command
                commandId="org.jcryptool.visual.grille.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
                style="push">
          </command>
       </menuContribution>

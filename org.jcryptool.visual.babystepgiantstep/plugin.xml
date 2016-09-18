@@ -53,7 +53,7 @@
             locationURI="toolbar:org.jcryptool.visual.babystepgiantstep.views.BabystepGiantstepView">
          <command
                commandId="org.jcryptool.visual.babystepgiantstep.command.Restart"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
                style="push">
          </command>
       </menuContribution>

@@ -43,7 +43,7 @@
 			locationURI="toolbar:org.jcryptool.visual.arc4.view">
 			<command
 				commandId="org.jcryptool.visual.arc4.restartCommand"
-				icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+				icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
 				style="push">
 			</command>
 		</menuContribution>

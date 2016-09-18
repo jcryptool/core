@@ -52,7 +52,7 @@
             locationURI="menu:org.jcryptool.visual.crt.view">
          <command
                commandId="org.jcryptool.visual.crt.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
                style="push">
          </command>
       </menuContribution>
@@ -60,7 +60,7 @@
             locationURI="toolbar:org.jcryptool.visual.crt.view">
          <command
                commandId="org.jcryptool.visual.crt.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
                style="push">
          </command>
       </menuContribution>
