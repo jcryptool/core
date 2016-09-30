@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="JCrypTool RCP" sequenceNumber="28">
+<?pde version="3.8"?><target name="JCrypTool RCP" sequenceNumber="29">
 <locations>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
-<unit id="org.eclipse.rcp.sdk.id" version="4.6.0.I20160606-1100"/>
-<unit id="org.eclipse.equinox.core.sdk.feature.group" version="3.12.0.v20160603-1336"/>
-<unit id="org.eclipse.zest.sdk.feature.group" version="1.7.0.201606061308"/>
-<unit id="org.eclipse.gef.feature.group" version="3.11.0.201606061308"/>
-<unit id="org.eclipse.equinox.p2.sdk.feature.group" version="3.9.200.v20160606-1311"/>
-<unit id="org.eclipse.rcp.feature.group" version="4.6.0.v20160606-1342"/>
-<unit id="org.eclipse.sdk.ide" version="4.6.0.I20160606-1100"/>
-<repository location="http://download.eclipse.org/releases/neon"/>
-</location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 <unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="4.6.0.v20160813060001"/>
 <repository location="http://download.eclipse.org/technology/babel/update-site/R0.14.0/neon"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+<unit id="org.eclipse.rcp.sdk.id" version="4.6.1.M20160907-1200"/>
+<unit id="org.eclipse.sdk.ide" version="4.6.1.M20160907-1200"/>
+<unit id="org.eclipse.equinox.core.sdk.feature.group" version="3.12.1.v20160829-1338"/>
+<unit id="org.eclipse.rcp.feature.group" version="4.6.1.v20160907-1200"/>
+<unit id="org.eclipse.zest.sdk.feature.group" version="1.7.0.201606061308"/>
+<unit id="org.eclipse.equinox.p2.sdk.feature.group" version="3.9.201.v20160901-1335"/>
+<unit id="org.eclipse.gef.feature.group" version="3.11.0.201606061308"/>
+<repository location="http://download.eclipse.org/releases/neon"/>
 </location>
 </locations>
 <launcherArgs>
