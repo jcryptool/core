@@ -59,7 +59,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
     private static final int LOADBUTTONHEIGHT = 30;
     private static final int LOADBUTTONWIDTH = 120;
 
-    private static final int CONTINUEBUTTONHEIGHT = 25;
+    private static final int CONTINUEBUTTONHEIGHT = 30;
     private static final int CONTINUEBUTTONWIDTH = 150;
 
     /* colors for backgrounds. */
@@ -462,7 +462,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
 
         Label solution1Label = new Label(canvas, SWT.PUSH);
         solution1Label.setText(Messages.ViterbiComposite_solution1);
-        solution1Label.setLayoutData(new GridData(LOADBUTTONWIDTH, LOADBUTTONHEIGHT));
+        solution1Label.setLayoutData(new GridData(190, LOADBUTTONHEIGHT));
     }
 
     /**
@@ -496,7 +496,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
 
         Label solution2Label = new Label(canvas, SWT.PUSH);
         solution2Label.setText(Messages.ViterbiComposite_solution2);
-        solution2Label.setLayoutData(new GridData(LOADBUTTONWIDTH, LOADBUTTONHEIGHT));
+        solution2Label.setLayoutData(new GridData(190, LOADBUTTONHEIGHT));
     }
 
     /**

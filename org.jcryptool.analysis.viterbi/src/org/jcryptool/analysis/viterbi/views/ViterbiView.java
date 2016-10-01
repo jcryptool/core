@@ -26,6 +26,8 @@ import org.jcryptool.analysis.viterbi.algorithm.Combination;
  * @author Georg Chalupar, Niederwieser Martin, Scheuchenpflug Simon
  */
 public class ViterbiView extends ViewPart {
+	public ViterbiView() {
+	}
 	private XORComposite xorComposite;
 	private ViterbiComposite viterbiComposite;
 	private TabFolder tf;
