@@ -20,9 +20,6 @@
   <modules>  
     <module>com.lowagie.itext</module>
 	<module>com.thoughtworks.xstream</module>
-	<module>org.apache.xalan</module>
-	<module>org.apache.xerces</module>
-	<module>org.apache.xml.security</module>
 	<module>org.jcryptool.analysis</module>
 	<module>org.jcryptool.analysis.entropy</module>
 	<module>org.jcryptool.analysis.feature</module>
@@ -55,11 +52,6 @@
 	<module>org.jcryptool.crypto.modern.stream.dragon</module>
 	<module>org.jcryptool.crypto.modern.stream.lfsr</module>
 	<module>org.jcryptool.crypto.ui</module>
-	<module>org.jcryptool.crypto.xml</module>
-	<module>org.jcryptool.crypto.xml.core</module>
-	<module>org.jcryptool.crypto.xml.feature</module>
-	<module>org.jcryptool.crypto.xml.help</module>
-	<module>org.jcryptool.crypto.xml.ui</module>
 	<module>org.jcryptool.games</module>
 	<module>org.jcryptool.games.divide</module>
 	<module>org.jcryptool.games.feature</module>
