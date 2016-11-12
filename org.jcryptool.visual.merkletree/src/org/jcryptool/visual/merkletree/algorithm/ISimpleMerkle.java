@@ -35,5 +35,7 @@ public interface ISimpleMerkle {
     public void setLeafCount(int i);
 
     public String getKeyLength();
+    
+    public void setWinternitzParameter (int w);
 
 }

@@ -79,10 +79,12 @@ public class Descriptions extends NLS {
     public static String Tab0_Head2;
     public static String Tab0_Head3;
     public static String Tab0_Head4;
+    public static String Tab0_Head5;
     public static String Tab0_Button1;
     public static String Tab0_Button2;
     public static String Tab0_Button3;
     public static String Tab0_Lable1;
+    public static String Tab0_Txt2;    
     public static String Tab0_Txt3;
 
     public static class MSS {

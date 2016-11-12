@@ -14,6 +14,7 @@ public class SimpleMerkleTree implements ISimpleMerkle {
     byte[] seed;
     boolean treeGenerated;
     OTS otsAlgo;
+    int w = 16;
 
     ArrayList<Node> tree = new ArrayList<Node>();
     ArrayList<Node> leaves = new ArrayList<Node>();
@@ -31,6 +32,7 @@ public class SimpleMerkleTree implements ISimpleMerkle {
     public SimpleMerkleTree() {
         this.treeGenerated = false;
         this.keyIndex = 0;
+        
     }
 
     @Override
@@ -75,6 +77,10 @@ public class SimpleMerkleTree implements ISimpleMerkle {
         return leaves.get(treeLeafNumber);
     }
 
+    @Override
+    public void setWinternitzParameter(int w) {
+    	this.w = w;
+    }
     @Override
     public void generateMerkleTree() {
 
@@ -149,13 +155,13 @@ public class SimpleMerkleTree implements ISimpleMerkle {
     public void selectOneTimeSignatureAlgorithm(String hash, String algo) {
         switch (algo) {
         case "WOTS":
-            this.otsAlgo = new WinternitzOTS(16, hash);
+            this.otsAlgo = new WinternitzOTS(w, hash);
             break;
         case "WOTSPlus":
-            this.otsAlgo = new WOTSPlus(16, hash, this.seed);
+            this.otsAlgo = new WOTSPlus(w, hash, this.seed);
             break;
         default:
-            this.otsAlgo = new WOTSPlus(16, hash, this.seed);
+            this.otsAlgo = new WOTSPlus(w, hash, this.seed);
             break;
         }
         if (this.mDigest == null) {

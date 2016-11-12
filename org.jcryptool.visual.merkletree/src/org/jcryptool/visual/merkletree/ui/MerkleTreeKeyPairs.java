@@ -177,6 +177,7 @@ public class MerkleTreeKeyPairs extends Composite {
                 }
                 merkle.setSeed(((MerkleTreeSeed) parent).getSeed());
                 merkle.setLeafCount(spinnerValue);
+                merkle.setWinternitzParameter(((MerkleTreeSeed) parent).getWinternitzParameter());
                 merkle.selectOneTimeSignatureAlgorithm("SHA-256", "WOTSPlus");
                 merkle.generateKeyPairsAndLeaves();
                 merkle.generateMerkleTree();

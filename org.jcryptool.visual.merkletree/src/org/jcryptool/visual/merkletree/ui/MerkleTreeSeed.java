@@ -29,6 +29,7 @@ import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
  */
 public class MerkleTreeSeed extends Composite {
     private MerkleTreeKeyPairs keyPairc;
+    private MerkleTreeWParam wParamc;
     public byte[] seedarray;
     public byte[] bitmaskSeedarray;
     private MerkleTreeBitmask bitMask;
@@ -110,6 +111,13 @@ public class MerkleTreeSeed extends Composite {
         } else {
             bitMask = null;
         }
+        
+        /*
+         * Create sub-Frame for the Winternitz Parameter selection
+         */
+        
+        wParamc = new MerkleTreeWParam(this, SWT.WRAP | SWT.BORDER | SWT.LEFT, mode, masterView);
+        wParamc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 8, SWT.FILL));
 
         /*
          * Create sub-Frame for the Key Text/Create-Button
@@ -199,6 +207,10 @@ public class MerkleTreeSeed extends Composite {
             value *= -1;
         }
         return value;
+    }
+    
+    public int getWinternitzParameter() {
+    	return wParamc.getWinternitzParameter();
     }
 
 }

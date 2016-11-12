@@ -22,6 +22,8 @@ public class XMSSTree implements ISimpleMerkle {
     byte[] bitmaskSeed;
     boolean treeGenerated;
     OTS otsAlgo;
+    int w = 16;
+    
     HashTreeAddress hAdrs = new HashTreeAddress();
     OTSHashAddress otsAdrs = new OTSHashAddress();
     LTreeAddress lAdrs = new LTreeAddress();
@@ -55,6 +57,11 @@ public class XMSSTree implements ISimpleMerkle {
     @Override
     public ArrayList<Node> getTree() {
         return this.tree;
+    }
+    
+    @Override
+    public void setWinternitzParameter(int w) {
+    	this.w = w;
     }
 
     @Override
@@ -188,6 +195,8 @@ public class XMSSTree implements ISimpleMerkle {
     public int getTreeHeight() {
         return (int) MathUtils.log2nlz(leafCounter);
     }
+    
+    
 
     @Override
     /**
@@ -197,13 +206,13 @@ public class XMSSTree implements ISimpleMerkle {
     public void selectOneTimeSignatureAlgorithm(String hash, String algo) {
         switch (algo) {
         case "WOTS":
-            this.otsAlgo = new WinternitzOTS(16, hash);
+            this.otsAlgo = new WinternitzOTS(w, hash);
             break;
         case "WOTSPlus":
-            this.otsAlgo = new WOTSPlus(16, hash, seed);
+            this.otsAlgo = new WOTSPlus(w, hash, seed);
             break;
         default:
-            this.otsAlgo = new WOTSPlus(16, hash, seed);
+            this.otsAlgo = new WOTSPlus(w, hash, seed);
             break;
         }
         if (this.mDigest == null) {
