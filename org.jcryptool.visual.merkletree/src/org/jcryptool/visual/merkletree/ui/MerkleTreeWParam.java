@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.Descriptions;
+import org.jcryptool.visual.merkletree.MerkleTreeView;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 public class MerkleTreeWParam extends Composite {
@@ -58,10 +59,12 @@ public class MerkleTreeWParam extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				wParameter = 4;
+				((MerkleTreeView) masterView).updateElement();
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
+				((MerkleTreeView) masterView).updateElement();
 			}
 
 		});

@@ -134,6 +134,7 @@ public class MerkleTreeView extends ViewPart {
                         }
                         merkle.setLeafCount(mtC.getMTS().getMTKP().getKeyAmmount());
                         merkle.setSeed(mtC.getMTS().getSeed());
+                        merkle.setWinternitzParameter(mtC.getMTS().getWinternitzParameter());
 
                         /*
                          * if the generated Tree is a XMSSTree -> the Bitmaskseed is also needed

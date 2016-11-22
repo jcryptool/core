@@ -117,7 +117,7 @@ public class MerkleTreeSeed extends Composite {
          */
         
         wParamc = new MerkleTreeWParam(this, SWT.WRAP | SWT.BORDER | SWT.LEFT, mode, masterView);
-        wParamc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 8, SWT.FILL));
+        wParamc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
 
         /*
          * Create sub-Frame for the Key Text/Create-Button
