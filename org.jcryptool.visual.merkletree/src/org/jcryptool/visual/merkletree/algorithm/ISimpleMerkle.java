@@ -37,5 +37,7 @@ public interface ISimpleMerkle {
     public String getKeyLength();
     
     public void setWinternitzParameter (int w);
+    
+    public String getKeyIndex();
 
 }

@@ -538,5 +538,9 @@ public class XMSSTree implements ISimpleMerkle {
         return keyLength;
 
     }
+    
+    public String getKeyIndex() {
+		return Integer.toString(keyIndex);
+}
 
 }
