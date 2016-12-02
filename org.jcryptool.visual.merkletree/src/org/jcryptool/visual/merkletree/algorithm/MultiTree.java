@@ -12,7 +12,7 @@ import org.jcryptool.visual.merkletree.files.ByteUtils;
 import org.jcryptool.visual.merkletree.files.Converter;
 import org.jcryptool.visual.merkletree.files.MathUtils;
 
-public abstract class MultiTree implements ISimpleMerkle {
+public abstract class MultiTree implements ISimpleMerkleTree  {
 	// nr of trees for the hypertree klickibunti
 
 	int d; // layers of the tree
@@ -84,6 +84,7 @@ public abstract class MultiTree implements ISimpleMerkle {
 		// TODO
 	}
 
+	
 	public void chooseAlgorihm() {
 
 		// eig. klassenvariable, aber for reasons private static final String[]
@@ -102,14 +103,13 @@ public abstract class MultiTree implements ISimpleMerkle {
 				"xmssmt_shake256_w16_h40_d2", "xmssmt_shake256_w16_h40_d4", "xmssmt_shake256_w16_h40_d8",
 				"xmssmt_shake256_w16_h60_d3", "xmssmt_shake256_w16_h60_d6", "xmssmt_shake256_w16_h60_d12" };
 
-		 Display display = new Display();
-		    Shell shell = new Shell(display);
-		    shell.setLayout(new FillLayout());
+//		 Display display = new Display();
+	//	    Shell shell = new Shell(display);
+	//	    shell.setLayout(new FillLayout());
 
 		    // Create a dropdown Combo
-		    Combo combo = new Combo(shell, SWT.DROP_DOWN);
-		    combo.setItems(ITEMS);
-		    
+		    Combo combo = new Combo(shell, SWT.DROP_DOWN | SWT.READ_ONLY);
+		    readOnly.setItems(cipherSuites);
 		    
 		    shell.open();
 		    while (!shell.isDisposed()) {
