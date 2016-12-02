@@ -27,19 +27,23 @@ public abstract class MultiTree implements ISimpleMerkle {
 	static int id;
 	Node Parent;
 
-	public MultiTree(int d, int h, int w, String message){
-		this.otsAlgo=new WOTSPlus(w,message,seed); // wots+ has the length from message and not from hash
-		if(h%d!=1){
-		/*	throw hDevidesDException(){
-				
-			}*/
+	public MultiTree(int d, int h, int w, String message) {
+		this.otsAlgo = new WOTSPlus(w, message, seed); // wots+ has the length
+														// from message and not
+														// from hash
+		if (h % d != 1) {
+			/*
+			 * throw hDevidesDException(){
+			 * 
+			 * }
+			 */
 		}
-		this.l=h/d;
-		int i=0;
-		while(i<d){
-			//TODO
-    	}
-	}	
+		this.l = h / d;
+		int i = 0;
+		while (i < d) {
+			// TODO
+		}
+	}
 
 	/*
 	 * void setParameters(int n, int h, int d, int w){
@@ -48,7 +52,6 @@ public abstract class MultiTree implements ISimpleMerkle {
 	 * }
 	 */
 	// make visible which tree signs which one--> parent
-
 
 	void setLayers(int d) {
 		this.d = d;
@@ -72,15 +75,52 @@ public abstract class MultiTree implements ISimpleMerkle {
 		}
 	}
 
-	public void xmssmt_public_key(){
-		byte [] publicRoot=this.getMerkleRoot();
-		byte [] publicSeed=this.getSeed();
+	public void xmssmt_public_key() {
+		byte[] publicRoot = this.getMerkleRoot();
+		byte[] publicSeed = this.getSeed();
 	}
-	
-	public void visualiseSig(){
-		//TODO
+
+	public void visualiseSig() {
+		// TODO
 	}
-	
+
+	public void chooseAlgorihm() {
+
+		// eig. klassenvariable, aber for reasons private static final String[]
+		// cipherSuites={"xmssmt_sha2-256_w16_h20_d2",
+		
+
+		final String[] cipherSuites = { "xmssmt_sha2-256_w16_h20_d2", "xmssmt_sha2-256_w16_h20_d4",
+				"xmssmt_sha2-256_w16_h40_d2", "xmssmt_sha2-256_w16_h40_d4", "xmssmt_sha2-256_w16_h40_d8",
+				"case xmssmt_sha2-256_w16_h60_d3", "xmssmt_sha2-256_w16_h60_d6", "xmssmt_sha2-256_w16_h60_d12",
+				"xmssmt_shake128_w16_h20_d2", "xmssmt_shake128_w16_h20_d4", "xmssmt_shake128_w16_h40_d2",
+				"xmssmt_shake128_w16_h40_d4", "xmssmt_shake128_w16_h40_d8", "xmssmt_shake128_w16_h60_d3",
+				"xmssmt_shake128_w16_h60_d6", "xmssmt_shake128_w16_h60_d12", "xmssmt_sha2-512_w16_h20_d2",
+				"xmssmt_sha2-512_w16_h20_d4", "xmssmt_sha2-512_w16_h40_d2", "xmssmt_sha2-512_w16_h40_d4",
+				"xmssmt_sha2-512_w16_h40_d8", "xmssmt_sha2-512_w16_h60_d3", "xmssmt_sha2-512_w16_h60_d6",
+				"xmssmt_sha2-512_w16_h60_d12", "xmssmt_shake256_w16_h20_d2", "xmssmt_shake256_w16_h20_d4",
+				"xmssmt_shake256_w16_h40_d2", "xmssmt_shake256_w16_h40_d4", "xmssmt_shake256_w16_h40_d8",
+				"xmssmt_shake256_w16_h60_d3", "xmssmt_shake256_w16_h60_d6", "xmssmt_shake256_w16_h60_d12" };
+
+		 Display display = new Display();
+		    Shell shell = new Shell(display);
+		    shell.setLayout(new FillLayout());
+
+		    // Create a dropdown Combo
+		    Combo combo = new Combo(shell, SWT.DROP_DOWN);
+		    combo.setItems(ITEMS);
+		    
+		    
+		    shell.open();
+		    while (!shell.isDisposed()) {
+		      if (!display.readAndDispatch()) {
+		        display.sleep();
+		      }
+		    }
+		    display.dispose();
+		
+	}
+
 	@Override
 	public byte[] getSeed() {
 		return seed;

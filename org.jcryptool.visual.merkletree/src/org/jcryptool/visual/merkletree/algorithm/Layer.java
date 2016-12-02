@@ -12,7 +12,7 @@ import org.jcryptool.visual.merkletree.files.ByteUtils;
 import org.jcryptool.visual.merkletree.files.Converter;
 import org.jcryptool.visual.merkletree.files.MathUtils;
 
-public class Layer extends MultiTree {
+public class Layer implements SimpleMerkleTree{
 
 	int leafCounter = 0;
 	int leafNumber = 0;
