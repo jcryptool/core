@@ -19,14 +19,13 @@ public class MerkleTreeWParam extends Composite {
 	Button buttonSet4;
 	Button buttonSet16;
 	Label createLabel;
-	Label keysum; 
+	Label keysum;
 	StyledText createdKey;
 	StyledText descText;
 	private int wParameter = 16;
 
 	/**
-	 * Create the composite. Including Descriptions and Radio Buttons
-	 * generation
+	 * Create the composite. Including Descriptions and Radio Buttons generation
 	 * 
 	 * @param parent
 	 * @param style
@@ -37,11 +36,11 @@ public class MerkleTreeWParam extends Composite {
 
 		// headline
 		keysum = new Label(this, SWT.NONE);
-		keysum.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));  
-		keysum.setText(Descriptions.Tab0_Head5);  
+		keysum.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
+		keysum.setText(Descriptions.Tab0_Head5);
 
 		// text box with Description (Tab0_Txt2)
-		createdKey = new StyledText(this, SWT.WRAP | SWT.BORDER);
+		createdKey = new StyledText(this, SWT.WRAP | SWT.BORDER | SWT.READ_ONLY);
 		createdKey.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 2));
 		createdKey.setText(Descriptions.Tab0_Txt2);
 
@@ -55,7 +54,7 @@ public class MerkleTreeWParam extends Composite {
 		buttonSet16.setText("16");
 		buttonSet16.setSelection(true);
 
-		buttonSet4.addSelectionListener (new SelectionListener() {
+		buttonSet4.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				wParameter = 4;
@@ -69,7 +68,7 @@ public class MerkleTreeWParam extends Composite {
 
 		});
 
-		buttonSet16.addSelectionListener (new SelectionListener() {
+		buttonSet16.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				wParameter = 16;
