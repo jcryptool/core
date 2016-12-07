@@ -360,7 +360,7 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 	}
 
 	public void generatePublicKeyString() {
-		Node root = tree.get(getTreeHeight());
+		Node root = tree.get((getLeafCounter() * 2 - 1) - 1);
 		xPubKey = Converter._byteToHex(root.getContent()) + "|" + Converter._byteToHex(seed);
 	}
 
