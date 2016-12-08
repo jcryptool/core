@@ -14,7 +14,7 @@ import org.jcryptool.visual.merkletree.files.MathUtils;
 
 public class XMSSTree implements ISimpleMerkle {
 
-// ArrayList<byte[]>pubKeys = new ArrayList<byte[]>();
+	// ArrayList<byte[]>pubKeys = new ArrayList<byte[]>();
 	int leafCounter = 0;
 	int leafNumber = 0;
 	int keyIndex;
@@ -241,6 +241,10 @@ public class XMSSTree implements ISimpleMerkle {
 	 */
 	public String sign(String message) {
 		int index = getIndex(xPrivKey);
+		// checks if tree has run out of keys/indices
+		if (keyIndex >= tree.size() - 1) {
+			return "";
+		}
 		ArrayList<Node> auth = buildAuth(index, seed);
 		byte[] r = randomGenerator(getSK_Seed(), message, message.length());
 		// index || r as seed for hashing the message
