@@ -1,5 +1,11 @@
 package org.jcryptool.visual.merkletree;
 
+import javax.inject.Inject;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -7,6 +13,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
@@ -14,6 +21,7 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.UISynchronizer;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
@@ -38,7 +46,7 @@ import org.jcryptool.visual.merkletree.ui.MerkleTreeZestComposite;
  */
 public class MerkleTreeView extends ViewPart {
 
-public MerkleTreeView() {
+	public MerkleTreeView() {
 
 	}
 
@@ -212,9 +220,8 @@ public MerkleTreeView() {
 						break;
 					case 2:
 						// Creates instance if tab was not clicked before
-						// if (mtK == null) //TODO: implement feature that this
-						// if knows: have the keys changed?
-						mtK = new MerkleTreeKeyComposite(tabFolder, SWT.NONE, merkle);
+						// if (mtK == null) //TODO: implement feature so that
+						// this knows: have the keys changed?
 						tbtmParameter2.setControl(mtK);
 						previousTab = 2;
 						break;
@@ -315,4 +322,17 @@ public MerkleTreeView() {
 	public void updateElement() {
 		unsavedChanges = true;
 	}
+
+	public void generateKeyTab() {
+
+		Display.getCurrent().asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				mtK = new MerkleTreeKeyComposite(tabFolder, SWT.NONE, merkle);
+			}
+		});
+
+	}
+
 }

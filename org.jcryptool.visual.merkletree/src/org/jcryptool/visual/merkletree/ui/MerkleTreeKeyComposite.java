@@ -55,7 +55,9 @@ public class MerkleTreeKeyComposite extends Composite {
 
 	public MerkleTreeKeyComposite(Composite parent, int style, ISimpleMerkle merkle) {
 		super(parent, style);
-		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
+		GridLayout layout = new GridLayout(MerkleConst.H_SPAN_MAIN * 2, true);
+		layout.marginBottom = 200;
+		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN * 2, true));
 		this.merkle = merkle;
 
 		publicKey = merkle.getPublicKey();
@@ -67,29 +69,40 @@ public class MerkleTreeKeyComposite extends Composite {
 
 		// Description in top right corner
 		descLabel = new Label(this, SWT.NONE);
-		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
+		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN * 2, 1));
+
+		// Label for public key
+		publicKeyLabel = new Label(this, SWT.NONE);
+		publicKeyLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN * 2, 1));
+		publicKeyLabel.setText("Public Key");
+
+		// text field storing public key
+		publicKeySign = new StyledText(this, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
+		publicKeySign.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN * 2, 1));
+		publicKeySign.setText(publicKey);
 
 		// Label for private key
 		privateKeyLabel = new Label(this, SWT.NONE);
-		privateKeyLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 5, 1));
+		privateKeyLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		privateKeyLabel.setText("Private Key");
 
 		// Buttons to toggle color highlighting
 		buttonIndex = new Button(this, SWT.TOGGLE);
-		buttonIndex.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 5, 1));
+		buttonIndex.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		buttonIndex.setText("Index");
 
 		buttonSeed = new Button(this, SWT.TOGGLE);
-		buttonSeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 5, 1));
+		buttonSeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		buttonSeed.setText("Seed");
 
-		buttonLeaves = new Button(this, SWT.TOGGLE);
-		buttonLeaves.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 5, 1));
+		buttonLeaves = new Button(this, SWT.NONE);
+		buttonLeaves.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		buttonLeaves.setText("Toggle Leaf");
 
 		// spinner to toggle leaf
 		leafCounter = merkle.getLeafCounter();
 		spinnerLeaf = new Spinner(this, SWT.NONE);
+		spinnerLeaf.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		spinnerLeaf.setMinimum(0);
 		spinnerLeaf.setMaximum(leafCounter - 1);
 		spinnerValue = 0;
@@ -98,17 +111,8 @@ public class MerkleTreeKeyComposite extends Composite {
 
 		// TODO: rework this test declaration; maybe inner class
 		PrivateKeyTextComposite test = new PrivateKeyTextComposite(this, SWT.NONE, merkle);
-		test.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, MerkleConst.H_SPAN_MAIN, 1));
+		test.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, MerkleConst.H_SPAN_MAIN * 2, 1));
 		test.setPrivateKeyText(privateKey);
-
-		// Label for public key
-		publicKeyLabel = new Label(this, SWT.NONE);
-		publicKeyLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 1));
-		publicKeyLabel.setText("Public Key");
-
-		// text field storing public key
-		publicKeySign = new StyledText(this, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
-		publicKeySign.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 1));
 
 		if (merkle instanceof XMSSTree) {
 			descLabel.setText(Descriptions.XMSS.Tab1_Head0);
@@ -116,8 +120,6 @@ public class MerkleTreeKeyComposite extends Composite {
 			descLabel.setText(Descriptions.MSS.Tab1_Head0);
 
 		}
-
-		publicKeySign.setText(publicKey);
 
 		// creates an array of well readable colors
 		distinguishableColors = new Color[4];
