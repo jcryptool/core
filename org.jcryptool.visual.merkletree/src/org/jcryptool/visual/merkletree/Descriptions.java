@@ -19,10 +19,11 @@ public class Descriptions extends NLS {
 	// >
 
 	// <- Tabs
-	public static String MerkleTreeView_0;
-	public static String MerkleTreeView_1;
-	public static String MerkleTreeView_2;
-	public static String MerkleTreeView_3;
+	public static String MerkleTreeTab_0;
+	public static String MerkleTreeTab_1;
+	public static String MerkleTreeTab_2;
+	public static String MerkleTreeTab_3;
+	public static String MerkleTreeTab_4;
 	// >
 
 	// <- MSG Box - wenn kein Key vorhanden
@@ -49,6 +50,14 @@ public class Descriptions extends NLS {
 	public static String ZestLabelProvider_6;
 	// >
 
+	// <- KeyPair Descriptions
+	public static String MerkleTreeKeyTab_0;
+	public static String MerkleTreeKeyTab_1;
+	public static String MerkleTreeKeyTab_2;
+	public static String MerkleTreeKeyTab_3;
+	public static String MerkleTreeKeyTab_4;
+	public static String MerkleTreeKeyTab_5;
+
 	public static String MerkleTreeKey_column_0;
 	public static String MerkleTreeKey_column_1;
 	public static String MerkleTreeKey_column_2;
@@ -57,6 +66,8 @@ public class Descriptions extends NLS {
 	public static String MerkleTreeKey_1;
 	public static String MerkleTreeKey_2;
 	public static String MerkleTreeKey_3;
+	public static String MerkleTreeKey_4;
+	public static String MerkleTreeKey_5;
 
 	public static String MerkleTreeSign_0;
 	public static String MerkleTreeSign_1;

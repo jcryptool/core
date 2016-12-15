@@ -7,6 +7,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.layout.GridData;
@@ -21,7 +22,6 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.internal.UISynchronizer;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
@@ -61,6 +61,7 @@ public class MerkleTreeView extends ViewPart {
 	private MerkleTreeSignatureComposite mtS;
 	private MerkleTreeVerifikationComposite mtV;
 	private ISimpleMerkle merkle;
+	private ISimpleMerkle oldMerkle;
 	private SUIT mode;
 	private int previousTab = 0;
 
@@ -95,25 +96,25 @@ public class MerkleTreeView extends ViewPart {
 
 		// Key-generation
 		TabItem tbtmParameter0 = new TabItem(tabFolder, SWT.NONE);
-		tbtmParameter0.setText(Descriptions.MerkleTreeView_0);
+		tbtmParameter0.setText(Descriptions.MerkleTreeTab_0);
 		mtC = new MerkleTreeComposite(tabFolder, this);
 		tbtmParameter0.setControl(mtC);
 
 		// TreeView
 		TabItem tbtmParameter1 = new TabItem(tabFolder, SWT.NONE);
-		tbtmParameter1.setText(Descriptions.MerkleTreeView_1);
+		tbtmParameter1.setText(Descriptions.MerkleTreeTab_1);
 
 		// keys
 		TabItem tbtmParameter2 = new TabItem(tabFolder, SWT.NONE);
-		tbtmParameter2.setText("Key Pair");
+		tbtmParameter2.setText(Descriptions.MerkleTreeTab_2);
 
 		// Signing
 		TabItem tbtmParameter3 = new TabItem(tabFolder, SWT.NONE);
-		tbtmParameter3.setText(Descriptions.MerkleTreeView_2);
+		tbtmParameter3.setText(Descriptions.MerkleTreeTab_3);
 
 		// Verification
 		TabItem tbtmParameter4 = new TabItem(tabFolder, SWT.NONE);
-		tbtmParameter4.setText(Descriptions.MerkleTreeView_3);
+		tbtmParameter4.setText(Descriptions.MerkleTreeTab_4);
 
 		tabFolder.addSelectionListener(new SelectionAdapter() {
 			/*
@@ -220,8 +221,19 @@ public class MerkleTreeView extends ViewPart {
 						break;
 					case 2:
 						// Creates instance if tab was not clicked before
-						// if (mtK == null) //TODO: implement feature so that
-						// this knows: have the keys changed?
+						if (mtK == null || ((oldMerkle != merkle) || oldMerkle == null)) {
+							// TODO: implement feature so that
+							// this knows: have the keys changed?
+							BusyIndicator.showWhile(Display.getCurrent(), new Runnable() {
+
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									mtK = new MerkleTreeKeyComposite(tabFolder, SWT.NONE, merkle);
+								}
+							});
+						}
+						oldMerkle = merkle;
 						tbtmParameter2.setControl(mtK);
 						previousTab = 2;
 						break;
@@ -321,18 +333,6 @@ public class MerkleTreeView extends ViewPart {
 
 	public void updateElement() {
 		unsavedChanges = true;
-	}
-
-	public void generateKeyTab() {
-
-		Display.getCurrent().asyncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				mtK = new MerkleTreeKeyComposite(tabFolder, SWT.NONE, merkle);
-			}
-		});
-
 	}
 
 }

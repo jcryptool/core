@@ -1,6 +1,7 @@
 package org.jcryptool.visual.merkletree.ui;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -8,7 +9,10 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.Descriptions;
@@ -35,6 +39,8 @@ public class MerkleTreeKeyPairs extends Composite {
 	StyledText descText;
 	private int spinnerValue;
 	private int treeValue;
+
+	MessageBox successBox;
 
 	/**
 	 * Create the composite. Including KeyPair content and button for keyPair
@@ -139,6 +145,11 @@ public class MerkleTreeKeyPairs extends Composite {
 		}
 		descText.setEditable(false);
 
+		// MessageBox when successfully creating a Key
+		successBox = new MessageBox(new Shell(), SWT.ICON_WORKING | SWT.OK);
+		successBox.setText(Descriptions.MerkleTreeKey_4);
+		successBox.setMessage(Descriptions.MerkleTreeKey_5);
+
 		/**
 		 * Event Listener for the generate keys button if this button is pressed
 		 * a new merkle tree is generated
@@ -153,48 +164,56 @@ public class MerkleTreeKeyPairs extends Composite {
 			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ISimpleMerkle merkle;
+				BusyIndicator.showWhile(Display.getCurrent(), new Runnable() {
 
-				/*
-				 * select the type of suite
-				 */
-				switch (mode) {
-				case XMSS:
-					merkle = new XMSSTree();
-					break;
-				case XMSS_MT:
-					// new XMSS_MT_TREE
-					// break;
-				case MSS:
-				default:
-					merkle = new SimpleMerkleTree();
-					break;
-				}
+					@Override
+					public void run() {
+						ISimpleMerkle merkle;
 
-				/*
-				 * create the merkle tree with the chosen values
-				 */
-				// if the generated Tree is a XMSSTree -> the bitmaskseed is
-				// also needed
-				// TODO: if XMSS^MT
-				if (merkle instanceof XMSSTree) {
-					((XMSSTree) merkle).setBitmaskSeed(((MerkleTreeSeed) parent).getBitmaskSeed());
-				}
-				merkle.setSeed(((MerkleTreeSeed) parent).getSeed());
-				merkle.setLeafCount(spinnerValue);
-				merkle.setWinternitzParameter(((MerkleTreeSeed) parent).getWinternitzParameter());
-				merkle.selectOneTimeSignatureAlgorithm("SHA-256", "WOTSPlus");
-				merkle.generateKeyPairsAndLeaves();
-				merkle.generateMerkleTree();
-				((MerkleTreeView) masterView).setAlgorithm(merkle, mode);
-				((MerkleTreeView) masterView).generateKeyTab();
+						/*
+						 * select the type of suite
+						 */
+						switch (mode) {
+						case XMSS:
+							merkle = new XMSSTree();
+							break;
+						case XMSS_MT:
+							// new XMSS_MT_TREE
+							// break;
+						case MSS:
+						default:
+							merkle = new SimpleMerkleTree();
+							break;
+						}
 
-				// set or update the key information
-				createdKey.setText(Descriptions.MerkleTreeKey_2 + " " + merkle.getKeyLength() + " "
-						+ Descriptions.MerkleTreeKey_3);
+						/*
+						 * create the merkle tree with the chosen values
+						 */
+						// if the generated Tree is a XMSSTree -> the
+						// bitmaskseed is
+						// also needed
+						// TODO: if XMSS^MT
+						if (merkle instanceof XMSSTree) {
+							((XMSSTree) merkle).setBitmaskSeed(((MerkleTreeSeed) parent).getBitmaskSeed());
+						}
+						merkle.setSeed(((MerkleTreeSeed) parent).getSeed());
+						merkle.setLeafCount(spinnerValue);
+						merkle.setWinternitzParameter(((MerkleTreeSeed) parent).getWinternitzParameter());
+						merkle.selectOneTimeSignatureAlgorithm("SHA-256", "WOTSPlus");
+						merkle.generateKeyPairsAndLeaves();
+						merkle.generateMerkleTree();
+						((MerkleTreeView) masterView).setAlgorithm(merkle, mode);
 
+						// set or update the key information
+						createdKey.setText(Descriptions.MerkleTreeKey_2 + " " + merkle.getKeyLength() + " "
+								+ Descriptions.MerkleTreeKey_3);
+
+					}
+				});
+				successBox.open();
 			}
 		});
+
 	}
 
 	/**

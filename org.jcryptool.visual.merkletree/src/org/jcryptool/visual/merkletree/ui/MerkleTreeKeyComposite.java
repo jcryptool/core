@@ -2,6 +2,7 @@ package org.jcryptool.visual.merkletree.ui;
 
 import java.util.Arrays;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -13,6 +14,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.widgets.Text;
 import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
@@ -24,6 +26,10 @@ public class MerkleTreeKeyComposite extends Composite {
 	Label privateKeyLabel;
 	Label publicKeyLabel;
 	Label descLabel;
+	Label spacer;
+	Label buttonInfoLabel;
+	Label spinnerInfoLabel;
+	Label keyExplanation;
 
 	Button buttonIndex;
 	Button buttonSeed;
@@ -55,8 +61,6 @@ public class MerkleTreeKeyComposite extends Composite {
 
 	public MerkleTreeKeyComposite(Composite parent, int style, ISimpleMerkle merkle) {
 		super(parent, style);
-		GridLayout layout = new GridLayout(MerkleConst.H_SPAN_MAIN * 2, true);
-		layout.marginBottom = 200;
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN * 2, true));
 		this.merkle = merkle;
 
@@ -71,41 +75,67 @@ public class MerkleTreeKeyComposite extends Composite {
 		descLabel = new Label(this, SWT.NONE);
 		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN * 2, 1));
 
+		keyExplanation = new Label(this, SWT.BORDER);
+		keyExplanation.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN * 2, 1));
+		keyExplanation.setText(Descriptions.MerkleTreeKeyTab_0);
+
 		// Label for public key
 		publicKeyLabel = new Label(this, SWT.NONE);
 		publicKeyLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN * 2, 1));
-		publicKeyLabel.setText("Public Key");
+		publicKeyLabel.setText(Descriptions.MerkleTreeKeyTab_1);
 
 		// text field storing public key
 		publicKeySign = new StyledText(this, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
 		publicKeySign.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN * 2, 1));
 		publicKeySign.setText(publicKey);
 
+		// spacer
+		spacer = new Label(this, SWT.NONE);
+		spacer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, MerkleConst.H_SPAN_MAIN * 2, 1));
+
 		// Label for private key
 		privateKeyLabel = new Label(this, SWT.NONE);
-		privateKeyLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
-		privateKeyLabel.setText("Private Key");
+		privateKeyLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 16, 1));
+		privateKeyLabel.setText(Descriptions.MerkleTreeKeyTab_2);
 
-		// Buttons to toggle color highlighting
-		buttonIndex = new Button(this, SWT.TOGGLE);
-		buttonIndex.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		buttonIndex.setText("Index");
+		// Buttons to toggle color highlighting in inner class
+		class ButtonLine extends Composite {
 
-		buttonSeed = new Button(this, SWT.TOGGLE);
-		buttonSeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		buttonSeed.setText("Seed");
+			public ButtonLine(Composite parent, int style) {
+				super(parent, style);
+				this.setLayout(new GridLayout(8, true));
 
-		buttonLeaves = new Button(this, SWT.NONE);
-		buttonLeaves.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		buttonLeaves.setText("Toggle Leaf");
+				buttonInfoLabel = new Label(this, SWT.NONE);
+				buttonInfoLabel.setText("Schlüsselteil farblich hervorheben: ");
+				buttonInfoLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 
-		// spinner to toggle leaf
-		leafCounter = merkle.getLeafCounter();
-		spinnerLeaf = new Spinner(this, SWT.NONE);
-		spinnerLeaf.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		spinnerLeaf.setMinimum(0);
-		spinnerLeaf.setMaximum(leafCounter - 1);
-		spinnerValue = 0;
+				buttonIndex = new Button(this, SWT.TOGGLE);
+				buttonIndex.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+				buttonIndex.setText(Descriptions.MerkleTreeKeyTab_3);
+
+				buttonSeed = new Button(this, SWT.TOGGLE);
+				buttonSeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+				buttonSeed.setText(Descriptions.MerkleTreeKeyTab_4);
+
+				buttonLeaves = new Button(this, SWT.NONE);
+				buttonLeaves.setLayoutData(new GridData(SWT.END, SWT.CENTER, false, false, 2, 1));
+				buttonLeaves.setText(Descriptions.MerkleTreeKeyTab_5);
+
+				// spinner to toggle leaf
+				leafCounter = merkle.getLeafCounter();
+				spinnerLeaf = new Spinner(this, SWT.BORDER);
+				spinnerLeaf.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+				spinnerLeaf.setMinimum(0);
+				spinnerLeaf.setMaximum(leafCounter - 1);
+				spinnerValue = 0;
+
+				spinnerInfoLabel = new Label(this, SWT.NONE);
+				spinnerInfoLabel.setText("0 - " + (merkle.getLeafCounter() - 1));
+
+			}
+		}
+		ButtonLine buttonLine = new ButtonLine(this, SWT.NONE);
+		buttonLine.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 16, 1));
 
 		colorBlack = getDisplay().getSystemColor(SWT.COLOR_BLACK);
 
