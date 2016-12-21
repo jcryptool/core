@@ -213,9 +213,7 @@ public class MerkleTreeView extends ViewPart {
 						previousTab = 0;
 						break;
 					case 1:
-						// Creates instance if tab was not clicked before
-						if (mtZ == null)
-							mtZ = new MerkleTreeZestComposite(tabFolder, SWT.NONE, merkle, mode);
+						mtZ = new MerkleTreeZestComposite(tabFolder, SWT.NONE, merkle, mode);
 						tbtmParameter1.setControl(mtZ);
 						previousTab = 1;
 						break;
