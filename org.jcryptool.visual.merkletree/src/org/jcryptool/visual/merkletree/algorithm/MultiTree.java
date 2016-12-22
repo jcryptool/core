@@ -1,5 +1,6 @@
 package org.jcryptool.visual.merkletree.algorithm;
 
+import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -15,28 +16,39 @@ import org.jcryptool.visual.merkletree.files.MathUtils;
 
 public abstract class MultiTree implements ISimpleMerkle {
 	// Starting over again
-    int leafCounter = 0;	
+	int leafCounter = 0;
 	int d;
 	int l;
+	int n;
 	OTS otsAlgo;
 	int h;
 	int w;
-	String message;
-    Node[] treeArray;
-
+	int index_len;
+	byte[] message;
+	Node[] treeArray;
+	byte[] sk_seed;
+	byte[] sk_prf;
+	byte[] pub_seed;
+	String sk;
 
 	byte[] seed;
-    byte[] bitmaskSeed;
+	BigInteger bitmaskSeed;
 	MessageDigest mDigest;
 
 	public ArrayList<byte[][]> publicKeys = new ArrayList<byte[][]>();
 
+	public void setLeafCount(int i) {
+		leafCounter = i;
+	}
 	
-    public void setLeafCount(int i) {
-        leafCounter = i;
-    }
-    
-    
+	
+	
+	/*
+	 * TODO LENA: 
+	 * Compute Autopath
+	 * better way to manage keys (optional)
+	 */
+
 	@Override
 	/**
 	 * Selects the Signature Algorithm defautl Algorithm is the WOTSPlus
@@ -44,7 +56,8 @@ public abstract class MultiTree implements ISimpleMerkle {
 	 * generateKeyPairsAndLeaves() is called
 	 */
 	public void selectOneTimeSignatureAlgorithm(String hash, String algo) {
-		this.otsAlgo = new WOTSPlus(w, hash, seed);
+		byte[] s = seed.toByteArray();
+		this.otsAlgo = new WOTSPlus(w, hash, s);
 		if (this.mDigest == null) {
 			try {
 				mDigest = MessageDigest.getInstance(hash);
@@ -54,32 +67,25 @@ public abstract class MultiTree implements ISimpleMerkle {
 		}
 	}
 
-	public void TreeParams(int d, int h, int w, String message) {
-		this.otsAlgo = new WOTSPlus(w, message, getSeed()); // wots+ has the
-		// length
-		// from message and not
-		// from hash
-		// winternitz parameter stays the same for every tree (duh)
-
-		if (h % d != 0) {
-			/*
-			 * müssen teilerfremd sein throw hDevidesDwithRemainderException(){
-			 * 
-			 * }
-			 */
-		}
-		this.l = h / d;
-		int i = 0;
-		while (i < d) {
-			// TODO
-		}
-	}
-
-	// nr of trees for the hypertree klickibunti
-
-	// public String xPrivKey;
-	// public String xPubKey;
+	// public void TreeParams(int d, int h, int w, String message) {
+	// this.otsAlgo = new WOTSPlus(w, message, getSeed()); // wots+ has the
+	// length
+	// from message and not
+	// from hash
+	// winternitz parameter stays the same for every tree (duh)
 	/*
+	 * if (h % d != 0) {
+	 *
+	 * müssen teilerfremd sein throw hDevidesDwithRemainderException(){
+	 * 
+	 * }
+	 *
+	 * } this.l = h / d; int i = 0; while (i < d) { // TODO } }
+	 * 
+	 * /* nr of trees for the hypertree klickibunti
+	 * 
+	 * public String xPrivKey; public String xPubKey;
+	 *
 	 * OTS otsAlgo; MessageDigest mDigest; static int id; Node Parent; String
 	 * cipherSuite; String algorithmID; public byte[] SK_MT; public byte[]
 	 * PK_MT; byte[] SK_Seed; byte[] PK_Seed;
@@ -95,9 +101,10 @@ public abstract class MultiTree implements ISimpleMerkle {
 	 */
 	// make visible which tree signs which one--> parent
 
-	/*
-	 * void setLayers(int d) { this.d = d; }
-	 */
+	void setLayers(int d) {
+		this.d = d;
+	}
+
 	/**
 	 * returns number of trees on a certain layer
 	 * 
@@ -116,180 +123,14 @@ public abstract class MultiTree implements ISimpleMerkle {
 	 * bytes | | +---------------------------------+ | | | SEED | n bytes | |
 	 * +---------------------------------+
 	 */
-	String algorithmID = this.algorithmID;
-	byte[] publicRoot = Layer.getMerkleRoot();
-	byte[] publicSeed = this.getSeed();
-
-
-public void visualiseSig() {
 	/*
-	 * +---------------------------------+ | | | index idx_sig | ceil(h / 8)
-	 * bytes | | +---------------------------------+ | | | randomness r | n
-	 * bytes | | +---------------------------------+ | | | (reduced) XMSS
-	 * signature Sig | (h / d + len) * n bytes | (bottom layer 0) | | |
-	 * +---------------------------------+ | | | (reduced) XMSS signature
-	 * Sig | (h / d + len) * n bytes | (layer 1) | | |
-	 * +---------------------------------+ | | ~ .... ~ | |
-	 * +---------------------------------+ | | | (reduced) XMSS signature
-	 * Sig | (h / d + len) * n bytes | (layer d - 1) | | |
-	 * +---------------------------------+
-	 */
-	// TODO
-}
-
-	/**
-	 * returns the height of the tree Tree with only one Node has height 0 Tree
-	 * with 4 Nodes has height 2
-	 *
-	 * public int getTreeHeight() { return (int) MathUtils.log2nlz(leafCounter);
-	 * }
-	 */
-	/**
-	 * @author zuck
-	 * @param SK
-	 *            XMSS secret key
-	 * @param s
-	 *            start index
-	 * @param t
-	 *            target node height
-	 * @param seed
-	 *            seed
-	 * @return root node of a tree of height t
-	 *
-	 *         public Node treeHash(int s, int t, byte[] seed) {
-	 * 
-	 *         Node node; // TODO make new Node class Stack<Node> stack = new
-	 *         Stack<Node>(); byte[][] pKey; OTSHashAddress otsAdrs = new
-	 *         OTSHashAddress(); LTreeAddress lAdrs = new LTreeAddress();
-	 *         HashTreeAddress hAdrs = new HashTreeAddress();
-	 * 
-	 *         if (s % (1 << t) != 0) { return null; }
-	 * 
-	 *         for (int i = 0; i < (1 << t); i++) { // i < 2^t
-	 *         otsAdrs.setOTSBit(true); otsAdrs.setOTSAddress(s + i); pKey =
-	 *         publicKeys.get(s + i); lAdrs.setOTSBit(false);
-	 *         lAdrs.setLTreeBit(true); lAdrs.setLTreeAddress(s + i); node = new
-	 *         XMSSNode(generateLTree(pKey, bitmaskSeed, lAdrs));
-	 *         hAdrs.setLTreeBit(false); hAdrs.setTreeHeight(0);
-	 *         hAdrs.setTreeIndex(i + s); saveNodeInfos(node,
-	 *         hAdrs.getTreeIndex()); // if the stack is empty the first node
-	 *         will be put into the stack // if the current node and the next
-	 *         node on the stack have the same height hash them and // put the
-	 *         new one back with height+1 while (!stack.empty() &&
-	 *         stack.peek().getHeight() == node.getHeight()) {
-	 *         hAdrs.setTreeIndex((hAdrs.getTreeIndex() - 1) / 2); node = new
-	 *         XMSSNode(rand_hash(stack.pop().getContent(), node.getContent(),
-	 *         bitmaskSeed, hAdrs)); hAdrs.setTreeHeight(hAdrs.getTreeHeight() +
-	 *         1); node.setHeight(hAdrs.getTreeHeight()); saveNodeInfos(node,
-	 *         hAdrs.getTreeIndex()); // save nodes on higher heights }
-	 * 
-	 *         stack.push(node); } // result will be root of the tree or subtree
-	 *         return stack.pop(); }
-	 */
-	/**
-	 * Generates the public key of the XMSS
-	 * 
-	 * public void xmss_genPK() { Node root; byte[] seed; seed =
-	 * getPublicSeed();
-	 * 
-	 * root = treeHash(0, getTreeHeight(), seed); xPubKey =
-	 * Converter._byteToHex(root.getContent()) + "|" +
-	 * Converter._byteToHex(seed); }
-	 * 
-	 * public void xmss_genSK() { int index = 0; // index of the next unused
-	 * wots+ key xPrivKey = Integer.toString(index) + "|" +
-	 * Converter._byteToHex(seed); for (int i = 0; i < privKeys.size(); i++) {
-	 * xPrivKey += "|"; xPrivKey += Converter._2dByteToHex(privKeys.get(i)); } }
-	 * 
-	 * byte [] getPublicSeed(){ return this.PK_Seed; }
-	 */
-
-	/*
-	 * public byte[] XMSS_MT_KeyGen(){ // Example initialization int idx_MT = 0;
-	 * //multiTreeIndex setIdx(SK_MT, idx_MT);s initialize SK_PRF with a
-	 * uniformly random n-byte string; setSK_PRF(SK_MT, SK_PRF); initialize SEED
-	 * with a uniformly random n-byte string; setSEED(SK_MT, SEED);
-	 * 
-	 * // generate reduced XMSS private keys ADRS = toByte(0, 32); for ( layer =
-	 * 0; layer < d; layer++ ) { ADRS.setLayerAddress(layer); for ( tree = 0;
-	 * tree < (1 << ((d - 1 - layer) * (h / d))); tree++ ) {
-	 * ADRS.setTreeAddress(tree); for ( i = 0; i < 2^h; i++ ) {
-	 * WOTS_genSK(wots_sk[i]); } setXMSS_SK(SK_MT, wots_sk, tree, layer); } }
-	 * 
-	 * SK = getXMSS_SK(SK_MT, 0, d - 1); setSEED(SK, SEED); root = treeHash(SK,
-	 * 0, h / d, ADRS); setRoot(SK_MT, root);
-	 * 
-	 * PK_MT = (root || SEED); return (SK_MT || PK_MT); }
-	 */
-
-	/*
-	 * public void chooseAlgorihm() {
-	 * 
-	 * // eig. klassenvariable, aber for reasons private static final String[]
-	 * // cipherSuites={"xmssmt_sha2-256_w16_h20_d2",
-	 * 
-	 * 
-	 * final String[] cipherSuites = { "xmssmt_sha2-256_w16_h20_d2",
-	 * "xmssmt_sha2-256_w16_h20_d4", "xmssmt_sha2-256_w16_h40_d2",
-	 * "xmssmt_sha2-256_w16_h40_d4", "xmssmt_sha2-256_w16_h40_d8",
-	 * "case xmssmt_sha2-256_w16_h60_d3", "xmssmt_sha2-256_w16_h60_d6",
-	 * "xmssmt_sha2-256_w16_h60_d12", "xmssmt_shake128_w16_h20_d2",
-	 * "xmssmt_shake128_w16_h20_d4", "xmssmt_shake128_w16_h40_d2",
-	 * "xmssmt_shake128_w16_h40_d4", "xmssmt_shake128_w16_h40_d8",
-	 * "xmssmt_shake128_w16_h60_d3", "xmssmt_shake128_w16_h60_d6",
-	 * "xmssmt_shake128_w16_h60_d12", "xmssmt_sha2-512_w16_h20_d2",
-	 * "xmssmt_sha2-512_w16_h20_d4", "xmssmt_sha2-512_w16_h40_d2",
-	 * "xmssmt_sha2-512_w16_h40_d4", "xmssmt_sha2-512_w16_h40_d8",
-	 * "xmssmt_sha2-512_w16_h60_d3", "xmssmt_sha2-512_w16_h60_d6",
-	 * "xmssmt_sha2-512_w16_h60_d12", "xmssmt_shake256_w16_h20_d2",
-	 * "xmssmt_shake256_w16_h20_d4", "xmssmt_shake256_w16_h40_d2",
-	 * "xmssmt_shake256_w16_h40_d4", "xmssmt_shake256_w16_h40_d8",
-	 * "xmssmt_shake256_w16_h60_d3", "xmssmt_shake256_w16_h60_d6",
-	 * "xmssmt_shake256_w16_h60_d12" };
-	 * 
-	 * // Display display = new Display(); // Shell shell = new Shell(display);
-	 * // shell.setLayout(new FillLayout());
-	 * 
-	 * // Create a dropdown Combo Combo combo = new Combo(shell, SWT.DROP_DOWN |
-	 * SWT.READ_ONLY); readOnly.setItems(cipherSuites);
-	 * 
-	 * shell.open(); while (!shell.isDisposed()) { if
-	 * (!display.readAndDispatch()) { display.sleep(); } } display.dispose();
-	 * 
-	 * }
-	 */
-	/*
-	 * static void treehash(byte [] node, int height, int index, byte []SK_Seed,
-	 * params params, char []pub_seed, int []addr) {
-	 * 
-	 * int idx = index; byte[] n = params.getN(params); // use three different
-	 * addresses because at this point we use all three formats in parallel int
-	 * [] ots_addr=new int[8]; int []ltree_addr=new int[8]; int node_addr[]=new
-	 * int[8]; // only copy layer and tree address parts memcpy(ots_addr, addr,
-	 * 12); // type = ots setType(ots_addr, 0); memcpy(ltree_addr, addr, 12);
-	 * setType(ltree_addr, 1); memcpy(node_addr, addr, 12); setType(node_addr,
-	 * 2);
-	 * 
-	 * int lastnode, i; char stack[]=new char[(height+1)*n]; int
-	 * stacklevels[]=new int[height+1]; int stackoffset=0;
-	 * 
-	 * lastnode = idx+(1 << height);
-	 * 
-	 * for (; idx < lastnode; idx++) { setLtreeADRS(ltree_addr, idx);
-	 * setOTSADRS(ots_addr, idx); gen_leaf_wots(stack+stackoffset*n, sk_seed,
-	 * params, pub_seed, ltree_addr, ots_addr); stacklevels[stackoffset] = 0;
-	 * stackoffset++; while (stackoffset>1 && stacklevels[stackoffset-1] ==
-	 * stacklevels[stackoffset-2]) { setTreeHeight(node_addr,
-	 * stacklevels[stackoffset-1]); setTreeIndex(node_addr, (idx >>
-	 * (stacklevels[stackoffset-1]+1))); hash_h(stack+(stackoffset-2)*n,
-	 * stack+(stackoffset-2)*n, pub_seed, node_addr, n);
-	 * stacklevels[stackoffset-2]++; stackoffset--; } } for (i=0; i < n; i++)
-	 * node[i] = stack[i]; }
-	 * 
+	 * String algorithmID = this.algorithmID; byte[] publicRoot =
+	 * Layer.getMerkleRoot(); byte[] publicSeed = this.getSeed();
 	 */
 
 	/**
-	 * @author zuck
+	 * @author zuck, Lena Heimberger (modified, because BigIntegers are just
+	 *         handier)
 	 * @param SK
 	 *            XMSS secret key
 	 * @param s
@@ -301,7 +142,7 @@ public void visualiseSig() {
 	 * @return root node of a tree of height t
 	 */
 	public Node treeHash(int s, int t, byte[] seed) {
-
+		byte[] bSeed = bitmaskSeed.toByteArray(); // 'cause bytearrays
 		Node node; // TODO make new Node class
 		Stack<Node> stack = new Stack<Node>();
 		byte[][] pKey;
@@ -320,7 +161,7 @@ public void visualiseSig() {
 			lAdrs.setOTSBit(false);
 			lAdrs.setLTreeBit(true);
 			lAdrs.setLTreeAddress(s + i);
-			node = new XMSSNode(generateLTree(pKey, bitmaskSeed, lAdrs));
+			node = new XMSSNode(generateLTree(pKey, bSeed, lAdrs));
 			hAdrs.setLTreeBit(false);
 			hAdrs.setTreeHeight(0);
 			hAdrs.setTreeIndex(i + s);
@@ -331,7 +172,7 @@ public void visualiseSig() {
 			// put the new one back with height+1
 			while (!stack.empty() && stack.peek().getHeight() == node.getHeight()) {
 				hAdrs.setTreeIndex((hAdrs.getTreeIndex() - 1) / 2);
-				node = new XMSSNode(rand_hash(stack.pop().getContent(), node.getContent(), bitmaskSeed, hAdrs));
+				node = new XMSSNode(rand_hash(stack.pop().getContent(), node.getContent(), bSeed, hAdrs));
 				hAdrs.setTreeHeight(hAdrs.getTreeHeight() + 1);
 				node.setHeight(hAdrs.getTreeHeight());
 				saveNodeInfos(node, hAdrs.getTreeIndex()); // save nodes on
@@ -368,73 +209,80 @@ public void visualiseSig() {
 		}
 		return pubKey[0];
 	}
-	
-    /**
-     * XORs two nodes and hashes them with a salt
-     * 
-     * @param pKey first node
-     * @param pKey2 second node
-     * @param seed the seed for the bitmask generator
-     * @param adrs lAdress construct used for bitmask generator
-     */
-    public byte[] rand_hash(byte[] pKey, byte[] pKey2, byte[] seed, Address adrs) {
 
-        int len = pKey.length;
-        byte[] bitmk, key;
-        byte[] message = ByteUtils.concatenate(pKey, pKey2);
+	/**
+	 * XORs two nodes and hashes them with a salt
+	 * 
+	 * @param pKey
+	 *            first node
+	 * @param pKey2
+	 *            second node
+	 * @param seed
+	 *            the seed for the bitmask generator
+	 * @param adrs
+	 *            lAdress construct used for bitmask generator
+	 */
+	public byte[] rand_hash(byte[] pKey, byte[] pKey2, byte[] seed, Address adrs) {
 
-        bitmk = generateBitmask(seed, adrs);
+		int len = pKey.length;
+		byte[] bitmk, key;
+		byte[] message = ByteUtils.concatenate(pKey, pKey2);
 
-        adrs.setKeyBit(true);
-        adrs.setBlockBit(false);
-        key = randomGenerator(seed, adrs.getAddress(), len);
-        for (int i = 0; i < message.length; i++) {
-            // XOR message with bitmask
-            message[i] ^= bitmk[i];
-        }
-        byte[] tohash = ByteUtils.concatenate(key, message);
-        return mDigest.digest(tohash);
-    }
-    
-    
-    /*
-     * @param seed
-     * @param len length of half the bitmask
-     * @param lAdrs the address construct
-     * @return a bitmask
-     */
-    public byte[] generateBitmask(byte[] seed, Address adrs) {
-        byte[] bitmk_0, bitmk_1, bitmk;
-        int len = otsAlgo.getLength();
-        adrs.setKeyBit(false);
-        adrs.setBlockBit(false);
-        bitmk_0 = randomGenerator(seed, adrs.getAddress(), len);
-        adrs.setBlockBit(true);
-        bitmk_1 = randomGenerator(seed, adrs.getAddress(), len);
-        bitmk = ByteUtils.concatenate(bitmk_0, bitmk_1);
-        return bitmk;
-    }
+		bitmk = generateBitmask(seed, adrs);
 
+		adrs.setKeyBit(true);
+		adrs.setBlockBit(false);
+		key = XMSSTree.randomGenerator(seed, adrs.getAddress(), len);
+		for (int i = 0; i < message.length; i++) {
+			// XOR message with bitmask
+			message[i] ^= bitmk[i];
+		}
+		byte[] tohash = ByteUtils.concatenate(key, message);
+		return mDigest.digest(tohash);
+	}
 
-    /**
-     * @author zuck PRNG used to generate the bitmasks and the key for hashing
-     * @param seed seed for the PRNG
-     * @param address address of left/right node
-     */
-    public byte[] randomGenerator(byte[] seed, byte[] address, int len) {
-        byte[] res = new byte[len + 32]; // erstellen des zu befüllenden arrays
-        byte[] padding = new byte[32];
-        MessageDigest hash = null;
-        try {
-            hash = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            // zuck: Der Algo existiert!
-        }
-        seed = ByteUtils.concatenate(padding, seed);
-        seed = ByteUtils.concatenate(seed, address);
-        res = hash.digest(seed);
-        return res;
-    }
+	/*
+	 * @param seed
+	 * 
+	 * @param len length of half the bitmask
+	 * 
+	 * @param lAdrs the address construct
+	 * 
+	 * @return a bitmask
+	 */
+	public byte[] generateBitmask(byte[] seed, Address adrs) {
+		byte[] bitmk_0, bitmk_1, bitmk;
+		int len = otsAlgo.getLength();
+		adrs.setKeyBit(false);
+		adrs.setBlockBit(false);
+		bitmk_0 = XMSSTree.randomGenerator(seed, adrs.getAddress(), len);
+		adrs.setBlockBit(true);
+		bitmk_1 = randomGenerator(seed, adrs.getAddress(), len);
+		bitmk = ByteUtils.concatenate(bitmk_0, bitmk_1);
+		return bitmk;
+	}
+
+	/**
+	 * @author zuck PRNG used to generate the bitmasks and the key for hashing
+	 * @param seed
+	 *            seed for the PRNG
+	 * @param address
+	 *            address of left/right node
+	 */
+	public byte[] randomGenerator(byte[] seed, byte[] address, int len) {
+		byte[] res = new byte[len + 32]; // erstellen des zu befüllenden arrays
+		byte[] padding = new byte[32];
+		MessageDigest hash = null;
+		try {
+			hash = MessageDigest.getInstance("SHA-256");
+		} catch (NoSuchAlgorithmException e) {
+			// zuck: Der Algo existiert!
+		}
+		seed = ByteUtils.concatenate(padding, seed);
+		seed = ByteUtils.concatenate(seed, address);
+		res = hash.digest(seed);
+		return res;
+	}
 
 	public void saveNodeInfos(Node node, int ix) {
 		int index = 0;
@@ -451,14 +299,166 @@ public void visualiseSig() {
 			((XMSSNode) node).setAuthPath(getTreeHeight());
 		}
 	}
+
+	/**
+	 * returns the height of the tree Tree with only one Node has height 0 Tree
+	 * with 4 Nodes has height 2
+	 */
+	public int getTreeHeight() {
+		return (int) MathUtils.log2nlz(leafCounter);
+	}
+
+	/**
+	 * @author C Code by Hülsing, modelled in Java by Heimberger
+	 * 
+	 * Signs a message.
+	 * Returns
+	 * 1. an array containing the signature followed by the message AND
+	 * 2. an updated secret key!
+	 *
+	 */
+	int xmssmt_sign(BigInteger sig_msg, BigInteger sig_msg_len, String msg)
+	{
+	  long idx_tree;
+	  int idx_leaf;
+	  int i;
+	  int idx_len=index_len;
+
+	  // Init working params
+	  byte R[]=new byte[n];
+	  byte hash_key[]=new byte[3*n];
+	  byte msg_h[]=new byte[n];
+	  byte root[]=new byte[n];
+	  byte ots_seed[]=new byte[n];
+	  byte idx_bytes_32[]=new byte[32];
+
+	  // Extract SK
+	  int idx = 0;
+	  byte[] sek=sk.getBytes();
+	  for (i = 0; i < idx_len; i++) {
+	    idx |= ((long)sek[i]) << 8*(idx_len - 1 - i);
+	  }
+	  
+	  ByteArrayOutputStream sks=new ByteArrayOutputStream();
+	  sks.write(sek, idx_len, n);	  
+	  sk_seed=sks.toByteArray();
+	  
+	  ByteArrayOutputStream skp=new ByteArrayOutputStream();
+	  skp.write(sek, (idx_len+n), n);
+	  sk_prf=skp.toByteArray();
+	  
+	  ByteArrayOutputStream pus=new ByteArrayOutputStream();
+	  pus.write(sek, (idx_len+2*n), n);
+	  pub_seed=pus.toByteArray();
+	  
+	  
+	  // Update SK
+	  for (i = 0; i < idx_len; i++) {
+	    sek[i] = (byte) (((idx + 1) >> 8*(idx_len - 1 - i)) & 255);
+	  }
+	  
+	  // First compute pseudorandom value
+
+	  byte []r=XMSSTree.randomGenerator(getSK_Seed(), message, message.length);	  
+	  // Generate hash key (R || root || idx)
+	  ByteArrayOutputStream hak=new ByteArrayOutputStream();
+	  hak.write(R, 0, n);
+  	  hak.write('|');
+	  hak.write(sek, idx_len+3*n, n);
+	  hash_key=hak.toByteArray();
+
+	  // Then use it for message digest
+	  byte []h_msg=XMSSTree.randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(idx).toByteArray(), r),
+              msg.getBytes(), msg.length());
+
+	  // Start collecting signature
+//	  *sig_msg_len = 0;
+	  byte []sigmsg=sig_msg.toByteArray();
+
+	  // Copy index to signature
+	  for (i = 0; i < idx_len; i++) {
+	    sigmsg[i] = (byte) ((idx >> 8*(idx_len - 1 - i)) & 255);
+	  }
+
+	  ByteArrayOutputStream sigmessage=new ByteArrayOutputStream();
+	  sigmessage.write(sigmsg);
+  	  sigmessage.write('|');
+	  sigmessage.write(idx_len);
+  	  sigmessage.write('|');
+	  sigmsg=sigmessage.toByteArray();
+	  
+//	  *sig_msg_len += idx_len;
+
+	  // Copy R to signature
+	  for (i=0; i < n; i++)
+	    sigmsg[i] = R[i];
+
+	  sigmessage.write(n);
+	  sigmsg=sigmessage.toByteArray();
+
+//	  *sig_msg_len += n;
+
+	  // ----------------------------------
+	  // Now we start to "really sign"
+	  // ----------------------------------
+
+	  // Handle lowest layer separately as it is slightly different...
+
+ 
+	  OTSHashAddress ots_addr=new OTSHashAddress();
+	  ots_addr.setOTSBit(true);
+	  ots_addr.setOTSAddress(idx);
+	  byte [][]sk_idx;
+	((OTS) ots_addr).setPrivateKey(sk_idx);
+	  byte [][]pk_idx;
+	((OTS) ots_addr).setPublicKey(pk_idx);
+	  
+	  
+	  //compute the WOTS+ signature happen
+      byte[][] ots_sig = ((WOTSPlus) otsAlgo).sign(sigmsg, seed, ots_addr);
+
+      int j;
+      for (j = 1; j < params->d; j++) {
+        // Prepare Address
+        idx_leaf = (idx_tree & ((1 << tree_h)-1));
+        idx_tree = idx_tree >> tree_h;
+        setLayerADRS(ots_addr, j);
+        setTreeADRS(ots_addr, idx_tree);
+        setOTSADRS(ots_addr, idx_leaf);
+
+        // Compute seed for OTS key pair
+        get_seed(ots_seed, sk_seed, n, ots_addr);
+
+        // Compute WOTS signature
+        byte [][]wotssig=WOTSPlus.sign(sigmsg, root, ots_seed, w, pub_seed, ots_addr);
+
+  	  ByteArrayOutputStream sigmessage=new ByteArrayOutputStream();
+  	  sigmessage.write(sigmsg);
+  	  sigmessage.write('|');
+  	  sigmessage.write(w);
+  	  sigmsg=sigmessage.toByteArray();
+     
+  //TODO
+  	  compute_authpath_wots(root, sig_msg, idx_leaf, sk_seed, &(params->xmss_par), pub_seed, ots_addr);
+        sigmsg += tree_h*n;
+      //  *sig_msg_len += tree_h*n;
+      }
+
+	  ByteArrayOutputStream sigmessage=new ByteArrayOutputStream();
+	  sigmessage.write(sigmsg);
+	  sigmessage.write('|');
+	  sigmessage.write(msg);
+	  sigmsg=sigmessage.toByteArray();
 	
-	  /**
-     * returns the height of the tree Tree with only one Node has height 0 Tree with 4 Nodes has
-     * height 2
-     */
-    public int getTreeHeight() {
-        return (int) MathUtils.log2nlz(leafCounter);
-    }
-    
+	 // *sig_msg_len += msglen;
+
+	  return sigmsg;
+	}
+
+	public byte[] getSK_Seed() {
+		String[] splitted = xPrivKey.split("\\|"); // splits the xmss private
+													// key in its components
+		return splitted[1].getBytes(); // private key seed is always second
+	}
 
 }

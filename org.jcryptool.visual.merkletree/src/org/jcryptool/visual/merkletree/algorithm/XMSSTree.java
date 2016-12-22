@@ -26,7 +26,6 @@ public class XMSSTree implements ISimpleMerkle {
     
     HashTreeAddress hAdrs = new HashTreeAddress();
     OTSHashAddress otsAdrs = new OTSHashAddress();
-    LTreeAddress lAdrs = new LTreeAddress();
     byte[] bitmask;
     public String xPrivKey;
     public String xPubKey;
@@ -304,7 +303,7 @@ public class XMSSTree implements ISimpleMerkle {
      * @param seed seed for the PRNG
      * @param address address of left/right node
      */
-    public byte[] randomGenerator(byte[] seed, byte[] address, int len) {
+    public static byte[] randomGenerator(byte[] seed, byte[] address, int len) {
         byte[] res = new byte[len + 32]; // erstellen des zu befüllenden arrays
         byte[] padding = new byte[32];
         MessageDigest hash = null;
