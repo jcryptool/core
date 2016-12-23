@@ -9,6 +9,7 @@ import javax.swing.text.html.HTMLDocument.HTMLReader.HiddenAction;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.SWTEventDispatcher;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StyledText;
@@ -17,6 +18,7 @@ import org.eclipse.swt.events.DragDetectListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
+import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -72,6 +74,8 @@ public class MerkleTreeZestComposite
 	Composite zestComposite;
 	GridLayout zestLayout;
 	SashForm zestSash;
+
+	boolean distinctListener = false;
 
 	/**
 	 * Create the composite. Including Description, GraphItem, GraphView,
@@ -162,7 +166,7 @@ public class MerkleTreeZestComposite
 			public void mouseUp(MouseEvent e) {
 				newMouse = Display.getCurrent().getCursorLocation();
 
-				if (Math.abs(newMouse.x - oldMouse.x) > 3 || Math.abs(newMouse.y - oldMouse.y) > 3) {
+				if (distinctListener == false) {
 					System.err.println("Drag Distance was: " + (newMouse.x - oldMouse.x) + "/" + (newMouse.y - oldMouse.y));
 					System.err.println("moved sash from: " + oldSash.x + "/" + oldSash.y + " to " + ((newMouse.x - oldMouse.x) - oldSash.x) + "/" + ((newMouse.y - oldMouse.y) - oldSash.y));
 					zestSash.setLocation((newMouse.x - oldMouse.x) + oldSash.x, (newMouse.y - oldMouse.y) + oldSash.y);
@@ -170,7 +174,7 @@ public class MerkleTreeZestComposite
 				}
 				// hidden.dispose();
 				// zestComposite.setCursor(Display.getCurrent().getSystemCursor(SWT.CURSOR_ARROW));
-
+				distinctListener = false;
 			}
 
 			@Override
@@ -243,6 +247,7 @@ public class MerkleTreeZestComposite
 			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				distinctListener = true;
 				if (e.item instanceof GraphNode) {
 					GraphNode node = (GraphNode) e.item;
 					Node n = (Node) node.getData();
@@ -275,6 +280,15 @@ public class MerkleTreeZestComposite
 						styledTextTree.setText(Descriptions.ZestLabelProvider_6 + " = " + n.getNameAsString());
 					}
 				}
+
+				/* Deselects immediately to allow dragging */
+				viewer.setSelection(new ISelection() {
+
+					@Override
+					public boolean isEmpty() {
+						return false;
+					}
+				});
 			}
 		});
 	}
