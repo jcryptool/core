@@ -1,11 +1,5 @@
 package org.jcryptool.visual.merkletree;
 
-import javax.inject.Inject;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -134,8 +128,7 @@ public class MerkleTreeView extends ViewPart {
 				if (unsavedChanges == true) {
 					int select = tabFolder.getSelectionIndex();
 					tabFolder.setSelection(0);
-					MessageBox messageBox = new MessageBox(new Shell(),
-							SWT.ICON_INFORMATION | SWT.YES | SWT.NO | SWT.CANCEL);
+					MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.YES | SWT.NO | SWT.CANCEL);
 					messageBox.setMessage(Descriptions.UnsavedChanges);
 					messageBox.setText("Info");
 					switch (messageBox.open()) {
@@ -264,8 +257,7 @@ public class MerkleTreeView extends ViewPart {
 								keyIndex = splittedSign[0];
 							}
 
-							mtV = new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle,
-									Integer.parseInt(keyIndex), signature, message);
+							mtV = new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle, Integer.parseInt(keyIndex), signature, message);
 							tabFolder.getSelection()[0].setControl(mtV);
 
 						}
@@ -281,8 +273,7 @@ public class MerkleTreeView extends ViewPart {
 		scrolledComposite.setMinSize(MerkleConst.PLUGIN_WIDTH, MerkleConst.PLUGIN_HEIGTH);
 
 		// makes the connection to the help of the plug-in
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(),
-				"org.jcryptool.visual.merkletree.merkletreeview");
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), "org.jcryptool.visual.merkletree.merkletreeview");
 	}
 
 	/**

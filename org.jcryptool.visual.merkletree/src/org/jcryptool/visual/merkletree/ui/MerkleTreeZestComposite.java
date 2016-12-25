@@ -1,24 +1,21 @@
 package org.jcryptool.visual.merkletree.ui;
 
-import java.awt.MouseInfo;
+import java.awt.Event;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.HiddenAction;
-
 import org.eclipse.draw2d.ColorConstants;
+import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.SWTEventDispatcher;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.DragDetectEvent;
-import org.eclipse.swt.events.DragDetectListener;
+import org.eclipse.swt.events.ExpandEvent;
+import org.eclipse.swt.events.ExpandListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.events.MouseMoveListener;
-import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -31,29 +28,23 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.ExpandBar;
+import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Sash;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.GraphConnection;
 import org.eclipse.zest.core.widgets.GraphItem;
 import org.eclipse.zest.core.widgets.GraphNode;
 import org.eclipse.zest.core.widgets.ZestStyles;
-import org.eclipse.zest.layouts.LayoutAlgorithm;
 import org.eclipse.zest.layouts.LayoutStyles;
-import org.eclipse.zest.layouts.algorithms.HorizontalTreeLayoutAlgorithm;
-import org.eclipse.zest.layouts.algorithms.RadialLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
 import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.Node;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
-import org.eclipse.swt.graphics.Cursor;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
-import org.eclipse.swt.graphics.PaletteData;
 
 /**
  * Class for the Composite of Tabpage "MerkleTree"
@@ -68,14 +59,23 @@ public class MerkleTreeZestComposite
 
 	private GraphViewer viewer;
 	private StyledText styledTextTree;
-	private int layoutCounter = 1;
 	private ArrayList<GraphConnection> markedConnectionList;
+	ExpandBar descriptionExpander;
 	Label descLabel;
+	StyledText descText;
+	Composite expandComposite;
 	Composite zestComposite;
 	GridLayout zestLayout;
 	SashForm zestSash;
-
+	Display curDisplay;
 	boolean distinctListener = false;
+	boolean mouseDragging;
+	Point cursorLoc;
+	Point oldMouse;
+	Point newMouse;
+	Point oldSash;
+	Point cameraPoint;
+	Object lock = new Object();
 
 	/**
 	 * Create the composite. Including Description, GraphItem, GraphView,
@@ -94,14 +94,8 @@ public class MerkleTreeZestComposite
 		super(parent, style);
 		this.setLayout(new GridLayout(1, true));
 		this.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, MerkleConst.DESC_HEIGHT + 1));
-
-		/*
-		 * Control listener for resizing the Graph this.addControlListener(new
-		 * ControlAdapter() {
-		 * 
-		 * @Override public void controlResized(ControlEvent e) {
-		 * viewer.applyLayout(); } });
-		 */
+		Composite parentComposite = this;
+		curDisplay = getDisplay();
 
 		/*
 		 * the description label for the chosen mode
@@ -109,25 +103,38 @@ public class MerkleTreeZestComposite
 		descLabel = new Label(this, SWT.NONE);
 		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
 
+		descriptionExpander = new ExpandBar(this, SWT.NONE);
+		descriptionExpander.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		ExpandItem collapsablePart = new ExpandItem(descriptionExpander, SWT.NONE, 0);
+
+		expandComposite = new Composite(descriptionExpander, SWT.NONE);
+		GridLayout expandLayout = new GridLayout();
+		expandComposite.setLayout(expandLayout);
+
 		/*
 		 * description text of the chosen mode
 		 */
-		StyledText descText = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
-		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		this.setLayout(new GridLayout(1, true));
+		descText = new StyledText(expandComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
+		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		// this.setLayout(new GridLayout(1, true));
 
-		styledTextTree = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
+		styledTextTree = new StyledText(expandComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
+		styledTextTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-		GridData gd_styledTextTree = new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1);
-		gd_styledTextTree.widthHint = 960;
-		gd_styledTextTree.heightHint = 40;
-		styledTextTree.setLayoutData(gd_styledTextTree);
+		collapsablePart.setText("Beschreibung ausblenden");
+		collapsablePart.setExpanded(true);
+		collapsablePart.setControl(expandComposite);
+		collapsablePart.setHeight(parent.getSize().y / 2);
+		descriptionExpander.setBackground(curDisplay.getSystemColor(SWT.COLOR_WHITE));
 
-		// Event Listener for the MerkleTree
+		/*
+		 * update the item's height if needed in response to changes in the
+		 * text's size
+		 */
 
 		// Composite which contains a SashForm which contains the MerkleTree
 		// Zest Graph
-		zestComposite = new Composite(this, SWT.BORDER);
+		zestComposite = new Composite(this, SWT.NONE);
 		zestComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		zestLayout = new GridLayout();
 		zestComposite.setLayout(zestLayout);
@@ -142,49 +149,44 @@ public class MerkleTreeZestComposite
 			}
 		});
 
-		zestSash = new SashForm(zestComposite, SWT.HORIZONTAL | SWT.SMOOTH);
+		zestSash = new SashForm(zestComposite, SWT.NO_SCROLL);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(zestSash);
 
 		// Beginning of the Graph
-		viewer = new GraphViewer(zestSash, SWT.NONE);
+		viewer = new GraphViewer(zestSash, SWT.H_SCROLL | SWT.V_SCROLL);
 
 		// Camera Movement
 		viewer.getGraphControl().addMouseListener(new MouseListener() {
-			Point oldMouse;
-			Point newMouse;
-			Point oldSash;
-
-			Color white = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
-			Color black = Display.getDefault().getSystemColor(SWT.COLOR_BLACK);
-			PaletteData palette = new PaletteData(new RGB[] { white.getRGB(), black.getRGB() });
-			ImageData sourceData = new ImageData(16, 16, 1, palette);
-			Cursor cursor = new Cursor(Display.getCurrent(), sourceData, 0, 0);
-
-			Cursor hidden;
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				newMouse = Display.getCurrent().getCursorLocation();
-
-				if (distinctListener == false) {
-					System.err.println("Drag Distance was: " + (newMouse.x - oldMouse.x) + "/" + (newMouse.y - oldMouse.y));
-					System.err.println("moved sash from: " + oldSash.x + "/" + oldSash.y + " to " + ((newMouse.x - oldMouse.x) - oldSash.x) + "/" + ((newMouse.y - oldMouse.y) - oldSash.y));
-					zestSash.setLocation((newMouse.x - oldMouse.x) + oldSash.x, (newMouse.y - oldMouse.y) + oldSash.y);
-
-				}
-				// hidden.dispose();
-				// zestComposite.setCursor(Display.getCurrent().getSystemCursor(SWT.CURSOR_ARROW));
 				distinctListener = false;
+				mouseDragging = false;
+				cameraPoint = zestSash.getLocation();
 			}
 
 			@Override
 			public void mouseDown(MouseEvent e) {
+				mouseDragging = true;
 				oldMouse = Display.getCurrent().getCursorLocation();
 				oldSash = zestSash.getLocation();
 
-				// hidden = new Cursor(Display.getCurrent(),
-				// cursorImage.getImageData(), 0, 0);
-				// zestComposite.setCursor(cursor);
+				Runnable runnable = new Runnable() {
+					@Override
+					public void run() {
+						while (mouseDragging) {
+							if (distinctListener == false)
+								updateSashPosition();
+							try {
+								Thread.sleep(10);
+							} catch (InterruptedException e) {
+							}
+
+						}
+
+					}
+				};
+				new Thread(runnable).start();
 
 			}
 
@@ -194,6 +196,59 @@ public class MerkleTreeZestComposite
 			}
 		});
 
+		descriptionExpander.addExpandListener(new ExpandListener() {
+
+			Point currentShellSize;
+
+			@Override
+			public void itemExpanded(ExpandEvent e) {
+				curDisplay.asyncExec(() -> {
+					currentShellSize = parent.getSize();
+					collapsablePart.setHeight(currentShellSize.y / 2);
+					descriptionExpander.pack();
+					parentComposite.layout();
+					zestSash.setLocation(cameraPoint.x, cameraPoint.y - (currentShellSize.y / 2));
+					// System.err.println("old y: " + cameraPoint.y + "
+					// subracting " + currentShellSize.y / 2 + "\nNew position:
+					// " + (cameraPoint.y - currentShellSize.y / 2));
+
+					// System.err.println("composite position: " +
+					// zestComposite.getSize().toString());
+					// zestSash.getLocation().y);
+
+				});
+
+			}
+
+			@Override
+			public void itemCollapsed(ExpandEvent e) {
+				curDisplay.asyncExec(() -> {
+					currentShellSize = parent.getSize();
+
+					descriptionExpander.pack();
+					parentComposite.layout();
+					// System.err.println("old y: " + cameraPoint.y + "\nnew y:
+					// " + (cameraPoint.y + (currentShellSize.y / 2)));
+					synchronized (Display.getDefault().getSynchronizer()) {
+						try {
+							Display.getDefault().getSynchronizer().wait(1000);
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+					zestSash.setLocation(cameraPoint.x, cameraPoint.y + (currentShellSize.y / 2));
+					// System.err.println("sash position: " +
+					// zestSash.getLocation().toString());
+					// System.err.println("actual position: " +
+					// zestSash.getLocation().y);
+
+				});
+			}
+		});
+
+		viewer.getGraphControl().setHorizontalScrollBarVisibility(FigureCanvas.NEVER);
+		viewer.getGraphControl().setVerticalScrollBarVisibility(FigureCanvas.NEVER);
 		markedConnectionList = new ArrayList<GraphConnection>();
 		viewer.setContentProvider(new ZestNodeContentProvider());
 		viewer.setLabelProvider(new ZestLabelProvider(ColorConstants.lightGreen));
@@ -226,7 +281,6 @@ public class MerkleTreeZestComposite
 			break;
 
 		}
-
 		Graph graph = viewer.getGraphControl();
 
 		// Makes the nodes fixed (they cannot be dragged around with the mouse
@@ -384,37 +438,6 @@ public class MerkleTreeZestComposite
 		}
 	}
 
-	/*
-	 * @Override public AbstractZoomableViewer getZoomableViewer() { return
-	 * viewer; }
-	 */
-
-	/**
-	 * Change the layout of the merkle tree
-	 */
-	public void setLayoutManager() {
-		switch (layoutCounter) {
-		case 1:
-			viewer.setLayoutAlgorithm(new HorizontalTreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
-			viewer.applyLayout();
-
-			layoutCounter++;
-			break;
-		case 2:
-			viewer.setLayoutAlgorithm(new RadialLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
-			viewer.applyLayout();
-
-			layoutCounter++;
-			break;
-		case 3:
-			viewer.setLayoutAlgorithm(new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
-			viewer.applyLayout();
-
-			layoutCounter = 1;
-			break;
-		}
-	}
-
 	/**
 	 * Synchronize the merklTree with the other Tabpages
 	 * 
@@ -423,12 +446,32 @@ public class MerkleTreeZestComposite
 	private void linkMerkleTree(ISimpleMerkle merkle) {
 		if (merkle.getMerkleRoot() != null) {
 			viewer.setInput(merkle.getTree());
-
-			LayoutAlgorithm layout = new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);
-			viewer.setLayoutAlgorithm(layout, true);
+			viewer.setLayoutAlgorithm(new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
 			viewer.applyLayout();
 		}
 
+	}
+
+	/**
+	 * 
+	 * 
+	 */
+	private void updateSashPosition() {
+
+		curDisplay.asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				newMouse = getDisplay().getCursorLocation();
+				if (newMouse.x - oldMouse.x != 0 || newMouse.y - oldMouse.y != 0) {
+					zestSash.setLocation((newMouse.x - oldMouse.x) + oldSash.x, (newMouse.y - oldMouse.y) + oldSash.y);
+					oldSash.x = (newMouse.x - oldMouse.x) + oldSash.x;
+					oldSash.y = (newMouse.y - oldMouse.y) + oldSash.y;
+					oldMouse = newMouse;
+					System.err.println(zestSash.getLocation().toString());
+				}
+
+			}
+		});
 	}
 
 }
