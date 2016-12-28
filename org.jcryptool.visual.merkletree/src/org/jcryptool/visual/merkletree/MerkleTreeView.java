@@ -51,6 +51,8 @@ public class MerkleTreeView extends ViewPart {
     private MerkleTreeVerifikationComposite mtV;
     private ISimpleMerkle merkle;
     private SUIT mode;
+    
+    private String peter;
 
     boolean sync = false;
 
@@ -177,7 +179,16 @@ public class MerkleTreeView extends ViewPart {
                     }
                     tabFolder.setSelection(select);
                 }
-
+/**
+ * Wöcha überprüfung? 
+ * heast michi, des geht ned
+ * instanz vo merkle 
+ */
+                
+                if (peter == null) {
+                	System.err.println("Tottottottottottottottottot");
+                }
+                
                 if (merkle == null) {
                     tabFolder.setSelection(0);
                     MessageBox messageBoxx = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
