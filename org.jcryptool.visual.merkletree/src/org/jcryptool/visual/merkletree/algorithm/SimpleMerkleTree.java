@@ -191,8 +191,7 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 		int iHeight = this.keyIndex;
 		int treeHeight = tree.size();
 
-		byte[] messageHash = randomGenerator(BigInteger.valueOf(keyIndex).toByteArray(), message.getBytes(),
-				message.length());
+		byte[] messageHash = randomGenerator(BigInteger.valueOf(keyIndex).toByteArray(), message.getBytes(), message.length());
 		this.otsAlgo.setPrivateKey(this.privKeys.get(this.keyIndex));
 		this.otsAlgo.setPublicKey(this.publicKeys.get(this.keyIndex));
 
@@ -279,14 +278,12 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 			this.otsAlgo.generateKeyPair();
 			this.privKeys.add(this.otsAlgo.getPrivateKey());
 			this.publicKeys.add(this.otsAlgo.getPublicKey());
-			d1pubKey = org.jcryptool.visual.merkletree.files.Converter._hexStringToByte(
-					org.jcryptool.visual.merkletree.files.Converter._2dByteToHex(this.otsAlgo.getPublicKey()));
+			d1pubKey = org.jcryptool.visual.merkletree.files.Converter._hexStringToByte(org.jcryptool.visual.merkletree.files.Converter._2dByteToHex(this.otsAlgo.getPublicKey()));
 			leaf = new SimpleNode(this.mDigest.digest(d1pubKey), true, i);
 			this.leafNumber++;
 			code = org.jcryptool.visual.merkletree.files.Converter._byteToHex(d1pubKey).substring(0, 5);
 			code += "...";
-			code += org.jcryptool.visual.merkletree.files.Converter._byteToHex(d1pubKey).substring(d1pubKey.length - 5,
-					d1pubKey.length);
+			code += org.jcryptool.visual.merkletree.files.Converter._byteToHex(d1pubKey).substring(d1pubKey.length - 5, d1pubKey.length);
 			leaf.setCode(code);
 			leaf.setAuthPath(getTreeHeight());
 			this.leaves.add(leaf);

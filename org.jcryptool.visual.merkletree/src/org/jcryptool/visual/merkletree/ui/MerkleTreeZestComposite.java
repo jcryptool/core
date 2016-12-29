@@ -4,11 +4,14 @@ import java.awt.Event;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Popup;
+
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.SWTEventDispatcher;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.osgi.container.namespaces.EclipsePlatformNamespace;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StyledText;
@@ -20,11 +23,17 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -33,6 +42,7 @@ import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.GraphConnection;
@@ -45,6 +55,7 @@ import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.Node;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
+import org.eclipse.swt.graphics.Rectangle;
 
 /**
  * Class for the Composite of Tabpage "MerkleTree"
@@ -76,6 +87,14 @@ public class MerkleTreeZestComposite
 	Point oldSash;
 	Point cameraPoint;
 	Object lock = new Object();
+	ISimpleMerkle merkle;
+	Graph graph;
+	Composite parent;
+	boolean expandedFlag = true;
+
+	// Interactive Variables
+	String message;
+	int step = 0;
 
 	/**
 	 * Create the composite. Including Description, GraphItem, GraphView,
@@ -96,6 +115,8 @@ public class MerkleTreeZestComposite
 		this.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, MerkleConst.DESC_HEIGHT + 1));
 		Composite parentComposite = this;
 		curDisplay = getDisplay();
+		this.merkle = merkle;
+		this.parent = parent;
 
 		/*
 		 * the description label for the chosen mode
@@ -127,10 +148,13 @@ public class MerkleTreeZestComposite
 		collapsablePart.setHeight(parent.getSize().y / 2);
 		descriptionExpander.setBackground(curDisplay.getSystemColor(SWT.COLOR_WHITE));
 
-		/*
-		 * update the item's height if needed in response to changes in the
-		 * text's size
-		 */
+		Button button = new Button(this, SWT.PUSH);
+		button.setText("Interaktive Signaturerstellung");
+		button.pack();
+		button.setLocation(10, 140);
+		button.addListener(SWT.Selection, event -> {
+			interactiveSignatureGeneration();
+		});
 
 		// Composite which contains a SashForm which contains the MerkleTree
 		// Zest Graph
@@ -149,14 +173,14 @@ public class MerkleTreeZestComposite
 			}
 		});
 
-		zestSash = new SashForm(zestComposite, SWT.NO_SCROLL);
+		zestSash = new SashForm(zestComposite, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(zestSash);
 
 		// Beginning of the Graph
-		viewer = new GraphViewer(zestSash, SWT.H_SCROLL | SWT.V_SCROLL);
+		viewer = new GraphViewer(zestSash, SWT.NONE);
 
 		// Camera Movement
-		viewer.getGraphControl().addMouseListener(new MouseListener() {
+		MouseListener dragQueen = new MouseListener() {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
@@ -194,7 +218,9 @@ public class MerkleTreeZestComposite
 			public void mouseDoubleClick(MouseEvent e) {
 				// do nothing
 			}
-		});
+		};
+		viewer.getGraphControl().addMouseListener(dragQueen);
+		zestComposite.addMouseListener(dragQueen);
 
 		descriptionExpander.addExpandListener(new ExpandListener() {
 
@@ -208,14 +234,7 @@ public class MerkleTreeZestComposite
 					descriptionExpander.pack();
 					parentComposite.layout();
 					zestSash.setLocation(cameraPoint.x, cameraPoint.y - (currentShellSize.y / 2));
-					// System.err.println("old y: " + cameraPoint.y + "
-					// subracting " + currentShellSize.y / 2 + "\nNew position:
-					// " + (cameraPoint.y - currentShellSize.y / 2));
-
-					// System.err.println("composite position: " +
-					// zestComposite.getSize().toString());
-					// zestSash.getLocation().y);
-
+					expandedFlag = true;
 				});
 
 			}
@@ -224,25 +243,10 @@ public class MerkleTreeZestComposite
 			public void itemCollapsed(ExpandEvent e) {
 				curDisplay.asyncExec(() -> {
 					currentShellSize = parent.getSize();
-
 					descriptionExpander.pack();
 					parentComposite.layout();
-					// System.err.println("old y: " + cameraPoint.y + "\nnew y:
-					// " + (cameraPoint.y + (currentShellSize.y / 2)));
-					synchronized (Display.getDefault().getSynchronizer()) {
-						try {
-							Display.getDefault().getSynchronizer().wait(1000);
-						} catch (InterruptedException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-					}
 					zestSash.setLocation(cameraPoint.x, cameraPoint.y + (currentShellSize.y / 2));
-					// System.err.println("sash position: " +
-					// zestSash.getLocation().toString());
-					// System.err.println("actual position: " +
-					// zestSash.getLocation().y);
-
+					expandedFlag = false;
 				});
 			}
 		});
@@ -281,7 +285,7 @@ public class MerkleTreeZestComposite
 			break;
 
 		}
-		Graph graph = viewer.getGraphControl();
+		graph = viewer.getGraphControl();
 
 		// Makes the nodes fixed (they cannot be dragged around with the mouse
 		// by overriding the mouseMovedListener with empty event
@@ -467,8 +471,177 @@ public class MerkleTreeZestComposite
 					oldSash.x = (newMouse.x - oldMouse.x) + oldSash.x;
 					oldSash.y = (newMouse.y - oldMouse.y) + oldSash.y;
 					oldMouse = newMouse;
-					System.err.println(zestSash.getLocation().toString());
 				}
+
+			}
+		});
+	}
+
+	Rectangle compositePosition;
+	Rectangle expanderPosition;
+	Rectangle windowPosition;
+	Rectangle currentView;
+	Point popupPosition;
+	Point graphPosition;
+
+	Label guideLabel;
+	Text signatureText;
+	Button nextButton;
+	Button cancelButton;
+
+	String plainSignature;
+	String signature[];
+	GraphNode rootNode;
+	Image highlightedNode;
+
+	private void interactiveSignatureGeneration() {
+		Shell popup = new Shell(getDisplay(), SWT.MODELESS | SWT.TOOL | SWT.ON_TOP);
+		popup.setSize(500, 150);
+
+		// Get leaves and root node
+
+		List<?> graphNodeRetriever = graph.getNodes();
+		Object[] nodeRetriever = viewer.getNodeElements();
+		GraphNode[] leaves = new GraphNode[nodeRetriever.length / 2 + 1];
+
+		for (int i = 0, j = 0; i < graphNodeRetriever.size(); ++i) {
+			if (((GraphNode) graphNodeRetriever.get(i)).getSourceConnections().isEmpty()) {
+				leaves[j] = (GraphNode) graphNodeRetriever.get(i);
+				++j;
+			}
+			if (((GraphNode) graphNodeRetriever.get(i)).getTargetConnections().isEmpty()) {
+				rootNode = (GraphNode) graphNodeRetriever.get(i);
+			}
+		}
+
+		// Initialize current size of the view
+
+		compositePosition = zestComposite.getBounds();
+		expanderPosition = descriptionExpander.getBounds();
+		windowPosition = getShell().getBounds();
+		currentView = new Rectangle(compositePosition.x, compositePosition.y, expanderPosition.width, windowPosition.height - compositePosition.y + 10);
+
+		int currentIndex = Integer.parseInt(merkle.getKeyIndex());
+		popup.setLayout(new GridLayout(6, true));
+		guideLabel = new Label(popup, SWT.WRAP);
+		guideLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 6, 1));
+		guideLabel.setText("Willkommen bei der Interaktiven Signaturerstellung\nGeben sie eine Nachricht an, die signiert werden soll");
+		signatureText = new Text(popup, SWT.WRAP | SWT.MULTI);
+		signatureText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 6, 1));
+
+		nextButton = new Button(popup, SWT.PUSH);
+		nextButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		nextButton.setText("Weiter");
+		cancelButton = new Button(popup, SWT.PUSH);
+		cancelButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		cancelButton.setText("Abbrechen");
+
+		// Initial Middle Position by taking the window base, adding the current
+		// anchor point of the graph composite (zestComposite), its size and
+		// divide it by half
+		popupPosition = new Point(windowPosition.x, windowPosition.y);
+		popupPosition.x += currentView.x;
+		popupPosition.y += currentView.y;
+		popupPosition.x += currentView.width / 2 - popup.getBounds().width / 2;
+		popupPosition.y += currentView.height / 2 - popup.getBounds().height / 2;
+
+		popup.setLocation(popupPosition);
+		popup.open();
+
+		// Step by Step Listeners
+		nextButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				switch (step) {
+
+				case 0:
+					message = signatureText.getText();
+					if (message.length() != 0) {
+						guideLabel.setText("Im ersten Schritt suchen wir ein freies OTS Schlüsselpaar.");
+						signatureText.setVisible(false);
+						++step;
+
+					}
+					break;
+
+				case 1:
+					Point leafPosition = new Point(leaves[currentIndex].getLocation().x, leaves[currentIndex].getLocation().y);
+
+					zestSash.setLocation(-leafPosition.x + popup.getBounds().width + 30, -leafPosition.y + currentView.height - 250);
+					popup.setLocation(windowPosition.x + compositePosition.x + 45, windowPosition.y + compositePosition.y + currentView.height - 230);
+					guideLabel.setText("Hier, Blatt " + currentIndex + " ist verwendbar.\nWir schreiben also den Index des Blattes in die Signatur");
+					signatureText.setText(currentIndex + " |");
+					signatureText.setVisible(true);
+					highlightedNode = new Image(getDisplay(), "C:\\Users\\XMSS\\highlighted.png");
+					leaves[currentIndex].highlight();
+
+					++step;
+					break;
+				case 2:
+					plainSignature = merkle.sign(message);
+					signature = plainSignature.split("\\|");
+					guideLabel.setText("Der Wert des Blattes " + currentIndex
+							+ " ist der öffentliche Schlüssel der One-Time-Signature. Er wird zur Überprüfung der Nachricht benötigt und ist damit der nächste Teil der Signatur ");
+					++step;
+					break;
+
+				case 3:
+					signatureText.append(signature[1]);
+					++step;
+					break;
+				case 4:
+					guideLabel.setText(
+							"Um Jetzt den Baum zu Hashen fehlt uns aber noch wichtige Information. Die Werte der rot markierten Nodes fehlen dem Prüfer der Signatur und müssen deshalb ergänzt werden");
+					markBranch(leaves[currentIndex]);
+					markAuthPath(markedConnectionList);
+					++step;
+					break;
+				case 5:
+					signatureText.append(" | " + signature[2]);
+					++step;
+					break;
+				case 6:
+					guideLabel.setText("Sind alle notwendigen Knoten bis zur Wurzel ergänzt, ist die Signatur fertig. Sie kann jetzt im Tab \"Verifizieren\" überprüft werden ");
+					Point rootPosition = new Point(rootNode.getLocation().x, rootNode.getLocation().y);
+					zestSash.setLocation(-rootPosition.x + currentView.width / 2, -rootPosition.y + popup.getBounds().height);
+					popup.setLocation(windowPosition.x + currentView.width / 2 - popup.getBounds().width / 2, windowPosition.y + currentView.y + 130);
+
+					nextButton.setText("Fertig");
+
+					++step;
+					break;
+				case 7:
+					popup.dispose();
+					step = 0;
+					break;
+				default:
+					break;
+				}
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+		});
+
+		cancelButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				step = 0;
+				popup.dispose();
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
 
 			}
 		});
