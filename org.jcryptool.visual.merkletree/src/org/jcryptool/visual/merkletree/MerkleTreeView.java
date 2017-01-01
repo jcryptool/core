@@ -221,6 +221,7 @@ public class MerkleTreeView extends ViewPart {
 								public void run() {
 									// TODO Auto-generated method stub
 									mtK = new MerkleTreeKeyComposite(tabFolder, SWT.NONE, merkle);
+									mtK.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 								}
 							});
 						}
@@ -236,6 +237,7 @@ public class MerkleTreeView extends ViewPart {
 						 */
 						if (sync == false || mtS == null) {
 							mtS = new MerkleTreeSignatureComposite(tabFolder, SWT.NONE, merkle);
+							mtS.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 							tbtmParameter3.setControl(mtS);
 						}
 						previousTab = 3;
@@ -258,6 +260,7 @@ public class MerkleTreeView extends ViewPart {
 							}
 
 							mtV = new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle, Integer.parseInt(keyIndex), signature, message);
+							mtV.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 							tabFolder.getSelection()[0].setControl(mtV);
 
 						}

@@ -11,6 +11,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
@@ -45,11 +46,13 @@ public class MerkleTreeSeed extends Composite {
 	 * @param style
 	 */
 	public MerkleTreeSeed(Composite parent, int style, SUIT mode, ViewPart masterView) {
-		super(parent, SWT.NONE);
+		super(parent, style);
 
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
-		Composite testComp = new Composite(this, SWT.NONE | SWT.BORDER);
-		testComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
+		Group testComp = new Group(this, SWT.NONE);
+		testComp.setText(Descriptions.Tab0_Head1);
+		// Composite testComp = new Composite(this, SWT.NONE | SWT.BORDER);
+		testComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
 		testComp.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
 
 		/*
@@ -57,7 +60,7 @@ public class MerkleTreeSeed extends Composite {
 		 */
 		randomgenerator = new Label(testComp, SWT.NONE);
 		randomgenerator.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
-		randomgenerator.setText(Descriptions.Tab0_Head1);
+		// randomgenerator.setText(Descriptions.Tab0_Head1);
 
 		/*
 		 * Textbox for seed initiates textbox with a seed
@@ -83,8 +86,8 @@ public class MerkleTreeSeed extends Composite {
 			/*
 			 * create Bitmask box
 			 */
-			bitMask = new MerkleTreeBitmask(this, SWT.WRAP | SWT.BORDER | SWT.LEFT, masterView);
-			bitMask.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
+			bitMask = new MerkleTreeBitmask(this, SWT.WRAP, masterView);
+			bitMask.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
 			// initial random Bitmask
 			bitmaskSeedarray = generateNewSeed();
 			bitMask.textSeed.setText(Converter._byteToHex(bitmaskSeedarray));
@@ -108,14 +111,14 @@ public class MerkleTreeSeed extends Composite {
 		 * Create sub-Frame for the Winternitz Parameter selection
 		 */
 
-		wParamc = new MerkleTreeWParam(this, SWT.WRAP | SWT.BORDER | SWT.LEFT, mode, masterView);
-		wParamc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
+		wParamc = new MerkleTreeWParam(this, SWT.WRAP, masterView);
+		wParamc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
 
 		/*
 		 * Create sub-Frame for the Key Text/Create-Button
 		 */
-		keyPairc = new MerkleTreeKeyPairs(this, SWT.WRAP | SWT.BORDER | SWT.LEFT, mode, masterView);
-		keyPairc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
+		keyPairc = new MerkleTreeKeyPairs(this, SWT.WRAP, mode, masterView);
+		keyPairc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
 
 		buttonCreateSeed.addSelectionListener(new SelectionAdapter() {
 			@Override

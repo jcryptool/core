@@ -8,6 +8,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.Descriptions;
@@ -19,7 +20,7 @@ public class MerkleTreeWParam extends Composite {
 	Button buttonSet4;
 	Button buttonSet16;
 	Label createLabel;
-	Label keysum;
+	Label titleLabel;
 	StyledText createdKey;
 	StyledText descText;
 	private int wParameter = 16;
@@ -30,26 +31,31 @@ public class MerkleTreeWParam extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public MerkleTreeWParam(Composite parent, int style, SUIT mode, ViewPart masterView) {
+	public MerkleTreeWParam(Composite parent, int style, ViewPart masterView) {
 		super(parent, style);
-		this.setLayout(new GridLayout(1, true));
+		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
+
+		Group group = new Group(this, SWT.NONE);
+		group.setText(Descriptions.Tab0_Head5);
+		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
+		group.setLayout(new GridLayout(1, true));
 
 		// headline
-		keysum = new Label(this, SWT.NONE);
-		keysum.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
-		keysum.setText(Descriptions.Tab0_Head5);
+		titleLabel = new Label(this, SWT.NONE);
+		titleLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
+		// titleLabel.setText(Descriptions.Tab0_Head5);
 
-		// text box with Description (Tab0_Txt2)
-		createdKey = new StyledText(this, SWT.WRAP | SWT.BORDER | SWT.READ_ONLY);
+		// text box with Description
+		createdKey = new StyledText(group, SWT.WRAP | SWT.BORDER | SWT.READ_ONLY);
 		createdKey.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 2));
 		createdKey.setText(Descriptions.Tab0_Txt2);
 
 		// Radio Buttons 4/16
-		buttonSet4 = new Button(this, SWT.RADIO);
+		buttonSet4 = new Button(group, SWT.RADIO);
 		buttonSet4.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		buttonSet4.setText("4");
 
-		buttonSet16 = new Button(this, SWT.RADIO);
+		buttonSet16 = new Button(group, SWT.RADIO);
 		buttonSet16.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		buttonSet16.setText("16");
 		buttonSet16.setSelection(true);
@@ -63,7 +69,6 @@ public class MerkleTreeWParam extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				((MerkleTreeView) masterView).updateElement();
 			}
 
 		});
@@ -72,6 +77,7 @@ public class MerkleTreeWParam extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				wParameter = 16;
+				((MerkleTreeView) masterView).updateElement();
 			}
 
 			@Override

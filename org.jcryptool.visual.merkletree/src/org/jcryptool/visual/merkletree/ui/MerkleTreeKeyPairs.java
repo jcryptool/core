@@ -10,6 +10,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
@@ -54,21 +55,26 @@ public class MerkleTreeKeyPairs extends Composite {
 		treeValue = 0;
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
 
+		Group group = new Group(this, SWT.NONE);
+		group.setText(Descriptions.Tab0_Head2);
+		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
+		group.setLayout(new GridLayout(1, true));
+
 		// headline
-		createLabel = new Label(this, SWT.NONE);
+		createLabel = new Label(group, SWT.NONE);
 		createLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
 
 		// text
-		descText = new StyledText(this, SWT.WRAP | SWT.BORDER);
+		descText = new StyledText(group, SWT.WRAP);
 		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 2));
 		descText.setCaret(null);
 
 		// text - for the spinner
-		Label keysum = new Label(this, SWT.NONE);
+		Label keysum = new Label(group, SWT.NONE);
 		keysum.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
 
 		// spinner for the key-ammount
-		Spinner spinnerkeysum = new Spinner(this, SWT.BORDER);
+		Spinner spinnerkeysum = new Spinner(group, SWT.BORDER);
 		spinnerkeysum.setMaximum(1024);
 		spinnerkeysum.setMinimum(2);
 		spinnerkeysum.setSelection(0);
@@ -96,12 +102,12 @@ public class MerkleTreeKeyPairs extends Composite {
 		});
 
 		// 'create button'
-		buttonCreateKeys = new Button(this, SWT.NONE);
+		buttonCreateKeys = new Button(group, SWT.NONE);
 		buttonCreateKeys.setEnabled(true);
 		buttonCreateKeys.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 3, 1));
 
 		// Text box with generated key info
-		createdKey = new StyledText(this, SWT.WRAP | SWT.BORDER);
+		createdKey = new StyledText(group, SWT.WRAP | SWT.BORDER);
 		createdKey.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 2));
 		createdKey.setText(Descriptions.MerkleTreeKey_1);
 
@@ -129,7 +135,7 @@ public class MerkleTreeKeyPairs extends Composite {
 
 		// setting the text's depending on the actual suite
 		keysum.setText(Descriptions.Tab0_Lable1);
-		createLabel.setText(Descriptions.Tab0_Head2);
+		// createLabel.setText(Descriptions.Tab0_Head2);
 		buttonCreateKeys.setText(Descriptions.Tab0_Button2);
 		switch (mode) {
 		case XMSS:
@@ -205,8 +211,7 @@ public class MerkleTreeKeyPairs extends Composite {
 						((MerkleTreeView) masterView).setAlgorithm(merkle, mode);
 
 						// set or update the key information
-						createdKey.setText(Descriptions.MerkleTreeKey_2 + " " + merkle.getKeyLength() + " "
-								+ Descriptions.MerkleTreeKey_3);
+						createdKey.setText(Descriptions.MerkleTreeKey_2 + " " + merkle.getKeyLength() + " " + Descriptions.MerkleTreeKey_3);
 
 					}
 				});
