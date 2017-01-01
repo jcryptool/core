@@ -9,6 +9,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.fonts.FontService;
@@ -28,7 +29,8 @@ import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 public class MerkleTreeComposite extends Composite {
 
 	private Composite descr;
-	private MerkleTreeSeed seedc;
+	// private MerkleTreeSeed generationTab;
+	private MerkleTreeGeneration generationTab;
 	private SUIT mode;
 
 	/**
@@ -46,11 +48,10 @@ public class MerkleTreeComposite extends Composite {
 		mode = SUIT.MSS;
 
 		// to make the text wrap lines automatically
-		descr = new Composite(this, SWT.WRAP /* | SWT.BORDER */ | SWT.LEFT);
+		descr = new Composite(this, SWT.WRAP | SWT.LEFT);
 		descr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, MerkleConst.H_SPAN_MAIN, 1));
 		descr.setLayout(new GridLayout(1, true));
 		descr.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-		parent.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 
 		// Combobox, to switch the different SUIT's (MSS,XMSS,XMSS_MT)
 		Combo combo = new Combo(descr, SWT.NONE);
@@ -85,27 +86,30 @@ public class MerkleTreeComposite extends Composite {
 				}
 				((MerkleTreeView) masterView).setAlgorithm(null, mode);
 
-				// clear actual frame
+				// clear actual frame before creating a new one
 				Control[] children = descr.getChildren();
 				for (Control control : children) {
 					if (control.getClass() != Combo.class)
 						control.dispose();
 				}
 
-				// generates new view:
-				// main-descriptions
+				// sets new main-description
 				MerkleTreeDescription(descr, mode);
-				// seed-description (->key and bitmask)
-				seedc = new MerkleTreeSeed(descr, SWT.WRAP, mode, masterView);
-				seedc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
+
+				// refresh generation tab with new bitmask box
+				generationTab = new MerkleTreeGeneration(descr, SWT.NONE, mode, masterView);
+				generationTab.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
+				generationTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+
 				descr.layout();
 			}
 		});
 
 		// initial MSS - Layout
 		MerkleTreeDescription(descr, mode);
-		seedc = new MerkleTreeSeed(descr, SWT.WRAP, mode, masterView);
-		seedc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
+		generationTab = new MerkleTreeGeneration(descr, SWT.NONE, mode, masterView);
+		generationTab.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
+		generationTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 	}
 
 	/**
@@ -141,7 +145,13 @@ public class MerkleTreeComposite extends Composite {
 
 	}
 
-	public MerkleTreeSeed getMTS() {
-		return seedc;
+	/**
+	 * Provides an interface to interact with the generation tab Called from
+	 * MerkleTreeView.java
+	 * 
+	 * @return the merkle generation tab
+	 */
+	public MerkleTreeGeneration getMTS() {
+		return generationTab;
 	}
 }

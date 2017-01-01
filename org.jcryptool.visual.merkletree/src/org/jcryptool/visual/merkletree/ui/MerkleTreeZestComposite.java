@@ -574,7 +574,6 @@ public class MerkleTreeZestComposite
 					guideLabel.setText("Hier, Blatt " + currentIndex + " ist verwendbar.\nWir schreiben also den Index des Blattes in die Signatur");
 					signatureText.setText(currentIndex + " |");
 					signatureText.setVisible(true);
-					highlightedNode = new Image(getDisplay(), "C:\\Users\\XMSS\\highlighted.png");
 					leaves[currentIndex].highlight();
 
 					++step;

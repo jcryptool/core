@@ -4,6 +4,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -18,7 +19,6 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
-import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
 import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
 import org.jcryptool.visual.merkletree.ui.MerkleConst;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
@@ -49,11 +49,12 @@ public class MerkleTreeView extends ViewPart {
 	private TabFolder tabFolder;
 
 	// this composite is what actually holds the plug-in contents
-	private MerkleTreeComposite mtC;
-	private MerkleTreeZestComposite mtZ;
-	private MerkleTreeKeyComposite mtK;
-	private MerkleTreeSignatureComposite mtS;
-	private MerkleTreeVerifikationComposite mtV;
+	private MerkleTreeComposite baseComposite;
+
+	private MerkleTreeZestComposite zestTab;
+	private MerkleTreeKeyComposite keyTab;
+	private MerkleTreeSignatureComposite signatureTab;
+	private MerkleTreeVerifikationComposite verificationTab;
 	private ISimpleMerkle merkle;
 	private ISimpleMerkle oldMerkle;
 	private SUIT mode;
@@ -61,10 +62,6 @@ public class MerkleTreeView extends ViewPart {
 
 	boolean sync = false;
 
-	// bei tabwechsel, wenn true -> msg Box (y|n) "achtung" änderungen wurden
-	// nicht in neuen Tree
-	// übertragen, bitte neuen Key Erzeugen!
-	// TODO: if abfrage bei Tabwechsel einbauen
 	private Boolean unsavedChanges;
 
 	/*
@@ -91,8 +88,8 @@ public class MerkleTreeView extends ViewPart {
 		// Key-generation
 		TabItem tbtmParameter0 = new TabItem(tabFolder, SWT.NONE);
 		tbtmParameter0.setText(Descriptions.MerkleTreeTab_0);
-		mtC = new MerkleTreeComposite(tabFolder, this);
-		tbtmParameter0.setControl(mtC);
+		baseComposite = new MerkleTreeComposite(tabFolder, this);
+		tbtmParameter0.setControl(baseComposite);
 
 		// TreeView
 		TabItem tbtmParameter1 = new TabItem(tabFolder, SWT.NONE);
@@ -124,7 +121,7 @@ public class MerkleTreeView extends ViewPart {
 			 * eclipse.swt.events. SelectionEvent)
 			 */
 			@Override
-			public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) {
+			public void widgetSelected(SelectionEvent event) {
 				if (unsavedChanges == true) {
 					int select = tabFolder.getSelectionIndex();
 					tabFolder.setSelection(0);
@@ -134,57 +131,12 @@ public class MerkleTreeView extends ViewPart {
 					switch (messageBox.open()) {
 
 					case SWT.YES:
-						switch (mode) {
-						case XMSS:
-							merkle = new XMSSTree();
-							break;
-						case XMSS_MT:
-							// new XMSS_MT_TREE
-							// break;
-						case MSS:
-						default:
-							merkle = new SimpleMerkleTree();
-							break;
-						}
-						merkle.setLeafCount(mtC.getMTS().getMTKP().getKeyAmmount());
-						merkle.setSeed(mtC.getMTS().getSeed());
-						merkle.setWinternitzParameter(mtC.getMTS().getWinternitzParameter());
-
-						/*
-						 * if the generated Tree is a XMSSTree -> the
-						 * Bitmaskseed is also needed
-						 */
-						if (merkle instanceof XMSSTree) {
-							((XMSSTree) merkle).setBitmaskSeed(mtC.getMTS().getBitmaskSeed());
-						}
-						merkle.selectOneTimeSignatureAlgorithm("SHA-256", "WOTSPlus");
-						merkle.generateKeyPairsAndLeaves();
-						merkle.generateMerkleTree();
+						merkle = baseComposite.getMTS().generateMerkleTree();
 						unsavedChanges = false;
 						sync = false;
 
 						break;
 					case SWT.NO:
-						Control[] mtsC = mtC.getMTS().getChildren();
-						for (int i = 0; i < mtsC.length; i++) {
-							if (mtsC[i] instanceof Text) {
-								((Text) mtsC[i]).setText(merkle.getSeed().toString());
-							}
-						}
-
-						Control[] mtbC = mtC.getMTS().getChildren();
-						for (int i = 0; i < mtbC.length; i++) {
-							if (mtbC[i] instanceof Text) {
-								((Text) mtbC[i]).setText(((XMSSTree) merkle).getBitmaskSeed().toString());
-							}
-						}
-
-						Control[] mtkC = mtC.getMTS().getMTKP().getChildren();
-						for (int i = 0; i < mtkC.length; i++) {
-							if (mtkC[i] instanceof Spinner) {
-								((Spinner) mtkC[i]).setSelection(merkle.getLeafCounter());
-							}
-						}
 						unsavedChanges = false;
 						break;
 					case SWT.CANCEL:
@@ -206,13 +158,13 @@ public class MerkleTreeView extends ViewPart {
 						previousTab = 0;
 						break;
 					case 1:
-						mtZ = new MerkleTreeZestComposite(tabFolder, SWT.NONE, merkle, mode);
-						tbtmParameter1.setControl(mtZ);
+						zestTab = new MerkleTreeZestComposite(tabFolder, SWT.NONE, merkle, mode);
+						tbtmParameter1.setControl(zestTab);
 						previousTab = 1;
 						break;
 					case 2:
 						// Creates instance if tab was not clicked before
-						if (mtK == null || ((oldMerkle != merkle) || oldMerkle == null)) {
+						if (keyTab == null || ((oldMerkle != merkle) || oldMerkle == null)) {
 							// TODO: implement feature so that
 							// this knows: have the keys changed?
 							BusyIndicator.showWhile(Display.getCurrent(), new Runnable() {
@@ -220,13 +172,13 @@ public class MerkleTreeView extends ViewPart {
 								@Override
 								public void run() {
 									// TODO Auto-generated method stub
-									mtK = new MerkleTreeKeyComposite(tabFolder, SWT.NONE, merkle);
-									mtK.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+									keyTab = new MerkleTreeKeyComposite(tabFolder, SWT.NONE, merkle);
+									keyTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 								}
 							});
 						}
 						oldMerkle = merkle;
-						tbtmParameter2.setControl(mtK);
+						tbtmParameter2.setControl(keyTab);
 						previousTab = 2;
 						break;
 					case 3:
@@ -235,33 +187,33 @@ public class MerkleTreeView extends ViewPart {
 						 * time if synced == true -> dont create a new
 						 * SignatureComposite necessary for tab changes
 						 */
-						if (sync == false || mtS == null) {
-							mtS = new MerkleTreeSignatureComposite(tabFolder, SWT.NONE, merkle);
-							mtS.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-							tbtmParameter3.setControl(mtS);
+						if (sync == false || signatureTab == null) {
+							signatureTab = new MerkleTreeSignatureComposite(tabFolder, SWT.NONE, merkle);
+							signatureTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+							tbtmParameter3.setControl(signatureTab);
 						}
 						previousTab = 3;
 						break;
 					case 4:
 						sync = true;
-						if (mtS == null || mtS.getSignature() == null) {
+						if (signatureTab == null || signatureTab.getSignature() == null) {
+							tabFolder.setSelection(previousTab);
 							MessageBox messageBoxx = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
 							messageBoxx.setMessage(Descriptions.MerkleTree_Signature_Generation_Info);
 							messageBoxx.setText("Info");
 							messageBoxx.open();
-							tabFolder.setSelection(previousTab);
 						} else {
-							String signature = mtS.getSignature();
+							String signature = signatureTab.getSignature();
 							String[] splittedSign = signature.split("\\|");
 							String keyIndex = "";
-							String message = mtS.getMessage();
+							String message = signatureTab.getMessage();
 							if (splittedSign.length > 1) {
 								keyIndex = splittedSign[0];
 							}
 
-							mtV = new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle, Integer.parseInt(keyIndex), signature, message);
-							mtV.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-							tabFolder.getSelection()[0].setControl(mtV);
+							verificationTab = new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle, Integer.parseInt(keyIndex), signature, message);
+							verificationTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+							tabFolder.getSelection()[0].setControl(verificationTab);
 
 						}
 						break;
