@@ -1,6 +1,7 @@
 package org.jcryptool.visual.merkletree.algorithm;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Stack;
 
-
+import org.jcryptool.visual.merkletree.Descriptions.XMSS;
 import org.jcryptool.visual.merkletree.files.ByteUtils;
 import org.jcryptool.visual.merkletree.files.Converter;
 import org.jcryptool.visual.merkletree.files.MathUtils;
@@ -26,6 +27,7 @@ public abstract class MultiTree implements ISimpleMerkle {
 	int h;
 	int w;
 	int index_len;
+	int keyIndex;
 	byte[] message;
 	Node[] treeArray;
 	byte[] sk_seed;
@@ -34,7 +36,6 @@ public abstract class MultiTree implements ISimpleMerkle {
 	ArrayList<byte[][]> sek;
 	String sk;
 	ArrayList<byte[][]> pk;
-
 
 	byte[] seed;
 	BigInteger bitmaskSeed;
@@ -45,14 +46,9 @@ public abstract class MultiTree implements ISimpleMerkle {
 	public void setLeafCount(int i) {
 		leafCounter = i;
 	}
-	
-	
-	
+
 	/*
-	 * TODO LENA: 
-	 * Compute Autopath
-	 * Key Management
-	 * WOTS+
+	 * TODO LENA: Compute Autopath Key Management WOTS+
 	 */
 
 	@Override
@@ -113,8 +109,11 @@ public abstract class MultiTree implements ISimpleMerkle {
 
 	/**
 	 * returns number of trees on a certain layer
-	 * @param h  overall height of the tree
-	 * @param d  layer on which the number of trees is searched
+	 * 
+	 * @param h
+	 *            overall height of the tree
+	 * @param d
+	 *            layer on which the number of trees is searched
 	 * @return trees on a layer
 	 */
 	/*
@@ -130,64 +129,6 @@ public abstract class MultiTree implements ISimpleMerkle {
 	 * String algorithmID = this.algorithmID; byte[] publicRoot =
 	 * Layer.getMerkleRoot(); byte[] publicSeed = this.getSeed();
 	 */
-
-	/**
-	 * @author zuck, Lena Heimberger (modified, because BigIntegers are just
-	 *         handier)
-	 * @param SK
-	 *            XMSS secret key
-	 * @param s
-	 *            start index
-	 * @param t
-	 *            target node height
-	 * @param seed
-	 *            seed
-	 * @return root node of a tree of height t
-	 */
-	public Node treeHash(int s, int t, byte[] seed) {
-		byte[] bSeed = bitmaskSeed.toByteArray(); // 'cause bytearrays
-		Node node; 
-		Stack<Node> stack = new Stack<Node>();
-		byte[][] pKey;
-		OTSHashAddress otsAdrs = new OTSHashAddress();
-		LTreeAddress lAdrs = new LTreeAddress();
-		HashTreeAddress hAdrs = new HashTreeAddress();
-
-		if (s % (1 << t) != 0) {
-			return null;
-		}
-
-		for (int i = 0; i < (1 << t); i++) { // i < 2^t
-			otsAdrs.setOTSBit(true);
-			otsAdrs.setOTSAddress(s + i);
-			pKey = publicKeys.get(s + i);
-			lAdrs.setOTSBit(false);
-			lAdrs.setLTreeBit(true);
-			lAdrs.setLTreeAddress(s + i);
-			//TODO
-			node = new XMSSNode(XMSSTree.generateLTree(pKey, bSeed, lAdrs)); //static methods oder oo?
-			hAdrs.setLTreeBit(false);
-			hAdrs.setTreeHeight(0);
-			hAdrs.setTreeIndex(i + s);
-			saveNodeInfos(node, hAdrs.getTreeIndex());
-			// if the stack is empty the first node will be put into the stack
-			// if the current node and the next node on the stack have the same
-			// height hash them and
-			// put the new one back with height+1
-			while (!stack.empty() && stack.peek().getHeight() == node.getHeight()) {
-				hAdrs.setTreeIndex((hAdrs.getTreeIndex() - 1) / 2);
-				node = new XMSSNode(rand_hash(stack.pop().getContent(), node.getContent(), bSeed, hAdrs));
-				hAdrs.setTreeHeight(hAdrs.getTreeHeight() + 1);
-				node.setHeight(hAdrs.getTreeHeight());
-				saveNodeInfos(node, hAdrs.getTreeIndex()); // save nodes on
-															// higher heights
-			}
-
-			stack.push(node);
-		}
-		// result will be root of the tree or subtree
-		return stack.pop();
-	}
 
 	/**
 	 * XORs two nodes and hashes them with a salt
@@ -287,158 +228,182 @@ public abstract class MultiTree implements ISimpleMerkle {
 		return (int) MathUtils.log2nlz(leafCounter);
 	}
 
-    /**
-     * Generates an authentication path as array list with authentication nodes
-     * 
-     * @param i index of the WOTS+ key pair
-     */
-    public ArrayList<Node> buildAuth(int i, byte[] seed) {
-        ArrayList<Node> auth = new ArrayList<Node>();
-        for (int j = 0; j < getTreeHeight(); j++) {
-            int k = ((int) Math.floor((double) i / (1 << j))) ^ 1;
-            auth.add(j, treeHash(k * (1 << j), j, seed));
-        }
-        return auth;
-    }
-	
-	
-	
+	/**
+	 * Generates an authentication path as array list with authentication nodes
+	 * 
+	 * @param i
+	 *            index of the WOTS+ key pair
+	 */
+	public ArrayList<Node> buildAuth(int i, byte[] seed) {
+		ArrayList<Node> auth = new ArrayList<Node>();
+		for (int j = 0; j < getTreeHeight(); j++) {
+			int k = ((int) Math.floor((double) i / (1 << j))) ^ 1;
+			auth.add(j, XMSS.treeHash((k * (1 << j)), j, seed));
+		}
+		return auth;
+	}
+
 	/**
 	 * @author C Code by Hülsing, modelled in Java by Heimberger
 	 * 
-	 * Signs a message.
-	 * Returns
-	 * 1. an array containing the signature followed by the message AND
-	 * 2. an updated secret key!
+	 *         Signs a message. Returns 1. an array containing the signature
+	 *         followed by the message AND 2. an updated secret key!
 	 *
 	 */
-	byte[] xmssmt_sign(BigInteger sig_msg, BigInteger sig_msg_len, String msg)
-	{
-	  long idx_tree;
-	  int idx_leaf;
-	  int i;
-	  int idx_len=index_len;
+	String xmssmt_sign(BigInteger sig_msg, BigInteger sig_msg_len, String msg) {
 
-	  // Init working params
-	  byte R[]=new byte[n];
-	  byte hash_key[]=new byte[3*n];
-	  byte msg_h[]=new byte[n];
-	  byte root[]=new byte[n];
-	  byte ots_seed[]=new byte[n];
-	  byte idx_bytes_32[]=new byte[32];
+		int i;
+		int idx_len = index_len;
 
-	  // Extract SK
-	  int idx = 0;
-	  byte[] sek=sk.getBytes();
-	  for (i = 0; i < idx_len; i++) {
-	    idx |= ((long)sek[i]) << 8*(idx_len - 1 - i);
-	  }
-	  
-	  ByteArrayOutputStream sks=new ByteArrayOutputStream();
-	  sks.write(sek, idx_len, n);	  
-	  sk_seed=sks.toByteArray();
-	  
-	  ByteArrayOutputStream skp=new ByteArrayOutputStream();
-	  skp.write(sek, (idx_len+n), n);
-	  sk_prf=skp.toByteArray();
-	  
-	  ByteArrayOutputStream pus=new ByteArrayOutputStream();
-	  pus.write(sek, (idx_len+2*n), n);
-	  pub_seed=pus.toByteArray();
-	  
-	  
-	  // Update SK
-	  for (i = 0; i < idx_len; i++) {
-	    sek[i] = (byte) (((idx + 1) >> 8*(idx_len - 1 - i)) & 255);
-	  }
-	  
-	  // First compute pseudorandom value
+		// Init working params
+		byte R[] = new byte[n]; // pseudo-random value
+		byte hash_key[] = new byte[3 * n]; //dunno, they are used
+		byte msg_h[] = new byte[n]; //also used
+//		byte root[] = new byte[n];
+//		byte ots_seed[] = new byte[n];
 
-	  byte []r=XMSSTree.randomGenerator(getSK_Seed(), message, message.length);	  
-	  // Generate hash key (R || root || idx)
-	  ByteArrayOutputStream hak=new ByteArrayOutputStream();
-	  hak.write(R, 0, n);
-  	  hak.write('|');
-	  hak.write(sek, idx_len+3*n, n);
-	  hash_key=hak.toByteArray();
+		// byte idx_bytes_32[]=new byte[32];
 
-	  // Then use it for message digest
-	  byte []h_msg=XMSSTree.randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(idx).toByteArray(), r),
-              msg.getBytes(), msg.length());
+		// Extract SK
+		int idx = 0;
+		byte[] sek = sk.getBytes();
+		for (i = 0; i < idx_len; i++) {
+			idx |= ((long) sek[i]) << 8 * (idx_len - 1 - i);
+		}
 
-	  // Start collecting signature
-//	  *sig_msg_len = 0;
-	  byte []sigmsg=sig_msg.toByteArray();
+		// note: ByteArrayOutputStream is closed by the Garbage Collector, hence
+		// no .close() is needed. The code of
+		// close() in ByteArrayOutputStream itself is dead code (no
+		// implementation is present).
+		ByteArrayOutputStream sks = new ByteArrayOutputStream();
+		sks.write(sek, idx_len, n);
+		sk_seed = sks.toByteArray();
 
-	  // Copy index to signature
-	  for (i = 0; i < idx_len; i++) {
-	    sigmsg[i] = (byte) ((idx >> 8*(idx_len - 1 - i)) & 255);
-	  }
+		ByteArrayOutputStream skp = new ByteArrayOutputStream();
+		skp.write(sek, (idx_len + n), n);
+		sk_prf = skp.toByteArray();
 
-	  ByteArrayOutputStream sigmessage=new ByteArrayOutputStream();
-	  sigmessage.write(sigmsg);
-  	  sigmessage.write('|');
-	  sigmessage.write(idx_len);
-  	  sigmessage.write('|');
-	  sigmsg=sigmessage.toByteArray();
-	  
-//	  *sig_msg_len += idx_len;
+		ByteArrayOutputStream pus = new ByteArrayOutputStream();
+		pus.write(sek, (idx_len + 2 * n), n);
+		pub_seed = pus.toByteArray();
 
-	  // Copy R to signature
-	  for (i=0; i < n; i++)
-	    sigmsg[i] = R[i];
+		// Update SK
+		for (i = 0; i < idx_len; i++) {
+			sek[i] = (byte) (((idx + 1) >> 8 * (idx_len - 1 - i)) & 255);
+		}
 
-	  sigmessage.write(n);
-	  sigmsg=sigmessage.toByteArray();
+		// First compute pseudorandom value
 
-//	  *sig_msg_len += n;
+		R = XMSSTree.randomGenerator(getSK_Seed(), message, message.length);
+		// Generate hash key (R || root || idx)
+		ByteArrayOutputStream hak = new ByteArrayOutputStream();
+		hak.write(R, 0, n);
+		hak.write('|');
+		hak.write(sek, idx_len + 3 * n, n);
+		hash_key = hak.toByteArray();
 
-	  // ----------------------------------
-	  // Now we start to "really sign"
-	  // ----------------------------------
+		// Then use it for message digest
+		msg_h = XMSSTree.randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(idx).toByteArray(), R),
+				msg.getBytes(), msg.length());
 
-	  // Handle lowest layer separately as it is slightly different...
+		// Start collecting signature
+		// *sig_msg_len = 0;
+		byte[] sigmsg = sig_msg.toByteArray();
 
- 
-	  OTSHashAddress ots_addr=new OTSHashAddress();
-	  ots_addr.setOTSBit(true);
-	  ots_addr.setOTSAddress(idx);
-	  byte [][]sk_idx;
-	((OTS) ots_addr).setPrivateKey(sk_idx);
-	  byte [][]pk_idx;
-	((OTS) ots_addr).setPublicKey(pk_idx);
-	  
-	  
-	  //compute the WOTS+ signature happen
-      byte[][] ots_sig = ((WOTSPlus) otsAlgo).sign(sigmsg, seed, ots_addr);
+		// Copy index to signature
+		for (i = 0; i < idx_len; i++) {
+			sigmsg[i] = (byte) ((idx >> 8 * (idx_len - 1 - i)) & 255);
+		}
 
-  	  ByteArrayOutputStream sigmessage1=new ByteArrayOutputStream();
-  	  sigmessage1.write(sigmsg);
-  	  sigmessage1.write('|');
-  	  sigmessage1.write(w);
-  	  sigmsg=sigmessage1.toByteArray();
-     
-  //TODO
-  	  buildAuth(idx_wots, seed); //WOTS index --> red ma nu
-        
-	  ByteArrayOutputStream signmessage=new ByteArrayOutputStream();
-	  signmessage.write(sigmsg);
-	  signmessage.write(h*n);
-	  signmessage.write('|');
-	  signmessage.write(msg.getBytes());
-	  sigmsg=signmessage.toByteArray();
-	
-	 // *sig_msg_len += msglen;
+		ByteArrayOutputStream sigmessage = new ByteArrayOutputStream();
+		try {
+			sigmessage.write(sigmsg);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		sigmessage.write('|');
+		sigmessage.write(idx_len);
+		sigmsg = sigmessage.toByteArray();
 
-	  return sigmsg;
+		// Copy R to signature
+		for (i = 0; i < n; i++)
+			sigmessage.write(R[i]);
+
+		sigmessage.write(n);
+		sigmsg = sigmessage.toByteArray();
+
+		// ----------------------------------
+		// Now we start to "really sign"
+		// ----------------------------------
+
+		// Handle lowest layer separately as it is slightly different...
+
+		OTSHashAddress ots_addr = new OTSHashAddress();
+		ots_addr.setOTSBit(true);
+		ots_addr.setOTSAddress(idx);
+		byte[][] sk_idx = null;
+		java.util.Arrays.fill(getIndex(sk.toString()), sk_idx[0][1]);
+		((OTS) ots_addr).setPrivateKey(sk_idx);
+		byte[][] pk_idx = null;
+		((OTS) ots_addr).setPublicKey(pk_idx);
+
+		// compute the WOTS+ signature
+		byte[][] ots_sig = ((WOTSPlus) otsAlgo).sign(sigmsg, seed, ots_addr);
+
+		// ByteArrayOutputStream sigmessage1 = new ByteArrayOutputStream();
+		// try {
+		// sigmessage1.write(sigmsg);
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
+		// sigmessage1.write('|');
+		// sigmessage1.write(w);
+		// sigmsg = sigmessage1.toByteArray();
+
+		ArrayList<Node> auth = buildAuth(idx, seed);
+
+//		ByteArrayOutputStream signmessage = new ByteArrayOutputStream();
+//		try {
+//			signmessage.write(sigmsg);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		signmessage.write(h * n);
+//		signmessage.write('|');
+//		try {
+//			signmessage.write(msg.getBytes());
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		sigmsg = signmessage.toByteArray();
+
+		// *sig_msg_len += msglen;
+
+		String signature = Integer.toString(idx) + "|" + Converter._byteToHex(R) + "|"
+				+ Converter._2dByteToHex(ots_sig);
+		for (i = 0; i < auth.size(); i++) {
+			signature = signature + "|" + Converter._byteToHex(auth.get(i).getContent());
+		}
+		setIndex(sk, (idx + 1));
+		return signature;
+	}
+
+    public void setIndex(String sk, int index) {
+        String[] splitted = sk.split("\\|"); // splits the xmss private key in its components
+        splitted[0] = Integer.toString(index); // index is the first part of the private key
+        this.sk = String.join("|", splitted);
+        keyIndex++;
+    }
+
+	public byte[] getIndex(String s) {
+		String[] splitted = s.split("\\|"); // splits the xmss private
+		return Converter._stringToByte(splitted[0]);// private key seed is always second
 	}
 
 	public byte[] getSK_Seed() {
 		String[] splitted = sk.split("\\|"); // splits the xmss private
-													// key in its components
+												// key in its components
 		return splitted[1].getBytes(); // private key seed is always second
 	}
 
 }
-
-
