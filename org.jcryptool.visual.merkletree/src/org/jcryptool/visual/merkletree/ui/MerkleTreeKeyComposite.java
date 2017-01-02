@@ -24,7 +24,7 @@ import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
 
 public class MerkleTreeKeyComposite extends Composite {
 
-	StyledText publicKeySign;
+	StyledText publicKeyText;
 	Label privateKeyLabel;
 	Label publicKeyLabel;
 	Label descLabel;
@@ -37,7 +37,7 @@ public class MerkleTreeKeyComposite extends Composite {
 	Button buttonSeed;
 	Button buttonLeaves;
 	Spinner spinnerLeaf;
-	StyledText privateKeySign;
+	StyledText privateKeyText;
 	Boolean nodeToggleMap[];
 	int spinnerValue;
 	int leafCounter;
@@ -93,9 +93,9 @@ public class MerkleTreeKeyComposite extends Composite {
 		publicKeyLabel.setText(Descriptions.MerkleTreeKeyTab_1);
 
 		// text field storing public key
-		publicKeySign = new StyledText(publicKeyLabel, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
-		publicKeySign.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN * 2, 1));
-		publicKeySign.setText(publicKey);
+		publicKeyText = new StyledText(publicKeyLabel, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
+		publicKeyText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN * 2, 1));
+		publicKeyText.setText(publicKey);
 
 		Group privateKeyLabel = new Group(this, SWT.SHADOW_ETCHED_IN);
 		privateKeyLabel.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, MerkleConst.H_SPAN_MAIN * 2, 1));
@@ -142,15 +142,10 @@ public class MerkleTreeKeyComposite extends Composite {
 		privateKeyComposite.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, MerkleConst.H_SPAN_MAIN * 2, 1));
 		privateKeyComposite.setLayout(new GridLayout(1, true));
 
-		privateKeySign = new StyledText(privateKeyComposite, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
-		privateKeySign.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, MerkleConst.H_SPAN_MAIN, 1));
-		privateKeySign.setText(privateKey);
-
-		// PrivateKeyTextComposite test = new
-		// PrivateKeyTextComposite(privateKeyLabel, SWT.NONE, merkle);
-		// test.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true,
-		// MerkleConst.H_SPAN_MAIN * 2, 1));
-		// test.setPrivateKeyText(privateKey);
+		privateKeyText = new StyledText(privateKeyComposite, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
+		privateKeyText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, MerkleConst.H_SPAN_MAIN, 1));
+		privateKeyText.setText(privateKey);
+		privateKeyText.setCaret(null);
 
 		if (merkle instanceof XMSSTree) {
 			descLabel.setText(Descriptions.XMSS.Tab1_Head0);
@@ -274,7 +269,7 @@ public class MerkleTreeKeyComposite extends Composite {
 	}
 
 	private void setColor(int start, int length, Color color) {
-		privateKeySign.setStyleRange(new StyleRange(start, length, color, null));
+		privateKeyText.setStyleRange(new StyleRange(start, length, color, null));
 	}
 
 }
