@@ -49,8 +49,9 @@ public class MerkleTreeKeyComposite extends Composite {
 	String privateKey;
 	String splittedPrivateKey[];
 
+	StyleRange indexBold;
 	Color distinguishableColors[];
-	Color colorBlack;
+	Color black;
 	ISimpleMerkle merkle;
 
 	/**
@@ -135,9 +136,6 @@ public class MerkleTreeKeyComposite extends Composite {
 		buttonComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 16, 1));
 		buttonComposite.setLayout(new GridLayout(8, true));
 
-		colorBlack = getDisplay().getSystemColor(SWT.COLOR_BLACK);
-
-		// TODO: rework this test declaration; maybe inner class
 		Composite privateKeyComposite = new Composite(privateKeyLabel, SWT.NONE);
 		privateKeyComposite.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, MerkleConst.H_SPAN_MAIN * 2, 1));
 		privateKeyComposite.setLayout(new GridLayout(1, true));
@@ -145,7 +143,6 @@ public class MerkleTreeKeyComposite extends Composite {
 		privateKeyText = new StyledText(privateKeyComposite, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
 		privateKeyText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, MerkleConst.H_SPAN_MAIN, 1));
 		privateKeyText.setText(privateKey);
-		privateKeyText.setCaret(null);
 
 		if (merkle instanceof XMSSTree) {
 			descLabel.setText(Descriptions.XMSS.Tab1_Head0);
@@ -154,22 +151,27 @@ public class MerkleTreeKeyComposite extends Composite {
 
 		}
 
+		black = getDisplay().getSystemColor(SWT.COLOR_BLACK);
 		// creates an array of well readable colors
 		distinguishableColors = new Color[4];
 		distinguishableColors[0] = new Color(getDisplay(), 186, 186, 0);
 		distinguishableColors[1] = new Color(getDisplay(), 186, 0, 186);
 		distinguishableColors[2] = new Color(getDisplay(), 0, 186, 186);
 		distinguishableColors[3] = new Color(getDisplay(), 0, 186, 0);
+
+		indexBold = new StyleRange(0, 1, new Color(getDisplay(), 176, 0, 0), privateKeyText.getBackground());
+		indexBold.fontStyle = SWT.BOLD;
 		// SelectionListener to toggle color highlight for index
 		buttonIndex.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (toggleIndex) {
-					setColor(0, 1, getDisplay().getSystemColor(SWT.COLOR_BLACK));
+					setColor(0, 1, black);
 					toggleIndex = false;
 				} else {
-					setColor(0, 1, new Color(getDisplay(), 176, 0, 0));
+					privateKeyText.setStyleRange(indexBold);
+					// setColor(0, 1, new Color(getDisplay(), 176, 0, 0));
 					toggleIndex = true;
 				}
 			}
@@ -190,7 +192,7 @@ public class MerkleTreeKeyComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 
 				if (toggleSeed) {
-					setColor(2, splittedPrivateKey[1].length(), getDisplay().getSystemColor(SWT.COLOR_BLACK));
+					setColor(2, splittedPrivateKey[1].length(), black);
 					toggleSeed = false;
 				} else {
 					setColor(2, splittedPrivateKey[1].length(), new Color(getDisplay(), 132, 132, 255));
@@ -225,7 +227,7 @@ public class MerkleTreeKeyComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				// if leaf was already highlighted set black
 				if (nodeToggleMap[spinnerValue]) {
-					setColor(startingNode[spinnerValue], endingNode[spinnerValue] + 1, getDisplay().getSystemColor(SWT.COLOR_BLACK));
+					setColor(startingNode[spinnerValue], endingNode[spinnerValue] + 1, black);
 					nodeToggleMap[spinnerValue] = false;
 				} else {
 					// if leaf wasn't highlighted calculate starting position
