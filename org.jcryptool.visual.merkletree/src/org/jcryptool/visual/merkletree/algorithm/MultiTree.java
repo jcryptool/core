@@ -10,9 +10,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.Stack;
 
+
 import org.jcryptool.visual.merkletree.files.ByteUtils;
 import org.jcryptool.visual.merkletree.files.Converter;
 import org.jcryptool.visual.merkletree.files.MathUtils;
+import org.omg.IOP.Encoding;
 
 public abstract class MultiTree implements ISimpleMerkle {
 	// Starting over again
@@ -29,7 +31,10 @@ public abstract class MultiTree implements ISimpleMerkle {
 	byte[] sk_seed;
 	byte[] sk_prf;
 	byte[] pub_seed;
+	ArrayList<byte[][]> sek;
 	String sk;
+	ArrayList<byte[][]> pk;
+
 
 	byte[] seed;
 	BigInteger bitmaskSeed;
@@ -46,7 +51,8 @@ public abstract class MultiTree implements ISimpleMerkle {
 	/*
 	 * TODO LENA: 
 	 * Compute Autopath
-	 * better way to manage keys (optional)
+	 * Key Management
+	 * WOTS+
 	 */
 
 	@Override
@@ -56,7 +62,7 @@ public abstract class MultiTree implements ISimpleMerkle {
 	 * generateKeyPairsAndLeaves() is called
 	 */
 	public void selectOneTimeSignatureAlgorithm(String hash, String algo) {
-		byte[] s = seed.toByteArray();
+		byte[] s = seed;
 		this.otsAlgo = new WOTSPlus(w, hash, s);
 		if (this.mDigest == null) {
 			try {
@@ -80,7 +86,7 @@ public abstract class MultiTree implements ISimpleMerkle {
 	 * 
 	 * }
 	 *
-	 * } this.l = h / d; int i = 0; while (i < d) { // TODO } }
+	 * } this.l = h / d; int i = 0; while (i < d) { } }
 	 * 
 	 * /* nr of trees for the hypertree klickibunti
 	 * 
@@ -107,12 +113,9 @@ public abstract class MultiTree implements ISimpleMerkle {
 
 	/**
 	 * returns number of trees on a certain layer
-	 * 
-	 * @param h
-	 *            overall height of the tree
-	 * @param d
-	 *            layer on which the number of trees is searched
-	 * @return
+	 * @param h  overall height of the tree
+	 * @param d  layer on which the number of trees is searched
+	 * @return trees on a layer
 	 */
 	/*
 	 * public double getXMSSTreeCount(int h, int d) { if (l == (this.d - 1))
@@ -143,7 +146,7 @@ public abstract class MultiTree implements ISimpleMerkle {
 	 */
 	public Node treeHash(int s, int t, byte[] seed) {
 		byte[] bSeed = bitmaskSeed.toByteArray(); // 'cause bytearrays
-		Node node; // TODO make new Node class
+		Node node; 
 		Stack<Node> stack = new Stack<Node>();
 		byte[][] pKey;
 		OTSHashAddress otsAdrs = new OTSHashAddress();
@@ -161,7 +164,8 @@ public abstract class MultiTree implements ISimpleMerkle {
 			lAdrs.setOTSBit(false);
 			lAdrs.setLTreeBit(true);
 			lAdrs.setLTreeAddress(s + i);
-			node = new XMSSNode(generateLTree(pKey, bSeed, lAdrs));
+			//TODO
+			node = new XMSSNode(XMSSTree.generateLTree(pKey, bSeed, lAdrs)); //static methods oder oo?
 			hAdrs.setLTreeBit(false);
 			hAdrs.setTreeHeight(0);
 			hAdrs.setTreeIndex(i + s);
@@ -183,31 +187,6 @@ public abstract class MultiTree implements ISimpleMerkle {
 		}
 		// result will be root of the tree or subtree
 		return stack.pop();
-	}
-
-	public byte[] generateLTree(byte[][] pKey, byte[] seed, LTreeAddress adrs) {
-		byte[][] pubKey = pKey.clone();
-		int len = pubKey.length;
-		Address lAdrs = adrs;
-		lAdrs.setTreeHeight(0);
-
-		while (len > 1) {
-			for (int i = 0; i < Math.floor(len / 2.0); i = i + 1) {
-				lAdrs.setTreeIndex(i);
-				// zuck: Hashing der leaves/nodes
-				pubKey[i] = rand_hash(pubKey[2 * i], pubKey[2 * i + 1], seed, lAdrs);
-			}
-			if (len % 2 == 1) {
-				// zuck: Nachrücken der ungeraden Node
-				pubKey[(int) (Math.floor(len / 2.0))] = pubKey[(int) len - 1];
-			}
-			// zuck: Anpassen der Anzahl an Nodes bzw. setzen der Anzahl der
-			// Nodes auf der neuen
-			// Höhe
-			len = (int) Math.ceil((len / 2.0));
-			lAdrs.setTreeHeight(lAdrs.getTreeHeight() + 1);
-		}
-		return pubKey[0];
 	}
 
 	/**
@@ -308,6 +287,22 @@ public abstract class MultiTree implements ISimpleMerkle {
 		return (int) MathUtils.log2nlz(leafCounter);
 	}
 
+    /**
+     * Generates an authentication path as array list with authentication nodes
+     * 
+     * @param i index of the WOTS+ key pair
+     */
+    public ArrayList<Node> buildAuth(int i, byte[] seed) {
+        ArrayList<Node> auth = new ArrayList<Node>();
+        for (int j = 0; j < getTreeHeight(); j++) {
+            int k = ((int) Math.floor((double) i / (1 << j))) ^ 1;
+            auth.add(j, treeHash(k * (1 << j), j, seed));
+        }
+        return auth;
+    }
+	
+	
+	
 	/**
 	 * @author C Code by Hülsing, modelled in Java by Heimberger
 	 * 
@@ -317,7 +312,7 @@ public abstract class MultiTree implements ISimpleMerkle {
 	 * 2. an updated secret key!
 	 *
 	 */
-	int xmssmt_sign(BigInteger sig_msg, BigInteger sig_msg_len, String msg)
+	byte[] xmssmt_sign(BigInteger sig_msg, BigInteger sig_msg_len, String msg)
 	{
 	  long idx_tree;
 	  int idx_leaf;
@@ -417,38 +412,21 @@ public abstract class MultiTree implements ISimpleMerkle {
 	  //compute the WOTS+ signature happen
       byte[][] ots_sig = ((WOTSPlus) otsAlgo).sign(sigmsg, seed, ots_addr);
 
-      int j;
-      for (j = 1; j < params->d; j++) {
-        // Prepare Address
-        idx_leaf = (idx_tree & ((1 << tree_h)-1));
-        idx_tree = idx_tree >> tree_h;
-        setLayerADRS(ots_addr, j);
-        setTreeADRS(ots_addr, idx_tree);
-        setOTSADRS(ots_addr, idx_leaf);
-
-        // Compute seed for OTS key pair
-        get_seed(ots_seed, sk_seed, n, ots_addr);
-
-        // Compute WOTS signature
-        byte [][]wotssig=WOTSPlus.sign(sigmsg, root, ots_seed, w, pub_seed, ots_addr);
-
-  	  ByteArrayOutputStream sigmessage=new ByteArrayOutputStream();
-  	  sigmessage.write(sigmsg);
-  	  sigmessage.write('|');
-  	  sigmessage.write(w);
-  	  sigmsg=sigmessage.toByteArray();
+  	  ByteArrayOutputStream sigmessage1=new ByteArrayOutputStream();
+  	  sigmessage1.write(sigmsg);
+  	  sigmessage1.write('|');
+  	  sigmessage1.write(w);
+  	  sigmsg=sigmessage1.toByteArray();
      
   //TODO
-  	  compute_authpath_wots(root, sig_msg, idx_leaf, sk_seed, &(params->xmss_par), pub_seed, ots_addr);
-        sigmsg += tree_h*n;
-      //  *sig_msg_len += tree_h*n;
-      }
-
-	  ByteArrayOutputStream sigmessage=new ByteArrayOutputStream();
-	  sigmessage.write(sigmsg);
-	  sigmessage.write('|');
-	  sigmessage.write(msg);
-	  sigmsg=sigmessage.toByteArray();
+  	  buildAuth(idx_wots, seed); //WOTS index --> red ma nu
+        
+	  ByteArrayOutputStream signmessage=new ByteArrayOutputStream();
+	  signmessage.write(sigmsg);
+	  signmessage.write(h*n);
+	  signmessage.write('|');
+	  signmessage.write(msg.getBytes());
+	  sigmsg=signmessage.toByteArray();
 	
 	 // *sig_msg_len += msglen;
 
@@ -456,9 +434,11 @@ public abstract class MultiTree implements ISimpleMerkle {
 	}
 
 	public byte[] getSK_Seed() {
-		String[] splitted = xPrivKey.split("\\|"); // splits the xmss private
+		String[] splitted = sk.split("\\|"); // splits the xmss private
 													// key in its components
 		return splitted[1].getBytes(); // private key seed is always second
 	}
 
 }
+
+
