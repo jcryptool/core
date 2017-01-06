@@ -419,7 +419,7 @@ public class XMSSTree implements ISimpleMerkle {
         return index;
     }
 
-    public byte[] randomGenerator(byte[] seed, String message, int len) {
+    public static byte[] randomGenerator(byte[] seed, String message, int len) {
         byte[] res = new byte[len + 32]; // erstellen des zu befüllenden arrays
         byte[] padding = new byte[32];
         MessageDigest hash = null;
