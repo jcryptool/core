@@ -171,7 +171,6 @@ public class MerkleTreeKeyComposite extends Composite {
 					toggleIndex = false;
 				} else {
 					privateKeyText.setStyleRange(indexBold);
-					// setColor(0, 1, new Color(getDisplay(), 176, 0, 0));
 					toggleIndex = true;
 				}
 			}
