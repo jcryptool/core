@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +40,7 @@ public class MultiTree implements ISimpleMerkle {
 	byte[] pk;
 	// ArrayList<byte[][]> puk;
 	boolean treeGenerated;
-
+	OTSHashAddress otsAdrs = new OTSHashAddress();
 	ArrayList<Node> tree;
 
 	byte[] seed;
@@ -47,6 +48,7 @@ public class MultiTree implements ISimpleMerkle {
 	MessageDigest mDigest;
 
 	public ArrayList<byte[][]> publicKeys = new ArrayList<byte[][]>();
+	public ArrayList<byte[][]> privKeys = new ArrayList<byte[][]>();
 
 	public void setLeafCount(int i) {
 		leafCounter = i;
@@ -73,40 +75,6 @@ public class MultiTree implements ISimpleMerkle {
 			}
 		}
 	}
-
-	// public void TreeParams(int d, int h, int w, String message) {
-	// this.otsAlgo = new WOTSPlus(w, message, getSeed()); // wots+ has the
-	// length
-	// from message and not
-	// from hash
-	// winternitz parameter stays the same for every tree (duh)
-	/*
-	 * if (h % d != 0) {
-	 *
-	 * müssen teilerfremd sein throw hDevidesDwithRemainderException(){
-	 * 
-	 * }
-	 *
-	 * } this.l = h / d; int i = 0; while (i < d) { } }
-	 * 
-	 * /* nr of trees for the hypertree klickibunti
-	 * 
-	 * public String xPrivKey; public String xPubKey;
-	 *
-	 * OTS otsAlgo; MessageDigest mDigest; static int id; Node Parent; String
-	 * cipherSuite; String algorithmID; public byte[] SK_MT; public byte[]
-	 * PK_MT; byte[] SK_Seed; byte[] PK_Seed;
-	 * 
-	 * public params params;
-	 * 
-	 * 
-	 * 
-	 * /* void setParameters(int n, int h, int d, int w){
-	 * 
-	 * 
-	 * }
-	 */
-	// make visible which tree signs which one--> parent
 
 	void setLayers(int d) {
 		this.d = d;
@@ -308,8 +276,7 @@ public class MultiTree implements ISimpleMerkle {
 		hash_key = hak.toByteArray();
 
 		// Then use it for message digest
-		msg_h = XMSSTree.randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(idx).toByteArray(), R),
-				msg.getBytes(), msg.length());
+		msg_h = XMSSTree.randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(idx).toByteArray(), R), msg.getBytes(), msg.length());
 
 		// Start collecting signature
 		// *sig_msg_len = 0;
@@ -346,60 +313,20 @@ public class MultiTree implements ISimpleMerkle {
 		OTSHashAddress ots_addr = new OTSHashAddress();
 		ots_addr.setOTSBit(true);
 		ots_addr.setOTSAddress(idx);
-		byte[][] sk_idx = null;
-		java.util.Arrays.fill(getIndex(sk.toString()), sk_idx[0][1]);
-		((OTS) ots_addr).setPrivateKey(sk_idx);
-		byte[][] pk_idx = null;
-		((OTS) ots_addr).setPublicKey(pk_idx);
 
 		// compute the WOTS+ signature
 		byte[][] ots_sig = ((WOTSPlus) otsAlgo).sign(sigmsg, seed, ots_addr);
 
-		// ByteArrayOutputStream sigmessage1 = new ByteArrayOutputStream();
-		// try {
-		// sigmessage1.write(sigmsg);
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// }
-		// sigmessage1.write('|');
-		// sigmessage1.write(w);
-		// sigmsg = sigmessage1.toByteArray();
-
 		ArrayList<Node> auth = buildAuth(idx, seed);
-
-		// ByteArrayOutputStream signmessage = new ByteArrayOutputStream();
-		// try {
-		// signmessage.write(sigmsg);
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// }
-		// signmessage.write(h * n);
-		// signmessage.write('|');
-		// try {
-		// signmessage.write(msg.getBytes());
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// }
-		// sigmsg = signmessage.toByteArray();
 
 		// *sig_msg_len += msglen;
 
-		String signature = Integer.toString(idx) + "|" + Converter._byteToHex(R) + "|"
-				+ Converter._2dByteToHex(ots_sig);
+		String signature = Integer.toString(idx) + "|" + Converter._byteToHex(R) + "|" + Converter._2dByteToHex(ots_sig);
 		for (i = 0; i < auth.size(); i++) {
 			signature = signature + "|" + Converter._byteToHex(auth.get(i).getContent());
 		}
 		return signature;
 	}
-
-	// public void setIndex(String sk, int index) {
-	// String[] splitted = sk.split("\\|"); // splits the xmss private key in
-	// // its components
-	// splitted[0] = Integer.toString(index); // index is the first part of the
-	// // private key
-	// this.sk = String.join("|", splitted);
-	// keyIndex++;
-	// }
 
 	public byte[] getIndex(String s) {
 		String[] splitted = s.split("\\|"); // splits the xmss private
@@ -451,18 +378,33 @@ public class MultiTree implements ISimpleMerkle {
 
 	@Override
 	public void generateKeyPairsAndLeaves() {
-		int i = 0;
-		for (i = 0; i < sk.length; i++) {
+		sk = new byte[200];
+		for (int i = 0; i < sk.length; i++) {
 			sk[i] = 0;
 		}
+		for (int i = 0; i < this.leafCounter; i++) {
+			// generates a new WOTS/ WOTSPlus Keypair (public and secret key)
+			if (otsAlgo instanceof WOTSPlus) {
+				((WOTSPlus) otsAlgo).setAddress(otsAdrs);
+			}
+
+			otsAlgo.generateKeyPair();
+			// adds the private Key of the generated keypair to the private key
+			// list of privKeys
+			privKeys.add(otsAlgo.getPrivateKey());
+			publicKeys.add(otsAlgo.getPublicKey());
+
+		}
+
 		randomGenerator(sk_seed, sk, 3 * n);
 
+		// SecureRandom prf = new SecureRandom();
 		ByteArrayOutputStream pek = new ByteArrayOutputStream();
 		pek.write(sk, 2 * n + idx_len, n);
 		pk = pek.toByteArray();
 
 		keyIndex = d - 1;
-		treeHash(keyIndex, getTreeHeight(), seed);
+		// treeHash(keyIndex, getTreeHeight(), seed);
 		System.arraycopy(pk, 0, sk, 3 * n + idx_len, n);
 
 	}
@@ -477,11 +419,13 @@ public class MultiTree implements ISimpleMerkle {
 	 * set beforehand and then the execution of generateKeyPairsAndLeaves()
 	 */
 	public void generateMerkleTree() {
+		generateKeyPairsAndLeaves();
 		treeArray = new Node[(1 << (getTreeHeight() + 1)) - 1];
 		treeHash(0, getTreeHeight(), bitmaskSeed);
 		tree = new ArrayList<Node>(Arrays.asList(treeArray));
 		setConnections();
-		generateKeyPairsAndLeaves();
+
+		System.err.println(Converter._byteToHex(sk));
 		treeGenerated = true;
 	}
 
@@ -497,17 +441,16 @@ public class MultiTree implements ISimpleMerkle {
 		return false;
 	}
 
-	public String getSK(){
-		String sek=sk.toString();
+	public String getSK() {
+		String sek = sk.toString();
 		return sek;
 	}
-	
-	public String getPK(){
-		String pek=pk.toString();
+
+	public String getPK() {
+		String pek = pk.toString();
 		return pek;
 	}
-	
-	
+
 	@Override
 	public String getKeyLength() {
 		int privLength = sk.length;
@@ -544,58 +487,64 @@ public class MultiTree implements ISimpleMerkle {
 			connections.add(right);
 		}
 	}
-	
-	   /**
-     * @author zuck
-     * @param SK XMSS secret key
-     * @param s start index
-     * @param t target node height
-     * @param seed seed
-     * @return root node of a tree of height t
-     */
-    public Node treeHash(int s, int t, byte[] seed) {
 
-        Node node; // TODO make new Node class
-        Stack<Node> stack = new Stack<Node>();
-        byte[][] pKey;
-        OTSHashAddress otsAdrs = new OTSHashAddress();
-        LTreeAddress lAdrs = new LTreeAddress();
-        HashTreeAddress hAdrs = new HashTreeAddress();
+	/**
+	 * @author zuck
+	 * @param SK
+	 *            XMSS secret key
+	 * @param s
+	 *            start index
+	 * @param t
+	 *            target node height
+	 * @param seed
+	 *            seed
+	 * @return root node of a tree of height t
+	 */
+	public Node treeHash(int s, int t, byte[] seed) {
 
-        if (s % (1 << t) != 0) {
-            return null;
-        }
+		Node node; // TODO make new Node class
+		Stack<Node> stack = new Stack<Node>();
+		byte[][] pKey;
+		OTSHashAddress otsAdrs = new OTSHashAddress();
+		LTreeAddress lAdrs = new LTreeAddress();
+		HashTreeAddress hAdrs = new HashTreeAddress();
 
-        for (int i = 0; i < (1 << t); i++) { // i < 2^t
-            otsAdrs.setOTSBit(true);
-            otsAdrs.setOTSAddress(s + i);
-            pKey = publicKeys.get(s + i);
-            lAdrs.setOTSBit(false);
-            lAdrs.setLTreeBit(true);
-            lAdrs.setLTreeAddress(s + i);
-            node = new XMSSNode(generateLTree(pKey, bitmaskSeed, lAdrs));
-            hAdrs.setLTreeBit(false);
-            hAdrs.setTreeHeight(0);
-            hAdrs.setTreeIndex(i + s);
-            saveNodeInfos(node, hAdrs.getTreeIndex());
-            // if the stack is empty the first node will be put into the stack
-            // if the current node and the next node on the stack have the same height hash them and
-            // put the new one back with height+1
-            while (!stack.empty() && stack.peek().getHeight() == node.getHeight()) {
-                hAdrs.setTreeIndex((hAdrs.getTreeIndex() - 1) / 2);
-                node = new XMSSNode(rand_hash(stack.pop().getContent(), node.getContent(), bitmaskSeed, hAdrs));
-                hAdrs.setTreeHeight(hAdrs.getTreeHeight() + 1);
-                node.setHeight(hAdrs.getTreeHeight());
-                saveNodeInfos(node, hAdrs.getTreeIndex()); // save nodes on higher heights
-            }
+		if (s % (1 << t) != 0) {
+			return null;
+		}
 
-            stack.push(node);
-        }
-        // result will be root of the tree or subtree
-        return stack.pop();
-    }
-    
-    public byte[] generateLTree(byte[][] pKey, byte[] seed, LTreeAddress adrs) {
+		for (int i = 0; i < (1 << t); i++) { // i < 2^t
+			otsAdrs.setOTSBit(true);
+			otsAdrs.setOTSAddress(s + i);
+			pKey = publicKeys.get(s + i);
+			lAdrs.setOTSBit(false);
+			lAdrs.setLTreeBit(true);
+			lAdrs.setLTreeAddress(s + i);
+			node = new XMSSNode(generateLTree(pKey, bitmaskSeed, lAdrs));
+			hAdrs.setLTreeBit(false);
+			hAdrs.setTreeHeight(0);
+			hAdrs.setTreeIndex(i + s);
+			saveNodeInfos(node, hAdrs.getTreeIndex());
+			// if the stack is empty the first node will be put into the stack
+			// if the current node and the next node on the stack have the same
+			// height hash them and
+			// put the new one back with height+1
+			while (!stack.empty() && stack.peek().getHeight() == node.getHeight()) {
+				hAdrs.setTreeIndex((hAdrs.getTreeIndex() - 1) / 2);
+				node = new XMSSNode(rand_hash(stack.pop().getContent(), node.getContent(), bitmaskSeed, hAdrs));
+				hAdrs.setTreeHeight(hAdrs.getTreeHeight() + 1);
+				node.setHeight(hAdrs.getTreeHeight());
+				saveNodeInfos(node, hAdrs.getTreeIndex()); // save nodes on
+															// higher heights
+			}
+
+			stack.push(node);
+		}
+		// result will be root of the tree or subtree
+		return stack.pop();
+	}
+
+	public byte[] generateLTree(byte[][] pKey, byte[] seed, LTreeAddress adrs) {
 		byte[][] pubKey = pKey.clone();
 		int len = pubKey.length;
 		Address lAdrs = adrs;
