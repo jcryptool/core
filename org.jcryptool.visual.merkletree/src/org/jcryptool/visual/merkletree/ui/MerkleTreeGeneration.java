@@ -48,6 +48,8 @@ public class MerkleTreeGeneration extends Composite {
 	private int wParameter = 16;
 	private SUIT mode;
 	private ViewPart masterView;
+	private Label leftSpacer;
+	private Label rightSpacer;
 
 	int spinnerValue;
 	int treeValue;
@@ -84,7 +86,6 @@ public class MerkleTreeGeneration extends Composite {
 		 * Seed Box
 		 * 
 		 */
-
 		Group group = new Group(this, SWT.NONE);
 		group.setText(Descriptions.Tab0_Head1);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
@@ -197,7 +198,7 @@ public class MerkleTreeGeneration extends Composite {
 
 		Group wParameterGroup = new Group(this, SWT.NONE);
 		wParameterGroup.setText(Descriptions.Tab0_Head5);
-		wParameterGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, MerkleConst.H_SPAN_MAIN, 1));
+		wParameterGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
 		wParameterGroup.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
 
 		// headline
@@ -275,7 +276,7 @@ public class MerkleTreeGeneration extends Composite {
 
 		// spinner for the key-ammount
 		Spinner spinnerkeysum = new Spinner(generateKeyGroup, SWT.BORDER);
-		spinnerkeysum.setMaximum(1024);
+		spinnerkeysum.setMaximum(64);
 		spinnerkeysum.setMinimum(2);
 		spinnerkeysum.setSelection(0);
 		spinnerkeysum.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
