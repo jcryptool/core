@@ -19,3 +19,4 @@ JCrypTool downloads are available as [weekly builds](https://www.cryptool.org/en
 ##Meta
 [![Build Status](https://travis-ci.org/jcryptool/core.svg)](https://travis-ci.org/jcryptool/core)
 [![Gitter](http://img.shields.io/badge/gitter-join%20chat-1dce73.svg)](https://gitter.im/dschadow/jcryptool)
+[![License](https://img.shields.io/badge/License-EPL%201.0-red.svg)](https://opensource.org/licenses/EPL-1.0)
