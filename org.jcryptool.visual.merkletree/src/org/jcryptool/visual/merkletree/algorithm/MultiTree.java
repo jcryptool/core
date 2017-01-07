@@ -36,8 +36,8 @@ public class MultiTree implements ISimpleMerkle {
 	byte[] sk_prf;
 	byte[] pub_seed;
 	// ArrayList<byte[][]> sek;
-	byte[] sk=new byte[n];
-	byte[] pk=new byte[n];
+	byte[] sk = new byte[n];
+	byte[] pk = new byte[n];
 	// ArrayList<byte[][]> puk;
 	boolean treeGenerated;
 	OTSHashAddress otsAdrs = new OTSHashAddress();
@@ -277,7 +277,8 @@ public class MultiTree implements ISimpleMerkle {
 		hash_key = hak.toByteArray();
 
 		// Then use it for message digest
-		msg_h = XMSSTree.randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(idx).toByteArray(), R), msg.getBytes(), msg.length());
+		msg_h = XMSSTree.randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(idx).toByteArray(), R),
+				msg.getBytes(), msg.length());
 
 		// Start collecting signature
 		// *sig_msg_len = 0;
@@ -322,7 +323,8 @@ public class MultiTree implements ISimpleMerkle {
 
 		// *sig_msg_len += msglen;
 
-		String signature = Integer.toString(idx) + "|" + Converter._byteToHex(R) + "|" + Converter._2dByteToHex(ots_sig);
+		String signature = Integer.toString(idx) + "|" + Converter._byteToHex(R) + "|"
+				+ Converter._2dByteToHex(ots_sig);
 		for (i = 0; i < auth.size(); i++) {
 			signature = signature + "|" + Converter._byteToHex(auth.get(i).getContent());
 		}
@@ -377,16 +379,11 @@ public class MultiTree implements ISimpleMerkle {
 		return null;
 	}
 
-	
-	public void generatePrivateKey(){
-		Random r=new Random();
-		for (int i = 0; i < sk.length; i++) {
-			r.nextBytes(sk[i]);
-		}
+	public void generatePrivateKey() {
+		Random r = new Random();
+		r.nextBytes(sk);
 	}
-	
-	
-	
+
 	@Override
 	public void generateKeyPairsAndLeaves() {
 		generatePrivateKey();
