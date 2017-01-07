@@ -36,8 +36,8 @@ public class MultiTree implements ISimpleMerkle {
 	byte[] sk_prf;
 	byte[] pub_seed;
 	// ArrayList<byte[][]> sek;
-	byte[] sk;
-	byte[] pk;
+	byte[] sk=new byte[n];
+	byte[] pk=new byte[n];
 	// ArrayList<byte[][]> puk;
 	boolean treeGenerated;
 	OTSHashAddress otsAdrs = new OTSHashAddress();
@@ -377,12 +377,19 @@ public class MultiTree implements ISimpleMerkle {
 		return null;
 	}
 
+	
+	public void generatePrivateKey(){
+		Random r=new Random();
+		for (int i = 0; i < sk.length; i++) {
+			r.nextBytes(sk[i]);
+		}
+	}
+	
+	
+	
 	@Override
 	public void generateKeyPairsAndLeaves() {
-		sk = new byte[200];
-		for (int i = 0; i < sk.length; i++) {
-			sk[i] = 0;
-		}
+		generatePrivateKey();
 		for (int i = 0; i < this.leafCounter; i++) {
 			// generates a new WOTS/ WOTSPlus Keypair (public and secret key)
 			if (otsAlgo instanceof WOTSPlus) {
