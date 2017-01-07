@@ -380,7 +380,7 @@ public class MultiTree implements ISimpleMerkle {
 	}
 
 	public void generatePrivateKey() {
-		Random r = new Random();
+		SecureRandom r = new SecureRandom();
 		r.nextBytes(sk);
 	}
 
@@ -559,16 +559,11 @@ public class MultiTree implements ISimpleMerkle {
 		while (len > 1) {
 			for (int i = 0; i < Math.floor(len / 2.0); i = i + 1) {
 				lAdrs.setTreeIndex(i);
-				// zuck: Hashing der leaves/nodes
 				pubKey[i] = rand_hash(pubKey[2 * i], pubKey[2 * i + 1], seed, lAdrs);
 			}
 			if (len % 2 == 1) {
-				// zuck: Nachrücken der ungeraden Node
 				pubKey[(int) (Math.floor(len / 2.0))] = pubKey[(int) len - 1];
 			}
-			// zuck: Anpassen der Anzahl an Nodes bzw. setzen der Anzahl der
-			// Nodes auf der neuen
-			// Höhe
 			len = (int) Math.ceil((len / 2.0));
 			lAdrs.setTreeHeight(lAdrs.getTreeHeight() + 1);
 		}
