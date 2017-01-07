@@ -42,6 +42,7 @@ public class MultiTree implements ISimpleMerkle {
 	boolean treeGenerated;
 	OTSHashAddress otsAdrs = new OTSHashAddress();
 	ArrayList<Node> tree;
+	Node rootNode;
 
 	byte[] seed;
 	byte[] bitmaskSeed;
@@ -421,7 +422,8 @@ public class MultiTree implements ISimpleMerkle {
 	public void generateMerkleTree() {
 		generateKeyPairsAndLeaves();
 		treeArray = new Node[(1 << (getTreeHeight() + 1)) - 1];
-		treeHash(0, getTreeHeight(), bitmaskSeed);
+		rootNode = treeHash(0, getTreeHeight(), bitmaskSeed);
+		System.err.println(rootNode.getContent().toString());
 		tree = new ArrayList<Node>(Arrays.asList(treeArray));
 		setConnections();
 
@@ -447,8 +449,8 @@ public class MultiTree implements ISimpleMerkle {
 	}
 
 	public String getPK() {
-		String pek = pk.toString();
-		return pek;
+		String publicKeyString = Converter._byteToHex(rootNode.getContent()) + "|" + Converter._byteToHex(seed);
+		return publicKeyString;
 	}
 
 	@Override
