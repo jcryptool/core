@@ -9,14 +9,11 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 import java.util.Stack;
 
-import org.jcryptool.visual.merkletree.Descriptions.XMSS;
 import org.jcryptool.visual.merkletree.files.ByteUtils;
 import org.jcryptool.visual.merkletree.files.Converter;
 import org.jcryptool.visual.merkletree.files.MathUtils;
-import org.omg.IOP.Encoding;
 
 public class MultiTree implements ISimpleMerkle {
 	// Starting over again
@@ -24,21 +21,19 @@ public class MultiTree implements ISimpleMerkle {
 	int d;
 	int l;
 	int idx_len;
+	int idx;
 	int n;
 	OTS otsAlgo;
 	int h;
 	int w;
-	int index_len;
 	int keyIndex;
 	byte[] message;
 	Node[] treeArray;
 	byte[] sk_seed;
 	byte[] sk_prf;
 	byte[] pub_seed;
-	// ArrayList<byte[][]> sek;
 	byte[] sk = new byte[n];
 	byte[] pk = new byte[n];
-	// ArrayList<byte[][]> puk;
 	boolean treeGenerated;
 	OTSHashAddress otsAdrs = new OTSHashAddress();
 	ArrayList<Node> tree;
@@ -227,19 +222,13 @@ public class MultiTree implements ISimpleMerkle {
 	public String sign(String message) {
 		String msg = message;
 		int i;
-		int idx_len = index_len;
 
 		// Init working params
 		byte R[] = new byte[n]; // pseudo-random value
 		byte hash_key[] = new byte[3 * n]; // dunno, they are used
 		byte msg_h[] = new byte[n]; // also used
-		// byte root[] = new byte[n];
-		// byte ots_seed[] = new byte[n];
-
-		// byte idx_bytes_32[]=new byte[32];
 
 		// Extract SK
-		int idx = 0;
 		byte[] sek = sk;
 		for (i = 0; i < idx_len; i++) {
 			idx |= ((long) sek[i]) << 8 * (idx_len - 1 - i);
@@ -280,8 +269,7 @@ public class MultiTree implements ISimpleMerkle {
 		msg_h = XMSSTree.randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(idx).toByteArray(), R),
 				msg.getBytes(), msg.length());
 
-		// Start collecting signature
-		// *sig_msg_len = 0;
+		// collecting signature
 		byte[] sigmsg = msg_h;
 
 		// Copy index to signature
@@ -306,10 +294,7 @@ public class MultiTree implements ISimpleMerkle {
 		sigmessage.write(n);
 		sigmsg = sigmessage.toByteArray();
 
-		// ----------------------------------
-		// Now we start to "really sign"
-		// ----------------------------------
-
+		// signing
 		// Handle lowest layer separately as it is slightly different...
 
 		OTSHashAddress ots_addr = new OTSHashAddress();
@@ -320,8 +305,6 @@ public class MultiTree implements ISimpleMerkle {
 		byte[][] ots_sig = ((WOTSPlus) otsAlgo).sign(sigmsg, seed, ots_addr);
 
 		ArrayList<Node> auth = buildAuth(idx, seed);
-
-		// *sig_msg_len += msglen;
 
 		String signature = Integer.toString(idx) + "|" + Converter._byteToHex(R) + "|"
 				+ Converter._2dByteToHex(ots_sig);
@@ -431,7 +414,7 @@ public class MultiTree implements ISimpleMerkle {
 		tree = new ArrayList<Node>(Arrays.asList(treeArray));
 		setConnections();
 
-		System.err.println(Converter._byteToHex(sk));
+		System.err.println(Converter._byteToHex(sk)); 
 		treeGenerated = true;
 	}
 
@@ -448,7 +431,7 @@ public class MultiTree implements ISimpleMerkle {
 	}
 
 	public String getSK() {
-		String sek = sk.toString();
+		String sek = idx+ "|"+ seed.toString() + "|" + sk.toString();
 		return sek;
 	}
 
