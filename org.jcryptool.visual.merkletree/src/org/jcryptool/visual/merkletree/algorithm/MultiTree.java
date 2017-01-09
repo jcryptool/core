@@ -32,6 +32,7 @@ public class MultiTree implements ISimpleMerkle {
 	byte[] sk_seed;
 	byte[] sk_prf;
 	byte[] pub_seed;
+	byte [] prf_seed;
 	byte[] sk = new byte[n];
 	byte[] pk = new byte[n];
 	boolean treeGenerated;
@@ -420,9 +421,8 @@ public class MultiTree implements ISimpleMerkle {
 	@Override
 	public boolean verify(String message, String signature) {
 		//  TODO
-		/**
-		 * 
-		 */
+		//first hash message
+		byte []hash= XMSSTree.randomGenerator(prf_seed, message, message.length());
 		return true;
 	}
 
@@ -432,12 +432,12 @@ public class MultiTree implements ISimpleMerkle {
 		return true;
 	}
 
-	public String getSK() {
+	public String getPrivateKey() {
 		String sek = idx+ "|"+ seed.toString() + "|" + sk.toString();
 		return sek;
 	}
 
-	public String getPK() {
+	public String getPublicKey() {
 		String publicKeyString = Converter._byteToHex(rootNode.getContent()) + "|" + Converter._byteToHex(seed);
 		return publicKeyString;
 	}
