@@ -50,9 +50,7 @@ public class MultiTree implements ISimpleMerkle {
 		leafCounter = i;
 	}
 
-	/*
-	 * TODO LENA: Compute Autopath Key Management WOTS+
-	 */
+
 
 	@Override
 	/**
@@ -358,7 +356,8 @@ public class MultiTree implements ISimpleMerkle {
 
 	@Override
 	public Node getTreeLeaf(int treeLeaveNumber) {
-		// TODO Auto-generated method stub
+		// Lena: brauch ma eh ned, oda?
+		//weil interface
 		return null;
 	}
 
@@ -420,14 +419,17 @@ public class MultiTree implements ISimpleMerkle {
 
 	@Override
 	public boolean verify(String message, String signature) {
-		// TODO Auto-generated method stub
-		return false;
+		//  TODO
+		/**
+		 * 
+		 */
+		return true;
 	}
 
 	@Override
 	public boolean verify(String message, String signature, int keyIndex) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	public String getSK() {
@@ -491,7 +493,7 @@ public class MultiTree implements ISimpleMerkle {
 	 */
 	public Node treeHash(int s, int t, byte[] seed) {
 
-		Node node; // TODO make new Node class
+		Node node; 
 		Stack<Node> stack = new Stack<Node>();
 		byte[][] pKey;
 		OTSHashAddress otsAdrs = new OTSHashAddress();
