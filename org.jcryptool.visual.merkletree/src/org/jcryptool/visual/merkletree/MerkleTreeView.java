@@ -59,6 +59,13 @@ public class MerkleTreeView extends ViewPart {
 	private ISimpleMerkle oldMerkle;
 	private SUIT mode;
 	private int previousTab = 0;
+	private ViewPart masterView;
+
+	TabItem tbtmParameter0;
+	TabItem tbtmParameter1;
+	TabItem tbtmParameter2;
+	TabItem tbtmParameter3;
+	TabItem tbtmParameter4;
 
 	boolean sync = false;
 
@@ -75,6 +82,7 @@ public class MerkleTreeView extends ViewPart {
 
 		this.parent = parent;
 		unsavedChanges = false;
+		masterView = this;
 
 		parent.setLayout(new GridLayout(1, false));
 
@@ -86,25 +94,25 @@ public class MerkleTreeView extends ViewPart {
 		tabFolder = new TabFolder(scrolledComposite, SWT.NONE);
 
 		// Key-generation
-		TabItem tbtmParameter0 = new TabItem(tabFolder, SWT.NONE);
+		tbtmParameter0 = new TabItem(tabFolder, SWT.NONE);
 		tbtmParameter0.setText(Descriptions.MerkleTreeTab_0);
-		baseComposite = new MerkleTreeComposite(tabFolder, this);
+		baseComposite = new MerkleTreeComposite(tabFolder, masterView);
 		tbtmParameter0.setControl(baseComposite);
 
 		// TreeView
-		TabItem tbtmParameter1 = new TabItem(tabFolder, SWT.NONE);
+		tbtmParameter1 = new TabItem(tabFolder, SWT.NONE);
 		tbtmParameter1.setText(Descriptions.MerkleTreeTab_1);
 
 		// keys
-		TabItem tbtmParameter2 = new TabItem(tabFolder, SWT.NONE);
+		tbtmParameter2 = new TabItem(tabFolder, SWT.NONE);
 		tbtmParameter2.setText(Descriptions.MerkleTreeTab_2);
 
 		// Signing
-		TabItem tbtmParameter3 = new TabItem(tabFolder, SWT.NONE);
+		tbtmParameter3 = new TabItem(tabFolder, SWT.NONE);
 		tbtmParameter3.setText(Descriptions.MerkleTreeTab_3);
 
 		// Verification
-		TabItem tbtmParameter4 = new TabItem(tabFolder, SWT.NONE);
+		tbtmParameter4 = new TabItem(tabFolder, SWT.NONE);
 		tbtmParameter4.setText(Descriptions.MerkleTreeTab_4);
 
 		tabFolder.addSelectionListener(new SelectionAdapter() {
@@ -153,73 +161,84 @@ public class MerkleTreeView extends ViewPart {
 					messageBoxx.setText("Info");
 					messageBoxx.open();
 				} else {
-					switch (tabFolder.getSelectionIndex()) {
-					case 0:
-						previousTab = 0;
-						break;
-					case 1:
-						zestTab = new MerkleTreeZestComposite(tabFolder, SWT.NONE, merkle, mode);
-						tbtmParameter1.setControl(zestTab);
-						previousTab = 1;
-						break;
-					case 2:
-						// Creates instance if tab was not clicked before
-						if (keyTab == null || ((oldMerkle != merkle) || oldMerkle == null)) {
-							// TODO: implement feature so that
-							// this knows: have the keys changed?
-							BusyIndicator.showWhile(Display.getCurrent(), new Runnable() {
-
-								@Override
-								public void run() {
-									// TODO Auto-generated method stub
-									keyTab = new MerkleTreeKeyComposite(tabFolder, SWT.NONE, merkle);
-									keyTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-								}
-							});
-						}
-						oldMerkle = merkle;
-						tbtmParameter2.setControl(keyTab);
-						previousTab = 2;
-						break;
-					case 3:
-						/*
-						 * only create a new SignatureComposite at the first
-						 * time if synced == true -> dont create a new
-						 * SignatureComposite necessary for tab changes
-						 */
-						if (sync == false || signatureTab == null) {
-							signatureTab = new MerkleTreeSignatureComposite(tabFolder, SWT.NONE, merkle);
-							signatureTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-							tbtmParameter3.setControl(signatureTab);
-						}
-						previousTab = 3;
-						break;
-					case 4:
-						sync = true;
-						if (signatureTab == null || signatureTab.getSignature() == null) {
-							tabFolder.setSelection(previousTab);
-							MessageBox messageBoxx = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
-							messageBoxx.setMessage(Descriptions.MerkleTree_Signature_Generation_Info);
-							messageBoxx.setText("Info");
-							messageBoxx.open();
-						} else {
-							String signature = signatureTab.getSignature();
-							String[] splittedSign = signature.split("\\|");
-							String keyIndex = "";
-							String message = signatureTab.getMessage();
-							if (splittedSign.length > 1) {
-								keyIndex = splittedSign[0];
-							}
-
-							verificationTab = new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle, Integer.parseInt(keyIndex), signature, message);
-							verificationTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-							tabFolder.getSelection()[0].setControl(verificationTab);
-
-						}
-						break;
-					default:
-						break;
-					}
+					setTab(tabFolder.getSelectionIndex());
+					// switch (tabFolder.getSelectionIndex()) {
+					// case 0:
+					// previousTab = 0;
+					// break;
+					// case 1:
+					// zestTab = new MerkleTreeZestComposite(tabFolder,
+					// SWT.NONE, merkle, mode, masterView);
+					// tbtmParameter1.setControl(zestTab);
+					// previousTab = 1;
+					// break;
+					// case 2:
+					// // Creates instance if tab was not clicked before
+					// if (keyTab == null || ((oldMerkle != merkle) || oldMerkle
+					// == null)) {
+					// // TODO: implement feature so that
+					// // this knows: have the keys changed?
+					// BusyIndicator.showWhile(Display.getCurrent(), new
+					// Runnable() {
+					//
+					// @Override
+					// public void run() {
+					// // TODO Auto-generated method stub
+					// keyTab = new MerkleTreeKeyComposite(tabFolder, SWT.NONE,
+					// merkle);
+					// keyTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+					// }
+					// });
+					// }
+					// oldMerkle = merkle;
+					// tbtmParameter2.setControl(keyTab);
+					// previousTab = 2;
+					// break;
+					// case 3:
+					// /*
+					// * only create a new SignatureComposite at the first
+					// * time if synced == true -> dont create a new
+					// * SignatureComposite necessary for tab changes
+					// */
+					// if (sync == false || signatureTab == null) {
+					// signatureTab = new
+					// MerkleTreeSignatureComposite(tabFolder, SWT.NONE,
+					// merkle);
+					// signatureTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+					// tbtmParameter3.setControl(signatureTab);
+					// }
+					// previousTab = 3;
+					// break;
+					// case 4:
+					// sync = true;
+					// if (signatureTab == null || signatureTab.getSignature()
+					// == null) {
+					// tabFolder.setSelection(previousTab);
+					// MessageBox messageBoxx = new MessageBox(new Shell(),
+					// SWT.ICON_INFORMATION | SWT.OK);
+					// messageBoxx.setMessage(Descriptions.MerkleTree_Signature_Generation_Info);
+					// messageBoxx.setText("Info");
+					// messageBoxx.open();
+					// } else {
+					// String signature = signatureTab.getSignature();
+					// String[] splittedSign = signature.split("\\|");
+					// String keyIndex = "";
+					// String message = signatureTab.getMessage();
+					// if (splittedSign.length > 1) {
+					// keyIndex = splittedSign[0];
+					// }
+					//
+					// verificationTab = new
+					// MerkleTreeVerifikationComposite(tabFolder, SWT.NONE,
+					// merkle, Integer.parseInt(keyIndex), signature, message);
+					// verificationTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+					// tabFolder.getSelection()[0].setControl(verificationTab);
+					//
+					// }
+					// break;
+					// default:
+					// break;
+					// }
 				}
 			}
 		});
@@ -277,6 +296,86 @@ public class MerkleTreeView extends ViewPart {
 
 	public void updateElement() {
 		unsavedChanges = true;
+	}
+
+	public void setTab(int tab) {
+		switch (tab) {
+		case 0:
+			previousTab = 0;
+			break;
+		case 1:
+			zestTab = new MerkleTreeZestComposite(tabFolder, SWT.NONE, merkle, mode, masterView);
+			tbtmParameter1.setControl(zestTab);
+			previousTab = 1;
+			break;
+		case 2:
+			// Creates instance if tab was not clicked before or keys changed
+			if (keyTab == null || ((oldMerkle != merkle) || oldMerkle == null)) {
+				BusyIndicator.showWhile(Display.getCurrent(), new Runnable() {
+
+					@Override
+					public void run() {
+						keyTab = new MerkleTreeKeyComposite(tabFolder, SWT.NONE, merkle);
+						keyTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+					}
+				});
+			}
+			oldMerkle = merkle;
+			tbtmParameter2.setControl(keyTab);
+			previousTab = 2;
+			break;
+		case 3:
+			/*
+			 * only create a new SignatureComposite at the first time if synced
+			 * == true -> dont create a new SignatureComposite necessary for tab
+			 * changes
+			 */
+			if (sync == false || signatureTab == null) {
+				signatureTab = new MerkleTreeSignatureComposite(tabFolder, SWT.NONE, merkle);
+				signatureTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+				tbtmParameter3.setControl(signatureTab);
+			}
+			previousTab = 3;
+			break;
+		case 4:
+			sync = true;
+			String signature;
+			String[] splittedSign;
+			String keyIndex;
+			String message;
+			if (zestTab != null && zestTab.getSignature() != null) {
+				signature = zestTab.getSignature();
+				splittedSign = signature.split("\\|");
+				keyIndex = "";
+				message = zestTab.getMessage();
+				if (splittedSign.length > 1) {
+					keyIndex = splittedSign[0];
+				}
+				verificationTab = new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle, Integer.parseInt(keyIndex), signature, message);
+				verificationTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+				tabFolder.getSelection()[0].setControl(verificationTab);
+			} else if (signatureTab != null && signatureTab.getSignature() != null) {
+				signature = signatureTab.getSignature();
+				splittedSign = signature.split("\\|");
+				keyIndex = "";
+				message = signatureTab.getMessage();
+				if (splittedSign.length > 1) {
+					keyIndex = splittedSign[0];
+				}
+				verificationTab = new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle, Integer.parseInt(keyIndex), signature, message);
+				verificationTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+				tabFolder.getSelection()[0].setControl(verificationTab);
+			} else {
+				tabFolder.setSelection(previousTab);
+				MessageBox messageBoxx = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
+				messageBoxx.setMessage(Descriptions.MerkleTree_Signature_Generation_Info);
+				messageBoxx.setText("Info");
+				messageBoxx.open();
+			}
+			break;
+		default:
+			break;
+		}
 	}
 
 }

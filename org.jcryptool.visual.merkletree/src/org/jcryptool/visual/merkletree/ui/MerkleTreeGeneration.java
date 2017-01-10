@@ -48,9 +48,6 @@ public class MerkleTreeGeneration extends Composite {
 	private int wParameter = 16;
 	private SUIT mode;
 	private ViewPart masterView;
-	private Label leftSpacer;
-	private Label rightSpacer;
-
 	int spinnerValue;
 	int treeValue;
 
