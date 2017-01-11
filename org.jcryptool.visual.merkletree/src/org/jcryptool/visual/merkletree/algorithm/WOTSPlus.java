@@ -275,7 +275,7 @@ public class WOTSPlus implements OTS {
      * @return True if the signature is valid, otherwise false
      */
 
-    public boolean verify() {
+    public boolean verify(String message, String signature) {
         // deadcode
         return true;
     }

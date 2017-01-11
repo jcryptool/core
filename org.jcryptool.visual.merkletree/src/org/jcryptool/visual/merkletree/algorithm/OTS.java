@@ -14,7 +14,7 @@ public interface OTS {
 
     public void sign();
 
-    public boolean verify();
+    public boolean verify(String message, String signature);
 
     public byte[][] getPrivateKey();
 
