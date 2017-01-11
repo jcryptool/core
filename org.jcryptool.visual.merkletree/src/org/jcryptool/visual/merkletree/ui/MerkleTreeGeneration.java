@@ -5,8 +5,6 @@ import java.security.SecureRandom;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -14,9 +12,12 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
@@ -40,28 +41,33 @@ import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
  *
  */
 public class MerkleTreeGeneration extends Composite {
-	public byte[] seedarray;
-	public byte[] bitmaskSeedarray;
+
+	private ViewPart masterView;
+	private SUIT mode;
+
+	private byte[] seedarray;
+	private byte[] bitmaskSeedarray;
+
+	private Composite groupMaster;
 	private Button buttonCreateSeed;
 	private Label randomgenerator;
 	private Text textSeed;
 	private int wParameter = 16;
-	private SUIT mode;
-	private ViewPart masterView;
-	int spinnerValue;
-	int treeValue;
+
+	private int spinnerValue;
+	private int treeValue;
 
 	// w Parameter Box
-	Button buttonSet4;
-	Button buttonSet16;
-	Label titleLabel;
-	StyledText wParamDescription;
+	private Button buttonSet4;
+	private Button buttonSet16;
+	private Label titleLabel;
+	private StyledText wParamDescription;
 
 	// Generate Keys Box
-	Button buttonCreateKeys;
-	Label createLabel;
-	StyledText createdKey;
-	StyledText descText;
+	private Button buttonCreateKeys;
+	private Label createLabel;
+	private StyledText createdKey;
+	private StyledText descText;
 
 	MessageBox successBox;
 
@@ -77,22 +83,26 @@ public class MerkleTreeGeneration extends Composite {
 		this.mode = mode;
 		this.masterView = masterView;
 
+		groupMaster = new Composite(this, SWT.NONE);
+		groupMaster.setLayout(new GridLayout(8, true));
+		groupMaster.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
+
 		/**
 		 * (non-javadoc)
 		 * 
 		 * Seed Box
 		 * 
 		 */
-		Group group = new Group(this, SWT.NONE);
+		Group group = new Group(groupMaster, SWT.NONE);
 		group.setText(Descriptions.Tab0_Head1);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
-		group.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
+		group.setLayout(new GridLayout(10, true));
 
 		/*
 		 * Seed Label
 		 */
 		randomgenerator = new Label(group, SWT.NONE);
-		randomgenerator.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
+		randomgenerator.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
 		// randomgenerator.setText(Descriptions.Tab0_Head1);
 
 		/*
@@ -107,7 +117,7 @@ public class MerkleTreeGeneration extends Composite {
 		 * Button generate new Seed
 		 */
 		buttonCreateSeed = new Button(group, SWT.NONE);
-		buttonCreateSeed.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 2, 1));
+		buttonCreateSeed.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 3, 1));
 		buttonCreateSeed.setText(Descriptions.Tab0_Button1);
 
 		buttonCreateSeed.addSelectionListener(new SelectionAdapter() {
@@ -138,17 +148,17 @@ public class MerkleTreeGeneration extends Composite {
 		Label randomgenerator;
 
 		if (mode == SUIT.XMSS || mode == SUIT.XMSS_MT) {
-			Group bitmaskGroup = new Group(this, SWT.NONE);
+			Group bitmaskGroup = new Group(groupMaster, SWT.NONE);
 			bitmaskGroup.setText(Descriptions.Tab0_Head5);
 			bitmaskGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
-			bitmaskGroup.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
+			bitmaskGroup.setLayout(new GridLayout(10, true));
 			bitmaskGroup.setText(Descriptions.Tab0_Head3);
 
 			bitmaskLabel = new Label(bitmaskGroup, SWT.NONE);
-			bitmaskLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
+			bitmaskLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 10, 1));
 
 			bitmaskDescText = new StyledText(bitmaskGroup, SWT.WRAP | SWT.BORDER);
-			bitmaskDescText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 2));
+			bitmaskDescText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 10, 2));
 			bitmaskDescText.setText(Descriptions.Tab0_Txt3);
 			bitmaskDescText.setEditable(false);
 			bitmaskDescText.setCaret(null);
@@ -157,7 +167,7 @@ public class MerkleTreeGeneration extends Composite {
 			 * Bitmask Seed Label
 			 */
 			randomgenerator = new Label(bitmaskGroup, SWT.NONE);
-			randomgenerator.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
+			randomgenerator.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
 			randomgenerator.setText(Descriptions.Tab0_Head4);
 
 			/*
@@ -170,7 +180,7 @@ public class MerkleTreeGeneration extends Composite {
 			 * Button generate new Seed
 			 */
 			bitmaskButton = new Button(bitmaskGroup, SWT.NONE);
-			bitmaskButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 2, 1));
+			bitmaskButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 3, 1));
 			bitmaskButton.setText(Descriptions.Tab0_Button3);
 
 			bitmaskSeedarray = generateNewSeed();
@@ -193,7 +203,7 @@ public class MerkleTreeGeneration extends Composite {
 		 * 
 		 */
 
-		Group wParameterGroup = new Group(this, SWT.NONE);
+		Group wParameterGroup = new Group(groupMaster, SWT.NONE);
 		wParameterGroup.setText(Descriptions.Tab0_Head5);
 		wParameterGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
 		wParameterGroup.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
@@ -251,9 +261,9 @@ public class MerkleTreeGeneration extends Composite {
 		 */
 
 		treeValue = 0;
-		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
+		// this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
 
-		Group generateKeyGroup = new Group(this, SWT.NONE);
+		Group generateKeyGroup = new Group(groupMaster, SWT.NONE);
 		generateKeyGroup.setText(Descriptions.Tab0_Head2);
 		generateKeyGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
 		generateKeyGroup.setLayout(new GridLayout(1, true));
@@ -263,20 +273,25 @@ public class MerkleTreeGeneration extends Composite {
 		createLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
 
 		// text
-		descText = new StyledText(generateKeyGroup, SWT.WRAP);
-		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 2));
+		descText = new StyledText(generateKeyGroup, SWT.WRAP | SWT.BORDER);
+		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 1));
 		descText.setCaret(null);
 
+		//
+		Composite keyRow = new Composite(generateKeyGroup, SWT.NONE);
+		keyRow.setLayout(new GridLayout(8, true));
+		keyRow.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, true, 8, 1));
+
 		// text - for the spinner
-		Label keysum = new Label(generateKeyGroup, SWT.NONE);
-		keysum.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
+		Label keysum = new Label(keyRow, SWT.NONE);
+		keysum.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
 
 		// spinner for the key-ammount
-		Spinner spinnerkeysum = new Spinner(generateKeyGroup, SWT.BORDER);
+		Spinner spinnerkeysum = new Spinner(keyRow, SWT.BORDER);
 		spinnerkeysum.setMaximum(64);
 		spinnerkeysum.setMinimum(2);
 		spinnerkeysum.setSelection(0);
-		spinnerkeysum.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
+		spinnerkeysum.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
 		spinnerValue = 2;
 
 		// set the spinner-value only to values of the power of 2
@@ -299,15 +314,14 @@ public class MerkleTreeGeneration extends Composite {
 			}
 		});
 
-		// 'create button'
-		buttonCreateKeys = new Button(generateKeyGroup, SWT.NONE);
-		buttonCreateKeys.setEnabled(true);
-		buttonCreateKeys.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 3, 1));
-
 		// Text box with generated key info
-		createdKey = new StyledText(generateKeyGroup, SWT.WRAP | SWT.BORDER);
-		createdKey.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 2));
+		createdKey = new StyledText(keyRow, SWT.WRAP | SWT.BORDER);
+		createdKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		createdKey.setText(Descriptions.MerkleTreeKey_1);
+
+		// 'create button'
+		buttonCreateKeys = new Button(keyRow, SWT.NONE);
+		buttonCreateKeys.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 2, 1));
 
 		// if the Mode is MultiTree there is an extra spinner for the amount of
 		// Trees (Tree-Layers)
@@ -370,9 +384,27 @@ public class MerkleTreeGeneration extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				generateMerkleTree();
 				successBox.open();
+				((MerkleTreeView) masterView).removeFocus();
 			}
 
 		});
+		// Listener to set "neutral" focus on current view, where you can scroll
+		// and click everything
+		Listener setLocalFocus = new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+				((MerkleTreeView) masterView).removeFocus();
+			}
+		};
+		// Gets all groups in this tab and adds above listener
+		Control groupChildren[] = groupMaster.getChildren();
+
+		for (int i = 0; i < groupChildren.length; ++i) {
+			if (groupChildren[i] instanceof Group) {
+				groupChildren[i].addListener(SWT.MouseUp, setLocalFocus);
+			}
+		}
+
 	}
 
 	ISimpleMerkle merkle;
