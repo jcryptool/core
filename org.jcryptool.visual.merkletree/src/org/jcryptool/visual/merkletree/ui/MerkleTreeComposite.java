@@ -62,10 +62,7 @@ public class MerkleTreeComposite extends Composite {
 		combo.setLayoutData(gd_combo);
 		combo.add(Descriptions.CompositeDescriptionMerkleTree);
 		combo.add(Descriptions.CompositeDescriptionXMSS);
-		/**
-		 * uncomment to add the XMSS MultiTree View in first Tab
-		 */
-		// combo.add(Descriptions.CompositeDescriptionXMSS_MT);
+		combo.add(Descriptions.CompositeDescriptionXMSS_MT);
 
 		combo.setEnabled(true);
 		combo.select(0);
@@ -153,9 +150,11 @@ public class MerkleTreeComposite extends Composite {
 		case XMSS_MT:
 			descLabel.setText(Descriptions.XMSS_MT.Tab0_Head0);
 			descText.setText(Descriptions.XMSS_MT.Tab0_Txt0);
+			break;
 		case MSS:
 			descLabel.setText(Descriptions.MSS.Tab0_Head0);
 			descText.setText(Descriptions.MSS.Tab0_Txt0);
+			break;
 		}
 
 	}

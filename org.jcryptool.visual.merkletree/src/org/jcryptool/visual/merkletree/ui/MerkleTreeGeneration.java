@@ -26,6 +26,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.MerkleTreeView;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
+import org.jcryptool.visual.merkletree.algorithm.MultiTree;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
 import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
 import org.jcryptool.visual.merkletree.files.Converter;
@@ -336,6 +337,7 @@ public class MerkleTreeGeneration extends Composite {
 			treespinner.setMinimum(2);
 			treespinner.setSelection(0);
 			treespinner.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
+			treeValue = 2;
 			treespinner.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -423,8 +425,8 @@ public class MerkleTreeGeneration extends Composite {
 					merkle = new XMSSTree();
 					break;
 				case XMSS_MT:
-					// new XMSS_MT_TREE
-					// break;
+					merkle = new MultiTree();
+					break;
 				case MSS:
 				default:
 					merkle = new SimpleMerkleTree();
@@ -435,10 +437,12 @@ public class MerkleTreeGeneration extends Composite {
 				 * create the merkle tree with the chosen values
 				 */
 				// if the generated Tree is a XMSSTree -> the
-				// bitmaskseed is
-				// also needed
+				// bitmaskseed is also needed
 				if (merkle instanceof XMSSTree) {
 					((XMSSTree) merkle).setBitmaskSeed(bitmaskSeedarray);
+				}
+				if (merkle instanceof MultiTree) {
+					((MultiTree) merkle).setLayers(treeValue);
 				}
 				merkle.setSeed(seedarray);
 				merkle.setLeafCount(spinnerValue);
