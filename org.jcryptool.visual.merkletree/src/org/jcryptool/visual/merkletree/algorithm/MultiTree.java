@@ -102,7 +102,8 @@ public class MultiTree implements ISimpleMerkle {
 
 		adrs.setKeyBit(true);
 		adrs.setBlockBit(false);
-		key = XMSSTree.randomGenerator(seed, adrs.getAddress(), len);
+		XMSSTree xtree=new XMSSTree();
+		key = xtree.randomGenerator(seed, adrs.getAddress(), len);
 		for (int i = 0; i < message.length; i++) {
 			// XOR message with bitmask
 			message[i] ^= bitmk[i];
@@ -125,7 +126,8 @@ public class MultiTree implements ISimpleMerkle {
 		int len = otsAlgo.getLength();
 		adrs.setKeyBit(false);
 		adrs.setBlockBit(false);
-		bitmk_0 = XMSSTree.randomGenerator(seed, adrs.getAddress(), len);
+		XMSSTree xtree=new XMSSTree();
+		bitmk_0 = xtree.randomGenerator(seed, adrs.getAddress(), len);
 		adrs.setBlockBit(true);
 		bitmk_1 = randomGenerator(seed, adrs.getAddress(), len);
 		bitmk = ByteUtils.concatenate(bitmk_0, bitmk_1);
@@ -238,7 +240,9 @@ public class MultiTree implements ISimpleMerkle {
 
 		// First compute pseudorandom value
 
-		R = XMSSTree.randomGenerator(getSK_Seed(), message, message.length());
+		XMSSTree xtree=new XMSSTree();
+		
+		R = xtree.randomGenerator(getSK_Seed(), message, message.length());
 		// Generate hash key (R || root || idx)
 		ByteArrayOutputStream hak = new ByteArrayOutputStream();
 		hak.write(R, 0, n);
@@ -247,7 +251,7 @@ public class MultiTree implements ISimpleMerkle {
 		hash_key = hak.toByteArray();
 
 		// Then use it for message digest
-		msg_h = XMSSTree.randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(idx).toByteArray(), R),
+		msg_h = xtree.randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(idx).toByteArray(), R),
 				msg.getBytes(), msg.length());
 
 		// collecting signature
@@ -596,6 +600,12 @@ public class MultiTree implements ISimpleMerkle {
 			lAdrs.setTreeHeight(lAdrs.getTreeHeight() + 1);
 		}
 		return pubKey[0];
+	}
+
+	@Override
+	public String getKeyIndex() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
