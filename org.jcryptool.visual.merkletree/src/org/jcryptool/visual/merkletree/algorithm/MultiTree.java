@@ -459,7 +459,6 @@ public class MultiTree implements ISimpleMerkle {
 			System.err.println("SIGNATURE VERIFYCATION FAILED: ABORT");
 			return false;
 		}
-		
 		//get PK
 		byte[][] pek=wots.pkFromSig(signature, msg, seed, otsAdrs);
 
