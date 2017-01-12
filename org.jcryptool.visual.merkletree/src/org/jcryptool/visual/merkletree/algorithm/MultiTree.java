@@ -29,7 +29,7 @@ public class MultiTree implements ISimpleMerkle {
 	int keyIndex;
 	byte[] message;
 	Node[] treeArray;
-	byte[] seed; // 
+	byte[] seed; //
 	byte[] sk_prf;
 	byte[] sk = new byte[n];
 	byte[] pk = new byte[n];
@@ -67,8 +67,6 @@ public class MultiTree implements ISimpleMerkle {
 		}
 	}
 
-
-
 	/*
 	 * public void xmssmt_public_key() { /* +---------------------------------+
 	 * | algorithm OID | +---------------------------------+ | | | root node | n
@@ -102,7 +100,7 @@ public class MultiTree implements ISimpleMerkle {
 
 		adrs.setKeyBit(true);
 		adrs.setBlockBit(false);
-		XMSSTree xtree=new XMSSTree();
+		XMSSTree xtree = new XMSSTree();
 		key = xtree.randomGenerator(seed, adrs.getAddress(), len);
 		for (int i = 0; i < message.length; i++) {
 			// XOR message with bitmask
@@ -126,7 +124,7 @@ public class MultiTree implements ISimpleMerkle {
 		int len = otsAlgo.getLength();
 		adrs.setKeyBit(false);
 		adrs.setBlockBit(false);
-		XMSSTree xtree=new XMSSTree();
+		XMSSTree xtree = new XMSSTree();
 		bitmk_0 = xtree.randomGenerator(seed, adrs.getAddress(), len);
 		adrs.setBlockBit(true);
 		bitmk_1 = randomGenerator(seed, adrs.getAddress(), len);
@@ -240,8 +238,8 @@ public class MultiTree implements ISimpleMerkle {
 
 		// First compute pseudorandom value
 
-		XMSSTree xtree=new XMSSTree();
-		
+		XMSSTree xtree = new XMSSTree();
+
 		R = xtree.randomGenerator(getSK_Seed(), message, message.length());
 		// Generate hash key (R || root || idx)
 		ByteArrayOutputStream hak = new ByteArrayOutputStream();
@@ -251,8 +249,7 @@ public class MultiTree implements ISimpleMerkle {
 		hash_key = hak.toByteArray();
 
 		// Then use it for message digest
-		msg_h = xtree.randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(idx).toByteArray(), R),
-				msg.getBytes(), msg.length());
+		msg_h = xtree.randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(idx).toByteArray(), R), msg.getBytes(), msg.length());
 
 		// collecting signature
 		byte[] sigmsg = msg_h;
@@ -291,14 +288,12 @@ public class MultiTree implements ISimpleMerkle {
 
 		ArrayList<Node> auth = buildAuth(idx, seed);
 
-		String signature = Integer.toString(idx) + "|" + Converter._byteToHex(R) + "|"
-				+ Converter._2dByteToHex(ots_sig);
+		String signature = Integer.toString(idx) + "|" + Converter._byteToHex(R) + "|" + Converter._2dByteToHex(ots_sig);
 		for (i = 0; i < auth.size(); i++) {
 			signature = signature + "|" + Converter._byteToHex(auth.get(i).getContent());
 		}
 		return signature;
 	}
-
 
 	public String getPrivateKey() {
 		String sek = idx + "|" + seed.toString() + "|" + sk.toString();
@@ -321,7 +316,7 @@ public class MultiTree implements ISimpleMerkle {
 		String keyLength = sb.toString();
 		return keyLength;
 	}
-	
+
 	/**
 	 * @author Lena returns number of trees on a certain layer
 	 * 
@@ -340,7 +335,7 @@ public class MultiTree implements ISimpleMerkle {
 			return s;
 		}
 	}
-	
+
 	public byte[] getIndex(String s) {
 		String[] splitted = s.split("\\|"); // splits the xmss private
 		return Converter._stringToByte(splitted[0]);// private key seed is
@@ -357,8 +352,8 @@ public class MultiTree implements ISimpleMerkle {
 	@Override
 	public byte[] getMerkleRoot() {
 		return getRoot().getContent();
-	}	
-	
+	}
+
 	public Node getRoot() {
 		return treeHash(0, getTreeHeight(), seed);
 	}
@@ -368,11 +363,10 @@ public class MultiTree implements ISimpleMerkle {
 		return this.seed;
 	}
 
-	public long getOverallLeaves(){
-		return (long)Math.pow(2,h);
+	public long getOverallLeaves() {
+		return (long) Math.pow(2, h);
 	}
-	
-	
+
 	@Override
 	public int getLeafCounter() {
 		return leafCounter;
@@ -450,19 +444,18 @@ public class MultiTree implements ISimpleMerkle {
 	public boolean verify(String message, String signature) {
 		// TODO
 		// first hash message
-		WOTSPlus wots=new WOTSPlus(w, signature, bitmaskSeed);
+		WOTSPlus wots = new WOTSPlus(w, signature, bitmaskSeed);
 		byte[] msg = message.getBytes();
 		byte[] hash = randomGenerator(seed, msg, message.length());
-				
-		//Validate WOTS Signature
-		if (wots.verify(hash.toString(), signature)==false){
+
+		// Validate WOTS Signature
+		if (wots.verify(hash.toString(), signature) == false) {
 			System.err.println("SIGNATURE VERIFYCATION FAILED: ABORT");
 			return false;
 		}
-		//get PK
-		byte[][] pek=wots.pkFromSig(signature, msg, seed, otsAdrs);
+		// get PK
+		byte[][] pek = wots.pkFromSig(signature, msg, seed, otsAdrs);
 
-		
 		return true;
 	}
 
@@ -482,9 +475,9 @@ public class MultiTree implements ISimpleMerkle {
 	/**
 	 * sets message and message length (n)
 	 */
-	public void setMessage(byte[] message){
-		this.message=message;
-		this.n=message.length;
+	public void setMessage(byte[] message) {
+		this.message = message;
+		this.n = message.length;
 	}
 
 	@Override
@@ -504,7 +497,7 @@ public class MultiTree implements ISimpleMerkle {
 	public void set(int l) {
 		this.l = l;
 	}
-	
+
 	/**
 	 * Fills the connections list in the node for the GUI
 	 */
@@ -602,9 +595,8 @@ public class MultiTree implements ISimpleMerkle {
 	}
 
 	@Override
-	public String getKeyIndex() {
-		// TODO Auto-generated method stub
-		return null;
+	public int getKeyIndex() {
+		return keyIndex;
 	}
 
 }
