@@ -347,8 +347,8 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 
 	}
 
-	public String getKeyIndex() {
-		return Integer.toString(keyIndex);
+	public int getKeyIndex() {
+		return keyIndex;
 	}
 
 	public void generateSecretKeyString() {
