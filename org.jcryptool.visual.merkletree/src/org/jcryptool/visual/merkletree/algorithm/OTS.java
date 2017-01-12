@@ -54,4 +54,6 @@ public interface OTS {
 
     public void setMessageDigest(String digest);
 
+	public boolean verify();
+
 }
