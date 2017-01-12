@@ -100,6 +100,21 @@ public class Descriptions extends NLS {
 	public static String Tab0_Txt2;
 	public static String Tab0_Txt3;
 
+	public static String InteractiveSignature_Button_0;
+	public static String InteractiveSignature_Button_1;
+	public static String InteractiveSignature_Button_2;
+	public static String InteractiveSignature_Button_3;
+	public static String InteractiveSignature_Button_4;
+	public static String InteractiveSignature_1;
+	public static String InteractiveSignature_2;
+	public static String InteractiveSignature_3_1;
+	public static String InteractiveSignature_3_2;
+	public static String InteractiveSignature_4_1;
+	public static String InteractiveSignature_4_2;
+	public static String InteractiveSignature_5;
+	public static String InteractiveSignature_6;
+	
+	
 	public static class MSS {
 
 		public static String Tab0_Head0;

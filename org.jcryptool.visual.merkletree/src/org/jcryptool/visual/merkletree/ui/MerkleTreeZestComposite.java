@@ -151,7 +151,7 @@ public class MerkleTreeZestComposite
 		descriptionExpander.setBackground(curDisplay.getSystemColor(SWT.COLOR_WHITE));
 
 		Button button = new Button(this, SWT.PUSH);
-		button.setText("Interaktive Signaturerstellung");
+		button.setText(Descriptions.InteractiveSignature_Button_0);
 		button.addListener(SWT.Selection, event -> {
 			if (popup == null || popup.isDisposed()) {
 				interactiveSignatureGeneration();
@@ -684,19 +684,19 @@ this.addPaintListener(new PaintListener() {
 		switch (step) {
 
 		case 0:
-			backButton.setText("Zurück");
+			backButton.setText(Descriptions.InteractiveSignature_Button_1);
 			backButton.setVisible(false);
 			signatureText.setVisible(true);
 			signatureText.setEditable(true);
 
-			guideLabel.setText("Willkommen bei der Interaktiven Signaturerstellung\nGeben sie eine Nachricht an, die signiert werden soll");
+			guideLabel.setText(Descriptions.InteractiveSignature_1);
 			popup.setLocation(popupPosition);
 			oldPopup = popup.getLocation();
 			break;
 		case 1:
 			message = signatureText.getText();
 			if (message.length() != 0) {
-				guideLabel.setText("Im ersten Schritt suchen wir ein freies OTS Schlüsselpaar.");
+				guideLabel.setText(Descriptions.InteractiveSignature_2);
 				signatureText.setVisible(false);
 				backButton.setVisible(true);
 				signatureText.setEditable(false);
@@ -712,7 +712,7 @@ this.addPaintListener(new PaintListener() {
 			zestSash.setLocation(currentSashPosition);
 			popup.setLocation(compositePosition.x + 10, currentView.height - (popup.getBounds().height + 10));
 			oldPopup = popup.getLocation();
-			guideLabel.setText("Hier, Blatt " + currentIndex + " ist verwendbar.\nWir schreiben also den Index des Blattes in die Signatur");
+			guideLabel.setText(Descriptions.InteractiveSignature_3_1 + currentIndex + " " + Descriptions.InteractiveSignature_3_2);
 			signatureText.setText(currentIndex + " |");
 			signatureText.setVisible(true);
 			leaves[currentIndex].highlight();
@@ -720,8 +720,7 @@ this.addPaintListener(new PaintListener() {
 		case 3:
 			plainSignature = merkle.sign(message);
 			signature = plainSignature.split("\\|");
-			guideLabel.setText("Der Wert des Blattes " + currentIndex
-					+ " ist der öffentliche Schlüssel der One-Time-Signature. Er wird zur Überprüfung der Nachricht benötigt und ist damit der nächste Teil der Signatur ");
+			guideLabel.setText(Descriptions.InteractiveSignature_4_1 + currentIndex + " " + Descriptions.InteractiveSignature_4_2);
 			break;
 
 		case 4:
@@ -729,8 +728,7 @@ this.addPaintListener(new PaintListener() {
 			signatureText.append(signature[1]);
 			break;
 		case 5:
-			guideLabel.setText(
-					"Um Jetzt den Baum zu Hashen fehlt uns aber noch wichtige Information. Die Werte der rot markierten Nodes fehlen dem Prüfer der Signatur und müssen deshalb ergänzt werden");
+			guideLabel.setText(Descriptions.InteractiveSignature_5);
 			markBranch(leaves[currentIndex]);
 			markAuthPath(markedConnectionList);
 			break;
@@ -740,13 +738,13 @@ this.addPaintListener(new PaintListener() {
 			zestSash.setLocation(currentSashPosition);
 			popup.setLocation(compositePosition.x + 10, currentView.height - (popup.getBounds().height + 10));
 			oldPopup = popup.getLocation();
-			nextButton.setText("Weiter");
+			nextButton.setText(Descriptions.InteractiveSignature_Button_2);
 			signatureText.setText(currentIndex + " | ");
 			signatureText.append(signature[1] + " | ");
 			signatureText.append(signature[2]);
 			break;
 		case 7:
-			guideLabel.setText("Sind alle notwendigen Knoten bis zur Wurzel ergänzt, ist die Signatur fertig. Sie kann jetzt im Tab \"Verifizieren\" überprüft werden ");
+			guideLabel.setText(Descriptions.InteractiveSignature_6);
 			Point rootPosition = new Point(rootNode.getLocation().x, rootNode.getLocation().y);
 			currentSashPosition.x = -rootPosition.x + currentView.width / 2;
 			currentSashPosition.y = -rootPosition.y + popup.getBounds().height + 15;
@@ -754,8 +752,8 @@ this.addPaintListener(new PaintListener() {
 			popup.setLocation(currentView.width / 2 - popup.getBounds().width / 2, 10);
 			oldPopup = popup.getLocation();
 
-			cancelButton.setText("Fertig");
-			nextButton.setText("Verifizieren");
+			cancelButton.setText(Descriptions.InteractiveSignature_Button_3);
+			nextButton.setText(Descriptions.InteractiveSignature_Button_4);
 
 			nextButton.removeSelectionListener(nextListener);
 			nextButton.addSelectionListener(new SelectionListener() {
