@@ -431,4 +431,10 @@ public class WinternitzOTS implements OTS {
             throw new RuntimeException(ex);
         }
     }
+
+	@Override
+	public boolean verify(String message, String signature) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

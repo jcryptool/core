@@ -275,7 +275,8 @@ public class WOTSPlus implements OTS {
      * @return True if the signature is valid, otherwise false
      */
 
-    public boolean verify() {
+    @Override
+    public boolean verify(String message, String signature) {
         // deadcode
         return true;
     }
@@ -453,5 +454,11 @@ public class WOTSPlus implements OTS {
         // TODO Auto-generated method stub
         return null;
     }
+
+	@Override
+	public boolean verify() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }
