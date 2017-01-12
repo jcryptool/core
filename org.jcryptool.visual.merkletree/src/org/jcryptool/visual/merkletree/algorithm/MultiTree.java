@@ -69,7 +69,7 @@ public class MultiTree implements ISimpleMerkle {
 		}
 	}
 
-	void setLayers(int d) {
+	public void setLayers(int d) {
 		this.d = d;
 	}
 
@@ -406,11 +406,11 @@ public class MultiTree implements ISimpleMerkle {
 		generateKeyPairsAndLeaves();
 		treeArray = new Node[(1 << (getTreeHeight() + 1)) - 1];
 		rootNode = treeHash(0, getTreeHeight(), bitmaskSeed);
-		System.err.println(rootNode.getContent().toString());
+		// System.err.println(rootNode.getContent().toString());
 		tree = new ArrayList<Node>(Arrays.asList(treeArray));
 		setConnections();
 
-		System.err.println(Converter._byteToHex(sk));
+		// System.err.println(Converter._byteToHex(sk));
 		treeGenerated = true;
 	}
 
