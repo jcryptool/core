@@ -107,7 +107,7 @@ public class MerkleTreeKeyComposite extends Composite {
 		Composite buttonComposite = new Composite(privateKeyLabel, SWT.NONE);
 
 		buttonInfoLabel = new Label(buttonComposite, SWT.NONE);
-		buttonInfoLabel.setText("Schlüsselteil farblich hervorheben: ");
+		buttonInfoLabel.setText(Descriptions.MerkleTreeKeyTab_6);
 		buttonInfoLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 
 		buttonIndex = new Button(buttonComposite, SWT.TOGGLE);
