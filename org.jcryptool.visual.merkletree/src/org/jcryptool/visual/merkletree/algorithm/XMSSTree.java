@@ -26,7 +26,6 @@ public class XMSSTree implements ISimpleMerkle {
 
 	HashTreeAddress hAdrs = new HashTreeAddress();
 	OTSHashAddress otsAdrs = new OTSHashAddress();
-	LTreeAddress lAdrs = new LTreeAddress();
 	byte[] bitmask;
 	public String xPrivKey;
 	public String xPubKey;
@@ -241,23 +240,17 @@ public class XMSSTree implements ISimpleMerkle {
 	 */
 	public String sign(String message) {
 		int index = getIndex(xPrivKey);
-		// checks if tree has run out of keys/indices
-		if (keyIndex >= tree.size() - 1) {
-			return "";
-		}
 		ArrayList<Node> auth = buildAuth(index, seed);
 		byte[] r = randomGenerator(getSK_Seed(), message, message.length());
 		// index || r as seed for hashing the message
-		byte[] hashedMessage = randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(index).toByteArray(), r),
-				message.getBytes(), message.length());
+		byte[] hashedMessage = randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(index).toByteArray(), r), message.getBytes(), message.length());
 		OTSHashAddress otsAdrs = new OTSHashAddress();
 		otsAdrs.setOTSBit(true);
 		otsAdrs.setOTSAddress(index);
 		otsAlgo.setPrivateKey(privKeys.get(index));
 		otsAlgo.setPublicKey(publicKeys.get(index));
 		byte[][] ots_sig = ((WOTSPlus) otsAlgo).sign(hashedMessage, seed, otsAdrs);
-		String signature = Integer.toString(index) + "|" + Converter._byteToHex(r) + "|"
-				+ Converter._2dByteToHex(ots_sig);
+		String signature = Integer.toString(index) + "|" + Converter._byteToHex(r) + "|" + Converter._2dByteToHex(ots_sig);
 		for (int i = 0; i < auth.size(); i++) {
 			signature = signature + "|" + Converter._byteToHex(auth.get(i).getContent());
 		}
@@ -322,7 +315,7 @@ public class XMSSTree implements ISimpleMerkle {
 	 * @param address
 	 *            address of left/right node
 	 */
-	public byte[] randomGenerator(byte[] seed, byte[] address, int len) {
+	public static byte[] randomGenerator(byte[] seed, byte[] address, int len) {
 		byte[] res = new byte[len + 32]; // erstellen des zu befüllenden arrays
 		byte[] padding = new byte[32];
 		MessageDigest hash = null;
@@ -353,8 +346,7 @@ public class XMSSTree implements ISimpleMerkle {
 		byte[][] pk_ots;
 		WOTSPlus wots = (WOTSPlus) this.otsAlgo;
 		// index || r as seed for hashing the message
-		byte[] hashedMessage = randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(index).toByteArray(), r),
-				message.getBytes(), message.length());
+		byte[] hashedMessage = randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(index).toByteArray(), r), message.getBytes(), message.length());
 		otsAdrs.setOTSBit(true);
 		otsAdrs.setOTSAddress(index);
 		wots.setPrivateKey(privKeys.get(index));
@@ -371,12 +363,13 @@ public class XMSSTree implements ISimpleMerkle {
 			lAdrs.setTreeHeight(k);
 			if (Math.floor((double) index / (1 << k)) % 2 == 0) {
 				lAdrs.setTreeIndex(lAdrs.getTreeIndex() / 2);
-				node[1] = new XMSSNode(rand_hash(node[0].getContent(), Converter._hexStringToByte(splitted[3 + k]),
-						bitmaskSeed, lAdrs)); // splitted[3] is auth[0] in
-												// signature
+				node[1] = new XMSSNode(rand_hash(node[0].getContent(), Converter._hexStringToByte(splitted[3 + k]), bitmaskSeed, lAdrs)); // splitted[3]
+																																			// is
+																																			// auth[0]
+																																			// in
+																																			// signature
 			} else {
-				node[1] = new XMSSNode(rand_hash(Converter._hexStringToByte(splitted[3 + k]), node[0].getContent(),
-						bitmaskSeed, lAdrs));
+				node[1] = new XMSSNode(rand_hash(Converter._hexStringToByte(splitted[3 + k]), node[0].getContent(), bitmaskSeed, lAdrs));
 			}
 			node[0] = node[1];
 		}
@@ -449,7 +442,7 @@ public class XMSSTree implements ISimpleMerkle {
 		return index;
 	}
 
-	public byte[] randomGenerator(byte[] seed, String message, int len) {
+	public static byte[] randomGenerator(byte[] seed, String message, int len) {
 		byte[] res = new byte[len + 32]; // erstellen des zu befüllenden arrays
 		byte[] padding = new byte[32];
 		MessageDigest hash = null;
@@ -574,14 +567,17 @@ public class XMSSTree implements ISimpleMerkle {
 
 	}
 
-	public String getKeyIndex() {
-		return Integer.toString(keyIndex);
+	@Override
+	public int getKeyIndex() {
+		return keyIndex;
 	}
 
+	@Override
 	public String getPrivateKey() {
 		return xPrivKey;
 	}
 
+	@Override
 	public String getPublicKey() {
 		return xPubKey;
 	}

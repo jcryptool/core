@@ -169,65 +169,65 @@ public class MerkleTreeZestComposite
 		zestLayout = new GridLayout();
 		zestComposite.setLayout(zestLayout);
 
-	zestSash = new SashForm(zestComposite, SWT.NONE);
+		zestSash = new SashForm(zestComposite, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(zestSash);
 		zestComposite.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_SIZEALL));
 
 		// sets the size for Composite zestComposite
-		
-this.addPaintListener(new PaintListener() {
+
+		this.addPaintListener(new PaintListener() {
 
 			@Override
 			public void paintControl(PaintEvent e) {
-				
+
 				Point currentShellSize;
 				currentShellSize = parent.getSize();
-				double x,y;
-				
+				double x, y;
+
 				switch (merkle.getLeafCounter()) {
 
-					case 2:
-						x = currentShellSize.x;
-						y = currentShellSize.y/2;
-						zestSash.setLocation(70,10);
-						break;
-					case 4:
-						x = currentShellSize.x;
-						y = currentShellSize.y/1.7;
-						zestSash.setLocation(40,10);
-						break;
-					case 8:
-						x = currentShellSize.x;
-						y = currentShellSize.y;
-						zestSash.setLocation(20,0);
-						break;
-					case 16:
-						x = currentShellSize.x*1.2;
-						y = currentShellSize.y;
-						zestSash.setLocation(-150,0);
-						break;
-					case 32:
-						x = currentShellSize.x*1.5;
-						y = currentShellSize.y*1.2;
-						zestSash.setLocation(-450,0);
-						break;
-					case 64:
-						x = currentShellSize.x*2;
-						y = currentShellSize.y*1.5;
-						zestSash.setLocation(-925,0);
-						break;
-					default:
-						x = currentShellSize.x;
-						y = currentShellSize.y;
-						zestSash.setLocation(80,10);
-						break;
-					}
-				
-				zestComposite.setSize((int)x, (int)y);
-				
+				case 2:
+					x = currentShellSize.x;
+					y = currentShellSize.y / 2;
+					zestSash.setLocation(70, 10);
+					break;
+				case 4:
+					x = currentShellSize.x;
+					y = currentShellSize.y / 1.7;
+					zestSash.setLocation(40, 10);
+					break;
+				case 8:
+					x = currentShellSize.x;
+					y = currentShellSize.y;
+					zestSash.setLocation(20, 0);
+					break;
+				case 16:
+					x = currentShellSize.x * 1.2;
+					y = currentShellSize.y;
+					zestSash.setLocation(-150, 0);
+					break;
+				case 32:
+					x = currentShellSize.x * 1.5;
+					y = currentShellSize.y * 1.2;
+					zestSash.setLocation(-450, 0);
+					break;
+				case 64:
+					x = currentShellSize.x * 2;
+					y = currentShellSize.y * 1.5;
+					zestSash.setLocation(-925, 0);
+					break;
+				default:
+					x = currentShellSize.x;
+					y = currentShellSize.y;
+					zestSash.setLocation(80, 10);
+					break;
+				}
+
+				zestComposite.setSize((int) x, (int) y);
+
 			}
 		});
-	
+
 		cameraPoint = zestSash.getLocation();
 		// Beginning of the Graph
 		viewer = new GraphViewer(zestSash, SWT.NONE);
@@ -607,7 +607,7 @@ this.addPaintListener(new PaintListener() {
 			}
 		}
 
-		currentIndex = Integer.parseInt(merkle.getKeyIndex());
+		currentIndex = merkle.getKeyIndex();
 		guideLabel = new Label(popup, SWT.WRAP);
 		guideLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 6, 1));
 

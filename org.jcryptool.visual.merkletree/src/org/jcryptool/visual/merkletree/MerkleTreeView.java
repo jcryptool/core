@@ -12,14 +12,11 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
-import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
 import org.jcryptool.visual.merkletree.ui.MerkleConst;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeComposite;
@@ -60,6 +57,7 @@ public class MerkleTreeView extends ViewPart {
 	private SUIT mode;
 	private int previousTab = 0;
 	private ViewPart masterView;
+	private ScrolledComposite scrolledComposite;
 
 	TabItem tbtmParameter0;
 	TabItem tbtmParameter1;
@@ -86,7 +84,7 @@ public class MerkleTreeView extends ViewPart {
 
 		parent.setLayout(new GridLayout(1, false));
 
-		ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
@@ -115,130 +113,47 @@ public class MerkleTreeView extends ViewPart {
 		tbtmParameter4 = new TabItem(tabFolder, SWT.NONE);
 		tbtmParameter4.setText(Descriptions.MerkleTreeTab_4);
 
+		// gets called when a user clicks a tab
 		tabFolder.addSelectionListener(new SelectionAdapter() {
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.
-			 * eclipse.swt.events. SelectionEvent)
-			 */
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.
-			 * eclipse.swt.events. SelectionEvent)
-			 */
 			@Override
 			public void widgetSelected(SelectionEvent event) {
+				// this part calls a messagebox if parameters have been changed
+				// on the UI but no new key was created
 				if (unsavedChanges == true) {
 					int select = tabFolder.getSelectionIndex();
 					tabFolder.setSelection(0);
 					MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.YES | SWT.NO | SWT.CANCEL);
 					messageBox.setMessage(Descriptions.UnsavedChanges);
 					messageBox.setText("Info");
+					// asks if changes should be done to key, discarded or
+					// action cancelled
 					switch (messageBox.open()) {
-
 					case SWT.YES:
 						merkle = baseComposite.getMTS().generateMerkleTree();
 						unsavedChanges = false;
 						sync = false;
-
 						break;
 					case SWT.NO:
 						unsavedChanges = false;
 						break;
 					case SWT.CANCEL:
+						removeFocus();
 					default:
 						select = 0;
 					}
 					tabFolder.setSelection(select);
 				}
-
+				// Calls messagebox if no key was created
 				if (merkle == null) {
 					tabFolder.setSelection(0);
 					MessageBox messageBoxx = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
 					messageBoxx.setMessage(Descriptions.MerkleTree_Generation_Info);
 					messageBoxx.setText("Info");
 					messageBoxx.open();
+					removeFocus();
 				} else {
+					// else sets tab with logic in setTab
 					setTab(tabFolder.getSelectionIndex());
-					// switch (tabFolder.getSelectionIndex()) {
-					// case 0:
-					// previousTab = 0;
-					// break;
-					// case 1:
-					// zestTab = new MerkleTreeZestComposite(tabFolder,
-					// SWT.NONE, merkle, mode, masterView);
-					// tbtmParameter1.setControl(zestTab);
-					// previousTab = 1;
-					// break;
-					// case 2:
-					// // Creates instance if tab was not clicked before
-					// if (keyTab == null || ((oldMerkle != merkle) || oldMerkle
-					// == null)) {
-					// // TODO: implement feature so that
-					// // this knows: have the keys changed?
-					// BusyIndicator.showWhile(Display.getCurrent(), new
-					// Runnable() {
-					//
-					// @Override
-					// public void run() {
-					// // TODO Auto-generated method stub
-					// keyTab = new MerkleTreeKeyComposite(tabFolder, SWT.NONE,
-					// merkle);
-					// keyTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-					// }
-					// });
-					// }
-					// oldMerkle = merkle;
-					// tbtmParameter2.setControl(keyTab);
-					// previousTab = 2;
-					// break;
-					// case 3:
-					// /*
-					// * only create a new SignatureComposite at the first
-					// * time if synced == true -> dont create a new
-					// * SignatureComposite necessary for tab changes
-					// */
-					// if (sync == false || signatureTab == null) {
-					// signatureTab = new
-					// MerkleTreeSignatureComposite(tabFolder, SWT.NONE,
-					// merkle);
-					// signatureTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-					// tbtmParameter3.setControl(signatureTab);
-					// }
-					// previousTab = 3;
-					// break;
-					// case 4:
-					// sync = true;
-					// if (signatureTab == null || signatureTab.getSignature()
-					// == null) {
-					// tabFolder.setSelection(previousTab);
-					// MessageBox messageBoxx = new MessageBox(new Shell(),
-					// SWT.ICON_INFORMATION | SWT.OK);
-					// messageBoxx.setMessage(Descriptions.MerkleTree_Signature_Generation_Info);
-					// messageBoxx.setText("Info");
-					// messageBoxx.open();
-					// } else {
-					// String signature = signatureTab.getSignature();
-					// String[] splittedSign = signature.split("\\|");
-					// String keyIndex = "";
-					// String message = signatureTab.getMessage();
-					// if (splittedSign.length > 1) {
-					// keyIndex = splittedSign[0];
-					// }
-					//
-					// verificationTab = new
-					// MerkleTreeVerifikationComposite(tabFolder, SWT.NONE,
-					// merkle, Integer.parseInt(keyIndex), signature, message);
-					// verificationTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-					// tabFolder.getSelection()[0].setControl(verificationTab);
-					//
-					// }
-					// break;
-					// default:
-					// break;
-					// }
 				}
 			}
 		});
@@ -376,6 +291,11 @@ public class MerkleTreeView extends ViewPart {
 		default:
 			break;
 		}
+
+	}
+
+	public void removeFocus() {
+		baseComposite.setLocalFocus();
 	}
 
 }

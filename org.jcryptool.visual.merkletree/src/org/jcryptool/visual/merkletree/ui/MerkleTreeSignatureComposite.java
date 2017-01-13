@@ -76,8 +76,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 		lkeyNumber.setText(Descriptions.MerkleTreeSign_7);
 
 		styledTextKeyNumber = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
-		styledTextKeyNumber
-				.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 5, 1));
+		styledTextKeyNumber.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 5, 1));
 		styledTextKeyNumber.setText("");
 
 		lSignaturSize = new Label(this, SWT.READ_ONLY | SWT.WRAP | SWT.RIGHT);
@@ -85,9 +84,8 @@ public class MerkleTreeSignatureComposite extends Composite {
 		lSignaturSize.setText(Descriptions.MerkleTreeSign_6);
 
 		styledTextSignSize = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
-		styledTextSignSize
-				.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 5, 1));
-		styledTextSignSize.setText(merkle.getKeyIndex());
+		styledTextSignSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 5, 1));
+		styledTextSignSize.setText(Integer.toString(merkle.getKeyIndex()));
 
 		SingatureExpl = new Label(this, SWT.NONE);
 		SingatureExpl.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));

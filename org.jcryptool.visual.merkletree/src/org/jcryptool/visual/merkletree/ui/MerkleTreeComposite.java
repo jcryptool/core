@@ -10,7 +10,9 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.merkletree.Descriptions;
@@ -60,10 +62,7 @@ public class MerkleTreeComposite extends Composite {
 		combo.setLayoutData(gd_combo);
 		combo.add(Descriptions.CompositeDescriptionMerkleTree);
 		combo.add(Descriptions.CompositeDescriptionXMSS);
-		/**
-		 * uncomment to add the XMSS MultiTree View in first Tab
-		 */
-		// combo.add(Descriptions.CompositeDescriptionXMSS_MT);
+		combo.add(Descriptions.CompositeDescriptionXMSS_MT);
 
 		combo.setEnabled(true);
 		combo.select(0);
@@ -100,6 +99,7 @@ public class MerkleTreeComposite extends Composite {
 				generationTab = new MerkleTreeGeneration(descr, SWT.NONE, mode, masterView);
 				generationTab.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
 				generationTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+				setLocalFocus();
 
 				descr.layout();
 			}
@@ -110,7 +110,19 @@ public class MerkleTreeComposite extends Composite {
 		generationTab = new MerkleTreeGeneration(descr, SWT.NONE, mode, masterView);
 		generationTab.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
 		generationTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+		setLocalFocus();
+
+		Listener triggerLocalFocus = new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+				setLocalFocus();
+			}
+		};
+		descr.addListener(SWT.MouseDown, triggerLocalFocus);
 	}
+
+	Label descLabel;
+	StyledText descText;
 
 	/**
 	 * Generates the main description for the first tab
@@ -123,9 +135,9 @@ public class MerkleTreeComposite extends Composite {
 	 */
 	private void MerkleTreeDescription(Composite descr, SUIT mode) {
 
-		Label descLabel = new Label(descr, SWT.NONE);
+		descLabel = new Label(descr, SWT.NONE);
 		descLabel.setFont(FontService.getHeaderFont());
-		StyledText descText = new StyledText(descr, SWT.WRAP);
+		descText = new StyledText(descr, SWT.WRAP);
 		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		descText.setCaret(null);
 		descText.setEditable(false);
@@ -138,9 +150,11 @@ public class MerkleTreeComposite extends Composite {
 		case XMSS_MT:
 			descLabel.setText(Descriptions.XMSS_MT.Tab0_Head0);
 			descText.setText(Descriptions.XMSS_MT.Tab0_Txt0);
+			break;
 		case MSS:
 			descLabel.setText(Descriptions.MSS.Tab0_Head0);
 			descText.setText(Descriptions.MSS.Tab0_Txt0);
+			break;
 		}
 
 	}
@@ -153,5 +167,9 @@ public class MerkleTreeComposite extends Composite {
 	 */
 	public MerkleTreeGeneration getMTS() {
 		return generationTab;
+	}
+
+	public void setLocalFocus() {
+		descText.setFocus();
 	}
 }
