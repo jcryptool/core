@@ -6,8 +6,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -15,10 +18,12 @@ import org.eclipse.swt.widgets.Composite;
 // import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
 import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
+import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 /**
  * Composite for the Tabpage "Signatur"
@@ -36,117 +41,156 @@ public class MerkleTreeSignatureComposite extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	Label sign;
-	Text textSign;
-	Button createSign;
-	StyledText styledTextSign;
-	StyledText styledTextSignSize;
-	Label lSignaturSize;
-	Label lkeyNumber;
-	Label SingatureExpl;
+	MerkleTreeSignatureComposite instance;
+	ViewPart masterView;
+	SUIT mode;
 	Label descLabel;
-	String signature = null;
+	Composite selectionComposite;
+	Label tabDescriptionLabel;
+	Text descrText;
+	Button interactiveButton;
+	Button plainButton;
+
+	Label spacerTop;
+	Label spacerBottom;
+	Label spacerLeft;
+	Label spacerRight;
+
+	String signature[] = null;
 
 	StyledText styledTextKeyNumber;
 	ISimpleMerkle merkle;
 
-	public MerkleTreeSignatureComposite(Composite parent, int style, ISimpleMerkle merkle) {
+	public MerkleTreeSignatureComposite(Composite parent, int style, ISimpleMerkle merkle, SUIT mode, ViewPart masterView) {
 		super(parent, SWT.NONE);
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
-
 		this.merkle = merkle;
-
+		this.mode = mode;
+		this.masterView = masterView;
+		instance = this;
 		descLabel = new Label(this, SWT.NONE);
 		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
-
-		sign = new Label(this, SWT.NONE);
-		sign.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
-		sign.setText(Descriptions.MerkleTreeSign_0);
-
-		textSign = new Text(this, SWT.BORDER | SWT.V_SCROLL | SWT.CANCEL | SWT.MULTI);
-		GridData gd_textSign = new GridData(SWT.FILL, SWT.FILL, true, true, MerkleConst.H_SPAN_MAIN, 1);
-		textSign.setLayoutData(gd_textSign);
-		textSign.setText(Descriptions.MerkleTreeSign_1);
-		createSign = new Button(this, SWT.NONE);
-		createSign.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 2, 1));
-		createSign.setText(Descriptions.MerkleTreeSign_2);
-
-		lkeyNumber = new Label(this, SWT.READ_ONLY | SWT.WRAP | SWT.RIGHT);
-		lkeyNumber.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 5, 1));
-		lkeyNumber.setText(Descriptions.MerkleTreeSign_7);
-
-		styledTextKeyNumber = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
-		styledTextKeyNumber.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 5, 1));
-		styledTextKeyNumber.setText("");
-
-		lSignaturSize = new Label(this, SWT.READ_ONLY | SWT.WRAP | SWT.RIGHT);
-		lSignaturSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 5, 1));
-		lSignaturSize.setText(Descriptions.MerkleTreeSign_6);
-
-		styledTextSignSize = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
-		styledTextSignSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 5, 1));
-		styledTextSignSize.setText(Integer.toString(merkle.getKeyIndex()));
-
-		SingatureExpl = new Label(this, SWT.NONE);
-		SingatureExpl.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
-
-		/**
-		 * @author Christoph Sonnberger The Text is based on the used suite if
-		 *         there will implemented an other suite, just add an else if
-		 *         and type the name of the instance Example for MultiTree ->
-		 *         merkle instanceof XMSSMT
-		 */
 		if (merkle instanceof XMSSTree) {
-			SingatureExpl.setText(Descriptions.XMSS.Tab2_Txt0);
-			SingatureExpl.setText(Descriptions.XMSS.Tab2_Txt0);
 			descLabel.setText(Descriptions.XMSS.Tab1_Head0);
 		} else if (merkle instanceof SimpleMerkleTree) {
-			SingatureExpl.setText(Descriptions.MSS.Tab2_Txt0);
-			SingatureExpl.setText(Descriptions.MSS.Tab2_Txt0);
 			descLabel.setText(Descriptions.MSS.Tab1_Head0);
-
 		}
 
-		styledTextSign = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
-		GridData gd_textTextSign = new GridData(SWT.FILL, SWT.FILL, true, true, MerkleConst.H_SPAN_MAIN, 1);
-		styledTextSign.setLayoutData(gd_textTextSign);
+		spacerTop = new Label(this, SWT.NONE);
+		spacerTop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
 
-		createSign.addSelectionListener(new SelectionAdapter() {
+		selectionComposite = new Composite(this, SWT.BORDER);
+		selectionComposite.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, true, 8, 1));
+		selectionComposite.setLayout(new GridLayout(4, true));
+		selectionComposite.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
 
-			/*
-			 * Event to create a Signature
-			 */
+		tabDescriptionLabel = new Label(selectionComposite, SWT.NONE);
+		tabDescriptionLabel.setText("In diesem Tab können Signaturen erstellt werden. Wählen sie eine der zwei optionen, sie unterscheiden sich lediglich in ihrer Darstellung.");
+		tabDescriptionLabel.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, true, 4, 1));
+		tabDescriptionLabel.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
+
+		descrText = new Text(selectionComposite, SWT.WRAP | SWT.CENTER);
+		descrText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 4, 1));
+		// descrText.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+
+		interactiveButton = new Button(selectionComposite, SWT.PUSH);
+		interactiveButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		interactiveButton.setText("Interaktive Signaturerstellung");
+
+		plainButton = new Button(selectionComposite, SWT.PUSH);
+		plainButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		plainButton.setText("Einfache Signaturerstellung");
+
+		spacerBottom = new Label(this, SWT.NONE);
+		spacerBottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
+
+		interactiveButton.addMouseTrackListener(new MouseTrackListener() {
+
+			@Override
+			public void mouseHover(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExit(MouseEvent e) {
+				descrText.setText("");
+			}
+
+			@Override
+			public void mouseEnter(MouseEvent e) {
+				descrText.setText("Die Signaturerstellung wird Schritt für Schritt visuell durchgeführt und erklärt. ");
+
+			}
+		});
+
+		plainButton.addMouseTrackListener(new MouseTrackListener() {
+
+			@Override
+			public void mouseHover(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExit(MouseEvent e) {
+				descrText.setText("");
+			}
+
+			@Override
+			public void mouseEnter(MouseEvent e) {
+				descrText.setText("Geben Sie einen Text ein und erhalten sofort eine Signatur");
+
+			}
+		});
+
+		interactiveButton.addSelectionListener(new SelectionListener() {
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				/*
-				 * store signature in temp string, to verify it
-				 */
-				String temp = merkle.sign(textSign.getText());
-				if (temp != "") {
-					signature = temp;
-					/**
-					 * updated the field of the Signature, KeyIndex and
-					 * SignatureLength
-					 */
-					styledTextSign.setText(signature);
-					styledTextSignSize.setText(getSignatureLength(signature) + " Byte");
-					styledTextKeyNumber.setText(getKeyIndex(signature));
-				} else {
-					styledTextSign.setText(Descriptions.MerkleTreeSign_8);
-				}
+				createInteractiveComposite();
 			}
-		});
-		textSign.addModifyListener(new ModifyListener() {
+
 			@Override
-			public void modifyText(ModifyEvent e) {
-				if (textSign.getText().length() > 0) {
-					createSign.setEnabled(true);
-				} else {
-					createSign.setEnabled(false);
-				}
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
 
 			}
 		});
+
+		plainButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				createPlainComposite();
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+	}
+
+	private void createInteractiveComposite() {
+		selectionComposite.dispose();
+		spacerTop.dispose();
+		spacerBottom.dispose();
+		InteractiveSignatureComposite interactive = new InteractiveSignatureComposite(this, SWT.NONE, merkle, mode, masterView);
+		interactive.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
+		this.layout();
+	}
+
+	private void createPlainComposite() {
+		selectionComposite.dispose();
+		spacerTop.dispose();
+		spacerBottom.dispose();
+		PlainSignatureComposite plain = new PlainSignatureComposite(this, SWT.NONE, merkle);
+		plain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
+		this.layout();
 	}
 
 	/**
@@ -154,7 +198,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 	 * 
 	 * @return Signature
 	 */
-	public String getSignature() {
+	public String[] getSignatures() {
 		return signature;
 	}
 
@@ -163,9 +207,9 @@ public class MerkleTreeSignatureComposite extends Composite {
 	 * 
 	 * @return usedText
 	 */
-	public String getMessage() {
-		return textSign.getText();
-	}
+	// public String getMessage() {
+	// return textSign.getText();
+	// }
 
 	/**
 	 * @author christoph sonnberger returns the Length of the Siganture as

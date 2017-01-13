@@ -17,11 +17,13 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
+import org.jcryptool.visual.merkletree.ui.InteractiveSignatureComposite;
 import org.jcryptool.visual.merkletree.ui.MerkleConst;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeComposite;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeKeyComposite;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeSignatureComposite;
+import org.jcryptool.visual.merkletree.ui.PlainSignatureComposite;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeVerifikationComposite;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeZestComposite;
 
@@ -246,9 +248,14 @@ public class MerkleTreeView extends ViewPart {
 			 * changes
 			 */
 			if (sync == false || signatureTab == null) {
-				signatureTab = new MerkleTreeSignatureComposite(tabFolder, SWT.NONE, merkle);
+				signatureTab = new MerkleTreeSignatureComposite(tabFolder, SWT.NONE, merkle, mode, this);
 				signatureTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 				tbtmParameter3.setControl(signatureTab);
+				// InteractiveSignatureComposite test = new
+				// InteractiveSignatureComposite(tabFolder, SWT.NONE, merkle,
+				// mode, masterView);
+				// test.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+				// tbtmParameter3.setControl(test);
 			}
 			previousTab = 3;
 			break;
@@ -269,11 +276,11 @@ public class MerkleTreeView extends ViewPart {
 				verificationTab = new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle, Integer.parseInt(keyIndex), signature, message);
 				verificationTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 				tabFolder.getSelection()[0].setControl(verificationTab);
-			} else if (signatureTab != null && signatureTab.getSignature() != null) {
-				signature = signatureTab.getSignature();
+			} else if (signatureTab != null && signatureTab.getSignatures() != null) {
+				signature = signatureTab.getSignatures()[0];
 				splittedSign = signature.split("\\|");
 				keyIndex = "";
-				message = signatureTab.getMessage();
+				message = null;// signatureTab.getMessage();
 				if (splittedSign.length > 1) {
 					keyIndex = splittedSign[0];
 				}
