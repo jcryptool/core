@@ -142,7 +142,7 @@ public class MerkleTreeZestComposite
 		// this.setLayout(new GridLayout(1, true));
 
 		styledTextTree = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
-		styledTextTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		styledTextTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 
 		collapsablePart.setText("Beschreibung ausblenden");
 		collapsablePart.setExpanded(true);
@@ -150,17 +150,17 @@ public class MerkleTreeZestComposite
 		collapsablePart.setHeight((parent.getSize().y - 250) / 2);
 		descriptionExpander.setBackground(curDisplay.getSystemColor(SWT.COLOR_WHITE));
 
-		Button button = new Button(this, SWT.PUSH);
-		button.setText(Descriptions.InteractiveSignature_Button_0);
-		button.addListener(SWT.Selection, event -> {
-			if (popup == null || popup.isDisposed()) {
-				interactiveSignatureGeneration();
-			} else {
-				zestSash.setLocation(currentSashPosition);
-				popup.setLocation(popupPosition);
-			}
-
-		});
+		// Button button = new Button(this, SWT.PUSH);
+		// button.setText(Descriptions.InteractiveSignature_Button_0);
+		// button.addListener(SWT.Selection, event -> {
+		// if (popup == null || popup.isDisposed()) {
+		// interactiveSignatureGeneration();
+		// } else {
+		// zestSash.setLocation(currentSashPosition);
+		// popup.setLocation(popupPosition);
+		// }
+		//
+		// });
 
 		// Composite which contains a SashForm which contains the MerkleTree
 		// Zest Graph
@@ -532,262 +532,11 @@ public class MerkleTreeZestComposite
 					oldSash.x = (newMouse.x - oldMouse.x) + oldSash.x;
 					oldSash.y = (newMouse.y - oldMouse.y) + oldSash.y;
 
-					if (popup != null && !popup.isDisposed()) {
-						popup.setLocation((newMouse.x - oldMouse.x) + oldPopup.x, (newMouse.y - oldMouse.y) + oldPopup.y);
-						oldPopup.x = (newMouse.x - oldMouse.x) + oldPopup.x;
-						oldPopup.y = (newMouse.y - oldMouse.y) + oldPopup.y;
-					}
-
 					oldMouse = newMouse;
 				}
 
 			}
 		});
-	}
-
-	Composite popup;
-	Rectangle compositePosition;
-	Rectangle expanderPosition;
-	Rectangle windowPosition;
-	Rectangle currentView;
-	Point popupPosition;
-	Point currentSashPosition;
-
-	Label guideLabel;
-	Text signatureText;
-	Button nextButton;
-	Button backButton;
-	Button cancelButton;
-	Button verifyButton;
-
-	SelectionListener nextListener;
-
-	String plainSignature;
-	String signature[];
-	GraphNode rootNode;
-	GraphNode[] leaves;
-	Image highlightedNode;
-
-	int currentIndex;
-
-	private void interactiveSignatureGeneration() {
-		popup = new Composite(zestComposite, SWT.BORDER);
-		popup.setVisible(false);
-		popup.setBounds(0, 0, 500, 150);
-		popup.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-		popup.setLayout(new GridLayout(6, true));
-		popup.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
-		zestSash.moveBelow(popup);
-
-		// Initialize current size of the view
-		compositePosition = zestComposite.getBounds();
-		expanderPosition = descriptionExpander.getBounds();
-		windowPosition = getShell().getBounds();
-		currentView = new Rectangle(compositePosition.x, compositePosition.y, expanderPosition.width, windowPosition.height - 200 - compositePosition.y);
-
-		// Initial Middle Position by taking the half of the currentView window,
-		// and subtract half the size of the popup
-		popupPosition = new Point(currentView.width / 2, currentView.height / 2);
-		popupPosition.x -= popup.getBounds().width / 2;
-		popupPosition.y -= popup.getBounds().height / 2;
-		currentSashPosition = zestSash.getLocation();
-
-		// Get leaves and root node
-		List<?> graphNodeRetriever = graph.getNodes();
-		Object[] nodeRetriever = viewer.getNodeElements();
-		leaves = new GraphNode[nodeRetriever.length / 2 + 1];
-
-		for (int i = 0, j = 0; i < graphNodeRetriever.size(); ++i) {
-			if (((GraphNode) graphNodeRetriever.get(i)).getSourceConnections().isEmpty()) {
-				leaves[j] = (GraphNode) graphNodeRetriever.get(i);
-				++j;
-			}
-			if (((GraphNode) graphNodeRetriever.get(i)).getTargetConnections().isEmpty()) {
-				rootNode = (GraphNode) graphNodeRetriever.get(i);
-			}
-		}
-
-		currentIndex = merkle.getKeyIndex();
-		guideLabel = new Label(popup, SWT.WRAP);
-		guideLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 6, 1));
-
-		signatureText = new Text(popup, SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
-		signatureText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 6, 1));
-
-		backButton = new Button(popup, SWT.PUSH);
-		backButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-
-		cancelButton = new Button(popup, SWT.PUSH);
-		cancelButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-		cancelButton.setText("Abbrechen");
-
-		Label spacer = new Label(popup, SWT.NONE);
-		spacer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1));
-
-		nextButton = new Button(popup, SWT.PUSH);
-		nextButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-		nextButton.setText("Weiter");
-
-		stepByStep();
-		popup.layout(true);
-		popup.setVisible(true);
-
-		// Step by Step Listeners
-		nextListener = new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				++step;
-				stepByStep();
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-			}
-
-		};
-		nextButton.addSelectionListener(nextListener);
-		backButton.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				--step;
-				stepByStep();
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-			}
-		});
-
-		cancelButton.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				step = 0;
-				popup.dispose();
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-	}
-
-	Point leafPosition = new Point(0, 0);
-
-	private void stepByStep() {
-		switch (step) {
-
-		case 0:
-			backButton.setText(Descriptions.InteractiveSignature_Button_1);
-			backButton.setVisible(false);
-			signatureText.setVisible(true);
-			signatureText.setEditable(true);
-
-			guideLabel.setText(Descriptions.InteractiveSignature_1);
-			popup.setLocation(popupPosition);
-			oldPopup = popup.getLocation();
-			break;
-		case 1:
-			message = signatureText.getText();
-			if (message.length() != 0) {
-				guideLabel.setText(Descriptions.InteractiveSignature_2);
-				signatureText.setVisible(false);
-				backButton.setVisible(true);
-				signatureText.setEditable(false);
-				signatureText.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
-
-			}
-			break;
-
-		case 2:
-			leafPosition = new Point(leaves[currentIndex].getLocation().x, leaves[currentIndex].getLocation().y);
-			currentSashPosition.x = -leafPosition.x + popup.getBounds().width + 30;
-			currentSashPosition.y = -leafPosition.y + currentView.height - 80;
-			zestSash.setLocation(currentSashPosition);
-			popup.setLocation(compositePosition.x + 10, currentView.height - (popup.getBounds().height + 10));
-			oldPopup = popup.getLocation();
-			guideLabel.setText(Descriptions.InteractiveSignature_3_1 + currentIndex + " " + Descriptions.InteractiveSignature_3_2);
-			signatureText.setText(currentIndex + " |");
-			signatureText.setVisible(true);
-			leaves[currentIndex].highlight();
-			break;
-		case 3:
-			plainSignature = merkle.sign(message);
-			signature = plainSignature.split("\\|");
-			guideLabel.setText(Descriptions.InteractiveSignature_4_1 + currentIndex + " " + Descriptions.InteractiveSignature_4_2);
-			break;
-
-		case 4:
-			signatureText.setText(currentIndex + " | ");
-			signatureText.append(signature[1]);
-			break;
-		case 5:
-			guideLabel.setText(Descriptions.InteractiveSignature_5);
-			markBranch(leaves[currentIndex]);
-			markAuthPath(markedConnectionList);
-			break;
-		case 6:
-			currentSashPosition.x = -leafPosition.x + popup.getBounds().width + 30;
-			currentSashPosition.y = -leafPosition.y + currentView.height - 80;
-			zestSash.setLocation(currentSashPosition);
-			popup.setLocation(compositePosition.x + 10, currentView.height - (popup.getBounds().height + 10));
-			oldPopup = popup.getLocation();
-			nextButton.setText(Descriptions.InteractiveSignature_Button_2);
-			signatureText.setText(currentIndex + " | ");
-			signatureText.append(signature[1] + " | ");
-			signatureText.append(signature[2]);
-			break;
-		case 7:
-			guideLabel.setText(Descriptions.InteractiveSignature_6);
-			Point rootPosition = new Point(rootNode.getLocation().x, rootNode.getLocation().y);
-			currentSashPosition.x = -rootPosition.x + currentView.width / 2;
-			currentSashPosition.y = -rootPosition.y + popup.getBounds().height + 15;
-			zestSash.setLocation(currentSashPosition);
-			popup.setLocation(currentView.width / 2 - popup.getBounds().width / 2, 10);
-			oldPopup = popup.getLocation();
-
-			cancelButton.setText(Descriptions.InteractiveSignature_Button_3);
-			nextButton.setText(Descriptions.InteractiveSignature_Button_4);
-
-			nextButton.removeSelectionListener(nextListener);
-			nextButton.addSelectionListener(new SelectionListener() {
-
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					((MerkleTreeView) masterView).setTab(4);
-					popup.dispose();
-					step = 0;
-				}
-
-				@Override
-				public void widgetDefaultSelected(SelectionEvent e) {
-					// nothing to do here
-
-				}
-			});
-
-			break;
-		case 8:
-			popup.dispose();
-			step = 0;
-			break;
-		default:
-			break;
-		}
-	}
-
-	public String getSignature() {
-		return plainSignature;
-	}
-
-	public String getMessage() {
-		return message;
 	}
 
 }

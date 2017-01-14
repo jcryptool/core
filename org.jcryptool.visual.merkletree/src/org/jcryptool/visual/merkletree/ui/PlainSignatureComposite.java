@@ -56,9 +56,6 @@ public class PlainSignatureComposite extends Composite {
 
 		this.merkle = merkle;
 
-		descLabel = new Label(this, SWT.NONE);
-		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
-
 		sign = new Label(this, SWT.NONE);
 		sign.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
 		sign.setText(Descriptions.MerkleTreeSign_0);
@@ -99,12 +96,9 @@ public class PlainSignatureComposite extends Composite {
 		if (merkle instanceof XMSSTree) {
 			SingatureExpl.setText(Descriptions.XMSS.Tab2_Txt0);
 			SingatureExpl.setText(Descriptions.XMSS.Tab2_Txt0);
-			descLabel.setText(Descriptions.XMSS.Tab1_Head0);
 		} else if (merkle instanceof SimpleMerkleTree) {
 			SingatureExpl.setText(Descriptions.MSS.Tab2_Txt0);
 			SingatureExpl.setText(Descriptions.MSS.Tab2_Txt0);
-			descLabel.setText(Descriptions.MSS.Tab1_Head0);
-
 		}
 
 		styledTextSign = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);

@@ -104,15 +104,9 @@ public class InteractiveSignatureComposite extends Composite {
 		this.merkle = merkle;
 		this.parent = parent;
 
-		/*
-		 * the description label for the chosen mode
-		 */
-		descLabel = new Label(this, SWT.NONE);
-		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
-
 		// Composite which contains a SashForm which contains the MerkleTree
 		// Zest Graph
-		zestComposite = new Composite(this, SWT.NONE);
+		zestComposite = new Composite(this, SWT.NO_REDRAW_RESIZE);
 		zestComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		zestComposite.setBackground(getDisplay().getSystemColor(SWT.COLOR_TRANSPARENT));
 		zestLayout = new GridLayout();
@@ -615,6 +609,7 @@ public class InteractiveSignatureComposite extends Composite {
 		case 3:
 			plainSignature = merkle.sign(message);
 			signature = plainSignature.split("\\|");
+			((MerkleTreeSignatureComposite) parent).addSignatureAndMessage(plainSignature, message);
 			guideLabel.setText(Descriptions.InteractiveSignature_4_1 + currentIndex + " " + Descriptions.InteractiveSignature_4_2);
 			break;
 

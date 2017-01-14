@@ -1,5 +1,7 @@
 package org.jcryptool.visual.merkletree;
 
+import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -66,6 +68,9 @@ public class MerkleTreeView extends ViewPart {
 	TabItem tbtmParameter2;
 	TabItem tbtmParameter3;
 	TabItem tbtmParameter4;
+
+	String signatures[];
+	String messages[];
 
 	boolean sync = false;
 
@@ -261,30 +266,10 @@ public class MerkleTreeView extends ViewPart {
 			break;
 		case 4:
 			sync = true;
-			String signature;
-			String[] splittedSign;
-			String keyIndex;
-			String message;
-			if (zestTab != null && zestTab.getSignature() != null) {
-				signature = zestTab.getSignature();
-				splittedSign = signature.split("\\|");
-				keyIndex = "";
-				message = zestTab.getMessage();
-				if (splittedSign.length > 1) {
-					keyIndex = splittedSign[0];
-				}
-				verificationTab = new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle, Integer.parseInt(keyIndex), signature, message);
-				verificationTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-				tabFolder.getSelection()[0].setControl(verificationTab);
-			} else if (signatureTab != null && signatureTab.getSignatures() != null) {
-				signature = signatureTab.getSignatures()[0];
-				splittedSign = signature.split("\\|");
-				keyIndex = "";
-				message = null;// signatureTab.getMessage();
-				if (splittedSign.length > 1) {
-					keyIndex = splittedSign[0];
-				}
-				verificationTab = new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle, Integer.parseInt(keyIndex), signature, message);
+			if (signatureTab != null && signatureTab.getSignatures() != null) {
+				signatures = signatureTab.getSignatures();
+				messages = signatureTab.getMessages();
+				verificationTab = new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle, signatures, messages);
 				verificationTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 				tabFolder.getSelection()[0].setControl(verificationTab);
 			} else {
