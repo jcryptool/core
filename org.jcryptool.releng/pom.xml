@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jcryptool</groupId>
 	<artifactId>org.jcryptool.releng</artifactId>
-	<version>0.9.9</version>
+	<version>1.0.0</version>
 	<packaging>pom</packaging>
 	<name>JCrypTool</name>
 	<url>https://github.com/jcryptool</url>
@@ -34,8 +34,10 @@ The categorized p2 repository is generated in org.jcryptool.product/target/repos
 	<properties>
 		<tycho.version>0.26.0</tycho.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 		<product.id>jcryptool</product.id>
-		<product.version>0.9.9</product.version>
+		<product.version>1.0.0</product.version>
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
 	</properties>
@@ -60,11 +62,6 @@ The categorized p2 repository is generated in org.jcryptool.product/target/repos
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.6.0</version>
-				<configuration>
-					<encoding>${project.build.sourceEncoding}</encoding>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
@@ -81,7 +78,7 @@ The categorized p2 repository is generated in org.jcryptool.product/target/repos
 						<artifact>
 							<groupId>org.jcryptool</groupId>
 							<artifactId>org.jcryptool.target</artifactId>
-							<version>0.9.9</version>
+							<version>1.0.0</version>
 						</artifact>
 					</target>
 					<environments>
