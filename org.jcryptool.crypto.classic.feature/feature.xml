@@ -2,7 +2,7 @@
 <feature
       id="org.jcryptool.crypto.classic.feature"
       label="JCrypTool Classic Algorithms Feature"
-      version="0.9.9"
+      version="1.0.0"
       provider-name="jcryptool.org"
       plugin="org.jcryptool.crypto.classic">
 
