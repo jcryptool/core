@@ -67,7 +67,7 @@ public class MerkleTreeGeneration extends Composite {
 	// Generate Keys Box
 	private Button buttonCreateKeys;
 	private Label createLabel;
-	private StyledText createdKey;
+	private Label createdKey;
 	private StyledText descText;
 
 	MessageBox successBox;
@@ -281,18 +281,18 @@ public class MerkleTreeGeneration extends Composite {
 		//
 		Composite keyRow = new Composite(generateKeyGroup, SWT.NONE);
 		keyRow.setLayout(new GridLayout(8, true));
-		keyRow.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, true, 8, 1));
+		keyRow.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, true, 10, 1));
 
 		// text - for the spinner
 		Label keysum = new Label(keyRow, SWT.NONE);
-		keysum.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
+		keysum.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
 
 		// spinner for the key-ammount
 		Spinner spinnerkeysum = new Spinner(keyRow, SWT.BORDER);
 		spinnerkeysum.setMaximum(64);
 		spinnerkeysum.setMinimum(2);
 		spinnerkeysum.setSelection(0);
-		spinnerkeysum.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
+		spinnerkeysum.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		spinnerValue = 2;
 
 		// set the spinner-value only to values of the power of 2
@@ -316,8 +316,8 @@ public class MerkleTreeGeneration extends Composite {
 		});
 
 		// Text box with generated key info
-		createdKey = new StyledText(keyRow, SWT.WRAP | SWT.BORDER);
-		createdKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		createdKey = new Label(keyRow, SWT.NONE);
+		createdKey.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 3, 1));
 		createdKey.setText(Descriptions.MerkleTreeKey_1);
 
 		// 'create button'
