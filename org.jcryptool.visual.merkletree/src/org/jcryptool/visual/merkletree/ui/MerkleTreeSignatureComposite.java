@@ -87,7 +87,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 		topBar.setLayout(new GridLayout(8, true));
 
 		topBarSpacer = new Label(topBar, SWT.NONE);
-		topBarSpacer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
+		topBarSpacer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		indexLabel = new Label(topBar, SWT.NONE);
 		indexLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
@@ -95,17 +95,17 @@ public class MerkleTreeSignatureComposite extends Composite {
 		indexLabel.setVisible(false);
 
 		interactiveTopButton = new Button(topBar, SWT.PUSH);
-		interactiveTopButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		interactiveTopButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		interactiveTopButton.setText("Interaktive Signaturerstellung");
 		interactiveTopButton.setVisible(false);
 
 		plainTopButton = new Button(topBar, SWT.PUSH);
-		plainTopButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		plainTopButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		plainTopButton.setText("Einfache Signaturerstellung");
 		plainTopButton.setVisible(false);
 
 		descLabel = new Label(topBar, SWT.NONE);
-		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, true, false, 1, 1));
+		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, true, false, 2, 1));
 		if (merkle instanceof XMSSTree) {
 			descLabel.setText(Descriptions.XMSS.Tab1_Head0);
 		} else if (merkle instanceof SimpleMerkleTree) {
