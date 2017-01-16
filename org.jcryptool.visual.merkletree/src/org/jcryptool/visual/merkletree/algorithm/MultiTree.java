@@ -2,6 +2,7 @@ package org.jcryptool.visual.merkletree.algorithm;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -249,7 +250,8 @@ public class MultiTree implements ISimpleMerkle {
 		hash_key = hak.toByteArray();
 
 		// Then use it for message digest
-		msg_h = xtree.randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(idx).toByteArray(), R), msg.getBytes(), msg.length());
+		msg_h = xtree.randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(idx).toByteArray(), R), msg.getBytes(),
+				msg.length());
 
 		// collecting signature
 		byte[] sigmsg = msg_h;
@@ -288,7 +290,8 @@ public class MultiTree implements ISimpleMerkle {
 
 		ArrayList<Node> auth = buildAuth(idx, seed);
 
-		String signature = Integer.toString(idx) + "|" + Converter._byteToHex(R) + "|" + Converter._2dByteToHex(ots_sig);
+		String signature = Integer.toString(idx) + "|" + Converter._byteToHex(R) + "|"
+				+ Converter._2dByteToHex(ots_sig);
 		for (i = 0; i < auth.size(); i++) {
 			signature = signature + "|" + Converter._byteToHex(auth.get(i).getContent());
 		}
@@ -296,7 +299,16 @@ public class MultiTree implements ISimpleMerkle {
 	}
 
 	public String getPrivateKey() {
-		String sek = idx + "|" + seed.toString() + "|" + sk.toString();
+		String sek = new String();
+		System.err.println(seed);
+		try {
+			sek = idx + "|" + Converter._byteToString(getSeed()) + "|"
+					+ Converter._2dByteToHex(otsAlgo.getPrivateKey());
+		} catch (UnsupportedEncodingException e) {
+			System.err.println("Unsupported encoding");
+			e.printStackTrace();
+		}
+		System.err.println(sek);
 		return sek;
 	}
 
@@ -305,18 +317,17 @@ public class MultiTree implements ISimpleMerkle {
 		return publicKeyString;
 	}
 
+	@Override
+	public String getKeyLength() {
+		// System.err.println(sk);
+		int length = getPrivateKey().length() + getPublicKey().length();
+		StringBuilder sb = new StringBuilder();
+		sb.append("");
+		sb.append((length / 2));
+		String keyLength = sb.toString();
+		return keyLength;
+	}
 
-    @Override
-    public String getKeyLength() {
-	// System.err.println(sk);
-	int length = getPrivateKey().length() + getPublicKey().length();
-	StringBuilder sb = new StringBuilder();
-	sb.append("");
-	sb.append((length / 2));
-	String keyLength = sb.toString();
-	return keyLength;
-    }
-    
 	/**
 	 * @author Lena returns number of trees on a certain layer
 	 * 
