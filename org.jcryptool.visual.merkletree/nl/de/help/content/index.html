@@ -4,57 +4,73 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
-<title>Merkle-Signature-Scheme und eXtended-Merkle-Signature-Scheme</title>
+<title>Merkle-Signaturen (MSS und XMSS)</title>
 </head>
 <body>
-<h1>Merkle-Signature-Scheme und eXtended-Merkle-Signature-Scheme</h1>
+<h1>Merkle-Signatur (MSS) und eXtended Merkle-Signatur (XMSS)</h1>
 
 <p>
 Diese Onlinehilfe erkl&aumlrt die Funktionsweise des Plug-ins <b>Merkle-Signature-Scheme</b>.
 <p>
+<p>
+Das Plug-in l&aumlsst sich &uumlber das Men&uuml <b>Visualisierungen</b> oder &uumlber den Krypto-Explorer im Tab <b>Visualisierungen</b> starten.
+<p>
 
+
+<br>
+<p>
 Inhalts&uumlbersicht:<br>
 <br>
-<b>1)</b> <a href="#Kapitel1"><b>Merkle-Signature-Scheme (MSS)</b></a><br>
+<b>1)</b> <a href="#Kapitel1"><b>Merkle-Signatur (MSS)</b></a><br>
 <br>
-<b>2)</b> <a href="#Kapitel2"><b>eXtended-Merkle-Signature-Scheme (XMSS)</b></a><br>
+<b>2)</b> <a href="#Kapitel2"><b>eXtended Merkle-Signatur (XMSS)</b></a><br>
 <br>
 <b>3)</b> <a href="#Kapitel3"><b>Bedienung</b></a><br>
 <br>
 <b>4)</b> <a href="#Kapitel4"><b>Quellen</b></a>
 <br>
+<p>
 
-<p>
-Das Plug-in l&aumlsst sich &uumlber das Men&uuml <b>Visualisierungen</b> oder &uumlber den Krypto-Explorer im Tab <b>Visualisierungen</b> starten.
-<p>
+
+
 
 <br>
-<a name="Kapitel1"><b>1) Merkle-Signature-Scheme (MSS)</b></a>
+<p>
+<a name="Kapitel1"><b>1) Merkle-Signatur (MSS)</b></a>
 <p>
 
 <h4>Einleitung</h4>
 
-<p>Mit dem Merkle Signaturverfahren l&aumlsst sich eine Nachricht Quantencomputer-resistent signieren.</p>
+<p>Mit dem Merkle Signaturverfahren l&aumlsst sich eine Nachricht Quantencomputer-resistent signieren. [[[TODO_�BERSETZEN]]]  The signature consists of two parts: the one-time signature (OTS) and the MerkleTree (a binary hashtree). The advantage of MerkleTrees is, that only one Merkle public key is needed for several OTS public keys. This is implemented by summarizing the hash values of the public key using the OTS MerkleTrees into a single hash value at the top of the tree. This value in the root node contains the Merkle public key.</p>
 
 <h4>Aufbau</h4>
 
 <img src="img/mss.png" alt="Schematischer Aufbau eines MSS-Trees" height="800"/>
 <br>
 <br>
-<br>	
-<a name="Kapitel2"><b>2) eXtended-Merkle-Signature-Scheme (XMSS)</b></a>
+
+
+
+
+<br>
+<p>
+<a name="Kapitel2"><b>2) eXtended Merkle-Signatur (XMSS)</b></a>
 <p>
 
 <h4>Einleitung</h4>
-<p>Das eXtended-Merkle-Signature-Scheme-Verfahren (XMSS) basiert auf dem Merkle-Signature-Scheme (MSS) und erweitert dieses. Die Hauptunterschiede zum MSS-Verfahren sind der Einsatz einer Bitmaske und eines sogenannten L-Trees. Durch den Einsatz von Bitmasken und des L-Trees kann auf eine kollisionsresistente Hashfunktion verzichtet und durch eine second-preeimage-resistente Hashfunktion ersetzt werden. Der Vorteil hierbei ist, dass eine second-preeimage-resistente Hashfunktion eine schwchere Annahme ist, und somit schwerer zu brechen ist. Ein weiterer Vorteil, der sich aus dem Verzicht einer kollisionsresisten Hashfunktion ergibt ist, dass die erstellte Signatur kleiner ist. XMSS benutzt als One-Time-Signature (OTS) Winternitz-OTS (WOTS). Es k&oumlnnen insgesamt 2^h Nachrichten mit einer L&aumlnge von m-Bytes signiert werden.</p>
+<p>Das eXtended Merkle-Signature-Scheme (XMSS) basiert auf dem Merkle-Signature-Scheme (MSS) und erweitert dieses Verfahren. Die Hauptunterschiede zum MSS-Verfahren sind der Einsatz einer Bitmaske und eines sogenannten L-Trees. Durch diese beiden Erweiterungen kann auf eine kollisionsresistente Hashfunktion verzichtet werden und diese durch eine Second-Preeimage-resistente Hashfunktion ersetzt werden. Das hat zwei Vorteile:
+a) Da eine Second-Preeimage-resistente Hashfunktion eine schw&aumlchere Annahme ist, ist das XMSS-Verfahren st&aumlrker (schwerer zu brechen).
+b) Die erstellte Signatur ist kleiner.</p>
+<p>XMSS benutzt als One-Time-Signatur (OTS) das Winternitz-OTS (WOTS). Es gibt zwei verschiedene Varianten, WOTS+ undr WOTS$. In diesem Plug-in verwenden wir WOTS+. In beiden Varianten kann eine beliebige Anzahl von WOTS-Schl&uumlsselpaaren mit Hilfe eines Seedwertes und eines Pseudozufallszahlengenerators erzeugt werden.
+Es k&oumlnnen insgesamt 2^h Nachrichten mit einer L&aumlnge von m Bytes signiert werden.</p>
 
 <h4>Bitmaske</h4>
 
 <p>Die Bitmaske ist ein pseudozuf&aumllliger bin&aumlrer Wert. Durch ihren Einsatz kann auf eine kollisionsresistente Hashfunktion verzichtet werden. Bitmasken werden im XMSS-Tree und im L-Tree verwendet.</p>
 
-<h4>Winternitz Parameter</h4>
+<h4>Winternitz-Parameter</h4>
 
-<p>Der Winternitz Parameter ist eine Variable der Winternitz OTS (W-OTS). Die Gr&oumlße der Signatur h&aumlngt davon ab. Je gr&oumlßer der Wert, desto kleiner werden die Signaturen, jedoch erh&oumlht sich auch der Berechnungsaufwand. Die Sicherheit wird nicht beeinflusst.</p>
+<p>Der Winternitz-Parameter ist eine Variable der Winternitz-OTS (W-OTS). Er bestimmt die Gr&oumlße der Signatur. Je gr&oumlßer der Wert, desto kleiner werden die Signaturen, jedoch erh&oumlht sich auch der Berechnungsaufwand. Die Sicherheit wird nicht beeinflusst.</p>
 
 <h4>L-Tree</h4>
 
@@ -66,79 +82,105 @@ Das Plug-in l&aumlsst sich &uumlber das Men&uuml <b>Visualisierungen</b> oder &u
 <img src="img/xmss.png" alt="Schematischer Aufbau eines XMSS-Trees" height="800"/>
 <br>
 <br>
+
+
+
 <br>
+<p>
 <a name="Kapitel3"><b>3) Bedienung</b></a>
 <p>
 
-<h4>Tab: Seed- und Schl&uumlsselerzeugung</h4>
+
+<h4>Tab 1: Seed- und Schl&uumlsselerzeugung</h4>
 
 <img src="img/page1.png" alt="Festlegung des Seeds und Schl&uumlsselgeneration" width="1200"/>
 
-<p>Auf dieser Seite kann zwischen den einzelnen Verfahren gewechselt werden. Des Weiteren kann hier der Seed festgelegt werden, der Winternitz Parameter kann eingestellt werden, die Anzahl der Secret-Keys definiert und die Secret-Keys erzeugt werden.</p>
+<p>In diesem Tab kann zwischen den einzelnen Verfahren (MSS, XMSS) gewechselt werden. Des Weiteren kann hier der Seed festgelegt werden, der Winternitz-Parameter kann eingestellt werden, die Anzahl der Secret Keys definiert und die Secret Keys erzeugt werden.</p>
 	
 <img src="img/seed.png" alt="Hier muss der Seed festgelegt werden" width="1200"/>
 	
-<p>Hier muss der Seed festgelegt werden, dieser wird benutzt um die Secret-Keys zu generieren. Es kann entweder ein eigener numerischer Seed benutzt werden, oder mit dem Button <b>Neuen Seed erzeugen</b> ein zuf&aumllliger Seed erzeugt werden.</p>
+<p>Dieser Bildausschnitt zeigt, wo der Seed festgelegt werden muss. Dieser wird benutzt, um die Secret Keys zu generieren. Es kann entweder ein eigener numerischer Seed benutzt werden, oder mit dem Button <b>Neuen Seed erzeugen</b> ein zuf&aumllliger Seed erzeugt werden.</p>
 	
 <img src="img/bitmask.png" alt="Hier kann der Seed f&uumlr die Bitmaske generiert werden" width="1200"/>
 	
-<p>Wenn als Verfahren <b>eXtended-Merkle-Signature-Scheme (XMSS)</b> gew&aumlhlt wurde, so erscheint zus&aumltzlich noch ein Feld in dem man den Seed f&uumlr die Bitmaske definieren kann.</p>
+<p>Wenn als Verfahren <b>eXtended Merkle-Signatur (MSS)</b> gew&aumlhlt wurde, so erscheint zus&aumltzlich noch ein Feld, in dem man den Seed f&uumlr die Bitmaske definieren kann.</p>
 
-<img src="img/winternitz.PNG" alt="Hier kann der Winternitz Parameter ausgew&aumlhlt werden" width="1200"/>
+<img src="img/winternitz.PNG" alt="Hier kann der Winternitz-Parameter ausgew&aumlhlt werden" width="1200"/>
 
-<p>Der Winternitz Parameter kann ausgew&aumlhlt werden. Obwohl der Parameter beliebig groß gew&aumllt werden k&oumlnnte, wird praktisch meist 4 und 16 verwendet.</p>
+<p>Obwohl der Winternitz-Parameter beliebig groß gew&aumlhlt werden k&oumlnnte, k&oumlnnen hier nur die Werte 4 oder 16 gesetzt werden, da diese am verbreitetsten sind.</p>
 
-<h4>Tab: MerkleTree</h4>
+
+<br>
+<h4>Tab 2: MerkleTree</h4>
 	
 <img src="img/page2.png" alt="MerkleTree" width="1200"/>
 	
-<p>In diesem Tab kann der MerkleTree inspiziert werden. Der Baum besteht aus den Leafs (Unterste Ebene), den Nodes und dem Root-Node, auch Merkle-Public-Key genannt. Es kann auf die einzelnen Nodes geklickt werden, dann wird in Gelb der Pfad zur Wurzel angezeigt. In Rot wird der Verifizierungspfad angezeigt, welcher ein Teil der Signatur ist. Des Weiteren wird, wenn man einen Node beziehungsweise Leaf anklickt, der Hash des ausgew&aumlhlten Node angezeigt. Mit einem klick auf <b>Beschreibung ausblenden</b> wird der ganze Baum sichtbar.</p>
+<p>In diesem Tab kann der MerkleTree inspiziert werden. Der Baum besteht aus den Leafs (Bl&aumlttern, unterste Ebene), den Nodes und dem Root-Node, auch Merkle-Public-Key genannt.
+Wird auf einen Node geklickt, dann wird in Gelb der Pfad zur Wurzel angezeigt.
+In Rot wird der Verifizierungspfad angezeigt, welcher ein Teil der Signatur ist.
+Klickt man einen Node oder ein Blatt (Leaf) an, wird oben links der zugeh&oumlrige Hashwert angezeigt.
+Mit einem Klick auf <b>Beschreibung ausblenden</b> wird der ganze Baum sichtbar.</p>
 
 <img src="img/expanded.PNG" alt="MerkleTree" width="1200"/>
 
-<p>Mit der <b>Interaktive Signaturerstellung</b> kann man den Vorgang der Signaturerstellung Schritt f&uumlr Schritt verfolgen.</p>
+<p>Mit der <b>Interaktiven Signaturerstellung</b> kann man den Vorgang der Signaturerstellung Schritt f&uumlr Schritt verfolgen.</p>
 
 <img src="img/interactive.PNG" alt="MerkleTree" width="1200"/>
 
-<h4>Tab: Schl&uumlsselpaar</h4>
 
-<p>Im Tab Schl&uumlsselpaar wird der &oumlffentliche Schl&uumlssel, so wie der private Schl&uumlssel angezeigt. Die Schl&uumlsselteile des privaten Schl&uumlssels k&oumlnnen farblich hervorgehoben werden.</p>
+
+
+<p></p><br>
+<h4>Tab 3: Schl&uumlsselpaar</h4>
+
+<p>Im dritten Tab wird der &oumlffentliche Schl&uumlssel und der private Schl&uumlssel angezeigt. Die Schl&uumlsselteile des privaten Schl&uumlssels k&oumlnnen farblich hervorgehoben werden.</p>
 
 <img src="img/schluesselpaar.PNG" alt="MerkleTree" width="1200"/>
 
-<h4>Tab: Signierung</h4>
+
+<p></p><br>
+<h4>Tab 4: Signierung</h4>
 	
-<img src="img/page3.png" alt="Nachricht Signieren" width="1200"/>
+<img src="img/page3.png" alt="Nachricht signieren" width="1200"/>
 	
-<p>In diesem Tab k&oumlnnen Signaturen generiert werden. Diese werden mit den in Tab Eins generierten Keys erzeugt. Hier kann ein beliebiger Text eingegeben werden, welcher nach dem Dr&uumlcken auf <b>Nachricht signieren</b> signiert wird.</p>
+<p>In diesem Tab k&oumlnnen Signaturen generiert werden. Diese werden mit den in Tab 1 generierten Keys erzeugt. Hier kann ein beliebiger Text eingegeben werden, welcher nach dem Dr&uumlcken auf <b>Nachricht signieren</b> signiert wird.</p>
 
 <img src="img/sign.png" alt="Signatur" width="1200"/>
 	
-<p>Die Signatur befindet sich im hier abgebildeten Fenster. Auch angegeben ist der Index der Signatur und L&aumlnge in Bytes.</p>
+<p>Dieses Bild zeigt die Signatur einer Nachricht und die L&aumlnge der Signatur in Bytes.
+Die Signatur hat den folgenden Aufbau: Index des Schl&uumlsselpaares | OTS-Signatur | Authentisierungspfad.
+</p>
 
-<h4>Tab: Verifikation</h4>
+
+
+
+<br>
+<h4>Tab 5: Verifikation</h4>
 
 <img src="img/page4.png" alt="Verifikation" width="1200"/>
 
-<p>Im Tab <b>Verifikation</b> kann die zuvor erstellte Signatur verifiziert werden. Das korrekte Leaf ist hierbei schon vorab ausgew&aumlhlt. Wenn man auf <b>Verifizieren</b> klickt, so wird der ausgew&aumlhlte Leaf verifiziert.</p>
+<p>Im Tab <b>Verifikation</b> kann die zuvor erstellte Signatur verifiziert werden. Das korrekte Blatt (d.h. das mit dem richtigen Index) ist hierbei schon vorab ausgew&aumlhlt. Wenn man auf <b>Verifizieren</b> klickt, so wird versucht, die Signatur mit dem ausgew&aumlhlte Leaf zu verifizieren, indem [[[TODO_�BERSETZEN]]] by calculating the WOTS public key of the WOTS signature. Then this WOTS key is used to calculate the corresponding leaf of the L-Tree.</p>
 
 <img src="img/verify.png" alt="Erfolgreiche Verifikation" width="1200"/>
 
-<p>Wenn man ein anderes Leaf ausw&aumlhlt und auf verifizieren klickt, so schl&aumlgt die Verifikation fehl.</p>
+<p>Wenn man ein anderes (falsches) Blatt ausw&aumlhlt und auf <b>Verifizieren</b> klickt, schl&aumlgt die Verifikation fehl.</p>
+
+
 <br>
 <p>
 <a name="Kapitel4"><b>4) Quellen</b></a>
 <p>
-
-
 <ul>
-  <li>A. Huelsing, D. Butin und S. Gazdag:<br>
-  IETF-Draft zu XMSS (<a href="https://tools.ietf.org/html/draft-xmss-00">https://tools.ietf.org/html/draft-xmss-00</a>)<br>
+  <li>A. H&uumllsing, D. Butin und S. Gazdag:<br>
+  <a href="https://tools.ietf.org/html/draft-xmss-00">IETF-Draft zu XMSS</a><br>
   vom 9.3.2015</li>
-  <li>Johannes Buchmann, Erik Dahmen und Andreas Hulsing:<br>
+  <li>Johannes Buchmann, Erik Dahmen und Andreas H&uumllsing:<br>
   <a href="https://eprint.iacr.org/2011/484.pdf">XMSS A Practical Forward Secure Signature Scheme based on Minimal Security Assumptions</a><br>
-  2nd version vom 26.11.2011</li>
-  <li>Wikipedia: <a href=https://de.wikipedia.org/wiki/Merkle-Signatur>Merkle-Signatur</a></li>
-</ul>	
+  Zweite Version vom 26.11.2011</li>
+  <li>Wikipedia:<br>
+  <a href=https://de.wikipedia.org/wiki/Merkle-Signatur>Merkle-Signatur</a></li>
+</ul>
+<br>
+
 </body>
 </html>
