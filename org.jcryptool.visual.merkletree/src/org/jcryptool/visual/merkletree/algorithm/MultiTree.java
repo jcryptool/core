@@ -300,15 +300,8 @@ public class MultiTree implements ISimpleMerkle {
 
 	public String getPrivateKey() {
 		String sek = new String();
-		System.err.println(seed);
-		try {
-			sek = idx + "|" + Converter._byteToString(getSeed()) + "|"
-					+ Converter._2dByteToHex(otsAlgo.getPrivateKey());
-		} catch (UnsupportedEncodingException e) {
-			System.err.println("Unsupported encoding");
-			e.printStackTrace();
-		}
-		System.err.println(sek);
+		sek = idx + "|" + Converter._byteToHex(getSeed()) + "|"
+				+ Converter._2dByteToHex(otsAlgo.getPrivateKey());
 		return sek;
 	}
 
@@ -402,14 +395,14 @@ public class MultiTree implements ISimpleMerkle {
 
 	@Override
 	public void generateKeyPairsAndLeaves() {
-		generatePrivateKey();
+		//generatePrivateKey();
 		for (int i = 0; i < this.leafCounter; i++) {
 			// generates a new WOTS/ WOTSPlus Keypair (public and secret key)
 			if (otsAlgo instanceof WOTSPlus) {
 				((WOTSPlus) otsAlgo).setAddress(otsAdrs);
 			}
 
-			otsAlgo.generateKeyPair();
+			this.otsAlgo.generateKeyPair();
 			// adds the private Key of the generated keypair to the private key
 			// list of privKeys
 			privKeys.add(otsAlgo.getPrivateKey());
