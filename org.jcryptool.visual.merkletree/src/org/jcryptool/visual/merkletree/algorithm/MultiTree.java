@@ -67,18 +67,7 @@ public class MultiTree implements ISimpleMerkle {
 			}
 		}
 	}
-
-	/*
-	 * public void xmssmt_public_key() { /* +---------------------------------+
-	 * | algorithm OID | +---------------------------------+ | | | root node | n
-	 * bytes | | +---------------------------------+ | | | SEED | n bytes | |
-	 * +---------------------------------+
-	 */
-	/*
-	 * String algorithmID = this.algorithmID; byte[] publicRoot =
-	 * Layer.getMerkleRoot(); byte[] publicSeed = this.getSeed();
-	 */
-
+	
 	/**
 	 * XORs two nodes and hashes them with a salt
 	 * 
@@ -300,8 +289,11 @@ public class MultiTree implements ISimpleMerkle {
 
 	public String getPrivateKey() {
 		String sek = new String();
-		sek = idx + "|" + Converter._byteToHex(getSeed()) + "|"
-				+ Converter._2dByteToHex(otsAlgo.getPrivateKey());
+		sek = idx + "|" + Converter._byteToHex(getSeed());
+		for (int i = 0; i < leafCounter; i++) {
+			sek += "|";
+			sek += Converter._2dByteToHex(privKeys.get(i));
+		}
 		return sek;
 	}
 
@@ -436,11 +428,9 @@ public class MultiTree implements ISimpleMerkle {
 		generateKeyPairsAndLeaves();
 		treeArray = new Node[(1 << (getTreeHeight() + 1)) - 1];
 		rootNode = treeHash(0, getTreeHeight(), bitmaskSeed);
-		System.err.println(rootNode.getContent().toString());
+	//	System.err.println(rootNode.getContent().toString());
 		tree = new ArrayList<Node>(Arrays.asList(treeArray));
 		setConnections();
-
-		System.err.println(Converter._byteToHex(sk));
 		treeGenerated = true;
 	}
 
@@ -469,6 +459,10 @@ public class MultiTree implements ISimpleMerkle {
 		return true;
 	}
 
+	public void setIndex(int i){
+		this.keyIndex=i;
+	}
+	
 	@Override
 	public void setSeed(byte[] seed) {
 		this.bitmaskSeed = seed; // dirty workaround, sorry, but here to make
