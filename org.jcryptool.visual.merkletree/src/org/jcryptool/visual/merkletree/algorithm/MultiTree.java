@@ -300,8 +300,11 @@ public class MultiTree implements ISimpleMerkle {
 
 	public String getPrivateKey() {
 		String sek = new String();
-		sek = idx + "|" + Converter._byteToHex(getSeed()) + "|"
-				+ Converter._2dByteToHex(otsAlgo.getPrivateKey());
+		sek = idx + "|" + Converter._byteToHex(getSeed());
+		for (int i = 0; i < leafCounter; i++) {
+			sek += "|";
+			sek += Converter._2dByteToHex(privKeys.get(i));
+		}
 		return sek;
 	}
 
@@ -436,11 +439,9 @@ public class MultiTree implements ISimpleMerkle {
 		generateKeyPairsAndLeaves();
 		treeArray = new Node[(1 << (getTreeHeight() + 1)) - 1];
 		rootNode = treeHash(0, getTreeHeight(), bitmaskSeed);
-		System.err.println(rootNode.getContent().toString());
+	//	System.err.println(rootNode.getContent().toString());
 		tree = new ArrayList<Node>(Arrays.asList(treeArray));
 		setConnections();
-
-		System.err.println(Converter._byteToHex(sk));
 		treeGenerated = true;
 	}
 
