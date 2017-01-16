@@ -41,7 +41,7 @@ Inhalts&uumlbersicht:<br>
 
 <h4>Einleitung</h4>
 
-<p>Mit dem Merkle Signaturverfahren l&aumlsst sich eine Nachricht Quantencomputer-resistent signieren. [[[TODO_�BERSETZEN]]]  The signature consists of two parts: the one-time signature (OTS) and the MerkleTree (a binary hashtree). The advantage of MerkleTrees is, that only one Merkle public key is needed for several OTS public keys. This is implemented by summarizing the hash values of the public key using the OTS MerkleTrees into a single hash value at the top of the tree. This value in the root node contains the Merkle public key.</p>
+<p>Mit dem Merkle Signaturverfahren l&aumlsst sich eine Nachricht Quantencomputer-resistent signieren.</p>
 
 <h4>Aufbau</h4>
 
@@ -159,7 +159,7 @@ Die Signatur hat den folgenden Aufbau: Index des Schl&uumlsselpaares | OTS-Signa
 
 <img src="img/page4.png" alt="Verifikation" width="1200"/>
 
-<p>Im Tab <b>Verifikation</b> kann die zuvor erstellte Signatur verifiziert werden. Das korrekte Blatt (d.h. das mit dem richtigen Index) ist hierbei schon vorab ausgew&aumlhlt. Wenn man auf <b>Verifizieren</b> klickt, so wird versucht, die Signatur mit dem ausgew&aumlhlte Leaf zu verifizieren, indem [[[TODO_�BERSETZEN]]] by calculating the WOTS public key of the WOTS signature. Then this WOTS key is used to calculate the corresponding leaf of the L-Tree.</p>
+<p>Im Tab <b>Verifikation</b> kann die zuvor erstellte Signatur verifiziert werden. Das korrekte Blatt (d.h. das mit dem richtigen Index) ist hierbei schon vorab ausgew&aumlhlt. Wenn man auf <b>Verifizieren</b> klickt, so wird versucht, die Signatur mit dem ausgew&aumlhlte Leaf zu verifizieren.</p>
 
 <img src="img/verify.png" alt="Erfolgreiche Verifikation" width="1200"/>
 
