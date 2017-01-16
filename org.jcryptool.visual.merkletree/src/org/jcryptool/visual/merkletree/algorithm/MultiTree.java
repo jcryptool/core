@@ -305,18 +305,18 @@ public class MultiTree implements ISimpleMerkle {
 		return publicKeyString;
 	}
 
-	@Override
-	public String getKeyLength() {
-		int privLength = sk.length;
-		int pubLength = pk.length;
-		int length = privLength + pubLength;
-		StringBuilder sb = new StringBuilder();
-		sb.append("");
-		sb.append(length);
-		String keyLength = sb.toString();
-		return keyLength;
-	}
 
+    @Override
+    public String getKeyLength() {
+	// System.err.println(sk);
+	int length = getPrivateKey().length() + getPublicKey().length();
+	StringBuilder sb = new StringBuilder();
+	sb.append("");
+	sb.append((length / 2));
+	String keyLength = sb.toString();
+	return keyLength;
+    }
+    
 	/**
 	 * @author Lena returns number of trees on a certain layer
 	 * 
