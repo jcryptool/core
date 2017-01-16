@@ -18,7 +18,8 @@ import org.jcryptool.visual.merkletree.files.MathUtils;
 
 public class MultiTree implements ISimpleMerkle {
 	// Starting over again
-	int leafCounter;
+	int leafCounter = 0;
+	int d; // set
 	int l;
 	int idx_len;
 	int idx;
@@ -66,18 +67,7 @@ public class MultiTree implements ISimpleMerkle {
 			}
 		}
 	}
-
-	/*
-	 * public void xmssmt_public_key() { /* +---------------------------------+
-	 * | algorithm OID | +---------------------------------+ | | | root node | n
-	 * bytes | | +---------------------------------+ | | | SEED | n bytes | |
-	 * +---------------------------------+
-	 */
-	/*
-	 * String algorithmID = this.algorithmID; byte[] publicRoot =
-	 * Layer.getMerkleRoot(); byte[] publicSeed = this.getSeed();
-	 */
-
+	
 	/**
 	 * XORs two nodes and hashes them with a salt
 	 * 
@@ -491,6 +481,15 @@ public class MultiTree implements ISimpleMerkle {
 	@Override
 	public void setWinternitzParameter(int w) {
 		this.w = w;
+	}
+
+	/**
+	 * 
+	 * @param d
+	 *            nr of layers on the tree
+	 */
+	public void setLayers(int d) {
+		this.d = d;
 	}
 
 	public void set(int l) {

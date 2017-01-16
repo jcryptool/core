@@ -315,7 +315,7 @@ public class XMSSTree implements ISimpleMerkle {
 	 * @param address
 	 *            address of left/right node
 	 */
-	public static byte[] randomGenerator(byte[] seed, byte[] address, int len) {
+	public byte[] randomGenerator(byte[] seed, byte[] address, int len) {
 		byte[] res = new byte[len + 32]; // erstellen des zu befüllenden arrays
 		byte[] padding = new byte[32];
 		MessageDigest hash = null;
@@ -511,6 +511,11 @@ public class XMSSTree implements ISimpleMerkle {
 			((XMSSNode) node).setAuthPath(getTreeHeight());
 		}
 	}
+	
+	public void setIndex(int i){
+		this.keyIndex=i;
+	}
+	
 
 	/**
 	 * Fills the connections list in the node for the GUI
