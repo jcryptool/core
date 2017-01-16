@@ -18,8 +18,7 @@ import org.jcryptool.visual.merkletree.files.MathUtils;
 
 public class MultiTree implements ISimpleMerkle {
 	// Starting over again
-	int leafCounter = 0;
-	int d; // set
+	int leafCounter;
 	int l;
 	int idx_len;
 	int idx;
@@ -470,6 +469,10 @@ public class MultiTree implements ISimpleMerkle {
 		return true;
 	}
 
+	public void setIndex(int i){
+		this.keyIndex=i;
+	}
+	
 	@Override
 	public void setSeed(byte[] seed) {
 		this.bitmaskSeed = seed; // dirty workaround, sorry, but here to make
@@ -488,15 +491,6 @@ public class MultiTree implements ISimpleMerkle {
 	@Override
 	public void setWinternitzParameter(int w) {
 		this.w = w;
-	}
-
-	/**
-	 * 
-	 * @param d
-	 *            nr of layers on the tree
-	 */
-	public void setLayers(int d) {
-		this.d = d;
 	}
 
 	public void set(int l) {
