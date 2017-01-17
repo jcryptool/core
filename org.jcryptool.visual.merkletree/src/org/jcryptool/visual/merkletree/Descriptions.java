@@ -12,6 +12,8 @@ import org.eclipse.osgi.util.NLS;
 public class Descriptions extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.visual.merkletree";
 
+	public static String Platzhalter;
+
 	// <-dropdown
 	public static String CompositeDescriptionMerkleTree;
 	public static String CompositeDescriptionXMSS;
@@ -119,8 +121,7 @@ public class Descriptions extends NLS {
 	public static String InteractiveSignature_8;
 	public static String InteractiveSignature_9;
 	public static String InteractiveSignature_10;
-	
-	
+
 	public static class MSS {
 
 		public static String Tab0_Head0;

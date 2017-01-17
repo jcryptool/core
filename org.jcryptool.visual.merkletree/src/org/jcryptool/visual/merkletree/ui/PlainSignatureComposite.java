@@ -50,7 +50,7 @@ public class PlainSignatureComposite extends Composite {
 	Label descLabel;
 	String signature = null;
 
-	StyledText styledTextKeyNumber;
+	// StyledText styledTextKeyNumber;
 	ISimpleMerkle merkle;
 
 	public PlainSignatureComposite(Composite parent, int style, ISimpleMerkle merkle, MerkleTreeSignatureComposite signatureComposite) {
@@ -72,13 +72,16 @@ public class PlainSignatureComposite extends Composite {
 		createSign.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 2, 1));
 		createSign.setText(Descriptions.MerkleTreeSign_2);
 
-		lkeyNumber = new Label(this, SWT.READ_ONLY | SWT.WRAP | SWT.RIGHT);
-		lkeyNumber.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 5, 1));
-		lkeyNumber.setText(Descriptions.MerkleTreeSign_7);
+		// lkeyNumber = new Label(this, SWT.READ_ONLY | SWT.WRAP | SWT.RIGHT);
+		// lkeyNumber.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+		// false, MerkleConst.H_SPAN_MAIN / 5, 1));
+		// lkeyNumber.setText(Descriptions.MerkleTreeSign_7);
 
-		styledTextKeyNumber = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
-		styledTextKeyNumber.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 5, 1));
-		styledTextKeyNumber.setText("");
+		// styledTextKeyNumber = new StyledText(this, SWT.BORDER | SWT.READ_ONLY
+		// | SWT.WRAP);
+		// styledTextKeyNumber.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
+		// true, false, MerkleConst.H_SPAN_MAIN / 5, 1));
+		// styledTextKeyNumber.setText("");
 
 		lSignaturSize = new Label(this, SWT.READ_ONLY | SWT.WRAP | SWT.RIGHT);
 		lSignaturSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 5, 1));
@@ -128,7 +131,7 @@ public class PlainSignatureComposite extends Composite {
 					 */
 					styledTextSign.setText(signature);
 					styledTextSignSize.setText(getSignatureLength(signature) + " Byte");
-					styledTextKeyNumber.setText(getKeyIndex(signature));
+					// styledTextKeyNumber.setText(getKeyIndex(signature));
 					signatureComposite.addSignatureAndMessage(signature, message);
 				} else {
 					// styledTextSign.setText(Descriptions.MerkleTreeSign_8);

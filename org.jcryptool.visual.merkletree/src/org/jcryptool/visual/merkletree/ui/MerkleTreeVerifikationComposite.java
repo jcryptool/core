@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
@@ -43,15 +44,27 @@ import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
  * @author Kevin Muehlboeck
  *
  */
-public class MerkleTreeVerifikationComposite extends Composite implements IZoomableWorkbenchPart {
+public class MerkleTreeVerifikationComposite
+		extends Composite /* implements IZoomableWorkbenchPart */ {
 
 	private GraphViewer viewer;
 	private StyledText binaryValue;
 	private StyledText styledTextTree;
 	private int layoutCounter = 1;
 	private ArrayList<GraphConnection> markedConnectionList;
+	private String messages[];
+	private String signatures[];
 	Label descLabel;
 	StyledText descText;
+
+	Composite topBar;
+	Composite stackComposite;
+	Composite descriptionComposite;
+	Composite signatureSelectionComposite;
+	StackLayout stackLayout;
+	Button descriptionButton;
+	Button signatureSelectionButton;
+	StyledText signatureText;
 
 	/**
 	 * Create the composite. Including Description, GraphItem, GraphView,
@@ -67,36 +80,96 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 		markedConnectionList = new ArrayList<GraphConnection>();
 		int leafNumber = 1;
 		this.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, MerkleConst.H_SPAN_MAIN + 5, MerkleConst.DESC_HEIGHT + 1));
-		this.addControlListener(new ControlAdapter() {
-			@Override
-			public void controlResized(ControlEvent e) {
-				viewer.applyLayout();
-			}
-		});
+		// this.addControlListener(new ControlAdapter() {
+		// @Override
+		// public void controlResized(ControlEvent e) {
+		// viewer.applyLayout();
+		// }
+		// });
 
 		/*
 		 * The Text is based on the used suite if there will implemented an
 		 * other suite, just add an else if and type the name of the instance
-		 * Example for MultiTree -> merkle instanceof XMSSMT
+		 * Example for MultiTree -> merkle instanceof XMSSMTs
 		 */
 
-		descLabel = new Label(this, SWT.NONE);
-		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
+		topBar = new Composite(this, SWT.NONE);
+		topBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 8, 1));
+		topBar.setLayout(new GridLayout(8, true));
 
+		Label spacerHeader = new Label(topBar, SWT.NONE);
+		spacerHeader.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		descriptionButton = new Button(topBar, SWT.PUSH);
+		descriptionButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		descriptionButton.setText(Descriptions.InteractiveSignature_Button_0);
+		descriptionButton.setEnabled(false);
+		descriptionButton.setVisible(false);
+
+		signatureSelectionButton = new Button(topBar, SWT.PUSH);
+		signatureSelectionButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		signatureSelectionButton.setText(Descriptions.InteractiveSignature_Button_5);
+		signatureSelectionButton.setVisible(false);
+
+		descLabel = new Label(topBar, SWT.NONE);
+		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, true, false, 2, 1));
 		if (merkle instanceof XMSSTree) {
 			descLabel.setText(Descriptions.XMSS.Tab1_Head0);
 		} else if (merkle instanceof SimpleMerkleTree) {
-
 			descLabel.setText(Descriptions.MSS.Tab1_Head0);
-
 		}
 
 		/*
 		 * The Description Text for the verification
 		 */
-		descText = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
+		stackComposite = new Composite(this, SWT.NONE);
+		stackComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+
+		stackLayout = new StackLayout();
+		stackComposite.setLayout(stackLayout);
+
+		descriptionComposite = new Composite(stackComposite, SWT.NONE);
+		descriptionComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		descriptionComposite.setLayout(new GridLayout(1, true));
+
+		descText = new StyledText(descriptionComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
 		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		descText.setText(Descriptions.MerkleTreeVerify_0);
+		descriptionComposite.pack();
+		stackLayout.topControl = descriptionComposite;
+
+		signatureSelectionComposite = new Composite(stackComposite, SWT.NONE);
+		signatureSelectionComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		signatureSelectionComposite.setLayout(new GridLayout(5, true));
+
+		signatureText = new StyledText(signatureSelectionComposite, SWT.BORDER | SWT.WRAP | SWT.MULTI);
+		signatureText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+
+		descriptionButton.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// stackLayout.topControl = descriptionComposite;
+				// signatureSelectionButton.setEnabled(true);
+				// descriptionButton.setEnabled(false);
+				// descriptionComposite.layout();
+				// descriptionComposite.pack();
+				setSelection(true);
+			}
+		});
+
+		signatureSelectionButton.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// stackLayout.topControl = signatureSelectionComposite;
+				// signatureSelectionButton.setEnabled(false);
+				// descriptionButton.setEnabled(true);
+				// signatureSelectionComposite.layout();
+				// signatureSelectionComposite.pack();
+				setSelection(false);
+			}
+		});
+
 		this.setLayout(new GridLayout(1, true));
 
 		styledTextTree = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
@@ -217,6 +290,7 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 				}
 			}
 		});
+		this.pack();
 
 	}
 
@@ -315,10 +389,10 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 		}
 	}
 
-	@Override
-	public AbstractZoomableViewer getZoomableViewer() {
-		return viewer;
-	}
+	// @Override
+	// public AbstractZoomableViewer getZoomableViewer() {
+	// return viewer;
+	// }
 
 	/**
 	 * Change the layout of the merkle tree
@@ -360,6 +434,28 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 			viewer.applyLayout();
 		}
 
+	}
+
+	public void setMessages(String messages[]) {
+		this.messages = messages;
+	}
+
+	public void setSignatures(String signatures[]) {
+		this.signatures = signatures;
+	}
+
+	private void setSelection(boolean description) {
+		if (description) {
+			stackLayout.topControl = descriptionComposite;
+			signatureSelectionButton.setEnabled(true);
+			descriptionButton.setEnabled(false);
+		} else {
+			stackLayout.topControl = signatureSelectionComposite;
+			signatureSelectionButton.setEnabled(false);
+			descriptionButton.setEnabled(true);
+		}
+
+		stackComposite.layout();
 	}
 
 }

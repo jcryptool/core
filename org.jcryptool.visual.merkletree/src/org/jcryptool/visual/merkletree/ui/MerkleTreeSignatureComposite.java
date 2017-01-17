@@ -93,21 +93,18 @@ public class MerkleTreeSignatureComposite extends Composite {
 		topBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 8, 1));
 		topBar.setLayout(new GridLayout(8, true));
 
-		topBarSpacer = new Label(topBar, SWT.NONE);
-		topBarSpacer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
 		indexLabel = new Label(topBar, SWT.NONE);
-		indexLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
-		indexLabel.setText("Aktueller Index: " + index + "/" + (merkle.getLeafCounter() - 1));
+		indexLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 2, 1));
+		indexLabel.setText(Descriptions.MerkleTreeSign_7 + " " + index + "/" + (merkle.getLeafCounter() - 1));
 		indexLabel.setVisible(false);
 
 		interactiveTopButton = new Button(topBar, SWT.PUSH);
-		interactiveTopButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		interactiveTopButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		interactiveTopButton.setText(Descriptions.InteractiveSignature_Button_0);
 		interactiveTopButton.setVisible(false);
 
 		plainTopButton = new Button(topBar, SWT.PUSH);
-		plainTopButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		plainTopButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		plainTopButton.setText(Descriptions.InteractiveSignature_Button_5);
 		plainTopButton.setVisible(false);
 
@@ -230,6 +227,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 					switch (boxValue) {
 					case SWT.YES:
 						createPlainComposite(true);
+						interactive.withdrawSignature();
 						break;
 					default:
 						break;
@@ -325,7 +323,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 	public void addSignatureAndMessage(String signature, String message) {
 		signatures[index] = signature;
 		messages[index] = message;
-		indexLabel.setText("Aktueller Index: " + index + "/" + (merkle.getLeafCounter() - 1));
+		indexLabel.setText(Descriptions.MerkleTreeSign_7 + index + "/" + (merkle.getLeafCounter() - 1));
 		++index;
 	}
 

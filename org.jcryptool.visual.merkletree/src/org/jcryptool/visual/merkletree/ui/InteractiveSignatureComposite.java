@@ -89,6 +89,7 @@ public class InteractiveSignatureComposite extends Composite {
 	GridData signatureTextLayout;
 	ScrolledComposite scrolledComposite;
 	int authpathSize;
+	Label signaturSize;
 
 	// Interactive Variables
 	String message;
@@ -278,63 +279,13 @@ public class InteractiveSignatureComposite extends Composite {
 
 		graph.setBackground(getDisplay().getSystemColor(SWT.COLOR_TRANSPARENT));
 
-		graph.addSelectionListener(new SelectionAdapter() {
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.
-			 * eclipse.swt.events. SelectionEvent) Click-Event to get the
-			 * Selected Node and to mark the other Nodes
-			 */
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				distinctListener = true;
-				if (e.item instanceof GraphNode) {
-					GraphNode node = (GraphNode) e.item;
-					Node n = (Node) node.getData();
-
-					if (n.isLeaf()) {
-
-						if (markedConnectionList.size() == 0) {
-							markBranch(node);
-							markAuthPath(markedConnectionList);
-						} else {
-							unmarkBranch(markedConnectionList);
-							markedConnectionList.clear();
-							markBranch(node);
-							markAuthPath(markedConnectionList);
-						}
-					} else {
-						if (markedConnectionList.size() != 0) {
-							unmarkBranch(markedConnectionList);
-							markedConnectionList.clear();
-							markBranch(node);
-						} else {
-							markBranch(node);
-						}
-					}
-				}
-
-				/* Deselects immediately to allow dragging */
-				viewer.setSelection(new ISelection() {
-
-					@Override
-					public boolean isEmpty() {
-						return false;
-					}
-				});
-			}
-		});
-
 		footerComposite = new Composite(this, SWT.NO_REDRAW_RESIZE);
 		footerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 8, 1));
 		footerComposite.setLayout(new GridLayout(8, true));
 
-		// TODO
-
 		Button testLabel = new Button(footerComposite, SWT.PUSH);
 		testLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		testLabel.setText("Neu");
+		testLabel.setText(Descriptions.InteractiveSignature_Button_3);
 		scrolledComposite = new ScrolledComposite(footerComposite, SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 6, 4));
 		scrolledComposite.setExpandHorizontal(true);
@@ -346,12 +297,17 @@ public class InteractiveSignatureComposite extends Composite {
 		scrolledComposite.setContent(signatureText);
 		Label asdf = new Label(footerComposite, SWT.NONE);
 		asdf.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		Button testLabel2 = new Button(footerComposite, SWT.PUSH);
-		testLabel2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		testLabel2.setText("Button 2");
+		// Button testLabel2 = new Button(footerComposite, SWT.PUSH);
+		// testLabel2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
+		// 2, 1));
+		// testLabel2.setText("Button 2");
 		Button testLabel3 = new Button(footerComposite, SWT.PUSH);
 		testLabel3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		testLabel3.setText("Button 3");
+		testLabel3.setVisible(false);
+
+		signaturSize = new Label(footerComposite, SWT.READ_ONLY | SWT.WRAP);
+		signaturSize.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		signaturSize.setText(Descriptions.MerkleTreeSign_6 + " 0");
 
 		testLabel.addSelectionListener(new SelectionAdapter() {
 
@@ -609,6 +565,7 @@ public class InteractiveSignatureComposite extends Composite {
 				inputText.setText("");
 				signatureText.setText("");
 				stepByStep();
+				plainSignature = null;
 			}
 		};
 
@@ -691,6 +648,7 @@ public class InteractiveSignatureComposite extends Composite {
 			// nextButton.setText(Descriptions.InteractiveSignature_2);
 			nextButton.setText(Descriptions.InteractiveSignature_Button_2);
 			nextButton.removeSelectionListener(newRoundListener);
+			nextButton.removeSelectionListener(nextListener);
 			nextButton.addSelectionListener(nextListener);
 
 			// *****Content*****//
@@ -717,6 +675,10 @@ public class InteractiveSignatureComposite extends Composite {
 				backButton.setVisible(true);
 				inputText.setEditable(false);
 				inputText.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
+
+				if (plainSignature != null) {
+					merkle.setIndex(currentIndex);
+				}
 
 				plainSignature = merkle.sign(message);
 				if (plainSignature == "") {
@@ -745,6 +707,7 @@ public class InteractiveSignatureComposite extends Composite {
 			// *****Content*****//
 			guideLabel.setText(Descriptions.InteractiveSignature_3_1 + currentIndex + " " + Descriptions.InteractiveSignature_3_2);
 			signatureText.setText(currentIndex + " |");
+			signaturSize.setText(Descriptions.MerkleTreeSign_6 + " " + signatureText.getText().length());
 			leaves[currentIndex].highlight();
 			break;
 		// Step 3: Further Leaf explanation
@@ -759,6 +722,7 @@ public class InteractiveSignatureComposite extends Composite {
 		case 4:
 			signatureText.setText(currentIndex + " | ");
 			signatureText.append(signature[1]);
+			signaturSize.setText(Descriptions.MerkleTreeSign_6 + " " + signatureText.getText().length() / 2);
 			break;
 		// Step 5: authentication path explanation
 		// Window Position: bottom-left at leaf Task: -> next
@@ -785,6 +749,7 @@ public class InteractiveSignatureComposite extends Composite {
 			signatureText.setText(currentIndex + " | ");
 			signatureText.append(signature[1] + " | ");
 			signatureText.append(signature[2]);
+			signaturSize.setText(Descriptions.MerkleTreeSign_6 + " " + signatureText.getText().length() / 2);
 			break;
 		// Final step: the signature is ready dialogue
 		// Window position: over root, Task: create new or verify
@@ -842,6 +807,10 @@ public class InteractiveSignatureComposite extends Composite {
 
 			}
 		});
+	}
+
+	public void withdrawSignature() {
+		merkle.setIndex(currentIndex);
 	}
 
 }
