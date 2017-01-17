@@ -30,6 +30,8 @@ public interface ISimpleMerkle {
 	public boolean verify(String message, String signature, int keyIndex);
 	// Options
 
+	public void setIndex(int i);
+	
 	public void selectOneTimeSignatureAlgorithm(String hash, String algo);
 
 	public void setLeafCount(int i);

@@ -39,6 +39,10 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 
 	}
 
+	public void setIndex(int i){
+		this.keyIndex=i;
+	}
+	
 	@Override
 	public void setSeed(byte[] seed) {
 		this.seed = seed;

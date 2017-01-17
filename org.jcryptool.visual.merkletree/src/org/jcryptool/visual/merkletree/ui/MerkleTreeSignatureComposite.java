@@ -102,13 +102,13 @@ public class MerkleTreeSignatureComposite extends Composite {
 		indexLabel.setVisible(false);
 
 		interactiveTopButton = new Button(topBar, SWT.PUSH);
-		interactiveTopButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		interactiveTopButton.setText("Interaktive Signaturerstellung");
+		interactiveTopButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		interactiveTopButton.setText(Descriptions.InteractiveSignature_Button_0);
 		interactiveTopButton.setVisible(false);
 
 		plainTopButton = new Button(topBar, SWT.PUSH);
-		plainTopButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		plainTopButton.setText("Einfache Signaturerstellung");
+		plainTopButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		plainTopButton.setText(Descriptions.InteractiveSignature_Button_5);
 		plainTopButton.setVisible(false);
 
 		descLabel = new Label(topBar, SWT.NONE);
@@ -131,7 +131,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 		selectionComposite.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
 
 		tabDescriptionLabel = new Label(selectionComposite, SWT.NONE);
-		tabDescriptionLabel.setText("In diesem Tab können Signaturen erstellt werden. Wählen sie eine der zwei optionen, sie unterscheiden sich lediglich in ihrer Darstellung.");
+		tabDescriptionLabel.setText(Descriptions.InteractiveSignature_8);
 		tabDescriptionLabel.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, true, 4, 1));
 		tabDescriptionLabel.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
 
@@ -141,11 +141,11 @@ public class MerkleTreeSignatureComposite extends Composite {
 
 		interactiveButton = new Button(selectionComposite, SWT.PUSH);
 		interactiveButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		interactiveButton.setText("Interaktive Signaturerstellung");
+		interactiveButton.setText(Descriptions.InteractiveSignature_Button_0);
 
 		plainButton = new Button(selectionComposite, SWT.PUSH);
 		plainButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		plainButton.setText("Einfache Signaturerstellung");
+		plainButton.setText(Descriptions.InteractiveSignature_Button_5);
 
 		spacerBottom = new Label(this, SWT.NONE);
 		spacerBottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
@@ -167,7 +167,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 
 			@Override
 			public void mouseEnter(MouseEvent e) {
-				descrText.setText("Die Signaturerstellung wird Schritt für Schritt durchgeführt und detailliert erklärt");
+				descrText.setText(Descriptions.InteractiveSignature_9);
 
 			}
 		});

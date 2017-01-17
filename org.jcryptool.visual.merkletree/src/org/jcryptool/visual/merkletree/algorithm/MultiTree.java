@@ -2,6 +2,7 @@ package org.jcryptool.visual.merkletree.algorithm;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -66,18 +67,7 @@ public class MultiTree implements ISimpleMerkle {
 			}
 		}
 	}
-
-	/*
-	 * public void xmssmt_public_key() { /* +---------------------------------+
-	 * | algorithm OID | +---------------------------------+ | | | root node | n
-	 * bytes | | +---------------------------------+ | | | SEED | n bytes | |
-	 * +---------------------------------+
-	 */
-	/*
-	 * String algorithmID = this.algorithmID; byte[] publicRoot =
-	 * Layer.getMerkleRoot(); byte[] publicSeed = this.getSeed();
-	 */
-
+	
 	/**
 	 * XORs two nodes and hashes them with a salt
 	 * 
@@ -249,7 +239,8 @@ public class MultiTree implements ISimpleMerkle {
 		hash_key = hak.toByteArray();
 
 		// Then use it for message digest
-		msg_h = xtree.randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(idx).toByteArray(), R), msg.getBytes(), msg.length());
+		msg_h = xtree.randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(idx).toByteArray(), R), msg.getBytes(),
+				msg.length());
 
 		// collecting signature
 		byte[] sigmsg = msg_h;
@@ -288,7 +279,8 @@ public class MultiTree implements ISimpleMerkle {
 
 		ArrayList<Node> auth = buildAuth(idx, seed);
 
-		String signature = Integer.toString(idx) + "|" + Converter._byteToHex(R) + "|" + Converter._2dByteToHex(ots_sig);
+		String signature = Integer.toString(idx) + "|" + Converter._byteToHex(R) + "|"
+				+ Converter._2dByteToHex(ots_sig);
 		for (i = 0; i < auth.size(); i++) {
 			signature = signature + "|" + Converter._byteToHex(auth.get(i).getContent());
 		}
@@ -296,7 +288,12 @@ public class MultiTree implements ISimpleMerkle {
 	}
 
 	public String getPrivateKey() {
-		String sek = idx + "|" + seed.toString() + "|" + sk.toString();
+		String sek = new String();
+		sek = idx + "|" + Converter._byteToHex(getSeed());
+		for (int i = 0; i < leafCounter; i++) {
+			sek += "|";
+			sek += Converter._2dByteToHex(privKeys.get(i));
+		}
 		return sek;
 	}
 
@@ -307,12 +304,11 @@ public class MultiTree implements ISimpleMerkle {
 
 	@Override
 	public String getKeyLength() {
-		int privLength = sk.length;
-		int pubLength = pk.length;
-		int length = privLength + pubLength;
+		// System.err.println(sk);
+		int length = getPrivateKey().length() + getPublicKey().length();
 		StringBuilder sb = new StringBuilder();
 		sb.append("");
-		sb.append(length);
+		sb.append((length / 2));
 		String keyLength = sb.toString();
 		return keyLength;
 	}
@@ -391,14 +387,14 @@ public class MultiTree implements ISimpleMerkle {
 
 	@Override
 	public void generateKeyPairsAndLeaves() {
-		generatePrivateKey();
+		//generatePrivateKey();
 		for (int i = 0; i < this.leafCounter; i++) {
 			// generates a new WOTS/ WOTSPlus Keypair (public and secret key)
 			if (otsAlgo instanceof WOTSPlus) {
 				((WOTSPlus) otsAlgo).setAddress(otsAdrs);
 			}
 
-			otsAlgo.generateKeyPair();
+			this.otsAlgo.generateKeyPair();
 			// adds the private Key of the generated keypair to the private key
 			// list of privKeys
 			privKeys.add(otsAlgo.getPrivateKey());
@@ -432,11 +428,9 @@ public class MultiTree implements ISimpleMerkle {
 		generateKeyPairsAndLeaves();
 		treeArray = new Node[(1 << (getTreeHeight() + 1)) - 1];
 		rootNode = treeHash(0, getTreeHeight(), bitmaskSeed);
-		System.err.println(rootNode.getContent().toString());
+	//	System.err.println(rootNode.getContent().toString());
 		tree = new ArrayList<Node>(Arrays.asList(treeArray));
 		setConnections();
-
-		System.err.println(Converter._byteToHex(sk));
 		treeGenerated = true;
 	}
 
@@ -465,6 +459,10 @@ public class MultiTree implements ISimpleMerkle {
 		return true;
 	}
 
+	public void setIndex(int i){
+		this.keyIndex=i;
+	}
+	
 	@Override
 	public void setSeed(byte[] seed) {
 		this.bitmaskSeed = seed; // dirty workaround, sorry, but here to make
