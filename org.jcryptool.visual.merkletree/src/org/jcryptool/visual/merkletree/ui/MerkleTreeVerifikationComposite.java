@@ -99,7 +99,7 @@ public class MerkleTreeVerifikationComposite extends Composite implements IZooma
 		descText.setText(Descriptions.MerkleTreeVerify_0);
 		this.setLayout(new GridLayout(1, true));
 
-		styledTextTree = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
+		styledTextTree = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
 		styledTextTree.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 		styledTextTree.setText(Descriptions.MerkleTreeVerify_4);
 

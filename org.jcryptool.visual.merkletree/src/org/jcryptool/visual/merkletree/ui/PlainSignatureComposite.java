@@ -14,6 +14,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 // import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
@@ -36,6 +38,7 @@ public class PlainSignatureComposite extends Composite {
 	 * @param parent
 	 * @param style
 	 */
+	MerkleTreeSignatureComposite signatureComposite;
 	Label sign;
 	Text textSign;
 	Button createSign;
@@ -50,11 +53,12 @@ public class PlainSignatureComposite extends Composite {
 	StyledText styledTextKeyNumber;
 	ISimpleMerkle merkle;
 
-	public PlainSignatureComposite(Composite parent, int style, ISimpleMerkle merkle) {
+	public PlainSignatureComposite(Composite parent, int style, ISimpleMerkle merkle, MerkleTreeSignatureComposite signatureComposite) {
 		super(parent, SWT.NONE);
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
 
 		this.merkle = merkle;
+		this.signatureComposite = signatureComposite;
 
 		sign = new Label(this, SWT.NONE);
 		sign.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
@@ -115,9 +119,9 @@ public class PlainSignatureComposite extends Composite {
 				/*
 				 * store signature in temp string, to verify it
 				 */
-				String temp = merkle.sign(textSign.getText());
-				if (temp != "") {
-					signature = temp;
+				String message = textSign.getMessage();
+				signature = merkle.sign(message);
+				if (signature != "") {
 					/**
 					 * updated the field of the Signature, KeyIndex and
 					 * SignatureLength
@@ -125,8 +129,10 @@ public class PlainSignatureComposite extends Composite {
 					styledTextSign.setText(signature);
 					styledTextSignSize.setText(getSignatureLength(signature) + " Byte");
 					styledTextKeyNumber.setText(getKeyIndex(signature));
+					signatureComposite.addSignatureAndMessage(signature, message);
 				} else {
-					styledTextSign.setText(Descriptions.MerkleTreeSign_8);
+					// styledTextSign.setText(Descriptions.MerkleTreeSign_8);
+					signatureComposite.keysExceededMessage();
 				}
 			}
 		});
