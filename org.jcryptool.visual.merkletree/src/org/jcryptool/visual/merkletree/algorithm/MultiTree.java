@@ -191,7 +191,8 @@ public class MultiTree implements ISimpleMerkle {
 	 *
 	 */
 	public String sign(String message) {
-		String msg = message;
+		if(keyIndex>=leafCounter) return "";
+		String msg = message; //ERR leer
 		int i;
 
 		// Init working params
@@ -201,6 +202,8 @@ public class MultiTree implements ISimpleMerkle {
 
 		// Extract SK
 		byte[] sek = sk;
+
+		//ERR wird nicht betreten
 		for (i = 0; i < idx_len; i++) {
 			idx |= ((long) sek[i]) << 8 * (idx_len - 1 - i);
 		}
@@ -272,24 +275,25 @@ public class MultiTree implements ISimpleMerkle {
 
 		OTSHashAddress ots_addr = new OTSHashAddress();
 		ots_addr.setOTSBit(true);
-		ots_addr.setOTSAddress(idx);
+		ots_addr.setOTSAddress(keyIndex);
 
 		// compute the WOTS+ signature
 		byte[][] ots_sig = ((WOTSPlus) otsAlgo).sign(sigmsg, seed, ots_addr);
 
 		ArrayList<Node> auth = buildAuth(idx, seed);
 
-		String signature = Integer.toString(idx) + "|" + Converter._byteToHex(R) + "|"
+		String signature = Integer.toString(keyIndex) + "|" + Converter._byteToHex(R) + "|"
 				+ Converter._2dByteToHex(ots_sig);
 		for (i = 0; i < auth.size(); i++) {
 			signature = signature + "|" + Converter._byteToHex(auth.get(i).getContent());
 		}
+		keyIndex++;
 		return signature;
 	}
 
 	public String getPrivateKey() {
 		String sek = new String();
-		sek = idx + "|" + Converter._byteToHex(getSeed());
+		sek = keyIndex + "|" + Converter._byteToHex(getSeed());
 		for (int i = 0; i < leafCounter; i++) {
 			sek += "|";
 			sek += Converter._2dByteToHex(privKeys.get(i));
@@ -333,9 +337,10 @@ public class MultiTree implements ISimpleMerkle {
 	}
 
 	public byte[] getIndex(String s) {
-		String[] splitted = s.split("\\|"); // splits the xmss private
-		return Converter._stringToByte(splitted[0]);// private key seed is
-													// always second
+	//	String[] splitted = s.split("\\|"); // splits the xmss private
+	//	return Converter._stringToByte(splitted[0]);// private key seed is
+		String indexString=String.valueOf(keyIndex);
+		return indexString.getBytes();											// always second
 	}
 
 	public byte[] getSK_Seed() {
@@ -409,7 +414,8 @@ public class MultiTree implements ISimpleMerkle {
 		pek.write(sk, 2 * n + idx_len, n);
 		pk = pek.toByteArray();
 
-		keyIndex = d - 1;
+		keyIndex=0;
+		//keyIndex = d - 1;
 		// treeHash(keyIndex, getTreeHeight(), seed);
 		System.arraycopy(pk, 0, sk, 3 * n + idx_len, n);
 
