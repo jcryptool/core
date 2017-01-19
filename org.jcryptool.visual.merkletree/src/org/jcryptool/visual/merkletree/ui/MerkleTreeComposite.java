@@ -150,7 +150,7 @@ public class MerkleTreeComposite extends Composite {
 			break;
 		case XMSS_MT:
 			descLabel.setText(Descriptions.XMSS_MT.Tab0_Head0);
-			descText.setText(Descriptions.XMSS_MT.Tab0_Txt0);
+			descText.setText(Descriptions.Platzhalter);
 			break;
 		case MSS:
 			descLabel.setText(Descriptions.MSS.Tab0_Head0);

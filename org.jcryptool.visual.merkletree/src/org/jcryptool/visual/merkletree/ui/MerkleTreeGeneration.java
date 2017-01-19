@@ -233,6 +233,7 @@ public class MerkleTreeGeneration extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				wParameter = 4;
 				((MerkleTreeView) masterView).updateElement();
+
 			}
 
 			@Override

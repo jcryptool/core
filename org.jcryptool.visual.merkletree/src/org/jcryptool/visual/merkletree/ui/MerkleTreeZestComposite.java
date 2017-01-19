@@ -332,7 +332,7 @@ public class MerkleTreeZestComposite
 			break;
 		case XMSS_MT:
 			descLabel.setText(Descriptions.XMSS_MT.Tab1_Head0);
-			descText.setText(Descriptions.XMSS_MT.Tab1_Txt0);
+			descText.setText(Descriptions.Platzhalter);
 			styledTextTree.setText(Descriptions.XMSS_MT.Tab1_Txt1);
 			break;
 		case MSS:

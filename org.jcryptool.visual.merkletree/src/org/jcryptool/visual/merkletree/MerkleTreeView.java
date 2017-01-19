@@ -1,8 +1,10 @@
 package org.jcryptool.visual.merkletree;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -72,9 +74,8 @@ public class MerkleTreeView extends ViewPart {
 	String signatures[];
 	String messages[];
 
-	boolean sync = false;
-
 	private Boolean unsavedChanges;
+	private boolean mustCreateTab[];
 
 	/*
 	 * (non-Javadoc)
@@ -88,6 +89,7 @@ public class MerkleTreeView extends ViewPart {
 		this.parent = parent;
 		unsavedChanges = false;
 		masterView = this;
+		mustCreateTab = new boolean[5];
 
 		parent.setLayout(new GridLayout(1, false));
 
@@ -124,10 +126,11 @@ public class MerkleTreeView extends ViewPart {
 		tabFolder.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
+				int select = tabFolder.getSelectionIndex();
 				// this part calls a messagebox if parameters have been changed
 				// on the UI but no new key was created
 				if (unsavedChanges == true) {
-					int select = tabFolder.getSelectionIndex();
+
 					tabFolder.setSelection(0);
 					MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.YES | SWT.NO | SWT.CANCEL);
 					messageBox.setMessage(Descriptions.UnsavedChanges);
@@ -138,7 +141,6 @@ public class MerkleTreeView extends ViewPart {
 					case SWT.YES:
 						merkle = baseComposite.getMTS().generateMerkleTree();
 						unsavedChanges = false;
-						sync = false;
 						break;
 					case SWT.NO:
 						unsavedChanges = false;
@@ -160,7 +162,7 @@ public class MerkleTreeView extends ViewPart {
 					removeFocus();
 				} else {
 					// else sets tab with logic in setTab
-					setTab(tabFolder.getSelectionIndex());
+					setTab(select);
 				}
 			}
 		});
@@ -181,9 +183,8 @@ public class MerkleTreeView extends ViewPart {
 		this.merkle = merkle;
 		this.mode = mode;
 		unsavedChanges = false;
-		// set sync back to false -> needed if the verification tab was clicked
-		// before
-		sync = false;
+		Arrays.fill(mustCreateTab, true);
+		signatureTab = null;
 	}
 
 	/**
@@ -202,6 +203,7 @@ public class MerkleTreeView extends ViewPart {
 
 	@Override
 	public void setFocus() {
+		scrolledComposite.setFocus();
 	}
 
 	/**
@@ -223,26 +225,31 @@ public class MerkleTreeView extends ViewPart {
 	public void setTab(int tab) {
 		switch (tab) {
 		case 0:
+			tbtmParameter0.setControl(baseComposite);
 			previousTab = 0;
 			break;
 		case 1:
-			zestTab = new MerkleTreeZestComposite(tabFolder, SWT.NONE, merkle, mode, masterView);
+			if (zestTab == null || mustCreateTab[1]) {
+				zestTab = new MerkleTreeZestComposite(tabFolder, SWT.NONE, merkle, mode, masterView);
+				mustCreateTab[1] = false;
+			}
+
 			tbtmParameter1.setControl(zestTab);
 			previousTab = 1;
 			break;
 		case 2:
 			// Creates instance if tab was not clicked before or keys changed
-			if (keyTab == null || ((oldMerkle != merkle) || oldMerkle == null)) {
+			if (keyTab == null || mustCreateTab[2]) {
 				BusyIndicator.showWhile(Display.getCurrent(), new Runnable() {
 
 					@Override
 					public void run() {
 						keyTab = new MerkleTreeKeyComposite(tabFolder, SWT.NONE, merkle);
 						keyTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+						mustCreateTab[2] = false;
 					}
 				});
 			}
-			oldMerkle = merkle;
 			tbtmParameter2.setControl(keyTab);
 			previousTab = 2;
 			break;
@@ -252,42 +259,50 @@ public class MerkleTreeView extends ViewPart {
 			 * == true -> dont create a new SignatureComposite necessary for tab
 			 * changes
 			 */
-			if (sync == false || signatureTab == null) {
+			if (signatureTab == null || mustCreateTab[3]) {
 				signatureTab = new MerkleTreeSignatureComposite(tabFolder, SWT.NONE, merkle, mode, this);
 				signatureTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-				tbtmParameter3.setControl(signatureTab);
-				// InteractiveSignatureComposite test = new
-				// InteractiveSignatureComposite(tabFolder, SWT.NONE, merkle,
-				// mode, masterView);
-				// test.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-				// tbtmParameter3.setControl(test);
+				mustCreateTab[3] = false;
 			}
+			tbtmParameter3.setControl(signatureTab);
 			previousTab = 3;
 			break;
 		case 4:
-			sync = true;
+
 			if (signatureTab != null && signatureTab.getSignatures() != null) {
 				signatures = signatureTab.getSignatures();
 				messages = signatureTab.getMessages();
-				verificationTab = new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle, signatures, messages);
-				verificationTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-				tabFolder.getSelection()[0].setControl(verificationTab);
+				if (mustCreateTab[4]) {
+					verificationTab = new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle, signatures, messages);
+					verificationTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+					mustCreateTab[4] = false;
+				}
+
+				// tabFolder.getSelection()[0].setControl(verificationTab);
+				tbtmParameter4.setControl(verificationTab);
 			} else {
 				tabFolder.setSelection(previousTab);
 				MessageBox messageBoxx = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
 				messageBoxx.setMessage(Descriptions.MerkleTree_Signature_Generation_Info);
 				messageBoxx.setText("Info");
 				messageBoxx.open();
+				tab = 0;
 			}
 			break;
 		default:
 			break;
 		}
 
+		tabFolder.setSelection(tab);
+
 	}
 
 	public void removeFocus() {
 		baseComposite.setLocalFocus();
+	}
+
+	public void deleteTree() {
+		merkle = null;
 	}
 
 }

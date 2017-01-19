@@ -14,6 +14,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 // import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
@@ -36,6 +38,7 @@ public class PlainSignatureComposite extends Composite {
 	 * @param parent
 	 * @param style
 	 */
+	MerkleTreeSignatureComposite signatureComposite;
 	Label sign;
 	Text textSign;
 	Button createSign;
@@ -47,14 +50,15 @@ public class PlainSignatureComposite extends Composite {
 	Label descLabel;
 	String signature = null;
 
-	StyledText styledTextKeyNumber;
+	// StyledText styledTextKeyNumber;
 	ISimpleMerkle merkle;
 
-	public PlainSignatureComposite(Composite parent, int style, ISimpleMerkle merkle) {
+	public PlainSignatureComposite(Composite parent, int style, ISimpleMerkle merkle, MerkleTreeSignatureComposite signatureComposite) {
 		super(parent, SWT.NONE);
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
 
 		this.merkle = merkle;
+		this.signatureComposite = signatureComposite;
 
 		sign = new Label(this, SWT.NONE);
 		sign.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
@@ -68,13 +72,16 @@ public class PlainSignatureComposite extends Composite {
 		createSign.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 2, 1));
 		createSign.setText(Descriptions.MerkleTreeSign_2);
 
-		lkeyNumber = new Label(this, SWT.READ_ONLY | SWT.WRAP | SWT.RIGHT);
-		lkeyNumber.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 5, 1));
-		lkeyNumber.setText(Descriptions.MerkleTreeSign_7);
+		// lkeyNumber = new Label(this, SWT.READ_ONLY | SWT.WRAP | SWT.RIGHT);
+		// lkeyNumber.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+		// false, MerkleConst.H_SPAN_MAIN / 5, 1));
+		// lkeyNumber.setText(Descriptions.MerkleTreeSign_7);
 
-		styledTextKeyNumber = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
-		styledTextKeyNumber.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 5, 1));
-		styledTextKeyNumber.setText("");
+		// styledTextKeyNumber = new StyledText(this, SWT.BORDER | SWT.READ_ONLY
+		// | SWT.WRAP);
+		// styledTextKeyNumber.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
+		// true, false, MerkleConst.H_SPAN_MAIN / 5, 1));
+		// styledTextKeyNumber.setText("");
 
 		lSignaturSize = new Label(this, SWT.READ_ONLY | SWT.WRAP | SWT.RIGHT);
 		lSignaturSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 5, 1));
@@ -115,18 +122,20 @@ public class PlainSignatureComposite extends Composite {
 				/*
 				 * store signature in temp string, to verify it
 				 */
-				String temp = merkle.sign(textSign.getText());
-				if (temp != "") {
-					signature = temp;
+				String message = textSign.getMessage();
+				signature = merkle.sign(message);
+				if (signature != "") {
 					/**
 					 * updated the field of the Signature, KeyIndex and
 					 * SignatureLength
 					 */
 					styledTextSign.setText(signature);
 					styledTextSignSize.setText(getSignatureLength(signature) + " Byte");
-					styledTextKeyNumber.setText(getKeyIndex(signature));
+					// styledTextKeyNumber.setText(getKeyIndex(signature));
+					signatureComposite.addSignatureAndMessage(signature, message);
 				} else {
-					styledTextSign.setText(Descriptions.MerkleTreeSign_8);
+					// styledTextSign.setText(Descriptions.MerkleTreeSign_8);
+					signatureComposite.keysExceededMessage();
 				}
 			}
 		});
