@@ -122,7 +122,9 @@ public class PlainSignatureComposite extends Composite {
 				/*
 				 * store signature in temp string, to verify it
 				 */
-				String message = textSign.getMessage();
+				// String message = textSign.getMessage();
+
+				String message = textSign.getText();
 				signature = merkle.sign(message);
 				if (signature != "") {
 					/**
