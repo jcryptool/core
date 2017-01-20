@@ -39,10 +39,10 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 
 	}
 
-	public void setIndex(int i){
-		this.keyIndex=i;
+	public void setIndex(int i) {
+		this.keyIndex = i;
 	}
-	
+
 	@Override
 	public void setSeed(byte[] seed) {
 		this.seed = seed;
@@ -221,8 +221,8 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 		String[] signer = signature.split("\\|");
 		int keyIndex = Integer.parseInt(signer[0]);
 		// set OTS Algorithm values
-		this.otsAlgo.setPrivateKey(this.privKeys.get(this.keyIndex));
-		this.otsAlgo.setPublicKey(this.publicKeys.get(this.keyIndex));
+		this.otsAlgo.setPrivateKey(this.privKeys.get(keyIndex));
+		this.otsAlgo.setPublicKey(this.publicKeys.get(keyIndex));
 
 		int iHigh = keyIndex;
 		// String currentAuthPath="";
