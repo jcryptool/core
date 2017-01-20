@@ -7,8 +7,6 @@ import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.ControlAdapter;
-import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
@@ -16,12 +14,13 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.zest.core.viewers.AbstractZoomableViewer;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.zest.core.viewers.GraphViewer;
-import org.eclipse.zest.core.viewers.IZoomableWorkbenchPart;
 import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.GraphConnection;
 import org.eclipse.zest.core.widgets.GraphItem;
@@ -51,6 +50,7 @@ public class MerkleTreeVerifikationComposite
 	private StyledText binaryValue;
 	private StyledText styledTextTree;
 	private int layoutCounter = 1;
+	private int currentIndex;
 	private ArrayList<GraphConnection> markedConnectionList;
 	private String messages[];
 	private String signatures[];
@@ -64,7 +64,13 @@ public class MerkleTreeVerifikationComposite
 	StackLayout stackLayout;
 	Button descriptionButton;
 	Button signatureSelectionButton;
-	StyledText signatureText;
+	GridData leftTextLayout;
+	GridData rightTextLayout;
+	Text leftText;
+	Text rightText;
+	Group leftGroup;
+	Group rightGroup;
+	Combo selectionCombo;
 
 	/**
 	 * Create the composite. Including Description, GraphItem, GraphView,
@@ -78,8 +84,17 @@ public class MerkleTreeVerifikationComposite
 
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
 		markedConnectionList = new ArrayList<GraphConnection>();
-		int leafNumber = 1;
 		this.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, MerkleConst.H_SPAN_MAIN + 5, MerkleConst.DESC_HEIGHT + 1));
+
+		this.signatures = signatures;
+		this.messages = messages;
+
+		for (int i = this.signatures.length - 1; i >= 0; --i) {
+			if (this.signatures[i] != null) {
+				currentIndex = i;
+				i = -1;
+			}
+		}
 		// this.addControlListener(new ControlAdapter() {
 		// @Override
 		// public void controlResized(ControlEvent e) {
@@ -103,12 +118,10 @@ public class MerkleTreeVerifikationComposite
 		descriptionButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		descriptionButton.setText(Descriptions.InteractiveSignature_Button_0);
 		descriptionButton.setEnabled(false);
-		descriptionButton.setVisible(false);
 
 		signatureSelectionButton = new Button(topBar, SWT.PUSH);
 		signatureSelectionButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		signatureSelectionButton.setText(Descriptions.InteractiveSignature_Button_5);
-		signatureSelectionButton.setVisible(false);
 
 		descLabel = new Label(topBar, SWT.NONE);
 		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, true, false, 2, 1));
@@ -134,26 +147,46 @@ public class MerkleTreeVerifikationComposite
 		descText = new StyledText(descriptionComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
 		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		descText.setText(Descriptions.MerkleTreeVerify_0);
-		descriptionComposite.pack();
 		stackLayout.topControl = descriptionComposite;
 
 		signatureSelectionComposite = new Composite(stackComposite, SWT.NONE);
 		signatureSelectionComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		signatureSelectionComposite.setLayout(new GridLayout(5, true));
 
-		signatureText = new StyledText(signatureSelectionComposite, SWT.BORDER | SWT.WRAP | SWT.MULTI);
-		signatureText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		leftGroup = new Group(signatureSelectionComposite, SWT.NONE);
+		leftGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		leftGroup.setLayout(new GridLayout(1, true));
+		leftGroup.setText("Message");
+
+		leftTextLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		leftTextLayout.heightHint = stackComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
+		leftText = new Text(leftGroup, SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
+		leftText.setLayoutData(leftTextLayout);
+
+		rightGroup = new Group(signatureSelectionComposite, SWT.NONE);
+		rightGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+		rightGroup.setLayout(new GridLayout(1, true));
+		rightGroup.setText("Signatur");
+
+		rightTextLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		rightTextLayout.heightHint = stackComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
+		rightText = new Text(rightGroup, SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
+		rightText.setLayoutData(rightTextLayout);
+
+		leftText.setText(messages[currentIndex]);
+		rightText.setText(signatures[currentIndex]);
+
+		selectionCombo = new Combo(signatureSelectionComposite, SWT.NONE);
+		selectionCombo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 
 		descriptionButton.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// stackLayout.topControl = descriptionComposite;
-				// signatureSelectionButton.setEnabled(true);
-				// descriptionButton.setEnabled(false);
-				// descriptionComposite.layout();
-				// descriptionComposite.pack();
-				setSelection(true);
+				stackLayout.topControl = descriptionComposite;
+				signatureSelectionButton.setEnabled(true);
+				descriptionButton.setEnabled(false);
+				stackComposite.layout();
 			}
 		});
 
@@ -161,12 +194,20 @@ public class MerkleTreeVerifikationComposite
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// stackLayout.topControl = signatureSelectionComposite;
-				// signatureSelectionButton.setEnabled(false);
-				// descriptionButton.setEnabled(true);
-				// signatureSelectionComposite.layout();
-				// signatureSelectionComposite.pack();
-				setSelection(false);
+				stackLayout.topControl = signatureSelectionComposite;
+				signatureSelectionButton.setEnabled(false);
+				descriptionButton.setEnabled(true);
+				stackComposite.layout();
+			}
+		});
+
+		selectionCombo.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				currentIndex = selectionCombo.getSelectionIndex();
+				leftText.setText(messages[currentIndex]);
+				rightText.setText(signatures[currentIndex]);
 			}
 		});
 
@@ -199,7 +240,7 @@ public class MerkleTreeVerifikationComposite
 		@SuppressWarnings("unchecked")
 		List<GraphNode> gNodes = graph.getNodes();
 		for (GraphNode gnode : gNodes) {
-			if (((Node) gnode.getData()).getLeafNumber() == leafNumber) {
+			if (((Node) gnode.getData()).getLeafNumber() == currentIndex) {
 				if (markedConnectionList.size() == 0) {
 					markBranch(gnode);
 					markAuthPath(markedConnectionList);
@@ -269,7 +310,7 @@ public class MerkleTreeVerifikationComposite
 					}
 				}
 				if (currentLeaf >= 0) {
-					if (merkle.verify(messages[0], signatures[0], currentLeaf)) {
+					if (merkle.verify(messages[currentIndex], signatures[currentIndex], currentLeaf)) {
 						/*
 						 * set the Screen color based on the result green if
 						 * verification success red if verification fails
@@ -436,26 +477,32 @@ public class MerkleTreeVerifikationComposite
 
 	}
 
-	public void setMessages(String messages[]) {
-		this.messages = messages;
-	}
-
-	public void setSignatures(String signatures[]) {
+	public void setSignatureMessagePair(String signatures[], String[] messages) {
 		this.signatures = signatures;
+		this.messages = messages;
+		refreshCombo();
 	}
 
-	private void setSelection(boolean description) {
-		if (description) {
-			stackLayout.topControl = descriptionComposite;
-			signatureSelectionButton.setEnabled(true);
-			descriptionButton.setEnabled(false);
-		} else {
-			stackLayout.topControl = signatureSelectionComposite;
-			signatureSelectionButton.setEnabled(false);
-			descriptionButton.setEnabled(true);
+	private void refreshCombo() {
+		if (selectionCombo.getItemCount() > 0)
+			selectionCombo.removeAll();
+
+		for (int i = 0; i < signatures.length; ++i) {
+			if (messages[i] != null) {
+				if (messages[i].length() > 60) {
+					selectionCombo.add("Nachricht " + i + ": " + messages[i].substring(0, 60) + "...");
+				} else {
+					selectionCombo.add("Nachricht " + i + ": " + messages[i]);
+				}
+
+			}
 		}
-
-		stackComposite.layout();
+		for (int i = signatures.length - 1; i >= 0; --i) {
+			if (signatures[i] != null) {
+				selectionCombo.select(i);
+				currentIndex = i;
+				i = -1;
+			}
+		}
 	}
-
 }

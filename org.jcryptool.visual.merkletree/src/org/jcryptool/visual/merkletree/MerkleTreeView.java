@@ -277,8 +277,7 @@ public class MerkleTreeView extends ViewPart {
 					verificationTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 					mustCreateTab[4] = false;
 				}
-
-				// tabFolder.getSelection()[0].setControl(verificationTab);
+				verificationTab.setSignatureMessagePair(signatures, messages);
 				tbtmParameter4.setControl(verificationTab);
 			} else {
 				tabFolder.setSelection(previousTab);
