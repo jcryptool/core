@@ -285,7 +285,7 @@ public class MerkleTreeView extends ViewPart {
 				messageBoxx.setMessage(Descriptions.MerkleTree_Signature_Generation_Info);
 				messageBoxx.setText("Info");
 				messageBoxx.open();
-				tab = 0;
+				tab = previousTab;
 			}
 			break;
 		default:
