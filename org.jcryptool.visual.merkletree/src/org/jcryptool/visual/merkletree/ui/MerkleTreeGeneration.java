@@ -292,9 +292,9 @@ public class MerkleTreeGeneration extends Composite {
 		Spinner spinnerkeysum = new Spinner(keyRow, SWT.BORDER);
 		spinnerkeysum.setMaximum(64);
 		spinnerkeysum.setMinimum(2);
-		spinnerkeysum.setSelection(0);
+		spinnerkeysum.setSelection(8);
 		spinnerkeysum.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
-		spinnerValue = 2;
+		spinnerValue = 8;
 
 		// set the spinner-value only to values of the power of 2
 		spinnerkeysum.addSelectionListener(new SelectionAdapter() {
