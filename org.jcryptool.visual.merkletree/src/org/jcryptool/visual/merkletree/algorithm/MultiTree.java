@@ -20,7 +20,6 @@ public class MultiTree implements ISimpleMerkle {
 	// Starting over again
 	int leafCounter = 0;
 	int d; // set
-	int l;
 	int idx_len;
 	int idx;
 	int n;
@@ -191,6 +190,8 @@ public class MultiTree implements ISimpleMerkle {
 	 *
 	 */
 	public String sign(String message) {
+		long idx_tree;
+		int idx_leaf;
 		if(keyIndex>=leafCounter) return "";
 		String msg = message; //ERR leer
 		int i;
@@ -271,25 +272,44 @@ public class MultiTree implements ISimpleMerkle {
 		sigmsg = sigmessage.toByteArray();
 
 		// signing
-		// Handle lowest layer separately as it is slightly different...
+		// set everything for the WOTS+ magic
 
 		OTSHashAddress ots_addr = new OTSHashAddress();
 		ots_addr.setOTSBit(true);
 		ots_addr.setOTSAddress(this.keyIndex);
 		otsAlgo.setPrivateKey(privKeys.get(keyIndex));
-		otsAlgo.setPublicKey(privKeys.get(keyIndex));
+		otsAlgo.setPublicKey(publicKeys.get(keyIndex));
 		
 		// compute the WOTS+ signature
 		byte[][] ots_sig = ((WOTSPlus) otsAlgo).sign(sigmsg, seed, ots_addr);
 
-		ArrayList<Node> auth = buildAuth(idx, seed);
-
+		ArrayList<Node>auth=buildAuth(keyIndex, seed);
+		
 		String signature = Integer.toString(keyIndex) + "|" + Converter._byteToHex(R) + "|"
 				+ Converter._2dByteToHex(ots_sig);
 		for (i = 0; i < auth.size(); i++) {
 			signature = signature + "|" + Converter._byteToHex(auth.get(i).getContent());
 		}
-		keyIndex++;
+		
+		int h=(int)getTreeHeight();
+		//loop over remaining layers... 
+//		for(i=1; i<d; i++){
+//			idx_leaf=(int) (idx_tree&((1<<h)-1));
+//			idx_tree= idx_tree >> h;
+//			ots_addr.setOTSAddress(idx_leaf);
+//			ots_addr.setOTSBit(true);
+//			otsAlgo.setPrivateKey(privKeys.get(idx_leaf));
+//			otsAlgo.setPublicKey(publicKeys.get(idx_leaf));
+//			ots_sig=((WOTSPlus)otsAlgo).sign(sigmsg, seed, ots_addr);
+//			signature+= "|" + Converter._2dByteToHex(ots_sig);
+//			
+//			for (int i = 0; i < auth.size(); i++) {
+//				signature = signature + "|" + Converter._byteToHex(auth.get(i).getContent());
+//			}
+//			signature+="| Signatur "
+//		}
+//		
+		if (keyIndex<(leafCounter-1)) keyIndex++;
 		return signature;
 	}
 
@@ -330,7 +350,7 @@ public class MultiTree implements ISimpleMerkle {
 	 */
 
 	public double getXMSSTreeCount(int h, int d) {
-		if (l == (this.d - 1))
+		if (keyIndex == (this.d - 1))
 			return 1;
 		else {
 			double s = Math.pow(2, (h / d));
@@ -469,12 +489,20 @@ public class MultiTree implements ISimpleMerkle {
 
 	public void setIndex(int i){
 		this.keyIndex=i;
+		this.h=getTreeHeight();
+		this.idx_len=(h+7)/8;
+	}
+	
+	public void setSingleTreeHeight(int h){
+		this.h=h;
+	}
+	
+	public void setBitmaskSeed(byte[] seed){
+		this.bitmaskSeed=seed;
 	}
 	
 	@Override
 	public void setSeed(byte[] seed) {
-		this.bitmaskSeed = seed; // dirty workaround, sorry, but here to make
-									// sure it is initalised
 		this.seed = seed;
 	}
 
@@ -498,10 +526,6 @@ public class MultiTree implements ISimpleMerkle {
 	 */
 	public void setLayers(int d) {
 		this.d = d;
-	}
-
-	public void set(int l) {
-		this.l = l;
 	}
 
 	/**
