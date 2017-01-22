@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.ui.InteractiveSignatureComposite;
 import org.jcryptool.visual.merkletree.ui.MerkleConst;
@@ -99,6 +100,7 @@ public class MerkleTreeView extends ViewPart {
 		scrolledComposite.setExpandVertical(true);
 
 		tabFolder = new TabFolder(scrolledComposite, SWT.NONE);
+		tabFolder.setFont(FontService.getLargeBoldFont());
 
 		// Key-generation
 		tbtmParameter0 = new TabItem(tabFolder, SWT.NONE);
