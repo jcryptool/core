@@ -216,7 +216,6 @@ public class MerkleTreeGeneration extends Composite {
 		// text box with Description
 		wParamDescription = new StyledText(wParameterGroup, SWT.WRAP | SWT.BORDER | SWT.READ_ONLY);
 		wParamDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 2));
-		wParamDescription.setText(Descriptions.Tab0_Txt2);
 
 		// Radio Buttons 4/16
 		buttonSet4 = new Button(wParameterGroup, SWT.RADIO);
@@ -292,9 +291,9 @@ public class MerkleTreeGeneration extends Composite {
 		Spinner spinnerkeysum = new Spinner(keyRow, SWT.BORDER);
 		spinnerkeysum.setMaximum(64);
 		spinnerkeysum.setMinimum(2);
-		spinnerkeysum.setSelection(0);
+		spinnerkeysum.setSelection(8);
 		spinnerkeysum.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
-		spinnerValue = 2;
+		spinnerValue = 8;
 
 		// set the spinner-value only to values of the power of 2
 		spinnerkeysum.addSelectionListener(new SelectionAdapter() {
@@ -355,13 +354,16 @@ public class MerkleTreeGeneration extends Composite {
 		switch (mode) {
 		case XMSS:
 			descText.setText(Descriptions.XMSS.Tab0_Txt2);
+			wParamDescription.setText(Descriptions.XMSS.Tab0_Txt1);
 			break;
 		case XMSS_MT:
 			descText.setText(Descriptions.XMSS_MT.Tab0_Txt2);
+			wParamDescription.setText(Descriptions.XMSS_MT.Tab0_Txt1);
 			break;
 		case MSS:
 		default:
 			descText.setText(Descriptions.MSS.Tab0_Txt2);
+			wParamDescription.setText(Descriptions.MSS.Tab0_Txt1);
 			break;
 		}
 		descText.setEditable(false);

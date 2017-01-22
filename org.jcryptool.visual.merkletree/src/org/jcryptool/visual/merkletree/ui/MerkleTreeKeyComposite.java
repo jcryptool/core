@@ -31,7 +31,7 @@ public class MerkleTreeKeyComposite extends Composite {
 	Label spacer;
 	Label buttonInfoLabel;
 	Label spinnerInfoLabel;
-	Label keyExplanation;
+	Text keyExplanation;
 
 	Button buttonIndex;
 	Button buttonSeed;
@@ -79,9 +79,10 @@ public class MerkleTreeKeyComposite extends Composite {
 		descLabel = new Label(this, SWT.NONE);
 		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN * 2, 1));
 
-		keyExplanation = new Label(this, SWT.WRAP | SWT.BORDER);
+		keyExplanation = new Text(this, SWT.WRAP);
 		keyExplanation.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN * 2, 1));
 		keyExplanation.setText(Descriptions.MerkleTreeKeyTab_0);
+		keyExplanation.setEditable(false);
 		keyExplanation.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
 
 		// spacer

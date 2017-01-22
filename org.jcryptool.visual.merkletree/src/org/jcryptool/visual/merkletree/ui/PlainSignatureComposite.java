@@ -215,4 +215,9 @@ public class PlainSignatureComposite extends Composite {
 		// Disable the check that prevents subclassing of SWT components
 	}
 
+	public void clearSignatureText() {
+		styledTextSign.setText("");
+		styledTextSignSize.setText("");
+	}
+
 }

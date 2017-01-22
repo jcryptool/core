@@ -88,6 +88,11 @@ public class Descriptions extends NLS {
 	public static String MerkleTreeVerify_4;
 	public static String MerkleTreeVerify_5;
 	public static String MerkleTreeVerify_6;
+	public static String MerkleTreeVerify_7;
+	public static String MerkleTreeVerify_8;
+	public static String MerkleTreeVerify_9;
+	public static String MerkleTreeVerify_10;
+	public static String MerkleTreeVerify_11;
 
 	public static String MerkleTree_Signature_Generation_Info;
 
@@ -100,7 +105,6 @@ public class Descriptions extends NLS {
 	public static String Tab0_Button2;
 	public static String Tab0_Button3;
 	public static String Tab0_Lable1;
-	public static String Tab0_Txt2;
 	public static String Tab0_Txt3;
 
 	public static String InteractiveSignature_Button_0;
@@ -126,6 +130,7 @@ public class Descriptions extends NLS {
 
 		public static String Tab0_Head0;
 		public static String Tab0_Txt0;
+		public static String Tab0_Txt1;
 		public static String Tab0_Txt2;
 
 		public static String Tab1_Head0;
@@ -139,6 +144,7 @@ public class Descriptions extends NLS {
 
 		public static String Tab0_Head0;
 		public static String Tab0_Txt0;
+		public static String Tab0_Txt1;
 		public static String Tab0_Txt2;
 
 		public static String Tab1_Head0;
@@ -152,6 +158,7 @@ public class Descriptions extends NLS {
 
 		public static String Tab0_Head0;
 		public static String Tab0_Txt0;
+		public static String Tab0_Txt1;
 		public static String Tab0_Txt2;
 		public static String Tab0_Lable2;
 

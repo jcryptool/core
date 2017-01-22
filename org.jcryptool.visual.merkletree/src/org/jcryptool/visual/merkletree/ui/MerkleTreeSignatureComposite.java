@@ -93,9 +93,9 @@ public class MerkleTreeSignatureComposite extends Composite {
 		topBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 8, 1));
 		topBar.setLayout(new GridLayout(8, true));
 
-		indexLabel = new Label(topBar, SWT.NONE);
+		indexLabel = new Label(topBar, SWT.CENTER);
 		indexLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 2, 1));
-		indexLabel.setText(Descriptions.MerkleTreeSign_7 + " " + index + "/" + (merkle.getLeafCounter() - 1));
+		indexLabel.setText(Descriptions.MerkleTreeSign_7 + "   " + "/" + (merkle.getLeafCounter() - 1));
 		indexLabel.setVisible(false);
 
 		interactiveTopButton = new Button(topBar, SWT.PUSH);
@@ -228,6 +228,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 					case SWT.YES:
 						createPlainComposite(true);
 						interactive.withdrawSignature();
+						updateIndexLabel(merkle.getKeyIndex() - 1);
 						break;
 					default:
 						break;
@@ -286,6 +287,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 		stackLayout.topControl = plain;
 		plainTopButton.setEnabled(false);
 		interactiveTopButton.setEnabled(true);
+		plain.clearSignatureText();
 		this.layout();
 		signatureComposite.layout();
 	}
@@ -323,8 +325,18 @@ public class MerkleTreeSignatureComposite extends Composite {
 	public void addSignatureAndMessage(String signature, String message) {
 		signatures[index] = signature;
 		messages[index] = message;
-		indexLabel.setText(Descriptions.MerkleTreeSign_7 + index + "/" + (merkle.getLeafCounter() - 1));
+		// indexLabel.setText(Descriptions.MerkleTreeSign_7 + index + "/" +
+		// (merkle.getLeafCounter() - 1));
+		updateIndexLabel(index);
 		++index;
+	}
+
+	public void updateIndexLabel(int pseudoIndex) {
+		if (pseudoIndex < 0) {
+			indexLabel.setText(Descriptions.MerkleTreeSign_7 + "   " + "/" + (merkle.getLeafCounter() - 1));
+		} else {
+			indexLabel.setText(Descriptions.MerkleTreeSign_7 + " " + pseudoIndex + "/" + (merkle.getLeafCounter() - 1));
+		}
 	}
 
 	/**
