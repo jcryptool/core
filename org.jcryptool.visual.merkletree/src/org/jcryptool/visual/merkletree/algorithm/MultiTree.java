@@ -30,10 +30,10 @@ public class MultiTree implements ISimpleMerkle {
 	int keyIndex;
 	byte[] message;
 	Node[] treeArray;
-	byte[] seed; //
+	byte[] seed; //random value for the PRF
 	byte[] sk_prf;
-	byte[] sk = new byte[n];
-	byte[] pk = new byte[n];
+	byte[] sk = new byte[n]; //private(secret) key
+	byte[] pk = new byte[n]; //public key
 	boolean treeGenerated;
 	OTSHashAddress otsAdrs = new OTSHashAddress();
 	ArrayList<Node> tree;
@@ -275,8 +275,10 @@ public class MultiTree implements ISimpleMerkle {
 
 		OTSHashAddress ots_addr = new OTSHashAddress();
 		ots_addr.setOTSBit(true);
-		ots_addr.setOTSAddress(keyIndex);
-
+		ots_addr.setOTSAddress(this.keyIndex);
+		otsAlgo.setPrivateKey(privKeys.get(keyIndex));
+		otsAlgo.setPublicKey(privKeys.get(keyIndex));
+		
 		// compute the WOTS+ signature
 		byte[][] ots_sig = ((WOTSPlus) otsAlgo).sign(sigmsg, seed, ots_addr);
 
