@@ -239,6 +239,10 @@ public class XMSSTree implements ISimpleMerkle {
 	 * returns the Signature
 	 */
 	public String sign(String message) {
+		if (keyIndex >= leafCounter) {
+			return "";
+		}
+
 		int index = getIndex(xPrivKey);
 		ArrayList<Node> auth = buildAuth(index, seed);
 		byte[] r = randomGenerator(getSK_Seed(), message, message.length());
@@ -511,11 +515,10 @@ public class XMSSTree implements ISimpleMerkle {
 			((XMSSNode) node).setAuthPath(getTreeHeight());
 		}
 	}
-	
-	public void setIndex(int i){
-		this.keyIndex=i;
+
+	public void setIndex(int i) {
+		this.keyIndex = i;
 	}
-	
 
 	/**
 	 * Fills the connections list in the node for the GUI

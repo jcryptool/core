@@ -188,7 +188,7 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 	@Override
 	public String sign(String message) {
 		// checks if tree has run out of keys/indices
-		if (keyIndex >= tree.size() - 1) {
+		if (keyIndex >= leafCounter) {
 			return "";
 		}
 
