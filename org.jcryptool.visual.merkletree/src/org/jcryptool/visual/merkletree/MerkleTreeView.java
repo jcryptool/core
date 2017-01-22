@@ -269,7 +269,7 @@ public class MerkleTreeView extends ViewPart {
 			break;
 		case 4:
 
-			if (signatureTab != null && signatureTab.getSignatures() != null) {
+			if (signatureTab != null && signatureTab.getSignatures()[0] != null) {
 				signatures = signatureTab.getSignatures();
 				messages = signatureTab.getMessages();
 				if (mustCreateTab[4]) {

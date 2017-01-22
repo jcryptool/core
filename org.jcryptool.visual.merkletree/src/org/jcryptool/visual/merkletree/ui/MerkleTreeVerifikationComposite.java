@@ -51,6 +51,7 @@ public class MerkleTreeVerifikationComposite
 	private StyledText styledTextTree;
 	private int layoutCounter = 1;
 	private int currentIndex;
+	private int latestIndex;
 	private ArrayList<GraphConnection> markedConnectionList;
 	private String messages[];
 	private String signatures[];
@@ -71,6 +72,10 @@ public class MerkleTreeVerifikationComposite
 	Group leftGroup;
 	Group rightGroup;
 	Combo selectionCombo;
+	Graph graph;
+
+	List<?> graphNodeRetriever;
+	GraphNode leaves[];
 
 	/**
 	 * Create the composite. Including Description, GraphItem, GraphView,
@@ -92,6 +97,7 @@ public class MerkleTreeVerifikationComposite
 		for (int i = this.signatures.length - 1; i >= 0; --i) {
 			if (this.signatures[i] != null) {
 				currentIndex = i;
+				latestIndex = i;
 				i = -1;
 			}
 		}
@@ -208,6 +214,13 @@ public class MerkleTreeVerifikationComposite
 				currentIndex = selectionCombo.getSelectionIndex();
 				leftText.setText(messages[currentIndex]);
 				rightText.setText(signatures[currentIndex]);
+				styledTextTree.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
+				styledTextTree.setText("");
+
+				unmarkBranch(markedConnectionList);
+				markedConnectionList.clear();
+				markBranch(leaves[currentIndex]);
+				markAuthPath(markedConnectionList);
 			}
 		});
 
@@ -235,7 +248,7 @@ public class MerkleTreeVerifikationComposite
 		Control control = viewer.getControl();
 		control.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-		Graph graph = viewer.getGraphControl();
+		graph = viewer.getGraphControl();
 
 		@SuppressWarnings("unchecked")
 		List<GraphNode> gNodes = graph.getNodes();
@@ -332,6 +345,16 @@ public class MerkleTreeVerifikationComposite
 			}
 		});
 		this.pack();
+
+		graphNodeRetriever = graph.getNodes();
+		leaves = new GraphNode[graphNodeRetriever.size() / 2 + 1];
+
+		for (int i = 0, j = 0; i < graphNodeRetriever.size(); ++i) {
+			if (((GraphNode) graphNodeRetriever.get(i)).getSourceConnections().isEmpty()) {
+				leaves[j] = (GraphNode) graphNodeRetriever.get(i);
+				++j;
+			}
+		}
 
 	}
 
@@ -487,6 +510,9 @@ public class MerkleTreeVerifikationComposite
 		if (selectionCombo.getItemCount() > 0)
 			selectionCombo.removeAll();
 
+		styledTextTree.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
+		styledTextTree.setText("");
+
 		for (int i = 0; i < signatures.length; ++i) {
 			if (messages[i] != null) {
 				if (messages[i].length() > 60) {
@@ -497,10 +523,24 @@ public class MerkleTreeVerifikationComposite
 
 			}
 		}
+		if (selectionCombo.getSelectionIndex() == -1)
+			selectionCombo.select(currentIndex);
+
 		for (int i = signatures.length - 1; i >= 0; --i) {
 			if (signatures[i] != null) {
-				selectionCombo.select(i);
-				currentIndex = i;
+				if (i != latestIndex) {
+					currentIndex = i;
+					latestIndex = i;
+
+					selectionCombo.select(currentIndex);
+					leftText.setText(messages[currentIndex]);
+					rightText.setText(signatures[currentIndex]);
+
+					unmarkBranch(markedConnectionList);
+					markedConnectionList.clear();
+					markBranch(leaves[currentIndex]);
+					markAuthPath(markedConnectionList);
+				}
 				i = -1;
 			}
 		}

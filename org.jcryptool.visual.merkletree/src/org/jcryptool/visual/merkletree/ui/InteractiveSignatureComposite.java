@@ -155,45 +155,46 @@ public class InteractiveSignatureComposite extends Composite {
 				Point currentShellSize;
 				currentShellSize = parent.getSize();
 				double x, y;
-
+				Point startingSashLocation;
+				
 				switch (merkle.getLeafCounter()) {
 
 				case 2:
 					x = currentShellSize.x;
 					// y = currentShellSize.y / 2;
 					y = currentShellSize.y;
-					zestSash.setLocation(70, 10);
+					startingSashLocation = new Point(70, 10);
 					break;
 				case 4:
 					x = currentShellSize.x;
 					// y = currentShellSize.y / 1.7;
 					y = currentShellSize.y;
-					zestSash.setLocation(40, 10);
+					startingSashLocation = new Point(40, 10);
 					break;
 				case 8:
 					x = currentShellSize.x;
 					y = currentShellSize.y;
-					zestSash.setLocation(20, 0);
+					startingSashLocation = new Point(20, 0);
 					break;
 				case 16:
 					x = currentShellSize.x * 1.2;
 					y = currentShellSize.y;
-					zestSash.setLocation(-150, 0);
+					startingSashLocation = new Point(-150, 0);
 					break;
 				case 32:
 					x = currentShellSize.x * 1.5;
 					y = currentShellSize.y * 1.2;
-					zestSash.setLocation(-450, 0);
+					startingSashLocation = new Point(-450, 0);
 					break;
 				case 64:
 					x = currentShellSize.x * 2;
 					y = currentShellSize.y * 1.5;
-					zestSash.setLocation(-925, 0);
+					startingSashLocation = new Point(-925, 0);
 					break;
 				default:
 					x = currentShellSize.x;
 					y = currentShellSize.y;
-					zestSash.setLocation(80, 10);
+					startingSashLocation = new Point(80, 10);
 					break;
 				}
 
@@ -475,13 +476,14 @@ public class InteractiveSignatureComposite extends Composite {
 	Button verifyButton;
 
 	SelectionListener nextListener;
-	SelectionListener newRoundListener;
+	// SelectionListener newRoundListener;
 
 	String plainSignature;
 	String signature[];
 	GraphNode rootNode;
 	GraphNode[] leaves;
 	Image highlightedNode;
+	boolean isNextListener = true;
 
 	int currentIndex;
 
@@ -506,8 +508,7 @@ public class InteractiveSignatureComposite extends Composite {
 
 		// Get leaves and root node
 		List<?> graphNodeRetriever = graph.getNodes();
-		Object[] nodeRetriever = viewer.getNodeElements();
-		leaves = new GraphNode[nodeRetriever.length / 2 + 1];
+		leaves = new GraphNode[graphNodeRetriever.size() / 2 + 1];
 
 		for (int i = 0, j = 0; i < graphNodeRetriever.size(); ++i) {
 			if (((GraphNode) graphNodeRetriever.get(i)).getSourceConnections().isEmpty()) {
@@ -551,23 +552,27 @@ public class InteractiveSignatureComposite extends Composite {
 		});
 
 		// Step by Step Listeners
-		nextListener = new SelectionAdapter() {
+		/* nextListener */ nextButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				++step;
-				stepByStep();
+				if (isNextListener) {
+					++step;
+					stepByStep();
+				} else {
+					step = 0;
+					inputText.setText("");
+					signatureText.setText("");
+					stepByStep();
+					plainSignature = null;
+				}
 			}
-		};
-		newRoundListener = new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				step = 0;
-				inputText.setText("");
-				signatureText.setText("");
-				stepByStep();
-				plainSignature = null;
-			}
-		};
+		});
+		// newRoundListener = new SelectionAdapter() {
+		// @Override
+		// public void widgetSelected(SelectionEvent e) {
+		//
+		// }
+		// };
 
 		backButton.addSelectionListener(new SelectionAdapter() {
 
@@ -647,9 +652,10 @@ public class InteractiveSignatureComposite extends Composite {
 			// *****Listeners*****//
 			// nextButton.setText(Descriptions.InteractiveSignature_2);
 			nextButton.setText(Descriptions.InteractiveSignature_Button_2);
-			nextButton.removeSelectionListener(newRoundListener);
-			nextButton.removeSelectionListener(nextListener);
-			nextButton.addSelectionListener(nextListener);
+			// nextButton.removeSelectionListener(newRoundListener);
+			// nextButton.removeSelectionListener(nextListener);
+			// nextButton.addSelectionListener(nextListener);
+			isNextListener = true;
 
 			// *****Content*****//
 			signatureComposite.setInteractiveStatus(false);
@@ -750,6 +756,8 @@ public class InteractiveSignatureComposite extends Composite {
 			signatureText.append(signature[1] + " | ");
 			signatureText.append(signature[2]);
 			signaturSize.setText(Descriptions.MerkleTreeSign_6 + " " + signatureText.getText().length() / 2);
+
+			isNextListener = true;
 			break;
 		// Final step: the signature is ready dialogue
 		// Window position: over root, Task: create new or verify
@@ -773,8 +781,10 @@ public class InteractiveSignatureComposite extends Composite {
 			verifyButton.setVisible(true);
 			nextButton.setText(Descriptions.InteractiveSignature_Button_3);
 
-			nextButton.removeSelectionListener(nextListener);
-			nextButton.addSelectionListener(newRoundListener);
+			// nextButton.removeSelectionListener(nextListener);
+			// nextButton.removeSelectionListener(newRoundListener);
+			// nextButton.addSelectionListener(newRoundListener);
+			isNextListener = false;
 			break;
 		case 8:
 			popup.dispose();
