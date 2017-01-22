@@ -122,12 +122,12 @@ public class MerkleTreeVerifikationComposite
 		spacerHeader.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		descriptionButton = new Button(topBar, SWT.PUSH);
 		descriptionButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		descriptionButton.setText(Descriptions.InteractiveSignature_Button_0);
+		descriptionButton.setText(Descriptions.MerkleTreeVerify_4);
 		descriptionButton.setEnabled(false);
 
 		signatureSelectionButton = new Button(topBar, SWT.PUSH);
 		signatureSelectionButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		signatureSelectionButton.setText(Descriptions.InteractiveSignature_Button_5);
+		signatureSelectionButton.setText(Descriptions.MerkleTreeVerify_5);
 
 		descLabel = new Label(topBar, SWT.NONE);
 		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, true, false, 2, 1));
@@ -162,7 +162,7 @@ public class MerkleTreeVerifikationComposite
 		leftGroup = new Group(signatureSelectionComposite, SWT.NONE);
 		leftGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		leftGroup.setLayout(new GridLayout(1, true));
-		leftGroup.setText("Message");
+		leftGroup.setText(Descriptions.MerkleTreeVerify_1);
 
 		leftTextLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		leftTextLayout.heightHint = stackComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
@@ -172,7 +172,7 @@ public class MerkleTreeVerifikationComposite
 		rightGroup = new Group(signatureSelectionComposite, SWT.NONE);
 		rightGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		rightGroup.setLayout(new GridLayout(1, true));
-		rightGroup.setText("Signatur");
+		rightGroup.setText(Descriptions.MerkleTreeVerify_2);
 
 		rightTextLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		rightTextLayout.heightHint = stackComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
@@ -228,7 +228,7 @@ public class MerkleTreeVerifikationComposite
 
 		styledTextTree = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
 		styledTextTree.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
-		styledTextTree.setText(Descriptions.MerkleTreeVerify_4);
+		styledTextTree.setText(Descriptions.MerkleTreeVerify_9);
 
 		viewer = new GraphViewer(this, SWT.NONE);
 		viewer.setContentProvider(new ZestNodeContentProvider());
@@ -311,7 +311,7 @@ public class MerkleTreeVerifikationComposite
 		 */
 		Button bt_Verify = new Button(this, SWT.WRAP);
 		bt_Verify.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		bt_Verify.setText(Descriptions.MerkleTreeVerify_1);
+		bt_Verify.setText(Descriptions.MerkleTreeVerify_6);
 		bt_Verify.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -329,10 +329,10 @@ public class MerkleTreeVerifikationComposite
 						 * verification success red if verification fails
 						 */
 						styledTextTree.setBackground(ColorConstants.green);
-						styledTextTree.setText(Descriptions.MerkleTreeVerify_2);
+						styledTextTree.setText(Descriptions.MerkleTreeVerify_7);
 					} else {
 						styledTextTree.setBackground(ColorConstants.red);
-						styledTextTree.setText(Descriptions.MerkleTreeVerify_3);
+						styledTextTree.setText(Descriptions.MerkleTreeVerify_8);
 					}
 				} else {
 					/*
@@ -340,7 +340,7 @@ public class MerkleTreeVerifikationComposite
 					 * cant be used to verify signature
 					 */
 					styledTextTree.setBackground(ColorConstants.red);
-					styledTextTree.setText(Descriptions.MerkleTreeVerify_6);
+					styledTextTree.setText(Descriptions.MerkleTreeVerify_11);
 				}
 			}
 		});
@@ -441,7 +441,7 @@ public class MerkleTreeVerifikationComposite
 			 * other Leaf
 			 */
 			if (myNode.isLeaf() == true) {
-				binaryValue.setText(Descriptions.MerkleTreeVerify_5 + myNode.getAuthPath());
+				binaryValue.setText(Descriptions.MerkleTreeVerify_10 + myNode.getAuthPath());
 			}
 			if (myNode.equals(parentNode.getLeft())) {
 				authPath = (GraphConnection) connect.getSource().getSourceConnections().get(1);
@@ -516,9 +516,9 @@ public class MerkleTreeVerifikationComposite
 		for (int i = 0; i < signatures.length; ++i) {
 			if (messages[i] != null) {
 				if (messages[i].length() > 60) {
-					selectionCombo.add("Nachricht " + i + ": " + messages[i].substring(0, 60) + "...");
+					selectionCombo.add(Descriptions.MerkleTreeVerify_1 + " " + i + ": " + messages[i].substring(0, 60).replaceAll("\n", " ") + "...");
 				} else {
-					selectionCombo.add("Nachricht " + i + ": " + messages[i]);
+					selectionCombo.add(Descriptions.MerkleTreeVerify_1 + " " + i + ": " + messages[i]);
 				}
 
 			}
