@@ -316,7 +316,10 @@ public class InteractiveSignatureComposite extends Composite {
 				step = 0;
 				inputText.setText("");
 				signatureText.setText("");
+				unmarkBranch(markedConnectionList);
+				markedConnectionList.clear();
 				stepByStep();
+				plainSignature = null;
 			}
 
 		});
@@ -483,7 +486,9 @@ public class InteractiveSignatureComposite extends Composite {
 	GraphNode[] leaves;
 	Image highlightedNode;
 	boolean isNextListener = true;
+	boolean goingBack = false;
 
+	int currentStaticIndex;
 	int currentIndex;
 
 	public void interactiveSignatureGeneration() {
@@ -518,7 +523,6 @@ public class InteractiveSignatureComposite extends Composite {
 				rootNode = (GraphNode) graphNodeRetriever.get(i);
 			}
 		}
-
 		currentIndex = merkle.getKeyIndex();
 		guideLabel = new Label(popup, SWT.WRAP);
 		guideLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 6, 1));
@@ -561,8 +565,10 @@ public class InteractiveSignatureComposite extends Composite {
 					step = 0;
 					inputText.setText("");
 					signatureText.setText("");
-					stepByStep();
 					plainSignature = null;
+					unmarkBranch(markedConnectionList);
+					markedConnectionList.clear();
+					stepByStep();
 				}
 			}
 		});
@@ -578,6 +584,7 @@ public class InteractiveSignatureComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				--step;
+				goingBack = true;
 				stepByStep();
 			}
 		});
@@ -636,7 +643,14 @@ public class InteractiveSignatureComposite extends Composite {
 		// Initial Step 0:
 		// Window Position: Centered, Task: Enter Text -> next
 		case 0:
+			if (goingBack) {
+				signatureComposite.updateIndexLabel(currentIndex - 1);
+				merkle.setIndex(currentIndex);
+			}
+			currentStaticIndex = merkle.getKeyIndex();
+			currentIndex = merkle.getKeyIndex();
 			// *****Position*****//
+
 			currentView = signatureComposite.getBounds();
 			currentView.height -= (footerComposite.getBounds().height + 70);
 			// Initial Middle Position by taking the half of the currentView
@@ -649,12 +663,18 @@ public class InteractiveSignatureComposite extends Composite {
 			sashShouldPosition = currentSashPosition;
 
 			// *****Listeners*****//
-			// nextButton.setText(Descriptions.InteractiveSignature_2);
 			nextButton.setText(Descriptions.InteractiveSignature_Button_2);
-			// nextButton.removeSelectionListener(newRoundListener);
-			// nextButton.removeSelectionListener(nextListener);
-			// nextButton.addSelectionListener(nextListener);
 			isNextListener = true;
+
+			// *****Algorithm*****//
+			// if (plainSignature != null) {
+			//
+			// }
+			// if (goingBack) {
+			// currentIndex = merkle.getKeyIndex();
+			// signatureComposite.updateIndexLabel(currentIndex);
+			// goingBack = false;
+			// }
 
 			// *****Content*****//
 			signatureComposite.setInteractiveStatus(false);
@@ -668,6 +688,8 @@ public class InteractiveSignatureComposite extends Composite {
 			oldPopup = popup.getLocation();
 
 			inputText.setFocus();
+
+			goingBack = false;
 			break;
 		// Step 1: First Description
 		// Window Position: still centered, Task, -> next
@@ -681,23 +703,28 @@ public class InteractiveSignatureComposite extends Composite {
 				inputText.setEditable(false);
 				inputText.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
 
-				if (plainSignature != null) {
+				if (goingBack) {
 					merkle.setIndex(currentIndex);
+					leaves[currentIndex].unhighlight();
+				} else {
+					plainSignature = merkle.sign(message);
+					if (plainSignature == "") {
+						signatureComposite.keysExceededMessage();
+					}
+					signature = plainSignature.split("\\|");
+					signatureComposite.updateIndexLabel(currentIndex);
 				}
 
-				plainSignature = merkle.sign(message);
-				if (plainSignature == "") {
-					signatureComposite.keysExceededMessage();
-				}
-				signature = plainSignature.split("\\|");
 			} else {
 				step--;
 			}
 			signatureText.setText("");
+			goingBack = false;
 			break;
 		// Step 2: Index/Leaf
 		// Window Position: bottom-left at leaf, Task: -> next
 		case 2:
+
 			// *****Position*****//
 			leafPosition = new Point(leaves[currentIndex].getLocation().x, leaves[currentIndex].getLocation().y);
 			currentSashPosition.x = -leafPosition.x + popup.getBounds().width + 30;
@@ -714,20 +741,28 @@ public class InteractiveSignatureComposite extends Composite {
 			signatureText.setText(currentIndex + " |");
 			signaturSize.setText(Descriptions.MerkleTreeSign_6 + " " + signatureText.getText().length());
 			leaves[currentIndex].highlight();
+			goingBack = false;
 			break;
 		// Step 3: Further Leaf explanation
 		// Window Position: bottom-left at leaf Task: -> next
 		case 3:
 			// *****Content*****//
 			guideLabel.setText(Descriptions.InteractiveSignature_4_1 + currentIndex + " " + Descriptions.InteractiveSignature_4_2);
+			goingBack = false;
 			break;
 
 		// Step 4: Add WOTS part to signature
 		// Window Position: bottom-left at leaf Task: -> next
 		case 4:
+			if (goingBack) {
+				unmarkBranch(markedConnectionList);
+				markedConnectionList.clear();
+			}
+
 			signatureText.setText(currentIndex + " | ");
 			signatureText.append(signature[1]);
 			signaturSize.setText(Descriptions.MerkleTreeSign_6 + " " + signatureText.getText().length() / 2);
+			goingBack = false;
 			break;
 		// Step 5: authentication path explanation
 		// Window Position: bottom-left at leaf Task: -> next
@@ -735,6 +770,7 @@ public class InteractiveSignatureComposite extends Composite {
 			guideLabel.setText(Descriptions.InteractiveSignature_5);
 			markBranch(leaves[currentIndex]);
 			markAuthPath(markedConnectionList);
+			goingBack = false;
 			break;
 		case 6:
 			// *****Position (when using back)*****//
@@ -757,6 +793,7 @@ public class InteractiveSignatureComposite extends Composite {
 			signaturSize.setText(Descriptions.MerkleTreeSign_6 + " " + signatureText.getText().length() / 2);
 
 			isNextListener = true;
+			goingBack = false;
 			break;
 		// Final step: the signature is ready dialogue
 		// Window position: over root, Task: create new or verify
@@ -772,6 +809,7 @@ public class InteractiveSignatureComposite extends Composite {
 			popupShouldPosition = new Point(popupPosition.x, popupPosition.y);
 			oldPopup = popup.getLocation();
 
+			// signatureComposite.updateIndexLabel(currentIndex - 1);
 			signatureComposite.addSignatureAndMessage(plainSignature, message);
 
 			guideLabel.setText(Descriptions.InteractiveSignature_6);
@@ -780,10 +818,9 @@ public class InteractiveSignatureComposite extends Composite {
 			verifyButton.setVisible(true);
 			nextButton.setText(Descriptions.InteractiveSignature_Button_3);
 
-			// nextButton.removeSelectionListener(nextListener);
-			// nextButton.removeSelectionListener(newRoundListener);
-			// nextButton.addSelectionListener(newRoundListener);
+			// *****Listener*****//
 			isNextListener = false;
+			goingBack = false;
 			break;
 		case 8:
 			popup.dispose();
