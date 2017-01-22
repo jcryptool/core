@@ -183,43 +183,44 @@ public class MerkleTreeZestComposite
 				Point currentShellSize;
 				currentShellSize = parent.getSize();
 				double x, y;
+				Point startingSashLocation;
 
 				switch (merkle.getLeafCounter()) {
 
 				case 2:
 					x = currentShellSize.x;
 					y = currentShellSize.y / 2;
-					zestSash.setLocation(70, 10);
+					startingSashLocation = new Point(70, 10);
 					break;
 				case 4:
 					x = currentShellSize.x;
 					y = currentShellSize.y / 1.7;
-					zestSash.setLocation(40, 10);
+					startingSashLocation = new Point(40, 10);
 					break;
 				case 8:
 					x = currentShellSize.x;
 					y = currentShellSize.y;
-					zestSash.setLocation(20, 0);
+					startingSashLocation = new Point(20, 0);
 					break;
 				case 16:
 					x = currentShellSize.x * 1.2;
 					y = currentShellSize.y;
-					zestSash.setLocation(-150, 0);
+					startingSashLocation = new Point(-150, 0);
 					break;
 				case 32:
 					x = currentShellSize.x * 1.5;
 					y = currentShellSize.y * 1.2;
-					zestSash.setLocation(-450, 0);
+					startingSashLocation = new Point(-450, 0);
 					break;
 				case 64:
 					x = currentShellSize.x * 2;
 					y = currentShellSize.y * 1.5;
-					zestSash.setLocation(-925, 0);
+					startingSashLocation = new Point(-925, 0);
 					break;
 				default:
 					x = currentShellSize.x;
 					y = currentShellSize.y;
-					zestSash.setLocation(80, 10);
+					startingSashLocation = new Point(80, 10);
 					break;
 				}
 
