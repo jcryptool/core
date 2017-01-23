@@ -1,7 +1,9 @@
 package org.jcryptool.visual.merkletree.ui;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
 
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.custom.StyledText;
@@ -30,6 +32,7 @@ import org.jcryptool.visual.merkletree.algorithm.MultiTree;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
 import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
 import org.jcryptool.visual.merkletree.files.Converter;
+import org.jcryptool.visual.merkletree.files.MathUtils;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 /**
@@ -69,8 +72,12 @@ public class MerkleTreeGeneration extends Composite {
 	private Label createLabel;
 	private Label createdKey;
 	private StyledText descText;
+	private Spinner keypairSpinner;
 
-	MessageBox successBox;
+	private MessageBox successBox;
+	private ArrayList<Integer> allowedHeight;
+	private Spinner treeHeightSpinner;
+	private int allowedIndex;
 
 	/**
 	 * Create the composite. Including Seed content and KeyPairComposite
@@ -288,64 +295,108 @@ public class MerkleTreeGeneration extends Composite {
 		keysum.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
 
 		// spinner for the key-ammount
-		Spinner spinnerkeysum = new Spinner(keyRow, SWT.BORDER);
-		spinnerkeysum.setMaximum(64);
-		spinnerkeysum.setMinimum(2);
-		spinnerkeysum.setSelection(8);
-		spinnerkeysum.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+		Spinner keypairSpinner = new Spinner(keyRow, SWT.BORDER);
+		if (mode != SUIT.XMSS_MT) {
+			keypairSpinner.setMinimum(2);
+		} else {
+			keypairSpinner.setMinimum(8);
+		}
+		keypairSpinner.setMaximum(64);
+		keypairSpinner.setSelection(8);
+		keypairSpinner.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		spinnerValue = 8;
 
-		// set the spinner-value only to values of the power of 2
-		spinnerkeysum.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (e.getSource() instanceof Spinner) {
-					Spinner spinner = (Spinner) e.getSource();
-					int selection = spinner.getSelection();
-					//
-					if (selection < spinnerValue) {
-
-						spinner.setSelection(spinnerValue / 2);
-					} else {
-						spinner.setSelection(spinnerValue * 2);
-					}
-					spinnerValue = spinner.getSelection();
-				}
-				((MerkleTreeView) masterView).updateElement();
-			}
-		});
+		allowedHeight = new ArrayList<>();
 
 		// Text box with generated key info
 		createdKey = new Label(keyRow, SWT.NONE);
-		createdKey.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 3, 1));
+		createdKey.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 3, 2));
 		createdKey.setText(Descriptions.MerkleTreeKey_1);
 
 		// 'create button'
 		buttonCreateKeys = new Button(keyRow, SWT.NONE);
-		buttonCreateKeys.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 2, 1));
+		buttonCreateKeys.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false, 2, 2));
 
 		// if the Mode is MultiTree there is an extra spinner for the amount of
 		// Trees (Tree-Layers)
 		if (mode == SUIT.XMSS_MT) {
 
-			Label trees = new Label(this, SWT.NONE);
-			trees.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
+			Label trees = new Label(keyRow, SWT.NONE);
+			trees.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
 			trees.setText(Descriptions.XMSS_MT.Tab0_Lable2);
 
-			Spinner treespinner = new Spinner(this, SWT.BORDER);
-			treespinner.setMaximum(64);
-			treespinner.setMinimum(2);
-			treespinner.setSelection(0);
-			treespinner.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
+			treeHeightSpinner = new Spinner(keyRow, SWT.BORDER);
+			treeHeightSpinner.setMaximum(64);
+			treeHeightSpinner.setMinimum(2);
+			treeHeightSpinner.setSelection(0);
+			treeHeightSpinner.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 			treeValue = 2;
-			treespinner.addSelectionListener(new SelectionAdapter() {
+
+			for (int i = 2; i < spinnerValue; ++i) {
+				if (spinnerValue % i == 0) {
+					allowedHeight.add(i);
+				}
+			}
+			treeHeightSpinner.setMinimum(allowedHeight.get(0));
+			treeHeightSpinner.setMaximum(allowedHeight.get(allowedHeight.size() - 1));
+
+			allowedIndex = allowedHeight.lastIndexOf(treeValue);
+			treeHeightSpinner.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
+					int helper = treeHeightSpinner.getSelection();
+
+					if (helper < treeValue) {
+						treeHeightSpinner.setSelection(allowedHeight.get(--allowedIndex));
+					} else {
+						treeHeightSpinner.setSelection(allowedHeight.get(++allowedIndex));
+					}
+
 					((MerkleTreeView) masterView).updateElement();
-					treeValue = treespinner.getSelection();
+					treeValue = treeHeightSpinner.getSelection();
 				}
 			});
+		} else {
+			Label trees = new Label(keyRow, SWT.NONE);
+			trees.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
 		}
+
+		// set the spinner-value only to values of the power of 2
+		keypairSpinner.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				int selection = keypairSpinner.getSelection();
+				boolean isIncremented = true;
+				//
+				if (selection < spinnerValue) {
+					isIncremented = false;
+					keypairSpinner.setSelection(spinnerValue / 2);
+				} else {
+					keypairSpinner.setSelection(spinnerValue * 2);
+				}
+				spinnerValue = keypairSpinner.getSelection();
+
+				((MerkleTreeView) masterView).updateElement();
+				allowedHeight.clear();
+				if (mode == SUIT.XMSS_MT) {
+
+					while (true) {
+						calculatePossibleTreeHeight();
+						if (allowedHeight.size() <= 0) {
+							keypairSpinner.setSelection(isIncremented ? spinnerValue * 2 : spinnerValue / 2);
+							spinnerValue = keypairSpinner.getSelection();
+						} else {
+							break;
+						}
+					}
+
+					treeHeightSpinner.setMinimum(allowedHeight.get(0));
+					treeHeightSpinner.setMaximum(allowedHeight.get(allowedHeight.size() - 1));
+				}
+
+			}
+		});
 
 		// setting the text's depending on the actual suite
 		keysum.setText(Descriptions.Tab0_Lable1);
@@ -445,7 +496,8 @@ public class MerkleTreeGeneration extends Composite {
 					((XMSSTree) merkle).setBitmaskSeed(bitmaskSeedarray);
 				}
 				if (merkle instanceof MultiTree) {
-					((MultiTree) merkle).setLayers(treeValue);
+					// ((MultiTree) merkle).setLayers(treeValue);
+					((MultiTree) merkle).setSingleTreeHeight(treeValue);
 				}
 				merkle.setSeed(seedarray);
 				merkle.setLeafCount(spinnerValue);
@@ -476,6 +528,15 @@ public class MerkleTreeGeneration extends Composite {
 		int seedByteCount = 16;
 		byte[] seed = secureRandomGenerator.generateSeed(seedByteCount);
 		return seed;
+	}
+
+	private void calculatePossibleTreeHeight() {
+		int logarithmand = (int) MathUtils.log2nlz(spinnerValue);
+		for (int i = 2; i < logarithmand; ++i) {
+			if (logarithmand % i == 0) {
+				allowedHeight.add(i);
+			}
+		}
 	}
 
 }
