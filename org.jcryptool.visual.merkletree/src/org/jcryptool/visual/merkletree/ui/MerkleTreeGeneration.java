@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.MerkleTreeView;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
@@ -316,7 +317,7 @@ public class MerkleTreeGeneration extends Composite {
 		// 'create button'
 		buttonCreateKeys = new Button(keyRow, SWT.NONE);
 		buttonCreateKeys.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false, 2, 2));
-
+		buttonCreateKeys.setFont(FontService.getNormalBoldFont());
 		// if the Mode is MultiTree there is an extra spinner for the amount of
 		// Trees (Tree-Layers)
 		if (mode == SUIT.XMSS_MT) {
