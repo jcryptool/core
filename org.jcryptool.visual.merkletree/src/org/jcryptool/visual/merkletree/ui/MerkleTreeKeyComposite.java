@@ -24,35 +24,32 @@ import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
 
 public class MerkleTreeKeyComposite extends Composite {
 
-	StyledText publicKeyText;
-	Label privateKeyLabel;
-	Label publicKeyLabel;
-	Label descLabel;
-	Label spacer;
-	Label buttonInfoLabel;
-	Label spinnerInfoLabel;
-	Text keyExplanation;
+	private StyledText publicKeyText;
+	private Label descLabel;
+	private Label spacer;
+	private Label buttonInfoLabel;
+	private Label spinnerInfoLabel;
+	private Text keyExplanation;
 
-	Button buttonIndex;
-	Button buttonSeed;
-	Button buttonLeaves;
-	Spinner spinnerLeaf;
-	StyledText privateKeyText;
-	Boolean nodeToggleMap[];
-	int spinnerValue;
-	int leafCounter;
+	private Button buttonIndex;
+	private Button buttonSeed;
+	private Button buttonLeaves;
+	private Spinner spinnerLeaf;
+	private StyledText privateKeyText;
+	private Boolean nodeToggleMap[];
+	private int spinnerValue;
+	private int leafCounter;
 
-	Boolean toggleIndex = false;
-	Boolean toggleSeed = false;
+	private Boolean toggleIndex = false;
+	private Boolean toggleSeed = false;
 
-	String publicKey;
-	String privateKey;
-	String splittedPrivateKey[];
+	private String publicKey;
+	private String privateKey;
+	private String splittedPrivateKey[];
 
-	StyleRange indexBold;
-	Color distinguishableColors[];
-	Color black;
-	ISimpleMerkle merkle;
+	private StyleRange indexBold;
+	private Color distinguishableColors[];
+	private Color black;
 
 	/**
 	 * Creates the key tab composite. Displays Private/Public keys of a
@@ -66,7 +63,6 @@ public class MerkleTreeKeyComposite extends Composite {
 	public MerkleTreeKeyComposite(Composite parent, int style, ISimpleMerkle merkle) {
 		super(parent, style);
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN * 2, true));
-		this.merkle = merkle;
 
 		publicKey = merkle.getPublicKey();
 		privateKey = merkle.getPrivateKey();
@@ -115,10 +111,6 @@ public class MerkleTreeKeyComposite extends Composite {
 		buttonIndex.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		buttonIndex.setText(Descriptions.MerkleTreeKeyTab_3);
 
-		buttonSeed = new Button(buttonComposite, SWT.TOGGLE);
-		buttonSeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		buttonSeed.setText(Descriptions.MerkleTreeKeyTab_4);
-
 		buttonLeaves = new Button(buttonComposite, SWT.NONE);
 		buttonLeaves.setLayoutData(new GridData(SWT.END, SWT.CENTER, false, false, 2, 1));
 		buttonLeaves.setText(Descriptions.MerkleTreeKeyTab_5);
@@ -160,7 +152,11 @@ public class MerkleTreeKeyComposite extends Composite {
 		distinguishableColors[2] = new Color(getDisplay(), 0, 186, 186);
 		distinguishableColors[3] = new Color(getDisplay(), 0, 186, 0);
 
-		indexBold = new StyleRange(0, 1, new Color(getDisplay(), 176, 0, 0), privateKeyText.getBackground());
+		// The private key is splitted to get the corrrect positions of
+		// seed/leaves
+		splittedPrivateKey = privateKey.split("\\|");
+		int indexSeedLength = splittedPrivateKey[0].length() + splittedPrivateKey[1].length() + 1;
+		indexBold = new StyleRange(0, indexSeedLength, new Color(getDisplay(), 176, 0, 0), privateKeyText.getBackground());
 		indexBold.fontStyle = SWT.BOLD;
 		// SelectionListener to toggle color highlight for index
 		buttonIndex.addSelectionListener(new SelectionListener() {
@@ -168,37 +164,12 @@ public class MerkleTreeKeyComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (toggleIndex) {
-					setColor(0, 1, black);
+					setColor(0, indexSeedLength, black);
 					toggleIndex = false;
 				} else {
 					privateKeyText.setStyleRange(indexBold);
 					toggleIndex = true;
 				}
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-			}
-		});
-
-		// The private key is splitted to get the corrrect positions of
-		// seed/leaves
-		splittedPrivateKey = privateKey.split("\\|");
-
-		// SelectionListener to toggle color highlight for seed
-		buttonSeed.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-				if (toggleSeed) {
-					setColor(2, splittedPrivateKey[1].length(), black);
-					toggleSeed = false;
-				} else {
-					setColor(2, splittedPrivateKey[1].length(), new Color(getDisplay(), 132, 132, 255));
-					toggleSeed = true;
-				}
-
 			}
 
 			@Override
