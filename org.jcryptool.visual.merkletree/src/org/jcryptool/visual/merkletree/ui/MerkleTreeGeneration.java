@@ -106,6 +106,7 @@ public class MerkleTreeGeneration extends Composite {
 		group.setText(Descriptions.Tab0_Head1);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
 		group.setLayout(new GridLayout(10, true));
+		group.setFont(FontService.getNormalBoldFont());
 
 		/*
 		 * Seed Label
@@ -162,6 +163,7 @@ public class MerkleTreeGeneration extends Composite {
 			bitmaskGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
 			bitmaskGroup.setLayout(new GridLayout(10, true));
 			bitmaskGroup.setText(Descriptions.Tab0_Head3);
+			bitmaskGroup.setFont(FontService.getNormalBoldFont());
 
 			bitmaskLabel = new Label(bitmaskGroup, SWT.NONE);
 			bitmaskLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 10, 1));
@@ -216,6 +218,7 @@ public class MerkleTreeGeneration extends Composite {
 		wParameterGroup.setText(Descriptions.Tab0_Head5);
 		wParameterGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
 		wParameterGroup.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
+		wParameterGroup.setFont(FontService.getNormalBoldFont());
 
 		// headline
 		titleLabel = new Label(wParameterGroup, SWT.NONE);
@@ -276,6 +279,7 @@ public class MerkleTreeGeneration extends Composite {
 		generateKeyGroup.setText(Descriptions.Tab0_Head2);
 		generateKeyGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
 		generateKeyGroup.setLayout(new GridLayout(1, true));
+		generateKeyGroup.setFont(FontService.getNormalBoldFont());
 
 		// headline
 		createLabel = new Label(generateKeyGroup, SWT.NONE);
@@ -299,13 +303,16 @@ public class MerkleTreeGeneration extends Composite {
 		Spinner keypairSpinner = new Spinner(keyRow, SWT.BORDER);
 		if (mode != SUIT.XMSS_MT) {
 			keypairSpinner.setMinimum(2);
+			keypairSpinner.setSelection(8);
+			spinnerValue = 8;
 		} else {
-			keypairSpinner.setMinimum(8);
+			keypairSpinner.setMinimum(16);
+			keypairSpinner.setSelection(16);
+			spinnerValue = 16;
 		}
 		keypairSpinner.setMaximum(64);
 		keypairSpinner.setSelection(8);
 		keypairSpinner.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
-		spinnerValue = 8;
 
 		allowedHeight = new ArrayList<>();
 
