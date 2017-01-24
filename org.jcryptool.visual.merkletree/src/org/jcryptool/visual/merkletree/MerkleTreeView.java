@@ -100,7 +100,7 @@ public class MerkleTreeView extends ViewPart {
 		scrolledComposite.setExpandVertical(true);
 
 		tabFolder = new TabFolder(scrolledComposite, SWT.NONE);
-		tabFolder.setFont(FontService.getLargeBoldFont());
+		tabFolder.setFont(FontService.getLargeFont());
 
 		// Key-generation
 		tbtmParameter0 = new TabItem(tabFolder, SWT.NONE);
