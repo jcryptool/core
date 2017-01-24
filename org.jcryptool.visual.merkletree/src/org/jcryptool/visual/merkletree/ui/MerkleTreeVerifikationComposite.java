@@ -31,6 +31,7 @@ import org.eclipse.zest.layouts.LayoutStyles;
 import org.eclipse.zest.layouts.algorithms.HorizontalTreeLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.RadialLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
+import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.Node;
@@ -163,6 +164,7 @@ public class MerkleTreeVerifikationComposite
 		leftGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		leftGroup.setLayout(new GridLayout(1, true));
 		leftGroup.setText(Descriptions.MerkleTreeVerify_1);
+		leftGroup.setFont(FontService.getNormalBoldFont());
 
 		leftTextLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		leftTextLayout.heightHint = stackComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
@@ -173,6 +175,7 @@ public class MerkleTreeVerifikationComposite
 		rightGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		rightGroup.setLayout(new GridLayout(1, true));
 		rightGroup.setText(Descriptions.MerkleTreeVerify_2);
+		rightGroup.setFont(FontService.getNormalBoldFont());
 
 		rightTextLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		rightTextLayout.heightHint = stackComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
@@ -182,7 +185,7 @@ public class MerkleTreeVerifikationComposite
 		leftText.setText(messages[currentIndex]);
 		rightText.setText(signatures[currentIndex]);
 
-		selectionCombo = new Combo(signatureSelectionComposite, SWT.NONE);
+		selectionCombo = new Combo(signatureSelectionComposite, SWT.READ_ONLY);
 		selectionCombo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 
 		descriptionButton.addSelectionListener(new SelectionAdapter() {
@@ -515,8 +518,8 @@ public class MerkleTreeVerifikationComposite
 
 		for (int i = 0; i < signatures.length; ++i) {
 			if (messages[i] != null) {
-				if (messages[i].length() > 60) {
-					selectionCombo.add(Descriptions.MerkleTreeVerify_1 + " " + i + ": " + messages[i].substring(0, 60).replaceAll("\n", " ") + "...");
+				if (messages[i].length() > 80) {
+					selectionCombo.add(Descriptions.MerkleTreeVerify_1 + " " + i + ": " + messages[i].substring(0, 80).replaceAll("\n", " ") + "...");
 				} else {
 					selectionCombo.add(Descriptions.MerkleTreeVerify_1 + " " + i + ": " + messages[i]);
 				}
