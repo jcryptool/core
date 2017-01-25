@@ -68,8 +68,8 @@ public class MerkleTreeVerifikationComposite
 	Button signatureSelectionButton;
 	GridData leftTextLayout;
 	GridData rightTextLayout;
-	Text leftText;
-	Text rightText;
+	StyledText leftText;
+	StyledText rightText;
 	Group leftGroup;
 	Group rightGroup;
 	Combo selectionCombo;
@@ -168,8 +168,10 @@ public class MerkleTreeVerifikationComposite
 
 		leftTextLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		leftTextLayout.heightHint = stackComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
-		leftText = new Text(leftGroup, SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
+		leftText = new StyledText(leftGroup, SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
 		leftText.setLayoutData(leftTextLayout);
+		leftText.setCaret(null);
+		leftText.setEditable(false);
 
 		rightGroup = new Group(signatureSelectionComposite, SWT.NONE);
 		rightGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
@@ -179,8 +181,10 @@ public class MerkleTreeVerifikationComposite
 
 		rightTextLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		rightTextLayout.heightHint = stackComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
-		rightText = new Text(rightGroup, SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
+		rightText = new StyledText(rightGroup, SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
 		rightText.setLayoutData(rightTextLayout);
+		rightText.setCaret(null);
+		rightText.setEditable(false);
 
 		leftText.setText(messages[currentIndex]);
 		rightText.setText(signatures[currentIndex]);

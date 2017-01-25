@@ -64,6 +64,7 @@ public class MerkleTreeKeyComposite extends Composite {
 	private Spinner privateOTSSpinner;
 	private Text privateOTSKey;
 	private GridLayout indexSeedLayout;
+	private ISimpleMerkle merkle;
 
 	/**
 	 * Creates the key tab composite. Displays Private/Public keys of a
@@ -77,6 +78,7 @@ public class MerkleTreeKeyComposite extends Composite {
 	public MerkleTreeKeyComposite(Composite parent, int style, ISimpleMerkle merkle) {
 		super(parent, style);
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN * 2, true));
+		this.merkle = merkle;
 
 		publicKey = merkle.getPublicKey();
 		privateKey = merkle.getPrivateKey();
@@ -314,6 +316,10 @@ public class MerkleTreeKeyComposite extends Composite {
 	// this method actually needs a point, or it's useless
 	private Color getDistinguishableColor(int position) {
 		return distinguishableColors[position];
+	}
+
+	public void updateIndexText() {
+		indexText.setText(String.valueOf(merkle.getKeyIndex()));
 	}
 
 	// private void setColor(int start, int length, Color color) {

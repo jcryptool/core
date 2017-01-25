@@ -72,7 +72,7 @@ public class MerkleTreeGeneration extends Composite {
 	private Button buttonCreateKeys;
 	private Label createLabel;
 	private Label createdKey;
-	private StyledText descText;
+	private StyledText generateKeyDescription;
 	private Spinner keypairSpinner;
 
 	private MessageBox successBox;
@@ -153,7 +153,7 @@ public class MerkleTreeGeneration extends Composite {
 
 		Button bitmaskButton;
 		Label bitmaskLabel;
-		StyledText bitmaskDescText;
+		StyledText bitmaskDescription;
 		Text bitmaskText;
 		Label randomgenerator;
 
@@ -168,11 +168,11 @@ public class MerkleTreeGeneration extends Composite {
 			bitmaskLabel = new Label(bitmaskGroup, SWT.NONE);
 			bitmaskLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 10, 1));
 
-			bitmaskDescText = new StyledText(bitmaskGroup, SWT.WRAP | SWT.BORDER);
-			bitmaskDescText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 10, 2));
-			bitmaskDescText.setText(Descriptions.Tab0_Txt3);
-			bitmaskDescText.setEditable(false);
-			bitmaskDescText.setCaret(null);
+			bitmaskDescription = new StyledText(bitmaskGroup, SWT.WRAP | SWT.BORDER);
+			bitmaskDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 10, 2));
+			bitmaskDescription.setText(Descriptions.Tab0_Txt3);
+			bitmaskDescription.setEditable(false);
+			bitmaskDescription.setCaret(null);
 
 			/*
 			 * Bitmask Seed Label
@@ -225,8 +225,10 @@ public class MerkleTreeGeneration extends Composite {
 		titleLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
 
 		// text box with Description
-		wParamDescription = new StyledText(wParameterGroup, SWT.WRAP | SWT.BORDER | SWT.READ_ONLY);
+		wParamDescription = new StyledText(wParameterGroup, SWT.WRAP | SWT.BORDER);
 		wParamDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 2));
+		wParamDescription.setEditable(false);
+		wParamDescription.setCaret(null);
 
 		// Radio Buttons 4/16
 		buttonSet4 = new Button(wParameterGroup, SWT.RADIO);
@@ -286,10 +288,10 @@ public class MerkleTreeGeneration extends Composite {
 		createLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
 
 		// text
-		descText = new StyledText(generateKeyGroup, SWT.WRAP | SWT.BORDER);
-		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 1));
-		descText.setCaret(null);
-
+		generateKeyDescription = new StyledText(generateKeyGroup, SWT.WRAP | SWT.BORDER);
+		generateKeyDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 1));
+		generateKeyDescription.setCaret(null);
+		generateKeyDescription.setEditable(false);
 		//
 		Composite keyRow = new Composite(generateKeyGroup, SWT.NONE);
 		keyRow.setLayout(new GridLayout(8, true));
@@ -331,7 +333,7 @@ public class MerkleTreeGeneration extends Composite {
 
 			Label trees = new Label(keyRow, SWT.NONE);
 			trees.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
-			trees.setText(Descriptions.XMSS_MT.Tab0_Lable2);
+			trees.setText(Descriptions.XMSS_MT.Tab0_Txt3);
 
 			treeHeightSpinner = new Spinner(keyRow, SWT.BORDER);
 			treeHeightSpinner.setMaximum(64);
@@ -412,20 +414,19 @@ public class MerkleTreeGeneration extends Composite {
 		buttonCreateKeys.setText(Descriptions.Tab0_Button2);
 		switch (mode) {
 		case XMSS:
-			descText.setText(Descriptions.XMSS.Tab0_Txt2);
+			generateKeyDescription.setText(Descriptions.XMSS.Tab0_Txt2);
 			wParamDescription.setText(Descriptions.XMSS.Tab0_Txt1);
 			break;
 		case XMSS_MT:
-			descText.setText(Descriptions.XMSS_MT.Tab0_Txt2);
+			generateKeyDescription.setText(Descriptions.XMSS_MT.Tab0_Txt2);
 			wParamDescription.setText(Descriptions.XMSS_MT.Tab0_Txt1);
 			break;
 		case MSS:
 		default:
-			descText.setText(Descriptions.MSS.Tab0_Txt2);
+			generateKeyDescription.setText(Descriptions.MSS.Tab0_Txt2);
 			wParamDescription.setText(Descriptions.MSS.Tab0_Txt1);
 			break;
 		}
-		descText.setEditable(false);
 
 		// MessageBox when successfully creating a Key
 		successBox = new MessageBox(new Shell(), SWT.ICON_WORKING | SWT.OK);

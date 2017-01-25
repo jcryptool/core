@@ -144,32 +144,45 @@ public class MerkleTreeZestComposite
 		styledTextTree = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
 		styledTextTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 
+		switch (mode) {
+		case XMSS:
+			descLabel.setText(Descriptions.XMSS.Tab1_Head0);
+			descText.setText(Descriptions.XMSS.Tab1_Txt0);
+			styledTextTree.setText(Descriptions.XMSS.Tab1_Txt1);
+			break;
+		case XMSS_MT:
+			descLabel.setText(Descriptions.XMSS_MT.Tab1_Head0);
+			descText.setText(Descriptions.XMSS_MT.Tab1_Txt0);
+			styledTextTree.setText(Descriptions.XMSS_MT.Tab1_Txt1);
+			break;
+		case MSS:
+		default:
+			descLabel.setText(Descriptions.MSS.Tab1_Head0);
+			descText.setText(Descriptions.MSS.Tab1_Txt0);
+			styledTextTree.setText(Descriptions.MSS.Tab1_Txt1);
+			break;
+
+		}
+		int preferredHeight = descText.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
+		// System.err.println(preferredHeight);
+
 		collapsablePart.setText("Beschreibung ausblenden");
 		collapsablePart.setExpanded(true);
 		collapsablePart.setControl(expandComposite);
-		collapsablePart.setHeight((parent.getSize().y - 250) / 2);
+		// collapsablePart.setHeight((parent.getSize().y - 250) / 2);
+		collapsablePart.setHeight(preferredHeight + 60);
 		descriptionExpander.setBackground(curDisplay.getSystemColor(SWT.COLOR_WHITE));
-
-		// Button button = new Button(this, SWT.PUSH);
-		// button.setText(Descriptions.InteractiveSignature_Button_0);
-		// button.addListener(SWT.Selection, event -> {
-		// if (popup == null || popup.isDisposed()) {
-		// interactiveSignatureGeneration();
-		// } else {
-		// zestSash.setLocation(currentSashPosition);
-		// popup.setLocation(popupPosition);
-		// }
-		//
-		// });
 
 		// Composite which contains a SashForm which contains the MerkleTree
 		// Zest Graph
 		zestComposite = new Composite(this, SWT.NONE);
 		zestComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		zestLayout = new GridLayout();
-		zestComposite.setLayout(zestLayout);
+		zestComposite.setLayout(new GridLayout());
+		zestComposite.setBackground(getDisplay().getSystemColor(SWT.COLOR_TRANSPARENT));
+		zestComposite.setBackgroundMode(SWT.INHERIT_FORCE);
 
 		zestSash = new SashForm(zestComposite, SWT.NONE);
+		zestSash.setBackground(getDisplay().getSystemColor(SWT.COLOR_TRANSPARENT));
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(zestSash);
 		zestComposite.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_SIZEALL));
 
@@ -287,7 +300,7 @@ public class MerkleTreeZestComposite
 			public void itemExpanded(ExpandEvent e) {
 				curDisplay.asyncExec(() -> {
 					currentShellSize = parent.getSize();
-					collapsablePart.setHeight(currentShellSize.y / 2);
+					collapsablePart.setHeight(preferredHeight + 60);
 					descriptionExpander.pack();
 					parentComposite.layout();
 					zestSash.setLocation(cameraPoint.x, cameraPoint.y - (currentShellSize.y / 2));
@@ -325,26 +338,8 @@ public class MerkleTreeZestComposite
 		Control control = viewer.getControl();
 		control.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-		switch (mode) {
-		case XMSS:
-			descLabel.setText(Descriptions.XMSS.Tab1_Head0);
-			descText.setText(Descriptions.XMSS.Tab1_Txt0);
-			styledTextTree.setText(Descriptions.XMSS.Tab1_Txt1);
-			break;
-		case XMSS_MT:
-			descLabel.setText(Descriptions.XMSS_MT.Tab1_Head0);
-			descText.setText(Descriptions.Platzhalter);
-			styledTextTree.setText(Descriptions.XMSS_MT.Tab1_Txt1);
-			break;
-		case MSS:
-		default:
-			descLabel.setText(Descriptions.MSS.Tab1_Head0);
-			descText.setText(Descriptions.MSS.Tab1_Txt0);
-			styledTextTree.setText(Descriptions.MSS.Tab1_Txt1);
-			break;
-
-		}
 		graph = viewer.getGraphControl();
+		graph.setBackground(getDisplay().getSystemColor(SWT.COLOR_TRANSPARENT));
 
 		// Makes the nodes fixed (they cannot be dragged around with the mouse
 		// by overriding the mouseMovedListener with empty event

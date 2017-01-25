@@ -156,7 +156,7 @@ public class InteractiveSignatureComposite extends Composite {
 				currentShellSize = parent.getSize();
 				double x, y;
 				Point startingSashLocation;
-				
+
 				switch (merkle.getLeafCounter()) {
 
 				case 2:
@@ -269,6 +269,7 @@ public class InteractiveSignatureComposite extends Composite {
 		control.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		graph = viewer.getGraphControl();
+		graph.setBackground(getDisplay().getSystemColor(SWT.COLOR_TRANSPARENT));
 
 		// Makes the nodes fixed (they cannot be dragged around with the mouse
 		// by overriding the mouseMovedListener with empty event
@@ -277,8 +278,6 @@ public class InteractiveSignatureComposite extends Composite {
 			}
 
 		});
-
-		graph.setBackground(getDisplay().getSystemColor(SWT.COLOR_TRANSPARENT));
 
 		footerComposite = new Composite(this, SWT.NO_REDRAW_RESIZE);
 		footerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 8, 1));

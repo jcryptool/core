@@ -252,6 +252,7 @@ public class MerkleTreeView extends ViewPart {
 					}
 				});
 			}
+			keyTab.updateIndexText();
 			tbtmParameter2.setControl(keyTab);
 			previousTab = 2;
 			break;
