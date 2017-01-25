@@ -21,7 +21,6 @@ public class MultiTree implements ISimpleMerkle {
 	int leafCounter = 0;
 	int d; // set
 	int idx_len;
-	int idx;
 	int n;
 	OTS otsAlgo;
 	int h;
@@ -190,7 +189,7 @@ public class MultiTree implements ISimpleMerkle {
 	 *
 	 */
 	public String sign(String message) {
-		long idx_tree;
+		long idx_tree= keyIndex >> h;
 		int idx_leaf;
 		if(keyIndex>=leafCounter) return "";
 		String msg = message; //ERR leer
@@ -199,12 +198,11 @@ public class MultiTree implements ISimpleMerkle {
 		// Init working params
 		byte R[] = new byte[n]; // pseudo-random value
 		byte hash_key[] = new byte[3 * n]; // dunno, they are used
-		byte msg_h[] = new byte[n]; // also used
 
 		// Extract SK
 		byte[] sek = sk;
 
-		//ERR wird nicht betreten
+		long idx=0;
 		for (i = 0; i < idx_len; i++) {
 			idx |= ((long) sek[i]) << 8 * (idx_len - 1 - i);
 		}
@@ -243,11 +241,8 @@ public class MultiTree implements ISimpleMerkle {
 		hash_key = hak.toByteArray();
 
 		// Then use it for message digest
-		msg_h = xtree.randomGenerator(ByteUtils.concatenate(BigInteger.valueOf(idx).toByteArray(), R), msg.getBytes(),
+		byte []sigmsg = xtree.randomGenerator(hash_key, msg.getBytes(),
 				msg.length());
-
-		// collecting signature
-		byte[] sigmsg = msg_h;
 
 		// Copy index to signature
 		for (i = 0; i < idx_len; i++) {
@@ -291,24 +286,24 @@ public class MultiTree implements ISimpleMerkle {
 			signature = signature + "|" + Converter._byteToHex(auth.get(i).getContent());
 		}
 		
-		int h=(int)getTreeHeight();
 		//loop over remaining layers... 
-//		for(i=1; i<d; i++){
-//			idx_leaf=(int) (idx_tree&((1<<h)-1));
-//			idx_tree= idx_tree >> h;
-//			ots_addr.setOTSAddress(idx_leaf);
-//			ots_addr.setOTSBit(true);
-//			otsAlgo.setPrivateKey(privKeys.get(idx_leaf));
-//			otsAlgo.setPublicKey(publicKeys.get(idx_leaf));
-//			ots_sig=((WOTSPlus)otsAlgo).sign(sigmsg, seed, ots_addr);
-//			signature+= "|" + Converter._2dByteToHex(ots_sig);
-//			
-//			for (int i = 0; i < auth.size(); i++) {
-//				signature = signature + "|" + Converter._byteToHex(auth.get(i).getContent());
-//			}
-//			signature+="| Signatur "
-//		}
-//		
+		for (i = 1; i < d; i++) {
+			idx_leaf = (int) (idx_tree & ((1 << h) - 1));
+			idx_tree = idx_tree >> h;
+			OTSHashAddress otsaddr=new OTSHashAddress();
+			otsaddr.setOTSAddress(idx_leaf);
+			otsaddr.setOTSBit(true);
+			otsAlgo.setPrivateKey(privKeys.get(keyIndex+h*i));
+			otsAlgo.setPublicKey(publicKeys.get(keyIndex+h*i));
+			ots_sig = ((WOTSPlus) otsAlgo).sign(signature.getBytes(), seed, otsaddr);
+			signature += "|" + Converter._2dByteToHex(ots_sig);
+			
+			int j=i;
+			for (;j < auth.size(); j++) {
+				signature = signature + "|" + Converter._byteToHex(auth.get(j).getContent());
+			}
+		}
+		
 		if (keyIndex<(leafCounter-1)) keyIndex++;
 		return signature;
 	}
@@ -456,8 +451,7 @@ public class MultiTree implements ISimpleMerkle {
 		generateKeyPairsAndLeaves();
 		treeArray = new Node[(1 << (getTreeHeight() + 1)) - 1];
 		rootNode = treeHash(0, getTreeHeight(), bitmaskSeed);
-	//	System.err.println(rootNode.getContent().toString());
-		tree = new ArrayList<Node>(Arrays.asList(treeArray));
+		this.tree = new ArrayList<Node>(Arrays.asList(treeArray));
 		setConnections();
 		treeGenerated = true;
 	}
@@ -489,7 +483,6 @@ public class MultiTree implements ISimpleMerkle {
 
 	public void setIndex(int i){
 		this.keyIndex=i;
-		this.h=getTreeHeight();
 		this.idx_len=(h+7)/8;
 	}
 	
