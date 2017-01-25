@@ -189,7 +189,7 @@ public class MultiTree implements ISimpleMerkle {
 	 *
 	 */
 	public String sign(String message) {
-		long idx_tree= keyIndex >> h;
+		long idx_tree= keyIndex >> (d/h);
 		int idx_leaf;
 		if(keyIndex>=leafCounter) return "";
 		String msg = message; //ERR leer
@@ -381,8 +381,8 @@ public class MultiTree implements ISimpleMerkle {
 		return this.seed;
 	}
 
-	public long getOverallLeaves() {
-		return (long) Math.pow(2, h);
+	public int getOverallLeaves() {
+		return (int) Math.pow(2, h);
 	}
 
 	@Override
@@ -488,6 +488,7 @@ public class MultiTree implements ISimpleMerkle {
 	
 	public void setSingleTreeHeight(int h){
 		this.h=h;
+		this.d=getOverallLeaves();
 	}
 	
 	public void setBitmaskSeed(byte[] seed){
