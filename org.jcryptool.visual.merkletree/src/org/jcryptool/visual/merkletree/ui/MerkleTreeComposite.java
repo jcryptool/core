@@ -57,7 +57,7 @@ public class MerkleTreeComposite extends Composite {
 		descr.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 
 		// Combobox, to switch the different SUIT's (MSS,XMSS,XMSS_MT)
-		Combo combo = new Combo(descr, SWT.NONE);
+		Combo combo = new Combo(descr, SWT.READ_ONLY);
 		GridData gd_combo = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 0, 1);
 		gd_combo.widthHint = 340;
 		combo.setLayoutData(gd_combo);
