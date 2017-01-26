@@ -52,7 +52,9 @@ import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
 import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.MerkleTreeView;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
+import org.jcryptool.visual.merkletree.algorithm.MultiTree;
 import org.jcryptool.visual.merkletree.algorithm.Node;
+import org.jcryptool.visual.merkletree.files.MathUtils;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 /**
@@ -92,6 +94,10 @@ public class MerkleTreeZestComposite
 	Graph graph;
 	Composite parent;
 	boolean expandedFlag = true;
+	List<?> graphNodeRetriever;
+	GraphNode[] leaves;
+	GraphNode[] nodes;
+	private Color distinguishableColors[];
 
 	// Interactive Variables
 	String message;
@@ -348,62 +354,70 @@ public class MerkleTreeZestComposite
 			}
 
 		});
+		graphNodeRetriever = graph.getNodes();
+		nodes = new GraphNode[graphNodeRetriever.size()];
+		leaves = new GraphNode[graphNodeRetriever.size() / 2 + 1];
 
-		graph.addSelectionListener(new SelectionAdapter() {
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.
-			 * eclipse.swt.events. SelectionEvent) Click-Event to get the
-			 * Selected Node and to mark the other Nodes
-			 */
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				distinctListener = true;
-				if (e.item instanceof GraphNode) {
-					GraphNode node = (GraphNode) e.item;
-					Node n = (Node) node.getData();
+		if (mode == SUIT.XMSS_MT) {
+			drawTreeLines();
+		} else {
 
-					if (n.isLeaf()) {
-						styledTextTree.setForeground(new Color(null, new RGB(1, 70, 122)));
-						// styledTextTree.setFont(FontService.getHugeFont());
-						styledTextTree.setText(Descriptions.ZestLabelProvider_5 + " " + n.getLeafNumber() + " = " //$NON-NLS-1$ //$NON-NLS-2$
-								+ n.getNameAsString());
+			graph.addSelectionListener(new SelectionAdapter() {
+				/*
+				 * (non-Javadoc)
+				 * 
+				 * @see
+				 * org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.
+				 * eclipse.swt.events. SelectionEvent) Click-Event to get the
+				 * Selected Node and to mark the other Nodes
+				 */
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					distinctListener = true;
+					if (e.item instanceof GraphNode) {
+						GraphNode node = (GraphNode) e.item;
+						Node n = (Node) node.getData();
 
-						if (markedConnectionList.size() == 0) {
-							markBranch(node);
-							markAuthPath(markedConnectionList);
+						if (n.isLeaf()) {
+							styledTextTree.setForeground(new Color(null, new RGB(1, 70, 122)));
+							// styledTextTree.setFont(FontService.getHugeFont());
+							styledTextTree.setText(Descriptions.ZestLabelProvider_5 + " " + n.getLeafNumber() + " = " //$NON-NLS-1$ //$NON-NLS-2$
+									+ n.getNameAsString());
+
+							if (markedConnectionList.size() == 0) {
+								markBranch(node);
+								markAuthPath(markedConnectionList);
+							} else {
+								unmarkBranch(markedConnectionList);
+								markedConnectionList.clear();
+								markBranch(node);
+								markAuthPath(markedConnectionList);
+							}
 						} else {
-							unmarkBranch(markedConnectionList);
-							markedConnectionList.clear();
-							markBranch(node);
-							markAuthPath(markedConnectionList);
+							if (markedConnectionList.size() != 0) {
+								unmarkBranch(markedConnectionList);
+								markedConnectionList.clear();
+								markBranch(node);
+							} else {
+								markBranch(node);
+							}
+							styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
+							styledTextTree.setAlignment(SWT.LEFT);
+							styledTextTree.setText(Descriptions.ZestLabelProvider_6 + " = " + n.getNameAsString());
 						}
-					} else {
-						if (markedConnectionList.size() != 0) {
-							unmarkBranch(markedConnectionList);
-							markedConnectionList.clear();
-							markBranch(node);
-						} else {
-							markBranch(node);
-						}
-						styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
-						styledTextTree.setAlignment(SWT.LEFT);
-						styledTextTree.setText(Descriptions.ZestLabelProvider_6 + " = " + n.getNameAsString());
 					}
+
+					/* Deselects immediately to allow dragging */
+					viewer.setSelection(new ISelection() {
+
+						@Override
+						public boolean isEmpty() {
+							return false;
+						}
+					});
 				}
-
-				/* Deselects immediately to allow dragging */
-				viewer.setSelection(new ISelection() {
-
-					@Override
-					public boolean isEmpty() {
-						return false;
-					}
-				});
-			}
-		});
-
+			});
+		}
 	}
 
 	/**
@@ -533,6 +547,94 @@ public class MerkleTreeZestComposite
 
 			}
 		});
+	}
+
+	public void drawTreeLines() {
+		int singleTreeHeight = ((MultiTree) merkle).getSingleTreeHeight();
+		int treeHeight = ((MultiTree) merkle).getTreeHeight();
+		int singleTreeLeaves = 0;// = (int) Math.pow(2, singleTreeHeight);
+		int treeCount = 0;
+		int leafCounter = merkle.getLeafCounter();
+
+		if (leafCounter == 16) {
+			treeCount = 5;
+			singleTreeLeaves = 4;
+		} else if (leafCounter == 64) {
+			// if (singleTreeHeight == 2) {
+			// singleTreeLeaves = 4;
+			// treeCount = 31;
+			// } else {
+			// singleTreeLeaves = 8;
+			// treeCount = 7;
+			// }
+			return;
+		}
+		// for (int i = 0; leafCounter >= singleTreeLeaves; ++i) {
+		// treeCount += leafCounter / singleTreeLeaves;
+		// leafCounter = leafCounter / singleTreeLeaves;
+		// }
+		// treeCount = 0;
+		// int d = ((MultiTree) merkle).getD();
+		// int h = ((MultiTree) merkle).getH();
+		// for (int i = 0; i < d; ++i) {
+		// treeCount += ((MultiTree) merkle).getXMSSTreeCount(h, i);
+		// }
+
+		// for (int i = 0; i < d; ++i)
+
+		GraphNode[] rootNodes = new GraphNode[treeCount];
+		GraphNode helper;
+
+		for (int i = 0, j = 0; i < graphNodeRetriever.size(); ++i) {
+			if (((GraphNode) graphNodeRetriever.get(i)).getSourceConnections().isEmpty()) {
+				leaves[i] = (GraphNode) graphNodeRetriever.get(i);
+				++j;
+			}
+			nodes[i] = (GraphNode) graphNodeRetriever.get(i);
+		}
+		leafCounter = merkle.getLeafCounter();
+
+		for (int i = 0; i < rootNodes.length;) {
+
+			for (int k = 0; k < leafCounter; k += singleTreeLeaves, ++i) {
+				rootNodes[i] = leaves[k];
+				for (int j = 0; j < singleTreeHeight; ++j) {
+					helper = ((GraphConnection) rootNodes[i].getTargetConnections().get(0)).getSource();
+					rootNodes[i] = helper;
+
+				}
+			}
+			for (int p = 0; p * singleTreeLeaves < leafCounter / singleTreeLeaves; ++p) {
+				leaves[p] = rootNodes[p];
+			}
+			leafCounter /= singleTreeLeaves;
+			// rootNodes[i].highlight();
+		}
+
+		distinguishableColors = new Color[5];
+		distinguishableColors[0] = new Color(getDisplay(), 186, 186, 0);
+		distinguishableColors[1] = new Color(getDisplay(), 186, 0, 186);
+		distinguishableColors[2] = new Color(getDisplay(), 0, 186, 186);
+		distinguishableColors[3] = new Color(getDisplay(), 0, 186, 0);
+		distinguishableColors[4] = new Color(getDisplay(), 176, 0, 0);
+
+		for (int i = rootNodes.length - 1; i >= 0; --i) {
+			recursive(rootNodes[i], distinguishableColors[i]);
+		}
+
+	}
+
+	@SuppressWarnings("unchecked")
+	private void recursive(GraphNode node, Color color) {
+		if (node.getSourceConnections() == null) {
+			node.setBackgroundColor(color);
+		}
+		List<GraphConnection> connection = node.getSourceConnections();
+		for (int i = 0; i < connection.size(); ++i) {
+			recursive(connection.get(i).getDestination(), color);
+		}
+		node.setBackgroundColor(color);
+
 	}
 
 }

@@ -347,8 +347,11 @@ public class MerkleTreeGeneration extends Composite {
 					allowedHeight.add(i);
 				}
 			}
-			treeHeightSpinner.setMinimum(allowedHeight.get(0));
-			treeHeightSpinner.setMaximum(allowedHeight.get(allowedHeight.size() - 1));
+			// treeHeightSpinner.setMinimum(allowedHeight.get(0));
+			// treeHeightSpinner.setMaximum(allowedHeight.get(allowedHeight.size()
+			// - 1));
+			treeHeightSpinner.setMaximum(3);
+			treeHeightSpinner.setMinimum(3);
 
 			allowedIndex = allowedHeight.lastIndexOf(treeValue);
 			treeHeightSpinner.addSelectionListener(new SelectionAdapter() {
