@@ -302,10 +302,10 @@ public class MerkleTreeGeneration extends Composite {
 		keyRow.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, true, 10, 1));
 
 		// text - for the spinner
-		Label keysum = new Label(keyRow, SWT.NONE);
 
 		// spinner for the key-ammount
 		if (mode != SUIT.XMSS_MT) {
+			Label keysum = new Label(keyRow, SWT.NONE);
 			keysum.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
 			keysum.setText(Descriptions.Tab0_Lable1);
 
@@ -333,18 +333,41 @@ public class MerkleTreeGeneration extends Composite {
 				}
 			});
 		} else {
-			keysum.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
+			multiTreeArguments = new int[][] { /* { 1, 16 }, */ { 3, 16 },
+					/* { 1, 64 }, */ { 3, 64 }, { 4, 64 } };
+
+			Label multiTreeAmountDescription = new Label(keyRow, SWT.NONE);
+			multiTreeAmountDescription.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
+			multiTreeAmountDescription.setText(Descriptions.Tab0_Lable1);
+
+			multitreeAmountLabel = new Label(keyRow, SWT.NONE);
+			multitreeAmountLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+			multitreeAmountLabel.setText(String.valueOf(multiTreeArguments[0][1]));
+
+		}
+
+		// Text box with generated key info
+		createdKey = new Label(keyRow, SWT.NONE);
+		createdKey.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 3, 2));
+		createdKey.setText(Descriptions.MerkleTreeKey_1);
+
+		// 'create button'
+		buttonCreateKeys = new Button(keyRow, SWT.NONE);
+		buttonCreateKeys.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false, 2, 2));
+		buttonCreateKeys.setFont(FontService.getNormalBoldFont());
+
+		if (mode == SUIT.XMSS_MT) {
+			Label keysum = new Label(keyRow, SWT.NONE);
+			keysum.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 			keysum.setText("Varianten");
 			multiTreeCombo = new Combo(keyRow, SWT.READ_ONLY);
 			multiTreeCombo.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
 
-			multiTreeCombo.add(Descriptions.Tab0_MT_1);
+			// multiTreeCombo.add(Descriptions.Tab0_MT_1);
 			multiTreeCombo.add(Descriptions.Tab0_MT_2);
-			multiTreeCombo.add(Descriptions.Tab0_MT_3);
+			// multiTreeCombo.add(Descriptions.Tab0_MT_3);
 			multiTreeCombo.add(Descriptions.Tab0_MT_4);
 			multiTreeCombo.add(Descriptions.Tab0_MT_5);
-
-			multiTreeArguments = new int[][] { { 1, 16 }, { 2, 16 }, { 1, 64 }, { 2, 64 }, { 3, 64 } };
 
 			multiTreeCombo.select(0);
 
@@ -352,22 +375,11 @@ public class MerkleTreeGeneration extends Composite {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					multiTreeArgumentIndex = multiTreeCombo.getSelectionIndex();
+					multitreeAmountLabel.setText(String.valueOf(multiTreeArguments[multiTreeArgumentIndex][1]));
 					((MerkleTreeView) masterView).updateElement();
 				}
 			});
 		}
-
-		// Text box with generated key info
-		createdKey = new Label(keyRow, SWT.NONE);
-		createdKey.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 3, 1));
-		createdKey.setText(Descriptions.MerkleTreeKey_1);
-
-		// 'create button'
-		buttonCreateKeys = new Button(keyRow, SWT.NONE);
-		buttonCreateKeys.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false, 2, 1));
-		buttonCreateKeys.setFont(FontService.getNormalBoldFont());
-
-		// set the spinner-value only to values of the power of 2
 
 		// setting the text's depending on the actual suite
 
@@ -463,8 +475,8 @@ public class MerkleTreeGeneration extends Composite {
 					((XMSSTree) merkle).setBitmaskSeed(bitmaskSeedarray);
 				}
 				if (mode == SUIT.XMSS_MT) {
-					((MultiTree) merkle).setSingleTreeHeight(multiTreeArguments[multiTreeArgumentIndex][0]);
 					merkle.setLeafCount(multiTreeArguments[multiTreeArgumentIndex][1]);
+					((MultiTree) merkle).setSingleTreeHeight(multiTreeArguments[multiTreeArgumentIndex][0]);
 				} else {
 					merkle.setLeafCount(spinnerValue);
 				}
