@@ -337,11 +337,11 @@ public class MerkleTreeGeneration extends Composite {
 			multiTreeCombo = new Combo(keyRow, SWT.READ_ONLY);
 			multiTreeCombo.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
 
-			multiTreeCombo.add("Baumhöhe 1; Baumanzahl 15");
-			multiTreeCombo.add("Baumhöhe 2; Baumanzahl 5");
-			multiTreeCombo.add("Baumhöhe 1; Baumanzahl 63");
-			multiTreeCombo.add("Baumhöhe 2; Baumanzahl 21");
-			multiTreeCombo.add("Baumhöhe 3; Baumanzahl 9");
+			multiTreeCombo.add(Descriptions.Tab0_MT_1);
+			multiTreeCombo.add(Descriptions.Tab0_MT_2);
+			multiTreeCombo.add(Descriptions.Tab0_MT_3);
+			multiTreeCombo.add(Descriptions.Tab0_MT_4);
+			multiTreeCombo.add(Descriptions.Tab0_MT_5);
 
 			multiTreeArguments = new int[][] { { 1, 16 }, { 2, 16 }, { 1, 64 }, { 2, 64 }, { 3, 64 } };
 

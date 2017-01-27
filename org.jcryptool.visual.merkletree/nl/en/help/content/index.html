@@ -100,7 +100,7 @@ The bitmask is a pseudo-random binary value. The bitmask is used to avoid the ne
 <img src="img/page1.png" alt="Create the seed and generate the keypairs" width="1200"/>
 
 <p>
-In this tab you can switch between the different modes (MSS, XMSS). There is also an option to define the seed, set the Winternitz parameter, set the amount of the secret keys, and generate the secret keys.
+In this tab you can switch between the different modes (MSS, XMSS, XMSS^MT). There is also an option to define the seed, set the Winternitz parameter, set the amount of the secret keys, and generate the secret keys.
 </p>
 	
 <img src="img/seed.png" alt="This is where the seed is defined" width="1200"/>
@@ -128,22 +128,18 @@ This image shows where the seed is defined. The seed is used to generate the sec
 If a node is chosen, the path to the root node is marked yellow.
 The verification path, which is part of the signature, is marked red.
 If a node or a leaf is chosen its hash value is displayed in the upper left area.
-The full tree can be viewed by clicking <b>Hide description</b>.
+The full tree can be viewed by clicking <b>Hide Description</b>.
+If you are in the XMSS^MT mode, the multitrees will display in different colors.
 </p>
 
 <img src="img/extended.PNG" alt="MerkleTree" width="1200"/>
-
-<p>With the <b>Interactive Signature Generator</b> you can follow the signature generation process step by step.</p>
-
-<img src="img/interactive.PNG" alt="MerkleTree" width="1200"/>
-
 
 
 
 <p></p><br>
 <h4>Tab 3: Key Pair</h4>
 
-<p>The public key and the private key are shown in the third tab. You can highlight the respective parts of the private key by clicking the buttons.</p>
+<p>The public key and the private key are shown in the third tab.</p>
 
 <img src="img/keypair.PNG" alt="MerkleTree" width="1200"/>
 
@@ -153,7 +149,7 @@ The full tree can be viewed by clicking <b>Hide description</b>.
 	
 <img src="img/page3.png" alt="Sign message" width="1200"/>
 	
-<p>This tab is used to generate signatures. The signature are generated using the keys defined in tab 1. You can enter a user defined text, and after pressing <b>Sign message</b> this message is going to be signed, using the Merkle signature scheme.
+<p>This tab is used to generate signatures. The signature are generated using the keys defined in tab 1. With the <b>Interactive Signature Generator</b> you can follow the signature generation process step by step. If you choose <b>Simple Signature Generation</b> you can enter a user defined text, and after pressing <b>Sign message</b> this message is going to be signed, using the Merkle signature scheme.
 </p>
 
 <img src="img/sign.png" alt="Signature" width="1200"/>
@@ -177,7 +173,7 @@ Clicking on <b>Verify</b> tries to verify the signature with the selected leaf b
 
 <img src="img/verify.png" alt="Successful Verification" width="1200"/>
 
-<p>You can also choose another (wrong) leaf. If you do so, the verification will fail.</p>
+<p>If you click <b>Created Signatures</b> it will display all your signatures. You can also choose another (wrong) leaf. If you do so, the verification will fail.</p>
 
 
 
