@@ -54,6 +54,7 @@ import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
 import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.MerkleTreeView;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
+import org.jcryptool.visual.merkletree.algorithm.MultiTree;
 import org.jcryptool.visual.merkletree.algorithm.Node;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
@@ -89,11 +90,13 @@ public class InteractiveSignatureComposite extends Composite {
 	GridData signatureTextLayout;
 	ScrolledComposite scrolledComposite;
 	int authpathSize;
-	Label signaturSize;
+	Label signatureSize;
 
 	// Interactive Variables
 	String message;
 	int step = 0;
+
+	Color[] distinguishableColors;
 
 	/**
 	 * Create the composite. Including Description, GraphItem, GraphView,
@@ -276,8 +279,11 @@ public class InteractiveSignatureComposite extends Composite {
 		graph.getLightweightSystem().setEventDispatcher(new SWTEventDispatcher() {
 			public void dispatchMouseMoved(MouseEvent e) {
 			}
-
 		});
+
+		if (mode == SUIT.XMSS_MT) {
+			colorizeMultitrees();
+		}
 
 		footerComposite = new Composite(this, SWT.NO_REDRAW_RESIZE);
 		footerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 8, 1));
@@ -305,9 +311,9 @@ public class InteractiveSignatureComposite extends Composite {
 		testLabel3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		testLabel3.setVisible(false);
 
-		signaturSize = new Label(footerComposite, SWT.READ_ONLY | SWT.WRAP);
-		signaturSize.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		signaturSize.setText(Descriptions.MerkleTreeSign_6 + " 0");
+		signatureSize = new Label(footerComposite, SWT.READ_ONLY | SWT.WRAP);
+		signatureSize.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		signatureSize.setText(Descriptions.MerkleTreeSign_6 + " 0" + " Byte");
 
 		testLabel.addSelectionListener(new SelectionAdapter() {
 
@@ -739,7 +745,7 @@ public class InteractiveSignatureComposite extends Composite {
 			// *****Content*****//
 			guideLabel.setText(Descriptions.InteractiveSignature_3_1 + currentIndex + " " + Descriptions.InteractiveSignature_3_2);
 			signatureText.setText(currentIndex + " |");
-			signaturSize.setText(Descriptions.MerkleTreeSign_6 + " " + signatureText.getText().length());
+			signatureSize.setText(Descriptions.MerkleTreeSign_6 + " " + signatureText.getText().length() + " Byte");
 			leaves[currentIndex].highlight();
 			goingBack = false;
 			break;
@@ -761,7 +767,7 @@ public class InteractiveSignatureComposite extends Composite {
 
 			signatureText.setText(currentIndex + " | ");
 			signatureText.append(signature[1]);
-			signaturSize.setText(Descriptions.MerkleTreeSign_6 + " " + signatureText.getText().length() / 2);
+			signatureSize.setText(Descriptions.MerkleTreeSign_6 + " " + signatureText.getText().length() / 2 + " Byte");
 			goingBack = false;
 			break;
 		// Step 5: authentication path explanation
@@ -790,7 +796,7 @@ public class InteractiveSignatureComposite extends Composite {
 			signatureText.setText(currentIndex + " | ");
 			signatureText.append(signature[1] + " | ");
 			signatureText.append(signature[2]);
-			signaturSize.setText(Descriptions.MerkleTreeSign_6 + " " + signatureText.getText().length() / 2);
+			signatureSize.setText(Descriptions.MerkleTreeSign_6 + " " + signatureText.getText().length() / 2 + " Byte");
 
 			isNextListener = true;
 			goingBack = false;
@@ -857,6 +863,88 @@ public class InteractiveSignatureComposite extends Composite {
 
 	public void withdrawSignature() {
 		merkle.setIndex(currentIndex);
+	}
+
+	public void colorizeMultitrees() {
+		int singleTreeHeight = ((MultiTree) merkle).getSingleTreeHeight();
+		// int treeHeight = ((MultiTree) merkle).getTreeHeight();
+		int singleTreeLeaves = (int) Math.pow(2, singleTreeHeight - 1);
+		int treeCount = 0;
+		int leafCounter = merkle.getLeafCounter();
+
+		List<?> graphNodeRetriever = graph.getNodes();
+		GraphNode[] nodes = new GraphNode[graphNodeRetriever.size()];
+		GraphNode[] leaves = new GraphNode[graphNodeRetriever.size() / 2 + 1];
+
+		for (int i = leafCounter; i >= 1;) {
+			i /= singleTreeLeaves;
+			treeCount += i;
+		}
+
+		GraphNode[] rootNodes = new GraphNode[treeCount];
+		GraphNode helper;
+
+		for (int i = 0, j = 0; i < graphNodeRetriever.size(); ++i) {
+			if (((GraphNode) graphNodeRetriever.get(i)).getSourceConnections().isEmpty()) {
+				leaves[j] = (GraphNode) graphNodeRetriever.get(i);
+				++j;
+			}
+			nodes[i] = (GraphNode) graphNodeRetriever.get(i);
+		}
+		leafCounter = merkle.getLeafCounter();
+
+		for (int i = 0, p = 0; i < rootNodes.length;) {
+
+			for (int k = 0; k < leafCounter; k += singleTreeLeaves, ++i) {
+				rootNodes[i] = leaves[k];
+				for (int j = 1; j < singleTreeHeight; ++j) {
+					helper = ((GraphConnection) rootNodes[i].getTargetConnections().get(0)).getSource();
+					rootNodes[i] = helper;
+
+				}
+			}
+			for (int q = 0; q < leafCounter / singleTreeLeaves; ++p, ++q) {
+				leaves[q] = rootNodes[p];
+			}
+			leafCounter /= singleTreeLeaves;
+			// rootNodes[i].highlight();
+		}
+
+		distinguishableColors = new Color[7];
+		distinguishableColors[0] = new Color(getDisplay(), 186, 186, 0);
+		distinguishableColors[1] = new Color(getDisplay(), 186, 0, 186);
+		distinguishableColors[2] = new Color(getDisplay(), 205, 183, 158);
+		distinguishableColors[3] = new Color(getDisplay(), 0, 186, 186);
+		distinguishableColors[4] = new Color(getDisplay(), 0, 186, 0);
+		distinguishableColors[5] = new Color(getDisplay(), 176, 0, 0);
+		distinguishableColors[6] = new Color(getDisplay(), 210, 105, 30);
+
+		for (int i = rootNodes.length - 1, j = 0; i >= 0; --i, ++j) {
+			if (j >= distinguishableColors.length)
+				j = 0;
+			recursive(rootNodes[i], distinguishableColors[j]);
+		}
+
+	}
+
+	@SuppressWarnings("unchecked")
+	private void recursive(GraphNode node, Color color) {
+		if (node.getSourceConnections() == null) {
+			node.setBackgroundColor(color);
+
+			return;
+		}
+		List<GraphConnection> connection = node.getSourceConnections();
+		for (int i = 0; i < connection.size(); ++i) {
+			recursive(connection.get(i).getDestination(), color);
+		}
+		node.setBackgroundColor(color);
+		if (color == distinguishableColors[5] || color == distinguishableColors[1]) {
+			node.setForegroundColor(getDisplay().getSystemColor(SWT.COLOR_GRAY));
+		} else {
+			node.setForegroundColor(new Color(null, new RGB(1, 70, 122)));
+		}
+
 	}
 
 }

@@ -130,7 +130,7 @@ public class MerkleTreeKeyComposite extends Composite {
 		indexLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		indexLabel.setText(Descriptions.MerkleTreeKeyTab_3);
 
-		indexText = new Text(indexSeedComposite, SWT.NONE);
+		indexText = new Text(indexSeedComposite, SWT.READ_ONLY);
 		indexText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		indexText.setText(splittedPrivateKey[0]);
 
@@ -141,20 +141,21 @@ public class MerkleTreeKeyComposite extends Composite {
 		seedLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		seedLabel.setText(Descriptions.MerkleTreeKeyTab_4);
 
-		seedText = new Text(indexSeedComposite, SWT.NONE);
+		seedText = new Text(indexSeedComposite, SWT.READ_ONLY);
 		seedText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		seedText.setText(splittedPrivateKey[1]);
 
 		otsLabel = new Label(privateKeyGroup, SWT.NONE);
 		otsLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		otsLabel.setText(Descriptions.MerkleTreeKeyTab_5);
 
 		privateOTSSpinner = new Spinner(privateKeyGroup, SWT.NONE);
 		privateOTSSpinner.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		privateOTSSpinner.setMinimum(0);
 		privateOTSSpinner.setMaximum(merkle.getLeafCounter() - 1);
 
-		privateOTSKey = new Text(privateKeyGroup, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
+		otsLabel.setText(Descriptions.MerkleTreeKeyTab_5 + " " + privateOTSSpinner.getSelection() + "/" + (merkle.getLeafCounter() - 1));
+
+		privateOTSKey = new Text(privateKeyGroup, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.READ_ONLY);
 		privateOTSKey.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 5, 1));
 		privateOTSKey.setText(splittedPrivateKey[2]);
 
@@ -163,6 +164,7 @@ public class MerkleTreeKeyComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				privateOTSKey.setText(splittedPrivateKey[privateOTSSpinner.getSelection() + 2]);
+				otsLabel.setText(Descriptions.MerkleTreeKeyTab_5 + " " + privateOTSSpinner.getSelection() + "/" + (merkle.getLeafCounter() - 1));
 			}
 
 		});

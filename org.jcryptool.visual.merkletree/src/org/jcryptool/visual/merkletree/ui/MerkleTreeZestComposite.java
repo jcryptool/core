@@ -359,7 +359,7 @@ public class MerkleTreeZestComposite
 		leaves = new GraphNode[graphNodeRetriever.size() / 2 + 1];
 
 		if (mode == SUIT.XMSS_MT) {
-			drawTreeLines();
+			colorizeMultitrees();
 		} else {
 
 			graph.addSelectionListener(new SelectionAdapter() {
@@ -549,77 +549,60 @@ public class MerkleTreeZestComposite
 		});
 	}
 
-	public void drawTreeLines() {
+	public void colorizeMultitrees() {
 		int singleTreeHeight = ((MultiTree) merkle).getSingleTreeHeight();
-		int treeHeight = ((MultiTree) merkle).getTreeHeight();
-		int singleTreeLeaves = 0;// = (int) Math.pow(2, singleTreeHeight);
+		// int treeHeight = ((MultiTree) merkle).getTreeHeight();
+		int singleTreeLeaves = (int) Math.pow(2, singleTreeHeight - 1);
 		int treeCount = 0;
 		int leafCounter = merkle.getLeafCounter();
 
-		if (leafCounter == 16) {
-			treeCount = 5;
-			singleTreeLeaves = 4;
-		} else if (leafCounter == 64) {
-			// if (singleTreeHeight == 2) {
-			// singleTreeLeaves = 4;
-			// treeCount = 31;
-			// } else {
-			// singleTreeLeaves = 8;
-			// treeCount = 7;
-			// }
-			return;
+		for (int i = leafCounter; i >= 1;) {
+			i /= singleTreeLeaves;
+			treeCount += i;
 		}
-		// for (int i = 0; leafCounter >= singleTreeLeaves; ++i) {
-		// treeCount += leafCounter / singleTreeLeaves;
-		// leafCounter = leafCounter / singleTreeLeaves;
-		// }
-		// treeCount = 0;
-		// int d = ((MultiTree) merkle).getD();
-		// int h = ((MultiTree) merkle).getH();
-		// for (int i = 0; i < d; ++i) {
-		// treeCount += ((MultiTree) merkle).getXMSSTreeCount(h, i);
-		// }
-
-		// for (int i = 0; i < d; ++i)
 
 		GraphNode[] rootNodes = new GraphNode[treeCount];
 		GraphNode helper;
 
 		for (int i = 0, j = 0; i < graphNodeRetriever.size(); ++i) {
 			if (((GraphNode) graphNodeRetriever.get(i)).getSourceConnections().isEmpty()) {
-				leaves[i] = (GraphNode) graphNodeRetriever.get(i);
+				leaves[j] = (GraphNode) graphNodeRetriever.get(i);
 				++j;
 			}
 			nodes[i] = (GraphNode) graphNodeRetriever.get(i);
 		}
 		leafCounter = merkle.getLeafCounter();
 
-		for (int i = 0; i < rootNodes.length;) {
+		for (int i = 0, p = 0; i < rootNodes.length;) {
 
 			for (int k = 0; k < leafCounter; k += singleTreeLeaves, ++i) {
 				rootNodes[i] = leaves[k];
-				for (int j = 0; j < singleTreeHeight; ++j) {
+				for (int j = 1; j < singleTreeHeight; ++j) {
 					helper = ((GraphConnection) rootNodes[i].getTargetConnections().get(0)).getSource();
 					rootNodes[i] = helper;
 
 				}
 			}
-			for (int p = 0; p * singleTreeLeaves < leafCounter / singleTreeLeaves; ++p) {
-				leaves[p] = rootNodes[p];
+			for (int q = 0; q < leafCounter / singleTreeLeaves; ++p, ++q) {
+				leaves[q] = rootNodes[p];
 			}
 			leafCounter /= singleTreeLeaves;
 			// rootNodes[i].highlight();
 		}
 
-		distinguishableColors = new Color[5];
+		distinguishableColors = new Color[7];
 		distinguishableColors[0] = new Color(getDisplay(), 186, 186, 0);
 		distinguishableColors[1] = new Color(getDisplay(), 186, 0, 186);
-		distinguishableColors[2] = new Color(getDisplay(), 0, 186, 186);
-		distinguishableColors[3] = new Color(getDisplay(), 0, 186, 0);
-		distinguishableColors[4] = new Color(getDisplay(), 176, 0, 0);
+		distinguishableColors[2] = new Color(getDisplay(), 205, 183, 158);
+		distinguishableColors[3] = new Color(getDisplay(), 0, 186, 186);
+		distinguishableColors[4] = new Color(getDisplay(), 0, 186, 0);
+		distinguishableColors[5] = new Color(getDisplay(), 176, 0, 0);
+		distinguishableColors[6] = new Color(getDisplay(), 210, 105, 30);
 
-		for (int i = rootNodes.length - 1; i >= 0; --i) {
-			recursive(rootNodes[i], distinguishableColors[i]);
+		for (int i = rootNodes.length - 1, j = 0; i >= 0; --i, ++j) {
+			if (j >= distinguishableColors.length)
+				j = 0;
+			recursive(rootNodes[i], distinguishableColors[j]);
 		}
 
 	}
@@ -628,12 +611,19 @@ public class MerkleTreeZestComposite
 	private void recursive(GraphNode node, Color color) {
 		if (node.getSourceConnections() == null) {
 			node.setBackgroundColor(color);
+
+			return;
 		}
 		List<GraphConnection> connection = node.getSourceConnections();
 		for (int i = 0; i < connection.size(); ++i) {
 			recursive(connection.get(i).getDestination(), color);
 		}
 		node.setBackgroundColor(color);
+		if (color == distinguishableColors[5] || color == distinguishableColors[1]) {
+			node.setForegroundColor(getDisplay().getSystemColor(SWT.COLOR_GRAY));
+		} else {
+			node.setForegroundColor(new Color(null, new RGB(1, 70, 122)));
+		}
 
 	}
 
