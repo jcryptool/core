@@ -95,7 +95,7 @@ Es k&oumlnnen insgesamt 2^h Nachrichten mit einer L&aumlnge von m Bytes signiert
 
 <img src="img/page1.png" alt="Festlegung des Seeds und Schl&uumlsselgeneration" width="1200"/>
 
-<p>In diesem Tab kann zwischen den einzelnen Verfahren (MSS, XMSS) gewechselt werden. Des Weiteren kann hier der Seed festgelegt werden, der Winternitz-Parameter kann eingestellt werden, die Anzahl der Secret Keys definiert und die Secret Keys erzeugt werden.</p>
+<p>In diesem Tab kann zwischen den einzelnen Verfahren (MSS, XMSS, XMSS^MT) gewechselt werden. Des Weiteren kann hier der Seed festgelegt werden, der Winternitz-Parameter kann eingestellt werden, die Anzahl der Secret Keys definiert und die Secret Keys erzeugt werden. Bei dem XMSS^MT Verfahren kann zusätzlich die Einzelbaumhöhe eingestellt werden.</p>
 	
 <img src="img/seed.png" alt="Hier muss der Seed festgelegt werden" width="1200"/>
 	
@@ -119,13 +119,10 @@ Es k&oumlnnen insgesamt 2^h Nachrichten mit einer L&aumlnge von m Bytes signiert
 Wird auf einen Node geklickt, dann wird in Gelb der Pfad zur Wurzel angezeigt.
 In Rot wird der Verifizierungspfad angezeigt, welcher ein Teil der Signatur ist.
 Klickt man einen Node oder ein Blatt (Leaf) an, wird oben links der zugeh&oumlrige Hashwert angezeigt.
-Mit einem Klick auf <b>Beschreibung ausblenden</b> wird der ganze Baum sichtbar.</p>
+Mit einem Klick auf <b>Beschreibung ausblenden</b> wird der ganze Baum sichtbar.
+In der XMSS^MT Varriante werden die einzelnen Bäume farblich hervorgehoben.</p>
 
 <img src="img/expanded.PNG" alt="MerkleTree" width="1200"/>
-
-<p>Mit der <b>Interaktiven Signaturerstellung</b> kann man den Vorgang der Signaturerstellung Schritt f&uumlr Schritt verfolgen.</p>
-
-<img src="img/interactive.PNG" alt="MerkleTree" width="1200"/>
 
 
 
@@ -133,7 +130,7 @@ Mit einem Klick auf <b>Beschreibung ausblenden</b> wird der ganze Baum sichtbar.
 <p></p><br>
 <h4>Tab 3: Schl&uumlsselpaar</h4>
 
-<p>Im dritten Tab wird der &oumlffentliche Schl&uumlssel und der private Schl&uumlssel angezeigt. Die Schl&uumlsselteile des privaten Schl&uumlssels k&oumlnnen farblich hervorgehoben werden.</p>
+<p>Im dritten Tab wird der &oumlffentliche Schl&uumlssel und der private Schl&uumlssel angezeigt.</p>
 
 <img src="img/schluesselpaar.PNG" alt="MerkleTree" width="1200"/>
 
@@ -143,7 +140,7 @@ Mit einem Klick auf <b>Beschreibung ausblenden</b> wird der ganze Baum sichtbar.
 	
 <img src="img/page3.png" alt="Nachricht signieren" width="1200"/>
 	
-<p>In diesem Tab k&oumlnnen Signaturen generiert werden. Diese werden mit den in Tab 1 generierten Keys erzeugt. Hier kann ein beliebiger Text eingegeben werden, welcher nach dem Dr&uumlcken auf <b>Nachricht signieren</b> signiert wird.</p>
+<p>In diesem Tab k&oumlnnen Signaturen generiert werden. Diese werden mit den in Tab 1 generierten Keys erzeugt. Mit der <b>Interaktiven Signaturerstellung</b> kann man den Vorgang der Signaturerstellung Schritt f&uumlr Schritt verfolgen. Bei der <b>Einfache Signaturerstellung</b> kann ein beliebiger Text eingegeben werden, welcher nach dem Dr&uumlcken auf <b>Nachricht signieren</b> signiert wird.</p>
 
 <img src="img/sign.png" alt="Signatur" width="1200"/>
 	
@@ -163,7 +160,7 @@ Die Signatur hat den folgenden Aufbau: Index des Schl&uumlsselpaares | OTS-Signa
 
 <img src="img/verify.png" alt="Erfolgreiche Verifikation" width="1200"/>
 
-<p>Wenn man ein anderes (falsches) Blatt ausw&aumlhlt und auf <b>Verifizieren</b> klickt, schl&aumlgt die Verifikation fehl.</p>
+<p> Mit einen Klick auf <b>Erstellte Signaturen</b> können die zuvor erstellten Signaturen betrachtet werden. Wenn man ein anderes (falsches) Blatt ausw&aumlhlt und auf <b>Verifizieren</b> klickt, schl&aumlgt die Verifikation fehl.</p>
 
 
 <br>
