@@ -172,7 +172,7 @@ public class MerkleTreeZestComposite
 		int preferredHeight = descText.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
 		// System.err.println(preferredHeight);
 
-		collapsablePart.setText("Beschreibung ausblenden");
+		collapsablePart.setText(Descriptions.Tab1_Button_1);
 		collapsablePart.setExpanded(true);
 		collapsablePart.setControl(expandComposite);
 		// collapsablePart.setHeight((parent.getSize().y - 250) / 2);
@@ -310,7 +310,7 @@ public class MerkleTreeZestComposite
 					descriptionExpander.pack();
 					parentComposite.layout();
 					zestSash.setLocation(cameraPoint.x, cameraPoint.y - (currentShellSize.y / 2));
-					collapsablePart.setText("Beschreibung ausblenden");
+					collapsablePart.setText(Descriptions.Tab1_Button_1);
 					expandedFlag = true;
 				});
 
@@ -323,7 +323,7 @@ public class MerkleTreeZestComposite
 					descriptionExpander.pack();
 					parentComposite.layout();
 					zestSash.setLocation(cameraPoint.x, cameraPoint.y + (currentShellSize.y / 2));
-					collapsablePart.setText("Beschreibung einblenden");
+					collapsablePart.setText(Descriptions.Tab1_Button_2);
 					expandedFlag = false;
 				});
 			}

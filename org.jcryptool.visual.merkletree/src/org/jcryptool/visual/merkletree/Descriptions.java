@@ -106,6 +106,14 @@ public class Descriptions extends NLS {
 	public static String Tab0_Button3;
 	public static String Tab0_Lable1;
 	public static String Tab0_Txt3;
+	public static String Tab0_MT_1;
+	public static String Tab0_MT_2;
+	public static String Tab0_MT_3;
+	public static String Tab0_MT_4;
+	public static String Tab0_MT_5;
+	
+	public static String Tab1_Button_1;
+	public static String Tab1_Button_2;
 
 	public static String InteractiveSignature_Button_0;
 	public static String InteractiveSignature_Button_1;
