@@ -165,6 +165,7 @@ public class Descriptions extends NLS {
 		public static String Tab1_Head0;
 		public static String Tab1_Txt0;
 		public static String Tab1_Txt1;
+		public static String Tab2_Txt0;
 
 	}
 

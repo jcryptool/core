@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
+import org.jcryptool.visual.merkletree.algorithm.MultiTree;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
 import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
 
@@ -106,6 +107,8 @@ public class PlainSignatureComposite extends Composite {
 		} else if (merkle instanceof SimpleMerkleTree) {
 			SingatureExpl.setText(Descriptions.MSS.Tab2_Txt0);
 			SingatureExpl.setText(Descriptions.MSS.Tab2_Txt0);
+		} else if (merkle instanceof MultiTree) {
+			SingatureExpl.setText(Descriptions.XMSS_MT.Tab2_Txt0);
 		}
 
 		styledTextSign = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);

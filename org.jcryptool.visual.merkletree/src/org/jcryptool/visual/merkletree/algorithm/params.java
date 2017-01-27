@@ -16,8 +16,7 @@ public class params {
 
 	public params(int h, int d, byte[] n) throws Exception {
 		if (h % d != 0) {
-			throw new Exception(
-					"Tree height and overall tree height are different- please pick parameters where h%d==0");
+			throw new Exception("Tree height and overall tree height are different- please pick parameters where h%d==0");
 			// do something fancy?
 		}
 		this.h = h;
