@@ -4,6 +4,8 @@ package org.jcryptool.visual.merkletree.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -42,7 +44,7 @@ public class PlainSignatureComposite extends Composite {
 	MerkleTreeSignatureComposite signatureComposite;
 	Label sign;
 	Text textSign;
-	Button createSign;
+	Button createButton;
 	StyledText styledTextSign;
 	StyledText styledTextSignSize;
 	Label lSignaturSize;
@@ -69,9 +71,9 @@ public class PlainSignatureComposite extends Composite {
 		GridData gd_textSign = new GridData(SWT.FILL, SWT.FILL, true, true, MerkleConst.H_SPAN_MAIN, 1);
 		textSign.setLayoutData(gd_textSign);
 		textSign.setText(Descriptions.MerkleTreeSign_1);
-		createSign = new Button(this, SWT.NONE);
-		createSign.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 2, 1));
-		createSign.setText(Descriptions.MerkleTreeSign_2);
+		createButton = new Button(this, SWT.NONE);
+		createButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 2, 1));
+		createButton.setText(Descriptions.MerkleTreeSign_2);
 
 		// lkeyNumber = new Label(this, SWT.READ_ONLY | SWT.WRAP | SWT.RIGHT);
 		// lkeyNumber.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
@@ -115,7 +117,26 @@ public class PlainSignatureComposite extends Composite {
 		GridData gd_textTextSign = new GridData(SWT.FILL, SWT.FILL, true, true, MerkleConst.H_SPAN_MAIN, 1);
 		styledTextSign.setLayoutData(gd_textTextSign);
 
-		createSign.addSelectionListener(new SelectionAdapter() {
+		textSign.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (textSign.getText().equals("")) {
+					textSign.setText(Descriptions.MerkleTreeSign_1);
+				}
+
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (textSign.getText().equals(Descriptions.MerkleTreeSign_1)) {
+					textSign.setText("");
+				}
+
+			}
+		});
+
+		createButton.addSelectionListener(new SelectionAdapter() {
 
 			/*
 			 * Event to create a Signature
@@ -148,9 +169,9 @@ public class PlainSignatureComposite extends Composite {
 			@Override
 			public void modifyText(ModifyEvent e) {
 				if (textSign.getText().length() > 0) {
-					createSign.setEnabled(true);
+					createButton.setEnabled(true);
 				} else {
-					createSign.setEnabled(false);
+					createButton.setEnabled(false);
 				}
 
 			}
