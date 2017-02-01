@@ -28,8 +28,8 @@ public class MultiTree implements ISimpleMerkle {
 	int keyIndex;
 	byte[] message;
 	Node[] treeArray;
-	byte[] seed; // random value for the PRF
-	byte[] sk_prf;
+	byte[] sk_seed;
+	byte[] pk_seed;
 	byte[] sk = new byte[n]; // private(secret) key
 	byte[] pk = new byte[n]; // public key
 	boolean treeGenerated;
@@ -54,7 +54,7 @@ public class MultiTree implements ISimpleMerkle {
 	 * generateKeyPairsAndLeaves() is called
 	 */
 	public void selectOneTimeSignatureAlgorithm(String hash, String algo) {
-		byte[] s = seed;
+		byte[] s = sk_seed;
 		this.otsAlgo = new WOTSPlus(w, hash, s);
 		if (this.mDigest == null) {
 			try {
@@ -169,7 +169,16 @@ public class MultiTree implements ISimpleMerkle {
 	public int getSingleTreeHeight() {
 		return h;
 	}
+	
+	public byte[] getSKSeed(){
+		return this.sk_seed;
+	}
 
+	public byte[] getPKSeed(){
+		return this.pk_seed;
+	}
+
+	
 	/**
 	 * Generates an authentication path as array list with authentication nodes
 	 * 
@@ -195,6 +204,7 @@ public class MultiTree implements ISimpleMerkle {
 	public String sign(String message) {
 		long idx_tree = keyIndex >> (d / h);
 		int idx_leaf;
+		byte[] seed;
 		if (keyIndex >= leafCounter)
 			return "";
 		String msg = message; // ERR leer
@@ -217,15 +227,17 @@ public class MultiTree implements ISimpleMerkle {
 		// close() in ByteArrayOutputStream itself is dead code (no
 		// implementation is present).
 		ByteArrayOutputStream sks = new ByteArrayOutputStream();
-		sks.write(sek, idx_len, n);
+		sks.write(sk_seed, idx_len, n);
 		seed = sks.toByteArray();
 
-		ByteArrayOutputStream skp = new ByteArrayOutputStream();
-		skp.write(sek, (idx_len + n), n);
-		sk_prf = skp.toByteArray();
-
 		ByteArrayOutputStream pus = new ByteArrayOutputStream();
-		pus.write(sek, (idx_len + 2 * n), n);
+		try {
+			pus.write(seed);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		pus.write(pk_seed, (idx_len + 2 * n), n);
 		seed = pus.toByteArray();
 
 		// Update SK
@@ -290,7 +302,7 @@ public class MultiTree implements ISimpleMerkle {
 		}
 
 		// loop over remaining layers...
-		for (i = 1; i < d; i++) {
+		for (i = 1; i < (d/h); i++) {
 			idx_leaf = (int) (idx_tree & ((1 << h) - 1));
 			idx_tree = idx_tree >> h;
 			OTSHashAddress otsaddr = new OTSHashAddress();
@@ -314,7 +326,7 @@ public class MultiTree implements ISimpleMerkle {
 
 	public String getPrivateKey() {
 		String sek = new String();
-		sek = keyIndex + "|" + Converter._byteToHex(getSeed());
+		sek = keyIndex + "|" + Converter._byteToHex(getSKSeed()) + "|" + Converter._byteToHex(getPKSeed());
 		for (int i = 0; i < leafCounter; i++) {
 			sek += "|";
 			sek += Converter._2dByteToHex(privKeys.get(i));
@@ -323,7 +335,7 @@ public class MultiTree implements ISimpleMerkle {
 	}
 
 	public String getPublicKey() {
-		String publicKeyString = Converter._byteToHex(rootNode.getContent()) + "|" + Converter._byteToHex(seed);
+		String publicKeyString = Converter._byteToHex(rootNode.getContent()) + "|" + Converter._byteToHex(getPKSeed());
 		return publicKeyString;
 	}
 
@@ -365,7 +377,7 @@ public class MultiTree implements ISimpleMerkle {
 	}
 
 	public byte[] getSK_Seed() {
-		return this.seed;
+		return this.sk_seed;
 	}
 
 	/**
@@ -377,12 +389,7 @@ public class MultiTree implements ISimpleMerkle {
 	}
 
 	public Node getRoot() {
-		return treeHash(0, getTreeHeight(), seed);
-	}
-
-	@Override
-	public byte[] getSeed() {
-		return this.seed;
+		return treeHash(0, getTreeHeight(), pk_seed);
 	}
 
 	public int getOverallLeaves() {
@@ -428,7 +435,7 @@ public class MultiTree implements ISimpleMerkle {
 
 		}
 
-		randomGenerator(seed, sk, 3 * n);
+		randomGenerator(sk_seed, sk, 3 * n);
 
 		// SecureRandom prf = new SecureRandom();
 		ByteArrayOutputStream pek = new ByteArrayOutputStream();
@@ -466,7 +473,7 @@ public class MultiTree implements ISimpleMerkle {
 		// first hash message
 		WOTSPlus wots = new WOTSPlus(w, signature, bitmaskSeed);
 		byte[] msg = message.getBytes();
-		byte[] hash = randomGenerator(seed, msg, message.length());
+		byte[] hash = randomGenerator(sk_seed, msg, message.length());
 
 		// Validate WOTS Signature
 		if (wots.verify(hash.toString(), signature) == false) {
@@ -474,7 +481,7 @@ public class MultiTree implements ISimpleMerkle {
 			return false;
 		}
 		// get PK
-		byte[][] pek = wots.pkFromSig(signature, msg, seed, otsAdrs);
+		byte[][] pek = wots.pkFromSig(signature, msg, pk_seed, otsAdrs);
 
 		return true;
 	}
@@ -489,7 +496,15 @@ public class MultiTree implements ISimpleMerkle {
 			return true; // this.verify(message, signature);
 
 	}
+	
+	public void setSKSeed(byte[] sks){
+		this.sk_seed=sks;
+	}
 
+	public void setPKSeed(byte[] pks){
+		this.pk_seed=pks;
+	}
+	
 	public void setIndex(int i) {
 		this.keyIndex = i;
 		this.idx_len = (h + 7) / 8;
@@ -502,11 +517,6 @@ public class MultiTree implements ISimpleMerkle {
 
 	public void setBitmaskSeed(byte[] seed) {
 		this.bitmaskSeed = seed;
-	}
-
-	@Override
-	public void setSeed(byte[] seed) {
-		this.seed = seed;
 	}
 
 	/**
@@ -630,6 +640,17 @@ public class MultiTree implements ISimpleMerkle {
 	@Override
 	public int getKeyIndex() {
 		return keyIndex;
+	}
+
+	//interface
+	public void setSeed(byte[] seed) {
+		//TODO
+	}
+
+	//interface
+	public byte[] getSeed() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
