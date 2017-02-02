@@ -84,6 +84,13 @@ public class MerkleTreeGeneration extends Composite {
 	private int multiTreeArgumentIndex;
 	private Label multitreeAmountLabel;
 
+	private Group bitmaskGroup;
+	private Button bitmaskButton;
+	private Label bitmaskLabel;
+	private StyledText bitmaskDescription;
+	private Text bitmaskText;
+	private Label bitmaskRandomgenerator;
+
 	/**
 	 * Create the composite. Including Seed content and KeyPairComposite
 	 * 
@@ -154,15 +161,8 @@ public class MerkleTreeGeneration extends Composite {
 		 * Bitmask Seed
 		 * 
 		 */
-
-		Button bitmaskButton;
-		Label bitmaskLabel;
-		StyledText bitmaskDescription;
-		Text bitmaskText;
-		Label randomgenerator;
-
 		if (mode == SUIT.XMSS || mode == SUIT.XMSS_MT) {
-			Group bitmaskGroup = new Group(groupMaster, SWT.NONE);
+			bitmaskGroup = new Group(groupMaster, SWT.NONE);
 			bitmaskGroup.setText(Descriptions.Tab0_Head5);
 			bitmaskGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
 			bitmaskGroup.setLayout(new GridLayout(10, true));
@@ -181,9 +181,9 @@ public class MerkleTreeGeneration extends Composite {
 			/*
 			 * Bitmask Seed Label
 			 */
-			randomgenerator = new Label(bitmaskGroup, SWT.NONE);
-			randomgenerator.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
-			randomgenerator.setText(Descriptions.Tab0_Head4);
+			bitmaskRandomgenerator = new Label(bitmaskGroup, SWT.NONE);
+			bitmaskRandomgenerator.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
+			bitmaskRandomgenerator.setText(Descriptions.Tab0_Head4);
 
 			/*
 			 * Textbox for seed
@@ -393,6 +393,14 @@ public class MerkleTreeGeneration extends Composite {
 		case XMSS_MT:
 			generateKeyDescription.setText(Descriptions.XMSS_MT.Tab0_Txt2);
 			wParamDescription.setText(Descriptions.XMSS_MT.Tab0_Txt1);
+			group.setText(Descriptions.XMSS_MT.Tab0_Seed0);
+			bitmaskGroup.setText(Descriptions.XMSS_MT.Tab0_Seed1);
+			bitmaskButton.setText(Descriptions.XMSS_MT.Tab0_Seed2);
+			buttonCreateSeed.setText(Descriptions.XMSS_MT.Tab0_Seed3);
+			bitmaskRandomgenerator.setText("");
+			bitmaskDescription.dispose();
+
+			this.layout();
 			break;
 		case MSS:
 		default:
