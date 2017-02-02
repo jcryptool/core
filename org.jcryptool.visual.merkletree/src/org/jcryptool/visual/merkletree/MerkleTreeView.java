@@ -246,7 +246,7 @@ public class MerkleTreeView extends ViewPart {
 
 					@Override
 					public void run() {
-						keyTab = new MerkleTreeKeyComposite(tabFolder, SWT.NONE, merkle);
+						keyTab = new MerkleTreeKeyComposite(tabFolder, SWT.NONE, merkle, mode);
 						keyTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 						mustCreateTab[2] = false;
 					}
