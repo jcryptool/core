@@ -477,11 +477,13 @@ public class MerkleTreeGeneration extends Composite {
 				if (mode == SUIT.XMSS_MT) {
 					merkle.setLeafCount(multiTreeArguments[multiTreeArgumentIndex][1]);
 					((MultiTree) merkle).setSingleTreeHeight(multiTreeArguments[multiTreeArgumentIndex][0]);
+					((MultiTree) merkle).setSKSeed(seedarray);
+					((MultiTree) merkle).setPKSeed(bitmaskSeedarray);
 				} else {
 					merkle.setLeafCount(spinnerValue);
+					merkle.setSeed(seedarray);
 				}
 
-				merkle.setSeed(seedarray);
 				// merkle.setLeafCount(spinnerValue);
 				merkle.setWinternitzParameter(wParameter);
 				merkle.selectOneTimeSignatureAlgorithm("SHA-256", "WOTSPlus");
