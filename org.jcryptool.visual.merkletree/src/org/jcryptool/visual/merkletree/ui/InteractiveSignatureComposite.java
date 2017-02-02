@@ -20,6 +20,10 @@ import org.eclipse.swt.events.ExpandEvent;
 import org.eclipse.swt.events.ExpandListener;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
@@ -69,6 +73,7 @@ public class InteractiveSignatureComposite extends Composite {
 	/* implements IZoomableWorkbenchPart */
 	private GraphViewer viewer;
 	private ArrayList<GraphConnection> markedConnectionList;
+	private ArrayList<GraphNode> markedAuthpathList;
 	private ViewPart masterView;
 	private MerkleTreeSignatureComposite signatureComposite;
 	Composite footerComposite;
@@ -282,6 +287,8 @@ public class InteractiveSignatureComposite extends Composite {
 		linkMerkleTree(merkle);
 		viewer.applyLayout();
 
+		markedAuthpathList = new ArrayList<>();
+
 		Control control = viewer.getControl();
 		control.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
@@ -375,19 +382,19 @@ public class InteractiveSignatureComposite extends Composite {
 			osGrey = 240;
 		}
 
-		int arrayLength = (int) Math.ceil((osGrey - 50f) / 3);
+		int arrayLength = (int) Math.ceil((osGrey - 50f) / 10);
 		int startingColor = 50;
-		for (; ((arrayLength * 3) + startingColor) % osGrey != 0; startingColor--) {
+		for (; ((arrayLength * 10) + startingColor) % osGrey != 0; startingColor--) {
 		}
 
 		greySteps = new Color[arrayLength];
 		redSteps = new Color[arrayLength];
 		Display currentDisplay = getDisplay();
-		for (int i = 0, colorValues = startingColor; i < greySteps.length; colorValues += 3, ++i) {
+		for (int i = 0, colorValues = startingColor; i < greySteps.length; colorValues += 10, ++i) {
 			greySteps[i] = new Color(currentDisplay, new RGB(colorValues, colorValues, colorValues));
 		}
-		for (int i = 0, colorValues = startingColor; i < redSteps.length; colorValues += 3, ++i) {
-			redSteps[i] = new Color(currentDisplay, new RGB(255, colorValues, colorValues));
+		for (int i = 0, colorValues = startingColor; i < redSteps.length; colorValues += 10, ++i) {
+			redSteps[i] = new Color(currentDisplay, new RGB(osGrey, colorValues, colorValues));
 		}
 
 	}
@@ -449,7 +456,7 @@ public class InteractiveSignatureComposite extends Composite {
 	 * @param markedConnectionList
 	 *            - Contains marked elements
 	 */
-	private void unmarkBranch(List<GraphConnection> markedConnectionList) {
+	private void unmarkBranch() {
 		GraphConnection authPath;
 		for (GraphConnection connection : markedConnectionList) {
 			connection.setLineColor(ColorConstants.lightGray);
@@ -457,6 +464,9 @@ public class InteractiveSignatureComposite extends Composite {
 			if (mode == SUIT.XMSS_MT) {
 				connection.getSource().setBorderWidth(0);
 			} else {
+
+				if (((GraphNode) connection.getSource()).getTargetConnections().isEmpty())
+					connection.getSource().setBackgroundColor(ColorConstants.lightGreen);
 
 				authPath = (GraphConnection) connection.getSource().getSourceConnections().get(0);
 				authPath.getDestination().setBackgroundColor(ColorConstants.lightGreen);
@@ -479,12 +489,19 @@ public class InteractiveSignatureComposite extends Composite {
 			// }
 
 		}
+		for (GraphNode authNode : markedAuthpathList) {
+			((GraphConnection) authNode.getTargetConnections().get(0)).setLineColor(ColorConstants.lightGray);
+			authNode.setBorderWidth(0);
+		}
 		if (mode == SUIT.XMSS_MT) {
 			if (currentlyHighlighted != null)
 				getDisplay().timerExec(-1, currentlyHighlighted);
 			if (highlightedAuthpath != null)
 				getDisplay().timerExec(-1, highlightedAuthpath);
 		}
+
+		markedConnectionList.clear();
+		markedAuthpathList.clear();
 	}
 
 	/**
@@ -494,7 +511,7 @@ public class InteractiveSignatureComposite extends Composite {
 	 *            - Contains marked elements of the Changing Path
 	 */
 	private void markAuthPath(List<GraphConnection> markedConnectionList) {
-		ArrayList<GraphNode> items = new ArrayList<GraphNode>();
+		// ArrayList<GraphNode> items = new ArrayList<GraphNode>();
 		GraphConnection authPath;
 		// List<GraphConnection> connections = leaf.getTargetConnections();
 		for (GraphConnection connect : markedConnectionList) {
@@ -503,21 +520,24 @@ public class InteractiveSignatureComposite extends Composite {
 
 			if (myNode.equals(parentNode.getLeft())) {
 				authPath = (GraphConnection) connect.getSource().getSourceConnections().get(1);
-				// authPath.getDestination().setBackgroundColor(ColorConstants.red);
-				items.add(authPath.getDestination());
+				// ((GraphConnection)
+				// connect.getSource()).getSourceConnections().get(1);
+				((GraphConnection) connect.getSource().getSourceConnections().get(1)).setLineColor(getDisplay().getSystemColor(SWT.COLOR_RED));
+				markedAuthpathList.add(authPath.getDestination());
 			} else {
 				authPath = (GraphConnection) connect.getSource().getSourceConnections().get(0);
-				// authPath.getDestination().setBackgroundColor(ColorConstants.red);
-				items.add(authPath.getDestination());
+				((GraphConnection) connect.getSource().getSourceConnections().get(0)).setLineColor(getDisplay().getSystemColor(SWT.COLOR_RED));
+				// connect.setLineColor(getDisplay().getSystemColor(SWT.COLOR_RED));
+				markedAuthpathList.add(authPath.getDestination());
 			}
 		}
 
 		if (mode != SUIT.XMSS_MT) {
-			for (int i = 0; i < items.size(); ++i) {
-				items.get(i).setBackgroundColor(ColorConstants.red);
+			for (int i = 0; i < markedAuthpathList.size(); ++i) {
+				markedAuthpathList.get(i).setBackgroundColor(ColorConstants.red);
 			}
 		} else {
-			highlightedAuthpath = animate(items.toArray(new GraphNode[items.size()]), redSteps);
+			highlightedAuthpath = animate(markedAuthpathList.toArray(new GraphNode[markedAuthpathList.size()]), redSteps);
 		}
 
 	}
@@ -576,14 +596,14 @@ public class InteractiveSignatureComposite extends Composite {
 	Point currentSashPosition;
 	Point sashShouldPosition;
 
-	Label guideLabel;
+	StyledText guideText;
 	Text inputText;
 	Button nextButton;
 	Button backButton;
 	Button verifyButton;
 
 	SelectionListener nextListener;
-	// SelectionListener newRoundListener;
+	ModifyListener emptyListener;
 
 	String plainSignature;
 	String signature[];
@@ -593,7 +613,6 @@ public class InteractiveSignatureComposite extends Composite {
 	boolean isNextListener = true;
 	boolean goingBack = false;
 
-	int currentStaticIndex;
 	int currentIndex;
 	int sigStringIndex;
 
@@ -631,8 +650,11 @@ public class InteractiveSignatureComposite extends Composite {
 			}
 		}
 		currentIndex = merkle.getKeyIndex();
-		guideLabel = new Label(popup, SWT.WRAP);
-		guideLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 6, 1));
+		guideText = new StyledText(popup, SWT.WRAP);
+		guideText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 6, 1));
+		guideText.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+		guideText.setEditable(false);
+		guideText.setCaret(null);
 
 		inputText = new Text(popup, SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
 		inputText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 6, 1));
@@ -650,6 +672,7 @@ public class InteractiveSignatureComposite extends Composite {
 
 		nextButton = new Button(popup, SWT.PUSH);
 		nextButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		nextButton.setEnabled(false);
 
 		popup.addPaintListener(new PaintListener() {
 			@Override
@@ -660,7 +683,8 @@ public class InteractiveSignatureComposite extends Composite {
 		});
 
 		// Step by Step Listeners
-		/* nextListener */ nextButton.addSelectionListener(new SelectionAdapter() {
+		/* nextListener */
+		nextButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (isNextListener) {
@@ -671,12 +695,6 @@ public class InteractiveSignatureComposite extends Composite {
 				}
 			}
 		});
-		// newRoundListener = new SelectionAdapter() {
-		// @Override
-		// public void widgetSelected(SelectionEvent e) {
-		//
-		// }
-		// };
 
 		backButton.addSelectionListener(new SelectionAdapter() {
 
@@ -727,6 +745,19 @@ public class InteractiveSignatureComposite extends Composite {
 			}
 		});
 
+		emptyListener = new ModifyListener() {
+
+			@Override
+			public void modifyText(ModifyEvent e) {
+				if (inputText.getText().length() > 0) {
+					nextButton.setEnabled(true);
+				} else {
+					nextButton.setEnabled(false);
+				}
+
+			}
+		};
+
 		stepByStep();
 		popup.layout(true);
 		popup.setVisible(true);
@@ -744,8 +775,14 @@ public class InteractiveSignatureComposite extends Composite {
 			if (goingBack) {
 				signatureComposite.updateIndexLabel(currentIndex - 1);
 				merkle.setIndex(currentIndex);
+
+				guideText.setText(Descriptions.InteractiveSignature_2);
+				guideText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 6, 1));
+				inputText.setText(message);
+				inputText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 6, 1));
+				popup.layout();
 			}
-			currentStaticIndex = merkle.getKeyIndex();
+
 			currentIndex = merkle.getKeyIndex();
 			// *****Position*****//
 
@@ -762,17 +799,8 @@ public class InteractiveSignatureComposite extends Composite {
 
 			// *****Listeners*****//
 			nextButton.setText(Descriptions.InteractiveSignature_Button_2);
+			inputText.addModifyListener(emptyListener);
 			isNextListener = true;
-
-			// *****Algorithm*****//
-			// if (plainSignature != null) {
-			//
-			// }
-			// if (goingBack) {
-			// currentIndex = merkle.getKeyIndex();
-			// signatureComposite.updateIndexLabel(currentIndex);
-			// goingBack = false;
-			// }
 
 			// *****Content*****//
 			signatureComposite.setInteractiveStatus(false);
@@ -781,47 +809,51 @@ public class InteractiveSignatureComposite extends Composite {
 			verifyButton.setVisible(false);
 			inputText.setVisible(true);
 			inputText.setEditable(true);
-			guideLabel.setText(Descriptions.InteractiveSignature_1);
+			guideText.setText(Descriptions.InteractiveSignature_1);
 			popup.setLocation(popupPosition);
 			oldPopup = popup.getLocation();
-
-			inputText.setFocus();
 
 			goingBack = false;
 			break;
 		// Step 1: First Description
 		// Window Position: still centered, Task, -> next
 		case 1:
-			message = inputText.getText();
-			if (message.length() != 0) {
-				signatureComposite.setInteractiveStatus(true);
-				guideLabel.setText(Descriptions.InteractiveSignature_2);
-				inputText.setVisible(false);
-				backButton.setVisible(true);
-				inputText.setEditable(false);
-				inputText.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
+			if (!goingBack) {
+				message = inputText.getText();
+			}
+			signatureComposite.setInteractiveStatus(true);
+			guideText.setText(Descriptions.InteractiveSignature_2);
+			guideText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 6, 1));
+			inputText.setVisible(false);
+			inputText.setText("");
+			inputText.removeModifyListener(emptyListener);
+			inputText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 6, 1));
 
-				if (goingBack) {
-					merkle.setIndex(currentIndex);
-					if (mode == SUIT.XMSS_MT) {
-						getDisplay().timerExec(-1, singleHighlightNode);
-						leaves[currentIndex].setBorderWidth(0);
-					} else {
-						leaves[currentIndex].unhighlight();
-					}
+			nextButton.setEnabled(true);
 
+			popup.layout();
+			backButton.setVisible(true);
+			inputText.setEditable(false);
+			inputText.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
+
+			if (goingBack) {
+				merkle.setIndex(currentIndex);
+				if (mode == SUIT.XMSS_MT) {
+					getDisplay().timerExec(-1, singleHighlightNode);
+					leaves[currentIndex].setBorderWidth(0);
 				} else {
-					plainSignature = merkle.sign(message);
-					if (plainSignature == "") {
-						signatureComposite.keysExceededMessage();
-					}
-					signature = plainSignature.split("\\|");
-					signatureComposite.updateIndexLabel(currentIndex);
+					leaves[currentIndex].unhighlight();
 				}
 
 			} else {
-				step--;
+				plainSignature = merkle.sign(message);
+				if (plainSignature == "") {
+					signatureComposite.keysExceededMessage();
+				}
+				signature = plainSignature.split("\\|");
+				signatureComposite.updateIndexLabel(currentIndex);
 			}
+
 			signatureText.setText("");
 			goingBack = false;
 			break;
@@ -841,7 +873,7 @@ public class InteractiveSignatureComposite extends Composite {
 			oldPopup = popup.getLocation();
 
 			// *****Content*****//
-			guideLabel.setText(Descriptions.InteractiveSignature_3_1 + currentIndex + " " + Descriptions.InteractiveSignature_3_2);
+			guideText.setText(Descriptions.InteractiveSignature_3_1 + currentIndex + " " + Descriptions.InteractiveSignature_3_2);
 			sigStringIndex = goingBack ? sigStringIndex - 1 : sigStringIndex;
 			signatureText.setText(signature[sigStringIndex] + "|");
 			signatureSize.setText(Descriptions.MerkleTreeSign_6 + " " + signatureText.getText().length() + " Byte");
@@ -864,7 +896,7 @@ public class InteractiveSignatureComposite extends Composite {
 				stepByStep();
 
 			} else {
-				guideLabel.setText("Als nächstes kommt der Seed");
+				guideText.setText("Als nächstes kommt der Seed");
 				signatureText.setText("");
 				sigStringIndex = goingBack ? sigStringIndex - 1 : sigStringIndex + 1;
 				for (int i = 0; i <= sigStringIndex; ++i) {
@@ -878,8 +910,7 @@ public class InteractiveSignatureComposite extends Composite {
 		// Window Position: bottom-left at leaf Task: -> next
 		case 4:
 			if (goingBack) {
-				unmarkBranch(markedConnectionList);
-				markedConnectionList.clear();
+				unmarkBranch();
 				if (mode == SUIT.XMSS_MT) {
 					GraphNode[] tmpArray = new GraphNode[1];
 					tmpArray[0] = leaves[currentIndex];
@@ -889,7 +920,7 @@ public class InteractiveSignatureComposite extends Composite {
 				}
 			}
 			// *****Content*****//
-			guideLabel.setText(Descriptions.InteractiveSignature_4_1 + currentIndex + " " + Descriptions.InteractiveSignature_4_2);
+			guideText.setText(Descriptions.InteractiveSignature_4_1 + currentIndex + " " + Descriptions.InteractiveSignature_4_2);
 
 			signatureText.setText("");
 			sigStringIndex = goingBack ? sigStringIndex : sigStringIndex + 1;
@@ -904,9 +935,10 @@ public class InteractiveSignatureComposite extends Composite {
 		// Window Position: bottom-left at leaf Task: -> next
 		case 5:
 			if (mode == SUIT.XMSS_MT) {
-				getDisplay().timerExec(-1, singleHighlightNode);
+				if (singleHighlightNode != null)
+					getDisplay().timerExec(-1, singleHighlightNode);
 			}
-			guideLabel.setText(Descriptions.InteractiveSignature_5);
+			guideText.setText(Descriptions.InteractiveSignature_5);
 			markBranch(leaves[currentIndex]);
 			markAuthPath(markedConnectionList);
 
@@ -954,7 +986,7 @@ public class InteractiveSignatureComposite extends Composite {
 			// signatureComposite.updateIndexLabel(currentIndex - 1);
 			signatureComposite.addSignatureAndMessage(plainSignature, message);
 
-			guideLabel.setText(Descriptions.InteractiveSignature_6);
+			guideText.setText(Descriptions.InteractiveSignature_6);
 			signatureComposite.setInteractiveStatus(false);
 
 			verifyButton.setVisible(true);
@@ -1105,7 +1137,7 @@ public class InteractiveSignatureComposite extends Composite {
 				if (colorIndex - 1 < 0) {
 					darkCounter++;
 					shouldUpdate = false;
-					if (darkCounter >= 30) {
+					if (darkCounter >= 20) {
 						direction = 1;
 						darkCounter = 0;
 						shouldUpdate = true;
@@ -1119,10 +1151,10 @@ public class InteractiveSignatureComposite extends Composite {
 				}
 				graph.redraw();
 
-				getDisplay().timerExec(10, this);
+				getDisplay().timerExec(40, this);
 			}
 		};
-		getDisplay().timerExec(10, runnable);
+		getDisplay().timerExec(40, runnable);
 		return runnable;
 	}
 
@@ -1133,13 +1165,15 @@ public class InteractiveSignatureComposite extends Composite {
 		signatureSize.setText("");
 		plainSignature = null;
 
+		guideText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 6, 1));
+		inputText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 6, 1));
+		popup.layout();
+
 		if (singleHighlightNode != null) {
 			getDisplay().timerExec(-1, singleHighlightNode);
 			leaves[currentIndex].setBorderWidth(0);
 		}
-
-		unmarkBranch(markedConnectionList);
-		markedConnectionList.clear();
+		unmarkBranch();
 
 		stepByStep();
 	}
