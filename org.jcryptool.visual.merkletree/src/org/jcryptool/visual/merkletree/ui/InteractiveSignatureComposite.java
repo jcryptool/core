@@ -148,9 +148,12 @@ public class InteractiveSignatureComposite extends Composite {
 		// false, 1, 1));
 		// }
 
-		graphComposite = new Composite(this, SWT.NONE);
+		graphComposite = new Composite(this, SWT.BORDER);
 		graphComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
-		graphComposite.setLayout(new GridLayout(1, true));
+		GridLayout graphCompositeLayout = new GridLayout(1, true);
+		graphCompositeLayout.marginWidth = 0;
+		graphCompositeLayout.marginHeight = 0;
+		graphComposite.setLayout(graphCompositeLayout);
 
 		// Composite which contains a SashForm which contains the MerkleTree
 		// Zest Graph
