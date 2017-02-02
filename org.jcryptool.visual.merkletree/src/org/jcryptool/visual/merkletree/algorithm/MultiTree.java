@@ -215,7 +215,7 @@ public class MultiTree implements ISimpleMerkle {
 		byte hash_key[] = new byte[3 * n]; // dunno, they are used
 
 		// Extract SK
-		byte[] sek = sk;
+		byte[] sek = this.sk;
 
 		long idx = 0;
 		for (i = 0; i < idx_len; i++) {
@@ -302,7 +302,10 @@ public class MultiTree implements ISimpleMerkle {
 		}
 
 		// loop over remaining layers...
-		for (i = 1; i < (d/h); i++) {
+		int n=d/h;
+		if (n==4) n--;
+		for (i = 1; i < n; i++) {
+			
 			idx_leaf = (int) (idx_tree & ((1 << h) - 1));
 			idx_tree = idx_tree >> h;
 			OTSHashAddress otsaddr = new OTSHashAddress();
@@ -435,7 +438,7 @@ public class MultiTree implements ISimpleMerkle {
 
 		}
 
-		randomGenerator(sk_seed, sk, 3 * n);
+		this.sk=randomGenerator(sk_seed, sk, 3 * n);
 
 		// SecureRandom prf = new SecureRandom();
 		ByteArrayOutputStream pek = new ByteArrayOutputStream();
