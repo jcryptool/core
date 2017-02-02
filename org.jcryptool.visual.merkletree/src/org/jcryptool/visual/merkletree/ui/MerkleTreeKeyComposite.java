@@ -22,6 +22,7 @@ import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
 import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
+import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 public class MerkleTreeKeyComposite extends Composite {
 
@@ -58,6 +59,8 @@ public class MerkleTreeKeyComposite extends Composite {
 	private Text indexText;
 	private Label seedLabel;
 	private Text seedText;
+	private Label publicSeedLabel;
+	private Text publicSeedText;
 	private Composite indexSeedComposite;
 	private Label leafLabel;
 	private Label otsLabel;
@@ -65,6 +68,8 @@ public class MerkleTreeKeyComposite extends Composite {
 	private Text privateOTSKey;
 	private GridLayout indexSeedLayout;
 	private ISimpleMerkle merkle;
+
+	private int arrayCounter;
 
 	/**
 	 * Creates the key tab composite. Displays Private/Public keys of a
@@ -75,7 +80,7 @@ public class MerkleTreeKeyComposite extends Composite {
 	 * @param merkle
 	 */
 
-	public MerkleTreeKeyComposite(Composite parent, int style, ISimpleMerkle merkle) {
+	public MerkleTreeKeyComposite(Composite parent, int style, ISimpleMerkle merkle, SUIT mode) {
 		super(parent, style);
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN * 2, true));
 		this.merkle = merkle;
@@ -110,7 +115,7 @@ public class MerkleTreeKeyComposite extends Composite {
 
 		privateKeyGroup = new Group(this, SWT.SHADOW_ETCHED_IN);
 		privateKeyGroup.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, MerkleConst.H_SPAN_MAIN * 2, 1));
-		privateKeyGroup.setLayout(new GridLayout(8, true));
+		privateKeyGroup.setLayout(new GridLayout(20, true));
 		privateKeyGroup.setFont(FontService.getNormalBoldFont());
 		privateKeyGroup.setText(Descriptions.MerkleTreeKeyTab_2);
 
@@ -119,34 +124,45 @@ public class MerkleTreeKeyComposite extends Composite {
 		splittedPrivateKey = privateKey.split("\\|");
 
 		indexSeedComposite = new Composite(privateKeyGroup, SWT.NONE);
-		indexSeedComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 8, 1));
-		// indexSeedComposite.setLayoutData(indexSeedLayout);
-		indexSeedLayout = new GridLayout(8, true);
+		indexSeedComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 20, 1));
+		indexSeedLayout = new GridLayout(20, true);
 		indexSeedLayout.marginWidth = 0;
-		// indexSeedComposite.setLayout(new GridLayout(8, true));
 		indexSeedComposite.setLayout(indexSeedLayout);
 
 		indexLabel = new Label(indexSeedComposite, SWT.NONE);
-		indexLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		indexLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 7, 1));
 		indexLabel.setText(Descriptions.MerkleTreeKeyTab_3);
 
 		indexText = new Text(indexSeedComposite, SWT.READ_ONLY);
-		indexText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		indexText.setText(splittedPrivateKey[0]);
+		indexText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 10, 1));
+		indexText.setText(splittedPrivateKey[arrayCounter++]);
 
 		Label spacer = new Label(indexSeedComposite, SWT.NONE);
-		spacer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 4, 1));
+		spacer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
 
 		seedLabel = new Label(indexSeedComposite, SWT.NONE);
-		seedLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		seedLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 7, 1));
 		seedLabel.setText(Descriptions.MerkleTreeKeyTab_4);
 
 		seedText = new Text(indexSeedComposite, SWT.READ_ONLY);
-		seedText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		seedText.setText(splittedPrivateKey[1]);
+		seedText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 10, 1));
+		seedText.setText(splittedPrivateKey[arrayCounter++]);
+
+		if (mode == SUIT.XMSS_MT) {
+			Label spacer2 = new Label(indexSeedComposite, SWT.NONE);
+			spacer2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
+
+			publicSeedLabel = new Label(indexSeedComposite, SWT.NONE);
+			publicSeedLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 7, 1));
+			publicSeedLabel.setText(Descriptions.XMSS_MT.MerkleTreeKey_MT);
+
+			publicSeedText = new Text(indexSeedComposite, SWT.READ_ONLY);
+			publicSeedText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 10, 1));
+			publicSeedText.setText(splittedPrivateKey[arrayCounter++]);
+		}
 
 		otsLabel = new Label(privateKeyGroup, SWT.NONE);
-		otsLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		otsLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 6, 1));
 
 		privateOTSSpinner = new Spinner(privateKeyGroup, SWT.NONE);
 		privateOTSSpinner.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
@@ -156,14 +172,14 @@ public class MerkleTreeKeyComposite extends Composite {
 		otsLabel.setText(Descriptions.MerkleTreeKeyTab_5 + " " + privateOTSSpinner.getSelection() + "/" + (merkle.getLeafCounter() - 1));
 
 		privateOTSKey = new Text(privateKeyGroup, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.READ_ONLY);
-		privateOTSKey.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 5, 1));
-		privateOTSKey.setText(splittedPrivateKey[2]);
+		privateOTSKey.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 13, 1));
+		privateOTSKey.setText(splittedPrivateKey[arrayCounter]);
 
 		privateOTSSpinner.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				privateOTSKey.setText(splittedPrivateKey[privateOTSSpinner.getSelection() + 2]);
+				privateOTSKey.setText(splittedPrivateKey[privateOTSSpinner.getSelection() + arrayCounter]);
 				otsLabel.setText(Descriptions.MerkleTreeKeyTab_5 + " " + privateOTSSpinner.getSelection() + "/" + (merkle.getLeafCounter() - 1));
 			}
 
