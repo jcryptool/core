@@ -899,7 +899,7 @@ public class InteractiveSignatureComposite extends Composite {
 				stepByStep();
 
 			} else {
-				guideText.setText("Als nächstes kommt der Seed");
+				guideText.setText(Descriptions.InteractiveSignature_Seed);
 				signatureText.setText("");
 				sigStringIndex = goingBack ? sigStringIndex - 1 : sigStringIndex + 1;
 				for (int i = 0; i <= sigStringIndex; ++i) {

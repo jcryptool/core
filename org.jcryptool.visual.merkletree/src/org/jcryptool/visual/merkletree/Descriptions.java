@@ -131,6 +131,7 @@ public class Descriptions extends NLS {
 	public static String InteractiveSignature_8;
 	public static String InteractiveSignature_9;
 	public static String InteractiveSignature_10;
+	public static String InteractiveSignature_Seed;
 
 	public static class MSS {
 
