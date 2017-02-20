@@ -140,14 +140,6 @@ public class InteractiveSignatureComposite extends Composite {
 		this.parent = parent;
 		this.signatureComposite = signatureComposite;
 
-		// spacers = new Label[4];
-		// for (int i = 0; i < spacers.length; ++i) {
-		// spacers[i] = new Label(this, SWT.NONE);
-		// spacers[i].setBackground(getDisplay().getSystemColor(SWT.COLOR_DARK_MAGENTA));
-		// spacers[i].setLayoutData(new GridData(SWT.BEGINNING, SWT.FILL, false,
-		// false, 1, 1));
-		// }
-
 		graphComposite = new Composite(this, SWT.BORDER);
 		graphComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
 		GridLayout graphCompositeLayout = new GridLayout(1, true);
@@ -287,13 +279,12 @@ public class InteractiveSignatureComposite extends Composite {
 		// select the layout of the connections -> CONNECTIONS_DIRECTED would be
 		// a ->
 		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_SOLID);
-		linkMerkleTree(merkle);
+		viewer.setInput(merkle.getTree());
+		viewer.setLayoutAlgorithm(new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
 		viewer.applyLayout();
 
 		markedAuthpathList = new ArrayList<>();
-
-		Control control = viewer.getControl();
-		control.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(viewer.getControl());
 
 		graph = viewer.getGraphControl();
 		graph.setBackground(getDisplay().getSystemColor(SWT.COLOR_TRANSPARENT));
@@ -308,6 +299,8 @@ public class InteractiveSignatureComposite extends Composite {
 		if (mode == SUIT.XMSS_MT) {
 			colorizeMultitrees();
 
+			// prevents a MultiTree node from being colorized yellow when
+			// clicked
 			graph.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -317,11 +310,6 @@ public class InteractiveSignatureComposite extends Composite {
 
 				}
 			});
-			// graph.getLightweightSystem().setEventDispatcher(new
-			// SWTEventDispatcher() {
-			// public void dispatchFocusGained(FocusEvent e) {
-			// }
-			// });
 		}
 
 		footerComposite = new Composite(this, SWT.NO_REDRAW_RESIZE);
@@ -340,13 +328,8 @@ public class InteractiveSignatureComposite extends Composite {
 		signatureText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		signatureText.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
 		scrolledComposite.setContent(signatureText);
-		Label asdf = new Label(footerComposite, SWT.NONE);
-		asdf.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		// Button startoverButton2 = new Button(footerComposite, SWT.PUSH);
-		// startoverButton2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-		// true,
-		// 2, 1));
-		// startoverButton2.setText("Button 2");
+		Label spacer = new Label(footerComposite, SWT.NONE);
+		spacer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		Button startoverButton3 = new Button(footerComposite, SWT.PUSH);
 		startoverButton3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		startoverButton3.setVisible(false);
@@ -364,9 +347,6 @@ public class InteractiveSignatureComposite extends Composite {
 
 		});
 
-		// ******************************************
-
-		// Animation Stuff TODO
 		String os;
 		try {
 			os = System.getProperty("os.name");
@@ -445,8 +425,6 @@ public class InteractiveSignatureComposite extends Composite {
 		} catch (IndexOutOfBoundsException ex) {
 			items.add(((GraphConnection) (leaf.getSourceConnections().get(0))).getSource());
 		}
-		// viewer.getGraphControl().setSelection(items.toArray(new
-		// GraphItem[items.size()]));
 
 		if (mode == SUIT.XMSS_MT) {
 			currentlyHighlighted = animate(items.toArray(new GraphNode[items.size()]), greySteps);
@@ -485,11 +463,6 @@ public class InteractiveSignatureComposite extends Composite {
 					connection.getDestination().setBackgroundColor(ColorConstants.lightGreen);
 				}
 			}
-
-			// } else {
-			// connection.getDestination().setBackgroundColor(ColorConstants.lightGreen);
-			// // viewer.getGraphControl().LIGHT_BLUE
-			// }
 
 		}
 		for (GraphNode authNode : markedAuthpathList) {
@@ -541,20 +514,6 @@ public class InteractiveSignatureComposite extends Composite {
 			}
 		} else {
 			highlightedAuthpath = animate(markedAuthpathList.toArray(new GraphNode[markedAuthpathList.size()]), redSteps);
-		}
-
-	}
-
-	/**
-	 * Synchronize the merklTree with the other Tabpages
-	 * 
-	 * @param merkle
-	 */
-	private void linkMerkleTree(ISimpleMerkle merkle) {
-		if (merkle.getMerkleRoot() != null) {
-			viewer.setInput(merkle.getTree());
-			viewer.setLayoutAlgorithm(new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
-			viewer.applyLayout();
 		}
 
 	}
@@ -1016,10 +975,6 @@ public class InteractiveSignatureComposite extends Composite {
 		return message;
 	}
 
-	// public void updateWindowManually() {
-	// popup.setLocation(popupPosition);
-	// popup.redraw();
-	// }
 	private void renderVisible() {
 		getDisplay().asyncExec(new Runnable() {
 
@@ -1036,7 +991,7 @@ public class InteractiveSignatureComposite extends Composite {
 		merkle.setIndex(currentIndex);
 	}
 
-	public void colorizeMultitrees() {
+	private void colorizeMultitrees() {
 		int singleTreeHeight = ((MultiTree) merkle).getSingleTreeHeight();
 		// int treeHeight = ((MultiTree) merkle).getTreeHeight();
 		int singleTreeLeaves = (int) Math.pow(2, singleTreeHeight - 1);
