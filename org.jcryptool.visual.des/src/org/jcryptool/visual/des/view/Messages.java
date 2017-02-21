@@ -274,34 +274,10 @@ public class Messages extends NLS {
 	public static String DesView_59;
 	public static String DesView_6;
 	public static String DesView_60;
-	public static String DesView_61;
-	public static String DesView_62;
-	public static String DesView_63;
-	public static String DesView_64;
-	public static String DesView_65;
-	public static String DesView_66;
-	public static String DesView_67;
-	public static String DesView_68;
-	public static String DesView_69;
 	public static String DesView_7;
 	public static String DesView_70;
-	public static String DesView_71;
-	public static String DesView_72;
-	public static String DesView_73;
-	public static String DesView_74;
-	public static String DesView_75;
-	public static String DesView_76;
-	public static String DesView_77;
-	public static String DesView_78;
-	public static String DesView_79;
 	public static String DesView_8;
 	public static String DesView_80;
-	public static String DesView_81;
-	public static String DesView_82;
-	public static String DesView_83;
-	public static String DesView_84;
-	public static String DesView_85;
-	public static String DesView_86;
 	public static String DesView_87;
 	public static String DesView_88;
 	public static String DesView_89;
@@ -316,13 +292,7 @@ public class Messages extends NLS {
 	public static String DesView_97;
 	public static String DesView_98;
 	public static String DesView_99;
-	public static String DesView_lblNewLabel_text;
-	public static String DesView_lblNewLabel_text_1;
-	public static String DesView_lblNewLabel_text_2;
-	public static String DesView_lblNewLabel_text_3;
-	public static String DesView_lblBlablablabla_text;
-	public static String DesView_lblBam_text;
-	public static String DesView_lblNewLabel_text_4;
+
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

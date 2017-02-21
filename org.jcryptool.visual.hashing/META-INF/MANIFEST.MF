@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name.0
 Bundle-SymbolicName: org.jcryptool.visual.hashing;singleton:=true
-Bundle-Version: 0.9.9
+Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.visual.hashing.HashingPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.jcryptool.core.operations;bundle-version="0.9.9",
+ org.jcryptool.core.operations;bundle-version="1.0.0",
  org.eclipse.help,
  org.bouncycastle
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

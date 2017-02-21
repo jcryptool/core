@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2010 JCrypTool Team and Contributors
+ * Copyright (c) 2017 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
@@ -26,6 +26,8 @@ import org.jcryptool.analysis.viterbi.algorithm.Combination;
  * @author Georg Chalupar, Niederwieser Martin, Scheuchenpflug Simon
  */
 public class ViterbiView extends ViewPart {
+	public ViterbiView() {
+	}
 	private XORComposite xorComposite;
 	private ViterbiComposite viterbiComposite;
 	private TabFolder tf;
