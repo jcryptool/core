@@ -4,9 +4,9 @@ Bundle-Name: %Bundle-Name.0
 Bundle-SymbolicName: org.jcryptool.analysis.freqanalysis;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.analysis.freqanalysis.FreqAnalysisPlugin
-Require-Bundle: org.jcryptool.core.operations;bundle-version="0.9.5",
+Require-Bundle: org.jcryptool.core.operations;bundle-version="1.0.0",
  org.eclipse.help.ui;bundle-version="3.5.100",
- org.jcryptool.core.util;bundle-version="0.9.5"
+ org.jcryptool.core.util;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.jcryptool.analysis.graphtools,

@@ -7,11 +7,11 @@ Bundle-Activator: org.jcryptool.analysis.vigenere.VigenereBreakerPlugin
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
  org.eclipse.core.runtime;bundle-version="3.7.0",
- org.jcryptool.crypto.classic.vigenere;bundle-version="0.9.5",
- org.jcryptool.analysis.freqanalysis;bundle-version="0.9.5",
- org.jcryptool.analysis.friedman;bundle-version="0.9.5",
- org.jcryptool.core.operations;bundle-version="0.9.5",
- org.jcryptool.core.util;bundle-version="0.9.5",
+ org.jcryptool.crypto.classic.vigenere;bundle-version="1.0.0",
+ org.jcryptool.analysis.freqanalysis;bundle-version="1.0.0",
+ org.jcryptool.analysis.friedman;bundle-version="1.0.0",
+ org.jcryptool.core.operations;bundle-version="1.0.0",
+ org.jcryptool.core.util;bundle-version="1.0.0",
  org.eclipse.help
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
