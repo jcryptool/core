@@ -303,7 +303,7 @@ public class MultiTree implements ISimpleMerkle {
 
 		// loop over remaining layers...
 		int n=d/h;
-		if (n==4) n--;
+		if ((d-1)%h==0) n--; //if 0 --> eine sig zu viel
 		for (i = 1; i < n; i++) {
 			
 			idx_leaf = (int) (idx_tree & ((1 << h) - 1));
@@ -416,38 +416,27 @@ public class MultiTree implements ISimpleMerkle {
 		return null;
 	}
 
-	public void generatePrivateKey() {
-		SecureRandom r = new SecureRandom();
-		r.nextBytes(sk);
-	}
 
 	@Override
 	public void generateKeyPairsAndLeaves() {
-		// generatePrivateKey();
 		for (int i = 0; i < this.leafCounter; i++) {
 			// generates a new WOTS/ WOTSPlus Keypair (public and secret key)
 			if (otsAlgo instanceof WOTSPlus) {
 				((WOTSPlus) otsAlgo).setAddress(otsAdrs);
 			}
-
 			this.otsAlgo.generateKeyPair();
 			// adds the private Key of the generated keypair to the private key
 			// list of privKeys
 			privKeys.add(otsAlgo.getPrivateKey());
 			publicKeys.add(otsAlgo.getPublicKey());
-
 		}
 
 		this.sk=randomGenerator(sk_seed, sk, 3 * n);
-
-		// SecureRandom prf = new SecureRandom();
 		ByteArrayOutputStream pek = new ByteArrayOutputStream();
 		pek.write(sk, 2 * n + idx_len, n);
-		pk = pek.toByteArray();
+		this.pk = pek.toByteArray();
 
 		keyIndex = 0;
-		// keyIndex = d - 1;
-		// treeHash(keyIndex, getTreeHeight(), seed);
 		System.arraycopy(pk, 0, sk, 3 * n + idx_len, n);
 
 	}
@@ -483,9 +472,6 @@ public class MultiTree implements ISimpleMerkle {
 			System.err.println("SIGNATURE VERIFYCATION FAILED: ABORT");
 			return false;
 		}
-		// get PK
-		byte[][] pek = wots.pkFromSig(signature, msg, pk_seed, otsAdrs);
-
 		return true;
 	}
 
