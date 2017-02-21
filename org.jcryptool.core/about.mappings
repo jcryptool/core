@@ -1,5 +1,5 @@
 ###############################################################################
-# Copyright (c) 2010 JCrypTool Core Team - https://github.com/jcryptool
+# Copyright (c) 2017 JCrypTool Core Team - https://github.com/jcryptool
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Eclipse Public License v1.0
 # which accompanies this distribution, and is available at
@@ -8,5 +8,5 @@
 # Contributors:
 #     JCrypTool Core Team - initial API and implementation
 ###############################################################################
-0=0.9.9
+0=1.0.0
 1=${timestamp}

@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.jcryptool</groupId>
 		<artifactId>org.jcryptool.core.parent</artifactId>
-		<version>0.9.9</version>
+		<version>1.0.0</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>org.jcryptool.product</artifactId>
@@ -85,7 +85,7 @@
 			<plugin>
 				<groupId>net.ju-n.maven.plugins</groupId>
 				<artifactId>checksum-maven-plugin</artifactId>
-				<version>1.3</version>
+				<version>1.4</version>
 				<executions>
 					<!-- calculate the hashes of the generated files -->
 					<execution>

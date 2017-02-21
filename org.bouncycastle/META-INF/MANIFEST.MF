@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.bouncycastle;singleton:=true
-Bundle-Version: 1.55.0
+Bundle-Version: 1.56.0
 Bundle-Activator: org.bouncycastle.BouncyCastlePlugin
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0"
@@ -95,8 +95,10 @@ Export-Package: org.bouncycastle,
  org.bouncycastle.jcajce.provider.asymmetric.x509,
  org.bouncycastle.jcajce.provider.config,
  org.bouncycastle.jcajce.provider.digest,
+ org.bouncycastle.jcajce.provider.drbg,
  org.bouncycastle.jcajce.provider.keystore,
  org.bouncycastle.jcajce.provider.keystore.bc,
+ org.bouncycastle.jcajce.provider.keystore.bcfks,
  org.bouncycastle.jcajce.provider.keystore.pkcs12,
  org.bouncycastle.jcajce.provider.symmetric,
  org.bouncycastle.jcajce.provider.symmetric.util,
@@ -146,6 +148,6 @@ Export-Package: org.bouncycastle,
  org.bouncycastle.x509.util
 Bundle-ClassPath: .,
  src/org/bouncycastle/,
- libs/bcprov-jdk15on-155.jar
+ libs/bcprov-jdk15on-156.jar
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.providers
