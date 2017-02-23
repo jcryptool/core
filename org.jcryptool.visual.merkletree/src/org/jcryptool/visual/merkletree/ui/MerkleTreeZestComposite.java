@@ -57,6 +57,7 @@ import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 public class MerkleTreeZestComposite extends Composite {
 
 	private GraphViewer viewer;
+	private SUIT mode;
 	private Composite merkleTreeZestComposite;
 	private StyledText styledTextTree;
 	private ArrayList<GraphConnection> markedConnectionList;
@@ -80,6 +81,12 @@ public class MerkleTreeZestComposite extends Composite {
 	private GraphNode[] nodes;
 	private Color distinguishableColors[];
 	private ZoomManager zoomManager;
+	private Runnable currentlyHighlighted;
+	private Runnable highlightedAuthpath;
+
+	Color[] greySteps;
+	Color[] redSteps;
+	private ArrayList<GraphNode> markedAuthpathList;
 
 	/**
 	 * Create the composite. Including Description, GraphItem, GraphView,
@@ -101,6 +108,7 @@ public class MerkleTreeZestComposite extends Composite {
 		curDisplay = getDisplay();
 		merkleTreeZestComposite = this;
 		this.merkle = merkle;
+		this.mode = mode;
 
 		/*
 		 * the description label for the chosen mode
@@ -188,6 +196,7 @@ public class MerkleTreeZestComposite extends Composite {
 		});
 
 		markedConnectionList = new ArrayList<GraphConnection>();
+		markedAuthpathList = new ArrayList<GraphNode>();
 		viewer.setContentProvider(new ZestNodeContentProvider());
 		viewer.setLabelProvider(new ZestLabelProvider(ColorConstants.lightGreen));
 
@@ -260,64 +269,62 @@ public class MerkleTreeZestComposite extends Composite {
 
 		if (mode == SUIT.XMSS_MT) {
 			colorizeMultitrees();
-		} else {
-
-			graph.addSelectionListener(new SelectionAdapter() {
-				/*
-				 * (non-Javadoc)
-				 * 
-				 * @see
-				 * org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.
-				 * eclipse.swt.events. SelectionEvent) Click-Event to get the
-				 * Selected Node and to mark the other Nodes
-				 */
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					distinctListener = true;
-					if (e.item instanceof GraphNode) {
-						GraphNode node = (GraphNode) e.item;
-						Node n = (Node) node.getData();
-
-						if (n.isLeaf()) {
-							styledTextTree.setForeground(new Color(null, new RGB(1, 70, 122)));
-							// styledTextTree.setFont(FontService.getHugeFont());
-							styledTextTree.setText(Descriptions.ZestLabelProvider_5 + " " + n.getLeafNumber() + " = " //$NON-NLS-1$ //$NON-NLS-2$
-									+ n.getNameAsString());
-
-							if (markedConnectionList.size() == 0) {
-								markBranch(node);
-								markAuthPath(markedConnectionList);
-							} else {
-								unmarkBranch(markedConnectionList);
-								markedConnectionList.clear();
-								markBranch(node);
-								markAuthPath(markedConnectionList);
-							}
-						} else {
-							if (markedConnectionList.size() != 0) {
-								unmarkBranch(markedConnectionList);
-								markedConnectionList.clear();
-								markBranch(node);
-							} else {
-								markBranch(node);
-							}
-							styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
-							styledTextTree.setAlignment(SWT.LEFT);
-							styledTextTree.setText(Descriptions.ZestLabelProvider_6 + " = " + n.getNameAsString());
-						}
-					}
-
-					/* Deselects immediately to allow dragging */
-					viewer.setSelection(new ISelection() {
-
-						@Override
-						public boolean isEmpty() {
-							return false;
-						}
-					});
-				}
-			});
 		}
+
+		graph.addSelectionListener(new SelectionAdapter() {
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.
+			 * eclipse.swt.events. SelectionEvent) Click-Event to get the
+			 * Selected Node and to mark the other Nodes
+			 */
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				distinctListener = true;
+				if (e.item instanceof GraphNode) {
+					GraphNode node = (GraphNode) e.item;
+					Node n = (Node) node.getData();
+
+					if (n.isLeaf()) {
+						styledTextTree.setForeground(new Color(null, new RGB(1, 70, 122)));
+						// styledTextTree.setFont(FontService.getHugeFont());
+						styledTextTree.setText(Descriptions.ZestLabelProvider_5 + " " + n.getLeafNumber() + " = " //$NON-NLS-1$ //$NON-NLS-2$
+								+ n.getNameAsString());
+
+						if (markedConnectionList.size() == 0) {
+							markBranch(node);
+							markAuthPath(markedConnectionList);
+						} else {
+							unmarkBranch();
+							markBranch(node);
+							markAuthPath(markedConnectionList);
+						}
+					} else {
+						if (markedConnectionList.size() == 0) {
+							markBranch(node);
+							markAuthPath(markedConnectionList);
+						} else {
+							unmarkBranch();
+							markBranch(node);
+						}
+						styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
+						styledTextTree.setAlignment(SWT.LEFT);
+						styledTextTree.setText(Descriptions.ZestLabelProvider_6 + " = " + n.getNameAsString());
+					}
+				}
+
+				/* Deselects immediately to allow dragging */
+				viewer.setSelection(new ISelection() {
+
+					@Override
+					public boolean isEmpty() {
+						return false;
+					}
+				});
+			}
+		});
+
 		// Camera Movement
 		MouseListener dragQueen = new MouseListener() {
 
@@ -388,6 +395,39 @@ public class MerkleTreeZestComposite extends Composite {
 
 		});
 
+		String os;
+		try {
+			os = System.getProperty("os.name");
+		} catch (Exception e) {
+			os = "";
+		}
+		os = os.toLowerCase();
+		int osGrey;
+		if (os.indexOf("win") >= 0) {
+			osGrey = 255;
+		} else if (os.indexOf("mac") >= 0) {
+			osGrey = 232;
+		} else if (os.indexOf("nix") >= 0 || os.indexOf("nux") >= 0) {
+			osGrey = 237;
+		} else {
+			osGrey = 240;
+		}
+
+		int arrayLength = (int) Math.ceil((osGrey - 50f) / 10);
+		int startingColor = 50;
+		for (; ((arrayLength * 10) + startingColor) % osGrey != 0; startingColor--) {
+		}
+
+		greySteps = new Color[arrayLength];
+		redSteps = new Color[arrayLength];
+		Display currentDisplay = getDisplay();
+		for (int i = 0, colorValues = startingColor; i < greySteps.length; colorValues += 10, ++i) {
+			greySteps[i] = new Color(currentDisplay, new RGB(colorValues, colorValues, colorValues));
+		}
+		for (int i = 0, colorValues = startingColor; i < redSteps.length; colorValues += 10, ++i) {
+			redSteps[i] = new Color(currentDisplay, new RGB(osGrey, colorValues, colorValues));
+		}
+
 	}
 
 	/**
@@ -404,8 +444,10 @@ public class MerkleTreeZestComposite extends Composite {
 			GraphConnection connection = (GraphConnection) leaf.getTargetConnections().get(0);
 
 			connection.setLineColor(viewer.getGraphControl().DARK_BLUE);
-			connection.getSource().setBackgroundColor(viewer.getGraphControl().HIGHLIGHT_COLOR);
-			connection.getDestination().setBackgroundColor(viewer.getGraphControl().HIGHLIGHT_COLOR);
+			if (mode != SUIT.XMSS_MT) {
+				connection.getSource().setBackgroundColor(viewer.getGraphControl().HIGHLIGHT_COLOR);
+				connection.getDestination().setBackgroundColor(viewer.getGraphControl().HIGHLIGHT_COLOR);
+			}
 
 			items.add(connection.getSource());
 			items.add(connection.getDestination());
@@ -415,9 +457,11 @@ public class MerkleTreeZestComposite extends Composite {
 
 			while (l.size() != 0) {
 				connection = (GraphConnection) connection.getSource().getTargetConnections().get(0);
+				if (mode != SUIT.XMSS_MT) {
+					connection.getSource().setBackgroundColor(viewer.getGraphControl().HIGHLIGHT_COLOR);
+					connection.getDestination().setBackgroundColor(viewer.getGraphControl().HIGHLIGHT_COLOR);
+				}
 				connection.setLineColor(viewer.getGraphControl().DARK_BLUE);
-				connection.getSource().setBackgroundColor(viewer.getGraphControl().HIGHLIGHT_COLOR);
-				connection.getDestination().setBackgroundColor(viewer.getGraphControl().HIGHLIGHT_COLOR);
 
 				items.add(connection.getSource());
 				items.add(connection.getDestination());
@@ -429,7 +473,10 @@ public class MerkleTreeZestComposite extends Composite {
 		} catch (IndexOutOfBoundsException ex) {
 			items.add(((GraphConnection) (leaf.getSourceConnections().get(0))).getSource());
 		}
-		viewer.getGraphControl().setSelection(items.toArray(new GraphItem[items.size()]));
+
+		if (mode == SUIT.XMSS_MT) {
+			currentlyHighlighted = animate(items.toArray(new GraphNode[items.size()]), greySteps);
+		}
 	}
 
 	/**
@@ -438,24 +485,47 @@ public class MerkleTreeZestComposite extends Composite {
 	 * @param markedConnectionList
 	 *            - Contains marked elements
 	 */
-	private void unmarkBranch(List<GraphConnection> markedConnectionList) {
+	private void unmarkBranch() {
 		GraphConnection authPath;
 		for (GraphConnection connection : markedConnectionList) {
 			connection.setLineColor(ColorConstants.lightGray);
-			connection.getSource().setBackgroundColor(viewer.getGraphControl().LIGHT_BLUE);
-			authPath = (GraphConnection) connection.getSource().getSourceConnections().get(0);
-			authPath.getDestination().setBackgroundColor(ColorConstants.lightGreen);
-			authPath = (GraphConnection) connection.getSource().getSourceConnections().get(1);
-			authPath.getDestination().setBackgroundColor(ColorConstants.lightGreen);
+			// connection.getSource().setBackgroundColor(viewer.getGraphControl().LIGHT_BLUE);
+			if (mode == SUIT.XMSS_MT) {
+				connection.getSource().setBorderWidth(0);
+			} else {
 
+				if (((GraphNode) connection.getSource()).getTargetConnections().isEmpty())
+					connection.getSource().setBackgroundColor(ColorConstants.lightGreen);
+
+				authPath = (GraphConnection) connection.getSource().getSourceConnections().get(0);
+				authPath.getDestination().setBackgroundColor(ColorConstants.lightGreen);
+				authPath = (GraphConnection) connection.getSource().getSourceConnections().get(1);
+				authPath.getDestination().setBackgroundColor(ColorConstants.lightGreen);
+			}
 			// color the nodes back to light green
 			Node leaf = (Node) connection.getDestination().getData();
 			if (leaf.isLeaf()) {
-				connection.getDestination().setBackgroundColor(ColorConstants.lightGreen);
-			} else {
-				connection.getDestination().setBackgroundColor(ColorConstants.lightGreen); // viewer.getGraphControl().LIGHT_BLUE
+				if (mode == SUIT.XMSS_MT) {
+					connection.getDestination().setBorderWidth(0);
+				} else {
+					connection.getDestination().setBackgroundColor(ColorConstants.lightGreen);
+				}
 			}
+
 		}
+		for (GraphNode authNode : markedAuthpathList) {
+			((GraphConnection) authNode.getTargetConnections().get(0)).setLineColor(ColorConstants.lightGray);
+			authNode.setBorderWidth(0);
+		}
+		if (mode == SUIT.XMSS_MT) {
+			if (currentlyHighlighted != null)
+				getDisplay().timerExec(-1, currentlyHighlighted);
+			if (highlightedAuthpath != null)
+				getDisplay().timerExec(-1, highlightedAuthpath);
+		}
+
+		markedConnectionList.clear();
+		markedAuthpathList.clear();
 	}
 
 	/**
@@ -465,6 +535,7 @@ public class MerkleTreeZestComposite extends Composite {
 	 *            - Contains marked elements of the Changing Path
 	 */
 	private void markAuthPath(List<GraphConnection> markedConnectionList) {
+		// ArrayList<GraphNode> items = new ArrayList<GraphNode>();
 		GraphConnection authPath;
 		// List<GraphConnection> connections = leaf.getTargetConnections();
 		for (GraphConnection connect : markedConnectionList) {
@@ -473,27 +544,42 @@ public class MerkleTreeZestComposite extends Composite {
 
 			if (myNode.equals(parentNode.getLeft())) {
 				authPath = (GraphConnection) connect.getSource().getSourceConnections().get(1);
-				authPath.getDestination().setBackgroundColor(ColorConstants.red);
+				// ((GraphConnection)
+				// connect.getSource()).getSourceConnections().get(1);
+				((GraphConnection) connect.getSource().getSourceConnections().get(1)).setLineColor(getDisplay().getSystemColor(SWT.COLOR_RED));
+				markedAuthpathList.add(authPath.getDestination());
 			} else {
 				authPath = (GraphConnection) connect.getSource().getSourceConnections().get(0);
-				authPath.getDestination().setBackgroundColor(ColorConstants.red);
+				((GraphConnection) connect.getSource().getSourceConnections().get(0)).setLineColor(getDisplay().getSystemColor(SWT.COLOR_RED));
+				// connect.setLineColor(getDisplay().getSystemColor(SWT.COLOR_RED));
+				markedAuthpathList.add(authPath.getDestination());
 			}
 		}
-	}
 
-	/**
-	 * Synchronize the merklTree with the other Tabpages
-	 * 
-	 * @param merkle
-	 */
-	private void linkMerkleTree(ISimpleMerkle merkle) {
-		if (merkle.getMerkleRoot() != null) {
-			viewer.setInput(merkle.getTree());
-			viewer.setLayoutAlgorithm(new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
-			viewer.applyLayout();
+		if (mode != SUIT.XMSS_MT) {
+			for (int i = 0; i < markedAuthpathList.size(); ++i) {
+				markedAuthpathList.get(i).setBackgroundColor(ColorConstants.red);
+			}
+		} else {
+			highlightedAuthpath = animate(markedAuthpathList.toArray(new GraphNode[markedAuthpathList.size()]), redSteps);
 		}
 
 	}
+
+	// /**
+	// * Synchronize the merklTree with the other Tabpages
+	// *
+	// * @param merkle
+	// */
+	// private void linkMerkleTree(ISimpleMerkle merkle) {
+	// if (merkle.getMerkleRoot() != null) {
+	// viewer.setInput(merkle.getTree());
+	// viewer.setLayoutAlgorithm(new
+	// TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
+	// viewer.applyLayout();
+	// }
+	//
+	// }
 
 	/**
 	 * Sets the current view location based on mouse movement
@@ -574,6 +660,10 @@ public class MerkleTreeZestComposite extends Composite {
 			if (j >= distinguishableColors.length)
 				j = 0;
 			recursive(rootNodes[i], distinguishableColors[j]);
+			if (rootNodes[i].getTargetConnections().size() != 0) {
+				rootNodes[i].setText("Wurzel/Blatt");
+			}
+
 		}
 
 	}
@@ -597,4 +687,48 @@ public class MerkleTreeZestComposite extends Composite {
 		}
 	}
 
+	int colorIndex = 0;
+	int direction = 1;
+	int darkCounter = 0;
+	boolean shouldUpdate = true;
+
+	private Runnable animate(GraphNode[] node, Color[] colors) {
+		for (int i = 0; i < node.length; ++i)
+			node[i].setBorderWidth(3);
+
+		Runnable runnable = new Runnable() {
+
+			@Override
+			public void run() {
+				for (int i = 0; i < node.length; ++i) {
+					if (node[i].isDisposed())
+						return;
+				}
+
+				if (colorIndex + 1 >= colors.length)
+					direction = -1;
+
+				if (colorIndex - 1 < 0) {
+					darkCounter++;
+					shouldUpdate = false;
+					if (darkCounter >= 20) {
+						direction = 1;
+						darkCounter = 0;
+						shouldUpdate = true;
+					}
+				}
+				if (shouldUpdate) {
+					colorIndex += direction;
+					for (int i = 0; i < node.length; ++i) {
+						node[i].setBorderColor(colors[colorIndex]);
+					}
+				}
+				graph.redraw();
+
+				getDisplay().timerExec(40, this);
+			}
+		};
+		getDisplay().timerExec(40, runnable);
+		return runnable;
+	}
 }
