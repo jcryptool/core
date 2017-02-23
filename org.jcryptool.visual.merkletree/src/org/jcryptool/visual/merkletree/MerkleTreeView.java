@@ -276,7 +276,7 @@ public class MerkleTreeView extends ViewPart {
 				signatures = signatureTab.getSignatures();
 				messages = signatureTab.getMessages();
 				if (mustCreateTab[4]) {
-					verificationTab = new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle, signatures, messages);
+					verificationTab = new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle, signatures, messages, mode);
 					verificationTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 					mustCreateTab[4] = false;
 				}
