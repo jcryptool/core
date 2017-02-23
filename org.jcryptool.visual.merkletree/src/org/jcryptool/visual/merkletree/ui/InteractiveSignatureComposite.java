@@ -273,6 +273,7 @@ public class InteractiveSignatureComposite extends Composite {
 		viewer.getGraphControl().setHorizontalScrollBarVisibility(FigureCanvas.NEVER);
 		viewer.getGraphControl().setVerticalScrollBarVisibility(FigureCanvas.NEVER);
 		markedConnectionList = new ArrayList<GraphConnection>();
+		markedAuthpathList = new ArrayList<GraphNode>();
 		viewer.setContentProvider(new ZestNodeContentProvider());
 		viewer.setLabelProvider(new ZestLabelProvider(ColorConstants.lightGreen));
 
@@ -283,7 +284,6 @@ public class InteractiveSignatureComposite extends Composite {
 		viewer.setLayoutAlgorithm(new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
 		viewer.applyLayout();
 
-		markedAuthpathList = new ArrayList<>();
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(viewer.getControl());
 
 		graph = viewer.getGraphControl();
@@ -1048,6 +1048,9 @@ public class InteractiveSignatureComposite extends Composite {
 			if (j >= distinguishableColors.length)
 				j = 0;
 			recursive(rootNodes[i], distinguishableColors[j]);
+			if (rootNodes[i].getTargetConnections().size() != 0) {
+				rootNodes[i].setText("Wurzel/Blatt");
+			}
 		}
 
 	}
