@@ -1,16 +1,10 @@
 package org.jcryptool.visual.merkletree.ui;
 
-import java.util.Arrays;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyleRange;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
@@ -22,47 +16,29 @@ import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
 import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
+import org.jcryptool.visual.merkletree.files.Converter;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 public class MerkleTreeKeyComposite extends Composite {
 
-	private StyledText publicKeyText;
+	private Text publicKeyText;
 	private Label descLabel;
-	private Label spacer;
-	private Label buttonInfoLabel;
-	private Label spinnerInfoLabel;
 	private Text keyExplanation;
 
 	private Group publicKeyGroup;
 	private Group privateKeyGroup;
 
-	private Button buttonIndex;
-	private Button buttonSeed;
-	private Button buttonLeaves;
-
-	private Boolean nodeToggleMap[];
-	private int spinnerValue;
-	private int leafCounter;
-
-	private Boolean toggleIndex = false;
-	private Boolean toggleSeed = false;
-
 	private String publicKey;
 	private String privateKey;
+	private String splittedPublicKey[];
 	private String splittedPrivateKey[];
-
-	private StyleRange indexBold;
-	private Color distinguishableColors[];
-	private Color black;
 
 	private Label indexLabel;
 	private Text indexText;
 	private Label seedLabel;
 	private Text seedText;
-	private Label publicSeedLabel;
 	private Text publicSeedText;
 	private Composite indexSeedComposite;
-	private Label leafLabel;
 	private Label otsLabel;
 	private Spinner privateOTSSpinner;
 	private Text privateOTSKey;
@@ -104,20 +80,58 @@ public class MerkleTreeKeyComposite extends Composite {
 
 		publicKeyGroup = new Group(this, SWT.SHADOW_IN);
 		publicKeyGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN * 2, 1));
-		publicKeyGroup.setLayout(new GridLayout(1, true));
+		publicKeyGroup.setLayout(new GridLayout(20, true));
 		publicKeyGroup.setFont(FontService.getNormalBoldFont());
 		publicKeyGroup.setText(Descriptions.MerkleTreeKeyTab_1);
 
+		Label lengthDescriptionLabel = new Label(publicKeyGroup, SWT.NONE);
+		lengthDescriptionLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+		lengthDescriptionLabel.setText("Schlüssellänge");
+
+		Label lengthLabel = new Label(publicKeyGroup, SWT.NONE);
+		lengthLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+		String cleanedPublicKey = publicKey.replaceAll("\\|", "");
+		lengthLabel.setText(Converter._numberToPrefix(cleanedPublicKey.length() / 2));
+
+		Label spacerLine1 = new Label(publicKeyGroup, SWT.SEPARATOR | SWT.HORIZONTAL);
+		spacerLine1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 20, 1));
+
+		splittedPublicKey = publicKey.split("\\|");
+
+		Label rootNodeLabel = new Label(publicKeyGroup, SWT.NONE);
+		rootNodeLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 7, 1));
+		rootNodeLabel.setText("Hashwert des Wurzelknotens");
+
+		Text rootNodeText = new Text(publicKeyGroup, SWT.READ_ONLY);
+		rootNodeText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 10, 1));
+		rootNodeText.setText(splittedPublicKey[0]);
+
+		Label publicSeedLabel = new Label(publicKeyGroup, SWT.NONE);
+		publicSeedLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 7, 1));
+		publicSeedLabel.setText("Öffentlicher Seed");
+
 		// text field storing public key
-		publicKeyText = new StyledText(publicKeyGroup, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
-		publicKeyText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN * 2, 1));
-		publicKeyText.setText(publicKey);
+		publicKeyText = new Text(publicKeyGroup, SWT.READ_ONLY);
+		publicKeyText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 10, 1));
+		publicKeyText.setText(splittedPublicKey[1]);
 
 		privateKeyGroup = new Group(this, SWT.SHADOW_ETCHED_IN);
-		privateKeyGroup.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, MerkleConst.H_SPAN_MAIN * 2, 1));
+		privateKeyGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, MerkleConst.H_SPAN_MAIN * 2, 1));
 		privateKeyGroup.setLayout(new GridLayout(20, true));
 		privateKeyGroup.setFont(FontService.getNormalBoldFont());
 		privateKeyGroup.setText(Descriptions.MerkleTreeKeyTab_2);
+
+		Label privateLengthDescriptionLabel = new Label(privateKeyGroup, SWT.NONE);
+		privateLengthDescriptionLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
+		privateLengthDescriptionLabel.setText("Schlüssellänge");
+
+		Label privateLengthLabel = new Label(privateKeyGroup, SWT.NONE);
+		privateLengthLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
+		String cleanedPrivateKey = privateKey.replaceAll("|", "");
+		privateLengthLabel.setText(Converter._numberToPrefix(cleanedPrivateKey.length() / 2));
+
+		Label spacerLine2 = new Label(privateKeyGroup, SWT.SEPARATOR | SWT.HORIZONTAL);
+		spacerLine2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 20, 1));
 
 		// The private key is splitted to get the corrrect positions of
 		// seed/leaves
@@ -172,8 +186,8 @@ public class MerkleTreeKeyComposite extends Composite {
 		otsLabel.setText(Descriptions.MerkleTreeKeyTab_5 + " " + privateOTSSpinner.getSelection() + "/" + (merkle.getLeafCounter() - 1));
 
 		privateOTSKey = new Text(privateKeyGroup, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.READ_ONLY);
-		privateOTSKey.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 13, 1));
 		privateOTSKey.setText(splittedPrivateKey[arrayCounter]);
+		privateOTSKey.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 13, 1));
 
 		privateOTSSpinner.addSelectionListener(new SelectionAdapter() {
 
@@ -185,138 +199,18 @@ public class MerkleTreeKeyComposite extends Composite {
 
 		});
 
-		// Buttons to toggle color highlighting
-		// Composite buttonComposite = new Composite(privateKeyGroup, SWT.NONE);
-		//
-		// buttonInfoLabel = new Label(buttonComposite, SWT.NONE);
-		// buttonInfoLabel.setText(Descriptions.MerkleTreeKeyTab_6);
-		// buttonInfoLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
-		// false, false, 2, 1));
-		//
-		// buttonIndex = new Button(buttonComposite, SWT.TOGGLE);
-		// buttonIndex.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
-		// false, 1, 1));
-		// buttonIndex.setText(Descriptions.MerkleTreeKeyTab_3);
-		//
-		// buttonLeaves = new Button(buttonComposite, SWT.NONE);
-		// buttonLeaves.setLayoutData(new GridData(SWT.END, SWT.CENTER, false,
-		// false, 2, 1));
-		// buttonLeaves.setText(Descriptions.MerkleTreeKeyTab_5);
-		//
-		// // spinner to toggle leaf
-		// leafCounter = merkle.getLeafCounter();
-		// spinnerLeaf = new Spinner(buttonComposite, SWT.BORDER);
-		// spinnerLeaf.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
-		// false, 1, 1));
-		// spinnerLeaf.setMinimum(0);
-		// spinnerLeaf.setMaximum(leafCounter - 1);
-		// spinnerValue = 0;
-		//
-		// spinnerInfoLabel = new Label(buttonComposite, SWT.NONE);
-		// spinnerInfoLabel.setText("0 - " + (merkle.getLeafCounter() - 1));
-		//
-		// buttonComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
-		// true, false, 16, 1));
-		// buttonComposite.setLayout(new GridLayout(8, true));
-
-		// Composite privateKeyComposite = new Composite(privateKeyGroup,
-		// SWT.NONE);
-		// privateKeyComposite.setLayoutData(new GridData(SWT.FILL, SWT.TOP,
-		// true, true, MerkleConst.H_SPAN_MAIN * 2, 1));
-		// privateKeyComposite.setLayout(new GridLayout(1, true));
-
-		// privateKeyText = new StyledText(privateKeyComposite, SWT.BORDER |
-		// SWT.V_SCROLL | SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
-		// privateKeyText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-		// true, MerkleConst.H_SPAN_MAIN, 1));
-		// privateKeyText.setText(privateKey);
-
-		if (merkle instanceof XMSSTree) {
+		switch (mode) {
+		case XMSS:
 			descLabel.setText(Descriptions.XMSS.Tab1_Head0);
-		} else if (merkle instanceof SimpleMerkleTree) {
+			break;
+		case XMSS_MT:
+			descLabel.setText(Descriptions.XMSS_MT.Tab1_Head0);
+			break;
+		case MSS:
 			descLabel.setText(Descriptions.MSS.Tab1_Head0);
-
+		default:
+			break;
 		}
-
-		black = getDisplay().getSystemColor(SWT.COLOR_BLACK);
-		// creates an array of well readable colors
-		distinguishableColors = new Color[4];
-		distinguishableColors[0] = new Color(getDisplay(), 186, 186, 0);
-		distinguishableColors[1] = new Color(getDisplay(), 186, 0, 186);
-		distinguishableColors[2] = new Color(getDisplay(), 0, 186, 186);
-		distinguishableColors[3] = new Color(getDisplay(), 0, 186, 0);
-
-		int indexSeedLength = splittedPrivateKey[0].length() + splittedPrivateKey[1].length() + 1;
-		// indexBold = new StyleRange(0, indexSeedLength, new
-		// Color(getDisplay(), 176, 0, 0), privateKeyText.getBackground());
-		// indexBold.fontStyle = SWT.BOLD;
-		// SelectionListener to toggle color highlight for index
-		// buttonIndex.addSelectionListener(new SelectionListener() {
-		//
-		// @Override
-		// public void widgetSelected(SelectionEvent e) {
-		// if (toggleIndex) {
-		// setColor(0, indexSeedLength, black);
-		// toggleIndex = false;
-		// } else {
-		// privateKeyText.setStyleRange(indexBold);
-		// toggleIndex = true;
-		// }
-		// }
-		//
-		// @Override
-		// public void widgetDefaultSelected(SelectionEvent e) {
-		// }
-		// });
-		//
-		// // the spinner value which selects a leaf
-		// spinnerLeaf.addSelectionListener(new SelectionAdapter() {
-		// @Override
-		// public void widgetSelected(SelectionEvent e) {
-		//
-		// spinnerValue = spinnerLeaf.getSelection();
-		// }
-		// });
-		//
-		// nodeToggleMap = new Boolean[leafCounter];
-		// Arrays.fill(nodeToggleMap, false);
-		//
-		// // SelectionListener to toggle color highlight for leaves
-		// buttonLeaves.addSelectionListener(new SelectionListener() {
-		// int startingNode[] = new int[leafCounter];
-		// int endingNode[] = new int[leafCounter];
-		//
-		// @Override
-		// public void widgetSelected(SelectionEvent e) {
-		// // if leaf was already highlighted set black
-		// if (nodeToggleMap[spinnerValue]) {
-		// setColor(startingNode[spinnerValue], endingNode[spinnerValue] + 1,
-		// black);
-		// nodeToggleMap[spinnerValue] = false;
-		// } else {
-		// // if leaf wasn't highlighted calculate starting position
-		// // and length
-		// startingNode[spinnerValue] = 0;
-		// endingNode[spinnerValue] = 0;
-		// for (int i = 0; i < (spinnerValue + 2); ++i) {
-		// startingNode[spinnerValue] += splittedPrivateKey[i].length();
-		// startingNode[spinnerValue]++;
-		// }
-		// // set the values, the pipe is also set in color (--
-		// // operation) due to a formatting bug
-		// startingNode[spinnerValue]--;
-		// endingNode[spinnerValue] = splittedPrivateKey[spinnerValue +
-		// 2].length();
-		// setColor(startingNode[spinnerValue], endingNode[spinnerValue] + 1,
-		// getDistinguishableColor(spinnerValue % 4));
-		// nodeToggleMap[spinnerValue] = true;
-		// }
-		// }
-		//
-		// @Override
-		// public void widgetDefaultSelected(SelectionEvent e) {
-		// }
-		// });
 
 	}
 
@@ -326,22 +220,8 @@ public class MerkleTreeKeyComposite extends Composite {
 		// Disable the check that prevents subclassing of SWT components
 	}
 
-	/**
-	 * 
-	 * @param position
-	 * @return a fixed value of a well distinguishable and readable color
-	 */
-	// this method actually needs a point, or it's useless
-	private Color getDistinguishableColor(int position) {
-		return distinguishableColors[position];
-	}
-
 	public void updateIndexText() {
 		indexText.setText(String.valueOf(merkle.getKeyIndex()));
 	}
-
-	// private void setColor(int start, int length, Color color) {
-	// privateKeyText.setStyleRange(new StyleRange(start, length, color, null));
-	// }
 
 }
