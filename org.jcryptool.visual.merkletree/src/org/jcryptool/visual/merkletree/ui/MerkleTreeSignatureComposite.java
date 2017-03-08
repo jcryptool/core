@@ -51,6 +51,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 	MerkleTreeSignatureComposite instance;
 	ViewPart masterView;
 	SUIT mode;
+	Shell shell;
 	Label descLabel;
 	Composite selectionComposite;
 	Composite topBar;
@@ -87,6 +88,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 		this.merkle = merkle;
 		this.mode = mode;
 		this.masterView = masterView;
+		shell = this.getShell();
 		instance = this;
 
 		topBar = new Composite(this, SWT.NONE);
@@ -95,7 +97,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 
 		indexLabel = new Label(topBar, SWT.CENTER);
 		indexLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 2, 1));
-		indexLabel.setText(Descriptions.MerkleTreeSign_7 + "   " + "/" + (merkle.getLeafCounter() - 1));
+		indexLabel.setText(Descriptions.MerkleTreeSign_7 + "   " + " / " + (merkle.getLeafCounter() - 1));
 		indexLabel.setVisible(false);
 
 		interactiveTopButton = new Button(topBar, SWT.PUSH);
@@ -110,10 +112,18 @@ public class MerkleTreeSignatureComposite extends Composite {
 
 		descLabel = new Label(topBar, SWT.NONE);
 		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, true, false, 2, 1));
-		if (merkle instanceof XMSSTree) {
+
+		switch (mode) {
+		case XMSS:
 			descLabel.setText(Descriptions.XMSS.Tab1_Head0);
-		} else if (merkle instanceof SimpleMerkleTree) {
+			break;
+		case XMSS_MT:
+			descLabel.setText(Descriptions.XMSS_MT.Tab1_Head0);
+			break;
+		case MSS:
 			descLabel.setText(Descriptions.MSS.Tab1_Head0);
+		default:
+			break;
 		}
 
 		signatures = new String[merkle.getLeafCounter()];
@@ -132,62 +142,20 @@ public class MerkleTreeSignatureComposite extends Composite {
 		tabDescriptionLabel.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, true, 4, 1));
 		tabDescriptionLabel.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
 
-		descrText = new Text(selectionComposite, SWT.WRAP | SWT.CENTER);
-		descrText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 4, 1));
-		// descrText.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-
 		interactiveButton = new Button(selectionComposite, SWT.PUSH);
 		interactiveButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		interactiveButton.setText(Descriptions.InteractiveSignature_Button_0);
+		interactiveButton.setToolTipText(Descriptions.InteractiveSignature_9);
 
 		plainButton = new Button(selectionComposite, SWT.PUSH);
 		plainButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		plainButton.setText(Descriptions.InteractiveSignature_Button_5);
+		plainButton.setToolTipText(Descriptions.InteractiveSignature_10);
 
 		spacerBottom = new Label(this, SWT.NONE);
 		spacerBottom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
 		spacerBottom2 = new Label(this, SWT.NONE);
 		spacerBottom2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
-
-		interactiveButton.addMouseTrackListener(new MouseTrackListener() {
-
-			@Override
-			public void mouseHover(MouseEvent e) {
-				// nothing here
-
-			}
-
-			@Override
-			public void mouseExit(MouseEvent e) {
-				descrText.setText("");
-			}
-
-			@Override
-			public void mouseEnter(MouseEvent e) {
-				descrText.setText(Descriptions.InteractiveSignature_9);
-
-			}
-		});
-
-		plainButton.addMouseTrackListener(new MouseTrackListener() {
-
-			@Override
-			public void mouseHover(MouseEvent e) {
-				// nothing here
-
-			}
-
-			@Override
-			public void mouseExit(MouseEvent e) {
-				descrText.setText("");
-			}
-
-			@Override
-			public void mouseEnter(MouseEvent e) {
-				descrText.setText("Geben Sie einen Text ein und erhalten sofort eine Signatur");
-
-			}
-		});
 
 		interactiveButton.addSelectionListener(new SelectionAdapter() {
 
@@ -220,7 +188,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (interactiveStatus) {
-					MessageBox abortInteractive = new MessageBox(new Shell(), SWT.ICON_WORKING | SWT.YES | SWT.NO);
+					MessageBox abortInteractive = new MessageBox(shell, SWT.ICON_WORKING | SWT.YES | SWT.NO);
 					abortInteractive.setText("Warnung");
 					abortInteractive.setMessage("Wollen sie die interaktive Signaturerstellung abbrechen?");
 					int boxValue = abortInteractive.open();
@@ -280,7 +248,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 			signatureComposite.setLayout(stackLayout);
 		}
 		if (plain == null) {
-			plain = new PlainSignatureComposite(signatureComposite, SWT.NONE, merkle, this);
+			plain = new PlainSignatureComposite(signatureComposite, SWT.NONE, merkle, this, mode);
 			plain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
 			plain.pack();
 		}
@@ -333,9 +301,9 @@ public class MerkleTreeSignatureComposite extends Composite {
 
 	public void updateIndexLabel(int pseudoIndex) {
 		if (pseudoIndex < 0) {
-			indexLabel.setText(Descriptions.MerkleTreeSign_7 + "   " + "/" + (merkle.getLeafCounter() - 1));
+			indexLabel.setText(Descriptions.MerkleTreeSign_7 + "   " + " / " + (merkle.getLeafCounter() - 1));
 		} else {
-			indexLabel.setText(Descriptions.MerkleTreeSign_7 + " " + pseudoIndex + "/" + (merkle.getLeafCounter() - 1));
+			indexLabel.setText(Descriptions.MerkleTreeSign_7 + " " + pseudoIndex + " / " + (merkle.getLeafCounter() - 1));
 		}
 	}
 
@@ -383,8 +351,8 @@ public class MerkleTreeSignatureComposite extends Composite {
 	}
 
 	protected void keysExceededMessage() {
-		MessageBox box = new MessageBox(new Shell(), SWT.COLOR_INFO_BACKGROUND | SWT.OK);
-		box.setMessage(Descriptions.MerkleTreeSign_8);
+		MessageBox box = new MessageBox(shell, SWT.COLOR_INFO_BACKGROUND | SWT.OK);
+		box.setMessage(Descriptions.MerkleTreeSign_9);
 		int boxOK = box.open();
 
 		switch (boxOK) {
