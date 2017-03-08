@@ -8,6 +8,7 @@ import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.SWTEventDispatcher;
 import org.eclipse.gef.editparts.ZoomManager;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.custom.StyledText;
@@ -63,7 +64,7 @@ public class MerkleTreeVerifikationComposite
 	private ISimpleMerkle merkle;
 	private GraphViewer viewer;
 	private StyledText binaryValue;
-	private StyledText styledTextTree;
+	private Label verificationFeedbackLabel;
 	private int layoutCounter = 1;
 	private int currentIndex;
 	private int latestIndex;
@@ -136,18 +137,6 @@ public class MerkleTreeVerifikationComposite
 				i = -1;
 			}
 		}
-		// this.addControlListener(new ControlAdapter() {
-		// @Override
-		// public void controlResized(ControlEvent e) {
-		// viewer.applyLayout();
-		// }
-		// });
-
-		/*
-		 * The Text is based on the used suite if there will implemented an
-		 * other suite, just add an else if and type the name of the instance
-		 * Example for MultiTree -> merkle instanceof XMSSMTs
-		 */
 
 		topBar = new Composite(this, SWT.NONE);
 		topBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 8, 1));
@@ -166,10 +155,17 @@ public class MerkleTreeVerifikationComposite
 
 		descLabel = new Label(topBar, SWT.NONE);
 		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, true, false, 2, 1));
-		if (merkle instanceof XMSSTree) {
+		switch (mode) {
+		case XMSS:
 			descLabel.setText(Descriptions.XMSS.Tab1_Head0);
-		} else if (merkle instanceof SimpleMerkleTree) {
+			break;
+		case XMSS_MT:
+			descLabel.setText(Descriptions.XMSS_MT.Tab1_Head0);
+			break;
+		case MSS:
 			descLabel.setText(Descriptions.MSS.Tab1_Head0);
+		default:
+			break;
 		}
 
 		/*
@@ -186,7 +182,7 @@ public class MerkleTreeVerifikationComposite
 		descriptionComposite.setLayout(new GridLayout(1, true));
 
 		descText = new StyledText(descriptionComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
-		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		descText.setText(Descriptions.MerkleTreeVerify_0);
 		stackLayout.topControl = descriptionComposite;
 
@@ -255,8 +251,8 @@ public class MerkleTreeVerifikationComposite
 				currentIndex = selectionCombo.getSelectionIndex();
 				leftText.setText(messages[currentIndex]);
 				rightText.setText(signatures[currentIndex]);
-				styledTextTree.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
-				styledTextTree.setText("");
+				verificationFeedbackLabel.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
+				verificationFeedbackLabel.setText("");
 
 				unmarkBranch();
 				markedConnectionList.clear();
@@ -267,9 +263,9 @@ public class MerkleTreeVerifikationComposite
 
 		this.setLayout(new GridLayout(1, true));
 
-		styledTextTree = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
-		styledTextTree.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
-		styledTextTree.setText(Descriptions.MerkleTreeVerify_9);
+		verificationFeedbackLabel = new Label(this, SWT.WRAP | SWT.CENTER);
+		verificationFeedbackLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
+		verificationFeedbackLabel.setText(Descriptions.MerkleTreeVerify_9);
 
 		zestComposite = new Composite(this, SWT.DOUBLE_BUFFERED | SWT.BORDER);
 		zestComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
@@ -350,7 +346,7 @@ public class MerkleTreeVerifikationComposite
 		 * Text field for the binary representation of the node this The textbox
 		 * is filled in the method markAuthPath()
 		 */
-		binaryValue = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
+		binaryValue = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
 		binaryValue.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 
 		graph = viewer.getGraphControl();
@@ -374,12 +370,17 @@ public class MerkleTreeVerifikationComposite
 			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				distinctListener = true;
 				if (e.item instanceof GraphNode) {
 					GraphNode node = (GraphNode) e.item;
 					Node n = (Node) node.getData();
 
+					verificationFeedbackLabel.setForeground(new Color(null, new RGB(0, 0, 0)));
+					// verificationFeedbackLabel.setAlignment(SWT.LEFT);
+					verificationFeedbackLabel.setBackground(ColorConstants.white);
+					verificationFeedbackLabel.setText("");
 					if (n.isLeaf()) {
-						styledTextTree.setForeground(new Color(null, new RGB(1, 70, 122)));
+						verificationFeedbackLabel.setForeground(new Color(null, new RGB(1, 70, 122)));
 						if (markedConnectionList.size() == 0) {
 							markBranch(node);
 							markAuthPath(markedConnectionList);
@@ -390,16 +391,23 @@ public class MerkleTreeVerifikationComposite
 							markAuthPath(markedConnectionList);
 						}
 					} else {
-						if (markedConnectionList.size() != 0) {
-							unmarkBranch();
-							markedConnectionList.clear();
+						if (markedConnectionList.size() == 0) {
 							markBranch(node);
+							markAuthPath(markedConnectionList);
 						} else {
+							unmarkBranch();
 							markBranch(node);
+							markAuthPath(markedConnectionList);
 						}
-						styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
-						styledTextTree.setAlignment(SWT.LEFT);
 					}
+					/* Deselects immediately to allow dragging */
+					viewer.setSelection(new ISelection() {
+
+						@Override
+						public boolean isEmpty() {
+							return false;
+						}
+					});
 				}
 			}
 		});
@@ -433,7 +441,6 @@ public class MerkleTreeVerifikationComposite
 
 							} catch (InterruptedException e) {
 							}
-
 						}
 
 					}
@@ -473,19 +480,19 @@ public class MerkleTreeVerifikationComposite
 						 * set the Screen color based on the result green if
 						 * verification success red if verification fails
 						 */
-						styledTextTree.setBackground(ColorConstants.green);
-						styledTextTree.setText(Descriptions.MerkleTreeVerify_7);
+						verificationFeedbackLabel.setBackground(ColorConstants.green);
+						verificationFeedbackLabel.setText(Descriptions.MerkleTreeVerify_7);
 					} else {
-						styledTextTree.setBackground(ColorConstants.red);
-						styledTextTree.setText(Descriptions.MerkleTreeVerify_8);
+						verificationFeedbackLabel.setBackground(ColorConstants.red);
+						verificationFeedbackLabel.setText(Descriptions.MerkleTreeVerify_8);
 					}
 				} else {
 					/*
 					 * if selected item is a node then show message that node
 					 * cant be used to verify signature
 					 */
-					styledTextTree.setBackground(ColorConstants.red);
-					styledTextTree.setText(Descriptions.MerkleTreeVerify_11);
+					verificationFeedbackLabel.setBackground(ColorConstants.red);
+					verificationFeedbackLabel.setText(Descriptions.MerkleTreeVerify_13);
 				}
 			}
 		});
@@ -624,6 +631,18 @@ public class MerkleTreeVerifikationComposite
 		if (mode == SUIT.XMSS_MT) {
 			currentlyHighlighted = animate(items.toArray(new GraphNode[items.size()]), greySteps);
 		}
+		Node selectedNode = (Node) markedConnectionList.get(0).getDestination().getData();
+		if (selectedNode.isLeaf()) {
+			binaryValue.setText(Descriptions.MerkleTreeVerify_10 + " " + selectedNode.getAuthPath());
+			if (selectedNode.getLeafNumber() == currentIndex) {
+				binaryValue.append(". " + Descriptions.MerkleTreeVerify_11);
+			} else {
+				binaryValue.append(". " + Descriptions.MerkleTreeVerify_12);
+			}
+
+		} else {
+			binaryValue.setText(Descriptions.MerkleTreeVerify_13);
+		}
 	}
 
 	/**
@@ -634,20 +653,22 @@ public class MerkleTreeVerifikationComposite
 	 */
 	private void unmarkBranch() {
 		GraphConnection authPath;
+		if (mode == SUIT.XMSS_MT) {
+			markedConnectionList.get(0).getDestination().setBorderWidth(0);
+		}
 		for (GraphConnection connection : markedConnectionList) {
 			connection.setLineColor(ColorConstants.lightGray);
-			// connection.getSource().setBackgroundColor(viewer.getGraphControl().LIGHT_BLUE);
 			if (mode == SUIT.XMSS_MT) {
 				connection.getSource().setBorderWidth(0);
 			} else {
 
 				if (((GraphNode) connection.getSource()).getTargetConnections().isEmpty())
-					connection.getSource().setBackgroundColor(ColorConstants.lightGreen);
+					connection.getSource().setBackgroundColor(ColorConstants.white);
 
 				authPath = (GraphConnection) connection.getSource().getSourceConnections().get(0);
-				authPath.getDestination().setBackgroundColor(ColorConstants.lightGreen);
+				authPath.getDestination().setBackgroundColor(ColorConstants.white);
 				authPath = (GraphConnection) connection.getSource().getSourceConnections().get(1);
-				authPath.getDestination().setBackgroundColor(ColorConstants.lightGreen);
+				authPath.getDestination().setBackgroundColor(ColorConstants.white);
 			}
 			// color the nodes back to light green
 			Node leaf = (Node) connection.getDestination().getData();
@@ -655,7 +676,7 @@ public class MerkleTreeVerifikationComposite
 				if (mode == SUIT.XMSS_MT) {
 					connection.getDestination().setBorderWidth(0);
 				} else {
-					connection.getDestination().setBackgroundColor(ColorConstants.lightGreen);
+					connection.getDestination().setBackgroundColor(ColorConstants.white);
 				}
 			}
 
@@ -710,13 +731,7 @@ public class MerkleTreeVerifikationComposite
 		} else {
 			highlightedAuthpath = animate(markedAuthpathList.toArray(new GraphNode[markedAuthpathList.size()]), redSteps);
 		}
-
 	}
-
-	// @Override
-	// public AbstractZoomableViewer getZoomableViewer() {
-	// return viewer;
-	// }
 
 	/**
 	 * Change the layout of the merkle tree
@@ -754,8 +769,8 @@ public class MerkleTreeVerifikationComposite
 		if (selectionCombo.getItemCount() > 0)
 			selectionCombo.removeAll();
 
-		styledTextTree.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
-		styledTextTree.setText("");
+		verificationFeedbackLabel.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
+		verificationFeedbackLabel.setText("");
 
 		for (int i = 0; i < signatures.length; ++i) {
 			if (messages[i] != null) {
