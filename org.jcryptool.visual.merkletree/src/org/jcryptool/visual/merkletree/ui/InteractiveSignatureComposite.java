@@ -3,36 +3,28 @@ package org.jcryptool.visual.merkletree.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.jws.WebParam.Mode;
-
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.SWTEventDispatcher;
+import org.eclipse.gef.editparts.ZoomManager;
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
-import org.eclipse.swt.events.ExpandEvent;
-import org.eclipse.swt.events.ExpandListener;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.MouseWheelListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.Rectangle;
@@ -40,13 +32,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.ExpandBar;
-import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.viewers.GraphViewer;
@@ -54,19 +41,16 @@ import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.GraphConnection;
 import org.eclipse.zest.core.widgets.GraphItem;
 import org.eclipse.zest.core.widgets.GraphNode;
-import org.eclipse.zest.core.widgets.IContainer;
 import org.eclipse.zest.core.widgets.ZestStyles;
-import org.eclipse.zest.layouts.LayoutAlgorithm;
 import org.eclipse.zest.layouts.LayoutStyles;
 import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
 import org.jcryptool.visual.merkletree.Descriptions;
-import org.jcryptool.visual.merkletree.Descriptions.XMSS;
-import org.jcryptool.visual.merkletree.Descriptions.XMSS_MT;
 import org.jcryptool.visual.merkletree.MerkleTreeView;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.MultiTree;
 import org.jcryptool.visual.merkletree.algorithm.Node;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
+import org.jcryptool.visual.merkletree.files.Converter;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 public class InteractiveSignatureComposite extends Composite {
@@ -106,6 +90,7 @@ public class InteractiveSignatureComposite extends Composite {
 	Color[] greySteps;
 	Color[] redSteps;
 	SUIT mode;
+	boolean movementLinked;
 
 	Runnable currentlyHighlighted;
 	Runnable highlightedAuthpath;
@@ -139,6 +124,7 @@ public class InteractiveSignatureComposite extends Composite {
 		this.mode = mode;
 		this.parent = parent;
 		this.signatureComposite = signatureComposite;
+		movementLinked = false;
 
 		graphComposite = new Composite(this, SWT.BORDER);
 		graphComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
@@ -336,12 +322,14 @@ public class InteractiveSignatureComposite extends Composite {
 
 		signatureSize = new Label(footerComposite, SWT.READ_ONLY | SWT.WRAP);
 		signatureSize.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		signatureSize.setText(Descriptions.MerkleTreeSign_6 + " 0" + " Byte");
+		signatureSize.setText(Descriptions.InteractiveSignature_11 + " 0" + " Byte");
 
 		startoverButton.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				if (step != 7)
+					withdrawSignature();
 				startOver();
 			}
 
@@ -379,6 +367,22 @@ public class InteractiveSignatureComposite extends Composite {
 		for (int i = 0, colorValues = startingColor; i < redSteps.length; colorValues += 10, ++i) {
 			redSteps[i] = new Color(currentDisplay, new RGB(osGrey, colorValues, colorValues));
 		}
+
+		// Uncomment to actiivate zooming, however Composite popup not supported
+		// yet
+		// ZoomManager zoomManager = new ZoomManager(graph.getRootLayer(),
+		// graph.getViewport());
+		// graph.addMouseWheelListener(new MouseWheelListener() {
+		//
+		// @Override
+		// public void mouseScrolled(MouseEvent e) {
+		// if (e.count < 0) {
+		// zoomManager.zoomOut();
+		// } else {
+		// zoomManager.zoomIn();
+		// }
+		// }
+		// });
 
 	}
 
@@ -535,7 +539,7 @@ public class InteractiveSignatureComposite extends Composite {
 					oldSash.x = (newMouse.x - oldMouse.x) + oldSash.x;
 					oldSash.y = (newMouse.y - oldMouse.y) + oldSash.y;
 
-					if (popup != null && !popup.isDisposed()) {
+					if (popup != null && !popup.isDisposed() && movementLinked) {
 						popupPosition.x = (newMouse.x - oldMouse.x) + oldPopup.x;
 						popupPosition.y = (newMouse.y - oldMouse.y) + oldPopup.y;
 						popup.setLocation(popupPosition);
@@ -585,9 +589,11 @@ public class InteractiveSignatureComposite extends Composite {
 		scrolledComposite.setLayoutData(signatureTextLayout);
 
 		// Create the guide window
+		// popup = new Composite((Composite) viewer.getControl(), SWT.BORDER);
 		popup = new Composite(zestComposite, SWT.BORDER);
+
 		popup.setVisible(false);
-		popup.setBounds(0, 0, 500, 150);
+		popup.setBounds(0, 0, 500, 200);
 		popup.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 		popup.setLayout(new GridLayout(6, true));
 		popup.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
@@ -734,6 +740,7 @@ public class InteractiveSignatureComposite extends Composite {
 		// Initial Step 0:
 		// Window Position: Centered, Task: Enter Text -> next
 		case 0:
+			popup.setVisible(false);
 			if (goingBack) {
 				signatureComposite.updateIndexLabel(currentIndex - 1);
 				merkle.setIndex(currentIndex);
@@ -744,10 +751,11 @@ public class InteractiveSignatureComposite extends Composite {
 				inputText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 6, 1));
 				popup.layout();
 			}
-
+			inputText.requestLayout();
 			currentIndex = merkle.getKeyIndex();
-			// *****Position*****//
+			popup.setVisible(true);
 
+			// *****Position*****//
 			currentView = signatureComposite.getBounds();
 			currentView.height -= (footerComposite.getBounds().height + 70);
 			// Initial Middle Position by taking the half of the currentView
@@ -758,6 +766,7 @@ public class InteractiveSignatureComposite extends Composite {
 			popupShouldPosition = new Point(popupPosition.x, popupPosition.y);
 			currentSashPosition = zestSash.getLocation();
 			sashShouldPosition = currentSashPosition;
+			movementLinked = false;
 
 			// *****Listeners*****//
 			nextButton.setText(Descriptions.InteractiveSignature_Button_2);
@@ -782,6 +791,7 @@ public class InteractiveSignatureComposite extends Composite {
 		case 1:
 			if (!goingBack) {
 				message = inputText.getText();
+				movementLinked = false;
 			}
 			signatureComposite.setInteractiveStatus(true);
 			guideText.setText(Descriptions.InteractiveSignature_2);
@@ -793,6 +803,7 @@ public class InteractiveSignatureComposite extends Composite {
 
 			nextButton.setEnabled(true);
 
+			popup.pack();
 			popup.layout();
 			backButton.setVisible(true);
 			inputText.setEditable(false);
@@ -833,12 +844,13 @@ public class InteractiveSignatureComposite extends Composite {
 			popup.setLocation(popupPosition);
 			popupShouldPosition = new Point(popupPosition.x, popupPosition.y);
 			oldPopup = popup.getLocation();
+			movementLinked = true;
 
 			// *****Content*****//
 			guideText.setText(Descriptions.InteractiveSignature_3_1 + currentIndex + " " + Descriptions.InteractiveSignature_3_2);
 			sigStringIndex = goingBack ? sigStringIndex - 1 : sigStringIndex;
 			signatureText.setText(signature[sigStringIndex] + "|");
-			signatureSize.setText(Descriptions.MerkleTreeSign_6 + " " + signatureText.getText().length() + " Byte");
+			signatureSize.setText(Descriptions.InteractiveSignature_11 + " " + Converter._numberToPrefix(signatureText.getText().length() / 2));
 			if (mode == SUIT.XMSS_MT && goingBack == false) {
 				GraphNode[] tmpArray = new GraphNode[1];
 				tmpArray[0] = leaves[currentIndex];
@@ -852,7 +864,6 @@ public class InteractiveSignatureComposite extends Composite {
 		// Step 3: Seed if needed (XMSS and MT only)
 		// Window Position: bottom-left at leaf, Task: -> next
 		case 3:
-
 			if (merkle instanceof SimpleMerkleTree) {
 				step = goingBack ? step - 1 : step + 1;
 				stepByStep();
@@ -889,7 +900,7 @@ public class InteractiveSignatureComposite extends Composite {
 			for (int i = 0; i <= sigStringIndex; ++i) {
 				signatureText.append(signature[i] + "|");
 			}
-			signatureSize.setText(Descriptions.MerkleTreeSign_6 + " " + signatureText.getText().length() / 2 + " Byte");
+			signatureSize.setText(Descriptions.InteractiveSignature_11 + " " + Converter._numberToPrefix(signatureText.getText().length() / 2));
 			goingBack = false;
 			break;
 
@@ -901,9 +912,14 @@ public class InteractiveSignatureComposite extends Composite {
 					getDisplay().timerExec(-1, singleHighlightNode);
 			}
 			guideText.setText(Descriptions.InteractiveSignature_5);
-			markBranch(leaves[currentIndex]);
-			markAuthPath(markedConnectionList);
-
+			if (goingBack == false) {
+				markBranch(leaves[currentIndex]);
+				markAuthPath(markedConnectionList);
+			} else {
+				verifyButton.setVisible(false);
+				nextButton.setText(Descriptions.InteractiveSignature_Button_2);
+				isNextListener = true;
+			}
 			// *****Position (when using back)*****//
 			leafPosition = new Point(leaves[currentIndex].getLocation().x, leaves[currentIndex].getLocation().y);
 			currentSashPosition.x = -leafPosition.x + popup.getBounds().width + 30;
@@ -926,19 +942,64 @@ public class InteractiveSignatureComposite extends Composite {
 					signatureText.append(signature[i] + "|");
 				}
 			}
-			signatureSize.setText(Descriptions.MerkleTreeSign_6 + " " + signatureText.getText().length() / 2 + " Byte");
+			signatureSize.setText(Descriptions.InteractiveSignature_11 + " " + Converter._numberToPrefix(signatureText.getText().length() / 2));
 
 			isNextListener = true;
 			goingBack = false;
 			break;
+		case 6:
+			if (mode != SUIT.XMSS_MT) {
+				step = goingBack ? step - 1 : step + 1;
+				stepByStep();
+
+			} else {
+				int reducedSignatureCount = 0;
+				for (int q = 2; q < signature.length; ++q) {
+					if (signature[q].length() > signature[1].length()) {
+						reducedSignatureCount++;
+					}
+				}
+				guideText.setText(Descriptions.InteractiveSignature_12 + " " + reducedSignatureCount + ".");
+				int singleTreeHeight = ((MultiTree) merkle).getSingleTreeHeight();
+				GraphNode nextRoot = leaves[currentIndex];
+				for (int i = 1; i < singleTreeHeight; ++i) {
+					nextRoot = ((GraphConnection) nextRoot.getTargetConnections().get(0)).getSource();
+				}
+				Point nextTreePosition = new Point(nextRoot.getLocation().x, nextRoot.getLocation().y);
+				currentSashPosition.x = -nextTreePosition.x + popup.getBounds().width + 30;
+				int nextRootOffset = leaves[currentIndex].getLocation().y - currentView.height + leaves[currentIndex].getSize().height + 20;
+
+				currentSashPosition.y = -nextRootOffset;
+				zestSash.setLocation(currentSashPosition);
+				popupPosition.x = 20;
+				popupPosition.y = currentSashPosition.y + nextTreePosition.y - popup.getBounds().height / 2;
+
+				// popupPosition.y = currentView.height -
+				// popup.getBounds().height - 40;
+				signatureComposite.setInteractiveStatus(true);
+				popup.setLocation(popupPosition);
+				popupShouldPosition = new Point(popupPosition.x, popupPosition.y);
+				oldPopup = popup.getLocation();
+
+				if (goingBack) {
+					verifyButton.setVisible(false);
+					nextButton.setText(Descriptions.InteractiveSignature_Button_2);
+					isNextListener = true;
+				}
+
+				goingBack = false;
+
+			}
+			break;
 		// Final step: the signature is ready dialogue
 		// Window position: over root, Task: create new or verify
-		case 6:
+		case 7:
 			// *****Position*****//
 			Point rootPosition = new Point(rootNode.getLocation().x, rootNode.getLocation().y);
 			currentSashPosition.x = -rootPosition.x + currentView.width / 2;
 			currentSashPosition.y = -rootPosition.y + popup.getBounds().height + 15;
 			zestSash.setLocation(currentSashPosition);
+
 			popupPosition.x = currentView.width / 2 - popup.getBounds().width / 2;
 			popupPosition.y = 10;
 			popup.setLocation(popupPosition);
@@ -948,20 +1009,24 @@ public class InteractiveSignatureComposite extends Composite {
 			// signatureComposite.updateIndexLabel(currentIndex - 1);
 			signatureComposite.addSignatureAndMessage(plainSignature, message);
 
-			guideText.setText(Descriptions.InteractiveSignature_6);
+			if (mode != SUIT.XMSS_MT) {
+				guideText.setText(Descriptions.InteractiveSignature_6);
+			} else {
+				guideText.setText(Descriptions.InteractiveSignature_6_MT);
+			}
+
 			signatureComposite.setInteractiveStatus(false);
 
 			verifyButton.setVisible(true);
-			nextButton.setText(Descriptions.InteractiveSignature_Button_3);
-
 			// *****Listener*****//
+			nextButton.setText(Descriptions.InteractiveSignature_Button_3);
 			isNextListener = false;
 			goingBack = false;
 			break;
-		case 9:
-			popup.dispose();
-			step = 0;
-			break;
+		// case 9:
+		// popup.dispose();
+		// step = 0;
+		// break;
 		default:
 			break;
 		}
@@ -1125,10 +1190,10 @@ public class InteractiveSignatureComposite extends Composite {
 		signatureText.setText("");
 		signatureSize.setText("");
 		plainSignature = null;
+		zestSash.setLocation(0, 0);
 
 		guideText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 6, 1));
 		inputText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 6, 1));
-		popup.layout();
 
 		if (singleHighlightNode != null) {
 			getDisplay().timerExec(-1, singleHighlightNode);
