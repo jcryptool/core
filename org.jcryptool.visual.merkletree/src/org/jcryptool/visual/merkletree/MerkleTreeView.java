@@ -65,6 +65,7 @@ public class MerkleTreeView extends ViewPart {
 	private int previousTab = 0;
 	private ViewPart masterView;
 	private ScrolledComposite scrolledComposite;
+	private Shell shell;
 
 	TabItem tbtmParameter0;
 	TabItem tbtmParameter1;
@@ -91,6 +92,8 @@ public class MerkleTreeView extends ViewPart {
 		unsavedChanges = false;
 		masterView = this;
 		mustCreateTab = new boolean[5];
+		mode = SUIT.MSS;
+		shell = parent.getShell();
 
 		parent.setLayout(new GridLayout(1, false));
 
@@ -134,7 +137,7 @@ public class MerkleTreeView extends ViewPart {
 				if (unsavedChanges == true) {
 
 					tabFolder.setSelection(0);
-					MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.YES | SWT.NO | SWT.CANCEL);
+					MessageBox messageBox = new MessageBox(shell, SWT.ICON_INFORMATION | SWT.YES | SWT.NO | SWT.CANCEL);
 					messageBox.setMessage(Descriptions.UnsavedChanges);
 					messageBox.setText("Info");
 					// asks if changes should be done to key, discarded or
@@ -157,8 +160,20 @@ public class MerkleTreeView extends ViewPart {
 				// Calls messagebox if no key was created
 				if (merkle == null) {
 					tabFolder.setSelection(0);
-					MessageBox messageBoxx = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
-					messageBoxx.setMessage(Descriptions.MerkleTree_Generation_Info);
+					MessageBox messageBoxx = new MessageBox(shell, SWT.ICON_INFORMATION | SWT.OK);
+					switch (mode) {
+					case XMSS:
+						messageBoxx.setMessage(Descriptions.XMSS.MerkleTree_Generation_Info);
+						break;
+					case XMSS_MT:
+						messageBoxx.setMessage(Descriptions.XMSS_MT.MerkleTree_Generation_Info);
+						break;
+					case MSS:
+						messageBoxx.setMessage(Descriptions.MSS.MerkleTree_Generation_Info);
+					default:
+						break;
+					}
+
 					messageBoxx.setText("Info");
 					messageBoxx.open();
 					removeFocus();
@@ -284,7 +299,7 @@ public class MerkleTreeView extends ViewPart {
 				tbtmParameter4.setControl(verificationTab);
 			} else {
 				tabFolder.setSelection(previousTab);
-				MessageBox messageBoxx = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
+				MessageBox messageBoxx = new MessageBox(shell, SWT.ICON_INFORMATION | SWT.OK);
 				messageBoxx.setMessage(Descriptions.MerkleTree_Signature_Generation_Info);
 				messageBoxx.setText("Info");
 				messageBoxx.open();
