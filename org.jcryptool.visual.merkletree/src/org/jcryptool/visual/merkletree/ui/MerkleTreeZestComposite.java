@@ -6,6 +6,10 @@ import java.util.List;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.SWTEventDispatcher;
+import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.draw2d.parts.Thumbnail;
+import org.eclipse.gef.editparts.ZoomListener;
 import org.eclipse.gef.editparts.ZoomManager;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ISelection;
@@ -26,6 +30,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -57,6 +62,7 @@ import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 public class MerkleTreeZestComposite extends Composite {
 
 	private GraphViewer viewer;
+	private int graphOffset;
 	private SUIT mode;
 	private Composite merkleTreeZestComposite;
 	private StyledText styledTextTree;
@@ -199,6 +205,7 @@ public class MerkleTreeZestComposite extends Composite {
 		markedAuthpathList = new ArrayList<GraphNode>();
 		viewer.setContentProvider(new ZestNodeContentProvider());
 		viewer.setLabelProvider(new ZestLabelProvider(ColorConstants.lightGreen));
+		graphOffset = 0;
 
 		viewer.getControl().addPaintListener(new PaintListener() {
 
@@ -249,6 +256,7 @@ public class MerkleTreeZestComposite extends Composite {
 					break;
 				}
 				graph.getViewport().setSize((int) x, (int) y);
+				viewer.getControl().setLocation(graphOffset, 0);
 			}
 		});
 
@@ -270,6 +278,12 @@ public class MerkleTreeZestComposite extends Composite {
 		if (mode == SUIT.XMSS_MT) {
 			colorizeMultitrees();
 		}
+
+		// Thumbnail test = new Thumbnail(graph.getRootLayer());
+		// FigureCanvas canvas = new FigureCanvas(this);
+		// canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8,
+		// 1));
+		// canvas.setContents(test);
 
 		graph.addSelectionListener(new SelectionAdapter() {
 			/*
@@ -307,6 +321,7 @@ public class MerkleTreeZestComposite extends Composite {
 						} else {
 							unmarkBranch();
 							markBranch(node);
+							markAuthPath(markedConnectionList);
 						}
 						styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
 						styledTextTree.setAlignment(SWT.LEFT);
@@ -487,9 +502,11 @@ public class MerkleTreeZestComposite extends Composite {
 	 */
 	private void unmarkBranch() {
 		GraphConnection authPath;
+		if (mode == SUIT.XMSS_MT) {
+			markedConnectionList.get(0).getDestination().setBorderWidth(0);
+		}
 		for (GraphConnection connection : markedConnectionList) {
 			connection.setLineColor(ColorConstants.lightGray);
-			// connection.getSource().setBackgroundColor(viewer.getGraphControl().LIGHT_BLUE);
 			if (mode == SUIT.XMSS_MT) {
 				connection.getSource().setBorderWidth(0);
 			} else {
@@ -566,21 +583,6 @@ public class MerkleTreeZestComposite extends Composite {
 
 	}
 
-	// /**
-	// * Synchronize the merklTree with the other Tabpages
-	// *
-	// * @param merkle
-	// */
-	// private void linkMerkleTree(ISimpleMerkle merkle) {
-	// if (merkle.getMerkleRoot() != null) {
-	// viewer.setInput(merkle.getTree());
-	// viewer.setLayoutAlgorithm(new
-	// TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
-	// viewer.applyLayout();
-	// }
-	//
-	// }
-
 	/**
 	 * Sets the current view location based on mouse movement
 	 */
@@ -644,7 +646,6 @@ public class MerkleTreeZestComposite extends Composite {
 				leaves[q] = rootNodes[p];
 			}
 			leafCounter /= singleTreeLeaves;
-			// rootNodes[i].highlight();
 		}
 
 		distinguishableColors = new Color[7];
