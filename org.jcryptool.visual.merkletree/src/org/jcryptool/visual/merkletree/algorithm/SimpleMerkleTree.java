@@ -324,7 +324,7 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 	/**
 	 * Calculate the Key lenght of the created Keys in Byte
 	 */
-	public String getKeyLength() {
+	public int getKeyLength() {
 		/*
 		 * Convert the Keys to a String and concanate them
 		 */
@@ -341,14 +341,7 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 		 * calculate the lenght of the Keys
 		 */
 
-		int length = keys.length();
-		length = length / 2;
-		StringBuilder sb = new StringBuilder();
-		sb.append("");
-		sb.append(length);
-		String keyLength = sb.toString();
-		return keyLength;
-
+		return keys.length() / 2;
 	}
 
 	public int getKeyIndex() {

@@ -31,12 +31,12 @@ public interface ISimpleMerkle {
 	// Options
 
 	public void setIndex(int i);
-	
+
 	public void selectOneTimeSignatureAlgorithm(String hash, String algo);
 
 	public void setLeafCount(int i);
 
-	public String getKeyLength();
+	public int getKeyLength();
 
 	public void setWinternitzParameter(int w);
 

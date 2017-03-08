@@ -169,16 +169,15 @@ public class MultiTree implements ISimpleMerkle {
 	public int getSingleTreeHeight() {
 		return h;
 	}
-	
-	public byte[] getSKSeed(){
+
+	public byte[] getSKSeed() {
 		return this.sk_seed;
 	}
 
-	public byte[] getPKSeed(){
+	public byte[] getPKSeed() {
 		return this.pk_seed;
 	}
 
-	
 	/**
 	 * Generates an authentication path as array list with authentication nodes
 	 * 
@@ -302,10 +301,11 @@ public class MultiTree implements ISimpleMerkle {
 		}
 
 		// loop over remaining layers...
-		int n=d/h;
-		if ((d-1)%h==0) n--; //if 0 --> eine sig zu viel
+		int n = d / h;
+		if ((d - 1) % h == 0)
+			n--; // if 0 --> eine sig zu viel
 		for (i = 1; i < n; i++) {
-			
+
 			idx_leaf = (int) (idx_tree & ((1 << h) - 1));
 			idx_tree = idx_tree >> h;
 			OTSHashAddress otsaddr = new OTSHashAddress();
@@ -343,14 +343,9 @@ public class MultiTree implements ISimpleMerkle {
 	}
 
 	@Override
-	public String getKeyLength() {
-		// System.err.println(sk);
-		int length = getPrivateKey().length() + getPublicKey().length();
-		StringBuilder sb = new StringBuilder();
-		sb.append("");
-		sb.append((length / 2));
-		String keyLength = sb.toString();
-		return keyLength;
+	public int getKeyLength() {
+		return (getPrivateKey().length() + getPublicKey().length()) / 2;
+
 	}
 
 	/**
@@ -416,7 +411,6 @@ public class MultiTree implements ISimpleMerkle {
 		return null;
 	}
 
-
 	@Override
 	public void generateKeyPairsAndLeaves() {
 		for (int i = 0; i < this.leafCounter; i++) {
@@ -431,7 +425,7 @@ public class MultiTree implements ISimpleMerkle {
 			publicKeys.add(otsAlgo.getPublicKey());
 		}
 
-		this.sk=randomGenerator(sk_seed, sk, 3 * n);
+		this.sk = randomGenerator(sk_seed, sk, 3 * n);
 		ByteArrayOutputStream pek = new ByteArrayOutputStream();
 		pek.write(sk, 2 * n + idx_len, n);
 		this.pk = pek.toByteArray();
@@ -485,15 +479,15 @@ public class MultiTree implements ISimpleMerkle {
 			return true; // this.verify(message, signature);
 
 	}
-	
-	public void setSKSeed(byte[] sks){
-		this.sk_seed=sks;
+
+	public void setSKSeed(byte[] sks) {
+		this.sk_seed = sks;
 	}
 
-	public void setPKSeed(byte[] pks){
-		this.pk_seed=pks;
+	public void setPKSeed(byte[] pks) {
+		this.pk_seed = pks;
 	}
-	
+
 	public void setIndex(int i) {
 		this.keyIndex = i;
 		this.idx_len = (h + 7) / 8;
@@ -631,12 +625,12 @@ public class MultiTree implements ISimpleMerkle {
 		return keyIndex;
 	}
 
-	//interface
+	// interface
 	public void setSeed(byte[] seed) {
-		//TODO
+		// TODO
 	}
 
-	//interface
+	// interface
 	public byte[] getSeed() {
 		// TODO Auto-generated method stub
 		return null;
