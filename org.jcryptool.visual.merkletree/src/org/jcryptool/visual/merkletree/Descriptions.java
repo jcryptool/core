@@ -24,10 +24,10 @@ public class Descriptions extends NLS {
 	public static String MerkleTreeTab_2;
 	public static String MerkleTreeTab_3;
 	public static String MerkleTreeTab_4;
+
 	// >
 
 	// <- MSG Box - wenn kein Key vorhanden
-	public static String MerkleTree_Generation_Info;
 	public static String UnsavedChanges;
 	// >
 
@@ -67,17 +67,18 @@ public class Descriptions extends NLS {
 	public static String MerkleTreeKey_1;
 	public static String MerkleTreeKey_2;
 	public static String MerkleTreeKey_3;
-	public static String MerkleTreeKey_4;
-	public static String MerkleTreeKey_5;
 
 	public static String MerkleTreeSign_0;
 	public static String MerkleTreeSign_1;
 	public static String MerkleTreeSign_2;
 	public static String MerkleTreeSign_4;
 	public static String MerkleTreeSign_5;
-	public static String MerkleTreeSign_6;
+	public static String MerkleTreeSign_6_1;
+	public static String MerkleTreeSign_6_2;
 	public static String MerkleTreeSign_7;
-	public static String MerkleTreeSign_8;
+	public static String MerkleTreeSign_8_1;
+	public static String MerkleTreeSign_8_2;
+	public static String MerkleTreeSign_9;
 
 	public static String MerkleTreeVerify_0;
 	public static String MerkleTreeVerify_1;
@@ -91,6 +92,8 @@ public class Descriptions extends NLS {
 	public static String MerkleTreeVerify_9;
 	public static String MerkleTreeVerify_10;
 	public static String MerkleTreeVerify_11;
+	public static String MerkleTreeVerify_12;
+	public static String MerkleTreeVerify_13;
 
 	public static String MerkleTree_Signature_Generation_Info;
 
@@ -99,9 +102,9 @@ public class Descriptions extends NLS {
 	public static String Tab0_Head3;
 	public static String Tab0_Head4;
 	public static String Tab0_Head5;
+	public static String Tab0_Head6;
+	public static String Tab0_Button0;
 	public static String Tab0_Button1;
-	public static String Tab0_Button2;
-	public static String Tab0_Button3;
 	public static String Tab0_Lable1;
 	public static String Tab0_Txt3;
 	public static String Tab0_MT_1;
@@ -127,18 +130,25 @@ public class Descriptions extends NLS {
 	public static String InteractiveSignature_4_2;
 	public static String InteractiveSignature_5;
 	public static String InteractiveSignature_6;
+	public static String InteractiveSignature_6_MT;
 	public static String InteractiveSignature_7;
 	public static String InteractiveSignature_8;
 	public static String InteractiveSignature_9;
 	public static String InteractiveSignature_10;
+	public static String InteractiveSignature_11;
+	public static String InteractiveSignature_12;
+
 	public static String InteractiveSignature_Seed;
 
 	public static class MSS {
+		public static String MerkleTree_Generation_Info;
 
 		public static String Tab0_Head0;
 		public static String Tab0_Txt0;
 		public static String Tab0_Txt1;
 		public static String Tab0_Txt2;
+		public static String Tab0_Key_Button;
+		public static String Tab0_MessageBox0;
 
 		public static String Tab1_Head0;
 		public static String Tab1_Txt0;
@@ -148,11 +158,14 @@ public class Descriptions extends NLS {
 	}
 
 	public static class XMSS {
+		public static String MerkleTree_Generation_Info;
 
 		public static String Tab0_Head0;
 		public static String Tab0_Txt0;
 		public static String Tab0_Txt1;
 		public static String Tab0_Txt2;
+		public static String Tab0_Key_Button;
+		public static String Tab0_MessageBox0;
 
 		public static String Tab1_Head0;
 		public static String Tab1_Txt0;
@@ -162,12 +175,15 @@ public class Descriptions extends NLS {
 	}
 
 	public static class XMSS_MT {
+		public static String MerkleTree_Generation_Info;
 
 		public static String Tab0_Head0;
 		public static String Tab0_Txt0;
 		public static String Tab0_Txt1;
 		public static String Tab0_Txt2;
 		public static String Tab0_Txt3;
+		public static String Tab0_Key_Button;
+		public static String Tab0_MessageBox0;
 
 		public static String Tab1_Head0;
 		public static String Tab1_Txt0;
