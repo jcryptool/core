@@ -662,7 +662,7 @@ public class MerkleTreeZestComposite extends Composite {
 				j = 0;
 			recursive(rootNodes[i], distinguishableColors[j]);
 			if (rootNodes[i].getTargetConnections().size() != 0) {
-				rootNodes[i].setText("Wurzel/Blatt");
+				rootNodes[i].setText(Descriptions.XMSS_MT.Tab1_Node);
 			}
 
 		}
