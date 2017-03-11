@@ -847,7 +847,7 @@ public class InteractiveSignatureComposite extends Composite {
 			movementLinked = true;
 
 			// *****Content*****//
-			guideText.setText(Descriptions.InteractiveSignature_3_1 + currentIndex + " " + Descriptions.InteractiveSignature_3_2);
+			guideText.setText(Descriptions.InteractiveSignature_3_1 + " " + currentIndex + " " + Descriptions.InteractiveSignature_3_2);
 			sigStringIndex = goingBack ? sigStringIndex - 1 : sigStringIndex;
 			signatureText.setText(signature[sigStringIndex] + "|");
 			signatureSize.setText(Descriptions.InteractiveSignature_11 + " " + Converter._numberToPrefix(signatureText.getText().length() / 2));
@@ -893,7 +893,7 @@ public class InteractiveSignatureComposite extends Composite {
 				}
 			}
 			// *****Content*****//
-			guideText.setText(Descriptions.InteractiveSignature_4_1 + currentIndex + " " + Descriptions.InteractiveSignature_4_2);
+			guideText.setText(Descriptions.InteractiveSignature_4_1 + " " + currentIndex + " " + Descriptions.InteractiveSignature_4_2);
 
 			signatureText.setText("");
 			sigStringIndex = goingBack ? sigStringIndex : sigStringIndex + 1;
@@ -1114,7 +1114,7 @@ public class InteractiveSignatureComposite extends Composite {
 				j = 0;
 			recursive(rootNodes[i], distinguishableColors[j]);
 			if (rootNodes[i].getTargetConnections().size() != 0) {
-				rootNodes[i].setText("Wurzel/Blatt");
+				rootNodes[i].setText(Descriptions.XMSS_MT.Tab1_Node);
 			}
 		}
 
