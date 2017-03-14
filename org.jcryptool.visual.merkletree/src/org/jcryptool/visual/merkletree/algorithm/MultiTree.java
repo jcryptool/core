@@ -302,8 +302,10 @@ public class MultiTree implements ISimpleMerkle {
 
 		// loop over remaining layers...
 		int n = d / h;
-		if ((d - 1) % h == 0)
-			n--; // if 0 --> eine sig zu viel
+		if ((d - 1) % h < 1)
+			n--; // if 0 --> eine sig zu viel, fehler bei layer ausrechnen
+		else if (d==9 && n==4)
+			n-=2; //calculating layers is a tremendous task
 		for (i = 1; i < n; i++) {
 
 			idx_leaf = (int) (idx_tree & ((1 << h) - 1));
