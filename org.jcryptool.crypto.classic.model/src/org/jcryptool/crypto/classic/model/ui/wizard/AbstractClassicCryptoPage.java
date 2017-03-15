@@ -57,7 +57,9 @@ import org.jcryptool.crypto.ui.util.WidgetBubbleUIInputHandler;
  */
 public class AbstractClassicCryptoPage extends WizardPage {
 
-    SWTResourceManager resources = new SWTResourceManager();
+    private static final boolean DEFAULT_DOFILTER = false;
+
+	SWTResourceManager resources = new SWTResourceManager();
 
     protected Group keyGroup;
     protected Label keyDescriptionLabel;
@@ -207,6 +209,8 @@ public class AbstractClassicCryptoPage extends WizardPage {
         createAlphabetInputObjects();
         createKeyInputObjects();
         createTransformationInputObject();
+        this.filterInput.addObserver(this.transformationInput);
+        updateTransformPage();
     }
 
     /**
@@ -286,10 +290,9 @@ public class AbstractClassicCryptoPage extends WizardPage {
             public String getName() {
                 return "nonalpha-chars filter"; //$NON-NLS-1$
             }
-
             @Override
             protected Boolean getDefaultContent() {
-                return true;
+                return DEFAULT_DOFILTER;
             }
 
             @Override
@@ -297,22 +300,36 @@ public class AbstractClassicCryptoPage extends WizardPage {
                 return filterCheckBox;
             }
         };
+        filterInput.addObserver((Observable o, Object arg) -> {
+        	AbstractClassicTransformationPage page2 = ((AbstractClassicWizard) getWizard()).page2;
+			page2.setTransformData(updateTransformData(filterInput.getContent(), page2.getTransformData()));
+			if(filterInput.getContent()) {
+				transformCheckBox.setSelection(true);
+				transformationInput.synchronizeWithUserSide();
+			}
+        });
 
         getAlphabetInput().addObserver(new Observer() {
             @Override
 			public void update(Observable o, Object arg) {
                 if (arg == null) { // when there is really a change
                     if (transformationInput.getContent()) {
-                        updateTransformationPage(getAlphabetInput().getContent());
+                    	updateTransformPage();
                     }
                 }
             }
         });
 
-        updateTransformationPage(getAlphabetInput().getContent());
     }
 
-    /**
+    private TransformData updateTransformData(Boolean filter, TransformData transformData) {
+		AbstractAlphabet alpha = getAlphabetInput().getContent();
+		transformData.setAlphabetTransformationON(filter);
+		transformData.setSelectedAlphabet(alpha);
+		return transformData;
+	}
+
+	/**
      * @return the input object from the alphabet combo
      */
     protected AbstractUIInput<AbstractAlphabet> getAlphabetInput() {
@@ -377,7 +394,10 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
     protected void createTransformationInputObject() {
         transformationInput = new AbstractUIInput<Boolean>() {
-            @Override
+            private boolean tSaved;
+			private Boolean fSaved;
+
+			@Override
             protected InputVerificationResult verifyUserChange() {
                 return InputVerificationResult.DEFAULT_RESULT_EVERYTHING_OK;
             }
@@ -404,6 +424,24 @@ public class AbstractClassicCryptoPage extends WizardPage {
             public String getName() {
                 return Messages.AbstractClassicCryptoPage_transform_name;
             }
+            
+            @Override
+            protected void saveDefaultRawUserInput() {
+            	this.fSaved = DEFAULT_DOFILTER;
+            	this.tSaved = getDefaultContent();
+            }
+            
+            @Override
+            protected void saveRawUserInput() {
+            	this.fSaved = filterInput.getContent();
+            	this.tSaved = transformCheckBox.getSelection();
+            }
+            
+            @Override
+            protected void resetUserInput() {
+            	transformCheckBox.setSelection(this.tSaved);
+            	filterInput.writeContent(this.fSaved);
+            }
         };
 
         SelectionAdapter adapter = new SelectionAdapter() {
@@ -419,11 +457,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
             @Override
 			public void update(Observable o, Object arg) {
                 if (arg == null) { // when there is really a change
-                    if (transformationInput.getContent()) {
-                        updateTransformationPage(getAlphabetInput().getContent());
-                    } else {
-                        updateTransformationPage(null);
-                    }
+                    updateTransformPage();
                 }
             }
         });
@@ -687,6 +721,8 @@ public class AbstractClassicCryptoPage extends WizardPage {
         alphabetGroup.setLayout(alphabetGroupGridLayout);
 
         alphabetInnerGroup = new Composite(alphabetGroup, SWT.NONE);
+        
+        createAlphaInner1stLabel(alphabetInnerGroup);
 
         GridLayout alphabetInnerGroupGridLayout = new GridLayout();
         alphabetInnerGroupGridLayout.numColumns = 3;
@@ -716,6 +752,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
                 return specification.isValidPlainTextAlphabet(alphabet);
             }
         };
+        
         Mode alphabetSelectionMode = specification.isAllowCustomAlphabetCreation() ?
         // AlphabetSelectorComposite.Mode.SINGLE_COMBO_BOX_WITH_CUSTOM_ALPHABETS:
         AlphabetSelectorComposite.Mode.COMBO_BOX_WITH_CUSTOM_ALPHABET_BUTTON
@@ -789,7 +826,14 @@ public class AbstractClassicCryptoPage extends WizardPage {
         filterCheckBox.setLayoutData(filterCheckBoxGridData);
     }
 
-    protected void createCustomAlphaGroupObjects(Composite innerGroup) {
+    protected void createAlphaInner1stLabel(Composite alphabetInnerGroup2) {
+		new Label(alphabetInnerGroup2, SWT.
+				NONE).setText(Messages.AbstractClassicCryptoPage_0);
+		new Label(alphabetInnerGroup2, SWT.NONE);
+		new Label(alphabetInnerGroup2, SWT.NONE);
+	}
+
+	protected void createCustomAlphaGroupObjects(Composite innerGroup) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -827,8 +871,6 @@ public class AbstractClassicCryptoPage extends WizardPage {
         transformCheckBox.setLayoutData(transformCheckBoxGridData);
 
         transformCheckBox.setSelection(true);
-        if (!transformCheckBox.getSelection())
-            ((AbstractClassicTransformationPage) getNextPage()).setTransformData(new TransformData());
     }
 
     /**
@@ -1003,14 +1045,12 @@ public class AbstractClassicCryptoPage extends WizardPage {
      *
      * @param abstractAlphabet the name of the currentAlphabet
      */
-    protected void updateTransformationPage(AbstractAlphabet abstractAlphabet) {
+    protected void updateTransformPage() {
         TransformData myTransformation;
-        if (abstractAlphabet == null) {
-        	myTransformation = new TransformData();
-        } else {
-            myTransformation = AbstractClassicTransformationPage.getTransformFromName(abstractAlphabet);
-        }
-
+        myTransformation = transformationInput.getContent() ? 
+        		AbstractClassicTransformationPage.getTransformFromName(getAlphabetInput().getContent()) :
+        		new TransformData();
+        if(filterInput.getContent()) myTransformation = updateTransformData(filterInput.getContent(), myTransformation);
         ((AbstractClassicTransformationPage) super.getNextPage()).setTransformData(myTransformation);
     }
 

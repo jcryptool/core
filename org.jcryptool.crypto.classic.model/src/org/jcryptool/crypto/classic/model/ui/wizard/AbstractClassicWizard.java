@@ -26,7 +26,7 @@ public class AbstractClassicWizard extends Wizard {
 	
 	/** Wizard pages */
 	protected AbstractClassicCryptoPage page;
-	protected AbstractClassicTransformationPage page2;
+	public AbstractClassicTransformationPage page2;
 	
 	/**
 	 * Creates a new instance of AbstractClassicWizard and sets the window title

@@ -169,6 +169,7 @@ public class ModifySelectionComposite extends Composite implements Listener {
      * Initializes the alphabet composites. An empty string leads to the selection of the first alphabet
      */
     private void initAlphabetComposites(AbstractAlphabet selectAlphabet) {
+    	
         alphabetComboNew.getAlphabetInput().writeContent(selectAlphabet);
         alphabetComboNew.getAlphabetInput().synchronizeWithUserSide();
     }

@@ -40,6 +40,7 @@ public class AbstractClassicTransformationPage extends WizardPage {
 		super("", "", null); //$NON-NLS-1$ //$NON-NLS-2$
 		setTitle(Messages.AbstractClassicTransformationPage_pageTitle);
 		setMessage(Messages.AbstractClassicTransformationPage_pageMessage);
+		setTransformData(new TransformData());
 	}
 
 	/**
@@ -50,6 +51,7 @@ public class AbstractClassicTransformationPage extends WizardPage {
 		super("", title, null); //$NON-NLS-1$
 		setTitle(title);
 		setMessage(Messages.AbstractClassicTransformationPage_pageMessage);
+		setTransformData(new TransformData());
 	}
 
 	/**
@@ -106,6 +108,15 @@ public class AbstractClassicTransformationPage extends WizardPage {
 
 		setControl(pageComposite);
 		setPageComplete(true);
+		
+		TransformData myTransformation;
+		AbstractAlphabet alpha = ((AbstractClassicWizard) getWizard()).page.getSelectedAlphabet();
+        if (alpha == null) {
+        	myTransformation = new TransformData();
+        } else {
+            myTransformation = AbstractClassicTransformationPage.getTransformFromName(alpha);
+        }
+        
 
 		setHelpAvailable();
 	}
@@ -132,7 +143,11 @@ public class AbstractClassicTransformationPage extends WizardPage {
 			TransformData loadedPreferenceSet = TransformationsPreferencePage.getDataFromNode(myNode);
 			return loadedPreferenceSet;
 		}
-		else return TransformationPreferenceSet.getDefaultByHeuristic(abstractAlphabet);
+		if(TransformationPreferenceSet.hasDefaultSetting(name)) {
+			return TransformationPreferenceSet.getDefaultSetting(name);
+		} else {
+			return TransformationPreferenceSet.getDefaultByHeuristic(abstractAlphabet);
+		}
 	}
 
 	/** Loads a specific transformation set in the wizard.
@@ -147,6 +162,9 @@ public class AbstractClassicTransformationPage extends WizardPage {
 	 * @return
 	 */
 	public TransformData getTransformData() {
+		if(! didCreate) {
+			return this.firstTransformData;
+		}
 		return transformComposite.getTransformData();
 	}
 

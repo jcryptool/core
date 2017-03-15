@@ -14,6 +14,7 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.crypto.classic.model.ui.wizard.messages"; //$NON-NLS-1$
+	public static String AbstractClassicCryptoPage_0;
 	public static String AbstractClassicCryptoPage_1;
 	public static String AbstractClassicCryptoPage_15;
 	public static String AbstractClassicCryptoPage_2;

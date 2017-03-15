@@ -87,13 +87,13 @@ public class CaesarWizardPage extends AbstractClassicCryptoPage {
 		cmpAlphaExpl.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
     	
 		Label lblAlphaExpl = new Label(cmpAlphaExpl, SWT.NONE);
-		lblAlphaExpl.setText("Interpretation des ersten Alphabetzeichens: ");
+		lblAlphaExpl.setText(Messages.CaesarWizardPage_0);
 		
 		btnShift0 = new Button(cmpAlphaExpl, SWT.RADIO);
-		btnShift0.setText("Verschiebewert = 0");
+		btnShift0.setText(Messages.CaesarWizardPage_1);
 		
     	btnShift1 = new Button(cmpAlphaExpl, SWT.RADIO);
-    	btnShift1.setText("Verschiebewert = 1");
+    	btnShift1.setText(Messages.CaesarWizardPage_2);
     }
     
     @Override
@@ -111,7 +111,7 @@ public class CaesarWizardPage extends AbstractClassicCryptoPage {
 
         keyGroup.setLayoutData(keyGroupGridData);
         keyGroup.setLayout(keyGroupGridLayout);
-        keyGroup.setText(org.jcryptool.crypto.classic.model.ui.wizard.Messages.WizardPage_key);
+        keyGroup.setText("");
 
         keyInputComp = new CaesarKeyInput(keyGroup, SWT.NONE);
         keyInputComp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -139,7 +139,7 @@ public class CaesarWizardPage extends AbstractClassicCryptoPage {
 
             @Override
             public String getName() {
-                return "Caesar key";
+                return Messages.CaesarWizardPage_3;
             }
 
             @Override
@@ -315,8 +315,8 @@ public class CaesarWizardPage extends AbstractClassicCryptoPage {
     }
 
 	protected void updateAlphaGroupText() {
-		alphabetGroup.setText(org.jcryptool.crypto.classic.model.ui.wizard.Messages.WizardPage_alpha + 
-				String.format(" (current length: %s )", getAlphabetInput().getContent().getCharacterSet().length));
+		alphabetGroup.setText("" + 
+				String.format(Messages.CaesarWizardPage_4, getAlphabetInput().getContent().getCharacterSet().length));
 	}
 	
 	public int getaShift() {
