@@ -20,10 +20,15 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.OperationsPlugin;
 import org.jcryptool.core.operations.algorithm.AbstractAlgorithm;
+import org.jcryptool.core.operations.algorithm.classic.AbstractClassicAlgorithm.CipherTextMask;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
@@ -40,7 +45,63 @@ import org.jcryptool.core.util.constants.IConstants;
  * @version 0.9.2
  */
 public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
-    /** Operation's engine. */
+    public class CipherTextMask {
+
+    	private Map<Integer, Character> maskMap;
+    	private char[] nonmasked;
+    	
+    	public CipherTextMask(char[] charInput, AbstractAlphabet alphabet) {
+			this.maskMap = new LinkedHashMap<>();
+			List<Character> passed = new ArrayList<>();
+			for (int i = 0; i < charInput.length; i++) {
+				Character c = charInput[i];
+				if(! alphabet.contains(c)) {
+					this.maskMap.put(i, c);
+				} else {
+					passed.add(c);
+				}
+			}
+			nonmasked = new char[passed.size()];
+			for (int i = 0; i < passed.size(); i++) {
+				Character c = passed.get(i);
+				nonmasked[i] = c;
+			}
+		}
+
+		public char[] readIntoMask(char[] fillIn) {
+			StringBuilder b = new StringBuilder();
+			LinkedHashMap<Integer, Character> mask = new LinkedHashMap<>(maskMap);
+			
+			int filledInCounter = 0;
+			for (int i = 0; i < fillIn.length; i++) {
+				char c = fillIn[i];
+				int fillInLookup = i+filledInCounter;
+				if(mask.containsKey(fillInLookup)) {
+					b.append(mask.get(fillInLookup));
+					mask.remove(fillInLookup);
+
+					filledInCounter++;
+					i--;
+				} else {
+					b.append(c);
+				}
+				
+			}
+			
+			for(Character rest: mask.values()) {
+				b.append(rest);
+			}
+			
+			return b.toString().toCharArray();
+		}
+
+		public char[] getNonmasked() {
+			return this.nonmasked;
+		}
+
+	}
+
+	/** Operation's engine. */
     protected IClassicAlgorithmEngine engine;
     /** Operation's key. */
     protected int[] key;
@@ -92,6 +153,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
         this.dataObject = new ClassicDataObject();
         this.dataObject.setTransformData(transformData);
         this.dataObject.setPlain(filterTextByTransformData(input, transformData));
+        
         this.dataObject.setAlphabet(alphabet);
         this.dataObject.setKey(key);
         this.dataObject.setOpmode(opmode);
@@ -316,17 +378,18 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
         charInput = inputString.toCharArray();
 
         // process en-/decryption cipher as char representation remove non-alpha chars
+        CipherTextMask mask = new CipherTextMask(charInput, this.dataObject.getAlphabet());
         try {
-            cipherInput = this.alphaConv.filterNonAlphaChars(charInput);
+            cipherInput = mask.getNonmasked();
         } catch (Exception e) {
             LogUtil.logError(OperationsPlugin.PLUGIN_ID, "Exception while setting up the cipher input", e, true); //$NON-NLS-1$
         }
 
         // encrypt
         if (dataObject.getOpmode() == 0) {
-            cipherOutput = encrypt(cipherInput, 0);
+            cipherOutput = mask.readIntoMask(encrypt(cipherInput, 0));
         } else if (dataObject.getOpmode() == 1) {
-            cipherOutput = decrypt(cipherInput, 0);
+            cipherOutput = mask.readIntoMask(decrypt(cipherInput, 0));
         }
 
         char[] out2 = new char[cipherOutput.length];
@@ -334,6 +397,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
             out2[i] = cipherOutput[i];
         }
 
+        filter = true; //TODO: cleanup the mess with the filter options.
         if (filter) {
             p.print(String.valueOf(cipherOutput));
             this.dataObject.setOutput(cipherOutput);
