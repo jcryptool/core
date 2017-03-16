@@ -1,10 +1,7 @@
 package org.jcryptool.visual.merkletree;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTException;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -22,19 +19,17 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
-import org.jcryptool.visual.merkletree.ui.InteractiveSignatureComposite;
 import org.jcryptool.visual.merkletree.ui.MerkleConst;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeComposite;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeKeyComposite;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeSignatureComposite;
-import org.jcryptool.visual.merkletree.ui.PlainSignatureComposite;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeVerifikationComposite;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeZestComposite;
 
 /**
- * This class holds everything that you see on the screen; It provides the Tabs
- * of its tool.
+ * Main GUI class, providing the basic composite, managing tabs and calling
+ * other GUI classes
  * 
  * @author Kevin Muehlboeck
  * @author <i>revised by</i>
@@ -60,21 +55,20 @@ public class MerkleTreeView extends ViewPart {
 	private MerkleTreeSignatureComposite signatureTab;
 	private MerkleTreeVerifikationComposite verificationTab;
 	private ISimpleMerkle merkle;
-	private ISimpleMerkle oldMerkle;
 	private SUIT mode;
 	private int previousTab = 0;
 	private ViewPart masterView;
 	private ScrolledComposite scrolledComposite;
 	private Shell shell;
 
-	TabItem tbtmParameter0;
-	TabItem tbtmParameter1;
-	TabItem tbtmParameter2;
-	TabItem tbtmParameter3;
-	TabItem tbtmParameter4;
+	private TabItem tbtmParameter0;
+	private TabItem tbtmParameter1;
+	private TabItem tbtmParameter2;
+	private TabItem tbtmParameter3;
+	private TabItem tbtmParameter4;
 
-	String signatures[];
-	String messages[];
+	private String signatures[];
+	private String messages[];
 
 	private Boolean unsavedChanges;
 	private boolean mustCreateTab[];
@@ -97,6 +91,7 @@ public class MerkleTreeView extends ViewPart {
 
 		parent.setLayout(new GridLayout(1, false));
 
+		// Main composite
 		scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		scrolledComposite.setExpandHorizontal(true);
@@ -192,7 +187,7 @@ public class MerkleTreeView extends ViewPart {
 	}
 
 	/**
-	 * This method synchronizes the merkleTree
+	 * This method synchronizes the merkleTree when a mode is selected
 	 * 
 	 * @param merkle
 	 */
@@ -218,6 +213,9 @@ public class MerkleTreeView extends ViewPart {
 		reset();
 	}
 
+	/**
+	 * Deselects focus after
+	 */
 	@Override
 	public void setFocus() {
 		scrolledComposite.setFocus();
@@ -235,10 +233,19 @@ public class MerkleTreeView extends ViewPart {
 		parent.layout();
 	}
 
+	/**
+	 * Sets the flag, indicating parameters of the merkle tree have changed This
+	 * forces a dialogue shown before you can switch to different tabs
+	 */
 	public void updateElement() {
 		unsavedChanges = true;
 	}
 
+	/**
+	 * Switches to the given tab
+	 * 
+	 * @param tab
+	 */
 	public void setTab(int tab) {
 		switch (tab) {
 		case 0:
