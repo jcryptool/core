@@ -2,8 +2,6 @@ package org.jcryptool.visual.merkletree.ui;
 
 import java.util.Arrays;
 
-import javax.jws.WebParam.Mode;
-
 // import java.security.SecureRandom;
 
 import org.eclipse.swt.SWT;
@@ -26,16 +24,13 @@ import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.merkletree.Descriptions;
-import org.jcryptool.visual.merkletree.Descriptions.XMSS_MT;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
-import org.jcryptool.visual.merkletree.algorithm.MultiTree;
-import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
-import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
 import org.jcryptool.visual.merkletree.files.Converter;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 /**
- * Composite for the Tabpage "Signatur"
+ * Composite for the selection: "plain signature generation" as subelement of MerkleTreeSignatureComposite
+ * It provides a simple GUI interface to sign messages and see the signature result
  * 
  * @author Kevin Muehlboeck
  * @author Christoph Sonnberger
@@ -43,59 +38,60 @@ import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
  */
 public class PlainSignatureComposite extends Composite {
 
+	private SUIT mode;
+	private Text textSign;
+	private Button createButton;
+	private StyledText styledTextSign;
+	private StyledText styledTextSignSize;
+	private Label lSignaturSize;
+	private String signature = null;
+	private String[] splittedSignature;
+
+	private Button indexSeedButton;
+	private Button otsButton;
+	private Spinner authPathSpinner;
+	private Button authPathButton;
+
+	private SelectionAdapter indexButtonListener;
+	private SelectionAdapter otsButtonListener;
+	private SelectionAdapter authPathButtonListener;
+
+	private Color[] distinguishableColors;
+	private Color black;
+	private Color white;
+	private int indexSeedLength;
+
+	private int[] authPathStart;
+	private int[] authPathEnd;
+	private int[][][] reducedSignatures;
+	private boolean[] authPathToggled;
+	private int oldToggle = -1;
+
+	private ISimpleMerkle merkle;
+	protected StyleRange indexBold;
+
 	/**
-	 * Create the composite. Includes Message definition, Signature generation
-	 * and Signature content
+	 * Create the GUI. Includes message definition, signature generation
+	 * and signature content
 	 * 
 	 * @param parent
 	 * @param style
+	 *        SWT Composite style bits
+	 * @param merkle
+	 * @param signatureComposite
+	 *        the parent class needed for method calls
+	 * @param mode
 	 */
-	MerkleTreeSignatureComposite signatureComposite;
-	SUIT mode;
-	Label sign;
-	Text textSign;
-	Button createButton;
-	StyledText styledTextSign;
-	StyledText styledTextSignSize;
-	Label lSignaturSize;
-	Label lkeyNumber;
-	Label SingatureExpl;
-	Label descLabel;
-	String signature = null;
-	String[] splittedSignature;
-
-	Button indexSeedButton;
-	Button otsButton;
-	Spinner authPathSpinner;
-	Button authPathButton;
-
-	SelectionAdapter indexButtonListener;
-	SelectionAdapter otsButtonListener;
-	SelectionAdapter authPathButtonListener;
-
-	Color[] distinguishableColors;
-	Color black;
-	Color white;
-	int indexSeedLength;
-
-	int[] authPathStart;
-	int[] authPathEnd;
-	int[][][] reducedSignatures;
-	boolean[] authPathToggled;
-	int reducedSignatureLength;
-	int oldToggle = -1;
-
-	// StyledText styledTextKeyNumber;
-	ISimpleMerkle merkle;
-	protected StyleRange indexBold;
-
 	public PlainSignatureComposite(Composite parent, int style, ISimpleMerkle merkle, MerkleTreeSignatureComposite signatureComposite, SUIT mode) {
-		super(parent, SWT.NONE);
+		super(parent, style);
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
 
 		this.merkle = merkle;
-		this.signatureComposite = signatureComposite;
 		this.mode = mode;
+
+		// ***********************************
+		// Beginning of GUI elements
+		// ***********************************
 
 		Group defineMessageGroup = new Group(this, SWT.NONE);
 		defineMessageGroup.setLayout(new GridLayout(8, true));
@@ -103,8 +99,7 @@ public class PlainSignatureComposite extends Composite {
 		defineMessageGroup.setText(Descriptions.MerkleTreeSign_0);
 
 		GridData messageGroupLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1);
-		messageGroupLayout.minimumHeight = SWT.DEFAULT; // this.getShell().getBounds().height
-														// / 4;
+		messageGroupLayout.minimumHeight = SWT.DEFAULT;
 		defineMessageGroup.setLayoutData(messageGroupLayout);
 
 		textSign = new Text(defineMessageGroup, SWT.V_SCROLL | SWT.CANCEL | SWT.MULTI);
@@ -122,9 +117,6 @@ public class PlainSignatureComposite extends Composite {
 		styledTextSignSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN / 5, 1));
 		styledTextSignSize.setText(Integer.toString(merkle.getKeyIndex()));
 
-		// SingatureExpl = new Label(this, SWT.NONE);
-		// SingatureExpl.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true,
-		// false, MerkleConst.H_SPAN_MAIN, 1));
 		Group signatureGroup = new Group(this, SWT.NONE);
 		signatureGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, MerkleConst.H_SPAN_MAIN, 1));
 		signatureGroup.setLayout(new GridLayout(40, true));
@@ -160,6 +152,7 @@ public class PlainSignatureComposite extends Composite {
 		white = getDisplay().getSystemColor(SWT.COLOR_WHITE);
 		addColorListeners();
 
+		// Set Strinsg depending on mode
 		switch (mode) {
 		case XMSS:
 			indexSeedButton.setText(Descriptions.MerkleTreeSign_6_2);
@@ -201,18 +194,13 @@ public class PlainSignatureComposite extends Composite {
 
 		createButton.addSelectionListener(new SelectionAdapter() {
 
-			/*
-			 * Event to create a Signature
-			 */
+			// Signature creation event
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				String message = textSign.getText();
 				signature = merkle.sign(message);
 				if (signature != "") {
-					/*
-					 * updated the field of the Signature, KeyIndex and
-					 * SignatureLength
-					 */
+
 					styledTextSign.setText(signature);
 					styledTextSignSize.setText(Converter._numberToPrefix(getSignatureLength(signature)));
 
@@ -223,7 +211,7 @@ public class PlainSignatureComposite extends Composite {
 					authPathButton.setVisible(true);
 					if (otsButton != null)
 						otsButton.setVisible(true);
-
+					// ******************************************
 					// take calculations for color highlighting
 					splittedSignature = signature.split("\\|");
 					if (mode == SUIT.MSS) {
@@ -332,6 +320,8 @@ public class PlainSignatureComposite extends Composite {
 					default:
 						break;
 					}
+					// end calculations for color highlighting
+					// ******************************************
 
 					signatureComposite.addSignatureAndMessage(signature, message);
 				} else {
@@ -339,6 +329,7 @@ public class PlainSignatureComposite extends Composite {
 				}
 			}
 		});
+		// Disables the sign button if no message is given in the text field
 		textSign.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
@@ -371,18 +362,19 @@ public class PlainSignatureComposite extends Composite {
 	}
 
 	/**
-	 * @author christoph sonnberger returns the Length of the Siganture as
-	 *         String used for styledTextSignSize in GUI
+	 * Calculates the Length of a signature
+	 *
 	 * @param signature
-	 * @return length of the Signature
+	 * @return length of the signature
 	 */
 	public int getSignatureLength(String signature) {
 		return signature.length() / 2;
 	}
 
 	/**
-	 * @author christoph sonnberger returns the Index of a given signature as
-	 *         String the Index is the first Letter of the signature
+	 * returns the Index of a given signature as
+	 * String the Index is the first Letter of the signature
+	 * 
 	 * @param signature
 	 * @return index
 	 */
@@ -403,7 +395,8 @@ public class PlainSignatureComposite extends Composite {
 
 	@Override
 	protected void checkSubclass() {
-		// Disable the check that prevents subclassing of SWT components
+		// Disable the check that prevents subclassing of non-composite SWT components
+		// this is a composite subclass
 	}
 
 	public void clearSignatureText() {
@@ -411,6 +404,10 @@ public class PlainSignatureComposite extends Composite {
 		styledTextSignSize.setText("");
 	}
 
+	/**
+	 * The following are color listeners used to highlight signature parts
+	 * Some listeners are exclusive for certain modes
+	 */
 	private void addColorListeners() {
 		distinguishableColors = new Color[4];
 		distinguishableColors[0] = new Color(getDisplay(), 0, 186, 0);
@@ -418,6 +415,7 @@ public class PlainSignatureComposite extends Composite {
 		distinguishableColors[2] = new Color(getDisplay(), 186, 186, 0);
 		distinguishableColors[3] = new Color(getDisplay(), 0, 186, 186);
 
+		// Used by every mode, either selects the index or index and seed
 		indexButtonListener = new SelectionAdapter() {
 
 			@Override
@@ -434,13 +432,14 @@ public class PlainSignatureComposite extends Composite {
 
 		indexSeedButton.addSelectionListener(indexButtonListener);
 
+		// This listener is only for MSS and XMSS. It is used to highlight the one-time signature
 		otsButtonListener = new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				int start = indexSeedLength + 1;
 				int length = mode == SUIT.MSS ? splittedSignature[1].length() + 2 : splittedSignature[2].length() + 2;
 				if (otsButton.getSelection()) {
-					styledTextSign.setStyleRange(new StyleRange(start, length, distinguishableColors[0], white));
+					styledTextSign.setStyleRange(new StyleRange(start, length, new Color(getDisplay(), 51, 204, 255), white));
 					styledTextSign.setTopIndex(0);
 				} else {
 					styledTextSign.setStyleRange(new StyleRange(start, length, black, white));
@@ -451,7 +450,7 @@ public class PlainSignatureComposite extends Composite {
 		if (mode != SUIT.XMSS_MT)
 			otsButton.addSelectionListener(otsButtonListener);
 		if (mode != SUIT.XMSS_MT) {
-
+			// the authPathButton is used solely for the Authentication path in MSS and XMSS
 			authPathButtonListener = new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -469,6 +468,8 @@ public class PlainSignatureComposite extends Composite {
 
 			};
 		} else {
+			// in MultiTree however, it is used for reduced XMSS signatures. It is strictly
+			// not the same feature but similiar
 			authPathButtonListener = new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -476,6 +477,9 @@ public class PlainSignatureComposite extends Composite {
 					int start, end;
 					boolean colouring = false;
 
+					// Only one reduced XMSS signature should be highlighted at once.
+					// (There are only few and it would be too confusing highlight more than one at the same time).
+					// This logic provides, that only one signature can be highlighted at the same time
 					if (authPathToggled[0] && oldToggle != spinner) {
 						for (int i = 0; i < reducedSignatures[oldToggle].length && reducedSignatures[oldToggle][i][1] != 0; ++i) {
 							start = reducedSignatures[oldToggle][i][0];
@@ -513,7 +517,6 @@ public class PlainSignatureComposite extends Composite {
 			};
 		}
 		authPathButton.addSelectionListener(authPathButtonListener);
-
 	}
 
 }
