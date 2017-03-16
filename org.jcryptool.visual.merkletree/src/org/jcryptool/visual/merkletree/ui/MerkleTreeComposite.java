@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.merkletree.Descriptions;
@@ -40,9 +39,9 @@ public class MerkleTreeComposite extends Composite {
 	 * Create the composite. Including Descriptions, Seed (,Bitmask) and Key
 	 * 
 	 * @param parent
-	 *            Parent Composite
+	 *        Parent Composite
 	 * @param masterView
-	 *            Plugin-Main-Composite
+	 *        Plugin-Main-Composite
 	 */
 	public MerkleTreeComposite(Composite parent, ViewPart masterView) {
 		super(parent, SWT.NONE);
@@ -129,9 +128,9 @@ public class MerkleTreeComposite extends Composite {
 	 * Generates the main description for the first tab
 	 * 
 	 * @param descr
-	 *            Parent Composite
+	 *        Parent Composite
 	 * @param mode
-	 *            SUIT { MSS, XMSS or XMSS_MT }
+	 *        SUIT { MSS, XMSS or XMSS_MT }
 	 * @author Maximilian Lindpointner
 	 */
 	private void MerkleTreeDescription(Composite descr, SUIT mode) {
