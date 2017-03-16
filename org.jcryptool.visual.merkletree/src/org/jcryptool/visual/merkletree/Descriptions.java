@@ -51,13 +51,15 @@ public class Descriptions extends NLS {
 	// >
 
 	// <- KeyPair Descriptions
-	public static String MerkleTreeKeyTab_0;
 	public static String MerkleTreeKeyTab_1;
 	public static String MerkleTreeKeyTab_2;
 	public static String MerkleTreeKeyTab_3;
 	public static String MerkleTreeKeyTab_4;
 	public static String MerkleTreeKeyTab_5;
 	public static String MerkleTreeKeyTab_6;
+	public static String MerkleTreeKeyTab_7;
+	public static String MerkleTreeKeyTab_8;
+	public static String MerkleTreeKeyTab_9;
 
 	public static String MerkleTreeKey_column_0;
 	public static String MerkleTreeKey_column_1;
@@ -80,7 +82,6 @@ public class Descriptions extends NLS {
 	public static String MerkleTreeSign_8_2;
 	public static String MerkleTreeSign_9;
 
-	public static String MerkleTreeVerify_0;
 	public static String MerkleTreeVerify_1;
 	public static String MerkleTreeVerify_2;
 	public static String MerkleTreeVerify_3;
@@ -99,8 +100,6 @@ public class Descriptions extends NLS {
 
 	public static String Tab0_Head1;
 	public static String Tab0_Head2;
-	public static String Tab0_Head3;
-	public static String Tab0_Head4;
 	public static String Tab0_Head5;
 	public static String Tab0_Head6;
 	public static String Tab0_Button0;
@@ -112,6 +111,11 @@ public class Descriptions extends NLS {
 	public static String Tab0_MT_3;
 	public static String Tab0_MT_4;
 	public static String Tab0_MT_5;
+
+	public static String Tab0_Seed0;
+	public static String Tab0_Seed1;
+	public static String Tab0_Seed2;
+	public static String Tab0_Seed3;
 
 	public static String Tab1_Button_1;
 	public static String Tab1_Button_2;
@@ -154,6 +158,9 @@ public class Descriptions extends NLS {
 		public static String Tab1_Txt0;
 		public static String Tab1_Txt1;
 
+		public static String MerkleTreeKeyTab_0;
+
+		public static String MerkleTreeVerify_0;
 		public static String Tab2_Txt0;
 	}
 
@@ -171,6 +178,9 @@ public class Descriptions extends NLS {
 		public static String Tab1_Txt0;
 		public static String Tab1_Txt1;
 
+		public static String MerkleTreeKeyTab_0;
+
+		public static String MerkleTreeVerify_0;
 		public static String Tab2_Txt0;
 	}
 
@@ -188,13 +198,11 @@ public class Descriptions extends NLS {
 		public static String Tab1_Head0;
 		public static String Tab1_Txt0;
 		public static String Tab1_Txt1;
+		public static String Tab1_Node;
 		public static String Tab2_Txt0;
-		public static String Tab0_Seed0;
-		public static String Tab0_Seed1;
-		public static String Tab0_Seed2;
-		public static String Tab0_Seed3;
-		public static String MerkleTreeKey_MT;
 
+		public static String MerkleTreeKeyTab_0;
+		public static String MerkleTreeVerify_0;
 	}
 
 	static {
