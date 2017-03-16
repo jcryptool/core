@@ -6,15 +6,10 @@ import java.util.List;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.SWTEventDispatcher;
-import org.eclipse.draw2d.geometry.Dimension;
-import org.eclipse.draw2d.geometry.Rectangle;
-import org.eclipse.draw2d.parts.Thumbnail;
-import org.eclipse.gef.editparts.ZoomListener;
 import org.eclipse.gef.editparts.ZoomManager;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ExpandEvent;
 import org.eclipse.swt.events.ExpandListener;
@@ -30,9 +25,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
@@ -54,6 +47,7 @@ import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 /**
  * Class for the Composite of Tabpage "MerkleTree"
+ * Depicts a Graph of the MerkleTree and a description
  * 
  * @author Kevin Muehlboeck
  * @author Maximilian Lindpointner
@@ -90,20 +84,16 @@ public class MerkleTreeZestComposite extends Composite {
 	private Runnable currentlyHighlighted;
 	private Runnable highlightedAuthpath;
 
-	Color[] greySteps;
-	Color[] redSteps;
+	private Color[] greySteps;
+	private Color[] redSteps;
 	private ArrayList<GraphNode> markedAuthpathList;
 
 	/**
-	 * Create the composite. Including Description, GraphItem, GraphView,
-	 * Description for GraphView
+	 * Creates the GUI elements and the Graph, as well as all listeners
 	 * 
 	 * @param parent
 	 * @param style
-	 */
-	/**
-	 * @param parent
-	 * @param style
+	 *        SWT Composite style bits
 	 * @param merkle
 	 * @param mode
 	 */
@@ -116,9 +106,10 @@ public class MerkleTreeZestComposite extends Composite {
 		this.merkle = merkle;
 		this.mode = mode;
 
-		/*
-		 * the description label for the chosen mode
-		 */
+		// ***********************************
+		// Beginning of GUI elements
+		// ***********************************
+
 		descLabel = new Label(this, SWT.NONE);
 		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, MerkleConst.H_SPAN_MAIN, 1));
 
@@ -130,16 +121,13 @@ public class MerkleTreeZestComposite extends Composite {
 		GridLayout expandLayout = new GridLayout(2, true);
 		expandComposite.setLayout(expandLayout);
 
-		/*
-		 * description text of the chosen mode
-		 */
 		descText = new StyledText(expandComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
 		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		// this.setLayout(new GridLayout(1, true));
 
 		styledTextTree = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
 		styledTextTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 
+		// sets descriptions depending on mode
 		switch (mode) {
 		case XMSS:
 			descLabel.setText(Descriptions.XMSS.Tab1_Head0);
@@ -149,7 +137,6 @@ public class MerkleTreeZestComposite extends Composite {
 		case XMSS_MT:
 			descLabel.setText(Descriptions.XMSS_MT.Tab1_Head0);
 			descText.setText(Descriptions.XMSS_MT.Tab1_Txt0);
-			// styledTextTree.setText(Descriptions.XMSS_MT.Tab1_Txt1);
 			break;
 		case MSS:
 		default:
@@ -176,37 +163,24 @@ public class MerkleTreeZestComposite extends Composite {
 
 		// Beginning of the Graph
 		viewer = new GraphViewer(zestComposite, SWT.V_SCROLL | SWT.H_SCROLL);
+		viewer.setContentProvider(new ZestNodeContentProvider());
+		viewer.setLabelProvider(new ZestLabelProvider(ColorConstants.lightGreen));
+		graph = viewer.getGraphControl();
+		graph.setBackground(getDisplay().getSystemColor(SWT.COLOR_TRANSPARENT));
+		graph.setScrollBarVisibility(FigureCanvas.NEVER);
 		viewer.getControl().forceFocus();
-
-		descriptionExpander.addExpandListener(new ExpandListener() {
-			@Override
-			public void itemExpanded(ExpandEvent e) {
-				curDisplay.asyncExec(() -> {
-					collapsablePart.setHeight(preferredHeight + 60);
-					descriptionExpander.pack();
-					merkleTreeZestComposite.layout();
-					collapsablePart.setText(Descriptions.Tab1_Button_1);
-
-				});
-
-			}
-
-			@Override
-			public void itemCollapsed(ExpandEvent e) {
-				curDisplay.asyncExec(() -> {
-					descriptionExpander.pack();
-					merkleTreeZestComposite.layout();
-					collapsablePart.setText(Descriptions.Tab1_Button_2);
-				});
-			}
-		});
+		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_SOLID);
+		viewer.setInput(merkle.getTree());
+		viewer.setLayoutAlgorithm(new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
+		viewer.applyLayout();
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(viewer.getControl());
 
 		markedConnectionList = new ArrayList<GraphConnection>();
 		markedAuthpathList = new ArrayList<GraphNode>();
-		viewer.setContentProvider(new ZestNodeContentProvider());
-		viewer.setLabelProvider(new ZestLabelProvider(ColorConstants.lightGreen));
+
 		graphOffset = 0;
 
+		// Sets the size of the graph
 		viewer.getControl().addPaintListener(new PaintListener() {
 
 			@Override
@@ -215,61 +189,45 @@ public class MerkleTreeZestComposite extends Composite {
 				Point currentShellSize;
 				currentShellSize = parent.getSize();
 				double x, y;
-				Point startingSashLocation;
 
 				switch (merkle.getLeafCounter()) {
 
 				case 2:
 					x = currentShellSize.x;
 					y = currentShellSize.y / 2;
-					startingSashLocation = new Point(70, 10);
 					break;
 				case 4:
 					x = currentShellSize.x;
 					y = currentShellSize.y / 1.7;
-					startingSashLocation = new Point(40, 10);
 					break;
 				case 8:
 					x = currentShellSize.x;
 					y = currentShellSize.y;
-					startingSashLocation = new Point(20, 0);
 					break;
 				case 16:
 					x = currentShellSize.x * 1.2;
 					y = currentShellSize.y;
-					startingSashLocation = new Point(-150, 0);
+					graphOffset = 150;
 					break;
 				case 32:
 					x = currentShellSize.x * 1.5;
 					y = currentShellSize.y * 1.2;
-					startingSashLocation = new Point(-450, 0);
+					graphOffset = 450;
 					break;
 				case 64:
 					x = currentShellSize.x * 2;
 					y = currentShellSize.y * 1.5;
-					startingSashLocation = new Point(-925, 0);
+					graphOffset = 925;
 					break;
 				default:
 					x = currentShellSize.x;
 					y = currentShellSize.y;
-					startingSashLocation = new Point(80, 10);
 					break;
 				}
 				graph.getViewport().setSize((int) x, (int) y);
-				viewer.getControl().setLocation(graphOffset, 0);
 			}
 		});
-
-		// select the layout of the connections -> CONNECTIONS_DIRECTED would be
-		// a ->
-		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_SOLID);
-		viewer.setInput(merkle.getTree());
-		viewer.setLayoutAlgorithm(new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
-		viewer.applyLayout();
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(viewer.getControl());
-		graph = viewer.getGraphControl();
-		graph.setBackground(getDisplay().getSystemColor(SWT.COLOR_TRANSPARENT));
-		graph.setScrollBarVisibility(FigureCanvas.NEVER);
+		graph.getViewport().setViewLocation(graphOffset, 0);
 
 		graphNodeRetriever = graph.getNodes();
 		nodes = new GraphNode[graphNodeRetriever.size()];
@@ -279,20 +237,19 @@ public class MerkleTreeZestComposite extends Composite {
 			colorizeMultitrees();
 		}
 
+		// ***********************************
+		// End of GUI elements
+		// ***********************************
+
 		// Thumbnail test = new Thumbnail(graph.getRootLayer());
 		// FigureCanvas canvas = new FigureCanvas(this);
-		// canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8,
-		// 1));
+		// canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
 		// canvas.setContents(test);
 
+		// Here start many diffenret Listeners
 		graph.addSelectionListener(new SelectionAdapter() {
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.
-			 * eclipse.swt.events. SelectionEvent) Click-Event to get the
-			 * Selected Node and to mark the other Nodes
-			 */
+			// when selecting a node of the tree, its path and authentication path gets highlighted
+			// also displays the hash value of the tree
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				distinctListener = true;
@@ -410,6 +367,30 @@ public class MerkleTreeZestComposite extends Composite {
 
 		});
 
+		descriptionExpander.addExpandListener(new ExpandListener() {
+			@Override
+			public void itemExpanded(ExpandEvent e) {
+				curDisplay.asyncExec(() -> {
+					collapsablePart.setHeight(preferredHeight + 60);
+					descriptionExpander.pack();
+					merkleTreeZestComposite.layout();
+					collapsablePart.setText(Descriptions.Tab1_Button_1);
+
+				});
+
+			}
+
+			@Override
+			public void itemCollapsed(ExpandEvent e) {
+				curDisplay.asyncExec(() -> {
+					descriptionExpander.pack();
+					merkleTreeZestComposite.layout();
+					collapsablePart.setText(Descriptions.Tab1_Button_2);
+				});
+			}
+		});
+
+		// Color arrays for animate(); in MultiTree
 		String os;
 		try {
 			os = System.getProperty("os.name");
@@ -446,17 +427,17 @@ public class MerkleTreeZestComposite extends Composite {
 	}
 
 	/**
-	 * Marks the whole branch begining from the leaf node
+	 * Marks the whole branch beginning from the selected node
 	 * 
-	 * @param leaf
-	 *            - the leaf node of the branch
+	 * @param node
+	 *        any node of the graph
 	 */
 	@SuppressWarnings("unchecked")
-	private void markBranch(GraphNode leaf) {
+	private void markBranch(GraphNode node) {
 		ArrayList<GraphItem> items = new ArrayList<GraphItem>();
 
 		try {
-			GraphConnection connection = (GraphConnection) leaf.getTargetConnections().get(0);
+			GraphConnection connection = (GraphConnection) node.getTargetConnections().get(0);
 
 			connection.setLineColor(viewer.getGraphControl().DARK_BLUE);
 			if (mode != SUIT.XMSS_MT) {
@@ -486,7 +467,7 @@ public class MerkleTreeZestComposite extends Composite {
 				l = connection.getSource().getTargetConnections();
 			}
 		} catch (IndexOutOfBoundsException ex) {
-			items.add(((GraphConnection) (leaf.getSourceConnections().get(0))).getSource());
+			items.add(((GraphConnection) (node.getSourceConnections().get(0))).getSource());
 		}
 
 		if (mode == SUIT.XMSS_MT) {
@@ -495,10 +476,8 @@ public class MerkleTreeZestComposite extends Composite {
 	}
 
 	/**
-	 * Unmark a previous marked branch
-	 * 
-	 * @param markedConnectionList
-	 *            - Contains marked elements
+	 * Unmark a previous marked branch stored in the Lists markedConnectionList and
+	 * markedAuthpathList
 	 */
 	private void unmarkBranch() {
 		GraphConnection authPath;
@@ -549,7 +528,7 @@ public class MerkleTreeZestComposite extends Composite {
 	 * Marks the authentification path of the leaf
 	 * 
 	 * @param markedConnectionList
-	 *            - Contains marked elements of the Changing Path
+	 *        - Contains marked elements of the Changing Path
 	 */
 	private void markAuthPath(List<GraphConnection> markedConnectionList) {
 		// ArrayList<GraphNode> items = new ArrayList<GraphNode>();
@@ -669,6 +648,14 @@ public class MerkleTreeZestComposite extends Composite {
 
 	}
 
+	/**
+	 * Recursively colors the nodes
+	 * 
+	 * @param node
+	 *        a root node of a single tree
+	 * @param color
+	 *        a color which should be used
+	 */
 	@SuppressWarnings("unchecked")
 	private void recursive(GraphNode node, Color color) {
 		if (node.getSourceConnections() == null) {
@@ -693,6 +680,16 @@ public class MerkleTreeZestComposite extends Composite {
 	int darkCounter = 0;
 	boolean shouldUpdate = true;
 
+	/**
+	 * Provides a blinking animation border for a number of given nodes and given colors
+	 * the animation will go through the given color array
+	 * 
+	 * @param node
+	 *        the nodes which will get an animated border
+	 * @param colors
+	 *        all steps of the animations colors
+	 * @return the thread which performs the animation. With this instance the animation can be cancelled
+	 */
 	private Runnable animate(GraphNode[] node, Color[] colors) {
 		for (int i = 0; i < node.length; ++i)
 			node[i].setBorderWidth(3);
