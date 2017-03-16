@@ -1,9 +1,6 @@
 package org.jcryptool.visual.merkletree.ui;
 
 import java.security.SecureRandom;
-import java.util.ArrayList;
-
-import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.custom.StyledText;
@@ -22,7 +19,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
@@ -34,7 +30,6 @@ import org.jcryptool.visual.merkletree.algorithm.MultiTree;
 import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
 import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
 import org.jcryptool.visual.merkletree.files.Converter;
-import org.jcryptool.visual.merkletree.files.MathUtils;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 /**
@@ -66,7 +61,8 @@ public class MerkleTreeGeneration extends Composite {
 
 	private Text privateSeedText;
 	private Button privateSeedButton;
-	private StyledText bitmaskDescription;
+	// Planned for future feature
+	// private StyledText bitmaskDescription;
 
 	// w Parameter Box
 	private Button buttonSet4;
@@ -92,12 +88,17 @@ public class MerkleTreeGeneration extends Composite {
 	 * 
 	 * @param parent
 	 * @param style
+	 *        SWT Composite style bits
 	 */
 	public MerkleTreeGeneration(Composite parent, int style, SUIT mode, ViewPart masterView) {
 		super(parent, style);
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
 		this.mode = mode;
 		this.masterView = masterView;
+
+		// ***********************************
+		// Beginning of GUI elements
+		// ***********************************
 
 		groupMaster = new Composite(this, SWT.NONE);
 		groupMaster.setLayout(new GridLayout(8, true));
@@ -108,23 +109,14 @@ public class MerkleTreeGeneration extends Composite {
 		publicSeedGroup.setLayout(new GridLayout(10, true));
 		publicSeedGroup.setFont(FontService.getNormalBoldFont());
 
-		/*
-		 * Seed Label
-		 */
 		Label leftSpacer0 = new Label(publicSeedGroup, SWT.NONE);
 		leftSpacer0.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
 
-		/*
-		 * Textbox for seed initiates textbox with a seed
-		 */
 		publicSeedText = new Text(publicSeedGroup, SWT.BORDER | SWT.CENTER);
 		publicSeedText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 		publicSeed = generateNewSeed();
 		publicSeedText.setText(Converter._byteToHex(publicSeed));
 
-		/*
-		 * Button generate new Seed
-		 */
 		publicSeedButton = new Button(publicSeedGroup, SWT.NONE);
 		publicSeedButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 3, 1));
 
@@ -137,17 +129,6 @@ public class MerkleTreeGeneration extends Composite {
 			}
 		});
 
-		/*
-		 * if XMSS or XMSS_MT is selected, also the Bitmask is requiered
-		 * therefore the Bitmask Box is injected
-		 */
-
-		/**
-		 * (non-javadoc)
-		 * 
-		 * Bitmask Seed
-		 * 
-		 */
 		if (mode == SUIT.XMSS || mode == SUIT.XMSS_MT) {
 			privateSeedGroup = new Group(groupMaster, SWT.NONE);
 			privateSeedGroup.setText(Descriptions.Tab0_Head5);
@@ -166,15 +147,10 @@ public class MerkleTreeGeneration extends Composite {
 
 			Label leftSpacer1 = new Label(privateSeedGroup, SWT.NONE);
 			leftSpacer1.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
-			/*
-			 * Textbox for seed
-			 */
+
 			privateSeedText = new Text(privateSeedGroup, SWT.BORDER | SWT.CENTER);
 			privateSeedText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 
-			/*
-			 * Button generate new Seed
-			 */
 			privateSeedButton = new Button(privateSeedGroup, SWT.NONE);
 			privateSeedButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 3, 1));
 			privateSeedButton.setText(Descriptions.Tab0_Seed3);
@@ -207,13 +183,11 @@ public class MerkleTreeGeneration extends Composite {
 		wParameterGroup.setLayout(wParameterGroupLayout);
 		wParameterGroup.setFont(FontService.getNormalBoldFont());
 
-		// text box with Description
 		wParamDescription = new StyledText(wParameterGroup, SWT.WRAP | SWT.BORDER);
 		wParamDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 2));
 		wParamDescription.setEditable(false);
 		wParamDescription.setCaret(null);
 
-		// Radio Buttons 4/16
 		buttonSet4 = new Button(wParameterGroup, SWT.RADIO);
 		buttonSet4.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		buttonSet4.setText("4");
@@ -250,13 +224,6 @@ public class MerkleTreeGeneration extends Composite {
 
 		});
 
-		/**
-		 * (non-javadoc)
-		 * 
-		 * Key Generation Box
-		 * 
-		 */
-
 		generateKeyGroup = new Group(groupMaster, SWT.NONE);
 		generateKeyGroup.setText(Descriptions.Tab0_Head2);
 		generateKeyGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
@@ -276,8 +243,6 @@ public class MerkleTreeGeneration extends Composite {
 		keyRowLayout.verticalSpacing = 13;
 		keyRow.setLayout(keyRowLayout);
 		keyRow.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, true, 8, 1));
-
-		// text - for the spinner
 
 		// spinner for the key-ammount
 		if (mode != SUIT.XMSS_MT) {
@@ -309,8 +274,9 @@ public class MerkleTreeGeneration extends Composite {
 				}
 			});
 		} else {
-			multiTreeArguments = new int[][] { /* { 1, 16 }, */ { 3, 16 },
-					/* { 1, 64 }, */ { 3, 64 }, { 4, 64 } };
+			// combobox arguments when calling MultiTree, some variants have
+			// been commented because they make the tree look too messy.
+			multiTreeArguments = new int[][] { /* { 1, 16 }, */ { 3, 16 }, /* { 1, 64 }, */ { 3, 64 }, { 4, 64 } };
 
 			Label multiTreeAmountDescription = new Label(keyRow, SWT.NONE);
 			multiTreeAmountDescription.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 4, 1));
@@ -322,12 +288,10 @@ public class MerkleTreeGeneration extends Composite {
 
 		}
 
-		// Text box with generated key info
 		createdKey = new Label(keyRow, SWT.NONE);
 		createdKey.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 5, 2));
 		createdKey.setText(Descriptions.MerkleTreeKey_1);
 
-		// 'create button'
 		createKeysButton = new Button(keyRow, SWT.NONE);
 		createKeysButton.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false, 5, 2));
 		createKeysButton.setFont(FontService.getNormalBoldFont());
@@ -339,6 +303,9 @@ public class MerkleTreeGeneration extends Composite {
 			multiTreeCombo = new Combo(keyRow, SWT.READ_ONLY);
 			multiTreeCombo.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 4, 1));
 
+			// combobox arguments when calling MultiTree, some variants have
+			// been commented on purpose because they make the tree look too
+			// messy, but could be used.
 			// multiTreeCombo.add(Descriptions.Tab0_MT_1);
 			multiTreeCombo.add(Descriptions.Tab0_MT_2);
 			// multiTreeCombo.add(Descriptions.Tab0_MT_3);
@@ -346,7 +313,6 @@ public class MerkleTreeGeneration extends Composite {
 			multiTreeCombo.add(Descriptions.Tab0_MT_5);
 
 			multiTreeCombo.select(0);
-
 			multiTreeCombo.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -361,6 +327,7 @@ public class MerkleTreeGeneration extends Composite {
 		successBox = new MessageBox(this.getShell(), SWT.ICON_WORKING | SWT.OK);
 		successBox.setMessage(Descriptions.MerkleTreeKey_3);
 
+		// Switch for setting Strings according to selected mode
 		switch (mode) {
 		case XMSS:
 			publicSeedGroup.setText(Descriptions.Tab0_Seed1);
@@ -391,10 +358,11 @@ public class MerkleTreeGeneration extends Composite {
 			break;
 		}
 
-		/**
-		 * Event Listener for the generate keys button if this button is pressed
-		 * a new merkle tree is generated
-		 */
+		// ***********************************
+		// End of GUI elements
+		// ***********************************
+
+		// Event for creating a key
 		createKeysButton.addSelectionListener(new SelectionAdapter() {
 			/*
 			 * (non-Javadoc) generates the MerkleTree and the KeyPairs
@@ -427,17 +395,25 @@ public class MerkleTreeGeneration extends Composite {
 
 	}
 
-	ISimpleMerkle merkle;
+	private ISimpleMerkle merkle;
 
+	/**
+	 * Creates a MerkleTree key pair depending on SUIT
+	 * Parameters required:
+	 * -number of leafs (or when MT single tree height/tree counter
+	 * -public seed
+	 * -private seed (when XMSS or MT)
+	 * -Hash and OTS Parameter
+	 * -Winternitz Parameter (when Winternitz OTS is used)
+	 * 
+	 * @return an instance of ISimpleMerkle, containing a key pair and MerkleTree
+	 */
 	public ISimpleMerkle generateMerkleTree() {
 		BusyIndicator.showWhile(Display.getCurrent(), new Runnable() {
 
 			@Override
 			public void run() {
-
-				/*
-				 * select the type of suite
-				 */
+				// select the type of scheme
 				switch (mode) {
 				case XMSS:
 					merkle = new XMSSTree();
@@ -451,11 +427,7 @@ public class MerkleTreeGeneration extends Composite {
 					break;
 				}
 
-				/*
-				 * create the merkle tree with the chosen values
-				 */
-				// if the generated Tree is a XMSSTree -> the
-				// bitmaskseed is also needed
+				// create the merkle tree with the chosen values
 				if (mode == SUIT.XMSS) {
 					((XMSSTree) merkle).setBitmaskSeed(privateSeed);
 				}
