@@ -37,6 +37,7 @@ public class MerkleTreeKeyComposite extends Composite {
 	private Text indexText;
 	private Label seedLabel;
 	private Text seedText;
+	private Label privatePublicSeedLabel;
 	private Text publicSeedText;
 	private Composite indexSeedComposite;
 	private Label otsLabel;
@@ -74,7 +75,6 @@ public class MerkleTreeKeyComposite extends Composite {
 
 		keyExplanation = new Text(this, SWT.WRAP);
 		keyExplanation.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN * 2, 1));
-		keyExplanation.setText(Descriptions.MerkleTreeKeyTab_0);
 		keyExplanation.setEditable(false);
 		keyExplanation.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
 
@@ -86,7 +86,7 @@ public class MerkleTreeKeyComposite extends Composite {
 
 		Label lengthDescriptionLabel = new Label(publicKeyGroup, SWT.NONE);
 		lengthDescriptionLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
-		lengthDescriptionLabel.setText("Schlüssellänge");
+		lengthDescriptionLabel.setText(Descriptions.MerkleTreeKeyTab_8);
 
 		Label lengthLabel = new Label(publicKeyGroup, SWT.NONE);
 		lengthLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
@@ -100,7 +100,7 @@ public class MerkleTreeKeyComposite extends Composite {
 
 		Label rootNodeLabel = new Label(publicKeyGroup, SWT.NONE);
 		rootNodeLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 7, 1));
-		rootNodeLabel.setText("Hashwert des Wurzelknotens");
+		rootNodeLabel.setText(Descriptions.MerkleTreeKeyTab_9);
 
 		Text rootNodeText = new Text(publicKeyGroup, SWT.READ_ONLY);
 		rootNodeText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 10, 1));
@@ -108,7 +108,6 @@ public class MerkleTreeKeyComposite extends Composite {
 
 		Label publicSeedLabel = new Label(publicKeyGroup, SWT.NONE);
 		publicSeedLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 7, 1));
-		publicSeedLabel.setText("Öffentlicher Seed");
 
 		// text field storing public key
 		publicKeyText = new Text(publicKeyGroup, SWT.READ_ONLY);
@@ -123,7 +122,7 @@ public class MerkleTreeKeyComposite extends Composite {
 
 		Label privateLengthDescriptionLabel = new Label(privateKeyGroup, SWT.NONE);
 		privateLengthDescriptionLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
-		privateLengthDescriptionLabel.setText("Schlüssellänge");
+		privateLengthDescriptionLabel.setText(Descriptions.MerkleTreeKeyTab_8);
 
 		Label privateLengthLabel = new Label(privateKeyGroup, SWT.NONE);
 		privateLengthLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
@@ -162,13 +161,12 @@ public class MerkleTreeKeyComposite extends Composite {
 		seedText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 10, 1));
 		seedText.setText(splittedPrivateKey[arrayCounter++]);
 
-		if (mode == SUIT.XMSS_MT) {
+		if (mode != SUIT.MSS) {
 			Label spacer2 = new Label(indexSeedComposite, SWT.NONE);
 			spacer2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
 
-			publicSeedLabel = new Label(indexSeedComposite, SWT.NONE);
-			publicSeedLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 7, 1));
-			publicSeedLabel.setText(Descriptions.XMSS_MT.MerkleTreeKey_MT);
+			privatePublicSeedLabel = new Label(indexSeedComposite, SWT.NONE);
+			privatePublicSeedLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 7, 1));
 
 			publicSeedText = new Text(indexSeedComposite, SWT.READ_ONLY);
 			publicSeedText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 10, 1));
@@ -183,7 +181,7 @@ public class MerkleTreeKeyComposite extends Composite {
 		privateOTSSpinner.setMinimum(0);
 		privateOTSSpinner.setMaximum(merkle.getLeafCounter() - 1);
 
-		otsLabel.setText(Descriptions.MerkleTreeKeyTab_5 + " " + privateOTSSpinner.getSelection() + "/" + (merkle.getLeafCounter() - 1));
+		otsLabel.setText(Descriptions.MerkleTreeKeyTab_7 + " " + privateOTSSpinner.getSelection() + "/" + (merkle.getLeafCounter() - 1));
 
 		privateOTSKey = new Text(privateKeyGroup, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.READ_ONLY);
 		privateOTSKey.setText(splittedPrivateKey[arrayCounter]);
@@ -194,7 +192,7 @@ public class MerkleTreeKeyComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				privateOTSKey.setText(splittedPrivateKey[privateOTSSpinner.getSelection() + arrayCounter]);
-				otsLabel.setText(Descriptions.MerkleTreeKeyTab_5 + " " + privateOTSSpinner.getSelection() + "/" + (merkle.getLeafCounter() - 1));
+				otsLabel.setText(Descriptions.MerkleTreeKeyTab_7 + " " + privateOTSSpinner.getSelection() + "/" + (merkle.getLeafCounter() - 1));
 			}
 
 		});
@@ -202,12 +200,23 @@ public class MerkleTreeKeyComposite extends Composite {
 		switch (mode) {
 		case XMSS:
 			descLabel.setText(Descriptions.XMSS.Tab1_Head0);
+			keyExplanation.setText(Descriptions.XMSS.MerkleTreeKeyTab_0);
+			publicSeedLabel.setText(Descriptions.MerkleTreeKeyTab_5);
+			privatePublicSeedLabel.setText(Descriptions.MerkleTreeKeyTab_5);
+			seedLabel.setText(Descriptions.MerkleTreeKeyTab_6);
 			break;
 		case XMSS_MT:
 			descLabel.setText(Descriptions.XMSS_MT.Tab1_Head0);
+			keyExplanation.setText(Descriptions.XMSS_MT.MerkleTreeKeyTab_0);
+			publicSeedLabel.setText(Descriptions.MerkleTreeKeyTab_5);
+			privatePublicSeedLabel.setText(Descriptions.MerkleTreeKeyTab_5);
+			seedLabel.setText(Descriptions.MerkleTreeKeyTab_6);
 			break;
 		case MSS:
 			descLabel.setText(Descriptions.MSS.Tab1_Head0);
+			keyExplanation.setText(Descriptions.MSS.MerkleTreeKeyTab_0);
+			publicSeedLabel.setText(Descriptions.MerkleTreeKeyTab_4);
+			seedLabel.setText(Descriptions.MerkleTreeKeyTab_4);
 		default:
 			break;
 		}
