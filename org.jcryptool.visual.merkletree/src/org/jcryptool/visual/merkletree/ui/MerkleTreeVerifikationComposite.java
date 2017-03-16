@@ -155,18 +155,6 @@ public class MerkleTreeVerifikationComposite
 
 		descLabel = new Label(topBar, SWT.NONE);
 		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, true, false, 2, 1));
-		switch (mode) {
-		case XMSS:
-			descLabel.setText(Descriptions.XMSS.Tab1_Head0);
-			break;
-		case XMSS_MT:
-			descLabel.setText(Descriptions.XMSS_MT.Tab1_Head0);
-			break;
-		case MSS:
-			descLabel.setText(Descriptions.MSS.Tab1_Head0);
-		default:
-			break;
-		}
 
 		/*
 		 * The Description Text for the verification
@@ -183,7 +171,21 @@ public class MerkleTreeVerifikationComposite
 
 		descText = new StyledText(descriptionComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
 		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		descText.setText(Descriptions.MerkleTreeVerify_0);
+		switch (mode) {
+		case XMSS:
+			descLabel.setText(Descriptions.XMSS.Tab1_Head0);
+			descText.setText(Descriptions.XMSS.MerkleTreeVerify_0);
+			break;
+		case XMSS_MT:
+			descLabel.setText(Descriptions.XMSS_MT.Tab1_Head0);
+			descText.setText(Descriptions.XMSS_MT.MerkleTreeVerify_0);
+			break;
+		case MSS:
+			descLabel.setText(Descriptions.MSS.Tab1_Head0);
+			descText.setText(Descriptions.MSS.MerkleTreeVerify_0);
+		default:
+			break;
+		}
 		stackLayout.topControl = descriptionComposite;
 
 		signatureSelectionComposite = new Composite(stackComposite, SWT.NONE);
@@ -631,8 +633,10 @@ public class MerkleTreeVerifikationComposite
 		if (mode == SUIT.XMSS_MT) {
 			currentlyHighlighted = animate(items.toArray(new GraphNode[items.size()]), greySteps);
 		}
-		Node selectedNode = (Node) markedConnectionList.get(0).getDestination().getData();
-		if (selectedNode.isLeaf()) {
+		Node selectedNode = null;
+		if (markedConnectionList.size() != 0)
+			selectedNode = (Node) markedConnectionList.get(0).getDestination().getData();
+		if (selectedNode != null && selectedNode.isLeaf()) {
 			binaryValue.setText(Descriptions.MerkleTreeVerify_10 + " " + selectedNode.getAuthPath());
 			if (selectedNode.getLeafNumber() == currentIndex) {
 				binaryValue.append(". " + Descriptions.MerkleTreeVerify_11);
@@ -882,7 +886,7 @@ public class MerkleTreeVerifikationComposite
 				j = 0;
 			recursive(rootNodes[i], distinguishableColors[j]);
 			if (rootNodes[i].getTargetConnections().size() != 0) {
-				rootNodes[i].setText("Wurzel/Blatt");
+				rootNodes[i].setText(Descriptions.XMSS_MT.Tab1_Node);
 			}
 
 		}
