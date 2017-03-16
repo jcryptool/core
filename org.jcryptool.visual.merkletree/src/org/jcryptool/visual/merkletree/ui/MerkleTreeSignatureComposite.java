@@ -1,39 +1,27 @@
 package org.jcryptool.visual.merkletree.ui;
 
-// import java.security.SecureRandom;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
-import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseTrackListener;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-// import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.MerkleTreeView;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
-import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
-import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 /**
- * Composite for the Tabpage "Signatur"
+ * Composite for the Tabpage "Signature"
+ * Main window for the subclasses org.jcryptool.visual.merkletree.ui.InteractiveSignatureComposite.java
+ * and org.jcryptool.visual.merkletree.ui.PlainSignatureComposite.java.
+ * Basically provides display and interaction tasks, for example selecting which kind of signature class the user wants to use.
  * 
  * @author Kevin Muehlboeck
  * @author Christoph Sonnberger
@@ -41,47 +29,43 @@ import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
  */
 public class MerkleTreeSignatureComposite extends Composite {
 
-	/**
-	 * Create the composite. Includes Message definition, Signature generation
-	 * and Signature content
-	 * 
-	 * @param parent
-	 * @param style
-	 */
-	MerkleTreeSignatureComposite instance;
-	ViewPart masterView;
-	SUIT mode;
-	Shell shell;
-	Label descLabel;
-	Composite selectionComposite;
-	Composite topBar;
-	Composite signatureComposite;
-	StackLayout stackLayout;
-	Label tabDescriptionLabel;
-	Text descrText;
-	Button interactiveButton;
-	Button plainButton;
-	Button interactiveTopButton;
-	Button plainTopButton;
+	private ViewPart masterView;
+	private SUIT mode;
+	private Shell shell;
+	private Label descLabel;
+	private Composite selectionComposite;
+	private Composite topBar;
+	private Composite signatureComposite;
+	private StackLayout stackLayout;
+	private Label tabDescriptionLabel;
+	private Button interactiveButton;
+	private Button plainButton;
+	private Button interactiveTopButton;
+	private Button plainTopButton;
 
-	Label topBarSpacer;
-	Label indexLabel;
+	private Label indexLabel;
+	private Label spacerTop;
+	private Label spacerBottom;
+	private Label spacerBottom2;
 
-	Label spacerTop;
-	Label spacerBottom;
-	Label spacerBottom2;
-
-	String signatures[];
-	String messages[];
+	private String signatures[];
+	private String messages[];
 	int index = 0;
 	boolean interactiveStatus = false;
 
-	InteractiveSignatureComposite interactive;
-	PlainSignatureComposite plain;
+	private InteractiveSignatureComposite interactive;
+	private PlainSignatureComposite plain;
 
-	StyledText styledTextKeyNumber;
-	ISimpleMerkle merkle;
+	private ISimpleMerkle merkle;
 
+	/**
+	 * Create a header including headline, index counter and buttons for the StackLayout
+	 * In the StackLayout, the Signature classes will be displayed
+	 * 
+	 * @param parent
+	 * @param style
+	 *        SWT Composite style bits
+	 */
 	public MerkleTreeSignatureComposite(Composite parent, int style, ISimpleMerkle merkle, SUIT mode, ViewPart masterView) {
 		super(parent, SWT.NONE);
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
@@ -89,7 +73,10 @@ public class MerkleTreeSignatureComposite extends Composite {
 		this.mode = mode;
 		this.masterView = masterView;
 		shell = this.getShell();
-		instance = this;
+
+		// ***********************************
+		// Beginning of GUI elements
+		// ***********************************
 
 		topBar = new Composite(this, SWT.NONE);
 		topBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 8, 1));
@@ -113,6 +100,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 		descLabel = new Label(topBar, SWT.NONE);
 		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, true, false, 2, 1));
 
+		// Strings depending on mode
 		switch (mode) {
 		case XMSS:
 			descLabel.setText(Descriptions.XMSS.Tab1_Head0);
@@ -157,6 +145,11 @@ public class MerkleTreeSignatureComposite extends Composite {
 		spacerBottom2 = new Label(this, SWT.NONE);
 		spacerBottom2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
 
+		// ***********************************
+		// End of GUI elements
+		// ***********************************
+
+		// Listeners to select between interactive/plain in the beginning
 		interactiveButton.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -164,7 +157,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 				createInteractiveComposite(false);
 			}
 		});
-
+		// Listeners to select between interactive/plain in the beginning
 		plainButton.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -175,6 +168,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 
 		});
 
+		// Listeners to switch between interactive/plain afterwards
 		interactiveTopButton.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -183,10 +177,15 @@ public class MerkleTreeSignatureComposite extends Composite {
 			}
 		});
 
+		// Listeners to switch between interactive/plain afterwards
 		plainTopButton.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				// This logic checks if the interactive process is "interrupted"
+				// If so a messagebox asks if you want to leave the process
+				// This is pseudo, as the interactive signature generation is an atomic process, which gets
+				// laid out by the GUI to look as it would work step by step
 				if (interactiveStatus) {
 					MessageBox abortInteractive = new MessageBox(shell, SWT.ICON_WORKING | SWT.YES | SWT.NO);
 					abortInteractive.setText("Warnung");
@@ -209,12 +208,16 @@ public class MerkleTreeSignatureComposite extends Composite {
 
 	}
 
+	/**
+	 * If no instance of InteractiveSignatureComposite has been created yet, it gets created
+	 * elsewise it is put on top of the StackLayout
+	 * 
+	 * @param toggle
+	 */
 	private void createInteractiveComposite(boolean toggle) {
 
 		if (!toggle) {
 			disposeSelection();
-		} else {
-			// plain.dispose();
 		}
 		if (signatureComposite == null) {
 			signatureComposite = new Composite(this, SWT.NONE);
@@ -222,12 +225,11 @@ public class MerkleTreeSignatureComposite extends Composite {
 			stackLayout = new StackLayout();
 			signatureComposite.setLayout(stackLayout);
 		}
-		// if (interactive == null) {
+
 		interactive = new InteractiveSignatureComposite(signatureComposite, SWT.NO_REDRAW_RESIZE, merkle, mode, masterView, this);
 		interactive.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
 		interactive.pack();
 		interactive.interactiveSignatureGeneration();
-		// }
 		stackLayout.topControl = interactive;
 		interactiveTopButton.setEnabled(false);
 		plainTopButton.setEnabled(true);
@@ -235,11 +237,15 @@ public class MerkleTreeSignatureComposite extends Composite {
 		signatureComposite.layout();
 	}
 
+	/**
+	 * If no instance of PlainSignatureComposite has been created yet, it gets created
+	 * elsewise it is put on top of the StackLayout
+	 * 
+	 * @param toggle
+	 */
 	private void createPlainComposite(boolean toggle) {
 		if (!toggle) {
 			disposeSelection();
-		} else {
-			// interactive.dispose();
 		}
 		if (signatureComposite == null) {
 			signatureComposite = new Composite(this, SWT.NONE);
@@ -260,6 +266,9 @@ public class MerkleTreeSignatureComposite extends Composite {
 		signatureComposite.layout();
 	}
 
+	/**
+	 * disposes the old main selection GUI
+	 */
 	private void disposeSelection() {
 		selectionComposite.dispose();
 		spacerTop.dispose();
@@ -347,9 +356,13 @@ public class MerkleTreeSignatureComposite extends Composite {
 
 	@Override
 	protected void checkSubclass() {
-		// Disable the check that prevents subclassing of SWT components
+		// Disable the check that prevents subclassing of non-composite SWT components
+		// this is a composite subclass
 	}
 
+	/**
+	 * Displays a messagebox that no more one-time keys are available
+	 */
 	protected void keysExceededMessage() {
 		MessageBox box = new MessageBox(shell, SWT.COLOR_INFO_BACKGROUND | SWT.OK);
 		box.setMessage(Descriptions.MerkleTreeSign_9);
@@ -363,10 +376,6 @@ public class MerkleTreeSignatureComposite extends Composite {
 			merkle = null;
 			break;
 		}
-	}
-
-	protected Rectangle getSignatureCompositeBounds() {
-		return selectionComposite.getBounds();
 	}
 
 	/**
