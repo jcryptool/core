@@ -6,7 +6,6 @@ import java.util.List;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.SWTEventDispatcher;
-import org.eclipse.gef.editparts.ZoomManager;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -18,12 +17,10 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.events.MouseWheelListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
@@ -53,66 +50,63 @@ import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
 import org.jcryptool.visual.merkletree.files.Converter;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
+/**
+ * Provides an step by step guide tour with a graph through a Merkle Signature generation
+ * 
+ * @author Michael Altenhuber
+ *
+ */
 public class InteractiveSignatureComposite extends Composite {
-	/* implements IZoomableWorkbenchPart */
 	private GraphViewer viewer;
 	private ArrayList<GraphConnection> markedConnectionList;
 	private ArrayList<GraphNode> markedAuthpathList;
 	private ViewPart masterView;
 	private MerkleTreeSignatureComposite signatureComposite;
-	Composite footerComposite;
-	Composite graphComposite;
-	Composite zestComposite;
-	GridLayout zestLayout;
-	SashForm zestSash;
-	Display curDisplay;
-	boolean distinctListener = false;
-	boolean mouseDragging;
-	Point oldMouse;
-	Point newMouse;
-	int differenceMouseX;
-	int differenceMouseY;
-	Point oldSash;
-	Point cameraPoint;
-	Point oldPopup;
-	Object lock = new Object();
-	ISimpleMerkle merkle;
-	Graph graph;
-	Composite parent;
-	boolean expandedFlag = true;
-	Text signatureText;
-	String temporaryResize;
-	Label spacers[];
-	GridData signatureTextLayout;
-	ScrolledComposite scrolledComposite;
-	int authpathSize;
-	Label signatureSize;
-	Color[] greySteps;
-	Color[] redSteps;
-	SUIT mode;
-	boolean movementLinked;
+	private Composite footerComposite;
+	private Composite graphComposite;
+	private Composite zestComposite;
+	private GridLayout zestLayout;
+	private SashForm zestSash;
+	private Display curDisplay;
+	private boolean distinctListener = false;
+	private boolean mouseDragging;
+	private Point oldMouse;
+	private Point newMouse;
+	private int differenceMouseX;
+	private int differenceMouseY;
+	private Point oldSash;
+	private Point oldPopup;
+	private ISimpleMerkle merkle;
+	private Graph graph;;
+	private Text signatureText;
+	private GridData signatureTextLayout;
+	private ScrolledComposite scrolledComposite;
+	private Label signatureSize;
+	private Color[] greySteps;
+	private Color[] redSteps;
+	private SUIT mode;
+	private boolean movementLinked;
 
-	Runnable currentlyHighlighted;
-	Runnable highlightedAuthpath;
+	private Runnable currentlyHighlighted;
+	private Runnable highlightedAuthpath;
 
-	// Interactive Variables
-	String message;
-	int step = 0;
+	private String message;
+	private int step = 0;
 
-	Color[] distinguishableColors;
+	private Color[] distinguishableColors;
 
 	/**
-	 * Create the composite. Including Description, GraphItem, GraphView,
-	 * Description for GraphView
+	 * Create the GUI elements, including the graph, a guidewindow, and a signature footer
 	 * 
 	 * @param parent
 	 * @param style
-	 */
-	/**
-	 * @param parent
-	 * @param style
+	 *        SWT composite style bits
 	 * @param merkle
 	 * @param mode
+	 * @param signatureComposite
+	 *        the parent class needed for method calls
+	 * @param masterView
+	 *        needed for setTab call
 	 */
 	public InteractiveSignatureComposite(Composite parent, int style, ISimpleMerkle merkle, SUIT mode, ViewPart masterView, MerkleTreeSignatureComposite signatureComposite) {
 		super(parent, style);
@@ -122,7 +116,6 @@ public class InteractiveSignatureComposite extends Composite {
 		curDisplay = getDisplay();
 		this.merkle = merkle;
 		this.mode = mode;
-		this.parent = parent;
 		this.signatureComposite = signatureComposite;
 		movementLinked = false;
 
@@ -133,12 +126,16 @@ public class InteractiveSignatureComposite extends Composite {
 		graphCompositeLayout.marginHeight = 0;
 		graphComposite.setLayout(graphCompositeLayout);
 
-		// Composite which contains a SashForm which contains the MerkleTree
-		// Zest Graph
+		// Note: The mouse dragging in this class works the following way:
+		// zestComposite is used as Control which fills the given space in the Layout
+		// zestSash inherits from zestComposite, but has a custom size
+		// the graph is put onto the zestSash
+
+		// now the zestSash can be moved around and it looks like the graph would scroll
+
 		zestComposite = new Composite(graphComposite, SWT.NO_REDRAW_RESIZE);
 		zestComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		zestComposite.setBackground(getDisplay().getSystemColor(SWT.COLOR_TRANSPARENT));
-		// zestComposite.setBackground(getDisplay().getSystemColor(SWT.COLOR_GREEN));
 
 		zestLayout = new GridLayout();
 		zestComposite.setLayout(zestLayout);
@@ -148,8 +145,7 @@ public class InteractiveSignatureComposite extends Composite {
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(zestSash);
 		zestComposite.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_SIZEALL));
 
-		// sets the size for Composite zestComposite
-
+		// sets the size for zestSash
 		this.addPaintListener(new PaintListener() {
 
 			@Override
@@ -201,13 +197,11 @@ public class InteractiveSignatureComposite extends Composite {
 					break;
 				}
 
-				// zestComposite.setSize(1920, 1080);
 				zestComposite.setSize((int) x, (int) y);
 
 			}
 		});
 
-		cameraPoint = zestSash.getLocation();
 		// Beginning of the Graph
 		viewer = new GraphViewer(zestSash, SWT.NONE);
 		// Camera Movement
@@ -217,7 +211,6 @@ public class InteractiveSignatureComposite extends Composite {
 			public void mouseUp(MouseEvent e) {
 				distinctListener = false;
 				mouseDragging = false;
-				cameraPoint = zestSash.getLocation();
 				zestComposite.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_CROSS));
 			}
 
@@ -263,8 +256,6 @@ public class InteractiveSignatureComposite extends Composite {
 		viewer.setContentProvider(new ZestNodeContentProvider());
 		viewer.setLabelProvider(new ZestLabelProvider(ColorConstants.lightGreen));
 
-		// select the layout of the connections -> CONNECTIONS_DIRECTED would be
-		// a ->
 		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_SOLID);
 		viewer.setInput(merkle.getTree());
 		viewer.setLayoutAlgorithm(new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
@@ -335,6 +326,7 @@ public class InteractiveSignatureComposite extends Composite {
 
 		});
 
+		// color arrays for the animate() funcion used in MultiTree
 		String os;
 		try {
 			os = System.getProperty("os.name");
@@ -368,7 +360,7 @@ public class InteractiveSignatureComposite extends Composite {
 			redSteps[i] = new Color(currentDisplay, new RGB(osGrey, colorValues, colorValues));
 		}
 
-		// Uncomment to actiivate zooming, however Composite popup not supported
+		// Uncomment to activate zooming, however Composite popup not supported
 		// yet
 		// ZoomManager zoomManager = new ZoomManager(graph.getRootLayer(),
 		// graph.getViewport());
@@ -390,7 +382,7 @@ public class InteractiveSignatureComposite extends Composite {
 	 * Marks the whole branch begining from the leaf node
 	 * 
 	 * @param leaf
-	 *            - the leaf node of the branch
+	 *        - the leaf node of the branch
 	 */
 	@SuppressWarnings("unchecked")
 	private void markBranch(GraphNode leaf) {
@@ -439,7 +431,7 @@ public class InteractiveSignatureComposite extends Composite {
 	 * Unmark a previous marked branch
 	 * 
 	 * @param markedConnectionList
-	 *            - Contains marked elements
+	 *        - Contains marked elements
 	 */
 	private void unmarkBranch() {
 		GraphConnection authPath;
@@ -488,7 +480,7 @@ public class InteractiveSignatureComposite extends Composite {
 	 * Marks the authentification path of the leaf
 	 * 
 	 * @param markedConnectionList
-	 *            - Contains marked elements of the Changing Path
+	 *        - Contains marked elements of the Changing Path
 	 */
 	private void markAuthPath(List<GraphConnection> markedConnectionList) {
 		// ArrayList<GraphNode> items = new ArrayList<GraphNode>();
@@ -523,8 +515,7 @@ public class InteractiveSignatureComposite extends Composite {
 	}
 
 	/**
-	 * 
-	 * 
+	 * Sets the current zestSash location based on mouse movement
 	 */
 	private void updateSashPosition() {
 		curDisplay.asyncExec(new Runnable() {
@@ -553,29 +544,28 @@ public class InteractiveSignatureComposite extends Composite {
 		});
 	}
 
-	Composite popup;
-	Rectangle compositePosition;
-	Rectangle windowPosition;
-	Rectangle currentView;
-	Point popupPosition;
-	Point popupShouldPosition;
-	Point currentSashPosition;
-	Point sashShouldPosition;
+	private Composite popup;
+	private Rectangle currentView;
+	private Point popupPosition;
+	private Point currentSashPosition;
 
-	StyledText guideText;
-	Text inputText;
-	Button nextButton;
-	Button backButton;
-	Button verifyButton;
+	// these two variables currently here for future planned feature
+	private Point popupShouldPosition;
+	private Point sashShouldPosition;
 
-	SelectionListener nextListener;
-	ModifyListener emptyListener;
+	private StyledText guideText;
+	private Text inputText;
+	private Button nextButton;
+	private Button backButton;
+	private Button verifyButton;
 
-	String plainSignature;
-	String signature[];
-	GraphNode rootNode;
-	GraphNode[] leaves;
-	Runnable singleHighlightNode;
+	private ModifyListener emptyListener;
+
+	private String plainSignature;
+	private String signature[];
+	private GraphNode rootNode;
+	private GraphNode[] leaves;
+	private Runnable singleHighlightNode;
 	boolean isNextListener = true;
 	boolean goingBack = false;
 
@@ -599,10 +589,6 @@ public class InteractiveSignatureComposite extends Composite {
 		popup.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
 		zestSash.moveBelow(popup);
 		sigStringIndex = 0;
-
-		// Initialize current size of the view
-		// compositePosition = zestComposite.getBounds();
-		windowPosition = getShell().getBounds();
 
 		// Get leaves and root node
 		List<?> graphNodeRetriever = graph.getNodes();
