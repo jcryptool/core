@@ -14,10 +14,15 @@ import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
-import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
-import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
 import org.jcryptool.visual.merkletree.files.Converter;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
+
+/**
+ * This class displays the key of an ISimpleMerkle instance
+ * 
+ * @author Michael Altenhuber
+ *
+ */
 
 public class MerkleTreeKeyComposite extends Composite {
 
@@ -49,11 +54,11 @@ public class MerkleTreeKeyComposite extends Composite {
 	private int arrayCounter;
 
 	/**
-	 * Creates the key tab composite. Displays Private/Public keys of a
-	 * ISimpleMerkle *
+	 * Creates the GUI elements and required listeners
 	 * 
 	 * @param parent
 	 * @param style
+	 *        SWT Composite style bits
 	 * @param merkle
 	 */
 
@@ -65,9 +70,9 @@ public class MerkleTreeKeyComposite extends Composite {
 		publicKey = merkle.getPublicKey();
 		privateKey = merkle.getPrivateKey();
 
-		/*
-		 * Begin of building GUI Labels and styled Text fields
-		 */
+		// ***********************************
+		// Beginning of GUI elements
+		// ***********************************
 
 		// Description in top right corner
 		descLabel = new Label(this, SWT.NONE);
@@ -96,6 +101,7 @@ public class MerkleTreeKeyComposite extends Composite {
 		Label spacerLine1 = new Label(publicKeyGroup, SWT.SEPARATOR | SWT.HORIZONTAL);
 		spacerLine1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 20, 1));
 
+		// as the key parts are displayed in their own text fields, it is splitted
 		splittedPublicKey = publicKey.split("\\|");
 
 		Label rootNodeLabel = new Label(publicKeyGroup, SWT.NONE);
@@ -109,7 +115,6 @@ public class MerkleTreeKeyComposite extends Composite {
 		Label publicSeedLabel = new Label(publicKeyGroup, SWT.NONE);
 		publicSeedLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 7, 1));
 
-		// text field storing public key
 		publicKeyText = new Text(publicKeyGroup, SWT.READ_ONLY);
 		publicKeyText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 10, 1));
 		publicKeyText.setText(splittedPublicKey[1]);
@@ -197,6 +202,7 @@ public class MerkleTreeKeyComposite extends Composite {
 
 		});
 
+		// setting Strings according to mode
 		switch (mode) {
 		case XMSS:
 			descLabel.setText(Descriptions.XMSS.Tab1_Head0);
@@ -223,12 +229,15 @@ public class MerkleTreeKeyComposite extends Composite {
 
 	}
 
-	// TODO: check if this method does anything, else remove it
 	@Override
 	protected void checkSubclass() {
-		// Disable the check that prevents subclassing of SWT components
+		// Disable the check that prevents subclassing of non-composite SWT components
+		// this subclass is a composite
 	}
 
+	/**
+	 * Force the private key to update its index, best called when a signature just got created
+	 */
 	public void updateIndexText() {
 		indexText.setText(String.valueOf(merkle.getKeyIndex()));
 	}
