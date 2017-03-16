@@ -127,33 +127,33 @@ public class PlainSignatureComposite extends Composite {
 		// false, MerkleConst.H_SPAN_MAIN, 1));
 		Group signatureGroup = new Group(this, SWT.NONE);
 		signatureGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, MerkleConst.H_SPAN_MAIN, 1));
-		signatureGroup.setLayout(new GridLayout(20, true));
+		signatureGroup.setLayout(new GridLayout(40, true));
 		signatureGroup.setText(Descriptions.MerkleTreeVerify_2);
 		signatureGroup.setFont(FontService.getNormalBoldFont());
 
 		Label buttonExplanationLabel = new Label(signatureGroup, SWT.NONE);
-		buttonExplanationLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
+		buttonExplanationLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 10, 1));
 		buttonExplanationLabel.setText(Descriptions.MerkleTreeSign_5);
 		buttonExplanationLabel.setVisible(false);
 
 		indexSeedButton = new Button(signatureGroup, SWT.TOGGLE);
-		indexSeedButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		indexSeedButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 6, 1));
 
 		indexSeedButton.setVisible(false);
 
 		if (mode != SUIT.XMSS_MT) {
 			otsButton = new Button(signatureGroup, SWT.TOGGLE);
-			otsButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+			otsButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 6, 1));
 			otsButton.setText(Descriptions.MerkleTreeSign_7);
 			otsButton.setVisible(false);
 		}
 
 		authPathSpinner = new Spinner(signatureGroup, SWT.NONE);
-		authPathSpinner.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
+		authPathSpinner.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 2, 1));
 		authPathSpinner.setVisible(false);
 
 		authPathButton = new Button(signatureGroup, SWT.PUSH);
-		authPathButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, mode != SUIT.XMSS_MT ? 4 : 9, 1));
+		authPathButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, mode != SUIT.XMSS_MT ? 8 : 22, 1));
 		authPathButton.setVisible(false);
 
 		black = getDisplay().getSystemColor(SWT.COLOR_BLACK);
@@ -178,7 +178,7 @@ public class PlainSignatureComposite extends Composite {
 		}
 
 		styledTextSign = new StyledText(signatureGroup, SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
-		styledTextSign.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 20, 1));
+		styledTextSign.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 40, 1));
 
 		textSign.addFocusListener(new FocusListener() {
 
@@ -246,14 +246,18 @@ public class PlainSignatureComposite extends Composite {
 						authPathToggled = new boolean[i - 3];
 						Arrays.fill(authPathToggled, false);
 
-						authPathStart[0] = splittedSignature[0].length() + splittedSignature[1].length() + splittedSignature[2].length() + 3;
+						authPathStart[0] = splittedSignature[0].length() + splittedSignature[1].length() + splittedSignature[2].length() + 7;
 						for (int j = 1; j < authPathStart.length; ++j) {
-							authPathEnd[j - 1] = authPathStart[j - 1] + splittedSignature[j + 3].length() + 1 + 1;
-							authPathStart[j] = authPathStart[j - 1] + splittedSignature[j + 3].length() + 1 + 1;
+							authPathEnd[j - 1] = authPathStart[j - 1] + splittedSignature[j + 3].length() + 1;
+							authPathStart[j] = authPathStart[j - 1] + splittedSignature[j + 3].length() + 1;
 						}
 						authPathEnd[authPathEnd.length - 1] = authPathStart[authPathStart.length - 1] + splittedSignature[splittedSignature.length - 1].length();
 
-						int authPathBeginning = splittedSignature[0].length() + splittedSignature[1].length() + splittedSignature[2].length() + 3;
+						int authPathBeginning = splittedSignature[0].length() + splittedSignature[1].length() + 2;
+						signature = signature.substring(0, authPathBeginning) + "\r\n" + signature.substring(authPathBeginning);
+						styledTextSign.setText(signature);
+
+						authPathBeginning = splittedSignature[0].length() + splittedSignature[1].length() + splittedSignature[2].length() + 5;
 						signature = signature.substring(0, authPathBeginning) + "\r\n" + signature.substring(authPathBeginning);
 						styledTextSign.setText(signature);
 
@@ -311,14 +315,18 @@ public class PlainSignatureComposite extends Composite {
 						authPathToggled = new boolean[k - 2];
 						Arrays.fill(authPathToggled, false);
 
-						authPathStart[0] = splittedSignature[0].length() + splittedSignature[1].length() + 2;
+						authPathStart[0] = splittedSignature[0].length() + splittedSignature[1].length() + 6;
 						for (j = 1; j < authPathStart.length; ++j) {
-							authPathEnd[j - 1] = authPathStart[j - 1] + splittedSignature[j + 2].length() + 1 + 1;
-							authPathStart[j] = authPathStart[j - 1] + splittedSignature[j + 2].length() + 1 + 1;
+							authPathEnd[j - 1] = authPathStart[j - 1] + splittedSignature[j + 2].length() + 1;
+							authPathStart[j] = authPathStart[j - 1] + splittedSignature[j + 2].length() + 1;
 						}
 						authPathEnd[authPathEnd.length - 1] = authPathStart[authPathStart.length - 1] + splittedSignature[splittedSignature.length - 1].length();
 
-						authPathBeginning = splittedSignature[0].length() + splittedSignature[1].length() + 2;
+						authPathBeginning = splittedSignature[0].length() + 1;
+						signature = signature.substring(0, authPathBeginning) + "\r\n" + signature.substring(authPathBeginning);
+						styledTextSign.setText(signature);
+
+						authPathBeginning = splittedSignature[0].length() + splittedSignature[1].length() + 4;
 						signature = signature.substring(0, authPathBeginning) + "\r\n" + signature.substring(authPathBeginning);
 						styledTextSign.setText(signature);
 					default:
@@ -430,7 +438,7 @@ public class PlainSignatureComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				int start = indexSeedLength + 1;
-				int length = mode == SUIT.MSS ? splittedSignature[1].length() : splittedSignature[2].length();
+				int length = mode == SUIT.MSS ? splittedSignature[1].length() + 2 : splittedSignature[2].length() + 2;
 				if (otsButton.getSelection()) {
 					styledTextSign.setStyleRange(new StyleRange(start, length, distinguishableColors[0], white));
 					styledTextSign.setTopIndex(0);
