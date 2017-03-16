@@ -2,7 +2,6 @@ package org.jcryptool.visual.merkletree.ui;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.SWTEventDispatcher;
@@ -27,11 +26,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.GraphConnection;
@@ -40,16 +37,12 @@ import org.eclipse.zest.core.widgets.GraphNode;
 import org.eclipse.zest.core.widgets.ZestStyles;
 import org.eclipse.zest.layouts.LayoutAlgorithm;
 import org.eclipse.zest.layouts.LayoutStyles;
-import org.eclipse.zest.layouts.algorithms.HorizontalTreeLayoutAlgorithm;
-import org.eclipse.zest.layouts.algorithms.RadialLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.algorithm.MultiTree;
 import org.jcryptool.visual.merkletree.algorithm.Node;
-import org.jcryptool.visual.merkletree.algorithm.SimpleMerkleTree;
-import org.jcryptool.visual.merkletree.algorithm.XMSSTree;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 /**
@@ -58,14 +51,14 @@ import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
  * @author Kevin Muehlboeck
  *
  */
-public class MerkleTreeVerifikationComposite
-		extends Composite /* implements IZoomableWorkbenchPart */ {
+public class MerkleTreeVerifikationComposite extends Composite {
 
 	private ISimpleMerkle merkle;
 	private GraphViewer viewer;
+	private Graph graph;
+	private int graphOffset;
 	private StyledText binaryValue;
 	private Label verificationFeedbackLabel;
-	private int layoutCounter = 1;
 	private int currentIndex;
 	private int latestIndex;
 	private ArrayList<GraphConnection> markedConnectionList;
@@ -73,30 +66,30 @@ public class MerkleTreeVerifikationComposite
 	private String messages[];
 	private String signatures[];
 	private Color distinguishableColors[];
-	Label descLabel;
-	StyledText descText;
+	private Label descLabel;
+	private StyledText descText;
 
 	private Composite zestComposite;
 
-	Composite topBar;
-	Composite stackComposite;
-	Composite descriptionComposite;
-	Composite signatureSelectionComposite;
-	StackLayout stackLayout;
-	Button descriptionButton;
-	Button signatureSelectionButton;
-	GridData leftTextLayout;
-	GridData rightTextLayout;
-	StyledText leftText;
-	StyledText rightText;
-	Group leftGroup;
-	Group rightGroup;
-	Combo selectionCombo;
-	Graph graph;
-	SUIT mode;
+	private Composite topBar;
+	private Composite stackComposite;
+	private Composite descriptionComposite;
+	private Composite signatureSelectionComposite;
+	private StackLayout stackLayout;
+	private Button descriptionButton;
+	private Button signatureSelectionButton;
+	private GridData leftTextLayout;
+	private GridData rightTextLayout;
+	private StyledText leftText;
+	private StyledText rightText;
+	private Group leftGroup;
+	private Group rightGroup;
+	private Combo selectionCombo;
 
-	List<?> graphNodeRetriever;
-	GraphNode leaves[];
+	private SUIT mode;
+
+	private List<?> graphNodeRetriever;
+	private GraphNode leaves[];
 	private GraphNode[] nodes;
 	protected boolean mouseDragging;
 	protected boolean distinctListener;
@@ -108,8 +101,8 @@ public class MerkleTreeVerifikationComposite
 	private Runnable currentlyHighlighted;
 	private Runnable highlightedAuthpath;
 
-	Color[] greySteps;
-	Color[] redSteps;
+	private Color[] greySteps;
+	private Color[] redSteps;
 
 	/**
 	 * Create the composite. Including Description, GraphItem, GraphView,
@@ -130,6 +123,7 @@ public class MerkleTreeVerifikationComposite
 		curDisplay = getDisplay();
 		this.mode = mode;
 
+		// finds the latest signature and its index
 		for (int i = this.signatures.length - 1; i >= 0; --i) {
 			if (this.signatures[i] != null) {
 				currentIndex = i;
@@ -137,6 +131,10 @@ public class MerkleTreeVerifikationComposite
 				i = -1;
 			}
 		}
+
+		// ***********************************
+		// Beginning of GUI elements
+		// ***********************************
 
 		topBar = new Composite(this, SWT.NONE);
 		topBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 8, 1));
@@ -156,9 +154,7 @@ public class MerkleTreeVerifikationComposite
 		descLabel = new Label(topBar, SWT.NONE);
 		descLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, true, false, 2, 1));
 
-		/*
-		 * The Description Text for the verification
-		 */
+		// A stack composite for the Description/Signature Selection window
 		stackComposite = new Composite(this, SWT.NONE);
 		stackComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
@@ -171,6 +167,8 @@ public class MerkleTreeVerifikationComposite
 
 		descText = new StyledText(descriptionComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
 		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+		// Set Strings according to mode
 		switch (mode) {
 		case XMSS:
 			descLabel.setText(Descriptions.XMSS.Tab1_Head0);
@@ -186,6 +184,7 @@ public class MerkleTreeVerifikationComposite
 		default:
 			break;
 		}
+		// Sets the initial top of StackLayout
 		stackLayout.topControl = descriptionComposite;
 
 		signatureSelectionComposite = new Composite(stackComposite, SWT.NONE);
@@ -280,11 +279,24 @@ public class MerkleTreeVerifikationComposite
 		viewer.setContentProvider(new ZestNodeContentProvider());
 		viewer.getControl().forceFocus();
 		viewer.setLabelProvider(new ZestLabelProvider(ColorConstants.white));
-		// select the layout of the connections -> CONNECTIONS_DIRECTED would be
-		// a ->
+		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_SOLID);
+		viewer.setInput(merkle.getTree());
+		viewer.setLayoutAlgorithm(new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
+		viewer.applyLayout();
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(viewer.getControl());
+
+		graph = viewer.getGraphControl();
+		graph.setBackground(getDisplay().getSystemColor(SWT.COLOR_TRANSPARENT));
+		graph.setScrollBarVisibility(FigureCanvas.NEVER);
+		graphNodeRetriever = graph.getNodes();
 		markedConnectionList = new ArrayList<GraphConnection>();
 		markedAuthpathList = new ArrayList<GraphNode>();
+		nodes = new GraphNode[graphNodeRetriever.size()];
+		leaves = new GraphNode[graphNodeRetriever.size() / 2 + 1];
 
+		graphOffset = 0;
+
+		// Sets the size of the graph
 		viewer.getControl().addPaintListener(new PaintListener() {
 
 			@Override
@@ -293,56 +305,45 @@ public class MerkleTreeVerifikationComposite
 				Point currentShellSize;
 				currentShellSize = parent.getSize();
 				double x, y;
-				Point startingSashLocation;
 
 				switch (merkle.getLeafCounter()) {
 
 				case 2:
 					x = currentShellSize.x;
 					y = currentShellSize.y / 2;
-					startingSashLocation = new Point(70, 10);
 					break;
 				case 4:
 					x = currentShellSize.x;
 					y = currentShellSize.y / 1.7;
-					startingSashLocation = new Point(40, 10);
 					break;
 				case 8:
 					x = currentShellSize.x;
 					y = currentShellSize.y;
-					startingSashLocation = new Point(20, 0);
 					break;
 				case 16:
 					x = currentShellSize.x * 1.2;
 					y = currentShellSize.y;
-					startingSashLocation = new Point(-150, 0);
+					graphOffset = 150;
 					break;
 				case 32:
 					x = currentShellSize.x * 1.5;
 					y = currentShellSize.y * 1.2;
-					startingSashLocation = new Point(-450, 0);
+					graphOffset = 450;
 					break;
 				case 64:
 					x = currentShellSize.x * 2;
 					y = currentShellSize.y * 1.5;
-					startingSashLocation = new Point(-925, 0);
+					graphOffset = 925;
 					break;
 				default:
 					x = currentShellSize.x;
 					y = currentShellSize.y;
-					startingSashLocation = new Point(80, 10);
 					break;
 				}
 				graph.getViewport().setSize((int) x, (int) y);
 			}
 		});
-
-		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_SOLID);
-		viewer.setInput(merkle.getTree());
-		LayoutAlgorithm layout = new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);
-		viewer.setLayoutAlgorithm(layout, true);
-		viewer.applyLayout();
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(viewer.getControl());
+		graph.getViewport().setViewLocation(graphOffset, 0);
 
 		/*
 		 * Text field for the binary representation of the node this The textbox
@@ -350,26 +351,17 @@ public class MerkleTreeVerifikationComposite
 		 */
 		binaryValue = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
 		binaryValue.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
-
-		graph = viewer.getGraphControl();
-		graph.setBackground(getDisplay().getSystemColor(SWT.COLOR_TRANSPARENT));
-		graph.setScrollBarVisibility(FigureCanvas.NEVER);
-		graphNodeRetriever = graph.getNodes();
-		nodes = new GraphNode[graphNodeRetriever.size()];
-		leaves = new GraphNode[graphNodeRetriever.size() / 2 + 1];
+		// ***********************************
+		// End of GUI elements
+		// Beginning of Graph / Listeners
+		// ***********************************
 
 		if (mode == SUIT.XMSS_MT) {
 			colorizeMultitrees();
 		}
 
 		graph.addSelectionListener(new SelectionAdapter() {
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.
-			 * eclipse.swt.events. SelectionEvent) Click-Event to get the
-			 * Selected Node and to mark the other Nodes
-			 */
+			// if a node is selected, mark the path, set the path in StyledText binaryValue, and set it for verification process
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				distinctListener = true;
@@ -378,7 +370,6 @@ public class MerkleTreeVerifikationComposite
 					Node n = (Node) node.getData();
 
 					verificationFeedbackLabel.setForeground(new Color(null, new RGB(0, 0, 0)));
-					// verificationFeedbackLabel.setAlignment(SWT.LEFT);
 					verificationFeedbackLabel.setBackground(ColorConstants.white);
 					verificationFeedbackLabel.setText("");
 					if (n.isLeaf()) {
@@ -414,6 +405,7 @@ public class MerkleTreeVerifikationComposite
 			}
 		});
 
+		// The mouselistener for dragging the graph
 		MouseListener dragQueen = new MouseListener() {
 
 			@Override
@@ -460,13 +452,10 @@ public class MerkleTreeVerifikationComposite
 		viewer.getGraphControl().addMouseListener(dragQueen);
 		zestComposite.addMouseListener(dragQueen);
 
-		/**
-		 * Verify Button
-		 */
-		Button bt_Verify = new Button(this, SWT.WRAP);
-		bt_Verify.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		bt_Verify.setText(Descriptions.MerkleTreeVerify_6);
-		bt_Verify.addSelectionListener(new SelectionAdapter() {
+		Button verifyButton = new Button(this, SWT.WRAP);
+		verifyButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		verifyButton.setText(Descriptions.MerkleTreeVerify_6);
+		verifyButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				int currentLeaf = -1;
@@ -490,7 +479,7 @@ public class MerkleTreeVerifikationComposite
 					}
 				} else {
 					/*
-					 * if selected item is a node then show message that node
+					 * if selected item is a node then show message that nodes
 					 * cant be used to verify signature
 					 */
 					verificationFeedbackLabel.setBackground(ColorConstants.red);
@@ -531,6 +520,7 @@ public class MerkleTreeVerifikationComposite
 
 		});
 
+		// Initializes the color arrays for MultiTree animation
 		String os;
 		try {
 			os = System.getProperty("os.name");
@@ -590,7 +580,7 @@ public class MerkleTreeVerifikationComposite
 	 * Marks the whole branch beginning from the leaf node
 	 * 
 	 * @param leaf
-	 *            - the leaf node of the branch
+	 *        - the leaf node of the branch
 	 */
 	@SuppressWarnings("unchecked")
 	private void markBranch(GraphNode leaf) {
@@ -704,7 +694,7 @@ public class MerkleTreeVerifikationComposite
 	 * Marks the authentification path of the leaf
 	 * 
 	 * @param markedConnectionList
-	 *            - Contains marked elements of the Changing Path
+	 *        - Contains marked elements of the Changing Path
 	 */
 	private void markAuthPath(List<GraphConnection> markedConnectionList) {
 		// ArrayList<GraphNode> items = new ArrayList<GraphNode>();
@@ -738,37 +728,17 @@ public class MerkleTreeVerifikationComposite
 	}
 
 	/**
-	 * Change the layout of the merkle tree
+	 * adds a signature/message pair
 	 */
-	public void setLayoutManager() {
-		switch (layoutCounter) {
-		case 1:
-			viewer.setLayoutAlgorithm(new HorizontalTreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
-			viewer.applyLayout();
-
-			layoutCounter++;
-			break;
-		case 2:
-			viewer.setLayoutAlgorithm(new RadialLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
-			viewer.applyLayout();
-
-			layoutCounter++;
-			break;
-		case 3:
-			viewer.setLayoutAlgorithm(new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
-			viewer.applyLayout();
-
-			layoutCounter = 1;
-			break;
-		}
-	}
-
 	public void setSignatureMessagePair(String signatures[], String[] messages) {
 		this.signatures = signatures;
 		this.messages = messages;
 		refreshCombo();
 	}
 
+	/**
+	 * takes all signature/message pairs and puts them into the selection combobox
+	 */
 	private void refreshCombo() {
 		if (selectionCombo.getItemCount() > 0)
 			selectionCombo.removeAll();
@@ -809,6 +779,9 @@ public class MerkleTreeVerifikationComposite
 		}
 	}
 
+	/**
+	 * Sets the current view location based on mouse movement
+	 */
 	private void updateViewLocation() {
 		curDisplay.asyncExec(new Runnable() {
 			@Override
@@ -893,6 +866,14 @@ public class MerkleTreeVerifikationComposite
 
 	}
 
+	/**
+	 * Recursively colors the nodes
+	 * 
+	 * @param node
+	 *        a root node of a single tree
+	 * @param color
+	 *        a color which should be used
+	 */
 	@SuppressWarnings("unchecked")
 	private void recursive(GraphNode node, Color color) {
 		if (node.getSourceConnections() == null) {
@@ -917,6 +898,16 @@ public class MerkleTreeVerifikationComposite
 	int darkCounter = 0;
 	boolean shouldUpdate = true;
 
+	/**
+	 * Provides a blinking animation border for a number of given nodes and given colors
+	 * the animation will go through the given color array
+	 * 
+	 * @param node
+	 *        the nodes which will get an animated border
+	 * @param colors
+	 *        all steps of the animations colors
+	 * @return the thread which performs the animation. With this instance the animation can be cancelled
+	 */
 	private Runnable animate(GraphNode[] node, Color[] colors) {
 		for (int i = 0; i < node.length; ++i)
 			node[i].setBorderWidth(3);
