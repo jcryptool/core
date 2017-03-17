@@ -49,6 +49,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
 
     	private Map<Integer, Character> maskMap;
     	private char[] nonmasked;
+		private boolean dontReconstruct = false;
     	
     	public CipherTextMask(char[] charInput, AbstractAlphabet alphabet) {
 			this.maskMap = new LinkedHashMap<>();
@@ -70,7 +71,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
 
 		public char[] readIntoMask(char[] fillIn) {
 			StringBuilder b = new StringBuilder();
-			LinkedHashMap<Integer, Character> mask = new LinkedHashMap<>(maskMap);
+			LinkedHashMap<Integer, Character> mask = this.dontReconstruct ? new LinkedHashMap<>() : new LinkedHashMap<>(maskMap);
 			
 			int filledInCounter = 0;
 			for (int i = 0; i < fillIn.length; i++) {
@@ -97,6 +98,10 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
 
 		public char[] getNonmasked() {
 			return this.nonmasked;
+		}
+
+		public void setToUnchangedReconstruction(boolean dontReconstruct) {
+			this.dontReconstruct = dontReconstruct;
 		}
 
 	}
@@ -274,7 +279,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
             // this.dataObject.setInputStream(input);
         }
     }
-
+    
     /**
      * filters a string by given criteria
      * 
@@ -385,6 +390,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
             LogUtil.logError(OperationsPlugin.PLUGIN_ID, "Exception while setting up the cipher input", e, true); //$NON-NLS-1$
         }
 
+        mask.setToUnchangedReconstruction(filter);
         // encrypt
         if (dataObject.getOpmode() == 0) {
             cipherOutput = mask.readIntoMask(encrypt(cipherInput, 0));
@@ -397,15 +403,15 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
             out2[i] = cipherOutput[i];
         }
 
-        filter = true; //TODO: cleanup the mess with the filter options.
-        if (filter) {
-            p.print(String.valueOf(cipherOutput));
-            this.dataObject.setOutput(cipherOutput);
-        } else {
-            char[] finalOutput = mergeToFinalOutput(charInput, cipherOutput);
-            p.print(String.valueOf(finalOutput));
-            this.dataObject.setOutput(finalOutput);
-        }
+        filter = true; 
+        p.print(String.valueOf(cipherOutput));
+        this.dataObject.setOutput(cipherOutput);
+//        if (filter) {
+//        } else {
+//            char[] finalOutput = mergeToFinalOutput(charInput, cipherOutput);
+//            p.print(String.valueOf(finalOutput));
+//            this.dataObject.setOutput(finalOutput);
+//        }
 
         return dataObject;
     }
