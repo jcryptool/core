@@ -79,6 +79,10 @@ public class CaesarWizardPage extends AbstractClassicCryptoPage {
     
     @Override
     protected void createCustomAlphaGroupObjects(Composite innerGroup) {
+    	
+    }
+    @Override
+    protected void createCustomKeyGroupObjects(Composite innerGroup) {
     	Composite cmpAlphaExpl = new Composite(innerGroup, SWT.NONE);
     	GridLayout layout = new GridLayout(3, false);
     	layout.marginWidth = 0;
@@ -116,7 +120,7 @@ public class CaesarWizardPage extends AbstractClassicCryptoPage {
         keyInputComp = new CaesarKeyInput(keyGroup, SWT.NONE);
         keyInputComp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         
-        
+        createCustomKeyGroupObjects(keyGroup);
     }
     @Override
     protected void createKeyInputObjects() {

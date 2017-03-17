@@ -838,6 +838,11 @@ public class AbstractClassicCryptoPage extends WizardPage {
 		
 	}
 
+	protected void createCustomKeyGroupObjects(Composite innerGroup) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	/**
      * This method initializes transformaGroup, providing the transformation controls <br>
      * Subclasses should override this, if more controls are needed. *
@@ -913,6 +918,8 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
         keyText.setLayoutData(keyTextGridData);
         keyText.setToolTipText(Messages.AbstractClassicCryptoPage_keyToolTip);
+        
+        createCustomKeyGroupObjects(keyGroup);
     }
 
     protected void createConsoleGroup(Composite parent) {
