@@ -28,7 +28,6 @@ import java.util.Map;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.OperationsPlugin;
 import org.jcryptool.core.operations.algorithm.AbstractAlgorithm;
-import org.jcryptool.core.operations.algorithm.classic.AbstractClassicAlgorithm.CipherTextMask;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
