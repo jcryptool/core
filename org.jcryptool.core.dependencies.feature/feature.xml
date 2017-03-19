@@ -221,7 +221,7 @@ litigation.
    </license>
 
    <url>
-      <update label="JCrypTool.org" url="http://www.cryptool.org/jct/update"/>
+      <update label="JCrypTool.org" url="https://www.cryptool.org/jct/update"/>
    </url>
 
    <includes
