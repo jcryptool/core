@@ -5,7 +5,7 @@ The **JCrypTool Crypto** repository contains all crypto plug-ins for JCrypTool: 
 
 These projects require the plug-ins from the [JCrypTool Core](https://github.com/jcryptool/core) repository to compile and to run.
 
-##Contributing
+## Contributing
 Every developer is welcome to join the JCrypTool community. Have a look at our [wiki](https://github.com/jcryptool/core/wiki) to see how you can join our growing community.
 
 ## More Information
@@ -16,7 +16,7 @@ General information on the CrypTool and JCrypTool projects is available in the [
 ## Downloads
 JCrypTool downloads are available as [weekly builds](https://www.cryptool.org/en/jct-downloads/jct-weekly) (unstable, build automatically every Saturday based on the **develop** branch) and as [release builds](https://www.cryptool.org/en/jct-downloads/jct-stable) (stable).
 
-##Meta
+## Meta
 [![Build Status](https://travis-ci.org/jcryptool/core.svg)](https://travis-ci.org/jcryptool/core)
 [![Gitter](http://img.shields.io/badge/gitter-join%20chat-1dce73.svg)](https://gitter.im/dschadow/jcryptool)
 [![License](https://img.shields.io/badge/License-EPL%201.0-red.svg)](https://opensource.org/licenses/EPL-1.0)
