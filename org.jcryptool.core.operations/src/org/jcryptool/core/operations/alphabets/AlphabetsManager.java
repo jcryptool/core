@@ -10,6 +10,9 @@
 package org.jcryptool.core.operations.alphabets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Optional;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -192,5 +195,16 @@ public class AlphabetsManager {
     public int getSize() {
         return store.getSize();
     }
+
+	/**
+	 * Retrieves an alphabet by case-sensitively looking for a substring of it. Returns null if no match is found.
+	 * 
+	 * @param string the substring of the alphabet name to look for
+	 * @return a found alphabet (to be considered randomly chosen out of multiple matches) or null if no match was found.
+	 */
+	public AbstractAlphabet getAlphabetBySubName(String string) {
+		Optional<AbstractAlphabet> alpha = Arrays.asList(getAlphabets()).stream().filter(a -> a.getName().contains(string)).findAny();
+		return alpha.orElse(null);
+	}
 
 }
