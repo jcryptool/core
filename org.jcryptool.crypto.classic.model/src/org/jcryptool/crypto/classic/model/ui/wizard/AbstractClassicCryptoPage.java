@@ -319,8 +319,15 @@ public class AbstractClassicCryptoPage extends WizardPage {
                 }
             }
         });
+        
+        updateAlphaGroupText();
 
     }
+    
+    protected void updateAlphaGroupText() {
+		alphabetGroup.setText(Messages.WizardPage_alpha + 
+				String.format(Messages.CaesarWizardPage_4, getAlphabetInput().getContent().getCharacterSet().length));
+	}
 
     private TransformData updateTransformData(Boolean filter, TransformData transformData) {
 		AbstractAlphabet alpha = getAlphabetInput().getContent();
@@ -908,7 +915,12 @@ public class AbstractClassicCryptoPage extends WizardPage {
         keyDescriptionLabel.setLayoutData(keyDescriptionLabelGridData);
         keyDescriptionLabel.setVisible(false);
 
-        keyText = new Text(keyGroup, SWT.BORDER);
+        createKeyInputWidgets();
+        createCustomKeyGroupObjects(keyGroup);
+    }
+
+	protected void createKeyInputWidgets() {
+		keyText = new Text(keyGroup, SWT.BORDER);
 
         GridData keyTextGridData = new GridData();
         keyTextGridData.grabExcessHorizontalSpace = true;
@@ -918,9 +930,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
         keyText.setLayoutData(keyTextGridData);
         keyText.setToolTipText(Messages.AbstractClassicCryptoPage_keyToolTip);
-        
-        createCustomKeyGroupObjects(keyGroup);
-    }
+	}
 
     protected void createConsoleGroup(Composite parent) {
         if (specification.hasConsoleRepresentation()) {

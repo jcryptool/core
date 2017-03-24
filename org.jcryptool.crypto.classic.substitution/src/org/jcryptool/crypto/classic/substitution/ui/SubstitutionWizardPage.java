@@ -272,21 +272,7 @@ public class SubstitutionWizardPage extends AbstractClassicCryptoPage {
 	}
 
 	@Override
-	protected void createKeyGroup(Composite parent) {
-		keyGroup = new Group(parent, SWT.NONE);
-		
-		GridLayout keyGroupGridLayout = new GridLayout();
-		keyGroupGridLayout.numColumns = 4;
-		
-		GridData keyGroupGridData = new GridData();
-		keyGroupGridData.horizontalAlignment = GridData.FILL;
-		keyGroupGridData.grabExcessHorizontalSpace = true;
-		keyGroupGridData.grabExcessVerticalSpace = false;
-		keyGroupGridData.verticalAlignment = SWT.CENTER;
-		
-		keyGroup.setLayoutData(keyGroupGridData);
-		keyGroup.setLayout(keyGroupGridLayout);
-		keyGroup.setText(""); //$NON-NLS-1$
+	protected void createKeyInputWidgets() {
 
 		initializeKeyEditor(keyGroup, getSelectedAlphabet());
 	}

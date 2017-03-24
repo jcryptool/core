@@ -47,6 +47,8 @@ public class Messages extends NLS {
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
 	}
 
+	public static String CaesarWizardPage_4;
+
 	private Messages() {
 	}
 }

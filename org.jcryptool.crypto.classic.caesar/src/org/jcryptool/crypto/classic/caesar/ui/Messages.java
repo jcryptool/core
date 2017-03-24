@@ -20,7 +20,6 @@ public class Messages extends NLS {
 	public static String CaesarWizardPage_1;
 	public static String CaesarWizardPage_2;
 	public static String CaesarWizardPage_3;
-	public static String CaesarWizardPage_4;
 	public static String CaesarWizardPage_key_instruction;
 	public static String CaesarWizardPage_keyTooLong;
 	public static String Label_Caesar;

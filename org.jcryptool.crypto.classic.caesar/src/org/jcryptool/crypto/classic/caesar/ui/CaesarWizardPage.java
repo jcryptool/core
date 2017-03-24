@@ -101,26 +101,9 @@ public class CaesarWizardPage extends AbstractClassicCryptoPage {
     }
     
     @Override
-    protected void createKeyGroup(Composite parent) {
-    	keyGroup = new Group(parent, SWT.NONE);
-
-        GridLayout keyGroupGridLayout = new GridLayout();
-        keyGroupGridLayout.numColumns = 2;
-
-        GridData keyGroupGridData = new GridData();
-        keyGroupGridData.horizontalAlignment = GridData.FILL;
-        keyGroupGridData.grabExcessHorizontalSpace = true;
-        keyGroupGridData.grabExcessVerticalSpace = false;
-        keyGroupGridData.verticalAlignment = SWT.TOP;
-
-        keyGroup.setLayoutData(keyGroupGridData);
-        keyGroup.setLayout(keyGroupGridLayout);
-        keyGroup.setText("");
-
+    protected void createKeyInputWidgets() {
         keyInputComp = new CaesarKeyInput(keyGroup, SWT.NONE);
         keyInputComp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        
-        createCustomKeyGroupObjects(keyGroup);
     }
     @Override
     protected void createKeyInputObjects() {
@@ -318,11 +301,6 @@ public class CaesarWizardPage extends AbstractClassicCryptoPage {
     	updateAlphaGroupText();
     }
 
-	protected void updateAlphaGroupText() {
-		alphabetGroup.setText("" + 
-				String.format(Messages.CaesarWizardPage_4, getAlphabetInput().getContent().getCharacterSet().length));
-	}
-	
 	public int getaShift() {
 		return aShift;
 	}
