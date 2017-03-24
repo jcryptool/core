@@ -105,7 +105,7 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
     private Label rc66;
 
     /** Instance of the ADFGVX currentAlphabet */
-    private final AbstractAlphabet adfgvxAlphabet = AlphabetsManager.getInstance().getAlphabetByName("ADFGVX-Alphabet"); //$NON-NLS-1$
+    private final AbstractAlphabet adfgvxAlphabet = AlphabetsManager.getInstance().getAlphabetBySubName("ADFGVX"); //$NON-NLS-1$
 
     /** Instance of the AdfgvxFactory */
     private AdfgvxFactory factory = new AdfgvxFactory();
