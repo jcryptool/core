@@ -198,6 +198,7 @@ public class InteractiveSignatureComposite extends Composite {
 				}
 
 				zestComposite.setSize((int) x, (int) y);
+				zestSash.setLocation(startingSashLocation);
 
 			}
 		});
@@ -581,9 +582,17 @@ public class InteractiveSignatureComposite extends Composite {
 		// Create the guide window
 		// popup = new Composite((Composite) viewer.getControl(), SWT.BORDER);
 		popup = new Composite(zestComposite, SWT.BORDER);
-
 		popup.setVisible(false);
-		popup.setBounds(0, 0, 500, 200);
+
+		Point popupSize = popup.computeSize(550, 175);
+		popup.addPaintListener(new PaintListener() {
+			@Override
+			public void paintControl(PaintEvent e) {
+				popup.setSize(popupSize);
+				popup.setLocation(popupPosition);
+			}
+		});
+
 		popup.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 		popup.setLayout(new GridLayout(6, true));
 		popup.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_ARROW));
@@ -603,7 +612,6 @@ public class InteractiveSignatureComposite extends Composite {
 				rootNode = (GraphNode) graphNodeRetriever.get(i);
 			}
 		}
-		currentIndex = merkle.getKeyIndex();
 		guideText = new StyledText(popup, SWT.WRAP);
 		guideText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 6, 1));
 		guideText.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
@@ -613,28 +621,21 @@ public class InteractiveSignatureComposite extends Composite {
 		inputText = new Text(popup, SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
 		inputText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 6, 1));
 
-		backButton = new Button(popup, SWT.PUSH);
+		Composite buttonRow = new Composite(popup, SWT.DOUBLE_BUFFERED);
+		buttonRow.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 4, 1));
+		buttonRow.setLayout(new GridLayout(6, true));
+
+		backButton = new Button(buttonRow, SWT.PUSH);
 		backButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		backButton.setText(Descriptions.InteractiveSignature_1);
 
-		Label spacer = new Label(popup, SWT.NONE);
-		spacer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
-
-		verifyButton = new Button(popup, SWT.PUSH);
-		verifyButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		verifyButton = new Button(buttonRow, SWT.PUSH);
+		verifyButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
 		verifyButton.setText(Descriptions.InteractiveSignature_Button_4);
 
 		nextButton = new Button(popup, SWT.PUSH);
 		nextButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		nextButton.setEnabled(false);
-
-		popup.addPaintListener(new PaintListener() {
-			@Override
-			public void paintControl(PaintEvent e) {
-				popup.setSize(500, 150);
-				popup.setLocation(popupPosition);
-			}
-		});
 
 		// Step by Step Listeners
 		/* nextListener */
@@ -713,8 +714,6 @@ public class InteractiveSignatureComposite extends Composite {
 		};
 
 		stepByStep();
-		popup.layout(true);
-		popup.setVisible(true);
 	}
 
 	Point leafPosition = new Point(0, 0);
@@ -808,6 +807,7 @@ public class InteractiveSignatureComposite extends Composite {
 				plainSignature = merkle.sign(message);
 				if (plainSignature == "") {
 					signatureComposite.keysExceededMessage();
+					break;
 				}
 				signature = plainSignature.split("\\|");
 				signatureComposite.updateIndexLabel(currentIndex);
