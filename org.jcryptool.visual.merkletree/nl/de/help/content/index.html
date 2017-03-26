@@ -25,9 +25,11 @@ Inhalts&uumlbersicht:<br>
 <br>
 <b>2)</b> <a href="#Kapitel2"><b>eXtended Merkle-Signatur (XMSS)</b></a><br>
 <br>
-<b>3)</b> <a href="#Kapitel3"><b>Bedienung</b></a><br>
+<b>2)</b> <a href="#Kapitel3"><b>eXtended Merkle-Signatur MultiTree (XMSS^MT)</b></a><br>
 <br>
-<b>4)</b> <a href="#Kapitel4"><b>Quellen</b></a>
+<b>3)</b> <a href="#Kapitel4"><b>Bedienung</b></a><br>
+<br>
+<b>4)</b> <a href="#Kapitel5"><b>Quellen</b></a>
 <br>
 <p>
 
@@ -61,7 +63,7 @@ Inhalts&uumlbersicht:<br>
 <p>Das eXtended Merkle-Signature-Scheme (XMSS) basiert auf dem Merkle-Signature-Scheme (MSS) und erweitert dieses Verfahren. Die Hauptunterschiede zum MSS-Verfahren sind der Einsatz einer Bitmaske und eines sogenannten L-Trees. Durch diese beiden Erweiterungen kann auf eine kollisionsresistente Hashfunktion verzichtet werden und diese durch eine Second-Preeimage-resistente Hashfunktion ersetzt werden. Das hat zwei Vorteile:
 a) Da eine Second-Preeimage-resistente Hashfunktion eine schw&aumlchere Annahme ist, ist das XMSS-Verfahren st&aumlrker (schwerer zu brechen).
 b) Die erstellte Signatur ist kleiner.</p>
-<p>XMSS benutzt als One-Time-Signatur (OTS) das Winternitz-OTS (WOTS). Es gibt zwei verschiedene Varianten, WOTS+ undr WOTS$. In diesem Plug-in verwenden wir WOTS+. In beiden Varianten kann eine beliebige Anzahl von WOTS-Schl&uumlsselpaaren mit Hilfe eines Seedwertes und eines Pseudozufallszahlengenerators erzeugt werden.
+<p>XMSS benutzt als Einmalsignatur (OTS) die Winternitz-OTS (WOTS). Es gibt zwei verschiedene Varianten, WOTS+ undr WOTS$. In diesem Plug-in verwenden wir WOTS+. In beiden Varianten kann eine beliebige Anzahl von Einmalschl&uumlsselpaaren mit Hilfe eines Seedwertes und eines Pseudozufallszahlengenerators erzeugt werden.
 Es k&oumlnnen insgesamt 2^h Nachrichten mit einer L&aumlnge von m Bytes signiert werden.</p>
 
 <h4>Bitmaske</h4>
@@ -70,7 +72,7 @@ Es k&oumlnnen insgesamt 2^h Nachrichten mit einer L&aumlnge von m Bytes signiert
 
 <h4>Winternitz-Parameter</h4>
 
-<p>Der Winternitz-Parameter ist eine Variable der Winternitz-OTS (W-OTS). Er bestimmt die Gr&oumlße der Signatur. Je gr&oumlßer der Wert, desto kleiner werden die Signaturen, jedoch erh&oumlht sich auch der Berechnungsaufwand. Die Sicherheit wird nicht beeinflusst.</p>
+<p>Der Winternitz-Parameter ist eine Variable der Winternitz-OTS (WOTS). Er bestimmt die Gr&ouml&szlige der Signatur. Je gr&ouml&szliger der Wert, desto kleiner werden die Signaturen, jedoch erh&oumlht sich auch der Berechnungsaufwand. Die Sicherheit wird nicht beeinflusst.</p>
 
 <h4>L-Tree</h4>
 
@@ -83,11 +85,19 @@ Es k&oumlnnen insgesamt 2^h Nachrichten mit einer L&aumlnge von m Bytes signiert
 <br>
 <br>
 
-
-
 <br>
 <p>
-<a name="Kapitel3"><b>3) Bedienung</b></a>
+<a name="Kapitel3"><b>3) eXtended Merkle-Signatur MultiTree (XMSS^MT)</b></a>
+<p>
+
+<p>Das MultiTree eXtended Merkle signature scheme (XMSS^MT) beruht auf mehreren miteinander verkn&uumlpften XMSS-B&aumlumen. Der Vorteil im Vergleich zu einem einfachen, gleich gro&szligen XMSS-Baum liegt im verringerten Berechnungsaufwand bei der Schl&uumlsselerzeugung. Die Teilb&aumlume werden verkn&uumlpft, indem ein XMSS-Baum die Wurzel des n&aumlchsten Baumes signiert. Dadurch entstehen Ebenen (layer). Die unterste Ebene signiert schlie&szlig;lich Nachrichten.</p>
+<br>
+<p>Warum ist die MultiTree Schl&uuml;sselerzeugung schneller?<p>
+<br>
+<p>Die Einzelb&auml;ume k&ouml;nnen jeweils unabh&auml;ngig voneindander generiert werden. Dann werden sie zu einem Pfad verkettet indem die jeweils obere Ebene die darunterliegende Ebene signiert. Es gen&uuml;gt ein vollst&auml;ndiger Pfad um Signaturen zu erstellen.</p>  
+<br>
+<p>
+<a name="Kapitel4"><b>4) Bedienung</b></a>
 <p>
 
 
@@ -107,7 +117,7 @@ Es k&oumlnnen insgesamt 2^h Nachrichten mit einer L&aumlnge von m Bytes signiert
 
 <img src="img/winternitz.PNG" alt="Hier kann der Winternitz-Parameter ausgew&aumlhlt werden" width="1200"/>
 
-<p>Obwohl der Winternitz-Parameter beliebig groß gew&aumlhlt werden k&oumlnnte, k&oumlnnen hier nur die Werte 4 oder 16 gesetzt werden, da diese am verbreitetsten sind.</p>
+<p>Obwohl der Winternitz-Parameter beliebig gro&szlig gew&aumlhlt werden k&oumlnnte, k&oumlnnen hier nur die Werte 4 oder 16 gesetzt werden, da diese am verbreitetsten sind.</p>
 
 
 <br>
@@ -145,7 +155,7 @@ In der XMSS^MT Varriante werden die einzelnen Bäume farblich hervorgehoben.</p>
 <img src="img/sign.png" alt="Signatur" width="1200"/>
 	
 <p>Dieses Bild zeigt die Signatur einer Nachricht und die L&aumlnge der Signatur in Bytes.
-Die Signatur hat den folgenden Aufbau: Index des Schl&uumlsselpaares | OTS-Signatur | Authentisierungspfad.
+Die Signatur hat den folgenden Aufbau: Index des Schl&uumlsselpaares | Einmalsignatur | Authentisierungspfad.
 </p>
 
 
@@ -165,7 +175,7 @@ Die Signatur hat den folgenden Aufbau: Index des Schl&uumlsselpaares | OTS-Signa
 
 <br>
 <p>
-<a name="Kapitel4"><b>4) Quellen</b></a>
+<a name="Kapitel5"><b>5) Quellen</b></a>
 <p>
 <ul>
   <li>A. H&uumllsing, D. Butin und S. Gazdag:<br>
