@@ -288,12 +288,12 @@ public class MerkleTreeGeneration extends Composite {
 
 		}
 
-		createdKey = new Label(keyRow, SWT.NONE);
-		createdKey.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 5, 2));
-		createdKey.setText(Descriptions.MerkleTreeKey_1);
+		// createdKey = new Label(keyRow, SWT.NONE);
+		// createdKey.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 5, 2));
+		// createdKey.setText(Descriptions.MerkleTreeKey_1);
 
 		createKeysButton = new Button(keyRow, SWT.NONE);
-		createKeysButton.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false, 5, 2));
+		createKeysButton.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false, 10, 2));
 		createKeysButton.setFont(FontService.getNormalBoldFont());
 
 		if (mode == SUIT.XMSS_MT) {
@@ -354,9 +354,9 @@ public class MerkleTreeGeneration extends Composite {
 			generateKeyDescription.setText(Descriptions.MSS.Tab0_Txt2);
 			createKeysButton.setText(Descriptions.MSS.Tab0_Key_Button);
 			successBox.setText(Descriptions.MSS.Tab0_MessageBox0);
-
 			break;
 		}
+		generateKeyDescription.append(" " + Descriptions.MerkleTreeKey_1);
 
 		// ***********************************
 		// End of GUI elements
@@ -370,6 +370,20 @@ public class MerkleTreeGeneration extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				generateMerkleTree();
+
+				// set or update the key information
+				switch (mode) {
+				case XMSS_MT:
+					generateKeyDescription.setText(Descriptions.XMSS_MT.Tab0_Txt2);
+					break;
+				case XMSS:
+					generateKeyDescription.setText(Descriptions.XMSS.Tab0_Txt2);
+				case MSS:
+				default:
+					generateKeyDescription.setText(Descriptions.MSS.Tab0_Txt2);
+					break;
+				}
+				// createdKey.setText(Descriptions.MerkleTreeKey_2 + " " + Converter._numberToPrefix(merkle.getKeyLength()));
 				successBox.open();
 				((MerkleTreeView) masterView).removeFocus();
 			}
@@ -447,9 +461,6 @@ public class MerkleTreeGeneration extends Composite {
 				merkle.generateKeyPairsAndLeaves();
 				merkle.generateMerkleTree();
 				((MerkleTreeView) masterView).setAlgorithm(merkle, mode);
-
-				// set or update the key information
-				createdKey.setText(Descriptions.MerkleTreeKey_2 + " " + Converter._numberToPrefix(merkle.getKeyLength()));
 
 			}
 		});
