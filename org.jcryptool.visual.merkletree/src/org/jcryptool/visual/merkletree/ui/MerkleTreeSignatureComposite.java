@@ -2,6 +2,7 @@ package org.jcryptool.visual.merkletree.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -37,7 +38,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 	private Composite topBar;
 	private Composite signatureComposite;
 	private StackLayout stackLayout;
-	private Label tabDescriptionLabel;
+	private StyledText tabDescriptionLabel;
 	private Button interactiveButton;
 	private Button plainButton;
 	private Button interactiveTopButton;
@@ -84,7 +85,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 
 		indexLabel = new Label(topBar, SWT.CENTER);
 		indexLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 2, 1));
-		indexLabel.setText(Descriptions.MerkleTreeSign_7 + "   " + " / " + (merkle.getLeafCounter() - 1));
+		indexLabel.setText(Descriptions.MerkleTreeSign_7 + " 0 " + " / " + (merkle.getLeafCounter() - 1));
 		indexLabel.setVisible(false);
 
 		interactiveTopButton = new Button(topBar, SWT.PUSH);
@@ -125,10 +126,12 @@ public class MerkleTreeSignatureComposite extends Composite {
 		selectionComposite.setLayout(new GridLayout(4, true));
 		selectionComposite.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
 
-		tabDescriptionLabel = new Label(selectionComposite, SWT.NONE);
+		tabDescriptionLabel = new StyledText(selectionComposite, SWT.NONE);
 		tabDescriptionLabel.setText(Descriptions.InteractiveSignature_8);
 		tabDescriptionLabel.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, true, 4, 1));
 		tabDescriptionLabel.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
+		tabDescriptionLabel.setCaret(null);
+		tabDescriptionLabel.setEditable(false);
 
 		interactiveButton = new Button(selectionComposite, SWT.PUSH);
 		interactiveButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
@@ -188,14 +191,14 @@ public class MerkleTreeSignatureComposite extends Composite {
 				// laid out by the GUI to look as it would work step by step
 				if (interactiveStatus) {
 					MessageBox abortInteractive = new MessageBox(shell, SWT.ICON_WORKING | SWT.YES | SWT.NO);
-					abortInteractive.setText("Warnung");
-					abortInteractive.setMessage("Wollen sie die interaktive Signaturerstellung abbrechen?");
+					abortInteractive.setText(Descriptions.InteractiveSignature_abort_1);
+					abortInteractive.setMessage(Descriptions.InteractiveSignature_abort_2);
 					int boxValue = abortInteractive.open();
 					switch (boxValue) {
 					case SWT.YES:
 						createPlainComposite(true);
 						interactive.withdrawSignature();
-						updateIndexLabel(merkle.getKeyIndex() - 1);
+						// updateIndexLabel(merkle.getKeyIndex() - 1);
 						break;
 					default:
 						break;
@@ -304,13 +307,15 @@ public class MerkleTreeSignatureComposite extends Composite {
 		messages[index] = message;
 		// indexLabel.setText(Descriptions.MerkleTreeSign_7 + index + "/" +
 		// (merkle.getLeafCounter() - 1));
-		updateIndexLabel(index);
+		updateIndexLabel(merkle.getKeyIndex());
 		++index;
 	}
 
 	public void updateIndexLabel(int pseudoIndex) {
 		if (pseudoIndex < 0) {
 			indexLabel.setText(Descriptions.MerkleTreeSign_7 + "   " + " / " + (merkle.getLeafCounter() - 1));
+		} else if (pseudoIndex > merkle.getLeafCounter() - 1) {
+			indexLabel.setText(Descriptions.MerkleTreeSign_10);
 		} else {
 			indexLabel.setText(Descriptions.MerkleTreeSign_7 + " " + pseudoIndex + " / " + (merkle.getLeafCounter() - 1));
 		}
