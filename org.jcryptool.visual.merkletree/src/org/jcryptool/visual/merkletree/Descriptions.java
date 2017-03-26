@@ -81,6 +81,7 @@ public class Descriptions extends NLS {
 	public static String MerkleTreeSign_8_1;
 	public static String MerkleTreeSign_8_2;
 	public static String MerkleTreeSign_9;
+	public static String MerkleTreeSign_10;
 
 	public static String MerkleTreeVerify_1;
 	public static String MerkleTreeVerify_2;
@@ -141,6 +142,9 @@ public class Descriptions extends NLS {
 	public static String InteractiveSignature_10;
 	public static String InteractiveSignature_11;
 	public static String InteractiveSignature_12;
+
+	public static String InteractiveSignature_abort_1;
+	public static String InteractiveSignature_abort_2;
 
 	public static String InteractiveSignature_Seed;
 
