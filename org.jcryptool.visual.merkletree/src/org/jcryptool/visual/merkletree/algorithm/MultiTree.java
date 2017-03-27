@@ -2,11 +2,8 @@ package org.jcryptool.visual.merkletree.algorithm;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -70,13 +67,13 @@ public class MultiTree implements ISimpleMerkle {
 	 * XORs two nodes and hashes them with a salt
 	 * 
 	 * @param pKey
-	 *            first node
+	 *        first node
 	 * @param pKey2
-	 *            second node
+	 *        second node
 	 * @param seed
-	 *            the seed for the bitmask generator
+	 *        the seed for the bitmask generator
 	 * @param adrs
-	 *            lAdress construct used for bitmask generator
+	 *        lAdress construct used for bitmask generator
 	 */
 	public byte[] rand_hash(byte[] pKey, byte[] pKey2, byte[] seed, Address adrs) {
 
@@ -123,9 +120,9 @@ public class MultiTree implements ISimpleMerkle {
 	/**
 	 * @author zuck PRNG used to generate the bitmasks and the key for hashing
 	 * @param seed
-	 *            seed for the PRNG
+	 *        seed for the PRNG
 	 * @param address
-	 *            address of left/right node
+	 *        address of left/right node
 	 */
 	public byte[] randomGenerator(byte[] seed, byte[] address, int len) {
 		byte[] res = new byte[len + 32]; // erstellen des zu befüllenden arrays
@@ -182,7 +179,7 @@ public class MultiTree implements ISimpleMerkle {
 	 * Generates an authentication path as array list with authentication nodes
 	 * 
 	 * @param i
-	 *            index of the WOTS+ key pair
+	 *        index of the WOTS+ key pair
 	 */
 	public ArrayList<Node> buildAuth(int i, byte[] seed) {
 		ArrayList<Node> auth = new ArrayList<Node>();
@@ -204,7 +201,7 @@ public class MultiTree implements ISimpleMerkle {
 		long idx_tree = keyIndex >> (d / h);
 		int idx_leaf;
 		byte[] seed;
-		if (keyIndex >= leafCounter)
+		if (keyIndex < 0)
 			return "";
 		String msg = message; // ERR leer
 		int i;
@@ -304,8 +301,8 @@ public class MultiTree implements ISimpleMerkle {
 		int n = d / h;
 		if ((d - 1) % h < 1)
 			n--; // if 0 --> eine sig zu viel, fehler bei layer ausrechnen
-		else if (d==9 && n==4)
-			n-=2; //calculating layers is a tremendous task
+		else if (d == 9 && n == 4)
+			n -= 2; // calculating layers is a tremendous task
 		for (i = 1; i < n; i++) {
 
 			idx_leaf = (int) (idx_tree & ((1 << h) - 1));
@@ -326,6 +323,8 @@ public class MultiTree implements ISimpleMerkle {
 
 		if (keyIndex < (leafCounter - 1))
 			keyIndex++;
+		else
+			keyIndex = -1;
 		return signature;
 	}
 
@@ -354,9 +353,9 @@ public class MultiTree implements ISimpleMerkle {
 	 * @author Lena returns number of trees on a certain layer
 	 * 
 	 * @param h
-	 *            overall height of the tree
+	 *        overall height of the tree
 	 * @param d
-	 *            layer on which the number of trees is searched
+	 *        layer on which the number of trees is searched
 	 * @return trees on a layer
 	 */
 
@@ -520,7 +519,7 @@ public class MultiTree implements ISimpleMerkle {
 	/**
 	 * 
 	 * @param d
-	 *            nr of layers on the tree
+	 *        nr of layers on the tree
 	 */
 	public void setLayers(int d) {
 		this.d = d;
@@ -549,13 +548,13 @@ public class MultiTree implements ISimpleMerkle {
 	/**
 	 * @author zuck
 	 * @param SK
-	 *            XMSS secret key
+	 *        XMSS secret key
 	 * @param s
-	 *            start index
+	 *        start index
 	 * @param t
-	 *            target node height
+	 *        target node height
 	 * @param seed
-	 *            seed
+	 *        seed
 	 * @return root node of a tree of height t
 	 */
 	public Node treeHash(int s, int t, byte[] seed) {
