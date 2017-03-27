@@ -548,6 +548,7 @@ public class InteractiveSignatureComposite extends Composite {
 	private Composite popup;
 	private Rectangle currentView;
 	private Point popupPosition;
+	private Point popupSize;
 	private Point currentSashPosition;
 
 	// these two variables currently here for future planned feature
@@ -584,7 +585,7 @@ public class InteractiveSignatureComposite extends Composite {
 		popup = new Composite(zestComposite, SWT.BORDER);
 		popup.setVisible(false);
 
-		Point popupSize = popup.computeSize(550, 175);
+		popupSize = popup.computeSize(550, 175);
 		popup.addPaintListener(new PaintListener() {
 			@Override
 			public void paintControl(PaintEvent e) {
@@ -745,9 +746,7 @@ public class InteractiveSignatureComposite extends Composite {
 			currentView.height -= (footerComposite.getBounds().height + 70);
 			// Initial Middle Position by taking the half of the currentView
 			// window, and subtract half the size of the popup
-			popupPosition = new Point(currentView.width / 2, currentView.height / 2);
-			popupPosition.x -= popup.getBounds().width / 2;
-			popupPosition.y -= popup.getBounds().height / 2;
+			popupPosition = new Point(currentView.width / 2 - (popupSize.x / 2), currentView.height / 2 - (popupSize.y / 2));
 			popupShouldPosition = new Point(popupPosition.x, popupPosition.y);
 			currentSashPosition = zestSash.getLocation();
 			sashShouldPosition = currentSashPosition;
