@@ -198,7 +198,6 @@ public class MerkleTreeSignatureComposite extends Composite {
 					case SWT.YES:
 						createPlainComposite(true);
 						interactive.withdrawSignature();
-						// updateIndexLabel(merkle.getKeyIndex() - 1);
 						break;
 					default:
 						break;
@@ -305,15 +304,13 @@ public class MerkleTreeSignatureComposite extends Composite {
 	public void addSignatureAndMessage(String signature, String message) {
 		signatures[index] = signature;
 		messages[index] = message;
-		// indexLabel.setText(Descriptions.MerkleTreeSign_7 + index + "/" +
-		// (merkle.getLeafCounter() - 1));
 		updateIndexLabel(merkle.getKeyIndex());
 		++index;
 	}
 
 	public void updateIndexLabel(int pseudoIndex) {
 		if (pseudoIndex < 0) {
-			indexLabel.setText(Descriptions.MerkleTreeSign_7 + "   " + " / " + (merkle.getLeafCounter() - 1));
+			indexLabel.setText(Descriptions.MerkleTreeSign_10);
 		} else if (pseudoIndex > merkle.getLeafCounter() - 1) {
 			indexLabel.setText(Descriptions.MerkleTreeSign_10);
 		} else {
