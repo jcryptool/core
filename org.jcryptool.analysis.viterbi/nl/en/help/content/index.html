@@ -47,5 +47,34 @@
 		<li>Analysis of a ciphertext built from two plaintexts of different languages.</li>
 		<li>Vertical and horizontal scrollbars are missing.</li>
 	</ul>
+	
+	<h3>Example</h3>
+	
+	<p>AS an example, we take as text 1 "the kitten is in the basket fuzzy ball go" 
+	and as text 2 "this is a codebook message that is unique". 
+	We use the XOR scheme.
+	</p>
+	
+	<img src="images/xor.png"><br clear="all">
+	 
+	<p>We observe that the first characters of the texts are equal. Therefore, the combination via XOR yields the 
+	Result "00" for both positions. The calculation of "0c", the result at the third position, results from the XOR 
+	combination of the character codes of the letters "i" and "e" of the respective texts 1 and 2:
+	
+	
+	</p>
+
+	<img src="images/viterbi1.png"><br clear="all">
+	
+	<p>We go into the analysis tab and click "Start analysis".
+	</p>
+	
+	<img src="images/viterbi2.png"><br clear="all">
+
+<p>Discussion: Because of the mentioned weakness of the Viterbi algorithm at the start of the decoding, the word "the" 
+could not be found correctly. It is likely that with equal starting phrases "Th" a random guessing of frequent alphabet characters was encouraged. 
+The rest of the decoded texts contains some other mistakes; nevertheless the meaning can be discerned by looking at them.
+	</p>
+	
 </body>
 </html>

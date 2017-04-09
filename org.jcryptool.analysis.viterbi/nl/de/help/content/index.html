@@ -49,5 +49,33 @@
 		<li>Analyse bei Klartexten mit verschiedenen Sprachen.</li>
 		<li>Vertikale und horizontale Scrollbars fehlen.</li>
 	</ul>
+	
+	<h3>Beispiel</h3>
+	
+	<p>Im folgenden wird Text 1 als &quot;the kitten is in the basket fuzzy ball go&quot; 
+	angenommen, und Text 2 als &quot;this is a codebook message that is unique&quot;. 
+	Wir nutzen die XOR-Versch&uuml;sselung.
+	</p>
+	
+	<img src="images/xor.png"><br clear="all">
+	 
+	<p>Wie man sehen kann, sind die beiden ersten Buchstaben der Nachricht genau gleich. 
+	Dementsprechend wird bei der XOR-Verschl&uuml;sselung f&uuml;r beide Positionen der Wert &quot;00&quot; berechnet. 
+	An Position 3 werden &quot;e&quot; und &quot;i&quot; kombiniert. Wie folgt ergibt sich der Wert &quot;0c&quot; an dieser Stelle. 
+	Genauso werden die darauf folgenden Stellen berechnet.
+	</p>
+
+	<img src="images/viterbi1.png"><br clear="all">
+	
+	<p>Nach Wechseln in den n&auml;chsten Tab analysieren wir den Text mit den h&ouml;chstm&ouml;glichen Einstellungen.
+	</p>
+	
+	<img src="images/viterbi2.png"><br clear="all">
+
+	<p>Diskussion: Aufgrund der Schw&auml;chen des Algorithmus zu Beginn des Textes findet die Analyse das Wort &quot;The&quot; nicht. Wegen der zwei f&uuml;hrenden Nullstellen in der Chiffre wird anscheinend ein Raten auf h&auml;ufigen Buchstaben beg&uuml;nstigt, wovon das Leerzeichen eines ist. Es folgen weitere Fehler; die Essenz der Texte ist jedoch zu erraten.
+	</p>
+
+
+ 
 </body>
 </html>
