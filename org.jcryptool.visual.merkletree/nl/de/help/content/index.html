@@ -25,7 +25,7 @@ Inhalts&uumlbersicht:<br>
 <br>
 <b>2)</b> <a href="#Kapitel2"><b>eXtended Merkle-Signatur (XMSS)</b></a><br>
 <br>
-<b>2)</b> <a href="#Kapitel3"><b>eXtended Merkle-Signatur MultiTree (XMSS^MT)</b></a><br>
+<b>3)</b> <a href="#Kapitel3"><b>eXtended Merkle-Signatur MultiTree (XMSS^MT)</b></a><br>
 <br>
 <b>3)</b> <a href="#Kapitel4"><b>Bedienung</b></a><br>
 <br>
@@ -63,8 +63,8 @@ Inhalts&uumlbersicht:<br>
 <p>Das eXtended Merkle-Signature-Scheme (XMSS) basiert auf dem Merkle-Signature-Scheme (MSS) und erweitert dieses Verfahren. Die Hauptunterschiede zum MSS-Verfahren sind der Einsatz einer Bitmaske und eines sogenannten L-Trees. Durch diese beiden Erweiterungen kann auf eine kollisionsresistente Hashfunktion verzichtet werden und diese durch eine Second-Preeimage-resistente Hashfunktion ersetzt werden. Das hat zwei Vorteile:
 a) Da eine Second-Preeimage-resistente Hashfunktion eine schw&aumlchere Annahme ist, ist das XMSS-Verfahren st&aumlrker (schwerer zu brechen).
 b) Die erstellte Signatur ist kleiner.</p>
-<p>XMSS benutzt als Einmalsignatur (OTS) die Winternitz-OTS (WOTS). Es gibt zwei verschiedene Varianten, WOTS+ undr WOTS$. In diesem Plug-in verwenden wir WOTS+. In beiden Varianten kann eine beliebige Anzahl von Einmalschl&uumlsselpaaren mit Hilfe eines Seedwertes und eines Pseudozufallszahlengenerators erzeugt werden.
-Es k&oumlnnen insgesamt 2^h Nachrichten mit einer L&aumlnge von m Bytes signiert werden.</p>
+<p>XMSS benutzt als Einmalsignatur (OTS) die Winternitz-OTS (WOTS). Es gibt zwei verschiedene Varianten, WOTS+ und WOTS$. In diesem Plug-in verwenden wir WOTS+. In beiden Varianten kann eine beliebige Anzahl von Einmalschl&uumlsselpaaren mit Hilfe eines Seedwertes und eines Pseudozufallszahlengenerators erzeugt werden.
+Es k&ouml;nnen insgesamt 2^h Nachrichten signiert werden. Die L&auml;nge der Nachricht (Anzahl an Bytes m) h&auml;ngt von der verwendeten Hashfunktion ab, ist also in der praktischen Anwendung zu vernachl&auml;ssigen.</p>
 
 <h4>Bitmaske</h4>
 
