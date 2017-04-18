@@ -1,6 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 package org.jcryptool.analysis.viterbi.views;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -10,6 +13,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
@@ -171,6 +175,25 @@ public class XORComposite extends Composite {
                                                 }
                                             }
                                         });
+                                Combo loadPlain1c = new Combo(canvas_1, SWT.NONE);
+                                GridData gd_loadPlain1c = new GridData(LOADBUTTONWIDTH, LOADBUTTONHEIGHT);
+                                gd_loadPlain1c.grabExcessHorizontalSpace = true;
+                                gd_loadPlain1c.horizontalAlignment = SWT.FILL;
+                                gd_loadPlain1c.verticalAlignment = SWT.FILL;
+                                loadPlain1c.setLayoutData(gd_loadPlain1c);
+                                loadPlain1c.add("Select a predefined text...");
+                                predefinedTexts.forEach(s -> loadPlain1c.add(limitS(30, s)));
+                                
+                                        loadPlain1c.addSelectionListener(new SelectionAdapter() {
+											@Override
+                                            public void widgetSelected(final SelectionEvent e) {
+                                                int idxOf = loadPlain1c.getSelectionIndex();
+                                                if(idxOf > 0 && idxOf <= predefinedTexts.size()) {
+                                                	setPlaintext(1, predefinedTexts.get(idxOf-1));
+                                                }
+                                            	
+                                            }
+                                        });
         plain1 = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
         GridData gd_plain1 = new GridData(SWT.FILL, SWT.FILL, true, true);
         gd_plain1.horizontalIndent = 1;
@@ -208,9 +231,56 @@ public class XORComposite extends Composite {
                                         }
                                     }
                                 });
+                                Combo loadPlain2c = new Combo(canvas, SWT.NONE);
+                                GridData gd_loadPlain2c = new GridData(LOADBUTTONWIDTH, LOADBUTTONHEIGHT);
+                                gd_loadPlain2c.grabExcessHorizontalSpace = true;
+                                gd_loadPlain2c.horizontalAlignment = SWT.FILL;
+                                gd_loadPlain2c.verticalAlignment = SWT.FILL;
+                                loadPlain2c.setLayoutData(gd_loadPlain2c);
+                                loadPlain2c.add("Select a predefined text...");
+                                predefinedTexts.forEach(s -> loadPlain2c.add(limitS(30, s)));
+                                
+                                        loadPlain2c.addSelectionListener(new SelectionAdapter() {
+											@Override
+                                            public void widgetSelected(final SelectionEvent e) {
+                                                int idxOf = loadPlain2c.getSelectionIndex();
+                                                if(idxOf > 0 && idxOf <= predefinedTexts.size()) {
+                                                	setPlaintext(2, predefinedTexts.get(idxOf-1));
+                                                }
+                                            	
+                                            }
+                                        });
     }
 
-    /**
+    
+    protected String limitS(int i, String s) {
+    	if(s.length() > i) {
+    		return s.substring(0,  i) + "...";
+    	} else {
+    		return s;
+    	}
+    }
+    protected List<String> predefinedTexts = new LinkedList<String>() {{
+    	add("the kitten is in the basket fuzzy ball go");
+    	add("this is a codebook message that is unique");
+    	add("Give in like a good fellow, and bring your garrison to dinner, and beds afterwards. Nobody injured, I hope?");
+    	add("Deeply regret advise your Titanic sunk this morning fifteenth after collision iceberg resulting serious loss life further particulars later.");
+    	add("It was a bright cold day in April, and the clocks were striking thirteen. Winston Smith, his chin nuzzled into his breast in an effort to escape the vile wind, slipped quickly through the glass doors of Victory Mansions, though not quickly enough to prevent a swirl of gritty dust from entering along with him. ");
+    	
+    	add("Fürwahr! er dient Euch auf besondre Weise. Nicht irdisch ist des Toren Trank noch Speise. Ihn treibt die Gärung in die Ferne, er ist sich seiner Tollheit halb bewusst. Vom Himmel fordert er die schönsten Sterne, und von der Erde jede höchste Lust.");
+    	add("Zieh diesen Geist von seinem Urquell ab, und führ ihn, kannst du ihn erfassen, auf deinem Wege mit herab, und steh' beschämt, wenn du bekennen musst: Ein guter Mensch, in seinem dunklen Drange, ist sich des rechten Weges wohl bewußt.");
+    	add("Das Dorf lag in tiefem Schnee. Vom Schloßberg war nichts zu sehen, Nebel und Finsternis umgaben ihn, auch nicht der schwächste Lichtschein deutete das große Schloß an.");
+    	add("Es war ein klarer, kalter Tag im April, und die Uhren schlugen gerade dreizehn, als Winston Smith, das Kinn an die Brust gepresst, um dem rauen Wind zu entgehen, rasch durch die Glasturen eines der Hauser des Victory-Blocks schlupfte, wenn auch nicht rasch genug, als dafür nicht zugleich mit ihm ein Wirbel griesigen Staubs eingedrungen ware.");
+    }};
+    protected void setPlaintext(int i, String string) {
+		if(i == 1) {
+			plain1.setText(string);
+		} else {
+			plain2.setText(string);
+		}
+	}
+
+	/**
      * Creates radio buttons. This is used for determining the combination mode.
      */
     private void createCombinationArea(final Composite parent) {

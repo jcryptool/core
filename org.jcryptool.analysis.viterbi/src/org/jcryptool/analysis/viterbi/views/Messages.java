@@ -25,6 +25,42 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.analysis.viterbi.views.messages"; //$NON-NLS-1$
 
+	public static String DetailsComposite_0;
+
+	public static String DetailsComposite_1;
+
+	public static String DetailsComposite_11;
+
+	public static String DetailsComposite_12;
+
+	public static String DetailsComposite_13;
+
+	public static String DetailsComposite_14;
+
+	public static String DetailsComposite_15;
+
+	public static String DetailsComposite_16;
+
+	public static String DetailsComposite_17;
+
+	public static String DetailsComposite_18;
+
+	public static String DetailsComposite_2;
+
+	public static String DetailsComposite_21;
+
+	public static String DetailsComposite_22;
+
+	public static String DetailsComposite_26;
+
+	public static String DetailsComposite_3;
+
+	public static String DetailsComposite_4;
+
+	public static String DetailsComposite_5;
+
+	public static String DetailsComposite_6;
+
 	public static String XORComposite_tab_title;
 	public static String XORComposite_description;
 	public static String XORComposite_algo_header;
@@ -47,6 +83,8 @@ public class Messages extends NLS {
 	public static String XORComposite_next;
 	public static String XORComposite_encodingmod_header;
 	public static String XORComposite_cipher;
+
+	public static String ViterbiComposite_00ShowAnalysis;
 
 	public static String ViterbiComposite_tab_title;
 

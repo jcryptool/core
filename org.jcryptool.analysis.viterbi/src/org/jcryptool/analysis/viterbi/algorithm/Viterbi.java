@@ -11,7 +11,11 @@
 package org.jcryptool.analysis.viterbi.algorithm;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Map;
+
+import org.jcryptool.analysis.viterbi.algorithm.Viterbi.IterationRecord;
 
 /**
  * This is the core of the viterbi plug-in.
@@ -39,6 +43,24 @@ import java.util.LinkedList;
  */
 public class Viterbi implements Runnable {
 
+	public static class IterationRecord {
+
+		public double factor;
+		public LinkedList<Path> paths;
+
+		public void setResultPaths(LinkedList<Path> currentPaths) {
+			this.paths = new LinkedList<Path>();
+			for(Path p: currentPaths) {
+				this.paths.add(p.copy());
+			}
+		}
+
+		public void setFactor(double factor) {
+			this.factor = factor;
+		}
+
+	}
+
 	private static final char DEFAULT_CHARACTER_SET_BEGIN = '\u0000';
 	private static final char DEFAULT_CHARACTER_SET_END = '\u00ff';
 
@@ -53,6 +75,7 @@ public class Viterbi implements Runnable {
 	private Path solution;
 	private Boolean stop;
 	private int maxDuplicatePathLength;
+	public Map<Integer, IterationRecord> records;
 
 	/**
 	 * This constructor will use the standard values for the character set
@@ -135,7 +158,8 @@ public class Viterbi implements Runnable {
 	 * a character to generate another combinations.
 	 */
 	public void run() {
-
+		
+		this.records = new LinkedHashMap<>();
 		LinkedList<Path> currentPaths = new LinkedList<Path>();
 
 		// in the first iteration there is already one path with the probability
@@ -154,98 +178,111 @@ public class Viterbi implements Runnable {
 				}
 			}
 
-			char cipherChar = cipher.charAt(i);
-
-			// inform observer about current best path
-			// TODO check for null
-			observer.update(currentPaths.getFirst());
-
-			// normalizing: the best path gets the probability 1
-			// therefore we wont get very little numbers
-
-			double maxProbabability = currentPaths.getFirst().getProbability();
-			double factor = 1 / maxProbabability;
-
-			for (Path path : currentPaths) {
-				path.setProbability(path.getProbability() * factor);
-			}
-
-			// saving paths
-			oldPaths = currentPaths;
-			currentPaths = new LinkedList<Path>();
-
-			// for every old path: create new paths by appending characters and
-			// calculate probabilities
-			for (Path path : oldPaths) {
-
-				String plain1 = path.getPlain1();
-				String plain2 = path.getPlain2();
-
-				String nGramTemplate1;
-				String nGramTemplate2;
-
-				// selecting the last n characters
-				if (plain1.length() >= nGramSize) {
-					nGramTemplate1 = plain1.substring(plain1.length()
-							- nGramSize + 1);
-					nGramTemplate2 = plain2.substring(plain2.length()
-							- nGramSize + 1);
-				} else {
-					nGramTemplate1 = plain1;
-					nGramTemplate2 = plain2;
-				}
-
-				double oldPathProbability = path.getProbability();
-
-				// we get every possible combination by looping trough all the
-				// characters in the alphabet, and then calculating the other
-				// character
-				plainfor: for (char plain1Char = characterSetBegin; plain1Char <= chararcerSetEnd; plain1Char++) {
-
-					// inverting the combination
-					char plain2Char = combi.subtract(cipherChar, plain1Char);
-
-					//to prevent duplicate paths
-					if (i<=maxDuplicatePathLength && path.getPlain1().equals(path.getPlain2())) {
-						for (Path otherPath : currentPaths) {
-							//check if path is already there
-							if (otherPath.getPlain2().equals(plain1+plain1Char)) {
-								continue plainfor;
-							}
-						}
-					}
-
-					String nGram1 = nGramTemplate1 + plain1Char;
-					String nGram2 = nGramTemplate2 + plain2Char;
-
-					double plain1Probability = language.getProbability(nGram1);
-					double plain2Probability = language.getProbability(nGram2);
-
-					// calculating the probability
-					double currentPathProbability = plain1Probability
-							* plain2Probability * oldPathProbability;
-
-					// the first few paths will always be stored
-					if (currentPaths.size() < prunningNumber) {
-						Path newPath = new Path(plain1 + plain1Char, plain2
-								+ plain2Char, currentPathProbability);
-						sortedInsert(newPath, currentPaths);
-
-						// if the current path is better than the worst path
-						// saved
-						// the worst path will be removed
-					} else if (currentPathProbability > currentPaths.getLast()
-							.getProbability()) {
-						currentPaths.removeLast();
-						Path newPath = new Path(plain1 + plain1Char, plain2
-								+ plain2Char, currentPathProbability);
-						sortedInsert(newPath, currentPaths);
-					}
-				}
-			}
+			currentPaths = oneCharRun(currentPaths, i);
 		}
 		solution = currentPaths.getFirst();
 		observer.viterbiFinished(); // TODO check for null
+	}
+
+	private LinkedList<Path> oneCharRun(LinkedList<Path> currentPaths, int i) {
+		IterationRecord rec = new IterationRecord();
+		
+		LinkedList<Path> oldPaths;
+		char cipherChar = cipher.charAt(i);
+
+		// inform observer about current best path
+		// TODO check for null
+		observer.update(currentPaths.getFirst());
+		
+		// normalizing: the best path gets the probability 1
+		// therefore we wont get very little numbers
+
+		double maxProbabability = currentPaths.getFirst().getProbability();
+		double factor = 1 / maxProbabability;
+		rec.setFactor(factor);
+
+		for (Path path : currentPaths) {
+			path.setProbability(path.getProbability() * factor);
+			
+		}
+
+		// saving paths
+		oldPaths = currentPaths;
+		currentPaths = new LinkedList<Path>();
+
+		// for every old path: create new paths by appending characters and
+		// calculate probabilities
+		for (Path path : oldPaths) {
+			
+			String plain1 = path.getPlain1();
+			String plain2 = path.getPlain2();
+			
+			String nGramTemplate1;
+			String nGramTemplate2;
+
+			// selecting the last n characters
+			if (plain1.length() >= nGramSize) {
+				nGramTemplate1 = plain1.substring(plain1.length()
+						- nGramSize + 1);
+				nGramTemplate2 = plain2.substring(plain2.length()
+						- nGramSize + 1);
+			} else {
+				nGramTemplate1 = plain1;
+				nGramTemplate2 = plain2;
+			}
+
+			double oldPathProbability = path.getProbability();
+
+			// we get every possible combination by looping trough all the
+			// characters in the alphabet, and then calculating the other
+			// character
+			plainfor: for (char plain1Char = characterSetBegin; plain1Char <= chararcerSetEnd; plain1Char++) {
+
+				// inverting the combination
+				char plain2Char = combi.subtract(cipherChar, plain1Char);
+
+				//to prevent duplicate paths
+				if (i<=maxDuplicatePathLength && path.getPlain1().equals(path.getPlain2())) {
+					for (Path otherPath : currentPaths) {
+						//check if path is already there
+						if (otherPath.getPlain2().equals(plain1+plain1Char)) {
+							continue plainfor;
+						}
+					}
+				}
+
+				String nGram1 = nGramTemplate1 + plain1Char;
+				String nGram2 = nGramTemplate2 + plain2Char;
+
+				double plain1Probability = language.getProbability(nGram1);
+				double plain2Probability = language.getProbability(nGram2);
+
+				// calculating the probability
+				double currentPathProbability = plain1Probability
+						* plain2Probability * oldPathProbability;
+
+				// the first few paths will always be stored
+				if (currentPaths.size() < prunningNumber) {
+					Path newPath = new Path(plain1 + plain1Char, plain2
+							+ plain2Char, currentPathProbability);
+					sortedInsert(newPath, currentPaths);
+
+					// if the current path is better than the worst path
+					// saved
+					// the worst path will be removed
+				} else if (currentPathProbability > currentPaths.getLast()
+						.getProbability()) {
+					currentPaths.removeLast();
+					Path newPath = new Path(plain1 + plain1Char, plain2
+							+ plain2Char, currentPathProbability);
+					sortedInsert(newPath, currentPaths);
+				}
+			}
+		}
+		
+		rec.setResultPaths(currentPaths);
+		this.records.put(i, rec);
+		return currentPaths;
 	}
 
 	/**

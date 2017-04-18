@@ -72,7 +72,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
     private Button hex;
     // the ciphertext that is displayed in the textfield and can analyzed
     // with the viterbi algorithm
-    private String cipherString = "";
+    private String cipherString = ""; //$NON-NLS-1$
     private Combination combi = new BitwiseXOR();
     private Button de;
     private Button en;
@@ -90,6 +90,8 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
 
     private static final int MAX_NGRAM_SIZE = 5; //$NON-NLS-1$
     private URL ngramsUrl = null;
+	private Button showBtn;
+	private ViterbiView view;
 
     /**
      * Creates the Viterbi tab
@@ -102,7 +104,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         super(parent, style);
 
         try {
-            ngramsUrl = FileLocator.toFileURL((ViterbiPlugin.getDefault().getBundle().getEntry("/")));
+            ngramsUrl = FileLocator.toFileURL((ViterbiPlugin.getDefault().getBundle().getEntry("/"))); //$NON-NLS-1$
         } catch (IOException ex) {
             LogUtil.logError(ViterbiPlugin.PLUGIN_ID, ex);
         }
@@ -112,6 +114,8 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         createInput();
         createCalculation();
         createResult();
+        
+        this.view = viterbiView;
     }
 
     /**
@@ -187,10 +191,10 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
 
                 String filename = dialog.open();
                 if (filename != null) {
-                    cipherString = new IO().read(filename, "\r\n");
+                    cipherString = new IO().read(filename, "\r\n"); //$NON-NLS-1$
 
                     if (text.getSelection()) {
-                        cipher.setText(replaceUnprintableChars(cipherString, "\ufffd"));
+                        cipher.setText(replaceUnprintableChars(cipherString, "\ufffd")); //$NON-NLS-1$
                     } else {
                         cipher.setText(stringToHex(cipherString));
                     }
@@ -232,7 +236,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
                 text.setSelection(true);
                 hex.setSelection(false);
 
-                cipher.setText(ViterbiComposite.replaceUnprintableChars(cipherString, "\ufffd"));
+                cipher.setText(ViterbiComposite.replaceUnprintableChars(cipherString, "\ufffd")); //$NON-NLS-1$
             }
         });
     }
@@ -341,7 +345,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
     	//some adjustments
     	final Canvas canvas = new Canvas(parent, SWT.NONE);
         canvas.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, true));
-        canvas.setLayout(new GridLayout());
+        canvas.setLayout(new GridLayout(2,  false));
 
         startButton = new Button(canvas, SWT.PUSH);
         startButton.setText(Messages.ViterbiComposite_startButton);
@@ -372,9 +376,9 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
                     path.append(ngramsUrl.getFile());
 
                     if (de.getSelection()) {
-                        path.append("data/ngrams_de.txt");
+                        path.append("data/ngrams_de.txt"); //$NON-NLS-1$
                     } else {
-                        path.append("data/ngrams_en.txt");
+                        path.append("data/ngrams_en.txt"); //$NON-NLS-1$
                     }
 
                     int nGramSize = Integer.parseInt(nGramDrop.getText());
@@ -400,9 +404,24 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
                 }
             }
         });
+        
+        showBtn = new Button(canvas, SWT.PUSH);
+        showBtn.setText(Messages.ViterbiComposite_00ShowAnalysis);
+        showBtn.setEnabled(false);
+        showBtn.addSelectionListener(new SelectionAdapter() {
+        	@Override
+        	public void widgetSelected(SelectionEvent e) {
+        		changeToDetailsTab();
+        	}
+		});
     }
 
-    /**
+    protected void changeToDetailsTab() {
+		this.view.detailsComposite.setAnalysis(this.viterbi);
+    	this.view.tf.setSelection(2);
+	}
+
+	/**
      * Creates the third line of the viterbi tab content, where the result of the viterbi calculation is displayed. This
      * contains the possible plaintexts and a button to export them
      */
@@ -443,8 +462,8 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
                 String filename = dialog.open();
                 if (filename != null) {
                     IO io = new IO();
-                    io.write(solution1.getText(), filename + "_1.txt");
-                    io.write(solution2.getText(), filename + "_2.txt");
+                    io.write(solution1.getText(), filename + "_1.txt"); //$NON-NLS-1$
+                    io.write(solution2.getText(), filename + "_2.txt"); //$NON-NLS-1$
                 }
             }
         });
@@ -518,7 +537,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         cipherString = newText;
 
         if (text.getSelection()) { // if the cipher should be displayed as text
-            cipher.setText(replaceUnprintableChars(cipherString, "\ufffd"));
+            cipher.setText(replaceUnprintableChars(cipherString, "\ufffd")); //$NON-NLS-1$
         } else { // else display it as hex-digits
             cipher.setText(stringToHex(cipherString));
         }
@@ -576,9 +595,9 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
             }
             String hex = Integer.toHexString(intValue);
             if (hex.length() == 1) {
-                buffer.append("0" + hex + " ");
+                buffer.append("0" + hex + " "); //$NON-NLS-1$ //$NON-NLS-2$
             } else {
-                buffer.append(hex + " ");
+                buffer.append(hex + " "); //$NON-NLS-1$
             }
         }
         return buffer.toString();
@@ -612,6 +631,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         display.asyncExec(new Runnable() {
             public void run() {
                 ViterbiComposite.this.startButton.setText(Messages.ViterbiComposite_startButton);
+                showBtn.setEnabled(true);
             }
         });
     }

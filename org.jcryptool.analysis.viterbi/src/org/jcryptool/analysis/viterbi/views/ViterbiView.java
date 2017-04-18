@@ -30,8 +30,9 @@ public class ViterbiView extends ViewPart {
 	}
 	private XORComposite xorComposite;
 	private ViterbiComposite viterbiComposite;
-	private TabFolder tf;
+	public TabFolder tf;
 	private Composite parent;
+	public DetailsComposite detailsComposite;
 
 	/**
 	 * creates the two tabs
@@ -64,6 +65,16 @@ public class ViterbiView extends ViewPart {
 		sc.setContent(viterbiComposite);
 		ti.setControl(sc);
 		viterbiComposite.displayDefaultTexts();
+
+		// Viterbi Details Tab
+		ti = new TabItem(tf, SWT.NONE);
+		ti.setText("Viterbi Analysis Details");
+		sc = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
+		sc.setExpandHorizontal(true);
+		sc.setExpandVertical(true);
+		detailsComposite = new DetailsComposite(sc, SWT.NONE, this);
+		sc.setContent(detailsComposite);
+		ti.setControl(sc);
 
 		PlatformUI.getWorkbench().getHelpSystem()
 				.setHelp(parent, ViterbiPlugin.PLUGIN_ID + ".view"); //$NON-NLS-1$

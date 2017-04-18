@@ -104,4 +104,8 @@ public class Path implements Comparable<Path> {
 	public String toString() {
 		return plain1 + "\t" + plain2 + "\t" + probability;
 	}
+	
+	public Path copy() {
+		return new Path(plain1.toString(), plain2.toString(), probability);
+	}
 }

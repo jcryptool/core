@@ -5,77 +5,158 @@
 	  <title>Viterbi-Analyse</title>
 </head>
 <body>
-	<h1>Viterbi-Analyse</h1>
 
-	<h2>Viterbi-Algorithmus</h2>
+	<h1>&Uuml;bersicht</h1>
 
-	<p>Der Viterbi-Algorithmus dient Angriffen auf die <a href="http://en.wikipedia.org/wiki/Running_key_cipher">Running-Key-Verschlüsselung</a> im Ciphertext-only-Modus.</p>
+	<h3><a href = "#1">Einf&uuml;hrung in die Viterbi-Analyse</a></h3>
+			<p>Es wird ein &Uuml;berblick &uuml;ber die Funktionsweise der
+				Viterbi-Analyse gegeben.</p>
+	<h3><a href = "#2">Erl&auml;uterung des Benutzerinterface</a></h3>
+			<p>Die Bedienung der einzelnen Tabs des Viterbi-Plugins.</p>
+	<h3><a href = "#3">Schrittweise erl&auml;utertes Beispiel</a></h3>
+			<p>Anhand eines einfachen Textpaars wird die Analyse erl&auml;utert.</p>
+	<h3><a href = "#4">H&auml;ufige Fragen und Erl&auml;uterungen</a></h3>
+      <p>Bekannte Grenzen der Anwendung und die &uuml;blichen Verd&auml;chtigen der Fragen zum Viterbi-Algorithmus.</p>
 
-	<p>Die Running-Key-Verschlüsselung kombiniert zwei Klartexte mittels XOR oder anderen Verfahren. Das Finden eines einzelnen Klartextes ist nur mit geringem Aufwand verbunden,
-	wenn der jeweils andere Klartext bekannt ist. In dem Szenario hier ist jedoch nur der Geheimtext bekannt. Der Algorithmus basiert auf der Annahme, dass die Klartexte ähnliche Muster
-	wie normale Bücher aufweisen. Das zugrunde liegende <a href="http://en.wikipedia.org/wiki/Hidden_Markov_model">Hidden-Markov-Modell</a> nutzt die Häufigkeitsanalyse von Zeichenfolgen. Die Implementierung basiert auf der Arbeit von <a href="http://www.csc.kth.se/utbildning/kth/kurser/DD2449/krypto09/pdf/rapport_vernam080309.pdf">M. Ekerå und B. Terelius</a> (M. Ekerå und B. Terelius. "Automatic solution in depth of one time pads". Royal Institute of Technology, Stockholm, Sweden. März 2008).</p>
 
-	<p>In den folgenden Teilen der Onlinehilfe wird in 4 Schritten erklärt, wie man das Plug-in praktisch benutzt.</p>
+	<h1 id="1">Einf&uuml;hrung in die Viterbi-Analyse</h1>
+		<p>Der Viterbi-Algorithmus dient Angriffen auf die <a href="http://en.wikipedia.org/wiki/Running_key_cipher">Running-Key-Verschl&uuml;sselung</a> im Ciphertext-only-Modus.</p>
 
-	<ol>
-		<li>Der Reiter Running-Key-Verschlüsselung<br>
+		<p>Die Running-Key-Verschl&uuml;sselung kombiniert zwei Klartexte mittels XOR oder anderen Verfahren. Das Finden eines einzelnen Klartextes ist nur mit geringem Aufwand verbunden,
+		wenn der jeweils andere Klartext bekannt ist. In dem Szenario hier ist jedoch nur der Geheimtext bekannt. Der Algorithmus basiert auf der Annahme, dass die Klartexte &auml;hnliche Muster
+		wie normale B&uuml;cher aufweisen. Das zugrunde liegende <a href="http://en.wikipedia.org/wiki/Hidden_Markov_model">Hidden-Markov-Modell</a> nutzt die H&auml;ufigkeitsanalyse von Zeichenfolgen. Die Implementierung basiert auf der Arbeit von <a href="http://www.csc.kth.se/utbildning/kth/kurser/DD2449/krypto09/pdf/rapport_vernam080309.pdf">M. Ekeri und B. Terelius</a> (M. Ekeri und B. Terelius. "Automatic solution in depth of one time pads". Royal Institute of Technology, Stockholm, Sweden. M&auml;rz 2008).</p>
+		<p>Der Viterbi-Algorithmus ist deterministisch, d. h. jede Analyse l&auml;uft exakt gleich
+			unter denselben Eingabeparametern. Es ist keine heuristische Abbruchbedingung vorgesehen.
+			Das Ergebnis jeder Iteration des Algorithmus bedingt das Ergebnis der n&auml;chsten Iteration,
+			unter Beachtung der Markov-Ordnung (bzw n-Gramm-L&auml;nge; kleinere Ordnung bedeutet schnelleres "Verschwinden"
+			dieser Abh&auml;ngigkeiten.)
+		</p>
+
+
+
+	<h1 id="2">Erl&auml;uterung des Benutzerinterface</h1>
+
+		<p></p>
+		<h2>Running-Key-Verschl&uuml;sselung</h2>
+		<p>
 			<img src="images/rk_enc_tab.png"><br clear="all">
-			Zuerst muss man den Geheimtext erzeugen. Dazu bietet der Reiter "Running-Key-Verschlüsselung" Methoden zum Kombinieren von zwei Klartexten. Die Klartexte können entweder manuell eingegeben werden, oder aus Textdateien geladen werden.</li>
-		<li>Parameter für die Running-Key-Verschlüsselung<br>
+			Zuerst muss man den Geheimtext erzeugen. Dazu bietet der Reiter "Running-Key-Verschl&uuml;sselung"
+			Methoden zum Kombinieren von zwei Klartexten. Die Klartexte k&ouml;nnen entweder manuell eingegeben
+			werden, oder aus Textdateien geladen werden.
+		</p><p>
 			<img src="images/encryption.png"><br clear="all">
-			Der Geheimtext kann entweder durch XOR oder durch modulare Addition erzeugt werden. Durch das Drücken des Buttons "Geheimtext berechnen" wird der Geheimtext erzeugt. Weil dieser oft nicht-druckbare Zeichen enthält, ist die Anzeige per Default in hexadezimaler Form. Der Button "Weiter zur Analyse" überträgt den Geheimtext in den zweiten Reiter. Falls das Plugin rein zur Verschlüsselung verwendet werden soll (was natürlich nicht empfohlen ist), kann der Geheimtext mit dem "Exportieren"-Button in eine Textdatei geschrieben werden (die Hexzeichen stehen dann wie hier angezeigt in der Textdatei).</li>
-		<li>Der Reiter Viterbi-Analyse<br>
-			<img src="images/viterbi_analysis_tab.png"><br clear="all">
-			Der zweite Reiter beschäftigt sich mit dem eigentlichen Angriff. Wurde der Geheimtext mit dem ersten Reiter erzeugt, konnte man den Geheimtext von dort aus automatisch hierher laden. Alternativ können die zu analysierenden Geheimtexte können auch aus einer Textdatei geladen werden.
-		</li>
-		<li>Parameter der Viterbi-Analyse<br>
-			<img src="images/analysis_params.png"><br clear="all">
-			Weil die Analyse stark vom Sprachmodel abhängt, ist die Auswahl der erwarteten Sprache der Klartexte von besonderer Bedeutung. Der Parameter "N-Gram-Größe" definiert die maximale Länge der analysierten Zeichenfolgen. Momentan kann man nur N-Gramme der Länge 1-5 auswählen (diese sind als vorberechnete Tabellen abgespeichert), um Speicherplatz zu sparen. Der Parameter "Suchtiefe" beeinflusst die Qualität der Ergebnisse: Ein hoher Wert erzeugt bessere Ergebnisse, verschlechtert jedoch die Performance. Um die Ergebnisse angezeigt zu bekommen, muss man den Button "Analyse starten" drücken. Die Ergebnisse mit den entschlüsselten Klartexten können wiederum in Textdateien exportiert werden.
-		</li>
-	</ol>
+			Der Geheimtext kann entweder durch XOR oder durch modulare Addition erzeugt werden.
+			Durch das Dr&uuml;cken des Buttons "Geheimtext berechnen" wird der Geheimtext erzeugt.
+			Weil dieser oft nicht-druckbare Zeichen enth&auml; lt, ist die Anzeige per Default in
+			hexadezimaler Form. Der Button "Weiter zur Analyse" &uuml;bertr&auml;gt den Geheimtext in den zweiten
+			Reiter. Falls das Plugin rein zur Verschl&uuml;sselung verwendet werden soll (was nat&uuml;rlich nicht
+			empfohlen ist), kann der Geheimtext mit dem "Exportieren"-Button in eine Textdatei geschrieben
+			werden (die Hexzeichen stehen dann wie hier angezeigt in der Textdatei).
+		</p>
 
-	<h2>Anmerkungen</h2>
+		<h2>Viterbi-Analyse</h2>
+		<p>
+			<img src="images/viterbi_analysis_tab.png" width="800px"><br clear="all">
+			Der zweite Reiter besch&auml;ftigt sich mit dem eigentlichen Angriff. Wurde der Geheimtext mit dem ersten Reiter erzeugt, konnte man den Geheimtext von dort aus automatisch hierher laden. Alternativ k&ouml;nnen die zu analysierenden Geheimtexte k&ouml;nnen auch aus einer Textdatei geladen werden.
+		</p><p>
+			<img src="images/analysis_params.png" width="800px"><br clear="all">
+			Weil die Analyse stark vom Sprachmodel abh&auml;ngt, ist die Auswahl der erwarteten Sprache der Klartexte von besonderer Bedeutung. Der Parameter "N-Gram-Gr&ouml;&szlig;e" definiert die maximale L&auml;nge der analysierten Zeichenfolgen. Momentan kann man nur N-Gramme der L&auml;nge 1-5 ausw&auml;hlen (diese sind als vorberechnete Tabellen abgespeichert), um Speicherplatz zu sparen. Der Parameter "Suchtiefe" beeinflusst die Qualit&auml;t der Ergebnisse: Ein hoher Wert erzeugt bessere Ergebnisse, verschlechtert jedoch die Performance. Um die Ergebnisse angezeigt zu bekommen, muss man den Button "Analyse starten" dr&uuml;cken. Die Ergebnisse mit den entschl&uuml;sselten Klartexten k&ouml;nnen wiederum in Textdateien exportiert werden.
 
-	<ul>
-		<li>Momentan müssen beide Klartexte aus derselben Sprache stammen.</li>
-		<li>Bei der Analyse ist der Anfang der gefundenen Klartexte normalerweise deutlich fehlerhafter als der Rest (das liegt daran, dass die Analyse Buchstaben aus der Umgebung vor und hinter dem Buchstaben braucht, aber am Anfang nur Buchstaben danach hat).</li>
-	</ul>
+			Durch den Button daneben k&ouml;nnen Details der Analyse nach deren Abschluss im n&auml;chsten Tab eingesehen werden:
+		</p>
+		<h2>Analysedetails</h2>
 
-	<h2>Mögliche zukünftige Erweiterungen</h2>
+			<img src="images/viterbi3.png" width="800px"><br clear="all">
+			<p>Im Analysedetails-Tab k&ouml;nnen alle Schritte des Viterbi-Algorithmus inspiziert werden.
+        Dabei wird f&uuml;r jeden Schritt auf der linken Seite eine Tabelle der Pfad-Kandidaten angezeigt,
+        nach absteigender (pro Schritt relativer) Wahrscheinlichkeit. Da jeder Schritt einem Zeichen des Geheimtext entspricht,
+        kann man so beobachten, wie die Kandidatenpfade Zeichen f&uuml;r Zeichen entstehen. Zum Beispiel kann man f&uuml;r den "Gewinner", d. h. den obersten Pfad im letzten Schritt, der auch der angezeigten L&ouml;sung entspricht, im vorigen Schritt nachsehen, welcher Kandidat denselben Beginn hat wie der "Gewinner", und das iterativ um so den Kandidaten und eine Vorg&auml;nger in der Menge aller Mitbewerber auszumachen und zu zur&uuml;ck zu verfolgen.
+		</p><p>
+			Ein m&auml;chtiges Werkzeug daf&uuml;r ist das Ausw&auml;hlen eines spezifischen Pfades zur Zur&uuml;ck-und Vorw&auml;rtsverfolgung.  F&uuml;r einen ausgew&auml;hlten Pfad werden alle "Geschwister" bestimmt. Ein Geschwisterpfad hat entweder dieselbe Zeichenfolge wie der Beginn des ausgew&auml;hlten Pfades oder umgekehrt: der ausgew&auml;hlte Pfad hat dieselbe Zeichenfolge wie der Geschwisterpfad. Das bedeutet eine R&uuml;ckverfolgung des ausgew&auml;hlten Pfades durch fr&uuml;here Schritte (ausgew&auml;hlter Pfad ist durch Anh&auml;ngen neuer Zeichen an Schwesterpfad entstanden) oder in die "Zukunft": es werden ebenfalls alle Schwesterpfade in sp&auml;teren Schritten angezeigt, die vom ausgew&auml;hlten Pfad abgeleitet sind. Im Kontext des folgenden Beispiels sieht man etwas besser was gemeint ist:
+		</p>
 
-	<ul>
-		<li>Neuere kryptoanalytische Ansätze gegen die Running-Key-Verschlüsselung implementieren, wie z.B. den Ansatz von <a href="http://dl.acm.org/citation.cfm?id=2390686">Sravana Reddy und Kevin Knight</a>, der Wort-basierte statt Zeichen-basierte Sprach-Modelle benutzt (Sravana Reddy and Kevin Knight. "Decoding running key ciphers", ACL '12 Proceedings of the 50th Annual Meeting of the Association for Computational Linguistics: Short Papers - Volume 2. 2012).</li>
-		<li>GUI für die dynamische Berechnung von N-Grammen. Der Quellcode dazu ist unter /src/org/jcryptool/analysis/viterbi/algorithm/NGramGen.java verfügbar.</li>
-		<li>Analyse bei Klartexten mit verschiedenen Sprachen.</li>
-		<li>Vertikale und horizontale Scrollbars fehlen.</li>
-	</ul>
-	
-	<h3>Beispiel</h3>
-	
-	<p>Im folgenden wird Text 1 als &quot;the kitten is in the basket fuzzy ball go&quot; 
-	angenommen, und Text 2 als &quot;this is a codebook message that is unique&quot;. 
-	Wir nutzen die XOR-Versch&uuml;sselung.
+			<p></p>
+	<h1 id="3">Schrittweise erl&auml;utertes Beispiel</h1>
+  <p>Im folgenden wird Text 1 als <br/>"the kitten is in the basket fuzzy ball go "<br/>
+  angenommen, und Text 2 als <br/>"this is a codebook message that is unique ".<br/>
+  <br/>Wir benutzen die XOR-Methode.
+  </p><p>
+
+    </p>
+		<h2>Running-Key-Verschl&uuml;sselung</h2>
+			<p>
+        Wir nutzen die XOR-Versch&amp;uuml;sselung.
+      </p>
+      <img src="images/xor.png" width="400px"><br clear="all">
+
+      <p>Wie man sehen kann, sind die beiden ersten Buchstaben der Nachricht genau gleich.
+      Dementsprechend wird bei der XOR-Verschl&amp;uuml;sselung f&amp;uuml;r beide Positionen der Wert &amp;quot;00&amp;quot; berechnet.
+      An Position 3 werden &amp;quot;e&amp;quot; und &amp;quot;i&amp;quot; kombiniert. Wie folgt ergibt sich der Wert &amp;quot;0c&amp;quot; an dieser Stelle.
+      Genauso werden die darauf folgenden Stellen berechnet.
+      </p>
+		<h2>Viterbi-Analyse</h2>
+
+
+			<p><img src="images/viterbi1.png" width="800px"><br clear="all">
+
+      <p>Nach Wechseln in den n&amp;auml;chsten Tab analysieren wir den Text mit den h&amp;ouml;chstm&amp;ouml;glichen Einstellungen, wie im folgenden Screenshot zu sehen:</p>
+
+      <img src="images/viterbi2.png" width="800px"><br clear="all">
+
+
+
+        <p>Diskussion: Aufgrund der Schw&amp;auml;chen des Algorithmus zu Beginn des Textes findet die Analyse das Wort &amp;quot;The&amp;quot; nicht. Wegen der zwei f&amp;uuml;hrenden Nullstellen in der Chiffre wird anscheinend ein Raten auf h&amp;auml;ufigen Buchstaben beg&amp;uuml;nstigt, wovon das Leerzeichen eines ist. Es folgen weitere Fehler; die Essenz der Texte ist jedoch zu erraten.
 	</p>
-	
-	<img src="images/xor.png"><br clear="all">
-	 
-	<p>Wie man sehen kann, sind die beiden ersten Buchstaben der Nachricht genau gleich. 
-	Dementsprechend wird bei der XOR-Verschl&uuml;sselung f&uuml;r beide Positionen der Wert &quot;00&quot; berechnet. 
-	An Position 3 werden &quot;e&quot; und &quot;i&quot; kombiniert. Wie folgt ergibt sich der Wert &quot;0c&quot; an dieser Stelle. 
-	Genauso werden die darauf folgenden Stellen berechnet.
-	</p>
 
-	<img src="images/viterbi1.png"><br clear="all">
-	
-	<p>Nach Wechseln in den n&auml;chsten Tab analysieren wir den Text mit den h&ouml;chstm&ouml;glichen Einstellungen.
-	</p>
-	
-	<img src="images/viterbi2.png"><br clear="all">
-
-	<p>Diskussion: Aufgrund der Schw&auml;chen des Algorithmus zu Beginn des Textes findet die Analyse das Wort &quot;The&quot; nicht. Wegen der zwei f&uuml;hrenden Nullstellen in der Chiffre wird anscheinend ein Raten auf h&auml;ufigen Buchstaben beg&uuml;nstigt, wovon das Leerzeichen eines ist. Es folgen weitere Fehler; die Essenz der Texte ist jedoch zu erraten.
-	</p>
+      <p>
+        Die Berechnung der Klartextpfade k&ouml;nnen wir, wie bereits beschrieben, im Analysedetails-Tab
+        zur&uuml;ckverfolgen.
+      </p>
+		<h2>Analysedetails</h2>
 
 
- 
+			<p>Durch Ausw&auml;hlen und festlegen des "Gewinner"-Pfades, an Position 1 im Ranking im letzten Schritt, bekommen wir die Historie seiner Geschwisterpfade in den vergangenen Schritten. Da wir den Gewinnerkandidaten im letzten Schritt ausw&auml;hlen, kann man auch Vorg&auml;ngerpfade sagen. So sieht das Programm nach Ausw&auml;hlen und Festlegen des Gewinnerpfades (Button auf der rechten Seite) aus:</p>
+
+      <img src="images/viterbi3.png" width="800px"><br clear="all">
+
+      <p>Wie man sehen kann, zeigt die Tabelle links die Kandidaten des (derzeit ausgew&auml;hlten) letzten Schrittes an. wir haben den Gewinner, Num mer 1, ausgew&auml;hlt und die Liste rechts zeigt alle seine Vorg&auml;nger an. Es wird schon einmal offensichtlich dass der Gewinnerpfad nicht in allen Schritten des Algorithmus erste Wahl war!</p>
+      <p>Wir sehen uns nun einmal an, was es mit dem Wort "seein" anstelle von "is in" auf sich hat. Dazu gehen wir zum Schritt 11, der Stelle an der das "s" aus "seein" bestimmt wurde. Wir m&uuml;ssen feststellen: Tats&auml;chlich steht der Vorg&auml;nger unseres Ergebnispfades dort nur an Stelle 5! Rang 1 hat das "i" von "is in", das wir erwartet haben!</p>
+      <img src="images/viterbi4.png" width="800px"><br clear="all">
+
+      <p>Das bedeutet, die Nachfolger der "s"-Option haben im weiteren Verlauf (Schritt 12 bereits) das vortrainierte Sprachmodell "Englisch" im Rahmen der n-Gramm-Fenster der Breite 5 mehr &uuml;berzeugen k&ouml;nnen als alles was mit "i" beginnt, was ja im lokalen Rahmen ("is in" versus "seein") durchaus erst einmal Sinn ergibt. Auch zu betrachten ist, dass Klartext 2 ebenfalls sinnvolle 5-gramme haben muss. Die Wahl "seein" vs. "is in" ist also auch davon noch abh&auml;ngig.</p>
+      <p>Dazu kann man sich &uuml;ber den anderen Radiobutton oben ein Bild machen, der Einfachheit halber schauen wir uns das hier erst einmal nicht an. Um zu schlie&szlig;en, vergleichen wir diese "Kontrahenten", Pfad "11-i" (korrekt) versus Pfad "11-s" in Hinsicht auf ihren weiteren Werdegang. Es folgen die "Nachfolger" dieser "11-i" und "11-s" it kurzen Erl&auml;uterungen. Diese Listen erh&auml;lt man, indem man die jeweiligen Kandidaten links ausw&auml;hlt und rechts per Button markiert. Nach einer Berechnung die l&auml;nger dauern kann werden die Geschwister dieser 11.-Schritt-Kandidaten angezeigt - also Vorg&auml;nger und alle m&ouml;glichen Nachfolger. Wir wissen bereits, dass "11-e" als Nachfolger den "Gewinnerpfad" hat: </p>
+      <img src="images/11s.png" width="600px"><br clear="all">
+      <p>Was passierte mit "11-i"? Hier sind dessen Nachfolger:</p>
+      <img src="images/11i.png" width="600px"><br clear="all">
+
+      <p>Wie es aussieht, konnte sich keine andere Kombination als "icebook", die mit "i" an Stelle 11 beginnt, durchsetzen. Das Durchforsten der Stacks die mit diesem "i" zusammenh&auml;ngen sei dem geneigten Leser &uuml;berlassen. Es ist oftmals hilfreich, auch die andere Plaintextvariante zu betrachten an Stellen, die unintuitiv erscheinen. Man sollte im Sinn behalten, dass die Analyse nicht perfekt ist, da ab einem bestimmten Punkt die Tabelle links bei jedem Schritt "abgeschnitten" wird; alles darunter steht dem nachfolgenden Schritt nicht zur Verf&uuml;gung. Das ist aus Performancegr&uuml;nden n&ouml;tig.</p><p>Die verwendeten Texte sind als Klartext-Vorlagen im Programm eingespeichert. Fr&ouml;hliches Ausprobieren!</p>
+
+
+  <h1 id="4">H&auml;ufige Fragen und Erl&auml;uterungen</h1>
+    <h3>Warum sind Klartext 1 und 2 in der Ausgabe der Analyse vertauscht?</h3>
+    Die Analyse stellt Hypothesen &uuml;ber die Eingaben der XORs im Verschl&uuml;sselungsschritt auf. XOR ist kommutativ, d. h. es ist egal ob a XOR b oder b XOR a. Daher muss Viterbi darauf Z&auml;hlen dass die Vorg&auml;nger des Zeichens &uuml;ber dessen Entstehung hypothetisiert wird, dies in Kontext setzen und es wahrscheinlicher dastehen lassen in welcher Orientation geXORt wurde. Zu Beginn der Analyse gibt es aber keinen historischen Kontext, deshalb wird praktisch geraten was TExt 1 und was Text 2 ist.
+    <h3>Warum tauchen W&ouml;rter aus dem einen Klartext nach der Analzse zuweilen im anderen Klartext auf?</h3>
+    Hier ebenfalls greift die Erkl&auml;rung von oben. Manchmal kommt der Algorithmus an eine Stelle an der die historischen Kontexte der Kandidatenpfade (Vorg&auml;nger-n-Gramme) konvergieren (ann&auml;hernd gleiches Muster oder gar Zeichen). In diesem Fall ist der historische Kontext wiederum wertlos, und der Algorithmus muss raten, welchem Klartext er welche XOR-Eingabe-Hypothese zuordnet.
+    <h3>Warum beinhaltet die L&ouml;sung der Analyse komische Sonderzeichen?</h3>
+    Sonderzeichen sind durch das Sprachmodell ber&uuml;cksichtigt, haben aber kleine Auftretenswahrscheinlichkeiten. Jedoch ist ein "y" wenig unterschiedlich zu einem Komma o. &Auml;. F&uuml;r den Viterbi-Algorithmus z&auml;hlt blo&szlig; die relative H&auml;ufigkeit eines Zeichens zu seinem historischen n-Gramm-Kontext.
+    <h3>Weitere Anmerkungen</h3>
+    <p>
+      Momentan m&uuml;ssen beide Klartexte aus derselben Sprache stammen damit die Analyse richtig funktioniert.
+    </p><p>
+      Bei der Analyse ist der Anfang der gefundenen Klartexte normalerweise deutlich fehlerhafter als der Rest. Das liegt daran, dass hier die Vorg&auml;nger der ersten paar Buchstaben fehlen. Dieser anf&auml;ngliche Fehler nimmt mit fortschreitender Analyse an Einfluss ab.
+    </p>
+		<h2>M&ouml;gliche Weiterentwicklung</h2>
+
+			<p>
+        <ul>
+          <li>Neuere kryptoanalytische Ans&auml;tze gegen die Running-Key-Verschl&uuml;sselung implementieren, wie z.B. den Ansatz von <a href="http://dl.acm.org/citation.cfm?id=2390686">Sravana Reddy und Kevin Knight</a>, der Wort-basierte statt Zeichen-basierte Sprach-Modelle benutzt (Sravana Reddy and Kevin Knight. "Decoding running key ciphers", ACL '12 Proceedings of the 50th Annual Meeting of the Association for Computational Linguistics: Short Papers - Volume 2. 2012).</li>
+          <li>GUI f&uuml;r die dynamische Berechnung von N-Grammen. Der Quellcode dazu ist unter /src/org/jcryptool/analysis/viterbi/algorithm/NGramGen.java verf&uuml;gbar.</li>
+          <li>Analyse bei Klartexten mit verschiedenen Sprachen.</li>
+          <li>Vertikale und horizontale Scrollbars fehlen.</li>
+        </ul>
+      </p>
+
+
+
 </body>
 </html>
