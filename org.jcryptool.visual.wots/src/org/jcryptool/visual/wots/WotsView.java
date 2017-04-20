@@ -364,7 +364,7 @@ public class WotsView extends ViewPart {
 					txt_Sigkey.setText("");
 					txt_Verifkey.setText("");
 					txt_Sig.setText("");
-					currentImg = "src/icons/Overview2.JPG";
+					currentImg = "icons/Overview2.JPG";
 					Image tmp = new Image(img_right.getDisplay(), org.eclipse.ui.plugin.AbstractUIPlugin
 							.imageDescriptorFromPlugin("org.jcryptool.visual.wots",
 									org.jcryptool.visual.wots.WotsView.currentImg)
