@@ -68,7 +68,7 @@ public class ViterbiView extends ViewPart {
 
 		// Viterbi Details Tab
 		ti = new TabItem(tf, SWT.NONE);
-		ti.setText("Viterbi Analysis Details");
+		ti.setText(Messages.ViterbiView_0);
 		sc = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
 		sc.setExpandHorizontal(true);
 		sc.setExpandVertical(true);

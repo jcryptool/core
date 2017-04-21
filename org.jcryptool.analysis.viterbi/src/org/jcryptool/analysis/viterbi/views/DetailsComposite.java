@@ -157,6 +157,12 @@ public class DetailsComposite extends Composite {
 		gridLayout.horizontalSpacing = 15;
 		setLayout(gridLayout);
 		
+		Label lblViterbiAnalysisDetails = new Label(this, SWT.NONE);
+		lblViterbiAnalysisDetails.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		lblViterbiAnalysisDetails.setText(Messages.DetailsComposite_lblViterbiAnalysisDetails_text);
+		lblViterbiAnalysisDetails.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD));
+		lblViterbiAnalysisDetails.setBackground(SWTResourceManager.getColor(255, 255, 255));
+		
 		Text lblInThisComposite = new Text(this, SWT.WRAP);
 		GridData lbl1LData = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
 		lbl1LData.widthHint = 400;
@@ -213,6 +219,10 @@ public class DetailsComposite extends Composite {
 		
 		Button btn_last = new Button(composite, SWT.NONE);
 		btn_last.setText(">>"); //$NON-NLS-1$
+		
+		Label lblCandidatePathsOf = new Label(composite, SWT.NONE);
+		lblCandidatePathsOf.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 7, 1));
+		lblCandidatePathsOf.setText(Messages.DetailsComposite_lblCandidatePathsOf_text);
 		
 		table = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 7, 1));
@@ -487,7 +497,7 @@ public class DetailsComposite extends Composite {
 			
 			TableItem ti = new TableItem(table_1, SWT.NONE);
 			ti.setBackground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
-			ti.setText(new String[]{""+(h.step), ""+(h.rank), displ}); //$NON-NLS-1$ //$NON-NLS-2$
+			ti.setText(new String[]{""+(h.step), ""+(h.rank+1), displ}); //$NON-NLS-1$ //$NON-NLS-2$
 		});
 	}
 	public String pathToString(Path path) {

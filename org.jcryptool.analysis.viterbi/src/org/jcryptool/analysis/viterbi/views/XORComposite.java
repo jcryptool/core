@@ -50,7 +50,7 @@ public class XORComposite extends Composite {
 	private ViterbiView viterbiView;
 	private Button hex;
 	private Button text;
-	private String cipherString = "";
+	private String cipherString = ""; //$NON-NLS-1$
 	private Button xor;
 	private Button mod;
 	private StyledText stDescription;
@@ -81,7 +81,7 @@ public class XORComposite extends Composite {
 	}
 
 	private void subjectChanged() {
-		System.out.println("subjChanged called");
+		System.out.println("subjChanged called"); //$NON-NLS-1$
 		String t1 = plain1.getText();
 		String t2 = plain2.getText();
 		String encrypted = cipherString;
@@ -196,7 +196,7 @@ public class XORComposite extends Composite {
 
 				String filename = dialog.open();
 				if (filename != null) {
-					String text = new IO().read(filename, "\r\n");
+					String text = new IO().read(filename, "\r\n"); //$NON-NLS-1$
 					plain1.setText(text); // printing text into textfield
 				}
 			}
@@ -207,7 +207,7 @@ public class XORComposite extends Composite {
 		gd_loadPlain1c.horizontalAlignment = SWT.FILL;
 		gd_loadPlain1c.verticalAlignment = SWT.FILL;
 		loadPlain1c.setLayoutData(gd_loadPlain1c);
-		loadPlain1c.add("Select a predefined text...");
+		loadPlain1c.add("Select a predefined text..."); //$NON-NLS-1$
 		predefinedTexts.forEach(s -> loadPlain1c.add(limitS(30, s)));
 
 		loadPlain1c.addSelectionListener(new SelectionAdapter() {
@@ -252,7 +252,7 @@ public class XORComposite extends Composite {
 
 				String filename = dialog.open();
 				if (filename != null) {
-					String text = new IO().read(filename, "\r\n");
+					String text = new IO().read(filename, "\r\n"); //$NON-NLS-1$
 					plain2.setText(text); // printing text into textfield
 				}
 			}
@@ -263,7 +263,7 @@ public class XORComposite extends Composite {
 		gd_loadPlain2c.horizontalAlignment = SWT.FILL;
 		gd_loadPlain2c.verticalAlignment = SWT.FILL;
 		loadPlain2c.setLayoutData(gd_loadPlain2c);
-		loadPlain2c.add("Select a predefined text...");
+		loadPlain2c.add("Select a predefined text..."); //$NON-NLS-1$
 		predefinedTexts.forEach(s -> loadPlain2c.add(limitS(30, s)));
 
 		loadPlain2c.addSelectionListener(new SelectionAdapter() {
@@ -280,7 +280,7 @@ public class XORComposite extends Composite {
 
 	protected String limitS(int i, String s) {
 		if (s.length() > i) {
-			return s.substring(0, i) + "...";
+			return s.substring(0, i) + "..."; //$NON-NLS-1$
 		} else {
 			return s;
 		}
@@ -288,16 +288,16 @@ public class XORComposite extends Composite {
 
 	protected List<String> predefinedTexts = new LinkedList<String>() {
 		{
-			add("the kitten is in the basket fuzzy ball go");
-			add("this is a codebook message that is unique");
-			add("Give in like a good fellow, and bring your garrison to dinner, and beds afterwards. Nobody injured, I hope?");
-			add("Deeply regret advise your Titanic sunk this morning fifteenth after collision iceberg resulting serious loss life further particulars later.");
-			add("It was a bright cold day in April, and the clocks were striking thirteen. Winston Smith, his chin nuzzled into his breast in an effort to escape the vile wind, slipped quickly through the glass doors of Victory Mansions, though not quickly enough to prevent a swirl of gritty dust from entering along with him. ");
+			add("the kitten is in the basket fuzzy ball go"); //$NON-NLS-1$
+			add("this is a codebook message that is unique"); //$NON-NLS-1$
+			add("Give in like a good fellow, and bring your garrison to dinner, and beds afterwards. Nobody injured, I hope?"); //$NON-NLS-1$
+			add("Deeply regret advise your Titanic sunk this morning fifteenth after collision iceberg resulting serious loss life further particulars later."); //$NON-NLS-1$
+			add("It was a bright cold day in April, and the clocks were striking thirteen. Winston Smith, his chin nuzzled into his breast in an effort to escape the vile wind, slipped quickly through the glass doors of Victory Mansions, though not quickly enough to prevent a swirl of gritty dust from entering along with him. "); //$NON-NLS-1$
 
-			add("Fürwahr! er dient Euch auf besondre Weise. Nicht irdisch ist des Toren Trank noch Speise. Ihn treibt die Gärung in die Ferne, er ist sich seiner Tollheit halb bewusst. Vom Himmel fordert er die schönsten Sterne, und von der Erde jede höchste Lust.");
-			add("Zieh diesen Geist von seinem Urquell ab, und führ ihn, kannst du ihn erfassen, auf deinem Wege mit herab, und steh' beschämt, wenn du bekennen musst: Ein guter Mensch, in seinem dunklen Drange, ist sich des rechten Weges wohl bewußt.");
-			add("Das Dorf lag in tiefem Schnee. Vom Schloßberg war nichts zu sehen, Nebel und Finsternis umgaben ihn, auch nicht der schwächste Lichtschein deutete das große Schloß an.");
-			add("Es war ein klarer, kalter Tag im April, und die Uhren schlugen gerade dreizehn, als Winston Smith, das Kinn an die Brust gepresst, um dem rauen Wind zu entgehen, rasch durch die Glasturen eines der Hauser des Victory-Blocks schlupfte, wenn auch nicht rasch genug, als dafür nicht zugleich mit ihm ein Wirbel griesigen Staubs eingedrungen ware.");
+			add("Fürwahr! er dient Euch auf besondre Weise. Nicht irdisch ist des Toren Trank noch Speise. Ihn treibt die Gärung in die Ferne, er ist sich seiner Tollheit halb bewusst. Vom Himmel fordert er die schönsten Sterne, und von der Erde jede höchste Lust."); //$NON-NLS-1$
+			add("Zieh diesen Geist von seinem Urquell ab, und führ ihn, kannst du ihn erfassen, auf deinem Wege mit herab, und steh' beschämt, wenn du bekennen musst: Ein guter Mensch, in seinem dunklen Drange, ist sich des rechten Weges wohl bewußt."); //$NON-NLS-1$
+			add("Das Dorf lag in tiefem Schnee. Vom Schloßberg war nichts zu sehen, Nebel und Finsternis umgaben ihn, auch nicht der schwächste Lichtschein deutete das große Schloß an."); //$NON-NLS-1$
+			add("Es war ein klarer, kalter Tag im April, und die Uhren schlugen gerade dreizehn, als Winston Smith, das Kinn an die Brust gepresst, um dem rauen Wind zu entgehen, rasch durch die Glasturen eines der Hauser des Victory-Blocks schlupfte, wenn auch nicht rasch genug, als dafür nicht zugleich mit ihm ein Wirbel griesigen Staubs eingedrungen ware."); //$NON-NLS-1$
 		}
 	};
 	private Button calculate;
@@ -396,7 +396,7 @@ public class XORComposite extends Composite {
 				hex.setSelection(false);
 
 				// unprintable chars will be replaced with "?"
-				cipher.setText(ViterbiComposite.replaceUnprintableChars(cipherString, "\ufffd"));
+				cipher.setText(ViterbiComposite.replaceUnprintableChars(cipherString, "\ufffd")); //$NON-NLS-1$
 				subjectChanged();
 			}
 		});
@@ -420,7 +420,7 @@ public class XORComposite extends Composite {
 				String filename = dialog.open();
 				if (filename != null) {
 					IO io = new IO();
-					io.write(cipher.getText(), filename + ".txt");
+					io.write(cipher.getText(), filename + ".txt"); //$NON-NLS-1$
 				}
 			}
 		});
@@ -437,7 +437,7 @@ public class XORComposite extends Composite {
 				cipherString = combi.add(plain1.getText(), plain2.getText());
 
 				if (text.getSelection()) {
-					cipher.setText(ViterbiComposite.replaceUnprintableChars(cipherString, "\ufffd"));
+					cipher.setText(ViterbiComposite.replaceUnprintableChars(cipherString, "\ufffd")); //$NON-NLS-1$
 					// the ? is used for masking unprintable characters
 				} else {
 					cipher.setText(ViterbiComposite.stringToHex(cipherString));
