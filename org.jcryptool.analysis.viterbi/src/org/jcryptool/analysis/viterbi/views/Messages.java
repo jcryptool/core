@@ -110,6 +110,10 @@ public class Messages extends NLS {
 
 	public static String options1tooltip;
 	public static String options2tooltip;
+	public static String DetailsComposite_tblclmnStep_text;
+	public static String DetailsComposite_tblclmnRank_1_text;
+
+	public static String DetailsComposite_xnew7;
 
 	static {
 		// initialize resource bundle

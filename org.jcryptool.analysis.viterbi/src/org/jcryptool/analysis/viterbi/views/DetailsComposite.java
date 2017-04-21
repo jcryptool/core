@@ -9,8 +9,6 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.analysis.viterbi.views;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,41 +18,25 @@ import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
-import org.jcryptool.analysis.viterbi.ViterbiPlugin;
-import org.jcryptool.analysis.viterbi.algorithm.BitwiseXOR;
-import org.jcryptool.analysis.viterbi.algorithm.Combination;
-import org.jcryptool.analysis.viterbi.algorithm.IO;
-import org.jcryptool.analysis.viterbi.algorithm.LanguageModel;
-import org.jcryptool.analysis.viterbi.algorithm.NGramProvider;
-import org.jcryptool.analysis.viterbi.algorithm.Path;
-import org.jcryptool.analysis.viterbi.algorithm.Viterbi;
-import org.jcryptool.analysis.viterbi.algorithm.Viterbi.IterationRecord;
-import org.jcryptool.analysis.viterbi.algorithm.ViterbiObserver;
-import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.core.util.constants.IConstants;
-import org.jcryptool.core.util.directories.DirectoryService;
-import org.jcryptool.core.util.fonts.FontService;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.SWTResourceManager;
+import org.jcryptool.analysis.viterbi.algorithm.Path;
+import org.jcryptool.analysis.viterbi.algorithm.Viterbi;
+import org.jcryptool.analysis.viterbi.algorithm.Viterbi.IterationRecord;
 
 /**
  * This class generates the content of the "Viterbi" tab. With this tab the user can break the running key cipher
@@ -117,8 +99,8 @@ public class DetailsComposite extends Composite {
 	private Text dyns_rightPathDisplay;
 	private Text dyns_leftPathDisplay;
 	private Text dyns_winning;
-	private org.eclipse.swt.widgets.List list;
 	private Combo dyn_combo;
+	private Table table_1;
 	private Optional<List<PathAddr>> calcHighlightedPaths() {
 		BiFunction<String, String, Boolean> matches = (String recordP, String highlP) -> {
 			int prefixL = Math.min(highlP.length(), recordP.length());
@@ -147,6 +129,10 @@ public class DetailsComposite extends Composite {
 			Path path = records().get(step).paths.get(rank);
 			return DetailsComposite.this.pathToString(path);
 		}
+		private Path resolvePath() {
+			Path path = records().get(step).paths.get(rank);
+			return path;
+		}
 		
 		@Override
 		public boolean equals(Object obj) {
@@ -167,9 +153,11 @@ public class DetailsComposite extends Composite {
     public DetailsComposite(final Composite parent, final int style, ViterbiView viterbiView) {
         super(parent, style);
 		this.viterbiView = viterbiView;
-		setLayout(new GridLayout(2, false));
+		GridLayout gridLayout = new GridLayout(2, false);
+		gridLayout.horizontalSpacing = 15;
+		setLayout(gridLayout);
 		
-		Label lblInThisComposite = new Label(this, SWT.WRAP);
+		Text lblInThisComposite = new Text(this, SWT.WRAP);
 		GridData lbl1LData = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
 		lbl1LData.widthHint = 400;
 		lblInThisComposite.setLayoutData(lbl1LData);
@@ -236,7 +224,7 @@ public class DetailsComposite extends Composite {
 		tblclmnRank.setText(Messages.DetailsComposite_11);
 		
 		TableColumn tblclmnPp = new TableColumn(table, SWT.NONE);
-		tblclmnPp.setWidth(100);
+		tblclmnPp.setWidth(108);
 		tblclmnPp.setText(Messages.DetailsComposite_12);
 		
 		TableColumn tblclmnNewColumn = new TableColumn(table, SWT.NONE);
@@ -259,8 +247,22 @@ public class DetailsComposite extends Composite {
 		lblPredecessorsOfSelected.setText(Messages.DetailsComposite_16);
 		new Label(composite_1, SWT.NONE);
 		
-		list = new org.eclipse.swt.widgets.List(composite_1, SWT.BORDER | SWT.V_SCROLL);
-		list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 3, 1));
+		table_1 = new Table(composite_1, SWT.BORDER | SWT.FULL_SELECTION);
+		table_1.setLinesVisible(true);
+		table_1.setHeaderVisible(true);
+		table_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+		
+		TableColumn tblclmnStep = new TableColumn(table_1, SWT.NONE);
+		tblclmnStep.setWidth(65);
+		tblclmnStep.setText(Messages.DetailsComposite_tblclmnStep_text);
+		
+		TableColumn tblclmnRank_1 = new TableColumn(table_1, SWT.NONE);
+		tblclmnRank_1.setWidth(65);
+		tblclmnRank_1.setText(Messages.DetailsComposite_tblclmnRank_1_text);
+		
+		TableColumn tableColumn_2 = new TableColumn(table_1, SWT.NONE);
+		tableColumn_2.setWidth(700);
+		tableColumn_2.setText(Messages.DetailsComposite_xnew7);
 		
 		Label lblHighlighted_1 = new Label(composite_1, SWT.NONE);
 		lblHighlighted_1.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -277,17 +279,6 @@ public class DetailsComposite extends Composite {
 		dyns_leftPathDisplay = new Text(composite, SWT.BORDER);
 		dyns_leftPathDisplay.setEditable(false);
 		dyns_leftPathDisplay.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 6, 1));
-        
-		list.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				int idx = list.getSelectionIndex();
-				if(idx > -1) {
-					navigate(derivedHighlights.get().get(idx));
-					updateGlobalLabels();
-				}
-			}
-		});
 		
         table.addSelectionListener(new SelectionAdapter() {
         	@Override
@@ -371,9 +362,24 @@ public class DetailsComposite extends Composite {
         btnHighlightAndLook.addSelectionListener(new SelectionAdapter() {
         	@Override
         	public void widgetSelected(SelectionEvent e) {
+        		if(highlightedPath.isPresent() && highlightedPath.get().rank == currentRank && 
+        				highlightedPath.get().step == currentStep) {
+        			return;
+        		}
         		setHighlighted(Optional.of(new PathAddr(currentStep, currentRank)));
         	}
         });
+        table_1.addSelectionListener(new SelectionAdapter() {
+        	@Override
+        	public void widgetSelected(SelectionEvent e) {
+        		int idx = table_1.getSelectionIndex();
+        		if(idx < 0) return;
+        		PathAddr addr = derivedHighlights.get().get(idx);
+        		if(! addr.equals(currentAddr())){
+        			navigate(addr);
+        		}
+        	}
+		});
     }
 
     public void setHighlighted(Optional<PathAddr> addr) {
@@ -384,6 +390,7 @@ public class DetailsComposite extends Composite {
     	if(! this.derivedHighlights.isPresent()) return;
     	
     	displayHighlightsFiltered(this.derivedHighlights.get());
+    	navigate(currentAddr());
     	updateGlobalLabels();
     }
     
@@ -459,6 +466,9 @@ public class DetailsComposite extends Composite {
 			Double prob = p.getProbability();
 			
 			TableItem ti = new TableItem(table, SWT.NONE);
+			if(derivedHighlights.isPresent() && derivedHighlights.get().stream().map(a->a.resolvePath()).anyMatch(q -> q.equals(p))) {
+				ti.setBackground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+			}
 			ti.setText(new String[]{""+(i+1), ""+prob, displ}); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
@@ -468,11 +478,17 @@ public class DetailsComposite extends Composite {
 	}
 
 	private void displayHighlightsFiltered(List<PathAddr> derivedHighlights2) {
-		list.setItems(new String[]{});
+		table_1.removeAll();
+		table_1.clearAll();
 		derivedHighlights2.forEach(h -> {
-			list.add(String.format(Messages.DetailsComposite_26, h.step, h.rank+1, limitTo(h.resolve(), LIMIT_CONST)));
+			Path p = h.resolvePath();
+			String displ = limitTo(pathToString(p), LIMIT_CONST);
+			Double prob = p.getProbability();
+			
+			TableItem ti = new TableItem(table_1, SWT.NONE);
+			ti.setBackground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+			ti.setText(new String[]{""+(h.step), ""+(h.rank), displ}); //$NON-NLS-1$ //$NON-NLS-2$
 		});
-		
 	}
 	public String pathToString(Path path) {
 		return this.track1Selected ? path.getPlain1() : path.getPlain2();

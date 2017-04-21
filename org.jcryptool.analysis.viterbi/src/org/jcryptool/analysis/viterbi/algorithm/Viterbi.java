@@ -15,8 +15,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-import org.jcryptool.analysis.viterbi.algorithm.Viterbi.IterationRecord;
-
 /**
  * This is the core of the viterbi plug-in.
  *
