@@ -60,7 +60,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
     private static final int LOADBUTTONHEIGHT = 30;
     private static final int LOADBUTTONWIDTH = 120;
 
-    private static final int CONTINUEBUTTONHEIGHT = 30;
+    private static final int CONTINUEBUTTONHEIGHT = 36;
     private static final int CONTINUEBUTTONWIDTH = 150;
 
     /* colors for backgrounds. */
@@ -318,7 +318,11 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         de = new Button(options, SWT.RADIO);
         en = new Button(options, SWT.RADIO);
 
-        de.setSelection(true);
+        if(Messages.ViterbiComposite_language_header.toLowerCase().contains("language")) {
+        	en.setSelection(true);
+        } else {
+        	de.setSelection(true);
+        }
 
         de.setText(Messages.ViterbiComposite_language_german);
         en.setText(Messages.ViterbiComposite_language_english);
@@ -383,6 +387,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         });
         
         showBtn = new Button(canvas, SWT.PUSH);
+        showBtn.setLayoutData(new GridData(CONTINUEBUTTONWIDTH+42, CONTINUEBUTTONHEIGHT));
         showBtn.setText(Messages.ViterbiComposite_00ShowAnalysis);
         showBtn.setEnabled(false);
         showBtn.addSelectionListener(new SelectionAdapter() {
@@ -664,8 +669,11 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
     public void viterbiFinished() {
         Display display = Display.getDefault();
         this.isRunning = false;
+        currentPath = viterbi.getSolution();
         display.asyncExec(new Runnable() {
             public void run() {
+            	solution1.setText(ViterbiComposite.this.currentPath.getPlain1());
+                solution2.setText(ViterbiComposite.this.currentPath.getPlain2());
                 ViterbiComposite.this.startButton.setText(Messages.ViterbiComposite_startButton);
                 showBtn.setEnabled(true);
             }

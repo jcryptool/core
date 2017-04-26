@@ -81,7 +81,6 @@ public class XORComposite extends Composite {
 	}
 
 	private void subjectChanged() {
-		System.out.println("subjChanged called"); //$NON-NLS-1$
 		String t1 = plain1.getText();
 		String t2 = plain2.getText();
 		String encrypted = cipherString;
