@@ -284,8 +284,7 @@ public class WotsView extends ViewPart {
 							LogUtil.logError(ex);
 						}
 					}
-
-					setEnabled();
+					reset();
 				}
 			});
 		}
