@@ -34,6 +34,7 @@ public class Descriptions extends NLS {
 	public static String outGenKeysPlus_txt;
 	public static String outGenSigPlus_txt;
 	public static String outVerSigPlus_txt;
+	public static String fileType_txt;
 
 	static {
 		// initialize resource bundle

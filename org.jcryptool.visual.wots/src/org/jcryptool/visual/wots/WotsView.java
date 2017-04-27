@@ -11,10 +11,8 @@
 package org.jcryptool.visual.wots;
 
 import java.io.File;
-import java.io.IOException;
-
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -30,6 +28,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
@@ -266,21 +266,22 @@ public class WotsView extends ViewPart {
 			btnLoadMessageFrom.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
+					FileDialog fd = new FileDialog(Display.getCurrent().getActiveShell(), SWT.OPEN);
+					fd.setFilterExtensions(new String[] { "*.txt" }); //$NON-NLS-1$
+					fd.setFilterNames(new String[] { Descriptions.fileType_txt });
+					String filePath = fd.open();
 
-					// Loads message from file
-					JFileChooser chooser = new JFileChooser();
-					int returnVal = chooser.showOpenDialog(null);
-					if (returnVal == JFileChooser.APPROVE_OPTION) {
-
-						File file = chooser.getSelectedFile();
-						String path = file.getAbsolutePath();
+					if (filePath != null) {
+						File file = new File(filePath);
 						try {
-							txt_message.setText(org.jcryptool.visual.wots.files.WotsComposite.readFile(path));
-						} catch (IOException ex) {
+							Scanner scanner = new Scanner(file, "ISO-8859-1"); //$NON-NLS-1$
+							String fileString = scanner.useDelimiter("\\Z").next(); //$NON-NLS-1$
+							scanner.close();
+
+							txt_message.setText(fileString);
+
+						} catch (FileNotFoundException ex) {
 							LogUtil.logError(ex);
-							JOptionPane.showMessageDialog(null, "Failed to load message from file", "Error",
-									JOptionPane.OK_OPTION);
-							txt_message.setText(Descriptions.defaultMessage_txt);
 						}
 					}
 
