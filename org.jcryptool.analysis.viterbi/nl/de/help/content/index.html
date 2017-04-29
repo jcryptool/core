@@ -26,17 +26,15 @@
 		</p>
 
 <p>
-Man kann -- wie bei einer Buchchiffre -- den einen Klartext als Passwort (Schl&uuml;sselstrom) betrachten, und den anderen Klartext als zu verschl&uuml;sselnde Nachricht. Das Passwort sollte mindestens so lang sein wie die Nachricht (ansonsten wird es zyklisch wiederholt). Wenn die Nachricht n Zeichen lang ist, hat die Running-Key-Verschl&uuml;sselung 2*n Zeichen als Input (Nachricht und Schl&uuml;ssel). Als Output erh&auml;lt man ein Chiffrat der L&auml;nge n.
+Man kann -- wie bei einer Buchchiffre -- den einen Klartext als Schl&uuml;sselstrom (hergeleitet aus dem Passwort) betrachten, und den anderen Klartext als zu verschl&uuml;sselnde Nachricht. Das Passwort sollte mindestens so lang sein wie die Nachricht (ansonsten wird es zyklisch wiederholt). Wenn die Nachricht n Zeichen lang ist, hat die Running-Key-Verschl&uuml;sselung 2*n Zeichen als Input (Nachricht und Schl&uuml;ssel). Als Output erh&auml;lt man ein Chiffrat der L&auml;nge n.
 </p>
 
-		<p>Wenn einer der beiden Klartexte bekannt ist, kann man den anderen ganz leicht und direkt finden. In dem Szenario hier ist jedoch nur der Geheimtext bekannt, und die Viterbi-Analyse generiert die doppelte Menge Klartext (Nachricht und Passwort) mit erstaunlicher Treffsicherheit (aber nur, wenn der Schl&uuml;sselstrom nicht zuf&auml;llig, sondern eben normaler Text ist). Der Viterbi-Algorithmus basiert auf der Annahme, dass die Klartexte &auml;hnliche Muster
-		wie normale B&uuml;cher aufweisen. Das zugrunde liegende <a href="https://de.wikipedia.org/wiki/Hidden_Markov_Model">Hidden-Markov-Modell</a> [2] nutzt die H&auml;ufigkeitsanalyse von Zeichenfolgen. Die Implementierung basiert auf der Arbeit von <a href="http://www.csc.kth.se/utbildning/kth/kurser/DD2449/krypto09/pdf/rapport_vernam080309.pdf">M. Ekerå und B. Terelius</a> [3].</p>
+		<p>Wenn einer der beiden Klartexte bekannt ist, kann man den anderen ganz leicht und direkt finden. In dem Szenario hier ist jedoch nur der Geheimtext bekannt, und die Viterbi-Analyse generiert die doppelte Menge Klartext (Nachricht und Schl&uuml;ssel) mit erstaunlicher Treffsicherheit (aber nur, wenn der Schl&uuml;sselstrom nicht zuf&auml;llig, sondern eben normaler Text ist). Der Viterbi-Algorithmus basiert auf der Annahme, dass die Klartexte &auml;hnliche Muster
+		wie normale B&uuml;cher aufweisen. Das zugrunde liegende <a href="https://de.wikipedia.org/wiki/Hidden_Markov_Model">Hidden-Markov-Modell</a> [2] nutzt die H&auml;ufigkeitsanalyse von Zeichenfolgen. Die Implementierung basiert auf der Arbeit von <a href="http://www.csc.kth.se/utbildning/kth/kurser/DD2449/krypto09/pdf/rapport_vernam080309.pdf">M. Eker&aring; und B. Terelius</a> [3].</p>
 		<p>Der Viterbi-Algorithmus ist deterministisch, d. h. jede Analyse l&auml;uft exakt gleich
 			unter denselben Eingabeparametern. Es ist keine heuristische Abbruchbedingung vorgesehen.
 			Das Ergebnis jeder Iteration des Algorithmus bedingt das Ergebnis der n&auml;chsten Iteration,
-			unter Beachtung der Markov-Ordnung (bzw n-Gramm-L&auml;nge): eine kleinere Ordnung bedeutet schnelleres "Verschwinden"
-			dieser Abh&auml;ngigkeiten.
-		</p>
+			unter Beachtung der Markov-Ordnung (bzw n-Gramm-L&auml;nge). Eine kleinere Ordnung bedeutet schnelleres &quot;Verschwinden&quot; dieser Abh&auml;ngigkeiten.		</p>
 <p>
 Im Folgenden werden die 3 Reiter des Benutzerinterfaces erkl&auml;rt, und dann wird das Vorgehen anhand eines Beispiels schrittweise erl&auml;utert. Am Ende gibt es FAQs, Ideen zur Weiterentwicklung des Plugins und Referenzen zum Verfahren.
 </p>
@@ -66,7 +64,7 @@ Im Folgenden werden die 3 Reiter des Benutzerinterfaces erkl&auml;rt, und dann w
 
     <h3>Bemerkung:</h3>
 		<p>
-		Bei einer Buchchiffre dient das Passwort genaugenommen zum Finden der Stelle im Buch, die dann als Schl&uuml;sselstrom genommen wird. Nutzt man als Schl&uuml;sselstrom stattdessen eine wirklich zuf&auml;llige Zeichenfolge, wird die Running-Key-Verschl&uuml;sselung zum One-Time-Pad (OTP) und kann mit den statistischen Methoden der Viterbi-Analyse nicht geknackt werden.
+		Bei einer Buchchiffre dient das Passwort zum Finden der Stelle im Buch, die dann als Schl&uuml;sselstrom genommen wird. Nutzt man als Schl&uuml;sselstrom stattdessen eine wirklich zuf&auml;llige Zeichenfolge, wird die Running-Key-Verschl&uuml;sselung zum One-Time-Pad (OTP) und kann mit den statistischen Methoden der Viterbi-Analyse nicht geknackt werden.
 		</p>
 
 
@@ -78,7 +76,7 @@ Im Folgenden werden die 3 Reiter des Benutzerinterfaces erkl&auml;rt, und dann w
 			Der zweite Reiter besch&auml;ftigt sich mit dem eigentlichen Angriff. Wurde der Geheimtext mit dem ersten Reiter erzeugt, konnte man den Geheimtext von dort aus automatisch hierher laden. Alternativ kann der zu analysierende Geheimtext auch aus einer Textdatei geladen werden.
 		</p><p>
 			<img src="images/analysis_params.png" width="800px"><br clear="all">
-			Weil die Analyse stark vom Sprachmodel abh&auml;ngt, ist es wichtig, die erwartete Sprache der Klartexte vor dem Beginn der Analyse korrekt zu w&auml;hlen. Der Parameter "N-Gramm-Gr&ouml;&szlig;e" definiert die maximale L&auml;nge der analysierten Zeichenfolgen. Momentan kann man nur N-Gramme der L&auml;nge 1-5 ausw&auml;hlen (diese sind als vorberechnete Tabellen abgespeichert), um Speicherplatz zu sparen. Der Parameter "Suchtiefe" beeinflusst die Qualit&auml;t der Ergebnisse: Ein hoher Wert erzeugt bessere Ergebnisse, verschlechtert jedoch die Performance. Um die Ergebnisse angezeigt zu bekommen, muss man den Button "Analyse starten" dr&uuml;cken. Die Ergebnisse mit den entschl&uuml;sselten Klartexten k&ouml;nnen wiederum in Textdateien exportiert werden.
+			Weil die Analyse stark vom Sprachmodell abh&auml;ngt, ist es wichtig, die erwartete Sprache der Klartexte vor dem Beginn der Analyse korrekt zu w&auml;hlen. Der Parameter "N-Gramm-Gr&ouml;&szlig;e" definiert die maximale L&auml;nge der analysierten Zeichenfolgen. Momentan kann man nur N-Gramme der L&auml;nge 1-5 ausw&auml;hlen (diese sind als vorberechnete Tabellen abgespeichert), um Speicherplatz zu sparen. Der Parameter "Suchtiefe" beeinflusst die Qualit&auml;t der Ergebnisse: Ein hoher Wert erzeugt bessere Ergebnisse, verschlechtert jedoch die Performance. Um die Ergebnisse angezeigt zu bekommen, muss man den Button "Analyse starten" dr&uuml;cken. Die Ergebnisse mit den entschl&uuml;sselten Klartexten k&ouml;nnen wiederum in Textdateien exportiert werden.
 		</p><p>
 			Durch Dr&uuml;cken des Buttons "Analysedetails anzeigen" (er wird erst nach Abschluss der Analyse aktiv) k&ouml;nnen Details der Analyse im dritten Reiter eingesehen werden.
 		</p>
@@ -146,10 +144,12 @@ Im Folgenden werden die 3 Reiter des Benutzerinterfaces erkl&auml;rt, und dann w
 
 	<img src="images/viterbi3.png" width="800px"><br clear="all">
 
-	<p>Wir sehen uns nun an, wie die Ungenauigkeit an Stelle 11 zustande kam: Dort steht "seein" statt "is in" wie im Originaltext. Was ist passiert? </p>
+	<p>Der gefundene Text &quot;he kitten *s*eein the basket fuzzy ball go&quot; weicht ab der 11. Stelle, also dem 11. Buchstaben (&quot;s&quot;) vom Originaltext &quot;the kitten is in the basket fuzzy ball go&quot; ab: Ab da steht &quot;seein&quot; statt &quot;is in&quot;.</p>
 
-<p>Die Tabelle links zeigt die Kandidaten des (derzeit ausgew&auml;hlten) letzten Schrittes an. Wir haben den Gewinner, Nummer 1, ausgew&auml;hlt. Durch Markieren dieses Pfades werden alle Pfade die Vorg&auml;nger dieses Gewinnerpfades sind (es werden auch Nachfolger aufgelistet, doch wir sind schon im letzten Schritt). Wenn wir diese Liste betrachten, so  wird offensichtlich, dass der Gewinnerpfad nicht in allen Schritten des Algorithmus erste Wahl war, es gibt zahlreiche &quot;schlechte&quot; Platzierungen!</p>
-<p>Wir klicken nun in der Tabelle rechts auf den Vorg&auml;nger des Gewinners aus Schritt 11 wo wir die Entscheidungsfindung bez&uuml;glich der genannten  Kuriosit&auml;t beim Entziffern beobachten wir erwarten ein &quot;i&quot; (aus &quot;is in&quot;), der Algorithmus entscheidet sich aber f&uuml;r &quot;s&quot; (aus &quot;seein&quot;).</p>
+<p>Die Tabelle links zeigt die Kandidaten des (derzeit ausgew&auml;hlten) letzten Schrittes an. Wir haben den Gewinner, Nummer 1, ausgew&auml;hlt. Durch Markieren dieses Pfades werden alle Pfade die Vorg&auml;nger dieses Gewinnerpfades sind markiert (es werden auch Nachfolger aufgelistet, doch wir sind schon im letzten Schritt). Wenn wir diese Liste betrachten, so  wird offensichtlich, dass der Gewinnerpfad nicht in allen Schritten des Algorithmus erste Wahl war, es gibt zahlreiche &quot;schlechte&quot; Platzierungen!</p>
+<p>Wir klicken nun in der Tabelle rechts auf den Vorg&auml;nger des Gewinners
+aus Schritt 11, wo wir die Entscheidungsfindung bez&uuml;glich der genannten
+Kuriosit&auml;t beim Entziffern beobachten: Wir erwarten ein &quot;i&quot; (aus &quot;is in&quot;), der Algorithmus entscheidet sich aber f&uuml;r &quot;s&quot; (aus &quot;seein&quot;).</p>
 
 	<img src="images/viterbi4.png" width="800px"><br clear="all">
 
@@ -165,7 +165,7 @@ Im Folgenden werden die 3 Reiter des Benutzerinterfaces erkl&auml;rt, und dann w
 	<img src="images/11i.png" width="600px"><br clear="all">
 
 	<p>Wie es aussieht, konnte sich keine andere Kombination als &quot;icebook&quot;, die mit &quot;i&quot; an Stelle 11 beginnt, durchsetzen. Da der Algorithmus ab einer bestimmten Suchtiefe (einstellbar) Kandidatenpfade verwirft (d.h. sp&auml;tere Schritte k&ouml;nnen nicht daran ankn&uuml;pfen), ist es nicht gesagt, dass ein Kandidat Nachfolger hat, die bis in den letzten Schritt reichen.</p>
-	<p>Das Durchforsten der Stacks, die mit diesem "i" zusammenh&auml;ngen, sei dem geneigten Leser &uuml;berlassen. Es ist oftmals hilfreich, auch die andere Plaintextvariante zu betrachten an Stellen, die unintuitiv erscheinen.</p>
+	<p>Das Durchforsten der Stacks, die mit diesem "i" zusammenh&auml;ngen, sei dem geneigten Leser &uuml;berlassen. Es ist oftmals hilfreich, auch die andere Klartext-Variante zu betrachten an Stellen, die unintuitiv erscheinen.</p>
 	<p>Die Analyse kann nicht perfekt sein, da ab einem bestimmten Punkt die Tabelle links bei jedem Schritt "abgeschnitten" wird; alles darunter steht dem nachfolgenden Schritt nicht zur Verf&uuml;gung. Das Abschneiden ist aus Performancegr&uuml;nden n&ouml;tig.</p>
 	<p>Die verwendeten Texte sind als Klartext-Vorlagen im Programm eingespeichert. Fr&ouml;hliches Ausprobieren!</p>
 
@@ -175,7 +175,7 @@ Im Folgenden werden die 3 Reiter des Benutzerinterfaces erkl&auml;rt, und dann w
 
     <h3>Warum sind Klartext 1 und 2 in der Ausgabe der Analyse vertauscht?</h3>
 	<p>
-        Die Analyse stellt Hypothesen &uuml;ber die Eingaben der XORs im Verschl&uuml;sselungsschritt auf. XOR ist kommutativ, d. h. es ist egal, ob a XOR b oder b XOR a. Daher muss Viterbi darauf z&auml;hlen, dass die Vorg&auml;nger des Zeichens &uuml;ber dessen Entstehung hypothetisiert wird, dies in Kontext setzen, und es wahrscheinlicher dastehen lassen, in welcher Reihenfolge geXORt wurde. Zu Beginn der Analyse gibt es aber keinen historischen Kontext, deshalb wird praktisch geraten was Klartext 1 und was Klartext 2 ist.
+        Die Analyse stellt Hypothesen &uuml;ber die Eingaben der XORs im Verschl&uuml;sselungsschritt auf. XOR ist kommutativ, d. h. es ist egal, ob a XOR b oder b XOR a. Daher muss Viterbi darauf z&auml;hlen, dass die Vorg&auml;nger des Zeichens, &uuml;ber dessen Entstehung hypothetisiert wird, dies in Kontext setzen, und es wahrscheinlicher dastehen lassen, in welcher Reihenfolge geXORt wurde. Zu Beginn der Analyse gibt es aber keinen historischen Kontext, deshalb wird praktisch geraten was Klartext 1 und was Klartext 2 ist.
 	</p>
     <h3>Warum tauchen W&ouml;rter aus dem einen Klartext nach der Analyse zuweilen im anderen Klartext auf?</h3>
 	<p>
@@ -197,8 +197,8 @@ Im Folgenden werden die 3 Reiter des Benutzerinterfaces erkl&auml;rt, und dann w
 <h2>M&ouml;gliche Weiterentwicklung</h2>
 <p>
         <ul>
-          <li>Neuere kryptoanalytische Ans&auml;tze gegen die Running-Key-Verschl&uuml;sselung implementieren, wie z.B. den Ansatz von <a href="http://dl.acm.org/citation.cfm?id=2390686">Sravana Reddy und Kevin Knight</a> [4], der Wort-basierte statt Zeichen-basierte Sprach-Modelle benutzt.</li>
-          <li>Laden weiterer Referenzmodelle: GUI f&uuml;r die dynamische Berechnung von N-Grammen. Der Quellcode dazu ist unter /src/org/jcryptool/analysis/viterbi/algorithm/NGramGen.java verf&uuml;gbar.</li>
+          <li>Neuere kryptoanalytische Ans&auml;tze gegen die Running-Key-Verschl&uuml;sselung implementieren, wie z.B. den Ansatz von <a href="http://dl.acm.org/citation.cfm?id=2390686">Sravana Reddy und Kevin Knight</a> [4], der Wort-basierte statt Zeichen-basierte Sprachmodelle benutzt.</li>
+          <li>Laden weiterer Referenzmodelle: GUI f&uuml;r die dynamische Berechnung von N-Grammen. Der Quellcode dazu ist unter /src/org/jcryptool/analysis/viterbi/algorithm/NGramGen.java verf&uuml;gbar. Wenn man damit die entsprechenden Referenzmodelle erzeugt hat, k&ouml;nnte man Viterbi-Analyse auch mit n-Gramm-Längen &gt; 5 ausf&uuml;hren.</li>
           <li>Analyse bei Klartexten mit verschiedenen Sprachen.</li>
           <li>Vertikale und horizontale Scrollbars fehlen.</li>
         </ul>

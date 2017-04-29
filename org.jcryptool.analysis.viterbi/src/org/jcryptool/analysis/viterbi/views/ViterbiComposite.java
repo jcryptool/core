@@ -387,7 +387,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         });
         
         showBtn = new Button(canvas, SWT.PUSH);
-        showBtn.setLayoutData(new GridData(CONTINUEBUTTONWIDTH+42, CONTINUEBUTTONHEIGHT));
+        showBtn.setLayoutData(new GridData(CONTINUEBUTTONWIDTH+60, CONTINUEBUTTONHEIGHT));
         showBtn.setText(Messages.ViterbiComposite_00ShowAnalysis);
         showBtn.setEnabled(false);
         showBtn.addSelectionListener(new SelectionAdapter() {
