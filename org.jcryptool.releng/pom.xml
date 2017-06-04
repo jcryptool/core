@@ -13,7 +13,7 @@
 
 		The categorized p2 repository is generated in org.jcryptool.product/target/repository
 	</description>
-	
+
 	<organization>
 		<name>CrypTool</name>
 		<url>http://www.cryptool.org</url>
@@ -71,6 +71,14 @@
 				<artifactId>tycho-maven-plugin</artifactId>
 				<version>${tycho.version}</version>
 				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-compiler-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+					<useProjectSettings>false</useProjectSettings>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
