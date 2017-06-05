@@ -6,16 +6,13 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jcryptool.analysis.ngram.views.NgramView;
 
-
-public class RestartHandler extends AbstractHandler 
-{
-    public Object execute(ExecutionEvent event) throws ExecutionException 
-    {
-        if (HandlerUtil.getActivePart(event) instanceof NgramView) 
-        {
-        	NgramView view = ((NgramView) HandlerUtil.getActivePart(event));
-            view.reset();
-        }
-        return null;
-    }
+public class RestartHandler extends AbstractHandler {
+	@Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
+		if (HandlerUtil.getActivePart(event) instanceof NgramView) {
+			NgramView view = ((NgramView) HandlerUtil.getActivePart(event));
+			view.reset();
+		}
+		return null;
+	}
 }

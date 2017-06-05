@@ -4,7 +4,7 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.analysis.ngram.views.messages";
-	//#be public static final String NgramView_17 = null;
+	// #be public static final String NgramView_17 = null;
 	public static String NgramView_0;
 	public static String NgramView_1;
 	public static String NgramView_17;
