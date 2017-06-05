@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="view" title="N-Gram Analysis">
+   	  <description>The N-Gram Text-Topic Analysis plug-in aims to identify the topic of a given text.</description>      
+      <topic href="nl/en/help/content/ngram_userguide.html" label="N-Gram Analysis Tutorial"/>
+   </context>
+</contexts>
