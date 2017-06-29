@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %Bundle-Name
+Bundle-SymbolicName: org.jcryptool.analysis.ngram_text_topics;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: org.jcryptool.analysis.ngram.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.jcryptool.core.operations,
+ org.jcryptool.crypto.ui
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Import-Package: org.eclipse.core.resources

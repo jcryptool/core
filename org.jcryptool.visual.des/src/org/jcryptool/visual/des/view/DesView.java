@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -16,6 +15,8 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -33,8 +34,6 @@ import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.des.algorithm.DESController;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
 
 public class DesView extends ViewPart {
 	public DesView() {

@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2010 JCrypTool Team and Contributors
+* Copyright (c) 2017 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -14,6 +14,7 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.crypto.classic.model.ui.wizard.messages"; //$NON-NLS-1$
+	public static String AbstractClassicCryptoPage_0;
 	public static String AbstractClassicCryptoPage_1;
 	public static String AbstractClassicCryptoPage_15;
 	public static String AbstractClassicCryptoPage_2;
@@ -45,6 +46,8 @@ public class Messages extends NLS {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
 	}
+
+	public static String CaesarWizardPage_4;
 
 	private Messages() {
 	}

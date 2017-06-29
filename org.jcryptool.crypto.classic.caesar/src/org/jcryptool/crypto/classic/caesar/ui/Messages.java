@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2010 JCrypTool Team and Contributors
+* Copyright (c) 2017 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -16,6 +16,10 @@ public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.crypto.classic.caesar.ui.messages"; //$NON-NLS-1$
 	public static String CaesarKeyInput_0;
 	public static String CaesarKeyInput_1;
+	public static String CaesarWizardPage_0;
+	public static String CaesarWizardPage_1;
+	public static String CaesarWizardPage_2;
+	public static String CaesarWizardPage_3;
 	public static String CaesarWizardPage_key_instruction;
 	public static String CaesarWizardPage_keyTooLong;
 	public static String Label_Caesar;

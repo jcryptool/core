@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2010 JCrypTool Team and Contributors
+* Copyright (c) 2017 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -25,6 +25,42 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.analysis.viterbi.views.messages"; //$NON-NLS-1$
 
+	public static String DetailsComposite_0;
+
+	public static String DetailsComposite_1;
+
+	public static String DetailsComposite_11;
+
+	public static String DetailsComposite_12;
+
+	public static String DetailsComposite_13;
+
+	public static String DetailsComposite_14;
+
+	public static String DetailsComposite_15;
+
+	public static String DetailsComposite_16;
+
+	public static String DetailsComposite_17;
+
+	public static String DetailsComposite_18;
+
+	public static String DetailsComposite_2;
+
+	public static String DetailsComposite_21;
+
+	public static String DetailsComposite_22;
+
+	public static String DetailsComposite_26;
+
+	public static String DetailsComposite_3;
+
+	public static String DetailsComposite_4;
+
+	public static String DetailsComposite_5;
+
+	public static String DetailsComposite_6;
+
 	public static String XORComposite_tab_title;
 	public static String XORComposite_description;
 	public static String XORComposite_algo_header;
@@ -48,6 +84,8 @@ public class Messages extends NLS {
 	public static String XORComposite_encodingmod_header;
 	public static String XORComposite_cipher;
 
+	public static String ViterbiComposite_00ShowAnalysis;
+
 	public static String ViterbiComposite_tab_title;
 
 	public static String ViterbiComposite_description;
@@ -70,8 +108,16 @@ public class Messages extends NLS {
 	public static String ViterbiComposite_exportButton;
 	public static String ViterbiComposite_cancelButton;
 
+	public static String ViterbiView_0;
+
 	public static String options1tooltip;
 	public static String options2tooltip;
+	public static String DetailsComposite_tblclmnStep_text;
+	public static String DetailsComposite_tblclmnRank_1_text;
+
+	public static String DetailsComposite_xnew7;
+	public static String DetailsComposite_lblViterbiAnalysisDetails_text;
+	public static String DetailsComposite_lblCandidatePathsOf_text;
 
 	static {
 		// initialize resource bundle

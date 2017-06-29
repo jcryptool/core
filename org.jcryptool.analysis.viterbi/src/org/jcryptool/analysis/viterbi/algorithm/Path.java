@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2010 JCrypTool Team and Contributors
+* Copyright (c) 2017 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -103,5 +103,9 @@ public class Path implements Comparable<Path> {
 	@Override
 	public String toString() {
 		return plain1 + "\t" + plain2 + "\t" + probability;
+	}
+	
+	public Path copy() {
+		return new Path(plain1.toString(), plain2.toString(), probability);
 	}
 }

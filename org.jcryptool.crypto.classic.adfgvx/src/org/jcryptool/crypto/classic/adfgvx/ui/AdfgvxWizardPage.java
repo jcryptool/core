@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2008 JCrypTool Team and Contributors
+ * Copyright (c) 2017 JCrypTool Team and Contributors
  * 
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -105,7 +105,7 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
     private Label rc66;
 
     /** Instance of the ADFGVX currentAlphabet */
-    private final AbstractAlphabet adfgvxAlphabet = AlphabetsManager.getInstance().getAlphabetByName("ADFGVX-Alphabet"); //$NON-NLS-1$
+    private final AbstractAlphabet adfgvxAlphabet = AlphabetsManager.getInstance().getAlphabetBySubName("ADFGVX"); //$NON-NLS-1$
 
     /** Instance of the AdfgvxFactory */
     private AdfgvxFactory factory = new AdfgvxFactory();

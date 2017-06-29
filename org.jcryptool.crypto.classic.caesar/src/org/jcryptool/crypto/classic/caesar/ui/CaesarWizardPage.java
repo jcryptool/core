@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2008 JCrypTool Team and Contributors
+* Copyright (c) 2017 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -23,7 +23,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -79,6 +78,10 @@ public class CaesarWizardPage extends AbstractClassicCryptoPage {
     
     @Override
     protected void createCustomAlphaGroupObjects(Composite innerGroup) {
+    	
+    }
+    @Override
+    protected void createCustomKeyGroupObjects(Composite innerGroup) {
     	Composite cmpAlphaExpl = new Composite(innerGroup, SWT.NONE);
     	GridLayout layout = new GridLayout(3, false);
     	layout.marginWidth = 0;
@@ -87,36 +90,19 @@ public class CaesarWizardPage extends AbstractClassicCryptoPage {
 		cmpAlphaExpl.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
     	
 		Label lblAlphaExpl = new Label(cmpAlphaExpl, SWT.NONE);
-		lblAlphaExpl.setText("Interpretation des ersten Alphabetzeichens: ");
+		lblAlphaExpl.setText(Messages.CaesarWizardPage_0);
 		
 		btnShift0 = new Button(cmpAlphaExpl, SWT.RADIO);
-		btnShift0.setText("Verschiebewert = 0");
+		btnShift0.setText(Messages.CaesarWizardPage_1);
 		
     	btnShift1 = new Button(cmpAlphaExpl, SWT.RADIO);
-    	btnShift1.setText("Verschiebewert = 1");
+    	btnShift1.setText(Messages.CaesarWizardPage_2);
     }
     
     @Override
-    protected void createKeyGroup(Composite parent) {
-    	keyGroup = new Group(parent, SWT.NONE);
-
-        GridLayout keyGroupGridLayout = new GridLayout();
-        keyGroupGridLayout.numColumns = 2;
-
-        GridData keyGroupGridData = new GridData();
-        keyGroupGridData.horizontalAlignment = GridData.FILL;
-        keyGroupGridData.grabExcessHorizontalSpace = true;
-        keyGroupGridData.grabExcessVerticalSpace = false;
-        keyGroupGridData.verticalAlignment = SWT.TOP;
-
-        keyGroup.setLayoutData(keyGroupGridData);
-        keyGroup.setLayout(keyGroupGridLayout);
-        keyGroup.setText(org.jcryptool.crypto.classic.model.ui.wizard.Messages.WizardPage_key);
-
+    protected void createKeyInputWidgets() {
         keyInputComp = new CaesarKeyInput(keyGroup, SWT.NONE);
         keyInputComp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        
-        
     }
     @Override
     protected void createKeyInputObjects() {
@@ -139,7 +125,7 @@ public class CaesarWizardPage extends AbstractClassicCryptoPage {
 
             @Override
             public String getName() {
-                return "Caesar key";
+                return Messages.CaesarWizardPage_3;
             }
 
             @Override
@@ -314,11 +300,6 @@ public class CaesarWizardPage extends AbstractClassicCryptoPage {
     	updateAlphaGroupText();
     }
 
-	protected void updateAlphaGroupText() {
-		alphabetGroup.setText(org.jcryptool.crypto.classic.model.ui.wizard.Messages.WizardPage_alpha + 
-				String.format(" (current length: %s )", getAlphabetInput().getContent().getCharacterSet().length));
-	}
-	
 	public int getaShift() {
 		return aShift;
 	}

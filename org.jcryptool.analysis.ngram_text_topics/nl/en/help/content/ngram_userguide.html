@@ -1,0 +1,134 @@
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title>N-Gram Text-Topic Analysis</title>
+</head>
+<body>
+ <h1>N-Gram Text-Topic Analysis</h1>
+ <p>The "N-Gram Text-Topic Analysis" plug-in aims to identify the topic of a given text. As the name of the plug-in indicates, it is based on an n-gram analysis. The n-gram analysis might be explained using the following sentence: “This is a short sentence.” The 2-grams in this sentence would be then “Th”, “hi”, “is” and so on. The 3-grams are “Thi”, “his”, etc. </p>
+
+ <p>It was found out that the best results of identifying a topic are achieved using 2-grams or 3-grams analysis. Since for instance, it would rather not make sense to build a hypothesis based on 8-grams or histograms (1-grams). Here, we used a combination of the 2- and 3-grams distances to build a hypothesis.</p>
+
+ <p>
+Right now, the plug-in supports 5 topics:
+<ol>
+ <li>Football news,</li>
+ <li>Political news,</li>
+ <li>Literature,</li>
+ <li>Law, and</li>
+ <li>[Board] Game rules.</li>
+</ol>
+
+Whereas by football news we mean news related to soccer and not American football.
+</p>
+
+ <h4>Plug-in Instructions</h4>
+
+<p>The user can setup the following parameters (see the screenshot below):
+<dl>
+        <dt><i>Input method:</i></dt>
+  <dd>Here one can choose the source of the text to be analyzed. By default this parameter is set to <i>From manual input</i> so that the user can easily copy & paste text. The other option is to load the text <i>From file</i>. Furthermore, the user can choose to load a sample text in English or German for easier testing and understanding of the plug-in.<br /></dd>
+ <br/>
+
+        <dt><i>Language:</i></dt>
+        <dd>This version of the plug-in supports texts both in <i>English</i> and <i>German</i> languages. More languages are planned to be supported in future versions.</dd>
+  <br/>
+
+        <dt><i>Analysis method:</i></dt>
+        <dd>To find out what the topic of the given text is the plug-in calculates the distance between the given text and reference texts. The distance can be calculated by using the following methods: <i>Euclidean</i> or <i>Least Squares</i>. These methods are described in detail in "The Algorithm" section below.</dd>
+</dl>
+</p>
+
+<p align="center">
+<img src="tab2.png" width="80%"  alt="The configuration and start tab."></p>
+
+<p>Optionally the user add one own topic (in total then it will be 6 different topics of text) by selecting one own reference text. For instance, if the user wants to find out whether the given text is about <i>computer news</i> or not, he needs to load a sample reference. A sample reference can be only a <i>txt</i> file.</p>
+
+<p align="center">
+<img src="tab3.png" width="80%"  alt="Option to add an additional reference."></p>
+
+<h4>The Algorithm</h4>
+<p>
+  The plug-in stores for each of the 5 topics and each language (German and English) the top 50 2-grams and 3-grams. These were find out by analyzing 20 random texts for each topic/language, combining these texts to one long text, analyzing it and finally saving the top 50 2-grams and 3-grams. Due to an overhead of 200 texts only the resulting n-grams are saved and hard coded into the plug-in. The original texts are not available.<br/><br/>
+
+  The given text is analyzed as follows: First, it is converted to the uppercase, and all the spaces are removed. E.g. from our last example “This is a sentence” becomes “THISISASENTENCE”.<br/><br/>
+
+  Next, the first 50 n-grams (here, as already mentioned before, 2-grams and 3-grams) with the highest frequencies are saved and sorted out in the descending order. Finally, it is compared how different these occurrences are from other references. This is done by using  either the Euclidean or the Least Square distance method: 
+  <br/>
+
+  <dt><i>Euclidean:</i></dt>
+    <dd>The distance between two grams i and j is defined as |i – j| [1]. E.g. if the sequence “th” in the given text is on the 1st place and in the reference text <i>political news</i> it is on the 4th place, then the distance between them is |1 – 4| = | – 3 | = 3. In a special case, when e.g. in a given text a specific sequence made it to the top 50 most frequent, but in a reference text not, then the distance is defined as 50 – <i>i</i> + 5, where <i>i</i> is the position of the sequence.</dd>
+  <br/>
+
+    <dt><i>Least Squares:</i></dt>
+    <dd>The main difference to the Euclidean method is that the distances are all squared first and added up. The result is set to the square root of the resulting sum [2]. </dd><br/>
+  
+
+  It is worth noting that the longer a given text is, the better results one would achieve. The minimum length of the text is 512 characters, both for an own reference text as well for the text that is to be analyzed. However, the analysis works best with texts that have more than 2000 characters. The number of characters for a given text is dynamically shown above the text itself. The length of an own reference text and its path are also shown for each loaded file.
+
+</p>
+
+<h4>Result field</h4>
+<p>The following are five guesses of what the topic of the given text might be as a result of the analysis using Euclidean distance method:<br/><br/>
+
+(★ ★ ★ ★ ☆)   1. Guess: This text deals with the topic Literature  [1124] <br/>
+(★ ★ ☆ ☆ ☆)   2. Guess: This text deals with the topic Football  [1252] <br/>
+(★ ★ ☆ ☆ ☆)   3. Guess: This text deals with the topic Game rules  [1345] <br/>
+(★ ☆ ☆ ☆ ☆)   4. Guess: This text deals with the topic Politics  [1434] <br/>
+(★ ☆ ☆ ☆ ☆)   5. Guess: This text deals with the topic Law  [1550] <br/><br/>
+
+In brackets behind each guess one can find the exact distance to one or another topic. How well the guesses are made is displayed using stars. This is explained below:
+
+<h4>Rating system</h4>
+The closer the topic is to one of the reference texts (in other words, the smaller distance between the given text and the reference text is), the higher is the rating. In the example above first guess has 4 stars out of 5, whereas the second and third guesses have only 2 stars out of 5. That roughly means that with a very high probability the topic of this text is <i>Literature</i>, and with a lower probability it is <i>Football</i> or <i>Game rules</i>. <br/><br/>
+
+By testing out about 100 texts of different origin it was found out that the distance to the same topic is usually close to 1050 for Euclidean and 200 for Least Squares method. Whereas the distance to a topic that is completely different the distance is higher than 1350 for Euclidean and Least Squares accordingly. The exact distances and its ratings can be found in the table below:
+<br/><br/>
+
+<table style="width:500px">
+<tr>
+  <th align="left">Rating</th>
+  <th align="left">Euclidean Distance</th>
+  <th align="left">Least Squares Distance</th>
+</tr>
+<tr>
+    <td>★ ★ ★ ★ ★</td>
+    <td>d < 1050</td>
+    <td>d < 200</td>
+</tr>  
+<tr>
+  <td>★ ★ ★ ★ ☆</td> 
+  <td> 1050 > d > 1150</td> 
+  <td> 220 > d > 200</td> 
+</tr>
+<tr>
+    <td>★ ★ ★ ☆ ☆</td>
+    <td>1150 > d > 1250</td>
+    <td>240 > d > 220</td> 
+</tr>  
+<tr>
+    <td>★ ★ ☆ ☆ ☆</td>
+    <td>1250 > d > 1350</td>
+    <td>260 > d > 240</td>  
+</tr>  
+<tr>
+    <td>★ ☆ ☆ ☆ ☆</td>
+    <td>d > 1350</td>
+    <td>d > 260</td>
+</tr>  
+
+</table>
+<br/>
+</p>
+
+ <p>Sources:<br/>
+ <ul>
+ <li>[1] Euclidean Distance, <a href="http://en.wikipedia.org/wiki/Euclidean_distance">http://en.wikipedia.org/wiki/Euclidean_distance</a>
+ </br>
+ <li>[2] Least Squares, <a href="http://en.wikipedia.org/wiki/Least_squares">http://en.wikipedia.org/wiki/Least_squares</a></li>
+ </ul>
+ </p>
+ 
+<br/>
+</body>
+</html>

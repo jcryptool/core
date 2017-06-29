@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2010 JCrypTool Team and Contributors
+ * Copyright (c) 2017 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
@@ -12,6 +12,7 @@ package org.jcryptool.analysis.viterbi.views;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.swt.SWT;
@@ -59,7 +60,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
     private static final int LOADBUTTONHEIGHT = 30;
     private static final int LOADBUTTONWIDTH = 120;
 
-    private static final int CONTINUEBUTTONHEIGHT = 30;
+    private static final int CONTINUEBUTTONHEIGHT = 36;
     private static final int CONTINUEBUTTONWIDTH = 150;
 
     /* colors for backgrounds. */
@@ -72,7 +73,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
     private Button hex;
     // the ciphertext that is displayed in the textfield and can analyzed
     // with the viterbi algorithm
-    private String cipherString = "";
+    private String cipherString = ""; //$NON-NLS-1$
     private Combination combi = new BitwiseXOR();
     private Button de;
     private Button en;
@@ -90,6 +91,8 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
 
     private static final int MAX_NGRAM_SIZE = 5; //$NON-NLS-1$
     private URL ngramsUrl = null;
+	private Button showBtn;
+	private ViterbiView view;
 
     /**
      * Creates the Viterbi tab
@@ -102,7 +105,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         super(parent, style);
 
         try {
-            ngramsUrl = FileLocator.toFileURL((ViterbiPlugin.getDefault().getBundle().getEntry("/")));
+            ngramsUrl = FileLocator.toFileURL((ViterbiPlugin.getDefault().getBundle().getEntry("/"))); //$NON-NLS-1$
         } catch (IOException ex) {
             LogUtil.logError(ViterbiPlugin.PLUGIN_ID, ex);
         }
@@ -112,7 +115,22 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         createInput();
         createCalculation();
         createResult();
+        
+        this.view = viterbiView;
+        
+        subjectChanged();
     }
+    
+    private void subjectChanged() {
+		String t1 = cipherString;
+		Boolean proceed = t1 !=  null && t1.trim().length() > 0; 
+		
+		Consumer<Boolean> fDoUI = (Boolean b) -> {
+			startButton.setEnabled(b);
+		};
+		
+		fDoUI.accept(proceed);
+	}
 
     /**
      * Sets the default texts. This is just a bugfix, because setting the texts earlier would
@@ -174,7 +192,10 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
 
         Button loadCipher = new Button(canvas, SWT.PUSH);
         loadCipher.setText(Messages.XORComposite_loadFile);
-        loadCipher.setLayoutData(new GridData(LOADBUTTONWIDTH, LOADBUTTONHEIGHT));
+        GridData gd_loadCipher = new GridData(140, LOADBUTTONHEIGHT);
+        gd_loadCipher.horizontalAlignment = SWT.FILL;
+        gd_loadCipher.grabExcessHorizontalSpace = true;
+        loadCipher.setLayoutData(gd_loadCipher);
 
         loadCipher.addSelectionListener(new SelectionAdapter() {
 
@@ -187,13 +208,14 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
 
                 String filename = dialog.open();
                 if (filename != null) {
-                    cipherString = new IO().read(filename, "\r\n");
+                    cipherString = new IO().read(filename, "\r\n"); //$NON-NLS-1$
 
                     if (text.getSelection()) {
-                        cipher.setText(replaceUnprintableChars(cipherString, "\ufffd"));
+                        cipher.setText(replaceUnprintableChars(cipherString, "\ufffd")); //$NON-NLS-1$
                     } else {
                         cipher.setText(stringToHex(cipherString));
                     }
+                    subjectChanged();
                 }
             }
         });
@@ -220,6 +242,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
                 text.setSelection(false);
 
                 cipher.setText(stringToHex(cipherString));
+                subjectChanged();
             }
         });
 
@@ -232,7 +255,8 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
                 text.setSelection(true);
                 hex.setSelection(false);
 
-                cipher.setText(ViterbiComposite.replaceUnprintableChars(cipherString, "\ufffd"));
+                cipher.setText(ViterbiComposite.replaceUnprintableChars(cipherString, "\ufffd")); //$NON-NLS-1$
+                subjectChanged();
             }
         });
     }
@@ -294,7 +318,11 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         de = new Button(options, SWT.RADIO);
         en = new Button(options, SWT.RADIO);
 
-        de.setSelection(true);
+        if(Messages.ViterbiComposite_language_header.toLowerCase().contains("language")) {
+        	en.setSelection(true);
+        } else {
+        	de.setSelection(true);
+        }
 
         de.setText(Messages.ViterbiComposite_language_german);
         en.setText(Messages.ViterbiComposite_language_english);
@@ -341,7 +369,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
     	//some adjustments
     	final Canvas canvas = new Canvas(parent, SWT.NONE);
         canvas.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, true));
-        canvas.setLayout(new GridLayout());
+        canvas.setLayout(new GridLayout(2,  false));
 
         startButton = new Button(canvas, SWT.PUSH);
         startButton.setText(Messages.ViterbiComposite_startButton);
@@ -352,57 +380,88 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
             public void widgetSelected(final SelectionEvent e) {
                 Display display = Display.getDefault();
 
-                if (ViterbiComposite.this.isRunning) {
-                    ViterbiComposite.this.viterbi.stop();
-                    ViterbiComposite.this.isRunning = false;
-
-                    display.syncExec(new Runnable() {
-                        public void run() {
-                            ViterbiComposite.this.startButton.setText(Messages.ViterbiComposite_startButton);
-                        }
-                    });
-                } else {
-                    display.syncExec(new Runnable() {
-                        public void run() {
-                            ViterbiComposite.this.startButton.setText(Messages.ViterbiComposite_cancelButton);
-                        }
-                    });
-
-                    StringBuilder path = new StringBuilder();
-                    path.append(ngramsUrl.getFile());
-
-                    if (de.getSelection()) {
-                        path.append("data/ngrams_de.txt");
-                    } else {
-                        path.append("data/ngrams_en.txt");
-                    }
-
-                    int nGramSize = Integer.parseInt(nGramDrop.getText());
-                    int prunningNumber = Integer.parseInt(pathDrop.getText());
-
-                    Map<String, Integer> ngrams;
-
-                    // reading ngrams from a textfile
-                    NGramProvider provider = new NGramProvider(path.toString());
-                    ngrams = provider.getNgrams();
-                    int totalMonoGrams = provider.getTotalMonoGrams();
-
-                    // creating the language model
-                    LanguageModel language = new LanguageModel(ngrams, DEFAULT_CHARACTER_SET_END
-                            - DEFAULT_CHARACTER_SET_BEGIN + 1, totalMonoGrams);
-
-                    viterbi = new Viterbi(nGramSize, prunningNumber, language, combi, ViterbiComposite.this,
-                            cipherString);
-
-                    // starting the viterbi thread
-                    isRunning = true;
-                    new Thread(viterbi).start();
-                }
+                onStartBtn(display);
             }
-        });
-    }
 
-    /**
+			
+        });
+        
+        showBtn = new Button(canvas, SWT.PUSH);
+        showBtn.setLayoutData(new GridData(CONTINUEBUTTONWIDTH+60, CONTINUEBUTTONHEIGHT));
+        showBtn.setText(Messages.ViterbiComposite_00ShowAnalysis);
+        showBtn.setEnabled(false);
+        showBtn.addSelectionListener(new SelectionAdapter() {
+        	@Override
+        	public void widgetSelected(SelectionEvent e) {
+        		changeToDetailsTab();
+        	}
+		});
+    }
+    
+    protected void onStartBtn(Display display) {
+//		if(cipherString.trim().length() == 0) {
+//			MessageDialog.openWarning(getShell(), "Start Analysis", 
+//					"Please first load as input a ciphertext to be analyzed. You can do this by either generate the "
+//					+ "ciphertext in the first tab or by loading a stored running-key ciphertext from a file.\n\n"
+//					+ "Bitte laden Sie als Eingabe zuerst einen Geheimtext zum Analysieren. "
+//					+ "Den Geheimtext können Sie entweder im ersten Reiter erzeugen oder indem Sie eine "
+//					+ "Datei laden, die einen abgespeicherten Running-Key-Geheimtext enthält.");
+//		}
+    	
+    	if (ViterbiComposite.this.isRunning) {
+            ViterbiComposite.this.viterbi.stop();
+            ViterbiComposite.this.isRunning = false;
+
+            display.syncExec(new Runnable() {
+                public void run() {
+                    ViterbiComposite.this.startButton.setText(Messages.ViterbiComposite_startButton);
+                }
+            });
+        } else {
+            display.syncExec(new Runnable() {
+                public void run() {
+                    ViterbiComposite.this.startButton.setText(Messages.ViterbiComposite_cancelButton);
+                }
+            });
+
+            StringBuilder path = new StringBuilder();
+            path.append(ngramsUrl.getFile());
+
+            if (de.getSelection()) {
+                path.append("data/ngrams_de.txt"); //$NON-NLS-1$
+            } else {
+                path.append("data/ngrams_en.txt"); //$NON-NLS-1$
+            }
+
+            int nGramSize = Integer.parseInt(nGramDrop.getText());
+            int prunningNumber = Integer.parseInt(pathDrop.getText());
+
+            Map<String, Integer> ngrams;
+
+            // reading ngrams from a textfile
+            NGramProvider provider = new NGramProvider(path.toString());
+            ngrams = provider.getNgrams();
+            int totalMonoGrams = provider.getTotalMonoGrams();
+
+            // creating the language model
+            LanguageModel language = new LanguageModel(ngrams, DEFAULT_CHARACTER_SET_END
+                    - DEFAULT_CHARACTER_SET_BEGIN + 1, totalMonoGrams);
+
+            viterbi = new Viterbi(nGramSize, prunningNumber, language, combi, ViterbiComposite.this,
+                    cipherString);
+
+            // starting the viterbi thread
+            isRunning = true;
+            new Thread(viterbi).start();
+        }
+	}
+
+    protected void changeToDetailsTab() {
+		this.view.detailsComposite.setAnalysis(this.viterbi);
+    	this.view.tf.setSelection(2);
+	}
+
+	/**
      * Creates the third line of the viterbi tab content, where the result of the viterbi calculation is displayed. This
      * contains the possible plaintexts and a button to export them
      */
@@ -443,8 +502,8 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
                 String filename = dialog.open();
                 if (filename != null) {
                     IO io = new IO();
-                    io.write(solution1.getText(), filename + "_1.txt");
-                    io.write(solution2.getText(), filename + "_2.txt");
+                    io.write(solution1.getText(), filename + "_1.txt"); //$NON-NLS-1$
+                    io.write(solution2.getText(), filename + "_2.txt"); //$NON-NLS-1$
                 }
             }
         });
@@ -518,10 +577,11 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         cipherString = newText;
 
         if (text.getSelection()) { // if the cipher should be displayed as text
-            cipher.setText(replaceUnprintableChars(cipherString, "\ufffd"));
+            cipher.setText(replaceUnprintableChars(cipherString, "\ufffd")); //$NON-NLS-1$
         } else { // else display it as hex-digits
             cipher.setText(stringToHex(cipherString));
         }
+        subjectChanged();
     }
 
     /**
@@ -576,9 +636,9 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
             }
             String hex = Integer.toHexString(intValue);
             if (hex.length() == 1) {
-                buffer.append("0" + hex + " ");
+                buffer.append("0" + hex + " "); //$NON-NLS-1$ //$NON-NLS-2$
             } else {
-                buffer.append(hex + " ");
+                buffer.append(hex + " "); //$NON-NLS-1$
             }
         }
         return buffer.toString();
@@ -609,9 +669,13 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
     public void viterbiFinished() {
         Display display = Display.getDefault();
         this.isRunning = false;
+        currentPath = viterbi.getSolution();
         display.asyncExec(new Runnable() {
             public void run() {
+            	solution1.setText(ViterbiComposite.this.currentPath.getPlain1());
+                solution2.setText(ViterbiComposite.this.currentPath.getPlain2());
                 ViterbiComposite.this.startButton.setText(Messages.ViterbiComposite_startButton);
+                showBtn.setEnabled(true);
             }
         });
     }
