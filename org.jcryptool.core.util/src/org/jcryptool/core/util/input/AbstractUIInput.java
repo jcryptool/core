@@ -566,7 +566,6 @@ public abstract class AbstractUIInput<Content> extends Observable implements Obs
      *            autocorrection
      * @return
      */
-    @SuppressWarnings("static-method")
     protected boolean canAutocorrect(InputVerificationResult result) {
         return false;
     }
