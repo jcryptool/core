@@ -93,7 +93,6 @@ public class Messages extends NLS {
 	public static String DesView_166;
 	public static String DesView_167;
 	public static String DesView_168;
-	public static String DesView_169;
 	public static String DesView_17;
 	public static String DesView_170;
 	public static String DesView_171;
@@ -197,7 +196,6 @@ public class Messages extends NLS {
 	public static String DesView_26;
 	public static String DesView_260;
 	public static String DesView_261;
-	public static String DesView_262;
 	public static String DesView_263;
 	public static String DesView_264;
 	public static String DesView_265;
@@ -240,7 +238,6 @@ public class Messages extends NLS {
 	public static String DesView_299;
 	public static String DesView_3;
 	public static String DesView_30;
-	public static String DesView_300;
 	public static String DesView_31;
 	public static String DesView_32;
 	public static String DesView_33;
@@ -272,16 +269,18 @@ public class Messages extends NLS {
 	public static String DesView_57;
 	public static String DesView_58;
 	public static String DesView_59;
-	public static String DesView_6;
 	public static String DesView_60;
+	public static String DesView_61;
+	public static String DesView_62;
+	public static String DesView_63;
 	public static String DesView_7;
 	public static String DesView_70;
+	public static String DesView_71;
 	public static String DesView_8;
 	public static String DesView_80;
+	public static String DesView_81;
 	public static String DesView_87;
 	public static String DesView_88;
-	public static String DesView_89;
-	public static String DesView_9;
 	public static String DesView_90;
 	public static String DesView_91;
 	public static String DesView_92;
