@@ -24,7 +24,7 @@ public interface OTS {
 
     public void sign();
 
-    public boolean verify();
+    public boolean verify(String message, String signature);
 
     public byte[][] getPrivateKey();
 
@@ -63,5 +63,7 @@ public interface OTS {
     public void setPublicKey(byte[][] p);
 
     public void setMessageDigest(String digest);
+
+	public boolean verify();
 
 }
