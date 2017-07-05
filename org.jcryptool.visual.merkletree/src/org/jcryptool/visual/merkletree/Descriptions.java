@@ -92,6 +92,7 @@ public class Descriptions extends NLS {
 	public static String MerkleTreeSign_8_2;
 	public static String MerkleTreeSign_9;
 	public static String MerkleTreeSign_10;
+	public static String MerkleTreeSign_11;
 
 	public static String MerkleTreeVerify_1;
 	public static String MerkleTreeVerify_2;
@@ -175,7 +176,6 @@ public class Descriptions extends NLS {
 		public static String MerkleTreeKeyTab_0;
 
 		public static String MerkleTreeVerify_0;
-		public static String Tab2_Txt0;
 	}
 
 	public static class XMSS {
@@ -195,7 +195,6 @@ public class Descriptions extends NLS {
 		public static String MerkleTreeKeyTab_0;
 
 		public static String MerkleTreeVerify_0;
-		public static String Tab2_Txt0;
 	}
 
 	public static class XMSS_MT {
@@ -213,7 +212,6 @@ public class Descriptions extends NLS {
 		public static String Tab1_Txt0;
 		public static String Tab1_Txt1;
 		public static String Tab1_Node;
-		public static String Tab2_Txt0;
 
 		public static String MerkleTreeKeyTab_0;
 		public static String MerkleTreeVerify_0;
