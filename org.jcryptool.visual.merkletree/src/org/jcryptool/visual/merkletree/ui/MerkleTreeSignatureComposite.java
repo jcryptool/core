@@ -75,9 +75,10 @@ public class MerkleTreeSignatureComposite extends Composite {
 	 * 
 	 * @param parent
 	 * @param style
-	 *        SWT Composite style bits
+	 *            SWT Composite style bits
 	 */
-	public MerkleTreeSignatureComposite(Composite parent, int style, ISimpleMerkle merkle, SUIT mode, ViewPart masterView) {
+	public MerkleTreeSignatureComposite(Composite parent, int style, ISimpleMerkle merkle, SUIT mode,
+			ViewPart masterView) {
 		super(parent, SWT.NONE);
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
 		this.merkle = merkle;
@@ -95,7 +96,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 
 		indexLabel = new Label(topBar, SWT.CENTER);
 		indexLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 2, 1));
-		indexLabel.setText(Descriptions.MerkleTreeSign_7 + " 0 " + " / " + (merkle.getLeafCounter() - 1));
+		indexLabel.setText(Descriptions.MerkleTreeSign_11 + " 0 " + " / " + (merkle.getLeafCounter() - 1));
 		indexLabel.setVisible(false);
 
 		interactiveTopButton = new Button(topBar, SWT.PUSH);
@@ -238,7 +239,8 @@ public class MerkleTreeSignatureComposite extends Composite {
 			signatureComposite.setLayout(stackLayout);
 		}
 
-		interactive = new InteractiveSignatureComposite(signatureComposite, SWT.NO_REDRAW_RESIZE, merkle, mode, masterView, this);
+		interactive = new InteractiveSignatureComposite(signatureComposite, SWT.NO_REDRAW_RESIZE, merkle, mode,
+				masterView, this);
 		interactive.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
 		interactive.pack();
 		interactive.interactiveSignatureGeneration();
@@ -324,7 +326,8 @@ public class MerkleTreeSignatureComposite extends Composite {
 		} else if (pseudoIndex > merkle.getLeafCounter() - 1) {
 			indexLabel.setText(Descriptions.MerkleTreeSign_10);
 		} else {
-			indexLabel.setText(Descriptions.MerkleTreeSign_7 + " " + pseudoIndex + " / " + (merkle.getLeafCounter() - 1));
+			indexLabel.setText(
+					Descriptions.MerkleTreeSign_11 + " " + pseudoIndex + " / " + (merkle.getLeafCounter() - 1));
 		}
 	}
 

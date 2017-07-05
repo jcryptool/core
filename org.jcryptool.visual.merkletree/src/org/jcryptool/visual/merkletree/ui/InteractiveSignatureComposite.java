@@ -100,15 +100,16 @@ public class InteractiveSignatureComposite extends Composite {
 	 * 
 	 * @param parent
 	 * @param style
-	 *        SWT composite style bits
+	 *            SWT composite style bits
 	 * @param merkle
 	 * @param mode
 	 * @param signatureComposite
-	 *        the parent class needed for method calls
+	 *            the parent class needed for method calls
 	 * @param masterView
-	 *        needed for setTab call
+	 *            needed for setTab call
 	 */
-	public InteractiveSignatureComposite(Composite parent, int style, ISimpleMerkle merkle, SUIT mode, ViewPart masterView, MerkleTreeSignatureComposite signatureComposite) {
+	public InteractiveSignatureComposite(Composite parent, int style, ISimpleMerkle merkle, SUIT mode,
+			ViewPart masterView, MerkleTreeSignatureComposite signatureComposite) {
 		super(parent, style);
 		this.setLayout(new GridLayout(8, true));
 		this.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, MerkleConst.DESC_HEIGHT + 1));
@@ -383,7 +384,7 @@ public class InteractiveSignatureComposite extends Composite {
 	 * Marks the whole branch begining from the leaf node
 	 * 
 	 * @param leaf
-	 *        - the leaf node of the branch
+	 *            - the leaf node of the branch
 	 */
 	@SuppressWarnings("unchecked")
 	private void markBranch(GraphNode leaf) {
@@ -432,7 +433,7 @@ public class InteractiveSignatureComposite extends Composite {
 	 * Unmark a previous marked branch
 	 * 
 	 * @param markedConnectionList
-	 *        - Contains marked elements
+	 *            - Contains marked elements
 	 */
 	private void unmarkBranch() {
 		GraphConnection authPath;
@@ -481,7 +482,7 @@ public class InteractiveSignatureComposite extends Composite {
 	 * Marks the authentification path of the leaf
 	 * 
 	 * @param markedConnectionList
-	 *        - Contains marked elements of the Changing Path
+	 *            - Contains marked elements of the Changing Path
 	 */
 	private void markAuthPath(List<GraphConnection> markedConnectionList) {
 		// ArrayList<GraphNode> items = new ArrayList<GraphNode>();
@@ -495,11 +496,13 @@ public class InteractiveSignatureComposite extends Composite {
 				authPath = (GraphConnection) connect.getSource().getSourceConnections().get(1);
 				// ((GraphConnection)
 				// connect.getSource()).getSourceConnections().get(1);
-				((GraphConnection) connect.getSource().getSourceConnections().get(1)).setLineColor(getDisplay().getSystemColor(SWT.COLOR_RED));
+				((GraphConnection) connect.getSource().getSourceConnections().get(1))
+						.setLineColor(getDisplay().getSystemColor(SWT.COLOR_RED));
 				markedAuthpathList.add(authPath.getDestination());
 			} else {
 				authPath = (GraphConnection) connect.getSource().getSourceConnections().get(0);
-				((GraphConnection) connect.getSource().getSourceConnections().get(0)).setLineColor(getDisplay().getSystemColor(SWT.COLOR_RED));
+				((GraphConnection) connect.getSource().getSourceConnections().get(0))
+						.setLineColor(getDisplay().getSystemColor(SWT.COLOR_RED));
 				// connect.setLineColor(getDisplay().getSystemColor(SWT.COLOR_RED));
 				markedAuthpathList.add(authPath.getDestination());
 			}
@@ -510,7 +513,8 @@ public class InteractiveSignatureComposite extends Composite {
 				markedAuthpathList.get(i).setBackgroundColor(ColorConstants.red);
 			}
 		} else {
-			highlightedAuthpath = animate(markedAuthpathList.toArray(new GraphNode[markedAuthpathList.size()]), redSteps);
+			highlightedAuthpath = animate(markedAuthpathList.toArray(new GraphNode[markedAuthpathList.size()]),
+					redSteps);
 		}
 
 	}
@@ -552,8 +556,8 @@ public class InteractiveSignatureComposite extends Composite {
 	private Point currentSashPosition;
 
 	// these two variables currently here for future planned feature
-	private Point popupShouldPosition;
-	private Point sashShouldPosition;
+	// private Point popupShouldPosition;
+	// private Point sashShouldPosition;
 
 	private StyledText guideText;
 	private Text inputText;
@@ -746,10 +750,9 @@ public class InteractiveSignatureComposite extends Composite {
 			currentView.height -= (footerComposite.getBounds().height + 70);
 			// Initial Middle Position by taking the half of the currentView
 			// window, and subtract half the size of the popup
-			popupPosition = new Point(currentView.width / 2 - (popupSize.x / 2), currentView.height / 2 - (popupSize.y / 2));
-			popupShouldPosition = new Point(popupPosition.x, popupPosition.y);
+			popupPosition = new Point(currentView.width / 2 - (popupSize.x / 2),
+					currentView.height / 2 - (popupSize.y / 2));
 			currentSashPosition = zestSash.getLocation();
-			sashShouldPosition = currentSashPosition;
 			movementLinked = false;
 
 			// *****Listeners*****//
@@ -827,15 +830,16 @@ public class InteractiveSignatureComposite extends Composite {
 			popupPosition.x = 20;
 			popupPosition.y = currentView.height - popup.getBounds().height - 40;
 			popup.setLocation(popupPosition);
-			popupShouldPosition = new Point(popupPosition.x, popupPosition.y);
 			oldPopup = popup.getLocation();
 			movementLinked = true;
 
 			// *****Content*****//
-			guideText.setText(Descriptions.InteractiveSignature_3_1 + " " + currentIndex + " " + Descriptions.InteractiveSignature_3_2);
+			guideText.setText(Descriptions.InteractiveSignature_3_1 + " " + currentIndex + " "
+					+ Descriptions.InteractiveSignature_3_2);
 			sigStringIndex = goingBack ? sigStringIndex - 1 : sigStringIndex;
 			signatureText.setText(signature[sigStringIndex] + "|");
-			signatureSize.setText(Descriptions.InteractiveSignature_11 + " " + Converter._numberToPrefix(signatureText.getText().length() / 2));
+			signatureSize.setText(Descriptions.InteractiveSignature_11 + " "
+					+ Converter._numberToPrefix(signatureText.getText().length() / 2));
 			if (mode == SUIT.XMSS_MT && goingBack == false) {
 				GraphNode[] tmpArray = new GraphNode[1];
 				tmpArray[0] = leaves[currentIndex];
@@ -878,14 +882,16 @@ public class InteractiveSignatureComposite extends Composite {
 				}
 			}
 			// *****Content*****//
-			guideText.setText(Descriptions.InteractiveSignature_4_1 + " " + currentIndex + " " + Descriptions.InteractiveSignature_4_2);
+			guideText.setText(Descriptions.InteractiveSignature_4_1 + " " + currentIndex + " "
+					+ Descriptions.InteractiveSignature_4_2);
 
 			signatureText.setText("");
 			sigStringIndex = goingBack ? sigStringIndex : sigStringIndex + 1;
 			for (int i = 0; i <= sigStringIndex; ++i) {
 				signatureText.append(signature[i] + "|");
 			}
-			signatureSize.setText(Descriptions.InteractiveSignature_11 + " " + Converter._numberToPrefix(signatureText.getText().length() / 2));
+			signatureSize.setText(Descriptions.InteractiveSignature_11 + " "
+					+ Converter._numberToPrefix(signatureText.getText().length() / 2));
 			goingBack = false;
 			break;
 
@@ -913,7 +919,6 @@ public class InteractiveSignatureComposite extends Composite {
 			popupPosition.x = 20;
 			popupPosition.y = currentView.height - popup.getBounds().height - 40;
 			popup.setLocation(popupPosition);
-			popupShouldPosition = new Point(popupPosition.x, popupPosition.y);
 			oldPopup = popup.getLocation();
 
 			// *****Content*****//
@@ -927,7 +932,8 @@ public class InteractiveSignatureComposite extends Composite {
 					signatureText.append(signature[i] + "|");
 				}
 			}
-			signatureSize.setText(Descriptions.InteractiveSignature_11 + " " + Converter._numberToPrefix(signatureText.getText().length() / 2));
+			signatureSize.setText(Descriptions.InteractiveSignature_11 + " "
+					+ Converter._numberToPrefix(signatureText.getText().length() / 2));
 
 			isNextListener = true;
 			goingBack = false;
@@ -952,7 +958,8 @@ public class InteractiveSignatureComposite extends Composite {
 				}
 				Point nextTreePosition = new Point(nextRoot.getLocation().x, nextRoot.getLocation().y);
 				currentSashPosition.x = -nextTreePosition.x + popup.getBounds().width + 30;
-				int nextRootOffset = leaves[currentIndex].getLocation().y - currentView.height + leaves[currentIndex].getSize().height + 20;
+				int nextRootOffset = leaves[currentIndex].getLocation().y - currentView.height
+						+ leaves[currentIndex].getSize().height + 20;
 
 				currentSashPosition.y = -nextRootOffset;
 				zestSash.setLocation(currentSashPosition);
@@ -963,7 +970,6 @@ public class InteractiveSignatureComposite extends Composite {
 				// popup.getBounds().height - 40;
 				signatureComposite.setInteractiveStatus(true);
 				popup.setLocation(popupPosition);
-				popupShouldPosition = new Point(popupPosition.x, popupPosition.y);
 				oldPopup = popup.getLocation();
 
 				if (goingBack) {
@@ -988,7 +994,6 @@ public class InteractiveSignatureComposite extends Composite {
 			popupPosition.x = currentView.width / 2 - popup.getBounds().width / 2;
 			popupPosition.y = 10;
 			popup.setLocation(popupPosition);
-			popupShouldPosition = new Point(popupPosition.x, popupPosition.y);
 			oldPopup = popup.getLocation();
 
 			// signatureComposite.updateIndexLabel(currentIndex - 1);

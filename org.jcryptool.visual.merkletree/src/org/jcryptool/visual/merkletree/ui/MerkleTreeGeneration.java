@@ -1,6 +1,7 @@
 package org.jcryptool.visual.merkletree.ui;
 
 import java.security.SecureRandom;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.custom.StyledText;
@@ -72,7 +73,8 @@ public class MerkleTreeGeneration extends Composite {
 
 	// Generate Keys Box
 	private Button createKeysButton;
-	private Label createdKey;
+	// May come to use
+	// private Label createdKey;
 	private StyledText generateKeyDescription;
 	private Spinner keypairSpinner;
 	private int spinnerValue;
@@ -88,7 +90,7 @@ public class MerkleTreeGeneration extends Composite {
 	 * 
 	 * @param parent
 	 * @param style
-	 *        SWT Composite style bits
+	 *            SWT Composite style bits
 	 */
 	public MerkleTreeGeneration(Composite parent, int style, SUIT mode, ViewPart masterView) {
 		super(parent, style);
