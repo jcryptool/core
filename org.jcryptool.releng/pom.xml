@@ -50,7 +50,7 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 		<repository>
 			<id>eclipse-babel-neon</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/technology/babel/update-site/R0.14.1/neon</url>
+			<url>http://download.eclipse.org/technology/babel/update-site/R0.15.0/oxygen</url>
 		</repository>
 	</repositories>
 
