@@ -234,7 +234,7 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>3.0.4</version>
+				<version>3.0.5</version>
 				<configuration>
 					<effort>Max</effort>
 					<threshold>Low</threshold>
