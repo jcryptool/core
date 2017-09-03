@@ -48,7 +48,7 @@
 							<id>${product.id}</id>
 							<rootFolders>
 								<linux>${product.id}</linux>
-								<macosx>${product.id}.app</macosx>
+								<macosx>${product.id}</macosx>
 								<win32>${product.id}</win32>
 							</rootFolders>
 						</product>
