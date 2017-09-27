@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="JCrypTool RCP" sequenceNumber="35">
+<?pde version="3.8"?><target name="JCrypTool RCP" sequenceNumber="36">
 <locations>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
-<unit id="org.eclipse.equinox.core.sdk.feature.group" version="3.13.0.v20170516-1513"/>
-<unit id="org.eclipse.equinox.p2.sdk.feature.group" version="3.10.0.v20170524-1345"/>
-<unit id="org.eclipse.gef.feature.group" version="3.11.0.201606061308"/>
-<unit id="org.eclipse.rcp.feature.group" version="4.7.0.v20170612-1255"/>
-<unit id="org.eclipse.rcp.sdk.id" version="4.7.0.I20170612-0950"/>
-<unit id="org.eclipse.sdk.ide" version="4.7.0.I20170612-0950"/>
-<unit id="org.eclipse.zest.sdk.feature.group" version="1.7.0.201606061308"/>
-<repository location="http://download.eclipse.org/releases/oxygen"/>
-</location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 <unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="4.7.0.v20170819060001"/>
 <repository location="http://download.eclipse.org/technology/babel/update-site/R0.15.0/oxygen"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+<unit id="org.eclipse.equinox.core.sdk.feature.group" version="3.13.1.v20170821-1548"/>
+<unit id="org.eclipse.equinox.p2.sdk.feature.group" version="3.10.1.v20170906-1259"/>
+<unit id="org.eclipse.gef.feature.group" version="3.11.0.201606061308"/>
+<unit id="org.eclipse.rcp.feature.group" version="4.7.1.v20170906-1700"/>
+<unit id="org.eclipse.rcp.sdk.id" version="4.7.1.M20170906-1700"/>
+<unit id="org.eclipse.sdk.ide" version="4.7.1.M20170906-1700"/>
+<unit id="org.eclipse.zest.sdk.feature.group" version="1.7.0.201606061308"/>
+<repository location="http://download.eclipse.org/releases/oxygen"/>
 </location>
 </locations>
 <launcherArgs>
