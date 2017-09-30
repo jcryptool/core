@@ -83,9 +83,9 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>net.ju-n.maven.plugins</groupId>
+				<groupId>net.nicoulaj.maven.plugins</groupId>
 				<artifactId>checksum-maven-plugin</artifactId>
-				<version>1.4</version>
+				<version>1.6</version>
 				<executions>
 					<!-- calculate the hashes of the generated files -->
 					<execution>
