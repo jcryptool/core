@@ -69,6 +69,7 @@ public class Messages extends NLS {
 	public static String XORComposite_Plain1;
 	public static String XORComposite_Plain1DefaultText;
 	public static String XORComposite_combination_header;
+	public static String XORComposite_combo_default;
 
 	public static String XORComposite_Combination_RadioXOR;
 	public static String XORComposite_Combination_RadioMOD;
