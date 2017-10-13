@@ -12,16 +12,16 @@ package org.jcryptool.analysis.entropy.ui;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
-//import org.eclipse.swt.graphics.Point;
-//import org.eclipse.swt.graphics.Rectangle;
-//import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-//import org.eclipse.swt.widgets.Display;
-//import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.jcryptool.core.logging.utils.LogUtil;
 
 /**
@@ -54,30 +54,30 @@ public class EntropyUI extends Composite {
 		return cMainTabFolder;
 	}
 
-	// /**
-	// * Auto-generated method to display this org.eclipse.swt.widgets.Composite
-	// inside a new Shell.
-	// */
-	// public static void showGUI() {
-	// Display display = Display.getDefault();
-	// Shell shell = new Shell(display);
-	// EntropyUI inst = new EntropyUI(shell, SWT.NULL);
-	// Point size = inst.getSize();
-	// shell.setLayout(new FillLayout());
-	// shell.layout();
-	// if (size.x == 0 && size.y == 0) {
-	// inst.pack();
-	// shell.pack();
-	// } else {
-	// Rectangle shellBounds = shell.computeTrim(0, 0, size.x, size.y);
-	// shell.setSize(shellBounds.width, shellBounds.height);
-	// }
-	// shell.open();
-	// while (!shell.isDisposed()) {
-	// if (!display.readAndDispatch())
-	// display.sleep();
-	// }
-	// }
+	/**
+	 * Auto-generated method to display this org.eclipse.swt.widgets.Composite
+	 * inside a new Shell.
+	 */
+	public static void showGUI() {
+		Display display = Display.getDefault();
+		Shell shell = new Shell(display);
+		EntropyUI inst = new EntropyUI(shell, SWT.NULL);
+		Point size = inst.getSize();
+		shell.setLayout(new FillLayout());
+		shell.layout();
+		if (size.x == 0 && size.y == 0) {
+			inst.pack();
+			shell.pack();
+		} else {
+			Rectangle shellBounds = shell.computeTrim(0, 0, size.x, size.y);
+			shell.setSize(shellBounds.width, shellBounds.height);
+		}
+		shell.open();
+		while (!shell.isDisposed()) {
+			if (!display.readAndDispatch())
+				display.sleep();
+		}
+	}
 
 	public EntropyUI(org.eclipse.swt.widgets.Composite parent, int style) {
 		super(parent, style);
