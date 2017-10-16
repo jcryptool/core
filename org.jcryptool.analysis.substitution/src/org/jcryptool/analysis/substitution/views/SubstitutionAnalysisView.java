@@ -191,6 +191,7 @@ public class SubstitutionAnalysisView extends ViewPart {
 		});
 		return panel;
 	}
+	//hghg
 
 	private void contributeToActionBars() {
 		IActionBars bars = getViewSite().getActionBars();
