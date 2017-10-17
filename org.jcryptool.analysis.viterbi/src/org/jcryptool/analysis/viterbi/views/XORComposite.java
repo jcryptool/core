@@ -206,7 +206,7 @@ public class XORComposite extends Composite {
 		gd_loadPlain1c.horizontalAlignment = SWT.FILL;
 		gd_loadPlain1c.verticalAlignment = SWT.FILL;
 		loadPlain1c.setLayoutData(gd_loadPlain1c);
-		loadPlain1c.add("Select a predefined text..."); //$NON-NLS-1$
+		loadPlain1c.add(Messages.XORComposite_combo_default); //$NON-NLS-1$
 		predefinedTexts.forEach(s -> loadPlain1c.add(limitS(30, s)));
 
 		loadPlain1c.addSelectionListener(new SelectionAdapter() {
@@ -262,7 +262,7 @@ public class XORComposite extends Composite {
 		gd_loadPlain2c.horizontalAlignment = SWT.FILL;
 		gd_loadPlain2c.verticalAlignment = SWT.FILL;
 		loadPlain2c.setLayoutData(gd_loadPlain2c);
-		loadPlain2c.add("Select a predefined text..."); //$NON-NLS-1$
+		loadPlain2c.add(Messages.XORComposite_combo_default); //$NON-NLS-1$
 		predefinedTexts.forEach(s -> loadPlain2c.add(limitS(30, s)));
 
 		loadPlain2c.addSelectionListener(new SelectionAdapter() {
@@ -293,10 +293,10 @@ public class XORComposite extends Composite {
 			add("Deeply regret advise your Titanic sunk this morning fifteenth after collision iceberg resulting serious loss life further particulars later."); //$NON-NLS-1$
 			add("It was a bright cold day in April, and the clocks were striking thirteen. Winston Smith, his chin nuzzled into his breast in an effort to escape the vile wind, slipped quickly through the glass doors of Victory Mansions, though not quickly enough to prevent a swirl of gritty dust from entering along with him. "); //$NON-NLS-1$
 
-			add("F¸rwahr! er dient Euch auf besondre Weise. Nicht irdisch ist des Toren Trank noch Speise. Ihn treibt die G‰rung in die Ferne, er ist sich seiner Tollheit halb bewusst. Vom Himmel fordert er die schˆnsten Sterne, und von der Erde jede hˆchste Lust."); //$NON-NLS-1$
-			add("Zieh diesen Geist von seinem Urquell ab, und f¸hr ihn, kannst du ihn erfassen, auf deinem Wege mit herab, und steh' besch‰mt, wenn du bekennen musst: Ein guter Mensch, in seinem dunklen Drange, ist sich des rechten Weges wohl bewuﬂt."); //$NON-NLS-1$
-			add("Das Dorf lag in tiefem Schnee. Vom Schloﬂberg war nichts zu sehen, Nebel und Finsternis umgaben ihn, auch nicht der schw‰chste Lichtschein deutete das groﬂe Schloﬂ an."); //$NON-NLS-1$
-			add("Es war ein klarer, kalter Tag im April, und die Uhren schlugen gerade dreizehn, als Winston Smith, das Kinn an die Brust gepresst, um dem rauen Wind zu entgehen, rasch durch die Glasturen eines der Hauser des Victory-Blocks schlupfte, wenn auch nicht rasch genug, als daf¸r nicht zugleich mit ihm ein Wirbel griesigen Staubs eingedrungen ware."); //$NON-NLS-1$
+			add("F√ºrwahr! er dient Euch auf besondre Weise. Nicht irdisch ist des Toren Trank noch Speise. Ihn treibt die G√§rung in die Ferne, er ist sich seiner Tollheit halb bewusst. Vom Himmel fordert er die sch√∂nsten Sterne, und von der Erde jede h√∂chste Lust."); //$NON-NLS-1$
+			add("Zieh diesen Geist von seinem Urquell ab, und f√ºhr ihn, kannst du ihn erfassen, auf deinem Wege mit herab, und steh' besch√§mt, wenn du bekennen musst: Ein guter Mensch, in seinem dunklen Drange, ist sich des rechten Weges wohl bewu√üt."); //$NON-NLS-1$
+			add("Das Dorf lag in tiefem Schnee. Vom Schlo√überg war nichts zu sehen, Nebel und Finsternis umgaben ihn, auch nicht der schw√§chste Lichtschein deutete das gro√üe Schlo√ü an."); //$NON-NLS-1$
+			add("Es war ein klarer, kalter Tag im April, und die Uhren schlugen gerade dreizehn, als Winston Smith, das Kinn an die Brust gepresst, um dem rauen Wind zu entgehen, rasch durch die Glasturen eines der Hauser des Victory-Blocks schlupfte, wenn auch nicht rasch genug, als daf√ºr nicht zugleich mit ihm ein Wirbel griesigen Staubs eingedrungen ware."); //$NON-NLS-1$
 		}
 	};
 	private Button calculate;
