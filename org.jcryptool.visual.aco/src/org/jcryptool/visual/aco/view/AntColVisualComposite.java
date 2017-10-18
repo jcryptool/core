@@ -1,19 +1,23 @@
 package org.jcryptool.visual.aco.view;
 
+//import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
+//import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+//import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ToolTip;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
 import org.jcryptool.visual.aco.ACOPlugin;
 import org.jcryptool.visual.aco.controller.AntColEventController;
 import org.jcryptool.visual.aco.model.CommonModel;
@@ -76,13 +80,9 @@ public class AntColVisualComposite extends Composite {
 		matrixComp.setLayout(new GridLayout(1, false));
 
 		CLabel help = new CLabel(visualGroup, SWT.NONE);
-		help.setSize(15, 15);
-		Image helpImage = ACOPlugin
-				.getImageDescriptor(
-						"platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif")
-				.createImage();
-		help.setImage(helpImage);
-
+//		help.setImage(ACOPlugin.getImageDescriptor("/icons/help_contents.gif").createImage());
+//		help.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG));
+		help.setImage(ACOPlugin.getImageDescriptor("platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png").createImage());
 		final ToolTip tip = new ToolTip(visualGroup.getShell(), SWT.BALLOON);
 		tip.setMessage(Messages.Result_description);
 		help.addListener(SWT.MouseDown, new Listener() {
@@ -114,7 +114,6 @@ public class AntColVisualComposite extends Composite {
 	}
 
 	public AntColPherMatrixComposite getMatrixComp() {
-		// TODO Auto-generated method stub
 		return matrixComp;
 	}
 

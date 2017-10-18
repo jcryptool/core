@@ -119,7 +119,6 @@ public class View extends ViewPart {
         Composite execType = new Composite(parent, SWT.NONE);
         execType.setLayout(new GridLayout(1, true));
         execType.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-
         createTypeSelection(execType);
         createSteps(execType);
 
@@ -128,13 +127,12 @@ public class View extends ViewPart {
     private void createTypeSelection(Composite execType) {
 
         Group typeSelection = new Group(execType, SWT.NONE);
-        GridData gd_typeSelection = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gd_typeSelection.widthHint = 270;
-        typeSelection.setLayoutData(gd_typeSelection);
+        typeSelection.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         typeSelection.setText(Messages.getString("View.type"));
         typeSelection.setLayout(new GridLayout(3, true));
 
         button_direct = new Button(typeSelection, SWT.RADIO);
+        button_direct.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
         button_direct.setText(Messages.getString("View.direct")); //$NON-NLS-1$
         button_direct.setSelection(true);
         button_direct.addSelectionListener(new SelectionListener() {
@@ -146,14 +144,10 @@ public class View extends ViewPart {
                 reset();
             }
         });
-        new Label(typeSelection, SWT.NONE);
-        new Label(typeSelection, SWT.NONE);
-        new Label(typeSelection, SWT.NONE);
-        new Label(typeSelection, SWT.NONE);
 
                 button_okay = new Button(typeSelection, SWT.NONE);
                 button_okay.setImage(GrillePlugin.getImageDescriptor("icons/run_exc.gif").createImage());
-                GridData gd_button_okay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+                GridData gd_button_okay = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 3, 1);
                 gd_button_okay.widthHint = 78;
                 gd_button_okay.heightHint = 39;
                 button_okay.setLayoutData(gd_button_okay);
@@ -199,9 +193,9 @@ public class View extends ViewPart {
                 });
 
         button_stepwise = new Button(typeSelection, SWT.RADIO);
+        button_stepwise.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
         button_stepwise.setText(Messages.getString("View.stepwise")); //$NON-NLS-1$
-                new Label(typeSelection, SWT.NONE);
-                new Label(typeSelection, SWT.NONE);
+        
         button_stepwise.addSelectionListener(new SelectionListener() {
             public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
@@ -211,21 +205,25 @@ public class View extends ViewPart {
                 reset();
             }
         });
+        
+        typeSelection.pack();
     }
 
     private void createSteps(Composite execType) {
 
         Group steps = new Group(execType, SWT.NONE);
+        steps.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         steps.setText(Messages.getString("View.steps"));
         steps.setLayout(new GridLayout(1, true));
 
         Group step1 = new Group(steps, SWT.NONE);
 
         step1.setLayout(new GridLayout(2, false));
-        step1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
+        step1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         step1.setText(Messages.getString("View.step1")); //$NON-NLS-1$
         label_step1 = new Label(step1, SWT.NONE);
         label_step1.setText(Messages.getString("View.check")); //$NON-NLS-1$
+        label_step1.setLayoutData(new GridData(SWT.FILL | SWT.LEFT, SWT.FILL, true, false));
         button_step1 = new Button(step1, SWT.NONE);
         button_step1.setText(Messages.getString("View.proceed")); //$NON-NLS-1$
         button_step1.setEnabled(false);
@@ -252,6 +250,7 @@ public class View extends ViewPart {
         step2.setText(Messages.getString("View.step2")); //$NON-NLS-1$
         label_step2 = new Label(step2, SWT.NONE);
         label_step2.setText(Messages.getString("View.first_turn")); //$NON-NLS-1$
+        label_step2.setLayoutData(new GridData(SWT.FILL | SWT.LEFT, SWT.FILL, true, false));
         button_step2 = new Button(step2, SWT.NONE);
         button_step2.setText(Messages.getString("View.proceed")); //$NON-NLS-1$
         button_step2.setEnabled(false);
@@ -280,6 +279,7 @@ public class View extends ViewPart {
         label_step3.setText(Messages.getString("View.second_turn")); //$NON-NLS-1$
         button_step3 = new Button(step3, SWT.NONE);
         button_step3.setText(Messages.getString("View.proceed")); //$NON-NLS-1$
+        label_step3.setLayoutData(new GridData(SWT.FILL | SWT.LEFT, SWT.FILL, true, false));
         button_step3.setEnabled(false);
         button_step3.addSelectionListener(new SelectionListener() {
             public void widgetDefaultSelected(SelectionEvent e) {
@@ -304,6 +304,7 @@ public class View extends ViewPart {
         step4.setText(Messages.getString("View.step4")); //$NON-NLS-1$
         label_step4 = new Label(step4, SWT.NONE);
         label_step4.setText(Messages.getString("View.third_turn")); //$NON-NLS-1$
+        label_step4.setLayoutData(new GridData(SWT.FILL | SWT.LEFT, SWT.FILL, true, false));
         button_step4 = new Button(step4, SWT.NONE);
         button_step4.setText(Messages.getString("View.proceed")); //$NON-NLS-1$
         button_step4.setEnabled(false);
@@ -330,6 +331,7 @@ public class View extends ViewPart {
         step5.setText(Messages.getString("View.step5")); //$NON-NLS-1$
         label_step5 = new Label(step5, SWT.NONE);
         label_step5.setText(Messages.getString("View.fourth_turn")); //$NON-NLS-1$
+        label_step5.setLayoutData(new GridData(SWT.FILL | SWT.LEFT, SWT.FILL, true, false));
         button_step5 = new Button(step5, SWT.NONE);
         button_step5.setText(Messages.getString("View.proceed")); //$NON-NLS-1$
         button_step5.setEnabled(false);
@@ -356,6 +358,7 @@ public class View extends ViewPart {
         step6.setText(Messages.getString("View.step6")); //$NON-NLS-1$
         label_step6 = new Label(step6, SWT.NONE);
         label_step6.setText(Messages.getString("View.linewise")); //$NON-NLS-1$
+        label_step6.setLayoutData(new GridData(SWT.FILL | SWT.LEFT, SWT.FILL, true, false));
         button_step6 = new Button(step6, SWT.NONE);
         button_step6.setText(Messages.getString("View.proceed")); //$NON-NLS-1$
         button_step6.setEnabled(false);
@@ -454,6 +457,7 @@ public class View extends ViewPart {
         options.setText(Messages.getString("View.operation")); //$NON-NLS-1$
         options.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         button_encrypt = new Button(options, SWT.RADIO);
+        button_encrypt.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         button_encrypt.setText(Messages.getString("View.encryption")); //$NON-NLS-1$
         button_encrypt.addSelectionListener(new SelectionListener() {
             public void widgetDefaultSelected(SelectionEvent e) {
@@ -470,6 +474,7 @@ public class View extends ViewPart {
         });
         button_encrypt.setSelection(true);
         button_decrypt = new Button(options, SWT.RADIO);
+        button_decrypt.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         button_decrypt.setText(Messages.getString("View.decryption")); //$NON-NLS-1$
         button_decrypt.addSelectionListener(new SelectionListener() {
             public void widgetDefaultSelected(SelectionEvent e) {

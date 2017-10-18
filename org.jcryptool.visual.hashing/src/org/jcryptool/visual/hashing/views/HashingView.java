@@ -47,7 +47,6 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -104,12 +103,10 @@ public class HashingView extends ViewPart {
 	public void createPartControl(Composite parent) {
 
 		ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		scrolledComposite.setExpandHorizontal(true);
-		scrolledComposite.setExpandVertical(true);
 
 		Composite compositeMain = new Composite(scrolledComposite, SWT.NONE);
-		compositeMain.setLayout(new GridLayout(2, false));
-
+		compositeMain.setLayout(new GridLayout(2, true));
+		
 		styledTextDescription = new StyledText(compositeMain, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
 		styledTextDescription.addFocusListener(new FocusAdapter() {
 			@Override
@@ -126,10 +123,7 @@ public class HashingView extends ViewPart {
 			}
 		});
 		styledTextDescription.setEditable(false);
-		GridData gd_styledTextDescription = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
-		gd_styledTextDescription.widthHint = 300;
-		gd_styledTextDescription.heightHint = 60;
-		styledTextDescription.setLayoutData(gd_styledTextDescription);
+		styledTextDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		styledTextDescription.setText(Messages.HashingView_0 + Messages.HashingView_1);
 
 		header = new StyleRange();
@@ -150,7 +144,7 @@ public class HashingView extends ViewPart {
 		});
 		mntmCopy_1.setText(Messages.HashingView_mntmCopy_text);
 
-		MenuItem menuItem_1 = new MenuItem(menu_1, SWT.SEPARATOR);
+//		MenuItem menuItem_1 = new MenuItem(menu_1, SWT.SEPARATOR);
 
 		MenuItem mntmSelectAll_1 = new MenuItem(menu_1, SWT.NONE);
 		mntmSelectAll_1.addSelectionListener(new SelectionAdapter() {
@@ -194,7 +188,7 @@ public class HashingView extends ViewPart {
 		comboHash.select(0);
 
 		Group grpTypeHash = new Group(compositeMain, SWT.NONE);
-		grpTypeHash.setLayout(new GridLayout(3, false));
+		grpTypeHash.setLayout(new GridLayout(3, true));
 		grpTypeHash.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		grpTypeHash.setText(Messages.HashingView_3);
 
@@ -258,15 +252,15 @@ public class HashingView extends ViewPart {
 
 			}
 		});
-		btnBinary.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, true, 1, 1));
+		btnBinary.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false, 1, 1));
 		btnBinary.setText(Messages.HashingView_6);
 
 		Group grpInput = new Group(compositeMain, SWT.NONE);
 		grpInput.setLayout(new GridLayout(1, false));
-		grpInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		grpInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		grpInput.setText(Messages.HashingView_7);
 
-		textInput = new Text(grpInput, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
+		textInput = new Text(grpInput, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.MULTI);
 		textInput.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -303,10 +297,10 @@ public class HashingView extends ViewPart {
 
 		Group grpOutput = new Group(compositeMain, SWT.NONE);
 		grpOutput.setLayout(new GridLayout(1, false));
-		grpOutput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		grpOutput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		grpOutput.setText(Messages.HashingView_9);
 
-		textOutput = new Text(grpOutput, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
+		textOutput = new Text(grpOutput, SWT.BORDER | SWT.H_SCROLL |  SWT.V_SCROLL | SWT.MULTI);
 		textOutput.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -343,10 +337,10 @@ public class HashingView extends ViewPart {
 
 		Group grpHashInput = new Group(compositeMain, SWT.NONE);
 		grpHashInput.setLayout(new GridLayout(1, false));
-		grpHashInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		grpHashInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		grpHashInput.setText(Messages.HashingView_10);
 
-		textHashInput = new Text(grpHashInput, SWT.BORDER | SWT.READ_ONLY);
+		textHashInput = new Text(grpHashInput, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
 		textHashInput.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL)); //$NON-NLS-1$
 		textHashInput.addKeyListener(new KeyAdapter() {
 			@Override
@@ -356,14 +350,14 @@ public class HashingView extends ViewPart {
 				}
 			}
 		});
-		textHashInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		textHashInput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		Group grpHashOutput = new Group(compositeMain, SWT.NONE);
 		grpHashOutput.setLayout(new GridLayout(1, false));
-		grpHashOutput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		grpHashOutput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		grpHashOutput.setText(Messages.HashingView_8);
 
-		textHashOutput = new Text(grpHashOutput, SWT.BORDER | SWT.READ_ONLY);
+		textHashOutput = new Text(grpHashOutput, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
 		textHashOutput.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL)); //$NON-NLS-1$
 		textHashOutput.addKeyListener(new KeyAdapter() {
 			@Override
@@ -373,15 +367,15 @@ public class HashingView extends ViewPart {
 				}
 			}
 		});
-		textHashOutput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		textHashOutput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 
 		Group grpUnterschied = new Group(compositeMain, SWT.NONE);
 		grpUnterschied.setLayout(new GridLayout(2, false));
-		grpUnterschied.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 2, 1));
+		grpUnterschied.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		grpUnterschied.setText(Messages.HashingView_11);
 
 		textDifference = new StyledText(grpUnterschied, SWT.BORDER | SWT.FULL_SELECTION | SWT.READ_ONLY | SWT.WRAP
-				| SWT.V_SCROLL);
+				| SWT.H_SCROLL | SWT.V_SCROLL);
 		textDifference.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -396,7 +390,7 @@ public class HashingView extends ViewPart {
 				}
 			}
 		});
-		textDifference.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 2, 1));
+		textDifference.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 
 		Menu menu = new Menu(textDifference);
 		textDifference.setMenu(menu);
@@ -410,7 +404,7 @@ public class HashingView extends ViewPart {
 		});
 		mntmCopy.setText(Messages.HashingView_mntmCopy_text);
 
-		MenuItem menuItem = new MenuItem(menu, SWT.SEPARATOR);
+//		MenuItem menuItem = new MenuItem(menu, SWT.SEPARATOR);
 
 		MenuItem mntmSelectAll = new MenuItem(menu, SWT.NONE);
 		mntmSelectAll.addSelectionListener(new SelectionAdapter() {
@@ -444,14 +438,12 @@ public class HashingView extends ViewPart {
 		textDifference.invokeAction(ST.CUT);
 		textDifference.invokeAction(ST.COPY);
 		textDifference.invokeAction(ST.PASTE);
-		scrolledComposite.setContent(compositeMain);
 		
-		if (System.getProperty("os.name").compareToIgnoreCase("Windows 8") == 0) {
-			scrolledComposite.setMinSize(new Point(1600, 830));						
-		} else {
-			scrolledComposite.setMinSize(new Point(1000, 630));			
-		}
-
+		scrolledComposite.setContent(compositeMain);
+//		scrolledComposite.setMinSize(compositeMain.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		scrolledComposite.setExpandHorizontal(true);
+		scrolledComposite.setExpandVertical(true);
+		
 		loadExampleText();
 	}
 
