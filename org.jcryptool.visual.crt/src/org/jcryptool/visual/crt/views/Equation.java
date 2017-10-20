@@ -56,12 +56,14 @@ public class Equation implements Constants {
 		xLabel.setText("x");
 
 		congruenceLabel = new Label(equationGroup, SWT.NONE);
-		congruenceLabel.setLayoutData(new GridData());
+//		congruenceLabel.setLayoutData(new GridData());
+		congruenceLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		congruenceLabel.setText(uCongruence);
 
 		textfieldA = new Text(equationGroup, SWT.BORDER);
-		final GridData gd_text = new GridData(SWT.FILL, SWT.CENTER, false, false);
-		gd_text.widthHint = 80;
+//		final GridData gd_text = new GridData(SWT.FILL, SWT.CENTER, false, false);
+		final GridData gd_text = new GridData(SWT.FILL, SWT.CENTER, true, false);
+//		gd_text.widthHint = 80;
 		textfieldA.setLayoutData(gd_text);
 		aTextfieldVerifyListiner = new VerifyListener() {
 			public void verifyText(VerifyEvent e) {
@@ -85,11 +87,12 @@ public class Equation implements Constants {
 		textfieldA.addVerifyListener(aTextfieldVerifyListiner);
 
 		modLabel = new Label(equationGroup, SWT.NONE);
+		modLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		modLabel.setText("mod");
 
 		textfieldM = new Text(equationGroup, SWT.BORDER);
 		final GridData gd_text_1 = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		gd_text_1.widthHint = 80;
+//		gd_text_1.widthHint = 80;
 		textfieldM.setLayoutData(gd_text_1);
 		mTextfieldVerifyListiner = new VerifyListener() {
 			public void verifyText(VerifyEvent e) {
