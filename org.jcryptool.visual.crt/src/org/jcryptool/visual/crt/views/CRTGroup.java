@@ -637,30 +637,6 @@ public class CRTGroup extends Composite implements Constants {
         resultMoreText.setText(MESSAGE_MORE_SOLUTION);
         resultMoreText.setFont(FontService.getSmallFont());
 
-        nextButton = new Button(resultGroup, SWT.NONE);
-        nextButton.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(final SelectionEvent e) {
-                /*
-                 * change the result value in the verify-group
-                 */
-                BigInteger tmpValue = new BigInteger(resultValueText.getText());
-                tmpValue = tmpValue.add(crt.getModulus());
-                resultValueText.setText(tmpValue.toString());
-
-                for (int i = 0; i < verifyEquationSet.size(); i++) {
-                    if (i % 5 == 0) {
-                        Text tmpText = (Text) verifyEquationSet.get(i);
-                        tmpText.setText(tmpValue.toString());
-                    }
-                }
-                previousButton.setEnabled(true);
-            }
-        });
-        nextButton.setEnabled(false);
-        nextButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
-        nextButton.setText(MESSAGE_NEXT);
-
         previousButton = new Button(resultGroup, SWT.NONE);
         previousButton.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -688,6 +664,30 @@ public class CRTGroup extends Composite implements Constants {
         previousButton.setEnabled(false);
         previousButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         previousButton.setText(MESSAGE_PREVIOUS);
+        
+        nextButton = new Button(resultGroup, SWT.NONE);
+        nextButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(final SelectionEvent e) {
+                /*
+                 * change the result value in the verify-group
+                 */
+                BigInteger tmpValue = new BigInteger(resultValueText.getText());
+                tmpValue = tmpValue.add(crt.getModulus());
+                resultValueText.setText(tmpValue.toString());
+
+                for (int i = 0; i < verifyEquationSet.size(); i++) {
+                    if (i % 5 == 0) {
+                        Text tmpText = (Text) verifyEquationSet.get(i);
+                        tmpText.setText(tmpValue.toString());
+                    }
+                }
+                previousButton.setEnabled(true);
+            }
+        });
+        nextButton.setEnabled(false);
+        nextButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+        nextButton.setText(MESSAGE_NEXT);
 
         scrolledVerify = new Group(content, SWT.V_SCROLL);
         scrolledVerify.setText(MESSAGE_VERIFY_GROUP);
