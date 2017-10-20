@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.visual.crt.xeuclid.XEuclid;
 
-public class CheckingEquationDialog extends TitleAreaDialog implements Constants{
+public class CheckingEquationDialog extends TitleAreaDialog implements Constants {
 
 	private int[] marking;
 	private Button okButton;
@@ -57,6 +57,7 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 
 	/**
 	 * Create the dialog
+	 * 
 	 * @param parentShell
 	 * @param marking
 	 */
@@ -75,13 +76,13 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 
 	/**
 	 * Create contents of the dialog
+	 * 
 	 * @param parent
 	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		area = (Composite) super.createDialogArea(parent);
-
-		scrolledComposite = new ScrolledComposite(area, SWT.V_SCROLL | SWT.BORDER);
+		scrolledComposite = new ScrolledComposite(area, SWT.V_SCROLL);
 		final GridData gd_scrolledComposite = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gd_scrolledComposite.heightHint = 357;
 		gd_scrolledComposite.widthHint = 543;
@@ -104,7 +105,7 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 			xLabel.setText("x");
 
 			congruenceLabel = new Label(dialogGroup, SWT.NONE);
-			congruenceLabel.setLayoutData(new GridData());
+			congruenceLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 			congruenceLabel.setText("\u2261");
 
 			textfieldA = new Text(dialogGroup, SWT.BORDER);
@@ -116,6 +117,7 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 			textfieldASet[i] = textfieldA;
 
 			modLabel = new Label(dialogGroup, SWT.NONE);
+			modLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 			modLabel.setText("mod");
 
 			textfieldM = new Text(dialogGroup, SWT.BORDER);
@@ -128,15 +130,15 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 					/*
 					 * keyCode == 8 is BACKSPACE and keyCode == 48 is ZERO and keyCode == 127 is DEL
 					 */
-					if (e.text.matches("[0-9]") || e.keyCode == 8 || e.keyCode == 127){
-						if (textfieldM.getText().length() == 0 && e.text.compareTo("0") == 0){
+					if (e.text.matches("[0-9]") || e.keyCode == 8 || e.keyCode == 127) {
+						if (textfieldM.getText().length() == 0 && e.text.compareTo("0") == 0) {
 							e.doit = false;
-						}else if(textfieldM.getSelection().x == 0 && e.keyCode == 48){
+						} else if (textfieldM.getSelection().x == 0 && e.keyCode == 48) {
 							e.doit = false;
-						}else{
+						} else {
 							e.doit = true;
 						}
-					}else{
+					} else {
 						e.doit = false;
 					}
 				}
@@ -146,9 +148,7 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 			textfieldMSet[i] = textfieldM;
 
 			suggestionButton = new Button(dialogGroup, SWT.NONE);
-			final GridData gd_suggestionButton = new GridData(SWT.FILL, SWT.FILL, false, false);
-			gd_suggestionButton.heightHint = 20;
-			gd_suggestionButton.widthHint = 80;
+			final GridData gd_suggestionButton = new GridData(SWT.RIGHT, SWT.FILL, false, false);
 			suggestionButton.setLayoutData(gd_suggestionButton);
 			suggestionButton.setText(MESSAGE_DIALOG_SUGGESTION);
 			suggestionButton.addMouseListener(new MouseAdapter() {
@@ -171,8 +171,8 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 					boolean search = true;
 					while (search) {
 						for (int k = 0; k < textfieldMSet.length; k++) {
-							BigInteger tmpGcd = gcd
-									.xeuclid(new BigInteger(textfieldMSet[k].getText()), suggestionValue);
+							BigInteger tmpGcd = gcd.xeuclid(new BigInteger(textfieldMSet[k].getText()),
+									suggestionValue);
 							if (new BigInteger(textfieldMSet[k].getText()).compareTo(suggestionValue) == 0
 									|| tmpGcd.compareTo(BigInteger.ONE) != 0) {
 
@@ -193,10 +193,8 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 			suggestionButtonSet.add(suggestionButton);
 
 			verifyButton = new Button(dialogGroup, SWT.NONE);
-			final GridData gd_verifyButton = new GridData(SWT.FILL, SWT.FILL, false, false);
-			gd_verifyButton.heightHint = 20;
-			gd_verifyButton.widthHint = 80;
-			verifyButton.setLayoutData(gd_suggestionButton);
+			final GridData gd_verifyButton = new GridData(SWT.RIGHT, SWT.FILL, false, false);
+			verifyButton.setLayoutData(gd_verifyButton);
 			verifyButton.setText(MESSAGE_DIALOG_VERIFY);
 			verifyButton.addMouseListener(new MouseAdapter() {
 				@Override
@@ -254,6 +252,7 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 
 	/**
 	 * Create contents of the button bar
+	 * 
 	 * @param parent
 	 */
 	@Override
@@ -280,7 +279,7 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(487, 375);
+		return new Point(520, 375);
 	}
 
 	@Override
@@ -291,6 +290,7 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 
 	/**
 	 * checks if all verifyButtons are disabled
+	 * 
 	 * @return true if all verifyButtons are disabled
 	 */
 	private boolean checkVerifyButtons() {
