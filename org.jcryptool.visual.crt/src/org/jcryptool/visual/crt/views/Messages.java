@@ -13,6 +13,8 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.visual.crt.views.messages"; //$NON-NLS-1$
+	public static String CheckingEquationDialog_6;
+	public static String CheckingEquationDialog_7;
 	public static String CRTConstants_ActionFlow;
 	public static String CRTConstants_DialogButtonSuggestion;
 	public static String CRTConstants_DialogButtonVerify;
