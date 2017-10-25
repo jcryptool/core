@@ -16,6 +16,7 @@ import java.math.BigInteger;
 import java.security.spec.ECFieldFp;
 import java.security.spec.ECPoint;
 
+import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyleRange;
@@ -27,6 +28,9 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -58,6 +62,11 @@ import com.swtdesigner.SWTResourceManager;
  * @version 1.0, 01/09/09
  */
 public class DPAView extends ViewPart implements Constants {
+	
+	public DPAView() {
+		
+	}
+	
     private Color white = Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
     private Text eCCAlgorithmText;
     private Text unsecureText;
@@ -98,8 +107,10 @@ public class DPAView extends ViewPart implements Constants {
     private Composite parent;
 
     // create a visual panel of DPA
+    @Override
     public void createPartControl(final Composite parent) {
         this.parent = parent;
+        parent.setLayout(new GridLayout());
         // define the subscript and superscript correctly
         final StyleRange styleRange = new StyleRange();
         styleRange.start = 282;
@@ -117,102 +128,78 @@ public class DPAView extends ViewPart implements Constants {
         // add horizontal and vertical scrollbar when contents on the mainGroup are out of bound
         final ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.BORDER | SWT.H_SCROLL
                 | SWT.V_SCROLL);
+        scrolledComposite.setExpandHorizontal(true);
+        scrolledComposite.setExpandVertical(true);
+        scrolledComposite.setLayout(new GridLayout());
+        scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
         // define an imbedding maingroup
         final Composite mainGroup = new Composite(scrolledComposite, SWT.NONE);
-        mainGroup.setSize(920, 810);
-        scrolledComposite.setContent(mainGroup);
-
-        // define a group called eccAlgorithmgroup which introduces the definition and basic
-        // principle of ECC algorithm
-        final Group eccAlgorithmGroup = new Group(mainGroup, SWT.NONE);
-        eccAlgorithmGroup.setText(ECC_ALG_GROUP_TITLE);
-        eccAlgorithmGroup.setBounds(10, 510, 903, 297);
-
-        // define the style of the Text shown in the eccAlgorithmGroup
-        eCCAlgorithmText = new Text(eccAlgorithmGroup, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
-        eCCAlgorithmText.setEditable(false);
-        eCCAlgorithmText.setBounds(10, 38, 277, 251);
-        eCCAlgorithmText.setText(ECC_ALG_TEXT);
-        eCCAlgorithmText.setBackground(white);
-
-        // define the content and script of the introduction of "double and add always"
-        unsecureText = new Text(eccAlgorithmGroup, SWT.BORDER | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
-        unsecureText.setEditable(false);
-        unsecureText.setBounds(303, 38, 293, 251);
-        unsecureText.setText(UNSECURE_DOUBLE_ADD_TEXT);
-        unsecureText.setBackground(white);
-
-        // define the style of the text shown in the parameterOfCountermeasuresGroup
-        parameterOfCountermeasuresText = new Text(eccAlgorithmGroup, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL
-                | SWT.READ_ONLY);
-        parameterOfCountermeasuresText.setLocation(616, 38);
-        parameterOfCountermeasuresText.setSize(277, 251);
-        parameterOfCountermeasuresText.setBackground(white);
-        parameterOfCountermeasuresText.setText("");
-
+        mainGroup.setLayout(new GridLayout(2, false));
+        mainGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        
+        final Composite headerComposite = new Composite(mainGroup, SWT.NONE);
+        headerComposite.setLayout(new GridLayout());
+        headerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+        headerComposite.setBackground(white);
+        
+        Label lblNewLabel_1 = new Label(headerComposite, SWT.NONE);
+        lblNewLabel_1.setBackground(white);
+        lblNewLabel_1.setFont(FontService.getHeaderFont());
+        lblNewLabel_1.setText(Messages.Title);
+        
+        StyledText stDescription = new StyledText(headerComposite, SWT.READ_ONLY | SWT.MULTI| SWT.WRAP);
+		stDescription.setText(Messages.DPAView_0);
+        
         // define a group in which the user can select the parameters of ECC and initialize an EC,
         // on which the
         // visualization will be based
         final Group parameterOfECCGroup = new Group(mainGroup, SWT.NONE);
-        parameterOfECCGroup.setBounds(10, 39, 230, 465);
+        parameterOfECCGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+        parameterOfECCGroup.setLayout(new GridLayout(2, false));
         parameterOfECCGroup.setText(PARAM_OF_ECC_GROUP_TITEL);
-
-        // define a group in which the whole process of encryption will be visualized with table
-        // form
-        final Group visualizedGroup = new Group(mainGroup, SWT.NONE);
-        visualizedGroup.setText(Messages.outputtable);
-        visualizedGroup.setBounds(246, 39, 667, 465);
-
-        // define a table to display the content and process of algorithm
-        recordTable = new Table(visualizedGroup, SWT.BORDER);
-        recordTable.setBounds(10, 20, 647, 435);
-        recordTable.setLinesVisible(true);
-        recordTable.setHeaderVisible(true);
-
-        // define the first low of recorder table, in which initial information, result of the
-        // computation will be
-        // displayed
-        final TableColumn roundCol = new TableColumn(recordTable, SWT.NONE);
-        roundCol.setWidth(190);
-        roundCol.setText(FIRST_COLUMN_IN_TABLE);
-
-        // define the second low of recorder table, in which the result after Doubling operation of
-        // certain loop will be
-        // given
-        final TableColumn resSquareCol = new TableColumn(recordTable, SWT.NONE);
-        resSquareCol.setWidth(225);
-        resSquareCol.setText(SECOND_COLUMN_IN_TABLE);
-
-        // define the last low of recorder table, in which the result after Adding operation of
-        // certain loop will be
-        // given
-        final TableColumn resMultiCol = new TableColumn(recordTable, SWT.NONE);
-        resMultiCol.setWidth(225);
-        resMultiCol.setText(THIRD_COLUMN_IN_TABLE);
-
-        // end table define
-
+        
+        Label lblParameterOfEc = new Label(parameterOfECCGroup, SWT.NONE);
+        lblParameterOfEc.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+        lblParameterOfEc.setText(Messages.parameter);
+        lblParameterOfEc.setFont(FontService.getSmallBoldFont());
+        
+        // define a cue label
+        final Label primeFieldFLabel = new Label(parameterOfECCGroup, SWT.NONE);
+        primeFieldFLabel.setText(PRIME_FIELD_LABEL_TEXT);
+        
         // define a combo in which the user can choose a prime as prime field GF(p)
         primeFieldSelectCombo = new Combo(parameterOfECCGroup, SWT.READ_ONLY);
+        primeFieldSelectCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         primeFieldSelectCombo.setToolTipText(TOOLTIPTEXT_OF_PRIMEFIELDSELECTCOMBO);
-        primeFieldSelectCombo.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-        primeFieldSelectCombo.setBounds(65, 49, 50, 25);
+        
+        // add a cue label
+        final Label aLabel = new Label(parameterOfECCGroup, SWT.NONE);
+        aLabel.setText(TEXT_OF_ALABEL);
 
         // define a dropdown combo in which the user can select a number as parameter A
         parameterACombo = new Combo(parameterOfECCGroup, SWT.READ_ONLY);
+        parameterACombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         parameterACombo.setToolTipText(TOOLTIPTEXT_OF_PARAMETERACOMBO);
-        parameterACombo.setBounds(65, 78, 50, 25);
         parameterACombo.setEnabled(false);
+        
+        // add a cue label
+        final Label bLabel = new Label(parameterOfECCGroup, SWT.NONE);
+        bLabel.setText(TEXT_OF_BLABEL);
 
         // define a dropdown combo in which the user can select a number as parameter B
         parameterBCombo = new Combo(parameterOfECCGroup, SWT.READ_ONLY);
+        parameterBCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         parameterBCombo.setToolTipText(TOOLTIPTEXT_OF_PARAMETERBCOMBO);
-        parameterBCombo.setBounds(65, 107, 50, 25);
         parameterBCombo.setEnabled(false);
-
+        
+        Label lblNewLabel = new Label(parameterOfECCGroup, SWT.NONE);
+        lblNewLabel.setLayoutData(new GridData(SWT.DEFAULT, SWT.DEFAULT, false, false, 2, 1));
+        lblNewLabel.setText(Messages.curve);
+        
         eCCurveText = new StyledText(parameterOfECCGroup, SWT.NONE);
-        eCCurveText.setBackground(org.eclipse.wb.swt.SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+        eCCurveText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+        eCCurveText.setBackground(white);
         eCCurveText.setEnabled(false);
         eCCurveText.setToolTipText(TOOLTIPTEXT_OF_ECCURVETEXT);
         eCCurveText.setEditable(false);
@@ -222,7 +209,7 @@ public class DPAView extends ViewPart implements Constants {
                     ecc = new ECCOrderAndPoints(BigInteger.valueOf(paraA), BigInteger.valueOf(paraB), BigInteger
                             .valueOf(primeFieldSelected));
 
-                    orderOfCurveText.setText("" + ecc.getStepsofCurve());
+                    orderOfCurveText.setText("" + ecc.getStepsofCurve()); //$NON-NLS-1$
 
                     orderOfCurve = ecc.getStepsofCurve();
 
@@ -236,8 +223,8 @@ public class DPAView extends ViewPart implements Constants {
                     int data_element_index = 0;
                     while (data_length > 0) {
 
-                        eCPointscombo.add("(" + allPoints[data_element_index].getAffineX() + ","
-                                + allPoints[data_element_index].getAffineY() + ")");
+                        eCPointscombo.add("(" + allPoints[data_element_index].getAffineX() + "," //$NON-NLS-1$ //$NON-NLS-2$
+                                + allPoints[data_element_index].getAffineY() + ")"); //$NON-NLS-1$
                         data_length--;
                         data_element_index++;
 
@@ -245,244 +232,66 @@ public class DPAView extends ViewPart implements Constants {
                 }
             }
         });
-        eCCurveText.setBounds(65, 136, 159, 21);
-
+        
+        Label lblOrderOfCurve = new Label(parameterOfECCGroup, SWT.NONE);
+        lblOrderOfCurve.setText(Messages.order_curve);
+        
         // define a text field in which the computed order will be displayed
         orderOfCurveText = new StyledText(parameterOfECCGroup, SWT.NONE);
-        orderOfCurveText.setBackground(org.eclipse.wb.swt.SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+        orderOfCurveText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        orderOfCurveText.setBackground(white);
         orderOfCurveText.setEnabled(false);
 
         // define a toolbar-text to explain the meaning of order
         orderOfCurveText.setToolTipText(TOOLTIPTEXT_OF_ORDEROFCURVETEXT);
         orderOfCurveText.setEditable(false);
-        orderOfCurveText.setBounds(110, 157, 62, 21);
 
+        
+        Label lblPointsOnEc = new Label(parameterOfECCGroup, SWT.NONE);
+        lblPointsOnEc.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+        lblPointsOnEc.setText(Messages.points);
+        lblPointsOnEc.setFont(FontService.getSmallBoldFont());
+        
+        Label label = new Label(parameterOfECCGroup, SWT.NONE);
+        label.setText("P ="); //$NON-NLS-1$
+        
         // define a combo in which the user can select a random point of EC to process the
         // computation
         eCPointscombo = new Combo(parameterOfECCGroup, SWT.READ_ONLY);
-
+        eCPointscombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         // define a toolbar-text to explain the aiming of selection
         eCPointscombo.setToolTipText(TOOLTIPTEXT_OF_ECPOINTSCOMBO);
-        eCPointscombo.setBackground(SWTResourceManager.getColor(255, 255, 255));
-        eCPointscombo.setBounds(64, 218, 95, 23);
         eCPointscombo.setEnabled(false);
+        
+        
+        Label label_1 = new Label(parameterOfECCGroup, SWT.NONE);
+        label_1.setText("Q ="); //$NON-NLS-1$
 
+        scalarParameterCombo = new Combo(parameterOfECCGroup, SWT.READ_ONLY);
+        scalarParameterCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        scalarParameterCombo.setToolTipText(TOOLTIPTEXT_OF_SCALARPARAMETERCOMBO);
+        scalarParameterCombo.setEnabled(false);
+        
+        Label label_2 = new Label(parameterOfECCGroup, SWT.NONE);
+        label_2.setText(ORDER_OF_SELECTED_POINT_TEXT);
+        
         // define a text field in which the order of selected point will be displayed
         orderOfECPointText = new StyledText(parameterOfECCGroup, SWT.NONE);
-        orderOfECPointText.setBackground(org.eclipse.wb.swt.SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+        orderOfECPointText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        orderOfECPointText.setBackground(white);
         orderOfECPointText.setEditable(false);
         orderOfECPointText.setEnabled(false);
 
         // define a toolbar-text to explain the meaning of order
         orderOfECPointText.setToolTipText(TOOLTIPTEXT_OF_ORDEROFECPOINTTEXT);
         // orderOfECPointText.setEditable(false);
-        orderOfECPointText.setBounds(158, 276, 62, 21);
-
-        scalarParameterCombo = new Combo(parameterOfECCGroup, SWT.READ_ONLY);
-        scalarParameterCombo.setBounds(64, 247, 95, 23);
-        scalarParameterCombo.setToolTipText(TOOLTIPTEXT_OF_SCALARPARAMETERCOMBO);
-        scalarParameterCombo.setEnabled(false);
-
-        final Button executeButton = new Button(parameterOfECCGroup, SWT.NONE);
-        executeButton.setText(TEXT_OF_EXECUTEBUTTON);
-        executeButton.setBounds(9, 399, 215, 25);
-
-        executeButton.setEnabled(false);
-
-        // define a cue label
-        final Label primeFieldFLabel = new Label(parameterOfECCGroup, SWT.NONE);
-        primeFieldFLabel.setText(PRIME_FIELD_LABEL_TEXT);
-        primeFieldFLabel.setBounds(9, 49, 50, 23);
-
-        // define an integer array as the elements of primefieldselectcombo
-        final int[] primeData = { 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401,
-                409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499 };
-
-        int data_length = primeData.length;
-        int data_element_index = 0;
-
-        // add all elements to primefieldselectcombo
-        while (data_length > 0) {
-
-            primeFieldSelectCombo.add(String.valueOf(primeData[data_element_index]));
-            data_length--;
-            data_element_index++;
-
-        }
-
-        // add a listener on primefieldselectcombo to determine which prime number the user has
-        // chosen as prime field
-        primeFieldSelectCombo.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(final SelectionEvent e) {
-
-                executeButton.setEnabled(false);
-                countermeasureselectionCombo.setEnabled(false);
-
-                primeFieldSelected = primeData[primeFieldSelectCombo.getSelectionIndex()];
-
-                eCPointscombo.setEnabled(false);
-                scalarParameterCombo.setEnabled(false);
-                parameterACombo.clearSelection();
-                parameterACombo.setItems(new String[] {});
-                parameterBCombo.clearSelection();
-                parameterBCombo.setItems(new String[] {});
-                orderOfECPointText.setText("");
-                eCCurveText.setText("");
-
-                for (int i = 0; i < primeFieldSelected; i++) {
-                    parameterACombo.add(String.valueOf(i));
-                }
-
-                parameterACombo.setEnabled(true);
-
-                for (int i = 1; i < primeFieldSelected; i++) {
-                    parameterBCombo.add(String.valueOf(i));
-                }
-
-                parameterBCombo.setEnabled(true);
-
-                scalarParameterCombo.removeAll();
-
-                if (!eCCurveText.getText().equals("")) {
-
-                    eCCurveText.setText(ECCURVE_TEXT_PART1 + paraA + ECCURVE_TEXT_PART2 + paraB + ECCURVE_TEXT_PART3
-                            + primeFieldSelected + ")");
-                    eCPointscombo.setEnabled(true);
-
-                }
-
-            }
-        });
-
-        // add a listener on parameterAcombo to determine which number the user has chosen as
-        // parameter A
-        parameterACombo.addModifyListener(new ModifyListener() {
-            public void modifyText(final ModifyEvent e) {
-
-                executeButton.setEnabled(false);
-                countermeasureselectionCombo.setEnabled(false);
-
-                try {
-
-                    if (Integer.parseInt(parameterACombo.getText()) >= primeFieldSelected) {
-
-                        parameterACombo.setText(Integer.valueOf(
-                                (Integer.parseInt(parameterACombo.getText()) % primeFieldSelected)).toString());
-
-                        return;
-
-                    }
-
-                    else if (!parameterBCombo.getText().equals("")) {
-
-                        paraA = Integer.parseInt(parameterACombo.getText());
-                        paraB = Integer.parseInt(parameterBCombo.getText());
-                        if ((4 * paraA * paraA * paraA + 27 * paraB * paraB) % primeFieldSelected != 0) {
-
-                            eCCurveText.setText(ECCURVE_TEXT_PART1 + paraA + ECCURVE_TEXT_PART2 + paraB
-                                    + ECCURVE_TEXT_PART3 + primeFieldSelected + ")");
-                            eCPointscombo.setEnabled(true);
-
-                        } else {
-
-                        }
-
-                    }
-
-                } catch (Exception ee) {
-                    return;
-                }
-
-            }
-
-        });
-
-        // add a listener on parameterBcombo to determine which number the user has chosen as
-        // parameter B
-        parameterBCombo.addModifyListener(new ModifyListener() {
-            public void modifyText(final ModifyEvent e) {
-
-                executeButton.setEnabled(false);
-                countermeasureselectionCombo.setEnabled(false);
-
-                try {
-                    if (Integer.parseInt(parameterBCombo.getText()) >= primeFieldSelected) {
-
-                        return;
-
-                    } else if (!parameterACombo.getText().equals("")) {
-
-                        paraA = Integer.parseInt(parameterACombo.getText());
-                        paraB = Integer.parseInt(parameterBCombo.getText());
-                        if (4 * paraA * paraA * paraA + 27 * paraB * paraB != 0) {
-
-                            eCCurveText.setText(ECCURVE_TEXT_PART1 + paraA + ECCURVE_TEXT_PART2 + paraB
-                                    + ECCURVE_TEXT_PART3 + primeFieldSelected + ")");
-
-                            eCPointscombo.setEnabled(true);
-
-                        } else {
-                        }
-                    }
-                } catch (Exception ee) {
-                    if (!parameterBCombo.getText().equals("")) {
-
-                    }
-
-                    return;
-                }
-            }
-        });
-
-        // add a listener on ecPointscombo to determine which point has been chosen as the initial
-        // point of the
-        // computation
-        eCPointscombo.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(final SelectionEvent e) {
-
-                executeButton.setEnabled(false);
-                countermeasureselectionCombo.setEnabled(false);
-
-                ecPointSelected = allPoints[eCPointscombo.getSelectionIndex()];
-
-                orderOfSelectedECPoint = ecc.getStepsOfPoint(ecPointSelected, paraA, new ECFieldFp(new BigInteger(
-                        String.valueOf(primeFieldSelected))));
-
-                orderOfECPointText.setText("" + orderOfSelectedECPoint);
-
-                scalarParameterCombo.removeAll();
-
-                int stepOfPoint = 0;
-
-                stepOfPoint = ecc.getStepsOfPoint(ecPointSelected, paraA,
-                        new ECFieldFp(new BigInteger(String.valueOf(primeFieldSelected))));
-
-                int j = 2;
-
-                while (stepOfPoint - 2 > 0) {
-
-                    scalarParameterCombo.add(j + "P");
-                    j++;
-                    stepOfPoint--;
-
-                }
-
-                scalarParameterCombo.setEnabled(true);
-
-            }
-        });
-
-        // add a cue label
-        final Label aLabel = new Label(parameterOfECCGroup, SWT.NONE);
-        aLabel.setText(TEXT_OF_ALABEL);
-        aLabel.setBounds(9, 78, 50, 23);
-
-        // add a cue label
-        final Label bLabel = new Label(parameterOfECCGroup, SWT.NONE);
-        bLabel.setText(TEXT_OF_BLABEL);
-        bLabel.setBounds(9, 107, 50, 23);
+        
+        Label lblModus = new Label(parameterOfECCGroup, SWT.NONE);
+        lblModus.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+        lblModus.setText(Messages.mode);
+        
         countermeasureselectionCombo = new Combo(parameterOfECCGroup, SWT.READ_ONLY);
-        countermeasureselectionCombo.setBounds(9, 336, 211, 23);
+        countermeasureselectionCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
         countermeasureselectionCombo.setEnabled(false);
         countermeasureselectionCombo.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(final SelectionEvent e) {
@@ -527,58 +336,12 @@ public class DPAView extends ViewPart implements Constants {
         countermeasureselectionCombo.add(COUNTERMEASURES_CCOMBO_RANDOMIZED_INITIAL_POINT);
         countermeasureselectionCombo.add(COUNTERMEASURES_CCOMBO_RANDOMIZED_ISOMORPHIC_CURVE);
         countermeasureselectionCombo.select(0);
-        parameterOfCountermeasuresText.setText(Messages.noprotection0);
 
-        Label lblNewLabel_2 = new Label(eccAlgorithmGroup, SWT.NONE);
-        lblNewLabel_2.setBounds(10, 17, 277, 21);
-        lblNewLabel_2.setText(Messages.DPAView_lblNewLabel_2_text);
-        lblNewLabel_2.setFont(FontService.getSmallBoldFont());
-
-        Label lblNewLabel_3 = new Label(eccAlgorithmGroup, SWT.NONE);
-        lblNewLabel_3.setBounds(303, 17, 293, 21);
-        lblNewLabel_3.setText(Messages.DPAView_lblNewLabel_3_text);
-        lblNewLabel_3.setFont(FontService.getSmallBoldFont());
-
-        Label lblNewLabel_4 = new Label(eccAlgorithmGroup, SWT.NONE);
-        lblNewLabel_4.setBounds(616, 17, 277, 21);
-        lblNewLabel_4.setText(Messages.DPAView_lblNewLabel_4_text);
-        lblNewLabel_4.setFont(FontService.getSmallBoldFont());
-        counterFlag = 0;
-
-        Label label = new Label(parameterOfECCGroup, SWT.NONE);
-        label.setText("P =");
-        label.setBounds(9, 218, 26, 21);
-
-        Label label_1 = new Label(parameterOfECCGroup, SWT.NONE);
-        label_1.setText("Q =");
-        label_1.setBounds(9, 247, 26, 21);
-
-        Label label_2 = new Label(parameterOfECCGroup, SWT.NONE);
-        label_2.setText(ORDER_OF_SELECTED_POINT_TEXT);
-        label_2.setBounds(9, 276, 149, 21);
-
-        Label lblModus = new Label(parameterOfECCGroup, SWT.NONE);
-        lblModus.setBounds(9, 309, 61, 21);
-        lblModus.setText(Messages.mode);
-
-        Label lblParameterOfEc = new Label(parameterOfECCGroup, SWT.NONE);
-        lblParameterOfEc.setBounds(9, 22, 125, 21);
-        lblParameterOfEc.setText(Messages.parameter);
-        lblParameterOfEc.setFont(FontService.getSmallBoldFont());
-
-        Label lblPointsOnEc = new Label(parameterOfECCGroup, SWT.NONE);
-        lblPointsOnEc.setBounds(9, 191, 211, 21);
-        lblPointsOnEc.setText(Messages.points);
-        lblPointsOnEc.setFont(FontService.getSmallBoldFont());
-
-        Label lblOrderOfCurve = new Label(parameterOfECCGroup, SWT.NONE);
-        lblOrderOfCurve.setBounds(9, 157, 95, 21);
-        lblOrderOfCurve.setText(Messages.order_curve);
-
-        Label lblNewLabel = new Label(parameterOfECCGroup, SWT.NONE);
-        lblNewLabel.setBounds(9, 136, 50, 21);
-        lblNewLabel.setText(Messages.curve);
-
+        final Button executeButton = new Button(parameterOfECCGroup, SWT.NONE);
+        executeButton.setText(TEXT_OF_EXECUTEBUTTON);
+        executeButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+        executeButton.setEnabled(false);
+        
         Button btnReset = new Button(parameterOfECCGroup, SWT.NONE);
         btnReset.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -598,18 +361,280 @@ public class DPAView extends ViewPart implements Constants {
                 unsecureText.setText(UNSECURE_DOUBLE_ADD_TEXT);
                 parameterOfCountermeasuresText.setText(Messages.noprotection0);
                 recordTable.removeAll();
-                orderOfECPointText.setText("");
-                orderOfCurveText.setText("");
-                eCCurveText.setText("");
+                orderOfECPointText.setText(""); //$NON-NLS-1$
+                orderOfCurveText.setText(""); //$NON-NLS-1$
+                eCCurveText.setText(""); //$NON-NLS-1$
             }
         });
-        btnReset.setBounds(9, 430, 215, 25);
+        GridData gd_btnReset = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
+        gd_btnReset.verticalIndent = 20;
+        btnReset.setLayoutData(gd_btnReset);
         btnReset.setText(Messages.reset);
+        
+        
+        // define a group in which the whole process of encryption will be visualized with table
+        // form
+        final Group visualizedGroup = new Group(mainGroup, SWT.NONE);
+        visualizedGroup.setLayout(new GridLayout());
+        visualizedGroup.setText(Messages.outputtable);
+        visualizedGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-        Label lblNewLabel_1 = new Label(mainGroup, SWT.NONE);
-        lblNewLabel_1.setFont(FontService.getHeaderFont());
-        lblNewLabel_1.setBounds(10, 10, 903, 30);
-        lblNewLabel_1.setText(Messages.Title);
+        // define a table to display the content and process of algorithm
+        recordTable = new Table(visualizedGroup, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+        recordTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        recordTable.setLinesVisible(true);
+        recordTable.setHeaderVisible(true);
+
+        
+        // define the first low of recorder table, in which initial information, result of the
+        // computation will be
+        // displayed
+        final TableColumn roundCol = new TableColumn(recordTable, SWT.NONE);
+        roundCol.setWidth(225);
+        roundCol.setText(FIRST_COLUMN_IN_TABLE);
+
+        // define the second low of recorder table, in which the result after Doubling operation of
+        // certain loop will be
+        // given
+        final TableColumn resSquareCol = new TableColumn(recordTable, SWT.NONE);
+        resSquareCol.setWidth(225);
+        resSquareCol.setText(SECOND_COLUMN_IN_TABLE);
+
+        // define the last low of recorder table, in which the result after Adding operation of
+        // certain loop will be
+        // given
+        final TableColumn resMultiCol = new TableColumn(recordTable, SWT.NONE);
+        resMultiCol.setWidth(225);
+        resMultiCol.setText(THIRD_COLUMN_IN_TABLE);
+
+        // end table define
+  
+        // define a group called eccAlgorithmgroup which introduces the definition and basic
+        // principle of ECC algorithm
+        final Group eccAlgorithmGroup = new Group(mainGroup, SWT.NONE);
+        eccAlgorithmGroup.setLayout(new GridLayout(3, true));
+        eccAlgorithmGroup.setText(ECC_ALG_GROUP_TITLE);
+        eccAlgorithmGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+
+        
+        Label lblNewLabel_2 = new Label(eccAlgorithmGroup, SWT.NONE);
+        lblNewLabel_2.setText(Messages.DPAView_lblNewLabel_2_text);
+        lblNewLabel_2.setFont(FontService.getSmallBoldFont());
+        
+        Label lblNewLabel_3 = new Label(eccAlgorithmGroup, SWT.NONE);
+        lblNewLabel_3.setText(Messages.DPAView_lblNewLabel_3_text);
+        lblNewLabel_3.setFont(FontService.getSmallBoldFont());
+        
+        Label lblNewLabel_4 = new Label(eccAlgorithmGroup, SWT.NONE);
+        lblNewLabel_4.setText(Messages.DPAView_lblNewLabel_4_text);
+        lblNewLabel_4.setFont(FontService.getSmallBoldFont());
+        
+        // define the style of the Text shown in the eccAlgorithmGroup
+        eCCAlgorithmText = new Text(eccAlgorithmGroup, SWT.BORDER | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
+        eCCAlgorithmText.setEditable(false);
+        GridData gd_eCCAlgorithmenText = new GridData(SWT.FILL, SWT.FILL, true, true);
+        gd_eCCAlgorithmenText.widthHint = 280;
+        gd_eCCAlgorithmenText.heightHint = 150;
+        eCCAlgorithmText.setLayoutData(gd_eCCAlgorithmenText);
+        eCCAlgorithmText.setText(ECC_ALG_TEXT);
+        eCCAlgorithmText.setBackground(white);
+
+        // define the content and script of the introduction of "double and add always"
+        unsecureText = new Text(eccAlgorithmGroup, SWT.BORDER | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
+        unsecureText.setEditable(false);
+        GridData gd_unsecureText = new GridData(SWT.FILL, SWT.FILL, true, true);
+        gd_unsecureText.widthHint = 280;
+        gd_unsecureText.heightHint = 150;
+        unsecureText.setLayoutData(gd_unsecureText);
+        unsecureText.setText(UNSECURE_DOUBLE_ADD_TEXT);
+        unsecureText.setBackground(white);
+
+        // define the style of the text shown in the parameterOfCountermeasuresGroup
+        parameterOfCountermeasuresText = new Text(eccAlgorithmGroup, SWT.BORDER | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
+        GridData gd_parameterOfCountermeasuresText = new GridData(SWT.FILL, SWT.FILL, true, true);
+        gd_parameterOfCountermeasuresText.widthHint = 280;
+        gd_parameterOfCountermeasuresText.heightHint = 150;
+        parameterOfCountermeasuresText.setLayoutData(gd_parameterOfCountermeasuresText);
+        parameterOfCountermeasuresText.setBackground(white);
+        parameterOfCountermeasuresText.setText(Messages.noprotection0);
+
+
+
+        // define an integer array as the elements of primefieldselectcombo
+        final int[] primeData = { 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401,
+                409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499 };
+
+        int data_length = primeData.length;
+        int data_element_index = 0;
+
+        // add all elements to primefieldselectcombo
+        while (data_length > 0) {
+
+            primeFieldSelectCombo.add(String.valueOf(primeData[data_element_index]));
+            data_length--;
+            data_element_index++;
+
+        }
+
+        // add a listener on primefieldselectcombo to determine which prime number the user has
+        // chosen as prime field
+        primeFieldSelectCombo.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(final SelectionEvent e) {
+
+                executeButton.setEnabled(false);
+                countermeasureselectionCombo.setEnabled(false);
+
+                primeFieldSelected = primeData[primeFieldSelectCombo.getSelectionIndex()];
+
+                eCPointscombo.setEnabled(false);
+                scalarParameterCombo.setEnabled(false);
+                parameterACombo.clearSelection();
+                parameterACombo.setItems(new String[] {});
+                parameterBCombo.clearSelection();
+                parameterBCombo.setItems(new String[] {});
+                orderOfECPointText.setText(""); //$NON-NLS-1$
+                eCCurveText.setText(""); //$NON-NLS-1$
+
+                for (int i = 0; i < primeFieldSelected; i++) {
+                    parameterACombo.add(String.valueOf(i));
+                }
+
+                parameterACombo.setEnabled(true);
+
+                for (int i = 1; i < primeFieldSelected; i++) {
+                    parameterBCombo.add(String.valueOf(i));
+                }
+
+                parameterBCombo.setEnabled(true);
+
+                scalarParameterCombo.removeAll();
+
+                if (!eCCurveText.getText().equals("")) { //$NON-NLS-1$
+
+                    eCCurveText.setText(ECCURVE_TEXT_PART1 + paraA + ECCURVE_TEXT_PART2 + paraB + ECCURVE_TEXT_PART3
+                            + primeFieldSelected + ")"); //$NON-NLS-1$
+                    eCPointscombo.setEnabled(true);
+
+                }
+
+            }
+        });
+
+        // add a listener on parameterAcombo to determine which number the user has chosen as
+        // parameter A
+        parameterACombo.addModifyListener(new ModifyListener() {
+            public void modifyText(final ModifyEvent e) {
+
+                executeButton.setEnabled(false);
+                countermeasureselectionCombo.setEnabled(false);
+
+                try {
+                    if (Integer.parseInt(parameterACombo.getText()) >= primeFieldSelected) {
+                        parameterACombo.setText(Integer.valueOf(
+                                (Integer.parseInt(parameterACombo.getText()) % primeFieldSelected)).toString());
+                        return;
+                    }
+                    else if (!parameterBCombo.getText().equals("")) { //$NON-NLS-1$
+                        paraA = Integer.parseInt(parameterACombo.getText());
+                        paraB = Integer.parseInt(parameterBCombo.getText());
+                        if ((4 * paraA * paraA * paraA + 27 * paraB * paraB) % primeFieldSelected != 0) {
+                            eCCurveText.setText(ECCURVE_TEXT_PART1 + paraA + ECCURVE_TEXT_PART2 + paraB
+                                    + ECCURVE_TEXT_PART3 + primeFieldSelected + ")"); //$NON-NLS-1$
+                            eCPointscombo.setEnabled(true);
+                        } else {
+                        	
+                        }
+                    }
+                } catch (Exception ee) {
+                    return;
+                }
+
+            }
+
+        });
+
+        // add a listener on parameterBcombo to determine which number the user has chosen as
+        // parameter B
+        parameterBCombo.addModifyListener(new ModifyListener() {
+            public void modifyText(final ModifyEvent e) {
+
+                executeButton.setEnabled(false);
+                countermeasureselectionCombo.setEnabled(false);
+
+                try {
+                    if (Integer.parseInt(parameterBCombo.getText()) >= primeFieldSelected) {
+
+                        return;
+
+                    } else if (!parameterACombo.getText().equals("")) { //$NON-NLS-1$
+
+                        paraA = Integer.parseInt(parameterACombo.getText());
+                        paraB = Integer.parseInt(parameterBCombo.getText());
+                        if (4 * paraA * paraA * paraA + 27 * paraB * paraB != 0) {
+
+                            eCCurveText.setText(ECCURVE_TEXT_PART1 + paraA + ECCURVE_TEXT_PART2 + paraB
+                                    + ECCURVE_TEXT_PART3 + primeFieldSelected + ")"); //$NON-NLS-1$
+
+                            eCPointscombo.setEnabled(true);
+
+                        } else {
+                        }
+                    }
+                } catch (Exception ee) {
+                    if (!parameterBCombo.getText().equals("")) { //$NON-NLS-1$
+
+                    }
+
+                    return;
+                }
+            }
+        });
+
+        // add a listener on ecPointscombo to determine which point has been chosen as the initial
+        // point of the
+        // computation
+        eCPointscombo.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(final SelectionEvent e) {
+
+                executeButton.setEnabled(false);
+                countermeasureselectionCombo.setEnabled(false);
+
+                ecPointSelected = allPoints[eCPointscombo.getSelectionIndex()];
+
+                orderOfSelectedECPoint = ecc.getStepsOfPoint(ecPointSelected, paraA, new ECFieldFp(new BigInteger(
+                        String.valueOf(primeFieldSelected))));
+
+                orderOfECPointText.setText("" + orderOfSelectedECPoint); //$NON-NLS-1$
+
+                scalarParameterCombo.removeAll();
+
+                int stepOfPoint = 0;
+
+                stepOfPoint = ecc.getStepsOfPoint(ecPointSelected, paraA,
+                        new ECFieldFp(new BigInteger(String.valueOf(primeFieldSelected))));
+
+                int j = 2;
+
+                while (stepOfPoint - 2 > 0) {
+
+                    scalarParameterCombo.add(j + "P"); //$NON-NLS-1$
+                    j++;
+                    stepOfPoint--;
+
+                }
+
+                scalarParameterCombo.setEnabled(true);
+
+            }
+        });
+
+        
+        
+        
+        
+        counterFlag = 0;
+
+
 
         // add a listener on executeButton, which is used to start the process of selected algorithm
         executeButton.addSelectionListener(new SelectionAdapter() {
@@ -654,7 +679,7 @@ public class DPAView extends ViewPart implements Constants {
                     // SWT.BORDER);
                     // initialTableItemKinBinary.setText(0, kInBinaryForm);
                     final TableItem empty = new TableItem(recordTable, SWT.BORDER);
-                    empty.setText(0, "");
+                    empty.setText(0, ""); //$NON-NLS-1$
                     final TableItem initialTableItemProcess = new TableItem(recordTable, SWT.BORDER);
                     initialTableItemProcess.setText(0, INITIAL_TABLE_ITEM_PROCESS);
 
@@ -689,11 +714,11 @@ public class DPAView extends ViewPart implements Constants {
                         initialTableItemInputnewScalarBinary.setText(0, Messages.k + String.valueOf(newkInBinaryForm));
 
                         parameterOfCountermeasuresText.setText(RANDOMIZED_K_TEXT_PART1 + RANDOMIZED_K_TEXT_PART2
-                                + paraA + "x + " + paraB + RANDOMIZED_K_TEXT_PART3 + primeFieldSelected
+                                + paraA + "x + " + paraB + RANDOMIZED_K_TEXT_PART3 + primeFieldSelected //$NON-NLS-1$
                                 + RANDOMIZED_K_TEXT_PART4 + paraA + RANDOMIZED_K_TEXT_PART5 + paraB
-                                + RANDOMIZED_K_TEXT_PART6 + "("
-                                + allPoints[eCPointscombo.getSelectionIndex()].getAffineX() + ","
-                                + allPoints[eCPointscombo.getSelectionIndex()].getAffineY() + ")"
+                                + RANDOMIZED_K_TEXT_PART6 + "(" //$NON-NLS-1$
+                                + allPoints[eCPointscombo.getSelectionIndex()].getAffineX() + "," //$NON-NLS-1$
+                                + allPoints[eCPointscombo.getSelectionIndex()].getAffineY() + ")" //$NON-NLS-1$
                                 + RANDOMIZED_K_TEXT_PART7 + String.valueOf(kSelected) + DECIMAL_ABBR
                                 + RANDOMIZED_K_TEXT_PART8 + String.valueOf(kInBinaryForm) + BINARY_ABBR
                                 + RANDOMIZED_K_TEXT_PART9 + randomFactor + RANDOMIZED_K_TEXT_PART10
@@ -719,8 +744,8 @@ public class DPAView extends ViewPart implements Constants {
 
                         final TableItem initialTableItemRandomPoint = new TableItem(recordTable, SWT.BORDER);
                         initialTableItemRandomPoint.setText(0,
-                                RANDOMIZED_ECPOINT_TEXT_PART1 + allPoints[randomFactor].getAffineX() + ","
-                                        + allPoints[randomFactor].getAffineY() + ")");
+                                RANDOMIZED_ECPOINT_TEXT_PART1 + allPoints[randomFactor].getAffineX() + "," //$NON-NLS-1$
+                                        + allPoints[randomFactor].getAffineY() + ")"); //$NON-NLS-1$
 
                         rplusP = eccAdd.ecAddition(allPoints[randomFactor], ecPoint,
                                 new ECFieldFp(BigInteger.valueOf(primeFieldSelected)));
@@ -733,32 +758,32 @@ public class DPAView extends ViewPart implements Constants {
 
                         } else {
                             final TableItem initialTableItemRandomPointPPlusR = new TableItem(recordTable, SWT.BORDER);
-                            initialTableItemRandomPointPPlusR.setText(0, "P + R = " + "(" + rplusP.getAffineX() + ","
-                                    + rplusP.getAffineY() + ")");
+                            initialTableItemRandomPointPPlusR.setText(0, "P + R = " + "(" + rplusP.getAffineX() + "," //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                                    + rplusP.getAffineY() + ")"); //$NON-NLS-1$
 
                             kR = eccMul.eccMultiply(allPoints[randomFactor], kSelected, paraA,
                                     new ECFieldFp(BigInteger.valueOf(primeFieldSelected)));
 
                             final TableItem initialTableItemRandomPointS = new TableItem(recordTable, SWT.BORDER);
                             initialTableItemRandomPointS.setText(0, RANDOMIZED_ECPOINT_TEXT_PART2 + kSelected
-                                    + RANDOMIZED_ECPOINT_TEXT_PART3 + "(" + kR.getAffineX() + "," + kR.getAffineY()
-                                    + ")");
+                                    + RANDOMIZED_ECPOINT_TEXT_PART3 + "(" + kR.getAffineX() + "," + kR.getAffineY() //$NON-NLS-1$ //$NON-NLS-2$
+                                    + ")"); //$NON-NLS-1$
 
                             parameterOfCountermeasuresText.setText(RANDOMIZED_ECPOINT_TEXT_PART4
                                     + RANDOMIZED_ECPOINT_TEXT_PART5 + paraA + RANDOMIZED_ECPOINT_TEXT_PART6 + paraB
                                     + RANDOMIZED_ECPOINT_TEXT_PART7 + primeFieldSelected
                                     + RANDOMIZED_ECPOINT_TEXT_PART8 + paraA + RANODMIZED_ECPOINT_TEXT_PART9 + paraB
-                                    + RANODMIZED_ECPOINT_TEXT_PART10 + "("
-                                    + allPoints[eCPointscombo.getSelectionIndex()].getAffineX() + ","
-                                    + allPoints[eCPointscombo.getSelectionIndex()].getAffineY() + ")"
+                                    + RANODMIZED_ECPOINT_TEXT_PART10 + "(" //$NON-NLS-1$
+                                    + allPoints[eCPointscombo.getSelectionIndex()].getAffineX() + "," //$NON-NLS-1$
+                                    + allPoints[eCPointscombo.getSelectionIndex()].getAffineY() + ")" //$NON-NLS-1$
                                     + RANODMIZED_ECPOINT_TEXT_PART11 + String.valueOf(kSelected) + DECIMAL_ABBR
                                     + RANODMIZED_ECPOINT_TEXT_PART12 + String.valueOf(kInBinaryForm) + BINARY_ABBR
                                     + RANODMIZED_ECPOINT_TEXT_PART13 + RANODMIZED_ECPOINT_TEXT_PART14
-                                    + allPoints[randomFactor].getAffineX() + "," + allPoints[randomFactor].getAffineY()
-                                    + ")" + RANODMIZED_ECPOINT_TEXT_PART15 + "(" + rplusP.getAffineX() + ","
-                                    + rplusP.getAffineY() + ")" + RANODMIZED_ECPOINT_TEXT_PART16 + kSelected
-                                    + RANODMIZED_ECPOINT_TEXT_PART17 + "(" + kR.getAffineX() + "," + kR.getAffineY()
-                                    + ")" + RANODMIZED_ECPOINT_TEXT_PART18 + RANODMIZED_ECPOINT_TEXT_PART19
+                                    + allPoints[randomFactor].getAffineX() + "," + allPoints[randomFactor].getAffineY() //$NON-NLS-1$
+                                    + ")" + RANODMIZED_ECPOINT_TEXT_PART15 + "(" + rplusP.getAffineX() + "," //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                                    + rplusP.getAffineY() + ")" + RANODMIZED_ECPOINT_TEXT_PART16 + kSelected //$NON-NLS-1$
+                                    + RANODMIZED_ECPOINT_TEXT_PART17 + "(" + kR.getAffineX() + "," + kR.getAffineY() //$NON-NLS-1$ //$NON-NLS-2$
+                                    + ")" + RANODMIZED_ECPOINT_TEXT_PART18 + RANODMIZED_ECPOINT_TEXT_PART19 //$NON-NLS-1$
                                     + RANODMIZED_ECPOINT_TEXT_PART20);
                         }
                     }
@@ -795,18 +820,18 @@ public class DPAView extends ViewPart implements Constants {
                                 + RANDOMIZED_ISOMORPHIC_TEXT_PART2 + paraA + RANDOMIZED_ISOMORPHIC_TEXT_PART3 + paraB
                                 + RANDOMIZED_ISOMORPHIC_TEXT_PART4 + primeFieldSelected
                                 + RANDOMIZED_ISOMORPHIC_TEXT_PART5 + paraA + RANDOMIZED_ISOMORPHIC_TEXT_PART6 + paraB
-                                + RANDOMIZED_ISOMORPHIC_TEXT_PART7 + "("
-                                + allPoints[eCPointscombo.getSelectionIndex()].getAffineX() + ","
-                                + allPoints[eCPointscombo.getSelectionIndex()].getAffineY() + ")"
+                                + RANDOMIZED_ISOMORPHIC_TEXT_PART7 + "(" //$NON-NLS-1$
+                                + allPoints[eCPointscombo.getSelectionIndex()].getAffineX() + "," //$NON-NLS-1$
+                                + allPoints[eCPointscombo.getSelectionIndex()].getAffineY() + ")" //$NON-NLS-1$
                                 + RANDOMIZED_ISOMORPHIC_TEXT_PART8 + String.valueOf(kSelected) + DECIMAL_ABBR
                                 + RANDOMIZED_ISOMORPHIC_TEXT_PART9 + String.valueOf(kInBinaryForm) + BINARY_ABBR
                                 + RANDOMIZED_ISOMORPHIC_TEXT_PART10 + RANDOMIZED_ISOMORPHIC_TEXT_PART11 + randomFactor
                                 + RANDOMIZED_ISOMORPHIC_TEXT_PART12 + newparaA + RANDOMIZED_ISOMORPHIC_TEXT_PART13
                                 + newparaB + RANDOMIZED_ISOMORPHIC_TEXT_PART14
                                 + String.valueOf(BigInteger.valueOf(newXp).mod(BigInteger.valueOf(primeFieldSelected)))
-                                + ","
+                                + "," //$NON-NLS-1$
                                 + String.valueOf(BigInteger.valueOf(newYp).mod(BigInteger.valueOf(primeFieldSelected)))
-                                + ")" + RANDOMIZED_ISOMORPHIC_TEXT_PART15 + RANDOMIZED_ISOMORPHIC_TEXT_PART16
+                                + ")" + RANDOMIZED_ISOMORPHIC_TEXT_PART15 + RANDOMIZED_ISOMORPHIC_TEXT_PART16 //$NON-NLS-1$
                                 + newparaA + RANDOMIZED_ISOMORPHIC_TEXT_PART17 + newparaB);
 
                     }
@@ -815,7 +840,7 @@ public class DPAView extends ViewPart implements Constants {
                     initialTableItemKinBinary.setText(0, TEXT_OF_K_IN_BINARYFORM + kInBinaryForm);
 
                     final TableItem empty = new TableItem(recordTable, SWT.BORDER);
-                    empty.setText(0, "");
+                    empty.setText(0, ""); //$NON-NLS-1$
 
                     final TableItem initialTableItemProcess = new TableItem(recordTable, SWT.BORDER);
                     initialTableItemProcess.setText(0, INITIAL_TABLE_ITEM_PROCESS);
@@ -829,7 +854,7 @@ public class DPAView extends ViewPart implements Constants {
 
                         final TableItem tempTableItems = new TableItem(recordTable, SWT.BORDER);
                         tempTableItems.setText(0,
-                                "  " + counter + INITIAL_TABLE_ITEM_HIGHEST_BIT + kInBinaryForm.charAt(counter - 1));
+                                "  " + counter + INITIAL_TABLE_ITEM_HIGHEST_BIT + kInBinaryForm.charAt(counter - 1)); //$NON-NLS-1$
 
                         if (Character.valueOf(kInBinaryForm.charAt(counter - 1)).equals('0')) {
 
@@ -837,8 +862,8 @@ public class DPAView extends ViewPart implements Constants {
                                     new ECFieldFp(BigInteger.valueOf(primeFieldSelected)));
 
                             tempTableItems.setText(1,
-                                    TABLE_ITEM_DOUBLE + counterP + TABLE_ITEM_P_EQUALS + ecPoint.getAffineX() + ","
-                                            + ecPoint.getAffineY() + ")");
+                                    TABLE_ITEM_DOUBLE + counterP + TABLE_ITEM_P_EQUALS + ecPoint.getAffineX() + "," //$NON-NLS-1$
+                                            + ecPoint.getAffineY() + ")"); //$NON-NLS-1$
 
                         }
 
@@ -848,8 +873,8 @@ public class DPAView extends ViewPart implements Constants {
                                     new ECFieldFp(BigInteger.valueOf(primeFieldSelected)));
 
                             tempTableItems.setText(1,
-                                    TABLE_ITEM_DOUBLE + counterP + TABLE_ITEM_P_EQUALS + ecPoint.getAffineX() + ","
-                                            + ecPoint.getAffineY() + ")");
+                                    TABLE_ITEM_DOUBLE + counterP + TABLE_ITEM_P_EQUALS + ecPoint.getAffineX() + "," //$NON-NLS-1$
+                                            + ecPoint.getAffineY() + ")"); //$NON-NLS-1$
 
                             ecPoint = eccAdd.ecAddition(ecPointSelected, ecPoint,
                                     new ECFieldFp(BigInteger.valueOf(primeFieldSelected)));
@@ -857,8 +882,8 @@ public class DPAView extends ViewPart implements Constants {
                             counterP++;
 
                             tempTableItems.setText(2,
-                                    TABLE_ITEM_ADD + counterP + TABLE_ITEM_P_EQUALS + ecPoint.getAffineX() + ","
-                                            + ecPoint.getAffineY() + ")");
+                                    TABLE_ITEM_ADD + counterP + TABLE_ITEM_P_EQUALS + ecPoint.getAffineX() + "," //$NON-NLS-1$
+                                            + ecPoint.getAffineY() + ")"); //$NON-NLS-1$
 
                         }
 
@@ -878,7 +903,7 @@ public class DPAView extends ViewPart implements Constants {
 
                         final TableItem tempTableItems = new TableItem(recordTable, SWT.BORDER);
                         tempTableItems.setText(0,
-                                "  " + counter + INITIAL_TABLE_ITEM_HIGHEST_BIT + kInBinaryForm.charAt(counter - 1));
+                                "  " + counter + INITIAL_TABLE_ITEM_HIGHEST_BIT + kInBinaryForm.charAt(counter - 1)); //$NON-NLS-1$
 
                         ECPoint ecPointbyBit0;
 
@@ -899,7 +924,7 @@ public class DPAView extends ViewPart implements Constants {
 
                         tempTableItems.setText(1,
                                 TABLE_ITEM_Q0_DOUBLE + counterP + TABLE_ITEM_P_EQUALS + ecPointbyBit0.getAffineX()
-                                        + "," + ecPointbyBit0.getAffineY() + ")");
+                                        + "," + ecPointbyBit0.getAffineY() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
 
                         // choose a new ecpoint automatically when the randomly chosen point is
                         // unsuitable
@@ -921,7 +946,7 @@ public class DPAView extends ViewPart implements Constants {
                         }
 
                         tempTableItems.setText(2, TABLE_ITEM_Q1_DOUBLE + (counterP + 1) + TABLE_ITEM_P_EQUALS
-                                + ecPointbyBit1.getAffineX() + "," + ecPointbyBit1.getAffineY() + ")");
+                                + ecPointbyBit1.getAffineX() + "," + ecPointbyBit1.getAffineY() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
 
                         if (Character.valueOf(kInBinaryForm.charAt(counter - 1)).equals('0')) {
 
@@ -951,10 +976,10 @@ public class DPAView extends ViewPart implements Constants {
 
                         final TableItem tempTableItems = new TableItem(recordTable, SWT.BORDER);
                         tempTableItems.setText(0,
-                                "  " + counter + INITIAL_TABLE_ITEM_HIGHEST_BIT + kInBinaryForm.charAt(counter - 1));
+                                "  " + counter + INITIAL_TABLE_ITEM_HIGHEST_BIT + kInBinaryForm.charAt(counter - 1)); //$NON-NLS-1$
 
                         tempTableItems.setText(1, TABLE_ITEM_Q0_DOUBLE_NEW + counterP + TABLE_ITEM_P_PLUS_R
-                                + ecPointbyBit0.getAffineX() + "," + ecPointbyBit0.getAffineY() + ")");
+                                + ecPointbyBit0.getAffineX() + "," + ecPointbyBit0.getAffineY() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
 
                         if (rplusP.equals(ecPointbyBit0)) {
                             ecPointbyBit1 = eccDouble.eccDouble(ecPointbyBit0, paraA,
@@ -1003,7 +1028,7 @@ public class DPAView extends ViewPart implements Constants {
                         }
 
                         tempTableItems.setText(2, TABLE_ITEM_Q1_ADD_NEW1 + (counterP + 1) + TABLE_ITEM_P_PLUS_R
-                                + ecPointbyBit1.getAffineX() + "," + ecPointbyBit1.getAffineY() + ")");
+                                + ecPointbyBit1.getAffineX() + "," + ecPointbyBit1.getAffineY() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
 
                         // process the doubling operation when the current bit is 0;
                         if (Character.valueOf(kInBinaryForm.charAt(counter - 1)).equals('0')) {
@@ -1020,10 +1045,8 @@ public class DPAView extends ViewPart implements Constants {
                             counterP = (counterP + 1) * 2;
 
                         }
-
                         klength--;
                         counter++;
-
                     }
 
                     // counterFlag == 4 stands for the countermeasure
@@ -1032,17 +1055,16 @@ public class DPAView extends ViewPart implements Constants {
 
                         final TableItem tempTableItems = new TableItem(recordTable, SWT.BORDER);
                         tempTableItems.setText(0,
-                                "  " + counter + INITIAL_TABLE_ITEM_HIGHEST_BIT + kInBinaryForm.charAt(counter - 1));
+                                "  " + counter + INITIAL_TABLE_ITEM_HIGHEST_BIT + kInBinaryForm.charAt(counter - 1)); //$NON-NLS-1$
 
                         ECPoint ecPointbyBit0;
-
                         ECPoint ecPointbyBit1;
 
                         ecPointbyBit0 = eccDouble.eccDouble(newP, (int) newparaA,
                                 new ECFieldFp(BigInteger.valueOf(primeFieldSelected)));
 
                         tempTableItems.setText(1, TABLE_ITEM_Q0_DOUBLE_NEW + counterP + TABLE_ITEM_P_NEW_EQUALS
-                                + ecPointbyBit0.getAffineX() + "," + ecPointbyBit0.getAffineY() + ")");
+                                + ecPointbyBit0.getAffineX() + "," + ecPointbyBit0.getAffineY() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
 
                         if (ecPointSelected.equals(ecPointbyBit0)) {
                             ecPointbyBit1 = eccDouble.eccDouble(ecPointbyBit0, (int) newparaA,
@@ -1053,7 +1075,7 @@ public class DPAView extends ViewPart implements Constants {
                         }
 
                         tempTableItems.setText(2, TABLE_ITEM_Q1_ADD_NEW2 + (counterP + 1) + TABLE_ITEM_P_NEW_EQUALS
-                                + ecPointbyBit1.getAffineX() + "," + ecPointbyBit1.getAffineY() + ")");
+                                + ecPointbyBit1.getAffineX() + "," + ecPointbyBit1.getAffineY() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
 
                         if (Character.valueOf(kInBinaryForm.charAt(counter - 1)).equals('0')) {
 
@@ -1070,7 +1092,6 @@ public class DPAView extends ViewPart implements Constants {
                         counter++;
 
                     }
-
                 }
 
                 final TableItem empty2 = new TableItem(recordTable, SWT.BORDER);
@@ -1083,12 +1104,12 @@ public class DPAView extends ViewPart implements Constants {
                     final TableItem result = new TableItem(recordTable, SWT.BORDER);
                     result.setText(0, Messages.result);
                     final TableItem initialTableItemnewGStep1 = new TableItem(recordTable, SWT.BORDER);
-                    initialTableItemnewGStep1.setText(0, TABLE_ITEM_NEW_G_PART1 + "(" + rplusP.getAffineX() + ","
-                            + rplusP.getAffineY() + ")");
+                    initialTableItemnewGStep1.setText(0, TABLE_ITEM_NEW_G_PART1 + "(" + rplusP.getAffineX() + "," //$NON-NLS-1$ //$NON-NLS-2$
+                            + rplusP.getAffineY() + ")"); //$NON-NLS-1$
 
                     final TableItem initialTableItemnewGStep2 = new TableItem(recordTable, SWT.BORDER);
-                    initialTableItemnewGStep2.setText(0, TABLE_ITEM_NEW_G_PART2 + "(" + kR.getAffineX() + ","
-                            + kR.getAffineY().negate() + ")");
+                    initialTableItemnewGStep2.setText(0, TABLE_ITEM_NEW_G_PART2 + "(" + kR.getAffineX() + "," //$NON-NLS-1$ //$NON-NLS-2$
+                            + kR.getAffineY().negate() + ")"); //$NON-NLS-1$
 
                     ECPoint minS = new ECPoint(new BigInteger(kR.getAffineX().toString()), new BigInteger(kR
                             .getAffineY().negate().toString()));
@@ -1108,9 +1129,9 @@ public class DPAView extends ViewPart implements Constants {
 
                         final TableItem initialTableItemnewGStep4 = new TableItem(recordTable, SWT.BORDER);
                         initialTableItemnewGStep4.setText(0,
-                                TABLE_ITEM_Q_EQUALS + rplusP.getAffineX() + "," + rplusP.getAffineY() + ") + " + "("
-                                        + kR.getAffineX() + "," + kR.getAffineY().negate() + ") = (" + Q.getAffineX()
-                                        + "," + Q.getAffineY() + ")");
+                                TABLE_ITEM_Q_EQUALS + rplusP.getAffineX() + "," + rplusP.getAffineY() + ") + " + "(" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                                        + kR.getAffineX() + "," + kR.getAffineY().negate() + ") = (" + Q.getAffineX() //$NON-NLS-1$ //$NON-NLS-2$
+                                        + "," + Q.getAffineY() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
                     }
 
                 }
@@ -1122,12 +1143,12 @@ public class DPAView extends ViewPart implements Constants {
                     result.setText(0, Messages.result);
                     final TableItem initialTableItemOutputStep1 = new TableItem(recordTable, SWT.BORDER);
                     initialTableItemOutputStep1.setText(0,
-                            TABLE_ITEM_NEW_Q + "(" + newP.getAffineX() + "," + newP.getAffineY() + ") ");
+                            TABLE_ITEM_NEW_Q + "(" + newP.getAffineX() + "," + newP.getAffineY() + ") "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
                     final TableItem initialTableItemOutputStep2 = new TableItem(recordTable, SWT.BORDER);
-                    initialTableItemOutputStep2.setText(0, TABLE_ITEM_Q_EQUALS + newP.getAffineX() + "*" + randomR
-                            + " " + UNICODE_1 + UNICODE_2 + "," + newP.getAffineY() + "*" + randomR + " " + UNICODE_1
-                            + UNICODE_3 + ")");
+                    initialTableItemOutputStep2.setText(0, TABLE_ITEM_Q_EQUALS + newP.getAffineX() + "*" + randomR //$NON-NLS-1$
+                            + " " + UNICODE_1 + UNICODE_2 + "," + newP.getAffineY() + "*" + randomR + " " + UNICODE_1 //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                            + UNICODE_3 + ")"); //$NON-NLS-1$
 
                     final TableItem initialTableItemExecution = new TableItem(recordTable, SWT.BORDER);
 
@@ -1139,48 +1160,47 @@ public class DPAView extends ViewPart implements Constants {
                             .modInverse(BigInteger.valueOf(primeFieldSelected)).multiply(newP.getAffineY())
                             .mod(BigInteger.valueOf(primeFieldSelected)).intValue();
 
-                    initialTableItemExecution.setText(0, TABLE_ITEM_Xq_EQUALS + Xq + ", " + TABLE_ITEM_Yq_EQUALS + Yq);
+                    initialTableItemExecution.setText(0, TABLE_ITEM_Xq_EQUALS + Xq + ", " + TABLE_ITEM_Yq_EQUALS + Yq); //$NON-NLS-1$
 
                     final TableItem initialTableItemOutputStep3 = new TableItem(recordTable, SWT.BORDER);
-                    initialTableItemOutputStep3.setText(0, TABLE_ITEM_Q_EQUALS + Xq + "," + Yq + ")");
+                    initialTableItemOutputStep3.setText(0, TABLE_ITEM_Q_EQUALS + Xq + "," + Yq + ")"); //$NON-NLS-1$ //$NON-NLS-2$
 
                 } else if (exceptionFlag == 1) {
 
                     exceptionFlag = 0;
 
                 } else {
-
-                    empty2.setText(0, "");
+                    empty2.setText(0, ""); //$NON-NLS-1$
 
                     result2.setText(0, Messages.result);
                     initialTableItemOutput.setText(0,
-                            TABLE_ITEM_Q_EQUALS + ecPoint.getAffineX() + "," + ecPoint.getAffineY() + ")");
+                            TABLE_ITEM_Q_EQUALS + ecPoint.getAffineX() + "," + ecPoint.getAffineY() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
 
                 }
-
+                // Resizes the Tabel Columns
+                roundCol.pack();
+                resSquareCol.pack();
+                resMultiCol.pack();
             }
         });
 
         scalarParameterCombo.addSelectionListener(new SelectionAdapter() {
-
             public void widgetSelected(final SelectionEvent e) {
-
                 executeButton.setEnabled(true);
                 countermeasureselectionCombo.setEnabled(true);
-
             }
-
         });
 
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), DPAPlugIn.PLUGIN_ID + ".dpaview");
-
+        scrolledComposite.setContent(mainGroup);
+        scrolledComposite.setMinSize(mainGroup.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), DPAPlugIn.PLUGIN_ID + ".dpaview"); //$NON-NLS-1$
     }
 
     /**
      * Passing the focus request to the viewer's control.
      */
     public void setFocus() {
-
+    	parent.setFocus();
     }
 
     public void reset() {
