@@ -19,6 +19,8 @@ import javax.crypto.KeyAgreement;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
@@ -95,13 +97,13 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 		this.sslView = sslView;
 
 		grpClientChangeCipher = new Group(this, SWT.NONE);
-		grpClientChangeCipher.setBounds(0, 0, 326, 175);
-		grpClientChangeCipher
-		.setText(Messages.ClientChangeCipherSpecCompositeLblClientChangeCipher);
+		grpClientChangeCipher.setLayout(new GridLayout(2, false));
+		grpClientChangeCipher.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
+		grpClientChangeCipher.setText(Messages.ClientChangeCipherSpecCompositeLblClientChangeCipher);
+		
 		lblChangeCipherSpec = new Label(grpClientChangeCipher, SWT.NONE);
-		lblChangeCipherSpec.setBounds(10, 25, 110, 20);
-		lblChangeCipherSpec
-		.setText(Messages.ClientChangeCipherSpecCompositeLblClientChangeCipherSpec);
+		lblChangeCipherSpec.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		lblChangeCipherSpec.setText(Messages.ClientChangeCipherSpecCompositeLblClientChangeCipherSpec);
 
 		btnInformationen = new Button(grpClientChangeCipher, SWT.NONE);
 		btnInformationen.addMouseListener(new MouseAdapter() {
@@ -117,10 +119,8 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 
 			}
 		});
-		btnInformationen.setLocation(216, 140);
-		btnInformationen.setSize(100, 25);
-		btnInformationen
-		.setText(Messages.ClientChangeCipherSpecCompositeBtnInformation);
+		btnInformationen.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		btnInformationen.setText(Messages.ClientChangeCipherSpecCompositeBtnInformation);
 	}
 
 	/**

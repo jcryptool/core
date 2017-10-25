@@ -21,6 +21,8 @@ import javax.crypto.KeyAgreement;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
@@ -152,28 +154,41 @@ public class ServerCertificateComposite extends Composite implements
 		this.sslView = sslView;
 
 		grpServerCertificate = new Group(this, SWT.NONE);
-		grpServerCertificate.setBounds(10, 0, 326, 175);
-		grpServerCertificate
-				.setText(Messages.ServerCertificateCompositeServerCertificate);
+		grpServerCertificate.setLayout(new GridLayout(6, false));
+		grpServerCertificate.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
+		grpServerCertificate.setText(Messages.ServerCertificateCompositeServerCertificate);
+		
+		lblCertificate = new Label(grpServerCertificate, SWT.NONE);
+		lblCertificate.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, false, 4, 1));
+		lblCertificate.setText(Messages.ServerCertificateCompositeLblCertificate);
+		
+		// Creates a new Object from CertificateShow and displays the
+		// ServerCertificate
+		btnShow = new Button(grpServerCertificate, SWT.NONE);
+		btnShow.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false, 2, 1));
+		btnShow.addMouseListener(new MouseAdapter() {
+			public void mouseUp(MouseEvent e) {
+				try {
+					CertificateShow cShow = new CertificateShow(certServer,
+							exchKey.getPublic());
+				} catch (IllegalStateException e1) {
+
+				}
+			}
+		});
+		btnShow.setText(Messages.ServerCertificateCompositeBtnShow);
 
 		lblServerKeyExchange = new Label(grpServerCertificate, SWT.NONE);
-		lblServerKeyExchange.setBounds(10, 55, 140, 15);
-		lblServerKeyExchange
-				.setText(Messages.ServerCertificateCompositeLblServerKeyExchange);
+		lblServerKeyExchange.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 6, 1));
+		lblServerKeyExchange.setText(Messages.ServerCertificateCompositeLblServerKeyExchange);
 
 		lblCertificateRequest = new Label(grpServerCertificate, SWT.NONE);
-		lblCertificateRequest.setBounds(10, 85, 173, 15);
-		lblCertificateRequest
-				.setText(Messages.ServerCertificateCompositeLblCertificateRequest);
-
-		lblServerHelloDone = new Label(grpServerCertificate, SWT.NONE);
-		lblServerHelloDone.setBounds(10, 115, 100, 15);
-		lblServerHelloDone
-				.setText(Messages.ServerCertificateCompositeLblServerHelloDone);
+		lblCertificateRequest.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
+		lblCertificateRequest.setText(Messages.ServerCertificateCompositeLblCertificateRequest);
 
 		// Adds the Radio Buttons and toggles them. No is default setting.
 		rdbYes = new Button(grpServerCertificate, SWT.RADIO);
-		rdbYes.setBounds(196, 85, 50, 15);
+		rdbYes.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		rdbYes.addMouseListener(new MouseAdapter() {
 			public void mouseUp(MouseEvent e) {
 				blnCertificateRequest = true;
@@ -182,7 +197,7 @@ public class ServerCertificateComposite extends Composite implements
 		rdbYes.setText(Messages.ServerCertificateCompositeRdbYes);
 
 		rdbNo = new Button(grpServerCertificate, SWT.RADIO);
-		rdbNo.setBounds(256, 85, 60, 15);
+		rdbNo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		rdbNo.setSelection(true);
 		rdbNo.addMouseListener(new MouseAdapter() {
 			public void mouseUp(MouseEvent e) {
@@ -190,10 +205,23 @@ public class ServerCertificateComposite extends Composite implements
 			}
 		});
 		rdbNo.setText(Messages.ServerCertificateCompositeRdbNo);
+		
+		lblServerHelloDone = new Label(grpServerCertificate, SWT.NONE);
+		lblServerHelloDone.setBounds(10, 115, 100, 15);
+		lblServerHelloDone.setText(Messages.ServerCertificateCompositeLblServerHelloDone);
+		new Label(grpServerCertificate, SWT.NONE);
+		new Label(grpServerCertificate, SWT.NONE);
+		new Label(grpServerCertificate, SWT.NONE);
+		new Label(grpServerCertificate, SWT.NONE);
+		new Label(grpServerCertificate, SWT.NONE);
+		
+		Composite btnComposite = new Composite(grpServerCertificate, SWT.NONE);
+		btnComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 6, 1));
+		btnComposite.setLayout(new GridLayout(2, true));
 
 		// Toggles the Text in the Information Box. Text is switch to
 		// "Parameter" if used once.
-		btnInfo = new Button(grpServerCertificate, SWT.NONE);
+		btnInfo = new Button(btnComposite, SWT.NONE);
 		btnInfo.addMouseListener(new MouseAdapter() {
 			public void mouseUp(MouseEvent e) {
 				infoText = !infoText;
@@ -206,40 +234,23 @@ public class ServerCertificateComposite extends Composite implements
 				refreshInformations();
 			}
 		});
-		btnInfo.setBounds(70, 140, 100, 25);
+		btnInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		btnInfo.setText(Messages.ServerCertificateCompositeBtnInfo);
 
 		// Ends this step and moves on to the next
-		btnNextStep = new Button(grpServerCertificate, SWT.NONE);
+		btnNextStep = new Button(btnComposite, SWT.NONE);
 		btnNextStep.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				sslView.nextStep();
 			}
 		});
-		btnNextStep.setBounds(176, 140, 140, 25);
+		btnNextStep.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		btnNextStep.setText(Messages.ServerCertificateCompositeBtnNextStep);
 
-		lblCertificate = new Label(grpServerCertificate, SWT.NONE);
-		lblCertificate.setBounds(10, 25, 160, 15);
-		lblCertificate
-				.setText(Messages.ServerCertificateCompositeLblCertificate);
 
-		// Creates a new Object from CertificateShow and displays the
-		// ServerCertificate
-		btnShow = new Button(grpServerCertificate, SWT.NONE);
-		btnShow.setBounds(241, 20, 75, 25);
-		btnShow.addMouseListener(new MouseAdapter() {
-			public void mouseUp(MouseEvent e) {
-				try {
-					CertificateShow cShow = new CertificateShow(certServer,
-							exchKey.getPublic());
-				} catch (IllegalStateException e1) {
 
-				}
-			}
-		});
-		btnShow.setText(Messages.ServerCertificateCompositeBtnShow);
+
 	}
 
 	/**

@@ -19,6 +19,8 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -71,68 +73,22 @@ public class ServerHelloComposite extends Composite implements ProtocolStep {
 	 * @param sslView
 	 * 			the element who calls, in our case SslView
 	 */
-	public ServerHelloComposite(Composite parent, int style,
-			final SslView sslView) {
+	public ServerHelloComposite(Composite parent, int style, final SslView sslView) {
 		super(parent, style);
 		this.sslView = sslView;
 		
 		defineTlsLists();
 		
 		grpServerHello = new Group(this, SWT.NONE);
-		grpServerHello.setBounds(0, 0, 326, 175);
+		grpServerHello.setLayout(new GridLayout(6, false));
+		grpServerHello.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
 		grpServerHello.setText(Messages.ServerHelloCompositeGrpServerHello);
 		
-		btnInfo = new Button(grpServerHello, SWT.NONE);
-		btnInfo.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseUp(MouseEvent e) {
-				infoText = !infoText;
-				if(btnInfo.getText().equals(Messages.btnInformationToggleParams)){
-					btnInfo.setText(Messages.ClientCertificateCompositeBtnInfo);
-				}else{
-					btnInfo.setText(Messages.btnInformationToggleParams);
-				}
-				refreshInformations();
-			}
-		});
-		btnInfo.setBounds(65, 140, 100, 25);
-		btnInfo.setText(Messages.ServerHelloCompositeBtnInfo);
-		
+		//Version
 		lblVersion = new Label(grpServerHello, SWT.NONE);
-		lblVersion.setBounds(10, 25, 55, 15);
+		lblVersion.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		lblVersion.setText(Messages.ServerHelloCompositeLblVersion);
-
-		lblRandom = new Label(grpServerHello, SWT.NONE);
-		lblRandom.setBounds(10, 55, 55, 15);
-		lblRandom.setText(Messages.ServerHelloCompositeLblRandom);
-
-		lblCipherSuite = new Label(grpServerHello, SWT.NONE);
-		lblCipherSuite.setBounds(10, 85, 70, 15);
-		lblCipherSuite.setText(Messages.ServerHelloCompositeLblCipherSuite);
-
-		lblSessionID = new Label(grpServerHello, SWT.NONE);
-		lblSessionID.setBounds(10, 115, 55, 15);
-		lblSessionID.setText(Messages.ServerHelloCompositeLblSessionID);
-
-		txtRandom = new Text(grpServerHello, SWT.BORDER);
-		txtRandom.setBounds(90, 52, 140, 23);
-
-		cmbCipherSuite = new Combo(grpServerHello, SWT.NONE);
-		cmbCipherSuite.setBounds(90, 82, 160, 23);
 		
-		txtSessionID = new Text(grpServerHello, SWT.BORDER);
-		txtSessionID.setBounds(90, 112, 75, 23);
-
-		btnGenerate = new Button(grpServerHello, SWT.NONE);
-		btnGenerate.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseUp(MouseEvent e) {
-				createRandom();
-			}
-		});
-		btnGenerate.setBounds(240, 50, 75, 25);
-		btnGenerate.setText(Messages.ServerHelloCompositeBtnGenerate);
-
 		cmbVersion = new Combo(grpServerHello, SWT.NONE);
 		cmbVersion.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -154,22 +110,76 @@ public class ServerHelloComposite extends Composite implements ProtocolStep {
 				cmbCipherSuite.select(0);
 			}
 		});
-		cmbVersion.setBounds(90, 22, 90, 20);
+		cmbVersion.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
 		cmbVersion.add(Messages.Tls0);
 		cmbVersion.add(Messages.Tls1);
 		cmbVersion.add(Messages.Tls2);
 		cmbVersion.select(2);
+		
+		//Random 
+		lblRandom = new Label(grpServerHello, SWT.NONE);
+		lblRandom.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		lblRandom.setText(Messages.ServerHelloCompositeLblRandom);
+		
+		txtRandom = new Text(grpServerHello, SWT.BORDER);
+		txtRandom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
+		
+		btnGenerate = new Button(grpServerHello, SWT.NONE);
+		btnGenerate.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				createRandom();
+			}
+		});
+		btnGenerate.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		btnGenerate.setText(Messages.ServerHelloCompositeBtnGenerate);
+		
+		//Cipher
+		lblCipherSuite = new Label(grpServerHello, SWT.NONE);
+		lblCipherSuite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		lblCipherSuite.setText(Messages.ServerHelloCompositeLblCipherSuite);
+		
+		cmbCipherSuite = new Combo(grpServerHello, SWT.NONE);
+		cmbCipherSuite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
+		
+		//SessionId
+		lblSessionID = new Label(grpServerHello, SWT.NONE);
+		lblSessionID.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		lblSessionID.setText(Messages.ServerHelloCompositeLblSessionID);
+		
+		txtSessionID = new Text(grpServerHello, SWT.BORDER);
+		txtSessionID.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		
+		//Buttons
+		Composite btnComposite = new Composite(grpServerHello, SWT.NONE);
+		btnComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 6, 1));
+		btnComposite.setLayout(new GridLayout(2, true));
+		
+		btnInfo = new Button(btnComposite, SWT.NONE);
+		btnInfo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				infoText = !infoText;
+				if(btnInfo.getText().equals(Messages.btnInformationToggleParams)){
+					btnInfo.setText(Messages.ClientCertificateCompositeBtnInfo);
+				}else{
+					btnInfo.setText(Messages.btnInformationToggleParams);
+				}
+				refreshInformations();
+			}
+		});
+		btnInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		btnInfo.setText(Messages.ServerHelloCompositeBtnInfo);
 
-		btnNextStep = new Button(grpServerHello, SWT.NONE);
+		btnNextStep = new Button(btnComposite, SWT.NONE);
 		btnNextStep.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				sslView.nextStep();
 			}
 		});
-		btnNextStep.setBounds(175, 140, 140, 25);
+		btnNextStep.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		btnNextStep.setText(Messages.ServerHelloCompositeBtnNextStep);
-		
 	}
 
 	/**
