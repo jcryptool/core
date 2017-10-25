@@ -67,7 +67,6 @@ public class SslView extends ViewPart {
     public void createPartControl(final Composite parent) {
         scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
         mainContent = new Composite(scrolledComposite, SWT.NONE);
-        scrolledComposite.setContent(mainContent);
         scrolledComposite.setExpandHorizontal(true);
         scrolledComposite.setExpandVertical(true);
         
@@ -81,13 +80,17 @@ public class SslView extends ViewPart {
         headline.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 
         content = new Composite(mainContent, SWT.NONE);
-        content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        GridData gd_content = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+        gd_content.widthHint = 1200;
+        gd_content.heightHint = 800;
+        content.setLayoutData(gd_content);
         content.setLayout(new GridLayout(4, false));
         
         createGui();
         createButtons();
-       
-        scrolledComposite.setMinSize(mainContent.computeSize(1100, SWT.DEFAULT));
+        
+        scrolledComposite.setContent(mainContent);
+        scrolledComposite.setMinSize(mainContent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         
         // Fuer die Hilfe:
         // PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), SslPlugin.PLUGIN_ID
@@ -161,12 +164,14 @@ public class SslView extends ViewPart {
 
         //Information Panel
         grp_stxInfo = new Group(content, SWT.NONE);
-        grp_stxInfo.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, true, 1, 1));
+        GridData gd_grpStxInfo = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+        grp_stxInfo.setLayoutData(gd_grpStxInfo);
         grp_stxInfo.setLayout(new GridLayout());
         grp_stxInfo.setText(Messages.SslViewLblInfo);
 
         stxInformation = new StyledText(grp_stxInfo, SWT.READ_ONLY | SWT.MULTI | SWT.V_SCROLL | SWT.WRAP );
         GridData gd_stxInfo = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+        gd_stxInfo.widthHint = 300;
         stxInformation.setLayoutData(gd_stxInfo);
         stxInformation.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
         stxInformation.setText(Messages.SslViewStxInformation);
@@ -347,8 +352,8 @@ public class SslView extends ViewPart {
         serverCertificateComposite.resetStep();
         serverHelloComposite.setVisible(false);
         serverHelloComposite.resetStep();
-        clientHelloComposite.resetStep();
         clientHelloComposite.enableControls();
+        clientHelloComposite.resetStep();
         arrow.resetArrows();
         stxInformation.setText(Messages.SslViewStxInformation);
         btnNextStep.setEnabled(true);
