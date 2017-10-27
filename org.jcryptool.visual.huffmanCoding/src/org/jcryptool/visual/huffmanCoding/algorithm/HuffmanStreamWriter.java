@@ -113,6 +113,7 @@ public class HuffmanStreamWriter extends OutputStream {
 	 */
 	@Override
 	public void write(int character) throws IOException {
+		System.out.println(character);
 		stream.write(character);
 	}
 }

@@ -19,6 +19,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+import org.jcryptool.core.logging.utils.LogUtil;
+
 /**
  *
  * @author Miray Inel
@@ -38,6 +40,9 @@ public class Huffman {
     private StringBuilder sb = null;
     private ArrayList<Node> resultNodeList = null;
     private OutputStream out;
+    private HuffmanStreamWriter hsw;
+    private ArrayList <Integer> bitArray;
+    private int[] huffmanBinaryCompressed;
 
     public Huffman() {
         super();
@@ -52,19 +57,18 @@ public class Huffman {
      * @param out the OutputStream
      * @throws IOException
      */
-    public void compress(String input, OutputStream out) throws IOException {
-        this.out = out;
+    public void compress(String input) throws IOException {
 
         InputStream is = new ByteArrayInputStream(input.getBytes());
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
-        HuffmanStreamWriter hsw = new HuffmanStreamWriter(out);
-
+        hsw = new HuffmanStreamWriter(out);
+        bitArray = new ArrayList<>(); 
         /*
          * read file and create a statistic
          */
-        ArrayList<Integer> file = new ArrayList<Integer>();
-        int[] charStats = createStatistics(br, file);
+        ArrayList<Integer> inputFile = new ArrayList<Integer>();
+        int[] charStats = createStatistics(br, inputFile);
 
         /*
          * create node set and calculate the probabilities
@@ -89,15 +93,104 @@ public class Huffman {
             }
         }
 
-        /*
-         * write the codeTable to file and write all the codes
-         */
-        hsw.writeCodeTable(table);
-        for (Integer i : file) {
-            hsw.write(table[i]);
-        }
-        hsw.close();
+    
+        huffmanBinaryCompressed = createFileAsInt(inputFile); 
     }
+    
+    public int[] getHuffmanBinary() {
+    	if (huffmanBinaryCompressed == null)
+    		return new int[0];
+    	return huffmanBinaryCompressed;
+    }
+    
+    public void writeHuffmanBinary(OutputStream out) throws IOException {
+    	if (huffmanBinaryCompressed == null) {
+    		throw new IllegalStateException("No compressed huffman encoded data available");
+    	}
+    	try (HuffmanStreamWriter hsw = new HuffmanStreamWriter(out);) {
+        	
+        	for (int huffmanByte : huffmanBinaryCompressed) {
+        		hsw.write(huffmanByte);
+        	}
+    	}
+    	
+    }
+    
+    /**
+     * Creates the binary structure for the huffman tree.
+     * 
+     * This used to be done by HuffmanStreamWriter but I think it's
+     * nicer to be first assembled and then write it in one chunk.
+     * 
+     * @param file
+     * @return a Integer Array of the binary representation of the huffman tree
+     */
+    private int[] createFileAsInt(ArrayList<Integer> inputFile) {
+    	//First we create the table
+    	bitArray.clear();
+    	
+    	
+		for (int i = 0; i < table.length; i++) {
+			if (table[i] != null) {
+				bitArray.add(i);
+				bitArray.add(table[i].getLength());
+				//write(table[i].getLength());
+				bitStringToInteger(table[i]);
+				commitBuffer();
+				//write(table[i]);
+				//flushBitBuffer();
+			}
+		}
+		// write end of table
+		bitArray.add(0);
+		bitArray.add(0);
+		
+		
+    	// Now we search for every character in the file, take its value from the table
+		// and write it to the binary (int) buffer
+		for (Integer i : inputFile) {
+            bitStringToInteger(table[i]);
+        }
+		commitBuffer();
+		
+		int[] fileAsInt = new int[bitArray.size()];
+		
+		for (int i = 0; i < fileAsInt.length; ++i) {
+			fileAsInt[i] = bitArray.get(i);
+		}
+		
+    	return fileAsInt;
+    }
+    
+    int buffer = 0;
+    int offset = 0;
+
+	private void bitStringToInteger(BitString bitString) {
+		int bit;
+		
+		
+		boolean [] bits = bitString.getBitArray();
+		for (int i = 0; i < bits.length; ++i, ++offset) {
+			if (offset >= 8) {
+				commitBuffer();
+			}
+			bit = bits[i] ? 1 : 0;
+			buffer |= bit << (7 - offset);
+			
+		}
+		
+	}
+	
+	private void commitBuffer() {
+		bitArray.add(buffer);
+		buffer = 0;
+		offset = 0;
+	}
+    
+    
+
+
+    
 
     /**
      * This method performs the uncompression of the file inFilename. It writes the results to the
