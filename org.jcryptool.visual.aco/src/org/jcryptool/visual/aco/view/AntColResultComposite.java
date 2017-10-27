@@ -3,7 +3,6 @@ package org.jcryptool.visual.aco.view;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.StackLayout;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -69,7 +68,6 @@ public class AntColResultComposite extends Composite {
 
 		GridData data = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
 		GridData dataLabel = new GridData(SWT.FILL, SWT.BOTTOM, true, false, 2, 1);
-		data.heightHint = 18;
 		currAntNolabel = new Label(resultComp, SWT.NONE);
 		currAntNolabel.setLayoutData(data);
 		Group currGroup = new Group(resultComp, SWT.NONE);
@@ -86,9 +84,7 @@ public class AntColResultComposite extends Composite {
 		currentText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		currentText.setEditable(false);
 		CLabel help = new CLabel(currGroup, SWT.NONE);
-		help.setSize(15, 15);
-		Image helpImage = ACOPlugin.getImageDescriptor("platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif").createImage();
-		help.setImage(helpImage);
+		help.setImage(ACOPlugin.getImageDescriptor("platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png").createImage());
 		
 		final ToolTip tip = new ToolTip(currGroup.getShell(), SWT.BALLOON);
 		tip.setMessage(Messages.Result_description);
@@ -98,11 +94,6 @@ public class AntColResultComposite extends Composite {
 				tip.setVisible(true);
 			}});
 
-		Composite filler = new Composite(currGroup, SWT.NONE);
-		GridData fillerData = new GridData(SWT.TOP, SWT.LEFT, false, false);
-		fillerData.heightHint = 3;
-		filler.setLayoutData(fillerData);
-
 		label = new Label(currGroup, SWT.NONE);
 		label.setLayoutData(dataLabel);
 		label.setText(Messages.Result_currTrailLbl); //$NON-NLS-1$ //$NON-NLS-2$
@@ -111,12 +102,9 @@ public class AntColResultComposite extends Composite {
 		currentTrail.setLayoutData(data);
 		currentTrail.setEditable(false);
 		
-		filler = new Composite(resultComp, SWT.NONE);
-		filler.setLayoutData(new GridData(SWT.TOP, SWT.LEFT, true, true));
-		
 		bestGroup = new Group(resultComp, SWT.NONE);
 		bestGroup.setText(Messages.Viusal_BestAntGroup);
-		bestGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		bestGroup.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true));
 		bestGroup.setLayout(new GridLayout(2, false));
 
 		label = new Label(bestGroup, SWT.NONE);
@@ -128,15 +116,12 @@ public class AntColResultComposite extends Composite {
 		bestText.setEditable(false);
 		
 		help = new CLabel(bestGroup, SWT.NONE);
-		help.setSize(15, 15);
-		help.setImage(helpImage);
+		help.setImage(ACOPlugin.getImageDescriptor("platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png").createImage());
 		help.addListener(SWT.MouseDown, new Listener(){
 			@Override
 			public void handleEvent(Event event) {
 				tip.setVisible(true);
 			}});
-		filler = new Composite(bestGroup, SWT.NONE);
-		filler.setLayoutData(fillerData);
 
 		label = new Label(bestGroup, SWT.NONE);
 		label.setLayoutData(dataLabel);

@@ -62,12 +62,11 @@ public class AntColConfigComposite extends Composite {
 		firstStepGroup.setLayout(layout);
 
 		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
-		gridData.widthHint = 220;
 
 		firstStepGroup.setLayoutData(gridData);
 		generateTextButton = new Button(firstStepGroup, SWT.PUSH);
 		generateTextButton.setText(Messages.Control_generateText); //$NON-NLS-1$
-		generateTextButton.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM,
+		generateTextButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
 				true, false));
 		generateTextButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -80,7 +79,7 @@ public class AntColConfigComposite extends Composite {
 		label.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
 
 		label = new Label(firstStepGroup, SWT.NONE);
-		label.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, false, false));
+		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		label.setText(Messages.Func_ciphertext); //$NON-NLS-1$
 		txtCipher = new StyledText(firstStepGroup, SWT.SINGLE | SWT.BORDER);
 		txtCipher.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -88,13 +87,11 @@ public class AntColConfigComposite extends Composite {
 		textLengthLabel = new Label(firstStepGroup, SWT.FILL);
 		textLengthLabel.setText(Messages.Control_textLength + " 0"); //$NON-NLS-1$
 
-		Composite filler = new Composite(firstStepGroup, SWT.NONE);
-		GridData fillerData = new GridData(SWT.TOP, SWT.LEFT, false, false);
-		fillerData.heightHint = 6;
-		filler.setLayoutData(fillerData);
-
 		labelSlider = new Label(firstStepGroup, SWT.NONE);
 		labelSlider.setText(Messages.Func_keyLength); //$NON-NLS-1$ //$NON-NLS-2$
+		GridData gd_labelSlider = new GridData(SWT.FILL, SWT.FILL, true, false);
+		gd_labelSlider.verticalIndent = 30;
+		labelSlider.setLayoutData(gd_labelSlider);
 
 		keyLengthSlider = new Spinner(firstStepGroup, SWT.BORDER);
 
@@ -112,19 +109,17 @@ public class AntColConfigComposite extends Composite {
 			}
 		});
 
-		filler = new Composite(firstStepGroup, SWT.NONE);
-		filler.setLayoutData(fillerData);
-
 		label = new Label(firstStepGroup, SWT.FILL);
 		label.setText(Messages.Func_textLanguage); //$NON-NLS-1$
-		label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		GridData gd_label = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		gd_label.verticalIndent = 30;
+		label.setLayoutData(gd_label);
 
 		languageCombo = new Combo(firstStepGroup, SWT.READ_ONLY);
-		languageCombo.setBounds(50, 50, 150, 65);
 		String items[] = { Messages.Control_language1,
 				Messages.Control_language2, Messages.Control_language_own };
 		languageCombo.setItems(items);
-		languageCombo.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true,
+		languageCombo.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true,
 				false));
 
 		languageCombo.select(0);
@@ -134,14 +129,12 @@ public class AntColConfigComposite extends Composite {
 			}
 		});
 
-		filler = new Composite(firstStepGroup, SWT.NONE);
-		filler.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		// Weiter-Button
 
 		startAnalysisButton = new Button(firstStepGroup, SWT.PUSH);
 		startAnalysisButton.setText(Messages.Func_proceedToAnalysis); //$NON-NLS-1$
 		startAnalysisButton.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM,
-				true, false));
+				true, true));
 		startAnalysisButton.setEnabled(false);
 		startAnalysisListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -205,7 +198,6 @@ public class AntColConfigComposite extends Composite {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		};
