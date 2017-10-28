@@ -67,21 +67,26 @@ public class DemonstrationPainter implements PaintListener {
     public void paintControl(PaintEvent e) {
         width = parent.getSize().x;
         height = parent.getSize().y;
+        if (width > height) {
+        	width = height;
+        } else {
+        	height = width;
+        }
         if (demonstration.getCurrentStep() == 0) {
             e.gc.fillRectangle(0, 0, width, height);
         } else if (demonstration.getCurrentStep() == 1) {
             e.gc.setFont(FontService.getLargeFont());
             e.gc.drawText(Messages.getString("DemonstrationPainter.description"), 0, 0); //$NON-NLS-1$
             if (!demonstration.padding.equals("")) { //$NON-NLS-1$
-                e.gc.drawText(Messages.getString("DemonstrationPainter.padding"), 0, 40); //$NON-NLS-1$
+                e.gc.drawText(Messages.getString("DemonstrationPainter.padding"), 0, 80); //$NON-NLS-1$
                 Color savedColor = e.gc.getForeground();
                 e.gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
-                e.gc.drawString(demonstration.padding.substring(0, Math.min(25, demonstration.padding.length())), 70,
-                        40);
+                e.gc.drawString(demonstration.padding.substring(0, Math.min(25, demonstration.padding.length())), 90,
+                        80);
                 for (int i = 25; i < demonstration.padding.length(); i = i + 40)
                     e.gc.drawString(
                             demonstration.padding.substring(i, Math.min(demonstration.padding.length(), i + 40)), 0,
-                            40 + (i / 25) * 20);
+                            95 + (i / 25) * 20);
                 e.gc.setForeground(savedColor);
 
             }
