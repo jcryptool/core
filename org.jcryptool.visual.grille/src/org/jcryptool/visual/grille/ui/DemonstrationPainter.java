@@ -78,15 +78,15 @@ public class DemonstrationPainter implements PaintListener {
             e.gc.setFont(FontService.getLargeFont());
             e.gc.drawText(Messages.getString("DemonstrationPainter.description"), 0, 0); //$NON-NLS-1$
             if (!demonstration.padding.equals("")) { //$NON-NLS-1$
-                e.gc.drawText(Messages.getString("DemonstrationPainter.padding"), 0, 80); //$NON-NLS-1$
+                e.gc.drawText(Messages.getString("DemonstrationPainter.padding"), 0, 140); //$NON-NLS-1$
                 Color savedColor = e.gc.getForeground();
                 e.gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
-                e.gc.drawString(demonstration.padding.substring(0, Math.min(25, demonstration.padding.length())), 95,
-                        80);
-                for (int i = 25; i < demonstration.padding.length(); i = i + 40)
-                    e.gc.drawString(
-                            demonstration.padding.substring(i, Math.min(demonstration.padding.length(), i + 40)), 0,
-                            95 + (i / 25) * 20);
+                String padding = "";
+                for (int i = 0; i < demonstration.padding.length(); i = i + 35) {
+                	padding += demonstration.padding.substring(i, Math.min(demonstration.padding.length(), i+35));
+                	padding += "\n";
+                }
+                e.gc.drawText(padding, 0, 175);
                 e.gc.setForeground(savedColor);
 
             }

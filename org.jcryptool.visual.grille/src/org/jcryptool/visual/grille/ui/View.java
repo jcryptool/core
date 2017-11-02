@@ -124,16 +124,28 @@ public class View extends ViewPart {
         group_output = new Group(parent, SWT.NONE);
         group_output.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         group_output.setLayout(new FillLayout());
-        group_output.setText(Messages.getString("View.ciphertext")); //$NON-NLS-1$
+        group_output.setText(Messages.getString("View.ciphertext") + " (0)");
         text_output = new Text(group_output, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
         text_output.addKeyListener(new org.eclipse.swt.events.KeyListener() {
+        	
+        	@Override
             public void keyPressed(KeyEvent e) {
                 e.doit = false;
             }
 
+        	@Override
             public void keyReleased(KeyEvent e) {
+        		
             }
         });
+        
+        text_output.addModifyListener(new ModifyListener() {
+			
+			@Override
+			public void modifyText(ModifyEvent e) {
+				group_output.setText(Messages.getString("View.ciphertext") + " (" + text_output.getText().length() + ")");
+			}
+		});
 
     }
 
@@ -420,10 +432,14 @@ public class View extends ViewPart {
         group_input = new Group(parent, SWT.NONE);
         group_input.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         group_input.setLayout(new FillLayout());
-        group_input.setText(Messages.getString("View.plaintext")); //$NON-NLS-1$
+        group_input.setText(Messages.getString("View.plaintext") + " (0)");
         text_input = new Text(group_input, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
+        text_input.setText("");
         text_input.addModifyListener(new ModifyListener() {
+        	
+        	@Override
             public void modifyText(ModifyEvent e) {
+        		group_input.setText(Messages.getString("View.plaintext") + " (" + text_input.getText().length() + ")");
                 reset();
             }
         });
@@ -474,6 +490,8 @@ public class View extends ViewPart {
                 checkOkButton();
             }
         });
+        
+        
     }
 
     private void createOptions(Composite parent) {
