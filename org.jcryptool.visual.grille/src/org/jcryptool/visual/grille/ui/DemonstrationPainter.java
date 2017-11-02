@@ -81,7 +81,7 @@ public class DemonstrationPainter implements PaintListener {
                 e.gc.drawText(Messages.getString("DemonstrationPainter.padding"), 0, 80); //$NON-NLS-1$
                 Color savedColor = e.gc.getForeground();
                 e.gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
-                e.gc.drawString(demonstration.padding.substring(0, Math.min(25, demonstration.padding.length())), 90,
+                e.gc.drawString(demonstration.padding.substring(0, Math.min(25, demonstration.padding.length())), 95,
                         80);
                 for (int i = 25; i < demonstration.padding.length(); i = i + 40)
                     e.gc.drawString(
@@ -189,10 +189,9 @@ public class DemonstrationPainter implements PaintListener {
 
     private void fillCell(PaintEvent e, int x, int y, char c) {
         Point eckeLO = new Point(x * cellWidth, y * cellHeight);
-        int fontSize = (int) Math.round(10 / (double) 17 * cellHeight * 0.9);
+        int fontSize =  (int) (0.5 * cellHeight);
         e.gc.setFont(new Font(Display.getCurrent(), "Times Roman", fontSize, SWT.NORMAL)); //$NON-NLS-1$
-        e.gc.drawString(
-                "" + c, eckeLO.x + (int) Math.round(cellWidth - charSize.get(c).x / (double) 10 * fontSize) / 2, eckeLO.y + (cellHeight - fontSize - (int) Math.round(5 / (double) 10 * fontSize)) / 2); //$NON-NLS-1$
+        e.gc.drawString("" + c, eckeLO.x + (cellWidth / 5), eckeLO.y); //$NON-NLS-1$
     }
 
 }

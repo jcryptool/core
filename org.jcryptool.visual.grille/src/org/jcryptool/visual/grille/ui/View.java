@@ -70,6 +70,7 @@ public class View extends ViewPart {
     private Composite parent;
 	private Composite viewParent;
 	private Composite inOutText;
+	private Composite composite_illustration;
 
     public View() {
         model = new Grille();
@@ -87,8 +88,7 @@ public class View extends ViewPart {
         createOptions(parent);
         createInOutComposite(parent);
         createSchablone(parent);
-        createDemonstration(parent);
-        createExecutionControls(parent);
+        createIllustrationAndExecType(parent);
 
         scrolledComposite.setContent(parent);
         scrolledComposite.setMinSize(parent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -97,14 +97,24 @@ public class View extends ViewPart {
         scrolledComposite.layout();
     }
 
-    private void createInOutComposite(Composite parent) {
+    private void createIllustrationAndExecType(Composite parent) {
+    	composite_illustration = new Composite(parent, SWT.NONE);
+    	composite_illustration.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
+    	GridLayout gl_composite_illustration = new GridLayout(2, false);
+    	gl_composite_illustration.marginWidth = 0;
+    	gl_composite_illustration.marginHeight = 0;
+		composite_illustration.setLayout(gl_composite_illustration);
+		createDemonstration(composite_illustration);
+		createExecutionControls(composite_illustration);
+	}
+
+	private void createInOutComposite(Composite parent) {
 		inOutText = new Composite(parent, SWT.NONE);
 		inOutText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 2));
 		// Composite should have no border, so it looks like the groups on the left.
 		GridLayout gl_inOutText = new GridLayout(2, true);
 		gl_inOutText.marginWidth = 0;
 		gl_inOutText.marginHeight = 0;
-		gl_inOutText.verticalSpacing = 0;
 		inOutText.setLayout(gl_inOutText);
 		createInputtext(inOutText);
 		createOutputtext(inOutText);
@@ -130,8 +140,11 @@ public class View extends ViewPart {
     private void createExecutionControls(Composite parent) {
 
         Composite execType = new Composite(parent, SWT.NONE);
-        execType.setLayout(new GridLayout(1, true));
-        execType.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+        GridLayout gl_execType = new GridLayout();
+        gl_execType.marginWidth = 0;
+        gl_execType.marginHeight = 0;
+        execType.setLayout(gl_execType);
+        execType.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         createTypeSelection(execType);
         createSteps(execType);
 
@@ -390,13 +403,17 @@ public class View extends ViewPart {
         Group illustration = new Group(parent, SWT.NONE);
         illustration.setLayout(new FillLayout());
         illustration.setText(Messages.getString("View.visualisation"));
-        illustration.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
+        illustration.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         canvas_demonstration = new Canvas(illustration, SWT.DOUBLE_BUFFERED);
         canvas_demonstration.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-        // canvas_demonstration.setLayoutData(new GridData(SWT.FILL, SWT.FILL,
-        // true, false));
-        // canvas_demonstration.addPaintListener(new
-        // DemonstrationPainter(demonstration));
+        
+        int width_Canvas_demonstration = canvas_demonstration.getSize().x;
+        int height_Canvas_demonstration = canvas_demonstration.getSize().y;
+        if (width_Canvas_demonstration >= height_Canvas_demonstration) {
+        	canvas_demonstration.setSize(height_Canvas_demonstration, height_Canvas_demonstration);
+        } else {
+        	canvas_demonstration.setSize(width_Canvas_demonstration, width_Canvas_demonstration);
+        }
     }
 
     private void createInputtext(Composite parent) {
