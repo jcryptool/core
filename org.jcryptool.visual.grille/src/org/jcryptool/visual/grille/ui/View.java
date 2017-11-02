@@ -51,6 +51,8 @@ public class View extends ViewPart {
     private Button button_step1;
     private Button button_direct;
     private Button button_stepwise;
+    private Button setHoles;
+    private Button deleteHoles;
     private Text text_output;
     private Button button_okay;
     private Spinner spinner_keySize;
@@ -82,7 +84,7 @@ public class View extends ViewPart {
     	this.viewParent = viewParent;
         ScrolledComposite scrolledComposite = new ScrolledComposite(viewParent, SWT.H_SCROLL | SWT.V_SCROLL);
         parent = new Composite(scrolledComposite, SWT.NONE);
-        parent.setLayout(new GridLayout(4, true));
+        parent.setLayout(new GridLayout(4, false));
 
         createDescription(parent);
         createOptions(parent);
@@ -124,7 +126,7 @@ public class View extends ViewPart {
         group_output = new Group(parent, SWT.NONE);
         group_output.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         group_output.setLayout(new FillLayout());
-        group_output.setText(Messages.getString("View.ciphertext") + " (0)");
+        group_output.setText(Messages.getString("View.ciphertext") + " (0)"); //$NON-NLS-1$ //$NON-NLS-2$
         text_output = new Text(group_output, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
         text_output.addKeyListener(new org.eclipse.swt.events.KeyListener() {
         	
@@ -143,7 +145,7 @@ public class View extends ViewPart {
 			
 			@Override
 			public void modifyText(ModifyEvent e) {
-				group_output.setText(Messages.getString("View.ciphertext") + " (" + text_output.getText().length() + ")");
+				group_output.setText(Messages.getString("View.ciphertext") + " (" + text_output.getText().length() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			}
 		});
 
@@ -166,7 +168,7 @@ public class View extends ViewPart {
 
         Group typeSelection = new Group(execType, SWT.NONE);
         typeSelection.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-        typeSelection.setText(Messages.getString("View.type"));
+        typeSelection.setText(Messages.getString("View.type")); //$NON-NLS-1$
         typeSelection.setLayout(new GridLayout(3, true));
 
         button_direct = new Button(typeSelection, SWT.RADIO);
@@ -184,7 +186,7 @@ public class View extends ViewPart {
         });
 
                 button_okay = new Button(typeSelection, SWT.NONE);
-                button_okay.setImage(GrillePlugin.getImageDescriptor("icons/run_exc.gif").createImage());
+                button_okay.setImage(GrillePlugin.getImageDescriptor("icons/run_exc.gif").createImage()); //$NON-NLS-1$
                 button_okay.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 3, 1));
                 button_okay.setText(Messages.getString("View.start")); //$NON-NLS-1$
                 button_okay.setEnabled(false);
@@ -248,7 +250,7 @@ public class View extends ViewPart {
 
         Group steps = new Group(execType, SWT.NONE);
         steps.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-        steps.setText(Messages.getString("View.steps"));
+        steps.setText(Messages.getString("View.steps")); //$NON-NLS-1$
         steps.setLayout(new GridLayout(1, true));
 
         Group step1 = new Group(steps, SWT.NONE);
@@ -414,7 +416,7 @@ public class View extends ViewPart {
     private void createDemonstration(Composite parent) {
         Group illustration = new Group(parent, SWT.NONE);
         illustration.setLayout(new FillLayout());
-        illustration.setText(Messages.getString("View.visualisation"));
+        illustration.setText(Messages.getString("View.visualisation")); //$NON-NLS-1$
         illustration.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         canvas_demonstration = new Canvas(illustration, SWT.DOUBLE_BUFFERED);
         canvas_demonstration.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
@@ -432,14 +434,14 @@ public class View extends ViewPart {
         group_input = new Group(parent, SWT.NONE);
         group_input.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         group_input.setLayout(new FillLayout());
-        group_input.setText(Messages.getString("View.plaintext") + " (0)");
+        group_input.setText(Messages.getString("View.plaintext") + " (0)"); //$NON-NLS-1$ //$NON-NLS-2$
         text_input = new Text(group_input, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
-        text_input.setText("");
+        text_input.setText(""); //$NON-NLS-1$
         text_input.addModifyListener(new ModifyListener() {
         	
         	@Override
             public void modifyText(ModifyEvent e) {
-        		group_input.setText(Messages.getString("View.plaintext") + " (" + text_input.getText().length() + ")");
+        		group_input.setText(Messages.getString("View.plaintext") + " (" + text_input.getText().length() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 reset();
             }
         });
@@ -448,7 +450,7 @@ public class View extends ViewPart {
     private void createSchablone(Composite parent) {
         Group schablone = new Group(parent, SWT.NONE);
         schablone.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
-        schablone.setLayout(new GridLayout(2, true));
+        schablone.setLayout(new GridLayout(2, false));
         schablone.setText(Messages.getString("View.keygrille")); //$NON-NLS-1$
 
         canvas_schluessel = new Canvas(schablone, SWT.DOUBLE_BUFFERED);
@@ -456,14 +458,14 @@ public class View extends ViewPart {
         canvas_schluessel.addPaintListener(new KeyPainter(canvas_schluessel, model));
         schluessel_listener = new KeyListener(model, this);
         canvas_schluessel.addMouseListener(schluessel_listener);
-        GridData gridData = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 2);
+        GridData gridData = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 4);
         gridData.widthHint = 151;
         gridData.heightHint = 151;
         canvas_schluessel.setLayoutData(gridData);
 
         Label spinner = new Label(schablone, SWT.NONE);
         spinner.setText(Messages.getString("View.size")); //$NON-NLS-1$
-        spinner.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+        spinner.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false));
 
         spinner_keySize = new Spinner(schablone, SWT.NONE);
         spinner_keySize.setMinimum(4);
@@ -471,7 +473,7 @@ public class View extends ViewPart {
         spinner_keySize.setIncrement(2);
         spinner_keySize.setSelection(6);
         spinner_keySize.setEnabled(true);
-        spinner_keySize.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+        spinner_keySize.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true));
     	
         spinner_keySize.addSelectionListener(new SelectionListener() {
             public void widgetDefaultSelected(SelectionEvent e) {
@@ -486,10 +488,70 @@ public class View extends ViewPart {
                 reset();
                 canvas_schluessel.removeMouseListener(schluessel_listener);
                 canvas_schluessel.addMouseListener(schluessel_listener);
-                canvas_schluessel.redraw();
-                checkOkButton();
             }
         });
+        
+        setHoles = new Button(schablone, SWT.PUSH);
+        setHoles.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, true));
+        setHoles.setText(Messages.getString("View.1")); //$NON-NLS-1$
+        setHoles.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				//reset the old schablone
+				model.setKey(new KeySchablone(Integer.parseInt(spinner_keySize.getText())));
+				reset();
+                
+                boolean set = false;
+				int size = model.getKey().getSize();
+				int x = (int) (Math.random() * (size - 1) + 1);
+				int y = (int) (Math.random() * (size - 1) + 1);
+
+				do {
+					for (int i = 0; i < 6; i++) {
+						if (model.getKey().get((x + i) % size, y % size) == '0') {
+							model.getKey().toggle((x + i) % size, y % size);
+							y++;
+							x++;
+							break;
+						}
+					}
+					if (!set) {
+						y++;
+					}
+				} while (!model.getKey().isValid());
+				
+				canvas_schluessel.redraw();
+                canvas_schluessel.removeMouseListener(schluessel_listener);
+                canvas_schluessel.addMouseListener(schluessel_listener);
+                checkOkButton();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+				
+			}
+		});
+        
+        deleteHoles = new Button(schablone, SWT.PUSH);
+        deleteHoles.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, false));
+        deleteHoles.setText(Messages.getString("View.0")); //$NON-NLS-1$
+        deleteHoles.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				model.setKey(new KeySchablone(Integer.parseInt(spinner_keySize.getText())));
+				reset();
+                canvas_schluessel.removeMouseListener(schluessel_listener);
+                canvas_schluessel.addMouseListener(schluessel_listener);
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+		});
         
         
     }
@@ -533,7 +595,7 @@ public class View extends ViewPart {
                 button_stepwise.setSelection(false);
                 button_direct.setSelection(true);
                 text_input.setText(text_output.getText());
-                text_output.setText("");
+                text_output.setText(""); //$NON-NLS-1$
             }
         });
     }
@@ -573,7 +635,6 @@ public class View extends ViewPart {
         label_step4.setEnabled(false);
         label_step5.setEnabled(false);
         label_step6.setEnabled(false);
-       // text_output.setText(""); //$NON-NLS-1$
         canvas_demonstration.redraw();
         canvas_schluessel.redraw();
     }
