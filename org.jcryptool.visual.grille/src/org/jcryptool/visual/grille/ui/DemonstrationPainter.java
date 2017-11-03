@@ -79,7 +79,7 @@ public class DemonstrationPainter implements PaintListener {
 			e.gc.drawText(Messages.getString("DemonstrationPainter.description"), 0, 0); //$NON-NLS-1$
 			if (!demonstration.padding.equals("")) { //$NON-NLS-1$
 				e.gc.drawText(Messages.getString("DemonstrationPainter.padding") + " (" + demonstration.padding.length() //$NON-NLS-1$
-						+ ")", 0, 140);
+						+ "):", 0, 140);
 				Color savedColor = e.gc.getForeground();
 				e.gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
 				String padding = "";
