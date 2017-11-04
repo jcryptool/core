@@ -25,12 +25,15 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.grille.GrillePlugin;
@@ -108,6 +111,20 @@ public class View extends ViewPart {
 		composite_illustration.setLayout(gl_composite_illustration);
 		createDemonstration(composite_illustration);
 		createExecutionControls(composite_illustration);
+		
+		final ToolTip tip = new ToolTip(composite_illustration.getShell(), SWT.BALLOON);
+		tip.setMessage(Messages.getString("View.2")); //$NON-NLS-1$
+		
+		Label help = new Label(composite_illustration, SWT.NONE);
+		help.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, false));
+		help.setImage(GrillePlugin.getImageDescriptor("platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png").createImage()); //$NON-NLS-1$
+		help.addListener(SWT.MouseDown, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				tip.setVisible(true);
+			}
+		});
 	}
 
 	private void createInOutComposite(Composite parent) {
@@ -158,7 +175,7 @@ public class View extends ViewPart {
         gl_execType.marginWidth = 0;
         gl_execType.marginHeight = 0;
         execType.setLayout(gl_execType);
-        execType.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        execType.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2));
         createTypeSelection(execType);
         createSteps(execType);
 
@@ -417,7 +434,7 @@ public class View extends ViewPart {
         Group illustration = new Group(parent, SWT.NONE);
         illustration.setLayout(new FillLayout());
         illustration.setText(Messages.getString("View.visualisation")); //$NON-NLS-1$
-        illustration.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        illustration.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         canvas_demonstration = new Canvas(illustration, SWT.DOUBLE_BUFFERED);
         canvas_demonstration.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
         
