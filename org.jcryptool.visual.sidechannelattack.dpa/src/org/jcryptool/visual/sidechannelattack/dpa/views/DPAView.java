@@ -16,7 +16,6 @@ import java.math.BigInteger;
 import java.security.spec.ECFieldFp;
 import java.security.spec.ECPoint;
 
-import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyleRange;
@@ -28,7 +27,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -36,6 +34,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
@@ -105,6 +104,7 @@ public class DPAView extends ViewPart implements Constants {
     private int outputFlag = 0;
     private int counterFlag = 1;
     private Composite parent;
+    private Button btnReset;
 
     // create a visual panel of DPA
     @Override
@@ -172,6 +172,18 @@ public class DPAView extends ViewPart implements Constants {
         primeFieldSelectCombo = new Combo(parameterOfECCGroup, SWT.READ_ONLY);
         primeFieldSelectCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         primeFieldSelectCombo.setToolTipText(TOOLTIPTEXT_OF_PRIMEFIELDSELECTCOMBO);
+        
+        // define an integer array as the elements of primefieldselectcombo
+        final int[] primeData = { 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401,
+                409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499 };
+        int data_length = primeData.length;
+        int data_element_index = 0;
+        // add all elements to primefieldselectcombo
+        while (data_length > 0) {
+            primeFieldSelectCombo.add(String.valueOf(primeData[data_element_index]));
+            data_length--;
+            data_element_index++;
+        }
         
         // add a cue label
         final Label aLabel = new Label(parameterOfECCGroup, SWT.NONE);
@@ -342,7 +354,7 @@ public class DPAView extends ViewPart implements Constants {
         executeButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
         executeButton.setEnabled(false);
         
-        Button btnReset = new Button(parameterOfECCGroup, SWT.NONE);
+        btnReset = new Button(parameterOfECCGroup, SWT.NONE);
         btnReset.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -364,12 +376,15 @@ public class DPAView extends ViewPart implements Constants {
                 orderOfECPointText.setText(""); //$NON-NLS-1$
                 orderOfCurveText.setText(""); //$NON-NLS-1$
                 eCCurveText.setText(""); //$NON-NLS-1$
+                btnReset.setEnabled(false);
+                setDefaultValues();
             }
         });
         GridData gd_btnReset = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
         gd_btnReset.verticalIndent = 20;
         btnReset.setLayoutData(gd_btnReset);
         btnReset.setText(Messages.reset);
+        btnReset.setEnabled(false);
         
         
         // define a group in which the whole process of encryption will be visualized with table
@@ -458,55 +473,38 @@ public class DPAView extends ViewPart implements Constants {
         parameterOfCountermeasuresText.setBackground(white);
         parameterOfCountermeasuresText.setText(Messages.noprotection0);
 
-
-
-        // define an integer array as the elements of primefieldselectcombo
-        final int[] primeData = { 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401,
-                409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499 };
-
-        int data_length = primeData.length;
-        int data_element_index = 0;
-
-        // add all elements to primefieldselectcombo
-        while (data_length > 0) {
-
-            primeFieldSelectCombo.add(String.valueOf(primeData[data_element_index]));
-            data_length--;
-            data_element_index++;
-
-        }
-
         // add a listener on primefieldselectcombo to determine which prime number the user has
         // chosen as prime field
-        primeFieldSelectCombo.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(final SelectionEvent e) {
+        
+        primeFieldSelectCombo.addSelectionListener(new SelectionAdapter() {  
+        	
+			@Override
+            public void widgetSelected(SelectionEvent e) {
 
                 executeButton.setEnabled(false);
                 countermeasureselectionCombo.setEnabled(false);
-
                 primeFieldSelected = primeData[primeFieldSelectCombo.getSelectionIndex()];
-
                 eCPointscombo.setEnabled(false);
+                eCPointscombo.clearSelection();
                 scalarParameterCombo.setEnabled(false);
                 parameterACombo.clearSelection();
                 parameterACombo.setItems(new String[] {});
                 parameterBCombo.clearSelection();
                 parameterBCombo.setItems(new String[] {});
+                lblOrderOfCurve.setText("");
                 orderOfECPointText.setText(""); //$NON-NLS-1$
                 eCCurveText.setText(""); //$NON-NLS-1$
+                btnReset.setEnabled(true);
 
                 for (int i = 0; i < primeFieldSelected; i++) {
                     parameterACombo.add(String.valueOf(i));
                 }
-
                 parameterACombo.setEnabled(true);
-
                 for (int i = 1; i < primeFieldSelected; i++) {
                     parameterBCombo.add(String.valueOf(i));
                 }
-
                 parameterBCombo.setEnabled(true);
-
+                
                 scalarParameterCombo.removeAll();
 
                 if (!eCCurveText.getText().equals("")) { //$NON-NLS-1$
@@ -514,9 +512,7 @@ public class DPAView extends ViewPart implements Constants {
                     eCCurveText.setText(ECCURVE_TEXT_PART1 + paraA + ECCURVE_TEXT_PART2 + paraB + ECCURVE_TEXT_PART3
                             + primeFieldSelected + ")"); //$NON-NLS-1$
                     eCPointscombo.setEnabled(true);
-
                 }
-
             }
         });
 
@@ -527,6 +523,7 @@ public class DPAView extends ViewPart implements Constants {
 
                 executeButton.setEnabled(false);
                 countermeasureselectionCombo.setEnabled(false);
+                orderOfECPointText.setText("");
 
                 try {
                     if (Integer.parseInt(parameterACombo.getText()) >= primeFieldSelected) {
@@ -560,6 +557,8 @@ public class DPAView extends ViewPart implements Constants {
 
                 executeButton.setEnabled(false);
                 countermeasureselectionCombo.setEnabled(false);
+                orderOfECPointText.setText("");
+                btnReset.setEnabled(true);
 
                 try {
                     if (Integer.parseInt(parameterBCombo.getText()) >= primeFieldSelected) {
@@ -598,6 +597,7 @@ public class DPAView extends ViewPart implements Constants {
 
                 executeButton.setEnabled(false);
                 countermeasureselectionCombo.setEnabled(false);
+                btnReset.setEnabled(true);
 
                 ecPointSelected = allPoints[eCPointscombo.getSelectionIndex()];
 
@@ -628,13 +628,7 @@ public class DPAView extends ViewPart implements Constants {
             }
         });
 
-        
-        
-        
-        
         counterFlag = 0;
-
-
 
         // add a listener on executeButton, which is used to start the process of selected algorithm
         executeButton.addSelectionListener(new SelectionAdapter() {
@@ -1188,8 +1182,12 @@ public class DPAView extends ViewPart implements Constants {
             public void widgetSelected(final SelectionEvent e) {
                 executeButton.setEnabled(true);
                 countermeasureselectionCombo.setEnabled(true);
+                btnReset.setEnabled(true);
             }
         });
+        
+        
+        setDefaultValues();     
 
         scrolledComposite.setContent(mainGroup);
         scrolledComposite.setMinSize(mainGroup.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -1197,6 +1195,29 @@ public class DPAView extends ViewPart implements Constants {
     }
 
     /**
+     * Sets default values to the combo boxes
+     */
+    private void setDefaultValues() {
+        //Set default Values to all Fields. 
+        primeFieldSelectCombo.select(0);
+        primeFieldSelectCombo.notifyListeners(SWT.Selection, new Event());
+        
+        parameterACombo.select(153);
+        parameterACombo.notifyListeners(SWT.Selection, new Event());
+        
+        parameterBCombo.select(217);
+        parameterBCombo.notifyListeners(SWT.Selection, new Event());
+        
+        eCPointscombo.select(72);
+        eCPointscombo.notifyListeners(SWT.Selection, new Event());
+        
+        scalarParameterCombo.select(30);
+        scalarParameterCombo.notifyListeners(SWT.Selection, new Event());
+        
+        btnReset.setEnabled(false);
+	}
+
+	/**
      * Passing the focus request to the viewer's control.
      */
     public void setFocus() {
