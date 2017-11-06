@@ -25,6 +25,7 @@ public class Messages extends NLS
 	public static String SslViewBtnReset;
 	public static String SslViewStxInformation;
 	public static String SslViewHeadline;
+	public static String SslViewHeadlineInformation;
 	
 	public static String btnInformationToggleParams;
 	public static String stxInformationCipherSuitesExchanged;

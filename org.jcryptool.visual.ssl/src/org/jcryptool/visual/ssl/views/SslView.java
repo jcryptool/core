@@ -21,6 +21,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
@@ -65,6 +66,8 @@ public class SslView extends ViewPart {
      */
     @Override
     public void createPartControl(final Composite parent) {
+    	int widthHint = 1200;
+    	
         scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
         mainContent = new Composite(scrolledComposite, SWT.NONE);
         scrolledComposite.setExpandHorizontal(true);
@@ -73,16 +76,26 @@ public class SslView extends ViewPart {
         GridLayout gl = new GridLayout(1, false);
         gl.verticalSpacing = 0;
         mainContent.setLayout(gl);
+        
+        Composite compositeIntro = new Composite(mainContent, SWT.NONE);
+        compositeIntro.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+        GridData gd_compositeIntro = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        gd_compositeIntro.widthHint = widthHint;
+        compositeIntro.setLayoutData(gd_compositeIntro);
+        compositeIntro.setLayout(new GridLayout(1, false));
 
-        Label headline = new Label(mainContent, SWT.NONE);
-        headline.setText(Messages.SslViewHeadline);
+        Label headline = new Label(compositeIntro, SWT.NONE);
         headline.setFont(FontService.getHeaderFont());
-        headline.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+        headline.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+        headline.setText(Messages.SslViewHeadline);
+
+        StyledText stDescription = new StyledText(compositeIntro, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
+        stDescription.setText(Messages.SslViewHeadlineInformation);
+        stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
         content = new Composite(mainContent, SWT.NONE);
         GridData gd_content = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-        gd_content.widthHint = 1200;
-        gd_content.heightHint = 800;
+        gd_content.widthHint = widthHint;
         content.setLayoutData(gd_content);
         content.setLayout(new GridLayout(4, false));
         
@@ -103,8 +116,9 @@ public class SslView extends ViewPart {
     private void createGui() {
         // Client Composites
         grp_clientComposites = new Group(content, SWT.NONE);
-        GridData gd_clientComposite = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 2);
-        gd_clientComposite.widthHint = 360;
+        GridData gd_clientComposite = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 2);
+        gd_clientComposite.widthHint = 400;
+        gd_clientComposite.heightHint = 700;
         grp_clientComposites.setLayoutData(gd_clientComposite);
         grp_clientComposites.setLayout(new GridLayout());
         grp_clientComposites.setText(Messages.SslViewLblClient);
@@ -129,15 +143,16 @@ public class SslView extends ViewPart {
         clientFinishedComposite.setVisible(false);
 
         // Draw Panel
-        GridData gd_drawPanel = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 2);
+        GridData gd_drawPanel = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 2);
         gd_drawPanel.widthHint = 100;
         arrow = new Arrows(content, SWT.NONE);
         arrow.setLayoutData(gd_drawPanel);
 
         // Server Composites
         grp_serverComposites = new Group(content, SWT.NONE);
-        GridData gd_serverComposite = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 2);
-        gd_serverComposite.widthHint = 360;
+        GridData gd_serverComposite = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 2);
+        gd_serverComposite.widthHint = 400;
+        gd_serverComposite.heightHint = 700;
         grp_serverComposites.setLayoutData(gd_serverComposite);
         grp_serverComposites.setLayout(new GridLayout());
         grp_serverComposites.setText(Messages.SslViewLblServer);
@@ -165,6 +180,7 @@ public class SslView extends ViewPart {
         //Information Panel
         grp_stxInfo = new Group(content, SWT.NONE);
         GridData gd_grpStxInfo = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+        gd_grpStxInfo.heightHint = 450;
         grp_stxInfo.setLayoutData(gd_grpStxInfo);
         grp_stxInfo.setLayout(new GridLayout());
         grp_stxInfo.setText(Messages.SslViewLblInfo);
@@ -172,6 +188,7 @@ public class SslView extends ViewPart {
         stxInformation = new StyledText(grp_stxInfo, SWT.READ_ONLY | SWT.MULTI | SWT.V_SCROLL | SWT.WRAP );
         GridData gd_stxInfo = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         gd_stxInfo.widthHint = 300;
+        gd_stxInfo.heightHint = 400;
         stxInformation.setLayoutData(gd_stxInfo);
         stxInformation.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
         stxInformation.setText(Messages.SslViewStxInformation);
@@ -183,7 +200,7 @@ public class SslView extends ViewPart {
      */
     private void createButtons() {
     	Group grp_buttons = new Group(content, SWT.NONE);
-        grp_buttons.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        grp_buttons.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         RowLayout rl_grpButtons = new RowLayout();
         rl_grpButtons.wrap = true;
         rl_grpButtons.pack = false;
