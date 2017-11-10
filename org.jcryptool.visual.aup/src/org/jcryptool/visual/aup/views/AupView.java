@@ -73,7 +73,6 @@ public class AupView extends ViewPart {
 	private Composite controlBox;
 	private Group helpBox;
 	private Group optionbox;
-	// private Label stDescription;
 	private Label[] cntrBtn = new Label[9];
 	private Region regionCircle;
 	private Button setPattern;
@@ -90,7 +89,6 @@ public class AupView extends ViewPart {
 	private CLabel statusText;
 	private Label instrTextHeading;
 	private Label descTextHeading;
-	// private Canvas canv;
 	private Composite parent;
 	private Boolean patternInput = false;
 	private Boolean inputFinished = false;
@@ -208,7 +206,7 @@ public class AupView extends ViewPart {
 		});
 
 		//test if advanced graphic processing is available
-		Image img = AndroidUnlockPatternPlugin.getImageDescriptor("icons/view.gif").createImage(child.getDisplay());
+		Image img = AndroidUnlockPatternPlugin.getImageDescriptor("icons/view.gif").createImage(child.getDisplay()); //$NON-NLS-1$
 		GC gc = new GC(img);
 		gc.setAdvanced(true);	// will do nothing if advanced graphic processing is not available
 		if (gc.getAdvanced()){
@@ -294,9 +292,12 @@ public class AupView extends ViewPart {
 		helpBox.setLayoutData(fd_helpBox);
 
 		instrTextHeading = new Label(helpBox, SWT.READ_ONLY | SWT.WRAP);
-		instrTextHeading.setText(Messages.AndroidUnlockPattern_helpBox_instrText_Heading);
+		instrTextHeading.setText(Messages.AupView_0); //$NON-NLS-1$
 
 		descTextHeading = new Label(helpBox, SWT.READ_ONLY | SWT.WRAP);
+		GridData gd_descTextHeading = new GridData();
+		gd_descTextHeading.horizontalIndent = 40;
+		descTextHeading.setLayoutData(gd_descTextHeading);
 		descTextHeading.setText(Messages.AndroidUnlockPattern_helpBox_descText_Heading);
 
 		instrText1 = new StyledText(helpBox, SWT.READ_ONLY | SWT.WRAP);
@@ -304,10 +305,12 @@ public class AupView extends ViewPart {
 		instrText1.setDoubleClickEnabled(false);
 		instrText1.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
 		instrText1.setAlignment(SWT.LEFT);
-		instrText1.setText(Messages.Mode_Set_1);
+		instrText1.setText(Messages.AupView_1);
 
 		descTextScroller = new ScrolledComposite(helpBox, SWT.V_SCROLL);
-		descTextScroller.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, true, 1, 3));
+		GridData gd_descTextScroller = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3);
+		gd_descTextScroller.horizontalIndent = 40;
+		descTextScroller.setLayoutData(gd_descTextScroller);
 		descTextScroller.setExpandHorizontal(true);
 		descTextScroller.setExpandVertical(true);
 
@@ -322,14 +325,14 @@ public class AupView extends ViewPart {
 		instrText2.setDoubleClickEnabled(false);
 		instrText2.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
 		instrText2.setAlignment(SWT.LEFT);
-		instrText2.setText(Messages.Mode_Set_1);
+		instrText2.setText(Messages.AupView_1);
 
 		instrText3 = new StyledText(helpBox, SWT.READ_ONLY | SWT.WRAP);
 		instrText3.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 		instrText3.setDoubleClickEnabled(false);
 		instrText3.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
 		instrText3.setAlignment(SWT.LEFT);
-		instrText3.setText(Messages.Mode_Set_1);
+		instrText3.setText(Messages.AupView_1);
 
 	}
 
@@ -436,7 +439,7 @@ public class AupView extends ViewPart {
 				if(logic.isFirst()) {
 					int length = 0;
 					for(Label a : cntrBtn) {
-						if(a.getData("icon").toString().regionMatches(false, 6, "g", 0, 1))
+						if(a.getData("icon").toString().regionMatches(false, 6, "g", 0, 1)) //$NON-NLS-1$ //$NON-NLS-2$
 							length++;
 					}
 					descText.setText(String.format(Messages.AndroidUnlockPattern_helpBox_descText_Security, Messages.AndroidUnlockPattern_helpBox_descText, length, apuPerm[length-4]));
@@ -660,12 +663,12 @@ public class AupView extends ViewPart {
 				Image img = new Image(cntrBtn[i].getDisplay(), tmp);
 				GC gc = new GC(img);
 
-				if(cntrBtn[i].getData("arc") != null && advancedGraphic) {
+				if(cntrBtn[i].getData("arc") != null && advancedGraphic) { //$NON-NLS-1$
 					Image arrow = null;
-					if(tmpStr.regionMatches(false, 6, "g", 0, 1))
-						arrow = AndroidUnlockPatternPlugin.getImageDescriptor("icons/ArrowGreen.png").createImage(cntrBtn[i].getDisplay());
-					else if(tmpStr.regionMatches(false, 6, "y", 0, 1))
-						arrow = AndroidUnlockPatternPlugin.getImageDescriptor("icons/ArrowYellow.png").createImage(cntrBtn[i].getDisplay());
+					if(tmpStr.regionMatches(false, 6, "g", 0, 1)) //$NON-NLS-1$
+						arrow = AndroidUnlockPatternPlugin.getImageDescriptor("icons/ArrowGreen.png").createImage(cntrBtn[i].getDisplay()); //$NON-NLS-1$
+					else if(tmpStr.regionMatches(false, 6, "y", 0, 1)) //$NON-NLS-1$
+						arrow = AndroidUnlockPatternPlugin.getImageDescriptor("icons/ArrowYellow.png").createImage(cntrBtn[i].getDisplay()); //$NON-NLS-1$
 
 					if(arrow != null) {
 						Transform oldTransform = new Transform(gc.getDevice());
@@ -673,7 +676,7 @@ public class AupView extends ViewPart {
 
 						Transform transform = new Transform(gc.getDevice());
 						transform.translate(size/2, size/2);
-						transform.rotate((Float)cntrBtn[i].getData("arc"));
+						transform.rotate((Float)cntrBtn[i].getData("arc")); //$NON-NLS-1$
 						transform.translate(-size/2, -size/2);
 
 						gc.setTransform(transform);
@@ -692,7 +695,6 @@ public class AupView extends ViewPart {
 					cntrBtn[i].getBounds().height / 2));
 
 			cntrBtn[i].setRegion(regionCircle);
-//			cntrBtn[i].setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 			cntrBtn[i].setLayoutData(new GridData(size, size));
 			regionCircle.dispose();
 		}
@@ -724,19 +726,19 @@ public class AupView extends ViewPart {
 		} else {
 		switch (state) {
 			case ERROR:
-				statusText.setImage(AndroidUnlockPatternPlugin.getImageDescriptor("platform:/plugin/org.eclipse.ui/icons/full/obj16/error_tsk.png").createImage());
+				statusText.setImage(AndroidUnlockPatternPlugin.getImageDescriptor("platform:/plugin/org.eclipse.ui/icons/full/obj16/error_tsk.png").createImage()); //$NON-NLS-1$
 				statusText.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_RED));
 				break;
 			case WARNING:
-				statusText.setImage(AndroidUnlockPatternPlugin.getImageDescriptor("platform:/plugin/org.eclipse.ui/icons/full/obj16/warn_tsk.png").createImage());
+				statusText.setImage(AndroidUnlockPatternPlugin.getImageDescriptor("platform:/plugin/org.eclipse.ui/icons/full/obj16/warn_tsk.png").createImage()); //$NON-NLS-1$
 				statusText.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_YELLOW));
 				break;
 			case INFO:
-				statusText.setImage(AndroidUnlockPatternPlugin.getImageDescriptor("platform:/plugin/org.eclipse.jface/icons/full/message_info.png").createImage());
+				statusText.setImage(AndroidUnlockPatternPlugin.getImageDescriptor("platform:/plugin/org.eclipse.jface/icons/full/message_info.png").createImage()); //$NON-NLS-1$
 				statusText.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 				break;
 			case OK:
-				statusText.setImage(AndroidUnlockPatternPlugin.getImageDescriptor("platform:/plugin/org.eclipse.pde.ui/icons/obj16/ok_st_obj.png").createImage());
+				statusText.setImage(AndroidUnlockPatternPlugin.getImageDescriptor("/icons/ok_st_obj.gif").createImage()); //$NON-NLS-1$
 				statusText.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
 				break;
 			default:
@@ -755,10 +757,10 @@ public class AupView extends ViewPart {
 			case 1: {	// set
 				if (logic.isFirst()) { // 1. step
 					//set texts
-					instrTextHeading.setText(String.format(Messages.AndroidUnlockPattern_helpBox_instrText_Heading, Messages.AndroidUnlockPattern_ModeSetText));
-					instrText1.setText(String.format(Messages.AndroidUnlockPattern_Step, 1, Messages.Mode_Set_1));
-					instrText2.setText(String.format(Messages.AndroidUnlockPattern_Step, 2, Messages.Mode_Set_2));
-					instrText3.setText("");
+					instrTextHeading.setText(Messages.AupView_0);
+					instrText1.setText(Messages.AupView_1);
+					instrText2.setText(Messages.AupView_2);
+					instrText3.setText(""); //$NON-NLS-1$
 
 					//set highlight
 					instrText1.setFont(bFont);
@@ -773,11 +775,11 @@ public class AupView extends ViewPart {
 			case 2: {	// change
 				if (!logic.isChangeable()) { // 1. step
 					//set texts
-					instrTextHeading.setText(String.format(Messages.AndroidUnlockPattern_helpBox_instrText_Heading, Messages.AndroidUnlockPattern_ModeChangeText));
-					instrText1.setText(String.format(Messages.AndroidUnlockPattern_Step, 1, Messages.Mode_Change_1));
-					instrText2.setText(String.format(Messages.AndroidUnlockPattern_Step, 2, Messages.Mode_Change_2));
-					instrText3.setText(String.format(Messages.AndroidUnlockPattern_Step, 3, Messages.Mode_Set_2));
-
+					instrTextHeading.setText(Messages.AupView_8);
+					instrText1.setText(Messages.AupView_4);
+					instrText2.setText(Messages.AupView_5);
+					instrText3.setText(Messages.AupView_6);
+					
 					//set highlight
 					instrText1.setFont(bFont);
 					instrText2.setFont(nFont);
@@ -795,13 +797,12 @@ public class AupView extends ViewPart {
 				break;
 			}
 			case 3: {	// check
-				instrTextHeading.setText(String.format(Messages.AndroidUnlockPattern_helpBox_instrText_Heading, Messages.AndroidUnlockPattern_ModeCheckText));
-				instrText1.setText(Messages.Mode_Check_1);
-				instrText2.setText("");
-				instrText3.setText("");
+				instrTextHeading.setText(Messages.AupView_3);
+				instrText1.setText(Messages.AupView_7);
+				instrText2.setText(""); //$NON-NLS-1$
+				instrText3.setText(""); //$NON-NLS-1$
 
 				instrText1.setFont(bFont);
-//				instrText1.setEnabled(true);
 				break;
 			}
 		}
