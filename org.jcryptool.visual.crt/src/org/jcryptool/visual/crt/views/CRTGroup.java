@@ -130,13 +130,16 @@ public class CRTGroup extends Composite implements Constants {
 
         step1Text = new Text(step1Group, SWT.MULTI);
         step1Text.setEditable(false);
-        final GridData gd_step1Text = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2);
-        step1Text.setLayoutData(gd_step1Text);
+//        final GridData gd_step1Text = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2);
+//        GridData gd_step1Text = new GridData(SWT.FILL, SWT.FILL, true, false);
+//        step1Text.setLayoutData(gd_step1Text);
+        step1Text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         step1Text.setText(MESSAGE_STEP1);
         step1Text.setFont(FontService.getSmallBoldFont());
-        new Label(step1Group, SWT.NONE);
+//        new Label(step1Group, SWT.NONE);
 
         step1nextButton = new Button(step1Group, SWT.NONE);
+        step1nextButton.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, true));
         step1nextButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent e) {
@@ -240,10 +243,10 @@ public class CRTGroup extends Composite implements Constants {
                     /*
                      * GUI functionality. Disable or enable widgets
                      */
+                	step1Text.clearSelection();
                     step1Text.setFont(FontService.getSmallFont());
                     step2Text.setFont(FontService.getSmallBoldFont());
                     execute = true;
-                    step1nextButton.setEnabled(false);
                     step1Group.setEnabled(false);
                     step2Group.setEnabled(true);
                     step2Text.setEnabled(true);
@@ -306,18 +309,18 @@ public class CRTGroup extends Composite implements Constants {
         step2Text = new Text(step2Group, SWT.MULTI);
         step2Text.setEnabled(false);
         step2Text.setEditable(false);
-        final GridData gd_step2Text = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2);
-        step2Text.setLayoutData(gd_step2Text);
+        step2Text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         step2Text.setText(MESSAGE_STEP2);
-        new Label(step2Group, SWT.NONE);
 
         step2nextButton = new Button(step2Group, SWT.NONE);
+        step2nextButton.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, true));
         step2nextButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent e) {
                 /*
                  * GUI functionality disable or enable widgets
                  */
+            	step2Text.clearSelection();
                 step2Text.setFont(FontService.getSmallFont());
                 step3Text.setFont(FontService.getSmallBoldFont());
                 step2nextButton.setEnabled(false);
@@ -437,18 +440,18 @@ public class CRTGroup extends Composite implements Constants {
         step3Text = new Text(step3Group, SWT.MULTI);
         step3Text.setEnabled(false);
         step3Text.setEditable(false);
-        final GridData gd_step3Text = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2);
-        step3Text.setLayoutData(gd_step3Text);
+        step3Text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         step3Text.setText(MESSAGE_STEP3);
-        new Label(step3Group, SWT.NONE);
 
         step3nextButton = new Button(step3Group, SWT.NONE);
+        step3nextButton.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, true));
         step3nextButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent e) {
                 /*
                  * GUI functionality. Disable or enable widgets
                  */
+            	step3Text.clearSelection();
                 step3Text.setFont(FontService.getSmallFont());
                 step4Text.setFont(FontService.getSmallBoldFont());
                 step3nextButton.setEnabled(false);
@@ -482,7 +485,6 @@ public class CRTGroup extends Composite implements Constants {
 
         GridData gridData_1 = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2);
         gridData_1.heightHint = 170;
-//        gridData_1.widthHint = 177;
         scrolledInverse.setLayoutData(gridData_1);
 
         scrolledComposite_1 = new ScrolledComposite(scrolledInverse, SWT.H_SCROLL | SWT.V_SCROLL);
@@ -509,18 +511,18 @@ public class CRTGroup extends Composite implements Constants {
         step4Text = new Text(step4Group, SWT.MULTI);
         step4Text.setEnabled(false);
         step4Text.setEditable(false);
-        final GridData gd_step4Text = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2);
-        step4Text.setLayoutData(gd_step4Text);
+        step4Text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         step4Text.setText(MESSAGE_STEP4);
-        new Label(step4Group, SWT.NONE);
 
         step4nextButton = new Button(step4Group, SWT.NONE);
+        step4nextButton.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, true));
         step4nextButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent e) {
                 /*
                  * GUI functionality. Disable or enable widgets
                  */
+            	step4Text.clearSelection();
                 step4Text.setFont(FontService.getSmallFont());
                 resultXText.setFont(FontService.getSmallBoldFont());
                 resultText.setFont(FontService.getSmallBoldFont());
@@ -622,7 +624,7 @@ public class CRTGroup extends Composite implements Constants {
         resultValueText.setEnabled(false);
         resultValueText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 
-        resultMoreText = new Text(resultGroup, SWT.NONE);
+        resultMoreText = new Text(resultGroup, SWT.MULTI);
         resultMoreText.setEnabled(false);
         resultMoreText.setEditable(false);
         resultMoreText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 2, 1));
@@ -706,9 +708,19 @@ public class CRTGroup extends Composite implements Constants {
 
         scrolledGroup.setContent(content);
         scrolledGroup.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        
+        setDefaultValues();
     }
 
-    /**
+    private void setDefaultValues() {
+    	equations.getEquationSet().elementAt(0).setTextfieldA("2");
+    	equations.getEquationSet().elementAt(0).setTextfieldM("5");
+    	
+    	equations.getEquationSet().elementAt(1).setTextfieldA("3");
+    	equations.getEquationSet().elementAt(1).setTextfieldM("7");	
+	}
+
+	/**
      * Convert a number to a subscript index
      *
      * @param id is the number to be converted

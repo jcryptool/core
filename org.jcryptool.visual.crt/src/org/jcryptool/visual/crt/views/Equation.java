@@ -53,7 +53,7 @@ public class Equation implements Constants {
 	public void addEquationToGroup() {
 		xLabel = new Label(equationGroup, SWT.NONE);
 		xLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		xLabel.setText("x");
+		xLabel.setText("x"); //$NON-NLS-1$
 
 		congruenceLabel = new Label(equationGroup, SWT.NONE);
 		congruenceLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
@@ -67,8 +67,8 @@ public class Equation implements Constants {
 				/*
 				 * keyCode == 8 is BACKSPACE and keyCode == 48 is ZERO and keyCode == 127 is DEL
 				 */
-				if (e.text.matches("[0-9]") || e.keyCode == 8 || e.keyCode == 127) {
-					if (textfieldA.getText().length() == 0 && e.text.compareTo("0") == 0) {
+				if (e.text.matches("[0-9]") || e.keyCode == 8 || e.keyCode == 127) { //$NON-NLS-1$
+					if (textfieldA.getText().length() == 0 && e.text.compareTo("0") == 0) { //$NON-NLS-1$
 						e.doit = false;
 					} else if (textfieldA.getSelection().x == 0 && e.keyCode == 48) {
 						e.doit = false;
@@ -85,7 +85,7 @@ public class Equation implements Constants {
 
 		modLabel = new Label(equationGroup, SWT.NONE);
 		modLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		modLabel.setText("mod");
+		modLabel.setText("mod"); //$NON-NLS-1$
 
 		textfieldM = new Text(equationGroup, SWT.BORDER);
 		final GridData gd_text_1 = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -95,8 +95,9 @@ public class Equation implements Constants {
 				/*
 				 * keyCode == 8 is BACKSPACE and keyCode == 48 is ZERO and keyCode == 127 is DEL
 				 */
-				if (e.text.matches("[0-9]") || e.keyCode == 8 || e.keyCode == 127) {
-					if (textfieldM.getText().length() == 0 && e.text.compareTo("0") == 0) {
+//				if (e.text.matches("[0-9]") || e.keyCode == 8 || e.keyCode == 127) {
+				if (e.text.matches("[0-9]") || e.keyCode == 8 || e.keyCode == 127) { //$NON-NLS-1$
+					if (textfieldM.getText().length() == 0 && e.text.compareTo("0") == 0) { //$NON-NLS-1$
 						e.doit = false;
 					} else if (textfieldM.getSelection().x == 0 && e.keyCode == 48) {
 						e.doit = false;
@@ -112,8 +113,10 @@ public class Equation implements Constants {
 		textfieldM.addVerifyListener(mTextfieldVerifyListiner);
 
 		plusButton = new Button(equationGroup, SWT.NONE);
-		plusButton.setLayoutData(new GridData(30, 20));
-		plusButton.setText("+");
+//		plusButton.setLayoutData(new GridData(30, 20));
+		plusButton.setLayoutData(new GridData(30, 25));
+		plusButton.setText("+"); //$NON-NLS-1$
+		plusButton.setToolTipText(Messages.Equation_0);
 		plusButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
@@ -133,8 +136,8 @@ public class Equation implements Constants {
 					equationSet.get(i).setTextfieldA(equationSet.get(i - 1).getTextfieldA());
 					equationSet.get(i).setTextfieldM(equationSet.get(i - 1).getTextfieldM());
 				}
-				equationSet.get(tmpIndex + 1).setTextfieldA("");
-				equationSet.get(tmpIndex + 1).setTextfieldM("");
+				equationSet.get(tmpIndex + 1).setTextfieldA(""); //$NON-NLS-1$
+				equationSet.get(tmpIndex + 1).setTextfieldM(""); //$NON-NLS-1$
 
 				for (Equation equation : equationSet) {
 					equation.textfieldA.addVerifyListener(equation.aTextfieldVerifyListiner);
@@ -162,8 +165,10 @@ public class Equation implements Constants {
 		});
 
 		minusButton = new Button(equationGroup, SWT.NONE);
-		minusButton.setLayoutData(new GridData(30, 20));
-		minusButton.setText("-");
+//		minusButton.setLayoutData(new GridData(30, 20));
+		minusButton.setLayoutData(new GridData(30, 25));
+		minusButton.setText("-"); //$NON-NLS-1$
+		minusButton.setToolTipText(Messages.Equation_1);
 		if (equations.getNumberOfEquations() < 3) {
 			minusButton.setEnabled(false);
 		}
