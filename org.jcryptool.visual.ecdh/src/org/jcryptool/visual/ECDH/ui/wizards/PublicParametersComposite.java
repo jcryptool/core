@@ -128,31 +128,15 @@ public class PublicParametersComposite extends Composite {
      * This method initializes groupCurveType
      *
      */
-    private void createGroupCurveType() {
-        GridData gridData6 = new GridData();
-        gridData6.verticalAlignment = org.eclipse.swt.layout.GridData.FILL;
-        gridData6.grabExcessHorizontalSpace = true;
-        gridData6.grabExcessVerticalSpace = true;
-        gridData6.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-        GridData gridData5 = new GridData();
-        gridData5.grabExcessHorizontalSpace = true;
-        gridData5.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-        gridData5.verticalAlignment = org.eclipse.swt.layout.GridData.FILL;
-        gridData5.grabExcessVerticalSpace = true;
-        GridData gridData3 = new GridData();
-        gridData3.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-        gridData3.grabExcessHorizontalSpace = true;
-        gridData3.grabExcessVerticalSpace = true;
-        gridData3.verticalAlignment = org.eclipse.swt.layout.GridData.FILL;
-        GridLayout gridLayout1 = new GridLayout();
-        gridLayout1.numColumns = 2;
+    private void createGroupCurveType() {     
         groupCurveType = new Group(groupCurve, SWT.NONE);
         groupCurveType.setText(Messages.getString("ECDHWizPP.groupCurveType")); //$NON-NLS-1$
-        groupCurveType.setLayoutData(gridData3);
-        groupCurveType.setLayout(gridLayout1);
+        groupCurveType.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        groupCurveType.setLayout(new GridLayout(2, false));
+        
         rbtnFP = new Button(groupCurveType, SWT.RADIO);
         rbtnFP.setText("F(p)"); //$NON-NLS-1$
-        rbtnFP.setLayoutData(gridData5);
+        rbtnFP.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         rbtnFP.setSelection(true);
         rbtnFP.addSelectionListener(new SelectionListener() {
             public void widgetDefaultSelected(SelectionEvent e) {
@@ -175,7 +159,7 @@ public class PublicParametersComposite extends Composite {
         });
         rbtnFM = new Button(groupCurveType, SWT.RADIO);
         rbtnFM.setText("F(2^m)"); //$NON-NLS-1$
-        rbtnFM.setLayoutData(gridData6);
+        rbtnFM.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         rbtnFM.addSelectionListener(new SelectionListener() {
             public void widgetDefaultSelected(SelectionEvent e) {
             }
@@ -221,12 +205,11 @@ public class PublicParametersComposite extends Composite {
      *
      */
     private void createGroupCurve() {
-        GridLayout gridLayout3 = new GridLayout();
-        gridLayout3.numColumns = 2;
         groupCurve = new Group(this, SWT.NONE);
         groupCurve.setText(Messages.getString("ECDHWizPP.ellipticCurve")); //$NON-NLS-1$
-        groupCurve.setLayout(gridLayout3);
+        groupCurve.setLayout(new GridLayout(2, false));
         groupCurve.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        
         createGroupCurveType();
         createGroupCurveSize();
         createGroupAttributes();
@@ -237,30 +220,19 @@ public class PublicParametersComposite extends Composite {
      *
      */
     private void createGroupGenerator() {
-        GridData gridData17 = new GridData();
-        gridData17.horizontalAlignment = org.eclipse.swt.layout.GridData.END;
-        GridData gridData15 = new GridData();
-        gridData15.horizontalSpan = 3;
-        gridData15.verticalAlignment = org.eclipse.swt.layout.GridData.CENTER;
-        gridData15.horizontalAlignment = org.eclipse.swt.layout.GridData.BEGINNING;
-        GridData gridData1 = new GridData();
-        gridData1.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-        gridData1.grabExcessHorizontalSpace = true;
-        gridData1.grabExcessVerticalSpace = true;
-        gridData1.verticalAlignment = org.eclipse.swt.layout.GridData.FILL;
-        GridLayout gridLayout = new GridLayout();
-        gridLayout.numColumns = 4;
         groupGenerator = new Group(this, SWT.NONE);
         groupGenerator.setText(Messages.getString("ECDHWizPP.groupGenerator")); //$NON-NLS-1$
-        groupGenerator.setLayoutData(gridData1);
-        groupGenerator.setLayout(gridLayout);
+        groupGenerator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        groupGenerator.setLayout(new GridLayout(4, false));
+        
         stGenerator = new StyledText(groupGenerator, SWT.READ_ONLY);
         stGenerator.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-        stGenerator.setLayoutData(gridData15);
+        stGenerator.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false, 3, 1));
         stGenerator.setText(Messages.getString("ECDHWizPP.textGenerator")); //$NON-NLS-1$
+        
         btnCreateGenerator = new Button(groupGenerator, SWT.READ_ONLY);
         btnCreateGenerator.setText(Messages.getString("ECDHWizPP.btnCreateGenerator")); //$NON-NLS-1$
-        btnCreateGenerator.setLayoutData(gridData17);
+        btnCreateGenerator.setLayoutData(new GridData(SWT.END, SWT.DEFAULT, false, false));
         btnCreateGenerator.setEnabled(false);
         btnCreateGenerator.addSelectionListener(new SelectionListener() {
             public void widgetDefaultSelected(SelectionEvent e) {
@@ -284,31 +256,15 @@ public class PublicParametersComposite extends Composite {
      * This method initializes groupCurveSize
      *
      */
-    private void createGroupCurveSize() {
-        GridData gridData8 = new GridData();
-        gridData8.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-        gridData8.grabExcessHorizontalSpace = true;
-        gridData8.grabExcessVerticalSpace = true;
-        gridData8.verticalAlignment = org.eclipse.swt.layout.GridData.FILL;
-        GridData gridData7 = new GridData();
-        gridData7.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-        gridData7.grabExcessHorizontalSpace = true;
-        gridData7.grabExcessVerticalSpace = true;
-        gridData7.verticalAlignment = org.eclipse.swt.layout.GridData.FILL;
-        GridData gridData4 = new GridData();
-        gridData4.grabExcessHorizontalSpace = true;
-        gridData4.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-        gridData4.verticalAlignment = org.eclipse.swt.layout.GridData.FILL;
-        gridData4.grabExcessVerticalSpace = true;
-        GridLayout gridLayout2 = new GridLayout();
-        gridLayout2.numColumns = 2;
+    private void createGroupCurveSize() {   
         groupCurveSize = new Group(groupCurve, SWT.NONE);
         groupCurveSize.setText(Messages.getString("ECDHWizPP.groupCurveSize")); //$NON-NLS-1$
-        groupCurveSize.setLayoutData(gridData4);
-        groupCurveSize.setLayout(gridLayout2);
+        groupCurveSize.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        groupCurveSize.setLayout(new GridLayout(2, false));
+        
         rbtnSmall = new Button(groupCurveSize, SWT.RADIO);
         rbtnSmall.setText(Messages.getString("ECDHWizPP.small")); //$NON-NLS-1$
-        rbtnSmall.setLayoutData(gridData7);
+        rbtnSmall.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         rbtnSmall.setSelection(true);
         rbtnSmall.addSelectionListener(new SelectionListener() {
             public void widgetDefaultSelected(SelectionEvent e) {
@@ -350,15 +306,16 @@ public class PublicParametersComposite extends Composite {
                         ((ECFm) curve).setB(cB.getSelectionIndex(), true);
                     }
                 }
-
-                setGeneratorPoints(curve.getPoints());
-                fillCSelection();
+                
+                setGeneratorPoints(curve.getPoints());         
+//                fillCSelection();
                 groupAttributes.layout();
+                
             }
         });
         rbtnLarge = new Button(groupCurveSize, SWT.RADIO);
         rbtnLarge.setText(Messages.getString("ECDHWizPP.large")); //$NON-NLS-1$
-        rbtnLarge.setLayoutData(gridData8);
+        rbtnLarge.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         rbtnLarge.addSelectionListener(new SelectionListener() {
             public void widgetDefaultSelected(SelectionEvent e) {
             }
@@ -393,16 +350,36 @@ public class PublicParametersComposite extends Composite {
         contentFp = new Composite(groupAttributes, SWT.NONE);
         contentFp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         contentFp.setLayout(new GridLayout(2, false));
-        GridData gridData = new GridData();
-        gridData.grabExcessHorizontalSpace = true;
-        gridData.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-        gridData.verticalIndent = 4;
-        GridData gridData3 = new GridData();
-        gridData3.horizontalSpan = 2;
+        
+//        GridData gridData3 = new GridData();
+//        gridData3.horizontalSpan = 2;
+        
+        btnGenerateCurveFp = new Button(contentFp, SWT.NONE);
+        btnGenerateCurveFp.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, true, false, 2, 1));
+        btnGenerateCurveFp.setText(Messages.getString("ECDHWizPP.btnGenerateCurve")); //$NON-NLS-1$
+        btnGenerateCurveFp.addSelectionListener(new SelectionListener() {
+            public void widgetDefaultSelected(SelectionEvent e) {
+                widgetSelected(e);
+            }
+
+            public void widgetSelected(SelectionEvent e) {
+                Random r = new Random();
+                int[] i = Curves.ECFp[r.nextInt(Curves.ECFp.length - 1)];
+                ((ECFp) curve).updateCurve(i[1], i[2], i[0]);
+                spnrP.setSelection(((ECFp) curve).getP());
+                lastPrime = ((ECFp) curve).getP();
+                spnrA.setMaximum(lastPrime - 1);
+                spnrB.setMaximum(lastPrime - 1);
+                spnrA.setSelection(curve.getA());
+                spnrB.setSelection(curve.getB());
+                setGeneratorPoints(curve.getPoints());
+            }
+        });
+        
         label = new Label(contentFp, SWT.NONE);
         label.setText("a ="); //$NON-NLS-1$
         spnrA = new Spinner(contentFp, SWT.NONE);
-        spnrA.setLayoutData(gridData);
+        spnrA.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         spnrA.setMinimum(0);
         spnrA.setSelection(1);
         spnrA.addSelectionListener(new SelectionListener() {
@@ -419,7 +396,7 @@ public class PublicParametersComposite extends Composite {
         label1 = new Label(contentFp, SWT.NONE);
         label1.setText("b ="); //$NON-NLS-1$
         spnrB = new Spinner(contentFp, SWT.NONE);
-        spnrB.setLayoutData(gridData);
+        spnrB.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         spnrB.setMinimum(0);
         spnrB.setSelection(1);
         spnrB.addSelectionListener(new SelectionListener() {
@@ -436,7 +413,7 @@ public class PublicParametersComposite extends Composite {
         label2 = new Label(contentFp, SWT.NONE);
         label2.setText("p ="); //$NON-NLS-1$
         spnrP = new Spinner(contentFp, SWT.NONE);
-        spnrP.setLayoutData(gridData);
+        spnrP.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         spnrP.setMaximum(1000);
         spnrP.setMinimum(3);
         spnrP.setSelection(23);
@@ -466,27 +443,6 @@ public class PublicParametersComposite extends Composite {
                 setGeneratorPoints(curve.getPoints());
             }
         });
-        btnGenerateCurveFp = new Button(contentFp, SWT.NONE);
-        btnGenerateCurveFp.setText(Messages.getString("ECDHWizPP.btnGenerateCurve")); //$NON-NLS-1$
-        btnGenerateCurveFp.setLayoutData(gridData3);
-        btnGenerateCurveFp.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
-                widgetSelected(e);
-            }
-
-            public void widgetSelected(SelectionEvent e) {
-                Random r = new Random();
-                int[] i = Curves.ECFp[r.nextInt(Curves.ECFp.length - 1)];
-                ((ECFp) curve).updateCurve(i[1], i[2], i[0]);
-                spnrP.setSelection(((ECFp) curve).getP());
-                lastPrime = ((ECFp) curve).getP();
-                spnrA.setMaximum(lastPrime - 1);
-                spnrB.setMaximum(lastPrime - 1);
-                spnrA.setSelection(curve.getA());
-                spnrB.setSelection(curve.getB());
-                setGeneratorPoints(curve.getPoints());
-            }
-        });
     }
 
     private void createContentFm() {
@@ -494,6 +450,73 @@ public class PublicParametersComposite extends Composite {
         contentFm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         contentFm.setLayout(new GridLayout(2, false));
 
+        btnGenerateCurveFm = new Button(contentFm, SWT.NONE);
+        btnGenerateCurveFm.setLayoutData(new GridData(SWT.RIGHT, SWT.DEFAULT, false, false, 2, 1));
+        btnGenerateCurveFm.setText(Messages.getString("ECDHWizPP.btnGenerateCurve")); //$NON-NLS-1$
+        btnGenerateCurveFm.addSelectionListener(new SelectionListener() {
+            public void widgetDefaultSelected(SelectionEvent e) {
+                widgetSelected(e);
+            }
+
+            public void widgetSelected(SelectionEvent e) {
+                Random r = new Random();
+                int m = r.nextInt(3); // Set m
+                while (m == 1) {
+                    m = r.nextInt(3);
+                }
+                m += 3;
+                spnrM.setSelection(m);
+                ((ECFm) curve).setM(m);
+                int[] ip = ((ECFm) curve).getIrreduciblePolinomials();
+                String[] s = new String[ip.length];
+                for (int i = 0; i < s.length; i++)
+                    s[i] = intToBitString(ip[i]);
+                cG.setItems(s);
+                if (ip.length == 1)
+                    cG.select(0);
+                else
+                    cG.select(r.nextInt(ip.length));
+                ((ECFm) curve).setG(cG.getSelectionIndex(), true); // set G
+
+                elements = ((ECFm) curve).getElements();
+                setComboAB(-1, -1);
+
+                if (m == 3) {
+                    int a = r.nextInt(3);
+                    if (a == 0)
+                        cA.select(3);
+                    else if (a == 1)
+                        cA.select(5);
+                    else
+                        cA.select(6);
+                    ((ECFm) curve).setA(cA.getSelectionIndex(), true);
+                    cB.select(0);
+                    ((ECFm) curve).setB(cB.getSelectionIndex(), true);
+                    setGeneratorPoints(curve.getPoints());
+                } else {
+                    cA.select(r.nextInt(cA.getItemCount()));
+                    ((ECFm) curve).setA(cA.getSelectionIndex(), true);
+                    int b = r.nextInt(cB.getItemCount());
+                    int count = 0;
+                    do {
+                        cB.select(b);
+                        ((ECFm) curve).setB(cB.getSelectionIndex(), true);
+                        setGeneratorPoints(curve.getPoints());
+                        b = (b + 1) % cB.getItemCount();
+                        count++;
+                    } while (cGenerator.getItemCount() == 0 && count < cB.getItemCount());
+
+                    if (count >= cB.getItemCount()) {
+                        try {
+                            throw new Exception("Generator fault, could not find correct curve"); //$NON-NLS-1$
+                        } catch (Exception ex) {
+                            LogUtil.logError(ECDHPlugin.PLUGIN_ID, ex);
+                        }
+                    }
+                }
+            }
+        });
+        
         Label label = new Label(contentFm, SWT.NONE);
         label.setText("m ="); //$NON-NLS-1$
         spnrM = new Spinner(contentFm, SWT.NONE);
@@ -562,80 +585,15 @@ public class PublicParametersComposite extends Composite {
                 setGeneratorPoints(curve.getPoints());
             }
         });
-        GridData gridData3 = new GridData();
-        gridData3.horizontalSpan = 2;
-        btnGenerateCurveFm = new Button(contentFm, SWT.NONE);
-        btnGenerateCurveFm.setText(Messages.getString("ECDHWizPP.btnGenerateCurve")); //$NON-NLS-1$
-        btnGenerateCurveFm.setLayoutData(gridData3);
-        btnGenerateCurveFm.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
-                widgetSelected(e);
-            }
-
-            public void widgetSelected(SelectionEvent e) {
-                Random r = new Random();
-                int m = r.nextInt(3); // Set m
-                while (m == 1) {
-                    m = r.nextInt(3);
-                }
-                m += 3;
-                spnrM.setSelection(m);
-                ((ECFm) curve).setM(m);
-                int[] ip = ((ECFm) curve).getIrreduciblePolinomials();
-                String[] s = new String[ip.length];
-                for (int i = 0; i < s.length; i++)
-                    s[i] = intToBitString(ip[i]);
-                cG.setItems(s);
-                if (ip.length == 1)
-                    cG.select(0);
-                else
-                    cG.select(r.nextInt(ip.length));
-                ((ECFm) curve).setG(cG.getSelectionIndex(), true); // set G
-
-                elements = ((ECFm) curve).getElements();
-                setComboAB(-1, -1);
-
-                if (m == 3) {
-                    int a = r.nextInt(3);
-                    if (a == 0)
-                        cA.select(3);
-                    else if (a == 1)
-                        cA.select(5);
-                    else
-                        cA.select(6);
-                    ((ECFm) curve).setA(cA.getSelectionIndex(), true);
-                    cB.select(0);
-                    ((ECFm) curve).setB(cB.getSelectionIndex(), true);
-                    setGeneratorPoints(curve.getPoints());
-                } else {
-                    cA.select(r.nextInt(cA.getItemCount()));
-                    ((ECFm) curve).setA(cA.getSelectionIndex(), true);
-                    int b = r.nextInt(cB.getItemCount());
-                    int count = 0;
-                    do {
-                        cB.select(b);
-                        ((ECFm) curve).setB(cB.getSelectionIndex(), true);
-                        setGeneratorPoints(curve.getPoints());
-                        b = (b + 1) % cB.getItemCount();
-                        count++;
-                    } while (cGenerator.getItemCount() == 0 && count < cB.getItemCount());
-
-                    if (count >= cB.getItemCount()) {
-                        try {
-                            throw new Exception("Generator fault, could not find correct curve"); //$NON-NLS-1$
-                        } catch (Exception ex) {
-                            LogUtil.logError(ECDHPlugin.PLUGIN_ID, ex);
-                        }
-                    }
-                }
-            }
-        });
+//        GridData gridData3 = new GridData();
+//        gridData3.horizontalSpan = 2;
     }
 
     private void createContentLarge() {
         contentLarge = new Composite(groupAttributes, SWT.NONE);
         contentLarge.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         contentLarge.setLayout(new GridLayout(4, false));
+        
         cStandard = new Combo(contentLarge, SWT.NONE);
         cStandard.setLayoutData(new GridData(SWT.CENTER, SWT.BEGINNING, false, false, 2, 1));
         cStandard.addSelectionListener(new SelectionListener() {
@@ -647,6 +605,7 @@ public class PublicParametersComposite extends Composite {
                 fillCSelection();
             }
         });
+        
         cCurve = new Combo(contentLarge, SWT.NONE);
         cCurve.addSelectionListener(new SelectionListener() {
             public void widgetDefaultSelected(SelectionEvent e) {
@@ -657,6 +616,7 @@ public class PublicParametersComposite extends Composite {
                 setCurve();
             }
         });
+        
         btnGenerateCurveLarge = new Button(contentLarge, SWT.NONE);
         btnGenerateCurveLarge.setText(Messages.getString("ECDHWizPP.btnGenerateCurve")); //$NON-NLS-1$
         btnGenerateCurveLarge.setLayoutData(new GridData(SWT.END, SWT.CENTER, true, false));
@@ -675,6 +635,7 @@ public class PublicParametersComposite extends Composite {
                 setCurve();
             }
         });
+        
         if (rbtnFP.getSelection()) {
             cStandard.setItems(LargeCurves.standardFp);
             cStandard.select(0);
@@ -684,6 +645,7 @@ public class PublicParametersComposite extends Composite {
             cStandard.select(0);
             cCurve.setItems(LargeCurves.getNamesFm(0));
         }
+        
         cCurve.select(0);
         Label label = new Label(contentLarge, SWT.NONE);
         label.setText("a ="); //$NON-NLS-1$
@@ -768,12 +730,8 @@ public class PublicParametersComposite extends Composite {
      *
      */
     private void createCGenerator() {
-        GridData gridData9 = new GridData();
-        gridData9.horizontalSpan = 2;
-        gridData9.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-        gridData9.grabExcessHorizontalSpace = true;
         cGenerator = new Combo(groupGenerator, SWT.READ_ONLY);
-        cGenerator.setLayoutData(gridData9);
+        cGenerator.setLayoutData(new GridData(SWT.FILL, SWT.DEFAULT, true, false, 2, 1));
         setGeneratorPoints(curve.getPoints());
     }
 

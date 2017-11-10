@@ -41,7 +41,8 @@ public class SecretKeyWizardPage extends WizardPage {
 		largeMax = m;
 		largeSecret = s;
 		setTitle(Messages.getString("ECDHWizSK.title1") + " " + name + Messages.getString("ECDHWizSK.title2")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		setDescription(Messages.getString("ECDHWizSK.description1") + ".\n" + Messages.getString("ECDHWizSK.description2")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+//		setDescription(Messages.getString("ECDHWizSK.description1") + " (" + largeMax + ")" +  ".\n" + Messages.getString("ECDHWizSK.description2"));
+		setDescription(Messages.getString("ECDHWizSK.description1") + ".\n" + Messages.getString("ECDHWizSK.description2"));
 	}
 
 	public void createControl(Composite parent) {
