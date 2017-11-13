@@ -248,6 +248,7 @@ public class CRTGroup extends Composite implements Constants {
                     step2Text.setFont(FontService.getSmallBoldFont());
                     execute = true;
                     step1Group.setEnabled(false);
+                	step1nextButton.setEnabled(false);
                     step2Group.setEnabled(true);
                     step2Text.setEnabled(true);
                     step2nextButton.setEnabled(true);
