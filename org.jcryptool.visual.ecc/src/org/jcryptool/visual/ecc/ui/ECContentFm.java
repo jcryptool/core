@@ -122,7 +122,6 @@ public class ECContentFm extends Composite{
 
 
 		GridLayout gridLayout = new GridLayout(2, false);
-		gridLayout.verticalSpacing = 2;
 		content.setLayout(gridLayout);
 
 		createCompositeIntro();
@@ -130,7 +129,7 @@ public class ECContentFm extends Composite{
 		createGroupSettings();
 
 		scrolledComposite.setContent(content);
-		scrolledComposite.setMinSize(content.computeSize(862, 804));
+		scrolledComposite.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 		createGroupAttributesFm();
 		createGroupPoints();
@@ -231,12 +230,11 @@ public class ECContentFm extends Composite{
 	 *
 	 */
 	private void createGroupSettings() {
-		groupSettings = new Group(content, SWT.NONE);
-		groupSettings.setText(Messages.getString("ECContentFm.15")); //$NON-NLS-1$
-		groupSettings.setLayout(new GridLayout(1, false));
-		GridData gridData = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 2);
-		gridData.widthHint = 300;
-		groupSettings.setLayoutData(gridData);
+    	groupSettings = new Group(content, SWT.NONE);
+        groupSettings.setText(Messages.getString("ECContentFm.15")); //$NON-NLS-1$
+        groupSettings.setLayout(new GridLayout());
+        groupSettings.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 2));
+        
 		createGroupSize();
 		createGroupCurveType();
 		createGroupCurveAttributes();
@@ -488,9 +486,9 @@ public class ECContentFm extends Composite{
 		if(curve == null)
 			curve = new ECFm();
 
-		GridData gridData1 = new GridData();
-		gridData1.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-		gridData1.widthHint = 100;
+//		GridData gridData1 = new GridData();
+//		gridData1.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
+//		gridData1.widthHint = 100;
 		Label label2 = new Label(groupCurveAttributes, SWT.NONE);
 		label2.setText("m ="); //$NON-NLS-1$
 		spnrM = new Spinner(groupCurveAttributes, SWT.BORDER);
@@ -510,7 +508,10 @@ public class ECContentFm extends Composite{
 				updateCurve(true);
 			}
 		});
-		spnrM.setLayoutData(gridData1);
+//		spnrM.setLayoutData(gridData1);
+		GridData gd_spnrM = new GridData(SWT.FILL, SWT.CENTER, false, false);
+		gd_spnrM.widthHint = 100;
+		spnrM.setLayoutData(gd_spnrM);
 		((ECFm) curve).setM(spnrM.getSelection());
 
 
@@ -536,12 +537,18 @@ public class ECContentFm extends Composite{
 			}
 		});
 		cF.setToolTipText(Messages.getString("ECContentFm.1")); //$NON-NLS-1$
-		cF.setLayoutData(gridData1);
+//		cF.setLayoutData(gridData1);
+		GridData gd_cF = new GridData(SWT.FILL, SWT.CENTER, false, false);
+		gd_cF.widthHint = 100;
+		cF.setLayoutData(gd_cF);
 		((ECFm) curve).setF(cF.getSelectionIndex(), true);
 		Label label = new Label(groupCurveAttributes, SWT.NONE);
 		label.setText("a ="); //$NON-NLS-1$
 		cA = new Combo(groupCurveAttributes, SWT.READ_ONLY);
-		cA.setLayoutData(gridData1);
+//		cA.setLayoutData(gridData1);
+		GridData gd_cA = new GridData(SWT.FILL, SWT.CENTER, false, false);
+		gd_cA.widthHint = 100;
+		cA.setLayoutData(gd_cA);
 		cA.addSelectionListener(new SelectionListener(){
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
 			public void widgetSelected(SelectionEvent e) {
@@ -563,7 +570,10 @@ public class ECContentFm extends Composite{
 			}
 		});
 		cB.setToolTipText(Messages.getString("ECContentFm.4")); //$NON-NLS-1$
-		cB.setLayoutData(gridData1);
+//		cB.setLayoutData(gridData1);
+		GridData gd_cB = new GridData(SWT.FILL, SWT.CENTER, false, false);
+		gd_cB.widthHint = 100;
+		cB.setLayoutData(gd_cB);
 		GridData gridData = new GridData();
 		gridData.horizontalSpan = 2;
 		cbShowBinary = new Button(groupCurveAttributes, SWT.CHECK);
@@ -628,7 +638,8 @@ public class ECContentFm extends Composite{
 		label.setBackground(white);
 		label.setText(Messages.getString("ECView.Title")); //$NON-NLS-1$
 
-		stDescription = new StyledText(compositeIntro, SWT.READ_ONLY);
+//		stDescription = new StyledText(compositeIntro, SWT.READ_ONLY);
+		stDescription = new StyledText(compositeIntro, SWT.READ_ONLY | SWT.WRAP);
 		stDescription.setText(Messages.getString("ECView.Description")); //$NON-NLS-1$
 		stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 	}
