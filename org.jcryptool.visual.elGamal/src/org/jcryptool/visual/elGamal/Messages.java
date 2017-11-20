@@ -38,7 +38,10 @@ public class Messages extends NLS {
 	public static String ElGamalComposite_copy_to_clipboard;
 	public static String ElGamalComposite_data_loss;
     public static String ElGamalComposite_decrypt;
-	public static String ElGamalComposite_description;
+	public static String ElGamalComposite_description_decrypt;
+	public static String ElGamalComposite_description_encrypt;
+	public static String ElGamalComposite_description_sign;
+	public static String ElGamalComposite_description_verify;
 	public static String ElGamalComposite_encrypt;
 	public static String ElGamalComposite_enter_param;
 	public static String ElGamalComposite_enter_param_text;
@@ -114,6 +117,7 @@ public class Messages extends NLS {
 	public static String NewKeypairPage_error_p_lt_256;
 	public static String NewKeypairPage_error_p_not_prime;
 	public static String NewKeypairPage_error_q_not_prime;
+	public static String NewKeypairPage_pChanged;
 	public static String NewKeypairPage_real_g_values;
 	public static String NewKeypairPage_save_keypair;
 	public static String NewKeypairPage_save_keypair_popup;
@@ -121,7 +125,10 @@ public class Messages extends NLS {
 	public static String NewKeypairPage_select_g;
 	public static String NewPublicKeyPage_0;
     public static String NewPublicKeyPage_1;
+	public static String NewPublicKeyPage_10;
     public static String NewPublicKeyPage_2;
+	public static String NewPublicKeyPage_4;
+	public static String NewPublicKeyPage_7;
     public static String NewPublicKeyPage_error_A_gt_p;
 	public static String NewPublicKeyPage_error_g_not_generator;
 	public static String NewPublicKeyPage_error_p_lt_256;

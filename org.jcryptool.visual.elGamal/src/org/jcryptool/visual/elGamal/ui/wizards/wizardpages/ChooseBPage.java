@@ -15,6 +15,7 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -53,11 +54,15 @@ public class ChooseBPage extends WizardPage {
 
     public void createControl(final Composite parent) {
         final Composite composite = new Composite(parent, SWT.NONE);
-        final int ncol = 2;
-        composite.setLayout(new GridLayout(ncol, true));
-        Label l = new Label(composite, SWT.NONE);
-        l.setText("b"); //$NON-NLS-1$
+        GridLayout gl_composite = new GridLayout(2, false);
+        gl_composite.marginWidth = 50;
+        composite.setLayout(gl_composite);
+        
+        final Label l = new Label(composite, SWT.NONE);
+        l.setText("b = ");
+        l.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         final Text t = new Text(composite, SWT.BORDER);
+        t.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         t.addVerifyListener(Lib.getVerifyListener(Lib.DIGIT));
         t.addModifyListener(new ModifyListener() {
 

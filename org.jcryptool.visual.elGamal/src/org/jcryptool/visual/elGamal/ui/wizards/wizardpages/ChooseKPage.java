@@ -21,6 +21,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.visual.elGamal.ElGamalData;
 import org.jcryptool.visual.elGamal.Messages;
@@ -55,23 +56,34 @@ public class ChooseKPage extends WizardPage {
     }
 
     public void createControl(final Composite parent) {
-        final Composite c = new Composite(parent, SWT.NONE);
-        final int ncol = 2;
-        c.setLayout(new GridLayout(ncol, false));
-        final GridData gd2 = new GridData(SWT.LEFT, SWT.CENTER, true, true, ncol, 1);
-        Label l = new Label(c, SWT.WRAP);
-        l.setText(Messages.ChooseKPage_select_k_text);
-        l.setLayoutData(gd2);
-        l = new Label(c, SWT.NONE);
-        l.setText("k"); //$NON-NLS-1$
-        combo = new Combo(c, SWT.DROP_DOWN | SWT.READ_ONLY);
+        final Composite composite = new Composite(parent, SWT.NONE);
+        
+        GridLayout gl_composite = new GridLayout(2, false);
+        gl_composite.marginWidth = 50;
+        composite.setLayout(gl_composite);
+        Label label_text = new Label(composite, SWT.WRAP);
+        label_text.setText(Messages.ChooseKPage_select_k_text);
+        Label prime = new Label(composite, SWT.WRAP);
+        prime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+        prime.setText("p = " + data.getModulus().toString());
+        label_text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+        
+        //Spacer label
+        new Label(composite, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+        Label label_k = new Label(composite, SWT.NONE);
+        
+        label_k.setText("k = "); //$NON-NLS-1$
+        combo = new Combo(composite, SWT.DROP_DOWN | SWT.READ_ONLY);
         fill(combo);
+
         combo.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(final SelectionEvent e) {
                 data.setK(new BigInteger(combo.getText()));
                 setPageComplete(!combo.getText().equals("")); //$NON-NLS-1$
             }
         });
+        combo.select(15);
+        combo.notifyListeners(SWT.Selection, new Event());
         setControl(parent);
     }
 

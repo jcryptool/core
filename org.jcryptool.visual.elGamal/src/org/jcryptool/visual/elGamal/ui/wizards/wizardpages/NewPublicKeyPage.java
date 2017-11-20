@@ -18,6 +18,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -93,46 +94,122 @@ public class NewPublicKeyPage extends WizardPage {
      * @param parent the parent composite
      */
     public final void createControl(final Composite parent) {
-        composite = new Composite(parent, SWT.NONE);
         // do stuff like layout et al
-        final int ncol = 4;
-        final GridLayout gl = new GridLayout(ncol, false);
-        composite.setLayout(gl);
-        // final GridData gd2 = new GridData(SWT.FILL, SWT.CENTER, true, false, ncol / 2, 1);
+        composite = new Composite(parent, SWT.NONE);
+        GridLayout gl_composite = new GridLayout(3, false);
+        gl_composite.marginWidth = 50;
+        composite.setLayout(gl_composite);
 
         Label label = new Label(composite, SWT.NONE);
-        label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, ncol, 1));
+        label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
         label.setText(Messages.NewPublicKeyPage_select_p);
-        new Label(composite, SWT.NONE).setText("p"); //$NON-NLS-1$
+        new Label(composite, SWT.NONE).setText("p = "); //$NON-NLS-1$
         ptext = new Text(composite, SWT.BORDER);
         ptext.addVerifyListener(VL);
         ptext.addModifyListener(ml);
-        new Label(composite, SWT.NONE);
-        new Label(composite, SWT.NONE);
+        Button suggestPrime = new Button(composite, SWT.PUSH);
+        suggestPrime.setText(Messages.NewPublicKeyPage_4);
+        suggestPrime.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (ptext.getText().equals("")) { //$NON-NLS-1$
+					//Get a random Prime
+					int rndm = (int) (Math.random() * 19500 + 257);
+					ptext.setText(Integer.toString(Lib.PRIMES.lower(rndm)));
+				} else {
+					//Get a prime near the entered value
+					ptext.setText(Integer.toString(Lib.PRIMES.lower(Integer.parseInt(ptext.getText()))));
+				}
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+		});
 
+        Label separator1 = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
+        GridData gd_separator1 = new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1);
+        gd_separator1.verticalIndent = 10;
+        separator1.setLayoutData(gd_separator1);
         label = new Label(composite, SWT.NONE);
         label.setText(Messages.NewPublicKeyPage_select_g);
-        label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, ncol, 1));
-        new Label(composite, SWT.NONE).setText("g"); //$NON-NLS-1$
+        GridData gd_label = new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1);
+        gd_label.verticalIndent = 10;
+        label.setLayoutData(gd_label);
+        new Label(composite, SWT.NONE).setText("g = "); //$NON-NLS-1$
         gtext = new Text(composite, SWT.BORDER);
         gtext.addVerifyListener(VL);
         gtext.addModifyListener(ml);
-        new Label(composite, SWT.NONE);
-        new Label(composite, SWT.NONE);
+        
+        Button suggestGenerator = new Button(composite, SWT.PUSH);
+        suggestGenerator.setText(Messages.NewPublicKeyPage_7);
+        suggestGenerator.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (gtext.getText().equals("")) { //$NON-NLS-1$
+					// get a random generator between 200 and 15000
+					int rnd = (int) (Math.random()*15000+200);
+					gtext.setText(getRandomGenerator(Integer.toString(rnd), ptext.getText()).toString());
+				} else {
+					// Get a Generator near the entered value
+					gtext.setText(getRandomGenerator(gtext.getText(), ptext.getText()).toString());
+				}
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+		});
 
+        Label separator2 = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
+        GridData gd_separator2 = new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1);
+        gd_separator2.verticalIndent = 20;
+        separator2.setLayoutData(gd_separator2);
         label = new Label(composite, SWT.NONE);
-        label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, ncol, 1));
+        label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
         label.setText(Messages.NewPublicKeyPage_select_A);
-        new Label(composite, SWT.NONE).setText("A"); //$NON-NLS-1$
+        GridData gd_label2 = new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1);
+        gd_label2.verticalIndent = 10;
+        label.setLayoutData(gd_label2);
+        new Label(composite, SWT.NONE).setText("A = "); //$NON-NLS-1$
         atext = new Text(composite, SWT.BORDER);
         atext.addVerifyListener(VL);
         atext.addModifyListener(ml);
-        new Label(composite, SWT.NONE);
-        new Label(composite, SWT.NONE);
+        Button suggestA = new Button(composite, SWT.PUSH);
+        suggestA.setText(Messages.NewPublicKeyPage_10);
+        suggestA.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (!ptext.getText().equals("")) { //$NON-NLS-1$
+					// if p is set, set A to a value between 1 and p - 1
+					int rnd = (int) (Math.random()*Integer.parseInt(ptext.getText()));
+					atext.setText(Integer.toString(rnd));
+				} else {
+					// if p isn't set, set A to a number between 1 and 1000 
+					int rnd = (int) (Math.random()*10000 + 1);
+					atext.setText(Integer.toString(rnd));
+				}
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+		});
+        
+        //Spacer
+        new Label(composite, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
         // Separator
-        new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-                false, ncol, 1));
+        Label separator3 = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
+        GridData gd_separator3 = new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1);
+        gd_separator3.verticalIndent = 10;
+        separator3.setLayoutData(gd_separator3);
 
         // should this key be saved?
         saveButton = new Button(composite, SWT.CHECK);
@@ -140,7 +217,7 @@ public class NewPublicKeyPage extends WizardPage {
         saveButton.setToolTipText(Messages.NewPublicKeyPage_save_pubkey_popup);
         saveButton.setSelection(data.isStandalone());
         saveButton.setEnabled(!data.isStandalone());
-        saveButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, ncol, 1));
+        saveButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
         saveButton.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(final SelectionEvent e) {
                 getContainer().updateButtons();
@@ -159,6 +236,21 @@ public class NewPublicKeyPage extends WizardPage {
     }
 
     /**
+     * 
+     * @param generator a value near a generator for the prime
+     * @param prime a prime number
+     * @return a generator to the given prime
+     */
+	protected BigInteger getRandomGenerator(String generator, String prime) {
+		BigInteger p = new BigInteger(prime);
+		BigInteger g = new BigInteger(generator);
+		while (!Lib.checkGenerator(g, p)) {
+			g = g.add(BigInteger.ONE);
+		}
+		return g;
+	}
+
+	/**
      * checks whether this page is completed and sets the status accordingly
      */
     private void setPageComplete() {

@@ -64,21 +64,21 @@ public class DecryptSignPage extends WizardPage {
     public final void createControl(Composite parent) {
         Composite composite = new Composite(parent, SWT.NONE);
         // set layout
-        composite.setLayout(new GridLayout());
-        // create grid data
-        GridData gd = new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER);
+        GridLayout gl_composite = new GridLayout();
+        gl_composite.marginWidth = 50;
+        composite.setLayout(gl_composite);
         // add new Keypair button
         newKeypairButton = new Button(composite, SWT.RADIO);
         newKeypairButton.setText(Messages.DecryptSignPage_new_keypair);
         newKeypairButton.setToolTipText(Messages.DecryptSignPage_new_keypair_popup);
         newKeypairButton.setSelection(true);
-        newKeypairButton.setLayoutData(gd);
+        newKeypairButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         newKeypairButton.addSelectionListener(sl);
         // add existing Keypair button
         existingKeypairButton = new Button(composite, SWT.RADIO);
         existingKeypairButton.setText(Messages.DecryptSignPage_existing_keypair);
         existingKeypairButton.setToolTipText(Messages.DecryptSignPage_existing_keypair_popup);
-        existingKeypairButton.setLayoutData(gd);
+        existingKeypairButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         existingKeypairButton.addSelectionListener(sl);
         // finally set control something
         setControl(composite);
