@@ -52,6 +52,7 @@ public class Messages extends NLS {
 	public static String SSSConstants_Title_Info;
 	public static String SSSConstants_Title_Info_Formula;
 	public static String SSSConstants_Zoom;
+	public static String SSSConstants_Reset;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

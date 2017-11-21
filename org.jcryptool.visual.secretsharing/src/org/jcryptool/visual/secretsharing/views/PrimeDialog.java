@@ -18,10 +18,12 @@ import org.eclipse.swt.custom.ExtendedModifyEvent;
 import org.eclipse.swt.custom.ExtendedModifyListener;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.custom.VerifyKeyListener;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -63,12 +65,11 @@ public class PrimeDialog extends TitleAreaDialog implements Constants {
 	protected Control createDialogArea(Composite parent) {
 		Composite area = (Composite) super.createDialogArea(parent);
 		Composite container = new Composite(area, SWT.NONE);
-		final GridLayout gridLayout = new GridLayout();
-		gridLayout.numColumns = 2;
-		container.setLayout(gridLayout);
+		container.setLayout(new GridLayout(2, true));
 		container.setLayoutData(new GridData(GridData.FILL_BOTH));
 
 		final Label modulLabel = new Label(container, SWT.NONE);
+		modulLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false));
 		modulLabel.setText(MESSAGE_PRIME_MODUL_LABEL);
 
 		primeText = new StyledText(container, SWT.BORDER);
@@ -77,8 +78,8 @@ public class PrimeDialog extends TitleAreaDialog implements Constants {
 				result[0] = primeText.getText();
 			}
 		});
-
-		final GridData gd_primeText = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		final GridData gd_primeText = new GridData(SWT.LEFT, SWT.CENTER, true, false);
+		gd_primeText.widthHint = 100;
 		primeText.setLayoutData(gd_primeText);
 		primeText.setText(number.toString());
 		style = new StyleRange();
@@ -87,6 +88,39 @@ public class PrimeDialog extends TitleAreaDialog implements Constants {
 		style.foreground = RED;
 		style.fontStyle = SWT.BOLD;
 		primeText.setStyleRange(style);
+		primeText.addVerifyKeyListener(new VerifyKeyListener() {
+			public void verifyKey(VerifyEvent e) {
+				/*
+                 * keyCode == 8 is BACKSPACE and keyCode == 48 is ZERO and keyCode == 127 is DEL
+                 */
+                if (Character.toString(e.character).matches("[0-9]") || e.keyCode == 8 || e.keyCode == 127) {
+                    if (primeText.getText().length() == 0 && Character.toString(e.character).compareTo("0") == 0) {
+                        e.doit = false;
+                    } else if (primeText.getSelection().x == 0 && e.keyCode == 48) {
+                        e.doit = false;
+                    } else {
+                        e.doit = true;
+                    }
+                } else {
+                    e.doit = false;
+                }
+			}	
+		});
+		primeText.addExtendedModifyListener(new ExtendedModifyListener() {
+			public void modifyText(final ExtendedModifyEvent event) {
+				style = new StyleRange();
+				style.start = 0;
+				style.length = primeText.getText().length();
+				style.foreground = BLACK;
+				style.fontStyle = SWT.BOLD;
+				primeText.setStyleRange(style);
+
+				verifyInputButton.setEnabled(true);
+				if (okButton != null) {
+					okButton.setEnabled(false);
+				}
+			}
+		});
 
 		generateNextPrimeButton = new Button(container, SWT.NONE);
 		generateNextPrimeButton.addSelectionListener(new SelectionAdapter() {
@@ -113,6 +147,7 @@ public class PrimeDialog extends TitleAreaDialog implements Constants {
 			}
 		});
 		generateNextPrimeButton.setText(MESSAGE_NEXT_PRIME);
+		generateNextPrimeButton.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false));
 
 		verifyInputButton = new Button(container, SWT.NONE);
 		verifyInputButton.addSelectionListener(new SelectionAdapter() {
@@ -144,28 +179,12 @@ public class PrimeDialog extends TitleAreaDialog implements Constants {
 				}
 			}
 		});
-
-		primeText.addExtendedModifyListener(new ExtendedModifyListener() {
-			public void modifyText(final ExtendedModifyEvent event) {
-				style = new StyleRange();
-				style.start = 0;
-				style.length = primeText.getText().length();
-				style.foreground = BLACK;
-				style.fontStyle = SWT.BOLD;
-				primeText.setStyleRange(style);
-
-				verifyInputButton.setEnabled(true);
-				if (okButton != null) {
-					okButton.setEnabled(false);
-				}
-			}
-		});
-
-		verifyInputButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		verifyInputButton.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false));
 		verifyInputButton.setText(MESSAGE_VERIFY_INPUT);
+		
 		setMessage(MESSAGE_PRIME_DIALOG);
 		setTitle(MESSAGE_PRIME_HEAD);
-		//
+		
 		return area;
 	}
 
@@ -191,7 +210,7 @@ public class PrimeDialog extends TitleAreaDialog implements Constants {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(428, 250);
+		return new Point(600, 250);
 	}
 
 	@Override

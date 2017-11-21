@@ -18,10 +18,12 @@ import org.eclipse.swt.custom.ExtendedModifyEvent;
 import org.eclipse.swt.custom.ExtendedModifyListener;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.custom.VerifyKeyListener;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -69,7 +71,7 @@ public class SecretDialog extends TitleAreaDialog implements Constants {
 		container.setLayoutData(new GridData(GridData.FILL_BOTH));
 
 		final Label modulLabel = new Label(container, SWT.NONE);
-		modulLabel.setLayoutData(new GridData(112, SWT.DEFAULT));
+		modulLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		modulLabel.setText(MESSAGE_PRIME_MODUL_LABEL);
 
 		modulText = new Text(container, SWT.BORDER);
@@ -82,6 +84,24 @@ public class SecretDialog extends TitleAreaDialog implements Constants {
 		secretLabel.setText(MESSAGE_SECRET_LABEL);
 
 		secretText = new StyledText(container, SWT.BORDER);
+		secretText.addVerifyKeyListener(new VerifyKeyListener() {
+			public void verifyKey(VerifyEvent e) {
+				/*
+                 * keyCode == 8 is BACKSPACE and keyCode == 48 is ZERO and keyCode == 127 is DEL
+                 */
+                if (Character.toString(e.character).matches("[0-9]") || e.keyCode == 8 || e.keyCode == 127) {
+                    if (secretText.getText().length() == 0 && Character.toString(e.character).compareTo("0") == 0) {
+                        e.doit = false;
+                    } else if (secretText.getSelection().x == 0 && e.keyCode == 48) {
+                        e.doit = false;
+                    } else {
+                        e.doit = true;
+                    }
+                } else {
+                    e.doit = false;
+                }
+			}	
+		});
 		secretText.addExtendedModifyListener(new ExtendedModifyListener() {
 			public void modifyText(final ExtendedModifyEvent event) {
 				style = new StyleRange();
@@ -154,7 +174,7 @@ public class SecretDialog extends TitleAreaDialog implements Constants {
 
 		setMessage(MESSAGE_SECRET_DIALOG);
 		setTitle(MESSAGE_SECRET_HEADER);
-		//
+		
 		return area;
 	}
 
@@ -174,7 +194,7 @@ public class SecretDialog extends TitleAreaDialog implements Constants {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(335, 250);
+		return new Point(500, 300);
 	}
 
 	@Override
