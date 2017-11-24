@@ -23,6 +23,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -37,6 +38,7 @@ import de.flexiprovider.core.elgamal.ElGamalPrivateKey;
  * Page for loading a Keypair.
  * 
  * @author Michael Gaber
+ * @author Thorben Groos
  */
 public class LoadKeypairPage extends WizardPage {
 
@@ -66,6 +68,9 @@ public class LoadKeypairPage extends WizardPage {
 
     /** the resulting public alias. */
     private KeyStoreAlias publicAlias;
+    
+    /** hint for the wrong password */
+    private Label pwHint;
 
     /**
      * Constructor setting pagename, description, data and completion status and initializes the keystore connection
@@ -138,6 +143,12 @@ public class LoadKeypairPage extends WizardPage {
             }
         });
         
+        pwHint = new Label(composite, SWT.NONE);
+        pwHint.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
+        pwHint.setVisible(false);
+        pwHint.setText(Messages.LoadKeypairPage_0);
+        pwHint.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        
         //select a key in the combo box
         if (combo.getItemCount() > 0) {
         	combo.select(0);
@@ -147,6 +158,15 @@ public class LoadKeypairPage extends WizardPage {
         setControl(composite);
     }
 
+    /**
+     * Sets the visibility for the hint for the password
+     * True if it should be displayed. False if not.
+     * @param status true, if the passwort is right. false, if it is wrong
+     */
+    public final void setPasswordHint(boolean status) {
+    	pwHint.setVisible(status);
+    }
+    
     /**
      * gets the matching public entry for a private one.
      * 
@@ -169,7 +189,6 @@ public class LoadKeypairPage extends WizardPage {
      */
     private void checkComplete() {
         final boolean complete = privateAlias != null && !passfield.getText().equals(""); //$NON-NLS-1$
-//    	final boolean complete = privateAlias != null;
         if (complete) {
             data.setPrivateAlias(privateAlias);
             data.setPublicAlias(publicAlias);

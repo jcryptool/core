@@ -25,6 +25,7 @@ import org.jcryptool.visual.elGamal.Messages;
  * page for saving a keypair.
  *
  * @author Michael Gaber
+ * @author Thorben Groos
  */
 public class SaveKeypairPage extends SaveWizardPage {
 

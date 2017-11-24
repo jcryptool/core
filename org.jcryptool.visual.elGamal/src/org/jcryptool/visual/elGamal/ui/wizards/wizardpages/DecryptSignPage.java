@@ -25,6 +25,7 @@ import org.jcryptool.visual.elGamal.Messages;
  * page to choose whether to use a new key or enter the parameters manually.
  *
  * @author Michael Gaber
+ * @author Thorben Groos
  */
 public class DecryptSignPage extends WizardPage {
 

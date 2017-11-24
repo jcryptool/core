@@ -13,6 +13,7 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.visual.elGamal.messages"; //$NON-NLS-1$
+	public static String ChooseBPage_1;
 	public static String ChooseBPage_choose_b;
 	public static String ChooseBPage_choose_b_text;
 	public static String ChooseBPage_error_invalid_b;
@@ -101,6 +102,7 @@ public class Messages extends NLS {
 	public static String EnterSignaturePage_use_sha1;
 	public static String EnterSignaturePage_use_sha1_popup;
 	public static String KeySelectionWizard_keyselection;
+	public static String LoadKeypairPage_0;
 	public static String LoadKeypairPage_enter_password;
 	public static String LoadKeypairPage_select_keypair;
 	public static String LoadKeypairPage_select_keypair_from_list;

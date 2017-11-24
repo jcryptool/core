@@ -34,6 +34,7 @@ import de.flexiprovider.core.elgamal.ElGamalPublicKey;
  * Page for loading a public Key.
  * 
  * @author Michael Gaber
+ * @author Thorben Groos
  */
 public class LoadPublicKeyPage extends WizardPage {
 

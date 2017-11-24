@@ -27,6 +27,7 @@ import org.jcryptool.visual.library.Lib;
 /**
  * page for entering a ciphertext to decrypt.
  * @author Michael Gaber
+ * @author Thorben Groos
  */
 public class EnterCiphertextPage extends TextWizardPage {
 
@@ -57,7 +58,9 @@ public class EnterCiphertextPage extends TextWizardPage {
 	public final void createControl(final Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
 		// do stuff like layout et al
-		composite.setLayout(new GridLayout());
+		GridLayout gl_composite = new GridLayout();
+		gl_composite.marginWidth = 50;
+		composite.setLayout(gl_composite);
 		final Label label = new Label(composite, SWT.NONE);
 		label.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 		label.setText(Messages.EnterCiphertextPage_textentry);

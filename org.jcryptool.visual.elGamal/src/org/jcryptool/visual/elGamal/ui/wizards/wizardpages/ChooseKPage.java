@@ -30,6 +30,7 @@ import org.jcryptool.visual.elGamal.Messages;
  * Page for entering the unique parameter k
  *
  * @author Michael Gaber
+ * @author Thorben Groos
  */
 public class ChooseKPage extends WizardPage {
 
@@ -57,22 +58,30 @@ public class ChooseKPage extends WizardPage {
 
     public void createControl(final Composite parent) {
         final Composite composite = new Composite(parent, SWT.NONE);
+        composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         
         GridLayout gl_composite = new GridLayout(2, false);
         gl_composite.marginWidth = 50;
         composite.setLayout(gl_composite);
+        
         Label label_text = new Label(composite, SWT.WRAP);
         label_text.setText(Messages.ChooseKPage_select_k_text);
-        Label prime = new Label(composite, SWT.WRAP);
-        prime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-        prime.setText("p = " + data.getModulus().toString());
         label_text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
         
-        //Spacer label
-        new Label(composite, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-        Label label_k = new Label(composite, SWT.NONE);
+        Label prime = new Label(composite, SWT.WRAP);
+        GridData gd_prime = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+        prime.setLayoutData(gd_prime);
+        prime.setText("p = ");
         
+        Label modulus = new Label(composite, SWT.WRAP);
+        GridData gd_modulus = new GridData(SWT.FILL, SWT.FILL, true, false);
+        gd_modulus.widthHint = 1000;
+        modulus.setLayoutData(gd_modulus);
+        modulus.setText(data.getModulus().toString());
+        
+        Label label_k = new Label(composite, SWT.NONE);     
         label_k.setText("k = "); //$NON-NLS-1$
+        
         combo = new Combo(composite, SWT.DROP_DOWN | SWT.READ_ONLY);
         fill(combo);
 

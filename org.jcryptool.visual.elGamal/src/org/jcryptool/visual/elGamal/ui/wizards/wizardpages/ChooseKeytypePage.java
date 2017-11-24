@@ -25,6 +25,7 @@ import org.jcryptool.visual.elGamal.Messages;
  * Page for choosing whether to create a public key or a private keypair.
  *
  * @author Michael Gaber
+ * @author Thorben Groos
  */
 public class ChooseKeytypePage extends WizardPage {
 

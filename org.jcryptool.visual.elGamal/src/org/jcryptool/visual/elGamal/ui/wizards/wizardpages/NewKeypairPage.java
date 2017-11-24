@@ -38,6 +38,7 @@ import org.jcryptool.visual.library.Lib;
  * Wizardpage for creating a new RSA public-private-keypair.
  *
  * @author Michael Gaber
+ * @author Thorben Groos
  */
 public class NewKeypairPage extends WizardPage {
 

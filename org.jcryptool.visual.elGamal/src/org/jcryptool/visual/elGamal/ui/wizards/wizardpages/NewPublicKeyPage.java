@@ -35,6 +35,7 @@ import org.jcryptool.visual.library.Lib;
  * Wizardpage for entering the parameters of a new Public Key.
  *
  * @author Michael Gaber
+ * @author Thorben Groos
  */
 public class NewPublicKeyPage extends WizardPage {
     /** unique pagename to get this page from inside a wizard. */

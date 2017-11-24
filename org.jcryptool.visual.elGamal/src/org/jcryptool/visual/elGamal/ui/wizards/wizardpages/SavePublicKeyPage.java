@@ -24,6 +24,7 @@ import org.jcryptool.visual.elGamal.Messages;
  * page for saving a public key.
  *
  * @author Michael Gaber
+ * @author Thorben Groos
  */
 public class SavePublicKeyPage extends SaveWizardPage {
 

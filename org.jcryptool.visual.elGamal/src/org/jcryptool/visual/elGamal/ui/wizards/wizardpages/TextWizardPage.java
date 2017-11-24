@@ -17,6 +17,7 @@ import org.eclipse.swt.widgets.Text;
  * abstract superclass for all wizardpages that want only text-input.
  *
  * @author Michael Gaber
+ * @author Thorben Groos
  */
 public abstract class TextWizardPage extends WizardPage {
 
