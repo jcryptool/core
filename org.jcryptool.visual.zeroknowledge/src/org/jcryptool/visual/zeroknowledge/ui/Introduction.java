@@ -48,25 +48,14 @@ public class Introduction {
      */
     public Introduction(final Protocol pro, final Composite parent, final String prefix) {
         group = new Group(parent, SWT.None);
-
-        GridLayout gridLayout = new GridLayout();
-        gridLayout.numColumns = 3;
-        gridLayout.horizontalSpacing = 10;
         group.setText(Messages.Introduction_0);
-        GridData gridData = new GridData();
-        gridData.horizontalAlignment = GridData.FILL;
-        gridData.grabExcessHorizontalSpace = true;
-        gridData.grabExcessVerticalSpace = true;
-        gridData.horizontalSpan = 1;
-        gridData.verticalAlignment = GridData.CENTER;
-
-        group.setLayout(gridLayout);
-        group.setLayoutData(gridData);
-
         group.setVisible(true);
+        group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        group.setLayout(new GridLayout(2, false));
 
         firstCase = new Button(group, SWT.RADIO);
         firstCase.setSelection(true);
+        firstCase.setText(Messages.Introduction_10);
         firstCase.addSelectionListener(
         /**
          * Selection-Listener, der auf Events vom First-Case-Button achtet
@@ -97,16 +86,14 @@ public class Introduction {
 
             }
         });
-        Label label = new Label(group, 0);
-        label.setText(Messages.Introduction_10);
 
         // Description label for chosen option
-        labelDesc = new Label(group, 0);
-        GridData gridData1 = new GridData();
-        gridData1.minimumWidth = 400;
-        gridData1.grabExcessVerticalSpace = true;
-        gridData1.grabExcessHorizontalSpace = true;
-        gridData1.verticalSpan = 2;
+        labelDesc = new Label(group, SWT.WRAP);
+        GridData gd_labelDesc = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2);
+        gd_labelDesc.minimumWidth = 500;
+        gd_labelDesc.widthHint = 500;
+        gd_labelDesc.horizontalIndent = 50;
+        labelDesc.setLayoutData(gd_labelDesc);
         String text = ""; //$NON-NLS-1$
         if ("FFS".equals(prefix)) { //$NON-NLS-1$
             text = Messages.Introduction_3;
@@ -118,12 +105,11 @@ public class Introduction {
             text = Messages.Introduction_9;
         }
         labelDesc.setText(text);
-        labelDesc.setLayoutData(gridData1);
 
         // RadioButton, mit dem man den zweiten Fall auswaehlen kann, und
         // der Text, der angibt, was hier passiert
         secondCase = new Button(group, SWT.RADIO);
-        // secondCase.setBounds(10, 60, 20, 20);
+        secondCase.setText(Messages.Introduction_29);
         secondCase.addSelectionListener(
         /**
          * Selection-Listener, der auf Events vom Second-Case-Button achtet
@@ -154,9 +140,6 @@ public class Introduction {
 
             }
         });
-        label = new Label(group, 0);
-        label.setText(Messages.Introduction_29);
-        group.setVisible(true);
     }
 
     /**

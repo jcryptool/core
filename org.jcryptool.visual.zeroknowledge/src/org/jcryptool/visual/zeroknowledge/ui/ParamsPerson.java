@@ -9,6 +9,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.zeroknowledge.ui;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -34,18 +35,9 @@ public abstract class ParamsPerson {
      * @param comp Parent-Objekt zu dem graphischen Teil einer Instanz dieser Klasse
      */
     public ParamsPerson(Composite comp) {
-        group = new Group(comp, 0);
-        GridLayout gridLayout = new GridLayout();
-        gridLayout.numColumns = 1;
-        // gridLayout.makeColumnsEqualWidth = true;
-        GridData gridData = new GridData();
-        gridData.grabExcessVerticalSpace = true;
-        gridData.grabExcessHorizontalSpace = true;
-        gridData.horizontalAlignment = GridData.FILL;
-        gridData.verticalAlignment = GridData.FILL;
-
-        group.setLayout(gridLayout);
-        group.setLayoutData(gridData);
+    	group = new Group(comp, SWT.NONE);
+        group.setLayout(new GridLayout());
+        group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
     }
 
     /**

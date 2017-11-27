@@ -12,9 +12,11 @@ package org.jcryptool.visual.zeroknowledge.ui;
 import java.math.BigInteger;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 /**
@@ -48,41 +50,38 @@ public class PrimePanel {
      *
      * @param POrQ Titel für das Panel
      */
-    public PrimePanel(String POrQ, Shell parent) {
-        // allgemeines
-        group = new Group(parent, 0);
-        group.setSize(300, 100);
-        group.setLayout(null);
-        group.setText(Messages.PrimePanel_0 + POrQ);
-
-        // Untergrenze des Wertebereichs: Beschreibung und Eingabefeld
-        untergrenze = new Label(group, 0);
+    public PrimePanel(String POrQ, Composite parent) {
+    	
+    	group = new Group(parent, SWT.NONE);
+    	group.setText(Messages.PrimePanel_0 + POrQ);
+    	group.setLayout(new GridLayout(2, false));
+    	GridData gd_group = new GridData(SWT.FILL, SWT.FILL, true, false);
+    	gd_group.verticalIndent = 20;
+    	group.setLayoutData(gd_group);
+    	
+    	untergrenze = new Label(group, SWT.NONE);
         untergrenze.setText(Messages.PrimePanel_1);
-        untergrenze.setSize(100, 20);
-        untergrenze.setLocation(10, 30);
-        input_untergrenze = new Text(group, SWT.SINGLE | SWT.BORDER | SWT.LEFT);
+        untergrenze.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        
+        input_untergrenze = new Text(group, SWT.NONE);
         input_untergrenze.setText(Messages.PrimePanel_2);
-        input_untergrenze.setSize(100, 20);
-        input_untergrenze.setLocation(110, 30);
-
-        // Obergrenze des Wertebereichs: Beschreibung und Eingabefeld
-        obergrenze = new Label(group, 0);
+        input_untergrenze.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+    	
+        obergrenze = new Label(group, SWT.NONE);
         obergrenze.setText(Messages.PrimePanel_3);
-        obergrenze.setSize(100, 20);
-        obergrenze.setLocation(10, 50);
-        input_obergrenze = new Text(group, SWT.SINGLE | SWT.BORDER | SWT.LEFT);
+        obergrenze.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        
+        input_obergrenze = new Text(group, SWT.NONE);
         input_obergrenze.setText(Messages.PrimePanel_4);
-        input_obergrenze.setSize(100, 20);
-        input_obergrenze.setLocation(110, 50);
-
-        // Ergebnis der Generierung: Beschreibung und Wert
-        ergebnis = new Label(group, 0);
+        input_obergrenze.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        
+        ergebnis = new Label(group, SWT.NONE);
         ergebnis.setText(Messages.PrimePanel_5);
-        ergebnis.setSize(100, 20);
-        ergebnis.setLocation(10, 70);
-        input_ergebnis = new Label(group, 0);
-        input_ergebnis.setSize(150, 20);
-        input_ergebnis.setLocation(110, 70);
+        ergebnis.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        
+        input_ergebnis = new Label(group, SWT.FILL);
+        input_ergebnis.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        
     }
 
     /**

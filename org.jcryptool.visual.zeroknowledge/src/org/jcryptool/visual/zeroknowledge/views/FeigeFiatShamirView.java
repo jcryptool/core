@@ -41,6 +41,8 @@ import org.jcryptool.visual.zeroknowledge.ui.feigefiatshamir.FFSParamsAliceCarol
 import org.jcryptool.visual.zeroknowledge.ui.feigefiatshamir.FFSParamsBob;
 
 public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalculator {
+	public FeigeFiatShamirView() {
+	}
     private FFSAlice alice;
     private Combo anzahl;
     private FFSBob bob;
@@ -64,29 +66,21 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
     public void createPartControl(Composite parent) {
         this.parent = parent;
         // Define layout elements
-        GridData gridData = new GridData();
-        gridData.grabExcessVerticalSpace = true;
-        gridData.grabExcessHorizontalSpace = true;
-        gridData.horizontalAlignment = GridData.FILL;
-        GridLayout gridLayout = new GridLayout();
-        gridLayout.numColumns = 1;
-        gridLayout.makeColumnsEqualWidth = true;
-        parent.setLayoutData(gridData);
+        parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         // Create srollable composite and composite within it
         ScrolledComposite sc =
                 new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
         sc.setExpandHorizontal(true);
         sc.setExpandVertical(true);
-        sc.setLayoutData(gridData);
+        sc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         Composite pageComposite = new Composite(sc, SWT.NONE);
         sc.setContent(pageComposite);
-        pageComposite.setLayout(gridLayout);
-        pageComposite.setLayoutData(gridData);
+        pageComposite.setLayout(new GridLayout());
+        pageComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		headerComp = new ZKHeaderComposite(pageComposite);
-		headerComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false,
-				4, 1));
+		headerComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 4, 1));
 		headerComp.setTitle(Messages.FeigeFiatShamirView_title);
 		headerComp.setDescription(Messages.FeigeFiatShamirView_text);
 
@@ -107,19 +101,15 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
 
         // Einfuehrung und Auswahl, ob das Geheimnis bekannt sein soll
         constOne = new Introduction(this, main, "FFS"); //$NON-NLS-1$
-        constOne.getGroup().setLocation(0, 0);
 
         // Modul zum Erstellen von n
         prime = new PrimeGenerator(this, main);
 
         // Layout for Action-Flow group
-        GridLayout gridLayoutP = new GridLayout();
-        gridLayoutP.numColumns = 1;
-        gridLayoutP.makeColumnsEqualWidth = false;
         Group action = new Group(main, SWT.None);
         action.setText(Messages.FeigeFiatShamirView_1);
-        action.setLayout(gridLayoutP);
-        action.setLayoutData(gridData);
+        action.setLayout(new GridLayout());
+        action.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
         // Modul für den Durchgang
         flow = new FFSFlow(this, action);
@@ -130,29 +120,24 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
 
         // Layout for information group
         info = new Group(main, SWT.None);
-        GridLayout gridLayoutI = new GridLayout();
-        gridLayoutI.numColumns = 2;
-        gridLayoutI.makeColumnsEqualWidth = false;
-        GridData gridDataI = new GridData();
-        gridDataI.grabExcessVerticalSpace = true;
-        gridDataI.grabExcessHorizontalSpace = true;
-        gridDataI.horizontalAlignment = GridData.FILL;
-        gridDataI.horizontalSpan = 1;
-        info.setLayout(gridLayoutI);
-        info.setLayoutData(gridDataI);
+        info.setLayout(new GridLayout(2, false));
+        info.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         info.setText(Messages.FeigeFiatShamirView_2);
 
-        new Label(info, 0);
-        Composite vectors = new Composite(info, 0);
-        GridLayout vectorLayout = new GridLayout();
-        vectorLayout.numColumns = 2;
-        vectors.setLayout(vectorLayout);
+        //Spacer
+        new Label(info, SWT.NONE);
+        
+        Composite vectors = new Composite(info, SWT.NONE);
+        vectors.setLayout(new GridLayout(2, true));
+        vectors.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
         // Text zum Combo-Objekt
-        Label label = new Label(vectors, SWT.RIGHT);
+        Label label = new Label(vectors, SWT.NONE);
+        label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false));
         label.setText(Messages.FeigeFiatShamirView_3);
         // Combo zum Angeben, wie viele Einträge die Vektoren haben sollen
         anzahl = new Combo(vectors, SWT.DROP_DOWN | SWT.READ_ONLY);
+        anzahl.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false));
         anzahl.add("1"); //$NON-NLS-1$
         anzahl.add("2"); //$NON-NLS-1$
         anzahl.add("3"); //$NON-NLS-1$
@@ -216,8 +201,6 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
 
         main.setVisible(true);
 
-        // make whole content scrollable
-        // main.setSize(main.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         sc.setMinSize(pageComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(),
