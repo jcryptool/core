@@ -11,6 +11,9 @@ package org.jcryptool.visual.zeroknowledge.ui.fiatshamir;
 
 import java.math.BigInteger;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -37,22 +40,24 @@ public class FSCombiLabel {
      * @param group Group-Objekt, in das das Composite-Objekt eingebunden wird
      */
     public FSCombiLabel(String title, boolean known, Group group) {
-        comp = new Composite(group, 0);
+    	comp = new Composite(group, SWT.NONE);
+    	comp.setLayout(new GridLayout(2, false));
+    	comp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+    	
         this.secret = known;
-        comp.setLayout(null);
-        comp.setSize(130, 20);
 
-        name = new Label(comp, 0);
+        name = new Label(comp, SWT.NONE);
+        name.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         name.setText(title);
-        name.setBounds(20, 0, 75, 20);
 
-        content = new Label(comp, 0);
+        content = new Label(comp, SWT.NONE);
+        content.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        
         if (known) {
             content.setText("-"); //$NON-NLS-1$
         } else {
             content.setText("?"); //$NON-NLS-1$
         }
-        content.setBounds(100, 0, 80, 20);
     }
 
     public FSCombiLabel() {
