@@ -48,7 +48,7 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
     private FFSBob bob;
     private Buttons buttons;
     private FFSCarol carol;
-    private Introduction constOne;
+//    private Introduction constOne;
     private FFSFlow flow;
     private Composite main;
     private Modell modell;
@@ -100,7 +100,8 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
         carol.addObserver(this);
 
         // Einfuehrung und Auswahl, ob das Geheimnis bekannt sein soll
-        constOne = new Introduction(this, main, "FFS"); //$NON-NLS-1$
+//        constOne = new Introduction(this, main, "FFS"); //$NON-NLS-1$
+        new Introduction(this, main, "FFS");
 
         // Modul zum Erstellen von n
         prime = new PrimeGenerator(this, main);

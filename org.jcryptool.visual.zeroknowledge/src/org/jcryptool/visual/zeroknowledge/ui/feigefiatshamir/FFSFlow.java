@@ -189,19 +189,19 @@ public class FFSFlow {
                 break;
             case 1:
                 erklaerung01.setFont(FontService.getNormalBoldFont());
-                erklaerung01.setSize(erklaerung01.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+                erklaerung01.getParent().layout();
                 break;
             case 2:
                 erklaerung02.setFont(FontService.getNormalBoldFont());
-                erklaerung02.setSize(erklaerung02.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+                erklaerung02.getParent().layout();
                 break;
             case 3:
                 erklaerung03.setFont(FontService.getNormalBoldFont());
-                erklaerung03.setSize(erklaerung03.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+                erklaerung03.getParent().layout();
                 break;
             case 4:
                 erklaerung04.setFont(FontService.getNormalBoldFont());
-                erklaerung04.setSize(erklaerung04.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+                erklaerung04.getParent().layout();
                 break;
         }
     }
@@ -248,7 +248,7 @@ public class FFSFlow {
         });
         genRandom.setEnabled(false);
         
-        erklaerung01 = new Label(parent, SWT.NONE);
+        erklaerung01 = new Label(parent, SWT.WRAP);
         erklaerung01.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
         
         new Label(parent, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -273,7 +273,7 @@ public class FFSFlow {
         });
         genB.setEnabled(false);
         
-        erklaerung02 = new Label(parent, SWT.NONE);
+        erklaerung02 = new Label(parent, SWT.WRAP);
         erklaerung02.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
         // erklaerung02.setLayoutData(gridData1);
 
@@ -307,7 +307,7 @@ public class FFSFlow {
         });
         calcY.setEnabled(false);
         
-        erklaerung03 = new Label(parent, SWT.NONE);
+        erklaerung03 = new Label(parent, SWT.WRAP);
         erklaerung03.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
         new Label(parent, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -335,7 +335,7 @@ public class FFSFlow {
         });
         verify.setEnabled(false);
         
-        erklaerung04 = new Label(parent, SWT.NONE);
+        erklaerung04 = new Label(parent, SWT.WRAP);
         erklaerung04.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2,1));
     }
 

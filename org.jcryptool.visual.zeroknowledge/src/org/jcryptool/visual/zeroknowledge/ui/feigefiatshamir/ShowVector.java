@@ -46,6 +46,7 @@ public class ShowVector {
      */
     public ShowVector(Group parent, String name, boolean isAlice) {
     	group = new Group(parent, SWT.NONE);
+    	group.setText(Messages.ShowVector_0 + name);
     	group.setLayout(new GridLayout());
     	group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
     	
