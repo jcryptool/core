@@ -436,4 +436,9 @@ public class EditorsManager {
             }
         });
     }
+    
+    public AbstractEditorService getServiceFor(IEditorPart part) {
+    	retrieveEditorServices();
+        return editorServices.get(part.getEditorSite().getId());
+    }
 }

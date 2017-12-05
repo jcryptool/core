@@ -11,8 +11,10 @@
 package org.jcryptool.editor.text.service;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
 import org.eclipse.ui.IEditorPart;
@@ -70,5 +72,24 @@ public class JCTEditorService extends AbstractEditorService {
         }
 
         return null;
+    }
+    
+    @Override
+    public void setContentOfEditor(IEditorPart editorPart, InputStream is) {
+    	String newContent = "";
+    	try {
+            String UTF8 = "utf8";
+            int BUFFER_SIZE = 8192;
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(is,
+                    UTF8), BUFFER_SIZE);
+            String str;
+            while ((str = br.readLine()) != null) {
+                newContent += str;
+            }
+        } catch (Exception e) {
+        	LogUtil.logError(e);
+        }
+    	setContentOfEditor(editorPart, newContent);
     }
 }

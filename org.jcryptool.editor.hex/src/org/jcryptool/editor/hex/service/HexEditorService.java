@@ -9,11 +9,15 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.editor.hex.service;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.util.LinkedList;
+import java.util.List;
 
 import net.sourceforge.ehep.editors.HexEditor;
 import net.sourceforge.ehep.gui.HexEditorControl;
@@ -109,6 +113,35 @@ public class HexEditorService extends AbstractEditorService {
     	HexEditorControl control = editor.getControl();
     	HexTable hexTable = control.getHexTable();
     	byte[] data = content.getBytes(Charset.forName(control.getCurrentEncoding()));
+    	hexTable.setBufferSize(data.length);
+    	hexTable.setData(data, 0, data.length);
+    }
+    
+    @Override
+    public void setContentOfEditor(IEditorPart editorPart, InputStream is) {
+    	HexEditor editor = getHexEditor(editorPart);
+    	if(editor == null)
+    	{
+    		LogUtil.logError(new IllegalArgumentException("cannot set content of undefined editor"));
+    		return;
+    	}
+    	
+    	int bufsize = 8092;
+    	byte[] buf = new byte[bufsize];
+    	byte[] data = new byte[0];
+    	try {
+            int nrBytes;
+            
+            while ((nrBytes = is.read(buf)) != -1) {
+            	data = new byte[data.length + nrBytes];
+                System.arraycopy(buf, 0, data, 0, nrBytes);
+            }
+        } catch (Exception e) {
+        	LogUtil.logError(e);
+        }
+    	
+    	HexEditorControl control = editor.getControl();
+    	HexTable hexTable = control.getHexTable();
     	hexTable.setBufferSize(data.length);
     	hexTable.setData(data, 0, data.length);
     }
