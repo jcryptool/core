@@ -37,8 +37,8 @@ public class PrimeGenerator {
     private Button gen;
     private Group group;
     private GeneralParams n;
-    private Text p;
-    private Text q;
+    private Text pPrime;
+    private Text qPrime;
     private Button take;
     private Button secret;
 
@@ -49,43 +49,30 @@ public class PrimeGenerator {
      * @param parent Parent zu der graphische n Oberfläche
      */
     public PrimeGenerator(final ModNCalculator shamir, Composite parent) {
-        group = new Group(parent, 0);
+
+    	group = new Group(parent, SWT.NONE);
         group.setText(Messages.PrimeGenerator_0);
-
-        GridLayout gridLayout = new GridLayout();
-        gridLayout.numColumns = 4;
-        gridLayout.makeColumnsEqualWidth = false;
-        GridData gridData = new GridData();
-        gridData.grabExcessHorizontalSpace = true;
-        gridData.horizontalAlignment = SWT.FILL;
-
-        group.setLayout(gridLayout);
-        group.setLayoutData(gridData);
+        group.setLayout(new GridLayout(4, false));
+        group.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         group.setVisible(true);
 
         // Eingabefeld für die Primzahl p
-        Label l = new Label(group, 0);
-        l.setText(Messages.PrimeGenerator_1);
-        l.setBounds(10, 20, 20, 20);
-        p = new Text(group, SWT.SINGLE | SWT.BORDER | SWT.LEFT);
-        p.setBounds(30, 20, 150, 20);
-        p.setTextLimit(10);
-        p.setLayoutData(gridData);
+        Label labelP = new Label(group, SWT.NONE);
+        labelP.setText(Messages.PrimeGenerator_1);
+        labelP.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        
+        pPrime = new Text(group, SWT.BORDER);
+        pPrime.setTextLimit(10);
+        pPrime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-        GridData gridData2 = new GridData();
-        gridData2.verticalSpan = 2;
-        gridData2.verticalAlignment = SWT.FILL;
-        gridData2.horizontalAlignment = SWT.FILL;
-        gridData2.grabExcessHorizontalSpace = true;
-        gridData2.grabExcessVerticalSpace = true;
-
+        // Warum ist die Group nur ca. 1,5 Zeilen hoch. Sie müsste genauso hoch sein wie 
+        // die Textfelder für p und q.
         n = new GeneralParams(group);
-        n.getGroup().setLayoutData(gridData2);
+        n.getGroup().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2));
 
         // Button zum Generieren der Parameter
-        gen = new Button(group, SWT.PUSH | SWT.CENTER);
+        gen = new Button(group, SWT.PUSH);
         gen.setText(Messages.PrimeGenerator_2);
-        gen.setBounds(400, 20, 170, 20);
         gen.addSelectionListener(
         /**
          * Selection-Listener, der auf Events vom "Generieren"-Button achtet
@@ -100,21 +87,21 @@ public class PrimeGenerator {
             }
         });
         gen.setToolTipText(Messages.PrimeGenerator_3);
-        gen.setLayoutData(gridData);
+        gen.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
         // Eingabefeld fuer die Primzahl q
-        l = new Label(group, 0);
-        l.setText(Messages.PrimeGenerator_4);
-        l.setBounds(10, 45, 20, 20);
-        q = new Text(group, SWT.SINGLE | SWT.BORDER | SWT.LEFT);
-        q.setBounds(30, 45, 150, 20);
-        q.setTextLimit(10);
-        q.setLayoutData(gridData);
+        Label labelQ = new Label(group, SWT.NONE);
+        labelQ.setText(Messages.PrimeGenerator_4);
+        labelQ.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        
+        qPrime = new Text(group, SWT.BORDER);
+        qPrime.setTextLimit(10);
+        qPrime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-        secret = new Button(group, SWT.PUSH | SWT.CENTER);
+        secret = new Button(group, SWT.PUSH);
         secret.setText(Messages.PrimeGenerator_5);
         secret.setEnabled(false);
-        secret.setLayoutData(gridData);
+        secret.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         secret.addSelectionListener(
         /**
          * Selection-Listener, der auf Events vom "Geheimnis erstellen"-Button achtet
@@ -133,25 +120,22 @@ public class PrimeGenerator {
         });
 
         // Dummy Label for Layout
-        new Label(group, 0);
+        new Label(group, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));;
 
         // Button zum Uebernehmen der Parameter
-        take = new Button(group, SWT.PUSH | SWT.CENTER);
+        take = new Button(group, SWT.PUSH);
         take.setText(Messages.PrimeGenerator_6);
         SelectionListener listener = new PrimeGeneratorListener(shamir, this);
         take.addSelectionListener(listener);
-        take.setLayoutData(gridData);
+        take.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         take.setToolTipText(Messages.PrimeGenerator_7);
 
         // Label zum Anzeigen von Fehlern
-        error = new Label(group, 0);
+        error = new Label(group, SWT.NONE);
         error.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_RED));
         error.setText(Messages.PrimeGenerator_8);
-        error.setLayoutData(gridData);
+        error.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
         error.setVisible(false);
-
-        // Dummy Label for Layout
-        new Label(group, 0);
 
     }
 
@@ -170,7 +154,7 @@ public class PrimeGenerator {
      * @return das formatierte Textfeld, das die Primzahl p enthält
      */
     public Text getP() {
-        return p;
+        return pPrime;
     }
 
     public Button getSecret() {
@@ -183,7 +167,7 @@ public class PrimeGenerator {
      * @return das formatierte Textfeld, das die Primzahl q enthält
      */
     public Text getQ() {
-        return q;
+        return qPrime;
     }
 
     /**
@@ -211,15 +195,15 @@ public class PrimeGenerator {
     public void update(ModNCalculator shamir) {
         BigInteger tmp;
         if (!(tmp = shamir.getModell().getP()).equals(BigInteger.ZERO)) {
-            p.setText(tmp.toString());
+            pPrime.setText(tmp.toString());
         } else {
-            p.setText(""); //$NON-NLS-1$
+            pPrime.setText(""); //$NON-NLS-1$
             shamir.getSecret().setEnabled(false);
         }
         if (!(tmp = shamir.getModell().getQ()).equals(BigInteger.ZERO)) {
-            q.setText(tmp.toString());
+            qPrime.setText(tmp.toString());
         } else {
-            q.setText(""); //$NON-NLS-1$
+            qPrime.setText(""); //$NON-NLS-1$
             shamir.getSecret().setEnabled(false);
         }
         n.update(shamir);

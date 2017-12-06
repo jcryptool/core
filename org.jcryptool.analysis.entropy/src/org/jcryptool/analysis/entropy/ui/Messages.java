@@ -29,13 +29,17 @@ public class Messages extends NLS {
 	public static String EntropyUIconfig_18;
     public static String EntropyUIconfig_19;
 	public static String EntropyUIconfig_2;
+	public static String EntropyUIconfig_20;
 	public static String EntropyUIconfig_21;
 	public static String EntropyUIconfig_22;
 	public static String EntropyUIconfig_23;
 	public static String EntropyUIconfig_24;
+	public static String EntropyUIconfig_25;
 	public static String EntropyUIconfig_26;
 	public static String EntropyUIconfig_27;
+	public static String EntropyUIconfig_29;
 	public static String EntropyUIconfig_3;
+	public static String EntropyUIconfig_30;
 	public static String EntropyUIconfig_4;
 	public static String EntropyUIconfig_5;
 	public static String EntropyUIconfig_6;

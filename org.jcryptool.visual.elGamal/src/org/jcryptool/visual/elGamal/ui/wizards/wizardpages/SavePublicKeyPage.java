@@ -24,14 +24,12 @@ import org.jcryptool.visual.elGamal.Messages;
  * page for saving a public key.
  *
  * @author Michael Gaber
+ * @author Thorben Groos
  */
 public class SavePublicKeyPage extends SaveWizardPage {
 
-    /** margin width. */
-    private static final int MARGIN = 50;
-
     /** minimum height for a textfield so it diesn't cut the text. */
-    private static final int TEXTFIELD_MIN_HEIGHT = 15;
+//    private static final int TEXTFIELD_MIN_HEIGHT = 15;
 
     /** unique pagename to get this page from inside a wizard. */
     private static final String PAGENAME = "Save Public Key Page"; //$NON-NLS-1$
@@ -62,17 +60,12 @@ public class SavePublicKeyPage extends SaveWizardPage {
     public final void createControl(final Composite parent) {
         final Composite composite = new Composite(parent, SWT.NONE);
         // do stuff like layout et al
-        final int ncol = 2;
-        final GridLayout gl = new GridLayout(ncol, true);
-        gl.marginWidth = MARGIN;
+        final GridLayout gl = new GridLayout();
+        gl.marginWidth = 50;
         composite.setLayout(gl);
-        final GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-        // needed so textfields don't cut text
-        gd.heightHint = TEXTFIELD_MIN_HEIGHT;
-        final GridData gd2 = new GridData(SWT.FILL, SWT.CENTER, false, false, ncol, 1);
         final Label own = new Label(composite, SWT.NONE);
         own.setText(Messages.SavePublicKeyPage_enter_name);
-        own.setLayoutData(gd2);
+        own.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
         owner = new Text(composite, SWT.BORDER | SWT.SINGLE);
         owner.addModifyListener(new ModifyListener() {
@@ -81,7 +74,7 @@ public class SavePublicKeyPage extends SaveWizardPage {
                 data.setContactName(owner.getText());
             }
         });
-        owner.setLayoutData(gd);
+        owner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
         // finish
         setControl(composite);

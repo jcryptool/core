@@ -13,7 +13,6 @@ import java.math.BigInteger;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.core.util.fonts.FontService;
@@ -46,13 +45,9 @@ public class FSParamsBob extends ParamsPerson {
     public FSParamsBob(FSBob bob, Composite parent) {
         super(parent);
         this.bob = bob;
+        
+        group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         group.setText(Messages.FS_ParamsBob_0);
-
-        GridLayout gridLayout1 = new GridLayout();
-        gridLayout1.makeColumnsEqualWidth = false;
-        gridLayout1.numColumns = 1;
-
-        group.setLayout(gridLayout1);
 
         b = new FSCombiLabel(Messages.FS_ParamsBob_1, false, group);
 
@@ -66,9 +61,7 @@ public class FSParamsBob extends ParamsPerson {
         verifiziert.setFont(FontService.getNormalBoldFont());
         verifiziert.setText(Messages.FS_ParamsBob_4);
         verifiziert.setVisible(false);
-        GridData gridData = new GridData();
-        gridData.widthHint = 200;
-        verifiziert.setLayoutData(gridData);
+        verifiziert.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         setVisible(true);
     }
 

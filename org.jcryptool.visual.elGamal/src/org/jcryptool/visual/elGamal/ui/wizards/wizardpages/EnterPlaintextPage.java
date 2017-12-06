@@ -29,6 +29,7 @@ import org.jcryptool.visual.library.Lib;
  * Page for entering a plaintext to sign or encrypt.
  *
  * @author Michael Gaber
+ * @author Thorben Groos
  */
 public class EnterPlaintextPage extends TextWizardPage {
 
@@ -69,7 +70,9 @@ public class EnterPlaintextPage extends TextWizardPage {
     public final void createControl(final Composite parent) {
         final Composite composite = new Composite(parent, SWT.NONE);
         // do stuff like layout et al
-        composite.setLayout(new GridLayout());
+        GridLayout gl_composite = new GridLayout();
+        gl_composite.marginWidth = 50;
+        composite.setLayout(gl_composite);
         Label label;
         if (action == Action.SignAction) {
             label = new Label(composite, SWT.WRAP);
@@ -83,7 +86,9 @@ public class EnterPlaintextPage extends TextWizardPage {
         label.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
         label.setText(Messages.EnterPlaintextPage_textentry);
         text = new Text(composite, SWT.BORDER | SWT.WRAP);
-        text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        GridData gd_text = new GridData(SWT.FILL, SWT.FILL, true, true);
+        gd_text.minimumHeight = 80;
+        text.setLayoutData(gd_text);
         text.setTextLimit(TEXTLIMIT);
         text.addModifyListener(new ModifyListener() {
             public void modifyText(final ModifyEvent e) {

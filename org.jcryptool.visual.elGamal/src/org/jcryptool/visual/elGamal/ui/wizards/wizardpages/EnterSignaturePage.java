@@ -31,6 +31,7 @@ import org.jcryptool.visual.library.Lib;
  * Page for entering a signature. Optionally the plaintext can be entered , too and
  *
  * @author Michael Gaber
+ * @author Thorben Groos
  */
 public class EnterSignaturePage extends TextWizardPage {
 

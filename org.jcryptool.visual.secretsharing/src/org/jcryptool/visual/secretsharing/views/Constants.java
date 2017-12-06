@@ -115,6 +115,7 @@ public interface Constants {
 	String MESSAGE_INFO_GROUP = Messages.SSSConstants_Info_Group;
 	String MESSAGE_P_ = "P'(x)"; //$NON-NLS-1$
 	String MESSAGE_LAGRANGE = Messages.SSSConstants_Title_Info_Formula;
+	String MESSAGE_RESET = Messages.SSSConstants_Reset;
 
 	/*
 	 * MESSAGE COEFFICIENTS DIALOG

@@ -55,7 +55,6 @@ public class FFSFlow {
     private Composite group;
 
     private boolean secretKnown;
-    private GridData gridData1 = new GridData();
 
     private Button verify;
 
@@ -68,33 +67,18 @@ public class FFSFlow {
      * @param parent Parent-Objekt für die Oberfläche
      */
     public FFSFlow(FeigeFiatShamirView shamir, Composite parent) {
-        int heigth = 45;
-        int width = 150;
-
-        gridData1.heightHint = heigth;
-        gridData1.widthHint = width;
-        gridData1.verticalAlignment = GridData.CENTER;
-
-        GridLayout gridLayout1 = new GridLayout();
-        gridLayout1.horizontalSpacing = 5;
-        gridLayout1.makeColumnsEqualWidth = false;
-        gridLayout1.numColumns = 2;
-        GridData gridData = new GridData();
-        gridData.horizontalAlignment = GridData.CENTER;
-        gridData.grabExcessHorizontalSpace = true;
-        gridData.grabExcessVerticalSpace = true;
-        // gridData.widthHint = 105;
-        gridData.verticalAlignment = GridData.CENTER;
 
         // Attribute werden gesetzt
         fiatshamir = shamir;
-        group = new Composite(parent, 0);
-        // group = parent;
-        group.setLayout(gridLayout1);
-        group.setLayoutData(gridData);
+        group = new Composite(parent, SWT.NONE);
+        GridLayout gl_group = new GridLayout(4, false);
+        gl_group.horizontalSpacing = 50;
+        gl_group.verticalSpacing = 20;
+        group.setLayout(gl_group);
+        group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         secretKnown = true;
 
-        generateButtons();
+        generateButtons(group);
         setFont();
         setFirstCase(true);
     }
@@ -205,55 +189,35 @@ public class FFSFlow {
                 break;
             case 1:
                 erklaerung01.setFont(FontService.getNormalBoldFont());
-                erklaerung01.setSize(erklaerung01.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+                erklaerung01.getParent().layout();
                 break;
             case 2:
                 erklaerung02.setFont(FontService.getNormalBoldFont());
-                erklaerung02.setSize(erklaerung02.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+                erklaerung02.getParent().layout();
                 break;
             case 3:
                 erklaerung03.setFont(FontService.getNormalBoldFont());
-                erklaerung03.setSize(erklaerung03.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+                erklaerung03.getParent().layout();
                 break;
             case 4:
                 erklaerung04.setFont(FontService.getNormalBoldFont());
-                erklaerung04.setSize(erklaerung04.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+                erklaerung04.getParent().layout();
                 break;
         }
     }
 
     /**
      * Methode, die die Buttons anlegt
+     * @param parent 
      */
-    private void generateButtons() {
-        int heigth = 45;
-        int width = 175;
+    private void generateButtons(Composite parent) {
+    	
+    	new Label(parent, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-        GridData gridData1 = new GridData();
-        gridData1.heightHint = heigth;
-        gridData1.minimumHeight = heigth;
-        gridData1.minimumWidth = width;
-        gridData1.widthHint = width;
-        gridData1.grabExcessHorizontalSpace = true;
-        gridData1.grabExcessVerticalSpace = true;
-        gridData1.verticalAlignment = GridData.CENTER;
-
-        GridLayout gridLayout1 = new GridLayout();
-        gridLayout1.horizontalSpacing = 5;
-        gridLayout1.makeColumnsEqualWidth = false;
-        gridLayout1.numColumns = 2;
-        GridData gridData = new GridData();
-        gridData.horizontalAlignment = GridData.CENTER;
-        gridData.grabExcessHorizontalSpace = true;
-        gridData.grabExcessVerticalSpace = true;
-        gridData.verticalAlignment = GridData.CENTER;
-
-        group.setLayout(gridLayout1);
-        group.setLayoutData(gridData);
         // Button, um die Zufallszahl zu erstellen
-        genRandom = new Button(group, SWT.PUSH | SWT.CENTER);
+        genRandom = new Button(parent, SWT.PUSH);
         genRandom.setText(Messages.FFS_Flow_8);
-        genRandom.setLayoutData(gridData1);
+        genRandom.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         genRandom.addSelectionListener(
         /**
          * Selection-Listener, der auf Events vom "Zufallszahl erstellen"-Button achtet
@@ -282,16 +246,17 @@ public class FFSFlow {
                 }
             }
         });
-        // genRandom.setSize(width, height);
-        // genRandom.setLocation(220, 20);
         genRandom.setEnabled(false);
-        erklaerung01 = new Label(group, 0);
-        // erklaerung01.setLayoutData(gridData1);
-
+        
+        erklaerung01 = new Label(parent, SWT.WRAP);
+        erklaerung01.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+        
+        new Label(parent, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        
         // Button, um das Zufallsbit zu erstellen
-        genB = new Button(group, SWT.PUSH | SWT.CENTER);
+        genB = new Button(parent, SWT.PUSH);
         genB.setText(Messages.FFS_Flow_9);
-        genB.setLayoutData(gridData1);
+        genB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         genB.addSelectionListener(
         /**
          * Selection-Listener, der auf Events vom "b generieren"-Button achtet
@@ -306,16 +271,18 @@ public class FFSFlow {
                 fiatshamir.getFlow().setStep(2);
             }
         });
-        // genB.setSize(width, height);
-        // genB.setLocation(220, 55);
         genB.setEnabled(false);
-        erklaerung02 = new Label(group, 0);
+        
+        erklaerung02 = new Label(parent, SWT.WRAP);
+        erklaerung02.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
         // erklaerung02.setLayoutData(gridData1);
 
+        new Label(parent, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        
         // Button, um die Antwort von Alice oder Carol zu errechnen
-        calcY = new Button(group, SWT.PUSH | SWT.CENTER);
+        calcY = new Button(parent, SWT.PUSH);
         calcY.setText(Messages.FFS_Flow_10);
-        calcY.setLayoutData(gridData1);
+        calcY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         calcY.addSelectionListener(
         /**
          * Selection-Listener, der auf Events vom "Antwort berechnen"-Button achtet
@@ -339,12 +306,16 @@ public class FFSFlow {
             }
         });
         calcY.setEnabled(false);
-        erklaerung03 = new Label(group, 0);
+        
+        erklaerung03 = new Label(parent, SWT.WRAP);
+        erklaerung03.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
+        new Label(parent, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        
         // Button, um die Antwort von Alice oder Carol zu verifizieren
-        verify = new Button(group, SWT.PUSH | SWT.CENTER);
+        verify = new Button(parent, SWT.PUSH);
         verify.setText(Messages.FFS_Flow_11);
-        verify.setLayoutData(gridData1);
+        verify.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         verify.addSelectionListener(
         /**
          * Selection-Listener, der auf Events vom Verifizieren-Button achtet
@@ -363,7 +334,9 @@ public class FFSFlow {
             }
         });
         verify.setEnabled(false);
-        erklaerung04 = new Label(group, 0);
+        
+        erklaerung04 = new Label(parent, SWT.WRAP);
+        erklaerung04.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2,1));
     }
 
     /**

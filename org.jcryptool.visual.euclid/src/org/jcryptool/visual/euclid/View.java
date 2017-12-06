@@ -9,8 +9,6 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.euclid;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 import org.eclipse.jface.action.Action;
@@ -31,7 +29,7 @@ import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;
-import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -49,7 +47,6 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
-import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.core.util.fonts.FontService;
@@ -58,6 +55,8 @@ import org.jcryptool.core.util.fonts.FontService;
  * @author Felix Eckardt
  */
 public class View extends ViewPart {
+	public View() {
+	}
     /*
      *  name_1 refers to the reciprocal subtraction
      *  name_2 refers to the extended euclidean algorithm
@@ -69,7 +68,6 @@ public class View extends ViewPart {
     private Action restartAction;
     private ScrolledComposite scrolledComposite;
     private Composite composite_1;
-    private Composite headerBox_1;
     private Label lblHeader_1;
     private TabFolder tabFolder;
     private TabItem tbtmEuclidean;
@@ -90,7 +88,6 @@ public class View extends ViewPart {
     
     private TabItem tbtmXEuclidean;
     private Composite composite_2;
-    private Composite headerBox_2;
     private Label lblHeader_2;
     private StyledText txtDescription_2;
     private Group grpInput_2;
@@ -157,7 +154,6 @@ public class View extends ViewPart {
         }
         
         scrolledComposite_canvas.setMinSize(canvas.computeSize(20+5*values.get(0)[0], 100+45*values.size()));
-        System.out.println(canvas.getSize().x+" "+canvas.getSize().y);
         Device device = this.getSite().getShell().getDisplay();
         imageBuffer = new ImageBuffer(device, canvas.getSize().x, canvas.getSize().y);
         imageBuffer.paintImage(values);
@@ -735,10 +731,10 @@ public class View extends ViewPart {
             }
         };
         exportToLatexAction.setEnabled(false);
-        
-        try {
-            restartAction = new Action("", ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"))) {
-                public void run() {
+
+        	Image img = EuclidPlugin.getImageDescriptor("/icons/view.gif").createImage();
+        	restartAction = new Action("", ImageDescriptor.createFromImage(img)) { 
+        		public void run() {
                     reset_1();
                     resetTable_2();
                     textP_2.setText("44");
@@ -753,9 +749,6 @@ public class View extends ViewPart {
                     tabFolder.setSelection(0);
                 }
             };
-        } catch (MalformedURLException e) {
-            LogUtil.logError(e);
-        }
     }
 
     /**
@@ -810,18 +803,22 @@ public class View extends ViewPart {
         tbtmEuclidean.setControl(composite_1);
         composite_1.setLayout(new GridLayout(6, false));
         
-        headerBox_1 = new Composite(composite_1, SWT.NONE);
-        headerBox_1.setLayout(new FormLayout());
-        lblHeader_1 = new Label(headerBox_1, SWT.NONE);
+//        headerBox_1 = new Composite(composite_1, SWT.NONE);
+//        headerBox_1.setLayout(new FormLayout());
+//        lblHeader_1 = new Label(headerBox_1, SWT.NONE);
+        lblHeader_1 = new Label(composite_1, SWT.NONE);
+        lblHeader_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 6, 1));
+//        lblHeader_1.setLayoutData(new FormData());
         lblHeader_1.setFont(FontService.getHeaderFont());
         lblHeader_1.setText(Messages.Euclid_Euclidean);
         
+        
         txtDescription_1 = new StyledText(composite_1, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
         txtDescription_1.setText(Messages.Euclid_Description_1);
-        GridData gd_styledTextDescription1 = new GridData(SWT.FILL, SWT.FILL, false, false, 6, 1);
-        gd_styledTextDescription1.widthHint = 600;
-        gd_styledTextDescription1.heightHint = 40;
-        txtDescription_1.setLayoutData(gd_styledTextDescription1);
+        GridData gd_txtDescription_1 = new GridData(SWT.FILL, SWT.FILL, true, false, 6, 1);
+        gd_txtDescription_1.widthHint = 600;
+        txtDescription_1.setLayoutData(gd_txtDescription_1);
+        
         
         grpInput_1 = new Group(composite_1, SWT.NONE);
         grpInput_1.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 6, 1));
@@ -968,18 +965,26 @@ public class View extends ViewPart {
         tbtmXEuclidean.setControl(composite_2);
         composite_2.setLayout(new GridLayout(5, false));
         
-        headerBox_2 = new Composite(composite_2, SWT.NONE);
-        headerBox_2.setLayout(new FormLayout());
-        lblHeader_2 = new Label(headerBox_2, SWT.NONE);
+//        headerBox_2 = new Composite(composite_2, SWT.NONE);
+//        headerBox_2.setLayout(new FormLayout());
+//        lblHeader_2 = new Label(headerBox_2, SWT.NONE);
+        lblHeader_2 = new Label(composite_2, SWT.NONE);
+        lblHeader_2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 5, 1));
+//        lblHeader_2.setLayoutData(new FormData());
         lblHeader_2.setFont(FontService.getHeaderFont());
         lblHeader_2.setText(Messages.Euclid_XEuclidean);
+//        new Label(composite_2, SWT.NONE);
+//        new Label(composite_2, SWT.NONE);
+//        new Label(composite_2, SWT.NONE);
+//        new Label(composite_2, SWT.NONE);
         
         txtDescription_2 = new StyledText(composite_2, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
         txtDescription_2.setText(Messages.Euclid_Description_2);
-        GridData gd_styledTextDescription2 = new GridData(SWT.FILL, SWT.FILL, false, false, 5, 1);
-        gd_styledTextDescription2.widthHint = 0;
-        gd_styledTextDescription2.heightHint = 40;
-        txtDescription_2.setLayoutData(gd_styledTextDescription2);
+        GridData gd_txtDescription_2 = new GridData(SWT.FILL, SWT.FILL, false, false, 5, 1);
+//        gd_styledTextDescription2.widthHint = 0;
+        gd_txtDescription_2.widthHint = 600;
+//        gd_styledTextDescription2.heightHint = 40;
+        txtDescription_2.setLayoutData(gd_txtDescription_2);
         
         grpInput_2 = new Group(composite_2, SWT.NONE);
         grpInput_2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));

@@ -20,6 +20,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
@@ -166,11 +167,13 @@ public class ARC4Composite extends Composite {
         descr = new Composite(this, SWT.WRAP | SWT.BORDER | SWT.LEFT);
         descr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, ARC4Con.H_SPAN_MAIN, ARC4Con.DESC_HEIGHT));
         descr.setLayout(new GridLayout(1, true));
+        descr.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
 
         // the heading of the description; is not selectable by mouse
         Label descLabel = new Label(descr, SWT.NONE);
         descLabel.setText(Messages.PluginDescriptionCaption);
         descLabel.setFont(FontService.getHeaderFont());
+        descLabel.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
 
         // this divide has been made to allow selection of text in this section but not of the
         // heading

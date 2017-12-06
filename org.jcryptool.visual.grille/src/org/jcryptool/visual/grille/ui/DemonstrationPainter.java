@@ -64,28 +64,34 @@ public class DemonstrationPainter implements PaintListener {
         }
     }
 
-    public void paintControl(PaintEvent e) {
-        width = parent.getSize().x;
-        height = parent.getSize().y;
-        if (demonstration.getCurrentStep() == 0) {
-            e.gc.fillRectangle(0, 0, width, height);
-        } else if (demonstration.getCurrentStep() == 1) {
-            e.gc.setFont(FontService.getLargeFont());
-            e.gc.drawText(Messages.getString("DemonstrationPainter.description"), 0, 0); //$NON-NLS-1$
-            if (!demonstration.padding.equals("")) { //$NON-NLS-1$
-                e.gc.drawText(Messages.getString("DemonstrationPainter.padding"), 0, 40); //$NON-NLS-1$
-                Color savedColor = e.gc.getForeground();
-                e.gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
-                e.gc.drawString(demonstration.padding.substring(0, Math.min(25, demonstration.padding.length())), 70,
-                        40);
-                for (int i = 25; i < demonstration.padding.length(); i = i + 40)
-                    e.gc.drawString(
-                            demonstration.padding.substring(i, Math.min(demonstration.padding.length(), i + 40)), 0,
-                            40 + (i / 25) * 20);
-                e.gc.setForeground(savedColor);
+	public void paintControl(PaintEvent e) {
+		width = parent.getSize().x;
+		height = parent.getSize().y;
+		if (width > height) {
+			width = height;
+		} else {
+			height = width;
+		}
+		if (demonstration.getCurrentStep() == 0) {
+			e.gc.fillRectangle(0, 0, width, height);
+		} else if (demonstration.getCurrentStep() == 1) {
+			e.gc.setFont(FontService.getLargeFont());
+			e.gc.drawText(Messages.getString("DemonstrationPainter.description"), 0, 0); //$NON-NLS-1$
+			if (!demonstration.padding.equals("")) { //$NON-NLS-1$
+				e.gc.drawText(Messages.getString("DemonstrationPainter.padding") + " (" + demonstration.padding.length() //$NON-NLS-1$
+						+ "):", 0, 140);
+				Color savedColor = e.gc.getForeground();
+				e.gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
+				String padding = "";
+				for (int i = 0; i < demonstration.padding.length(); i = i + 35) {
+					padding += demonstration.padding.substring(i, Math.min(demonstration.padding.length(), i + 35));
+					padding += "\n";
+				}
+				e.gc.drawText(padding, 0, 175);
+				e.gc.setForeground(savedColor);
 
-            }
-        } else if (demonstration.getCurrentStep() <= 5) {
+			}
+		} else if (demonstration.getCurrentStep() <= 5) {
             Schablone crypt = demonstration.getSchablone();
             cellWidth = width / crypt.getSize();
             cellHeight = cellWidth;
@@ -184,10 +190,9 @@ public class DemonstrationPainter implements PaintListener {
 
     private void fillCell(PaintEvent e, int x, int y, char c) {
         Point eckeLO = new Point(x * cellWidth, y * cellHeight);
-        int fontSize = (int) Math.round(10 / (double) 17 * cellHeight * 0.9);
+        int fontSize =  (int) (0.5 * cellHeight);
         e.gc.setFont(new Font(Display.getCurrent(), "Times Roman", fontSize, SWT.NORMAL)); //$NON-NLS-1$
-        e.gc.drawString(
-                "" + c, eckeLO.x + (int) Math.round(cellWidth - charSize.get(c).x / (double) 10 * fontSize) / 2, eckeLO.y + (cellHeight - fontSize - (int) Math.round(5 / (double) 10 * fontSize)) / 2); //$NON-NLS-1$
+        e.gc.drawString("" + c, eckeLO.x + (cellWidth / 5), eckeLO.y); //$NON-NLS-1$
     }
 
 }

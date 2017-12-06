@@ -36,24 +36,27 @@ public class GeneralParams {
     /**
      * Konstruktor für eine Group, dass den allgemeinen Parameter n darstellt. Die Group besteht aus
      * zwei Labeln: eins für die Beschreibung, eines für den Inhalt.
+     * Layout von comp muss GridLayout sein.
+     * Standard Layout Werte sind:
+     * horizontalAlignment = SWT.FILL
+     * verticalAlignment = SWT.FILL
+     * grabExcessHorizontalSpace = true
+     * grabExcessVerticalSpace = false
      *
      * @param comp Eltern-Objekt zum Group-Objekt
      */
     public GeneralParams(Composite comp) {
-        group = new Group(comp, 0);
-        GridLayout gridLayout = new GridLayout();
-        gridLayout.numColumns = 2;
-        GridData gridData = new GridData();
-        gridData.grabExcessVerticalSpace = true;
-        gridData.verticalAlignment = SWT.FILL;
-        group.setLayout(gridLayout);
-        group.setLayoutData(gridData);
+    	group = new Group(comp, SWT.NONE);
+    	group.setLayout(new GridLayout(2, false));
+        group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-        n = new Label(group, 0);
+        n = new Label(group, SWT.NONE);
         n.setText(Messages.GeneralParams_0);
+        n.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
 
-        n_content = new Label(group, 0);
+        n_content = new Label(group, SWT.NONE);
         n_content.setText(Messages.GeneralParams_1);
+        n_content.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
     }
 
     /**

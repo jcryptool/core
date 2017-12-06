@@ -49,27 +49,13 @@ public class Buttons {
     public Buttons(Protocol pro, final Composite parent, final Object par, final FFSAlice alice) {
         this.protocol = pro;
 
-        GridLayout gridLayout = new GridLayout();
-        gridLayout.numColumns = 3;
-        GridData gridData = new GridData();
-        gridData.grabExcessVerticalSpace = true;
-        gridData.grabExcessHorizontalSpace = true;
-        gridData.horizontalAlignment = GridData.FILL;
+        group = new Group(parent, SWT.NONE);
+        group.setLayout(new GridLayout(3, true));
+        group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 
-        GridData gridData2 = new GridData();
-        gridData2.grabExcessVerticalSpace = true;
-        gridData2.grabExcessHorizontalSpace = true;
-        gridData2.horizontalAlignment = GridData.FILL;
-        gridData2.horizontalSpan = 2;
-
-        group = new Group(parent, 0);
-        group.setLayout(gridLayout);
-        group.setLayoutData(gridData2);
-
-        reset = new Button(group, SWT.PUSH | SWT.CENTER);
+        reset = new Button(group, SWT.PUSH);
         reset.setText(Messages.Buttons_0);
-        reset.setLayoutData(gridData);
-        // reset.setBounds(20, 20, 150, 20);
+        reset.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         reset.addSelectionListener(
         /**
          * Selection-Listener, der auf Events vom Reset-Button achtet
@@ -83,9 +69,10 @@ public class Buttons {
             }
         });
         reset.setToolTipText(Messages.Buttons_1);
-        ok = new Button(group, SWT.PUSH | SWT.CENTER);
+        
+        ok = new Button(group, SWT.PUSH);
         ok.setText(Messages.Buttons_2);
-        ok.setLayoutData(gridData);
+        ok.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         ok.setEnabled(false);
         ok.addSelectionListener(
         /**
@@ -103,9 +90,9 @@ public class Buttons {
 
         // Modul zum Darstellen des Buttons zum mehrfachen Durchführen des
         // Protokolls
-        repeatedly = new Button(group, SWT.PUSH | SWT.CENTER);
+        repeatedly = new Button(group, SWT.PUSH);
         repeatedly.setText(Messages.Buttons_4);
-        repeatedly.setLayoutData(gridData);
+        repeatedly.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         repeatedly.setEnabled(true);
         repeatedly.addSelectionListener(
 

@@ -11,10 +11,12 @@ package org.jcryptool.visual.zeroknowledge.ui.feigefiatshamir;
 
 import java.math.BigInteger;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.jcryptool.visual.zeroknowledge.algorithm.feigefiatshamir.FFSAlice;
 import org.jcryptool.visual.zeroknowledge.algorithm.feigefiatshamir.FFSCarol;
 import org.jcryptool.visual.zeroknowledge.algorithm.feigefiatshamir.FFSPerson;
@@ -42,38 +44,19 @@ public class FFSParamsAliceCarol extends ParamsPerson {
      * Werte anzeigen
      *
      * @param p Person, dessen Werte dargestellt werden soll
-     * @param comp Parent-Objekt fuer die graphische Oberflaeche
+     * @param parent Parent-Objekt fuer die graphische Oberflaeche
      */
-    public FFSParamsAliceCarol(FFSPerson p, Composite comp) {
-        super(comp);
+    public FFSParamsAliceCarol(FFSPerson p, Composite parent) {
+        super(parent);
         this.p = p;
-        // group.setSize(300, 170);
 
-        GridLayout gridLayout = new GridLayout();
-        gridLayout.makeColumnsEqualWidth = false;
-        gridLayout.numColumns = 2;
-        GridData gridData2 = new GridData();
-        gridData2.verticalAlignment = GridData.FILL;
-        gridData2.grabExcessVerticalSpace = true;
-        gridData2.grabExcessHorizontalSpace = true;
-
-        GridData gridData = new GridData();
-        gridData.grabExcessVerticalSpace = true;
-        gridData.grabExcessHorizontalSpace = true;
-        gridData.verticalAlignment = GridData.FILL;
-        gridData.horizontalAlignment = GridData.FILL;
-
-        group.setLayout(gridLayout);
-        group.setLayoutData(gridData);
+        group.setLayout(new GridLayout(2, true));
+        group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         group.setText(p.getName());
 
-        GridLayout gridLayout1 = new GridLayout();
-        gridLayout1.makeColumnsEqualWidth = false;
-        gridLayout1.numColumns = 1;
-
-        Group group_secret = new Group(group, 0);
-        group_secret.setLayout(gridLayout1);
-        group_secret.setLayoutData(gridData2);
+        Group group_secret = new Group(group, SWT.NONE);
+        group_secret.setLayout(new GridLayout());
+        group_secret.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         group_secret.setText(Messages.FFS_ParamsAliceCarol_0);
 
         boolean isAlice = (p instanceof FFSAlice);
@@ -82,11 +65,12 @@ public class FFSParamsAliceCarol extends ParamsPerson {
 
         r = new FFSCombiLabel(Messages.FFS_ParamsAliceCarol_1, true, group_secret);
 
-        Group group_public = new Group(group, 0);
-        group_public.setLayout(gridLayout1);
-        group_public.setLayoutData(gridData2);
-        v = new ShowVector(group_public, "v", true); //$NON-NLS-1$
+        Group group_public = new Group(group, SWT.NONE);
+        group_public.setLayout(new GridLayout());
+        group_public.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         group_public.setText(Messages.FFS_ParamsAliceCarol_4);
+        
+        v = new ShowVector(group_public, "v", true); //$NON-NLS-1$
 
         x = new FFSCombiLabel(Messages.FFS_ParamsAliceCarol_5, true, group_public);
 
@@ -94,8 +78,12 @@ public class FFSParamsAliceCarol extends ParamsPerson {
 
         if (!isAlice) {
             c = new FFSCombiLabel(Messages.FFS_ParamsAliceCarol_7, true, group_public);
-            // c.getComp().setLocation(2, 145);
+        } else {
+            //als Spacer. hält Platz für c frei
+            new Label(group_public, SWT.NONE);
+            
         }
+        
         setVisible(true);
     }
 

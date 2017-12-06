@@ -12,7 +12,10 @@ package org.jcryptool.visual.zeroknowledge.ui;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
@@ -39,6 +42,7 @@ public class Repeat extends Dialog {
     private Funcs funcs;
     private Label info;
     private Button start;
+    private Composite main;
     // This is the percentage how likely it is for carol to guess the right answer
     // in one single round
     private Double algoPercentage;
@@ -52,9 +56,8 @@ public class Repeat extends Dialog {
      *        MessagesBundle*.properties
      */
     public Repeat(Shell parent, Funcs funcs, String string) {
-        super(parent, 0);
+    	super(parent, SWT.NONE);
         this.funcs = funcs;
-        setText(Messages.Repeat_0);
         // Sets Carols chance to guess right for the different functions
         // All except FiatFeigeShamir have a probability of 50%
         if (funcs.getClass().getSimpleName().equals("FFS_Funcs")) { //$NON-NLS-1$
@@ -64,9 +67,9 @@ public class Repeat extends Dialog {
         }
 
         Shell shell = new Shell(parent, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
-        shell.setText(getText());
-        createGui(shell, string);
-        shell.setSize(470, 300);
+        shell.setText(Messages.Repeat_0);
+        createGui(shell);
+        shell.pack();
         shell.open();
         Display display = parent.getDisplay();
         while (!shell.isDisposed()) {
@@ -75,8 +78,73 @@ public class Repeat extends Dialog {
         }
     }
 
-    private void createGui(Shell s, String string) {
-        amount = new Scale(s, 0);
+    private void createGui(Shell s) {
+    	
+    	main = new Composite(s, SWT.NONE);
+    	GridLayout gl_main = new GridLayout(3, false);
+    	gl_main.marginWidth = 50;
+    	gl_main.marginHeight = 20;
+    	main.setLayout(gl_main);
+    	
+        aliceButton = new Button(main, SWT.RADIO);
+        aliceButton.addSelectionListener(
+
+        new SelectionAdapter() {
+            /**
+             * Wenn der RadioButton betätigt wurde, wird beim Funcs-Objekt gesetzt, das das
+             * Geheimnis bekannt ist. Zusätzlich wird der RadioButton für Carol auf
+             * "nicht ausgewählt" gesetzt
+             */
+            public void widgetSelected(SelectionEvent e) {
+                aliceButton.setSelection(true);
+                carolButton.setSelection(false);
+                carolPercent.setVisible(false);
+                funcs.setSecretKnown(true);
+            }
+        });
+        aliceButton.setSelection(true);
+        aliceButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        
+        aliceInfo = new Label(main, SWT.NONE);
+        aliceInfo.setText(Messages.Repeat_2);
+        aliceInfo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+        
+        carolButton = new Button(main, SWT.RADIO);
+        carolButton.addSelectionListener(
+        new SelectionAdapter() {
+            /**
+             * Wenn der RadioButton betätigt wurde, wird beim Funcs-Objekt gesetzt, das das
+             * Geheimnis nicht bekannt ist. Zusätzlich wird der RadioButton für Alice auf
+             * "nicht ausgewählt" gesetzt
+             */
+            public void widgetSelected(SelectionEvent e) {
+                aliceButton.setSelection(false);
+                carolButton.setSelection(true);
+                carolPercent.setVisible(true);
+                funcs.setSecretKnown(false);
+            }
+        });
+        carolButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        
+        carolInfo = new Label(main, SWT.NONE);
+        carolInfo.setText(Messages.Repeat_3);
+        carolInfo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+        
+        info = new Label(main, SWT.NONE);
+        info.setText(Messages.Repeat_4);
+        GridData gd_info = new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1);
+        gd_info.verticalIndent = 20;
+        info.setLayoutData(gd_info);
+        
+        // Create the labels which specify for Carol the chance to deceive Bob
+        carolPercent = new Label(main, SWT.NONE);
+        carolPercent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
+        carolPercent.setVisible(false);
+        
+        amountAnzeige = new Label(main, SWT.NONE);
+        amountAnzeige.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+    	
+    	amount = new Scale(main, SWT.NONE);
         amount.setPageIncrement(2);
         amount.setMinimum(1);
         amount.setMaximum(20);
@@ -101,74 +169,11 @@ public class Repeat extends Dialog {
                 }
             }
         });
-
-        amount.setBounds(90, 160, 150, 40);
-        amountAnzeige = new Label(s, 0);
-        amountAnzeige.setText(amount.getSelection() + ""); //$NON-NLS-1$
-        amountAnzeige.setBounds(50, 160, 30, 20);
-
-        // Create the labels which specify for Carol the chance to deceive Bob
-        carolPercent = new Label(s, 0);
-        // Set initial chance to deceive Bob when "Carol"
-        String tmp =
-                Double.toString(getChance(algoPercentage, Double.valueOf(amount.getSelection())));
-        if (tmp.equals("0.0"))tmp = "<0.01"; //$NON-NLS-1$ //$NON-NLS-2$
-        carolPercent.setText(" " + tmp + Messages.Repeat_1); //$NON-NLS-1$
-        carolPercent.setBounds(200, 130, 250, 20);
-        carolPercent.setVisible(false);
-
-        aliceButton = new Button(s, SWT.RADIO);
-        aliceButton.addSelectionListener(
-
-        new SelectionAdapter() {
-            /**
-             * Wenn der RadioButton betätigt wurde, wird beim Funcs-Objekt gesetzt, das das
-             * Geheimnis bekannt ist. Zusätzlich wird der RadioButton für Carol auf
-             * "nicht ausgewählt" gesetzt
-             */
-            public void widgetSelected(SelectionEvent e) {
-                aliceButton.setSelection(true);
-                carolButton.setSelection(false);
-                carolPercent.setVisible(false);
-                funcs.setSecretKnown(true);
-            }
-        });
-        aliceButton.setSelection(true);
-        aliceButton.setBounds(20, 30, 20, 15);
-
-        aliceInfo = new Label(s, 0);
-        aliceInfo.setText(Messages.Repeat_2);
-        aliceInfo.setBounds(50, 20, 300, 40);
-
-        carolButton = new Button(s, SWT.RADIO);
-        carolButton.addSelectionListener(
-
-        new SelectionAdapter() {
-            /**
-             * Wenn der RadioButton betätigt wurde, wird beim Funcs-Objekt gesetzt, das das
-             * Geheimnis nicht bekannt ist. Zusätzlich wird der RadioButton für Alice auf
-             * "nicht ausgewählt" gesetzt
-             */
-            public void widgetSelected(SelectionEvent e) {
-                aliceButton.setSelection(false);
-                carolButton.setSelection(true);
-                carolPercent.setVisible(true);
-                funcs.setSecretKnown(false);
-            }
-        });
-        carolButton.setBounds(20, 80, 20, 20);
-
-        carolInfo = new Label(s, 0);
-        carolInfo.setText(Messages.Repeat_3);
-        carolInfo.setBounds(50, 70, 360, 50);
-
-        info = new Label(s, 0);
-        info.setText(Messages.Repeat_4);
-        info.setBounds(50, 130, 150, 20);
-
-        start = new Button(s, SWT.PUSH | SWT.CENTER);
+        amount.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        
+        start = new Button(main, SWT.PUSH);
         start.setText(Messages.Repeat_9);
-        start.setBounds(250, 160, 100, 25);
+        start.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         start.addSelectionListener(
 
         new SelectionAdapter() {
@@ -196,9 +201,20 @@ public class Repeat extends Dialog {
             }
         });
         start.setToolTipText(Messages.Repeat_8);
+       
+        ergebnis = new Label(main, SWT.NONE);
+        ergebnis.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
+        
+        amountAnzeige.setText(amount.getSelection() + ""); //$NON-NLS-1$
 
-        ergebnis = new Label(s, 0);
-        ergebnis.setBounds(40, 210, 300, 20);
+        // Set initial chance to deceive Bob when "Carol"
+        String tmp =
+                Double.toString(getChance(algoPercentage, Double.valueOf(amount.getSelection())));
+        if (tmp.equals("0.0"))tmp = "<0.01"; //$NON-NLS-1$ //$NON-NLS-2$
+        carolPercent.setText(" " + tmp + Messages.Repeat_1); //$NON-NLS-1$
+        
+        
+        main.pack();
     }
 
     // Computes (percentage^runs) in percentage (xx.yy%)

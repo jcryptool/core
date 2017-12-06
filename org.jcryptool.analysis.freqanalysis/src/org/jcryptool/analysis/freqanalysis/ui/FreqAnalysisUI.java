@@ -69,12 +69,12 @@ public class FreqAnalysisUI extends org.eclipse.swt.widgets.Composite {
     		label.setFont(FontService.getHeaderFont());
     		label.setText("Frequency Analysis");
     		label.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-    		stDescription = new StyledText(headerComposite, SWT.READ_ONLY | SWT.MULTI
-    				| SWT.WRAP);
-    		stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false,
-    				false));
-    		stDescription
-    				.setText("");
+//    		stDescription = new StyledText(headerComposite, SWT.READ_ONLY | SWT.MULTI
+//    				| SWT.WRAP);
+//    		stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false,
+//    				false));
+//    		stDescription
+//    				.setText("");
             group1 = new Group(this, SWT.NONE);
             GridLayout group1Layout = new GridLayout();
             group1Layout.makeColumnsEqualWidth = true;
@@ -130,6 +130,7 @@ public class FreqAnalysisUI extends org.eclipse.swt.widgets.Composite {
             C1.setLayoutData(C1LData);
             C1.setLayout(C1Layout);
             C1.setVisible(false);
+            
             C2 = new FullAnalysisUI(this, SWT.NONE);
             GridLayout C2Layout = new GridLayout();
             C2Layout.makeColumnsEqualWidth = true;

@@ -67,12 +67,13 @@ public class AntColAnalysisComposite extends Composite {
 		secondStepGroup.setText(Messages.Func_analyseGroupLabel); //$NON-NLS-1$
 		secondStepGroup.setLayout(new GridLayout(1, false));
 		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
-		gridData.widthHint = 220;
 		secondStepGroup.setLayoutData(gridData);
+		
 		Group groupSteps = new Group(secondStepGroup, SWT.NONE);
 		groupSteps.setText(Messages.Func_analysisType); //$NON-NLS-1$
 		groupSteps.setLayout(new GridLayout(1, false));
 		groupSteps.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		
 		// Animation-Checkbox
 		animationCheckbox = new Button(secondStepGroup, SWT.CHECK);
 		animationCheckbox.setText(Messages.Func_animation); //$NON-NLS-1$
@@ -146,16 +147,12 @@ public class AntColAnalysisComposite extends Composite {
 
 	private void initSettingsGroup() {
 
-		Composite filler = new Composite(secondStepGroup, SWT.NONE);
-		GridData fillerData = new GridData(SWT.TOP, SWT.LEFT, false, false);
-		fillerData.heightHint = 10;
-		filler.setLayoutData(fillerData);
-
 		settingsGroup = new Group(secondStepGroup, SWT.NONE);
 		settingsGroup.setText(Messages.Func_settings); //$NON-NLS-1$
 		settingsGroup.setLayout(new GridLayout(1, false));
-		settingsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-				false));
+		GridData gd_settingsGroups = new GridData(SWT.FILL, SWT.FILL, true, false);
+		gd_settingsGroups.verticalIndent = 30;
+		settingsGroup.setLayoutData(gd_settingsGroups);
 
 		// Alpha-Label
 		final Label alpha = new Label(settingsGroup, SWT.TOP);
@@ -167,18 +164,14 @@ public class AntColAnalysisComposite extends Composite {
 		final Slider alphaslider = new Slider(settingsGroup, SWT.HORIZONTAL);
 		alphaslider.setValues(80, 0, 101, 1, 10, 1);
 		alphaslider.setEnabled(true);
-		alphaslider
-				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		alphaslider.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		alphaslider.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				controller.onAlphaChanged((double) alphaslider.getSelection() / 100);
 				alpha.setText(str + " " + model.getAlpha());
 			}
 		});
-		filler = new Composite(settingsGroup, SWT.NONE);
-		fillerData = new GridData(SWT.TOP, SWT.LEFT, false, false);
-		fillerData.heightHint = 3;
-		filler.setLayoutData(fillerData);
+
 		// Beta-Label
 		final Label beta = new Label(settingsGroup, SWT.TOP);
 		final String str2 = Messages.Func_beta; //$NON-NLS-1$
@@ -189,15 +182,14 @@ public class AntColAnalysisComposite extends Composite {
 		final Slider betaslider = new Slider(settingsGroup, SWT.HORIZONTAL);
 		betaslider.setValues(80, 0, 101, 1, 10, 1);
 		betaslider.setEnabled(true);
-		betaslider.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		betaslider.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		betaslider.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				controller.onBetaChanged((double) betaslider.getSelection() / 100);
 				beta.setText(str2 + " " + model.getBeta());
 			}
 		});
-		filler = new Composite(settingsGroup, SWT.NONE);
-		filler.setLayoutData(fillerData);
+
 		// Verdunstung-Label
 		final Label verd = new Label(settingsGroup, SWT.TOP);
 		final String str3;
@@ -209,7 +201,7 @@ public class AntColAnalysisComposite extends Composite {
 		final Slider verdslider = new Slider(settingsGroup, SWT.HORIZONTAL);
 		verdslider.setValues(90, 1, 101, 1, 10, 1);
 		verdslider.setEnabled(true);
-		verdslider.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		verdslider.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		verdslider.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				controller.onPheromoneChanged((double) verdslider

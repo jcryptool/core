@@ -23,6 +23,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
@@ -36,6 +38,7 @@ import de.flexiprovider.core.elgamal.ElGamalPrivateKey;
  * Page for loading a Keypair.
  * 
  * @author Michael Gaber
+ * @author Thorben Groos
  */
 public class LoadKeypairPage extends WizardPage {
 
@@ -65,6 +68,9 @@ public class LoadKeypairPage extends WizardPage {
 
     /** the resulting public alias. */
     private KeyStoreAlias publicAlias;
+    
+    /** hint for the wrong password */
+    private Label pwHint;
 
     /**
      * Constructor setting pagename, description, data and completion status and initializes the keystore connection
@@ -102,9 +108,9 @@ public class LoadKeypairPage extends WizardPage {
         gl.marginWidth = 50;
         composite.setLayout(gl);
         new Label(composite, SWT.NONE).setText(Messages.LoadKeypairPage_select_keypair_from_list);
+        
         combo = new Combo(composite, SWT.READ_ONLY);
-        final GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, false);
-        combo.setLayoutData(gd);
+        combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         combo.setItems(keyStoreItems.keySet().toArray(new String[keyStoreItems.size()]));
         combo.addSelectionListener(new SelectionListener() {
             public void widgetDefaultSelected(final SelectionEvent e) {
@@ -118,21 +124,49 @@ public class LoadKeypairPage extends WizardPage {
             }
         });
 
-        new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(gd);
+        //Seperator
+        GridData gd_seperator = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        gd_seperator.verticalIndent = 30;
+        new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(gd_seperator);
 
         final Text l = new Text(composite, SWT.WRAP | SWT.MULTI | SWT.READ_ONLY);
         l.setText(Messages.LoadKeypairPage_enter_password);
-        l.setLayoutData(gd);
+        GridData gd_l = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        gd_l.verticalIndent = 30;
+        l.setLayoutData(gd_l);
+        
         passfield = new Text(composite, SWT.BORDER | SWT.PASSWORD);
-        passfield.setLayoutData(gd);
+        passfield.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         passfield.addModifyListener(new ModifyListener() {
             public void modifyText(final ModifyEvent e) {
                 checkComplete();
             }
         });
+        
+        pwHint = new Label(composite, SWT.NONE);
+        pwHint.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
+        pwHint.setVisible(false);
+        pwHint.setText(Messages.LoadKeypairPage_0);
+        pwHint.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        
+        //select a key in the combo box
+        if (combo.getItemCount() > 0) {
+        	combo.select(0);
+        	combo.notifyListeners(SWT.Selection, new Event());
+        }
+        
         setControl(composite);
     }
 
+    /**
+     * Sets the visibility for the hint for the password
+     * True if it should be displayed. False if not.
+     * @param status true, if the passwort is right. false, if it is wrong
+     */
+    public final void setPasswordHint(boolean status) {
+    	pwHint.setVisible(status);
+    }
+    
     /**
      * gets the matching public entry for a private one.
      * 

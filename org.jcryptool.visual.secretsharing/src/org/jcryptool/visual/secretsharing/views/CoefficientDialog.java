@@ -87,8 +87,6 @@ public class CoefficientDialog extends TitleAreaDialog implements Constants {
 		final GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 3;
 		coefficientsGroup.setLayout(gridLayout);
-
-		coefficientsGroup.setSize(329, 224);
 		scrolledComposite.setContent(coefficientsGroup);
 
 		generateCoefficientsButton = new Button(area, SWT.NONE);
@@ -107,11 +105,14 @@ public class CoefficientDialog extends TitleAreaDialog implements Constants {
 		});
 		generateCoefficientsButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		generateCoefficientsButton.setText(MESSAGE_COEFFICIENTS_GENERATE);
+		
 		setTitle(MESSAGE_COEFFICIENTS_GROUP_NAME);
 		setMessage(MESSAGE_COEFFICIENTS_DIALOG);
 
 		createGroupCoefficient();
 
+//		size = area.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		
 		return area;
 	}
 
@@ -219,7 +220,7 @@ public class CoefficientDialog extends TitleAreaDialog implements Constants {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(336, 395);
+		return new Point(380, 395);
 	}
 
 	@Override

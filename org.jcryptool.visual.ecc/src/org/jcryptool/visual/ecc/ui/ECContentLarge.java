@@ -111,6 +111,7 @@ public class ECContentLarge extends Composite {
 	private Button btnSave = null;
 	private Label lblP = null;
 	private Composite content;
+//    private ScrolledComposite scrolledCompositeSettings;
 
 	public ECContentLarge(Composite parent, int style, ECView v) {
 		super(parent, style);
@@ -125,7 +126,6 @@ public class ECContentLarge extends Composite {
 
 
 		GridLayout gridLayout = new GridLayout(2, false);
-		gridLayout.verticalSpacing = 2;
 		content.setLayout(gridLayout);
 
 		createCompositeIntro();
@@ -133,7 +133,7 @@ public class ECContentLarge extends Composite {
 		createGroupSettings();
 
 		scrolledComposite.setContent(content);
-		scrolledComposite.setMinSize(content.computeSize(862, 804));
+		scrolledComposite.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 		fillCSelection();
 		updateScreen();
@@ -186,7 +186,8 @@ public class ECContentLarge extends Composite {
 		label.setBackground(white);
 		label.setText(Messages.getString("ECView.Title")); //$NON-NLS-1$
 
-		stDescription = new StyledText(compositeIntro, SWT.READ_ONLY);
+//		stDescription = new StyledText(compositeIntro, SWT.READ_ONLY);
+		stDescription = new StyledText(compositeIntro, SWT.READ_ONLY | SWT.WRAP);
 		stDescription.setText(Messages.getString("ECView.LargeDescription")); //$NON-NLS-1$
 		stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 	}
@@ -196,14 +197,11 @@ public class ECContentLarge extends Composite {
 	 *
 	 */
 	private void createGroupSettings() {
-		GridData gridData2 = new GridData();
-		gridData2.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-		gridData2.widthHint = 300;
-		gridData2.verticalAlignment = org.eclipse.swt.layout.GridData.FILL;
 		groupSettings = new Group(content, SWT.NONE);
-		groupSettings.setLayout(new GridLayout());
-		groupSettings.setText(Messages.getString("ECView.Settings")); //$NON-NLS-1$
-		groupSettings.setLayoutData(gridData2);
+        groupSettings.setText(Messages.getString("ECView.Settings")); //$NON-NLS-1$
+        groupSettings.setLayout(new GridLayout());
+        groupSettings.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
+        
 		createGroupSize();
 		createGroupType();
 		createGroupSelectAttributes();
@@ -417,13 +415,11 @@ public class ECContentLarge extends Composite {
 	 *
 	 */
 	private void createGroupCurve() {
-		GridData gridData8 = new GridData();
-		gridData8.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-		gridData8.grabExcessHorizontalSpace = true;
-		gridData8.verticalAlignment = org.eclipse.swt.layout.GridData.FILL;
 		groupCurve = new Group(content, SWT.NONE);
 		groupCurve.setLayout(new GridLayout());
-		groupCurve.setLayoutData(gridData8);
+		GridData gd_groupCurve = new GridData(SWT.FILL, SWT.FILL, true, false);
+		gd_groupCurve.minimumWidth = 600;
+		groupCurve.setLayoutData(gd_groupCurve);
 		createGroupAttributes();
 		groupCurve.setText(Messages.getString("ECView.EllipticCurve")); //$NON-NLS-1$
 		createGroupP();
@@ -703,31 +699,14 @@ public class ECContentLarge extends Composite {
 	 *
 	 */
 	private void createGroupP() {
-		GridData gridData44 = new GridData();
-		gridData44.horizontalAlignment = org.eclipse.swt.layout.GridData.END;
-		GridData gridData34 = new GridData();
-		gridData34.horizontalSpan = 3;
-		gridData34.grabExcessHorizontalSpace = true;
-		gridData34.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-		GridData gridData33 = new GridData();
-		gridData33.horizontalSpan = 2;
-		GridData gridData32 = new GridData();
-		gridData32.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-		gridData32.horizontalSpan = 3;
-		gridData32.grabExcessHorizontalSpace = true;
-		GridLayout gridLayout6 = new GridLayout();
-		gridLayout6.numColumns = 4;
-		GridData gridData31 = new GridData();
-		gridData31.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-		gridData31.grabExcessHorizontalSpace = true;
-		gridData31.verticalAlignment = org.eclipse.swt.layout.GridData.FILL;
 		groupP = new Group(groupCurve, SWT.NONE);
-		groupP.setLayoutData(gridData31);
-		groupP.setLayout(gridLayout6);
+		groupP.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		groupP.setLayout(new GridLayout(4, false));
 		groupP.setText(Messages.getString("ECView.Point") + " P"); //$NON-NLS-1$ //$NON-NLS-2$
+		
 		btnPGenerate = new Button(groupP, SWT.NONE);
 		btnPGenerate.setText(Messages.getString("ECView.GenerateRandomPoint")); //$NON-NLS-1$
-		btnPGenerate.setLayoutData(gridData33);
+		btnPGenerate.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		btnPGenerate.addSelectionListener(new SelectionListener() {
 			public void widgetDefaultSelected(SelectionEvent e) { }
 			public void widgetSelected(SelectionEvent e) {
@@ -764,7 +743,9 @@ public class ECContentLarge extends Composite {
 				}
 			}
 		});
+		
 		btnPGenerator = new Button(groupP, SWT.NONE);
+		btnPGenerator.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		btnPGenerator.setText(Messages.getString("ECView.UseGeneratorG")); //$NON-NLS-1$
 		btnPGenerator.addSelectionListener(new SelectionListener() {
 			public void widgetDefaultSelected(SelectionEvent e) { }
@@ -799,14 +780,15 @@ public class ECContentLarge extends Composite {
 				}
 			}
 		});
+				
 		Label label = new Label(groupP, SWT.NONE);
 		label.setText("x ="); //$NON-NLS-1$
 		txtPX = new Text(groupP, SWT.BORDER | SWT.READ_ONLY);
-		txtPX.setLayoutData(gridData32);
+		txtPX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		label = new Label(groupP, SWT.NONE);
 		label.setText("y ="); //$NON-NLS-1$
 		txtPY = new Text(groupP, SWT.BORDER | SWT.READ_ONLY);
-		txtPY.setLayoutData(gridData34);
+		txtPY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 	}
 
 	/**
@@ -814,30 +796,13 @@ public class ECContentLarge extends Composite {
 	 *
 	 */
 	private void createGroupQ() {
-		GridData gridData43 = new GridData();
-		gridData43.horizontalAlignment = org.eclipse.swt.layout.GridData.END;
-		GridData gridData39 = new GridData();
-		gridData39.horizontalSpan = 3;
-		gridData39.grabExcessHorizontalSpace = true;
-		gridData39.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-		GridData gridData38 = new GridData();
-		gridData38.horizontalSpan = 2;
-		GridData gridData37 = new GridData();
-		gridData37.grabExcessHorizontalSpace = true;
-		gridData37.horizontalSpan = 3;
-		gridData37.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-		GridLayout gridLayout7 = new GridLayout();
-		gridLayout7.numColumns = 4;
-		GridData gridData35 = new GridData();
-		gridData35.grabExcessHorizontalSpace = true;
-		gridData35.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
 		groupQ = new Group(groupCurve, SWT.NONE);
-		groupQ.setLayoutData(gridData35);
-		groupQ.setLayout(gridLayout7);
+		groupQ.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		groupQ.setLayout(new GridLayout(4, false));
 		groupQ.setText(Messages.getString("ECView.Point") + " Q"); //$NON-NLS-1$ //$NON-NLS-2$
 		btnQGenerate = new Button(groupQ, SWT.NONE);
 		btnQGenerate.setText(Messages.getString("ECView.GenerateRandomPoint")); //$NON-NLS-1$
-		btnQGenerate.setLayoutData(gridData38);
+		btnQGenerate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		btnQGenerate.addSelectionListener(new SelectionListener() {
 			public void widgetDefaultSelected(SelectionEvent e) { }
 			public void widgetSelected(SelectionEvent e) {
@@ -859,6 +824,7 @@ public class ECContentLarge extends Composite {
 			}
 		});
 		btnQGenerator = new Button(groupQ, SWT.NONE);
+		btnQGenerator.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 2, 1));
 		btnQGenerator.setText(Messages.getString("ECView.UseGeneratorG")); //$NON-NLS-1$
 		btnQGenerator.addSelectionListener(new SelectionListener() {
 			public void widgetDefaultSelected(SelectionEvent e) {}
@@ -879,48 +845,33 @@ public class ECContentLarge extends Composite {
 		Label label = new Label(groupQ, SWT.NONE);
 		label.setText("x ="); //$NON-NLS-1$
 		txtQX = new Text(groupQ, SWT.BORDER | SWT.READ_ONLY);
-		txtQX.setLayoutData(gridData37);
+		txtQX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		label = new Label(groupQ, SWT.NONE);
 		label.setText("y ="); //$NON-NLS-1$
 		txtQY = new Text(groupQ, SWT.BORDER | SWT.READ_ONLY);
-		txtQY.setLayoutData(gridData39);
+		txtQY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 	}
 
 	/**
 	 * This method initializes groupR
 	 *
 	 */
-	private void createGroupR() {
-		GridData gridData42 = new GridData();
-		gridData42.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-		gridData42.grabExcessHorizontalSpace = true;
-		GridData gridData41 = new GridData();
-		gridData41.grabExcessHorizontalSpace = true;
-		gridData41.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-		GridLayout gridLayout9 = new GridLayout();
-		gridLayout9.numColumns = 2;
-		GridData gridData40 = new GridData();
-		gridData40.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-		gridData40.horizontalSpan = 2;
-		gridData40.grabExcessHorizontalSpace = true;
-		GridData gridData36 = new GridData();
-		gridData36.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-		gridData36.grabExcessHorizontalSpace = true;
+	private void createGroupR() {	
 		groupR = new Group(groupCurve, SWT.NONE);
-		groupR.setLayoutData(gridData36);
-		groupR.setLayout(gridLayout9);
+		groupR.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		groupR.setLayout(new GridLayout(2, false));
 		groupR.setText(Messages.getString("ECView.Point") + " R"); //$NON-NLS-1$ //$NON-NLS-2$
 		lblR = new Label(groupR, SWT.NONE);
 		lblR.setText(""); //$NON-NLS-1$
-		lblR.setLayoutData(gridData40);
+		lblR.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		Label label = new Label(groupR, SWT.NONE);
 		label.setText("x ="); //$NON-NLS-1$
 		txtRX = new Text(groupR, SWT.BORDER | SWT.READ_ONLY);
-		txtRX.setLayoutData(gridData41);
+		txtRX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		label = new Label(groupR, SWT.NONE);
 		label.setText("y ="); //$NON-NLS-1$
 		txtRY = new Text(groupR, SWT.BORDER | SWT.READ_ONLY);
-		txtRY.setLayoutData(gridData42);
+		txtRY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 	}
 
 	/**

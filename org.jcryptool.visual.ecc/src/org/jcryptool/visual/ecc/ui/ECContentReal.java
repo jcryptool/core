@@ -104,7 +104,6 @@ public class ECContentReal extends Composite {
         content = new Composite(scrolledComposite, SWT.NONE);
 
         GridLayout gridLayout = new GridLayout(2, false);
-        gridLayout.verticalSpacing = 2;
         content.setLayout(gridLayout);
 
         createCompositeIntro();
@@ -112,7 +111,7 @@ public class ECContentReal extends Composite {
         createGroupSettings();
 
         scrolledComposite.setContent(content);
-        scrolledComposite.setMinSize(content.computeSize(862, 664));
+        scrolledComposite.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
         createGroupAttributesR();
 
@@ -226,13 +225,11 @@ public class ECContentReal extends Composite {
      *
      */
     private void createGroupSettings() {
-        groupSettings = new Group(content, SWT.NONE);
+    	groupSettings = new Group(content, SWT.NONE);
         groupSettings.setText(Messages.getString("ECContentReal.9")); //$NON-NLS-1$
-        groupSettings.setLayout(new GridLayout(1, false));
-        groupSettings.setLayout(new GridLayout(1, false));
-        GridData gridData = new GridData(SWT.FILL, SWT.FILL, false, true);
-        gridData.widthHint = 300;
-        groupSettings.setLayoutData(gridData);
+        groupSettings.setLayout(new GridLayout());
+        groupSettings.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
+        
         createGroupSize();
         createGroupCurveType();
         createGroupCurveAttributes();
@@ -248,10 +245,7 @@ public class ECContentReal extends Composite {
         canvasCurve = new Canvas(groupCurve, SWT.DOUBLE_BUFFERED);
         canvasCurve.setBackground(white);
         GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
-        // gridData.heightHint = 500;
-        // gridData.widthHint = 500;
         canvasCurve.setLayoutData(gridData);
-        // canvasCurve.setSize(500,500);
         canvasCurve.addPaintListener(new PaintListener() {
             public void paintControl(PaintEvent e) {
                 drawGraph(e);
@@ -307,7 +301,7 @@ public class ECContentReal extends Composite {
     private void createGroupSave() {
         groupSave = new Group(groupSettings, SWT.NONE);
         groupSave.setLayout(new GridLayout(2, false));
-        groupSave.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+        groupSave.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         groupSave.setText(Messages.getString("ECView.SaveResults")); //$NON-NLS-1$
 
         cSaveResults = new Combo(groupSave, SWT.READ_ONLY);
@@ -383,7 +377,7 @@ public class ECContentReal extends Composite {
      */
     private void createGroupCurveType() {
         groupCurveType = new Group(groupSettings, SWT.NONE);
-        groupCurveType.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+        groupCurveType.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         groupCurveType.setLayout(new GridLayout(3, true));
         groupCurveType.setText(Messages.getString("ECView.SelectCurveType")); //$NON-NLS-1$
         rbtnReal = new Button(groupCurveType, SWT.RADIO);
@@ -515,7 +509,7 @@ public class ECContentReal extends Composite {
         label.setBackground(white);
         label.setText(Messages.getString("ECView.Title")); //$NON-NLS-1$
 
-        stDescription = new StyledText(compositeIntro, SWT.READ_ONLY);
+        stDescription = new StyledText(compositeIntro, SWT.READ_ONLY | SWT.WRAP);
         stDescription.setText(Messages.getString("ECView.Description")); //$NON-NLS-1$
         stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
     }
@@ -528,7 +522,7 @@ public class ECContentReal extends Composite {
         groupCalculations = new Group(groupSettings, SWT.NONE);
         groupCalculations.setText(Messages.getString("ECContentReal.35")); //$NON-NLS-1$
         groupCalculations.setLayout(new GridLayout(3, false));
-        groupCalculations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        groupCalculations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));    
 
         Label label = new Label(groupCalculations, SWT.WRAP);
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));

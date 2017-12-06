@@ -40,6 +40,8 @@ import org.jcryptool.visual.crt.export.FileExporter;
  * @version 1.0.1
  */
 public class ChineseRemainderTheoremView extends ViewPart implements Constants {
+	public ChineseRemainderTheoremView() {
+	}
 
 	private final String exportToLatexCommandId = "org.jcryptool.visual.crt.commands.exportToLatex";
 	private final String exportToCSVCommandId = "org.jcryptool.visual.crt.commands.exportToCsv";

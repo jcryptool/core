@@ -75,11 +75,6 @@ public class AntColPherMatrixComposite extends Composite {
 				}
 			}
 		}
-
-		Composite filler = new Composite(matComp, SWT.NONE);
-		GridData fillerData = new GridData(SWT.TOP, SWT.LEFT, false, false, m.getSize(), 1);
-		fillerData.heightHint = 3;
-		filler.setLayoutData(fillerData);
 		
 		String[] text = m.getKnots();
 
@@ -87,6 +82,7 @@ public class AntColPherMatrixComposite extends Composite {
 			label = new Label(matComp, SWT.NONE);
 			data = new GridData(SWT.CENTER, SWT.CENTER, false, false,
 					m.getSize(), 1);
+			data.verticalIndent = 30;
 			label.setLayoutData(data);
 			label.setText(Messages.PherMatrix_knotContent); //$NON-NLS-1$
 
@@ -95,7 +91,6 @@ public class AntColPherMatrixComposite extends Composite {
 					label = new Label(matComp, SWT.NONE);
 					data = new GridData(SWT.CENTER, SWT.CENTER, false, false,
 							1, 1);
-					data.heightHint = 12;
 					label.setLayoutData(data);
 
 					if (text[col].length() > line) {

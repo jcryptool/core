@@ -19,6 +19,8 @@ import javax.crypto.KeyAgreement;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
@@ -104,14 +106,13 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 		this.sslView = sslView;
 
 		grpServerChangeCipher = new Group(this, SWT.NONE);
-		grpServerChangeCipher.setBounds(0, 0, 326, 175);
-		grpServerChangeCipher
-				.setText(Messages.ServerChangeCipherSpecCompositeLblServerChangeCipher);
+		grpServerChangeCipher.setLayout(new GridLayout(2, false));
+		grpServerChangeCipher.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
+		grpServerChangeCipher.setText(Messages.ServerChangeCipherSpecCompositeLblServerChangeCipher);
 
 		lblChangeCipherSpec = new Label(grpServerChangeCipher, SWT.NONE);
-		lblChangeCipherSpec.setBounds(10, 25, 110, 20);
-		lblChangeCipherSpec
-				.setText(Messages.ServerChangeCipherSpecCompositeLblServerChangeCipherSpec);
+		lblChangeCipherSpec.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		lblChangeCipherSpec.setText(Messages.ServerChangeCipherSpecCompositeLblServerChangeCipherSpec);
 
 		btnInformation = new Button(grpServerChangeCipher, SWT.NONE);
 		btnInformation.addMouseListener(new MouseAdapter() {
@@ -126,10 +127,8 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 				refreshInformations();
 			}
 		});
-		btnInformation.setLocation(70, 140);
-		btnInformation.setSize(100, 25);
-		btnInformation
-				.setText(Messages.ServerChangeCipherSpecCompositeBtnInformation);
+		btnInformation.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		btnInformation.setText(Messages.ServerChangeCipherSpecCompositeBtnInformation);
 
 		btnNextStep = new Button(grpServerChangeCipher, SWT.NONE);
 		btnNextStep.addMouseListener(new MouseAdapter() {
@@ -138,9 +137,8 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 				sslView.nextStep();
 			}
 		});
-		btnNextStep.setBounds(176, 140, 140, 25);
-		btnNextStep
-				.setText(Messages.ServerChangeCipherSpecCompositeBtnNextStep);
+		btnNextStep.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		btnNextStep.setText(Messages.ServerChangeCipherSpecCompositeBtnNextStep);
 	}
 
 	/**

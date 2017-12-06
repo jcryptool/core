@@ -13,6 +13,8 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.visual.crt.views.messages"; //$NON-NLS-1$
+	public static String CheckingEquationDialog_6;
+	public static String CheckingEquationDialog_7;
 	public static String CRTConstants_ActionFlow;
 	public static String CRTConstants_DialogButtonSuggestion;
 	public static String CRTConstants_DialogButtonVerify;
@@ -43,6 +45,8 @@ public class Messages extends NLS {
     public static String CRTGroup_error_no_equations_title;
     public static String CRTGroup_Header;
     public static String CRTGroup_HeaderInfoText;
+	public static String Equation_0;
+	public static String Equation_1;
     static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

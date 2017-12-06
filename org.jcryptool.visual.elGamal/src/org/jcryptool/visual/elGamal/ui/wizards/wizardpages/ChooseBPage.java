@@ -10,12 +10,17 @@
 package org.jcryptool.visual.elGamal.ui.wizards.wizardpages;
 
 import java.math.BigInteger;
+import java.util.Random;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -27,6 +32,7 @@ import org.jcryptool.visual.library.Lib;
  * Page for choosing the unique parameter b
  *
  * @author Michael Gaber
+ * @author Thorben Groos
  */
 public class ChooseBPage extends WizardPage {
 
@@ -53,11 +59,15 @@ public class ChooseBPage extends WizardPage {
 
     public void createControl(final Composite parent) {
         final Composite composite = new Composite(parent, SWT.NONE);
-        final int ncol = 2;
-        composite.setLayout(new GridLayout(ncol, true));
-        Label l = new Label(composite, SWT.NONE);
-        l.setText("b"); //$NON-NLS-1$
+        GridLayout gl_composite = new GridLayout(3, false);
+        gl_composite.marginWidth = 50;
+        composite.setLayout(gl_composite);
+        
+        final Label l = new Label(composite, SWT.NONE);
+        l.setText("b = "); //$NON-NLS-1$
+        l.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         final Text t = new Text(composite, SWT.BORDER);
+        t.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         t.addVerifyListener(Lib.getVerifyListener(Lib.DIGIT));
         t.addModifyListener(new ModifyListener() {
 
@@ -77,6 +87,22 @@ public class ChooseBPage extends WizardPage {
                 }
             }
         });
+        
+        Button randomB = new Button(composite, SWT.PUSH);
+        randomB.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+        randomB.setText(Messages.ChooseBPage_1);
+        randomB.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				t.setText(new BigInteger(ChooseBPage.this.data.getModulus().bitLength()-1, new Random()).toString());
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				
+			}
+		});
 
         setControl(composite);
     }

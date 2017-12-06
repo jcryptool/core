@@ -25,12 +25,14 @@ import org.eclipse.swt.widgets.Shell;
 import org.jcryptool.core.logging.utils.LogUtil;
 
 /**
- * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI Builder, which is free
- * for non-commercial use. If Jigloo is being used commercially (ie, by a corporation, company or
- * business for any purpose whatever) then you should purchase a license for each developer using
- * Jigloo. Please visit www.cloudgarden.com for details. Use of Jigloo implies acceptance of these
- * licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS
- * CODE CANNOT BE USED LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+ * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
+ * Builder, which is free for non-commercial use. If Jigloo is being used
+ * commercially (ie, by a corporation, company or business for any purpose
+ * whatever) then you should purchase a license for each developer using Jigloo.
+ * Please visit www.cloudgarden.com for details. Use of Jigloo implies
+ * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
+ * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
+ * ANY CORPORATE OR COMMERCIAL PURPOSE.
  */
 public class EntropyUI extends Composite {
 	private CTabFolder cMainTabFolder;
@@ -42,7 +44,8 @@ public class EntropyUI extends Composite {
 	private EntropyUItable compositeTable;
 
 	/**
-	 * Overriding checkSubclass allows this class to extend org.eclipse.swt.widgets.Composite
+	 * Overriding checkSubclass allows this class to extend
+	 * org.eclipse.swt.widgets.Composite
 	 */
 	protected void checkSubclass() {
 	}
@@ -52,7 +55,8 @@ public class EntropyUI extends Composite {
 	}
 
 	/**
-	 * Auto-generated method to display this org.eclipse.swt.widgets.Composite inside a new Shell.
+	 * Auto-generated method to display this org.eclipse.swt.widgets.Composite
+	 * inside a new Shell.
 	 */
 	public static void showGUI() {
 		Display display = Display.getDefault();
@@ -86,8 +90,6 @@ public class EntropyUI extends Composite {
 			{
 				cMainTabFolder = new CTabFolder(this, SWT.NONE);
 				FormData cMainTabFolderLData = new FormData();
-				cMainTabFolderLData.width = 622;
-				cMainTabFolderLData.height = 288;
 				cMainTabFolderLData.left = new FormAttachment(0, 1000, 0);
 				cMainTabFolderLData.top = new FormAttachment(0, 1000, 0);
 				cMainTabFolderLData.bottom = new FormAttachment(1000, 1000, 0);

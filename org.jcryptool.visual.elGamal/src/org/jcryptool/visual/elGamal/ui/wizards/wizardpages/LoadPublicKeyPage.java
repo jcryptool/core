@@ -21,6 +21,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
@@ -33,6 +34,7 @@ import de.flexiprovider.core.elgamal.ElGamalPublicKey;
  * Page for loading a public Key.
  * 
  * @author Michael Gaber
+ * @author Thorben Groos
  */
 public class LoadPublicKeyPage extends WizardPage {
 
@@ -91,7 +93,7 @@ public class LoadPublicKeyPage extends WizardPage {
      */
     public final void createControl(final Composite parent) {
         final Composite composite = new Composite(parent, SWT.NONE);
-        // TODO in between do stuff like layout et al
+//      do stuff like layout et al
         final GridLayout gl = new GridLayout();
         gl.marginWidth = 50;
         composite.setLayout(gl);
@@ -100,6 +102,7 @@ public class LoadPublicKeyPage extends WizardPage {
         final GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, false);
         combo.setLayoutData(gd);
         combo.setItems(keystoreitems.keySet().toArray(new String[keystoreitems.size()]));
+        
         combo.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(final SelectionEvent e) {
                 final boolean complete = !combo.getText().equals(""); //$NON-NLS-1$
@@ -111,6 +114,13 @@ public class LoadPublicKeyPage extends WizardPage {
                 setPageComplete(complete);
             }
         });
+        
+        // Select a default key and call the SelectionListener
+        if (combo.getItems().length > 0) {
+        	combo.select(0);
+        	combo.notifyListeners(SWT.Selection, new Event());
+        }
+        
         // end TODO
         setControl(composite);
     }

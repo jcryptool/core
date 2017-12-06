@@ -10,6 +10,7 @@
 package org.jcryptool.visual.elGamal.ui.wizards;
 
 import java.security.PrivateKey;
+import java.security.UnrecoverableEntryException;
 
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
@@ -168,15 +169,21 @@ public class KeySelectionWizard extends Wizard {
                         save(true);
                     }
                 } else {
+                	try {
                     final KeyStoreManager ksm = KeyStoreManager.getInstance();
                     final KeyStoreAlias privAlias = data.getPrivateAlias();
                     final String password = data.getPassword();
                     final PrivateKey key = ksm.getPrivateKey(privAlias, password.toCharArray());
                     final ElGamalPrivateKey privkey = (ElGamalPrivateKey) key;
+                    
                     data.setModulus(privkey.getModulus().bigInt);
                     data.setGenerator(privkey.getGenerator().bigInt);
                     data.setPublicA(privkey.getPublicA().bigInt);
                     data.setA(privkey.getA().bigInt);
+                	} catch (UnrecoverableEntryException uee) {
+                		((LoadKeypairPage) getPage(LoadKeypairPage.getPagename())).setPasswordHint(true);
+                		return false;
+                	}
                 }
                 break;
             case EncryptAction:

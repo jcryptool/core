@@ -12,7 +12,10 @@ package org.jcryptool.visual.zeroknowledge.ui;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
@@ -56,6 +59,10 @@ public class Generator extends Dialog {
     private Button unabhaengig;
 
     private Group wertebereich;
+    
+    private Composite main;
+    
+    private Composite compositeButtons;
 
     /**
      * Konstruktor für einen Dialog, der zum Erstellen von Primzahlen gedacht ist.
@@ -96,8 +103,6 @@ public class Generator extends Dialog {
         messageBox.setText(text);
         messageBox.setMessage(text);
         messageBox.open();
-//        exception.setText(text);
-//        exception.setVisible(true);
     }
 
     /**
@@ -106,49 +111,28 @@ public class Generator extends Dialog {
      * @param s Shell, auf der die GUI zusammengebastelt werden soll
      */
     private void createGui(Shell s) {
-        // allgemeine Angaben
-        s.setLayout(null);
-        s.setSize(600, 350);
-        s.setLocation(100, 100);
 
+    	main = new Composite(s, SWT.NONE);
+    	GridLayout gd_main = new GridLayout(2, true);
+    	gd_main.marginWidth = 30;
+    	main.setLayout(gd_main);
+    	
         // allgemeine Ueberschrift
-        Label label = new Label(s, 0);
-        label.setText(Messages.Generator_0);
-        label.setSize(500, 55);
-        label.setLocation(50, 10);
+    	Label description = new Label(main, SWT.FILL);
+        description.setText(Messages.Generator_0);
+        description.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false, 2, 1));
 
         // Gruppe mit dem Wertebereich anlegen, Ueberschrift setzen
-        wertebereich = new Group(s, 0);
+        wertebereich = new Group(main, SWT.NONE);
         wertebereich.setText(Messages.Generator_1);
-        wertebereich.setBounds(0, 70, 600, 70);
-
-        // Erstellung der RadioButtons zur Festlegung des Verhaeltnisses der
-        // Wertebereiche
-        unabhaengig = new Button(wertebereich, SWT.RADIO);
-        unabhaengig.setText(Messages.Generator_2);
-        unabhaengig.addSelectionListener(
-        /**
-         * Selection-Listener, der auf Events vom "unabhängig voneinander"-Button achtet
-         */
-        new SelectionAdapter() {
-
-            /**
-             * Methode, die aufgerufen wird, wenn der "unabhängig"-RadioButton ausgewählt wurde.
-             * Setzt den RadioButton "gleich" auf nicht gewahlt und vermerkt, dass die Wertebereich
-             * nicht gleich sein muessen
-             */
-            public void widgetSelected(SelectionEvent arg0) {
-                gleich.setSelection(false);
-                unabhaengig.setSelection(true);
-                both = false;
-                q.setEnabled(true);
-            }
-        });
-        unabhaengig.setSize(280, 20);
-        unabhaengig.setLocation(310, 30);
-        unabhaengig.setSelection(true);
-
+        wertebereich.setLayout(new GridLayout(2, true));
+        GridData gd_wertebereich = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
+        gd_wertebereich.verticalIndent = 20;
+        wertebereich.setLayoutData(gd_wertebereich);
+        
+        
         gleich = new Button(wertebereich, SWT.RADIO);
+        gleich.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         gleich.setText(Messages.Generator_3);
         gleich.addSelectionListener(
         /**
@@ -168,18 +152,46 @@ public class Generator extends Dialog {
                 q.setEnabled(false);
             }
         });
-        gleich.setSize(280, 20);
-        gleich.setLocation(10, 30);
-        gleich.setSelection(false);
+
+        // Erstellung der RadioButtons zur Festlegung des Verhaeltnisses der
+        // Wertebereiche
+        unabhaengig = new Button(wertebereich, SWT.RADIO);
+        unabhaengig.setText(Messages.Generator_2);
+        unabhaengig.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        unabhaengig.addSelectionListener(
+        /**
+         * Selection-Listener, der auf Events vom "unabhängig voneinander"-Button achtet
+         */
+        new SelectionAdapter() {
+
+            /**
+             * Methode, die aufgerufen wird, wenn der "unabhängig"-RadioButton ausgewählt wurde.
+             * Setzt den RadioButton "gleich" auf nicht gewahlt und vermerkt, dass die Wertebereich
+             * nicht gleich sein muessen
+             */
+            public void widgetSelected(SelectionEvent arg0) {
+                gleich.setSelection(false);
+                unabhaengig.setSelection(true);
+                both = false;
+                q.setEnabled(true);
+            }
+        });
+        unabhaengig.setSelection(true);
 
         // PrimePanels p und q einfuegen
-        p = new PrimePanel("p", s); //$NON-NLS-1$
-        p.getGroup().setLocation(0, 150);
-        q = new PrimePanel("q", s); //$NON-NLS-1$
-        q.getGroup().setLocation(300, 150);
-
+        p = new PrimePanel("p", main);
+        q = new PrimePanel("q", main);
+        
+        compositeButtons = new Composite(main, SWT.NONE);
+        compositeButtons.setLayout(new GridLayout(3, true));
+        GridData gd_compositeButtons = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
+        gd_compositeButtons.verticalIndent = 20;
+        compositeButtons.setLayoutData(gd_compositeButtons);
+        
+        
         // Button zum Generieren der Primzahlen
-        generieren = new Button(s, SWT.PUSH | SWT.CENTER);
+        generieren = new Button(compositeButtons, SWT.PUSH);
+        generieren.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         generieren.setText(Messages.Generator_6);
         generieren.addSelectionListener(
         /**
@@ -272,18 +284,17 @@ public class Generator extends Dialog {
                 // q generieren
                 try {
                     q.setErgebnis(Primzahlen.primzahl(unten_q, oben_q));
+                    nehmen.setFocus();
                 } catch (IllegalArgumentException e) {
                     setExceptionLabel(e.getMessage());
                 }
             }
         });
         generieren.setToolTipText(Messages.Generator_17);
-        generieren.setSize(180, 25);
-        generieren.setLocation(20, 260);
-        generieren.setVisible(true);
 
         // Button zum Uebernehmen der Primzahlen
-        nehmen = new Button(s, SWT.PUSH | SWT.CENTER);
+        nehmen = new Button(compositeButtons, SWT.PUSH);
+        nehmen.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         nehmen.setText(Messages.Generator_18);
         nehmen.addSelectionListener(
         /**
@@ -305,12 +316,10 @@ public class Generator extends Dialog {
         });
         nehmen.setToolTipText(Messages.Generator_19);
         nehmen.setEnabled(false);
-        nehmen.setSize(180, 25);
-        nehmen.setLocation(210, 260);
-        nehmen.setVisible(true);
 
         // Button zum Abbrechen der Aktion
-        abbrechen = new Button(s, SWT.PUSH | SWT.CENTER);
+        abbrechen = new Button(compositeButtons, SWT.PUSH);
+        abbrechen.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         abbrechen.setText(Messages.Generator_20);
         abbrechen.addSelectionListener(
         /**
@@ -327,14 +336,16 @@ public class Generator extends Dialog {
             }
         });
         abbrechen.setToolTipText(Messages.Generator_21);
-        abbrechen.setSize(180, 25);
-        abbrechen.setLocation(400, 260);
-        abbrechen.setVisible(true);
 
-        exception = new Label(s, SWT.BOLD);
-        exception.setForeground(s.getDisplay().getSystemColor(SWT.COLOR_RED));
-        exception.setBounds(200, 280, 250, 20);
+        exception = new Label(main, SWT.BOLD);
+        exception.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
+        GridData gd_exception = new GridData(SWT.FILL, SWT.FILL, true, false);
+        gd_exception.verticalIndent = 20;
+        exception.setLayoutData(gd_exception);
         exception.setVisible(false);
+        
+        main.pack();
+        
     }
 
     /**
@@ -343,9 +354,9 @@ public class Generator extends Dialog {
     private void open() {
         Shell parent = getParent();
         akt = new Shell(parent, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
-        akt.setText(getText());
+        akt.setText("Primzahlen generieren");
         createGui(akt);
-        akt.setSize(600, 350);
+        akt.pack();
         akt.open();
         Display display = parent.getDisplay();
         while (!akt.isDisposed()) {

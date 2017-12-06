@@ -22,6 +22,7 @@ import org.jcryptool.visual.elGamal.Messages;
  * page to choose whether to use a new key or enter the parameters manually.
  *
  * @author Michael Gaber
+ * @author Thorben Groos
  */
 public class EncryptVerifyPage extends WizardPage {
 
@@ -53,21 +54,20 @@ public class EncryptVerifyPage extends WizardPage {
     public final void createControl(Composite parent) {
         Composite composite = new Composite(parent, SWT.NONE);
         // set layout
-        composite.setLayout(new GridLayout());
-        // create grid data
-        GridData gd = new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER);
-        GridData gd1 = new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER);
+        GridLayout gl_composite = new GridLayout();
+        gl_composite.marginWidth = 50;
+        composite.setLayout(gl_composite);
         // add enter Pubkey button
         newPubkeyButton = new Button(composite, SWT.RADIO);
         newPubkeyButton.setText(Messages.EncryptVerifyPage_manual_entry);
         newPubkeyButton.setToolTipText(Messages.EncryptVerifyPage_manual_entry_popup);
         newPubkeyButton.setSelection(true);
-        newPubkeyButton.setLayoutData(gd);
+        newPubkeyButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         // add existing Pubkey button
         existingPubkeyButton = new Button(composite, SWT.RADIO);
         existingPubkeyButton.setText(Messages.EncryptVerifyPage_load_key);
         existingPubkeyButton.setToolTipText(Messages.EncryptVerifyPage_load_key_popup);
-        existingPubkeyButton.setLayoutData(gd1);
+        existingPubkeyButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         // finally set control something
         setControl(composite);
     }

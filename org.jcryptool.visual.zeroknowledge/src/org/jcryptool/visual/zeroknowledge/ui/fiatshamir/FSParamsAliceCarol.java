@@ -11,6 +11,7 @@ package org.jcryptool.visual.zeroknowledge.ui.fiatshamir;
 
 import java.math.BigInteger;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -47,29 +48,18 @@ public class FSParamsAliceCarol extends ParamsPerson {
         super(comp);
         this.person = person;
 
-        GridData gridData2 = new GridData();
-        gridData2.verticalAlignment = GridData.FILL;
-        gridData2.grabExcessVerticalSpace = true;
-        gridData2.grabExcessHorizontalSpace = true;
-
-        GridData gridData = new GridData();
-        gridData.grabExcessVerticalSpace = true;
-        gridData.grabExcessHorizontalSpace = true;
-        gridData.horizontalAlignment = GridData.FILL;
-        gridData.verticalAlignment = GridData.FILL;
-
-        group.setLayout(new GridLayout(2, false));
-        group.setLayoutData(gridData);
+        group.setLayout(new GridLayout(2, true));
+        group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         group.setText(person.getName());
 
-        Group groupSecret = new Group(group, 0);
-        groupSecret.setLayout(new GridLayout(1, false));
-        groupSecret.setLayoutData(gridData2);
+        Group groupSecret = new Group(group, SWT.NONE);
+        groupSecret.setLayout(new GridLayout());
+        groupSecret.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         groupSecret.setText(Messages.FS_ParamsAliceCarol_0);
 
-        Group groupPublic = new Group(group, 0);
-        groupPublic.setLayout(new GridLayout(1, false));
-        groupPublic.setLayoutData(gridData2);
+        Group groupPublic = new Group(group, SWT.NONE);
+        groupPublic.setLayout(new GridLayout());
+        groupPublic.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         groupPublic.setText(Messages.FS_ParamsAliceCarol_1);
 
         r = new FSCombiLabel(Messages.FS_ParamsAliceCarol_2, true, groupSecret);
@@ -122,9 +112,7 @@ public class FSParamsAliceCarol extends ParamsPerson {
 
     public void setPerson(FSPerson person) {
         this.person = person;
-
         group.setText(person.getName());
-
         update();
     }
 }

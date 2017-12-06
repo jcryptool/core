@@ -11,6 +11,9 @@ package org.jcryptool.visual.zeroknowledge.ui.feigefiatshamir;
 
 import java.math.BigInteger;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -41,22 +44,23 @@ public class FFSCombiLabel {
      * @param group Group-Objekt, in das das Composite-Objekt eingebunden wird
      */
     public FFSCombiLabel(String title, boolean secret, Group group) {
-        comp = new Composite(group, 0);
+    	comp = new Composite(group, SWT.NONE);
+    	comp.setLayout(new GridLayout(2, false));
+    	comp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+    	
         this.secret = secret;
-        comp.setLayout(null);
-        comp.setSize(135, 20);
 
-        name = new Label(comp, 0);
+        name = new Label(comp, SWT.NONE);
+        name.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         name.setText(title);
-        name.setBounds(5, 0, 40, 20);
 
-        content = new Label(comp, 0);
+        content = new Label(comp, SWT.NONE);
+        content.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         if (secret) {
             content.setText(Messages.FFS_CombiLabel_0);
         } else {
             content.setText(Messages.FFS_CombiLabel_1);
         }
-        content.setBounds(50, 0, 70, 20);
     }
 
     /**
