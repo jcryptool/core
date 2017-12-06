@@ -78,6 +78,8 @@ public class HuffmanCodingView extends ViewPart {
 	public static final String ID = "org.jcryptool.visual.huffmanCoding.views.HuffmanCodingView"; //$NON-NLS-1$
 	public final static int COMPRESS = 1;
 	public final static int UNCOMPRESS = 2;
+	private int MIN_WIDTH = 1400;
+	private int MIN_HEIGHT = 700;
 
 	private Composite parent;
 	private TabFolder tabFolder;
@@ -199,7 +201,6 @@ public class HuffmanCodingView extends ViewPart {
 
 		grpSzenario = new Group(composite, SWT.NONE);
 		GridData gd_grpSzenario = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-		// gd_grpSzenario.widthHint = 200;
 		grpSzenario.setLayoutData(gd_grpSzenario);
 		grpSzenario.setText(Messages.HuffmanCodingView_grpSzenario_text);
 		grpSzenario.setLayout(new GridLayout(1, false));
@@ -241,7 +242,6 @@ public class HuffmanCodingView extends ViewPart {
 			}
 		});
 		GridData gd_btnRadioCompress = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		// gd_btnRadioCompress.widthHint = 110;
 		btnRadioCompress.setLayoutData(gd_btnRadioCompress);
 		btnRadioCompress.setSelection(true);
 		btnRadioCompress.setText(Messages.HuffmanCodingView_6);
@@ -327,7 +327,7 @@ public class HuffmanCodingView extends ViewPart {
 		tbtmCodeTable.setText(Messages.HuffmanCodingView_14);
 
 		scrolledComposite.setContent(tabFolder);
-		scrolledComposite.setMinSize(tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		scrolledComposite.setMinSize(MIN_WIDTH, MIN_HEIGHT);
 
 		loadExampleText();
 
@@ -355,9 +355,9 @@ public class HuffmanCodingView extends ViewPart {
 
 	private Group createCompressButtonGroup() {
 		Group grpNextSteps = new Group(composite, SWT.NONE);
-		GridLayout gl_grpNextSteps = new GridLayout(2, false);
+		GridLayout gl_grpNextSteps = new GridLayout(1, false);
 		grpNextSteps.setLayout(gl_grpNextSteps);
-		grpNextSteps.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		grpNextSteps.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		grpNextSteps.setText(Messages.HuffmanCodingView_grpNextSteps_text);
 
 		btnCompress = new Button(grpNextSteps, SWT.NONE);
@@ -469,7 +469,7 @@ public class HuffmanCodingView extends ViewPart {
 		Group grpCompress = new Group(composite, SWT.NONE);
 		grpCompress.setText(Messages.HuffmanCodingView_6);
 		grpCompress.setLayout(new GridLayout(7, false));
-		grpCompress.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 3, 1));
+		grpCompress.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
 		btnRadioExampleText = new Button(grpCompress, SWT.RADIO);
 		btnRadioExampleText.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 7, 1));
@@ -740,7 +740,7 @@ public class HuffmanCodingView extends ViewPart {
 		Group grpCompress = new Group(composite, SWT.NONE);
 		grpCompress.setText(Messages.HuffmanCodingView_6);
 		grpCompress.setLayout(new GridLayout(7, false));
-		grpCompress.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 3, 1));
+		grpCompress.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
 		btnRadioExampleText = new Button(grpCompress, SWT.RADIO);
 		btnRadioExampleText.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 7, 1));
