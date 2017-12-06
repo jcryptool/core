@@ -12,7 +12,8 @@ package org.jcryptool.visual.huffmanCoding.algorithm;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -22,8 +23,10 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 /**
- *
  * @author Miray Inel
+ * @author <i>revised by</i>
+ * @author Michael Altenhuber
+ * 
  */
 public class Huffman {
 
@@ -42,7 +45,6 @@ public class Huffman {
 	@Inject
 	private ArrayList<Node> resultNodeList = null;
 	private OutputStream out;
-	private HuffmanStreamWriter hsw;
 	private ArrayList<Integer> bitArray;
 	private int[] huffmanBinaryCompressed;
 
@@ -66,7 +68,6 @@ public class Huffman {
 		InputStream is = new ByteArrayInputStream(input.getBytes());
 		BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
-		hsw = new HuffmanStreamWriter(out);
 		bitArray = new ArrayList<>();
 		/*
 		 * read file and create a statistic
@@ -106,17 +107,16 @@ public class Huffman {
 		return huffmanBinaryCompressed;
 	}
 
-	public void writeHuffmanBinary(OutputStream out) throws IOException {
+	public void writeHuffmanBinary(File file) throws IOException {
 		if (huffmanBinaryCompressed == null) {
 			throw new IllegalStateException("No compressed huffman encoded data available");
 		}
-		try (HuffmanStreamWriter hsw = new HuffmanStreamWriter(out);) {
+		try (OutputStream out = new FileOutputStream(file)) {
 
 			for (int huffmanByte : huffmanBinaryCompressed) {
-				hsw.write(huffmanByte);
+				out.write(huffmanByte);
 			}
 		}
-
 	}
 
 	/**
@@ -136,11 +136,8 @@ public class Huffman {
 			if (table[i] != null) {
 				bitArray.add(i);
 				bitArray.add(table[i].getLength());
-				// write(table[i].getLength());
 				bitStringToInteger(table[i]);
 				commitBuffer();
-				// write(table[i]);
-				// flushBitBuffer();
 			}
 		}
 		// write end of table
@@ -187,6 +184,14 @@ public class Huffman {
 		offset = 0;
 	}
 
+	/**
+	 * This method performs the uncompression of the byte array (as Integer). It can
+	 * be fetched by calling getMessage()
+	 *
+	 * @param path
+	 *            the byte data
+	 * @throws IOException
+	 */
 	public void uncompress(int[] huffmanBinary) {
 
 		table = new BitString[256];
@@ -243,54 +248,6 @@ public class Huffman {
 			mask >>= 1;
 		}
 
-	}
-
-	/**
-	 * This method performs the uncompression of the file inFilename. It writes the
-	 * results to the OutputStream out.
-	 *
-	 * @param path
-	 *            the file to uncompress
-	 * @throws IOException
-	 */
-	public void uncompress(String path) throws IOException {
-		try (HuffmanStreamReader hsr = new HuffmanStreamReader(new FileInputStream(path))) {
-			sb = new StringBuilder();
-			table = hsr.getCodeTable();
-			root = buildTreeReverse(table);
-
-			/*
-			 * output for Debugging
-			 */
-			// ArrayList<Integer> t = getPreOrderRek(root, new
-			// ArrayList<Integer>());
-			// System.out.println(" Preorder:\n " + t);
-
-			/*
-			 * Traverse the huffman tree. Read the input bit by bit. If bit == 1 go left, if
-			 * bit == 0 go right
-			 */
-			Node currentNode = root;
-			int tmp = hsr.readBit();
-			while (tmp != -1) {
-				if (tmp == 1)
-					currentNode = currentNode.getLeft();
-				else
-					currentNode = currentNode.getRight();
-
-				/*
-				 * if the Node is a leaf then write the output stream
-				 */
-				if (currentNode.isLeaf()) {
-					if (currentNode.getName() == 0) {
-						return;
-					}
-					sb.append((char) currentNode.getName());
-					currentNode = root;
-				}
-				tmp = hsr.readBit();
-			}
-		}
 	}
 
 	/**
@@ -366,7 +323,7 @@ public class Huffman {
 			file.add(tmp);
 		while (tmp != -1) {
 			if (tmp == (char) 0 || tmp >= 256) {
-				out.close();
+				br.close();
 				throw new InvalidCharacterException();
 			}
 			charStats[tmp]++;
