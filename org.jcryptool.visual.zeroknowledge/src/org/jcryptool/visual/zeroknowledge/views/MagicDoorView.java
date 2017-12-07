@@ -53,38 +53,24 @@ public class MagicDoorView extends ViewPart implements Observer, Protocol {
     private MParamsBob paramsBob;
     private Group info;
     private Composite parent;
+    private Composite pageComposite;
 
     @Override
     public void createPartControl(final Composite parent) {
         this.parent = parent;
 
-        GridData gridData = new GridData();
-        gridData.grabExcessVerticalSpace = false;
-        gridData.grabExcessHorizontalSpace = true;
-        gridData.horizontalAlignment = GridData.FILL;
-        parent.setLayoutData(new GridLayout(1, true));
-
         ScrolledComposite sc =
                 new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
         sc.setExpandHorizontal(true);
         sc.setExpandVertical(true);
-        sc.setLayoutData(gridData);
 
-        Composite pageComposite = new Composite(sc, SWT.NONE);
+        pageComposite = new Composite(sc, SWT.NONE);
         sc.setContent(pageComposite);
-        pageComposite.setLayout(new GridLayout(1, true));
-        gridData = new GridData();
-        gridData.grabExcessVerticalSpace = false;
-        gridData.grabExcessHorizontalSpace = true;
-        gridData.horizontalAlignment = GridData.FILL;
-        pageComposite.setLayoutData(gridData);
+        pageComposite.setLayout(new GridLayout());
         
-     
 		ZKHeaderComposite headerComp = new ZKHeaderComposite(pageComposite);
-		headerComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false,
-				4, 1));
-
-        Composite main = pageComposite;
+		headerComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
+				1, 1));
 
         bob = new MBob();
         alice = new MAlice();
@@ -97,22 +83,13 @@ public class MagicDoorView extends ViewPart implements Observer, Protocol {
         alice.addObserver(this);
         carol.addObserver(this);
 
-        Introduction situation = new Introduction(this, main, "M"); //$NON-NLS-1$
-        gridData = new GridData();
-        gridData.grabExcessVerticalSpace = false;
-        gridData.grabExcessHorizontalSpace = true;
-        gridData.horizontalAlignment = GridData.FILL;
-        situation.getGroup().setLayoutData(gridData);
-
+        new Introduction(this, pageComposite, "M");
+        
         // Layout for Action-Flow group
-        Group action = new Group(main, SWT.None);
+        Group action = new Group(pageComposite, SWT.NONE);
         action.setText(Messages.MagicDoorView_0);
         action.setLayout(new GridLayout(2, false));
-        gridData = new GridData();
-        gridData.grabExcessVerticalSpace = false;
-        gridData.grabExcessHorizontalSpace = true;
-        gridData.horizontalAlignment = GridData.FILL;
-        action.setLayoutData(gridData);
+        action.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
         // Process-flow graph
         flow = new MFlow(this, action);
@@ -125,13 +102,9 @@ public class MagicDoorView extends ViewPart implements Observer, Protocol {
         buttons = new Buttons(this, action, door, null);
 
         // Layout for information group
-        info = new Group(main, SWT.None);
+        info = new Group(pageComposite, SWT.NONE);
         info.setLayout(new GridLayout(2, true));
-        gridData = new GridData();
-        gridData.grabExcessVerticalSpace = false;
-        gridData.grabExcessHorizontalSpace = true;
-        gridData.horizontalAlignment = GridData.FILL;
-        info.setLayoutData(gridData);
+        info.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         info.setText(Messages.MagicDoorView_29);
 
         paramsBob = new MParamsBob(bob, info);
@@ -140,12 +113,11 @@ public class MagicDoorView extends ViewPart implements Observer, Protocol {
         paramsAC.setVisible(true);
         paramsAC.update();
 
-        descAliceCarol = new Label(main, SWT.CENTER | SWT.BOLD);
-        descAliceCarol.setVisible(true);
-        descBob = new Label(main, SWT.CENTER | SWT.BOLD);
-        descBob.setVisible(true);
+        descAliceCarol = new Label(info, SWT.WRAP);
+        descAliceCarol.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
-        main.setVisible(true);
+        descBob = new Label(info, SWT.WRAP);
+        descBob.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
         sc.setMinSize(pageComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
@@ -308,72 +280,75 @@ public class MagicDoorView extends ViewPart implements Observer, Protocol {
         switch (fall) {
             case 0:
                 descAliceCarol.setText(Messages.MagicDoorView_1);
-                return;
+                break;
             case 1:
                 descAliceCarol.setText(Messages.MagicDoorView_2);
-                return;
+                break;
             case 2:
                 descAliceCarol.setText(Messages.MagicDoorView_3);
-                return;
+                break;
             case 3:
                 descAliceCarol.setText(Messages.MagicDoorView_4);
-                return;
+                break;
             case 8:
                 descAliceCarol.setText(Messages.MagicDoorView_5);
-                return;
+                break;
             case 9:
                 descAliceCarol.setText(Messages.MagicDoorView_6);
-                return;
+                break;
             case 16:
                 descAliceCarol.setText(Messages.MagicDoorView_7);
-                return;
+                break;
             case 17:
                 descAliceCarol.setText(Messages.MagicDoorView_8);
-                return;
+                break;
             case 32:
                 descAliceCarol.setText(Messages.MagicDoorView_9);
                 descBob.setText(Messages.MagicDoorView_10);
-                return;
+                break;
             case 33:
                 descAliceCarol.setText(Messages.MagicDoorView_11);
                 descBob.setText(Messages.MagicDoorView_12);
-                return;
+                break;
             case 64:
                 descAliceCarol.setText(Messages.MagicDoorView_13);
                 descBob.setText(Messages.MagicDoorView_14);
-                return;
+                break;
             case 65:
                 descAliceCarol.setText(Messages.MagicDoorView_15);
                 descBob.setText(Messages.MagicDoorView_16);
-                return;
+                break;
             case 128:
                 descAliceCarol.setText(Messages.MagicDoorView_17);
                 descBob.setText(Messages.MagicDoorView_18);
-                return;
+                break;
             case 129:
                 descAliceCarol.setText(Messages.MagicDoorView_19);
                 descBob.setText(Messages.MagicDoorView_20);
-                return;
+                break;
             case 256:
                 descAliceCarol.setText(Messages.MagicDoorView_21);
                 descBob.setText(Messages.MagicDoorView_22);
-                return;
+                break;
             case 257:
                 descAliceCarol.setText(Messages.MagicDoorView_23);
                 descBob.setText(Messages.MagicDoorView_24);
-                return;
+                break;
             case 512:
                 descAliceCarol.setText(Messages.MagicDoorView_25);
-                return;
+                break;
             case 513:
                 descAliceCarol.setText(Messages.MagicDoorView_26);
-                return;
+                break;
             case 1024:
                 descBob.setText(Messages.MagicDoorView_27);
-                return;
+                break;
             case 1025:
                 descBob.setText(Messages.MagicDoorView_28);
+                break;
         }
+        pageComposite.layout();
+        return;
     }
 
     /**

@@ -21,85 +21,90 @@ import org.jcryptool.visual.zeroknowledge.ui.ParamsPerson;
  * Enthält ein Group-Objekt, auf dem die Parameter von Bob dargestellt werden.
  *
  * @author Mareike Paul
- *@version 1.0.0
+ * @version 1.0.0
  */
 public class MParamsBob extends ParamsPerson {
 
-    private MBob b;
+	private MBob b;
 
-    private MCombiLabel raumwahl;
+	private MCombiLabel raumwahl;
 
-    private Label verifiziert;
+	private Label verifiziert;
 
-    /**
-     * Konstruktor, der die graphischen Komponenten erstellt und eingefügt. Die Group besteht einem
-     * CombiLabel, das den Wert vom Attribut b darstellt. Die Group hat als Text den Namen "Bob".
-     *
-     * @param bob Bob-Objekt, dessen Werte dargestellt werden sollen
-     * @param parent Parent-Objekt zur graphischen Oberfläche
-     */
-    public MParamsBob(MBob bob, Composite parent) {
-        super(parent);
-        group.setText(Messages.MParamsBob_0);
+	/**
+	 * Konstruktor, der die graphischen Komponenten erstellt und eingefügt. Die
+	 * Group besteht einem CombiLabel, das den Wert vom Attribut b darstellt. Die
+	 * Group hat als Text den Namen "Bob".
+	 *
+	 * @param bob
+	 *            Bob-Objekt, dessen Werte dargestellt werden sollen
+	 * @param parent
+	 *            Parent-Objekt zur graphischen Oberfläche
+	 */
+	public MParamsBob(MBob bob, Composite parent) {
+		super(parent);
+		this.b = bob;
 
-        b = bob;
+		group.setText(Messages.MParamsBob_0);
 
-        raumwahl = new MCombiLabel(Messages.MParamsBob_1, group);
+		raumwahl = new MCombiLabel(Messages.MParamsBob_1, group);
 
-        verifiziert = new Label(group, SWT.NONE);
-        verifiziert.setFont(FontService.getNormalBoldFont());
-        verifiziert.setText(Messages.MParamsBob_2);
-        verifiziert.setVisible(false);
-        GridData gridData = new GridData();
-        gridData.widthHint = 200;
-        verifiziert.setLayoutData(gridData);
+		verifiziert = new Label(group, SWT.NONE);
+		verifiziert.setFont(FontService.getNormalBoldFont());
+		verifiziert.setText(Messages.MParamsBob_2);
+		verifiziert.setVisible(false);
+		verifiziert.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		setVisible(true);
+	}
 
-        setVisible(true);
-    }
+	/**
+	 * Methode zum Erhalten des Labels, auf dem ausgegeben wird, ob das Verifizieren
+	 * erfolgreich war oder nicht
+	 *
+	 * @return Label, das ausgibt, ob die Verifikation erfolgreich war
+	 */
+	public Label getVerifiziert() {
+		return verifiziert;
+	}
 
-    /**
-     * Methode zum Erhalten des Labels, auf dem ausgegeben wird, ob das Verifizieren erfolgreich war
-     * oder nicht
-     *
-     * @return Label, das ausgibt, ob die Verifikation erfolgreich war
-     */
-    public Label getVerifiziert() {
-        return verifiziert;
-    }
+	/**
+	 * setzt den Text des Verifiziert-Labels in Abhängigkeit von b: wenn b true ist,
+	 * wird der Text in grün ausgegeben, ansonsten in rot
+	 *
+	 * @param b
+	 *            gibt an, ob Bob die Antwort verifiziert hat. Wenn ja, dann gibt
+	 *            das Label aus "wurde verifiziert", ansonsten "wurde nicht
+	 *            verifiziert"
+	 */
+	public void setVerifiziert(boolean b) {
+		if (b) {
+			verifiziert.setText(Messages.MParamsBob_3);
+			verifiziert.setForeground(group.getDisplay().getSystemColor(SWT.COLOR_DARK_GREEN));
+		} else {
+			verifiziert.setText(Messages.MParamsBob_4);
+			verifiziert.setForeground(group.getDisplay().getSystemColor(SWT.COLOR_RED));
+		}
+		verifiziert.setVisible(true);
+	}
 
-    /**
-     * setzt den Text des Verifiziert-Labels in Abhängigkeit von b: wenn b true ist, wird der Text
-     * in grün ausgegeben, ansonsten in rot
-     *
-     * @param b gibt an, ob Bob die Antwort verifiziert hat. Wenn ja, dann gibt das Label aus
-     *        "wurde verifiziert", ansonsten "wurde nicht verifiziert"
-     */
-    public void setVerifiziert(boolean b) {
-        if (b) {
-            verifiziert.setText(Messages.MParamsBob_3);
-            verifiziert.setForeground(group.getDisplay().getSystemColor(SWT.COLOR_DARK_GREEN));
-        } else {
-            verifiziert.setText(Messages.MParamsBob_4);
-            verifiziert.setForeground(group.getDisplay().getSystemColor(SWT.COLOR_RED));
-        }
-        verifiziert.setVisible(true);
-    }
+	/**
+	 * Methode zum updaten des Panels
+	 */
+	@Override
+	public void update() {
+		raumwahl.update(b.getRaumwahl());
+	}
 
-    /**
-     * Methode zum updaten des Panels
-     */
-    public void update() {
-        raumwahl.update(b.getRaumwahl());
-    }
-
-    /**
-     * Setzt den Text der einzelnen Labels, die nur sichtbar werden, wenn Bob verifiziert.
-     *
-     * @param on true, wenn die Labels sichtbar werden sollen
-     */
-    public void verifizieren(boolean on) {
-        if (!on) {
-            verifiziert.setVisible(false);
-        }
-    }
+	/**
+	 * Setzt den Text der einzelnen Labels, die nur sichtbar werden, wenn Bob
+	 * verifiziert.
+	 *
+	 * @param on
+	 *            true, wenn die Labels sichtbar werden sollen
+	 */
+	public void verifizieren(boolean on) {
+		if (!on) {
+			verifiziert.setVisible(false);
+		}
+	}
 }
