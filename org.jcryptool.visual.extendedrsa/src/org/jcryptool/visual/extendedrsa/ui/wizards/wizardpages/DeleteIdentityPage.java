@@ -18,7 +18,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.extendedrsa.ExtendedTabFolder;
 import org.jcryptool.visual.extendedrsa.IdentityManager;
@@ -52,7 +51,6 @@ public class DeleteIdentityPage extends WizardPage {
 
         selectedIdentity = new Combo(container, SWT.READ_ONLY);
         GridData gd_selectedIdentity = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gd_selectedIdentity.widthHint = 256;
         selectedIdentity.setLayoutData(gd_selectedIdentity);
 
         Vector<String> ids = IdentityManager.getInstance().getContacts();
@@ -63,15 +61,11 @@ public class DeleteIdentityPage extends WizardPage {
         }
 
         selectedIdentity.select(0);
-        new Label(container, SWT.NONE);
-        new Label(container, SWT.NONE);
 
-        Text hint = new Text(container, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
-        hint.setBackground(container.getBackground());
-        hint.setFont(FontService.getNormalBoldFont());
-        hint.setText(Messages.DeleteIdentityPage_6);
-        GridData gd_hint = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
-        gd_hint.widthHint = 559;
+        Label hint = new Label(container, SWT.WRAP);
+      hint.setFont(FontService.getNormalBoldFont());
+      hint.setText(Messages.DeleteIdentityPage_6);
+        GridData gd_hint = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
         hint.setLayoutData(gd_hint);
     }
 

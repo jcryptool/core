@@ -49,15 +49,15 @@ public class NewIdentityPage extends WizardPage implements ModifyListener {
         Composite container = new Composite(parent, SWT.NULL);
         setControl(container);
         GridLayout layout = new GridLayout(3, false);
-        layout.horizontalSpacing = 40;
+        layout.horizontalSpacing = 20;
         layout.verticalSpacing = 10;
         container.setLayout(layout);
 
         Label lblName = new Label(container, SWT.NONE);
         lblName.setText(Messages.NewIdentityPage_3);
         idName = new Text(container, SWT.BORDER);
-        GridData gd_text = new GridData(SWT.LEFT, SWT.LEFT, false, false, 1, 1);
-        gd_text.widthHint = 155;
+        GridData gd_text = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_text.widthHint = 200;
         idName.setLayoutData(gd_text);
         idName.addModifyListener(this);
         idName.addVerifyListener(VL);
@@ -67,43 +67,35 @@ public class NewIdentityPage extends WizardPage implements ModifyListener {
         Label lblVorname = new Label(container, SWT.NONE);
         lblVorname.setText(Messages.NewIdentityPage_5);
         idForename = new Text(container, SWT.BORDER);
-        GridData gd_idForename = new GridData(SWT.LEFT, SWT.LEFT, false, false, 1, 1);
-        gd_idForename.widthHint = 155;
+        GridData gd_idForename = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
+        gd_idForename.widthHint = 200;
         idForename.setLayoutData(gd_idForename);
-        new Label(container, SWT.NONE).setLayoutData(new GridData(SWT.LEFT, SWT.LEFT, false, false, 1, 1));
 
         Label lblNachname = new Label(container, SWT.NONE);
         lblNachname.setText(Messages.NewIdentityPage_6);
         idSurname = new Text(container, SWT.BORDER);
-        GridData gd_idSurname = new GridData(SWT.LEFT, SWT.LEFT, false, false, 1, 1);
-        gd_idSurname.widthHint = 155;
+        GridData gd_idSurname = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
+        gd_idSurname.widthHint = 200;
         idSurname.setLayoutData(gd_idSurname);
-        new Label(container, SWT.NONE).setLayoutData(new GridData(SWT.LEFT, SWT.LEFT, false, false, 1, 1));
-
+        
         Label lblFirma = new Label(container, SWT.NONE);
         lblFirma.setText(Messages.NewIdentityPage_7);
         idOrganisation = new Text(container, SWT.BORDER);
-        GridData gd_txt_idOrganisation = new GridData(SWT.LEFT, SWT.LEFT, false, false, 1, 1);
-        gd_txt_idOrganisation.widthHint = 155;
+        GridData gd_txt_idOrganisation = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
+        gd_txt_idOrganisation.widthHint = 200;
         idOrganisation.setLayoutData(gd_txt_idOrganisation);
-        new Label(container, SWT.NONE).setLayoutData(new GridData(SWT.LEFT, SWT.LEFT, false, false, 1, 1));
 
         Label lblLand = new Label(container, SWT.NONE);
         lblLand.setText(Messages.NewIdentityPage_8);
         idRegion = new Text(container, SWT.BORDER);
-        GridData gd_idRegion = new GridData(SWT.LEFT, SWT.LEFT, false, false, 1, 1);
-        gd_idRegion.widthHint = 155;
+        GridData gd_idRegion = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
+        gd_idRegion.widthHint = 200;
         idRegion.setLayoutData(gd_idRegion);
-
-        for (int i = 0; i < 4; i++) {
-            new Label(container, SWT.NONE).setLayoutData(new GridData(SWT.LEFT, SWT.LEFT, false, false, 1, 1));
-        }
 
         Label hint = new Label(container, SWT.WRAP);
         hint.setFont(FontService.getNormalBoldFont());
         hint.setText(Messages.NewIdentityPage_9);
-        GridData gd = new GridData(SWT.LEFT, SWT.LEFT, true, true, 3, 2);
-        gd.widthHint = 500;
+        GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
         hint.setLayoutData(gd);
     }
 
