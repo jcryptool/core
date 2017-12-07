@@ -9,6 +9,9 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.zeroknowledge.ui.graphenisomorphie;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -37,20 +40,22 @@ public class GCombiLabel {
      * @param group Group-Objekt, in das das Composite-Objekt eingebunden wird
      */
     public GCombiLabel(String title, boolean known, Group group) {
-        comp = new Composite(group, 0);
-        comp.setSize(100, 30);
-
-        name = new Label(comp, 0);
+    	comp = new Composite(group, SWT.NONE);
+    	comp.setLayout(new GridLayout(2, false));
+    	comp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+    	
+    	name = new Label(comp, SWT.NONE);
+        name.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         name.setText(title);
-        name.setBounds(20, 0, 40, 30);
 
-        content = new Label(comp, 0);
+        content = new Label(comp, SWT.NONE);
+        content.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        
         if (known) {
             content.setText(Messages.G_CombiLabel_0);
         } else {
             content.setText(Messages.G_CombiLabel_1);
         }
-        content.setBounds(65, 0, 90, 30);
     }
 
     /**
@@ -83,6 +88,7 @@ public class GCombiLabel {
         } else {
             setText(k + ""); //$NON-NLS-1$
         }
+        comp.layout();
     }
 
     /**
@@ -100,5 +106,6 @@ public class GCombiLabel {
         } else {
             setText(k.toString());
         }
+        comp.layout();
     }
 }
