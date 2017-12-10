@@ -16,8 +16,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.GraphConnection;
@@ -41,15 +39,13 @@ public class HuffmanCodingViewTree extends Composite {
 	private GraphViewer viewer;
 	private StyledText styledTextTree;
 	private ArrayList<GraphConnection> markedConnectionList;
-	private Table table;
 
 	// May be used in the future for fancy graphs
 	// private MenuManager zoom;
 	// private int layoutCounter = 1;
 
-	public HuffmanCodingViewTree(Composite parent, int style, Table codeTable, ArrayList<Node> nodes) {
+	public HuffmanCodingViewTree(Composite parent, int style, ArrayList<Node> nodes) {
 		super(parent, style);
-		this.table = codeTable;
 
 		this.addControlListener(new ControlAdapter() {
 			@Override
@@ -109,19 +105,6 @@ public class HuffmanCodingViewTree extends Composite {
 						styledTextTree.setAlignment(SWT.LEFT);
 						styledTextTree.setFont(FontService.getNormalFont());
 						styledTextTree.setText(Messages.ZestLabelProvider_4);
-					}
-
-					// table = table;
-					TableItem[] tmpItem = table.getItems();
-					for (int i = 0; i < tmpItem.length; i++) {
-						if (n.getNameAsString().compareTo(tmpItem[i].getText(0)) == 0) {
-							table.setSelection(tmpItem[i]);
-							table.showSelection();
-							break;
-						} else {
-							table.showItem(table.getItem(0));
-							table.deselectAll();
-						}
 					}
 
 				}

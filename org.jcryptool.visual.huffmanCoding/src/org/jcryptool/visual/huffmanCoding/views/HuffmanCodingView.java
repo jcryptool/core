@@ -19,7 +19,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Scanner;
@@ -40,7 +39,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -60,7 +58,6 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.huffmanCoding.HuffmanCodingPlugin;
 import org.jcryptool.visual.huffmanCoding.algorithm.BitString;
 import org.jcryptool.visual.huffmanCoding.algorithm.Huffman;
@@ -75,86 +72,79 @@ import org.jcryptool.visual.huffmanCoding.algorithm.Node;
  */
 public class HuffmanCodingView extends ViewPart {
 
+	// Constants
 	public static final String ID = "org.jcryptool.visual.huffmanCoding.views.HuffmanCodingView"; //$NON-NLS-1$
 	public final static int COMPRESS = 1;
 	public final static int UNCOMPRESS = 2;
+	private int mode = HuffmanCodingView.COMPRESS;
 	private int MIN_WIDTH = 1400;
 	private int MIN_HEIGHT = 700;
+	private int TABLE_WIDTH = 560;
 
-	private Composite parent;
-	private TabFolder tabFolder;
-	private TabItem tbtmHuffmanTree;
-	private StyledText textInput;
-	private Button btnUncompress;
-
+	// Algorithm attributes
 	private Huffman huffmanCode;
 	private int[] huffmanCodeBinary;
-
-	private Text textFileUncompName;
-	private Text textFileUncompSize;
-	private Button btnOpenUncompFile;
-	private File fileUncomp;
-	private File fileComp;
-
-	private TabItem tbtmCodeTable;
-	private Composite compositeCT;
-
-	private Table table;
-
 	private boolean isCompressed = false;
 	private boolean isUncompressed = false;
-	private StyledText styledTextTree;
 
-	private ArrayList<Control> codeTableControls;
-	private StyledText styledTextDescription;
-	private Button btnRadioCompress;
-	private Button btnRadioUncompress;
+	private File fileUncomp;
+	private File fileComp;
+	private String filePath;
+
+	// Main UI components
+	private Composite parent;
+	private Composite mainViewComposite;
+	private TabFolder tabFolder;
+	private TabItem tbtmParameter;
+	private TabItem tbtmHuffmanTree;
+	private TabItem tbtmCodeTable;
+
+	private HuffmanCodingView mainView;
+	private HuffmanCodingViewTree treeView;
+	private HuffmanCodingViewTable tableView;
+
+	private StyledText textTitle;
 	private Group grpSzenario;
 	private Group grpCompress;
-	private Composite composite;
-
-	private DecimalFormat df = new DecimalFormat();
 	private Group grpNextSteps;
-	private Button btnCompress;
+	private Button btnRadioCompress;
+	private Button btnRadioUncompress;
+
+	// Shared variables (by Compress/Decompress scenario) in the main view
 	private Button btnRadioExampleText;
 	private Button btnRadioContentFromFile;
-	private int mode = HuffmanCodingView.COMPRESS;
-	private Button btnShowBranch;
+	private Button btnOpenUncompFile;
+	private Text textFileUncompName;
+	private Label horizontalSeparator;
+	private Composite compInputOutput;
 	private Composite compInputText;
 	private Composite compHexTable;
+	private Label inputHeader;
+	private StyledText textInput;
+	private Label hexTableHeader;
+	private Table hexTable;
 
+	// Buttons
+	private Button btnCompress;
+	private Button btnUncompress;
+
+	// Center information group
+	private Group grpCenterData;
 	private Label inputSizeDescription;
 	private Label outputSizeDescription;
 	private Label compressionRateDescription;
 	private Text inputSize;
 	private Text outputSize;
 	private Text compressionRate;
-	private Group grpCenterData;
 	private Button btnSaveResult;
-
-	private String filePath;
 
 	private Color labelEnabled;
 	private Color labelDisabled;
 
-	private Label inputHeader;
-	private Label hexTableHeader;
-
-	private HuffmanCodingViewTree treeView;
-	private HuffmanCodingViewTable tableView;
-
-	private int TABLE_WIDTH = 560;
-
 	public HuffmanCodingView() {
-		codeTableControls = new ArrayList<Control>();
 		new ArrayList<TableEditor>();
 		new Hashtable<Integer, Button>();
 	}
-
-	private HuffmanCodingView mainView;
-
-	private Table hexTable;
-	private ArrayList<Integer> readBytes;
 
 	/**
 	 * Create contents of the view part.
@@ -174,20 +164,60 @@ public class HuffmanCodingView extends ViewPart {
 
 		tabFolder = new TabFolder(scrolledComposite, SWT.NONE);
 
-		TabItem tbtmParameter = new TabItem(tabFolder, SWT.NONE);
+		// Tabs
+		tbtmParameter = new TabItem(tabFolder, SWT.NONE);
 		tbtmParameter.setText(Messages.HuffmanCodingView_0);
 
-		composite = new Composite(tabFolder, SWT.NONE);
-		tbtmParameter.setControl(composite);
-		composite.setLayout(new GridLayout(2, false));
+		tbtmHuffmanTree = new TabItem(tabFolder, SWT.NONE);
+		tbtmHuffmanTree.setText(Messages.HuffmanCodingView_13);
 
-		styledTextDescription = new StyledText(composite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
-		styledTextDescription.setText(Messages.HuffmanCodingView_16 + "\n" + Messages.HuffmanCodingView_1); //$NON-NLS-1$
-		StyleRange title = new StyleRange();
-		title.start = 0;
-		title.length = Messages.HuffmanCodingView_16.length();
-		title.fontStyle = SWT.BOLD;
-		styledTextDescription.setStyleRange(title);
+		tbtmCodeTable = new TabItem(tabFolder, SWT.NONE);
+		tbtmCodeTable.setText(Messages.HuffmanCodingView_14);
+
+		// Tab selection listener
+		tabFolder.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				int selection = tabFolder.getSelectionIndex();
+
+				if (selection == 1 && (isCompressed || isUncompressed)) {
+					if (treeView == null)
+						treeView = new HuffmanCodingViewTree(tabFolder, SWT.NONE, huffmanCode.getResultNodeList());
+					tbtmHuffmanTree.setControl(treeView);
+					tabFolder.setSelection(selection);
+				}
+				if (selection == 2 && (isCompressed || isUncompressed)) {
+					if (tableView == null)
+						tableView = new HuffmanCodingViewTable(tabFolder, SWT.NONE, mainView);
+					tbtmCodeTable.setControl(tableView);
+					tabFolder.setSelection(selection);
+				}
+
+				if (selection != 0 && (!isCompressed && !isUncompressed)) {
+					tabFolder.setSelection(0);
+					MessageBox notReady = new MessageBox(tabFolder.getShell(), SWT.OK);
+					notReady.setText(Messages.HuffmanCodingView_28);
+					notReady.setMessage(Messages.HuffmanCodingView_29);
+					notReady.open();
+
+				}
+
+			}
+		});
+
+		// Init first tab
+		mainViewComposite = new Composite(tabFolder, SWT.NONE);
+		tbtmParameter.setControl(mainViewComposite);
+		mainViewComposite.setLayout(new GridLayout(2, false));
+
+		// Content of first tab
+		textTitle = new StyledText(mainViewComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
+		textTitle.setText(Messages.HuffmanCodingView_16 + "\n" + Messages.HuffmanCodingView_1); //$NON-NLS-1$
+		StyleRange titleStyle = new StyleRange();
+		titleStyle.start = 0;
+		titleStyle.length = Messages.HuffmanCodingView_16.length();
+		titleStyle.fontStyle = SWT.BOLD;
+		textTitle.setStyleRange(titleStyle);
 		GridData gd_styledTextDescription = new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1);
 		gd_styledTextDescription.widthHint = 960;
 
@@ -197,9 +227,9 @@ public class HuffmanCodingView extends ViewPart {
 			gd_styledTextDescription.heightHint = 95;
 		}
 
-		styledTextDescription.setLayoutData(gd_styledTextDescription);
+		textTitle.setLayoutData(gd_styledTextDescription);
 
-		grpSzenario = new Group(composite, SWT.NONE);
+		grpSzenario = new Group(mainViewComposite, SWT.NONE);
 		GridData gd_grpSzenario = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 		grpSzenario.setLayoutData(gd_grpSzenario);
 		grpSzenario.setText(Messages.HuffmanCodingView_grpSzenario_text);
@@ -221,19 +251,13 @@ public class HuffmanCodingView extends ViewPart {
 
 					grpNextSteps = createCompressButtonGroup();
 					grpCompress = createCompressGroup();
-					composite.layout();
+					mainViewComposite.layout();
 					setFocus();
 
 					/*
 					 * reset tabs
 					 */
 					isCompressed = false;
-
-					styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
-					styledTextTree.setAlignment(SWT.LEFT);
-					styledTextTree.setFont(FontService.getNormalFont());
-					codeTableControls.clear();
-
 					loadExampleText();
 
 					mode = HuffmanCodingView.COMPRESS;
@@ -262,78 +286,36 @@ public class HuffmanCodingView extends ViewPart {
 
 					grpNextSteps = createUncompressButtonGroup();
 					grpCompress = createUncompressGroup();
-					composite.layout();
+					mainViewComposite.layout();
 
 					/*
 					 * reset tabs
 					 */
-
-					styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
-					styledTextTree.setAlignment(SWT.LEFT);
-					styledTextTree.setFont(FontService.getNormalFont());
-					codeTableControls.clear();
-
 					mode = HuffmanCodingView.UNCOMPRESS;
 				}
 			}
 		});
-		GridData gd_btnRadioUncompress = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		// gd_btnRadioUncompress.widthHint = 110;
-		btnRadioUncompress.setLayoutData(gd_btnRadioUncompress);
+		btnRadioUncompress.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 		btnRadioUncompress.setText(Messages.HuffmanCodingView_7);
 
 		/*
-		 * create the compress / uncompress group
+		 * create the initial compress group
 		 */
-
 		grpNextSteps = createCompressButtonGroup();
 		grpCompress = createCompressGroup();
-
-		tbtmHuffmanTree = new TabItem(tabFolder, SWT.NONE);
-		tbtmHuffmanTree.setText(Messages.HuffmanCodingView_13);
-
-		tabFolder.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				int selection = tabFolder.getSelectionIndex();
-
-				if (selection == 1 && (isCompressed || isUncompressed)) {
-					if (treeView == null)
-						treeView = new HuffmanCodingViewTree(tabFolder, SWT.NONE, table,
-								huffmanCode.getResultNodeList());
-					tbtmHuffmanTree.setControl(treeView);
-					tabFolder.setSelection(selection);
-				}
-				if (selection == 2 && (isCompressed || isUncompressed)) {
-					if (tableView == null)
-						tableView = new HuffmanCodingViewTable(tabFolder, SWT.NONE, mainView);
-					tbtmCodeTable.setControl(tableView);
-					tabFolder.setSelection(selection);
-				}
-
-				if (selection != 0 && (!isCompressed && !isUncompressed)) {
-					tabFolder.setSelection(0);
-					MessageBox notReady = new MessageBox(tabFolder.getShell(), SWT.OK);
-					notReady.setText(Messages.HuffmanCodingView_28);
-					notReady.setMessage(Messages.HuffmanCodingView_29);
-					notReady.open();
-
-				}
-
-			}
-		});
-
-		tbtmCodeTable = new TabItem(tabFolder, SWT.NONE);
-		tbtmCodeTable.setText(Messages.HuffmanCodingView_14);
+		loadExampleText();
 
 		scrolledComposite.setContent(tabFolder);
 		scrolledComposite.setMinSize(MIN_WIDTH, MIN_HEIGHT);
 
-		loadExampleText();
+		mainViewComposite.pack();
 
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, HuffmanCodingPlugin.PLUGIN_ID + ".view");
 	}
 
+	/**
+	 * Loads the default JCrypTool sample text and puts it into the inputText field
+	 */
 	private void loadExampleText() {
 		try {
 			URL url = HuffmanCodingPlugin.getDefault().getBundle().getEntry("/"); //$NON-NLS-1$
@@ -353,8 +335,13 @@ public class HuffmanCodingView extends ViewPart {
 		}
 	}
 
+	/**
+	 * Creates the group with the compress button in it
+	 * 
+	 * @return the group
+	 */
 	private Group createCompressButtonGroup() {
-		Group grpNextSteps = new Group(composite, SWT.NONE);
+		Group grpNextSteps = new Group(mainViewComposite, SWT.NONE);
 		GridLayout gl_grpNextSteps = new GridLayout(1, false);
 		grpNextSteps.setLayout(gl_grpNextSteps);
 		grpNextSteps.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -383,7 +370,8 @@ public class HuffmanCodingView extends ViewPart {
 					}
 					huffmanCodeBinary = huffmanCode.getHuffmanBinary();
 					parseBinaryHuffman(huffmanCodeBinary);
-					outputSize.setText(Integer.toString(huffmanCodeBinary.length));
+					outputSize
+							.setText(Integer.toString(huffmanCodeBinary.length) + " " + Messages.HuffmanCodingView_24);
 
 					float compressedSize = huffmanCodeBinary.length;
 					float rawSize = inputString.length();
@@ -404,8 +392,6 @@ public class HuffmanCodingView extends ViewPart {
 					String message = Messages.HuffmanCodingView_20;
 					MessageDialog.openInformation(HuffmanCodingView.this.parent.getShell(),
 							Messages.HuffmanCodingView_19, message);
-
-					compositeCT.layout();
 				}
 			}
 		});
@@ -413,8 +399,13 @@ public class HuffmanCodingView extends ViewPart {
 		return grpNextSteps;
 	}
 
+	/**
+	 * Creates the group with the decompress button in it
+	 * 
+	 * @return the group
+	 */
 	private Group createUncompressButtonGroup() {
-		Group grpNextSteps = new Group(composite, SWT.NONE);
+		Group grpNextSteps = new Group(mainViewComposite, SWT.NONE);
 		grpNextSteps.setLayout(new GridLayout(1, false));
 		grpNextSteps.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		grpNextSteps.setText(Messages.HuffmanCodingView_grpNextSteps_text);
@@ -435,7 +426,7 @@ public class HuffmanCodingView extends ViewPart {
 				message = huffmanCode.getMessage();
 				textInput.setText(message);
 				btnSaveResult.setEnabled(true);
-				outputSize.setText(Integer.toString(message.length()));
+				outputSize.setText(Integer.toString(message.length()) + " " + Messages.HuffmanCodingView_24);
 				inputHeader.setForeground(labelEnabled);
 
 				float compressedSize = huffmanCodeBinary.length;
@@ -466,7 +457,7 @@ public class HuffmanCodingView extends ViewPart {
 		fileComp = null;
 		fileUncomp = null;
 
-		Group grpCompress = new Group(composite, SWT.NONE);
+		Group grpCompress = new Group(mainViewComposite, SWT.NONE);
 		grpCompress.setText(Messages.HuffmanCodingView_6);
 		grpCompress.setLayout(new GridLayout(7, false));
 		grpCompress.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
@@ -486,7 +477,8 @@ public class HuffmanCodingView extends ViewPart {
 						if (isCompressed) {
 							parseBinaryHuffman(huffmanCodeBinary);
 							btnUncompress.setEnabled(true);
-							inputSize.setText(Integer.toString(huffmanCodeBinary.length));
+							inputSize.setText(
+									Integer.toString(huffmanCodeBinary.length) + " " + Messages.HuffmanCodingView_24);
 						} else {
 							hexTable.removeAll();
 							hexTable.clearAll();
@@ -558,7 +550,7 @@ public class HuffmanCodingView extends ViewPart {
 					textFileUncompName.setText(filePath);
 					textFileUncompName.setSelection(filePath.length());
 					parseBinaryHuffman(filePath);
-					inputSize.setText(Integer.toString(huffmanCodeBinary.length));
+					inputSize.setText(Integer.toString(huffmanCodeBinary.length) + " " + Messages.HuffmanCodingView_24);
 
 					btnUncompress.setEnabled(true);
 					btnUncompress.setFocus();
@@ -571,26 +563,17 @@ public class HuffmanCodingView extends ViewPart {
 		textFileUncompName = new Text(grpCompress, SWT.BORDER | SWT.READ_ONLY);
 		textFileUncompName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
-		Label lblFileUncompSize = new Label(grpCompress, SWT.RIGHT);
-		lblFileUncompSize.setText(Messages.HuffmanCodingView_4);
-		lblFileUncompSize.setVisible(false);
-
-		textFileUncompSize = new Text(grpCompress, SWT.BORDER | SWT.READ_ONLY | SWT.CENTER);
-		GridData gd_textFileUncompSize = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_textFileUncompSize.widthHint = 140;
-		textFileUncompSize.setLayoutData(gd_textFileUncompSize);
-		textFileUncompSize.setVisible(false);
-
-		Label horizontalSeparator = new Label(grpCompress, SWT.SEPARATOR | SWT.HORIZONTAL);
+		horizontalSeparator = new Label(grpCompress, SWT.SEPARATOR | SWT.HORIZONTAL);
 		GridData gdHorizontalSeparator = new GridData(SWT.FILL, SWT.TOP, true, false, 7, 1);
 		gdHorizontalSeparator.heightHint = 35;
 		horizontalSeparator.setLayoutData(gdHorizontalSeparator);
 
-		Composite compAllData = new Composite(grpCompress, SWT.NONE);
-		compAllData.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 7, 1));
-		compAllData.setLayout(new GridLayout(7, false));
+		// FIXME CURRENT MARKER
+		compInputOutput = new Composite(grpCompress, SWT.NONE);
+		compInputOutput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 7, 1));
+		compInputOutput.setLayout(new GridLayout(7, false));
 
-		compHexTable = new Composite(compAllData, SWT.NONE);
+		compHexTable = new Composite(compInputOutput, SWT.NONE);
 		compHexTable.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 3, 1));
 		compHexTable.setLayout(new GridLayout(1, true));
 
@@ -627,13 +610,17 @@ public class HuffmanCodingView extends ViewPart {
 		if (huffmanCodeBinary != null)
 			parseBinaryHuffman(huffmanCodeBinary);
 
-		grpCenterData = new Group(compAllData, SWT.NONE);
+		grpCenterData = new Group(compInputOutput, SWT.NONE);
 		grpCenterData.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		grpCenterData.setLayout(new GridLayout(4, true));
 
+		// Set the size once so it is the same in the column
+		GridData inputSizeDescriptionLayout = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
+		inputSizeDescriptionLayout.widthHint = 150;
+
 		inputSizeDescription = new Label(grpCenterData, SWT.NONE);
-		inputSizeDescription.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
-		inputSizeDescription.setText(Messages.HuffmanCodingView_compInputSize);
+		inputSizeDescription.setLayoutData(inputSizeDescriptionLayout);
+		inputSizeDescription.setText(Messages.HuffmanCodingView_inputSize);
 
 		inputSize = new Text(grpCenterData, SWT.BORDER | SWT.READ_ONLY | SWT.CENTER);
 		inputSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
@@ -702,10 +689,10 @@ public class HuffmanCodingView extends ViewPart {
 			btnUncompress.setEnabled(true);
 
 		if (isCompressed) {
-			inputSize.setText(Integer.toString(huffmanCodeBinary.length));
+			inputSize.setText(Integer.toString(huffmanCodeBinary.length) + " " + Messages.HuffmanCodingView_24);
 		}
 
-		compInputText = new Composite(compAllData, SWT.NONE);
+		compInputText = new Composite(compInputOutput, SWT.NONE);
 		compInputText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		compInputText.setLayout(new GridLayout(1, true));
 
@@ -737,7 +724,7 @@ public class HuffmanCodingView extends ViewPart {
 		fileUncomp = null;
 		isUncompressed = false;
 
-		Group grpCompress = new Group(composite, SWT.NONE);
+		Group grpCompress = new Group(mainViewComposite, SWT.NONE);
 		grpCompress.setText(Messages.HuffmanCodingView_6);
 		grpCompress.setLayout(new GridLayout(7, false));
 		grpCompress.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
@@ -752,18 +739,9 @@ public class HuffmanCodingView extends ViewPart {
 					btnOpenUncompFile.setEnabled(false);
 					textInput.setEditable(true);
 					textFileUncompName.setText(""); //$NON-NLS-1$
-					textFileUncompSize.setText(""); //$NON-NLS-1$
 					fileUncomp = null;
 
 					isCompressed = false;
-
-					styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
-					styledTextTree.setAlignment(SWT.LEFT);
-					styledTextTree.setFont(FontService.getNormalFont());
-					codeTableControls.clear();
-
-					// compInputText.setText(Messages.HuffmanCodingView_5);
-
 				}
 			}
 		});
@@ -777,16 +755,9 @@ public class HuffmanCodingView extends ViewPart {
 				textInput.setText(""); //$NON-NLS-1$
 				textInput.setEditable(false);
 				textFileUncompName.setText(""); //$NON-NLS-1$
-				textFileUncompSize.setText(""); //$NON-NLS-1$
 				fileUncomp = null;
 				btnOpenUncompFile.setEnabled(true);
-
 				isCompressed = false;
-
-				styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
-				styledTextTree.setAlignment(SWT.LEFT);
-				styledTextTree.setFont(FontService.getNormalFont());
-				codeTableControls.clear();
 
 			}
 		});
@@ -798,7 +769,6 @@ public class HuffmanCodingView extends ViewPart {
 		btnOpenUncompFile = new Button(grpCompress, SWT.NONE);
 		btnOpenUncompFile.setEnabled(false);
 		GridData gd_btnOpenUncompFile = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		// gd_btnOpenUncompFile.widthHint = 180;
 		btnOpenUncompFile.setLayoutData(gd_btnOpenUncompFile);
 		btnOpenUncompFile.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -812,8 +782,6 @@ public class HuffmanCodingView extends ViewPart {
 					fileUncomp = new File(filePath);
 					textFileUncompName.setText(filePath);
 					textFileUncompName.setSelection(filePath.length());
-					int filesize = (int) fileUncomp.length();
-					textFileUncompSize.setText(df.format(filesize));
 
 					try {
 						Scanner scanner = new Scanner(fileUncomp, "ISO-8859-1"); //$NON-NLS-1$
@@ -846,23 +814,18 @@ public class HuffmanCodingView extends ViewPart {
 		textFileUncompName = new Text(grpCompress, SWT.BORDER | SWT.READ_ONLY);
 		textFileUncompName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
-		Label lblFileUncompSize = new Label(grpCompress, SWT.RIGHT);
-		lblFileUncompSize.setText(Messages.HuffmanCodingView_4);
-		lblFileUncompSize.setVisible(false);
-
-		textFileUncompSize = new Text(grpCompress, SWT.BORDER | SWT.READ_ONLY | SWT.CENTER);
-		GridData gd_textFileUncompSize = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_textFileUncompSize.widthHint = 140;
-		textFileUncompSize.setLayoutData(gd_textFileUncompSize);
-		textFileUncompSize.setVisible(false);
-
-		Label horizontalSeparator = new Label(grpCompress, SWT.SEPARATOR | SWT.HORIZONTAL);
+		horizontalSeparator = new Label(grpCompress, SWT.SEPARATOR | SWT.HORIZONTAL);
 		GridData gdHorizontalSeparator = new GridData(SWT.FILL, SWT.TOP, true, false, 7, 1);
 		gdHorizontalSeparator.heightHint = 35;
 		horizontalSeparator.setLayoutData(gdHorizontalSeparator);
 
-		compInputText = new Composite(grpCompress, SWT.NONE);
-		compInputText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+		// FIXME CURRENT MARKER
+		compInputOutput = new Composite(grpCompress, SWT.NONE);
+		compInputOutput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 7, 1));
+		compInputOutput.setLayout(new GridLayout(7, false));
+
+		compInputText = new Composite(compInputOutput, SWT.NONE);
+		compInputText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 3, 1));
 		compInputText.setLayout(new GridLayout(1, true));
 
 		inputHeader = new Label(compInputText, SWT.NONE);
@@ -871,17 +834,21 @@ public class HuffmanCodingView extends ViewPart {
 
 		textInput = new StyledText(compInputText, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		textInput.setAlwaysShowScrollBars(false);
-		GridData gdTextInput = new GridData(SWT.RIGHT, SWT.FILL, true, true, 1, 1);
+		GridData gdTextInput = new GridData(SWT.LEFT, SWT.FILL, true, true, 1, 1);
 		gdTextInput.widthHint = TABLE_WIDTH;
 		textInput.setLayoutData(gdTextInput);
 		loadExampleText();
 
-		grpCenterData = new Group(grpCompress, SWT.NONE);
+		grpCenterData = new Group(compInputOutput, SWT.NONE);
 		grpCenterData.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		grpCenterData.setLayout(new GridLayout(4, true));
 
+		// Set the size once so it is the same in the column
+		GridData inputSizeDescriptionLayout = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
+		inputSizeDescriptionLayout.widthHint = 150;
+
 		inputSizeDescription = new Label(grpCenterData, SWT.NONE);
-		inputSizeDescription.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		inputSizeDescription.setLayoutData(inputSizeDescriptionLayout);
 		inputSizeDescription.setText(Messages.HuffmanCodingView_inputSize);
 
 		inputSize = new Text(grpCenterData, SWT.BORDER | SWT.READ_ONLY | SWT.CENTER);
@@ -911,8 +878,6 @@ public class HuffmanCodingView extends ViewPart {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// String outputFilename;
-
 				FileDialog fd = new FileDialog(parent.getShell(), SWT.SAVE);
 				fd.setText(Messages.HuffmanCodingView_saveBinary);
 				fd.setFilterPath(System.getProperty("user.home") + System.getProperty("file.separator"));
@@ -952,7 +917,7 @@ public class HuffmanCodingView extends ViewPart {
 			}
 		});
 
-		compHexTable = new Composite(grpCompress, SWT.NONE);
+		compHexTable = new Composite(compInputOutput, SWT.NONE);
 		compHexTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		compHexTable.setLayout(new GridLayout(6, true));
 
@@ -1004,7 +969,7 @@ public class HuffmanCodingView extends ViewPart {
 		textInput.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
-				inputSize.setText(Integer.toString(textInput.getText().length()));
+				inputSize.setText(Integer.toString(textInput.getText().length()) + " " + Messages.HuffmanCodingView_24);
 
 				if (textInput.getText().isEmpty()) {
 					btnCompress.setEnabled(false);
@@ -1048,7 +1013,7 @@ public class HuffmanCodingView extends ViewPart {
 
 		grpNextSteps = createCompressButtonGroup();
 		grpCompress = createCompressGroup();
-		composite.layout();
+		mainViewComposite.layout();
 
 		huffmanCode = null;
 		btnCompress.setEnabled(false);
@@ -1056,16 +1021,20 @@ public class HuffmanCodingView extends ViewPart {
 		isCompressed = false;
 		textInput.setFocus();
 
-		styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
-		styledTextTree.setAlignment(SWT.LEFT);
-		styledTextTree.setFont(FontService.getNormalFont());
-
-		codeTableControls.clear();
 		mode = HuffmanCodingView.COMPRESS;
 
-		btnShowBranch.setEnabled(false);
-
 		loadExampleText();
+	}
+
+	private void setCenterEnabled(boolean enabled) {
+		if (inputSizeDescription == null || inputSize == null || outputSizeDescription == null || outputSize == null
+				|| compressionRateDescription == null || compressionRateDescription == null || btnSaveResult == null)
+			return;
+		outputSizeDescription.setEnabled(enabled);
+		outputSize.setEnabled(enabled);
+		compressionRateDescription.setEnabled(enabled);
+		compressionRate.setEnabled(enabled);
+		btnSaveResult.setEnabled(enabled);
 	}
 
 	private void parseBinaryHuffman(int[] huffmanEncodedAsInt) {
@@ -1087,20 +1056,10 @@ public class HuffmanCodingView extends ViewPart {
 
 	}
 
-	private void setCenterEnabled(boolean enabled) {
-		if (inputSizeDescription == null || inputSize == null || outputSizeDescription == null || outputSize == null
-				|| compressionRateDescription == null || compressionRateDescription == null || btnSaveResult == null)
-			return;
-		outputSizeDescription.setEnabled(enabled);
-		outputSize.setEnabled(enabled);
-		compressionRateDescription.setEnabled(enabled);
-		compressionRate.setEnabled(enabled);
-		btnSaveResult.setEnabled(enabled);
-	}
-
 	private void parseBinaryHuffman(String path) {
 		DataInputStream readFile = null;
-		readBytes = new ArrayList<>();
+		ArrayList<Integer> readBytes = new ArrayList<>();
+
 		try {
 			readFile = new DataInputStream(new BufferedInputStream(new FileInputStream(new File(path))));
 			int lineOfBytes;
