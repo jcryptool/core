@@ -77,9 +77,9 @@ public class HuffmanCodingView extends ViewPart {
 	public final static int COMPRESS = 1;
 	public final static int UNCOMPRESS = 2;
 	private int mode = HuffmanCodingView.COMPRESS;
-	private int MIN_WIDTH = 1400;
+	private int MIN_WIDTH = 1550;
 	private int MIN_HEIGHT = 700;
-	private int TABLE_WIDTH = 560;
+	private int TABLE_WIDTH = 565;
 
 	// Algorithm attributes
 	private Huffman huffmanCode;
