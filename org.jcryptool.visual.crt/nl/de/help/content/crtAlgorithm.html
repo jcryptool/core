@@ -3,77 +3,54 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" type="text/css" href="crtAlgorithm.css">
-    <title>Der Chinese Remainder Theorem Algorithmus</title>
+    <title>Der Chinesische Restsatz-Algorithmus</title>
 </head>
 <body>
-   <h1>Der Chinese Remainder Theorem Algorithmus</h1>
-<!--l. 30--><p class="noindent" >Der <span
-class="cmbx-10">Chinese Remainder Theorem </span>Algorithmus ist eine Lösungsmethode um
-simultane Kongruenzen zu lösen. Er wird z.B. benutzt, um den RSA-Algorithmus zu beschleunigen,
-speziell für die Erzeugung digitaler Signaturen und die Entschlüsselung. Eine weitere Anwendung des <span
-class="cmbx-10">Chinese Remainder Theorem</span> ist die Berechnung der Wurzel bei dem <span
-class="cmbx-10">Fiat-Shamir</span> Verfahren.
+   <h1>Der Chinesische Restsatz-Algorithmus</h1>
+
+   <!--l. 30--><p class="noindent">Der <span class="cmbx-10">Chinesische Restsatz</span>-Algorithmus (englisch Chinese Remainder Theorem, abgekürzt <b>CRT</b>) ist eine Lösungsmethode, um simultane Kongruenzen zu lösen. Er wird z.B. benutzt, um den RSA-Algorithmus zu beschleunigen, speziell für die Erzeugung digitaler Signaturen und die Entschlüsselung. Eine weitere Anwendung des <span class="cmbx-10">Chinesischen Restsatzes</span> ist die Berechnung der Wurzel beim <span class="cmbx-10">Fiat-Shamir</span>-Verfahren.</p>
+   
+<p>Die Bedienung des zugehörigen JCT-Plug-ins ist <a href="index.html">hier</a> beschrieben.</p>
+
 <p>
- Wir haben Gleichungen der Form<br
-class="newline" />
-<!--l. 33--><p class="indent" >   <span
-class="cmmi-10">x </span><span
-class="cmsy-10">&#x2261; </span><span
-class="cmmi-10">a</span><sub><span
+ Gegeben ist ein System von linearen Gleichungen (Kongruenzen) der Form<br class="newline" />
+ 
+<!--l. 33--><p class="indent"> <span
+class="cmmi-10">x &#x2261; a</span><sub><span
 class="cmr-7">0</span></sub><span
-class="cmmi-10">&#x00A0;mod</span><span
-class="cmmi-10">&#x00A0;m</span><sub><span
+class="cmmi-10">&#x00A0;mod &#x00A0;m</span><sub><span
 class="cmr-7">1</span></sub><span
-class="cmmi-10">,      x </span><span
-class="cmsy-10">&#x2261; </span><span
-class="cmmi-10">a</span><sub><span
+class="cmmi-10">, x &#x2261; a</span><sub><span
 class="cmr-7">2</span></sub><span
-class="cmmi-10">&#x00A0;mod</span><span
-class="cmmi-10">&#x00A0;m</span><sub><span
+class="cmmi-10">&#x00A0;mod &#x00A0;m</span><sub><span
 class="cmr-7">2</span></sub><span
-class="cmmi-10">,</span>      <span
-class="cmmi-10">&#x2026;</span>     <span
-class="cmmi-10">x </span><span
-class="cmsy-10">&#x2261; </span><span
-class="cmmi-10">a</span><sub><span
+class="cmmi-10">, &#x2026;, x &#x2261; a</span><sub><span
 class="cmmi-7">n</span></sub><span
-class="cmmi-10">&#x00A0;mod</span><span
-class="cmmi-10">&#x00A0;m</span><sub><span
-class="cmmi-7">n</span></sub>
-<!--l. 39--><p class="noindent" >vorliegen, wobei <span
+class="cmmi-10">&#x00A0;mod &#x00A0;m</span><sub><span
+class="cmmi-7">n</span></sub></p>
+
+<!--l. 39--><p class="noindent">vorliegen, wobei <span
 class="cmmi-10">m</span><sub><span
 class="cmr-7">1</span></sub><span
-class="cmmi-10">,</span><span
-class="cmmi-10">&#x2026;</span><span
-class="cmmi-10">,m</span><sub><span
-class="cmmi-7">n</span></sub> natürliche Zahlen, die paarweise zueinander teilerfremd
-und <span
+class="cmmi-10">, &#x2026;, m</span><sub><span
+class="cmmi-7">n</span></sub> natürliche Zahlen, die paarweise zueinander teilerfremd und <span
 class="cmmi-10">a</span><sub><span
 class="cmr-7">1</span></sub><span
-class="cmmi-10">,</span><span
-class="cmmi-10">&#x2026;</span><span
-class="cmmi-10">a</span><sub><span
-class="cmmi-7">n</span></sub> ganze Zahlen sind. Nun wird<br
-class="newline" />
-<!--l. 43--><p class="indent" >   <span
-class="cmmi-10">m </span>= <span
-class="cmex-10">&#x220F;</span>
-  <span
-class="cmmi-10">m</span><sub><span
+class="cmmi-10">, &#x2026;, a</span><sub><span
+class="cmmi-7">n</span></sub> ganze Zahlen sind. Nun wird</p>
+
+<!--l. 43--><p class="indent"> <span
+class="cmmi-10">m = &#x220F; m</span><sub><span
 class="cmmi-7">i</span></sub><span
-class="cmmi-10">,      M</span><sub><span
+class="cmmi-10"> , M</span><sub><span
 class="cmmi-7">i</span></sub> = <span
 class="cmmi-10">m&#x2215;m</span><sub><span
 class="cmmi-7">i</span></sub><span
-class="cmmi-10">,      </span>0 <span
-class="cmsy-10">&#x2264; </span><span
-class="cmmi-10">i </span><span
-class="cmsy-10">&#x2264; </span><span
-class="cmmi-10">n</span>
-<!--l. 47--><p class="indent" >   berechnet. Es gibt eine eindeutige Lösung der simultanen Kongruenzen. Es gilt
-die Gleichung<br
-class="newline" />
-<!--l. 50--><p class="indent" >   <span
+class="cmmi-10"> , 0 &#x2264; i &#x2264; n</span></p>
+
+<!--l. 47--><p class="indent"> berechnet. Es gibt eine eindeutige Lösung der simultanen Kongruenzen. Es gilt die Gleichung</p>
+
+<!--l. 50--><p class="indent"> <span
 class="cmmi-10">gcd</span>(<span
 class="cmmi-10">m</span><sub><span
 class="cmmi-7">i</span></sub><span
@@ -83,12 +60,12 @@ class="cmmi-10">,      </span>0 <span
 class="cmsy-10">&#x2264; </span><span
 class="cmmi-10">i </span><span
 class="cmsy-10">&#x2264; </span><span
-class="cmmi-10">n</span>
-<!--l. 54--><p class="indent" >   da die <span
+class="cmmi-10">n</span></p>
+
+<!--l. 54--><p class="indent"> da die <span
 class="cmmi-10">m</span><sub><span
 class="cmmi-7">i</span></sub> paarweise teilerfremd sind. Wir benutzen den <span
-class="cmbx-10">extended Euclidean</span>,
-um die Zahlen <span
+class="cmbx-10">Erweiterten Euklid</span>, um die Zahlen <span
 class="cmmi-10">y</span><sub><span
 class="cmmi-7">i</span></sub> <span
 class="cmsy-10">&#x2208; </span><span
@@ -97,8 +74,8 @@ class="cmmi-10">,</span>0 <span
 class="cmsy-10">&#x2264; </span><span
 class="cmmi-10">i </span><span
 class="cmsy-10">&#x2264; </span><span
-class="cmmi-10">n </span>zu berechnen mit<br
-class="newline" />
+class="cmmi-10">n </span>zu berechnen mit</p>
+
 <!--l. 58--><p class="indent" >   <span
 class="cmmi-10">y</span><sub><span
 class="cmmi-7">i</span></sub><span
@@ -112,13 +89,14 @@ class="cmmi-10">,      </span>0 <span
 class="cmsy-10">&#x2264; </span><span
 class="cmmi-10">i </span><span
 class="cmsy-10">&#x2264; </span><span
-class="cmmi-10">n.</span>
-<!--l. 62--><p class="indent" >   Nun können wir<br
-class="newline" />
+class="cmmi-10">n.</span></p>
+
+<!--l. 62--><p class="indent"> Nun können wir</p>
+<!--  <br class="newline"/>  ersetzt durch  </p>  -->
+
 <!--l. 64--><p class="indent" >   <span
 class="cmmi-10">x </span>= (<span
-class="cmex-10">&#x2211;</span>
-  <span
+class="cmex-10">&#x2211;</span><span
 class="cmmi-10">a</span><sub><span
 class="cmmi-7">i</span></sub><span
 class="cmmi-10">y</span><sub><span
@@ -130,17 +108,14 @@ class="cmmi-10">&#x00A0;m     </span>0 <span
 class="cmsy-10">&#x2264; </span><span
 class="cmmi-10">i </span><span
 class="cmsy-10">&#x2264; </span><span
-class="cmmi-10">n</span>
-<!--l. 68--><p class="indent" >   setzen und erhalten eine Lösung <span
-class="cmmi-10">x </span>der simultanen Kongruenz. Wir übernehmen
-folgendes Theorem aus <span class="cite">[<a
-href="#XJBu">1</a>]</span>
+class="cmmi-10">n</span></p> 
+
+<!--l. 68--><p class="indent"> setzen und erhalten eine Lösung der simultanen Kongruenz. Wir übernehmen folgendes Theorem aus <span class="cite">[<a href="#XJBu">1</a>]</span></p>
+   
    <div class="newtheorem">
-<!--l. 71--><p class="noindent" ><span class="head">
-<span
+<!--l. 71--><p class="noindent"><span class="head"><span
 class="cmbx-10">Theorem</span><span
-class="cmbx-10">&#x00A0;1.1</span> </span><a
- id="x1-10011"></a> <span
+class="cmbx-10">&#x00A0;1.1</span> </span><a id="x1-10011"></a> <span
 class="cmti-10">Seien </span><span
 class="cmmi-10">m</span><sub><span
 class="cmr-7">0</span></sub><span
@@ -148,11 +123,7 @@ class="cmmi-10">,</span><span
 class="cmmi-10">&#x2026;</span><span
 class="cmmi-10">,m</span><sub><span
 class="cmmi-7">n</span></sub> <span
-class="cmti-10">paarweise teilerfremde nat</span><span
-class="cmti-10">ürliche Zahlen und</span>
-<span
-class="cmti-10">seien </span><span
-class="cmmi-10">a</span><sub><span
+class="cmti-10">paarweise teilerfremde natürliche Zahlen und seien a</span><sub><span
 class="cmr-7">0</span></sub><span
 class="cmmi-10">,</span><span
 class="cmmi-10">&#x2026;</span><span
@@ -161,26 +132,24 @@ class="cmmi-7">n</span></sub> <span
 class="cmti-10">ganze Zahlen. Dann hat die simultane Kongruenz eine L</span><span
 class="cmti-10">ösung </span><span
 class="cmmi-10">x</span><span
-class="cmti-10">,</span>
-<span
+class="cmti-10">,</span><span
 class="cmti-10">die eindeutig ist mod </span><span
 class="cmmi-10">m </span>= <span
-class="cmex-10">&#x220F;</span>
-  <span
+class="cmex-10">&#x220F;</span>  <span
 class="cmmi-10">m</span><sub><span
 class="cmmi-7">i</span></sub><span
 class="cmmi-10">,      </span>0 <span
 class="cmsy-10">&#x2264; </span><span
 class="cmmi-10">i </span><span
 class="cmsy-10">&#x2264; </span><span
-class="cmmi-10">n.</span>
+class="cmmi-10">n.</span></p>
+
    </div>
-<!--l. 78--><p class="indent" >   Den Beweis dazu kann man in <span class="cite">[<a
-href="#XJBu">1</a>]</span> nachlesen. Wir wollen den Algorithmus anhand
-eines Beispiels zeigen.<br
-class="newline" />
+<!--l. 78--><p class="indent" >   Den Beweis dazu kann man in <span class="cite">[<a href="#XJBu">1</a>]</span> nachlesen. Wir wollen den Algorithmus anhand eines Beispiels zeigen.</p>
+
 <!--l. 81--><p class="noindent" ><span
-class="cmbx-10">Beispiel  </span>Wir wollen die simultane Kongruenz
+class="cmbx-10">Beispiel  </span>Wir wollen die simultane Kongruenz</p>
+
 <!--l. 84--><p class="noindent" ><span
 class="cmmi-10">x </span><span
 class="cmsy-10">&#x2261; </span>2<span
@@ -197,8 +166,7 @@ class="cmmi-10">&#x00A0;</span>5<span
 class="cmmi-10">,      x </span><span
 class="cmsy-10">&#x2261; </span>3<span
 class="cmmi-10">&#x00A0;mod</span><span
-class="cmmi-10">&#x00A0;</span>7<br
-class="newline" />
+class="cmmi-10">&#x00A0;</span>7</p>
 
 <!--l. 88--><p class="noindent" >lösen. Also ist <span
 class="cmmi-10">m</span><sub><span
@@ -223,8 +191,7 @@ class="cmmi-10">&#x00A0;a</span><sub><span
 class="cmr-7">2</span></sub> = 4<span
 class="cmmi-10">,</span><span
 class="cmmi-10">&#x00A0;a</span><sub><span
-class="cmr-7">3</span></sub> = 3. Dann
-ist <span
+class="cmr-7">3</span></sub> = 3. Dann ist <span
 class="cmmi-10">m </span>= 420<span
 class="cmmi-10">,</span><span
 class="cmmi-10">&#x00A0;M</span><sub><span
@@ -241,8 +208,7 @@ class="cmmi-10">&#x2215;</span>5 = 84<span
 class="cmmi-10">,</span><span
 class="cmmi-10">&#x00A0;M</span><sub><span
 class="cmr-7">3</span></sub> = 420<span
-class="cmmi-10">&#x2215;</span>7 = 60.
-Wir lösen <span
+class="cmmi-10">&#x2215;</span>7 = 60. Wir lösen <span
 class="cmmi-10">y</span><sub><span
 class="cmr-7">0</span></sub><span
 class="cmmi-10">M</span><sub><span
@@ -259,8 +225,7 @@ class="cmmi-10">y</span><sub><span
 class="cmr-7">1</span></sub> <span
 class="cmsy-10">&#x2261; </span>1<span
 class="cmmi-10">&#x00A0;mod</span><span
-class="cmmi-10">&#x00A0;</span>4. Die kleinste nicht negative Lösung
-ist <span
+class="cmmi-10">&#x00A0;</span>4. Die kleinste nicht negative Lösung ist <span
 class="cmmi-10">y</span><sub><span
 class="cmr-7">0</span></sub> = 1. Wir lösen <span
 class="cmmi-10">y</span><sub><span
@@ -280,8 +245,7 @@ class="cmr-7">1</span></sub> <span
 class="cmsy-10">&#x2261; </span>1<span
 class="cmmi-10">&#x00A0;mod</span><span
 class="cmmi-10">&#x00A0;</span>3<span
-class="cmmi-10">. </span>Die absolut kleinste
-Lösung ist <span
+class="cmmi-10">. </span>Die absolut kleinste Lösung ist <span
 class="cmmi-10">y</span><sub><span
 class="cmr-7">1</span></sub> = <span
 class="cmsy-10">-</span>1. Wir lösen <span
@@ -301,8 +265,7 @@ class="cmr-7">2</span></sub> <span
 class="cmsy-10">&#x2261; </span>1<span
 class="cmmi-10">&#x00A0;mod</span><span
 class="cmmi-10">&#x00A0;</span>5<span
-class="cmmi-10">. </span>Die absolut
-kleinste Lösung ist <span
+class="cmmi-10">. </span>Die absolut kleinste Lösung ist <span
 class="cmmi-10">y</span><sub><span
 class="cmr-7">2</span></sub> = <span
 class="cmsy-10">-</span>1. Schließlich lösen wir <span
@@ -322,11 +285,9 @@ class="cmr-7">3</span></sub> <span
 class="cmsy-10">&#x2261; </span>1<span
 class="cmmi-10">&#x00A0;mod</span><span
 class="cmmi-10">&#x00A0;</span>7<span
-class="cmmi-10">.</span>
-Die kleinste nicht negative Lösung ist <span
+class="cmmi-10">.</span> Die kleinste nicht negative Lösung ist <span
 class="cmmi-10">y</span><sub><span
-class="cmr-7">3</span></sub> = 2. Daher erhalten wir
-<span
+class="cmr-7">3</span></sub> = 2. Daher erhalten wir <span
 class="cmmi-10">x </span><span
 class="cmsy-10">&#x2261; </span>210 <span
 class="cmsy-10">- </span>140 <span
@@ -334,26 +295,22 @@ class="cmsy-10">- </span>336 + 360 <span
 class="cmsy-10">&#x2261; </span>94<span
 class="cmmi-10">&#x00A0;mod</span><span
 class="cmmi-10">&#x00A0;</span>420<span
-class="cmmi-10">. </span>Eine Lösung der simultanen Kongruenz ist
-<span
-class="cmmi-10">x </span>= 94. <br
-class="newline" />
-<!--l. 102--><p class="indent" >   Man beachte, dass in dem beschriebenen Algorithmus die Zahlen <span
+class="cmmi-10">. </span>Eine Lösung der simultanen Kongruenz ist <span
+class="cmmi-10">x </span>= 94. </p>
+
+<!--l. 102--><p class="indent"> Man beachte, dass in dem beschriebenen Algorithmus die Zahlen <span
 class="cmmi-10">y</span><sub><span
 class="cmmi-7">i</span></sub> und <span
 class="cmmi-10">M</span><sub><span
-class="cmmi-7">i</span></sub> nicht
-von den Zahlen <span
+class="cmmi-7">i</span></sub> nicht von den Zahlen <span
 class="cmmi-10">a</span><sub><span
 class="cmmi-7">i</span></sub> abhängen. Sind die Werte <span
 class="cmmi-10">y</span><sub><span
 class="cmmi-7">i</span></sub> und <span
 class="cmmi-10">M</span><sub><span
-class="cmmi-7">i</span></sub> berechnet, dann kann man
-die Formel <span
+class="cmmi-7">i</span></sub> berechnet, dann kann man die Formel <span
 class="cmmi-10">x </span>= (<span
-class="cmex-10">&#x2211;</span>
-  <sub><span
+class="cmex-10">&#x2211;</span><sub><span
 class="cmmi-7">i</span><span
 class="cmr-7">=0</span></sub><sup><span
 class="cmmi-7">n</span></sup><span
@@ -364,23 +321,24 @@ class="cmmi-7">i</span></sub><span
 class="cmmi-10">M</span><sub><span
 class="cmmi-7">i</span></sub>)<span
 class="cmmi-10">&#x00A0;mod</span><span
-class="cmmi-10">&#x00A0;m </span>benutzen, um die simultane Kongruenz für
-jede Auswahl von Werten <span
+class="cmmi-10">&#x00A0;m </span>benutzen, um die simultane Kongruenz für jede Auswahl von Werten <span
 class="cmmi-10">a</span><sub><span
-class="cmmi-7">i</span></sub> zu lösen.
+class="cmmi-7">i</span></sub> zu lösen.</p>
+
 <!--l. 212--><p class="noindent" >
-   <h3 class="sectionHead"><span class="titlemark">2   </span> <a
+   <h3 class="sectionHead"><span class="titlemark">  </span> <a
  id="x1-20002"></a>Literatur</h3>
-<!--l. 212--><p class="noindent" >
+
+ <!--l. 212--><p class="noindent" >
        <div class="thebibliography">
+
        <p class="bibitem" ><span class="biblabel">
-     [1]<span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span><a
- id="XJBu"></a>Johannes   Buchmann,   Einführung   in   die   Kryptographie,   4.,
-       erweiterte Auflage 2008, Kapitel 3.15, Seite 43
-</p>
-       </div>
+     [1]<span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span><a id="XJBu"></a>Johannes Buchmann, Einführung in die Kryptographie, 4., erweiterte Auflage 2008, Kapitel 3.15, Seite 43</p>
+ 
+       <p class="bibitem" ><span class="biblabel">
+     [2]<span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span><a id="XJBv"></a>Wikipedia-Artikel: <a class="external" href="https://de.wikipedia.org/wiki/Chinesischer_Restsatz"> Chinesischer Restsatz</a></p>
 
+ </div>
+
+<p><br class="newline"/></p>
 </body></html>
-
-
-
