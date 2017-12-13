@@ -9,13 +9,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.grille.ui;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.util.HashMap;
-
-import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
@@ -24,46 +18,29 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
-import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
-import org.jcryptool.visual.grille.GrillePlugin;
 import org.jcryptool.visual.grille.algorithm.Schablone;
 
 public class DemonstrationPainter implements PaintListener {
 
     private Demonstration demonstration;
-    private HashMap<Character, Point> charSize;
     private int width;
     private int height;
     private int cellWidth;
     private int cellHeight;
     private Canvas parent;
 
-    @SuppressWarnings("unchecked")
+    /**
+     * painter for the visualization
+     * @param parent The parent canvas
+     * @param demonstration
+     */
     public DemonstrationPainter(Canvas parent, Demonstration demonstration) {
         this.demonstration = demonstration;
         this.parent = parent;
-
-        ObjectInputStream ois = null;
-
-        try {
-            File file = new File(FileLocator.toFileURL(GrillePlugin.getDefault().getBundle().getEntry("/")).getFile() //$NON-NLS-1$
-                    + "files" + File.separatorChar + "charSize.map"); //$NON-NLS-1$ //$NON-NLS-2$
-            ois = new ObjectInputStream(new FileInputStream(file));
-            charSize = (HashMap<Character, Point>) ois.readObject();
-        } catch (Exception e) {
-            LogUtil.logError(GrillePlugin.PLUGIN_ID, e);
-        } finally {
-            try {
-                if (ois != null) {
-                    ois.close();
-                }
-            } catch (IOException e) {
-                LogUtil.logError(GrillePlugin.PLUGIN_ID, e);
-            }
-        }
     }
 
+	@Override
 	public void paintControl(PaintEvent e) {
 		width = parent.getSize().x;
 		height = parent.getSize().y;
@@ -76,10 +53,12 @@ public class DemonstrationPainter implements PaintListener {
 			e.gc.fillRectangle(0, 0, width, height);
 		} else if (demonstration.getCurrentStep() == 1) {
 			e.gc.setFont(FontService.getLargeFont());
-			e.gc.drawText(Messages.getString("DemonstrationPainter.description"), 0, 0); //$NON-NLS-1$
+			int schablonenGrosse = demonstration.getSchablone().getSize();
+			e.gc.drawText((NLS.bind(Messages.getString("DemonstrationPainter.description"), 
+					new Object[] {schablonenGrosse*schablonenGrosse, demonstration.padding.length()})), 0, 0); 
 			if (!demonstration.padding.equals("")) { //$NON-NLS-1$
-				e.gc.drawText(Messages.getString("DemonstrationPainter.padding") + " (" + demonstration.padding.length() //$NON-NLS-1$
-						+ "):", 0, 140);
+				e.gc.drawText((NLS.bind(Messages.getString("DemonstrationPainter.padding"), 
+						demonstration.padding.length())), 0, 175);
 				Color savedColor = e.gc.getForeground();
 				e.gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
 				String padding = "";
@@ -87,7 +66,7 @@ public class DemonstrationPainter implements PaintListener {
 					padding += demonstration.padding.substring(i, Math.min(demonstration.padding.length(), i + 35));
 					padding += "\n";
 				}
-				e.gc.drawText(padding, 0, 175);
+				e.gc.drawText(padding, 0, 210);
 				e.gc.setForeground(savedColor);
 
 			}
@@ -188,6 +167,13 @@ public class DemonstrationPainter implements PaintListener {
         }
     }
 
+	/**
+	 * 
+	 * @param e
+	 * @param x
+	 * @param y
+	 * @param c
+	 */
     private void fillCell(PaintEvent e, int x, int y, char c) {
         Point eckeLO = new Point(x * cellWidth, y * cellHeight);
         int fontSize =  (int) (0.5 * cellHeight);

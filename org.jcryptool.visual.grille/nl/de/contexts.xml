@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="grille" title="Grille-Verschlüsselungsverfahren">
+      <description>Bei der Fleißnerschen Schablone (engl. turning grille) handelt es sich um ein Verschlüsselungsverfahren, bei dem durch Transposition mittels einer Schablone der Klartext einer Nachricht zu einem Geheimtext verwürfelt wird. Die Fleißnersche Schablone wurde nach dem österreichischen Oberst Eduard Fleißner von Wostrowitz benannt.</description>
+      <topic href="$nl$/content/index.html" label="Grille-Verschlüsselungsverfahren" />
+   </context>
+</contexts>
