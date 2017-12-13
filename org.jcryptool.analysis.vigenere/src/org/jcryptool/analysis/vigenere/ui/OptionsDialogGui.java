@@ -12,9 +12,6 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -26,204 +23,145 @@ import org.eclipse.swt.widgets.Shell;
 import org.jcryptool.analysis.vigenere.interfaces.DataProvider;
 
 public class OptionsDialogGui extends Dialog {
-    private FrequencyGui parent;
+	private FrequencyGui parent;
 
-    private Combo creference;
-    private Combo calphabet;
+	private Combo comboReference;
+	private Combo comboAlphabet;
 
-    private Button bblocks;
+	private Button buttonBlocks;
 
-    public OptionsDialogGui(final FrequencyGui container) {
-        super(container.getShell());
-        this.parent = container;
-    }
+	/**
+	 * Constructor for OptionsDialogGUI.
+	 * @param container
+	 */
+	public OptionsDialogGui(final FrequencyGui container) {
+		super(container.getShell());
+		this.parent = container;
+	}
 
-    @Override
-    protected void configureShell(Shell newShell) {
-        super.configureShell(newShell);
-        newShell.setText(Messages.OptionsDialogGui_dialog_title);
-    }
+	private void applyPressed() {
+		boolean blocks = buttonBlocks.getSelection();
+		String alph = comboAlphabet.getText();
+		String reftxt = comboReference.getText();
 
-    @Override
-    protected Control createDialogArea(Composite parent) {
-        GridLayout parentLayout = new GridLayout();
-        parentLayout.makeColumnsEqualWidth = true;
-        parent.setLayout(parentLayout);
-        Composite ccontain = new Composite(parent, SWT.NONE);
-        GridLayout ccontainLayout = new GridLayout();
-        ccontainLayout.makeColumnsEqualWidth = true;
-        GridData ccontainLData = new GridData();
-        ccontainLData.widthHint = 460;
-        ccontainLData.heightHint = 205;
-        ccontain.setLayoutData(ccontainLData);
-        ccontain.setLayout(ccontainLayout);
-        {
-            Composite ccontent = new Composite(ccontain, SWT.NONE);
-            FormLayout ccontentLayout = new FormLayout();
-            GridData ccontentLData = new GridData();
-            ccontentLData.widthHint = 450;
-            ccontentLData.heightHint = 205;
-            ccontent.setLayoutData(ccontentLData);
-            ccontent.setLayout(ccontentLayout);
-            {
-                Button bapply = new Button(ccontent, SWT.PUSH | SWT.CENTER);
-                FormData bapplyLData = new FormData();
-                bapplyLData.left = new FormAttachment(0, 1000, 340);
-                bapplyLData.top = new FormAttachment(0, 1000, 160);
-                bapplyLData.width = 90;
-                bapplyLData.height = 25;
-                bapply.setLayoutData(bapplyLData);
-                bapply.setText(Messages.OptionsDialogGui_button_preview);
-                bapply.addSelectionListener(new SelectionAdapter() {
-                    @Override
-					public void widgetSelected(SelectionEvent event) {
-                        applyPressed();
-                    }
-                });
-            }
-            {
-                Label sepup = new Label(ccontent, SWT.SEPARATOR
-                        | SWT.HORIZONTAL);
-                FormData sepobenLData = new FormData();
-                sepobenLData.left = new FormAttachment(0, 1000, 20);
-                sepobenLData.top = new FormAttachment(0, 1000, 43);
-                sepobenLData.width = 410;
-                sepobenLData.height = 10;
-                sepup.setLayoutData(sepobenLData);
-            }
-            {
-                calphabet = new Combo(ccontent, SWT.READ_ONLY);
-                FormData calphabetLData = new FormData();
-                calphabetLData.left = new FormAttachment(0, 1000, 200);
-                calphabetLData.top = new FormAttachment(0, 1000, 105);
-                calphabetLData.width = 204;
-                calphabetLData.height = 23;
-                calphabet.setLayoutData(calphabetLData);
-                calphabet.setItems(DataProvider.getInstance().getAlphabets());
-                calphabet.select(getIndexAlphabets());
-            }
-            {
-                creference = new Combo(ccontent, SWT.READ_ONLY);
-                FormData creferenceLData = new FormData();
-                creferenceLData.left = new FormAttachment(0, 1000, 200);
-                creferenceLData.top = new FormAttachment(0, 1000, 63);
-                creferenceLData.width = 203;
-                creferenceLData.height = 23;
-                creference.setLayoutData(creferenceLData);
-                creference.setItems(DataProvider.getInstance()
-                        .listReferenceTexts());
-                creference.select(getIndexReferences());
-            }
-            {
-                Label lalphabet = new Label(ccontent, SWT.NONE);
-                FormData lalphabetLData = new FormData();
-                lalphabetLData.left = new FormAttachment(0, 1000, 20);
-                lalphabetLData.top = new FormAttachment(0, 1000, 105);
-                lalphabetLData.width = 160;
-                lalphabetLData.height = 23;
-                lalphabet.setLayoutData(lalphabetLData);
-                lalphabet.setText(Messages.OptionsDialogGui_label_alphabet);
-                lalphabet.setAlignment(SWT.RIGHT);
-            }
-            {
-                Label lreference = new Label(ccontent, SWT.NONE);
-                FormData lreferenceLData = new FormData();
-                lreferenceLData.left = new FormAttachment(0, 1000, 20);
-                lreferenceLData.top = new FormAttachment(0, 1000, 63);
-                lreferenceLData.width = 160;
-                lreferenceLData.height = 23;
-                lreference.setLayoutData(lreferenceLData);
-                lreference.setText(Messages.OptionsDialogGui_label_reference);
-                lreference.setAlignment(SWT.RIGHT);
-            }
-            {
-                bblocks = new Button(ccontent, SWT.CHECK | SWT.LEFT);
-                FormData bblocksLData = new FormData();
-                bblocksLData.left = new FormAttachment(0, 1000, 20);
-                bblocksLData.top = new FormAttachment(0, 1000, 10);
-                bblocksLData.width = 410;
-                bblocksLData.height = 23;
-                bblocks.setLayoutData(bblocksLData);
-                bblocks.setText(Messages.OptionsDialogGui_label_blocks);
-                bblocks.setSelection(this.parent.isBlocked());
-            }
-            {
-                Label sepmid = new Label(ccontent, SWT.SEPARATOR
-                        | SWT.HORIZONTAL);
-                FormData sepmidLData = new FormData();
-                sepmidLData.left = new FormAttachment(0, 1000, 20);
-                sepmidLData.top = new FormAttachment(0, 1000, 143);
-                sepmidLData.width = 410;
-                sepmidLData.height = 10;
-                sepmid.setLayoutData(sepmidLData);
-            }
-            {
-                Label sepbut = new Label(ccontent, SWT.SEPARATOR
-                        | SWT.HORIZONTAL);
-                FormData sepbutLData = new FormData();
-                sepbutLData.left = new FormAttachment(0, 1000, 20);
-                sepbutLData.top = new FormAttachment(0, 1000, 196);
-                sepbutLData.width = 410;
-                sepbutLData.height = 10;
-                sepbut.setLayoutData(sepbutLData);
-            }
-            {
+		parent.chancePreview(blocks, reftxt, alph);
+	}
 
-            }
-        }
+	@Override
+	protected void cancelPressed() {
+		this.parent.cancelOperation();
+		this.close();
+		super.cancelPressed();
+	}
 
-        return ccontain;
-    }
+	@Override
+	protected void configureShell(Shell newShell) {
+		super.configureShell(newShell);
+		newShell.setText(Messages.OptionsDialogGui_dialog_title);
+	}
 
-    @Override
-    protected void okPressed() {
-        boolean blocks = bblocks.getSelection();
-        String alph = calphabet.getText();
-        String reftxt = creference.getText();
+	@Override
+	protected Control createDialogArea(Composite parent) {
+		Composite compositeContain = new Composite(parent, SWT.NONE);
+		compositeContain.setLayout(new GridLayout());
 
-        parent.chancePreview(blocks, reftxt, alph);
-        parent.saveOptions(blocks, reftxt, alph);
-        super.okPressed();
-    }
+		Composite compositeContent = new Composite(compositeContain, SWT.NONE);
+		compositeContent.setLayout(new GridLayout(2, false));
+		compositeContent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-    @Override
-    protected void cancelPressed() {
-        this.parent.cancelOperation();
-        this.close();
-        super.cancelPressed();
-    }
+		buttonBlocks = new Button(compositeContent, SWT.CHECK);
+		buttonBlocks.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		buttonBlocks.setText(Messages.OptionsDialogGui_label_blocks);
+		buttonBlocks.setSelection(this.parent.isBlocked());
 
-    private void applyPressed() {
-        boolean blocks = bblocks.getSelection();
-        String alph = calphabet.getText();
-        String reftxt = creference.getText();
+		Label separatorUp = new Label(compositeContent, SWT.SEPARATOR | SWT.HORIZONTAL);
+		GridData gd_separatorUp = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
+		gd_separatorUp.verticalIndent = 10;
+		separatorUp.setLayoutData(gd_separatorUp);
 
-        parent.chancePreview(blocks, reftxt, alph);
-    }
+		Label labelReference = new Label(compositeContent, SWT.RIGHT);
+		GridData gd_labelReference = new GridData(SWT.FILL, SWT.FILL, false, false);
+		gd_labelReference.verticalIndent = 10;
+		labelReference.setLayoutData(gd_labelReference);
+		labelReference.setText(Messages.OptionsDialogGui_label_reference);
 
-    private int getIndexAlphabets() {
-        String alph = parent.getAlphabetIdent();
-        String[] alphs = DataProvider.getInstance().getAlphabets();
+		comboReference = new Combo(compositeContent, SWT.READ_ONLY);
+		GridData gd_comboReference = new GridData(SWT.FILL, SWT.FILL, true, false);
+		gd_comboReference.verticalIndent = 10;
+		comboReference.setLayoutData(gd_comboReference);
+		comboReference.setItems(DataProvider.getInstance().listReferenceTexts());
+		comboReference.select(getIndexReferences());
 
-        for (int i = 0; i < alphs.length; i++) {
-            if (alph.equals(alphs[i])) {
-                return i;
-            }
-        }
+		Label labelAlphabet = new Label(compositeContent, SWT.RIGHT);
+		labelAlphabet.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
+		labelAlphabet.setText(Messages.OptionsDialogGui_label_alphabet);
+		labelAlphabet.setAlignment(SWT.RIGHT);
 
-        return 0;
-    }
+		comboAlphabet = new Combo(compositeContent, SWT.READ_ONLY);
+		comboAlphabet.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		comboAlphabet.setItems(DataProvider.getInstance().getAlphabets());
+		comboAlphabet.select(getIndexAlphabets());
 
-    private int getIndexReferences() {
-        String ref = parent.getRefTextIdent();
-        String[] refs = DataProvider.getInstance().listReferenceTexts();
+		Label separatorMid = new Label(compositeContent, SWT.SEPARATOR | SWT.HORIZONTAL);
+		GridData gd_separatorMid = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
+		gd_separatorMid.verticalIndent = 10;
+		separatorMid.setLayoutData(gd_separatorMid);
 
-        for (int i = 0; i < refs.length; i++) {
-            if (ref.equals(refs[i])) {
-                return i;
-            }
-        }
+		Button buttonPreview = new Button(compositeContent, SWT.PUSH);
+		GridData gd_buttonPreview = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1);
+		gd_buttonPreview.verticalIndent = 10;
+		buttonPreview.setLayoutData(gd_buttonPreview);
+		buttonPreview.setText(Messages.OptionsDialogGui_button_preview);
+		buttonPreview.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent event) {
+				applyPressed();
+			}
+		});
 
-        return 0;
-    }
+		Label separatorBottom = new Label(compositeContent, SWT.SEPARATOR | SWT.HORIZONTAL);
+		GridData gd_separatorBottom = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
+		gd_separatorBottom.verticalIndent = 10;
+		separatorBottom.setLayoutData(gd_separatorBottom);
+
+		compositeContain.setSize(compositeContent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		return compositeContain;
+	}
+
+	private int getIndexAlphabets() {
+		String alph = parent.getAlphabetIdent();
+		String[] alphs = DataProvider.getInstance().getAlphabets();
+
+		for (int i = 0; i < alphs.length; i++) {
+			if (alph.equals(alphs[i])) {
+				return i;
+			}
+		}
+
+		return 0;
+	}
+
+	private int getIndexReferences() {
+		String ref = parent.getRefTextIdent();
+		String[] refs = DataProvider.getInstance().listReferenceTexts();
+
+		for (int i = 0; i < refs.length; i++) {
+			if (ref.equals(refs[i])) {
+				return i;
+			}
+		}
+
+		return 0;
+	}
+
+	@Override
+	protected void okPressed() {
+		boolean blocks = buttonBlocks.getSelection();
+		String alph = comboAlphabet.getText();
+		String reftxt = comboReference.getText();
+
+		parent.chancePreview(blocks, reftxt, alph);
+		parent.saveOptions(blocks, reftxt, alph);
+		super.okPressed();
+	}
 }

@@ -6,31 +6,26 @@
  */
 package org.jcryptool.analysis.vigenere.ui;
 
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.ui.IEditorReference;
 import org.jcryptool.analysis.vigenere.exceptions.IllegalActionException;
 import org.jcryptool.analysis.vigenere.exceptions.IllegalInputException;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
-import org.jcryptool.core.util.ui.SingleVanishTooltipLauncher;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI Builder, which is free for non-commercial
@@ -46,13 +41,14 @@ public class FriedmanGui extends Content {
     private Text tfile;
 
     private Composite cselection;
-    private Composite cvariable;
     private Composite cgraph;
+	private Composite mainComposite;
+	private Composite passwordComposite;
+	private Composite buttonComposite;
 
     private Label lstwo;
     private Label lsthree;
     private Label lsone;
-    private Label lsep;
     private Label lsepend;
     private Label llength;
 
@@ -62,6 +58,12 @@ public class FriedmanGui extends Content {
     private Button bback;
     private Button bnext;
 
+    /**
+     * Constructor for FriedmanGui
+     * @param parent
+     * @param chiffre
+     * @param title
+     */
     public FriedmanGui(final ContentDelegator parent, final String chiffre, final String title) {
         super(parent, SWT.NONE);
         this.chiffre = chiffre;
@@ -69,6 +71,12 @@ public class FriedmanGui extends Content {
         initGUI();
     }
 
+    /**
+     * Constructor for FriedmanGui
+     * @param parent
+     * @param chiffre
+     * @param selection
+     */
     public FriedmanGui(VigenereBreakerGui parent, String chiffre, IEditorReference selection) {
         super(parent, SWT.NONE);
         this.chiffre = chiffre;
@@ -76,208 +84,130 @@ public class FriedmanGui extends Content {
         initGUI();
     }
 
+    /**
+     * initializes the GUI for the friedman test window
+     */
     private void initGUI() {
         try {
-            FormLayout thisLayout = new FormLayout();
-            this.setSize(780, 620);
-            this.setLayout(thisLayout);
-            {
-                cselection = new Composite(this, SWT.NONE);
-                FormLayout cselectionLayout = new FormLayout();
-                FormData cselectionLData = new FormData();
-                cselectionLData.left = new FormAttachment(0, 1000, 10);
-                cselectionLData.top = new FormAttachment(0, 1000, 0);
-                cselectionLData.width = 760;
-                cselectionLData.height = 30;
-                cselection.setLayoutData(cselectionLData);
-                cselection.setLayout(cselectionLayout);
-                {
-                    lsep = new Label(cselection, SWT.SEPARATOR | SWT.HORIZONTAL);
-                    FormData lsepLData = new FormData();
-                    lsepLData.left = new FormAttachment(0, 1000, 0);
-                    lsepLData.top = new FormAttachment(0, 1000, 26);
-                    lsepLData.width = 760;
-                    lsepLData.height = 2;
-                    lsep.setLayoutData(lsepLData);
-                }
-                {
-                    lsthree = new Label(cselection, SWT.BORDER | SWT.CENTER);
-                    FormData lsthreeLData = new FormData();
-                    lsthreeLData.left = new FormAttachment(0, 1000, 480);
-                    lsthreeLData.top = new FormAttachment(0, 1000, 0);
-                    lsthreeLData.width = 238;
-                    lsthreeLData.height = 24;
-                    lsthree.setLayoutData(lsthreeLData);
-                    lsthree.setText(Messages.VigenereGlobal_navi_decryption);
-                    lsthree.setFont(FontService.getLargeFont());
-                    lsthree.setEnabled(false);
-                }
-                {
-                    lstwo = new Label(cselection, SWT.BORDER | SWT.CENTER);
-                    FormData lstwoLData = new FormData();
-                    lstwoLData.left = new FormAttachment(0, 1000, 240);
-                    lstwoLData.top = new FormAttachment(0, 1000, 0);
-                    lstwoLData.width = 238;
-                    lstwoLData.height = 24;
-                    lstwo.setLayoutData(lstwoLData);
-                    lstwo.setText(Messages.VigenereGlobal_navi_frequency);
-                    lstwo.setFont(FontService.getLargeFont());
-                    lstwo.setEnabled(false);
-                }
-                {
-                    lsone = new Label(cselection, SWT.BORDER | SWT.CENTER);
-                    FormData lsoneLData = new FormData();
-                    lsoneLData.left = new FormAttachment(0, 1000, 0);
-                    lsoneLData.top = new FormAttachment(0, 1000, 0);
-                    lsoneLData.width = 238;
-                    lsoneLData.height = 24;
-                    lsone.setLayoutData(lsoneLData);
-                    lsone.setText(Messages.VigenereGlobal_navi_friedman);
-                    lsone.setFont(FontService.getLargeFont());
-                }
-            }
-            {
-                cvariable = new Composite(this, SWT.NONE);
-                FormLayout cvariableLayout = new FormLayout();
-                FormData cvariableLData = new FormData();
-                cvariableLData.left = new FormAttachment(0, 1000, 10);
-                cvariableLData.top = new FormAttachment(0, 1000, 30);
-                cvariableLData.width = 760;
-                cvariableLData.height = 560;
-                cvariable.setLayoutData(cvariableLData);
-                cvariable.setLayout(cvariableLayout);
-                {
-                    tfile = new Text(cvariable, SWT.NONE);
-                    FormData tfileLData = new FormData();
-                    tfileLData.left = new FormAttachment(0, 1000, 0);
-                    tfileLData.top = new FormAttachment(0, 1000, 5);
-                    tfileLData.width = 754;
-                    tfileLData.height = 15;
-                    tfile.setLayoutData(tfileLData);
-                    tfile.setFont(FontService.getNormalFont());
-                    tfile.setText(NLS.bind(Messages.FriedmanGui_text_graph, new Object[] { edtitle }));
-                    tfile.setEditable(false);
-                    tfile.setEnabled(false);
-                }
-                {
-                    bback = new Button(cvariable, SWT.PUSH | SWT.CENTER);
-                    FormData bbackLData = new FormData();
-                    bbackLData.left = new FormAttachment(0, 1000, 0);
-                    bbackLData.top = new FormAttachment(0, 1000, 402);
-                    bbackLData.width = 90;
-                    bbackLData.height = 25;
-                    bback.setLayoutData(bbackLData);
-                    bback.setText(Messages.FriedmanGui_button_back);
-                    bback.setFont(FontService.getNormalFont());
-                    bback.setToolTipText(Messages.FriedmanGui_ttip_back);
-                    bback.addSelectionListener(new SelectionAdapter() {
-                        @Override
-						public void widgetSelected(SelectionEvent event) {
-                            back();
-                        }
-                    });
-                }
-                {
-                    lsepend = new Label(cvariable, SWT.SEPARATOR | SWT.HORIZONTAL);
-                    FormData label1LData = new FormData();
-                    label1LData.left = new FormAttachment(0, 1000, 0);
-                    label1LData.top = new FormAttachment(0, 1000, 387);
-                    label1LData.width = 760;
-                    label1LData.height = 2;
-                    lsepend.setLayoutData(label1LData);
-                }
-                {
-                    thelp = new Text(cvariable, SWT.MULTI | SWT.WRAP);
-                    FormData tadecrLData = new FormData();
-                    tadecrLData.left = new FormAttachment(0, 1000, 0);
-                    tadecrLData.top = new FormAttachment(0, 1000, 275);
-                    tadecrLData.width = 394;
-                    tadecrLData.height = 110;
-                    thelp.setLayoutData(tadecrLData);
-                    thelp.setText(Messages.FriedmanGui_text_help);
-                    thelp.setFont(FontService.getSmallFont());
-                    thelp.setBackground(new Color(getDisplay(), 240, 240, 240));
-                    thelp.setEditable(false);
-                    thelp.setEnabled(false);
-                }
-                {
-                    cgraph = new Composite(cvariable, SWT.NONE);
-                    GridLayout cagraphLayout = new GridLayout();
-                    cagraphLayout.makeColumnsEqualWidth = true;
-                    FormData cagraphLData = new FormData();
-                    cagraphLData.left = new FormAttachment(0, 1000, 0);
-                    cagraphLData.top = new FormAttachment(0, 1000, 20);
-                    cagraphLData.width = 760;
-                    cagraphLData.height = 240;
-                    cgraph.setLayoutData(cagraphLData);
-                    cgraph.setLayout(cagraphLayout);
+        	this.setLayout(new GridLayout());
+        	this.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+            
+        	cselection = new Composite(this, SWT.NONE);
+			cselection.setLayout(new GridLayout(3, false));
+			cselection.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-                    container = new FriedmanContainer(cgraph, this.chiffre);
-                    container.initGraph();
-                }
-                {
-                    bnext = new Button(cvariable, SWT.PUSH | SWT.CENTER);
-                    FormData banextLData = new FormData();
-                    banextLData.left = new FormAttachment(0, 1000, 670);
-                    banextLData.top = new FormAttachment(0, 1000, 402);
-                    banextLData.width = 90;
-                    banextLData.height = 25;
-                    bnext.setLayoutData(banextLData);
-                    bnext.setText(Messages.FriedmanGui_button_next);
-                    bnext.setFont(FontService.getSmallFont());
-                    bnext.setToolTipText(Messages.FriedmanGui_ttip_next);
-                    bnext.addSelectionListener(new SelectionAdapter() {
-                        @Override
-						public void widgetSelected(SelectionEvent event) {
-                            start();
-                        }
-                    });
-                }
-                {
-                    llength = new Label(cvariable, SWT.NONE);
-                    FormData lalengthLData = new FormData();
-                    lalengthLData.left = new FormAttachment(0, 1000, 440);
-                    lalengthLData.top = new FormAttachment(0, 1000, 284);
-                    lalengthLData.width = 160;
-                    lalengthLData.height = 15;
-                    llength.setLayoutData(lalengthLData);
-                    llength.setText(Messages.FriedmanGui_0);
-                    llength.setFont(FontService.getSmallFont());
-                    llength.setAlignment(SWT.RIGHT);
-                }
-                {
-                    FormData talengthLData = new FormData();
-                    talengthLData.left = new FormAttachment(0, 1000, 610);
-                    talengthLData.top = new FormAttachment(0, 1000, 280);
-                    talengthLData.width = 38;
-                    talengthLData.height = 19;
-                    tlength = new Text(cvariable, SWT.BORDER | SWT.RIGHT);
-                    tlength.setLayoutData(talengthLData);
-                    tlength.setTextLimit(3);
-                    tlength.setFocus();
-                    tlength.setFont(FontService.getSmallFont());
-                    tlength.addKeyListener(new KeyAdapter() {
-                        @Override
-						public void keyPressed(KeyEvent event) {
-                            if (13 == event.keyCode) {
-                                start();
-                            }
-                        }
-                    });
-                    autodetect();
-                }
-            }
+			lsone = new Label(cselection, SWT.BORDER | SWT.CENTER);
+			lsone.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+			lsone.setText(Messages.VigenereGlobal_navi_friedman);
+			lsone.setFont(FontService.getLargeFont());
 
-            this.layout();
-            final SingleVanishTooltipLauncher launcher = new SingleVanishTooltipLauncher(this.getShell());
-            launcher.showNewTooltip(tlength.toDisplay(new Point(tlength.getBounds().width - 1, 1)), 20000,
-                    Messages.FriedmanGui_1, Messages.FriedmanGui_2);
-            this.addDisposeListener(new DisposeListener() {
+			lstwo = new Label(cselection, SWT.BORDER | SWT.CENTER);
+			lstwo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+			lstwo.setText(Messages.VigenereGlobal_navi_frequency);
+			lstwo.setFont(FontService.getLargeFont());
+			lstwo.setForeground(ColorService.GRAY);
+
+			lsthree = new Label(cselection, SWT.BORDER | SWT.CENTER);
+			lsthree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+			lsthree.setText(Messages.VigenereGlobal_navi_decryption);
+			lsthree.setFont(FontService.getLargeFont());
+			lsthree.setForeground(ColorService.GRAY);
+
+			mainComposite = new Composite(this, SWT.NONE);
+			mainComposite.setLayout(new GridLayout(2, true));
+			mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+			
+			tfile = new Text(mainComposite, SWT.NONE);
+			tfile.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+            tfile.setText(Messages.FriedmanGui_text_graph + " " + edtitle);
+            tfile.setEditable(false);
+            
+            cgraph = new Composite(mainComposite, SWT.NONE);
+            cgraph.setLayout(new GridLayout());
+            GridData gd_cgraph = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+            gd_cgraph.widthHint = 600;
+            gd_cgraph.minimumHeight = 250;
+            cgraph.setLayoutData(gd_cgraph);
+
+            container = new FriedmanContainer(cgraph, this.chiffre);
+            container.initGraph();
+
+            thelp = new Text(mainComposite, SWT.MULTI | SWT.WRAP);
+            GridData gd_thelp = new GridData(SWT.FILL, SWT.FILL, false, false);
+            gd_thelp.widthHint = 300;
+            thelp.setLayoutData(gd_thelp);
+            thelp.setText(Messages.FriedmanGui_text_help);
+            thelp.setFont(FontService.getSmallFont());
+            thelp.setEditable(false);
+            
+            passwordComposite = new Composite(mainComposite, SWT.NONE);
+            passwordComposite.setLayout(new GridLayout(2, true));
+            passwordComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false));
+            
+            llength = new Label(passwordComposite, SWT.NONE);
+            llength.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+            llength.setText(Messages.FriedmanGui_0);
+            
+            tlength = new Text(passwordComposite, SWT.BORDER);
+            tlength.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+            tlength.setTextLimit(3);
+            tlength.setFocus();
+            tlength.addKeyListener(new KeyAdapter() {
                 @Override
-				public void widgetDisposed(DisposeEvent e) {
-                    launcher.dispose();
+				public void keyPressed(KeyEvent event) {
+                    if (13 == event.keyCode) {
+                        start();
+                    }
                 }
             });
+            autodetect();
+            
+            final ToolTip tip = new ToolTip(tlength.getShell(), SWT.BALLOON);
+            tip.setMessage(Messages.FriedmanGui_2);
+//            tip.setLocation(new Point(tlength.getBounds().x, tlength.getBounds().y));
+            tip.addSelectionListener(new SelectionListener() {
+				
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					tip.dispose();
+				}
+				
+				@Override
+				public void widgetDefaultSelected(SelectionEvent e) {
+					
+				}
+			});
+            tip.setVisible(true);
+            
+            lsepend = new Label(this, SWT.SEPARATOR | SWT.HORIZONTAL);
+            lsepend.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+
+            buttonComposite = new Composite(this, SWT.NONE);
+            buttonComposite.setLayout(new GridLayout(2, true));
+            buttonComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+            
+            bback = new Button(buttonComposite, SWT.PUSH);
+            bback.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false));
+            bback.setText(Messages.FriedmanGui_button_back);
+            bback.setToolTipText(Messages.FriedmanGui_ttip_back);
+            bback.addSelectionListener(new SelectionAdapter() {
+                @Override
+				public void widgetSelected(SelectionEvent event) {
+                    back();
+                }
+            });
+            
+            bnext = new Button(buttonComposite, SWT.PUSH | SWT.CENTER);
+            bnext.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false));
+            bnext.setText(Messages.FriedmanGui_button_next);
+            bnext.setToolTipText(Messages.FriedmanGui_ttip_next);
+            bnext.addSelectionListener(new SelectionAdapter() {
+                @Override
+				public void widgetSelected(SelectionEvent event) {
+                    start();
+                }
+            });
+            
         } catch (Exception ex) {
             LogUtil.logError(ex);
         }
