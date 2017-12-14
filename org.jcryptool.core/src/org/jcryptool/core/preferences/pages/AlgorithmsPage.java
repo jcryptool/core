@@ -27,7 +27,7 @@ public class AlgorithmsPage extends FieldEditorPreferencePage implements IWorkbe
     public AlgorithmsPage() {
         super(GRID);
         setPreferenceStore(CorePlugin.getDefault().getPreferenceStore());
-        setDescription(Messages.AlgorithmsPage_0);
+//        setDescription(Messages.AlgorithmsPage_0);
     }
 
     @Override

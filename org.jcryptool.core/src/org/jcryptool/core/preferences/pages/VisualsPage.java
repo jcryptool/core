@@ -27,7 +27,7 @@ public class VisualsPage extends FieldEditorPreferencePage implements IWorkbench
     public VisualsPage() {
         super(GRID);
         setPreferenceStore(CorePlugin.getDefault().getPreferenceStore());
-        setDescription(Messages.VisualsPage_0);
+//        setDescription(Messages.VisualsPage_0);
     }
 
     @Override
