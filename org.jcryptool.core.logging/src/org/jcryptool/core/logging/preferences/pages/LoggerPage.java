@@ -94,17 +94,20 @@ public class LoggerPage extends PreferencePage implements IWorkbenchPreferencePa
             loglevel = LogUtil.getLogLevel();
     }
 
-    protected IPreferenceStore doGetPreferenceStore() {
+    @Override
+	protected IPreferenceStore doGetPreferenceStore() {
         return LoggingPlugin.getDefault().getPreferenceStore();
     }
 
-    protected void performDefaults() {
+    @Override
+	protected void performDefaults() {
         setDefaultLogLevel();
         refreshWidgets();
         super.performDefaults();
     }
 
-    public boolean performOk() {
+    @Override
+	public boolean performOk() {
         if (btError.getSelection()) {
             doGetPreferenceStore().setValue(LogUtil.LOGGER_LOG_LEVEL, IStatus.ERROR);
             LogUtil.setLogLevel(IStatus.ERROR);
@@ -118,7 +121,8 @@ public class LoggerPage extends PreferencePage implements IWorkbenchPreferencePa
         return super.performOk();
     }
 
-    public void init(IWorkbench workbench) {
+    @Override
+	public void init(IWorkbench workbench) {
         setDefaultLogLevel();
     }
 }
