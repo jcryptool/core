@@ -44,6 +44,8 @@ public class GeneralPage extends PreferencePage implements IWorkbenchPreferenceP
 	private Button bt_contOnError;
 	private Button bt_showErrors;
 	
+	private Composite content;
+	
     public GeneralPage() {
         super();
         setPreferenceStore(ActionsUIPlugin.getDefault().getPreferenceStore());
@@ -91,71 +93,15 @@ public class GeneralPage extends PreferencePage implements IWorkbenchPreferenceP
 		return (ActionView)PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().findViewReference(ActionView.ID).getPart(false); 
 	}
 
-	protected void createFieldEditors(Composite parent) {
-        GridData gridData = new GridData();
-        gridData.horizontalAlignment = GridData.FILL;
-        gridData.grabExcessHorizontalSpace = true;
-        
-        Group layoutGroup = new Group(parent, SWT.NONE);
-        layoutGroup.setText(Messages.GeneralPage_1);
-        layoutGroup.setLayoutData(gridData);
-        layoutGroup.setLayout(new GridLayout());
-        
-        bt_showFilenames = new Button(layoutGroup, SWT.CHECK);
-        bt_showFilenames.setText(Messages.GeneralPage_3);
-        bt_showFilenames.setLayoutData(gridData);
-        bt_showFilenames.setSelection(showFilenames);
-
-        gridData = new GridData();
-        gridData.horizontalAlignment = GridData.FILL;
-        gridData.grabExcessHorizontalSpace = true;
-
-        Group securityGroup = new Group(parent, SWT.NONE);
-        securityGroup.setText(Messages.GeneralPage_2);
-        securityGroup.setLayoutData(gridData);
-        securityGroup.setLayout(new GridLayout());
-        
-        bt_storePasswords = new Button(securityGroup, SWT.CHECK);
-        bt_storePasswords.setText(Messages.GeneralPage_4);
-        bt_storePasswords.setLayoutData(gridData);
-        bt_storePasswords.setSelection(storePasswords);
-
-        gridData = new GridData();
-        gridData.horizontalAlignment = GridData.FILL;
-        gridData.grabExcessHorizontalSpace = true;
-
-        Group errorHandlingGroup = new Group(parent, SWT.NONE);
-        errorHandlingGroup.setText(Messages.GeneralPage_5);
-        errorHandlingGroup.setLayoutData(gridData);
-        errorHandlingGroup.setLayout(new GridLayout());
-
-        bt_contOnError = new Button(errorHandlingGroup, SWT.CHECK);
-        bt_contOnError.setText(Messages.GeneralPage_6);
-        bt_contOnError.setLayoutData(gridData);
-        bt_contOnError.addListener(SWT.Selection, this);
-        bt_contOnError.setSelection(contOnError);
-        
-        bt_showErrors = new Button(errorHandlingGroup, SWT.CHECK);
-        bt_showErrors.setText(Messages.GeneralPage_7);
-        bt_showErrors.setLayoutData(gridData);
-        bt_showErrors.setSelection(showErrors);
-        
-        if (bt_contOnError.getSelection())
-			bt_showErrors.setEnabled(true);
-		else {
-			bt_showErrors.setEnabled(false);
-		}
-			
-        
-    }
-
-    public void init(IWorkbench workbench) {
+    @Override
+	public void init(IWorkbench workbench) {
     	showErrors = ActionsUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_DONT_SHOW_MESSAGES);
     	contOnError =  ActionsUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_IGNORE_ERRORS);
     	showFilenames = ActionsUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_SHOW_FILENAMES);
     	storePasswords = ActionsUIPlugin.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_STORE_PASSWORDS);
     }
 
+	@Override
 	public void handleEvent(Event event) {
 		if (event.widget == bt_contOnError){
 			if (bt_contOnError.getSelection())
@@ -163,12 +109,55 @@ public class GeneralPage extends PreferencePage implements IWorkbenchPreferenceP
 			else
 				bt_showErrors.setEnabled(false);
 		}
-		
 	}
 
 	@Override
 	protected Control createContents(Composite parent) {
-		createFieldEditors(parent);
-		return null;
+        content = new Composite(parent, SWT.NONE);
+        content.setLayout(new GridLayout());
+        
+        Group layoutGroup = new Group(content, SWT.NONE);
+        layoutGroup.setText(Messages.GeneralPage_1);
+        layoutGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        layoutGroup.setLayout(new GridLayout());
+        
+        bt_showFilenames = new Button(layoutGroup, SWT.CHECK);
+        bt_showFilenames.setText(Messages.GeneralPage_3);
+        bt_showFilenames.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        bt_showFilenames.setSelection(showFilenames);
+
+        Group securityGroup = new Group(content, SWT.NONE);
+        securityGroup.setText(Messages.GeneralPage_2);
+        securityGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        securityGroup.setLayout(new GridLayout());
+        
+        bt_storePasswords = new Button(securityGroup, SWT.CHECK);
+        bt_storePasswords.setText(Messages.GeneralPage_4);
+        bt_storePasswords.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        bt_storePasswords.setSelection(storePasswords);
+
+        Group errorHandlingGroup = new Group(content, SWT.NONE);
+        errorHandlingGroup.setText(Messages.GeneralPage_5);
+        errorHandlingGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        errorHandlingGroup.setLayout(new GridLayout());
+
+        bt_contOnError = new Button(errorHandlingGroup, SWT.CHECK);
+        bt_contOnError.setText(Messages.GeneralPage_6);
+        bt_contOnError.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        bt_contOnError.addListener(SWT.Selection, this);
+        bt_contOnError.setSelection(contOnError);
+        
+        bt_showErrors = new Button(errorHandlingGroup, SWT.CHECK);
+        bt_showErrors.setText(Messages.GeneralPage_7);
+        bt_showErrors.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        bt_showErrors.setSelection(showErrors);
+        
+        if (bt_contOnError.getSelection())
+			bt_showErrors.setEnabled(true);
+		else {
+			bt_showErrors.setEnabled(false);
+		}
+        
+        return content;
 	}
 }
