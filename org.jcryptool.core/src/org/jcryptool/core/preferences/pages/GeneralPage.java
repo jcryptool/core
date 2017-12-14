@@ -68,7 +68,6 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
     public GeneralPage() {
         super(GRID);
         setPreferenceStore(CorePlugin.getDefault().getPreferenceStore());
-        setDescription(Messages.General_0);
         IExtensionPoint p = Platform.getExtensionRegistry().getExtensionPoint("org.jcryptool.core.platformLanguage"); //$NON-NLS-1$
         IExtension[] ext = p.getExtensions();
         nl = new String[ext.length];
@@ -95,13 +94,9 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
 
     @Override
     protected Control createContents(Composite parent) {
-        GridData gridData = new GridData();
-        gridData.horizontalAlignment = GridData.FILL;
-        gridData.grabExcessHorizontalSpace = true;
-
         Group gLanguage = new Group(parent, SWT.NONE);
         gLanguage.setText(Messages.SelectLanguage);
-        gLanguage.setLayoutData(gridData);
+        gLanguage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         gLanguage.setLayout(new GridLayout());
 
         listLanguage = new Combo(gLanguage, SWT.BORDER | SWT.SINGLE | SWT.READ_ONLY);
@@ -116,17 +111,16 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
             listLanguage.select(0);
         }
 
-        GridData gridData2 = new GridData();
-        gridData2.horizontalAlignment = GridData.FILL;
-        gridData2.grabExcessHorizontalSpace = true;
-
         Group gLocation = new Group(parent, SWT.NONE);
         gLocation.setText(Messages.WorkspaceLocation);
-        gLocation.setLayoutData(gridData2);
+        GridData gd_gLocation = new GridData(SWT.FILL, SWT.FILL, true, false);
+        gd_gLocation.verticalIndent = 30;
+        gLocation.setLayoutData(gd_gLocation);
         gLocation.setLayout(new GridLayout());
         
         lblLocation = new Label(gLocation, SWT.BORDER | SWT.SINGLE | SWT.READ_ONLY);
         lblLocation.setText(currentLocation);
+        lblLocation.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         
         return super.createContents(parent);
     }
