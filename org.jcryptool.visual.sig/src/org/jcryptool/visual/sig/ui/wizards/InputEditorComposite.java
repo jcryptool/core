@@ -14,6 +14,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -32,14 +33,16 @@ public class InputEditorComposite extends Composite {
 
     public InputEditorComposite(Composite parent, int style, InputEditorWizardPage p) {
         super(parent, style);
-        text = new Text(this, SWT.BORDER | SWT.WRAP);
-        text.setBounds(10, 10, 430, 215);
+        setLayout(new GridLayout());
+        
+        text = new Text(this, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
         text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         text.setTextLimit(TEXTLIMIT);
         text.setFocus();
         
         Label lblToSaveThe = new Label(this, SWT.NONE);
-        lblToSaveThe.setBounds(10, 231, 400, 15);
+        GridData gd_lblToSaveThe = new GridData(SWT.FILL, SWT.FILL, false, false);
+        gd_lblToSaveThe.widthHint = 400;
         lblToSaveThe.setText(Messages.InputEditorWizard_Label);
 
         page = p;

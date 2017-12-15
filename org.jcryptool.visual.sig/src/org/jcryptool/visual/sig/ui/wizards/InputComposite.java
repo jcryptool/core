@@ -11,6 +11,8 @@
 package org.jcryptool.visual.sig.ui.wizards;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
@@ -25,15 +27,16 @@ public class InputComposite extends Composite {
 
     public InputComposite(Composite parent, int style) {
         super(parent, style);
+        
+        setLayout(new GridLayout());
 
         rdoFromFile = new Button(this, SWT.RADIO);
-        rdoFromFile.setBounds(10, 10, 91, 18);
+        rdoFromFile.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         rdoFromFile.setText(Messages.InputWizard_rdoFromFile);
 
         rdoFromEditor = new Button(this, SWT.RADIO);
-        rdoFromEditor.setBounds(10, 34, 157, 18);
+        rdoFromEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         rdoFromEditor.setText(Messages.InputWizard_rdoFromEditor);
-        parent.setSize(600, 400);
 
         rdoFromFile.setSelection(true);
     }
