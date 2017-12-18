@@ -27,7 +27,7 @@ public class AnalysisPage extends FieldEditorPreferencePage implements IWorkbenc
     public AnalysisPage() {
         super(GRID);
         setPreferenceStore(CorePlugin.getDefault().getPreferenceStore());
-        setDescription(Messages.AnalysisPage_0);
+//        setDescription(Messages.AnalysisPage_0);
     }
 
     @Override

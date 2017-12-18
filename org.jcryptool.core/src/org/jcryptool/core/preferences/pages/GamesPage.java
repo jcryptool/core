@@ -27,7 +27,7 @@ public class GamesPage extends FieldEditorPreferencePage implements IWorkbenchPr
     public GamesPage() {
         super(GRID);
         setPreferenceStore(CorePlugin.getDefault().getPreferenceStore());
-        setDescription(Messages.Games_0);
+//        setDescription(Messages.Games_0);
     }
 
     @Override

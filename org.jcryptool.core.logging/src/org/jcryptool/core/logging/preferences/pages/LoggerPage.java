@@ -28,10 +28,11 @@ import org.jcryptool.core.logging.LoggingPlugin;
 import org.jcryptool.core.logging.utils.LogUtil;
 
 public class LoggerPage extends PreferencePage implements IWorkbenchPreferencePage {
-    private GridLayout layout;
+	
     private Button btError;
     private Button btWarn;
     private Button btInfo;
+    private Composite content;
     private Label lbError;
     private Label lbWarn;
     private Label lbInfo;
@@ -44,21 +45,12 @@ public class LoggerPage extends PreferencePage implements IWorkbenchPreferencePa
 
     @Override
     protected Control createContents(Composite parent) {
-        Composite content = new Composite(parent, SWT.NONE);
-
-        GridData gridData = new GridData();
-        gridData.horizontalAlignment = GridData.FILL;
-        gridData.grabExcessHorizontalSpace = true;
-
-        layout = new GridLayout(1, false);
-        layout.marginHeight = 0;
-        layout.marginWidth = 0;
-        content.setLayout(layout);
+        content = new Composite(parent, SWT.NONE);
+        content.setLayout(new GridLayout());
 
         Group gLoglevel = new Group(content, SWT.SHADOW_ETCHED_IN);
-        gLoglevel.setSize(110, 75);
         gLoglevel.setText(Messages.loglevel);
-        gLoglevel.setLayoutData(gridData);
+        gLoglevel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         gLoglevel.setLayout(new GridLayout(2, false));
 
         btError = new Button(gLoglevel, SWT.RADIO);
@@ -102,17 +94,20 @@ public class LoggerPage extends PreferencePage implements IWorkbenchPreferencePa
             loglevel = LogUtil.getLogLevel();
     }
 
-    protected IPreferenceStore doGetPreferenceStore() {
+    @Override
+	protected IPreferenceStore doGetPreferenceStore() {
         return LoggingPlugin.getDefault().getPreferenceStore();
     }
 
-    protected void performDefaults() {
+    @Override
+	protected void performDefaults() {
         setDefaultLogLevel();
         refreshWidgets();
         super.performDefaults();
     }
 
-    public boolean performOk() {
+    @Override
+	public boolean performOk() {
         if (btError.getSelection()) {
             doGetPreferenceStore().setValue(LogUtil.LOGGER_LOG_LEVEL, IStatus.ERROR);
             LogUtil.setLogLevel(IStatus.ERROR);
@@ -126,7 +121,8 @@ public class LoggerPage extends PreferencePage implements IWorkbenchPreferencePa
         return super.performOk();
     }
 
-    public void init(IWorkbench workbench) {
+    @Override
+	public void init(IWorkbench workbench) {
         setDefaultLogLevel();
     }
 }
