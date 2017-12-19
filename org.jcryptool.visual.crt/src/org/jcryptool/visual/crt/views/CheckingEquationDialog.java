@@ -15,12 +15,10 @@ import java.util.Vector;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -37,7 +35,6 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 	private int[] marking;
 	private Button okButton;
 	private Composite area;
-	private ScrolledComposite scrolledComposite;
 	private Group dialogGroup;
 	private Vector<Equation> equationSet;
 	private Label xLabel;
@@ -73,6 +70,63 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 		suggestionValue = new BigInteger("1"); //$NON-NLS-1$
 		
 	}
+	
+	/**
+	 * checks if all verifyButtons are disabled
+	 * 
+	 * @return true if all verifyButtons are disabled
+	 */
+	private boolean checkVerifyButtons() {
+		boolean value = true;
+		for (int j = 0; j < verifyButtonSet.length; j++) {
+			if (verifyButtonSet[j].isEnabled() == true) {
+				value = false;
+				break;
+			}
+		}
+		return value;
+	}
+
+	/**
+	 * Return the initial size of the dialog
+	 */
+//	@Override
+//	protected Point getInitialSize() {
+////		return super.dialogArea.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+////		return new Point(525, 375);
+//		return area.getSize();
+////		return this.getContents().computeSize(SWT.DEFAULT, SWT.DEFAULT);
+//	}
+
+	@Override
+	protected void configureShell(Shell newShell) {
+		super.configureShell(newShell);
+		newShell.setText(MESSAGE_DIALOG_VERIFY_INPUT);
+	}
+
+	/**
+	 * Create contents of the button bar
+	 * 
+	 * @param parent
+	 */
+	@Override
+	protected void createButtonsForButtonBar(Composite parent) {
+		okButton = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
+		okButton.setEnabled(false);
+		okButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(final MouseEvent e) {
+				for (int i = 0; i < textfieldASet.length; i++) {
+					equationSet.get(i).removetextfieldMVerifyListener();
+					if (equationSet.get(i).getTextfieldA().compareTo(textfieldASet[i].getText()) == 0) {
+						equationSet.get(i).setTextfieldM(textfieldMSet[i].getText());
+					}
+					equationSet.get(i).addTextfieldMVerifyListener();
+				}
+			}
+		});
+		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+	}
 
 	/**
 	 * Create contents of the dialog
@@ -81,22 +135,19 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
-		area = (Composite) super.createDialogArea(parent);
 		
-		scrolledComposite = new ScrolledComposite(area, SWT.BORDER | SWT.V_SCROLL);
-		final GridData gd_scrolledComposite = new GridData(SWT.FILL, SWT.FILL, true, true);
-		scrolledComposite.setLayoutData(gd_scrolledComposite);
-
-		dialogGroup = new Group(scrolledComposite, SWT.NONE);
-		dialogGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		dialogGroup.setText(MESSAGE_GROUP_EQUATION);
-		final GridLayout gridLayout = new GridLayout();
-		gridLayout.numColumns = 7;
-		dialogGroup.setLayout(gridLayout);
-		scrolledComposite.setContent(dialogGroup);
-
 		setTitle(MESSAGE_DIALOG_TITLE);
 		setMessage(MESSAGE_DIALOG_INFO);
+		
+		area = new Composite(parent, SWT.NONE);
+		area.setLayout(new GridLayout());
+		area.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		dialogGroup = new Group(area, SWT.NONE);
+		dialogGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		dialogGroup.setText(MESSAGE_GROUP_EQUATION);
+		dialogGroup.setLayout(new GridLayout(7, false));
+
 		int i = 0;
 		for (Equation e : equationSet) {
 			xLabel = new Label(dialogGroup, SWT.NONE);
@@ -125,6 +176,7 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 			textfieldM.setLayoutData(gd_textfieldM);
 			textfieldM.setText(e.getTextfieldM());
 			mTextfieldVerifyListener = new VerifyListener() {
+				@Override
 				public void verifyText(VerifyEvent e) {
 					/*
 					 * keyCode == 8 is BACKSPACE and keyCode == 48 is ZERO and keyCode == 127 is DEL
@@ -247,62 +299,8 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 
 			i++;
 		}
-		dialogGroup.pack();
+
 		return area;
-	}
-
-	/**
-	 * Create contents of the button bar
-	 * 
-	 * @param parent
-	 */
-	@Override
-	protected void createButtonsForButtonBar(Composite parent) {
-		okButton = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
-		okButton.setEnabled(false);
-		okButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseUp(final MouseEvent e) {
-				for (int i = 0; i < textfieldASet.length; i++) {
-					equationSet.get(i).removetextfieldMVerifyListener();
-					if (equationSet.get(i).getTextfieldA().compareTo(textfieldASet[i].getText()) == 0) {
-						equationSet.get(i).setTextfieldM(textfieldMSet[i].getText());
-					}
-					equationSet.get(i).addTextfieldMVerifyListener();
-				}
-			}
-		});
-		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
-	}
-
-	/**
-	 * Return the initial size of the dialog
-	 */
-	@Override
-	protected Point getInitialSize() {
-		return new Point(525, 375);
-	}
-
-	@Override
-	protected void configureShell(Shell newShell) {
-		super.configureShell(newShell);
-		newShell.setText(MESSAGE_DIALOG_VERIFY_INPUT);
-	}
-
-	/**
-	 * checks if all verifyButtons are disabled
-	 * 
-	 * @return true if all verifyButtons are disabled
-	 */
-	private boolean checkVerifyButtons() {
-		boolean value = true;
-		for (int j = 0; j < verifyButtonSet.length; j++) {
-			if (verifyButtonSet[j].isEnabled() == true) {
-				value = false;
-				break;
-			}
-		}
-		return value;
 	}
 	
 	
