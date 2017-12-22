@@ -391,10 +391,18 @@ public class AupView extends ViewPart {
 		
 		setPattern = new Button(optionbox, SWT.RADIO);
 		setPattern.setText(Messages.AndroidUnlockPattern_ModeSetText);
+		
 		changePattern = new Button(optionbox, SWT.RADIO);
 		changePattern.setText(Messages.AndroidUnlockPattern_ModeChangeText);
+		
 		checkPattern = new Button(optionbox, SWT.RADIO);
 		checkPattern.setText(Messages.AndroidUnlockPattern_ModeCheckText);
+		
+		//get standard font
+		FontData fd = setPattern.getFont().getFontData()[0];
+		nFont = new Font(parent.getDisplay(), fd);
+		fd.setStyle(SWT.BOLD);
+		bFont = new Font(parent.getDisplay(), fd);
 
 		btnSave = new Button(controlBox, SWT.NONE);
 		btnSave.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
@@ -460,6 +468,7 @@ public class AupView extends ViewPart {
 		GridData gd_descTextHeading = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gd_descTextHeading.horizontalIndent = 40;
 		descTextHeading.setLayoutData(gd_descTextHeading);
+		descTextHeading.setFont(bFont);
 		descTextHeading.setText(Messages.AndroidUnlockPattern_helpBox_descText_Heading);
 
 		instrText1 = new StyledText(helpBox, SWT.READ_ONLY | SWT.WRAP);
@@ -490,12 +499,6 @@ public class AupView extends ViewPart {
 
 		logic.init();
 		child.pack();	//update the size of the visuals child's
-		
-		//get standard font
-		FontData fd = setPattern.getFont().getFontData()[0];
-		nFont = new Font(parent.getDisplay(), fd);
-		fd.setStyle(SWT.BOLD);
-		bFont = new Font(parent.getDisplay(), fd);
 
 		//dispose allocated resources on shutdown
 		parent.addDisposeListener(new DisposeListener() {
