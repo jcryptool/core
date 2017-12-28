@@ -13,9 +13,9 @@
   1) <a href="#term">The RSA Scheme</a><br/>
   2) <a href="#plugin">Handling Instructions: How to Use this Visualization</a></p>
   
-  <p> <b>Please note</b> that in this visualization the operations are performed on each single character. In practice, the operations are performed on blocks or even the whole message. Normally, RSA is not used to encrypt large amounts of data. Mostly, it is used to encrypt a session key, which later is used to encrypt the data with a symmetric cryptosystem (e.g., AES or 3DES), or to sign the hash value of a message. </p>
+  <p> <b>Please note</b> that in this visualization the operations are performed on each single character. In practice, the operations are performed on blocks or even the whole message. Normally, RSA is not used to encrypt large amounts of data. Mostly, it is used to encrypt a session key, which later is used to encrypt the data with a symmetric cryptosystem (e.g. AES or 3DES), or to sign the hash value of a message. </p>
 
-  <h2 id="term">1) Explanation of the RSA Scheme</h2>
+  <h2 id="term">1) The RSA Scheme</h2>
 
   <p> The most well-known asymmetric cryptosystem, RSA, was developed in 1977 by Ronald Rivest, Adi Shamir, and Leonard Adleman. The private and public keys are constructed using two randomly selected big prime numbers p and q which the user can specify himself</p>
   
@@ -30,7 +30,8 @@
   <p>The security of the RSA scheme is based on two mathematical problems. First, it is hard to extract a root modulo N (RSA problem). Second, factorization of a number N = p*q is hard, if the factors are sufficiently large (RSA key problem).<br/></p>
 
   
-  <h3 id="Enc">a) RSA Key Generation</h3>
+  <h3 id="KeyGen">a) RSA Key Generation</h3>
+  
   <p> A special characteristic of public key cryptosystems like RSA is that extensive calculations are necessary to generate the key before en-/decryption or signing can take place.</p>
   
   <p>First of all, the RSA parameters p, q, N and the Euler number phi(N) are calculated by choosing two different prime numbers p and q at random, and then by calculating the so-called RSA modulus N = p*q. The Euler number phi(N) = (p-1)*(q-1) is calculated from the prime factors p and q.</p>
@@ -78,6 +79,7 @@
   
   <p>For further information about the RSA cryptosystem please refer to:</p>
   <ul>
+  <li><a href="../../../../../org.jcryptool.visual.extendedrsa/nl/en/help/content/rsaHelp.html">JCT Plugin: Visualization of an Extended RSA Cryptosystem (including Identities and Multi-Prime RSA)</a>
   <li><a href="http://www.springer.com/de/book/9783662484234">Joachim von zur Gathen: CryptoSchool, Springer, 2015, Chapter 3</a></li>
   <li><a href="http://www.springer.com/de/book/9780387207568">Johannes Buchmann: Introduction to Cryptography, Springer, 2004, Chapter 8</a></li>
   <li><a href="http://en.wikipedia.org/wiki/RSA_(algorithm)">Wikipedia: RSA</a></li>

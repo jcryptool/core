@@ -10,12 +10,12 @@
   <h1>RSA-Kryptosystem (verschl&uuml;sseln, entschl&uuml;sseln, signieren und verifizieren)</h1>
 
   <p>Diese Hilfe beschreibt zwei Punkte:<br/>
-  1) <a href="#term">Das RSA Schema</a><br/>
+  1) <a href="#term">Das RSA-Schema</a><br/>
   2) <a href="#plugin">Benutzerinstruktionen f&uuml;r diese Visualisierung</a></p>
   
   <p> <b>Bitte beachten</b> Sie, dass diese Visualisierung die Operationen auf einzelnen Zeichen durchf&uuml;hrt. In der Praxis werden die Operationen auf Zeichenbl&ouml;cken oder der gesamten Nachricht durchgef&uuml;hrt. RSA wird normalerweise nicht verwendet, um gro&szlig;e Datenmengen zu verschl&uuml;sseln, sondern um einen Sessionkey zu verschl&uuml;sseln (mit diesem werden dann die Daten mit einem symmetrischen Verfahren wie AES oder 3DES verschl&uuml;sselt) oder um einen Hashwert der Nachricht zu signieren.</p>
 
-  <h2 id="term">1) Erkl&auml;rung des RSA-Schemas</h2>
+  <h2 id="term">1) Das RSA-Schema</h2>
 
   <p> Die bekannteste asymmetrische Verschl&uuml;sselung, die RSA-Verschl&uuml;sselung, wurde 1977 von Ronald Rivest, Adi Shamir und Leonard Adleman entwickelt. Die privaten und &ouml;ffentlichen Schl&uuml;ssel werden mit Hilfe von zwei zuf&auml;lligen, gro&szlig;en Primzahlen, p und q, konstruiert, die vom Nutzer gew&auml;hlt werden.</p>
   
@@ -32,7 +32,7 @@
   <p>Die Sicherheit des RSA Schemas basiert auf zwei mathematischen Problemen: Erstens ist es schwierig, f&uuml;r gro&szlig;e Zahlen eine Wurzel modulo N zu berechnen (RSA-Problem). Zweitens ist die Faktorisierung von N = p*q schwierig, wenn die Faktoren ausreichend gro&szlig; gew&auml;hlt werden (RSA-Schl&uuml;sselproblem).</p>
 
   
-  <h3 id="Enc">a) RSA-Schl&uuml;sselgenerierung</h3>
+  <h3 id="KeyGen">a) RSA-Schl&uuml;sselgenerierung</h3>
   <p> Eine besondere Charakteristik von Public-Key-Kryptosystemen wie RSA ist, dass umfangreiche Berechnungen n&ouml;tig sind, um einen Schl&uuml;ssel zu generieren. Erst danach kann die Ver- und Entschl&uuml;sselung durchgef&uuml;hrt werden.</p>
   
   <p>Als erstes werden die RSA-Parameter p, q, N und die Eulersche Zahl phi(N) mit Hilfe von zwei zuf&auml;lligen Primzahlen p und q berechnet. Der sogenannte RSA-Modulus N wird als Produkt von p und q berechnet, N = p*q. Die Eulersche Zahl phi(N) ergibt sich als Produkt (p-1)*(q-1). Im Standardfall werden hiernach p und q gel&ouml;scht (somit kennt sie auch der Schl&uuml;sselerzeuger nicht mehr und braucht sie auch nicht geheim zu halten).</p>
@@ -48,6 +48,7 @@
 
   <p> Um ein Chiffrat mit RSA zu <b>entschl&uuml;sseln</b>, muss der private Schl&uuml;ssel d bekannt sein. Die Entschl&uuml;sselungsfunktion, c^d = (m^e)^d = m^(e*d) = m mod N, berechnet den Klartext m.</p>
 
+  
   <h3 id="Sig">c) RSA-Signatur / Verifizierung</h3>
   <p> Um eine Nachricht m mit RSA zu <b>signieren</b>, muss der private Schl&uuml;ssel d bekannt sein. Die Signaturfunktion wird auf m oder auf einen Hashwert von m angewendet: m^d = sign(m) oder (hash(m))^d = sign(hash(m)). Dies erzeugt die Signatur.</p>
 
@@ -78,6 +79,7 @@
   
   <p>Weitere Informationen zum RSA-Kryptosystem finden sich z.B. unter:</p>
   <ul>
+  <li><a href="../../../../../org.jcryptool.visual.extendedrsa/nl/de/help/content/rsaHelp.html">JCT-Plugin: Erweitertes RSA-Kryptosystem (inklusive Identit&auml;ten und multi-primem RSA)</a>
   <li><a href="http://www.springer.com/de/book/9783662484234">Joachim von zur Gathen: CryptoSchool, Springer, 2015, Kapitel 3</a></li>
   <li><a href="http://www.springer.com/de/book/9783662484234">Johannes Buchmann: Einführung in die Kryptographie, Springer, 2010, Kapitel 8</a></li>
   <li><a href="http://de.wikipedia.org/wiki/RSA-Kryptosystem">Wikipedia: RSA</a></li>
