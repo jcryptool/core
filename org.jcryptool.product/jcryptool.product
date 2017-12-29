@@ -17,6 +17,7 @@
       <programArgs>-data @user.home/Documents/.jcryptool
       </programArgs>
       <vmArgs>-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.SimpleLog
+--add-modules=ALL-SYSTEM
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>
@@ -32,7 +33,6 @@
    <launcher name="JCrypTool">
       <linux icon="icons/icons_linux.xpm"/>
       <macosx icon="icons/icons_osx.icns"/>
-      <solaris/>
       <win useIco="true">
          <ico path="icons/icons_windows.ico"/>
          <bmp/>
@@ -40,6 +40,9 @@
    </launcher>
 
    <intro introId="org.jcryptool.intro"/>
+
+   <vm>
+   </vm>
 
    <license>
         <url>http://www.eclipse.org/legal/epl-v10.html</url>
@@ -127,5 +130,12 @@ Agreement more than one year after the cause of action arose. Each party waives 
       <plugin id="org.jcryptool.crypto.keystore" autoStart="true" startLevel="4" />
       <property name="Dfile.encoding" value="UTF-8" />
    </configurations>
+
+   <preferencesInfo>
+      <targetfile overwrite="false"/>
+   </preferencesInfo>
+
+   <cssInfo>
+   </cssInfo>
 
 </product>
