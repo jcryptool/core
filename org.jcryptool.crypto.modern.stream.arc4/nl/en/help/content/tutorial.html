@@ -30,7 +30,7 @@
 	</p>
 	<p>
 	RC4 generates a (pseudo-)random bitstream which is then used as keystream to encrypt the plaintext through an exclusive disjunction
- 	(XOR). The result of this operation is the cipher text. The basis of this generation in RC4 is a so called s-box. This s-box is a byte-vector with 256 elements initially assigned with the consecutive values from 0 to 255. Afterwards these values will be permutated using the key. 
+ 	(XOR). The result of this operation is the ciphertext. The basis of this generation in RC4 is a so called s-box. This s-box is a byte-vector with 256 elements initially assigned with the consecutive values from 0 to 255. Afterwards these values will be permutated using the key. 
 	After this initialization the algorithm generates the random bitstream with well defined calculation rules. Every single step of the 
 	generation concludes with the swapping of two values inside the s-box. The calculation for the RC4 algorithm uses very simple operations, 
 	therefore it is easy to implement the algorithm in hardware and software. The execution of the algorithm itself is pretty fast in comparison
@@ -87,7 +87,7 @@
 	</p>
 	<p>
 	A few weaknesses of the RC4 algorithm (some of them being really serious) are shown in <i>Weaknesses in the Key Scheduling Algorithm of 
-	RC4</i> by Scott Fluhrer, Itsik Mantin and Adi Shamir. The weaknesses shown in this paper are mainly based on the derivation of the 
+	RC4</i> by Scott Fluhrer, Itsik Mantin, and Adi Shamir. The weaknesses shown in this paper are mainly based on the derivation of the 
 	initial state of RC4 using the key, but they also have consequences for the generation of the bitstream. In the mentioned 
 	paper, which is verbalized in a very mathematical way, the authors create an algorithm derived from RC4. Based on this altered RC4 they 
 	show that certain patterns in the key are correlating with certain patterns in the internal state of RC4 and as a result the key or parts 
@@ -106,8 +106,7 @@
 	key with the help of the output and the (known) <i>IV</i> with relatively low effort (the effort depends on the length of the key and the 
 	<i>IV</i>, of course). In reality it is often possible to guess the first words of the plaintext (for example if the first words are 
 	timestamps or the identity of a client in some protocols), which makes a ciphertext-only attack possible. In such an attack the attacker 
-	can break the encryption using only the ciphertext. Additionally, Fluhrer, Mantin and Shamir show the possibility of 
-	practically using these weaknesses to attack certain crypto systems and techniques like the old, but wide-spread wireless security 
+	can break the encryption using only the ciphertext. Additionally, Fluhrer, Mantin and Shamir show the possibility of practically using these weaknesses to attack certain crypto systems and techniques like the old, but wide-spread wireless security 
 	standard WEP.</p>
 	<p>
 	In his paper <i>Attacks in the RC4 stream cipher</i> Andreas Klein describes another attack, which is mainly based on the attack already 
@@ -115,8 +114,7 @@
 	the algorithm in the stage of generating the key and the output of the algorithm. With this procedure Klein was able to calculate a 
 	previous state of the algorithm with high efficiency. To make things worse he also exposed the fact that his new attack works with 
 	the first 256 bytes discarded, too. This is why he recommends users to dump the outputs of at least the first 12 rounds of the algorithm 
-	in order to make an attack impossible or at least very hard (where one round equals 256 bytes of output). In March 2013, AlFardan, Bernstein, Paterson, Poettering and Schuldt 
-	described one of the latest attack scenarios on RC4. In this scenario an attacker can read a few messages encrypted with RC4 and then 
+	in order to make an attack impossible or at least very hard (where one round equals 256 bytes of output). In March 2013, AlFardan, Bernstein, Paterson, Poettering, and Schuldt described one of the latest attack scenarios on RC4. In this scenario an attacker can read a few messages encrypted with RC4 and then 
 	sent over TLS connections. Here it is necessary that the same plaintext is encrypted and sent over more than just one connection. The 
 	authors are using statistical biases in the key generation of RC4 which allow to differentiate between the output and really 
 	random bits and therefore enable an attacker to break the security of RC4. They recommend not to use RC4 anymore 
@@ -159,7 +157,7 @@
 
 	<p>In the <b>visualization</b> you can enter this key by clicking on the appropriate button next to the key vector and then typing the key in 
 	the wizard.<br>
-	In the <b>crypto plug-in</b> just enter the key into the textfield of the GUI.</p>
+	In the <b>crypto plug-in</b> just enter the key into the text field of the GUI.</p>
 	<p>
 	To encrypt the text you may click on <i>Encrypt all</i> in the <b>visualization</b> (or you may watch the process step by step). In the 
 	<b>crypto plug-in</b> make sure you chose the options <i>Encrypt</i> and <i>ARC4</i> and then click <i>Finish</i>.</p>
@@ -175,11 +173,9 @@
 	<p>Further information on cryptography and (A)RC4 are available here:</p>
 	<ul>
 		<li><a href="https://en.wikipedia.org/wiki/RC4">(A)RC4 on the English wikipedia</a></li>
-		<li><a href="http://www.cryptool.org/images/ctp/documents/CrypToolScript-en.pdf">CrypTool Script in English</a></li>
-		<li><a href="http://www.wisdom.weizmann.ac.il/~itsik/RC4/Papers/Rc4_ksa.ps"><i>Weaknesses in the Key Scheduling Algorithm of RC4
-			</i>, Fluhrer, Mantin, Shamir</a></li>
-		<li><a href="http://www.isg.rhul.ac.uk/tls/"><i>On the Security of RC4 in TLS and WPA</i>, AlFardan, Bernstein, Paterson, 
-			Poettering, Schuldt</a></li>
+		<li><a href="https://www.cryptool.org/images/ctp/documents/CT-Book-en.pdf">The CrypTool Book</a></li>
+		<li><a href="http://www.wisdom.weizmann.ac.il/~itsik/RC4/Papers/Rc4_ksa.ps"><i>Weaknesses in the Key Scheduling Algorithm of RC4</i>, Fluhrer, Mantin, Shamir</a></li>
+		<li><a href="http://www.isg.rhul.ac.uk/tls/"><i>On the Security of RC4 in TLS and WPA</i>, AlFardan, Bernstein, Paterson, Poettering, Schuldt</a></li>
 		<li><a href="https://www.schneier.com/blog/archives/2014/10/spritz_a_new_rc.html">Bruce Schneier about Spritz</a></li>
 	</ul>
 <br>

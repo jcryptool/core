@@ -35,7 +35,7 @@
 	
 	<p>
 	Like any stream cipher RC4 generates a (pseudo-)random bitstream which is then used as keystream to encrypt the plaintext through an exclusive disjunction
- 	(XOR). The result of this operation is the cipher-text. The basis of this generation in RC4 is a so called s-box. This s-box is a byte-vector with 
+ 	(XOR). The result of this operation is the ciphertext. The basis of this generation in RC4 is a so called s-box. This s-box is a byte-vector with 
  	256 elements initially assigned with the consecutive values from 0 to 255. Afterwards these values will be permutated using the key.
 	After this initialization the algorithm generates the random bitstream using well-defined calculation rules. Every single step of the
 	generation concludes with the swapping of two values inside the s-box. The calculations of the RC4 algorithm uses very simple operations,
@@ -117,7 +117,7 @@
 	key with the help of the output and the (known) <i>IV</i> with relatively low effort (the effort depends on the length of the key and the
 	<i>IV</i>, of course). In reality it is often possible to guess the first words of the plaintext (for example if the first words are
 	timestamps or the identity of a client in some protocols), which makes a ciphertext-only attack possible. In such an attack the attacker
-	can break the encryption using only the ciphertext. Additionally, Fluhrer, Mantin and Shamir show the possibility of
+	can break the encryption using only the ciphertext. Additionally, Fluhrer, Mantin, and Shamir show the possibility of
 	practically using these weaknesses to attack certain crypto systems and techniques like the old, but wide-spread wireless security
 	standard WEP.
 	</p>
@@ -132,7 +132,7 @@
 	</p>
 	
 	<p>
-	In March 2013, AlFardan, Bernstein, Paterson, Poettering and Schuldt
+	In March 2013, AlFardan, Bernstein, Paterson, Poettering, and Schuldt
 	described one of the latest attack scenarios on RC4. In this scenario an attacker can read a few messages encrypted with RC4 and then
 	sent over TLS connections. Here it is necessary that the same plaintext is encrypted and sent over more than just one connection. The
 	authors use statistical biases in the key generation of RC4 which allows differentiating between the created output and really
@@ -315,11 +315,7 @@
 				(A)RC4 on the English Wikipedia
 			</a>
 		</li>
-		<li>
-			<a href="http://www.cryptool.org/images/ctp/documents/CrypToolScript-en.pdf">
-				CrypTool Script in English
-			</a>
-		</li>
+		<li><a href="https://www.cryptool.org/images/ctp/documents/CT-Book-en.pdf">The CrypTool Book</a></li>
 		<li>
 			Fluhrer, Mantin, Shamir:
 			<i>
