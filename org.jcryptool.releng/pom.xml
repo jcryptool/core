@@ -132,6 +132,25 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 					</environments>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<id>timestamp-property</id>
+						<goals>
+							<goal>timestamp-property</goal>
+						</goals>
+						<phase>validate</phase>
+						<configuration>
+							<name>current.year</name>
+							<pattern>yyyy</pattern>
+							<locale>en_EN</locale>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
