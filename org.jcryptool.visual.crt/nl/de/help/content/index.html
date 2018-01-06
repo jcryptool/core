@@ -2,104 +2,87 @@
 <html>
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	  <title>Chinese Remainder Theorem</title>
+	  <title>Chinesischer Restsatz</title>
 </head>
 <body>
-<h1>Chinese Remainder Theorem</h1>
+<h1>Chinesischer Restsatz</h1>
 
-    <p>Die Demonstration soll die Funktionsweise des <b>Chinese Remainder Theorem</b> Plug-ins zeigen.</p>
+    <p>Dieses Plug-in demonstriert die Funktionsweise des <b>Chinesischen Restsatzes</b> (englisch Chinese Remainder Theorem, abgekürzt CRT).</p>
+	<p>Der CRT-Algorithmus selbst ist <a href="crtAlgorithm.html">hier</a> beschrieben.</p>
 
-    <p>Das <b>Chinese Remainder Theorem</b> Plug-in lässt sich über das Menü Visualisierungen starten und in
-    seiner Ansicht maximieren.</p>
-
-    <div class="screenshot">
-       <img src="crt_plugin.jpg" width="755" height="567" alt="Chinese Remainder Theorem"/>
-    </div>
-
-    <p>Das Plug-in gliedert sich ein zwei Spalten. Auf der linken Seite wird die Beschreibung und die Berechnungsvorschrift
-des aktuellen Schrittes dargestellt und auf der rechten Seite die Eingabefelder und Ergebnisse der Berechnung. In der
-<b>Equation Gruppe</b> auf der rechten Seite des Plug-ins können die Parameter der Gleichung eingegeben werden.</p>
+    <p>Das <b>CRT</b>-Plug-in lässt sich über das Menü <b>Visualisierungen</b> starten. Seine Ansicht lässt sich maximieren, und mit der <b>Neustart</b>-Ikone (oben rechts) kann man das Plugin in den Initialzustand versetzen.</p>
 
     <div class="screenshot">
-        <img src="crt_equation.jpg" width="348" height="173">
+       <img src="crt_plugin.png" width="700" height="535" alt="Chinese Remainder Theorem"/>
     </div>
 
-<p>Dabei können positive Zahlen beliebiger Größe verwendet werden.
-Durch Drücken des + Buttons kann die Menge der Gleichungen erhöht und mit dem - Button verringert werden. Die
-minimale Anzahl der Gleichungen ist zwei. Nach Festlegung der Anzahl der Gleichungen und Eingabe der Parameter,
-kann man durch betätigen des Buttons <b>Step 2</b> zum nächsten Schritt übergehen.</p>
+    <p>Das Plug-in gliedert sich in zwei Spalten: Auf der linken Seite werden die Berechnungsvorschriften der Schritte erläutert, und auf der rechten Seite werden die Eingabefelder und Ergebnisse der Berechnung angezeigt. In der Gruppe <b>Gleichungen</b> auf der rechten Seite des Plug-ins können die Parameter der Gleichungen eingegeben werden.</p>
 
     <div class="screenshot">
-        <img src="crt_step1.jpg" width="392" height="97">
+        <img src="crt_equation.png" width="350" height="103">
     </div>
 
-<p>Falls die Eingabeparameter der Gleichungen nicht korrekt waren, erscheint ein Dialogfeld, in der der Benutzer die Eingabe
-korrigieren kann.</p>
+<p>Dabei können positive ganze Zahlen beliebiger Größe verwendet werden. Durch Drücken des + Buttons kann die Anzahl der Gleichungen erhöht und mit dem - Button kann sie verringert werden. Es werden mindestens zwei Gleichungen benötigt. Nach Festlegung der Anzahl der Gleichungen und Eingabe der Parameter kann man durch Betätigen des Buttons <b>Weiter</b> zum nächsten Schritt übergehen.</p>
 
     <div class="screenshot">
-        <img src="crt_equationCheck.jpg" width="497" height="385">
+        <img src="crt_step1.png" width="350" height="92">
     </div>
 
-<p>Der Benutzer hat die Möglichkeit die Eingabe selbst zu korrigieren oder durch
-den Button <b>Suggestion</b> einen gültigen Wert vom Programm vorschlagen zulassen. In beiden Fällen muss der Benutzer
-die Eingabe mit dem Button <b>Apply</b> einloggen. Mit dem <b>Ok</b> Button kehrt der Benutzer zum Programm zurück und das
-Dialogfeld schließt sich. Die Gruppe <b>Step 2</b> wird aktiviert und die Berechnungsvorschrift wird hervorgehoben.</p>
+<p>Falls die Eingabeparameter der Gleichungen nicht korrekt waren, erscheint ein Dialogfenster.</p>
 
     <div class="screenshot">
-        <img src="crt_step2.jpg" width="391" height="78">
+        <img src="crt_equationCheck.png" width="450" height="241">
     </div>
 
-<p>Der Benutzer kann nun durch Drücken auf Button <b>Step 3</b> zum dritten Schritt wechseln. Es werden in der <b>Inverse</b>
-Gruppe die Zwischenergebnisse der Berechnung angezeigt.</p>
+<p>In diesem Dialogfenster hat der Benutzer die Möglichkeit, die Eingabe selbst zu korrigieren oder sich durch den Button <b>Vorschlag</b> einen gültigen Wert vom Programm vorschlagen zu lassen. In beiden Fällen muss der Benutzer die Eingabe mit dem Button <b>Übernehmen</b> bestätigen. Mit dem <b>Ok</b>-Button kehrt der Benutzer zum Programm zurück und das Dialogfenster schließt sich. Die Gruppe <b>Schritt 2</b> wird aktiviert und die darin enthaltene Berechnungsvorschrift wird hervorgehoben.</p>
 
     <div class="screenshot">
-        <img src="crt_inverse1.jpg" width="348" height="197">
+        <img src="crt_step2.png" width="350" height="66">
     </div>
 
-<p>Die dazu gehörige Erklärung ist zuvor in der <b>Step 2</b> Gruppe beschrieben worden. <b>Step 3</b> beschreibt die Berechnung
-des Inversen Elements.</p>
+<p>Der Benutzer kann nun durch Drücken auf Button <b>Weiter</b> zum dritten Schritt wechseln. In der Gruppe <b>Inverse</b> werden die Zwischenergebnisse der Berechnung angezeigt. Die dazu gehörige Erklärung ist zuvor in der <b>Schritt 2</b>-Gruppe gegeben worden.</p>
 
     <div class="screenshot">
-        <img src="crt_step3.jpg" width="392" height="94">
+        <img src="crt_inverse1.png" width="350" height="132">
     </div>
 
-<p>Die dann im nächsten Schritt <b>Step 4</b> in der <b>Inverse</b> Gruppe dargestellt wird.</p>
+<p>Gruppe <b>Schritt 3</b> beschreibt die Berechnung des inversen Elements.</p>
 
     <div class="screenshot">
-        <img src="crt_inverse2.jpg" width="348" height="197">
+        <img src="crt_step3.png" width="350" height="110">
     </div>
 
-<p>Die Berechnung des Endergebnisses ist im letzten Schritt <b>Step 4</b> beschrieben.</p>
+<p>Der nächste Schritt, <b>Schritt 4</b>, wird ebenfalls in der Gruppe <b>Inverse</b> dargestellt.</p>
 
     <div class="screenshot">
-        <img src="crt_step4.jpg" width="391" height="106">
+        <img src="crt_inverse2.png" width="350 height="132">
     </div>
 
-<p>Das Endergebnis kann durch Drücken des <b>Result</b> Buttons nun in der Gruppe <b>Result</b> angezeigt werden.</p>
+<p>Die Berechnung des Endergebnisses ist im letzten Schritt, <b>Schritt 4</b>, beschrieben.</p>
 
     <div class="screenshot">
-        <img src="crt_result.jpg" width="391" height="140">
+        <img src="crt_step4.png" width="350" height="91">
     </div>
 
-<p>Damit der Benutzer sich von der Richtigkeit der Lösung überzeugen kann, werden in der <b>Verify</b> Gruppe alle Gleichungen
-noch einmal dargestellt.</p>
+<p>Das Endergebnis kann nun durch Drücken des <b>Ergebnis</b>-Buttons in der Gruppe <b>Überprüfung</b> angezeigt werden.</p>
 
     <div class="screenshot">
-        <img src="crt_verify.jpg" width="349" height="144">
+        <img src="crt_result.png" width="350" height="107">
     </div>
 
-<p>Der Benutzer kann sich nun durch Klicken auf die Buttons <b>Next</b> und <b>Previous</b> weiter Lösungen der simultanen Kongruenzen
-anzeigen lassen. Dabei werden die Lösungen sowohl in der <b>Result</b> als auch in der <b>Verify</b> Gruppe dargestellt. Um
-eine neue Berechnung zu initiieren reicht es, wenn man in der <b>Equation</b> Gruppe auf den + oder - Button zu klicken. Es
-wird dadurch ein Reset der Eingabefelder bis auf die <b>Equation</b> Gruppe durchgeführt und man kann weitere Gleichungen
-hinzufügen oder entfernen. Dieser Reset ist von jedem Schritt aus möglich.</p>
-
-<p>Nach Durchlauf des Algorithmus ist es möglich, die Berechnung zu exportieren. Das Plug-in unterstützt dabei die
-Ausgabe als LaTex-, PDF- oder CSV-Datei.</p>
+<p>Damit der Benutzer sich von der Richtigkeit der Lösung überzeugen kann, werden in der <b>Überprüfung</b>-Gruppe alle Gleichungen noch einmal dargestellt.</p>
 
     <div class="screenshot">
-        <img src="crt_export.jpg" width="260" height="143">
+        <img src="crt_verify.png" width="350" height="73">
     </div>
 
+<p>Der Benutzer kann sich nun durch Klicken auf die beiden Buttons <b>Nächste</b> und <b>Vorherige</b> weitere Lösungen der simultanen Kongruenzen anzeigen lassen. Dabei werden die Lösungen sowohl in der <b>Ergebnis</b>- als auch in der <b>Überprüfung</b>-Gruppe dargestellt. Um eine neue Berechnung zu initiieren reicht es, wenn man in der <b>Gleichungen</b>-Gruppe auf den + oder - Button klickt. Dadurch wird ein Reset der Eingabefelder bis auf diejenigen in der <b>Gleichungen</b>-Gruppe durchgeführt und man kann weitere Gleichungen hinzufügen oder entfernen. Dieser Reset ist von jedem Schritt aus möglich.</p>
+
+<p>Nach Durchlauf des Algorithmus ist es möglich, die Berechnung zu exportieren. Das Plug-in unterstützt dabei die Ausgabe als LaTeX-, PDF- oder CSV-Datei.</p>
+    <div class="screenshot">
+        <img src="crt_export.png" width="250" height="136">
+    </div>
+
+<p><br class="newline"/></p>
 </body>
 </html>

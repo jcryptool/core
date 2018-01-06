@@ -38,22 +38,18 @@ public class GParamsBob extends ParamsPerson {
      */
     public GParamsBob(GBob bob, Composite parent) {
         super(parent);
-        // group.setSize(30, 121);
+        this.bob = bob;
         group.setText(Messages.GParamsBob_0);
 
-        this.bob = bob;
+
 
         b = new GCombiLabel(Messages.GParamsBob_1, false, group);
-        b.getComp().setLocation(90, 25);
 
-        verifiziert = new Label(group, 0);
+        verifiziert = new Label(group, SWT.None);
         verifiziert.setFont(FontService.getNormalBoldFont());
         verifiziert.setText(Messages.GParamsBob_2);
-        // verifiziert.setBounds(100, 90, 130, 20);
         verifiziert.setVisible(false);
-        GridData gridData = new GridData();
-        gridData.widthHint = 200;
-        verifiziert.setLayoutData(gridData);
+        verifiziert.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         setVisible(true);
     }
 
@@ -93,7 +89,8 @@ public class GParamsBob extends ParamsPerson {
      *
      * @see ParamsPerson#update()
      */
-    public void update() {
+    @Override
+	public void update() {
         b.update(bob.getB());
     }
 

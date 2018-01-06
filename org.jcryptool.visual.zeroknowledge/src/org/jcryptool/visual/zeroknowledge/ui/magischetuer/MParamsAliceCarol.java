@@ -17,56 +17,54 @@ import org.jcryptool.visual.zeroknowledge.ui.ParamsPerson;
  * Group, auf der die Parameter von Alice oder Carol dargestellt werden.
  *
  * @author Mareike Paul
- *@version 1.0.0
+ * @version 1.0.0
  */
 public class MParamsAliceCarol extends ParamsPerson {
 
-    private MCombiLabel code;
+	private MCombiLabel code;
 
-    private MPerson person;
+	private MPerson person;
 
-    private MCombiLabel raum;
+	private MCombiLabel raum;
 
-    private MCombiLabel raumwahl;
+	private MCombiLabel raumwahl;
 
-    /**
-     * Konstruktor, der die graphischen Komponenten erstellt und eingefügt. Die Group besteht aus
-     * einem Label, das den Namen enthält und jeweils zwei Labeln, die den Wert vom Attribut s, s^2,
-     * r, r^2 und y darstellen (einer für die Beschreibung und einer für den Wert)
-     *
-     * @param person Person, dessen Werte dargestellt werden sollen
-     * @param comp Parent-Objekt zu dem graphischen Teil dieses Objektes
-     */
-    public MParamsAliceCarol(MPerson person, Composite comp) {
-        super(comp);
-        this.person = person;
-        group.setText(person.getName());
-        group.setSize(300, 121);
+	/**
+	 * Konstruktor, der die graphischen Komponenten erstellt und eingefügt. Die
+	 * Group besteht aus einem Label, das den Namen enthält und jeweils zwei Labeln,
+	 * die den Wert vom Attribut s, s^2, r, r^2 und y darstellen (einer für die
+	 * Beschreibung und einer für den Wert)
+	 *
+	 * @param person
+	 *            Person, dessen Werte dargestellt werden sollen
+	 * @param parent
+	 *            Parent-Objekt zu dem graphischen Teil dieses Objektes
+	 */
+	public MParamsAliceCarol(MPerson person, Composite parent) {
+		super(parent);
+		this.person = person;
+		group.setText(person.getName());
 
-        code = new MCombiLabel(Messages.MParamsAliceCarol_0, group);
-        code.getComp().setLocation(60, 40);
+		code = new MCombiLabel(Messages.MParamsAliceCarol_0, group);
 
-        raumwahl = new MCombiLabel(Messages.MParamsAliceCarol_1, group);
-        raumwahl.getComp().setLocation(60, 65);
+		raumwahl = new MCombiLabel(Messages.MParamsAliceCarol_1, group);
 
-        raum = new MCombiLabel(Messages.MParamsAliceCarol_2, group);
-        raum.getComp().setLocation(60, 90);
-    }
+		raum = new MCombiLabel(Messages.MParamsAliceCarol_2, group);
+	}
 
-    /**
-     * Methode zum updaten des Panels
-     */
-    public void update() {
-        code.update(person.getCode());
-        raumwahl.update(person.getRaumwahl());
-        raum.update(person.getRaum());
-    }
+	public void setPerson(MPerson person) {
+		this.person = person;
+		group.setText(person.getName());
+		update();
+	}
 
-    public void setPerson(MPerson person) {
-        this.person = person;
-
-        group.setText(person.getName());
-
-        update();
-    }
+	/**
+	 * Methode zum updaten des Panels
+	 */
+	@Override
+	public void update() {
+		code.update(person.getCode());
+		raumwahl.update(person.getRaumwahl());
+		raum.update(person.getRaum());
+	}
 }

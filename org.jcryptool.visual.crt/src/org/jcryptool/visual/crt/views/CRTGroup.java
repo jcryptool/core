@@ -16,6 +16,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -33,812 +34,786 @@ import org.jcryptool.visual.crt.xeuclid.XEuclid;
 
 public class CRTGroup extends Composite implements Constants {
 
-    private Text resultXText;
-    private Group scrolledInverse;
-    private Composite content;
-
-    private Composite verifyGroup;
-    private Group scrolledVerify;
-    private Group scrolledEquation;
-    private Composite equationGroup;
-    private Composite inverseGroup;
-    private Button previousButton;
-    private Button nextButton;
-    private Button step4nextButton;
-    private Button step3nextButton;
-    private Button step2nextButton;
-    private Button step1nextButton;
-    private Group resultGroup;
-    private Group step4Group;
-    private Group step3Group;
-    private Group step2Group;
-    private Group step1Group;
-    private Text resultMoreText;
-    private Text resultText;
-    private Text resultValueText;
-    private Text step4Text;
-    private Text step3Text;
-    private Text step2Text;
-    private Text step1Text;
-
-    private ChineseRemainderTheorem crt;
-
-    private Equations equations;
-    private int numberOfEquations;
-    private boolean showDialog;
-    private BigInteger result;
-    private ChineseRemainderTheoremView view;
-
-    private Vector<Control> inverseEquationSet;
-    private Vector<Control> verifyEquationSet;
-
-    public static boolean execute;
-    private ScrolledComposite scrolledComposite_1;
-    private ScrolledComposite scrolledComposite_2;
-    private Composite compositeTitleArea;
-    private Label lblHeader;
-    private Text lblHeaderInfoText;
-
-    /**
-     * Create the composite
-     *
-     * @param parent
-     * @param style
-     * @param equations
-     * @param chineseRemainderView
-     */
-    public CRTGroup(Composite parent, int style, final ChineseRemainderTheoremView view) {
-        super(parent, style);
-        this.view = view;
-        setLayout(new FillLayout());
-
-        equations = new Equations();
-        inverseEquationSet = new Vector<Control>();
-        verifyEquationSet = new Vector<Control>();
-
-        final ScrolledComposite scrolledGroup = new ScrolledComposite(this, SWT.V_SCROLL | SWT.H_SCROLL);
-        scrolledGroup.setExpandHorizontal(true);
-        scrolledGroup.setExpandVertical(true);
-
-        content = new Composite(scrolledGroup, SWT.NONE);
-        content.setLayout(new GridLayout(2, false));
-        
-        compositeTitleArea = new Composite(content, SWT.NONE);
-        compositeTitleArea.setLayout(new GridLayout(1, false));
-        compositeTitleArea.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-        compositeTitleArea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-    
-        
-        lblHeader = new Label(compositeTitleArea, SWT.NONE);
-        lblHeader.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        lblHeader.setFont(FontService.getHeaderFont());
-        lblHeader.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-        lblHeader.setText(Messages.CRTGroup_Header);
-        
-        lblHeaderInfoText = new Text(compositeTitleArea, SWT.WRAP | SWT.MULTI | SWT.READ_ONLY);
-        lblHeaderInfoText.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false));
-        lblHeaderInfoText.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-        lblHeaderInfoText.setText(Messages.CRTGroup_HeaderInfoText);
-
-        step1Group = new Group(content, SWT.NONE);
-        final GridLayout gridLayout_step1Group = new GridLayout();
-        gridLayout_step1Group.numColumns = 2;
-        step1Group.setLayout(gridLayout_step1Group);
-        final GridData gd_step1Group = new GridData(SWT.FILL, SWT.FILL, false, false);
-        step1Group.setLayoutData(gd_step1Group);
-        step1Group.setText(MESSAGE_STEP_1_GROUP);
-
-        step1Text = new Text(step1Group, SWT.MULTI);
-        step1Text.setEditable(false);
-//        final GridData gd_step1Text = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2);
-//        GridData gd_step1Text = new GridData(SWT.FILL, SWT.FILL, true, false);
-//        step1Text.setLayoutData(gd_step1Text);
-        step1Text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        step1Text.setText(MESSAGE_STEP1);
-        step1Text.setFont(FontService.getSmallBoldFont());
-//        new Label(step1Group, SWT.NONE);
-
-        step1nextButton = new Button(step1Group, SWT.NONE);
-        step1nextButton.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, true));
-        step1nextButton.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(final SelectionEvent e) {
-                /*
-                 * checks whether all fields are filled
-                 */
-                Vector<Equation> data = equations.getEquationSet();
-                inverseEquationSet.clear();
-                verifyEquationSet.clear();
-                numberOfEquations = data.size();
-
-                String[] tmpATextfield = new String[numberOfEquations];
-                String[] tmpMTextfield = new String[numberOfEquations];
-
-                /*
-                 * the modul always have to be bigger than the parameter a
-                 */
-                BigInteger tmpA = BigInteger.ZERO, tmpM = BigInteger.ONE;
-                try {
-                    for (int i = 0; i < numberOfEquations; i++) {
-                        tmpA = new BigInteger(data.get(i).getTextfieldA());
-                        tmpM = new BigInteger(data.get(i).getTextfieldM());
-                        tmpA = tmpA.mod(tmpM);
-
-                        /*
-                         * Zero is not allowed. we change the value to one if the remainder is zero
-                         */
-                        if (tmpA == BigInteger.ZERO) {
-                            tmpA = BigInteger.ONE;
-                        }
-
-                        data.get(i).setTextfieldA(tmpA.toString());
-                    }
-                } catch (NumberFormatException e1) {
-                    MessageBox mb = new MessageBox(Display.getDefault().getActiveShell(), SWT.ICON_ERROR | SWT.OK);
-                    mb.setText(Messages.CRTGroup_error_no_equations_title);
-                    mb.setMessage(Messages.CRTGroup_error_no_equations_text);
-                    mb.open();
-                    return;
-                }
-
-                /*
-                 * in the array "marking" we store the id of the not paired coprime equations
-                 */
-                int[] marking = new int[numberOfEquations];
-                for (int i = 0; i < marking.length; i++) {
-                    marking[i] = 0;
-                }
-                boolean notFilled = false;
-                for (int i = 0; i < numberOfEquations; i++) {
-                    tmpATextfield[i] = data.get(i).getTextfieldA();
-                    tmpMTextfield[i] = data.get(i).getTextfieldM();
-                    if (data.get(i).getTextfieldA().length() == 0 || data.get(i).getTextfieldM().length() == 0)
-                        notFilled = true;
-
-                }
-                if (notFilled)
-                    return;
-
-                /*
-                 * it is paired compared, whether the "moduli" are paired coprime. if this is not the case, then the
-                 * position of the equation is marked.
-                 */
-                for (int i = 0; i < tmpMTextfield.length; i++) {
-                    BigInteger a = new BigInteger(tmpMTextfield[i]);
-                    for (int j = i + 1; j < tmpMTextfield.length; j++) {
-                        XEuclid gcd = new XEuclid();
-                        BigInteger tmpValue = gcd.xeuclid(a, new BigInteger(tmpMTextfield[j]));
-                        if (tmpValue.compareTo(BigInteger.ONE) != 0) {
-                            marking[j] = -1;
-                        }
-
-                    }
-                }
-
-                /*
-                 * if no equation is marked, then the VerifyDialog not displayed. Otherwise, the
-                 * "CheckingEquationDialog" is displayed for corrections.
-                 */
-                for (int i = 0; i < marking.length; i++) {
-                    if (marking[i] == -1) {
-                        showDialog = true;
-                    }
-                }
-                int dialogStatus = 0;
-
-                /*
-                 * open the Dialog to correct the input
-                 */
-                if (showDialog) {
-                    CheckingEquationDialog ced = new CheckingEquationDialog(getShell(), equations.getEquationSet(),
-                            marking);
-                    dialogStatus = ced.open();
-                }
-
-                /*
-                 * if you closes the "CheckingEquationDialog" by the cancel button, then the ChineseReaminder is not
-                 * computed.
-                 */
-                if (dialogStatus == 0) {
-                    /*
-                     * GUI functionality. Disable or enable widgets
-                     */
-                	step1Text.clearSelection();
-                    step1Text.setFont(FontService.getSmallFont());
-                    step2Text.setFont(FontService.getSmallBoldFont());
-                    execute = true;
-                    step1Group.setEnabled(false);
-                	step1nextButton.setEnabled(false);
-                    step2Group.setEnabled(true);
-                    step2Text.setEnabled(true);
-                    step2nextButton.setEnabled(true);
-                    crt = new ChineseRemainderTheorem();
-                    BigInteger[] a = new BigInteger[numberOfEquations];
-                    BigInteger[] moduli = new BigInteger[numberOfEquations];
-                    for (int i = 0; i < numberOfEquations; i++) {
-                        a[i] = new BigInteger(data.get(i).getTextfieldA());
-                        moduli[i] = new BigInteger(data.get(i).getTextfieldM());
-                    }
-                    /*
-                     * create the equations
-                     */
-                    for (Equation equation : equations.getEquationSet()) {
-                        equation.setEquationEnable(false);
-                    }
-
-                    /*
-                     * store the result
-                     */
-                    result = crt.crt(moduli, a);
-                }
-            }
-        });
-        final GridData gd_step1nextButton = new GridData(SWT.RIGHT, SWT.BOTTOM, false, false);
-        step1nextButton.setLayoutData(gd_step1nextButton);
-        step1nextButton.setText(MESSAGE_STEP_2_GROUP);
-
-        scrolledEquation = new Group(content, SWT.V_SCROLL);
-        scrolledEquation.setLayout(new GridLayout(1, false));
-        scrolledEquation.setText(MESSAGE_GROUP_EQUATION);
-        scrolledEquation.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2));
-
-        ScrolledComposite scrolledComposite = new ScrolledComposite(scrolledEquation, SWT.H_SCROLL | SWT.V_SCROLL);
-
-        GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-        gridData.heightHint = 62;
-        scrolledComposite.setLayoutData(gridData);
-
-        scrolledComposite.setExpandHorizontal(true);
-        scrolledComposite.setExpandVertical(true);
-
-        equationGroup = new Composite(scrolledComposite, SWT.NONE);
-        final GridLayout gridLayout_equationGroup = new GridLayout();
-        gridLayout_equationGroup.numColumns = 7;
-        equationGroup.setLayout(gridLayout_equationGroup);
-        equations.createEquation(0, equationGroup, this);
-        equations.createEquation(1, equationGroup, this);
-        scrolledComposite.setContent(equationGroup);
-
-        step2Group = new Group(content, SWT.NONE);
-        step2Group.setEnabled(false);
-        final GridLayout gridLayout_step2Group = new GridLayout();
-        gridLayout_step2Group.numColumns = 2;
-        step2Group.setLayout(gridLayout_step2Group);
-        step2Group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
-        step2Group.setText(MESSAGE_STEP_2_GROUP);
-
-        step2Text = new Text(step2Group, SWT.MULTI);
-        step2Text.setEnabled(false);
-        step2Text.setEditable(false);
-        step2Text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        step2Text.setText(MESSAGE_STEP2);
-
-        step2nextButton = new Button(step2Group, SWT.NONE);
-        step2nextButton.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, true));
-        step2nextButton.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(final SelectionEvent e) {
-                /*
-                 * GUI functionality disable or enable widgets
-                 */
-            	step2Text.clearSelection();
-                step2Text.setFont(FontService.getSmallFont());
-                step3Text.setFont(FontService.getSmallBoldFont());
-                step2nextButton.setEnabled(false);
-                step2Group.setEnabled(false);
-                step3Group.setEnabled(true);
-                step3Text.setEnabled(true);
-                step3nextButton.setEnabled(true);
-
-                /*
-                 * create the inverse-group
-                 */
-                BigInteger[] bigM = crt.getBigM();
-
-                for (int i = -1; i < bigM.length; i++) {
-                    if (i == -1) {
-                        Label mLabel = new Label(inverseGroup, SWT.NONE);
-                        mLabel.setText("m"); //$NON-NLS-1$
-                        mLabel.setVisible(false);
-
-                        Label equivalenzLabel = new Label(inverseGroup, SWT.NONE);
-                        equivalenzLabel.setText("="); //$NON-NLS-1$
-                        equivalenzLabel.setVisible(false);
-
-                        Text mText = new Text(inverseGroup, SWT.READ_ONLY | SWT.BORDER);
-                        mText.setText(crt.getModulus().toString());
-                        final GridData gd_mText = new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1);
-                        gd_mText.widthHint = 267;
-                        mText.setLayoutData(gd_mText);
-                        mText.setVisible(false);
-
-                        inverseEquationSet.add(mLabel);
-                        inverseEquationSet.add(equivalenzLabel);
-                        inverseEquationSet.add(mText);
-
-                    } else {
-
-                        Label mLabel = new Label(inverseGroup, SWT.NONE);
-                        mLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-                        mLabel.setText("M" + convertToSubset(i)); //$NON-NLS-1$
-                        mLabel.setVisible(false);
-
-                        Label equivalenzLabelFront = new Label(inverseGroup, SWT.NONE);
-                        equivalenzLabelFront.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-                        equivalenzLabelFront.setText("="); //$NON-NLS-1$
-                        equivalenzLabelFront.setVisible(false);
-
-                        Text mText = new Text(inverseGroup, SWT.READ_ONLY | SWT.BORDER);
-                        mText.setEditable(false);
-                        final GridData gd_mText = new GridData(SWT.FILL, SWT.CENTER, false, false);
-                        gd_mText.widthHint = 140;
-                        mText.setLayoutData(gd_mText);
-                        mText.setText(crt.getBigM()[i].toString());
-                        mText.setVisible(false);
-
-                        Label yLabel = new Label(inverseGroup, SWT.NONE);
-                        yLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
-                        yLabel.setText("y" + convertToSubset(i)); //$NON-NLS-1$
-                        yLabel.setVisible(false);
-
-                        Label equivalenzLabelBack = new Label(inverseGroup, SWT.NONE);
-                        equivalenzLabelBack.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-                        equivalenzLabelBack.setText("="); //$NON-NLS-1$
-                        equivalenzLabelBack.setVisible(false);
-
-                        Text yText = new Text(inverseGroup, SWT.READ_ONLY | SWT.BORDER);
-                        yText.setEditable(false);
-                        yText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-                        yText.setText(crt.getInverse()[i].toString());
-                        yText.setVisible(false);
-
-                        inverseEquationSet.add(mLabel);
-                        inverseEquationSet.add(equivalenzLabelFront);
-                        inverseEquationSet.add(mText);
-                        inverseEquationSet.add(yLabel);
-                        inverseEquationSet.add(equivalenzLabelBack);
-                        inverseEquationSet.add(yText);
-
-                    }
-                }
-                /*
-                 * expand the scolledComposite for better look
-                 */
-                if (numberOfEquations <= 4) {
-                    scrolledComposite_1.setExpandVertical(true);
-                } else {
-                    scrolledComposite_1.setExpandVertical(false);
-                }
-                inverseGroup.pack();
-
-                /*
-                 * make the widgets visible. the first three widgets always have to be visible
-                 */
-                for (int i = 0; i < inverseEquationSet.size(); i++) {
-                    /*
-                     * make only the left side visible
-                     */
-                    if (i == 0 || i == 1 || i == 2 || i % 6 == 3 || i % 6 == 4 || i % 6 == 5) {
-                        inverseEquationSet.get(i).setVisible(true);
-                    }
-                }
-            }
-        });
-        step2nextButton.setEnabled(false);
-        final GridData gd_step2nextButton = new GridData(SWT.RIGHT, SWT.BOTTOM, false, false);
-        step2nextButton.setLayoutData(gd_step2nextButton);
-        step2nextButton.setText(MESSAGE_STEP_3_GROUP);
-
-        step3Group = new Group(content, SWT.NONE);
-        step3Group.setEnabled(false);
-        final GridData gd_step3Group = new GridData(SWT.FILL, SWT.FILL, false, false);
-        step3Group.setLayoutData(gd_step3Group);
-        step3Group.setText(MESSAGE_STEP_3_GROUP);
-        final GridLayout gridLayout_step3Group = new GridLayout();
-        gridLayout_step3Group.numColumns = 2;
-        step3Group.setLayout(gridLayout_step3Group);
-
-        step3Text = new Text(step3Group, SWT.MULTI);
-        step3Text.setEnabled(false);
-        step3Text.setEditable(false);
-        step3Text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        step3Text.setText(MESSAGE_STEP3);
-
-        step3nextButton = new Button(step3Group, SWT.NONE);
-        step3nextButton.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, true));
-        step3nextButton.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(final SelectionEvent e) {
-                /*
-                 * GUI functionality. Disable or enable widgets
-                 */
-            	step3Text.clearSelection();
-                step3Text.setFont(FontService.getSmallFont());
-                step4Text.setFont(FontService.getSmallBoldFont());
-                step3nextButton.setEnabled(false);
-                step3Group.setEnabled(false);
-                step4Group.setEnabled(true);
-                step4Text.setEnabled(true);
-                step4nextButton.setEnabled(true);
-                nextButton.setVisible(true);
-
-                /*
-                 * make the widgets visible.
-                 */
-                for (int i = 3; i < inverseEquationSet.size(); i++) {
-                    /*
-                     * make only the left side visible
-                     */
-                    if (i % 6 == 0 || i % 6 == 1 || i % 6 == 2) {
-                        inverseEquationSet.get(i).setVisible(true);
-                    }
-                }
-            }
-        });
-        step3nextButton.setEnabled(false);
-        final GridData gd_step3nextButton = new GridData(SWT.RIGHT, SWT.BOTTOM, false, false);
-        step3nextButton.setLayoutData(gd_step3nextButton);
-        step3nextButton.setText(MESSAGE_STEP_4_GROUP);
-
-        scrolledInverse = new Group(content, SWT.V_SCROLL);
-        scrolledInverse.setLayout(new GridLayout(1, false));
-        scrolledInverse.setText("Inverse"); //$NON-NLS-1$
-
-        GridData gridData_1 = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2);
-        gridData_1.heightHint = 170;
-        scrolledInverse.setLayoutData(gridData_1);
-
-        scrolledComposite_1 = new ScrolledComposite(scrolledInverse, SWT.H_SCROLL | SWT.V_SCROLL);
-        scrolledComposite_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        scrolledComposite_1.setExpandHorizontal(true);
-        scrolledComposite_1.setExpandVertical(true);
-
-        inverseGroup = new Composite(scrolledComposite_1, SWT.NONE);
-        final GridLayout gridLayout_1 = new GridLayout();
-        gridLayout_1.numColumns = 6;
-        inverseGroup.setLayout(gridLayout_1);
-        scrolledComposite_1.setContent(inverseGroup);
-        scrolledComposite_1.setMinSize(inverseGroup.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-
-        step4Group = new Group(content, SWT.NONE);
-        step4Group.setEnabled(false);
-        final GridData gd_step4Group = new GridData(SWT.FILL, SWT.FILL, false, false);
-        step4Group.setLayoutData(gd_step4Group);
-        step4Group.setText(MESSAGE_STEP_4_GROUP);
-        final GridLayout gridLayout_step4Group = new GridLayout();
-        gridLayout_step4Group.numColumns = 2;
-        step4Group.setLayout(gridLayout_step4Group);
-
-        step4Text = new Text(step4Group, SWT.MULTI);
-        step4Text.setEnabled(false);
-        step4Text.setEditable(false);
-        step4Text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        step4Text.setText(MESSAGE_STEP4);
-
-        step4nextButton = new Button(step4Group, SWT.NONE);
-        step4nextButton.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, true));
-        step4nextButton.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(final SelectionEvent e) {
-                /*
-                 * GUI functionality. Disable or enable widgets
-                 */
-            	step4Text.clearSelection();
-                step4Text.setFont(FontService.getSmallFont());
-                resultXText.setFont(FontService.getSmallBoldFont());
-                resultText.setFont(FontService.getSmallBoldFont());
-                resultValueText.setFont(FontService.getSmallBoldFont());
-                resultMoreText.setFont(FontService.getSmallBoldFont());
-                step4nextButton.setEnabled(false);
-                step4Group.setEnabled(false);
-                resultGroup.setEnabled(true);
-                resultXText.setEnabled(true);
-                resultText.setEnabled(true);
-                resultValueText.setEnabled(true);
-                resultMoreText.setEnabled(true);
-                nextButton.setEnabled(true);
-                previousButton.setEnabled(false);
-
-                /*
-                 * create the verify-group
-                 */
-                resultValueText.setText(result.toString());
-
-                Vector<Equation> equationSet = equations.getEquationSet();
-                for (Equation equation : equationSet) {
-                    Text resultText = new Text(verifyGroup, SWT.READ_ONLY | SWT.BORDER);
-                    final GridData gd_resultText = new GridData(SWT.FILL, SWT.CENTER, true, false);
-                    gd_resultText.widthHint = 121;
-                    resultText.setLayoutData(gd_resultText);
-                    resultText.setText(result.toString());
-
-                    Label cLabel = new Label(verifyGroup, SWT.NONE);
-                    cLabel.setText(uCongruence);
-
-                    Text aText = new Text(verifyGroup, SWT.READ_ONLY | SWT.BORDER);
-                    final GridData gd_aText = new GridData(SWT.FILL, SWT.CENTER, false, false);
-                    gd_aText.widthHint = 51;
-                    aText.setLayoutData(gd_aText);
-                    aText.setText(equation.getTextfieldA());
-
-                    Label modLabel = new Label(verifyGroup, SWT.NONE);
-                    modLabel.setText("mod"); //$NON-NLS-1$
-
-                    Text mText = new Text(verifyGroup, SWT.READ_ONLY | SWT.BORDER);
-                    final GridData gd_mText = new GridData(SWT.FILL, SWT.CENTER, false, false);
-                    gd_mText.widthHint = 51;
-                    mText.setLayoutData(gd_mText);
-                    mText.setText(equation.getTextfieldM());
-
-                    verifyEquationSet.add(resultText);
-                    verifyEquationSet.add(cLabel);
-                    verifyEquationSet.add(aText);
-                    verifyEquationSet.add(modLabel);
-                    verifyEquationSet.add(mText);
-
-                }
-                if (numberOfEquations <= 4) {
-                    scrolledComposite_2.setExpandVertical(true);
-                } else {
-                    scrolledComposite_2.setExpandVertical(false);
-                }
-                verifyGroup.pack();
-
-                /*
-                 * enable the export menu
-                 */
-                view.enableMenu(true);
-
-            }
-        });
-        step4nextButton.setEnabled(false);
-        final GridData gd_step4nextButton = new GridData(SWT.RIGHT, SWT.BOTTOM, false, false);
-        step4nextButton.setLayoutData(gd_step4nextButton);
-        step4nextButton.setText(MESSAGE_RESULT_GROUP);
-
-        resultGroup = new Group(content, SWT.NONE);
-        resultGroup.setEnabled(false);
-        final GridData gd_resultGroup = new GridData(SWT.FILL, SWT.FILL, false, false);
-        resultGroup.setLayoutData(gd_resultGroup);
-        resultGroup.setText(MESSAGE_RESULT_GROUP);
-        final GridLayout gridLayout_resultGroup = new GridLayout();
-        gridLayout_resultGroup.numColumns = 4;
-        resultGroup.setLayout(gridLayout_resultGroup);
-
-        resultText = new Text(resultGroup, SWT.NONE);
-        resultText.setEnabled(false);
-        resultText.setEditable(false);
-        resultText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 4, 1));
-        resultText.setText(MESSAGE_RESULT);
-        resultText.setFont(FontService.getSmallFont());
-
-        resultXText = new Text(resultGroup, SWT.READ_ONLY);
-        resultXText.setEditable(false);
-        resultXText.setEnabled(false);
-        resultXText.setText(Messages.CRTGroup_0);
-        resultText.setFont(FontService.getSmallFont());
-        final GridData gd_resultXText = new GridData(SWT.CENTER, SWT.CENTER, false, false);
-        resultXText.setLayoutData(gd_resultXText);
-
-        resultValueText = new Text(resultGroup, SWT.READ_ONLY | SWT.BORDER);
-        resultValueText.setEditable(false);
-        resultValueText.setEnabled(false);
-        resultValueText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
-
-        resultMoreText = new Text(resultGroup, SWT.MULTI);
-        resultMoreText.setEnabled(false);
-        resultMoreText.setEditable(false);
-        resultMoreText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 2, 1));
-        resultMoreText.setText(MESSAGE_MORE_SOLUTION);
-        resultMoreText.setFont(FontService.getSmallFont());
-
-        previousButton = new Button(resultGroup, SWT.NONE);
-        previousButton.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(final SelectionEvent e) {
-                /*
-                 * change the result value in the verify-group
-                 */
-                BigInteger tmpValue = new BigInteger(resultValueText.getText());
-                tmpValue = tmpValue.subtract(crt.getModulus());
-
-                if (tmpValue.subtract(crt.getModulus()).compareTo(BigInteger.ZERO) < 0) {
-                    previousButton.setEnabled(false);
-                }
-
-                resultValueText.setText(tmpValue.toString());
-
-                for (int i = 0; i < verifyEquationSet.size(); i++) {
-                    if (i % 5 == 0) {
-                        Text tmpText = (Text) verifyEquationSet.get(i);
-                        tmpText.setText(tmpValue.toString());
-                    }
-                }
-            }
-        });
-        previousButton.setEnabled(false);
-        previousButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-        previousButton.setText(MESSAGE_PREVIOUS);
-        
-        nextButton = new Button(resultGroup, SWT.NONE);
-        nextButton.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(final SelectionEvent e) {
-                /*
-                 * change the result value in the verify-group
-                 */
-                BigInteger tmpValue = new BigInteger(resultValueText.getText());
-                tmpValue = tmpValue.add(crt.getModulus());
-                resultValueText.setText(tmpValue.toString());
-
-                for (int i = 0; i < verifyEquationSet.size(); i++) {
-                    if (i % 5 == 0) {
-                        Text tmpText = (Text) verifyEquationSet.get(i);
-                        tmpText.setText(tmpValue.toString());
-                    }
-                }
-                previousButton.setEnabled(true);
-            }
-        });
-        nextButton.setEnabled(false);
-        nextButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-        nextButton.setText(MESSAGE_NEXT);
-
-        scrolledVerify = new Group(content, SWT.V_SCROLL);
-        scrolledVerify.setText(MESSAGE_VERIFY_GROUP);
-        scrolledVerify.setLayout(new GridLayout(1, false));
-        final GridData gd_scrolledVerify = new GridData(SWT.FILL, SWT.FILL, true, false);
-        gd_scrolledVerify.heightHint = 102;
-        scrolledVerify.setLayoutData(gd_scrolledVerify);
-
-        scrolledComposite_2 = new ScrolledComposite(scrolledVerify, SWT.H_SCROLL | SWT.V_SCROLL);
-        scrolledComposite_2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        scrolledComposite_2.setExpandHorizontal(true);
-        scrolledComposite_2.setExpandVertical(true);
-
-        verifyGroup = new Composite(scrolledComposite_2, SWT.NONE);
-        final GridLayout gridLayout_verifyGroup = new GridLayout();
-        gridLayout_verifyGroup.numColumns = 5;
-        verifyGroup.setLayout(gridLayout_verifyGroup);
-        scrolledComposite_2.setContent(verifyGroup);
-
-        step2Text.setFont(FontService.getSmallFont());
-        step3Text.setFont(FontService.getSmallFont());
-        step4Text.setFont(FontService.getSmallFont());
-        new Label(content, SWT.NONE);
-
-        scrolledGroup.setContent(content);
-        scrolledGroup.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-        
-        setDefaultValues();
-    }
-
-    private void setDefaultValues() {
-    	equations.getEquationSet().elementAt(0).setTextfieldA("2");
-    	equations.getEquationSet().elementAt(0).setTextfieldM("5");
-    	
-    	equations.getEquationSet().elementAt(1).setTextfieldA("3");
-    	equations.getEquationSet().elementAt(1).setTextfieldM("7");	
+	public static boolean execute;
+
+	private Composite content;
+	private Composite verifyGroup;
+	private Group scrolledVerify;
+	private Group scrolledEquation;
+	private Group scrolledInverse;
+	private Composite equationGroup;
+	private Composite inverseGroup;
+	private Button previousButton;
+	private Button nextButton;
+	private Button reset;
+	private Button step4nextButton;
+	private Button step3nextButton;
+	private Button step2nextButton;
+	private Button step1nextButton;
+	private Group resultGroup;
+	private Group step4Group;
+	private Group step3Group;
+	private Group step2Group;
+	private Group step1Group;
+	private Text resultMoreText;
+	private Text resultText;
+	private Text resultValueText;
+	private Text resultXText;
+	private Text step4Text;
+	private Text step3Text;
+	private Text step2Text;
+
+	private Text step1Text;
+
+	private ChineseRemainderTheorem crt;
+	private Equations equations;
+	private int numberOfEquations;
+	private boolean showDialog;
+	private BigInteger result;
+
+	private ChineseRemainderTheoremView view;
+	private Vector<Control> inverseEquationSet;
+
+	private Vector<Control> verifyEquationSet;
+	private ScrolledComposite scrolledComposite_1;
+	private ScrolledComposite scrolledComposite_2;
+	private Composite compositeTitleArea;
+	private Label lblHeader;
+	private Text lblHeaderInfoText;
+
+	/**
+	 * Create the composite
+	 *
+	 * @param parent
+	 * @param style
+	 * @param equations
+	 * @param chineseRemainderView
+	 */
+	public CRTGroup(Composite parent, int style, final ChineseRemainderTheoremView view) {
+		super(parent, style);
+		this.view = view;
+		setLayout(new FillLayout());
+
+		equations = new Equations();
+		inverseEquationSet = new Vector<Control>();
+		verifyEquationSet = new Vector<Control>();
+
+		ScrolledComposite scrolledGroup = new ScrolledComposite(this, SWT.V_SCROLL | SWT.H_SCROLL);
+		scrolledGroup.setExpandHorizontal(true);
+		scrolledGroup.setExpandVertical(true);
+
+		content = new Composite(scrolledGroup, SWT.NONE);
+		content.setLayout(new GridLayout(2, false));
+
+		compositeTitleArea = new Composite(content, SWT.NONE);
+		compositeTitleArea.setLayout(new GridLayout(1, false));
+		compositeTitleArea.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+		compositeTitleArea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+
+		lblHeader = new Label(compositeTitleArea, SWT.NONE);
+		lblHeader.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		lblHeader.setFont(FontService.getHeaderFont());
+		lblHeader.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+		lblHeader.setText(Messages.CRTGroup_Header);
+
+		lblHeaderInfoText = new Text(compositeTitleArea, SWT.WRAP | SWT.MULTI | SWT.READ_ONLY);
+		lblHeaderInfoText.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false));
+		lblHeaderInfoText.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+		lblHeaderInfoText.setText(Messages.CRTGroup_HeaderInfoText);
+
+		step1Group = new Group(content, SWT.NONE);
+		step1Group.setLayout(new GridLayout(2, false));
+		step1Group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		step1Group.setText(MESSAGE_STEP_1_GROUP);
+
+		step1Text = new Text(step1Group, SWT.MULTI);
+		step1Text.setEditable(false);
+		step1Text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		step1Text.setText(MESSAGE_STEP1);
+		step1Text.setFont(FontService.getSmallBoldFont());
+
+		step1nextButton = new Button(step1Group, SWT.NONE);
+		step1nextButton.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, true));
+		step1nextButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent e) {
+				/*
+				 * checks whether all fields are filled
+				 */
+				Vector<Equation> data = equations.getEquationSet();
+				inverseEquationSet.clear();
+				verifyEquationSet.clear();
+				numberOfEquations = data.size();
+
+				String[] tmpATextfield = new String[numberOfEquations];
+				String[] tmpMTextfield = new String[numberOfEquations];
+
+				/*
+				 * the modul always have to be bigger than the parameter a
+				 */
+				BigInteger tmpA = BigInteger.ZERO, tmpM = BigInteger.ONE;
+				try {
+					for (int i = 0; i < numberOfEquations; i++) {
+						tmpA = new BigInteger(data.get(i).getTextfieldA());
+						tmpM = new BigInteger(data.get(i).getTextfieldM());
+						tmpA = tmpA.mod(tmpM);
+					}
+				} catch (NumberFormatException e1) {
+					MessageBox mb = new MessageBox(Display.getDefault().getActiveShell(), SWT.ICON_ERROR | SWT.OK);
+					mb.setText(Messages.CRTGroup_error_no_equations_title);
+					mb.setMessage(Messages.CRTGroup_error_no_equations_text);
+					mb.open();
+					return;
+				}
+
+				/*
+				 * in the array "marking" we store the id of the not paired coprime equations
+				 */
+				int[] marking = new int[numberOfEquations];
+				for (int i = 0; i < marking.length; i++) {
+					marking[i] = 0;
+				}
+				boolean notFilled = false;
+				for (int i = 0; i < numberOfEquations; i++) {
+					tmpATextfield[i] = data.get(i).getTextfieldA();
+					tmpMTextfield[i] = data.get(i).getTextfieldM();
+					if (data.get(i).getTextfieldA().length() == 0 || data.get(i).getTextfieldM().length() == 0)
+						notFilled = true;
+
+				}
+				if (notFilled)
+					return;
+
+				/*
+				 * it is paired compared, whether the "moduli" are paired coprime. if this is
+				 * not the case, then the position of the equation is marked.
+				 */
+				for (int i = 0; i < tmpMTextfield.length; i++) {
+					BigInteger a = new BigInteger(tmpMTextfield[i]);
+					for (int j = i + 1; j < tmpMTextfield.length; j++) {
+						XEuclid gcd = new XEuclid();
+						BigInteger tmpValue = gcd.xeuclid(a, new BigInteger(tmpMTextfield[j]));
+						if (tmpValue.compareTo(BigInteger.ONE) != 0) {
+							marking[j] = -1;
+						}
+
+					}
+				}
+
+				/*
+				 * if no equation is marked, then the VerifyDialog not displayed. Otherwise, the
+				 * "CheckingEquationDialog" is displayed for corrections.
+				 */
+				for (int i = 0; i < marking.length; i++) {
+					if (marking[i] == -1) {
+						showDialog = true;
+					}
+				}
+				int dialogStatus = 0;
+
+				/*
+				 * open the Dialog to correct the input
+				 */
+				if (showDialog) {
+					CheckingEquationDialog ced = new CheckingEquationDialog(getShell(), equations.getEquationSet(),
+							marking);
+					dialogStatus = ced.open();
+				}
+
+				/*
+				 * if you closes the "CheckingEquationDialog" by the cancel button, then the
+				 * ChineseReaminder is not computed.
+				 */
+				if (dialogStatus == 0) {
+					/*
+					 * GUI functionality. Disable or enable widgets
+					 */
+					reset.setEnabled(true);
+					step1Text.clearSelection();
+					step1Text.setFont(FontService.getSmallFont());
+					step2Text.setFont(FontService.getSmallBoldFont());
+					execute = true;
+					step1Group.setEnabled(false);
+					step1nextButton.setEnabled(false);
+					step2Group.setEnabled(true);
+					step2Text.setEnabled(true);
+					step2nextButton.setEnabled(true);
+					crt = new ChineseRemainderTheorem();
+					BigInteger[] a = new BigInteger[numberOfEquations];
+					BigInteger[] moduli = new BigInteger[numberOfEquations];
+					for (int i = 0; i < numberOfEquations; i++) {
+						a[i] = new BigInteger(data.get(i).getTextfieldA());
+						moduli[i] = new BigInteger(data.get(i).getTextfieldM());
+					}
+					/*
+					 * create the equations
+					 */
+					for (Equation equation : equations.getEquationSet()) {
+						equation.setEquationEnable(false);
+					}
+
+					/*
+					 * store the result
+					 */
+					result = crt.crt(moduli, a);
+				}
+			}
+		});
+		step1nextButton.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, false));
+		step1nextButton.setText(MESSAGE_NEXT_STEP);
+
+		scrolledEquation = new Group(content, SWT.NONE);
+		scrolledEquation.setLayout(new GridLayout());
+		scrolledEquation.setText(MESSAGE_GROUP_EQUATION);
+		GridData gd_scrolledEquation = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2);
+		gd_scrolledEquation.heightHint = 100;
+		scrolledEquation.setLayoutData(gd_scrolledEquation);
+
+		ScrolledComposite scrolledComposite = new ScrolledComposite(scrolledEquation, SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		scrolledComposite.setExpandHorizontal(true);
+		scrolledComposite.setExpandVertical(true);
+
+		equationGroup = new Composite(scrolledComposite, SWT.NONE);
+		equationGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		equationGroup.setLayout(new GridLayout(7, false));
+
+		reset = new Button(equationGroup, SWT.PUSH);
+		reset.setEnabled(false);
+		reset.setText(MESSAGE_CHANGE_VALUES);
+		reset.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, true, false, 7, 1));
+		reset.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				reset();
+			}
+		});
+
+		equations.createEquation(0, equationGroup, this);
+		equations.createEquation(1, equationGroup, this);
+
+		scrolledComposite.setContent(equationGroup);
+
+		step2Group = new Group(content, SWT.NONE);
+		step2Group.setEnabled(false);
+		step2Group.setLayout(new GridLayout(2, false));
+		step2Group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		step2Group.setText(MESSAGE_STEP_2_GROUP);
+
+		step2Text = new Text(step2Group, SWT.MULTI);
+		step2Text.setEnabled(false);
+		step2Text.setEditable(false);
+		step2Text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		step2Text.setText(MESSAGE_STEP2);
+
+		step2nextButton = new Button(step2Group, SWT.NONE);
+		step2nextButton.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, true));
+		step2nextButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent e) {
+				/*
+				 * GUI functionality disable or enable widgets
+				 */
+				step2Text.clearSelection();
+				step2Text.setFont(FontService.getSmallFont());
+				step3Text.setFont(FontService.getSmallBoldFont());
+				step2nextButton.setEnabled(false);
+				step2Group.setEnabled(false);
+				step3Group.setEnabled(true);
+				step3Text.setEnabled(true);
+				step3nextButton.setEnabled(true);
+
+				/*
+				 * create the inverse-group
+				 */
+				BigInteger[] bigM = crt.getBigM();
+
+				for (int i = -1; i < bigM.length; i++) {
+					if (i == -1) {
+						Label mLabel = new Label(inverseGroup, SWT.NONE);
+						mLabel.setText("m"); //$NON-NLS-1$
+						mLabel.setVisible(false);
+
+						Label equivalenzLabel = new Label(inverseGroup, SWT.NONE);
+						equivalenzLabel.setText("="); //$NON-NLS-1$
+						equivalenzLabel.setVisible(false);
+
+						Text mText = new Text(inverseGroup, SWT.READ_ONLY | SWT.BORDER);
+						mText.setText(crt.getModulus().toString());
+						GridData gd_mText = new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1);
+						gd_mText.widthHint = 267;
+						mText.setLayoutData(gd_mText);
+						mText.setVisible(false);
+
+						inverseEquationSet.add(mLabel);
+						inverseEquationSet.add(equivalenzLabel);
+						inverseEquationSet.add(mText);
+
+					} else {
+
+						Label mLabel = new Label(inverseGroup, SWT.NONE);
+						mLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+						mLabel.setText("M" + convertToSubset(i)); //$NON-NLS-1$
+						mLabel.setVisible(false);
+
+						Label equivalenzLabelFront = new Label(inverseGroup, SWT.NONE);
+						equivalenzLabelFront.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+						equivalenzLabelFront.setText("="); //$NON-NLS-1$
+						equivalenzLabelFront.setVisible(false);
+
+						Text mText = new Text(inverseGroup, SWT.READ_ONLY | SWT.BORDER);
+						mText.setEditable(false);
+						GridData gd_mText = new GridData(SWT.FILL, SWT.CENTER, false, false);
+						gd_mText.widthHint = 180;
+						mText.setLayoutData(gd_mText);
+						mText.setText(crt.getBigM()[i].toString());
+						mText.setVisible(false);
+
+						Label yLabel = new Label(inverseGroup, SWT.NONE);
+						yLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+						yLabel.setText("y" + convertToSubset(i)); //$NON-NLS-1$
+						yLabel.setVisible(false);
+
+						Label equivalenzLabelBack = new Label(inverseGroup, SWT.NONE);
+						equivalenzLabelBack.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+						equivalenzLabelBack.setText("="); //$NON-NLS-1$
+						equivalenzLabelBack.setVisible(false);
+
+						Text yText = new Text(inverseGroup, SWT.READ_ONLY | SWT.BORDER);
+						yText.setEditable(false);
+						yText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+						yText.setText(crt.getInverse()[i].toString());
+						yText.setVisible(false);
+
+						inverseEquationSet.add(mLabel);
+						inverseEquationSet.add(equivalenzLabelFront);
+						inverseEquationSet.add(mText);
+						inverseEquationSet.add(yLabel);
+						inverseEquationSet.add(equivalenzLabelBack);
+						inverseEquationSet.add(yText);
+
+					}
+				}
+				/*
+				 * expand the scolledComposite for better look
+				 */
+				inverseGroup.layout();
+				scrolledComposite_1.setMinSize(inverseGroup.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+
+				/*
+				 * make the widgets visible. the first three widgets always have to be visible
+				 */
+				for (int i = 0; i < inverseEquationSet.size(); i++) {
+					/*
+					 * make only the left side visible
+					 */
+					if (i == 0 || i == 1 || i == 2 || i % 6 == 3 || i % 6 == 4 || i % 6 == 5) {
+						inverseEquationSet.get(i).setVisible(true);
+					}
+				}
+			}
+		});
+		step2nextButton.setEnabled(false);
+		step2nextButton.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, false));
+		step2nextButton.setText(MESSAGE_NEXT_STEP);
+
+		step3Group = new Group(content, SWT.NONE);
+		step3Group.setEnabled(false);
+		step3Group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		step3Group.setText(MESSAGE_STEP_3_GROUP);
+		step3Group.setLayout(new GridLayout(2, false));
+
+		step3Text = new Text(step3Group, SWT.MULTI);
+		step3Text.setEnabled(false);
+		step3Text.setEditable(false);
+		step3Text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		step3Text.setText(MESSAGE_STEP3);
+
+		step3nextButton = new Button(step3Group, SWT.NONE);
+		step3nextButton.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, true));
+		step3nextButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent e) {
+				/*
+				 * GUI functionality. Disable or enable widgets
+				 */
+				step3Text.clearSelection();
+				step3Text.setFont(FontService.getSmallFont());
+				step4Text.setFont(FontService.getSmallBoldFont());
+				step3nextButton.setEnabled(false);
+				step3Group.setEnabled(false);
+				step4Group.setEnabled(true);
+				step4Text.setEnabled(true);
+				step4nextButton.setEnabled(true);
+				nextButton.setVisible(true);
+
+				/*
+				 * make the widgets visible.
+				 */
+				for (int i = 3; i < inverseEquationSet.size(); i++) {
+					/*
+					 * make only the left side visible
+					 */
+					if (i % 6 == 0 || i % 6 == 1 || i % 6 == 2) {
+						inverseEquationSet.get(i).setVisible(true);
+					}
+				}
+			}
+		});
+		step3nextButton.setEnabled(false);
+		step3nextButton.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, false));
+		step3nextButton.setText(MESSAGE_NEXT_STEP);
+
+		scrolledInverse = new Group(content, SWT.V_SCROLL);
+		scrolledInverse.setLayout(new GridLayout(1, false));
+		scrolledInverse.setText("Inverse"); //$NON-NLS-1$
+		GridData gd_scrolledInverse = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2);
+		gd_scrolledInverse.verticalIndent = 20;
+		scrolledInverse.setLayoutData(gd_scrolledInverse);
+
+		scrolledComposite_1 = new ScrolledComposite(scrolledInverse, SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		scrolledComposite_1.setExpandHorizontal(true);
+		scrolledComposite_1.setExpandVertical(true);
+
+		inverseGroup = new Composite(scrolledComposite_1, SWT.NONE);
+		inverseGroup.setLayout(new GridLayout(6, false));
+		scrolledComposite_1.setContent(inverseGroup);
+
+		step4Group = new Group(content, SWT.NONE);
+		step4Group.setEnabled(false);
+		step4Group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		step4Group.setText(MESSAGE_STEP_4_GROUP);
+		step4Group.setLayout(new GridLayout(2, false));
+
+		step4Text = new Text(step4Group, SWT.MULTI);
+		step4Text.setEnabled(false);
+		step4Text.setEditable(false);
+		step4Text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		step4Text.setText(MESSAGE_STEP4);
+
+		step4nextButton = new Button(step4Group, SWT.NONE);
+		step4nextButton.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, true));
+		step4nextButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent e) {
+				/*
+				 * GUI functionality. Disable or enable widgets
+				 */
+				step4Text.clearSelection();
+				step4Text.setFont(FontService.getSmallFont());
+				resultXText.setFont(FontService.getSmallBoldFont());
+				resultText.setFont(FontService.getSmallBoldFont());
+				resultValueText.setFont(FontService.getSmallBoldFont());
+				resultMoreText.setFont(FontService.getSmallBoldFont());
+				step4nextButton.setEnabled(false);
+				step4Group.setEnabled(false);
+				resultGroup.setEnabled(true);
+				resultXText.setEnabled(true);
+				resultText.setEnabled(true);
+				resultValueText.setEnabled(true);
+				resultMoreText.setEnabled(true);
+				nextButton.setEnabled(true);
+				previousButton.setEnabled(false);
+
+				/*
+				 * create the verify-group
+				 */
+				resultValueText.setText(result.toString());
+
+				Vector<Equation> equationSet = equations.getEquationSet();
+				for (Equation equation : equationSet) {
+					Text resultText = new Text(verifyGroup, SWT.READ_ONLY | SWT.BORDER);
+					GridData gd_resultText = new GridData(SWT.FILL, SWT.CENTER, true, false);
+					gd_resultText.widthHint = 121;
+					resultText.setLayoutData(gd_resultText);
+					resultText.setText(result.toString());
+
+					Label cLabel = new Label(verifyGroup, SWT.NONE);
+					cLabel.setText(uCongruence);
+
+					Text aText = new Text(verifyGroup, SWT.READ_ONLY | SWT.BORDER);
+					GridData gd_aText = new GridData(SWT.FILL, SWT.CENTER, false, false);
+					gd_aText.widthHint = 51;
+					aText.setLayoutData(gd_aText);
+					aText.setText(equation.getTextfieldA());
+
+					Label modLabel = new Label(verifyGroup, SWT.NONE);
+					modLabel.setText("mod"); //$NON-NLS-1$
+
+					Text mText = new Text(verifyGroup, SWT.READ_ONLY | SWT.BORDER);
+					GridData gd_mText = new GridData(SWT.FILL, SWT.CENTER, true, false);
+					gd_mText.widthHint = 51;
+					mText.setLayoutData(gd_mText);
+					mText.setText(equation.getTextfieldM());
+
+					verifyEquationSet.add(resultText);
+					verifyEquationSet.add(cLabel);
+					verifyEquationSet.add(aText);
+					verifyEquationSet.add(modLabel);
+					verifyEquationSet.add(mText);
+
+				}
+
+				scrolledComposite_2.setMinSize(verifyGroup.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				verifyGroup.pack();
+
+				/*
+				 * enable the export menu
+				 */
+				view.enableMenu(true);
+
+			}
+		});
+		step4nextButton.setEnabled(false);
+		step4nextButton.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, false));
+		step4nextButton.setText(MESSAGE_RESULT_GROUP);
+
+		resultGroup = new Group(content, SWT.NONE);
+		resultGroup.setEnabled(false);
+		resultGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		resultGroup.setText(MESSAGE_RESULT_GROUP);
+		resultGroup.setLayout(new GridLayout(4, false));
+
+		resultText = new Text(resultGroup, SWT.NONE);
+		resultText.setEnabled(false);
+		resultText.setEditable(false);
+		resultText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 4, 1));
+		resultText.setText(MESSAGE_RESULT);
+		resultText.setFont(FontService.getSmallFont());
+
+		resultXText = new Text(resultGroup, SWT.READ_ONLY);
+		resultXText.setEditable(false);
+		resultXText.setEnabled(false);
+		resultXText.setText(Messages.CRTGroup_0);
+		resultText.setFont(FontService.getSmallFont());
+		resultXText.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true));
+
+		resultValueText = new Text(resultGroup, SWT.READ_ONLY | SWT.BORDER);
+		resultValueText.setEditable(false);
+		resultValueText.setEnabled(false);
+		resultValueText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 3, 1));
+
+		resultMoreText = new Text(resultGroup, SWT.MULTI);
+		resultMoreText.setEnabled(false);
+		resultMoreText.setEditable(false);
+		resultMoreText.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 2, 1));
+		resultMoreText.setText(MESSAGE_MORE_SOLUTION);
+		resultMoreText.setFont(FontService.getSmallFont());
+
+		previousButton = new Button(resultGroup, SWT.NONE);
+		previousButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent e) {
+				/*
+				 * change the result value in the verify-group
+				 */
+				BigInteger tmpValue = new BigInteger(resultValueText.getText());
+				tmpValue = tmpValue.subtract(crt.getModulus());
+
+				if (tmpValue.subtract(crt.getModulus()).compareTo(BigInteger.ZERO) < 0) {
+					previousButton.setEnabled(false);
+				}
+
+				resultValueText.setText(tmpValue.toString());
+
+				for (int i = 0; i < verifyEquationSet.size(); i++) {
+					if (i % 5 == 0) {
+						Text tmpText = (Text) verifyEquationSet.get(i);
+						tmpText.setText(tmpValue.toString());
+					}
+				}
+			}
+		});
+		previousButton.setEnabled(false);
+		previousButton.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, false));
+		previousButton.setText(MESSAGE_PREVIOUS);
+
+		nextButton = new Button(resultGroup, SWT.NONE);
+		nextButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent e) {
+				/*
+				 * change the result value in the verify-group
+				 */
+				BigInteger tmpValue = new BigInteger(resultValueText.getText());
+				tmpValue = tmpValue.add(crt.getModulus());
+				resultValueText.setText(tmpValue.toString());
+
+				for (int i = 0; i < verifyEquationSet.size(); i++) {
+					if (i % 5 == 0) {
+						Text tmpText = (Text) verifyEquationSet.get(i);
+						tmpText.setText(tmpValue.toString());
+					}
+				}
+				previousButton.setEnabled(true);
+			}
+		});
+		nextButton.setEnabled(false);
+		nextButton.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, false));
+		nextButton.setText(MESSAGE_NEXT);
+
+		scrolledVerify = new Group(content, SWT.NONE);
+		scrolledVerify.setText(MESSAGE_VERIFY_GROUP);
+		scrolledVerify.setLayout(new GridLayout(1, false));
+		GridData gd_scrolledVerify = new GridData(SWT.FILL, SWT.FILL, true, false);
+		gd_scrolledVerify.heightHint = 120;
+		gd_scrolledVerify.verticalIndent = 20;
+		scrolledVerify.setLayoutData(gd_scrolledVerify);
+
+		scrolledComposite_2 = new ScrolledComposite(scrolledVerify, SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite_2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		scrolledComposite_2.setExpandHorizontal(true);
+		scrolledComposite_2.setExpandVertical(true);
+
+		verifyGroup = new Composite(scrolledComposite_2, SWT.NONE);
+		verifyGroup.setLayout(new GridLayout(5, false));
+		scrolledComposite_2.setContent(verifyGroup);
+
+		step2Text.setFont(FontService.getSmallFont());
+		step3Text.setFont(FontService.getSmallFont());
+		step4Text.setFont(FontService.getSmallFont());
+		new Label(content, SWT.NONE);
+
+		scrolledGroup.setContent(content);
+		scrolledGroup.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+
+		setDefaultValues();
+	}
+
+	@Override
+	protected void checkSubclass() {
+		// Disable the check that prevents subclassing of SWT components
 	}
 
 	/**
-     * Convert a number to a subscript index
-     *
-     * @param id is the number to be converted
-     * @return a string which contains only subscript
-     */
-    private String convertToSubset(int id) {
-        char[] data = String.valueOf(id).toCharArray();
-        String result = ""; //$NON-NLS-1$
+	 * Convert a number to a subscript index
+	 *
+	 * @param id
+	 *            is the number to be converted
+	 * @return a string which contains only subscript
+	 */
+	private String convertToSubset(int id) {
+		char[] data = String.valueOf(id).toCharArray();
+		String result = ""; //$NON-NLS-1$
 
-        for (int i = 0; i < data.length; i++) {
-            if (data[i] == '0')
-                result += uZero;
+		for (int i = 0; i < data.length; i++) {
+			if (data[i] == '0')
+				result += uZero;
 
-            if (data[i] == '1')
-                result += uOne;
+			if (data[i] == '1')
+				result += uOne;
 
-            if (data[i] == '2')
-                result += uTwo;
+			if (data[i] == '2')
+				result += uTwo;
 
-            if (data[i] == '3')
-                result += uThree;
+			if (data[i] == '3')
+				result += uThree;
 
-            if (data[i] == '4')
-                result += uFour;
+			if (data[i] == '4')
+				result += uFour;
 
-            if (data[i] == '5')
-                result += uFive;
+			if (data[i] == '5')
+				result += uFive;
 
-            if (data[i] == '6')
-                result += uSix;
+			if (data[i] == '6')
+				result += uSix;
 
-            if (data[i] == '7')
-                result += uSeven;
+			if (data[i] == '7')
+				result += uSeven;
 
-            if (data[i] == '8')
-                result += uEight;
+			if (data[i] == '8')
+				result += uEight;
 
-            if (data[i] == '9')
-                result += uNine;
-        }
+			if (data[i] == '9')
+				result += uNine;
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    /**
-     * reset the algorithm. Executed when pressed the plus or minus button
-     */
-    public void reset() {
-        view.enableMenu(false);
-        showDialog = false;
-        execute = false;
+	/**
+	 * get the crt algorithm
+	 *
+	 * @return the crt object which contains the algorithm
+	 */
+	public ChineseRemainderTheorem getCrt() {
+		return crt;
+	}
 
-        equationGroup.setEnabled(true);
-        for (Equation equation : equations.getEquationSet()) {
-            equation.setEquationEnable(true);
-        }
+	/**
+	 * reset the algorithm. Executed when pressed the plus or minus button
+	 */
+	public void reset() {
+		view.enableMenu(false);
+		showDialog = false;
+		execute = false;
 
-        step1Text.setFont(FontService.getSmallBoldFont());
-        step2Text.setFont(FontService.getSmallFont());
-        step3Text.setFont(FontService.getSmallFont());
-        step4Text.setFont(FontService.getSmallFont());
-        resultText.setFont(FontService.getSmallFont());
-        resultValueText.setFont(FontService.getSmallFont());
-        resultMoreText.setFont(FontService.getSmallFont());
-        resultXText.setFont(FontService.getSmallFont());
+		equationGroup.setEnabled(true);
+		for (Equation equation : equations.getEquationSet()) {
+			equation.setEquationEnable(true);
+		}
 
-        step1Group.setEnabled(true);
-        step2Group.setEnabled(false);
-        step3Group.setEnabled(false);
-        step4Group.setEnabled(false);
-        resultGroup.setEnabled(false);
+		step1Text.setFont(FontService.getSmallBoldFont());
+		step2Text.setFont(FontService.getSmallFont());
+		step3Text.setFont(FontService.getSmallFont());
+		step4Text.setFont(FontService.getSmallFont());
+		resultText.setFont(FontService.getSmallFont());
+		resultValueText.setFont(FontService.getSmallFont());
+		resultMoreText.setFont(FontService.getSmallFont());
+		resultXText.setFont(FontService.getSmallFont());
 
-        step1Text.setEnabled(true);
-        step2Text.setEnabled(false);
-        step3Text.setEnabled(false);
-        step4Text.setEnabled(false);
+		step1Group.setEnabled(true);
+		step2Group.setEnabled(false);
+		step3Group.setEnabled(false);
+		step4Group.setEnabled(false);
+		resultGroup.setEnabled(false);
 
-        step1nextButton.setEnabled(true);
-        step2nextButton.setEnabled(false);
-        step3nextButton.setEnabled(false);
-        step4nextButton.setEnabled(false);
+		step1Text.setEnabled(true);
+		step2Text.setEnabled(false);
+		step3Text.setEnabled(false);
+		step4Text.setEnabled(false);
 
-        resultText.setEnabled(false);
-        resultMoreText.setEnabled(false);
-        resultValueText.setEnabled(false);
-        resultXText.setEnabled(false);
-        resultValueText.setText(""); //$NON-NLS-1$
+		step1nextButton.setEnabled(true);
+		step2nextButton.setEnabled(false);
+		step3nextButton.setEnabled(false);
+		step4nextButton.setEnabled(false);
 
-        nextButton.setEnabled(false);
-        previousButton.setEnabled(false);
+		resultText.setEnabled(false);
+		resultMoreText.setEnabled(false);
+		resultValueText.setEnabled(false);
+		resultXText.setEnabled(false);
+		resultValueText.setText(""); //$NON-NLS-1$
 
-        /*
-         * dispose the inverse and verify group for the next turn of calculating
-         */
-        for (Control elem : inverseGroup.getChildren()) {
-            elem.dispose();
-        }
-        inverseGroup.pack();
+		nextButton.setEnabled(false);
+		previousButton.setEnabled(false);
 
-        for (Control elem : verifyGroup.getChildren()) {
-            elem.dispose();
-        }
-        verifyGroup.pack();
+		/*
+		 * dispose the inverse and verify group for the next turn of calculating
+		 */
+		for (Control elem : inverseGroup.getChildren()) {
+			elem.dispose();
+		}
+		inverseGroup.pack();
 
-    }
+		for (Control elem : verifyGroup.getChildren()) {
+			elem.dispose();
+		}
+		verifyGroup.pack();
 
-    /**
-     * get the crt algorithm
-     *
-     * @return the crt object which contains the algorithm
-     */
-    public ChineseRemainderTheorem getCrt() {
-        return crt;
-    }
+	}
 
-    @Override
-    protected void checkSubclass() {
-        // Disable the check that prevents subclassing of SWT components
-    }
+	private void setDefaultValues() {
+		equations.getEquationSet().elementAt(0).setTextfieldA("2"); //$NON-NLS-1$
+		equations.getEquationSet().elementAt(0).setTextfieldM("5"); //$NON-NLS-1$
+
+		equations.getEquationSet().elementAt(1).setTextfieldA("3"); //$NON-NLS-1$
+		equations.getEquationSet().elementAt(1).setTextfieldM("7"); //$NON-NLS-1$
+	}
 }

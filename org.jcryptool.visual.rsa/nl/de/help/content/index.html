@@ -3,62 +3,89 @@
 <html>
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	  <title>RSA Verschl&uuml;sselung</title>
+	  <title>RSA-Verschl&uuml;sselung</title>
 </head>
 
 <body>
   <h1>RSA-Kryptosystem (verschl&uuml;sseln, entschl&uuml;sseln, signieren und verifizieren)</h1>
 
   <p>Diese Hilfe beschreibt zwei Punkte:<br/>
-  1) <a href="#term">Das RSA Schema</a><br/>
-  2) <a href="#plugin">Benutzerinstruktionen f&uuml;r diese Visualisierung</a> </p>
-  <p> <b>Bitte beachten</b> Sie, dass diese Visualisierung die Operationen auf einzelnen Zeichen durchf&uuml;hrt. In der Praxis werden die Operationen auf Zeichenbl&ouml;cken oder der gesamten Nachricht durchgef&uuml;hrt. RSA wird normalerweise nicht verwendet, um gro&szlig;e Datenmengen zu verschl&uuml;sseln, sondern um einen Sessionkey zu verschl&uuml;sseln (mit diesem werden dann die Daten mit einem symmetrischen Verfahren (bspw. AES oder 3DES) verschl&uuml;sselt) oder um einen Hashwert der Nachricht zu signieren. </p>
+  1) <a href="#term">Das RSA-Schema</a><br/>
+  2) <a href="#plugin">Benutzerinstruktionen f&uuml;r diese Visualisierung</a></p>
+  
+  <p> <b>Bitte beachten</b> Sie, dass diese Visualisierung die Operationen auf einzelnen Zeichen durchf&uuml;hrt. In der Praxis werden die Operationen auf Zeichenbl&ouml;cken oder der gesamten Nachricht durchgef&uuml;hrt. RSA wird normalerweise nicht verwendet, um gro&szlig;e Datenmengen zu verschl&uuml;sseln, sondern um einen Sessionkey zu verschl&uuml;sseln (mit diesem werden dann die Daten mit einem symmetrischen Verfahren wie AES oder 3DES verschl&uuml;sselt) oder um einen Hashwert der Nachricht zu signieren.</p>
 
-  <h2 id="term">1) Erkl&auml;rung des RSA-Schemas</h2>
+  <h2 id="term">1) Das RSA-Schema</h2>
 
-  <p> Die bekannteste asymmetrische Verschl&uuml;sselung, die RSA-Verschl&uuml;sselung, wurde 1977 von Ronald Rivest, Adi Shamir und Leonard Adleman entwickelt. Die privaten und &ouml;ffentlichen Schl&uuml;ssel werden mit Hilfe von zwei zuf&auml;lligen, gro&szlig;en Primzahlen, p und q, konstruiert, die vom Nutzer gew&auml;hlt, aber geheim gehalten werden m&uuml;ssen. Anschlie&szlig;end berechnet der Nutzer zwei nat&uuml;rliche Zahlen e und d, so dass (e*d) = 1 mod ((p-1)(q-1)).<br/>
-  Das Produkt p*q = N und der Exponent e dienen dann als &ouml;ffentlicher, und der Exponent d als privater Schl&uuml;ssel. <br/>
-  Da dieser Verschl&uuml;sselungsalgorithmus nur auf ganzen Zahlen funktioniert, werden vor dem Verschl&uuml;sseln die Klartextzeichen in Zahlen konvertiert. Normalerweise wird dies mit Hilfe des ASCII-Codes durchgef&uuml;hrt. Es ist aber auch m&ouml;glich sich auf A=0, B=1, ...., Z=25 zu einigen. <br/>
-  In dieser Visualisierung wird die ASCII-Code-Variante umgesetzt.<br/></p>
-  <p> Die Zahl jedes Klartextzeichens muss kleiner sein als das Produkt N. Warum das so ist, wird klar wenn man die Ver- und Entschl&uuml;sselungsfunktionen betrachtet (m = Zahlenwert des Klartextzeichen, c = Zahlenwert des Chiffratzeichen): c = m^e mod N und m = c^d mod N.<br/>
-  Da modulo gerechnet wird, ist es m&ouml;glich zuerst die Reste von jedem Faktor und dann den Rest des Produkts modulo N zu berechnen. Wenn der Klartextzeichen-Wert m gr&ouml;&szlig;er als N w&auml;re, w&auml;re es nicht m&ouml;glich, in jedem Fall ein eindeutiges Chiffratzeichen c zu erhalten.<br/>
-  Die Sicherheit des RSA Schemas basiert auf zwei mathematischen Problemen: Erstens ist es schwierig, f&uuml;r gro&szlig;e Zahlen eine Wurzel modulo N zu berechnen (RSA-Problem). Zweitens ist die Faktorisierung von N = p*q schwierig, wenn die Faktoren ausreichend gro&szlig; gew&auml;hlt werden (RSA-Schl&uuml;sselproblem).</p>
+  <p> Die bekannteste asymmetrische Verschl&uuml;sselung, die RSA-Verschl&uuml;sselung, wurde 1977 von Ronald Rivest, Adi Shamir und Leonard Adleman entwickelt. Die privaten und &ouml;ffentlichen Schl&uuml;ssel werden mit Hilfe von zwei zuf&auml;lligen, gro&szlig;en Primzahlen, p und q, konstruiert, die vom Nutzer gew&auml;hlt werden.</p>
+  
+  <p>Anschlie&szlig;end berechnet der Nutzer zwei nat&uuml;rliche Zahlen e und d, so dass (e*d) = 1 mod ((p-1)(q-1)). Das Produkt p*q = N und der Exponent e dienen dann als &ouml;ffentlicher, und der Exponent d als privater Schl&uuml;ssel. Die ursprünglich erzeugten Primzahlen p und q m&uuml;ssen geheim gehalten, oder besser gelöscht werden.</p>
+  
+  <p>Da dieser Verschl&uuml;sselungsalgorithmus nur auf ganzen Zahlen funktioniert, werden vor dem Verschl&uuml;sseln die Klartextzeichen in Zahlen konvertiert. Normalerweise wird dies mit Hilfe des ASCII-Codes durchgef&uuml;hrt. Es ist aber auch m&ouml;glich sich auf A=0, B=1, ...., Z=25 zu einigen.</p>
+  
+  <p>In dieser Visualisierung wird die ASCII-Code-Variante umgesetzt.</p>
+  
+  <p> Die Zahl jedes Klartextzeichens muss kleiner sein als das Produkt N. Warum das so ist, wird klar wenn man die Ver- und Entschl&uuml;sselungsfunktionen betrachtet (m = Zahlenwert des Klartextzeichen, c = Zahlenwert des Chiffratzeichen): c = m^e mod N und m = c^d mod N.</p>
+  
+  <p>Modulo-Rechnung bedeutet, den Rest einer Zahl modulo N zu berechnen. Wenn der Klartextzeichen-Wert m gr&ouml;&szlig;er als N w&auml;re, w&auml;re nicht sicher gestellt, dass man in jedem Fall ein eindeutiges Geheimtextzeichen c erhält.</p>
+  
+  <p>Die Sicherheit des RSA Schemas basiert auf zwei mathematischen Problemen: Erstens ist es schwierig, f&uuml;r gro&szlig;e Zahlen eine Wurzel modulo N zu berechnen (RSA-Problem). Zweitens ist die Faktorisierung von N = p*q schwierig, wenn die Faktoren ausreichend gro&szlig; gew&auml;hlt werden (RSA-Schl&uuml;sselproblem).</p>
 
-  <h3 id="Enc">a) RSA-Schl&uuml;sselgenerierung</h3>
-  <p> Eine besondere Charakteristik des RSA-Kryptosystems ist, dass umfangreiche Berechnungen n&ouml;tig sind, um einen RSA-Schl&uuml;ssel zu generieren. Erst danach kann die Ver- und Entschl&uuml;sselung durchgef&uuml;hrt werden.<br/>
-  Als erstes werden die RSA-Parameter p, q, N und die Eulersche Zahl phi(N) mit Hilfe von zwei zuf&auml;lligen Primzahlen, p und q, berechnet. Der sogenannte RSA-Modulus N wird als Produkt von p und q berechnet, N = p*q. Die Eulersche Zahl phi(N) ergibt sich als Produkt (p-1)*(q-1). Im Standardfall werden hiernach p und q gel&ouml;scht (somit kennt sie auch der Schl&uuml;sselerzeuger nicht mehr und braucht sie auch nicht geheim zu halten).<br/>
-  Als zweiter Schritt wird der &ouml;ffentliche Exponent e bestimmt. Mit dessen Hilfe, sowie phi(N), wird der private Exponent d berechnet. Der Exponent e wird wie folgt gew&auml;hlt: 1 &lt; e &lt; phi(N), mit der Voraussetzung, dass e relativ prim zu phi(N) ist. Ein besonders beliebter Wert f&uuml;r e ist 2^16+1 = 65537. Diese Zahl ist meistens co-prim zu phi(N) und besonders gut f&uuml;r "square and multiply" Exponentiationen geeignet. Dies resultiert in sehr schnellen Operationen mit dem &ouml;ffentlichen Schl&uuml;ssel.<br/>
-  Der private Exponent d = e^(-1) mod phi(N) wird als multiplikative Inverse des &ouml;ffentlichen Exponenten e modulo phi(N) berechnet. Anders geschrieben: e*d = 1 mod ((p-1)(q-1)).<br/>
-  Nach der Schl&uuml;sselerzeugung k&ouml;nnen N und e &ouml;ffentlich gemacht werden. Anschlie&szlig;end kann jeder eine Nachricht f&uuml;r den Besitzer des zugeh&ouml;rigen privaten Schl&uuml;ssels d verschl&uuml;sseln oder eine digitale Signatur &uuml;berpr&uuml;fen -- einzig und allein durch die Verwendung des &ouml;ffentlichen Schl&uuml;ssels. </p>
+  
+  <h3 id="KeyGen">a) RSA-Schl&uuml;sselgenerierung</h3>
+  <p> Eine besondere Charakteristik von Public-Key-Kryptosystemen wie RSA ist, dass umfangreiche Berechnungen n&ouml;tig sind, um einen Schl&uuml;ssel zu generieren. Erst danach kann die Ver- und Entschl&uuml;sselung durchgef&uuml;hrt werden.</p>
+  
+  <p>Als erstes werden die RSA-Parameter p, q, N und die Eulersche Zahl phi(N) mit Hilfe von zwei zuf&auml;lligen Primzahlen p und q berechnet. Der sogenannte RSA-Modulus N wird als Produkt von p und q berechnet, N = p*q. Die Eulersche Zahl phi(N) ergibt sich als Produkt (p-1)*(q-1). Im Standardfall werden hiernach p und q gel&ouml;scht (somit kennt sie auch der Schl&uuml;sselerzeuger nicht mehr und braucht sie auch nicht geheim zu halten).</p>
+  
+  <p>Als zweiter Schritt wird der &ouml;ffentliche Exponent e bestimmt. Mit dessen Hilfe, sowie phi(N), wird der private Exponent d berechnet. Der Exponent e wird wie folgt gew&auml;hlt: 1 &lt; e &lt; phi(N), mit der Voraussetzung, dass e relativ prim zu phi(N) ist. Ein besonders beliebter Wert f&uuml;r e ist 2^16+1 = 65537. Diese Zahl ist meistens co-prim zu phi(N) und besonders gut f&uuml;r "square and multiply" Exponentiationen geeignet. Dies resultiert in sehr schnellen Operationen mit dem &ouml;ffentlichen Schl&uuml;ssel.</p>
+  
+  <p>Der private Exponent d = e^(-1) mod phi(N) wird als multiplikative Inverse des &ouml;ffentlichen Exponenten e modulo phi(N) berechnet. Anders geschrieben: e*d = 1 mod ((p-1)(q-1)).</p>
+  
+  <p>Nach der Schl&uuml;sselerzeugung k&ouml;nnen N und e &ouml;ffentlich gemacht werden. Anschlie&szlig;end kann jeder eine Nachricht f&uuml;r den Besitzer des zugeh&ouml;rigen privaten Schl&uuml;ssels d verschl&uuml;sseln oder eine digitale Signatur &uuml;berpr&uuml;fen  &nbsp;&ndash;  einzig und allein durch die Verwendung des &ouml;ffentlichen Schl&uuml;ssels. </p>
 
   <h3 id="Enc">b) RSA-Ver- / Entschl&uuml;sselung</h3>
-  <p> Um Daten mit RSA zu <b>verschl&uuml;sseln</b>, wird das Chiffrat mit Hilfe des &ouml;ffentlichen Schl&uuml;ssels e des Empf&auml;ngers und des Klartexts berechnet. Die Verschl&uuml;sselungsfunktion ist c = m^e mod N. Das hei&szlig;t, dass jeder eine Nachricht mit Hilfe des &ouml;ffentlichen Schl&uuml;ssels verschl&uuml;sseln kann. Allerdings kann nur der Besitzer des zugeh&ouml;rigen privaten Schl&uuml;ssels d die Nachricht wieder entschl&uuml;sseln. </p>
+  <p> Um Daten mit RSA zu <b>verschl&uuml;sseln</b>, wird das Chiffrat mit Hilfe des &ouml;ffentlichen Schl&uuml;ssels e des Empf&auml;ngers und des Klartexts berechnet. Die Verschl&uuml;sselungsfunktion ist c = m^e mod N. Das hei&szlig;t, dass jeder eine Nachricht mit Hilfe des &ouml;ffentlichen Schl&uuml;ssels verschl&uuml;sseln kann. Allerdings kann nur der Besitzer des zugeh&ouml;rigen privaten Schl&uuml;ssels d die Nachricht wieder entschl&uuml;sseln.</p>
 
-  <p> Um ein Chiffrat mit RSA zu <b>entschl&uuml;sseln</b>, muss der private Schl&uuml;ssel d bekannt sein. Die Entschl&uuml;sselungsfunktion, c^d = (m^e)^d = m^(e*d) = m mod N, berechnet den Klartext m. </p>
+  <p> Um ein Chiffrat mit RSA zu <b>entschl&uuml;sseln</b>, muss der private Schl&uuml;ssel d bekannt sein. Die Entschl&uuml;sselungsfunktion, c^d = (m^e)^d = m^(e*d) = m mod N, berechnet den Klartext m.</p>
 
+  
   <h3 id="Sig">c) RSA-Signatur / Verifizierung</h3>
   <p> Um eine Nachricht m mit RSA zu <b>signieren</b>, muss der private Schl&uuml;ssel d bekannt sein. Die Signaturfunktion wird auf m oder auf einen Hashwert von m angewendet: m^d = sign(m) oder (hash(m))^d = sign(hash(m)). Dies erzeugt die Signatur.</p>
 
   <p> Um eine RSA-Signatur zu <b>verifizieren</b>, wird der &ouml;ffentliche Schl&uuml;ssel e des Signierers wie folgt verwendet: (sign(m))^e = m' oder (sign(hash(m)))^e = hash(m)'. Das Ergebnis der RSA-Exponentiation ist m' oder hash(m)' und muss mit der Nachricht m oder dem Hashwert der Nachricht hash(m), berechnet aus dem erhaltenen (und entschl&uuml;sselten) Dokument, verglichen werden. Wenn beide Werte identisch sind, wird dies als Beweis gesehen, dass der echte Besitzer des zugeh&ouml;rigen privaten Schl&uuml;ssels d das Dokument signiert hat.</p>
 
+  
   <h2 id="plugin">2) Benutzerinstruktionen f&uuml;r diese Visualisierung</h2>
-  <p> Wenn die RSA-Visualisierung gestartet wird, ist es m&ouml;glich, die gew&uuml;nschte Operation (verschl&uuml;sseln, entschl&uuml;sseln, signieren oder verifizieren) durch die Wahl des entsprechenden Tabs auszuw&auml;hlen.</p>
+  
+  <p> Wenn die RSA-Visualisierung gestartet wird, kann man die gew&uuml;nschte Operation (verschl&uuml;sseln, entschl&uuml;sseln, signieren oder verifizieren) auszuw&auml;hlen  &nbsp;&ndash; durch die Wahl des entsprechenden Tabs.</p>
 
-  <p>Die Farben der ersten drei Buttons links zeigen den aktuellen Status. Rot bedeutet: Dieser Schritt wurde noch nicht bearbeitet. Sind die Buttons gr&uuml;n, bedeutet das, diese Aktion ist erledigt. Wenn die ersten beiden Buttons gr&uuml;n sind, kann die Verschl&uuml;sselung schrittweise mit einem Klick auf <strong>Start</strong> gestartet oder direkt mit einem Klick auf <strong>Verschl&uuml;sseln</strong> abgeschlossen werden. Mit dem Button <strong>Zur&uuml;cksetzen</strong> k&ouml;nnen Sie die Eingaben immer wieder neu durchf&uuml;hren.</p>
+  <p>Die Farbe der ersten drei Buttons links zeigt den aktuellen Status an. Rot bedeutet: Dieser Schritt wurde noch nicht bearbeitet. Ist ein Button gr&uuml;n, bedeutet das, diese Aktion ist erledigt. Wenn die ersten beiden Buttons gr&uuml;n sind, kann die Verschl&uuml;sselung schrittweise mit einem Klick auf <strong>Start</strong> gestartet oder direkt mit einem Klick auf <strong>Verschl&uuml;sseln</strong> abgeschlossen werden. Mit dem Button <strong>Zur&uuml;cksetzen</strong> k&ouml;nnen Sie die Eingaben immer wieder neu durchf&uuml;hren.</p>
 
-  <p> Zuerst m&uuml;ssen die ben&ouml;tigten RSA-Schl&uuml;ssel ausgew&auml;hlt werden. Klicken Sie auf den Button <strong>Schl&uuml;sselwahl</strong>. Es ist m&ouml;glich, ein neues Schl&uuml;sselpaar zu erzeugen oder ein gespeichertes Schl&uuml;sselpaar zu laden. Wenn der Verschl&uuml;sselungs- oder Verifizier-Reiter ausgew&auml;hlt ist, ist es au&szlig;erdem m&ouml;glich, nur einen &ouml;ffentlichen Schl&uuml;ssel zu erzeugen oder zu laden (denn für die Operationen Verschl&uuml;sselung und Verifizierung wird kein privater Schl&uuml;ssel ben&ouml;tigt).
-  <br/> Wenn Sie die Option <strong>Neues Schl&uuml;sselpaar</strong> w&auml;hlen, ist es m&ouml;glich, die Parameter p, q, und e entweder aus der Drop-down Liste zu w&auml;hlen oder eigene Werte einzugeben. Wenn Sie den Schl&uuml;ssel f&uuml;r eine sp&auml;tere Verwendung speichern wollen, setzen Sie einen Haken bei der Checkbox <strong>Schl&uuml;sselpaar speichern</strong>.
-  <br/> Die Option <strong>Bestehendes Schl&uuml;sselpaar</strong> l&auml;dt ein zuvor generiertes und gespeichertes Schl&uuml;sselpaar. W&auml;hlen Sie einen Schl&uuml;ssel aus der Liste und geben Sie das entsprechende Passwort ein.
-  <br/> Wenn der Verschl&uuml;sselungs- oder Verifizier-Reiter ausgew&auml;hlt wurde, ist es au&szlig;erdem m&ouml;glich, die Optionen <strong>Neuer &ouml;ffentlicher Schl&uuml;ssel</strong> und <Strong>Bestehender &ouml;ffentlicher Schl&uuml;ssel</Strong> auszuw&auml;hlen. Die Option <strong>Neuer &ouml;ffentlicher Schl&uuml;ssel</strong> erlaubt die Eingabe von N und e, sowie die Option den Schl&uuml;ssel zu speichern. Die Option <Strong>Bestehender &ouml;ffentlicher Schl&uuml;ssel</Strong> l&auml;dt einen zuvor gespeicherten &ouml;ffentlichen Schl&uuml;ssel.
-  <br/> Wenn Sie auf <strong>Fertigstellen</strong> klicken, wird der gew&auml;hlte Schl&uuml;ssel automatisch &uuml;bernommen und im Feld "Schl&uuml;ssel" angezeigt (in Hexadezimal-Darstellung).</p>
-  <p> Als n&auml;chstes klicken Sie auf den Button <strong>Text eingeben</strong> auf der linken Seite. Sie können Text mit ASCII-Zeichen eingeben. Jedes Zeichen wird nach Hex konvertiert und im Feld "Eingegebener Text" angezeigt. Wenn die Checkbox <strong>Zahlen direkt eingeben</strong> markiert ist, k&ouml;nnen Sie direkt Dezimalzahlen, separiert mit "SPACE" eingeben. Diese Zahlen werden zu ASCII-Zeichen konvertiert und im Feld "Eingegebener Text" angezeigt. Auf der n&auml;chsten Seite haben Sie die M&ouml;glichkeit, den eingegebenen Text automatisch formatieren zu lassen.</p>
-  <p> Jetzt sind alle ben&ouml;tigten Informationen verf&uuml;gbar und es ist m&ouml;glich, die Operation zu starten. Wenn Sie nur das Ergebnis sehen m&ouml;chten, klicken Sie auf den Button unterhalb des Buttons <strong>Text eingeben</strong>. Wenn Sie die Berechnung jeder Zahl sehen m&ouml;chten, klicken Sie auf den <strong>Start</strong>-Button im Feld "Schrittweise Berechnungen". Wenn Sie schrittweise oder direkt durch alle Schritte gehen, wird das Ergebnis im Feld "Ergebnis" angezeigt. </p>
-  <p> Am unteren Rand der Maske k&ouml;nnen Sie verschiedene zus&auml;tzliche Optionen ausw&auml;hlen. Es besteht die M&ouml;glichkeit sich den Schl&uuml;ssel und das Ergebnis entweder in Hex- oder Dezimalwerten anzeigen zu lassen. Au&szlig;erdem k&ouml;nnen Sie Werte von einem der drei anderen Tabs &uuml;bernehmen und sich zus&auml;tzliche Informationen w&auml;hrend der Operation anzeigen lassen. </p>
-  <p>Weitere Informationen finden sich z.B. unter:<br/>
+  <p> Zuerst m&uuml;ssen die ben&ouml;tigten RSA-Schl&uuml;ssel ausgew&auml;hlt werden. Klicken Sie auf den Button <strong>Schl&uuml;sselwahl</strong> auf der linken Seite. Man kann dann entweder ein neues Schl&uuml;sselpaar erzeugen oder ein gespeichertes Schl&uuml;sselpaar laden. Wenn der Verschl&uuml;sselungs- oder Verifizier-Reiter ausgew&auml;hlt ist, ist es au&szlig;erdem m&ouml;glich, nur einen &ouml;ffentlichen Schl&uuml;ssel zu erzeugen oder zu laden (denn für die Operationen Verschl&uuml;sselung und Verifizierung wird kein privater Schl&uuml;ssel ben&ouml;tigt).</p>
+  
+  <p>Wenn Sie die Option <strong>Neues Schl&uuml;sselpaar</strong> w&auml;hlen, kann man die Parameter p, q, und e entweder aus der Drop-down Liste w&auml;hlen, oder eigene Werte eingeben (die Zahlen können beliebig groß sein, da JCT eine Langzahlarithmetik-Bibliothek benutzt). Wenn Sie den Schl&uuml;ssel f&uuml;r eine sp&auml;tere Verwendung speichern wollen, setzen Sie einen Haken bei der Checkbox <strong>Schl&uuml;sselpaar speichern</strong>.</p>
+  
+  <p>Die Option <strong>Bestehendes Schl&uuml;sselpaar</strong> l&auml;dt ein zuvor generiertes und gespeichertes Schl&uuml;sselpaar. W&auml;hlen Sie einen Schl&uuml;ssel aus der Liste und geben Sie das entsprechende Passwort ein.</p>
+  
+  <p>Wenn der Verschl&uuml;sselungs- oder Verifizier-Reiter ausgew&auml;hlt wurde, ist es au&szlig;erdem m&ouml;glich, die Optionen <strong>Neuer &ouml;ffentlicher Schl&uuml;ssel</strong> und <Strong>Bestehender &ouml;ffentlicher Schl&uuml;ssel</Strong> auszuw&auml;hlen. Die Option <strong>Neuer &ouml;ffentlicher Schl&uuml;ssel</strong> erlaubt die Eingabe von N und e, sowie die Option den Schl&uuml;ssel zu speichern. Die Option <Strong>Bestehender &ouml;ffentlicher Schl&uuml;ssel</Strong> l&auml;dt einen zuvor gespeicherten &ouml;ffentlichen Schl&uuml;ssel.</p>
+  
+  <p>Wenn Sie auf <strong>Fertigstellen</strong> klicken, wird der gew&auml;hlte Schl&uuml;ssel automatisch &uuml;bernommen und im Feld "Schl&uuml;ssel" angezeigt (in Hexadezimal-Darstellung).</p>
+  
+  <p>Als Beispiel für die weitere Vorgehen wird die Bedienung im Reiter <strong>Verschlüsseln</strong> beschrieben. Als n&auml;chstes klicken Sie auf den Button <strong>Text eingeben</strong> auf der linken Seite. Sie können Text mit ASCII-Zeichen eingeben. Jedes Zeichen wird nach Hex konvertiert und im Feld "Eingegebener Text" angezeigt. Wenn die Checkbox <strong>Zahlen direkt eingeben</strong> markiert ist, k&ouml;nnen Sie direkt Dezimalzahlen, separiert mit "SPACE" eingeben. Diese Zahlen werden zu ASCII-Zeichen konvertiert und im Feld "Eingegebener Text" angezeigt. Auf der n&auml;chsten Seite haben Sie die M&ouml;glichkeit, den eingegebenen Text automatisch formatieren zu lassen.</p>
+  
+  <p> Jetzt sind alle ben&ouml;tigten Informationen verf&uuml;gbar und es ist m&ouml;glich, die Operation zu starten. Wenn Sie nur das Ergebnis sehen m&ouml;chten, klicken Sie auf den Button <strong>Verschlüsseln</strong> (unterhalb des Buttons <strong>Text eingeben</strong>). Wenn Sie stattdessen die Berechnung jeder Zahl einzeln sehen m&ouml;chten, klicken Sie auf den <strong>Start</strong>-Button im Feld "Schrittweise Berechnungen". In beiden Fällen (schrittweise oder direkt durch alle Schritte) wird das endgültige Ergebnis im Feld "Ergebnis" angezeigt.</p>
+  
+  <p> Am unteren Rand der Maske k&ouml;nnen Sie verschiedene zus&auml;tzliche Optionen ausw&auml;hlen. Es besteht die M&ouml;glichkeit sich den Schl&uuml;ssel und das Ergebnis entweder in Hex-, Binär- oder Dezimalwerten anzeigen zu lassen. Au&szlig;erdem k&ouml;nnen Sie Werte von einem der drei anderen Tabs &uuml;bernehmen und sich zus&auml;tzliche Informationen in Dialogen w&auml;hrend der Operation anzeigen lassen.</p>
+  
+  <p>Weitere Informationen zum RSA-Kryptosystem finden sich z.B. unter:</p>
   <ul>
-  <li><a href="http://de.wikipedia.org/wiki/RSA-Kryptosystem">Wikipedia RSA</a></li>
-  <li><a href="http://www.cryptool.org/images/ctp/documents/CrypToolScript-de.pdf">CrypTool-Skript, Kapitel 4</a></li>
+  <li><a href="../../../../../org.jcryptool.visual.extendedrsa/nl/de/help/content/rsaHelp.html">JCT-Plugin: Erweitertes RSA-Kryptosystem (inklusive Identit&auml;ten und multi-primem RSA)</a>
+  <li><a href="http://www.springer.com/de/book/9783662484234">Joachim von zur Gathen: CryptoSchool, Springer, 2015, Kapitel 3</a></li>
+  <li><a href="http://www.springer.com/de/book/9783662484234">Johannes Buchmann: Einführung in die Kryptographie, Springer, 2010, Kapitel 8</a></li>
+  <li><a href="http://de.wikipedia.org/wiki/RSA-Kryptosystem">Wikipedia: RSA</a></li>
+  <li><a href="https://www.cryptool.org/images/ctp/documents/CT-Book-de.pdf">Das CrypTool-Buch, Kapitel 4</a></li>
   </ul>
-  <br/>
+  
+<br/>
 </body>
 </html>

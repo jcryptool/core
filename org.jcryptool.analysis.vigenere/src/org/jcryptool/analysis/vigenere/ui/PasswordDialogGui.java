@@ -10,9 +10,6 @@ package org.jcryptool.analysis.vigenere.ui;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -32,81 +29,67 @@ import org.eclipse.swt.widgets.Text;
  * ANY CORPORATE OR COMMERCIAL PURPOSE.
  */
 public class PasswordDialogGui extends Dialog {
-    private FrequencyGui parent;
-    private String passphrase;
-    private Text tpass;
+	private FrequencyGui parent;
+	private String passphrase;
+	private Text tpass;
 
-    public PasswordDialogGui(final FrequencyGui container, final String pass) {
-        super(container.getShell());
-        this.parent = container;
-        this.passphrase = pass;
-    }
+	/**
+	 * Creates the Dialog in which you can set the Password.
+	 * 
+	 * @param container
+	 * @param pass
+	 *            The suggested password.
+	 */
+	public PasswordDialogGui(final FrequencyGui container, final String pass) {
+		super(container.getShell());
+		this.parent = container;
+		this.passphrase = pass;
+	}
 
-    @Override
-    protected void configureShell(Shell newShell) {
-        super.configureShell(newShell);
-        newShell.setText(Messages.PassDialogGui_dialog_title);
-    }
+	@Override
+	protected void cancelPressed() {
+		super.cancelPressed();
+	}
 
-    @Override
-    protected Control createDialogArea(Composite parent) {
-        GridLayout parentLayout = new GridLayout();
-        parentLayout.makeColumnsEqualWidth = true;
-        parent.setLayout(parentLayout);
-        Composite ccontain = new Composite(parent, SWT.NONE);
-        GridLayout ccontainLayout = new GridLayout();
-        ccontainLayout.makeColumnsEqualWidth = true;
-        GridData ccontainLData = new GridData();
-        ccontainLData.widthHint = 460;
-        ccontainLData.heightHint = 50;
-        ccontain.setLayoutData(ccontainLData);
-        ccontain.setLayout(ccontainLayout);
-        {
-            Composite ccontent = new Composite(ccontain, SWT.NONE);
-            FormLayout ccontentLayout = new FormLayout();
-            GridData ccontentLData = new GridData();
-            ccontentLData.widthHint = 450;
-            ccontentLData.heightHint = 50;
-            ccontent.setLayoutData(ccontentLData);
-            ccontent.setLayout(ccontentLayout);
-            {
-                FormData tpassLData = new FormData();
-                tpassLData.left = new FormAttachment(0, 1000, 210);
-                tpassLData.top = new FormAttachment(0, 1000, 10);
-                tpassLData.width = 218;
-                tpassLData.height = 19;
-                tpass = new Text(ccontent, SWT.BORDER);
-                tpass.setLayoutData(tpassLData);
-                tpass.setText(passphrase);
-                tpass.setFocus();
-                tpass.setTextLimit(100);
-                tpass.selectAll();
-            }
-            {
-                Label lpass = new Label(ccontent, SWT.NONE);
-                FormData lpassLData = new FormData();
-                lpassLData.left = new FormAttachment(0, 1000, 10);
-                lpassLData.top = new FormAttachment(0, 1000, 14);
-                lpassLData.width = 180;
-                lpassLData.height = 20;
-                lpass.setLayoutData(lpassLData);
-                lpass.setText(Messages.PassDialogGui_label_password);
-                lpass.setAlignment(SWT.RIGHT);
-            }
-        }
+	@Override
+	protected void configureShell(Shell newShell) {
+		super.configureShell(newShell);
+		newShell.setText(Messages.PassDialogGui_dialog_title);
+	}
 
-        return ccontain;
-    }
+	@Override
+	protected Control createDialogArea(Composite parent) {
+		Composite compositeContain = new Composite(parent, SWT.NONE);
+		compositeContain.setLayout(new GridLayout());
 
-    @Override
-    protected void okPressed() {
-        String in = tpass.getText();
-        parent.showCompletePass(in);
-        super.okPressed();
-    }
+		Composite compositeContent = new Composite(compositeContain, SWT.NONE);
+		compositeContent.setLayout(new GridLayout(2, true));
+		compositeContent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-    @Override
-    protected void cancelPressed() {
-        super.cancelPressed();
-    }
+		Label lpass = new Label(compositeContent, SWT.NONE);
+		lpass.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		lpass.setText(Messages.PassDialogGui_label_password);
+
+		tpass = new Text(compositeContent, SWT.BORDER);
+		tpass.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		tpass.setText(passphrase);
+		tpass.setFocus();
+		tpass.setTextLimit(100);
+		tpass.selectAll();
+		
+		Label separator = new Label(compositeContent, SWT.SEPARATOR | SWT.HORIZONTAL);
+		GridData gd_separator = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
+		gd_separator.verticalIndent = 10;
+		separator.setLayoutData(gd_separator);
+
+		compositeContain.setSize(compositeContent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		return compositeContain;
+	}
+
+	@Override
+	protected void okPressed() {
+		String in = tpass.getText();
+		parent.showCompletePass(in);
+		super.okPressed();
+	}
 }

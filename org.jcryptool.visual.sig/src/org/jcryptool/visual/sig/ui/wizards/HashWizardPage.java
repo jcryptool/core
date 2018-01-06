@@ -23,8 +23,7 @@ public class HashWizardPage extends WizardPage {
     private HashComposite composite;
 
     protected HashWizardPage(String pageName) {
-        super(Messages.HashWizard_header);
-        setDescription(Messages.HashWizard_header);
+        super(pageName);
         setTitle(Messages.HashWizard_WindowTitle);
     }
 

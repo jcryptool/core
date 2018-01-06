@@ -87,15 +87,6 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener,
 	/** {@link CalcRunnable} for using later. */
 	private final CalcRunnable calcRunnable = new CalcRunnable();
 
-	/**
-	 * getter for the pagename constant for easy access.
-	 * 
-	 * @return the pagename
-	 */
-	public static String getPagename() {
-		return PAGENAME;
-	}
-
 	/** data-object storing all relevant information about the algorithm. */
 	private final RSAData data;
 
@@ -137,27 +128,21 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener,
 	public final void createControl(Composite parent) {
 		Composite composite = new Composite(parent, SWT.NONE);
 		// do stuff like layout et al
-		int ncol = 6;
-		GridLayout gl = new GridLayout(ncol, false);
-		composite.setLayout(gl);
-		GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, false, ncol, 1);
-		GridData gd1 = new GridData(SWT.FILL, SWT.CENTER, true, false, ncol, 1);
-		GridData gd2 = new GridData(SWT.FILL, SWT.CENTER, true, false,
-				ncol / 2 + 1, 1);
-		GridData gd3 = new GridData(SWT.FILL, SWT.CENTER, true, false,
-				ncol / 2 - 1, 1);
+		composite.setLayout(new GridLayout(5, false));
 
 		Label label = new Label(composite, SWT.NONE);
-		label.setLayoutData(gd2);
+		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 		label.setText(Messages.NewPublicKeyPage_choose_rsa_mod);
 
 		label = new Label(composite, SWT.NONE);
-		label.setLayoutData(gd3);
+		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		label.setText(Messages.NewPublicKeyPage_suggestion);
 
 		// field for entering N
-		nField = new Text(composite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
-		nField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		nField = new Text(composite, SWT.SINGLE | SWT.BORDER);
+		GridData gd_nField = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		gd_nField.widthHint = 150;
+		nField.setLayoutData(gd_nField);
 		nField.addModifyListener(this);
 		nField.addVerifyListener(this);
 		nField.setToolTipText(Messages.NewPublicKeyPage_enter_n_popup);
@@ -168,12 +153,10 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener,
 		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		// button for moving the value from calcN to N
-		final Button moveButton = new Button(composite, SWT.PUSH);
+		Button moveButton = new Button(composite, SWT.PUSH);
 		moveButton.setText(Messages.NewPublicKeyPage_use);
 		moveButton.setToolTipText(Messages.NewPublicKeyPage_use_popup);
-		moveButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
-				false));
-		moveButton.setEnabled(true);
+		moveButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		moveButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -187,33 +170,21 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener,
 		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		// field for calculated N value
-		calcNField = new Text(composite, SWT.SINGLE | SWT.LEAD | SWT.BORDER
-				| SWT.READ_ONLY);
-		calcNField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-				false, 1, 1));
-		// calcNField.addModifyListener(new ModifyListener() {
-		//
-		// public void modifyText(ModifyEvent e) {
-		//                moveButton.setEnabled(!((Text) e.widget).getText().equals("")); //$NON-NLS-1$
-		// }
-		// });
+		calcNField = new Text(composite, SWT.SINGLE | SWT.BORDER | SWT.READ_ONLY);
+		calcNField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+//		calcNField.setText("323");
 		calcRunnable.setN(new BigInteger("323"));
 		Display d = Display.getDefault();
 		d.asyncExec(calcRunnable);
 
-		// new label for <-
-		label = new Label(composite, SWT.CENTER);
-		label.setText("");
-		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-
-		// label
+		//Please enter your encryption exponent e.
 		label = new Label(composite, SWT.NONE);
-		label.setLayoutData(gd);
+		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
 		label.setText(Messages.NewPublicKeyPage_enter_e);
 
 		// field for entering e
-		eField = new Text(composite, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
-		eField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		eField = new Text(composite, SWT.SINGLE | SWT.BORDER);
+		eField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		eField.addModifyListener(this);
 		eField.addVerifyListener(this);
 		eField.setToolTipText(Messages.NewPublicKeyPage_enter_e_popup);
@@ -224,12 +195,10 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener,
 		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		// button for moving the value from calcE to e
-		final Button moveButton2 = new Button(composite, SWT.PUSH);
+		Button moveButton2 = new Button(composite, SWT.PUSH);
 		moveButton2.setText(Messages.NewPublicKeyPage_use);
 		moveButton2.setToolTipText(Messages.NewPublicKeyPage_use_popup);
-		moveButton2.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
-				false));
-		moveButton2.setEnabled(true);
+		moveButton2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		moveButton2.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -243,24 +212,20 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener,
 		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		// field for calculated e value
-		calcEField = new Text(composite, SWT.SINGLE | SWT.LEAD | SWT.BORDER
-				| SWT.READ_ONLY);
-		calcEField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-				false, 1, 1));
+		calcEField = new Text(composite, SWT.SINGLE | SWT.BORDER | SWT.READ_ONLY);
+		calcEField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+//		calcEField.setText("17");
 		calcRunnable.setE(new BigInteger("17"));
 		Display x = Display.getDefault();
 		x.asyncExec(calcRunnable);
 
-		// new label for <-
-		label = new Label(composite, SWT.CENTER);
-		label.setText("");
-		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-
 		// Separator
-		new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(gd1);
+		new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL).
+			setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
 
 		// should this key be saved?
 		saveButton = new Button(composite, SWT.CHECK);
+		saveButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
 		saveButton.setText(Messages.NewPublicKeyPage_save_pubkey);
 		saveButton.setToolTipText(Messages.NewPublicKeyPage_save_pubkey_popup);
 		saveButton.setSelection(data.isStandalone());
@@ -279,13 +244,23 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener,
 		});
 
 		// fill in old data
-		if (data.getE() != null)
-			eField.setText(data.getE().toString());
-		if (data.getN() != null)
+		if (data.getN() != null) {
 			nField.setText(data.getN().toString());
-
+		}
+		if (data.getE() != null) {
+			eField.setText(data.getE().toString());
+		}
 		// finishing touch
 		setControl(composite);
+	}
+	
+	/**
+	 * getter for the pagename constant for easy access.
+	 * 
+	 * @return the pagename
+	 */
+	public static String getPagename() {
+		return PAGENAME;
 	}
 
 	@Override
@@ -325,11 +300,16 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener,
 			data.setE(e);
 			boolean eok = e.compareTo(data.getN()) < 0;
 			// check for valid e and n values (n >256, e<floor(sqrt(n)-1)^2
-			setPageComplete(data.getN().compareTo(Constants.TWOFIVESIX) > 0
+			if (data.getN().compareTo(Constants.TWOFIVESIX) > 0
 					&& isTwoComposite(data.getN())
 					&& e.compareTo(BigInteger.ONE) > 0
 					&& (eok && e.compareTo(BigSquareRoot.get(data.getN())
-							.toBigInteger().subtract(BigInteger.ONE).pow(2)) < 0));
+							.toBigInteger().subtract(BigInteger.ONE).pow(2)) < 0)) {
+				data.setD(null);
+				data.setQ(null);
+				data.setP(null);
+				setPageComplete(true);
+			}
 			if (!eok) {
 				String error = getErrorMessage();
 				if (error == null) {

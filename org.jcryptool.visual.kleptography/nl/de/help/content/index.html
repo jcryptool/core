@@ -9,12 +9,9 @@
 <body>
 <h1>Kleptographische Angriffe</h1>
 
-<p>Dieses Handbuch stellt eine tiefergehende Erklärung der Schlüsselerzeugungssangriffe
+<p>Dieses Handbuch stellt eine tiefergehende Erklärung der Schlüsselerzeugungs-Angriffe
 in dem Plug-in <i>org.jcryptool.visual.kleptography</i> bereit. Dieses Plug-in nutzt
-RSA, obwohl kleptographische Angriffe auf jeden asymmetrischen
-Kryptoalgorithmus angewandt werden können. Es wird angenommen, dass der Leser
-sich mit der Mathematik der RSA-Verschlüsselung auskennt. Die Ideen und Algorithmen, die
-in diesem Plug-in verwendet werden, basieren zum größten Teil auf dem ausführlichen und einzigartigen Buch
+RSA, obwohl kleptographische Angriffe auf jeden asymmetrischen Kryptoalgorithmus angewandt werden können. Es wird angenommen, dass der Leser sich mit der Mathematik der RSA-Verschlüsselung auskennt. Die Ideen und Algorithmen, die in diesem Plug-in verwendet werden, basieren zum größten Teil auf dem ausführlichen und einzigartigen Buch
 [<a href="#YY04">YY04</a>]. Dieses Buch ist sehr empfehlenswert für jeden, der noch mehr
 über Kleptographie und Kryptovirologie im Allgemeinen erfahren will. Eine FAQ zu
 Kryptovirologie wird von den Autoren des Buches angeboten unter [<a href="#Yo06">Yo06</a>].</p>
@@ -30,21 +27,17 @@ dass ein Angriff in Gang ist, doch wäre es immer noch unmöglich, die Backdoor 
 zu nutzen, ohne die besondere Information des Angreifers zu kennen.</p>
 
 <p>Die Autoren von [<a href="#YY04">YY04</a>] beschreiben einen Angriff auf RSA, der diese
-Kriterien erfüllt. Sie nannten den Angriff einen geheim eingebauten, universal geschützten Falltürangriff
-(auf Englisch, "secretly embedded trapdoor with universal protection (SETUP) attack"). Dieses
-Plug-in beinhaltet</p>
+Kriterien erfüllt. Sie nannten den Angriff einen geheim eingebauten, universal geschützten Falltürangriff (auf Englisch, "secretly embedded trapdoor with universal protection (SETUP) attack"). Dieses Plug-in beinhaltet</p>
 
 <ul>
 <li>eine etwas vereinfachte Version dieses SETUP-Angriffs, neben
 <li>drei anderen weniger sicheren Angriffen und
-<li>eine unmanipulierte Schlüsselerzeugungsimplementierung zum Vergleich.
+<li>eine unmanipulierte Schlüsselerzeugungs-Implementierung zum Vergleich.
 </ul>
 
-<p>Jeder dieser Angriffe nimmt an, dass entweder der Hersteller unehrlich ist und folglich irgendwelche
-Schwächen oder Backdoors in dem gegebenen kryptographischen Gerät eingebaut hat, oder ein Angreifer
-von außen das Gerät irgendwie infiziert hat und es dadurch nach seinem Willen änderte.</p>
+<p>Jeder dieser Angriffe nimmt an, dass entweder der Hersteller unehrlich ist und folglich irgendwelche Schwächen oder Backdoors in dem gegebenen kryptographischen Gerät eingebaut hat, oder ein Angreifer von außen das Gerät irgendwie infiziert hat und es dadurch nach seinem Willen änderte.</p>
 
-<p>Nähere Infos zu diesen Schlüsselerzeugungsverfahren und ihren Implementierungen in
+<p>Nähere Infos zu diesen Schlüsselerzeugungs-Verfahren und ihren Implementierungen in
 diesem Plug-in finden Sie mit den Links zu jedem einzelnen Algorithmus: </p>
 
 <ul>
@@ -62,10 +55,16 @@ definitiv entdecken. Man muss den Entwickler der Implementierung des Kryptosyste
 vertrauen, sowie dass das Gerät nicht angegriffen und modifiziert wurde, um eine Schwäche
 zu beinhalten.
 
-<p>[YY04]<a id="YY04"></a> A. Young, M. Yung, <i>Malicious Cryptography: Exposing Cryptovirology</i>,
-John Wiley & Sons, 2004.</p>
-<p>[Yo06]<a id="Yo06"></a> A. Young, <i>Cryptovirology FAQ</i>, Version 1.31,
-<a href="http://www.cryptovirology.com/">http://www.cryptovirology.com/</a>.</p>
+<p>Referenzen:</p>
 
+<p>[YY04]<a id="YY04"></a> A. Young, M. Yung, <i>Malicious Cryptography: Exposing Cryptovirology</i>, John Wiley & Sons, 2004</p>
+
+<p>[Yo06]<a id="Yo06"></a> A. Young, <i>Cryptovirology FAQ</i>, Version 1.31,
+<a href="http://www.cryptovirology.com/">http://www.cryptovirology.com/</a></p>
+  
+<p><a href="https://de.wikipedia.org/wiki/Kleptographie">https://de.wikipedia.org/wiki/Kleptographie</a></p>
+  
+<p><a href="https://www.cryptool.org/images/ctp/documents/Kleptografie_kes_4-2010.pdf">Bernhard Esslinger: Kleptografie bei Black-Box-Implementierungen, KES, 2010</a></p>
+  
 </body>
 </html>

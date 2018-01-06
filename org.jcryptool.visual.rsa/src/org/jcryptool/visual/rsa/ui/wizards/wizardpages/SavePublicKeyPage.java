@@ -30,9 +30,6 @@ public class SavePublicKeyPage extends SaveWizardPage {
 	/** margin width. */
 	private static final int MARGIN = 50;
 
-	/** minimum height for a textfield so it diesn't cut the text. */
-	private static final int TEXTFIELD_MIN_HEIGHT = 15;
-
 	/** unique pagename to get this page from inside a wizard. */
 	private static final String PAGENAME = "Save Public Key Page"; //$NON-NLS-1$
 
@@ -49,8 +46,7 @@ public class SavePublicKeyPage extends SaveWizardPage {
 	public SavePublicKeyPage(final RSAData data) {
 		super(PAGENAME, TITLE, null);
 		setPageComplete(false);
-		this
-				.setDescription(Messages.SavePublicKeyPage_enter_params);
+		this.setDescription(Messages.SavePublicKeyPage_enter_params);
 		this.data = data;
 	}
 
@@ -58,29 +54,28 @@ public class SavePublicKeyPage extends SaveWizardPage {
 	 * Set up UI stuff.
 	 * @param parent the parent composite
 	 */
-	public final void createControl(final Composite parent) {
-		final Composite composite = new Composite(parent, SWT.NONE);
+	@Override
+	public final void createControl(Composite parent) {
+		Composite composite = new Composite(parent, SWT.NONE);
 		// do stuff like layout et al
-		final int ncol = 2;
-		final GridLayout gl = new GridLayout(ncol, true);
-		gl.marginWidth = MARGIN;
-		composite.setLayout(gl);
-		final GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		// needed so textfields don't cut text
-		gd.heightHint = TEXTFIELD_MIN_HEIGHT;
-		final GridData gd2 = new GridData(SWT.FILL, SWT.CENTER, false, false, ncol, 1);
-		final Label own = new Label(composite, SWT.NONE);
+		GridLayout gl_composite = new GridLayout();
+		gl_composite.marginWidth = MARGIN;
+		composite.setLayout(gl_composite);
+		
+		Label own = new Label(composite, SWT.NONE);
 		own.setText(Messages.SavePublicKeyPage_enter_name);
-		own.setLayoutData(gd2);
+		own.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		owner = new Text(composite, SWT.BORDER | SWT.SINGLE);
+		owner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		owner.addModifyListener(new ModifyListener() {
-			public void modifyText(final ModifyEvent e) {
+			
+			@Override
+			public void modifyText(ModifyEvent e) {
 				setPageComplete(!owner.getText().equals("")); //$NON-NLS-1$
 				data.setContactName(owner.getText());
 			}
 		});
-		owner.setLayoutData(gd);
 
 		// finish
 		setControl(composite);

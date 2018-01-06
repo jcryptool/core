@@ -62,14 +62,12 @@ public class MFlow {
 
     private boolean secretKnown;
 
-    private GridData gridData1 = new GridData();
+//    private GridData gridData1 = new GridData();
 
     /**
      * Konstruktor, der die Group erstellt
      */
     public MFlow(MagicDoorView magical, Composite parent) {
-        int heigth = 45;
-        int width = 200;
         // Attribute werden gesetzt
         magisch = magical;
         alice = magisch.getAlice();
@@ -78,28 +76,15 @@ public class MFlow {
         door = magisch.getDoor();
         secretKnown = true;
 
-        // allgemeine Angaben
-        gridData1.heightHint = heigth;
-        gridData1.widthHint = width;
-        gridData1.verticalAlignment = GridData.CENTER;
-
-        GridLayout gridLayout1 = new GridLayout();
-        gridLayout1.horizontalSpacing = 5;
-        gridLayout1.makeColumnsEqualWidth = false;
-        gridLayout1.numColumns = 2;
-        GridData gridData = new GridData();
-        gridData.horizontalAlignment = GridData.CENTER;
-        gridData.grabExcessHorizontalSpace = true;
-        gridData.grabExcessVerticalSpace = true;
-        // gridData.widthHint = 105;
-        gridData.verticalAlignment = GridData.CENTER;
         group = new Composite(parent, SWT.NONE);
-        group.setLayout(gridLayout1);
-        group.setLayoutData(gridData);
+        GridLayout gl_group = new GridLayout(4, false);
+        gl_group.horizontalSpacing = 50;
+        gl_group.verticalSpacing = 20;
+        group.setLayout(gl_group);
+        group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
         // Generieren der einzelnen Komponenten des Panels
-        // genLabels();
-        generateButtons();
+        generateButtons(group);
         setFont();
         setFirstCase(true);
     }
@@ -161,77 +146,19 @@ public class MFlow {
     }
 
     /**
-     * Gibt das Group-Objekt zurück, auf dem die graphischen Komponenten enthalten sind.
-     *
-     * @return Group-Objekt, auf den die graphischen Komponenten liegen
-     */
-    public Composite getGroup() {
-        return group;
-    }
-
-    /**
-     * setzt den Text in Abhängigkeit von dem Fall, der behandelt wird.
-     *
-     * @param b true, wenn der erste Fall betrachtet wird, ansonsten false
-     */
-    public void setFirstCase(boolean b) {
-        secretKnown = b;
-        if (b) {
-            erklaerung01.setText(Messages.MFlow_0);
-            erklaerung02.setText(Messages.MFlow_1);
-            erklaerung03.setText(Messages.MFlow_2);
-            erklaerung04.setText(Messages.MFlow_3);
-        } else {
-            erklaerung01.setText(Messages.MFlow_4);
-            erklaerung02.setText(Messages.MFlow_5);
-            erklaerung03.setText(Messages.MFlow_6);
-            erklaerung04.setText(Messages.MFlow_7);
-        }
-        setFont();
-    }
-
-    /**
-     * Highlighting der erläuternden Textteile
-     *
-     * @param step Schritt im Zero-Knowledge-Protokoll
-     */
-    public void setStep(int step) {
-        setFont();
-        switch (step) {
-            case 1:
-                erklaerung01.setFont(FontService.getNormalBoldFont());
-                erklaerung01.setSize(erklaerung01.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-                break;
-            case 2:
-                erklaerung02.setFont(FontService.getNormalBoldFont());
-                erklaerung02.setSize(erklaerung02.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-                break;
-            case 3:
-                erklaerung03.setFont(FontService.getNormalBoldFont());
-                erklaerung03.setSize(erklaerung03.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-                break;
-            case 4:
-                erklaerung04.setFont(FontService.getNormalBoldFont());
-                erklaerung04.setSize(erklaerung04.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-                break;
-        }
-    }
-
-    /**
      * Methode, die die Buttons anlegt
+     * @param parent parent Composite in which the Buttons and 
+     * explanatory notes should be displayed
      */
-    private void generateButtons() {
-        int width = 150;
-        int height = 45;
+    private void generateButtons(Composite parent) {
+    
+    	//Spacer, that helps to center the texts and buttons in the middle of the available space
+    	new Label(parent, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+    
         // Button, um die Zufallszahl zu erstellen
-        enterRoom = new Button(group, 0);
-        enterRoom.setText(Messages.MFlow_8);
-        enterRoom.setLayoutData(gridData1);
-
-        // Label für Button
-        erklaerung01 = new Label(group, 0);
-        erklaerung01.setLayoutData(gridData1);
-
+    	enterRoom = new Button(group, SWT.PUSH);
+    	enterRoom.setText(Messages.MFlow_8);
+    	enterRoom.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         enterRoom.addSelectionListener(
         /**
          * SelectionAdapter, der darauf achtet, ob der Button "Raum betreten" betätigt wurde
@@ -240,7 +167,8 @@ public class MFlow {
             /**
              * Alice bzw. Carol sucht sich einen Raum aus und betritt ihn
              */
-            public void widgetSelected(SelectionEvent arg0) {
+            @Override
+			public void widgetSelected(SelectionEvent arg0) {
                 alice.chooseRaum();
                 carol.chooseRaum();
                 if (secretKnown) {
@@ -262,18 +190,19 @@ public class MFlow {
                 enableSecond();
             }
         });
-        enterRoom.setSize(width, height);
         enterRoom.setEnabled(false);
-
-        // Button, um das Zufallsbit zu erstellen
-        chooseRoom = new Button(group, 0);
-        chooseRoom.setText(Messages.MFlow_9);
-        chooseRoom.setLayoutData(gridData1);
-
+        
         // Label für Button
-        erklaerung02 = new Label(group, SWT.NONE);
-        erklaerung02.setLayoutData(gridData1);
-
+        erklaerung01 = new Label(parent, SWT.WRAP);
+        erklaerung01.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+        
+    	//Spacer, that helps to center the texts and buttons in the middle of the available space
+        new Label(parent, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+               
+        // Button, um das Zufallsbit zu erstellen
+        chooseRoom = new Button(group, SWT.PUSH);
+        chooseRoom.setText(Messages.MFlow_9);
+        chooseRoom.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         chooseRoom.addSelectionListener(
         /**
          * SelectionAdapter, der darauf achtet, ob der Button "Raum aussuchen" betätigt wurde
@@ -282,7 +211,8 @@ public class MFlow {
             /**
              * Bob sucht sich einen Raum aus
              */
-            public void widgetSelected(SelectionEvent arg0) {
+            @Override
+			public void widgetSelected(SelectionEvent arg0) {
                 bob.chooseRaum();
                 if (secretKnown) {
                     magisch.getGebaeude().setStep(2, alice.getRaum(), false);
@@ -298,17 +228,19 @@ public class MFlow {
                 setStep(2);
             }
         });
-        chooseRoom.setSize(width, height);
         chooseRoom.setEnabled(false);
-
+        
+        // Label für Button
+        erklaerung02 = new Label(parent, SWT.WRAP);
+        erklaerung02.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+        
+    	//Spacer, that helps to center the texts and buttons in the middle of the available space
+        new Label(parent, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        
         // Button, um die Antwort von Alice oder Carol zu errechnen
-        changeRoom = new Button(group, 0);
+        changeRoom = new Button(group, SWT.PUSH);
         changeRoom.setText(Messages.MFlow_10);
-        changeRoom.setLayoutData(gridData1);
-
-        erklaerung03 = new Label(group, 0);
-        erklaerung03.setLayoutData(gridData1);
-
+        changeRoom.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         changeRoom.addSelectionListener(
         /**
          * SelectionAdapter, der darauf achtet, ob der Button "evtl. Raum wechseln" betätigt wurde
@@ -317,7 +249,8 @@ public class MFlow {
             /**
              * Alice wechselt ggf. den Raum, Carol bleibt in dem Raum
              */
-            public void widgetSelected(SelectionEvent arg0) {
+            @Override
+			public void widgetSelected(SelectionEvent arg0) {
                 MPerson p;
                 int nummer = 0;
                 if (secretKnown) {
@@ -344,19 +277,18 @@ public class MFlow {
                 setStep(3);
             }
         });
-        changeRoom.setSize(width, height);
-        // changeRoom.setLocation(220, 130);
         changeRoom.setEnabled(false);
 
+        erklaerung03 = new Label(parent, SWT.WRAP);
+        erklaerung03.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+
+    	//Spacer, that helps to center the texts and buttons in the middle of the available space
+        new Label(parent, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        
         // Button, um die Antwort von Alice oder Carol zu verifizieren
-        leave = new Button(group, 0);
+        leave = new Button(group, SWT.PUSH);
         leave.setText(Messages.MFlow_11);
-
-        leave.setLayoutData(gridData1);
-
-        erklaerung04 = new Label(group, 0);
-        erklaerung04.setLayoutData(gridData1);
-
+        leave.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         leave.addSelectionListener(
         /**
          * SelectionAdapter, der darauf achtet, ob der Button "Raum verlassen" betätigt wurde
@@ -365,7 +297,8 @@ public class MFlow {
             /**
              * Alice bzw. Carol verlässt den Raum, in dem sie sich befindet.
              */
-            public void widgetSelected(SelectionEvent arg0) {
+            @Override
+			public void widgetSelected(SelectionEvent arg0) {
                 MPerson p;
                 int nr = 0;
                 if (secretKnown)
@@ -394,9 +327,47 @@ public class MFlow {
                 disableAll();
             }
         });
-        leave.setSize(width, height);
-        leave.setLocation(220, 180);
         leave.setEnabled(false);
+        
+        erklaerung04 = new Label(parent, SWT.WRAP);
+        erklaerung04.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2,1));
+    
+    }
+
+    /**
+     * Gibt das Group-Objekt zurück, auf dem die graphischen Komponenten enthalten sind.
+     *
+     * @return Group-Objekt, auf den die graphischen Komponenten liegen
+     */
+    public Composite getGroup() {
+        return group;
+    }
+
+    /**
+     * setzt den Text in Abhängigkeit von dem Fall, der behandelt wird.
+     *
+     * @param b true, wenn der erste Fall betrachtet wird, ansonsten false
+     */
+    public void setFirstCase(boolean b) {
+        secretKnown = b;
+        if (b) {
+            erklaerung01.setText(Messages.MFlow_0);
+            erklaerung02.setText(Messages.MFlow_1);
+            erklaerung03.setText(Messages.MFlow_2);
+            erklaerung04.setText(Messages.MFlow_3);
+        } else {
+            erklaerung01.setText(Messages.MFlow_4);
+            erklaerung02.setText(Messages.MFlow_5);
+            erklaerung03.setText(Messages.MFlow_6);
+            erklaerung04.setText(Messages.MFlow_7);
+        }
+        erklaerung01.setVisible(false);
+        erklaerung02.setVisible(false);
+        erklaerung03.setVisible(false);
+        erklaerung04.setVisible(false);
+        group.layout();
+        group.getParent().layout();
+        setFont();
     }
 
     /**
@@ -407,5 +378,38 @@ public class MFlow {
         erklaerung02.setFont(FontService.getNormalFont());
         erklaerung03.setFont(FontService.getNormalFont());
         erklaerung04.setFont(FontService.getNormalFont());
+    }
+
+    /**
+     * Highlighting der erläuternden Textteile
+     *
+     * @param step Schritt im Zero-Knowledge-Protokoll
+     */
+    public void setStep(int step) {
+        setFont();
+        switch (step) {
+	        case 0:
+	            erklaerung01.setVisible(false);
+	            erklaerung02.setVisible(false);
+	            erklaerung03.setVisible(false);
+	            erklaerung04.setVisible(false);
+	            break;
+            case 1:
+                erklaerung01.setFont(FontService.getNormalBoldFont());
+                erklaerung01.getParent().layout();
+                break;
+            case 2:
+                erklaerung02.setFont(FontService.getNormalBoldFont());
+                erklaerung02.getParent().layout();
+                break;
+            case 3:
+                erklaerung03.setFont(FontService.getNormalBoldFont());
+                erklaerung03.getParent().layout();
+                break;
+            case 4:
+                erklaerung04.setFont(FontService.getNormalBoldFont());
+                erklaerung04.getParent().layout();
+                break;
+        }
     }
 }

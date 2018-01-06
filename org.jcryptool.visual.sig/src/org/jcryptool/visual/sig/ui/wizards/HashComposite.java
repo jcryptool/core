@@ -17,11 +17,13 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
@@ -51,20 +53,56 @@ public class HashComposite extends Composite implements SelectionListener {
      * Draws all the controls of the composite
      */
     private void initialize() {
-        GridData gd_grpSignatures = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gd_grpSignatures.widthHint = 141;
+    	setLayout(new GridLayout());
+    	int width = 400;
+    	
+    	Label wizardDescription = new Label(this, SWT.WRAP);
+    	wizardDescription.setText(Messages.HashWizard_header);
+    	GridData gd_wizardDescription = new GridData(SWT.FILL, SWT.FILL, true, false);
+    	gd_wizardDescription.widthHint = width;
+    	wizardDescription.setLayoutData(gd_wizardDescription);
+    	
+        grpHashes = new Group(this, SWT.NONE);
+ 	    GridData gd_grpSignatures = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+ 	    gd_grpSignatures.widthHint = width;
+ 	    grpHashes.setLayoutData(gd_grpSignatures);
+ 	    grpHashes.setLayout(new GridLayout());
+        grpHashes.setText(Messages.HashWizard_grpHashes);
+
+        rdo1 = new Button(grpHashes, SWT.RADIO);
+        rdo1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+        rdo1.setText("MD5 (128)"); //$NON-NLS-1$
+
+        rdo2 = new Button(grpHashes, SWT.RADIO);
+        rdo2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+        rdo2.setText("SHA-1 (160)"); //$NON-NLS-1$
+
+        rdo3 = new Button(grpHashes, SWT.RADIO);
+        rdo3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+        rdo3.setText(Messages.HashWizard_rdosha256);
+
+        rdo4 = new Button(grpHashes, SWT.RADIO);
+        rdo4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+        rdo4.setText(Messages.HashWizard_rdosha384);
+
+        rdo5 = new Button(grpHashes, SWT.RADIO);
+        rdo5.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+        rdo5.setText(Messages.HashWizard_rdosha512);
 
         Group grpDescription = new Group(this, SWT.NONE);
-        GridData gd_grpDescription = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gd_grpDescription.widthHint = 129;
+        GridData gd_grpDescription = new GridData(SWT.FILL, SWT.FILL, true, true);
+        gd_grpDescription.widthHint = width;
+        gd_grpDescription.heightHint = 200;
         grpDescription.setLayoutData(gd_grpDescription);
         grpDescription.setText(Messages.HashWizard_grpDescription);
-        grpDescription.setBounds(10, 187, 300, 246);
+        grpDescription.setLayout(new GridLayout());
 
-        txtDescription = new Text(grpDescription, SWT.WRAP | SWT.TRANSPARENT);
+        txtDescription = new Text(grpDescription, SWT.WRAP | SWT.TRANSPARENT | SWT.V_SCROLL);
         txtDescription.setEditable(false);
         txtDescription.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
-        txtDescription.setBounds(10, 18, 275, 201);
+        GridData gd_txtDescription = new GridData(SWT.FILL, SWT.FILL, true, true);
+        gd_txtDescription.heightHint = 200;
+        txtDescription.setLayoutData(gd_txtDescription);
         txtDescription.setText(Messages.HashWizard_rdomd5_description);
 
         menuHash = new Menu(txtDescription);
@@ -79,33 +117,11 @@ public class HashComposite extends Composite implements SelectionListener {
             }
         });
 
-        setSize(new Point(321, 443));
-
-        grpHashes = new Group(this, SWT.NONE);
-        grpHashes.setLayoutData(gd_grpSignatures);
-        grpHashes.setText(Messages.HashWizard_grpHashes);
-        grpHashes.setBounds(10, 10, 300, 171);
-
-        rdo1 = new Button(grpHashes, SWT.RADIO);
-        rdo1.setBounds(10, 19, 91, 18);
-        rdo1.setText("MD5 (128)"); //$NON-NLS-1$
-
-        rdo2 = new Button(grpHashes, SWT.RADIO);
-        rdo2.setBounds(10, 43, 91, 18);
-        rdo2.setText("SHA-1 (160)"); //$NON-NLS-1$
-
-        rdo3 = new Button(grpHashes, SWT.RADIO);
-        rdo3.setBounds(10, 67, 91, 18);
-        rdo3.setText(Messages.HashWizard_rdosha256);
-
-        rdo4 = new Button(grpHashes, SWT.RADIO);
-        rdo4.setBounds(10, 91, 91, 18);
-        rdo4.setText(Messages.HashWizard_rdosha384);
-
-        rdo5 = new Button(grpHashes, SWT.RADIO);
-        rdo5.setBounds(10, 115, 91, 18);
-        rdo5.setText(Messages.HashWizard_rdosha512);
-
+        pack();
+        Point size = computeSize(width, SWT.DEFAULT);
+        size.y += 100;
+        getShell().setMinimumSize(size);
+ 
         // Add event listeners
         rdo1.addSelectionListener(this);
         rdo2.addSelectionListener(this);

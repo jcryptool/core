@@ -59,7 +59,7 @@ public class ManageVisibleIdentitiesPage extends WizardPage {
 
         Label lbl = new Label(container, SWT.WRAP);
         lbl.setText(Messages.ManageVisibleIdentitiesPage_3);
-        GridData gdLbl = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2);
+        GridData gdLbl = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
         lbl.setLayoutData(gdLbl);
 
         Vector<String> identites_vector = new Vector<String>();
@@ -114,8 +114,7 @@ public class ManageVisibleIdentitiesPage extends WizardPage {
             }
         });
 
-        GridData gdTable = new GridData(SWT.LEFT, SWT.LEFT, true, false, 1, 1);
-        gdTable.widthHint = 150;
+        GridData gdTable = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
         gdTable.heightHint = 150;
         table.setLayoutData(gdTable);
 

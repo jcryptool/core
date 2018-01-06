@@ -62,6 +62,7 @@ public class EnterSignaturePage extends TextWizardPage {
 	 * Set up the UI stuff.
 	 * @param parent the parent composite
 	 */
+	@Override
 	public final void createControl(final Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
 		// do stuff like layout et al
@@ -72,6 +73,7 @@ public class EnterSignaturePage extends TextWizardPage {
 		plaintext = new Text(composite, SWT.BORDER);
 		plaintext.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		plaintext.addVerifyListener(new VerifyListener() {
+			@Override
 			public void verifyText(final VerifyEvent e) {
 				switch (e.keyCode) {
 				case SWT.DEL:
@@ -93,6 +95,7 @@ public class EnterSignaturePage extends TextWizardPage {
 		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		text.addModifyListener(new ModifyListener() {
 
+			@Override
 			public void modifyText(final ModifyEvent e) {
 				final String trimmed = text.getText().replaceAll(WHITESPACE, ""); //$NON-NLS-1$
 				final boolean leer = trimmed.length() == 0;
@@ -106,6 +109,7 @@ public class EnterSignaturePage extends TextWizardPage {
 			}
 		});
 		text.addVerifyListener(new VerifyListener() {
+			@Override
 			public void verifyText(final VerifyEvent e) {
 				switch (e.keyCode) {
 				case SWT.DEL:
@@ -127,6 +131,7 @@ public class EnterSignaturePage extends TextWizardPage {
 				.setToolTipText(Messages.EnterPlaintextPage_use_sha1_popup);
 		SHA1Checkbox.addSelectionListener(new SelectionAdapter() {
 
+			@Override
 			public void widgetSelected(final SelectionEvent e) {
 				data.setSimpleHash(!SHA1Checkbox.getSelection());
 			}

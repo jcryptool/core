@@ -18,6 +18,8 @@ import java.io.InputStream;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -44,12 +46,18 @@ public class InputFileComposite extends Composite implements SelectionListener {
     public InputFileComposite(Composite parent, int style, InputFileWizardPage p) {
         super(parent, style);
 
+        setLayout(new GridLayout(2, false));
+               
         txtPath = new Text(this, SWT.BORDER);
         txtPath.setEditable(false);
-        txtPath.setBounds(10, 10, 323, 19);
-
+        GridData gd_txtPath = new GridData(SWT.FILL, SWT.FILL, false, false);
+        gd_txtPath.widthHint = 320;
+        txtPath.setLayoutData(gd_txtPath);
+        
         Button btnBrowse = new Button(this, SWT.NONE);
-        btnBrowse.setBounds(339, 6, 94, 28);
+        GridData gd_btnBrowse = new GridData(SWT.FILL, SWT.FILL, false, false);
+        gd_btnBrowse.widthHint = 150;
+        btnBrowse.setLayoutData(gd_btnBrowse);
         btnBrowse.setText(Messages.InputFileWirard_btnBrowse);
         btnBrowse.addSelectionListener(this);
         btnBrowse.setFocus();

@@ -45,6 +45,7 @@ public class SaveKeypairPage extends SaveWizardPage {
 	/** modifyListener for the fields. */
 	private final ModifyListener ml = new ModifyListener() {
 
+		@Override
 		public void modifyText(final ModifyEvent e) {
 			final boolean pwmatch = password.getText().equals(passwordverify.getText());
 			setPageComplete(!owner.getText().equals("") && !password.getText().equals("") //$NON-NLS-1$ //$NON-NLS-2$
@@ -80,6 +81,7 @@ public class SaveKeypairPage extends SaveWizardPage {
 	 * Set up UI stuff.
 	 * @param parent the parent composite
 	 */
+	@Override
 	public final void createControl(final Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
 		// do stuff like layout et al

@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	  <title>Fleißnersche Schablone</title>
+</head>
+<html>
+<body>
+
+<h1>Fleißnersche Schablone</h1>
+
+<p>Die "Fleißner-Schablone" (engl. turning grille) ist ein historisches Verschlüsselungsverfahren, erfunden von Eduard Fleißner von Wostrowitz im Jahr 1881. Sie wurde 1916 von den Deutschen im 1. Weltkrieg benutzt.</p>
+<p>Dieses Plugin soll helfen, diese spezielle Variante einer Transpositions-Verschlüsselung zu verstehen, indem sie das Verfahren visualisiert und ein einfaches Werkzeug anbietet, eigene Nachrichten zu verschlüsseln und zu entschlüsseln.</p>
+<p>Das Verfahren wird als <b>pädagogisches</b> Beispiel historischer Kryptographie vorgestellt. Verwenden Sie das Tool <b>nicht</b> zum Verschlüsseln Ihrer Korrespondenz, da es sich nicht um eine starke Verschlüsselung handelt.</p>
+
+<h3>Technik</h3>
+
+<p>Die Fleißner-Schablone selbst ist ein quadratisches Stück Papier mit n² Feldern, n&#8712;&#8469;, n > 0. Jedes vierte Feld ist herausgeschnitten. Der zu verschlüsselnde Text wird – durch die Löcher dieser Maske – zeilenweise auf ein darunter liegendes Blatt geschrieben. Sind alle Löcher gefüllt, so wird die Schablone um 90° im Uhrzeigersinn gedreht und das Einschreiben des Textes fortgesetzt, dies wird noch 2 mal wiederholt. Am Ende sollte jedes Feld des darunter liegenden Papiers genau mit einem Zeichen gefüllt sein. Damit dies so funktioniert, müssen die Löcher in einer bestimmten Weise auf der Schablone verteilt sein.</p>
+<p>Der resultierende Geheimtext wird zeilenweise ausgelesen. Zum Entschlüsseln wird eine identische Schablone einfach auf die Nachricht gelegt, welche zuvor wieder in ein quadratisches Raster von vorgegebener Seitenlänge geschrieben wurde.</p>
+<p>Ist die Schablonengröße (Kantenlänge) eine gerade Zahl gibt es (n²) / 4 Löcher. Ist die Schablonengröße eine ungerade Zahl, gibt es ein ausgezeichnetes Feld in der Mitte, das bei keiner Rotation freiliegt. Damit ergeben sich (n²-1)/4 Löcher.</p>
+
+<h3>Geschichte</h3>
+
+<p>Die Fleißner Schablone wurde erfunden von Eduard Fleißner von Wostrowitz, einem österreichischen Oberst. Dieser verfasste das Buch „Handbuch der Kryptographie“, welches 1881 in Wien erschien [BAU95, 80]. Das Kryptographieverfahren wurde Ende 1916 im ersten Weltkrieg von Deutschland kurzzeitig verwendet. Die Schablonen hatten Namen, wie z.B. ANNA für die 25 Großbuchstaben, BERTA für die mit 36 Feldern und so weiter. Als die Franzosen 1917 das Verfahren erkannten und eine Dechiffrierung sich als sehr einfach herausstellte, wurde das System nach viermonatiger Benutzung verworfen [KAN97, 309].</p>
+<p>Es wurden auch Varianten eingesetzt, die weniger als die maximal möglichen Löcher in der Schablone enthielten.</p>
+
+<h3>Erzeugung der Schablone</h3>
+
+<p>Anders als bei vielen anderen Verfahren ist hier der Schlüssel nicht beliebig wählbar, sondern unterliegt bestimmten Regeln. Unterteilt man die Schablone in 4 Quadranten, kann eine Zahl nur in einem der Quadranten ausgestochen sein.</p>
+<p>Für den Standardfall mit einer gerade Seitenlänge gibt es S = 4 ^ (n² / 4) mögliche Schlüssel. Die möglichen Transpositionen hängen nicht von der Textlänge sondern nur von der Schlüsselgröße ab. Bei einer Seitenlänge von n=6 sind dies 262.144 mögliche Schlüssel.</p>
+
+<h3>Bedienung</h3>
+
+<h4>1) Schnell zum Verschlüsselungsergebnis</h4>
+<p>Wenn man die Standardeinstellung für Größe und Verteilung der Löcher in der Schablone auf den initialen Werten lässt, kann man direkt den Klartext eingeben. Klickt man nun auf den Button "Starten", sieht man im Klartextfeld den gepaddeten Text hinter dem eigentlichen Klartext und im Geheimtext-Feld das verschlüsselte Ergebnis.</p>
+<p><img src="direct.png" width="700" height="437" alt="Layout der Benutzeroberfläche bei driekter Analyse"></p>
+<h4>2) Schrittweises Vorgehen</h4>
+<p>Im folgenden Beispiel wurde die Größe der Schablone auf 8 erhöht und dann der Button "Löcher zufällig setzen" gedrückt. Wieder wurde als Klartext "Dies ist ein Test" gewählt. Vor dem Drücken des Buttons "Starten" wurde der Typ (Vorgehensweise) auf "Schrittweise" gesetzt.</p>
+<p>(1) Nach dem Klick auf "Starten", werden links in der Gruppierung "Visualisierung" das Padding und seine Länge (47) angezeigt. Zusammen mit dem Klartext der Länge 17 ergeben sich 64 Byte.</p>
+<p><img src="type.png" width="700" height="437" alt="Layout der Benutzeroberfläche bei Auswahl des Typs"></p>
+<p>(2) Nach dem Klick auf "Weiter" in Schritt 1, werden links in der Gruppierung "Visualisierung" die ersten 16 Zeichen verteilt – direkt erkennen kann man nur 13 rote Buchstaben, denn die 3 verteilten Leerzeichen sieht man nicht.</p>
+<p><img src="step2.png" width="700" height="437" alt="Layout der Benutzeroberfläche bei Schritt 2"></p>
+<p>Die blaue Linie zeigt das Loch in der Schablone und den zugehörigen Buchstaben auf dem darunter liegenden Papier.</p>
+<p>(3) Nach dem Klick auf "Weiter" in Schritt 2, werden links in der Gruppierung "Visualisierung" die nächsten 16 Zeichen verteilt (wieder rot dargestellt).</p>
+<p><img src="step3.png" width="700" height="437" alt="Layout der Benutzeroberfläche bei Schritt 3"></p>
+<p>Die Schlüsselschablone oben wird mitgedreht angezeigt.</p>
+<p>(4) Am Ende sieht man den fertigen Geheimtext, der zeilenweise aus dem unter der Schablone liegenden Papier ausgelesen wird.</p>
+<p><img src="finish.png" width="700" height="437" alt="Layout der Benutzeroberfläche bei Schritt 5"></p>
+
+<h3>Bemerkung</h3>
+<p>Wenn Sie nochmal auf "Starten" klicken, geht es von vorne los.</p>
+<p>Sie können dann mal probieren, die Lochmaske per Maus zu verändern, indem Sie auf ein Loch klicken. Dann werden die möglichen Positionen in allen Quadranten angezeigt. Nun können Sie dieses Loch in einem anderen Quadranten setzen.</p>
+<p><img src="key1.png" alt="orginal Schablone"></p>
+<p><img src="key2.png" alt="Schablone vor Wechsel des Lochs"></p>
+<p><img src="key3.png" alt="Schablone nach Wechsel des Lochs"></p>
+
+<h3>Literatur</h3>
+<p><b>[BAU95]</b></br>Bauer, Friedrich L., Entzifferte Geheimnisse, Methoden und Maximen der Kryptologie, 2. Auflage,Springer Verlag, Berlin 1995</p>
+<p><b>[KAN97]</b></br>Kahn, David, The Codebreakers, The Story Of Secret Writing, Scribner, New York 1997</p>
+<p><b>[SCHN03]</b></br>Schneider, Matthias, Die Fleißner-Schablone, Seminararbeit im Bereich IT-Sicherheit & Kryptologie, Siegen 2003</p>
+<p><b>Wikipedia</b>, Fleißner Schablone, <a href="https://de.wikipedia.org/wiki/Flei%C3%9Fnersche_Schablone">https://de.wikipedia.org/wiki/Flei%C3%9Fnersche_Schablone</a></p>
+<p></p>
+
+</body/>
+</html>

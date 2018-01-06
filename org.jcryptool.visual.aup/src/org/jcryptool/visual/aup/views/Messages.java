@@ -62,6 +62,7 @@ public class Messages extends NLS {
 	public static String AupView_6;
 	public static String AupView_7;
 	public static String AupView_8;
+	public static String AupView_9;
 	
 	static {
 		// initialize resource bundle

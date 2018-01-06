@@ -12,6 +12,7 @@ package org.jcryptool.visual.elGamal;
 import java.math.BigInteger;
 import java.security.PrivateKey;
 import java.security.UnrecoverableKeyException;
+import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -22,6 +23,7 @@ import org.jcryptool.core.logging.dialogs.JCTMessageDialog;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.crypto.ui.textblockloader.conversion.ConversionStringToBlocks;
 
 import de.flexiprovider.core.elgamal.ElGamalPrivateKey;
 
@@ -82,6 +84,17 @@ public class ElGamalData {
 
     /** the current action */
     private final Action action;
+    
+    private ConversionStringToBlocks plainTextConversion;
+    
+    /** is the cipherText in number representation */
+    private List<Integer> cipherTextAsNumbers;
+    
+    /** is the plainText in number representation */
+    private List<Integer> plainTextAsNumbers;
+    
+    /** is the signature in number representation */
+    private List<Integer> signatureAsNumbers;
 
     /**
      * constructor, setting {@link #action}
@@ -114,25 +127,27 @@ public class ElGamalData {
                 this.a = oldData.a;
                 this.privateAlias = oldData.privateAlias;
                 this.password = oldData.password;
-            } else {
-            	this.privateAlias = KeyStoreManager.getInstance().getPrivateForPublic(this.publicAlias);
-                final InputDialog passDialog = new InputDialog(Display.getCurrent().getActiveShell(),
-                        Messages.ElGamalData_inherit_password_text, Messages.ElGamalData_inherit_password_title, "",
-                        null);
-                if (passDialog.open() == Window.OK) {
-                    this.password = passDialog.getValue();
-                } else {
-                    return;
-                }
-                try {
-                    this.getPrivateParams();
-                } catch (UnrecoverableKeyException e) {
-                    JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, ElGamalPlugin.PLUGIN_ID,
-                            Messages.ElGamalData_ExAccessKeystorePassword, e));
-                } catch (final Exception e) {
-                    LogUtil.logError(e);
-                }
-            }
+			} else {
+				if (this.publicAlias != null) {
+					this.privateAlias = KeyStoreManager.getInstance().getPrivateForPublic(this.publicAlias);
+					final InputDialog passDialog = new InputDialog(Display.getCurrent().getActiveShell(),
+							Messages.ElGamalData_inherit_password_text, Messages.ElGamalData_inherit_password_title, "",
+							null);
+					if (passDialog.open() == Window.OK) {
+						this.password = passDialog.getValue();
+					} else {
+						return;
+					}
+					try {
+						this.getPrivateParams();
+					} catch (UnrecoverableKeyException e) {
+						JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, ElGamalPlugin.PLUGIN_ID,
+								Messages.ElGamalData_ExAccessKeystorePassword, e));
+					} catch (final Exception e) {
+						LogUtil.logError(e);
+					}
+				}
+			}
         }
 
         this.cipherText = oldData.cipherText;
@@ -472,5 +487,45 @@ public class ElGamalData {
     public void setB(final BigInteger b) {
         this.b = b;
     }
+    
+    /**
+     * Used for showing the right conversion in the NumberblocksAndTextViewer Fields in the GUI.
+     * @param blockConversion
+     */
+	public void setPlainTextConversion(ConversionStringToBlocks blockConversion) {
+		this.plainTextConversion = blockConversion;
+	}
+	
+	/**
+	 * Used for showing the right conversion in the NumberblocksAndTextViewer Fields in the GUI.
+	 * @return the used ConversionStringToBlocks.
+	 */
+	public ConversionStringToBlocks getPlainTextConversion() {
+		return plainTextConversion;
+	}
+
+	public List<Integer> getPlainTextAsNumbers() {
+		return plainTextAsNumbers;
+	}
+
+	public void setPlainTextAsNumbers(List<Integer> plainTextAsNumbers) {
+		this.plainTextAsNumbers = plainTextAsNumbers;
+	}
+
+	public List<Integer> getSignatureAsNumbers() {
+		return signatureAsNumbers;
+	}
+
+	public void setSignatureAsNumbers(List<Integer> signatureAsnumbers) {
+		this.signatureAsNumbers = signatureAsnumbers;
+	}
+
+	public List<Integer> getCipherTextAsNumbers() {
+		return cipherTextAsNumbers;
+	}
+
+	public void setCipherTextAsNumbers(List<Integer> cipherTextAsNumbers) {
+		this.cipherTextAsNumbers = cipherTextAsNumbers;
+	}
 
 }

@@ -8,38 +8,58 @@
 
 <body>
 
-<h1>RSA Cryptosystem (including Identities and Multi-Prime RSA)</h1>
+<h1>Extended RSA Cryptosystem (including Identities and Multi-Prime RSA)</h1>
+
 <p>This plug-in visualizes the usage of RSA for message encryption. In most usage scenarios, this algorithm utilizes two prime numbers for key generation, and has – as every asymmetric algorithm – a private and a public key.</p>
-<p>This algorithm can also be used with more than two prime numbers – which is then called <strong>multi-prime RSA</strong. The key generation and the encryption are working analogously to the classic RSA-algorithm with two prime numbers (N is the product of all chosen prime numbers).</p>
-<p><b>Please note </b>that in this visualization the operations are performed on each single character. In practice, though the operations are performed on blocks or even the whole message. However, in the typical use cases RSA is not used to encrypt large amounts of data. Instead it is used to encrypt a symmetric session key, with which the actual data is encrypted (using e.g. AES or 3DES). This is typically referred to as ‘hybrid encryption’. (Another typical use case is to sign the hash value of a message.)</p>
+
+<p>This algorithm can also be used with more than two prime numbers – which is then called <strong>multi-prime RSA</strong>. The key generation and the encryption are working analogously to the classic RSA-algorithm with two prime numbers (N is the product of all chosen prime numbers).</p>
+
+<p><b>Please note </b>that in this visualization the operations are performed on each single character. In practice, though the operations are performed on blocks or even the whole message. However, in the typical use cases RSA is not used to encrypt large amounts of data. Instead it is used to encrypt a session key, with which the actual data is encrypted (using a symmetric cipher like AES or 3DES). This is typically referred to as ‘hybrid encryption’. (Another typical use case is to sign the hash value of a message.)</p>
 
 <h2>Explanation of the RSA Scheme</h2>
-<p>RSA is the most-commonly used asymmetric algorithm, and has been developed by Ronald Rivest, Adi Shamir and Leonard Adleman in 1977 (and named after their last names’ initials). The private and public keys are constructed using two randomly selected large prime numbers p and q which can be specified by the user. Then the user calculates two natural numbers (i.e., positive integers) e and d such that (e*d) = 1 mod ((p-1)(q-1)).
+<p>RSA is the most-commonly used asymmetric algorithm, and has been developed by Ronald Rivest, Adi Shamir, and Leonard Adleman in 1977 (and named after their last names’ initials). The private and public keys are constructed using two randomly selected large prime numbers p and q which can be specified by the user. Then the user calculates two natural numbers (i.e., positive integers) e and d such that (e*d) = 1 mod ((p-1)(q-1)).
 The product p*q = N and e then serve as the public key, the exponent d as the private key. The primes p and q then can be deleted.</p>
+
 <p>As this encryption algorithm only works on non-negative integers, first the plaintext letters must be converted to natural numbers. This is generally done using the ASCII code, but one can of course also agree on A=0, B=1 .... Z=25. In this plug-in the ASCII code is used.</p>
-<p>However, the ordinal number of each plaintext letter must be smaller than the product N. This becomes clear when you examine the encryption and decryption functions (m = numeric value of the plaintext letter, c = numeric value of the ciphertext letter): c = m^e mod N and m = c^d mod N.
-Calculating modulo you can also first determine the remainder from each factor and then the rest of its product modulo N. It would not always be possible to obtain a unique ciphertext character if m could be greater than N.
-The security of the RSA scheme is based on two mathematical problems. First, it is hard for big numbers to extract a root modulo N (RSA problem). Second, factorization of a number N = p*q is hard, if the factors are sufficiently large (RSA key problem).</p>
+
+<p>However, the ordinal number of each plaintext letter must be smaller than the product N. This becomes clear when you examine the encryption and decryption functions (m = numeric value of the plaintext letter, c = numeric value of the ciphertext letter): c = m^e mod N and m = c^d mod N.</p>
+  
+<p>Calculating modulo you can also first determine the remainder from each factor and then the rest of its product modulo N. It would not always be possible to obtain a unique ciphertext character if m could be greater than N.</p>
+  
+<p>The security of the RSA scheme is based on two mathematical problems. First, it is hard for big numbers to extract a root modulo N (RSA problem). Second, factorization of a number N = p*q is hard, if the factors are sufficiently large (RSA key problem).</p>
 
 <h3>RSA Key Generation</h3>
-<p>A special characteristic of the RSA cryptosystem is that extensive calculations are necessary to generate the RSA key before the “normal” operation can take place: RSA en-/decryption (or signing/verifying).
-First of all, the RSA parameters p, q, N and the Euler function phi(N) are calculated by choosing two different prime numbers p and q at random, and then by calculating the so-called RSA modulus N = p*q. The Euler function phi(N) is the product of (p-1)*(q-1). Normally p and q are deleted after this calculation to ensure these are not revealed even by coincidence (even the key creator doesn’t know the values any more).</p>
+<p>A special characteristic of the RSA cryptosystem is that extensive calculations are necessary to generate the RSA key before the “normal” operation can take place: RSA en-/decryption (or signing/verifying).</p>
+  
+<p>First of all, the RSA parameters p, q, N and the Euler function phi(N) are calculated by choosing two different prime numbers p and q at random, and then by calculating the so-called RSA modulus N = p*q. The Euler function phi(N) is the product of (p-1)*(q-1). Normally p and q are deleted after this calculation to ensure these are not revealed even by coincidence (even the key creator doesn’t know the values any more).</p>
+
 <p>In a second step, the public RSA exponent e is determined. Together with phi(N), the secret RSA exponent d is calculated. The number e is chosen as follows 1 < e < phi(N), with the property that e is relatively prime to phi(N). A popular value for e is 2^16+1 = 65537, as in most cases this is co-prime to phi(N) and is especially well-suited for square and multiply exponentiation resulting in a very fast public key operation.</p>
+
 <p>The secret exponent d = e^(-1) mod phi(N) is calculated as the multiplicative inverse of the public exponent e modulo phi(N). In a different notation: e*d = 1 mod phi(N).</p>
-<p>After the RSA key generation, N and e can be published. Then, anyone could encrypt a message for the owner of the according secret RSA key d (or check a digital signature -- using only the public key). </p>
+
+<p>After the RSA key generation, N and e can be published. Then, anyone could encrypt a message for the owner of the according secret RSA key d (or check a digital signature  &nbsp;&ndash;  using only the public key).</p>
 
 <h3>RSA Encryption / Decryption</h3>
 <p>To encrypt data with the RSA scheme, the ciphertext is calculated using the public key e of the recipient and the plaintext. The encryption function is c = m^e mod N. This means that anyone can encrypt a message using the public key. But only the owner of the associated secret key d can then decrypt the message again.</p>
+
 <p>To decrypt a ciphertext with the RSA scheme, one needs to know the private key d. The decryption function, c^d = (m^e)^d = m^(e*d) = m mod N, yields the plaintext m again.</p>
+
 
 <h2>Factorizing Attack</h2>
 <p>Goal of the factorizing attack is to factorize the public modulus N to reconstruct the prime numbers used for the key generation. With this prime numbers, the private key (the secret parameter d) can be calculated like at the the originally key generation. So an attacker can possibly read messages which are not assigned to him. </p>
+
 <p>This attack can be avoided by using prime numbers with a length of more than 612 bits (in case of a RSA key with two primes, the modulus is more than 1024 bit long). Even today's supercomputers have no chance to factorize such a modulus in several years.</p>
+
 <p>In this visual a factorizing attack is implemented to factorize only small public keys. The attack tries to get all factors of the public modulus N. As soon as all factors are found, the used prime numbers for the key generation are identified and the private key can be reconstructed.</p>
 
 <p>For further information please refer to:</p>
 <ul>
-	<li><a href="https://en.wikipedia.org/wiki/RSA_cryptosystem">http://en.wikipedia.org/wiki/RSA_cryptosystem</a></li>
-	<li><a href="http://www.cryptool.org/images/ctp/documents/CrypToolScript-en.pdf">the CrypTool-script, chapter 4</a></li>
+  <li><a href="../../../../../org.jcryptool.visual.rsa/nl/en/help/content/index.html">JCT Plugin: RSA Cryptosystem (Encrypt, Decrypt, Sign, and Verify)</a>
+
+  <li><a href="https://en.wikipedia.org/wiki/RSA_cryptosystem">http://en.wikipedia.org/wiki/RSA_cryptosystem</a></li>
+
+  <li><a href="https://www.cryptool.org/images/ctp/documents/CT-Book-en.pdf">The CrypTool Book, Chapter 4</a></li>
 </ul>
+
+<br/>
 </body>

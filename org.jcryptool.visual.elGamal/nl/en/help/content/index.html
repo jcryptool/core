@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title>ElGamal Cryptosystem</title>
+</head>
+
+<body>
+  <h1>ElGamal Cryptosystem (Encrypt, Decrypt, Sign, and Verify)</h1>
+
+  <p>This help file describes two things:<br/>
+  1) <a href="#scheme-general">The ElGamal Scheme (Algorithm)</a><br/>
+  2) <a href="#plugin">Handling Instructions: How to Use this Visualization</a> </p>
+
+  <h2 id="scheme-general">1) The ElGamal Scheme (Algorithm)</h2>
+  
+  <p>The ElGamal encryption scheme is an asymmetric key encryption scheme which is based on the idea of the Diffie–Hellman key exchange. It was described by Taher Elgamal in 1985.</p>
+  
+  <p>The ElGamal signature scheme is a digital signature scheme which is based on the difficulty to compute discrete logarithms. It was described by Taher ElGamal in 1984.</p>
+  
+  <p>While the ElGamal signature scheme is rarely used, the ElGamal encryption is widely used as an alternative to RSA encryption.
+  The setup and the generation (of the private and the public key) are the same for both schemes. However, encryption and signing work differently. In the opposite to the <a href="../../../../../org.jcryptool.visual.rsa/nl/en/help/content/index.html">RSA cryptosystem</a>, ElGamal depends on the difficulty of solving discrete logarithms while RSA depends on the factorization of big numbers. Another difference is, that encryption and signing need an additional random session key, what RSA doesn't.</p>
+  
+  <p>As usual, we use the scenario with Alice sending a message to Bob. For encrypting the message, she needs his public key; for signing it she uses her private key.</p>
+  
+  <p>Like all asymmetric cryptosystems, the ElGamal cryptosystem uses for each participant (Alice and Bob) a key pair consisting of a public and a private key. A public key is used for encryption and can be published, while a private key is used for decryption and must only be known to the recipient of the message. This means that Bob, the recipient of the message, must generate a key pair only once. Afterwards, Alice and everyone else can use his public key to encrypt a message as often as they like and send encrypted messages to Bob.</p>
+
+  <p>In the following we have four sections: the parameter generation (setup), the key generation, the encryption scheme, and the signature scheme. The first two are used by both schemes. The methods for the two schemes encryption and signing are different.</p>
+  
+  <h3 id="Setup">a) ElGamal Setup (Parameter Generation)</h3>
+  
+  <p> ElGamal encryption can be defined over any cyclic group G with a finite order.</p>
+
+  <p>Alice and Bob both use the same cyclic (aka finite) group G with d elements (this is called the group is of order d). This group is generated with the generator g. d is an n-bit integer. The input for the generation process is normally the security parameter n. All of this data is made public. As G often Z_d = { 0 , … , d-1 } is used with a prime d.</p>
+  
+  
+  <h3 id="KeyGen">b) ElGamal Key Generation</h3>
+
+
+  <p>For encryption we need Bob's public key. His key generation works like this:</p>
+  <ul>
+  <li>Bob chooses b randomly from { 1 , … , d-1 }. This is his private key.</li>
+  <li>Bob computes B = g^b. This is (part of) his public key.</li>
+  <li>Bob publishes B, along with the description of G, d, g, as his public key. Bob retains b as his private key, which must be kept secret.</li>
+  </ul>
+
+  <p>For the signature of Alice we need Alice's private key. Her key generation works like this:</p>
+  <ul>
+  <li>Alice chooses a randomly from { 1 , … , d-1 }. This is her private key.</li>
+  <li>Alice computes A = g^a. This is (part of) her public key.</li>
+  <li>Alice publishes A, along with the description of G, d, g, as her public key. Alice retains a as her private key, which must be kept secret.</li>
+  </ul>
+
+  
+  <h3 id="SchemeEncDec">c) ElGamal Encryption / Decryption</h3>
+
+  <p>The ElGamal encryption scheme consists of four steps: the parameter generation (setup), the key generation, the encryption, and the decryption. The first two steps were described above, the actual encryption and decryption follow now.</p>
+  
+  <h4 id="SchemeEnc">c1) ElGamal Encryption</h3>
+
+  <p>The encryption algorithm works as follows: To encrypt a plaintext message m to Bob she uses his public key ( G , d , g , B ),</p>
+  <ul>
+  <li>Alice chooses a random secret session key l from { 1 , … , d − 1 }.</li>
+  <li>Alice calculates a public session key L = g^l.</li>
+  <li>Alice calculates the shared secret K = B^l = g^(b*l).</li>
+  <li>Alice maps her message m onto an element m' of G.</li>
+  <li>Alice calculates M = m' * K.</li>
+  <li>Alice sends the ciphertext (L, M) = ( g^l, m' * K) = (g^l, m' * g^(b*l)) to Bob.</li>
+  </ul>
+
+<p><b>Note 1:</b> One can easily find B^l if one knows m'. Therefore, a new l is generated for every message to improve security. For this reason, l is also called an ephemeral (or session) key.</p>
+<p><b>Note 2:</b> With Diffie-Hellman key exchange, Alice would send A=g^a to Bob, so he can create the shared session key as S = A^b. With ElGamal encryption, Alice doesn't use her private key a, but a secret session key l. The remaining logic is the same.</p>
+
+    
+  <h4 id="SchemeEnc">c2) ElGamal Decryption</h3>
+
+  <p>The decryption algorithm works as follows: To decrypt a ciphertext (L, M) sent to Bob he uses his private key b,</p>
+  <ul>
+  <li>Bob calculates the shared secret K = L^b = g^(l*b).</li>
+  <li>Bob computes K^(-1) which is the inverse of K in the group G.</li>
+  <li>Bob computes m' = M * K^(-1).</li>
+  <li>Bob then converts m' back into the plaintext message m.</li>
+  </ul>
+
+<p>Note that the decryption algorithm produces the intended message, since M * K^(-1) = [m' * g^(b*l)] * (g^(b*l))^(-1) = m' * g^(bl) * g^(-bl) = m'.</p>
+
+
+  
+  
+  <h3 id="SchemeSigVer">d) ElGamal Signing / Verifying</h3>
+
+  <p>The ElGamal signature scheme consists of four steps: the parameter generation (setup), the key generation, the signing, and the verification. The first two steps were described above, the actual signing and verification follow now.</p>
+  <p> ... </p>
+
+  <h2 id="plugin">2) Handling Instructions: How to Use this Visualization</h2>
+  <p> When the ElGamal visualization is started, you can select the desired operation, encrypt, decrypt, sign, or verify, by choosing the corresponding tab.</p>
+  <p> ... </p>
+  
+  <h3 id="Sig">Further Information / References</h3>
+  <p>For further information about the ElGamal cryptosystems please refer to:</p>
+  <ul>
+  <li><a href="http://www.springer.com/de/book/9783662484234">Joachim von zur Gathen: CryptoSchool, Springer, 2015, Chapter 4.2 and 8.2</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/ElGamal_encryption">Wikipedia: ElGamal encryption</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/ElGamal_signature_scheme">Wikipedia: ElGamal signature scheme</a></li>
+  <li><a href="https://www.cryptool.org/images/ctp/documents/CT-Book-en.pdf">CrypTool Book, Chapter 5</a></li>
+  </ul>
+
+  <br/>
+</body>
+</html>

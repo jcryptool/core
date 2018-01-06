@@ -21,6 +21,7 @@ import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.jcryptool.analysis.freqanalysis.calc.FreqAnalysisCalc;
 import org.jcryptool.analysis.freqanalysis.calc.FreqAnalysisData;
@@ -31,7 +32,7 @@ import org.jcryptool.analysis.graphtools.derivates.OverlayLabelBar;
  * @author SLeischnig
  *
  */
-public class CustomFreqCanvas extends org.eclipse.swt.widgets.Canvas implements PaintListener,
+public class CustomFreqCanvas extends Canvas implements PaintListener,
         MouseMoveListener {
 
     private Composite mycomp;

@@ -14,8 +14,8 @@ import java.util.Vector;
 
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.swt.widgets.Text;
 import org.jcryptool.crypto.keystore.ui.views.nodes.Contact;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 import org.jcryptool.visual.extendedrsa.ExtendedTabFolder;
@@ -32,9 +32,9 @@ import org.jcryptool.visual.extendedrsa.ui.wizards.wizardpages.ManageVisibleIden
 public class ManageVisibleIdentitesWizard extends Wizard {
     private ManageVisibleIdentitiesPage visiblePage;
     private ExtendedTabFolder tabfolder;
-    private Label txtExplain;
+    private Text txtExplain;
 
-    public ManageVisibleIdentitesWizard(ExtendedTabFolder folder, Label txtExplain) {
+    public ManageVisibleIdentitesWizard(ExtendedTabFolder folder, Text txtExplain) {
         this.tabfolder = folder;
         this.txtExplain = txtExplain;
     }

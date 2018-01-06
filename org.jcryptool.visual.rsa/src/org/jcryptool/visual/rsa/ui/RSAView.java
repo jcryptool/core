@@ -41,12 +41,10 @@ public class RSAView extends ViewPart {
 		// Encrypt
 		TabItem ti = new TabItem(tf, SWT.NONE);
 		ti.setText(Messages.RSAComposite_encrypt);
-		ScrolledComposite sc = new ScrolledComposite(tf, SWT.H_SCROLL
-				| SWT.V_SCROLL);
+		ScrolledComposite sc = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
 		sc.setExpandHorizontal(true);
 		sc.setExpandVertical(true);
-		RSAComposite c = new RSAComposite(sc, SWT.NONE, Action.EncryptAction,
-				datas);
+		RSAComposite c = new RSAComposite(sc, SWT.NONE, Action.EncryptAction, datas);
 		sc.setContent(c);
 		sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		ti.setControl(sc);
@@ -86,55 +84,12 @@ public class RSAView extends ViewPart {
 
 		PlatformUI.getWorkbench().getHelpSystem()
 				.setHelp(parent.getShell(), "org.jcryptool.visual.rsa.rsaview");
-		
-		// Test tab
-//		TabItem testtab = new TabItem(tf, SWT.NONE);
-//		testtab.setText("Test");
-//		sc = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
-//		sc.setExpandHorizontal(true);
-//		sc.setExpandVertical(true);
-//		
-//		final Composite testMainComp = new Composite(sc, SWT.NONE);
-//		GridData gd = new GridData();
-//		GridLayout gl = new GridLayout();
-//		testMainComp.setLayout(gl);
-//		testMainComp.setLayoutData(gd);
-//		
-//		Button testBtn = new Button(testMainComp, SWT.PUSH);
-//		testBtn.setText("Test");
-//		
-//		testBtn.addSelectionListener(new SelectionAdapter() {
-//			@Override
-//			public void widgetSelected(SelectionEvent e) {
-//				Shell shell = testMainComp.getShell();
-//				
-//				TextAsNumbersLoaderWizard wiz = new TextAsNumbersLoaderWizard(120, false);
-//				WizardDialog dialog = new WizardDialog(shell, wiz);
-//				
-//				dialog.open();
-//			}
-//
-//			private void showMsgBox(Shell shell, String msgText) {
-//				MessageBox dialog = 
-//				  new MessageBox(shell, SWT.ICON_QUESTION | SWT.OK| SWT.CANCEL);
-//				dialog.setText("Message");
-//				dialog.setMessage(msgText);
-//
-//				dialog.open();
-//			}
-//		});
-//		
-//		
-//		sc.setContent(testMainComp);
-//		sc.setMinSize(testMainComp.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-//		testtab.setControl(sc);
-//		
-//		tf.setSelection(testtab);
 
 	}
 
 	@Override
 	public void setFocus() {
+		parent.setFocus();
 	}
 
 	public void reset() {

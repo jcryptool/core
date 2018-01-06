@@ -36,7 +36,8 @@ public class ChooseKeytypePage extends WizardPage {
     /** the selection listener which updates the buttons when changing from keypair to pubkey and vice versa. */
     private final SelectionListener sl = new SelectionAdapter() {
 
-        public void widgetSelected(SelectionEvent e) {
+        @Override
+		public void widgetSelected(SelectionEvent e) {
             getContainer().updateButtons();
         }
     };
@@ -54,7 +55,8 @@ public class ChooseKeytypePage extends WizardPage {
      *
      * @param parent the parent composite.
      */
-    public final void createControl(Composite parent) {
+    @Override
+	public final void createControl(Composite parent) {
         Composite composite = new Composite(parent, SWT.NONE);
         composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         composite.setLayout(new GridLayout(1, false));

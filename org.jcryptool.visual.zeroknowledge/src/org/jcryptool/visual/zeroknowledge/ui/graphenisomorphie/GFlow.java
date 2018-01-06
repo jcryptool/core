@@ -25,326 +25,353 @@ import org.jcryptool.visual.zeroknowledge.algorithm.graphenisomorphie.GCarol;
 import org.jcryptool.visual.zeroknowledge.views.GraphenisomorphieView;
 
 /**
- * Repräsentiert eine Klasse, die ein Group-Objekt erstellt, das die Erklärung zum behandelten Fall enthält.
+ * Repräsentiert eine Klasse, die ein Group-Objekt erstellt, das die Erklärung
+ * zum behandelten Fall enthält.
  *
  * @author Mareike Paul
  * @version 1.0.0
  */
 public class GFlow {
-    private GAlice alice;
-    private GBob bob;
-    private GCarol carol;
-    private Label erklaerung01;
-    private Label erklaerung02;
-    private Label erklaerung03;
-    private Label erklaerung04;
-    private Button generateB;
-    private Button generateH;
-    private GraphenisomorphieView graphiso;
-    private Composite group;
-    private boolean secretKnown;
-    private Button sendSigma;
-    private Button verify;
+	private GAlice alice;
+	private GBob bob;
+	private GCarol carol;
+	private Label erklaerung01;
+	private Label erklaerung02;
+	private Label erklaerung03;
+	private Label erklaerung04;
+	private Button generateB;
+	private Button generateH;
+	private GraphenisomorphieView graphiso;
+	private Composite group;
+	private boolean secretKnown;
+	private Button sendSigma;
+	private Button verify;
 
-    /**
-     * Konstruktor, der das Group-Objekt erstellt
-     *
-     * @param graphiso Graphenisomorphie-Objekt, das die Modelle enthält
-     * @param parent Parent für die graphische Oberfläche
-     */
-    public GFlow(GraphenisomorphieView graphiso, Composite parent) {
-        this.graphiso = graphiso;
-        alice = graphiso.getAlice();
-        bob = graphiso.getBob();
-        carol = graphiso.getCarol();
-        secretKnown = true;
-        group = new Composite(parent, SWT.NONE);
+	/**
+	 * Konstruktor, der das Group-Objekt erstellt
+	 *
+	 * @param graphiso
+	 *            Graphenisomorphie-Objekt, das die Modelle enthält
+	 * @param parent
+	 *            Parent für die graphische Oberfläche
+	 */
+	public GFlow(GraphenisomorphieView graphiso, Composite parent) {
+		this.graphiso = graphiso;
+		alice = graphiso.getAlice();
+		bob = graphiso.getBob();
+		carol = graphiso.getCarol();
+		secretKnown = true;
+		
+		group = new Composite(parent, SWT.NONE);
+        GridLayout gl_group = new GridLayout(4, false);
+        gl_group.horizontalSpacing = 50;
+        gl_group.verticalSpacing = 20;
+        group.setLayout(gl_group);
+        group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-        generateButtons();
-        setFont();
-        setFirstCase(true);
-    }
 
-    /**
-     * schaltet nur den ersten Button frei, deaktiviert alle folgenden
-     */
-    public void disableAll() {
-        generateH.setEnabled(false);
-        generateB.setEnabled(false);
-        sendSigma.setEnabled(false);
-        verify.setEnabled(false);
-        erklaerung04.setVisible(true);
-    }
+		generateButtons(group);
+		setFont();
+		setFirstCase(true);
+	}
 
-    /**
-     * schaltet den genRandom Button frei, deaktiviert alle folgenden
-     */
-    public void enableFirst() {
-        generateH.setEnabled(true);
-        generateH.setFocus();
-        generateB.setEnabled(false);
-        sendSigma.setEnabled(false);
-        verify.setEnabled(false);
-        erklaerung01.setVisible(false);
-        erklaerung02.setVisible(false);
-        erklaerung03.setVisible(false);
-        erklaerung04.setVisible(false);
-    }
+	/**
+	 * schaltet nur den ersten Button frei, deaktiviert alle folgenden
+	 */
+	public void disableAll() {
+		generateH.setEnabled(false);
+		generateB.setEnabled(false);
+		sendSigma.setEnabled(false);
+		verify.setEnabled(false);
+		erklaerung04.setVisible(true);
+	}
 
-    /**
-     * schaltet den vierten Button frei
-     */
-    public void enableForth() {
-        verify.setEnabled(true);
-        verify.setFocus();
-        erklaerung03.setVisible(true);
-    }
+	/**
+	 * schaltet den genRandom Button frei, deaktiviert alle folgenden
+	 */
+	public void enableFirst() {
+		generateH.setEnabled(true);
+		generateH.setFocus();
+		generateB.setEnabled(false);
+		sendSigma.setEnabled(false);
+		verify.setEnabled(false);
+		
+		erklaerung01.setVisible(false);
+		erklaerung02.setVisible(false);
+		erklaerung03.setVisible(false);
+		erklaerung04.setVisible(false);
+	}
 
-    /**
-     * schaltet den dritten Button frei, deaktiviert alle folgenden
-     */
-    public void enableSecond() {
-        generateB.setEnabled(true);
-        generateB.setFocus();
-        sendSigma.setEnabled(false);
-        verify.setEnabled(false);
-        erklaerung01.setVisible(true);
-    }
+	/**
+	 * schaltet den vierten Button frei
+	 */
+	public void enableForth() {
+		verify.setEnabled(true);
+		verify.setFocus();
+		erklaerung03.setVisible(true);
+	}
 
-    /**
-     * schaltet den calcY Button frei, deaktiviert alle folgenden
-     */
-    public void enableThird() {
-        sendSigma.setEnabled(true);
-        sendSigma.setFocus();
-        verify.setEnabled(false);
-        erklaerung02.setVisible(true);
-    }
+	/**
+	 * schaltet den dritten Button frei, deaktiviert alle folgenden
+	 */
+	public void enableSecond() {
+		generateB.setEnabled(true);
+		generateB.setFocus();
+		sendSigma.setEnabled(false);
+		verify.setEnabled(false);
+		erklaerung01.setVisible(true);
+	}
 
-    /**
-     * Methode zum Erhalten des Group-Objektes, auf dem die Buttons und Labels liegen
-     *
-     * @return Group-Objekt, auf dem die graphische Oberfläche des Flows liegt.
-     */
-    public Composite getGroup() {
-        return group;
-    }
+	/**
+	 * schaltet den calcY Button frei, deaktiviert alle folgenden
+	 */
+	public void enableThird() {
+		sendSigma.setEnabled(true);
+		sendSigma.setFocus();
+		verify.setEnabled(false);
+		erklaerung02.setVisible(true);
+	}
 
-    /**
-     * setzt den Text in Abhängigkeit von dem Fall, der behandelt wird.
-     *
-     * @param b true, wenn der erste Fall betrachtet wird, ansonsten false
-     */
-    public void setFirstCase(boolean b) {
-        secretKnown = b;
-        if (b) {
-            erklaerung01.setText(Messages.GFlow_0);
-            erklaerung02.setText(Messages.GFlow_1);
-            erklaerung03.setText(Messages.GFlow_2);
-            erklaerung04.setText(Messages.GFlow_3);
-        } else {
-            erklaerung01.setText(Messages.GFlow_4);
-            erklaerung02.setText(Messages.GFlow_5);
-            erklaerung03.setText(Messages.GFlow_6);
-            erklaerung04.setText(Messages.GFlow_7);
-        }
-        erklaerung01.setVisible(false);
-        erklaerung02.setVisible(false);
-        erklaerung03.setVisible(false);
-        erklaerung04.setVisible(false);
-        setFont();
-    }
+	/**
+	 * Methode, die die Buttons anlegt
+	 * @param parent 
+	 */
+	private void generateButtons(Composite parent) {	
+		new Label(parent, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-    /**
-     * Highlighting der erläuternden Textteile
-     *
-     * @param step Schritt im Zero-Knowledge-Protokoll
-     */
-    public void setStep(int step) {
-        setFont();
-        switch (step) {
-            case 1:
-                erklaerung01.setFont(FontService.getNormalBoldFont());
-                break;
-            case 2:
-                erklaerung02.setFont(FontService.getNormalBoldFont());
-                break;
-            case 3:
-                erklaerung03.setFont(FontService.getNormalBoldFont());
-                break;
-            case 4:
-                erklaerung04.setFont(FontService.getNormalBoldFont());
-                break;
-        }
-    }
+		// Button, um die Zufallszahl zu erstellen
+		generateH = new Button(parent, SWT.PUSH);
+		generateH.setText(Messages.GFlow_8);
+		generateH.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		generateH.addSelectionListener(
+				/**
+				 * SelectionAdapter, der darauf achtet, ob der Button "Graph H erstellen"
+				 * betätigt wurde
+				 */
+				new SelectionAdapter() {
+					/**
+					 * Die Person, die gerade betrachtet wird, erstellt einen Graphen H und reicht
+					 * diesen an Bob. Der erläuternde Text wird fett gedruckt, der zweite Schritt
+					 * des Protokolls wird ermöglicht.
+					 */
+					@Override
+					public void widgetSelected(SelectionEvent arg0) {
+						GBeweiser p;
+						if (secretKnown) {
+							p = alice;
+						} else {
+							p = carol;
+						}
+						bob.setG0(p.getG0());
+						bob.setG1(p.getG1());
+						p.generateA();
+						bob.setH(p.getGraphH());
+						graphiso.setH(p.getGraphH());
+						setStep(1);
+						enableSecond();
+					}
+				});
+		generateH.setEnabled(false);
 
-    /**
-     * aktualisiert die Attribute des Flows
-     */
-    public void update() {
-        this.alice = graphiso.getAlice();
-        this.bob = graphiso.getBob();
-        this.carol = graphiso.getCarol();
-    }
+		erklaerung01 = new Label(parent, SWT.WRAP);
+        erklaerung01.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+        
+        new Label(parent, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        
+		// Button, um das Zufallsbit zu erstellen
+        generateB = new Button(parent, SWT.PUSH);
+		generateB.setText(Messages.GFlow_9);
+		generateB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		generateB.addSelectionListener(
+				/**
+				 * SelectionAdapter, der darauf achtet, ob der Button "b wählen" betätigt wurde
+				 */
+				new SelectionAdapter() {
+					/**
+					 * Bob generiert b. Der erläuternde Text wird fett gedruckt, der dritte Schritt
+					 * des Protokolls wird ermöglicht.
+					 */
+					@Override
+					public void widgetSelected(SelectionEvent arg0) {
+						bob.generateB();
+						enableThird();
+						setStep(2);
+					}
+				});
 
-    /**
-     * Methode, die die Buttons anlegt
-     */
-    private void generateButtons() {
-        GridData gdButtons = new GridData();
-        gdButtons.heightHint = 55;
-        gdButtons.widthHint = 150;
-        gdButtons.verticalAlignment = GridData.CENTER;
+		generateB.setEnabled(false);
 
-        GridData gdText = new GridData();
-        gdText.heightHint = 55;
-        gdText.widthHint = 350;
-        gdText.verticalAlignment = GridData.CENTER;
+		erklaerung02 = new Label(parent, SWT.WRAP);
+        erklaerung02.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+        
+        new Label(parent, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        
+		// Button, um die Antwort von Alice oder Carol zu errechnen
+        sendSigma = new Button(parent, SWT.PUSH);
+		sendSigma.setText(Messages.GFlow_10);
+		sendSigma.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		sendSigma.addSelectionListener(
+				/**
+				 * SelectionAdapter, der darauf achtet, ob der Button "Isomorphismus berechnen"
+				 * betätigt wurde
+				 */
+				new SelectionAdapter() {
+					/**
+					 * Die Person, die gerade betrachtet wird, berechnet den Isomorphismus h. Der
+					 * erläuternde Text wird fett gedruckt, der vierte Schritt des Protokolls wird
+					 * ermöglicht.
+					 */
+					@Override
+					public void widgetSelected(SelectionEvent arg0) {
+						GBeweiser p;
+						if (secretKnown)
+							p = alice;
+						else
+							p = carol;
+						p.genH(bob.getB());
+						bob.setIsomorphismus(p.getH());
+						enableForth();
+						setStep(3);
+					}
+				});
 
-        GridLayout glGroup = new GridLayout();
-        glGroup.horizontalSpacing = 5;
-        glGroup.makeColumnsEqualWidth = false;
-        glGroup.numColumns = 2;
+		sendSigma.setEnabled(false);
 
-        GridData gdGroup = new GridData();
-        gdGroup.horizontalAlignment = GridData.CENTER;
-        gdGroup.grabExcessHorizontalSpace = true;
-        gdGroup.grabExcessVerticalSpace = true;
-        gdGroup.verticalAlignment = GridData.CENTER;
+		erklaerung03 = new Label(parent, SWT.WRAP);
+        erklaerung03.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+        
+        new Label(parent, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-        group.setLayout(glGroup);
-        group.setLayoutData(gdGroup);
 
-        // Button, um die Zufallszahl zu erstellen
-        generateH = new Button(group, SWT.PUSH | SWT.CENTER);
-        generateH.setText(Messages.GFlow_8);
-        generateH.addSelectionListener(
-        /**
-         * SelectionAdapter, der darauf achtet, ob der Button "Graph H erstellen" betätigt wurde
-         */
-        new SelectionAdapter() {
-            /**
-             * Die Person, die gerade betrachtet wird, erstellt einen Graphen H und reicht diesen an Bob. Der
-             * erläuternde Text wird fett gedruckt, der zweite Schritt des Protokolls wird ermöglicht.
-             */
-            public void widgetSelected(SelectionEvent arg0) {
-                GBeweiser p;
-                if (secretKnown) {
-                    p = alice;
-                } else {
-                    p = carol;
-                }
-                bob.setG0(p.getG0());
-                bob.setG1(p.getG1());
-                p.generateA();
-                bob.setH(p.getGraphH());
-                graphiso.setH(p.getGraphH());
-                setStep(1);
-                enableSecond();
-            }
-        });
-        generateH.setEnabled(false);
-        generateH.setLayoutData(gdButtons);
-        erklaerung01 = new Label(group, SWT.None);
-        erklaerung01.setLayoutData(gdText);
-        erklaerung01.setVisible(false);
+		// Button, um die Antwort von Alice oder Carol zu verifizieren
+        verify = new Button(parent, SWT.PUSH);
+		verify.setText(Messages.GFlow_11);
+		verify.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		verify.addSelectionListener(
+				/**
+				 * SelectionAdapter, der darauf achtet, ob der Button "verifizieren" betätigt
+				 * wurde
+				 */
+				new SelectionAdapter() {
+					/**
+					 * Bob erhält den Isomorphismus h und überprüft ihn. Das Ergebnis wird bekannt
+					 * gegeben, ebenso der von Bob berechnete Graph h(G<sub>b</sub>). Der
+					 * erläuternde Text wird fett gedruckt, der Durchlauf durch das Protokoll ist
+					 * beendet.
+					 */
+					@Override
+					public void widgetSelected(SelectionEvent arg0) {
+						setStep(4);
+						graphiso.getButtons().enableOK(true);
+						graphiso.getParamsBob().verifizieren(true);
+						graphiso.getParamsBob().setVerifiziert(bob.verify());
+						if (bob.getB() == 0) {
+							graphiso.setH_G_b(bob.getG0().change(bob.getH()));
+						} else {
+							graphiso.setH_G_b(bob.getG1().change(bob.getH()));
+						}
+						disableAll();
+					}
+				});
+		verify.setEnabled(false);
 
-        // Button, um das Zufallsbit zu erstellen
-        generateB = new Button(group, SWT.PUSH | SWT.CENTER);
-        generateB.setText(Messages.GFlow_9);
-        generateB.addSelectionListener(
-        /**
-         * SelectionAdapter, der darauf achtet, ob der Button "b wählen" betätigt wurde
-         */
-        new SelectionAdapter() {
-            /**
-             * Bob generiert b. Der erläuternde Text wird fett gedruckt, der dritte Schritt des Protokolls wird
-             * ermöglicht.
-             */
-            public void widgetSelected(SelectionEvent arg0) {
-                bob.generateB();
-                enableThird();
-                setStep(2);
-            }
-        });
+		erklaerung04 = new Label(parent, SWT.WRAP);
+        erklaerung04.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2,1));
+ 
+	}
 
-        generateB.setEnabled(false);
-        generateB.setLayoutData(gdButtons);
-        erklaerung02 = new Label(group, SWT.None);
-        erklaerung02.setLayoutData(gdText);
-        erklaerung02.setVisible(false);
+	/**
+	 * Methode zum Erhalten des Group-Objektes, auf dem die Buttons und Labels
+	 * liegen
+	 *
+	 * @return Group-Objekt, auf dem die graphische Oberfläche des Flows liegt.
+	 */
+	public Composite getGroup() {
+		return group;
+	}
 
-        // Button, um die Antwort von Alice oder Carol zu errechnen
-        sendSigma = new Button(group, SWT.PUSH | SWT.CENTER);
-        sendSigma.setText(Messages.GFlow_10);
-        sendSigma.addSelectionListener(
-        /**
-         * SelectionAdapter, der darauf achtet, ob der Button "Isomorphismus berechnen" betätigt wurde
-         */
-        new SelectionAdapter() {
-            /**
-             * Die Person, die gerade betrachtet wird, berechnet den Isomorphismus h. Der erläuternde Text wird fett
-             * gedruckt, der vierte Schritt des Protokolls wird ermöglicht.
-             */
-            public void widgetSelected(SelectionEvent arg0) {
-                GBeweiser p;
-                if (secretKnown)
-                    p = alice;
-                else
-                    p = carol;
-                p.genH(bob.getB());
-                bob.setIsomorphismus(p.getH());
-                enableForth();
-                setStep(3);
-            }
-        });
+	/**
+	 * setzt den Text in Abhängigkeit von dem Fall, der behandelt wird.
+	 *
+	 * @param b
+	 *            true, wenn der erste Fall betrachtet wird, ansonsten false
+	 */
+	public void setFirstCase(boolean b) {
+		secretKnown = b;
+		if (b) {
+			erklaerung01.setText(Messages.GFlow_0);
+			erklaerung02.setText(Messages.GFlow_1);
+			erklaerung03.setText(Messages.GFlow_2);
+			erklaerung04.setText(Messages.GFlow_3);
+		} else {
+			erklaerung01.setText(Messages.GFlow_4);
+			erklaerung02.setText(Messages.GFlow_5);
+			erklaerung03.setText(Messages.GFlow_6);
+			erklaerung04.setText(Messages.GFlow_7);
+		}
+		erklaerung01.setVisible(false);
+		erklaerung02.setVisible(false);
+		erklaerung03.setVisible(false);
+		erklaerung04.setVisible(false);
+        group.layout();
+        group.getParent().layout();
+		setFont();
+	}
 
-        sendSigma.setEnabled(false);
-        sendSigma.setLayoutData(gdButtons);
-        erklaerung03 = new Label(group, SWT.None);
-        erklaerung03.setLayoutData(gdText);
-        erklaerung03.setVisible(false);
+	/**
+	 * Methode, die den Font setzt
+	 */
+	private void setFont() {
+		erklaerung01.setFont(FontService.getNormalFont());
+		erklaerung02.setFont(FontService.getNormalFont());
+		erklaerung03.setFont(FontService.getNormalFont());
+		erklaerung04.setFont(FontService.getNormalFont());
+	}
 
-        // Button, um die Antwort von Alice oder Carol zu verifizieren
-        verify = new Button(group, SWT.PUSH | SWT.CENTER);
-        verify.setText(Messages.GFlow_11);
-        verify.addSelectionListener(
-        /**
-         * SelectionAdapter, der darauf achtet, ob der Button "verifizieren" betätigt wurde
-         */
-        new SelectionAdapter() {
-            /**
-             * Bob erhält den Isomorphismus h und überprüft ihn. Das Ergebnis wird bekannt gegeben, ebenso der von Bob
-             * berechnete Graph h(G<sub>b</sub>). Der erläuternde Text wird fett gedruckt, der Durchlauf durch das
-             * Protokoll ist beendet.
-             */
-            public void widgetSelected(SelectionEvent arg0) {
-                setStep(4);
-                graphiso.getButtons().enableOK(true);
-                graphiso.getParamsBob().verifizieren(true);
-                graphiso.getParamsBob().setVerifiziert(bob.verify());
-                if (bob.getB() == 0) {
-                    graphiso.setH_G_b(bob.getG0().change(bob.getH()));
-                } else {
-                    graphiso.setH_G_b(bob.getG1().change(bob.getH()));
-                }
-                disableAll();
-            }
-        });
-        verify.setEnabled(false);
-        verify.setLayoutData(gdButtons);
-        erklaerung04 = new Label(group, SWT.None);
-        erklaerung04.setLayoutData(gdText);
-        erklaerung04.setVisible(false);
-    }
+	/**
+	 * Highlighting der erläuternden Textteile.
+	 * 
+	 * Das erklärungXX.getParent().layout() ist dafür verantwortlich, dass
+	 * die Buttons und Text beim weiter klicken ihre horizontale 
+	 * Position verändern. Sorgt auf der anderen Seite aber dafür, dass
+	 * die Texte immer genug Platz haben.
+	 *
+	 * @param step
+	 *            Schritt im Zero-Knowledge-Protokoll
+	 */
+	public void setStep(int step) {
+		setFont();
+		switch (step) {
+		case 0:
+            erklaerung01.setVisible(false);
+            erklaerung02.setVisible(false);
+            erklaerung03.setVisible(false);
+            erklaerung04.setVisible(false);
+		case 1:
+			erklaerung01.setFont(FontService.getNormalBoldFont());
+            erklaerung01.getParent().layout();
+			break;
+		case 2:
+			erklaerung02.setFont(FontService.getNormalBoldFont());
+            erklaerung02.getParent().layout();
+			break;
+		case 3:
+			erklaerung03.setFont(FontService.getNormalBoldFont());
+            erklaerung03.getParent().layout();
+			break;
+		case 4:
+			erklaerung04.setFont(FontService.getNormalBoldFont());
+            erklaerung04.getParent().layout();
+			break;
+		}
+	}
 
-    /**
-     * Methode, die den Font setzt
-     */
-    private void setFont() {
-        erklaerung01.setFont(FontService.getNormalFont());
-        erklaerung02.setFont(FontService.getNormalFont());
-        erklaerung03.setFont(FontService.getNormalFont());
-        erklaerung04.setFont(FontService.getNormalFont());
-    }
+	/**
+	 * aktualisiert die Attribute des Flows
+	 */
+	public void update() {
+		this.alice = graphiso.getAlice();
+		this.bob = graphiso.getBob();
+		this.carol = graphiso.getCarol();
+	}
 }

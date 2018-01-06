@@ -12,6 +12,7 @@ package org.jcryptool.visual.rsa;
 import java.math.BigInteger;
 import java.security.PrivateKey;
 import java.security.UnrecoverableKeyException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
@@ -107,6 +108,7 @@ public class RSAData {
     private boolean standalone;
     
     private boolean randomPlaintext;
+    
     private boolean randomKey;
 
 	private List<Integer> plainTextAsNumbers;
@@ -507,8 +509,6 @@ public class RSAData {
     /**
      * tests if random key is needed
      */
-    
-    @SuppressWarnings("incomplete-switch")
     public boolean randomNeeded() {
 
     	switch (getAction()) {
@@ -525,6 +525,12 @@ public class RSAData {
     			}
     			break;
     		}
+		case DecryptAction:
+			break;
+		case VerifyAction:
+			break;
+		default:
+			break;
     	}
     	return false;
     }
@@ -560,7 +566,13 @@ public class RSAData {
     public void randomPlain() {
     	this.randomPlaintext = true;
         this.simpleHash = true;
-//        this.plainText = "abcdefghijklmnopqrstuvwxyz 0123456789";
+        ArrayList<Integer> plain = new ArrayList<>();
+        plain.add(72);
+        plain.add(97);
+        plain.add(108);
+        plain.add(108);
+        plain.add(111);
+        this.plainTextAsNumbers = plain;
     }
     
     
@@ -609,4 +621,29 @@ public class RSAData {
 		return plainTextConversion;
 	}
 	
+	/**
+	 * Simple toString() Method to visualize RSAData Objects
+	 */
+	@Override
+	public String toString() {
+		String output = "Primes:";
+		output += "\tp:" + (this.p != null ? this.p.toString() : "null");
+		output += "\tq:" + (this.q != null ? this.q.toString() : "null");
+		output += "\nKey:";
+		output += "\te:" + (this.e != null ? this.e.toString() : "null");
+		output += "\td:" + (this.d != null ? this.d.toString() : "null");
+		output += "\tN:" + (this.N != null ? this.N.toString() : "null");
+		output += "\nplainText:\t" + (this.plainText != null ? plainText.toString() : "null");
+		output += "\tplainTextAsNumbers:\t" + (this.plainTextAsNumbers != null ? plainTextAsNumbers.toString() : "null");
+		output += "\ncipherText:\t" + (this.plainText != null ? cipherText.toString() : "null");
+		output += "\tcipherTextAsNumbers:\t" + (this.cipherTextAsNumbers != null ? cipherTextAsNumbers.toString() : "null");
+		output += "\nsignature:\t" + (this.signature != null ? this.signature.toString() : "null"); 
+		output += "\tsignatureAsNumbers:\t" + (this.signatureAsNumbers != null ? signatureAsNumbers.toString() : "null");
+		output += "\n\t\t\ttempAsNumbers:\t\t" + (this.tempAsNumbers != null ? tempAsNumbers.toString() : "null");
+		output += "\nsimpleHash:\t" + this.simpleHash;
+		output += "\tstandalone:\t" + this.standalone;
+		output += "\trandomPlaintext:\t" + this.randomPlaintext;
+		output += "\trandomKey:\t" + this.randomKey;
+		return output;
+	}
 }
