@@ -31,6 +31,10 @@ public class Messages extends NLS {
 	public static String DecryptSignPage_existing_keypair_popup;
 	public static String DecryptSignPage_new_keypair;
 	public static String DecryptSignPage_new_keypair_popup;
+	public static String ElGamalComposite_Action_Decrypt;
+	public static String ElGamalComposite_Action_Encrypt;
+	public static String ElGamalComposite_Action_Sign;
+	public static String ElGamalComposite_Action_Verify;
 	public static String ElGamalComposite_algorithm;
 	public static String ElGamalComposite_calculate;
 	public static String ElGamalComposite_calculate_popup;
@@ -57,6 +61,9 @@ public class Messages extends NLS {
 	public static String ElGamalComposite_key_generation_popup;
 	public static String ElGamalComposite_key_selection;
 	public static String ElGamalComposite_key_selection_message_text;
+	public static String ElGamalComposite_keyType_keyType;
+	public static String ElGamalComposite_keyType_private;
+	public static String ElGamalComposite_keyType_public;
 	public static String ElGamalComposite_options;
 	public static String ElGamalComposite_reset;
 	public static String ElGamalComposite_result;

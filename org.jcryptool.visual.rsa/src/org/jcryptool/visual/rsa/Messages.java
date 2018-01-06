@@ -133,6 +133,9 @@ public class Messages extends NLS {
 	public static String RSAComposite_key_generation_text;
 	public static String RSAComposite_key_selection;
 	public static String RSAComposite_keysel_messagebox_text;
+	public static String RSAComposite_KeyType_keyType;
+	public static String RSAComposite_KeyType_private;
+	public static String RSAComposite_KeyType_public;
     public static String RSAComposite_mult;
 	public static String RSAComposite_needed;
 	public static String RSAComposite_no;

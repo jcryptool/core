@@ -50,7 +50,10 @@ public class SavePublicKeyPage extends SaveWizardPage {
         setPageComplete(false);
         this.setDescription(Messages.SavePublicKeyPage_enter_save_params);
         this.data = data;
+        
     }
+    
+    
 
     /**
      * Set up UI stuff.

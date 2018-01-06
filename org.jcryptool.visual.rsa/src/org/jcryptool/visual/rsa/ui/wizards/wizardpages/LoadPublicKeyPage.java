@@ -21,6 +21,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
@@ -88,7 +89,8 @@ public class LoadPublicKeyPage extends WizardPage {
      * 
      * @param parent the parent composite.
      */
-    public final void createControl(Composite parent) {
+    @Override
+	public final void createControl(Composite parent) {
         Composite composite = new Composite(parent, SWT.NONE);
         // do stuff like layout et al
         GridLayout gl = new GridLayout();
@@ -96,12 +98,12 @@ public class LoadPublicKeyPage extends WizardPage {
         composite.setLayout(gl);
         new Label(composite, SWT.NONE).setText(Messages.LoadPublicKeyPage_select_pubkey_text2);
         combo = new Combo(composite, SWT.READ_ONLY);
-        GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, false);
-        combo.setLayoutData(gd);
+        combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         combo.setItems(keystoreitems.keySet().toArray(new String[keystoreitems.size()]));
         combo.addSelectionListener(new SelectionAdapter() {
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 boolean complete = !combo.getText().equals(""); //$NON-NLS-1$
                 if (complete) {
                     publicAlias = keystoreitems.get(combo.getText());
@@ -111,6 +113,14 @@ public class LoadPublicKeyPage extends WizardPage {
                 setPageComplete(complete);
             }
         });
+        
+        // Must be behind the declaration of the SelectionListener of the combo
+        //Automatic selection of the first key to improve the usability.
+        if (combo.getItemCount() > 0) {
+        	combo.select(0);
+        	combo.notifyListeners(SWT.Selection, new Event());	
+        }
+        
         setControl(composite);
     }
 

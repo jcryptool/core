@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="elGamalHelp" title="Demonstration of ElGamal">
+      <description>This visualization demonstrates the asymetric encryption and signature scheme ElGamal.</description>
+      <topic href="nl/en/help/content/index.html" label="ElGamal Cryptographic System"/>
+   </context>
+</contexts>

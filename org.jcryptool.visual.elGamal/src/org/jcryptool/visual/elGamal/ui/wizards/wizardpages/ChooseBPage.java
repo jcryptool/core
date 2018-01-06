@@ -77,7 +77,7 @@ public class ChooseBPage extends WizardPage {
                     return;
                 }
                 final BigInteger b = new BigInteger(t.getText());
-                if (b.compareTo(data.getModulus().subtract(BigInteger.ONE)) < 0 && b.compareTo(BigInteger.ONE) > 0) {
+                if (b.compareTo(data.getModulus().subtract(BigInteger.ONE)) <= 0 && b.compareTo(BigInteger.ONE) >= 0) {
                     data.setB(b);
                     setPageComplete(true);
                 } else {

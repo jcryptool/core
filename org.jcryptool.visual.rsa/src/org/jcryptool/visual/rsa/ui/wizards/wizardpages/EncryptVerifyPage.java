@@ -47,6 +47,7 @@ public class EncryptVerifyPage extends WizardPage {
 	/** selection listener that updates the buttons. */
 	private final SelectionListener sl = new SelectionAdapter() {
 
+		@Override
 		public void widgetSelected(SelectionEvent e) {
 			getContainer().updateButtons();
 		}
@@ -75,6 +76,7 @@ public class EncryptVerifyPage extends WizardPage {
 	 * sets up all the UI stuff.
 	 * @param parent the parent composite
 	 */
+	@Override
 	public final void createControl(Composite parent) {
 		Composite composite = new Composite(parent, SWT.NONE);
 		// set layout
@@ -84,30 +86,38 @@ public class EncryptVerifyPage extends WizardPage {
 		newPubkeyButton.setText(Messages.EncryptVerifyPage_manual_entry);
 		newPubkeyButton.setToolTipText(Messages.EncryptVerifyPage_manual_entry_popup);
 		newPubkeyButton.setSelection(true);
-		newPubkeyButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER));
+		newPubkeyButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		newPubkeyButton.addSelectionListener(sl);
 		// add existing Pubkey button
 		existingPubkeyButton = new Button(composite, SWT.RADIO);
 		existingPubkeyButton.setText(Messages.EncryptVerifyPage_existing_key);
 		existingPubkeyButton.setToolTipText(Messages.EncryptVerifyPage_existing_key_popup);
-		existingPubkeyButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER));
+		existingPubkeyButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		existingPubkeyButton.addSelectionListener(sl);
 		// add new Keypair button
 		newKeypairButton = new Button(composite, SWT.RADIO);
 		newKeypairButton.setText(Messages.ChooseKeytypePage_new_keypair);
 		newKeypairButton.setToolTipText(Messages.ChooseKeytypePage_new_keypair_popup);
-		newKeypairButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER));
+		newKeypairButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		newKeypairButton.addSelectionListener(sl);
 		// add existing Keypair button
 		existingKeypairButton = new Button(composite, SWT.RADIO);
 		existingKeypairButton.setText(Messages.DecryptSignPage_existing_keypair);
 		existingKeypairButton.setToolTipText(Messages.DecryptSignPage_existing_keypair_popup);
-		existingKeypairButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER));
+		existingKeypairButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		existingKeypairButton.addSelectionListener(sl);
-        // Add Note
+        //Separator label
+		Label separator = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
+		GridData gd_separator = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		gd_separator.verticalIndent = 20;
+		separator.setLayoutData(gd_separator);
+		// Add Note
 		Label selectdtext = new Label(composite, SWT.WRAP);
         selectdtext.setText(Messages.EncryptVerifyPage_note);
-        selectdtext.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER));
+        GridData gd_selectdtext = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        gd_selectdtext.widthHint = 600;
+        gd_selectdtext.verticalIndent = 20;
+        selectdtext.setLayoutData(gd_selectdtext);
 		
 		// finally set control something
 		setControl(composite);

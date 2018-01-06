@@ -70,7 +70,8 @@ public class EnterPlaintextPage extends TextWizardPage {
      *
      * @param parent the parent composite
      */
-    public final void createControl(Composite parent) {
+    @Override
+	public final void createControl(Composite parent) {
         Composite composite = new Composite(parent, SWT.NONE);
         // do stuff like layout et al
         composite.setLayout(new GridLayout());
@@ -90,14 +91,16 @@ public class EnterPlaintextPage extends TextWizardPage {
         text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         text.setTextLimit(TEXTLIMIT);
         text.addModifyListener(new ModifyListener() {
-            public void modifyText(ModifyEvent e) {
+            @Override
+			public void modifyText(ModifyEvent e) {
                 setPageComplete(!((Text) e.widget).getText().equals("")); //$NON-NLS-1$
             }
         });
 
         
       text.addVerifyListener(new VerifyListener() { 
-    	public void verifyText(VerifyEvent e) { 
+    	@Override
+		public void verifyText(VerifyEvent e) { 
     		switch (e.keyCode) { 
     			case SWT.DEL: 
     			case SWT.BS: 
@@ -153,7 +156,8 @@ public class EnterPlaintextPage extends TextWizardPage {
         numberCheckBox.setToolTipText(Messages.EnterPlaintextPage_1);
         numberCheckBox.addSelectionListener(new SelectionAdapter() {
     	
-    	public void widgetSelected(SelectionEvent e) {
+    	@Override
+		public void widgetSelected(SelectionEvent e) {
     		if (numberCheckBox.getSelection()) {
     		setPageComplete(text.getText().matches(DIGIT+WHITESPACE));
     		}
@@ -175,7 +179,8 @@ public class EnterPlaintextPage extends TextWizardPage {
             SHA1Checkbox.setToolTipText(Messages.EnterPlaintextPage_use_sha1_popup);
             SHA1Checkbox.addSelectionListener(new SelectionAdapter() {
 
-                public void widgetSelected(SelectionEvent e) {
+                @Override
+				public void widgetSelected(SelectionEvent e) {
                     data.setSimpleHash(!SHA1Checkbox.getSelection());
                 }
             });

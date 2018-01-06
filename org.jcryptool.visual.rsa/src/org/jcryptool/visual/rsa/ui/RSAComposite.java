@@ -10,9 +10,6 @@
 package org.jcryptool.visual.rsa.ui;
 
 import static org.jcryptool.visual.library.Constants.BIGBUTTONHEIGHT;
-import static org.jcryptool.visual.library.Constants.BIGBUTTONVERTICALSPACE;
-import static org.jcryptool.visual.library.Constants.BIGBUTTONWIDTH;
-
 import java.math.BigInteger;
 import java.util.Collections;
 import java.util.HashMap;
@@ -25,23 +22,23 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.FontMetrics;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.TextLayout;
 import org.eclipse.swt.graphics.TextStyle;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
@@ -166,56 +163,54 @@ public class RSAComposite extends Composite {
 	Repr[] reprWOString = new Repr[] { Repr.HEX, Repr.DECIMAL, Repr.BINARY };
 	Repr[] reprWithString = new Repr[] { Repr.STRING, Repr.HEX, Repr.DECIMAL,
 			Repr.BINARY };
+	
+	private boolean firstRun = true;
 
-	/** Selectionlistener for the start/step button when in step-state */
-	private SelectionAdapter stepSelectionListener = new SelectionAdapter() {
-
+	/** Selection Listener for the stepButton. */
+	private SelectionListener stepButtonSelectionlistner = new SelectionListener() {
+		
 		@Override
-		public void widgetSelected(final SelectionEvent e) {
-			++numberIndex;
-			stepbackButton.setEnabled(true);
-			updateTable();
-			updateLabel();
-			if (numberIndex == numbers.size() - 1) {
-				stepButton.setEnabled(false);
-				runCalc.setEnabled(false);
-				runCalc.setBackground(ColorService.GREEN);
+		public void widgetSelected(SelectionEvent e) {
+			if (firstRun) {
+				data.setTempAsNumbers(new LinkedList<Integer>());
+				viewHex();
+				textEnter.setEnabled(false);
+				numbers = data.getAction() != Action.SignAction ? textText
+						.getContent() : Collections.singletonList(signHash);
+				numberIndex = 0;
+				stepButton.setEnabled(numberIndex != numbers.size() - 1);
+				initTable();
+				updateTable();
+				updateLabel();
+				started = true;
+				if (numberIndex == numbers.size() - 1) {
+					runCalc.setEnabled(false);
+					runCalc.setBackground(ColorService.GREEN);
+					finish();
+				}
+				stepButton.setText(Messages.RSAComposite_step);
+				finish();
+				firstRun = false;
+			} else {
+				++numberIndex;
+				stepbackButton.setEnabled(true);
+				updateTable();
+				updateLabel();
+				if (numberIndex == numbers.size() - 1) {
+					stepButton.setEnabled(false);
+					runCalc.setEnabled(false);
+					runCalc.setBackground(ColorService.GREEN);
+					finish();
+					viewHex();
+				}
 				finish();
 				viewHex();
 			}
-			finish();
-			viewHex();
-			// stepButton.pack();
 		}
-	};
-
-	/** Selectionlistener for the start/step button when in start-state */
-	private SelectionAdapter startSelectionListener = new SelectionAdapter() {
-
+		
 		@Override
-		public void widgetSelected(final SelectionEvent e) {
-			data.setTempAsNumbers(new LinkedList<Integer>());
-			viewHex();
-			textEnter.setEnabled(false);
-			numbers = data.getAction() != Action.SignAction ? textText
-					.getContent() : Collections.singletonList(signHash);
-			numberIndex = 0;
-			stepButton.setEnabled(numberIndex != numbers.size() - 1);
-			initTable();
-			updateTable();
-			updateLabel();
-			started = true;
-			if (numberIndex == numbers.size() - 1) {
-				runCalc.setEnabled(false);
-				runCalc.setBackground(ColorService.GREEN);
-				finish();
-			}
-			// Switch from start- to step-state
-			stepButton.removeSelectionListener(startSelectionListener);
-			stepButton.addSelectionListener(stepSelectionListener);
-			stepButton.setText(Messages.RSAComposite_step);
-			// stepButton.pack();
-			finish();
+		public void widgetDefaultSelected(SelectionEvent e) {
+			
 		}
 	};
 
@@ -237,9 +232,9 @@ public class RSAComposite extends Composite {
 
 	private Text txtHashT;
 
-	private Label lblEqSign;
-
 	private Label lblVerResultDisplay;
+
+	private Text text_keyType;
 
 	/**
 	 * constructor calls super and saves a reference to the view.
@@ -270,7 +265,6 @@ public class RSAComposite extends Composite {
 		// basic layout is a Gridlayout
 		setLayout(new GridLayout());
 		createHead();
-		// createActionChoice();
 		createMainArea();
 		createOptionsArea();
 	}
@@ -282,7 +276,7 @@ public class RSAComposite extends Composite {
 	private void createHead() {
 		final Composite head = new Composite(this, SWT.NONE);
 		head.setBackground(ColorService.WHITE);
-		head.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false));
+		head.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		head.setLayout(new GridLayout());
 
 		final Label label = new Label(head, SWT.NONE); // head
@@ -290,10 +284,7 @@ public class RSAComposite extends Composite {
 		label.setBackground(ColorService.WHITE);
 		label.setText(Messages.RSAComposite_title);
 
-		StyledText stDescription = new StyledText(head, SWT.MULTI | SWT.WRAP
-				| SWT.READ_ONLY);
-		// final Label stDescription = new Label(head, SWT.WRAP); // head
-		// stDescription.setBackground(ColorService.WHITE);
+		StyledText stDescription = new StyledText(head, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
 
 		switch (data.getAction()) {
 		case EncryptAction: {
@@ -313,18 +304,8 @@ public class RSAComposite extends Composite {
 			break;
 		}
 		}
-		// stDescription.setSize(500, SWT.DEFAULT);
 
-		// stDescription.setSize(1000,1000);
-		// stDescription.redraw();
-		// stDescription.setRedraw(true);
-		stDescription.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-				false));
-
-		// stDescription.setSize(, height)
-		// RowLayout row = new RowLayout();
-		// row.wrap = true;
-		// stDescription.setLayoutData(new RowLayout(SWT.WRAP));
+		stDescription.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 	}
 
 	/**
@@ -332,17 +313,13 @@ public class RSAComposite extends Composite {
 	 * contained.
 	 */
 	private void createMainArea() {
-		final Group g = new Group(this, SWT.NONE);
-		g.setText(Messages.RSAComposite_algo_header);
+		final Group mainGroup = new Group(this, SWT.NONE);
+		mainGroup.setText(Messages.RSAComposite_algo_header);
 		final GridLayout gl = new GridLayout(2, false);
-		// Space between left side and the three buttons
-		// gl.marginWidth = MARGIN_WIDTH;
-		// Space between three buttons and 2nd field
-		// gl.horizontalSpacing = HORIZONTAL_SPACING;
-		g.setLayout(gl);
-		g.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		createButtonArea(g);
-		createAlgoArea(g);
+		mainGroup.setLayout(gl);
+		mainGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		createButtonArea(mainGroup);
+		createAlgoArea(mainGroup);
 	}
 
 	/**
@@ -353,51 +330,46 @@ public class RSAComposite extends Composite {
 	 */
 	private void createButtonArea(final Composite parent) {
 		// Set up the canvas for the Buttons
-		final Canvas canvas = new Canvas(parent, SWT.NONE);
-		canvas.setLayout(new FormLayout());
-		canvas.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true));
-
-		// Form data to place Key selection Button
-		final FormData fDkeysel = new FormData(BIGBUTTONWIDTH, BIGBUTTONHEIGHT);
-		fDkeysel.left = new FormAttachment(4);
-		fDkeysel.top = new FormAttachment(2);
-
-		// Key selection Button
-		keysel = new Button(canvas, SWT.PUSH);
+		
+		Composite compositeButtons = new Composite(parent, SWT.NONE);
+		compositeButtons.setLayout(new GridLayout());
+		GridData gd_compositeButtons = new GridData(SWT.FILL, SWT.FILL, false, true);
+		gd_compositeButtons.verticalIndent = 10;
+		compositeButtons.setLayoutData(gd_compositeButtons);
+		
+		keysel = new Button(compositeButtons, SWT.PUSH);
 		keysel.setBackground(ColorService.RED);
 		keysel.setText(Messages.RSAComposite_key_selection);
-		keysel.setLayoutData(fDkeysel);
+		GridData gd_keysel = new GridData(SWT.FILL, SWT.FILL, false, false);
+		gd_keysel.heightHint = BIGBUTTONHEIGHT;
+		keysel.setLayoutData(gd_keysel);
 		keysel.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
 				if (dialog) {
-					final MessageBox messageBox = new MessageBox(new Shell(
-							Display.getCurrent()), SWT.ICON_INFORMATION
-							| SWT.OK);
+					MessageBox messageBox = new MessageBox(getShell(), SWT.ICON_INFORMATION | SWT.OK);
 					messageBox.setText(Messages.RSAComposite_key_selection);
-					messageBox
-							.setMessage(Messages.RSAComposite_keysel_messagebox_text);
+					messageBox.setMessage(Messages.RSAComposite_keysel_messagebox_text);
 					messageBox.open();
 				}
-				if (new WizardDialog(getShell(), new KeySelectionWizard(data,
-						false)).open() == Window.OK) {
+				WizardDialog keySelectionDialog = new WizardDialog(getShell(), new KeySelectionWizard(data, false));
+				keySelectionDialog.setHelpAvailable(false);
+				if (keySelectionDialog.open() == Window.OK) {
 					keySelected();
 				}
 			}
 
 		});
 
-		// Form data to place Text enter button
-		final FormData fDtextEnter = new FormData(BIGBUTTONWIDTH,
-				BIGBUTTONHEIGHT);
-		fDtextEnter.left = new FormAttachment(4);
-		fDtextEnter.top = new FormAttachment(keysel, BIGBUTTONVERTICALSPACE,
-				SWT.BOTTOM);
-
-		Composite compLoadTextBtns = new Composite(canvas, SWT.NONE);
-		compLoadTextBtns.setLayout(new GridLayout());
-		compLoadTextBtns.setLayoutData(fDtextEnter);
+		Composite compLoadTextBtns = new Composite(compositeButtons, SWT.NONE);
+		GridLayout gl_compLoadTextBtns = new GridLayout();
+		gl_compLoadTextBtns.marginWidth = 0;
+		gl_compLoadTextBtns.marginHeight = 0;
+		compLoadTextBtns.setLayout(gl_compLoadTextBtns);
+		GridData gd_compLoadTextBtns = new GridData(SWT.FILL, SWT.FILL, true, false);
+		gd_compLoadTextBtns.verticalIndent = 25;
+		compLoadTextBtns.setLayoutData(gd_compLoadTextBtns);
 
 		// Text enter Button
 		textEnter = new Button(compLoadTextBtns, SWT.PUSH);
@@ -408,18 +380,17 @@ public class RSAComposite extends Composite {
 		} else {
 			textEnter.setText(Messages.RSAComposite_2);
 		}
-		textEnter.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		GridData gd_textEnter = new GridData(SWT.FILL, SWT.FILL, true, false);
+		gd_textEnter.heightHint = BIGBUTTONHEIGHT;
+		textEnter.setLayoutData(gd_textEnter);
 		textEnter.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
 				if (dialog) {
-					final MessageBox messageBox = new MessageBox(new Shell(
-							Display.getCurrent()), SWT.ICON_INFORMATION
-							| SWT.OK);
+					MessageBox messageBox = new MessageBox(getShell(), SWT.ICON_INFORMATION | SWT.OK);
 					messageBox.setText(Messages.EnterCiphertextPage_textentry);
-					messageBox
-							.setMessage(Messages.RSAComposite_textentry_messagebox_text);
+					messageBox.setMessage(Messages.RSAComposite_textentry_messagebox_text);
 					messageBox.open();
 				}
 				buttonLoadTextClicked();
@@ -430,23 +401,15 @@ public class RSAComposite extends Composite {
 		if (data.getAction() == Action.VerifyAction) {
 			// Text enter Button #2
 			textEnter2 = new Button(compLoadTextBtns, SWT.PUSH);
-			// textEnter2.setBackground(ColorService.RED);
 			textEnter2.setEnabled(false);
 			textEnter2.setText(Messages.RSAComposite_1);
-			textEnter2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-					true));
+			GridData gd_textEnter2 = new GridData(SWT.FILL, SWT.FILL, true, false);
+			gd_textEnter2.heightHint = BIGBUTTONHEIGHT;
+			textEnter2.setLayoutData(gd_textEnter2);
 			textEnter2.addSelectionListener(new SelectionAdapter() {
 
 				@Override
 				public void widgetSelected(final SelectionEvent e) {
-					// if (dialog) {
-					// final MessageBox messageBox =
-					// new MessageBox(new Shell(Display.getCurrent()),
-					// SWT.ICON_INFORMATION | SWT.OK);
-					// messageBox.setText(Messages.EnterCiphertextPage_textentry);
-					// messageBox.setMessage(Messages.RSAComposite_textentry_messagebox_text);
-					// messageBox.open();
-					// }
 					buttonLoadText2Clicked();
 				}
 
@@ -454,14 +417,16 @@ public class RSAComposite extends Composite {
 
 		}
 
-		// Form Data to place Calculate Button
-		final FormData fDcalc = new FormData(BIGBUTTONWIDTH, BIGBUTTONHEIGHT);
-		fDcalc.left = new FormAttachment(4);
-		fDcalc.top = new FormAttachment(compLoadTextBtns,
-				2 * BIGBUTTONVERTICALSPACE, SWT.BOTTOM);
-
 		// Run Calculations Button
-		runCalc = new Button(canvas, SWT.PUSH);
+		runCalc = new Button(compositeButtons, SWT.PUSH);
+		GridData gd_runCalc = new GridData(SWT.FILL, SWT.FILL, false, false);
+		gd_runCalc.heightHint = BIGBUTTONHEIGHT;
+		if (data.getAction() == Action.VerifyAction) {
+			gd_runCalc.verticalIndent = 90;
+		} else {
+			gd_runCalc.verticalIndent = 61;
+		}
+		runCalc.setLayoutData(gd_runCalc);
 		runCalc.setBackground(ColorService.RED);
 		runCalc.setEnabled(false);
 
@@ -485,36 +450,26 @@ public class RSAComposite extends Composite {
 			break;
 		}
 		}
-		runCalc.setLayoutData(fDcalc);
 		runCalc.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
 				textEnter.setEnabled(false);
-				// if(data.getAction() == Action.VerifyAction)
-				// textEnter2.setEnabled(false);
-				// runCalc.setEnabled(false);
 				runCalc.setBackground(ColorService.GREEN);
-				// startButton.setEnabled(false);
+				runCalc.setEnabled(false);
 				if (numberIndex != 0 || started == true) {
 					stepButton.setEnabled(false);
 					runCalc.setEnabled(false);
 				}
 				stepbackButton.setEnabled(false);
 				if (dialog) {
-					final MessageBox message = new MessageBox(new Shell(Display
-							.getCurrent()), SWT.ICON_INFORMATION | SWT.OK);
+					final MessageBox message = new MessageBox(getShell(), SWT.ICON_INFORMATION | SWT.OK);
 					message.setText(Messages.RSAComposite_finish_calc_messagebox_title);
 					message.setMessage(Messages.RSAComposite_finish_calc_messagebox_text);
 					message.open();
 				}
 
 				List<Integer> input = textText.getContent();
-				if (data.getAction() == Action.SignAction) {
-					LinkedList<Integer> hashList = new LinkedList<Integer>();
-					hashList.add(signHash);
-					input = hashList;
-				}
 
 				// If needed fill with random values
 				switch (data.getAction()) {
@@ -525,9 +480,13 @@ public class RSAComposite extends Composite {
 						data.setrandomPlaintext(true);
 						FillRandom();
 					}
-					if (data.plainNeeded()) {
+					if (data.plainNeeded() || input == null) {
 						data.setrandomPlaintext(true);
 						FillPlain();
+						input = data.getPlainTextAsNumbers();
+						textEnter.setEnabled(false);
+						runCalc.setEnabled(false);
+						runCalc.setBackground(ColorService.GREEN);
 					}
 					break;
 				}
@@ -536,22 +495,19 @@ public class RSAComposite extends Composite {
 					break;
 				}
 				}
+				
+				if (data.getAction() == Action.SignAction) {
+					LinkedList<Integer> hashList = new LinkedList<Integer>();
+					hashList.add(signHash);
+					input = hashList;
+				}
+				
 				data.setTempAsNumbers(data.getAction().run(input,
 						getExponent(), data.getN()));
-				// resultText.setText(data.getAction().run(numberText.getText().split(" "), getExponent(), //$NON-NLS-1$
-				// data.getN()));
 				viewHex();
 				finish();
-
 			}
 		});
-
-		// Form Data to place Reset Button
-		final FormData fDreset = new FormData(BIGBUTTONWIDTH, BIGBUTTONHEIGHT);
-		fDreset.left = new FormAttachment(4);
-		fDreset.top = new FormAttachment(runCalc, 2 * BIGBUTTONVERTICALSPACE,
-				SWT.BOTTOM);
-
 	}
 
 	private void buttonLoadTextClicked() {
@@ -560,6 +516,7 @@ public class RSAComposite extends Composite {
 		NewTextEntryWizard wizard = makeWizardLoadInput(dataForWizard, 1);
 
 		WizardDialog wizardDialog = new WizardDialog(getShell(), wizard);
+		wizardDialog.setHelpAvailable(false);
 		int open = wizardDialog.open();
 
 		if (open == Window.OK) {
@@ -583,7 +540,6 @@ public class RSAComposite extends Composite {
 			default:
 				break;
 			}
-
 			textEntered();
 		}
 	}
@@ -594,6 +550,7 @@ public class RSAComposite extends Composite {
 		NewTextEntryWizard wizard = makeWizardLoadInput(dataForWizard, 2);
 
 		WizardDialog wizardDialog = new WizardDialog(getShell(), wizard);
+		wizardDialog.setHelpAvailable(false);
 		int open = wizardDialog.open();
 
 		List<Integer> loadedData;
@@ -636,15 +593,15 @@ public class RSAComposite extends Composite {
 	 *            the parent
 	 */
 	private void createAlgoArea(final Composite parent) {
-		final Composite g = new Composite(parent, SWT.SHADOW_NONE);
+		final Composite algoAreaComposite = new Composite(parent, SWT.SHADOW_NONE);
 		GridLayout layout = new GridLayout();
 		layout.verticalSpacing = 20;
-		g.setLayout(layout);
-		g.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		createKeyGroup(g);
-		createTextGroup(g);
-		createCalcGroup(g);
-		createResultGroup(g);
+		algoAreaComposite.setLayout(layout);
+		algoAreaComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		createKeyGroup(algoAreaComposite);
+		createTextGroup(algoAreaComposite);
+		createCalcGroup(algoAreaComposite);
+		createResultGroup(algoAreaComposite);
 	}
 
 	/**
@@ -654,44 +611,50 @@ public class RSAComposite extends Composite {
 	 *            the parent
 	 */
 	private void createKeyGroup(final Composite parent) {
-		final GridLayout gl = new GridLayout(8, false);
-		final Group g = new Group(parent, SWT.SHADOW_NONE);
-		g.setText(Messages.RSAComposite_key);
-		g.setLayout(gl);
-		GridData gL = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		gL.verticalIndent = 3;
-		g.setLayoutData(gL);
+		final Group calcGroup = new Group(parent, SWT.SHADOW_NONE);
+		calcGroup.setText(Messages.RSAComposite_key);
+		calcGroup.setLayout(new GridLayout(8, false));
+		calcGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-		Label l = new Label(g, SWT.NONE);
-		l.setText("e :"); //$NON-NLS-1$
-		l.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-		eText = new Text(g, SWT.READ_ONLY | SWT.BORDER);
+		Label labelE = new Label(calcGroup, SWT.NONE);
+		labelE.setText("e :"); //$NON-NLS-1$
+		labelE.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+		
+		eText = new Text(calcGroup, SWT.READ_ONLY | SWT.BORDER);
 		eText.setEnabled(false);
 		eText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-		// Spacer
-		l = new Label(g, SWT.NONE);
-		l.setText("  "); //$NON-NLS-1$
-		l.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-
-		l = new Label(g, SWT.NONE);
-		l.setText("d :"); //$NON-NLS-1$
-		l.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-		dText = new Text(g, SWT.READ_ONLY | SWT.BORDER);
+		Label labelD = new Label(calcGroup, SWT.NONE);
+		labelD.setText("d :"); //$NON-NLS-1$
+		GridData gd_labelD = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
+		gd_labelD.horizontalIndent = 30;
+		labelD.setLayoutData(gd_labelD);
+		
+		dText = new Text(calcGroup, SWT.READ_ONLY | SWT.BORDER);
 		dText.setEnabled(false);
 		dText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-		// Spacer
-		l = new Label(g, SWT.NONE);
-		l.setText("  "); //$NON-NLS-1$
-		l.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-
-		l = new Label(g, SWT.NONE);
-		l.setText("N :"); //$NON-NLS-1$
-		l.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-		nText = new Text(g, SWT.READ_ONLY | SWT.BORDER);
+		Label labelN = new Label(calcGroup, SWT.NONE);
+		labelN.setText("N :"); //$NON-NLS-1$
+		GridData gd_labelN = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
+		gd_labelN.horizontalIndent = 30;
+		labelN.setLayoutData(gd_labelN);
+		
+		nText = new Text(calcGroup, SWT.READ_ONLY | SWT.BORDER);
 		nText.setEnabled(false);
 		nText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		
+		Label label_keyType = new Label(calcGroup, SWT.NONE);
+		GridData gd_keyType = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
+		gd_keyType.horizontalIndent = 30;
+		label_keyType.setLayoutData(gd_keyType);
+		label_keyType.setText(Messages.RSAComposite_KeyType_keyType);
+		
+		text_keyType = new Text(calcGroup, SWT.READ_ONLY | SWT.BORDER);
+		text_keyType.setEnabled(false);
+		GridData gd_text_keyType = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		text_keyType.setLayoutData(gd_text_keyType);
+		
 	}
 
 	/**
@@ -701,75 +664,53 @@ public class RSAComposite extends Composite {
 	 *            the parent
 	 */
 	private void createTextGroup(final Composite parent) {
-		final Group g = new Group(parent, SWT.NONE);
-		GridLayout layoutG = new GridLayout();
-		layoutG.marginTop = -4;
-		g.setLayout(layoutG);
-		GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		layoutData.verticalIndent = 25;
-		g.setLayoutData(layoutData);
-//		Composite textDisplaysC = new Composite(g, SWT.NONE);
-//		GridLayout layout = new GridLayout(2, true);
-//		layout.marginWidth = 0;
-//		layout.marginHeight = 0;
-//		textDisplaysC.setLayout(layout);
-//		textDisplaysC.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-//				false));
+		final Group textGroup = new Group(parent, SWT.NONE);
+		textGroup.setLayout(new GridLayout());
+		textGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		
 		switch (data.getAction()) {
 		case EncryptAction: {
-			g.setText(Messages.RSAComposite_text_enc);
+			textGroup.setText(Messages.RSAComposite_text_enc);
 			break;
 		}
 		case DecryptAction: {
-			g.setText(Messages.RSAComposite_text_dec);
+			textGroup.setText(Messages.RSAComposite_text_dec);
 			break;
 		}
 		case SignAction: {
-//			Label textLabel = new Label(textDisplaysC, SWT.NONE);
-//			Label label2;
-//			label2 = new Label(textDisplaysC, SWT.NONE);
-//			label2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-			g.setText(Messages.RSAComposite_text_sig);
-//			label2.setText(Messages.RSAComposite_3);
+			textGroup.setText(Messages.RSAComposite_text_sig);
 			break;
 		}
 		case VerifyAction: {
-			g.setText(Messages.RSAComposite_numbertext_header_ver);
+			textGroup.setText(Messages.RSAComposite_numbertext_header_ver);
 			break;
 		}
 		}
 
-		makeTextfield1(g);
+		makeTextfield1(textGroup);
 
-		Composite textDisplaysC2 = new Composite(g, SWT.NONE);
-		textDisplaysC2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-				false));
+		Composite textDisplaysC2 = new Composite(textGroup, SWT.NONE);
+		textDisplaysC2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		GridLayout layout2 = new GridLayout(2, true);
 		layout2.marginWidth = 0;
 		layout2.marginHeight = 0;
 		textDisplaysC2.setLayout(layout2);
 		switch (data.getAction()) {
 		case EncryptAction: {
-			// new Label(g,
-			// SWT.NONE).setText(Messages.RSAComposite_numbertext_header_enc);
 			break;
 		}
 		case DecryptAction: {
-			// new Label(g,
-			// SWT.NONE).setText(Messages.RSAComposite_numbertext_header_dec);
 			break;
 		}
 		case SignAction: {
 			break;
 		}
 		case VerifyAction: {
-			Label label2;
-			label2 = new Label(textDisplaysC2, SWT.NONE);
+			Label label2 = new Label(textDisplaysC2, SWT.NONE);
 			label2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 			label2.setText(Messages.RSAComposite_text_ver);
 
-			Label label3;
-			label3 = new Label(textDisplaysC2, SWT.NONE);
+			Label label3 = new Label(textDisplaysC2, SWT.NONE);
 			label3.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 			label3.setText(Messages.RSAComposite_4);
 
@@ -778,14 +719,8 @@ public class RSAComposite extends Composite {
 		}
 
 		if (data.getAction() == Action.VerifyAction) {
-			makeTextfield2(g);
+			makeTextfield2(textGroup);
 		}
-
-		// numberText = new Text(g, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY |
-		// SWT.WRAP | SWT.V_SCROLL);
-		//        numberText.setText("\n\n\n"); //$NON-NLS-1$
-		// numberText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-		// false, 1, 3));
 	}
 
 	private void makeHashDisplay(Composite g) {
@@ -831,13 +766,12 @@ public class RSAComposite extends Composite {
 		}
 
 		textText = new NumberblocksAndTextViewer(localC, SWT.NONE, reprOptions);
-		textText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1,
-				1));
+		textText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 		if (withHashDisplay) {
 			Label labelHashD = new Label(localC, SWT.NONE);
 			GridData layoutData2 = new GridData(SWT.FILL, SWT.CENTER, false, false);
-			layoutData2.verticalIndent = 13;
+			layoutData2.verticalIndent = 30;
 			labelHashD.setLayoutData(layoutData2);
 			labelHashD.setText(Messages.RSAComposite_0);
 			makeHashDisplay(localC);
@@ -852,25 +786,17 @@ public class RSAComposite extends Composite {
 	 *            the parent
 	 */
 	private void createCalcGroup(final Composite parent) {
-		final Group g = new Group(parent, SWT.NONE);
-		int numColumns = 3;
-		g.setLayout(new GridLayout(3, false));
-		g.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		g.setText(Messages.RSAComposite_Calculations);
-		final GridData gd2 = new GridData(SWT.FILL, SWT.CENTER, true, false,
-				numColumns, 1);
-		final GridData gd3 = new GridData(SWT.FILL, SWT.CENTER, true, false,
-				numColumns, 1);
-		gd2.heightHint = 25;
-		gd3.heightHint = 25;
+		final Group calcGroup = new Group(parent, SWT.NONE);	
+		calcGroup.setLayout(new GridLayout(3, false));
+		calcGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		calcGroup.setText(Messages.RSAComposite_Calculations);
 
 		// Add Previous Step Button
-		stepbackButton = new Button(g, SWT.PUSH);
+		stepbackButton = new Button(calcGroup, SWT.PUSH);
 		stepbackButton.setText(Messages.RSAComposite_stepback);
 		stepbackButton.setEnabled(false);
 		stepbackButton.setToolTipText(Messages.RSAComposite_stepback_text);
-		stepbackButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-				false, 1, 1));
+		stepbackButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		stepbackButton.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -894,60 +820,47 @@ public class RSAComposite extends Composite {
 				data.setTempAsNumbers(data.getTempAsNumbers().subList(0,
 						data.getTempAsNumbers().size() - 2));
 				viewHex();
-				// switch (data.getAction()) {
-				// case EncryptAction:
-				// stepBArray = data.getTempAsNumbers();
-				// data.setTempAsNumbers(data.getTempAsNumbers().subList(
-				// 0,
-				// data.getTempAsNumbers().size()-2));
-				// viewHex();
-				// break;
-				//
-				// case DecryptAction:
-				// data.setTempAsNumbers(data.getTempAsNumbers().subList(0,
-				// data.getTempAsNumbers().size() - 1));
-				// viewHex();
-				// break;
-				// }
 			}
 		});
 
 		// Add Start / Next Step Button
-		stepButton = new Button(g, SWT.PUSH);
+		stepButton = new Button(calcGroup, SWT.PUSH);
 		stepButton.setText(Messages.RSAComposite_start);
 		stepButton.setEnabled(false);
 		stepButton.setToolTipText(Messages.RSAComposite_step_text);
-		stepButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-				false, 1, 1));
-		stepButton.addSelectionListener(startSelectionListener);
-
+		stepButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+//		stepButton.addSelectionListener(startSelectionListener);
+		stepButton.addSelectionListener(stepButtonSelectionlistner);
+		
 		// Add Step Status
-		stepLabel = new Text(g, SWT.LEAD | SWT.BORDER);
+		stepLabel = new Text(calcGroup, SWT.LEAD | SWT.BORDER);
 		GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		layoutData.widthHint = 100;
-		stepLabel
-				.setLayoutData(layoutData);
+		stepLabel.setLayoutData(layoutData);
 		stepLabel.setEditable(false);
 
 		// Set up a composite to draw the fast exp on
-		styledFastExtText = new Composite(g, SWT.NONE);
-		styledFastExtText.setLayoutData(gd2);
+		styledFastExtText = new Composite(calcGroup, SWT.NONE);
+		GridData gd_styledFastExtText = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
+		styledFastExtText.setLayoutData(gd_styledFastExtText);
 
-		styledFastExpMulText = new Composite(g, SWT.NONE);
-		styledFastExpMulText.setLayoutData(gd3);
+		styledFastExpMulText = new Composite(calcGroup, SWT.NONE);
+		GridData gd_styledFastExpMulText = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
+		styledFastExpMulText.setLayoutData(gd_styledFastExpMulText);
 
-		fastExpTable = new Table(g, SWT.NO_SCROLL);
+		fastExpTable = new Table(calcGroup, SWT.NO_SCROLL);
 		fastExpTable.setLayout(new TableLayout());
-		fastExpTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
-				numColumns, 1));
+		GridData gd_fastExpTable = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
+		gd_fastExpTable.minimumHeight = 100;
+		gd_fastExpTable.heightHint = 150;
+		fastExpTable.setLayoutData(gd_fastExpTable);
 		fastExpTable.setLinesVisible(true);
 		fastExpTable.setHeaderVisible(true);
 		fastExpTable.setVisible(false);
 		fastExpTable.addListener(SWT.MeasureItem, new Listener() {
 			@Override
 			public void handleEvent(final Event event) {
-				event.width = fastExpTable.getSize().x
-						/ (fastExpTable.getColumnCount() + 1);
+				event.width = fastExpTable.getSize().x / (fastExpTable.getColumnCount() + 1);
 				event.height = fastExpTable.getSize().y / 3;
 			}
 		});
@@ -960,11 +873,12 @@ public class RSAComposite extends Composite {
 			}
 		});
 
-		final Label l = new Label(g, SWT.NONE);
-		l.setText(Messages.RSAComposite_step_result);
-		stepResult = new Text(g, SWT.BORDER | SWT.READ_ONLY);
-		stepResult.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-				false, 2, 1));
+		final Label stepResultLabel = new Label(calcGroup, SWT.NONE);
+		stepResultLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		stepResultLabel.setText(Messages.RSAComposite_step_result);
+		
+		stepResult = new Text(calcGroup, SWT.BORDER | SWT.READ_ONLY);
+		stepResult.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 	}
 
 	/**
@@ -1030,11 +944,11 @@ public class RSAComposite extends Composite {
 		superSuperScript.rise = baseline - 2;
 		subscript.rise = -baseline / 2 + 2;
 		// add a paint listener which paints the text everytime it's needed
-		fastExpTable.addListener(SWT.Paint, new Listener() {
-
+		fastExpTable.addPaintListener(new PaintListener() {
+			
 			@Override
-			public void handleEvent(final Event event) {
-				fastExpText.draw(event.gc, 10, 40);
+			public void paintControl(PaintEvent e) {
+				fastExpText.draw(e.gc, 10, 40);
 			}
 		});
 
@@ -1185,11 +1099,6 @@ public class RSAComposite extends Composite {
 			LinkedList<Integer> newList = new LinkedList<Integer>(
 					data.getTempAsNumbers());
 			newList.add(result.intValue());
-			// String text1 = data.getTemp();
-			//            if (!data.getTemp().equals("")) { //$NON-NLS-1$
-			//                text1 += " "; //$NON-NLS-1$
-			// }
-			// text1 += result.toString(Constants.HEXBASE);
 			data.setTempAsNumbers(newList);
 			viewHex();
 		}
@@ -1217,13 +1126,13 @@ public class RSAComposite extends Composite {
 		group.setText(Messages.RSAComposite_result);
 
 		Composite verSuccessDisplay = new Composite(group, SWT.NONE);
-		GridLayout layout5 = new GridLayout();
-		layout5.marginWidth = 0;
-		layout5.marginHeight = 0;
-		verSuccessDisplay.setLayout(layout5);
-		GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false);
-		layoutData.exclude = true;
-		verSuccessDisplay.setLayoutData(layoutData);
+		GridLayout gl_verSuccessDisplay = new GridLayout();
+		gl_verSuccessDisplay.marginWidth = 0;
+		gl_verSuccessDisplay.marginHeight = 0;
+		verSuccessDisplay.setLayout(gl_verSuccessDisplay);
+		GridData gd_verSuccessDisplay = new GridData(SWT.FILL, SWT.CENTER, false, false);
+		gd_verSuccessDisplay.exclude = true;
+		verSuccessDisplay.setLayoutData(gd_verSuccessDisplay);
 
 		Label verSuccessLbl = new Label(verSuccessDisplay, SWT.NONE);
 		verSuccessLbl.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
@@ -1241,36 +1150,9 @@ public class RSAComposite extends Composite {
 			reprForResultDisplay = Repr.ALL;
 			break;
 		}
-		resultDisplay = new NumberblocksAndTextViewer(group, SWT.NONE,
-				reprForResultDisplay);
-		resultDisplay.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-				false));
-		// resultText = new Text(group, SWT.V_SCROLL | SWT.READ_ONLY |
-		// SWT.BORDER | SWT.MULTI | SWT.WRAP);
-		// data.setTemp("\n\n");
+		resultDisplay = new NumberblocksAndTextViewer(group, SWT.NONE,reprForResultDisplay);
+		resultDisplay.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		data.setTempAsNumbers(new LinkedList<Integer>());
-		//        resultText.setText("\n\n"); //$NON-NLS-1$
-		// resultText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-		// false));
-		// resultText.addModifyListener(new ModifyListener() {
-		//
-		// public void modifyText(final ModifyEvent e) {
-		// copyButton.setEnabled(true);
-		// TODO: reenable verification result display
-		//                if (data.getAction() == Action.VerifyAction && !textText.getText().equals("")) { //$NON-NLS-1$
-		// String text;
-		// if (Lib.hash(textText.getText(), data.getSimpleHash(),
-		// data.getN()).equals(data.getTemp().trim())) {
-		// text = Messages.RSAComposite_valid;
-		// verifiedText.setForeground(ColorService.GREEN);
-		// } else {
-		// text = Messages.RSAComposite_invalid;
-		// verifiedText.setForeground(ColorService.RED);
-		// }
-		// verifiedText.setText(text);
-		// }
-		// }
-		// });
 
 		copyButton = new Button(group, SWT.PUSH);
 		copyButton.setEnabled(false);
@@ -1292,70 +1174,48 @@ public class RSAComposite extends Composite {
 		});
 
 		if (data.getAction() == Action.VerifyAction) {
-			int width = 270;
 
 			resultDisplayVerification = new Group(group, SWT.NONE);
 			resultDisplayVerification.setLayout(new GridLayout());
-			GridData layoutData3 = new GridData(SWT.FILL, SWT.CENTER, false,
-					false);
-			layoutData3.widthHint = width;
-			resultDisplayVerification.setLayoutData(layoutData3);
+			resultDisplayVerification.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 			resultDisplayVerification.setText(Messages.RSAComposite_6);
 
 			lblVerResult = new Label(resultDisplayVerification, SWT.WRAP);
-			GridData layoutData4 = new GridData(SWT.FILL, SWT.CENTER, true,
-					false);
-			layoutData4.widthHint = width - 10;
-			lblVerResult.setLayoutData(layoutData4);
+			GridData gd_lblVerResult = new GridData(SWT.FILL, SWT.CENTER, true, false);
+			gd_lblVerResult.widthHint = 300;
+			lblVerResult.setLayoutData(gd_lblVerResult);
 			lblVerResult.setText(Messages.RSAComposite_7);
 
-			Composite compCompare = new Composite(resultDisplayVerification,
-					SWT.NONE);
-			compCompare.setLayout(new GridLayout(3, false));
-			compCompare.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-					false));
+			Composite compCompare = new Composite(resultDisplayVerification, SWT.NONE);
+			compCompare.setLayout(new GridLayout(2, true));
+			compCompare.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 			Label lblSigT = new Label(compCompare, SWT.NONE);
+			lblSigT.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
 			lblSigT.setText(Messages.RSAComposite_8);
 
-			new Label(compCompare, SWT.NONE);
-
 			Label lblHashT = new Label(compCompare, SWT.NONE);
+			lblHashT.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
 			lblHashT.setText(Messages.RSAComposite_9);
 
 			txtSigT = new Text(compCompare, SWT.CENTER);
-			GridData layoutData6 = new GridData(SWT.CENTER, SWT.CENTER, true,
-					false);
-			layoutData6.widthHint = width / 3;
-			txtSigT.setLayoutData(layoutData6);
+			txtSigT.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 			txtSigT.setText(VER_RESULT_DISPLAY_DEFAULT);
 			txtSigT.setBackground(ColorService.WHITE);
 			txtSigT.setEditable(false);
 
-			lblEqSign = new Label(compCompare, SWT.NONE);
-			lblEqSign.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true,
-					false));
-			lblEqSign.setText("="); //$NON-NLS-1$
-
 			txtHashT = new Text(compCompare, SWT.CENTER);
-			GridData layoutData7 = new GridData(SWT.CENTER, SWT.CENTER, true,
-					false);
-			layoutData7.widthHint = width / 3;
-			txtHashT.setLayoutData(layoutData7);
+			txtHashT.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 			txtHashT.setText(VER_RESULT_DISPLAY_DEFAULT);
 			txtHashT.setBackground(ColorService.WHITE);
 			txtHashT.setEditable(false);
 
-			lblVerResultDisplay = new Label(resultDisplayVerification, SWT.WRAP
-					| SWT.CENTER);
-			GridData layoutData5 = new GridData(SWT.FILL, SWT.CENTER, true,
-					false);
-			lblVerResultDisplay.setLayoutData(layoutData5);
-			layoutData5.widthHint = width - 10;
-			layoutData5.heightHint = 16 * 2;
-
+			lblVerResultDisplay = new Label(resultDisplayVerification, SWT.WRAP | SWT.CENTER);
+			GridData gd_lblVerResultDisplay = new GridData(SWT.FILL, SWT.CENTER, true, false);
+			gd_lblVerResultDisplay.widthHint = 300;
+			lblVerResultDisplay.setLayoutData(gd_lblVerResultDisplay);
+			
 			updateVerificationResult();
-
 		}
 	}
 
@@ -1398,7 +1258,16 @@ public class RSAComposite extends Composite {
 				}
 				lblVerResultDisplay.setForeground(ColorService.GRAY);
 			}
+			resizeControl(lblVerResultDisplay);
 		}
+	}
+	
+	/**
+	 * Method to resize a control. For example when the content changed and it has not enough space anymore.
+	 * @param control The control that needs resizing.
+	 */
+	public void resizeControl(Control control) {
+		super.layout(new Control[] {control});
 	}
 
 	/**
@@ -1408,8 +1277,7 @@ public class RSAComposite extends Composite {
 
 		// setup the main layout for this group
 		final Group optionsGroup = new Group(this, SWT.NONE);
-		optionsGroup
-				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		optionsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		optionsGroup.setLayout(new GridLayout(4, false));
 		optionsGroup.setText(Messages.RSAComposite_options);
 
@@ -1445,23 +1313,13 @@ public class RSAComposite extends Composite {
 		// hex.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
 		// hex.addSelectionListener(view);
 		//
-		// // initialize dialog checkbox
-		// final Button dialogButton = new Button(optionsGroup, SWT.CHECK);
-		// dialogButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true,
-		// false));
-		// dialogButton.setText(Messages.RSAComposite_show_dialogs);
-		// dialogButton.setSelection(dialog);
-		// dialogButton.addSelectionListener(new SelectionAdapter() {
-		// @Override
-		// public void widgetSelected(final SelectionEvent e) {
-		// dialog = ((Button) e.widget).getSelection();
-		// }
 		//
 		// });
 
 		// initialize copy data selector
-		final Label l = new Label(optionsGroup, SWT.NONE);
+		Label l = new Label(optionsGroup, SWT.NONE);
 		l.setText(Messages.RSAComposite_inherit_from);
+		
 		inheritCombo = new Combo(optionsGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
 		inheritCombo.add(""); //$NON-NLS-1$
 		switch (data.getAction()) {
@@ -1522,8 +1380,7 @@ public class RSAComposite extends Composite {
 						reset(true);
 						data.inherit(newdata);
 						// if we got any data at all insert the key parameters
-						// to
-						// their fields
+						// to their fields
 						if (data.getN() != null) {
 							keySelected();
 							// if we got plaintext/ciphertext/signature, set
@@ -1541,21 +1398,38 @@ public class RSAComposite extends Composite {
 
 		});
 		
+		 // initialize dialog checkbox
+		 Button dialogButton = new Button(optionsGroup, SWT.CHECK);
+		 dialogButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
+		 dialogButton.setText(Messages.RSAComposite_show_dialogs);
+		 dialogButton.setSelection(dialog);
+		 dialogButton.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				dialog = ((Button) e.widget).getSelection();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				
+			}
+		});
+		 
+		 
 		// Initialize reset button
-				reset = new Button(optionsGroup, SWT.PUSH);
-				GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false);
-				layoutData.horizontalIndent = 12;
-				reset.setLayoutData(layoutData);
-				reset.setText(Messages.RSAComposite_reset);
-				reset.addSelectionListener(new SelectionAdapter() {
-					@Override
-					public void widgetSelected(final SelectionEvent e) {
-						boolean keyWasSelected = keysel.getBackground().equals(ColorService.GREEN);
-						boolean fullReset = !keyWasSelected;
-						reset(fullReset);
-					}
-				});
-		// comb.setLayoutData(leftAlign);
+		reset = new Button(optionsGroup, SWT.PUSH);
+		reset.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+		reset.setText(Messages.RSAComposite_reset);
+		reset.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent e) {
+				boolean keyWasSelected = keysel.getBackground().equals(ColorService.GREEN);
+				boolean fullReset = !keyWasSelected;
+				reset(fullReset);
+			}
+		});
+		 
 	}
 
 	private void FillRandom() {
@@ -1574,14 +1448,11 @@ public class RSAComposite extends Composite {
 		if (data.getAction() == Action.VerifyAction)
 			textEnter2.setEnabled(false);
 		textEnter.setBackground(ColorService.GREEN);
-		runCalc.setEnabled(true);
-		runCalc.setBackground(ColorService.RED);
 		data.randomKey();
 		// sets eText, dText, nText
 		keySelected();
 		// sets textText, numberText
 		textEntered();
-		stepButton.removeSelectionListener(stepSelectionListener);
 	}
 
 	private void FillPlain() {
@@ -1597,17 +1468,15 @@ public class RSAComposite extends Composite {
 		if (data.getAction() == Action.VerifyAction)
 			textEnter2.setEnabled(false);
 		textEnter.setBackground(ColorService.GREEN);
-		runCalc.setEnabled(true);
-		runCalc.setBackground(ColorService.RED);
 		data.randomPlain();
-		// sets eText, dText, nText
+//		 sets eText, dText, nText
 		keySelected();
-		// sets textText, numberText
+//		sets textText, numberText
 		textEntered();
-		stepButton.removeSelectionListener(stepSelectionListener);
 	}
 
 	private void reset(boolean full) {
+		firstRun = true;
 		keysel.setEnabled(true);
 		keysel.setBackground(ColorService.RED);
 		textEnter.setEnabled(false);
@@ -1638,6 +1507,7 @@ public class RSAComposite extends Composite {
 		eText.setText(""); //$NON-NLS-1$
 		dText.setText(""); //$NON-NLS-1$
 		nText.setText(""); //$NON-NLS-1$
+		text_keyType.setText(""); //$NON-NLS-1$
 		setTextfield1BlockContent(new LinkedList<Integer>());
 		setSignHash(0, true);
 		// TODO: reset also verification plain text field
@@ -1663,11 +1533,7 @@ public class RSAComposite extends Composite {
 		styledFastExpMulText.redraw();
 		inheritCombo.select(0);
 		stepLabel.setText(""); //$NON-NLS-1$
-		stepButton.removeSelectionListener(stepSelectionListener);
-		stepButton.removeSelectionListener(startSelectionListener);
-		stepButton.addSelectionListener(startSelectionListener);
 		stepButton.setText(Messages.RSAComposite_start);
-		// stepButton.pack();
 
 		if (!full) {
 			data.setE(oldE);
@@ -1746,6 +1612,16 @@ public class RSAComposite extends Composite {
 		if (data.getN() != null) {
 			nText.setText(data.getN().toString(Constants.HEXBASE));
 		}
+		//Check if it is a public key or private key. If it is a private key d is set
+		if (data.getE() != null && data.getD() != null && data.getN() != null) {
+			text_keyType.setText(Messages.RSAComposite_KeyType_private);
+		} else if (data.getE() != null && data.getN() != null) {
+			//if it is a public key d isn't set.
+			text_keyType.setText(Messages.RSAComposite_KeyType_public);
+			//Not the best solution, but does what it should: Setting dText to ""
+			//when e and N is set but d isn't.
+			dText.setText(""); //$NON-NLS-1$
+		}
 		viewHex();
 	}
 
@@ -1754,8 +1630,7 @@ public class RSAComposite extends Composite {
 	 */
 	private void textEntered() {
 		if (data.getAction() == Action.EncryptAction) {
-			RSAComposite.lastEnteredEncryptConversion = data
-					.getPlainTextConversion();
+			RSAComposite.lastEnteredEncryptConversion = data.getPlainTextConversion();
 		}
 		keysel.setEnabled(false);
 		textEnter.setBackground(ColorService.GREEN);
@@ -1765,8 +1640,7 @@ public class RSAComposite extends Composite {
 		case EncryptAction:
 		case SignAction:
 			setTextfield1BlockContent(data.getPlainTextAsNumbers());
-			setSignHash(Lib.hash(data.getPlainTextAsNumbers(),
-					data.getSimpleHash(), data.getN()), false);
+			setSignHash(Lib.hash(data.getPlainTextAsNumbers(), data.getSimpleHash(), data.getN()), false);
 			break;
 		case DecryptAction:
 			setTextfield1BlockContent(data.getCipherTextAsNumbers());
@@ -1799,7 +1673,6 @@ public class RSAComposite extends Composite {
 	 * finishes after the cryptographic operation is done by saving the
 	 * plaintext, ciphertext or signature into the data object
 	 */
-	@SuppressWarnings("incomplete-switch")
 	private void finish() {
 		switch (data.getAction()) {
 		case EncryptAction:
@@ -1810,6 +1683,10 @@ public class RSAComposite extends Composite {
 			break;
 		case SignAction:
 			data.setSignatureAsNumbers(data.getTempAsNumbers());
+			break;
+		case VerifyAction:
+			break;
+		default:
 			break;
 		}
 	}
@@ -1826,8 +1703,14 @@ public class RSAComposite extends Composite {
 			if (data.getN() != null) {
 				nText.setText(data.getN().toString());
 			}
-			if (data.getTempAsNumbers() != null
-					&& data.getTempAsNumbers().size() != 0) {
+			//Check if it is a public key or private key. If it is a private key d is set
+			if (data.getE() != null && data.getD() != null && data.getN() != null) {
+				text_keyType.setText(Messages.RSAComposite_KeyType_private); //$NON-NLS-1$
+			} else if (data.getE() != null && data.getN() != null) {
+				//if it is a public key d isn't set.
+				text_keyType.setText(Messages.RSAComposite_KeyType_public); //$NON-NLS-1$
+			}
+			if (data.getTempAsNumbers() != null && data.getTempAsNumbers().size() != 0) {
 				switch (data.getAction()) {
 				case DecryptAction:
 					// resultText.setText(data.getTemp());
@@ -1835,13 +1718,6 @@ public class RSAComposite extends Composite {
 					setTextfieldResultBlockContent(data.getTempAsNumbers());
 					break;
 				default:
-					// StringBuilder sb = new StringBuilder();
-					// String[] words = data.getTemp().split(" ");
-					// for (String word : words) {
-					// sb.append(Integer.valueOf(word, Constants.HEXBASE));
-					// sb.append(" ");
-					// }
-					// resultText.setText(sb.toString());
 					setTextfieldResultBlockContent(data.getTempAsNumbers());
 					break;
 				}
@@ -1857,6 +1733,13 @@ public class RSAComposite extends Composite {
 			}
 			if (data.getN() != null) {
 				nText.setText(data.getN().toString(Constants.HEXBASE));
+			}
+			//Check if it is a public key or private key. If it is a private key d is set
+			if (data.getE() != null && data.getD() != null && data.getN() != null) {
+				text_keyType.setText(Messages.RSAComposite_KeyType_private); //$NON-NLS-1$
+			} else if (data.getE() != null && data.getN() != null) {
+				//if it is a public key d isn't set.
+				text_keyType.setText(Messages.RSAComposite_KeyType_public); //$NON-NLS-1$
 			}
 			if (data.getTempAsNumbers() != null) {
 
