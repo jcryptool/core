@@ -31,7 +31,7 @@ public class FriedmanGraph extends Graph {
 	private int savedShift = 0;
 	private double lowestValue = 999999.0;
 
-	private int beginIndex = 0, barCount = 0;
+	private int barCount = 0;
 	private double zoomFactor = 1.628;
 
 	/**
@@ -133,6 +133,7 @@ public class FriedmanGraph extends Graph {
 				bars.get(i).setGC(gc);
 				bars.get(i).drawBar();
 			}
+
 		}
 	}
 
@@ -348,7 +349,7 @@ public class FriedmanGraph extends Graph {
 	 * @return whether the zoom has affected something or not.
 	 */
 	public final boolean zoomin() {
-		int oldBeginIndex = beginIndex;
+		int oldShift = currentShift;
 		boolean changed = false;
 		if (bars.size() > 0) {
 			double newBarCount = barCount / zoomFactor;
@@ -361,7 +362,7 @@ public class FriedmanGraph extends Graph {
 				newCount = barCount - 1;
 			}
 
-			if (barCount != newCount || beginIndex != oldBeginIndex) {
+			if (barCount != newCount || currentShift != oldShift) {
 				changed = true;
 			}
 			if (barCount != newCount) {

@@ -44,7 +44,8 @@ public class FriedmanGraphUI extends org.eclipse.swt.widgets.Composite implement
 		SWTResourceManager.registerResourceUser(this);
 	}
 
-	private Button button9;
+	private Button btnShowTable;
+	private Button btnResetGraph;
 	private String message;
 
 	public FriedmanGraphUI(final org.eclipse.swt.widgets.Composite parent, final int style) {
@@ -95,17 +96,43 @@ public class FriedmanGraphUI extends org.eclipse.swt.widgets.Composite implement
 				Label spacer3 = new Label(composite1, SWT.NONE);
 				spacer3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 
+				btnShowTable = new Button(composite1, SWT.PUSH | SWT.CENTER);
+				GridData btnShowTableLData = new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1);
+				btnShowTableLData.widthHint = 275;
+				btnShowTable.setLayoutData(btnShowTableLData);
+				btnShowTable.setText(Messages.FriedmanGraphUI_showastable);
+				btnShowTable.setEnabled(false);
+				btnShowTable.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						showTableDialog(e);
+					}
+				});
+
+				Label spacer4 = new Label(composite1, SWT.NONE);
+				spacer4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+				Label spacer5 = new Label(composite1, SWT.NONE);
+				spacer5.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+
 				TextLoadController textSelector = new TextLoadController(composite1, this, SWT.NONE, true, true);
 				GridData textSelectorLData = new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1);
-				textSelectorLData.widthHint = 200;
+				textSelectorLData.widthHint = 275;
 				textSelector.setLayoutData(textSelectorLData);
 				textSelector.addObserver(new Observer() {
 
 					@Override
 					public void update(Observable o, Object arg) {
 						message = textSelector.getText().getText();
-						if (message.length() > 0)
+						if (message.length() > 0) {
 							button2.setEnabled(true);
+
+							// After loading a text the button is replaced with information.
+							// To let this be displayed properly the button size is removed,
+							// and resizes to preferred
+							textSelectorLData.widthHint = SWT.DEFAULT;
+							textSelector.pack();
+							composite1.layout();
+						}
 					}
 				});
 
@@ -142,15 +169,15 @@ public class FriedmanGraphUI extends org.eclipse.swt.widgets.Composite implement
 			composite2.setLayoutData(composite2LData);
 			composite2.setLayout(composite2Layout);
 			{
-				button9 = new Button(composite2, SWT.PUSH | SWT.CENTER);
-				GridData button9LData = new GridData();
-				button9.setLayoutData(button9LData);
-				button9.setText(Messages.FriedmanGraphUI_showastable);
-				button9.setEnabled(false);
-				button9.addSelectionListener(new SelectionAdapter() {
+				btnResetGraph = new Button(composite2, SWT.PUSH | SWT.CENTER);
+				btnResetGraph.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+				btnResetGraph.setText("Reset graph");
+				btnResetGraph.setEnabled(false);
+				btnResetGraph.addSelectionListener(new SelectionAdapter() {
 					@Override
 					public void widgetSelected(SelectionEvent e) {
-						showTableDialog(e);
+						myGraph.getFrequencyGraph().resetDrag(40);
+						myGraph.redraw();
 					}
 				});
 			}
@@ -278,7 +305,8 @@ public class FriedmanGraphUI extends org.eclipse.swt.widgets.Composite implement
 
 		if (message != null && message.length() > 0) {
 			goodCiphertext = makeFormattedString(message);
-			button9.setEnabled(true);
+			btnShowTable.setEnabled(true);
+			btnResetGraph.setEnabled(true);
 			analyze();
 		}
 
@@ -287,7 +315,7 @@ public class FriedmanGraphUI extends org.eclipse.swt.widgets.Composite implement
 		// didSomeCalc = true;
 		// }
 		// if (didSomeCalc) {
-		// button9.setEnabled(true);
+		// btnShowTable.setEnabled(true);
 		// }
 		//
 		// analyze();
