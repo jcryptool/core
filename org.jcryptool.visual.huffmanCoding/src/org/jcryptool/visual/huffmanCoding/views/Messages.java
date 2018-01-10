@@ -45,6 +45,8 @@ public class Messages extends NLS {
 	public static String HuffmanCodingView_25;
 	public static String HuffmanCodingView_26;
 	public static String HuffmanCodingView_27;
+	public static String HuffmanCodingView_28;
+	public static String HuffmanCodingView_29;
 	public static String HuffmanCodingView_grpSzenario_text;
 	public static String HuffmanCodingView_btnPfadbernehmen_text;
 	public static String ZestLabelProvider_4;
@@ -53,6 +55,8 @@ public class Messages extends NLS {
 	public static String HuffmanCodingView_inputText;
 	public static String HuffmanCodingView_btnExampleText_text;
 	public static String HuffmanCodingView_btnContentFromFile_text;
+	public static String HuffmanCodingView_radioUncompFromMem;
+	public static String HuffmanCodingView_radioUncompFromFile;
 	public static String HuffmanCodingView_tblclmnCharacter_text;
 	public static String HuffmanCodingView_tblclmnCode_text;
 	public static String HuffmanCodingView_tblclmnPropability_text;
@@ -63,8 +67,21 @@ public class Messages extends NLS {
 	public static String HuffmanCodingView_codetable_stat_3;
 	public static String HuffmanCodingView_codetable_stat_4;
 	public static String HuffmanCodingView_codetable_stat_5;
-	public static String HuffmanCodingView_28;
-	public static String HuffmanCodingView_29;
+	public static String HuffmanCodingView_offset;
+	public static String HuffmanCodingView_inputSize;
+	public static String HuffmanCodingView_outputSize;
+	public static String HuffmanCodingView_compInputSize;
+	public static String HuffmanCodingView_compOutputSize;
+	public static String HuffmanCodingView_compressionRate;
+	public static String HuffmanCodingView_headerIn;
+	public static String HuffmanCodingView_headerOut;
+	public static String HuffmanCodingView_compHeaderOut;
+	public static String HuffmanCodingView_saveBinary;
+	public static String HuffmanCodingView_saveText;
+	public static String HuffmanCodingView_error0;
+	public static String HuffmanCodingView_error1;
+	public static String HuffmanCodingView_error2;
+	public static String HuffmanCodingView_error3;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
