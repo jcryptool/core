@@ -21,7 +21,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -271,6 +270,7 @@ public class Parameter extends TitleAreaDialog {
 		Composite container = new Composite(area, SWT.NONE);
 		container.setLayout(new GridLayout(3, false));
 		container.setLayoutData(new GridData(GridData.FILL_BOTH));
+		
 
 		Label lblGroup = new Label(container, SWT.NONE);
 		lblGroup.setText(Messages.BabystepGiantstepView_4);
@@ -383,11 +383,11 @@ public class Parameter extends TitleAreaDialog {
 		return groupElementValue;
 	}
 
-	/**
-	 * Return the initial size of the dialog.
-	 */
-	@Override
-	protected Point getInitialSize() {
-		return new Point(480, 250);
-	}
+//	/**
+//	 * Return the initial size of the dialog.
+//	 */
+//	@Override
+//	protected Point getInitialSize() {
+//		return new Point(480, 250);
+//	}
 }

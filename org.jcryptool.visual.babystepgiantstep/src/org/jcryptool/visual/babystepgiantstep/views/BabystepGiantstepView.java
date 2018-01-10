@@ -21,6 +21,10 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.VerifyEvent;
@@ -126,6 +130,11 @@ public class BabystepGiantstepView extends ViewPart {
 	private Composite compositeStep4Btn;
 
 	private Composite parent;
+	
+	private GridData gd_compositeStep1Btn;
+	private GridData gd_compositeStep2Btn;
+	private GridData gd_compositeStep3Btn;
+	private GridData gd_compositeStep4Btn;
 
 	/**
 	 * The constructor.
@@ -159,9 +168,8 @@ public class BabystepGiantstepView extends ViewPart {
 		styledText.setText(Messages.BabystepGiantstepView_2);
 		styledText.setBackground(Constants.LIGHTGREY);
 		styledText.setEditable(false);
-		GridData gd_styledText = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_styledText.widthHint = 300;
-		gd_styledText.heightHint = 51;
+		GridData gd_styledText = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		gd_styledText.widthHint = 400;
 		styledText.setLayoutData(gd_styledText);
 
 		Group grpEnterTheParameters = new Group(grpBabyStepGiant, SWT.NONE);
@@ -207,8 +215,7 @@ public class BabystepGiantstepView extends ViewPart {
 		comboGroup.addVerifyListener(vl_numbers);
 
 		compositeStep1Btn = new Composite(grpEnterTheParameters, SWT.NONE);
-		GridData gd_compositeStep1Btn = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-		gd_compositeStep1Btn.widthHint = 170;
+		gd_compositeStep1Btn = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 		compositeStep1Btn.setLayoutData(gd_compositeStep1Btn);
 		compositeStep1Btn.setLayout(new GridLayout(1, false));
 
@@ -247,6 +254,7 @@ public class BabystepGiantstepView extends ViewPart {
 						 */
 						Parameter parameter = new Parameter(e.display.getActiveShell(), textGroupValue.toString(),
 								textGeneratorValue.toString(), textGroupElementValue.toString());
+						parameter.setHelpAvailable(false);
 
 						int rc = parameter.open();
 
@@ -329,8 +337,7 @@ public class BabystepGiantstepView extends ViewPart {
 		textInv.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		compositeStep2Btn = new Composite(grpCalculateTheGroupoder, SWT.NONE);
-		GridData gd_compositeStep2Btn = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
-		gd_compositeStep2Btn.widthHint = 170;
+		gd_compositeStep2Btn = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 		compositeStep2Btn.setLayoutData(gd_compositeStep2Btn);
 		compositeStep2Btn.setLayout(new GridLayout(1, false));
 
@@ -453,8 +460,7 @@ public class BabystepGiantstepView extends ViewPart {
 		tblclmnCommentBS.setText(Messages.BabystepGiantstepView_47);
 
 		compositeStep3Btn = new Composite(grpCalculateTheBaby, SWT.NONE);
-		GridData gd_compositeStep3Btn = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-		gd_compositeStep3Btn.widthHint = 170;
+		gd_compositeStep3Btn = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 		compositeStep3Btn.setLayoutData(gd_compositeStep3Btn);
 		compositeStep3Btn.setLayout(new GridLayout(1, false));
 
@@ -544,13 +550,12 @@ public class BabystepGiantstepView extends ViewPart {
 		tblclmnCommentGS.setText(Messages.BabystepGiantstepView_69);
 
 		compositeStep4Btn = new Composite(grpCalculateTheGiant, SWT.NONE);
-		GridData gd_compositeStep4Btn = new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 2);
-		gd_compositeStep4Btn.widthHint = 170;
+		gd_compositeStep4Btn = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 2);
 		compositeStep4Btn.setLayoutData(gd_compositeStep4Btn);
 		compositeStep4Btn.setLayout(new GridLayout(1, false));
 
 		btnResult = new Button(compositeStep4Btn, SWT.NONE);
-		btnResult.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true, 1, 1));
+		btnResult.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		btnResult.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -654,7 +659,7 @@ public class BabystepGiantstepView extends ViewPart {
 		btnResult.setText(Messages.BabystepGiantstepView_90);
 
 		btnReset = new Button(compositeStep4Btn, SWT.NONE);
-		btnReset.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true, 1, 1));
+		btnReset.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 1, 1));
 		btnReset.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -725,14 +730,65 @@ public class BabystepGiantstepView extends ViewPart {
 		textResult = new StyledText(grpDescription, SWT.READ_ONLY | SWT.WRAP);
 		textResult.setFont(FontService.getNormalFont());
 		GridData gd_textDescription = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd_textDescription.widthHint = 300;
-		gd_textDescription.heightHint = 34;
+		gd_textDescription.widthHint = 400;
 		textResult.setBackground(Constants.LIGHTGREY);
 		textResult.setLayoutData(gd_textDescription);
+		
+		textResult.addModifyListener(new ModifyListener() {
+			
+			@Override
+			public void modifyText(ModifyEvent e) {
+				//Autoadjust the size of the textfield.
+				parent.layout(new Control[] {textResult});
+			}
+		});
+		
 		scrolledComposite.setMinSize(grpBabyStepGiant.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		// scrolledComposite.setMinSize(new Point(1100, 650));
 		scrolledComposite.setContent(grpBabyStepGiant);
+		
+		this.parent.addControlListener(new ControlListener() {
+			
+			@Override
+			public void controlResized(ControlEvent e) {
+				resizeButtons();
+			}
+			
+			@Override
+			public void controlMoved(ControlEvent e) {
+				// Just do nothing
+				
+			}
+		});
 
+	}
+	
+	private void resizeButtons() {
+		//At first, the composite should use their preferred size (the minimum size).
+		compositeStep1Btn.pack();
+		compositeStep2Btn.pack();
+		compositeStep3Btn.pack();
+		compositeStep4Btn.pack();
+		
+		//Then figure out, which composite is the biggest.
+		int width = 0;
+		if (compositeStep1Btn.getBounds().width > width) {
+			width = compositeStep1Btn.getBounds().width;
+		}
+		if (compositeStep2Btn.getBounds().width > width) {
+			width = compositeStep2Btn.getBounds().width;
+		}
+		if (compositeStep3Btn.getBounds().width > width) {
+			width = compositeStep3Btn.getBounds().width;
+		}
+		if (compositeStep4Btn.getBounds().width > width) {
+			width = compositeStep4Btn.getBounds().width;
+		}
+		
+		//Set all composites to the size of the biggest.
+		gd_compositeStep1Btn.widthHint = width;
+		gd_compositeStep2Btn.widthHint = width;
+		gd_compositeStep3Btn.widthHint = width;
+		gd_compositeStep4Btn.widthHint = width;
 	}
 
 	@Override
@@ -746,7 +802,9 @@ public class BabystepGiantstepView extends ViewPart {
 			control.dispose();
 		}
 		createPartControl(parent);
-
+		
+		resizeButtons();
 		parent.layout();
+		
 	}
 }
