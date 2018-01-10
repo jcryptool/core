@@ -1,5 +1,3 @@
-package org.jcryptool.visual.grille.handlers;
-
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2017 JCrypTool Team and Contributors
@@ -9,6 +7,8 @@ package org.jcryptool.visual.grille.handlers;
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
+
+package org.jcryptool.visual.grille.handlers;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;

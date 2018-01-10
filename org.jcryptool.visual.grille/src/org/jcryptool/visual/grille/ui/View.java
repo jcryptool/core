@@ -17,7 +17,6 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
@@ -50,7 +49,6 @@ public class View extends ViewPart {
     private Text text_input;
     private Button button_encrypt;
     private Button button_decrypt;
-//    private Button button_step6;
     private Button button_step5;
     private Button button_step4;
     private Button button_step3;
@@ -92,7 +90,7 @@ public class View extends ViewPart {
     	this.viewParent = viewParent;
         ScrolledComposite scrolledComposite = new ScrolledComposite(viewParent, SWT.H_SCROLL | SWT.V_SCROLL);
         parent = new Composite(scrolledComposite, SWT.NONE);
-        parent.setLayout(new GridLayout(4, false));
+        parent.setLayout(new GridLayout(3, false));
 
         createDescription(parent);
         createOptions(parent);
@@ -115,7 +113,7 @@ public class View extends ViewPart {
      */
     private void createIllustrationAndExecType(Composite parent) {
     	composite_illustration = new Composite(parent, SWT.NONE);
-    	composite_illustration.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
+    	composite_illustration.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
     	GridLayout gl_composite_illustration = new GridLayout(2, false);
     	gl_composite_illustration.marginWidth = 0;
     	gl_composite_illustration.marginHeight = 0;
@@ -133,7 +131,7 @@ public class View extends ViewPart {
      */
 	private void createInOutComposite(Composite parent) {
 		inOutText = new Composite(parent, SWT.NONE);
-		inOutText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 2));
+		inOutText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 2));
 		// Composite should have no border, so it looks like the groups on the left.
 		GridLayout gl_inOutText = new GridLayout(2, true);
 		gl_inOutText.marginWidth = 0;
@@ -142,13 +140,38 @@ public class View extends ViewPart {
 		createInputtext(inOutText);
 		createOutputtext(inOutText);
 	}
+	
+    private void createInputtext(Composite parent) {
+        group_input = new Group(parent, SWT.NONE);
+        group_input.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+//        group_input.setLayout(new FillLayout());
+        group_input.setLayout(new GridLayout());
+        group_input.setText(Messages.getString("View.plaintext") + " (0)"); //$NON-NLS-1$ //$NON-NLS-2$
+        
+        text_input = new Text(group_input, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
+        GridData gd_text_input = new GridData(SWT.FILL, SWT.FILL, true, true);
+        gd_text_input.minimumWidth = 200;
+        text_input.setLayoutData(gd_text_input);
+        text_input.addModifyListener(new ModifyListener() {
+        	
+        	@Override
+            public void modifyText(ModifyEvent e) {
+        		group_input.setText(Messages.getString("View.plaintext") + " (" + text_input.getText().length() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                reset();
+            }
+        });
+    }
 
 	private void createOutputtext(Composite parent) {
         group_output = new Group(parent, SWT.NONE);
         group_output.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        group_output.setLayout(new FillLayout());
+        group_output.setLayout(new GridLayout());
         group_output.setText(Messages.getString("View.ciphertext") + " (0)"); //$NON-NLS-1$ //$NON-NLS-2$
+        
         text_output = new Text(group_output, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
+        GridData gd_text_output = new GridData(SWT.FILL, SWT.FILL, true, true);
+        gd_text_output.minimumWidth = 200;
+        text_output.setLayoutData(gd_text_output);
         text_output.addKeyListener(new org.eclipse.swt.events.KeyListener() {
         	
         	@Override
@@ -192,7 +215,7 @@ public class View extends ViewPart {
         Group typeSelection = new Group(execType, SWT.NONE);
         typeSelection.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         typeSelection.setText(Messages.getString("View.type")); //$NON-NLS-1$
-        typeSelection.setLayout(new GridLayout(2, true));
+        typeSelection.setLayout(new GridLayout(2, false));
 
         button_direct = new Button(typeSelection, SWT.RADIO);
         button_direct.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
@@ -487,23 +510,6 @@ public class View extends ViewPart {
         }
     }
 
-    private void createInputtext(Composite parent) {
-        group_input = new Group(parent, SWT.NONE);
-        group_input.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        group_input.setLayout(new FillLayout());
-        group_input.setText(Messages.getString("View.plaintext") + " (0)"); //$NON-NLS-1$ //$NON-NLS-2$
-        text_input = new Text(group_input, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
-        text_input.setText(""); //$NON-NLS-1$
-        text_input.addModifyListener(new ModifyListener() {
-        	
-        	@Override
-            public void modifyText(ModifyEvent e) {
-        		group_input.setText(Messages.getString("View.plaintext") + " (" + text_input.getText().length() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                reset();
-            }
-        });
-    }
-
     /**
      * Creates the schablone animation and the belonging buttons
      * @param parent The parent composite.
@@ -517,7 +523,7 @@ public class View extends ViewPart {
         canvas_schluessel = new Canvas(schablone, SWT.DOUBLE_BUFFERED);
         canvas_schluessel.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
         canvas_schluessel.addPaintListener(new KeyPainter(canvas_schluessel, model));
-        schluessel_listener = new KeyListener(model, this);
+        schluessel_listener = new org.jcryptool.visual.grille.ui.KeyListener(model, this);
         canvas_schluessel.addMouseListener(schluessel_listener);
         GridData gridData = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 4);
         gridData.widthHint = 151;
@@ -553,7 +559,9 @@ public class View extends ViewPart {
         });
         
         setHoles = new Button(schablone, SWT.PUSH);
-        setHoles.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, true));
+        GridData gd_setHoles = new GridData(SWT.FILL, SWT.BOTTOM, false, true);
+        gd_setHoles.horizontalIndent = 70;
+        setHoles.setLayoutData(gd_setHoles);
         setHoles.setText(Messages.getString("View.1")); //$NON-NLS-1$
         setHoles.addSelectionListener(new SelectionListener() {
 			
@@ -596,7 +604,9 @@ public class View extends ViewPart {
 		});
         
         deleteHoles = new Button(schablone, SWT.PUSH);
-        deleteHoles.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, false));
+        GridData gd_deleteHoles = new GridData(SWT.FILL, SWT.BOTTOM, false, false);
+        gd_deleteHoles.horizontalIndent = 70;
+        deleteHoles.setLayoutData(gd_deleteHoles);
         deleteHoles.setText(Messages.getString("View.0")); //$NON-NLS-1$
         deleteHoles.addSelectionListener(new SelectionListener() {
 			
@@ -644,6 +654,7 @@ public class View extends ViewPart {
             }
         });
         button_encrypt.setSelection(true);
+        
         button_decrypt = new Button(options, SWT.RADIO);
         button_decrypt.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         button_decrypt.setText(Messages.getString("View.decryption")); //$NON-NLS-1$
@@ -673,7 +684,7 @@ public class View extends ViewPart {
     private void createDescription(Composite parent) {
         Composite compositeIntro = new Composite(parent, SWT.NONE);
         compositeIntro.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-        compositeIntro.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 4, 1));
+        compositeIntro.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
         compositeIntro.setLayout(new GridLayout(1, false));
 
         Label label = new Label(compositeIntro, SWT.NONE);
@@ -689,8 +700,9 @@ public class View extends ViewPart {
     }
 
     private void reset() {
-        if (demonstration != null)
+        if (demonstration != null) {
             demonstration.reset();
+        }
         
         checkOkButton();
         button_step1.setEnabled(false);
@@ -698,7 +710,6 @@ public class View extends ViewPart {
         button_step3.setEnabled(false);
         button_step4.setEnabled(false);
         button_step5.setEnabled(false);
-//        button_step6.setEnabled(false);
         label_step1.setEnabled(false);
         label_step2.setEnabled(false);
         label_step3.setEnabled(false);
@@ -717,6 +728,7 @@ public class View extends ViewPart {
 		}
 		createPartControl(viewParent);
 		viewParent.layout();
+		model.setKey(new KeySchablone(Integer.parseInt(spinner_keySize.getText())));
 		reset();
     }
     
