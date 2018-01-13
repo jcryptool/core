@@ -82,6 +82,14 @@ public abstract class AbstractEditorService {
     public abstract void setContentOfEditor(IEditorPart editorPart, String content);
 
     /**
+     * Subclasses must provide a mechanism to set a new content for the parameterized editor.
+     * 
+     * @param editorPart the editor which content is to be setted
+     * @param content an inputStream to be read into the editor as new content
+     */
+    public abstract void setContentOfEditor(IEditorPart editorPart, InputStream content);
+
+    /**
      * Getter for the editor ID.
      * 
      * @return the ID of the editor

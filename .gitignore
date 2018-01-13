@@ -10,3 +10,7 @@ Thumbs.db
 *.exe
 *.zip
 *.tar.gz
+
+org.jcryptool.product/plugin_customization.ini
+.settings/
+.project
