@@ -15,57 +15,69 @@
 
   <h2 id="scheme-general">1) The ElGamal Scheme (Algorithm)</h2>
   
-  <p>The ElGamal <b>encryption</b> scheme is an asymmetric encryption scheme which is based on the idea of the Diffie-Hellman key exchange. It was first described by Taher Elgamal in 1985.</p>
+  <p>The ElGamal Cryptosystem is there in two different ways: for encryption and for signing.</p>
+  
+  <p>The ElGamal <b>encryption</b> scheme is an asymmetric encryption scheme which is based on the idea of the <a href="PLUGINS_ROOT/org.jcryptool.visual.ecdh/$nl$/help/content/index.html">Diffie-Hellman key exchange (DH)</a>. It was first described by Taher Elgamal in 1985.</p>
   
   <p>The ElGamal <b>signature</b> scheme is a digital signature scheme which is based on the difficulty to compute discrete logarithms. It was first described by Taher ElGamal in 1984.</p>
   
   <p>While the ElGamal signature scheme is rarely used, the ElGamal encryption is widely used as an alternative to RSA encryption.
-  The setup and the generation (of the private and the public key) are the same for both schemes. However, encryption and signing work differently. In the opposite to the <a href="PLUGINS_ROOT/org.jcryptool.visual.rsa/$nl$/help/content/index.html">RSA cryptosystem</a>, ElGamal depends on the difficulty of solving discrete logarithms while RSA depends on the factorization of big numbers. Another difference is, that ElGamal encryption and signing need an additional random session key and so is probabilistic, what RSA isn't.</p>
+  The setup and the generation (of the private and the public key) are the same for both ElGamal schemes. However, encryption and signing work differently. In the opposite to the <a href="PLUGINS_ROOT/org.jcryptool.visual.rsa/$nl$/help/content/index.html">RSA cryptosystem</a>, ElGamal depends on the difficulty of solving discrete logarithms while RSA depends on the factorization of big numbers. Another difference is, that ElGamal encryption and signing need an additional random session key and so ElGamal is probabilistic, what RSA isn't.</p>
   
   <p>As usual, we use the scenario with Alice sending a message to Bob. For encrypting the message, she needs his public key; for signing it she uses her private key.</p>
   
-  <p>Like all asymmetric cryptosystems, the ElGamal cryptosystem uses for each participant (Alice and Bob) a key pair consisting of a public and a private key. in the encryption case, a public key is used for encryption and can be published, while a private key is used for decryption and must only be known to the recipient of the message. This means that Bob, the recipient of the message, must generate a key pair only once. Afterwards, Alice and everyone else can use his public key to encrypt messages as often as they like and send these encrypted messages to Bob.</p>
+  <p>Like all asymmetric cryptosystems, the ElGamal cryptosystem uses for each participant (Alice and Bob) a key pair consisting of a public and a private key. The public key can be published. In the encryption case, the public key of the recipient is used for encryption, while the private key of the recipient is used for decryption and must only be known to the recipient of the message. This means that Bob, the recipient of the message, must generate his key pair only once. And afterwards, Alice and everyone else can use his public key to encrypt messages as often as they like and send these encrypted messages to Bob.</p>
 
-  <p>In the following we have four sections: <a href="#Setup">a) parameter generation (setup)</a>, <a href="#KeyGen">b) key generation</a>, <a href="#SchemeEncDec">c) encryption</a>, and <a href="#SchemeSigVer">d) signing</a>. The first two components are used by both schemes. The third and fourth component are different for the two schemes ElGamal encryption and ElGamal signature.</p>
+  <p>In the following we have four sections:</p>
+  <ul>
+  <li><a href="#Setup">a) parameter generation (setup)</a>,</li>
+  <li><a href="#SchemeKeyGen">b) key generation</a>,</li>
+  <li><a href="#SchemeEncDec">c) encryption</a>, and</li>
+  <li><a href="#SchemeSigVer">d) signing</a>.</li>
+  </ul>
+  <p>The first two components are used by both ElGamal schemes. The third and fourth component are different for the two schemes ElGamal encryption and ElGamal signature.</p>
+
   
   <h3 id="Setup">a) ElGamal Setup (Parameter Generation)</h3>
   
   <p> ElGamal encryption can be defined over any cyclic group G with a finite order.</p>
 
-  <p>Alice and Bob both use the same cyclic (aka finite) group G with d elements (aka the group is of order d). This group is generated with the generator g where g is an element of G. d is an n-bit integer. The input for the generation process is normally the security parameter n. All of this data is made public. As G often Z_d = { 0, … , d-1 } is used with a prime d.</p>
+  <p>Alice and Bob both use their own cyclic (aka finite) group G with d elements (aka the group is of order d). This group is generated with the generator g where g is an element of G. d is an n-bit integer. The input for the generation process is normally the security parameter n. All of this data is made public. As G often Z_d = { 0, … , d-1 } is used with a prime d.</p>
 
   <p><b>Note 1:</b> The randomly chosen d should be large and have a similar size as an RSA modulus (1024 - 4096 bit).</p>
+  
   <p><b>Note 2:</b> The generator g is a special number and must be a primitive root (aka primitive element) of G.</p>
   
   
-  <h3 id="KeyGen">b) ElGamal Key Generation</h3>
+  <h3 id="SchemeKeyGen">b) ElGamal Key Generation</h3>
 
-  <p> The key generation is done only once per subject.</p>
+  <p> The key generation is done only once per subject (participants like Alice and Bob); limited validity of keys is not considered here. </p>
 
   <p>For encryption we need Bob's public key. His key generation works like this:</p>
   <ul>
-  <li>Bob chooses b randomly from Z*_d = { 1, … , d-1 } with 1 < b < d-2. This is his private key.</li>
+  <li>Bob chooses b randomly from Z*_d = { 1, … , d-1 } with 1 < b < d-2. This b is his private key. He must keep his private key b secret.</li>
   <li>Bob computes B = g^b. This is (part of) his public key.</li>
-  <li>Bob publishes B, along with the description of G, d, g, as his public key. Bob retains b as his private key, which must be kept secret.</li>
+  <li>Bob publishes B, along with the description of G, d, and g, as his public key.</li>
   </ul>
 
   <p>For the signature of Alice we need Alice's private key. Her key generation works like this:</p>
   <ul>
-  <li>Alice chooses a randomly from Z*_d = { 1, … , d-1 } with 1 < a < d-2. This is her private key.</li>
+  <li>Alice chooses a randomly from Z*_d = { 1, … , d-1 } with 1 < a < d-2. This is her private key. She must keep her private key a secret.</li>
   <li>Alice computes A = g^a. This is (part of) her public key.</li>
-  <li>Alice publishes A, along with the description of G, d, g, as her public key. Alice retains a as her private key, which must be kept secret.</li>
+  <li>Alice publishes A, along with the description of G, d, and g, as her public key.</li>
   </ul>
 
-  <p><b>Note:</b> The values of d and g are determined independently by Alice and Bob. For encryption, the values from Bob are needed; for signing the values from Alice are needed.</p>
+  <p><b>Note:</b> The values of d and g are determined independently by Alice and Bob &nbsp;&ndash; for simplicity reasons we omitted for these setup parameters the indices "A" and "B". For encryption, the values from Bob are needed; for signing the values from Alice are needed.</p>
 
   
   <h3 id="SchemeEncDec">c) ElGamal Encryption / Decryption</h3>
 
-  <p>The ElGamal encryption scheme consists of four steps: the parameter generation (setup), the key generation, the encryption, and the decryption. The first two steps were described above, the actual encryption and decryption follow now.</p>
+  <p>The ElGamal encryption scheme consists of four sub-steps: the parameter generation (setup), the key generation, the encryption, and the decryption. The first two steps were described above, the actual encryption and decryption follow now.</p>
+
   
   <h4 id="SchemeEnc">c1) ElGamal Encryption</h3>
 
-  <p>The encryption algorithm works as follows: To encrypt a plaintext message m for Bob she uses his public key ( G, d, g, B ), and</p>
+  <p>The encryption algorithm works as follows: To encrypt a plaintext message m for Bob, Alice uses his public key ( G, d, g, B ), and</p>
   <ul>
   <li>Alice chooses a random secret session key k from { 1, … , d-1 }.</li>
   <li>Alice calculates a public session key K = g^k.</li>
@@ -76,8 +88,11 @@
   </ul>
 
 <p><b>Note 1:</b> One can easily find B^k if one knows m'. Therefore, a new k is generated for every message to improve security. For this reason, k is also called an ephemeral (or session) key.</p>
-<p><b>Note 2:</b> With Diffie-Hellman key exchange, Alice would send A=g^a to Bob, so he can create the shared session key as S = A^b. With ElGamal encryption, Alice doesn't use her private key a, but a secret session key k. The remaining logic is the same.</p>
+
+<p><b>Note 2:</b> With Diffie-Hellman key exchange (DH), Alice would send A=g^a to Bob, so he can create the shared session key as S = A^b. With ElGamal encryption, Alice doesn't use her private key a, but uses the secret session key k which is also random and secret. The remaining logic is the same.</p>
+
 <p><b>Note 3:</b> With ElGamal encryption, the ciphertext is twice as long as the plaintext (message expansion).</p>
+
 <p><b>Note 4:</b> ElGamal encryption is a probabilistic encryption: The ciphertext not only depends on the public key of the receiver but also on a random k. So each time the same plaintext is encrypted using the same public key, the resulting ciphertext should be different.</p>
 
     
@@ -97,10 +112,10 @@
   
   <h3 id="SchemeSigVer">d) ElGamal Signing / Verifying</h3>
 
-  <p>Like any signature scheme, the ElGamal signature scheme allows a third-party to confirm the authenticity of a message. The ElGamal signature scheme consists of four steps: the parameter generation (setup), the key generation, the signing, and the verifying. The first two steps were described above, the actual signing and verification follow now.</p>
+  <p>Like any signature scheme, the ElGamal signature scheme allows a third-party to confirm the authenticity of a message. The ElGamal signature scheme consists of four sub-steps: the parameter generation (setup), the key generation, the signing, and the verifying. The first two steps were described above, the actual signing and verification follow now.</p>
 
-  <p> In addition to the setup parameters above, a collision-resistant hash function H is needed.</p>
-  <p> As G, usually Z*_d = { 1, … , d-1 } is used with a large prime d, such that computing discrete logarithms modulo d is difficult. </p>
+  <p>In addition to the setup parameters above, a collision-resistant hash function H is needed.</p>
+  <p> As G, usually Z*_d = { 1, … , d-1 } is used with a large prime d, such that computing discrete logarithms modulo d is very difficult. </p>
   
   
   <h4 id="SchemeEnc">d1) ElGamal Signing</h3>
@@ -111,7 +126,7 @@
   <li>Alice chooses a random secret session key k from { 2, … , d-2 } with gcd(k, d-1) = 1.</li>
   <li>Alice calculates the public session key K = g^k mod d.</li>
   <li>Alice calculates s = k^(-1) * ( H(m) - a*K )  mod d-1.</li>
-  <li>If s=0 start again.</li>
+  <li>If s=0 start again (with choosing k).</li>
   <li>Alice sends the pair (K, s) which is the signature of m to Bob.</li>
   </ul>
 
@@ -121,17 +136,17 @@
 
   <p>The verification algorithm works as follows: To verify a message m from Alice he uses her public key ( G, d, g, A ), the received signature (K, s), and</p>
   <ul>
-  <li>Bob checks that 0 < K < d and 0 < s < p-1.</li>
+  <li>Bob checks that 1 < K < d and 0 < s < p-1.</li>
   <li>Bob computes u = g^(H(m))  mod d.</li>
   <li>Bob computes v = A^K * K^s  mod d.</li>
-  <li>If K != 1 and u = v, then the signature is correct, else it is invalid (doesn't fit to m or not signed with Alice's private key).</li>
+  <li>If u = v, then the signature is correct; else it is invalid (doesn't fit to m or is not signed with Alice's private key).</li>
   </ul>
 
-<p>Note that the verification algorithm is correct in the sense that a signature generated with the signing algorithm will always be accepted by the verifier, since from the signature generation 
+<p>Note that the verification algorithm is correct in the sense that a signature generated with the signing algorithm will always be accepted by the verifier, since from the signature generation
 <br/>
   s = k^(-1) * ( H(m) - a*K )  mod d-1 <br/>
   H(m) = k*s + a*K  mod d-1 <br/>
-and then because of Fermat's little theorem<br/>
+and then because of Fermat's little theorem:<br/>
   u <br/>
   = g^(H(m))  mod d <br/>
   = g^(k*s) * g^(a*K)  mod d <br/>
@@ -144,11 +159,11 @@ and then because of Fermat's little theorem<br/>
 <p><br/></p>  
   <h3 id="NotationElGamal">e) Notation Used for ElGamal Encryption / Signing</h3>
 
-  <p>We used a and A for the private and public key of the sender Alice, and b and B for the private and public key of the entity Bob, as this is the usual way the scenario of Diffie-Hellman key exchange is described, and so we have no overlap when describing ElGamal encryption and ElGamal signing. Capital letters represent always powers with the base g.</p>
+  <p>We used a and A for the private and the public key of the sender Alice, and b and B for the private and public key of the recipient Bob, as this is the usual way the scenario of Diffie-Hellman key exchange (DH) is described. And so we have no overlap in the variables' names when describing ElGamal encryption and ElGamal signing after each other. Capital letters represent always powers of exponents in lower-case (each with the base g).</p>
 
-  <p>Other authors and the English Wikipedia use independent notation for ElGamal encryption and ElGamal signing. So in case of encryption the private key is called x and the according public key is y. And another author uses x as name for the message as this is the variable input for the encryption function.</p>
+  <p>Other authors and the English Wikipedia use independent notations for ElGamal encryption and ElGamal signing. So in case of encryption the private key is called x and the according public key is y. And another author uses x as name for the message as this is the variable input for the encryption function.</p>
 
-  <p>Here we present a table which maps the different notations: the one oriented on the Diffie-Hellman key exchange (DH) which is used here, and the one used in the English (but not the German) Wikipedia (December 2017).</p>
+  <p>Here we present a table which maps different notations: Column 1 shows the notation oriented towards the Diffie-Hellman key exchange (DH) which is used here; column 2 shows the notation used in the English Wikipedia (December 2017), which again differs from the German Wikipedia.</p>
 
 <p></p>
 <style>
@@ -283,40 +298,38 @@ table, th, td {
 
 
 
-
-
-
-
-
   
  <br/>  
   <h2 id="plugin">2) Handling Instructions: How to Use this Visualization</h2>
-  <p> When the ElGamal visualization is started, you can select the desired operation, encrypt, decrypt, sign, or verify&nbsp;&ndash; by choosing the corresponding tab.</p>
+  <p> When the ElGamal visualization is started, you can select the desired operation&nbsp;&ndash; encrypt, decrypt, sign, or verify&nbsp;&ndash; by choosing the corresponding tab.</p>
 
-  <p>Each tab has on the left 4 or 5 buttons to proceed:<br/>
-  - select the key of the subject<br/>
-  - choose additional parameters for the session key<br/>
-  - enter the text (message) to be processed<br/>
-  - calculate the result either in one step or step-by-step.</p>
+  <p>Each tab shows a window which has <b>on the left</b> 4 or 5 buttons to proceed the steps:</p>
+  <ul>
+  <li>select the key of the subject</li>
+  <li>choose additional parameters for the session key</li>
+  <li>enter the text (message) to be processed</li>
+  <li>calculate the result either in one step or step-by-step (then the intermediate calculation results are shown too).</li>
+  </ul>
 
-  <p>In the step-by-step mode the intermediate calculations are shown too.<br/>
-  After the data for a step is entered and the step is processed, the color of the button changes from red to green.</p>
+  <p>After the data for a step is entered and the step is processed, the color of the button changes from red to green.</p>
  
-  <p>The fields at the right are just for showing the data (view part). You can enter the necessary data only within the dialog boxes which come up after pressing the buttons at the left. These dialogs take care to check the entered data for correctness.</p>
+  <p>The fields <b>at the right</b> of the window are just for showing the data and the according calculations (view part). You can enter the necessary data only within dialog boxes &nbsp;&ndash; which come up after pressing the buttons at the left. These dialogs take care to check the entered data for correctness and whether the data fits for the algorithm.</p>
     
-  <p>At the bottom you find the options:<br/>
-  - More details for key generation.<br/>
-  - A drop-down control to copy the data from another tab.<br/>
-  - Optionally you can enable additional message boxes which
-    explain the steps in more details.<br/>
-  - The <b>Reset</b> button just deletes the calculations. It does not delete the
-    entered text, the chosen key, and the chosen parameter.</p>
-	
-  <p>If you want the plugin to show the visualization in the initial state, click at the small icon <b>Restart</b> in the upper left.</p>
+  <p>At <b>the bottom</b> you find the options:</p>
+  <ul>
+  <li>More details for key generation</li>
+  <li>A drop-down control to copy the data from another tab</li>
+  <li>Optionally you can switch to a verbose mode which enables
+    additional message boxes explaining the steps in more details.</li>
+  <li>The button <b>Reset calculations</b> just deletes the calculations.
+    It does not delete the entered text, the chosen key, and the chosen parameters.<br/>
+	If you otherwise want to reset all data to the initial state like when
+	loading this plugin, click on the small <b>Restart</b> icon in the upper
+	left &nbsp;&ndash; as usual in all visualization plugins.</li>
+  </ul>
 
 
-  <p><br/>xxxxxxxxxxxxxx</p>
-  
+  <p><br/>xxxxxxxxxxxxxx TODO: add some screenshots</p>
   
   
  <br/>  
