@@ -11,6 +11,8 @@ Bundle-ActivationPolicy: lazy
 Import-Package: org.bouncycastle.jcajce,
  org.bouncycastle.jce.provider,
  org.jcryptool.core.logging.utils,
+ org.jcryptool.core.util.colors,
+ org.jcryptool.core.util.fonts,
  org.jcryptool.crypto.keystore.backend,
  org.jcryptool.crypto.keystore.keys
 Export-Package: org.eclipse.wb.swt,

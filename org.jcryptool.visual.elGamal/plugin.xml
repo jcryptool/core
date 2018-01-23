@@ -60,19 +60,6 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:org.jcryptool.visual.elGamal.view">
-         <command
-               commandId="org.jcryptool.visual.elGamal.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
-               style="push">
-         </command>
-         <command
-               commandId="org.jcryptool.visual.elGamal.helpCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png"
-               style="push">
-         </command>
-      </menuContribution>
-      <menuContribution
             locationURI="toolbar:org.jcryptool.visual.elGamal.view">
          <command
                commandId="org.jcryptool.visual.elGamal.restartCommand"

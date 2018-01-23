@@ -14,11 +14,8 @@ import java.math.BigInteger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -34,15 +31,9 @@ import org.jcryptool.visual.library.Lib;
  * @author Thorben Groos
  */
 public class EnterSignaturePage extends TextWizardPage {
-
-    /** unique pagename to get this page from inside a wizard. */
-    private static final String PAGENAME = "Enter Plaintext and Signature Page"; //$NON-NLS-1$
-
-    /** title of this page, displayed in the head of the wizard. */
-    private static final String TITLE = Messages.EnterSignaturePage_enter_signature;
-
-    /** field for entering the plaintext. */
-    private Text plaintext;
+    
+	/** unique pagename to get this page from inside a wizard. */
+    private static final String PAGENAME = "Enter Signature Page"; //$NON-NLS-1$
 
     /** Common data object fore storing the entries. */
     private final ElGamalData data;
@@ -53,7 +44,7 @@ public class EnterSignaturePage extends TextWizardPage {
      * @param data the data-object
      */
     public EnterSignaturePage(final ElGamalData data) {
-        super(PAGENAME, TITLE, null);
+    	super(PAGENAME, Messages.EnterSignaturePage_enter_signature, null);
         this.setDescription(Messages.EnterSignaturePage_enter_signature_text);
         setPageComplete(false);
         this.data = data;
@@ -68,61 +59,50 @@ public class EnterSignaturePage extends TextWizardPage {
         final Composite composite = new Composite(parent, SWT.NONE);
         // do stuff like layout et al
         composite.setLayout(new GridLayout());
+
         Label label = new Label(composite, SWT.NONE);
         label.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        label.setText(Messages.EnterSignaturePage_textentry);
-        plaintext = new Text(composite, SWT.BORDER);
-        plaintext.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        plaintext.addVerifyListener(Lib.getVerifyListener(Lib.CHARACTERS));
-
-        label = new Label(composite, SWT.NONE);
-        label.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
         label.setText(Messages.EnterSignaturePage_signatureen);
+        
         text = new Text(composite, SWT.BORDER);
         text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         text.addModifyListener(new ModifyListener() {
 
-            public void modifyText(final ModifyEvent e) {
-                final String trimmed = text.getText().replaceAll(Lib.WHITESPACE, ""); //$NON-NLS-1$
-                final boolean leer = trimmed.length() == 0;
-                if (!leer) {
-                    final String[] rs = trimmed.split(","); //$NON-NLS-1$
-                    rs[0] = rs[0].substring(1);
-                    rs[1] = rs[1].replace(')', ' ').trim();
-                    final BigInteger r = new BigInteger(rs[0], Constants.HEXBASE);
-                    final BigInteger s = new BigInteger(rs[1], Constants.HEXBASE);
-                    data.setR(r);
-                    if (r.compareTo(BigInteger.ZERO) <= 0 || r.compareTo(data.getModulus()) >= 0) {
-                        setErrorMessage(Messages.EnterSignaturePage_error_invalid_r);
-                        setPageComplete(false);
-                    } else if (s.compareTo(BigInteger.ZERO) <= 0
-                            || s.compareTo(data.getModulus().subtract(BigInteger.ONE)) >= 0) {
-                        setErrorMessage(Messages.EnterSignaturePage_error_invalid_s);
-                        setPageComplete(false);
-                    } else {
-                        setErrorMessage(null);
-                        setPageComplete(!leer);
-                    }
-                }
-            }
-        });
+			public void modifyText(ModifyEvent e) {
+				String trimmed = text.getText().replaceAll(Lib.WHITESPACE, ""); //$NON-NLS-1$
+
+				// This checks if the input has the form of
+				// 1. an open bracket ([(])
+				// 2. a hex value ([0-9A-Fa-f]+?)
+				// 3. a comma ([,])
+				// 4. a hex value ([0-9A-Fa-f]+?)
+				// 5. a closed bracket ([)])
+				if (trimmed.matches("[(][0-9A-Fa-f]+?[,][0-9A-Fa-f]+?[)]")) { //$NON-NLS-1$
+					//Remove the brackets
+					trimmed = trimmed.replaceAll("[(]", "").replaceAll("[)]", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+					String[] rs = trimmed.split(","); //$NON-NLS-1$
+					BigInteger r = new BigInteger(rs[0], Constants.HEXBASE);
+					BigInteger s = new BigInteger(rs[1], Constants.HEXBASE);
+					data.setR(r);
+					if (r.compareTo(BigInteger.ZERO) <= 0 || r.compareTo(data.getModulus()) >= 0) {
+						setErrorMessage(Messages.EnterSignaturePage_error_invalid_r);
+						setPageComplete(false);
+					} else if (s.compareTo(BigInteger.ZERO) <= 0
+							|| s.compareTo(data.getModulus().subtract(BigInteger.ONE)) >= 0) {
+						setErrorMessage(Messages.EnterSignaturePage_error_invalid_s);
+						setPageComplete(false);
+					} else {
+						setErrorMessage(null);
+						setPageComplete(true);
+					}
+				}
+			}
+		});
         text.addVerifyListener(Lib.getVerifyListener("[" + Lib.WHITESPACE + Lib.HEXDIGIT + "\\(\\),]*")); //$NON-NLS-1$ //$NON-NLS-2$
-
-        final Button SHA1Checkbox = new Button(composite, SWT.CHECK);
-        SHA1Checkbox.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        SHA1Checkbox.setText(Messages.EnterSignaturePage_use_sha1);
-        SHA1Checkbox.setToolTipText(Messages.EnterSignaturePage_use_sha1_popup);
-        SHA1Checkbox.addSelectionListener(new SelectionAdapter() {
-
-            public void widgetSelected(final SelectionEvent e) {
-                data.setSimpleHash(!SHA1Checkbox.getSelection());
-            }
-        });
 
         // fill in old data
         text.setText(data.getSignature());
-        plaintext.setText(data.getPlainText());
-        SHA1Checkbox.setSelection(!data.getSimpleHash());
+
 
         // finish
         setControl(composite);
@@ -135,14 +115,5 @@ public class EnterSignaturePage extends TextWizardPage {
      */
     public static String getPagename() {
         return PAGENAME;
-    }
-
-    /**
-     * getter for the contents of the plaintextfield.
-     *
-     * @return the content of the plaintextfield as string or the empty string if not set
-     */
-    public final String getPlaintext() {
-        return plaintext.getText();
     }
 }

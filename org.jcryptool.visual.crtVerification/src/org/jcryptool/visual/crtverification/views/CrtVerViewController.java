@@ -395,8 +395,8 @@ public class CrtVerViewController {
         fromCert = parseDate(composite.textCertFromDay.getText(), composite.fromCert.getText());
         verificationDate = parseDate(composite.textVerificationDateDay.getText(), composite.verificationDate.getText());
         signatureDate = parseDate(composite.textSignatureDateDay.getText(), composite.signatureDate.getText());
-        if (!composite.btnReset.isEnabled())
-            composite.btnReset.setEnabled(true);
+//        if (!composite.btnReset.isEnabled())
+//            composite.btnReset.setEnabled(true);
     }
 
     /**
@@ -471,7 +471,7 @@ public class CrtVerViewController {
         composite.textCertThruDay.setText("1");
         composite.textVerificationDateDay.setText("1");
         composite.textSignatureDateDay.setText("1");
-        composite.validitySymbol.hide();
+        composite.labelValiditySymbol.setVisible(false);
         composite.btnLoadRootCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
         composite.btnLoadCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
         composite.btnLoadUserCert.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
@@ -499,7 +499,7 @@ public class CrtVerViewController {
         composite.btnShellModelModified.setSelection(false);
         composite.btnChainModel.setSelection(false);
         composite.scaleVerificationDate.setEnabled(true);
-        composite.btnReset.setEnabled(false);
+//        composite.btnReset.setEnabled(false);
 
     }
 
@@ -514,7 +514,7 @@ public class CrtVerViewController {
     }
 
     public void loadCertificate(ChooseCertPage p, X509Certificate cert, String contact_name) {
-        composite.validitySymbol.hide();
+    	composite.labelValiditySymbol.setVisible(false);
         switch (p.getCertType()) {
         case 1: // [1] UserCert
             setTN(cert);
@@ -539,8 +539,8 @@ public class CrtVerViewController {
             break;
         }
         p.setPageComplete(true);
-        if (!composite.btnReset.isEnabled())
-            composite.btnReset.setEnabled(true);
+//        if (!composite.btnReset.isEnabled())
+//            composite.btnReset.setEnabled(true);
     }
 
     public void updateElements(Label l, Scale s, int default_selection) {
