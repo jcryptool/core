@@ -11,6 +11,7 @@
 package org.jcryptool.visual.jctca.tabs;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -36,11 +37,20 @@ public class CertificationTab {
     public CertificationTab(TabFolder parent, Composite exp, int style) {
         TabItem t = new TabItem(parent, SWT.NONE);
         t.setText(Messages.CertificationTab_tabitem_name);
-        Group generalGroup = new Group(parent, SWT.NONE);
+        
+        ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+        scrolledComposite.setExpandHorizontal(true);
+        scrolledComposite.setExpandVertical(true);
+        scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        scrolledComposite.setLayout(new GridLayout());
+        
+        Group generalGroup = new Group(scrolledComposite, SWT.NONE);
         generalGroup.setLayoutData(new GridData(SWT.TOP, SWT.TOP, true, true, 1, 1));
-        t.setControl(generalGroup);
-        @SuppressWarnings("unused")
-        ShowReq sReq = new ShowReq(generalGroup, exp);
+        t.setControl(scrolledComposite);
+        new ShowReq(generalGroup, exp);
         generalGroup.setLayout(new GridLayout(1, false));
+        
+        scrolledComposite.setContent(generalGroup);
+        
     }
 }

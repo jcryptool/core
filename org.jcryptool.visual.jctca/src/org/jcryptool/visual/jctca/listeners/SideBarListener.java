@@ -10,6 +10,8 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.visual.jctca.listeners;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
@@ -75,7 +77,12 @@ public class SideBarListener implements SelectionListener {
         }
         // layout the composite afterwards. also changes the explain group
         comp_right.layout(true, true);
+        ScrolledComposite sc1 = (ScrolledComposite) comp_right.getParent().getParent();
+        sc1.setMinSize(comp_right.getParent().computeSize(SWT.DEFAULT, SWT.DEFAULT));
         grp_exp.layout(true);
+        
+//        comp_right.getParent().getParent()
+        
     }
 
 }

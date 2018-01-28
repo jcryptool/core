@@ -61,16 +61,16 @@ public class ShowSigData implements Views {
         lbl_signature.setLayoutData(gd_txt);
 
         Button btn_get_CRL = new Button(showSelectedRequest, SWT.CHECK);
-        btn_get_CRL.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        btn_get_CRL.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         btn_get_CRL.setText(Messages.ShowSigData_checkbox_check_revoke_status);
 
         Button btn_check_signature = new Button(showSelectedRequest, SWT.NONE);
-        btn_check_signature.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        btn_check_signature.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         btn_check_signature.setText(Messages.ShowSigData_btn_check_sig);
         btn_check_signature.setEnabled(false);
 
         Button btn_deleteEntry = new Button(showSelectedRequest, SWT.NONE);
-        btn_deleteEntry.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        btn_deleteEntry.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         btn_deleteEntry.setText(Messages.ShowSigData_btn_delete_entry);
         btn_deleteEntry.setEnabled(false);
         SecondUserListener listener = new SecondUserListener(btn_check_signature, btn_get_CRL, tree, lbl_text,

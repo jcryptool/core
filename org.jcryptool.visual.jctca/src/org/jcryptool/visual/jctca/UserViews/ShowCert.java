@@ -46,7 +46,7 @@ public class ShowCert implements Views {
     public ShowCert(Composite content, Composite exp) {
         composite = new Composite(content, SWT.NONE);
         composite.setLayout(new GridLayout(2, false));
-        GridData gd_comp = new GridData(SWT.FILL, SWT.TOP, true, true);
+        GridData gd_comp = new GridData(SWT.FILL, SWT.FILL, true, true);
         composite.setLayoutData(gd_comp);
 
         Group showCertGroup = new Group(composite, SWT.NONE);

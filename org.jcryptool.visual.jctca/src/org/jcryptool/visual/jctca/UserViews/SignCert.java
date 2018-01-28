@@ -34,14 +34,14 @@ public class SignCert implements Views {
     private Combo cmb_priv_key;
 
     public SignCert(Composite content, Composite exp) {
-        this.composite = new Composite(content, SWT.NONE);
-        this.composite.setLayout(new GridLayout(1, false));
-        GridData gd_comp = new GridData(SWT.FILL, SWT.FILL, true, false);
+        composite = new Composite(content, SWT.NONE);
+        composite.setLayout(new GridLayout(1, false));
+        GridData gd_comp = new GridData(SWT.FILL, SWT.FILL, true, true);
         composite.setLayoutData(gd_comp);
 
         Group cmp_mini = new Group(composite, SWT.NONE);
-        cmp_mini.setLayout(new GridLayout(2, false));
-        cmp_mini.setLayoutData(gd_comp);
+        cmp_mini.setLayout(new GridLayout());
+        cmp_mini.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         cmp_mini.setText(Messages.SignCert_chose_method);
 
         Group selectSthGroup = new Group(composite, SWT.None);
@@ -51,7 +51,7 @@ public class SignCert implements Views {
 
         Group signCertGroup = new Group(composite, SWT.NONE);
         signCertGroup.setLayout(new GridLayout(1, false));
-        signCertGroup.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL));
+        signCertGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         signCertGroup.setText(Messages.SignCert_headline);
 
         Composite signBtnComp = new Composite(composite, SWT.NONE);
@@ -60,32 +60,26 @@ public class SignCert implements Views {
 
         Composite selectSthComp = new Composite(selectSthGroup, SWT.NONE);
         selectSthComp.setLayout(new GridLayout(3, false));
-        selectSthComp.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL | GridData.GRAB_HORIZONTAL));
+        selectSthComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
         Button btn_detail = new Button(cmp_mini, SWT.RADIO);
+        btn_detail.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         btn_detail.setText(Messages.SignCert_checkbox_show_sigvis);
         btn_detail.setData("detail"); //$NON-NLS-1$
         btn_detail.setSelection(true);
 
         Button btn_non_detail = new Button(cmp_mini, SWT.RADIO);
+        btn_non_detail.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         btn_non_detail.setText(Messages.SignCert_sign_directly);
         btn_non_detail.setData("detail"); //$NON-NLS-1$
 
-        Composite cmp_minimi = new Composite(cmp_mini, SWT.NONE);
-        cmp_minimi.setLayoutData(new GridData(SWT.NONE, SWT.NONE, false, false, 2, 1));
-        cmp_minimi.setLayout(new GridLayout(2, false));
-
-        Label filler = new Label(cmp_minimi, SWT.None);
-        filler.setText(""); //$NON-NLS-1$
-        GridData gd = new GridData();
-        gd.widthHint = 7;
-        filler.setLayoutData(gd);
-
-        Label lbl_detail = new Label(cmp_minimi, SWT.WRAP);
+        Label lbl_detail = new Label(cmp_mini, SWT.WRAP);
         lbl_detail.setText(Messages.SignCert_footnote_input_in_signvis);
         lbl_detail.setForeground(dark_gray);
-        lbl_detail.setLayoutData(new GridData(SWT.NONE, SWT.NONE, false, false, 1, 1));
-
+        GridData gd_lbl_detail = new GridData(SWT.FILL, SWT.FILL, true, false);
+        gd_lbl_detail.widthHint = 300;
+        lbl_detail.setLayoutData(gd_lbl_detail);
+        
         Button btn_radio_signFile = new Button(selectSthComp, SWT.RADIO);
         btn_radio_signFile.setText(Messages.SignCert_file);
         btn_radio_signFile.setData("file"); //$NON-NLS-1$
@@ -125,12 +119,12 @@ public class SignCert implements Views {
                 btn_select_file, selected_file, txt_sign, btn_select_file));
 
         cmb_priv_key = new Combo(signCertGroup, SWT.DROP_DOWN);
-        cmb_priv_key.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1));
+        cmb_priv_key.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         addRSAPrivateKeysToDropdown();
         cmb_priv_key.select(0);
 
         Button btn_sign = new Button(signBtnComp, SWT.PUSH);
-        btn_sign.setLayoutData(gd_comp);
+        btn_sign.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
         btn_sign.setText(Messages.SignCert_btn_sign_with_key);
         btn_sign.addSelectionListener(new SigVisPluginOpenListener(btn_detail, selected_file, txt_sign, cmb_priv_key));
 

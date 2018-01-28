@@ -13,6 +13,7 @@ package org.jcryptool.visual.jctca.listeners;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -58,18 +59,32 @@ public class TabItemListener implements SelectionListener {
             stl_exp.setText(Messages.TabItemListener_tab_user_explain);
             Control[] x = (parent.getChildren());
             if (x.length > 0) {
-                Control[] foo = ((Group) x[0]).getChildren();
-                Composite right = (Composite) foo[1];
+            	ScrolledComposite sc1 = (ScrolledComposite) parent.getChildren()[0];
+//            	Group g1 = (Group) sc1.getChildren()[0];
+            	Group g1 = (Group) sc1.getContent();
+//                Control[] foo = ((Group) x[0]).getChildren();
+//                Composite right = (Composite) foo[1];
+//            	Composite right = (Composite) g1.getChildren()[0];
+            	// If it schould be Composite right from UserTab it has to be g1.getChildren()[1]
+            	Composite right = (Composite) g1.getChildren()[1];
                 if (right.getChildren().length > 0) {
                     Composite right2 = (Composite) right.getChildren()[0];
                     right2.dispose();
-                    ((Group) x[0]).layout(true);
+//                    ((Group) x[0]).layout(true);
+//                    sc1.layout(true);
+//                    parent.layout();
+//                    g1.layout();
+//                    g1.redraw();
+                    g1.layout(true);
                 }
+//                sc1.layout();
+//                g1.layout(true);
             }
         } else if (parent.getSelectionIndex() == 1) {
             // RA View, fills up the list with CSRs
             stl_exp.setText(Messages.TabItemListener_tab_ra_explain);
-            Group g1 = (Group) parent.getChildren()[1];
+            ScrolledComposite sc1 = (ScrolledComposite) parent.getChildren()[1];
+            Group g1 = (Group) sc1.getChildren()[0];
             Group g2 = (Group) g1.getChildren()[0];
             Composite c = (Composite) g2.getChildren()[0];
             List lst_csr = (List) c.getChildren()[0];
@@ -84,7 +99,8 @@ public class TabItemListener implements SelectionListener {
         } else if (parent.getSelectionIndex() == 2) {
             // CA View, fills up the tree with CSRs and RRs
             stl_exp.setText(Messages.TabItemListener_tab_ca_explain);
-            Group g1 = (Group) parent.getChildren()[2];
+            ScrolledComposite sc1 = (ScrolledComposite) parent.getChildren()[2];
+            Group g1 = (Group) sc1.getChildren()[0];
             Composite c = (Composite) g1.getChildren()[0];
             Composite c1 = (Composite) c.getChildren()[0];
             Tree tree = (Tree) c1.getChildren()[0];
@@ -111,7 +127,8 @@ public class TabItemListener implements SelectionListener {
         } else if (parent.getSelectionIndex() == 3) {
             // 2nd User View, fills up the tree with the signatures
             stl_exp.setText(Messages.TabItemListener_tab_secuser_explain);
-            Group g1 = (Group) parent.getChildren()[3];
+            ScrolledComposite sc1 = (ScrolledComposite) parent.getChildren()[3];
+            Group g1 = (Group) sc1.getChildren()[0];
             Composite c = (Composite) g1.getChildren()[0];
             Composite c1 = (Composite) c.getChildren()[0];
             Tree tree = (Tree) c1.getChildren()[0];

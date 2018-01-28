@@ -14,12 +14,15 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -46,24 +49,25 @@ public class JCTCA_Visual extends ViewPart {
     private static final Color WHITE = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
 
     private Composite composite;
+    private Composite head_composite;
     private StyledText head_description;
     private Composite comp_center;
     private TabFolder tabFolder;
     private StyledText stl_explain;
+    private ScrolledComposite root;
 
     @Override
     public void createPartControl(Composite parent) {
-        ScrolledComposite root = new ScrolledComposite(parent, SWT.BORDER);
+        root = new ScrolledComposite(parent, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
         composite = new Composite(root, SWT.NONE);
         root.setContent(composite);
         root.setExpandHorizontal(true);
         root.setExpandVertical(true);
 
-        GridLayout gl = new GridLayout(1, false);
-        composite.setLayout(gl);
+        composite.setLayout(new GridLayout(1, false));
 
         // Begin - headline area
-        Composite head_composite = new Composite(composite, SWT.NONE);
+        head_composite = new Composite(composite, SWT.NONE);
         head_composite.setBackground(WHITE);
         head_composite.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
         head_composite.setLayout(new GridLayout());
@@ -74,10 +78,20 @@ public class JCTCA_Visual extends ViewPart {
         // Set the headline text to the title of the plugin
         headline.setText(Messages.JCTCA_Visual_Plugin_Headline);
         head_description = new StyledText(head_composite, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
-        head_description.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
+        GridData gd_head_description = new GridData(SWT.FILL, SWT.FILL, true, false);
+        gd_head_description.widthHint = 700;
+        head_description.setLayoutData(gd_head_description);
         // set the short introduction text for the certificate creation picture
         // because this is the first text that needs to be shown
         head_description.setText(Messages.JCTCA_Visual_archpic_create_text);
+        head_description.addModifyListener(new ModifyListener() {
+			
+			@Override
+			public void modifyText(ModifyEvent e) {
+				//Resize the control when the text changes
+				parent.layout(new Control[] {head_description});
+			}
+		});
         // End - Header
         showArchitecture();
 
@@ -135,59 +149,48 @@ public class JCTCA_Visual extends ViewPart {
         btn_continue.setData(new Integer(3));
         btn_continue.addSelectionListener(new PluginBtnListener(this, lbl_img, head_description));
         composite.layout(true);
+        
+        root.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
     }
 
     public void showCenter() {
+    	
         comp_center = new Composite(composite, SWT.NONE);
         // 2 columns (tabs and explanation) --> new GridLayout(2, false);
         comp_center.setLayout(new GridLayout(2, false));
         comp_center.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
         tabFolder = new TabFolder(comp_center, SWT.NONE);
-        tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
+        tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         Group grp_explain = new Group(comp_center, SWT.NONE);
         grp_explain.setLayout(new GridLayout(1, true));
-        GridData gd_explain = new GridData(SWT.FILL, SWT.FILL, true, true);
-        // gd_explain.minimumWidth = 150;
-        // gd_explain.widthHint = 10;
-
+        GridData gd_explain = new GridData(SWT.FILL, SWT.FILL, false, true);
+        gd_explain.widthHint = 500;
         grp_explain.setLayoutData(gd_explain);
         grp_explain.setText(Messages.JCTCA_Visual_grp_explain_headline);
 
-        // scrolled composite for vertical scrollbar
-        ScrolledComposite scrolled_comp = new ScrolledComposite(grp_explain, SWT.V_SCROLL);
-        scrolled_comp.setLayout(new GridLayout(1, true));
-        scrolled_comp.setLayoutData(gd_explain);
-        scrolled_comp.setExpandVertical(true);
-        scrolled_comp.setExpandHorizontal(true);
-
-        Composite comp_vscroll = new Composite(scrolled_comp, SWT.FILL);
-        comp_vscroll.setLayout(new GridLayout(1, true));
-        scrolled_comp.setContent(comp_vscroll);
-
-        comp_vscroll.setLayoutData(gd_explain);
-        comp_vscroll.setSize(comp_vscroll.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-
         // label for showing explanation texts
-        stl_explain = new StyledText(comp_vscroll, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
+        stl_explain = new StyledText(grp_explain, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
         GridData gd_txt_explain = new GridData(SWT.FILL, SWT.FILL, true, true);
         stl_explain.setLayoutData(gd_txt_explain);
 
-        TabItemListener tabItemListener = new TabItemListener(tabFolder, comp_vscroll);
+        TabItemListener tabItemListener = new TabItemListener(tabFolder, grp_explain);
         tabFolder.addSelectionListener(tabItemListener);
 
-        @SuppressWarnings("unused")
-        UserTab user = new UserTab(tabFolder, comp_vscroll, SWT.NONE);
-        @SuppressWarnings("unused")
-        RegistrationTab ra = new RegistrationTab(tabFolder, comp_vscroll, SWT.NONE);
-        @SuppressWarnings("unused")
-        CertificationTab ca = new CertificationTab(tabFolder, comp_vscroll, SWT.NONE);
-        @SuppressWarnings("unused")
-        SecondUserTab scndUser = new SecondUserTab(tabFolder, comp_vscroll, SWT.NONE);
+        new UserTab(tabFolder, grp_explain, SWT.NONE);
+
+        new RegistrationTab(tabFolder, grp_explain, SWT.NONE);
+        
+        new CertificationTab(tabFolder, grp_explain, SWT.NONE);
+
+        new SecondUserTab(tabFolder, grp_explain, SWT.NONE);
 
         tabFolder.setSelection(0);
-        composite.layout(true, true);
+        composite.layout(true);
+        
+        root.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        
     }
 
     public void disposeCompCenter() {
@@ -196,5 +199,6 @@ public class JCTCA_Visual extends ViewPart {
 
     @Override
     public void setFocus() {
+    	root.setFocus();
     }
 }
