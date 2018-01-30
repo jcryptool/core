@@ -139,6 +139,7 @@ public class RSANewPublicKeyPage extends WizardPage implements ModifyListener, V
         nField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         nField.addModifyListener(this);
         nField.addVerifyListener(this);
+        nField.setFocus();
 
         // new label for <-
         label = new Label(composite, SWT.CENTER);
@@ -213,6 +214,8 @@ public class RSANewPublicKeyPage extends WizardPage implements ModifyListener, V
         // fill in old data
         if (data.getE() != null) {
             eField.setText(data.getE().toString());
+        }
+        if (data.getN() != null) {
             nField.setText(data.getN().toString());
         }
 
@@ -232,22 +235,36 @@ public class RSANewPublicKeyPage extends WizardPage implements ModifyListener, V
     public final void modifyText(ModifyEvent evt) {
         final BigInteger n;
         BigInteger e;
+        boolean isTwoComposite = false;
+        boolean tooSmall = false;
+        boolean isEmpty = false;
         try {
+        	isEmpty = nField.getText().isEmpty();
             n = new BigInteger(nField.getText());
-            if (n.compareTo(Constants.TWOFIVESIX) < 0) {
-                setErrorMessage(Messages.RSANewPublicKeyPage_error_n_lt_256);
-            } else {
-                setErrorMessage(null);
+            if (n.compareTo(Constants.TWOFIVESIX) <= 0) {
+                tooSmall = true;
             }
             if (!isTwoComposite(n)) {
-                setMessage(Messages.RSANewPublicKeyPage_error_n_not_p_by_q, (isPrime(n) ? ERROR : WARNING));
                 suggestN(n);
             } else {
-                setErrorMessage(null);
-                setMessage(null, WARNING);
+                isTwoComposite = true;
+            }     
+            if (tooSmall && isTwoComposite && !isEmpty) {
+            	setErrorMessage(Messages.RSANewPublicKeyPage_error_n_lt_256);
+            } else if (tooSmall && !isTwoComposite && !isEmpty) {
+            	setErrorMessage(Messages.RSANewPublicKeyPage_error_n_lt_256 
+            			+ " " + Messages.RSANewPublicKeyPage_error_n_not_p_by_q);
+            } else if (!tooSmall && !isTwoComposite && !isEmpty) {
+            	setErrorMessage(null);
+            	setMessage(Messages.RSANewPublicKeyPage_error_n_not_p_by_q, (isPrime(n) ? ERROR : WARNING));
+            } else {
+            	setErrorMessage(null);
+            	setMessage(null, WARNING);
             }
             data.setN(n);
         } catch (NumberFormatException e1) {
+        	setErrorMessage(null);
+        	setMessage(null, WARNING);
             setPageComplete(false);
             data.setN(null);
         }
@@ -255,10 +272,11 @@ public class RSANewPublicKeyPage extends WizardPage implements ModifyListener, V
             e = new BigInteger(eField.getText());
             data.setE(e);
             boolean eok = e.compareTo(data.getN()) < 0;
+            boolean eok2 = e.compareTo(BigSquareRoot.get(data.getN()).toBigInteger().subtract(BigInteger.ONE).pow(2)) < 0;
+            boolean eok3 = e.compareTo(BigInteger.ONE) >= 0;
             // check for valid e and n values (n >256, e<floor(sqrt(n)-1)^2
-            setPageComplete(data.getN().compareTo(Constants.TWOFIVESIX) > 0 && e.compareTo(BigInteger.ONE) > 0 && eok
-                    && e.compareTo(BigSquareRoot.get(data.getN()).toBigInteger().subtract(BigInteger.ONE).pow(2)) < 0);
-            if (!eok) {
+            setPageComplete(!tooSmall && isTwoComposite && eok && eok2 && eok3);
+            if (!eok || !eok2 || !eok3) {
                 String error = getErrorMessage();
                 if (error == null) {
                     error = ""; //$NON-NLS-1$
@@ -281,16 +299,17 @@ public class RSANewPublicKeyPage extends WizardPage implements ModifyListener, V
         new Thread() {
             @Override
             public void run() {
-                BigDecimal root = BigSquareRoot.get(n);
-                BigInteger possibleP = root.toBigInteger().nextProbablePrime();
-                BigInteger possibleQ = possibleP.add(BigInteger.ONE).nextProbablePrime();
-                BigInteger possibleN = possibleP.multiply(possibleQ);
-                while (n.compareTo(Constants.TWOFIVESIX) < 0) {
-                    possibleQ = possibleQ.add(BigInteger.ONE).nextProbablePrime();
-                }
-                calcRunnable.setN(possibleN);
-                Display d = Display.getDefault();
-                d.asyncExec(calcRunnable);
+            	BigInteger possibleN = BigInteger.ZERO;
+            	BigDecimal root = BigSquareRoot.get(n);
+            	BigInteger possibleP = root.toBigInteger().nextProbablePrime();
+            	BigInteger possibleQ = possibleP.add(BigInteger.ONE).nextProbablePrime();
+            	while (possibleN.compareTo(Constants.TWOFIVESIX) < 0) {
+                 	possibleQ = possibleQ.add(BigInteger.ONE).nextProbablePrime();
+                	possibleN = possibleP.multiply(possibleQ);
+            	}
+            	calcRunnable.setN(possibleN);
+            	Display d = Display.getDefault();
+            	d.asyncExec(calcRunnable);
             }
         }.start();
     }

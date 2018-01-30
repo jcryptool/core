@@ -52,7 +52,6 @@ public class PaillierChooseKeySelGenPage extends WizardPage {
 		existingKeyButton.setLayoutData(gd);
 		
 		setControl(composite);
-		
 	}
 	
 	@Override

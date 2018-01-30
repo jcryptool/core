@@ -11,6 +11,7 @@ package org.jcryptool.visual.he.wizards;
 
 import java.math.BigInteger;
 import java.security.PrivateKey;
+import java.security.UnrecoverableKeyException;
 
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
@@ -159,13 +160,18 @@ public class RSAKeySelectionWizard extends Wizard {
                         final KeyStoreManager ksm = KeyStoreManager.getInstance();
                         final KeyStoreAlias privAlias = data.getPrivateAlias();
                         final String password = data.getPassword();
-                        final PrivateKey key = ksm.getPrivateKey(privAlias, password.toCharArray());
-                        final RSAPrivateCrtKey privkey = (RSAPrivateCrtKey) key;
-                        data.setN(privkey.getModulus());
-                        data.setD(privkey.getD().bigInt);
-                        data.setP(privkey.getP().bigInt);
-                        data.setQ(privkey.getQ().bigInt);
-                        data.setE(privkey.getPublicExponent());
+                        try {
+                        	final PrivateKey key = ksm.getPrivateKey(privAlias, password.toCharArray());
+                            final RSAPrivateCrtKey privkey = (RSAPrivateCrtKey) key;
+                            data.setN(privkey.getModulus());
+                            data.setD(privkey.getD().bigInt);
+                            data.setP(privkey.getP().bigInt);
+                            data.setQ(privkey.getQ().bigInt);
+                            data.setE(privkey.getPublicExponent());
+                        } catch (UnrecoverableKeyException e) {
+                        	((RSALoadKeypairPage) getPage(RSALoadKeypairPage.getPagename())).setErrorMessage(Messages.Wrong_Password);
+                            return false;
+                        }
                     }
                     break;
                 case EncryptAction:

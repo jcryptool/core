@@ -48,6 +48,8 @@ public class Messages extends NLS {
 	public static String GHNewKeyPage_No;
 	public static String GHNewKeyPage_Save;
 	public static String GHNewKeyPage_Yes;
+	public static String GHNewKeyPage_Title;
+	public static String GHNewKeyPage_Message;
 	public static String GHSaveKeyPage_Title;
 	public static String HEComposite_Add_Job_Name;
 	public static String HEComposite_Add_Task_Name;	
@@ -122,10 +124,9 @@ public class Messages extends NLS {
 	public static String InitialTextWizard_Title;
 	public static String KeySelectionWizard_Title;
 	public static String ModulusWizard_Title;
-	public static String NewKeyPage_Title;
-	public static String NewKeyPage_Message;
 	public static String OperationTextWizard_Title;
 	public static String PaillierNewKeyPage_Message;
+	public static String PaillierNewKeyPage_Title;
 	public static String RSAChooseKeytypePage_choose_keytype;
 	public static String RSAChooseKeytypePage_choose_type_text;
 	public static String RSAChooseKeytypePage_new_keypair;
@@ -193,6 +194,8 @@ public class Messages extends NLS {
 	public static String Wrong_Password;
 	public static String GHChooseMultiplicationsExplanation;
 	public static String GHChooseMultiplicationsText;
+	public static String LoadKeyPage_select_file;
+	public static String LoadKeyPage_description;
 
 
 	static {

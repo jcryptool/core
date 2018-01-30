@@ -71,7 +71,6 @@ public class HEView extends ViewPart {
         ti.setControl(sc);
 
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), HEPlugin.PLUGIN_ID + ".heview");
-
 	}
 
 	@Override

@@ -35,7 +35,6 @@ public class RSAChooseKeytypePage extends WizardPage {
 
     /** the selection listener which updates the buttons when changing from keypair to pubkey and vice versa. */
     private final SelectionListener sl = new SelectionAdapter() {
-
         public void widgetSelected(SelectionEvent e) {
             getContainer().updateButtons();
         }

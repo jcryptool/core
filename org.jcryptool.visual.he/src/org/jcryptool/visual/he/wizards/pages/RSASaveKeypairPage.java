@@ -27,10 +27,6 @@ import org.jcryptool.visual.he.rsa.RSAData;
  * @author Michael Gaber
  */
 public class RSASaveKeypairPage extends RSASaveWizardPage {
-
-    /** minimal height for a textfield so it diesn't cut the entered text. */
-    private static final int TEXTFIELD_MIN_HEIGHT = 15;
-
     /** unique pagename to get this page from inside a wizard. */
     private static final String PAGENAME = "Save Keypair Page"; //$NON-NLS-1$
 
@@ -84,33 +80,38 @@ public class RSASaveKeypairPage extends RSASaveWizardPage {
      */
     public final void createControl(final Composite parent) {
         final Composite composite = new Composite(parent, SWT.NONE);
-        // do stuff like layout et al
-        final int ncol = 2;
-        final GridLayout gl = new GridLayout(ncol, false);
-        composite.setLayout(gl);
-        final GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-        // needed so textfields don't cut text
-        gd.heightHint = TEXTFIELD_MIN_HEIGHT;
-        final GridData gd2 = new GridData(SWT.FILL, SWT.CENTER, false, false, ncol, 1);
+        composite.setLayout(new GridLayout());
+
         final Label own = new Label(composite, SWT.NONE);
         own.setText(Messages.RSASaveKeypairPage_name);
-        own.setLayoutData(gd2);
+        GridData gd_own = new GridData(SWT.FILL, SWT.CENTER, false, false);
+        own.setLayoutData(gd_own);
 
         owner = new Text(composite, SWT.BORDER | SWT.SINGLE);
         owner.addModifyListener(ml);
-        owner.setLayoutData(gd);
+        GridData gd_owner = new GridData(SWT.FILL, SWT.CENTER, false, false);
+        gd_owner.widthHint = 300;
+        owner.setLayoutData(gd_owner);
 
         final Label pass = new Label(composite, SWT.NONE);
         pass.setText(Messages.RSASaveKeypairPage_password);
-        pass.setLayoutData(gd2);
+        GridData gd_pass = new GridData(SWT.FILL, SWT.CENTER, false, false);
+        gd_pass.verticalIndent = 20;
+        pass.setLayoutData(gd_pass);
 
         password = new Text(composite, SWT.BORDER | SWT.PASSWORD);
         password.addModifyListener(ml);
-        password.setLayoutData(gd);
-        new Label(composite, SWT.NONE).setLayoutData(gd);
+        GridData gd_password = new GridData(SWT.FILL, SWT.CENTER, false, false);
+        gd_password.widthHint = 300;
+        password.setLayoutData(gd_password);
+        
         passwordverify = new Text(composite, SWT.BORDER | SWT.PASSWORD);
         passwordverify.addModifyListener(ml);
-        passwordverify.setLayoutData(gd);
+        GridData gd_passwordverify = new GridData(SWT.FILL, SWT.CENTER, false, false);
+        gd_passwordverify.widthHint = 300;
+        passwordverify.setLayoutData(gd_passwordverify);    
+
+        owner.forceFocus();
 
         // finish
         setControl(composite);

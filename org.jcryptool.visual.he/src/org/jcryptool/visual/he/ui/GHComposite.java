@@ -7,8 +7,11 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.dialogs.IPageChangedListener;
+import org.eclipse.jface.dialogs.PageChangedEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -138,36 +141,30 @@ public class GHComposite extends Composite {
 
 	/** Check whether the operation is the first, for parentheses */
 	private boolean first = true;
-	private Label label_1;
-	private Label label_2;
-	private Composite composite;
-	private Composite composite_1;
-	private Composite subComposite_1;
-	private Composite composite_2;
-	private Label label_3;
-	private Composite composite_3;
-	private Composite composite_4;
-	private Composite composite_5;
-	private Group mainComposite_3;
-	private Composite subComposite_2;
-	private Label label_4;
-	private Label label_5;
-	private Composite composite_6;
-	private Composite composite_7;
-	private Label label_6;
-	private Composite subComposite_3;
-	private Label label_7;
-	private Composite subComposite_4;
-	private Label label_8;
-	private Composite subComposite_5;
-	private Composite composite_8;
-	private Label label_9;
-	private Composite composite_9;
-	private Label label_10;
-	private Composite composite_10;
-	private Composite composite_11;
-	private Label label_11;
-	private Label spacerLabel_1;
+	
+	/** The width of the labels left to the text boxes */
+	private int lblWidth = 120;
+	
+	/**The width of the buttons on the left side */
+	private int buttonWidth = 200;
+	
+	private Label labelDeterminant;
+	private Label labelRoot;
+	private Composite compositeDeterminant;
+	private Composite compositeRoot;
+	private Composite compositeBlocks;
+	private Label labelBlocks;
+	private Composite compositeVector;
+	private Group mainGroup;
+	private Label lblEncVectorOp1;
+	private Label lblBitVectorOp1;
+	private Label lblBitVectorOp2;
+	private Label lblEncVectorOp2;
+	private Label lblResultEncVector;
+	private Label lblResultDecimal;
+	private Label lblResultBitVector;
+	private Label lblResult;
+	private Label spacerLabel;
 
 	public GHComposite(final Composite parent, final int style) {
 		super(parent,style);
@@ -328,193 +325,25 @@ public class GHComposite extends Composite {
 	}
 
 	/**
-	 * Creates the main area, subdivided into the button area and the algorithm area
+	 * Creates the main area
 	 */
 	private void createMain() {
-		final Group g = new Group(this, SWT.NONE);
-		final GridLayout gl = new GridLayout(2, false);
-		g.setText(Messages.HEComposite_Scheme);
-        g.setLayout(gl);
-        g.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        this.createButtonArea(g);
-        this.createAlgoArea(g);
-	}
-
-	/**
-	 * Creates the button area
-	 * @param parent the composite in which it is created
-	 */
-	private void createButtonArea(final Composite parent) {
-		final Composite mainComposite = new Composite(parent, SWT.SHADOW_NONE);
-		mainComposite.setLayout(new GridLayout());
-		GridData gd_mainComposite = new GridData(SWT.FILL, SWT.FILL, false, true);
-		gd_mainComposite.minimumWidth = 180;
-		gd_mainComposite.widthHint = 180;
-		mainComposite.setLayoutData(gd_mainComposite);
-
-		Group subComposite1= new Group(mainComposite, SWT.SHADOW_NONE);
-		subComposite1.setLayout(new FillLayout(SWT.HORIZONTAL));
-		subComposite1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		subComposite1.setText(Messages.HEComposite_Key);
-
-        this.keySel = new Button(subComposite1, SWT.PUSH);
-        this.keySel.setBackground(ColorService.RED);
-        this.keySel.setEnabled(true);
-        this.keySel.setText(Messages.HEComposite_Keysel);
-        this.keySel.setToolTipText(Messages.HEComposite_Key_Tooltip);
-        this.keySel.addSelectionListener(new SelectionAdapter() {
-        	@Override
-			public void widgetSelected(final SelectionEvent e) {
-        		/** Every scheme has a different type of key, so requires his own wizard */
-        		if (new WizardDialog(GHComposite.this.getShell(),
-        					new GHKeySelectionWizard(keyPair, fheParams, GHComposite.this.getDisplay())).open() == Window.OK) keySelected();
-        	}
-        });
-
-        Composite spacerComposite = new Composite(mainComposite, SWT.NONE);
-        Label spacerLabel = new Label(spacerComposite, SWT.NONE);
-        spacerLabel.setSize(130, 82);
+		final Group mainGroup = new Group(this, SWT.NONE);
+		final GridLayout gl = new GridLayout(1, false);
+		mainGroup.setText(Messages.HEComposite_Scheme);
+        mainGroup.setLayout(gl);
+        mainGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         
-    	Group subComposite2 = new Group(mainComposite, SWT.SHADOW_NONE);
-    	subComposite2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		subComposite2.setText(Messages.HEComposite_Modulus);
-    	subComposite2.setLayout(new FillLayout(SWT.HORIZONTAL));
-    	this.modulusSel = new Button(subComposite2, SWT.PUSH);
-        this.modulusSel.setBackground(ColorService.RED);
-        this.modulusSel.setEnabled(false);
-        this.modulusSel.setText(Messages.HEComposite_Keysel);
-        this.modulusSel.setToolTipText(Messages.HEComposite_Modulus_Tooltip);
-        this.modulusSel.addSelectionListener(new SelectionAdapter() {
-        	@Override
-			public void widgetSelected(final SelectionEvent e) {
-        		/** Every scheme has a different type of key, so requires his own wizard */
-        		if (new WizardDialog(GHComposite.this.getShell(),
-        					new GHModulusWizard(data)).open() == Window.OK) modulusSelected();
-        	}
-        });
-        
-        Group subComposite3 = new Group(mainComposite, SWT.SHADOW_NONE);
-        subComposite3.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		subComposite3.setText(Messages.HEComposite_Initial_Text);
-		subComposite3.setLayout(new FillLayout(SWT.HORIZONTAL));
-		this.initTextSel = new Button(subComposite3, SWT.PUSH);
-		this.initTextSel.setToolTipText(Messages.HEComposite_Initial_Tooltip);
-        this.initTextSel.setBackground(ColorService.RED);
-        this.initTextSel.setEnabled(false);
-        this.initTextSel.setText(Messages.HEComposite_Initial_Text_Select);
-        this.initTextSel.addSelectionListener(new SelectionAdapter() {
-
-        	@Override
-			public void widgetSelected(final SelectionEvent e) {
-        		/** Since the modulus is different for each scheme, they each require an own wizard*/
-        		if (new WizardDialog(GHComposite.this.getShell(),
-        				new GHInitialTextWizard(logMod, data)).open() == Window.OK) initialTextSelected();
-        	}
-        });
-
-        spacerComposite = new Composite(mainComposite, SWT.NONE);
-        spacerLabel = new Label(spacerComposite, SWT.NONE);
-        spacerLabel.setSize(130, 96);
-
-        Group subComposite4 = new Group(mainComposite, SWT.SHADOW_NONE);
-        subComposite4.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		subComposite4.setText(Messages.HEComposite_Homomorphic_Text);
-        subComposite4.setLayout(new FillLayout(SWT.VERTICAL));
-
-        this.homomorphAdd = new Button(subComposite4, SWT.PUSH);
-        this.homomorphAdd.setToolTipText(Messages.HEComposite_Homomorphic_Tooltip_Add);
-        this.homomorphAdd.setEnabled(false);
-        this.homomorphAdd.setText(Messages.HEComposite_Homomorphic_Add_Select);
-        this.homomorphAdd.addSelectionListener(new SelectionAdapter() {
-
-        	@Override
-			public void widgetSelected(final SelectionEvent e) {
-        		if (new WizardDialog(GHComposite.this.getShell(),
-        				new GHOperationTextWizard(logMod, data)).open() == Window.OK) addTextSelected();
-        	}
-        });
-
-        this.homomorphMult = new Button(subComposite4, SWT.PUSH);
-        this.homomorphMult.setToolTipText(Messages.HEComposite_Homomorphic_Tooltip_Multiply);
-        this.homomorphMult.setEnabled(false);
-        this.homomorphMult.setText(Messages.HEComposite_Homomorphic_Mult_Select);
-        this.homomorphMult.addSelectionListener(new SelectionAdapter() {
-
-        	@Override
-			public void widgetSelected(final SelectionEvent e) {
-        		if (new WizardDialog(GHComposite.this.getShell(),
-	        		new GHOperationTextWizard(logMod, data)).open() == Window.OK) multTextSelected();
-        	}
-        });
-
-		spacerLabel_1 = new Label(subComposite4, SWT.NONE);
-		spacerLabel_1.setSize(new Point(0, 70));
-		spacerLabel_1.setSize(130,10);
-
-        this.decryptButton = new Button(subComposite4, SWT.PUSH);
-        this.decryptButton.setToolTipText(Messages.HEComposite_Decrypt_Tooltip);
-        this.decryptButton.setEnabled(false);
-        this.decryptButton.setText(Messages.HEComposite_Decrypt_Select);
-        this.decryptButton.addSelectionListener(new SelectionAdapter() {
-
-        	@Override
-			public void widgetSelected(final SelectionEvent e) {
-        		decryptResult();
-        	}
-        });
-
-        spacerComposite = new Composite(mainComposite, SWT.NONE);
-        spacerLabel = new Label(spacerComposite, SWT.NONE);
-        spacerLabel.setSize(130, 78);
-
-        Group subComposite5 = new Group(mainComposite, SWT.SHADOW_NONE);
-        subComposite5.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		subComposite5.setText(Messages.HEComposite_Reset_Text);
-		subComposite5.setLayout(new FillLayout(SWT.VERTICAL));
-
-		this.resetNumButton = new Button(subComposite5, SWT.PUSH);
-		this.resetNumButton.setToolTipText(Messages.HEComposite_Reset_Numbers_Tooltip);
-		this.resetNumButton.setEnabled(false);
-		this.resetNumButton.setText(Messages.HEComposite_Reset_Numbers);
-		this.resetNumButton.addSelectionListener(new SelectionAdapter() {
-
-        	@Override
-			public void widgetSelected(final SelectionEvent e) {
-        		resetNumbers();
-        	}
-
-        });
-
-		this.resetAllButton = new Button(subComposite5, SWT.PUSH);
-		this.resetAllButton.setToolTipText(Messages.HEComposite_Reset_All_Tooltip);
-		this.resetAllButton.setEnabled(false);
-		this.resetAllButton.setText(Messages.HEComposite_Reset_All);
-		this.resetAllButton.addSelectionListener(new SelectionAdapter() {
-
-        	@Override
-			public void widgetSelected(final SelectionEvent e) {
-        		resetAll();
-        	}
-
-        });
-
-		Group subComposite6 = new Group(mainComposite, SWT.SHADOW_NONE);
-		subComposite6.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		subComposite6.setText(Messages.HEComposite_Settings_Group);
-		subComposite6.setLayout(new FillLayout(SWT.HORIZONTAL));
-
-		this.settingsButton = new Button(subComposite6, SWT.PUSH);
-		this.settingsButton.setToolTipText(Messages.HEComposite_Settings_Tooltip);
-		this.settingsButton.setText(Messages.HEComposite_Settings);
-		this.settingsButton.addSelectionListener(new SelectionAdapter() {
-
-        	@Override
-			public void widgetSelected(final SelectionEvent e) {
-        		new WizardDialog(GHComposite.this.getShell(),
-    					new GHSettingsWizard(data)).open();
-        	}
-
-        });
+		final Composite mainComposite = new Composite(mainGroup, SWT.SHADOW_NONE);
+		mainComposite.setLayout(new GridLayout(2, false));
+		mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		createGHKeyArea(mainComposite);
+		createGHModulusArea(mainComposite);
+		createGHHomomorphicArea(mainComposite);
+		createGHPlainArea(mainComposite);
+		
+		initDataBindings();
 	}
 
 	/**
@@ -768,6 +597,8 @@ public class GHComposite extends Composite {
 		this.pkBlockText.setText("");
 		this.cText.setText("");
 
+		keySel.setBackground(ColorService.RED);
+		keySel.setForeground(null);
 		detText.setBackground(null);
 		rootText.setBackground(null);
 		cText.setBackground(null);
@@ -775,121 +606,130 @@ public class GHComposite extends Composite {
 	}
 
 	/**
-	 * Creates the algorithm area
-	 * @param parent the composite in wich the algorithm area is created
-	 */
-	private void createAlgoArea(final Composite parent) {
-		final Composite g = new Composite(parent, SWT.SHADOW_NONE);
-		g.setLayout(new GridLayout());
-		g.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		this.createGHKeyArea(g);
-		this.createGHModulusArea(g);
-		mainComposite_3 = new Group(g, SWT.SHADOW_NONE);
-		mainComposite_3.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		mainComposite_3.setText(Messages.HEComposite_HomomorphicArea);
-		this.createGHInitialArea(mainComposite_3);
-		this.createGHHomomorphicArea(mainComposite_3);
-		this.createGHPlainArea(g);
-	}
-
-	/**
 	 * Creates the key area for the Gentry & Halevi scheme
 	 * @param parent the composite in which it is created
 	 */
-	private void createGHKeyArea(final Composite parent) {
-		Group mainComposite_1 = new Group(parent, SWT.SHADOW_NONE);
-		mainComposite_1.setLayout(new GridLayout(1, false));
-		mainComposite_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		mainComposite_1.setText(Messages.HEComposite_KeyArea_Public_Key);
-
-		Composite subComposite = new Composite(mainComposite_1, SWT.NONE);
-		subComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Label label;
-		GridLayout gl_subComposite = new GridLayout(2, true);
-		gl_subComposite.marginHeight = 0;
-		gl_subComposite.marginWidth = 0;
-		subComposite.setLayout(gl_subComposite);
+	private void createGHKeyArea(final Composite parent) {		
+		Group buttonGroup = new Group(parent, SWT.SHADOW_NONE);
+		GridData gd_buttonGroup = new GridData(SWT.FILL, SWT.TOP, false, true, 1, 1);
+		gd_buttonGroup.widthHint = buttonWidth;
+		FillLayout fl_buttonGroup = new FillLayout(SWT.HORIZONTAL);
+		fl_buttonGroup.marginHeight = fl_buttonGroup.marginWidth = 2;
+		buttonGroup.setLayoutData(gd_buttonGroup);
+		buttonGroup.setLayout(fl_buttonGroup);	
+		buttonGroup.setText(Messages.HEComposite_Key);
+        this.keySel = new Button(buttonGroup, SWT.PUSH);
+        this.keySel.setBackground(ColorService.RED);
+        this.keySel.setEnabled(true);
+        this.keySel.setText(Messages.HEComposite_Keysel);
+        this.keySel.setToolTipText(Messages.HEComposite_Key_Tooltip);
+        this.keySel.addSelectionListener(new SelectionAdapter() {
+        	@Override
+			public void widgetSelected(final SelectionEvent e) {
+        		WizardDialog wd = new WizardDialog(GHComposite.this.getShell(),
+    					new GHKeySelectionWizard(keyPair, fheParams, GHComposite.this.getDisplay()));
+        		recalcMinSizeOnPageChange(wd);
+        		if (wd.open() == Window.OK) keySelected();
+        	}
+        });
 		
-		composite = new Composite(subComposite, SWT.NONE);
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		GridLayout gl_composite = new GridLayout(2, false);
-		gl_composite.marginHeight = 0;
-		gl_composite.marginWidth = 0;
-		composite.setLayout(gl_composite);
-		label_1 = new Label(composite, SWT.RIGHT);
-		GridData gd_label_1 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-		gd_label_1.widthHint = 100;
-		label_1.setLayoutData(gd_label_1);
-		label_1.setText(Messages.HEComposite_GH_KeyArea_Determinant);
-		detText = new Text(composite, SWT.MULTI | SWT.H_SCROLL);
+		Group mainGroup = new Group(parent, SWT.SHADOW_NONE);
+		mainGroup.setLayout(new GridLayout(2, false));
+		mainGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		mainGroup.setText(Messages.HEComposite_KeyArea_Public_Key);
+		
+		compositeDeterminant = new Composite(mainGroup, SWT.NONE);
+		compositeDeterminant.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		GridLayout gl_compositeDeterminant = new GridLayout(2, false);
+		gl_compositeDeterminant.marginHeight = 0;
+		gl_compositeDeterminant.marginWidth = 0;
+		compositeDeterminant.setLayout(gl_compositeDeterminant);
+		labelDeterminant = new Label(compositeDeterminant, SWT.RIGHT);
+		GridData gd_labelDeterminant = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+		gd_labelDeterminant.widthHint = lblWidth;
+		labelDeterminant.setLayoutData(gd_labelDeterminant);
+		labelDeterminant.setText(Messages.HEComposite_GH_KeyArea_Determinant);
+		detText = new Text(compositeDeterminant, SWT.BORDER | SWT.MULTI | SWT.H_SCROLL);
 		detText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		detText.setEditable(false);
 		
-		composite_1 = new Composite(subComposite, SWT.NONE);
-		composite_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		GridLayout gl_composite_1 = new GridLayout(2, false);
-		gl_composite_1.marginHeight = 0;
-		gl_composite_1.marginWidth = 0;
-		composite_1.setLayout(gl_composite_1);
+		compositeRoot = new Composite(mainGroup, SWT.NONE);
+		compositeRoot.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		GridLayout gl_compositeRoot = new GridLayout(2, false);
+		gl_compositeRoot.marginHeight = 0;
+		gl_compositeRoot.marginWidth = 0;
+		compositeRoot.setLayout(gl_compositeRoot);		
+		labelRoot = new Label(compositeRoot, SWT.RIGHT);
+		GridData gd_labelRoot = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+		gd_labelRoot.widthHint = lblWidth;
+		labelRoot.setLayoutData(gd_labelRoot);
+		labelRoot.setText(Messages.HEComposite_GH_KeyArea_Root);
+		rootText = new Text(compositeRoot, SWT.BORDER | SWT.MULTI | SWT.H_SCROLL);
+		rootText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		rootText.setEditable(false);
 		
-				label_2 = new Label(composite_1, SWT.RIGHT);
-				GridData gd_label_2 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-				gd_label_2.widthHint = 100;
-				label_2.setLayoutData(gd_label_2);
-				label_2.setSize(new Point(110, 30));
-				label_2.setText(Messages.HEComposite_GH_KeyArea_Root);
-				rootText = new Text(composite_1, SWT.MULTI | SWT.H_SCROLL);
-				rootText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-				rootText.setEditable(false);
-
-		subComposite_1 = new Composite(mainComposite_1, SWT.NONE);
-		subComposite_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		GridLayout gl_subComposite_1 = new GridLayout(2, true);
-		gl_subComposite_1.marginHeight = 0;
-		gl_subComposite_1.marginWidth = 0;
-		subComposite_1.setLayout(gl_subComposite_1);
-		
-		composite_2 = new Composite(subComposite_1, SWT.NONE);
-		composite_2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		GridLayout gl_composite_2 = new GridLayout(2, false);
-		gl_composite_2.marginHeight = 0;
-		gl_composite_2.marginWidth = 0;
-		composite_2.setLayout(gl_composite_2);
-		label_3 = new Label(composite_2, SWT.RIGHT);
-		GridData gd_label_3 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-		gd_label_3.widthHint = 100;
-		label_3.setLayoutData(gd_label_3);
-		label_3.setText(Messages.HEComposite_GH_KeyArea_Public_Key_Blocks);
-		pkBlockText = new Text(composite_2, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+		compositeBlocks = new Composite(mainGroup, SWT.NONE);
+		compositeBlocks.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		GridLayout gl_compositeBlocks = new GridLayout(2, false);
+		gl_compositeBlocks.marginHeight = 0;
+		gl_compositeBlocks.marginWidth = 0;
+		compositeBlocks.setLayout(gl_compositeBlocks);
+		labelBlocks = new Label(compositeBlocks, SWT.RIGHT);
+		GridData gd_labelBlocks = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+		gd_labelBlocks.widthHint = lblWidth;
+		labelBlocks.setLayoutData(gd_labelBlocks);
+		labelBlocks.setText(Messages.HEComposite_GH_KeyArea_Public_Key_Blocks);
+		pkBlockText = new Text(compositeBlocks, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
 		GridData gd_pkBlockText = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gd_pkBlockText.heightHint = 40;
 		pkBlockText.setLayoutData(gd_pkBlockText);
 		pkBlockText.setEditable(false);
 		
-		composite_3 = new Composite(subComposite_1, SWT.NONE);
-		composite_3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		GridLayout gl_composite_3 = new GridLayout(2, false);
-		gl_composite_3.marginHeight = 0;
-		gl_composite_3.marginWidth = 0;
-		composite_3.setLayout(gl_composite_3);
-		
-		        label = new Label(composite_3, SWT.RIGHT);
-		        GridData gd_label = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-		        gd_label.widthHint = 100;
-		        label.setLayoutData(gd_label);
-		        label.setText(Messages.HEComposite_GH_KeyArea_Secret_Vector);
-		        cText = new Text(composite_3, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		        GridData gd_cText = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		        gd_cText.heightHint = 40;
-		        cText.setLayoutData(gd_cText);
-		        cText.setEditable(false);
+		compositeVector = new Composite(mainGroup, SWT.NONE);
+		compositeVector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		GridLayout gl_compositeVector = new GridLayout(2, false);
+		gl_compositeVector.marginHeight = 0;
+		gl_compositeVector.marginWidth = 0;
+		compositeVector.setLayout(gl_compositeVector);		
+        Label labelVector = new Label(compositeVector, SWT.RIGHT);
+        GridData gd_labelVector = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+        gd_labelVector.widthHint = lblWidth;
+        labelVector.setLayoutData(gd_labelVector);
+        labelVector.setText(Messages.HEComposite_GH_KeyArea_Secret_Vector);
+        cText = new Text(compositeVector, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
+        GridData gd_cText = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+        gd_cText.heightHint = 40;
+        cText.setLayoutData(gd_cText);
+        cText.setEditable(false);
 	}
 
 	/**
      * The scheme by Gentry and Halevi requires the modulus to be manually set.
      */
 	private void createGHModulusArea(final Composite parent) {
+		Group buttonGroup = new Group(parent, SWT.SHADOW_NONE);
+		GridData gd_buttonGroup = new GridData(SWT.FILL, SWT.TOP, false, true, 1, 1);
+		gd_buttonGroup.widthHint = buttonWidth;
+		FillLayout fl_buttonGroup = new FillLayout(SWT.HORIZONTAL);
+		fl_buttonGroup.marginHeight = fl_buttonGroup.marginWidth = 2;
+		buttonGroup.setLayoutData(gd_buttonGroup);
+		buttonGroup.setLayout(fl_buttonGroup);	
+		buttonGroup.setText(Messages.HEComposite_Modulus);
+    	this.modulusSel = new Button(buttonGroup, SWT.PUSH);
+        this.modulusSel.setBackground(ColorService.RED);
+        this.modulusSel.setEnabled(false);
+        this.modulusSel.setText(Messages.HEComposite_Keysel);
+        this.modulusSel.setToolTipText(Messages.HEComposite_Modulus_Tooltip);
+        this.modulusSel.addSelectionListener(new SelectionAdapter() {
+        	@Override
+			public void widgetSelected(final SelectionEvent e) {
+        		WizardDialog wd = new WizardDialog(GHComposite.this.getShell(),
+    					new GHModulusWizard(data));
+        		recalcMinSizeOnPageChange(wd);
+        		if (wd.open() == Window.OK) modulusSelected();
+        	}
+        });
+        
         Group mainComposite_2 = new Group(parent, SWT.SHADOW_NONE);
         mainComposite_2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         mainComposite_2.setText(Messages.HEComposite_Modulus);
@@ -897,215 +737,240 @@ public class GHComposite extends Composite {
 
         Label textLabel = new Label(mainComposite_2, SWT.RIGHT);
         GridData gd_textLabel = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-        gd_textLabel.widthHint = 100;
+        gd_textLabel.widthHint = lblWidth;
         textLabel.setLayoutData(gd_textLabel);
         textLabel.setText(Messages.HEComposite_Modulus_Label);
-        this.modulus = new Text(mainComposite_2, SWT.NONE);
+        this.modulus = new Text(mainComposite_2, SWT.BORDER);
         modulus.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         this.modulus.setEditable(false);
 	}
 
 	/**
-	 * Creates the area in which the initial number and its encryption are shown
-	 * @param parent the composite in which it is created
-	 */
-	private void createGHInitialArea(final Composite parent) {
-		GridLayout gl_mainComposite_3 = new GridLayout(1, false);
-		mainComposite_3.setLayout(gl_mainComposite_3);
-		Group mainComposite = new Group(parent, SWT.SHADOW_NONE);
-		mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		mainComposite.setText(Messages.HEComposite_Initial_Data);
-		GridLayout gl_mainComposite = new GridLayout(1, false);
-		gl_mainComposite.marginHeight = 0;
-		gl_mainComposite.marginWidth = 0;
-		mainComposite.setLayout(gl_mainComposite);
-
-		Composite subComposite = new Composite(mainComposite, SWT.NONE);
-		subComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		GridLayout gl_subComposite = new GridLayout(2, true);
-		gl_subComposite.marginHeight = 0;
-		gl_subComposite.marginWidth = 0;
-		subComposite.setLayout(gl_subComposite);
-		
-		composite_4 = new Composite(subComposite, SWT.NONE);
-		composite_4.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		GridLayout gl_composite_4 = new GridLayout(2, false);
-		gl_composite_4.marginHeight = 0;
-		gl_composite_4.marginWidth = 0;
-		composite_4.setLayout(gl_composite_4);
-	
-		Label label = new Label(composite_4, SWT.RIGHT);
-		GridData gd_label = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-		gd_label.widthHint = 100;
-		label.setLayoutData(gd_label);
-		label.setText(Messages.HEComposite_Initial_Number);
-		initialPlain = new Text(composite_4, SWT.MULTI | SWT.H_SCROLL);
-		initialPlain.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		initialPlain.setEditable(false);
-        
-        composite_5 = new Composite(subComposite, SWT.NONE);
-        composite_5.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        GridLayout gl_composite_5 = new GridLayout(2, false);
-        gl_composite_5.marginHeight = 0;
-        gl_composite_5.marginWidth = 0;
-        composite_5.setLayout(gl_composite_5);
-
-        label_5 = new Label(composite_5, SWT.RIGHT);
-        GridData gd_label_5 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-        gd_label_5.widthHint = 100;
-        label_5.setLayoutData(gd_label_5);
-		label_5.setText(Messages.HEComposite_Initial_Number_As_Bits);
-		initialPlainBits = new Text(composite_5, SWT.MULTI | SWT.H_SCROLL);
-		initialPlainBits.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		initialPlainBits.setEditable(false);
-
-		subComposite_2 = new Composite(mainComposite, SWT.NONE);
-		subComposite_2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        GridLayout gl_subComposite_2 = new GridLayout(2, false);
-        gl_subComposite_2.marginHeight = 0;
-        gl_subComposite_2.marginWidth = 0;
-        subComposite_2.setLayout(gl_subComposite_2);
-        label_4 = new Label(subComposite_2, SWT.RIGHT);
-        GridData gd_label_4 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-        gd_label_4.widthHint = 100;
-        label_4.setLayoutData(gd_label_4);
-		label_4.setText(Messages.HEComposite_Initial_Number_As_Enc_Vec);
-		initialEncryptedBits = new Text(subComposite_2, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		GridData gd_initialEncryptedBits = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		gd_initialEncryptedBits.heightHint = 70;
-		initialEncryptedBits.setLayoutData(gd_initialEncryptedBits);
-		initialEncryptedBits.setEditable(false);
-	}
-
-	/**
-	 * Creates the area in which the operation number, its encryption, the result and the decryption are shown
+	 * Creates the area in which the initial number, its encryption, the operation number, its encryption, the result and the decryption are shown
 	 * @param parent the composite in which it is created
 	 */
 	private void createGHHomomorphicArea(final Composite parent) {
-		Group mainComposite = new Group(parent, SWT.SHADOW_NONE);
-		mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		mainComposite.setText(Messages.HEComposite_Operation_Area);
-		GridLayout gl_mainComposite = new GridLayout(1, false);
-		gl_mainComposite.marginHeight = 0;
-		gl_mainComposite.marginWidth = 0;
-		mainComposite.setLayout(gl_mainComposite);
+		//Group Button First Operand
+        Group grpBtnOp1 = new Group(parent, SWT.SHADOW_NONE);
+        GridData gd_grpBtnOp1 = new GridData(SWT.FILL, SWT.TOP, false, true, 1, 1);
+        gd_grpBtnOp1.widthHint = buttonWidth;
+		FillLayout fl_grpBtnOp1 = new FillLayout(SWT.HORIZONTAL);
+		fl_grpBtnOp1.marginHeight = fl_grpBtnOp1.marginWidth = 2;
+		grpBtnOp1.setText(Messages.HEComposite_Initial_Text);
+		grpBtnOp1.setLayoutData(gd_grpBtnOp1);
+		grpBtnOp1.setLayout(fl_grpBtnOp1);
+		this.initTextSel = new Button(grpBtnOp1, SWT.PUSH);
+		this.initTextSel.setToolTipText(Messages.HEComposite_Initial_Tooltip);
+        this.initTextSel.setBackground(ColorService.RED);
+        this.initTextSel.setEnabled(false);
+        this.initTextSel.setText(Messages.HEComposite_Initial_Text_Select);
+        this.initTextSel.addSelectionListener(new SelectionAdapter() {
+        	@Override
+			public void widgetSelected(final SelectionEvent e) {
+        		WizardDialog wd = new WizardDialog(GHComposite.this.getShell(),
+        				new GHInitialTextWizard(logMod, data));
+        		recalcMinSizeOnPageChange(wd);
+        		if (wd.open() == Window.OK) initialTextSelected();
+        	}
+        });
+		
+        //Main Group on the right side
+		mainGroup = new Group(parent, SWT.SHADOW_NONE);
+		mainGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 3));
+		mainGroup.setText(Messages.HEComposite_HomomorphicArea);
+		GridLayout gl_mainGroup = new GridLayout(1, false);
+		mainGroup.setLayout(gl_mainGroup);
+		
+		//Group First Operand
+		Group groupFirstOperand = new Group(mainGroup, SWT.SHADOW_NONE);
+		groupFirstOperand.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		groupFirstOperand.setText(Messages.HEComposite_Initial_Data);
+		GridLayout gl_mainComposite = new GridLayout(4, false);
+		groupFirstOperand.setLayout(gl_mainComposite);
 
-		Composite subComposite = new Composite(mainComposite, SWT.NONE);
-		subComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		GridLayout gl_subComposite = new GridLayout(2, true);
-		gl_subComposite.marginHeight = 0;
-		gl_subComposite.marginWidth = 0;
-		subComposite.setLayout(gl_subComposite);
-		
-		composite_6 = new Composite(subComposite, SWT.NONE);
-		composite_6.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		GridLayout gl_composite_6 = new GridLayout(2, false);
-		gl_composite_6.marginHeight = 0;
-		gl_composite_6.marginWidth = 0;
-		composite_6.setLayout(gl_composite_6);
-		
-				Label label = new Label(composite_6, SWT.RIGHT);
-				GridData gd_label = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-				gd_label.widthHint = 100;
-				label.setLayoutData(gd_label);
-				label.setText(Messages.HEComposite_Operation_Number);
-				homomorphPlain = new Text(composite_6, SWT.MULTI | SWT.H_SCROLL);
-				homomorphPlain.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-				homomorphPlain.setEditable(false);
-		
-		composite_7 = new Composite(subComposite, SWT.NONE);
-		composite_7.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		GridLayout gl_composite_7 = new GridLayout(2, false);
-		gl_composite_7.marginHeight = 0;
-		gl_composite_7.marginWidth = 0;
-		composite_7.setLayout(gl_composite_7);
-		
-		        label_6 = new Label(composite_7, SWT.RIGHT);
-		        GridData gd_label_6 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-		        gd_label_6.widthHint = 100;
-		        label_6.setLayoutData(gd_label_6);
-		        label_6.setText(Messages.HEComposite_Operation_Number_As_Bits);
-		        homomorphPlainBits = new Text(composite_7, SWT.MULTI | SWT.H_SCROLL);
-		        homomorphPlainBits.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		        homomorphPlainBits.setEditable(false);
+		Label lblDecOp1 = new Label(groupFirstOperand, SWT.RIGHT);
+		GridData gd_lblDecOp1 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+		gd_lblDecOp1.widthHint = lblWidth;
+		lblDecOp1.setLayoutData(gd_lblDecOp1);
+		lblDecOp1.setText(Messages.HEComposite_Initial_Number);
+		initialPlain = new Text(groupFirstOperand, SWT.MULTI | SWT.H_SCROLL | SWT.BORDER);
+		initialPlain.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		initialPlain.setEditable(false);
 
-		subComposite_3 = new Composite(mainComposite, SWT.NONE);
-		subComposite_3.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        GridLayout gl_subComposite_3 = new GridLayout(2, false);
-        gl_subComposite_3.marginHeight = 0;
-        gl_subComposite_3.marginWidth = 0;
-        subComposite_3.setLayout(gl_subComposite_3);
-        label_7 = new Label(subComposite_3, SWT.RIGHT);
-        GridData gd_label_7 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-        gd_label_7.widthHint = 100;
-        label_7.setLayoutData(gd_label_7);
-		label_7.setText(Messages.HEComposite_Operation_Number_As_Enc_Vec);
-		homomorphEncryptedBits = new Text(subComposite_3, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		GridData gd_homomorphEncryptedBits = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+        lblBitVectorOp1 = new Label(groupFirstOperand, SWT.RIGHT);
+        GridData gd_lblBitVectorOp1 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+        gd_lblBitVectorOp1.widthHint = lblWidth;
+        lblBitVectorOp1.setLayoutData(gd_lblBitVectorOp1);
+		lblBitVectorOp1.setText(Messages.HEComposite_Initial_Number_As_Bits);
+		initialPlainBits = new Text(groupFirstOperand, SWT.MULTI | SWT.H_SCROLL | SWT.BORDER);
+		initialPlainBits.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		initialPlainBits.setEditable(false);
+
+        lblEncVectorOp1 = new Label(groupFirstOperand, SWT.RIGHT);
+        GridData gd_lblEncVectorOp1 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+        gd_lblEncVectorOp1.widthHint = lblWidth;
+        lblEncVectorOp1.setLayoutData(gd_lblEncVectorOp1);
+		lblEncVectorOp1.setText(Messages.HEComposite_Initial_Number_As_Enc_Vec);
+		initialEncryptedBits = new Text(groupFirstOperand, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
+		GridData gd_initialEncryptedBits = new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1);
+		gd_initialEncryptedBits.heightHint = 70;
+		initialEncryptedBits.setLayoutData(gd_initialEncryptedBits);
+		initialEncryptedBits.setEditable(false);
+		
+		//Group Buttons Operations
+		Group grpBtnOperations = new Group(parent, SWT.SHADOW_NONE);      
+		GridData gd_grpBtnOperations = new GridData(SWT.FILL, SWT.TOP, false, true, 1, 1);
+		gd_grpBtnOperations.widthHint = buttonWidth;
+	    FillLayout fl_grpBtnOperations = new FillLayout(SWT.VERTICAL);
+		fl_grpBtnOperations.marginHeight = fl_grpBtnOperations.marginWidth = 2;
+		grpBtnOperations.setText(Messages.HEComposite_Homomorphic_Text);
+		grpBtnOperations.setLayoutData(gd_grpBtnOperations);
+        grpBtnOperations.setLayout(fl_grpBtnOperations);
+
+        this.homomorphAdd = new Button(grpBtnOperations, SWT.PUSH);
+        this.homomorphAdd.setToolTipText(Messages.HEComposite_Homomorphic_Tooltip_Add);
+        this.homomorphAdd.setEnabled(false);
+        this.homomorphAdd.setText(Messages.HEComposite_Homomorphic_Add_Select);
+        this.homomorphAdd.addSelectionListener(new SelectionAdapter() {
+        	@Override
+			public void widgetSelected(final SelectionEvent e) {
+        		WizardDialog wd = new WizardDialog(GHComposite.this.getShell(),
+        				new GHOperationTextWizard(logMod, data));
+        		recalcMinSizeOnPageChange(wd);
+        		if (wd.open() == Window.OK) addTextSelected();
+        	}
+        });
+
+        this.homomorphMult = new Button(grpBtnOperations, SWT.PUSH);
+        this.homomorphMult.setToolTipText(Messages.HEComposite_Homomorphic_Tooltip_Multiply);
+        this.homomorphMult.setEnabled(false);
+        this.homomorphMult.setText(Messages.HEComposite_Homomorphic_Mult_Select);
+        this.homomorphMult.addSelectionListener(new SelectionAdapter() {
+	    	@Override
+			public void widgetSelected(final SelectionEvent e) {
+	    		WizardDialog wd = new WizardDialog(GHComposite.this.getShell(),
+		        		new GHOperationTextWizard(logMod, data));
+	    		recalcMinSizeOnPageChange(wd);
+	    		if (wd.open() == Window.OK) multTextSelected();
+	    		}
+	        });
+        
+		spacerLabel = new Label(grpBtnOperations, SWT.NONE);
+		spacerLabel.setSize(new Point(0, 70));
+		spacerLabel.setSize(130,10);
+
+        this.decryptButton = new Button(grpBtnOperations, SWT.PUSH);
+        this.decryptButton.setToolTipText(Messages.HEComposite_Decrypt_Tooltip);
+        this.decryptButton.setEnabled(false);
+        this.decryptButton.setText(Messages.HEComposite_Decrypt_Select);
+        this.decryptButton.addSelectionListener(new SelectionAdapter() {
+	        	@Override
+				public void widgetSelected(final SelectionEvent e) {
+	        		decryptResult();
+	        	}
+	        });
+
+		//Group Second Operand
+		Group groupSecondOperand = new Group(mainGroup, SWT.SHADOW_NONE);
+		groupSecondOperand.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		groupSecondOperand.setText(Messages.HEComposite_Operation_Area);
+		GridLayout gl_groupSecondOperand = new GridLayout(4, false);
+		groupSecondOperand.setLayout(gl_groupSecondOperand);
+
+		Label lblDecOp2 = new Label(groupSecondOperand, SWT.RIGHT);
+		GridData gd_lblDecOp2 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+		gd_lblDecOp2.widthHint = lblWidth;
+		lblDecOp2.setLayoutData(gd_lblDecOp2);
+		lblDecOp2.setText(Messages.HEComposite_Operation_Number);
+		homomorphPlain = new Text(groupSecondOperand, SWT.MULTI | SWT.H_SCROLL | SWT.BORDER);
+		homomorphPlain.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		homomorphPlain.setEditable(false);
+
+        lblBitVectorOp2 = new Label(groupSecondOperand, SWT.RIGHT);
+        GridData gd_lblBitVectorOp2 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+        gd_lblBitVectorOp2.widthHint = lblWidth;
+        lblBitVectorOp2.setLayoutData(gd_lblBitVectorOp2);
+        lblBitVectorOp2.setText(Messages.HEComposite_Operation_Number_As_Bits);
+        homomorphPlainBits = new Text(groupSecondOperand, SWT.MULTI | SWT.H_SCROLL | SWT.BORDER);
+        homomorphPlainBits.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        homomorphPlainBits.setEditable(false);
+
+        lblEncVectorOp2 = new Label(groupSecondOperand, SWT.RIGHT);
+        GridData gd_lblEncVectorOp2 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+        gd_lblEncVectorOp2.widthHint = lblWidth;
+        lblEncVectorOp2.setLayoutData(gd_lblEncVectorOp2);
+		lblEncVectorOp2.setText(Messages.HEComposite_Operation_Number_As_Enc_Vec);
+		homomorphEncryptedBits = new Text(groupSecondOperand, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
+		GridData gd_homomorphEncryptedBits = new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1);
 		gd_homomorphEncryptedBits.heightHint = 70;
 		homomorphEncryptedBits.setLayoutData(gd_homomorphEncryptedBits);
 		homomorphEncryptedBits.setEditable(false);
+		
+		//Group Reset Buttons
+        Group grpBtnReset = new Group(parent, SWT.SHADOW_NONE);
+        GridData gd_grpBtnReset = new GridData(SWT.FILL, SWT.BOTTOM, false, true, 1, 1);
+        gd_grpBtnReset.widthHint = buttonWidth;
+	    FillLayout fl_grpBtnReset = new FillLayout(SWT.VERTICAL);
+	    fl_grpBtnReset.marginHeight = fl_grpBtnOperations.marginWidth = 2;
+		grpBtnReset.setText(Messages.HEComposite_Reset_Text);
+		grpBtnReset.setLayoutData(gd_grpBtnReset);
+		grpBtnReset.setLayout(fl_grpBtnReset);
 
-		Group mainComposite_2 = new Group(parent, SWT.SHADOW_NONE);
-		mainComposite_2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		mainComposite_2.setText(Messages.HEComposite_Result_Area);
-		GridLayout gl_mainComposite_2 = new GridLayout(1, false);
-		gl_mainComposite_2.marginHeight = 0;
-		gl_mainComposite_2.marginWidth = 0;
-		mainComposite_2.setLayout(gl_mainComposite_2);
+		this.resetNumButton = new Button(grpBtnReset, SWT.PUSH);
+		this.resetNumButton.setToolTipText(Messages.HEComposite_Reset_Numbers_Tooltip);
+		this.resetNumButton.setEnabled(false);
+		this.resetNumButton.setText(Messages.HEComposite_Reset_Numbers);
+		this.resetNumButton.addSelectionListener(new SelectionAdapter() {
+        	@Override
+			public void widgetSelected(final SelectionEvent e) {
+        		resetNumbers();
+        	}
+        });
 
-		subComposite_4 = new Composite(mainComposite_2, SWT.NONE);
-		subComposite_4.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        GridLayout gl_subComposite_4 = new GridLayout(2, false);
-        gl_subComposite_4.marginHeight = 0;
-        gl_subComposite_4.marginWidth = 0;
-        subComposite_4.setLayout(gl_subComposite_4);
-        label_8 = new Label(subComposite_4, SWT.RIGHT);
-        GridData gd_label_8 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-        gd_label_8.widthHint = 100;
-        label_8.setLayoutData(gd_label_8);
-		label_8.setText(Messages.HEComposite_Result_Number_As_Enc_Vec);
-		homomorphResultEncryptedBits = new Text(subComposite_4, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		GridData gd_homomorphResultEncryptedBits = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+		this.resetAllButton = new Button(grpBtnReset, SWT.PUSH);
+		this.resetAllButton.setToolTipText(Messages.HEComposite_Reset_All_Tooltip);
+		this.resetAllButton.setEnabled(false);
+		this.resetAllButton.setText(Messages.HEComposite_Reset_All);
+		this.resetAllButton.addSelectionListener(new SelectionAdapter() {
+        	@Override
+			public void widgetSelected(final SelectionEvent e) {
+        		resetAll();
+        	}
+        });
+
+		//Group Result
+		Group groupResult = new Group(mainGroup, SWT.SHADOW_NONE);
+		groupResult.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		groupResult.setText(Messages.HEComposite_Result_Area);
+		GridLayout gl_groupResult = new GridLayout(4, false);
+		groupResult.setLayout(gl_groupResult);
+
+        lblResultEncVector = new Label(groupResult, SWT.RIGHT);
+        GridData gd_lblResultEncVector = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+        gd_lblResultEncVector.widthHint = lblWidth;
+        lblResultEncVector.setLayoutData(gd_lblResultEncVector);
+		lblResultEncVector.setText(Messages.HEComposite_Result_Number_As_Enc_Vec);
+		homomorphResultEncryptedBits = new Text(groupResult, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
+		GridData gd_homomorphResultEncryptedBits = new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1);
 		gd_homomorphResultEncryptedBits.heightHint = 70;
 		homomorphResultEncryptedBits.setLayoutData(gd_homomorphResultEncryptedBits);
 		homomorphResultEncryptedBits.setEditable(false);
 
-		subComposite_5 = new Composite(mainComposite_2, SWT.NONE);
-		subComposite_5.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        GridLayout gl_subComposite_5 = new GridLayout(2, true);
-        gl_subComposite_5.marginHeight = 0;
-        gl_subComposite_5.marginWidth = 0;
-        subComposite_5.setLayout(gl_subComposite_5);
-		
-		composite_8 = new Composite(subComposite_5, SWT.NONE);
-		composite_8.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		GridLayout gl_composite_8 = new GridLayout(2, false);
-		gl_composite_8.marginHeight = 0;
-		gl_composite_8.marginWidth = 0;
-		composite_8.setLayout(gl_composite_8);
-		label_9 = new Label(composite_8, SWT.RIGHT);
-		GridData gd_label_9 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-		gd_label_9.widthHint = 100;
-		label_9.setLayoutData(gd_label_9);
-		label_9.setText(Messages.HEComposite_Result_Number);
-		homomorphResultPlain = new Text(composite_8, SWT.MULTI | SWT.H_SCROLL);
+		lblResultDecimal = new Label(groupResult, SWT.RIGHT);
+		GridData gd_lblResultDecimal = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+		gd_lblResultDecimal.widthHint = lblWidth;
+		lblResultDecimal.setLayoutData(gd_lblResultDecimal);
+		lblResultDecimal.setText(Messages.HEComposite_Result_Number);
+		homomorphResultPlain = new Text(groupResult, SWT.MULTI | SWT.H_SCROLL | SWT.BORDER);
 		homomorphResultPlain.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		homomorphResultPlain.setEditable(false);
 		
-		composite_9 = new Composite(subComposite_5, SWT.NONE);
-		composite_9.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		GridLayout gl_composite_9 = new GridLayout(2, false);
-		gl_composite_9.marginHeight = 0;
-		gl_composite_9.marginWidth = 0;
-		composite_9.setLayout(gl_composite_9);
-		
-        label_10 = new Label(composite_9, SWT.RIGHT);
-        GridData gd_label_10 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-        gd_label_10.widthHint = 100;
-        label_10.setLayoutData(gd_label_10);
-        label_10.setText(Messages.HEComposite_Result_Number_As_Bits);
-        homomorphResultPlainBits = new Text(composite_9, SWT.MULTI | SWT.H_SCROLL);
+        lblResultBitVector = new Label(groupResult, SWT.RIGHT);
+        GridData gd_lblResultBitVector = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+        gd_lblResultBitVector.widthHint = lblWidth;
+        lblResultBitVector.setLayoutData(gd_lblResultBitVector);
+        lblResultBitVector.setText(Messages.HEComposite_Result_Number_As_Bits);
+        homomorphResultPlainBits = new Text(groupResult, SWT.MULTI | SWT.H_SCROLL | SWT.BORDER);
         homomorphResultPlainBits.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         homomorphResultPlainBits.setEditable(false);
 	}
@@ -1115,59 +980,79 @@ public class GHComposite extends Composite {
 	 * @param parent the composite in which it is created
 	 */
 	private void createGHPlainArea(final Composite parent) {
-		Group mainComposite_4 = new Group(parent, SWT.SHADOW_NONE);
-		mainComposite_4.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		mainComposite_4.setText(Messages.HEComposite_Plain_Data);
-		GridLayout gl_mainComposite_4 = new GridLayout(1, false);
-		mainComposite_4.setLayout(gl_mainComposite_4);
+		Group groupBtnSettings = new Group(parent, SWT.SHADOW_NONE);
+	    GridData gd_groupBtnSettings = new GridData(SWT.FILL, SWT.BOTTOM, false, true, 1, 1);
+	    gd_groupBtnSettings.widthHint = buttonWidth;
+		FillLayout fl_grpBtnSettings = new FillLayout(SWT.HORIZONTAL);
+		fl_grpBtnSettings.marginHeight = fl_grpBtnSettings.marginWidth = 2;
+		groupBtnSettings.setLayoutData(gd_groupBtnSettings);
+		groupBtnSettings.setText(Messages.HEComposite_Settings_Group);
+		groupBtnSettings.setLayout(fl_grpBtnSettings);
+		this.settingsButton = new Button(groupBtnSettings, SWT.PUSH);
+		this.settingsButton.setToolTipText(Messages.HEComposite_Settings_Tooltip);
+		this.settingsButton.setText(Messages.HEComposite_Settings);
+		this.settingsButton.addSelectionListener(new SelectionAdapter() {
+        	@Override
+			public void widgetSelected(final SelectionEvent e) {
+        		WizardDialog wd = new WizardDialog(GHComposite.this.getShell(),
+    					new GHSettingsWizard(data));
+        		recalcMinSizeOnPageChange(wd);
+        		wd.open();
+        	}
 
-		Composite subComposite = new Composite(mainComposite_4, SWT.NONE);
-		subComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		GridLayout gl_subComposite = new GridLayout(2, true);
-		gl_subComposite.marginHeight = 0;
-		gl_subComposite.marginWidth = 0;
-		subComposite.setLayout(gl_subComposite);
-		
-		composite_10 = new Composite(subComposite, SWT.NONE);
-		composite_10.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		GridLayout gl_composite_10 = new GridLayout(2, false);
-		gl_composite_10.marginHeight = 0;
-		gl_composite_10.marginWidth = 0;
-		composite_10.setLayout(gl_composite_10);
-		
-		Label label = new Label(composite_10, SWT.RIGHT);
-		GridData gd_label = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-		gd_label.widthHint = 100;
-		label.setLayoutData(gd_label);
-		label.setText(Messages.HEComposite_Plain_Operations);
-		plainOperations = new Text(composite_10, SWT.MULTI | SWT.H_SCROLL);
+        });
+	
+		Group groupPlainTextOperations = new Group(parent, SWT.SHADOW_NONE);
+		groupPlainTextOperations.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		groupPlainTextOperations.setText(Messages.HEComposite_Plain_Data);
+		GridLayout gl_mainComposite_4 = new GridLayout(4, false);
+		groupPlainTextOperations.setLayout(gl_mainComposite_4);
+
+		Label lblPlainTextOperation = new Label(groupPlainTextOperations, SWT.RIGHT);
+		GridData gd_lblPlainTextOperation = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+		gd_lblPlainTextOperation.widthHint = lblWidth;
+		lblPlainTextOperation.setLayoutData(gd_lblPlainTextOperation);
+		lblPlainTextOperation.setText(Messages.HEComposite_Plain_Operations);
+		plainOperations = new Text(groupPlainTextOperations, SWT.MULTI | SWT.H_SCROLL | SWT.BORDER);
 		plainOperations.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		plainOperations.setEditable(false);
-		
-		composite_11 = new Composite(subComposite, SWT.NONE);
-		composite_11.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		GridLayout gl_composite_11 = new GridLayout(2, false);
-		gl_composite_11.marginHeight = 0;
-		gl_composite_11.marginWidth = 0;
-		composite_11.setLayout(gl_composite_11);
-		
-		        label_11 = new Label(composite_11, SWT.RIGHT);
-		        GridData gd_label_11 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-		        gd_label_11.widthHint = 100;
-		        label_11.setLayoutData(gd_label_11);
-		        label_11.setText(Messages.HEComposite_Result);
-		        plainResult = new Text(composite_11, SWT.MULTI | SWT.H_SCROLL);
-		        plainResult.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		        plainResult.setEditable(false);
-        initDataBindings();
+
+        lblResult = new Label(groupPlainTextOperations, SWT.RIGHT);
+        GridData gd_lblResult = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+        gd_lblResult.widthHint = lblWidth;
+        lblResult.setLayoutData(gd_lblResult);
+        lblResult.setText(Messages.HEComposite_Result);
+        plainResult = new Text(groupPlainTextOperations, SWT.MULTI | SWT.H_SCROLL| SWT.BORDER);
+        plainResult.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        plainResult.setEditable(false);
 	}
+	
 	protected DataBindingContext initDataBindings() {
 		DataBindingContext bindingContext = new DataBindingContext();
 		//
-		IObservableValue sizeLabel_1ObserveValue = PojoProperties.value("size").observe(label_1);
-		IObservableValue sizeLabel_3ObserveValue = PojoProperties.value("size").observe(label_3);
+		IObservableValue sizeLabel_1ObserveValue = PojoProperties.value("size").observe(labelDeterminant);
+		IObservableValue sizeLabel_3ObserveValue = PojoProperties.value("size").observe(labelBlocks);
 		bindingContext.bindValue(sizeLabel_1ObserveValue, sizeLabel_3ObserveValue, null, null);
 		//
 		return bindingContext;
 	}
+	
+	/**
+	 * Adds a IPageChangedListener to the given WizardDialog and 
+	 * recalculates the minSize of the shell every time its page changes.
+	 * Uses the GridLayout of the page to calculate the minSize.
+	 * @param dialog the WizardDialog 
+	 */
+    private void recalcMinSizeOnPageChange(WizardDialog dialog) {
+    	if (dialog != null) {
+        	dialog.addPageChangedListener(new IPageChangedListener() {
+    			public void pageChanged(PageChangedEvent event) {
+    				WizardPage page = ((WizardPage)event.getSelectedPage());
+    				Point newMinSize = page.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT);
+    				newMinSize.y += 122 + 69 + 41; //add the height of titleArea, buttonArea and titleBar
+    				page.getShell().setMinimumSize(newMinSize);
+    			}
+    		});
+    	}
+    }
 }
