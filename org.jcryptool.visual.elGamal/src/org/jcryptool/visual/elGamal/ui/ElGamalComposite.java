@@ -643,6 +643,7 @@ public class ElGamalComposite extends Composite {
 						finish();
 					}
 					stepButton.setText(Messages.ElGamalComposite_step);
+					stepButton.setToolTipText(Messages.ElGamalComposite_step);
 					stepButton.pack();
 					firstRun = false;
 				} else {
@@ -774,7 +775,6 @@ public class ElGamalComposite extends Composite {
         }
         switch (this.data.getAction()) {
             case EncryptAction:
-                // TODO das hier in ne konstante bei initialisierung der tabelle
                 updateEncrypt();
                 break;
             case DecryptAction:
@@ -801,7 +801,7 @@ public class ElGamalComposite extends Composite {
         int offset1 = 0;
         int offset2;
         value = new BigInteger(data.getAction().run(data, (String) null), Constants.HEXBASE);
-        sb.append("r = "); //$NON-NLS-1$
+        sb.append("K = "); //$NON-NLS-1$
         sb.append(data.getR().toString(Constants.HEXBASE));
         sb.append("\ns = "); //$NON-NLS-1$
         final BigInteger s = new BigInteger(
@@ -825,7 +825,7 @@ public class ElGamalComposite extends Composite {
         }
         sb.append("\n"); //$NON-NLS-1$
         offset2 = sb.length();
-        sb.append("Arrs = "); //$NON-NLS-1$
+        sb.append("AKKs = "); //$NON-NLS-1$
         sb.append(data.getPublicA().toString(Constants.HEXBASE));
         sb.append(data.getR().toString(Constants.HEXBASE));
         sb.append(" ∙ "); //$NON-NLS-1$
@@ -871,7 +871,7 @@ public class ElGamalComposite extends Composite {
         sb.append(data.getK().toString(Constants.HEXBASE));
         sb.append("\n"); //$NON-NLS-1$
         offset0 = sb.length();
-        sb.append("r = gk = "); //$NON-NLS-1$
+        sb.append("K = gk = "); //$NON-NLS-1$
         sb.append(data.getGenerator().toString(Constants.HEXBASE));
         sb.append(data.getK().toString(Constants.HEXBASE));
         sb.append(" mod "); //$NON-NLS-1$
@@ -880,7 +880,7 @@ public class ElGamalComposite extends Composite {
         sb.append(data.getR().toString(Constants.HEXBASE));
         sb.append("\n"); //$NON-NLS-1$
         offset1 = sb.length();
-        sb.append("s = (H(m) - ar)k-1 = ("); //$NON-NLS-1$
+        sb.append("s = (H(m) - aK)k-1 = ("); //$NON-NLS-1$
         sb.append(numbers[numberIndex]);
         sb.append(" - "); //$NON-NLS-1$
         sb.append(data.getA().toString(Constants.HEXBASE));
@@ -900,7 +900,7 @@ public class ElGamalComposite extends Composite {
                 + data.getK().toString(Constants.HEXBASE).length() - 1);
         fastExpText.setStyle(superScript, offset1 + 16, offset1 + 17);
         // set result
-        stepResult.setText("r = " + data.getR().toString(Constants.HEXBASE) + ", s = " + value.toString(Constants.HEXBASE)); //$NON-NLS-1$ //$NON-NLS-2$
+        stepResult.setText("K = " + data.getR().toString(Constants.HEXBASE) + ", s = " + value.toString(Constants.HEXBASE)); //$NON-NLS-1$ //$NON-NLS-2$
         resultText.setText("(" + data.getR().toString(Constants.HEXBASE) + ", " + value.toString(Constants.HEXBASE) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
@@ -915,7 +915,7 @@ public class ElGamalComposite extends Composite {
         int offset1;
         int offset2;
         BigInteger x;
-        sb.append("x = p - b - 1 = "); //$NON-NLS-1$
+        sb.append("x = d - b - 1 = "); //$NON-NLS-1$
         sb.append(modulus.toString(Constants.HEXBASE));
         sb.append(" - "); //$NON-NLS-1$
         sb.append(data.getA().toString(Constants.HEXBASE));
@@ -923,7 +923,7 @@ public class ElGamalComposite extends Composite {
         sb.append((x = modulus.subtract(data.getA()).subtract(BigInteger.ONE)).toString(Constants.HEXBASE));
         sb.append("\n"); //$NON-NLS-1$
         offset0 = sb.length();
-        sb.append("K = gb mod p = "); //$NON-NLS-1$
+        sb.append("K = gb mod d = "); //$NON-NLS-1$
         sb.append(data.getGenerator().toString(Constants.HEXBASE));
         sb.append(data.getB().toString(Constants.HEXBASE));
         sb.append(" mod "); //$NON-NLS-1$
@@ -971,7 +971,7 @@ public class ElGamalComposite extends Composite {
         sb.append(data.getB().toString());
         sb.append("\n"); //$NON-NLS-1$
         offset0 = sb.length();
-        sb.append("K = gb mod p = "); //$NON-NLS-1$
+        sb.append("K = gk mod d = "); //$NON-NLS-1$
         sb.append(data.getGenerator().toString(Constants.HEXBASE));
         sb.append(data.getB().toString(Constants.HEXBASE));
         sb.append(" mod "); //$NON-NLS-1$
@@ -979,9 +979,8 @@ public class ElGamalComposite extends Composite {
         sb.append(" = "); //$NON-NLS-1$
         sb.append(data.getGPowB().toString(Constants.HEXBASE));
         sb.append("\n"); //$NON-NLS-1$
-        // TODO bis hier
         offset1 = sb.length();
-        sb.append("M = Abm mod p = "); //$NON-NLS-1$
+        sb.append("M = Bkm mod d = "); //$NON-NLS-1$
         sb.append(data.getPublicA().toString(Constants.HEXBASE));
         offset2 = sb.length();
         sb.append(data.getB().toString(Constants.HEXBASE));
