@@ -17,7 +17,7 @@ script:
 before_deploy:
 - git config --local user.name "Dominik Schadow"
 - git config --local user.email "dominikschadow@gmail.com"
-- git tag "Weekly-Build-$(date +'%d.%m.%Y-%H.%M.%S')"
+- git tag "Weekly-Build-$(date +'%d.%m.%Y')"
 deploy:
   provider: releases
   prerelease: true
@@ -33,3 +33,4 @@ deploy:
   on:
     repo: jcryptool/core
     branch: develop
+    condition: $TRAVIS_EVENT_TYPE = cron
