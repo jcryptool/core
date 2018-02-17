@@ -14,6 +14,7 @@ import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.SecureRandom;
 import java.security.Signature;
+import java.util.Arrays;
 import java.util.Date;
 
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
@@ -74,6 +75,7 @@ public class SigGeneration {
         Signature sig = Signature.getInstance(signaturemethod);
         sig.initSign(k);
         sig.update(input);
+        
         signature = sig.sign();
 
         if (Input.privateKey != null) {
@@ -100,7 +102,13 @@ public class SigGeneration {
         Input.signature = signature; // Store the generated original signature
         Input.signatureHex = Input.bytesToHex(signature); // Hex String
         Input.signatureOct = Input.toOctalString(signature, ""); //$NON-NLS-1$
-        Input.dataHex = Input.bytesToHex(Input.data);
+        
+        //The first 1024 bytes of data get converted to hex representation
+        int maxHexLength = 1024; //1kB
+        if (Input.data.length > maxHexLength)
+        	Input.dataHex = Input.bytesToHex(Arrays.copyOfRange(Input.data, 0, maxHexLength));
+        else
+        	Input.dataHex = Input.bytesToHex(Input.data);
 
         return signature;
     }

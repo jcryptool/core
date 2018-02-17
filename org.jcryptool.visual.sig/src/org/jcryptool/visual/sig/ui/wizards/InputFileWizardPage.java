@@ -23,9 +23,7 @@ public class InputFileWizardPage extends WizardPage {
 
     public InputFileWizardPage(String pageName) {
         super(pageName);
-
         setTitle(Messages.InputFileWizard_title);
-        setDescription(Messages.InputFileWizard_header);
     }
 
     public void createControl(Composite parent) {
@@ -39,5 +37,15 @@ public class InputFileWizardPage extends WizardPage {
      */
     public InputFileComposite getCompositeFile() {
         return compositeFile;
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+    	super.setVisible(visible);
+    	if (visible) {
+    		compositeFile.setInitialFocus();
+    		compositeFile.updateMaxSize();
+    		setDescription(Messages.InputFileWizard_header + " " + compositeFile.getMaxSizeInMB() + "MB.");
+    	}
     }
 }

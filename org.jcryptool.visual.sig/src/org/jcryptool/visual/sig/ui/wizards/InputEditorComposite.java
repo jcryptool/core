@@ -40,6 +40,11 @@ public class InputEditorComposite extends Composite {
         text.setTextLimit(TEXTLIMIT);
         text.setFocus();
         
+        //Restore the former text, if existing 
+        if (Input.dataPlain != null && Input.filename == null) {
+        	text.setText(Input.dataPlain);
+        }
+        
         Label lblToSaveThe = new Label(this, SWT.NONE);
         GridData gd_lblToSaveThe = new GridData(SWT.FILL, SWT.FILL, false, false);
         gd_lblToSaveThe.widthHint = 400;
@@ -53,7 +58,9 @@ public class InputEditorComposite extends Composite {
                 if (text.getText().length() > 0) {
                     page.setPageComplete(true);
                     page.canFlipToNextPage();
+                    Input.dataPlain = text.getText();
                     Input.data = text.getText().getBytes();
+                    Input.filename = null;
                     page.getWizard().getContainer().updateButtons();
                 } else {
                     page.setPageComplete(false);
@@ -66,5 +73,9 @@ public class InputEditorComposite extends Composite {
 
     public String getText() {
         return text.getText();
+    }
+    
+    public void setInitialFocus() {
+    	text.setFocus();
     }
 }

@@ -46,6 +46,8 @@ public class Messages {
     public static String SigComposite_MessageTextReturn;
     public static String SigComposite_txtDescriptionOfStep4_Success;
     public static String SigComposite_menu;
+    public static String SigComposite_FileInput_Tooltip;
+    public static String SigComposite_Copy;
 
     static {
         // initialize resource bundle

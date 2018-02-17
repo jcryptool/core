@@ -22,15 +22,18 @@ public class Input {
     /**
      * Contains the input data
      */
+	public static String dataPlain;
     public static byte[] data;
     public static String dataHex;
+    
+    public static String filename;
 
     /**
      * Contains the path to the input data
      */
     public static String path = ""; //$NON-NLS-1$
 
-    public static int s = -1; // the chosen string (integer)
+    public static int s = -1; // the chosen signature (integer)
 
     public static int h = -1; // the chosen hash (integer)
 
@@ -78,12 +81,21 @@ public class Input {
      * Contains the private key used to sign the data (chosen in our plugin)
      */
     public static KeyStoreAlias key;
+    
+    /**
+     * The path used to save the binary file
+     */
+    public static String savePath;
+    
 
     /**
      * This method resets all variables in this class to their initial value
      */
     public static void reset() {
+    	filename = null;
+    	dataPlain = null;
         data = null;
+        dataHex = null;
         path = null;
         hash = null;
         hashHex = null;
@@ -92,6 +104,7 @@ public class Input {
         signatureOct = null;
         privateKey = null;
         publicKey = null;
+        savePath = null;
         h = -1;
         s = -1;
     }
@@ -113,6 +126,49 @@ public class Input {
             hexChars[j * 2 + 1] = hexArray[v & 0x0F];
         }
         return new String(hexChars);
+        
+//        String result = "";
+//        int v;
+//    	int currArrSize;
+//        int partSize = 5242880; // 5MB 
+//        int remainingSize = bytes.length;
+//        int part = 0;
+//        
+//        while (remainingSize > 0) {
+//        	if (remainingSize > partSize)
+//        		currArrSize = partSize;
+//        	else
+//        		currArrSize = remainingSize;
+//        	
+//        	int offset = part * partSize;
+//        	
+//	        char[] hexChars = new char[currArrSize * 2];
+//	        for(int i = 0; i < currArrSize; i ++) {  
+//	           v = bytes[offset + i] & 0xFF;
+//	           hexChars[i*2] = hexArray[v >>> 4];
+//	           hexChars[i*2 + 1] = hexArray[v & 0x0F];
+//	        }
+//	        result += new String(hexChars);
+//	        
+//	        remainingSize -= currArrSize;
+//        }
+//        
+//        return result;
+
+       
+        
+//        String result = "";
+//        int v;
+//        char char1;
+//        char char2;
+//        for (int i = 0; i < bytes.length; i++) {
+//        	v = bytes[i] & 0xFF;
+//        	char1 = hexArray[v >>> 4];
+//        	char2 = hexArray[v & 0x0F];
+//        	result += char1;
+//        	result += char2;
+//        }
+//        return result;
     }
 
     /**

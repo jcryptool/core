@@ -20,7 +20,6 @@ import org.eclipse.osgi.util.NLS;
 public class Messages {
     // Name of the files that contain the string values
     private static final String BUNDLE_NAME = "org.jcryptool.visual.sig.ui.wizards.messages"; //$NON-NLS-1$
-    public static String SignatureWizard_Usage;
     // Create strings for all the values
     // Group box 1 text
     public static String HashWizard_grpHashes;
@@ -39,6 +38,8 @@ public class Messages {
     public static String HashWizard_rdosha512;
     public static String InputWizard_FileOpenDialog;
     // SignatureWizard
+    public static String SignatureWizard_Usage;
+    public static String SignatureWizard_Usage2;
     // Group box 1 text
     public static String SignatureWizard_grpSignatures;
     // Group box 2 text
@@ -96,6 +97,7 @@ public class Messages {
     public static String ShowSig_hexDump;
 
     public static String ShowSig_grpMessage;
+    public static String ShowSig_grpMessage_first10kB;
     public static String ShowSig_lengthMessage;
 
     public static String ShowSig_btnClose;
@@ -106,11 +108,15 @@ public class Messages {
     public static String ShowSig_tblAscii;
 
     public static String ShowSig_editorDescripton;
+    public static String ShowSig_randomizedMethods;
     
     public static String EnterText;
     public static String ShowSig_btnSave;
     public static String ShowSig_MessageBoxTitle;
     public static String ShowSig_MessageBoxText;
+    public static String ShowSig_ContextCopy;
+    public static String ShowSig_ContextCopySelection;
+    public static String ShowSig_ContexstCopyAll;
     
     static {
         // initialize resource bundle
