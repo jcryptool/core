@@ -9,12 +9,12 @@ This core platform is extended by the crypto plug-ins available in the [JCrypToo
 Every developer is welcome to join the JCrypTool community. Have a look at our [wiki](https://github.com/jcryptool/core/wiki) to see how you can join our growing community.
 
 ## More Information
-Have a look at our [wiki](https://github.com/jcryptool/core/wiki) for more information, especially the [Getting started as a JCrypTool Developer](https://github.com/jcryptool/core/wiki/Getting-started-as-a-JCrypTool-Developer) page. Feel free to ask any question you might have in our [developers group](http://groups.google.com/group/jcryptool-developers).
+Have a look at our [wiki](https://github.com/jcryptool/core/wiki) for more information, especially the [Getting started as a JCrypToo[title](file:///Users/dos/Repositories/crypto/readme.md)l Developer](https://github.com/jcryptool/core/wiki/Getting-started-as-a-JCrypTool-Developer) page. Feel free to ask any question you might have in our [developers group](http://groups.google.com/group/jcryptool-developers).
 
 General information on the CrypTool and JCrypTool projects is available in the [CrypTool](http://www.cryptool.org) portal.
 
 ## Downloads
-JCrypTool downloads are available as [weekly builds](https://github.com/jcryptool/core/releases) (unstable, built automatically based on the **develop** branch) and as [release builds](https://www.cryptool.org/en/jct-downloads/jct-stable) (stable).
+JCrypTool downloads are available as [weekly builds](https://github.com/jcryptool/core/releases) (unstable, built automatically based on the **develop** branch) and as [release builds](https://www.cryptool.org/de/jct-downloads/stable) (stable).
 
 ## Meta
 [![Build Status](https://travis-ci.org/jcryptool/core.svg)](https://travis-ci.org/jcryptool/core)
