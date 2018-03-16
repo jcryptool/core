@@ -70,6 +70,7 @@ public class HuffmanCodingViewTree extends Composite implements IZoomableWorkben
 		GridData gd_styledTextTree = new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1);
 		gd_styledTextTree.heightHint = 40;
 		styledTextTree.setLayoutData(gd_styledTextTree);
+		styledTextTree.setText(Messages.ZestLabelProvider_4);
 
 		viewer = new GraphViewer(this, SWT.NONE);
 		viewer.setContentProvider(new ZestNodeContentProvider());
