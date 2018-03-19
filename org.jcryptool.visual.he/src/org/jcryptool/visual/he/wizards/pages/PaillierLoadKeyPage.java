@@ -99,7 +99,7 @@ public class PaillierLoadKeyPage extends WizardPage {
         GridData gd_password = new GridData(SWT.LEFT, SWT.CENTER, false, false);
         gd_password.widthHint = 200;
         password.setLayoutData(gd_password);
-        password.setEditable(false);
+        password.setEnabled(false);
         password.addModifyListener(new ModifyListener() {
             public void modifyText(final ModifyEvent e) {
                 if (filename != null) {
@@ -122,7 +122,7 @@ public class PaillierLoadKeyPage extends WizardPage {
           if (filename == null) {
               setErrorMessage(Messages.GHLoadKeyPage_File_Error);
           } else {
-              password.setEditable(true);
+              password.setEnabled(true);
           }
           StringBuffer fileData = new StringBuffer(1000);
           BufferedReader reader;
