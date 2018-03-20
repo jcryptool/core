@@ -183,6 +183,7 @@ public class GHComposite extends Composite {
 					homomorphResultEncryptedBits.append(i + ": " + homomorphResultEncrypted[i].toString());
 					homomorphResultEncryptedBits.append(homomorphResultEncryptedBits.getLineDelimiter());
 				}
+				homomorphResultEncryptedBits.setTopIndex(0);
 				decryptButton.setEnabled(true);
 				detText.setBackground(null);
 				rootText.setBackground(null);
@@ -365,12 +366,12 @@ public class GHComposite extends Composite {
         	if (i != keyPair.ctxts.length-1) cText.append(cText.getLineDelimiter());
         }
 		cText.setVisible(true);
-		cText.append(cText.getLineDelimiter());
+		cText.setTopIndex(0);
 		for (int i = 0; i < keyPair.pkBlocksX.length; i++) {
         	pkBlockText.append(i + ": " + keyPair.pkBlocksX[i].toString());
         	pkBlockText.append(pkBlockText.getLineDelimiter());
         }
-
+		pkBlockText.setTopIndex(0);
 		detText.setBackground(YELLOW);
 		rootText.setBackground(YELLOW);
 		cText.setBackground(YELLOW);
@@ -432,6 +433,7 @@ public class GHComposite extends Composite {
 			this.initialEncryptedBits.append(i + ": " + this.initialEncrypted[i].toString());
 			this.initialEncryptedBits.append(this.initialEncryptedBits.getLineDelimiter());
 		}
+		this.initialEncryptedBits.setTopIndex(0);
 		this.plainOperations.setText(Integer.toString(data.getNumber()));
 
 		detText.setBackground(null);
@@ -474,6 +476,7 @@ public class GHComposite extends Composite {
 			this.homomorphEncryptedBits.append(i + ": " + this.homomorphEncrypted[i].toString());
 			this.homomorphEncryptedBits.append(this.homomorphEncryptedBits.getLineDelimiter());
 		}
+		this.homomorphEncryptedBits.setTopIndex(0);
 		if (first) {
 			this.plainOperations.setText(this.plainOperations.getText() + " + " + Integer.toString(data.getNumber()));
 			first = false;
@@ -509,6 +512,7 @@ public class GHComposite extends Composite {
 			this.homomorphEncryptedBits.append(i + ": " + this.homomorphEncrypted[i].toString());
 			this.homomorphEncryptedBits.append(this.homomorphEncryptedBits.getLineDelimiter());
 		}
+		this.homomorphEncryptedBits.setTopIndex(0);
 		if (first) {
 			this.plainOperations.setText(this.plainOperations.getText() + " * " + Integer.toString(data.getNumber()));
 			first = false;
@@ -635,8 +639,9 @@ public class GHComposite extends Composite {
 		
 		Group mainGroup = new Group(parent, SWT.SHADOW_NONE);
 		mainGroup.setLayout(new GridLayout(2, false));
-		mainGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		mainGroup.setText(Messages.HEComposite_KeyArea_Public_Key);
+		((GridLayout)mainGroup.getLayout()).verticalSpacing = 10;
+		mainGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		mainGroup.setText(Messages.GHComposite_KeyArea_Public_Key);
 		
 		compositeDeterminant = new Composite(mainGroup, SWT.NONE);
 		compositeDeterminant.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -669,7 +674,7 @@ public class GHComposite extends Composite {
 		rootText.setEditable(false);
 		
 		compositeBlocks = new Composite(mainGroup, SWT.NONE);
-		compositeBlocks.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		compositeBlocks.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout gl_compositeBlocks = new GridLayout(2, false);
 		gl_compositeBlocks.marginHeight = 0;
 		gl_compositeBlocks.marginWidth = 0;
@@ -679,14 +684,14 @@ public class GHComposite extends Composite {
 		gd_labelBlocks.widthHint = lblWidth;
 		labelBlocks.setLayoutData(gd_labelBlocks);
 		labelBlocks.setText(Messages.HEComposite_GH_KeyArea_Public_Key_Blocks);
-		pkBlockText = new Text(compositeBlocks, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
-		GridData gd_pkBlockText = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd_pkBlockText.heightHint = 40;
+		pkBlockText = new Text(compositeBlocks, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
+		GridData gd_pkBlockText = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_pkBlockText.heightHint = 50;
 		pkBlockText.setLayoutData(gd_pkBlockText);
 		pkBlockText.setEditable(false);
 		
 		compositeVector = new Composite(mainGroup, SWT.NONE);
-		compositeVector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		compositeVector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout gl_compositeVector = new GridLayout(2, false);
 		gl_compositeVector.marginHeight = 0;
 		gl_compositeVector.marginWidth = 0;
@@ -696,9 +701,9 @@ public class GHComposite extends Composite {
         gd_labelVector.widthHint = lblWidth;
         labelVector.setLayoutData(gd_labelVector);
         labelVector.setText(Messages.HEComposite_GH_KeyArea_Secret_Vector);
-        cText = new Text(compositeVector, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
-        GridData gd_cText = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-        gd_cText.heightHint = 40;
+        cText = new Text(compositeVector, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+        GridData gd_cText = new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1);
+        gd_cText.heightHint = 50;
         cText.setLayoutData(gd_cText);
         cText.setEditable(false);
 	}
@@ -708,7 +713,7 @@ public class GHComposite extends Composite {
      */
 	private void createGHModulusArea(final Composite parent) {
 		Group buttonGroup = new Group(parent, SWT.SHADOW_NONE);
-		GridData gd_buttonGroup = new GridData(SWT.FILL, SWT.TOP, false, true, 1, 1);
+		GridData gd_buttonGroup = new GridData(SWT.FILL, SWT.CENTER, false, true, 1, 1);
 		gd_buttonGroup.widthHint = buttonWidth;
 		FillLayout fl_buttonGroup = new FillLayout(SWT.HORIZONTAL);
 		fl_buttonGroup.marginHeight = fl_buttonGroup.marginWidth = 2;
@@ -776,16 +781,17 @@ public class GHComposite extends Composite {
 		
         //Main Group on the right side
 		mainGroup = new Group(parent, SWT.SHADOW_NONE);
-		mainGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 3));
+		mainGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3));
 		mainGroup.setText(Messages.HEComposite_HomomorphicArea);
 		GridLayout gl_mainGroup = new GridLayout(1, false);
 		mainGroup.setLayout(gl_mainGroup);
 		
 		//Group First Operand
 		Group groupFirstOperand = new Group(mainGroup, SWT.SHADOW_NONE);
-		groupFirstOperand.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		groupFirstOperand.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		groupFirstOperand.setText(Messages.HEComposite_Initial_Data);
 		GridLayout gl_mainComposite = new GridLayout(4, false);
+		gl_mainComposite.verticalSpacing = 10;
 		groupFirstOperand.setLayout(gl_mainComposite);
 
 		Label lblDecOp1 = new Label(groupFirstOperand, SWT.RIGHT);
@@ -811,9 +817,9 @@ public class GHComposite extends Composite {
         gd_lblEncVectorOp1.widthHint = lblWidth;
         lblEncVectorOp1.setLayoutData(gd_lblEncVectorOp1);
 		lblEncVectorOp1.setText(Messages.HEComposite_Initial_Number_As_Enc_Vec);
-		initialEncryptedBits = new Text(groupFirstOperand, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
-		GridData gd_initialEncryptedBits = new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1);
-		gd_initialEncryptedBits.heightHint = 70;
+		initialEncryptedBits = new Text(groupFirstOperand, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		GridData gd_initialEncryptedBits = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
+		gd_initialEncryptedBits.heightHint = 50;
 		initialEncryptedBits.setLayoutData(gd_initialEncryptedBits);
 		initialEncryptedBits.setEditable(false);
 		
@@ -872,7 +878,7 @@ public class GHComposite extends Composite {
 
 		//Group Second Operand
 		Group groupSecondOperand = new Group(mainGroup, SWT.SHADOW_NONE);
-		groupSecondOperand.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		groupSecondOperand.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		groupSecondOperand.setText(Messages.HEComposite_Operation_Area);
 		GridLayout gl_groupSecondOperand = new GridLayout(4, false);
 		groupSecondOperand.setLayout(gl_groupSecondOperand);
@@ -897,12 +903,14 @@ public class GHComposite extends Composite {
 
         lblEncVectorOp2 = new Label(groupSecondOperand, SWT.RIGHT);
         GridData gd_lblEncVectorOp2 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+        gd_lblEncVectorOp2.verticalIndent = 5;
         gd_lblEncVectorOp2.widthHint = lblWidth;
         lblEncVectorOp2.setLayoutData(gd_lblEncVectorOp2);
 		lblEncVectorOp2.setText(Messages.HEComposite_Operation_Number_As_Enc_Vec);
-		homomorphEncryptedBits = new Text(groupSecondOperand, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
-		GridData gd_homomorphEncryptedBits = new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1);
-		gd_homomorphEncryptedBits.heightHint = 70;
+		homomorphEncryptedBits = new Text(groupSecondOperand, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		GridData gd_homomorphEncryptedBits = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
+		gd_homomorphEncryptedBits.heightHint = 50;
+		gd_homomorphEncryptedBits.verticalIndent = 5;
 		homomorphEncryptedBits.setLayoutData(gd_homomorphEncryptedBits);
 		homomorphEncryptedBits.setEditable(false);
 		
@@ -940,7 +948,7 @@ public class GHComposite extends Composite {
 
 		//Group Result
 		Group groupResult = new Group(mainGroup, SWT.SHADOW_NONE);
-		groupResult.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		groupResult.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		groupResult.setText(Messages.HEComposite_Result_Area);
 		GridLayout gl_groupResult = new GridLayout(4, false);
 		groupResult.setLayout(gl_groupResult);
@@ -950,28 +958,32 @@ public class GHComposite extends Composite {
         gd_lblResultEncVector.widthHint = lblWidth;
         lblResultEncVector.setLayoutData(gd_lblResultEncVector);
 		lblResultEncVector.setText(Messages.HEComposite_Result_Number_As_Enc_Vec);
-		homomorphResultEncryptedBits = new Text(groupResult, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
-		GridData gd_homomorphResultEncryptedBits = new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1);
-		gd_homomorphResultEncryptedBits.heightHint = 70;
+		homomorphResultEncryptedBits = new Text(groupResult, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		GridData gd_homomorphResultEncryptedBits = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
+		gd_homomorphResultEncryptedBits.heightHint = 50;
 		homomorphResultEncryptedBits.setLayoutData(gd_homomorphResultEncryptedBits);
 		homomorphResultEncryptedBits.setEditable(false);
 
 		lblResultDecimal = new Label(groupResult, SWT.RIGHT);
 		GridData gd_lblResultDecimal = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+		gd_lblResultDecimal.verticalIndent = 5;
 		gd_lblResultDecimal.widthHint = lblWidth;
 		lblResultDecimal.setLayoutData(gd_lblResultDecimal);
 		lblResultDecimal.setText(Messages.HEComposite_Result_Number);
 		homomorphResultPlain = new Text(groupResult, SWT.MULTI | SWT.H_SCROLL | SWT.BORDER);
 		homomorphResultPlain.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		((GridData)homomorphResultPlain.getLayoutData()).verticalIndent = 5;
 		homomorphResultPlain.setEditable(false);
 		
         lblResultBitVector = new Label(groupResult, SWT.RIGHT);
         GridData gd_lblResultBitVector = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+        gd_lblResultBitVector.verticalIndent = 5;
         gd_lblResultBitVector.widthHint = lblWidth;
         lblResultBitVector.setLayoutData(gd_lblResultBitVector);
         lblResultBitVector.setText(Messages.HEComposite_Result_Number_As_Bits);
         homomorphResultPlainBits = new Text(groupResult, SWT.MULTI | SWT.H_SCROLL | SWT.BORDER);
         homomorphResultPlainBits.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        ((GridData)homomorphResultPlainBits.getLayoutData()).verticalIndent = 5;
         homomorphResultPlainBits.setEditable(false);
 	}
 
@@ -980,15 +992,10 @@ public class GHComposite extends Composite {
 	 * @param parent the composite in which it is created
 	 */
 	private void createGHPlainArea(final Composite parent) {
-		Group groupBtnSettings = new Group(parent, SWT.SHADOW_NONE);
-	    GridData gd_groupBtnSettings = new GridData(SWT.FILL, SWT.BOTTOM, false, true, 1, 1);
-	    gd_groupBtnSettings.widthHint = buttonWidth;
-		FillLayout fl_grpBtnSettings = new FillLayout(SWT.HORIZONTAL);
-		fl_grpBtnSettings.marginHeight = fl_grpBtnSettings.marginWidth = 2;
-		groupBtnSettings.setLayoutData(gd_groupBtnSettings);
-		groupBtnSettings.setText(Messages.HEComposite_Settings_Group);
-		groupBtnSettings.setLayout(fl_grpBtnSettings);
-		this.settingsButton = new Button(groupBtnSettings, SWT.PUSH);
+	    GridData gd_settingsButton = new GridData(SWT.FILL, SWT.BOTTOM, false, true, 1, 1);
+	    gd_settingsButton.widthHint = buttonWidth;
+		this.settingsButton = new Button(parent, SWT.PUSH);
+		this.settingsButton.setLayoutData(gd_settingsButton);
 		this.settingsButton.setToolTipText(Messages.HEComposite_Settings_Tooltip);
 		this.settingsButton.setText(Messages.HEComposite_Settings);
 		this.settingsButton.addSelectionListener(new SelectionAdapter() {
@@ -1003,7 +1010,7 @@ public class GHComposite extends Composite {
         });
 	
 		Group groupPlainTextOperations = new Group(parent, SWT.SHADOW_NONE);
-		groupPlainTextOperations.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		groupPlainTextOperations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		groupPlainTextOperations.setText(Messages.HEComposite_Plain_Data);
 		GridLayout gl_mainComposite_4 = new GridLayout(4, false);
 		groupPlainTextOperations.setLayout(gl_mainComposite_4);

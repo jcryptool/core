@@ -127,6 +127,7 @@ public class Messages extends NLS {
 	public static String OperationTextWizard_Title;
 	public static String PaillierNewKeyPage_Message;
 	public static String PaillierNewKeyPage_Title;
+	public static String PaillierLoadKeyPage_Title;
 	public static String RSAChooseKeytypePage_choose_keytype;
 	public static String RSAChooseKeytypePage_choose_type_text;
 	public static String RSAChooseKeytypePage_new_keypair;
@@ -192,6 +193,7 @@ public class Messages extends NLS {
 	public static String SettinsPage_Title;
 	public static String SettingsWizard_Title;
 	public static String Wrong_Password;
+	public static String GHComposite_KeyArea_Public_Key;
 	public static String GHChooseMultiplicationsExplanation;
 	public static String GHChooseMultiplicationsText;
 	public static String LoadKeyPage_select_file;

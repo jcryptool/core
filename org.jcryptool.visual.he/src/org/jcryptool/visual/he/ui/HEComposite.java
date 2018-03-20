@@ -599,15 +599,17 @@ public class HEComposite extends Composite {
 		Group mainGroup = new Group(parent, SWT.SHADOW_NONE);
 		mainGroup.setText(Messages.HEComposite_HomomorphicArea);
 		mainGroup.setLayout(new GridLayout());
-		mainGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 3));
+		mainGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3));
 		
 		Group firstOperandGroup = new Group(mainGroup, SWT.SHADOW_NONE);
 		firstOperandGroup.setText(Messages.HEComposite_Initial_Data);
-		firstOperandGroup.setLayout(new GridLayout(1, false));
-		firstOperandGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		GridLayout gl_firstOperandGroup = new GridLayout(1, false);
+		gl_firstOperandGroup.verticalSpacing = 10; 
+		firstOperandGroup.setLayout(gl_firstOperandGroup);
+		firstOperandGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		Composite subComposite = new Composite(firstOperandGroup, SWT.NONE);
-		subComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		subComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout gl_subComposite = new GridLayout(2, false);
 		gl_subComposite.marginHeight = 0;
 		gl_subComposite.marginWidth = 0;
@@ -618,11 +620,11 @@ public class HEComposite extends Composite {
         gd_labelDecimal.widthHint = lblWidth;
         labelDecimal.setLayoutData(gd_labelDecimal);
         initialPlain = new Text(subComposite, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
-        initialPlain.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        initialPlain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         ((GridData)initialPlain.getLayoutData()).heightHint = 50;
 
         Composite subComposite1 = new Composite(firstOperandGroup, SWT.NONE);
-        subComposite1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        subComposite1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout gl_subComposite1 = new GridLayout(2, false);
 		gl_subComposite1.marginHeight = 0;
 		gl_subComposite1.marginWidth = 0;
@@ -633,9 +635,8 @@ public class HEComposite extends Composite {
         gd_labelCipher.widthHint = lblWidth;
         labelCipher.setLayoutData(gd_labelCipher);
         initialEncryptedBits = new Text(subComposite1, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
-        initialEncryptedBits.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        initialEncryptedBits.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         ((GridData)initialEncryptedBits.getLayoutData()).heightHint = 50;
-        
         
         Group btnGroup2 = new Group(parent, SWT.SHADOW_NONE);
         btnGroup2.setText(Messages.HEComposite_Homomorphic_Text);
@@ -711,11 +712,13 @@ public class HEComposite extends Composite {
         
     	Group secondOperandGroup = new Group(mainGroup, SWT.SHADOW_NONE);
     	secondOperandGroup.setText(Messages.HEComposite_Operation_Area);
-    	secondOperandGroup.setLayout(new GridLayout(1, false));
-    	secondOperandGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+    	GridLayout gl_secondOperandGroup = new GridLayout(1, false);
+    	gl_secondOperandGroup.verticalSpacing = 10;
+    	secondOperandGroup.setLayout(gl_secondOperandGroup);
+    	secondOperandGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		Composite subComposite2 = new Composite(secondOperandGroup, SWT.NONE);
-		subComposite2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		subComposite2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout gl_subComposite2 = new GridLayout(2, false);
 		gl_subComposite2.marginHeight = 0;
 		gl_subComposite2.marginWidth = 0;
@@ -726,11 +729,11 @@ public class HEComposite extends Composite {
 	    gd_labelDecimal1.widthHint = lblWidth;
 	    labelDecimal1.setLayoutData(gd_labelDecimal1);
         homomorphPlain = new Text(subComposite2, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
-        homomorphPlain.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        homomorphPlain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         ((GridData)homomorphPlain.getLayoutData()).heightHint = 50;
 
         Composite subComposite3 = new Composite(secondOperandGroup, SWT.NONE);
-        subComposite3.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        subComposite3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout gl_subComposite3 = new GridLayout(2, false);
 		gl_subComposite3.marginHeight = 0;
 		gl_subComposite3.marginWidth = 0;
@@ -741,16 +744,18 @@ public class HEComposite extends Composite {
 		gd_labelCipher2.widthHint = lblWidth;
 		labelCipher2.setLayoutData(gd_labelCipher2);
         homomorphEncryptedBits = new Text(subComposite3, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
-        homomorphEncryptedBits.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        homomorphEncryptedBits.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         ((GridData)homomorphEncryptedBits.getLayoutData()).heightHint = 50;
 
 		Group resultGroup = new Group(mainGroup, SWT.SHADOW_NONE);
 		resultGroup.setText(Messages.HEComposite_Result_Area);
-		resultGroup.setLayout(new GridLayout(1, false));
-		resultGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		GridLayout gl_resultGroup = new GridLayout(1, false);
+		gl_resultGroup.verticalSpacing = 10;
+		resultGroup.setLayout(gl_resultGroup);
+		resultGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		Composite subComposite4 = new Composite(resultGroup, SWT.NONE);
-		subComposite4.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		subComposite4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout gl_subComposite4 = new GridLayout(2, false);
 		gl_subComposite4.marginHeight = 0;
 		gl_subComposite4.marginWidth = 0;
@@ -761,11 +766,11 @@ public class HEComposite extends Composite {
 	    gd_labelResultEnc.widthHint = lblWidth;
 	    labelResultEnc.setLayoutData(gd_labelResultEnc);
         homomorphResultEncryptedBits = new Text(subComposite4, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
-        homomorphResultEncryptedBits.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        homomorphResultEncryptedBits.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         ((GridData)homomorphResultEncryptedBits.getLayoutData()).heightHint = 50;
 
 		Composite subComposite5 = new Composite(resultGroup, SWT.NONE);
-		subComposite5.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		subComposite5.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout gl_subComposite5 = new GridLayout(2, false);
 		gl_subComposite5.marginHeight = 0;
 		gl_subComposite5.marginWidth = 0;
@@ -776,7 +781,7 @@ public class HEComposite extends Composite {
 	    gd_labelResultNumber.widthHint = lblWidth;
         labelResultNumber.setLayoutData(gd_labelResultNumber);
         homomorphResultPlain = new Text(subComposite5, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
-        homomorphResultPlain.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        homomorphResultPlain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         ((GridData)homomorphResultPlain.getLayoutData()).heightHint = 50;
     }
 
@@ -819,11 +824,13 @@ public class HEComposite extends Composite {
 		
 		Group mainGroup = new Group(parent, SWT.SHADOW_NONE);
 		mainGroup.setText(Messages.HEComposite_Plain_Data);
-		mainGroup.setLayout(new GridLayout(1, false));
-		mainGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		GridLayout gl_mainGroup = new GridLayout(1, false);
+		gl_mainGroup.verticalSpacing = 10;
+		mainGroup.setLayout(gl_mainGroup);
+		mainGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		Composite subComposite = new Composite(mainGroup, SWT.NONE);
-		subComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		subComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout gl_subComposite = new GridLayout(2, false);
 		gl_subComposite.marginHeight = 0;
 		gl_subComposite.marginWidth = 0;
@@ -834,11 +841,11 @@ public class HEComposite extends Composite {
 	    labelOperations.setLayoutData(gd_labelOperations);
 		labelOperations.setText(Messages.HEComposite_Plain_Operations);
 		plainOperations = new Text(subComposite, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
-		plainOperations.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		plainOperations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		((GridData)plainOperations.getLayoutData()).heightHint = 50;
 
         Composite subComposite2 = new Composite(mainGroup, SWT.NONE);
-        subComposite2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        subComposite2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout gl_subComposite2 = new GridLayout(2, false);
 		gl_subComposite2.marginHeight = 0;
 		gl_subComposite2.marginWidth = 0;
@@ -849,7 +856,7 @@ public class HEComposite extends Composite {
 		labelResult.setLayoutData(gd_labelResult);
         labelResult.setText(Messages.HEComposite_Result);
 		plainResult = new Text(subComposite2, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
-		plainResult.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		plainResult.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		((GridData)plainResult.getLayoutData()).heightHint = 50;
     }
 	
