@@ -21,3 +21,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.jcryptool.crypto.ui.textmodify.wizard,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.directories
+Automatic-Module-Name: org.jcryptool.crypto.classic.alphabets

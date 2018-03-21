@@ -18,3 +18,4 @@ Export-Package: org.jcryptool.analysis.freqanalysis,
  org.jcryptool.analysis.freqanalysis.calc,
  org.jcryptool.analysis.freqanalysis.ui
 Bundle-Vendor: %Bundle-Vendor.0
+Automatic-Module-Name: org.jcryptool.analysis.freqanalysis

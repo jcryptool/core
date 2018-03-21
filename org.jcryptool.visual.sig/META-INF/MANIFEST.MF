@@ -18,3 +18,4 @@ Import-Package: de.flexiprovider.core.dsa,
 Export-Package: org.jcryptool.visual.sig.algorithm,
  org.jcryptool.visual.sig.listener
 Bundle-Vendor: %Bundle-Vendor
+Automatic-Module-Name: org.jcryptool.visual.sig

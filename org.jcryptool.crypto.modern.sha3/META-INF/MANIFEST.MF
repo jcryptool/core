@@ -11,3 +11,4 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
  org.jcryptool.core.operations;bundle-version="1.0.0"
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.constants
+Automatic-Module-Name: org.jcryptool.crypto.modern.sha3

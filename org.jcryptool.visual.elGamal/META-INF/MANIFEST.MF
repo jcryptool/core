@@ -20,3 +20,4 @@ Import-Package: org.jcryptool.core.logging.dialogs,
  org.jcryptool.crypto.ui.textblockloader,
  org.jcryptool.crypto.ui.textblockloader.conversion
 Bundle-Vendor: %Bundle-Vendor
+Automatic-Module-Name: org.jcryptool.visual.elGamal

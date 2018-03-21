@@ -10,3 +10,4 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
  org.jcryptool.core.util;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.jcryptool.visual.sidechannelattack.spa

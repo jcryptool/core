@@ -16,3 +16,4 @@ Import-Package: org.jcryptool.analysis.graphtools,
  org.jcryptool.analysis.graphtools.derivates,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.constants
+Automatic-Module-Name: org.jcryptool.analysis.friedman

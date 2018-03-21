@@ -69,3 +69,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: %Bundle-Vendor
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.ui;bundle-version="3.107.0"
+Automatic-Module-Name: org.jcryptool.visual.verifiablesecretsharing.lib

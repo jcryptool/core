@@ -22,3 +22,4 @@ Import-Package: org.jcryptool.core.logging.dialogs,
  org.jcryptool.core.util.colors,
  org.jcryptool.core.util.constants,
  org.jcryptool.core.util.fonts
+Automatic-Module-Name: org.jcryptool.visual.rsa
