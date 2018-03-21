@@ -89,3 +89,4 @@ Export-Package: de.flexiprovider,
  de.flexiprovider.pqc.rainbow,
  de.flexiprovider.pqc.rainbow.util,
  de.flexiprovider.pqc.tss
+Automatic-Module-Name: de.flexiprovider

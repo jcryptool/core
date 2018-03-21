@@ -15,3 +15,4 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.editors,
  org.jcryptool.core.util.constants
 Bundle-Activator: org.jcryptool.commands.core.CommandsCorePlugin
+Automatic-Module-Name: org.jcryptool.commands.core

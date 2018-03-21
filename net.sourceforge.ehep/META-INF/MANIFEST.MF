@@ -15,3 +15,4 @@ Export-Package: net.sourceforge.ehep,net.sourceforge.ehep.actions,net.sourceforg
 Bundle-ManifestVersion: 2
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.jcryptool.core.logging.utils
+Automatic-Module-Name: net.sourceforge.ehep

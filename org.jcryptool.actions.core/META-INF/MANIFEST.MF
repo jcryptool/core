@@ -14,3 +14,4 @@ Require-Bundle: org.jdom;bundle-version="1.1.1",
  org.eclipse.core.databinding.observable;bundle-version="1.4.0"
 Import-Package: org.jcryptool.core.logging.utils
 Bundle-Activator: org.jcryptool.actions.core.ActionsCorePlugin
+Automatic-Module-Name: org.jcryptool.actions.core

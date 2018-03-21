@@ -28,3 +28,4 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.crypto.keystore,
  org.jcryptool.crypto.keystore.backend
 Export-Package: org.jcryptool.crypto.flexiprovider.integrator
+Automatic-Module-Name: org.jcryptool.crypto.flexiprovider.integrator

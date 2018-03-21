@@ -161,3 +161,4 @@ Bundle-ClassPath: .,
  libs/bcprov-jdk15on-159.jar
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.providers
+Automatic-Module-Name: org.bouncycastle

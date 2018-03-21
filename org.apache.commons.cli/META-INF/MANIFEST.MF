@@ -25,4 +25,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-SymbolicName: org.apache.commons.cli;singleton:=true
 Tool: Bnd-0.0.238
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.apache.commons.cli
 

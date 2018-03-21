@@ -11,3 +11,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.jcryptool.core.cryptosystem.core,
  org.jcryptool.core.cryptosystem.core.exception,
  org.jcryptool.core.cryptosystem.core.text
+Automatic-Module-Name: org.jcryptool.core.cryptosystem

@@ -29,3 +29,4 @@ Import-Package: org.jcryptool.core,
  org.jcryptool.core.operations,
  org.jcryptool.core.operations.algorithm,
  org.jcryptool.core.operations.util
+Automatic-Module-Name: org.jcryptool.core.views

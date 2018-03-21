@@ -25,3 +25,4 @@ Export-Package: org.jcryptool.crypto.flexiprovider,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.crypto.keystore.keys
+Automatic-Module-Name: org.jcryptool.crypto.flexiprovider

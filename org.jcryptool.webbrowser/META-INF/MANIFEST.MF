@@ -11,3 +11,4 @@ Bundle-Activator: org.jcryptool.webbrowser.BrowserPlugin
 Bundle-Vendor: %bundleProvider
 Export-Package: org.jcryptool.webbrowser.remote
 Import-Package: org.jcryptool.core.logging.utils
+Automatic-Module-Name: org.jcryptool.webbrowser

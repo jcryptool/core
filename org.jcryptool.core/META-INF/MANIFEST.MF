@@ -22,3 +22,4 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations,
  org.jcryptool.core.util.constants,
  org.jcryptool.core.util.directories
+Automatic-Module-Name: org.jcryptool.core

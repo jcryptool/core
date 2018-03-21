@@ -25,3 +25,4 @@ Import-Package: org.jcryptool.actions.core.registry,
  org.jcryptool.crypto.flexiprovider.types,
  org.jcryptool.crypto.keystore.keys,
  org.jcryptool.crypto.keystore.backend
+Automatic-Module-Name: org.jcryptool.crypto.flexiprovider.engines

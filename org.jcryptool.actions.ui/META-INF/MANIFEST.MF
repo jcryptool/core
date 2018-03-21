@@ -29,3 +29,4 @@ Import-Package: org.eclipse.core.filesystem,
  org.jcryptool.editor.text.startup
 Export-Package: org.jcryptool.actions.ui,
  org.jcryptool.actions.ui.views
+Automatic-Module-Name: org.jcryptool.actions.ui
