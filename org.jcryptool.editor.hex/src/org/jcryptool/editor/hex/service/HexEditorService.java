@@ -9,24 +9,20 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.editor.hex.service;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
-import java.util.LinkedList;
-import java.util.List;
-
-import net.sourceforge.ehep.editors.HexEditor;
-import net.sourceforge.ehep.gui.HexEditorControl;
-import net.sourceforge.ehep.gui.HexTable;
 
 import org.eclipse.ui.IEditorPart;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.editors.AbstractEditorService;
 import org.jcryptool.editor.hex.HexEditorConstants;
+
+import net.sourceforge.ehep.editors.HexEditor;
+import net.sourceforge.ehep.gui.HexEditorControl;
+import net.sourceforge.ehep.gui.HexTable;
 
 /***
  * 
