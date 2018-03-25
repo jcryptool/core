@@ -79,11 +79,14 @@ public class DynamicPredefinedStatisticsProvider implements PredefinedStatistics
 
         String kafka = "refTexts/Die_Verwandlung_1_2.txt"; //$NON-NLS-1$
         String poe = "refTexts/The_Murders_in_the_Rue_Morgue.txt"; //$NON-NLS-1$
+        String dumas = "refTexts/Le_Comte_de_Monte_Cristo.txt"; //$NON-NLS-1$
 
         predefinedTextFiles.put(
                 new Info("Die Verwandlung (Kafka)", Messages.DynamicPredefinedStatisticsProvider_3), kafka); //$NON-NLS-1$
         predefinedTextFiles.put(new Info(
                 "The Murders in the Rue Morgue (Poe)", Messages.DynamicPredefinedStatisticsProvider_5), poe); //$NON-NLS-1$
+        predefinedTextFiles.put(new Info(
+                "Le Comte de Monte Cristo (Dumas)", Messages.DynamicPredefinedStatisticsProvider_6), dumas); //$NON-NLS-1$
 
         if (predefinedTextFiles.isEmpty()) {
             String message = "Could not locate reference text files for statistics"; //$NON-NLS-1$
