@@ -11,6 +11,7 @@
 package org.jcryptool.visual.sig.ui.wizards;
 
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
@@ -28,7 +29,7 @@ public class HashWizardPage extends WizardPage {
     }
 
     public void createControl(Composite parent) {
-        composite = new HashComposite(parent, NONE);
+        composite = new HashComposite(parent, SWT.NONE);
         setControl(composite);
         setPageComplete(true);
     }

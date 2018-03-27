@@ -15,6 +15,8 @@ public class Input {
      * Contains the path to the input data
      */
     public String path = ""; //$NON-NLS-1$
+    
+    public String tooltipData;
 
     public int h = -1; // the chosen hash (integer)
 

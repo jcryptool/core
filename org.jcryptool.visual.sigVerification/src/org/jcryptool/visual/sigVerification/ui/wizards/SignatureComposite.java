@@ -14,6 +14,8 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -51,34 +53,38 @@ public class SignatureComposite extends Composite implements SelectionListener {
      * Draws all the controls of the composite
      */
     private void initialize() {
+        setLayout(new GridLayout());
+        
         grpSignatures = new Group(this, SWT.NONE);
         grpSignatures.setText(Messages.SignatureWizard_grpSignatures);
-        grpSignatures.setBounds(10, 10, 406, 151);
+        grpSignatures.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        grpSignatures.setLayout(new GridLayout());
 
         rdo1 = new Button(grpSignatures, SWT.RADIO);
-        rdo1.setBounds(10, 19, 118, 18);
+        rdo1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         rdo1.setText(Messages.SignatureWizard_DSA);
 
         rdo2 = new Button(grpSignatures, SWT.RADIO);
-        rdo2.setBounds(10, 43, 118, 18);
+        rdo2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         rdo2.setText(Messages.SignatureWizard_RSA);
 
         rdo3 = new Button(grpSignatures, SWT.RADIO);
         rdo3.setEnabled(true);
-        rdo3.setBounds(10, 67, 118, 18);
+        rdo3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         rdo3.setText(Messages.SignatureWizard_ECDSA);
 
         rdo4 = new Button(grpSignatures, SWT.RADIO);
-        rdo4.setBounds(10, 91, 118, 18);
+        rdo4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         rdo4.setText(Messages.SignatureWizard_RSAandMGF1);
 
         Group grpDescription = new Group(this, SWT.NONE);
         grpDescription.setText(Messages.SignatureWizard_grpDescription);
-        grpDescription.setBounds(10, 220, 406, 255);
+        grpDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        grpDescription.setLayout(new GridLayout());
 
-        txtDescription = new Text(grpDescription, SWT.WRAP | SWT.NO_BACKGROUND);
+        txtDescription = new Text(grpDescription, SWT.WRAP | SWT.NO_BACKGROUND | SWT.V_SCROLL);
         txtDescription.setEditable(false);
-        txtDescription.setBounds(10, 15, 382, 213);
+        txtDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         txtDescription.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
         txtDescription.setText(Messages.SignatureWizard_DSA_description);
 

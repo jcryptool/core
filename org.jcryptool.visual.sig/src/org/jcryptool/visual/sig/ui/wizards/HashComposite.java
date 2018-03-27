@@ -63,7 +63,7 @@ public class HashComposite extends Composite implements SelectionListener {
     	wizardDescription.setLayoutData(gd_wizardDescription);
     	
         grpHashes = new Group(this, SWT.NONE);
- 	    GridData gd_grpSignatures = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+ 	    GridData gd_grpSignatures = new GridData(SWT.FILL, SWT.FILL, true, false);
  	    gd_grpSignatures.widthHint = width;
  	    grpHashes.setLayoutData(gd_grpSignatures);
  	    grpHashes.setLayout(new GridLayout());

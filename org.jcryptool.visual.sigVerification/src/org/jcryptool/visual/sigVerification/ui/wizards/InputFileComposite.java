@@ -4,10 +4,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -29,19 +32,28 @@ public class InputFileComposite extends Composite implements SelectionListener {
     private Text txtPath;
     private File file = null;
     private InputFileWizardPage page;
-    private int maxSize = 10485760; // Maximal size of the file (10 MB)
+    private int maxSize = 10485760; // Maximal size of the file (initial 10 MB but gets computed from free heap space later)
     Input input;
 
     public InputFileComposite(Composite parent, int style, InputFileWizardPage p, Input input) {
         super(parent, style);
         this.input = input;
+        
+        setLayout(new GridLayout(2, false));
 
         txtPath = new Text(this, SWT.BORDER);
         txtPath.setEditable(false);
-        txtPath.setBounds(10, 10, 323, 19);
-
+        GridData gd_txtPath = new GridData(SWT.FILL, SWT.FILL, false, false);
+        gd_txtPath.widthHint = 320;
+        txtPath.setLayoutData(gd_txtPath);
+        if (input.path != null) {
+        	txtPath.setText(input.path);
+        }
+        
         Button btnBrowse = new Button(this, SWT.NONE);
-        btnBrowse.setBounds(339, 6, 94, 28);
+        GridData gd_btnBrowse = new GridData(SWT.FILL, SWT.FILL, false, false);
+        gd_btnBrowse.widthHint = 150;
+        btnBrowse.setLayoutData(gd_btnBrowse);
         btnBrowse.setText(Messages.InputFileWizard_btnBrowse);
         btnBrowse.addSelectionListener(this);
         btnBrowse.setFocus();
@@ -67,11 +79,11 @@ public class InputFileComposite extends Composite implements SelectionListener {
                 messageBox.setMessage(Messages.InputWizard_WarningMessageTooLarge);
                 messageBox.open();
                 throw new Exception("The file " + file.getName() + " is too large."); //$NON-NLS-1$ //$NON-NLS-2$
+            } else {
+            	// Call a method that converts the input file to a byte array and save the returned
+            	// array in Input.java
+            	input.data = getBytesFromFile(file);
             }
-
-            // Call a method that converts the input file to a byte array and save the returned
-            // array in Input.java
-            input.data = getBytesFromFile(file);
 
             if (input.data == null) {
                 MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_WARNING | SWT.OK);
@@ -79,6 +91,18 @@ public class InputFileComposite extends Composite implements SelectionListener {
                 messageBox.setMessage(Messages.InputWizard_WarningMessageEmpty);
                 messageBox.open();
                 throw new Exception("The file " + file.getName() + " appears to be empty."); //$NON-NLS-1$ //$NON-NLS-2$
+            } else {
+            	input.path = strFile;
+            	
+            	//get Hex values from first 10 bytes for representatin via tooltip in the main screen
+            	String dataPlain = Input.bytesToHex(Arrays.copyOfRange(input.data, 0, Math.min(input.data.length, 10))); 
+            	
+            	//Insert whitespace after each two hex chars
+            	int initialLength = dataPlain.length();
+            	for (int i = 2, count = 0; i < initialLength; i+=2, count++) {
+        			dataPlain = new StringBuilder(dataPlain).insert(i + count, " ").toString();
+            	}
+            	input.tooltipData = dataPlain;
             }
 
             txtPath.setText(file.getAbsolutePath());
@@ -99,7 +123,6 @@ public class InputFileComposite extends Composite implements SelectionListener {
      * @return The byte array
      */
     public byte[] getBytesFromFile(File file) throws IOException {
-        int maxSize = 10485760; // 10 MB
         InputStream is = new FileInputStream(file);
 
         // Get the size (in bytes) of the file
@@ -124,5 +147,23 @@ public class InputFileComposite extends Composite implements SelectionListener {
 
         is.close();
         return bytes;
+    }
+    
+    /**
+     * Computes the maximum size of files that can be opened and saves it in the member variable maxSize
+     */
+    public void updateMaxSize() {
+    	long usedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+    	long maxFree = Runtime.getRuntime().maxMemory() - usedMemory;
+    	maxSize = (int) (0.9*(maxFree - 52428800)); //returns lower value for safety reasons
+    }
+    
+    /**
+     * Converts the member variable maxSize into a MegaByte value. 
+     * 
+     * @return the value of maxSize in MB (Megabytes)
+     */
+    public int getMaxSizeInMB() {
+    	return (int) (maxSize / 1048576);
     }
 }

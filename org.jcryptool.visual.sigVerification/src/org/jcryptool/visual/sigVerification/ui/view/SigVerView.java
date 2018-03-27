@@ -28,7 +28,7 @@ public class SigVerView extends ViewPart {
         
         // Signatur Verifikation tab
         ti = new TabItem(tf, SWT.NONE);
-        ti.setText("Signatur-Verifikation");
+        ti.setText("Signatur-Verifikation"); 		//TODO multilingual 
         ScrolledComposite sc = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
         sc.setExpandHorizontal(true);
         sc.setExpandVertical(true);

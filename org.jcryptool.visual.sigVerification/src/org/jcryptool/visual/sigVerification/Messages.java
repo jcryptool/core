@@ -57,6 +57,7 @@ public class Messages {
     public static String ModelComposite_btnNewResult;
     public static String ModelComposite_Choose;
     public static String ModelComposite_btnReset;
+    public static String SigVerComposite_FileInput_Tooltip;
 
     static {
         // initialize resource bundle

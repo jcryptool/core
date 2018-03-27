@@ -589,7 +589,7 @@ public class SigComposite extends Composite {
      */
     public void createEvents() {
     	
-        // Adds a Listener for the document
+        // Adds a Listener for the input button
         btnChooseInput.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 try {               
@@ -601,7 +601,7 @@ public class SigComposite extends Composite {
                         oldMessage = Arrays.copyOfRange(Input.data, 0, lengthOldMessage);
                 	}
                 	
-                    // Create the HashWizard
+                    // Create the InputWizard
                     InputWizard wiz = new InputWizard();
                     // Display it
                     WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
