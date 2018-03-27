@@ -122,8 +122,13 @@ public class FriedmanGraphUI extends org.eclipse.swt.widgets.Composite implement
 
 					@Override
 					public void update(Observable o, Object arg) {
-						message = textSelector.getText().getText();
-						if (message.length() > 0) {
+						if (textSelector.getText() != null) {
+							if (textSelector.getText().getText() != null) {
+								message = textSelector.getText().getText();
+							}
+						}
+
+						if (message != null && message.length() > 0) {
 							button2.setEnabled(true);
 
 							// After loading a text the button is replaced with information.
