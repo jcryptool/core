@@ -124,14 +124,19 @@ public class CustomFriedmanCanvas extends org.eclipse.swt.widgets.Canvas impleme
 
 		double barHeight = 0;
 		double maxValue = max(myAnalysis.getAnalysis());
-
 		//generate Bars
 		graph.resetBars();
 		for (int i = 0; i < myAnalysis.getAnalysis().length; i++) {
 			barHeight = (myAnalysis.getAnalysis()[i]) / (maxValue);
 			graph.addBar(new LabelBar(barHeight, i, 10, "" + myAnalysis.getAnalysis()[i], "" + (i + 1))); //$NON-NLS-1$ //$NON-NLS-2$
 		}
-		graph.optimizeBarHeights(1);
+
+		/*
+		I took out the optimize to align the bars with the y-axis
+		*/
+		//graph.optimizeBarHeights(1);
+
+		graph.setMaxHeight(maxValue);
 
 	}
 
