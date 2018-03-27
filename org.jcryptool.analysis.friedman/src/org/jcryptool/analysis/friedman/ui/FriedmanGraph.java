@@ -27,12 +27,16 @@ public class FriedmanGraph extends Graph {
 	int overlayTranspHighest, overlayTranspLowest;
 	MColor overlayBarColor;
 	double overlayBarWidth = 1.0;
+	double maxValue = 0;
 	private int currentShift = 0;
 	private int savedShift = 0;
 	private double lowestValue = 999999.0;
 
 	private int barCount = 0;
 	private double zoomFactor = 1.628;
+
+	private Rectangle barDrawingRect;
+	private Rectangle descDrawingRect;
 
 	/**
 	 * Change the standard settings from the super class
@@ -42,9 +46,9 @@ public class FriedmanGraph extends Graph {
 		overlayTranspHighest = 230;
 		overlayTranspLowest = 0;
 
-		distTop = 3;
+		distTop = 30;
 		distBottom = 16;
-		distLeft = 0;
+		distLeft = 34;
 		distRight = 0;
 		marginTop = 0;
 		marginBottom = 0;
@@ -113,8 +117,8 @@ public class FriedmanGraph extends Graph {
 	@Override
 	protected final void paintBarArea(final Rectangle thisArea, final MColor thisBGColor) {
 		//The bar drawing rectangle without margins
-		Rectangle barDrawingRect = new Rectangle(barAreaRect.x + marginLeft, barAreaRect.y + marginTop,
-				barAreaRect.width - marginLeft - marginRight, barAreaRect.height - marginTop - marginBottom);
+		barDrawingRect = new Rectangle(barAreaRect.x + marginLeft + distLeft, barAreaRect.y + marginTop,
+				barAreaRect.width - marginLeft - marginRight + distLeft, barAreaRect.height - marginTop - marginBottom);
 		//actual bar box
 		Rectangle barBox;
 
@@ -138,21 +142,40 @@ public class FriedmanGraph extends Graph {
 	}
 
 	@Override
+	protected void paintDescLeftArea(Rectangle thisArea, MColor thisBGColor) {
+		thisArea.width = distLeft;
+		thisArea.y = 0;
+		thisArea.height += distTop;
+
+		barAreaBGColor.setColor(gc);
+		gc.setLineWidth(2);
+
+		gc.fillRectangle(thisArea);
+		drawYAxis(thisBGColor);
+
+	}
+
+	@Override
 	protected final void paintDescTopArea(final Rectangle thisArea, final MColor thisBGColor,
 			final MColor thisFontColor) {
-		thisBGColor.setColor(gc);
-		thisBGColor.setBGColor(gc);
-		gc.fillRectangle(thisArea);
+		//thisArea.height = 150;
+		//thisArea.width = 0;
 
-		thisFontColor.setColor(gc);
+		super.paintDescTopArea(thisArea, thisBGColor, thisFontColor);
+
+		//Old function body
+		//		thisBGColor.setColor(gc);
+		//		thisBGColor.setBGColor(gc);
+		//		gc.fillRectangle(thisArea);
+		//		thisFontColor.setColor(gc);
 	}
 
 	@Override
 	protected final void paintDescBottomArea(final Rectangle thisArea, final MColor thisBGColor,
 			final MColor thisFontColor) {
 		// The bar drawing rectangle without margins
-		Rectangle descDrawingRect = new Rectangle(barAreaRect.x + marginLeft, descBottomRect.y,
-				barAreaRect.width - marginLeft - marginRight, descBottomRect.height);
+		descDrawingRect = new Rectangle(barAreaRect.x + marginLeft + distLeft, descBottomRect.y,
+				barAreaRect.width - marginLeft - marginRight + distLeft, descBottomRect.height);
 		// actual bar box
 		Rectangle textBox;
 
@@ -160,37 +183,12 @@ public class FriedmanGraph extends Graph {
 		thisBGColor.setBGColor(gc);
 		gc.fillRectangle(thisArea);
 
-		// Following constructs count the number of digits which should be printed to avoid overlapping
-		int multiplier = 1, digitCounter = 1, decimalPower = 10, digitsPerNumber = 1;
-
-		// this simple loops determines how many digits the current leftmost number in the graph
-		// has and sets digitsPerNumber and (next bigger) decimalPower
-		for (int i = 10; i < currentShift; i *= 10, ++digitsPerNumber, decimalPower *= 10)
-			;
-		boolean fitting = false;
-
-		while (!fitting) {
-			// This inner loop counts the number indexes the graph would show depending on the multiplier
-			// e.g. an multiplier of 1 displays it for every bar, 5 would display for every 5th bar.
-			for (int i = digitsPerNumber; i < barCount; i += multiplier) {
-				if (i % decimalPower == 0) {
-					digitsPerNumber++;
-					decimalPower *= 10;
-				}
-				digitCounter += digitsPerNumber;
-			}
-			//if it doesn't fit the multiplier is increased to 5, 50 or 500 and the loop run again
-			if (digitCounter * 10 > thisArea.width) {
-				multiplier = multiplier == 1 ? 5 : multiplier * 10;
-				digitCounter = multiplier;
-			} else
-				fitting = true;
-		}
+		int numberCounter = calculateNumberingSpaces(thisArea.width);
 
 		thisFontColor.setColor(gc);
 		for (int i = currentShift, index; i < currentShift + barCount; i++) {
 			index = bars.get(i).getIndex();
-			if (multiplier == 1 || (i >= 2 && (index + 1) % multiplier == 0)) {
+			if (numberCounter == 1 || (i >= 2 && (index + 1) % numberCounter == 0)) {
 				textBox = calculateTextContainer(descDrawingRect, index);
 				bars.get(i).drawLowerLabel(textBox, gc);
 			}
@@ -340,6 +338,7 @@ public class FriedmanGraph extends Graph {
 	public final void setCurrentShift(final int currentShift) {
 		if (bars.size() > 0) {
 			this.currentShift = Math.min(currentShift, bars.size() - barCount - 1);
+			this.currentShift = Math.max(this.currentShift, 0);
 		}
 	}
 
@@ -432,6 +431,105 @@ public class FriedmanGraph extends Graph {
 
 	public final double getZoomFactor() {
 		return zoomFactor;
+	}
+
+	public final void setMaxHeight(double maxValue) {
+		this.maxValue = maxValue;
+	}
+
+	private void drawYAxis(MColor thisBGColor) {
+		MColor thisColor = new MColor("FFFFFF");
+		thisBGColor.setBGColor(gc);
+
+		double ySpacingUnround;
+		int ySpacing;
+
+		int virtualScale = (int) Math.round(barDrawingRect.height / (maxValue * 10));
+		ySpacingUnround = virtualScale / 10D;
+		ySpacing = (int) Math.floor(ySpacingUnround);
+
+		org.eclipse.swt.graphics.Point textSize = gc.stringExtent("0.05");
+		int textHeight = textSize.y;
+
+		if (bars.size() > 0) {
+			if (ySpacing > textHeight + 5) {
+				for (int i = 0; ySpacing * i + ySpacing < barDrawingRect.height; ++i) {
+					gc.drawLine(3, barDrawingRect.y + barDrawingRect.height - (ySpacing * i) - 1, 3 + distLeft,
+							barDrawingRect.y + barDrawingRect.height - (ySpacing * i) - 1);
+				}
+
+				gc.drawLine(3, distTop, distLeft, distTop);
+
+				thisColor.setColor(gc);
+
+				gc.drawString(String.format("%.3f", maxValue), 3, distTop - textHeight - 2 - 2);
+
+				double scale = 0.0;
+				String scaleText;
+				for (int i = 0; /*i <= 9 &&*/ ySpacing * i + ySpacing < barDrawingRect.height; ++i, scale += 0.01) {
+					scaleText = String.format("%.2f", scale);
+					gc.drawText(scaleText, 3,
+							barDrawingRect.y + barDrawingRect.height - (ySpacing * i) - textHeight - 5);
+				}
+				return;
+
+			} else {
+				ySpacingUnround = virtualScale / 4D;
+				ySpacing = (int) Math.floor(ySpacingUnround);
+				for (int i = 0; i <= 3; ++i) {
+					gc.drawLine(3, barDrawingRect.y + barDrawingRect.height - (ySpacing * i) - 1, 3 + distLeft,
+							barDrawingRect.y + barDrawingRect.height - (ySpacing * i) - 1);
+				}
+			}
+
+			if (ySpacing > textHeight + 5) {
+				gc.drawLine(3, distTop, distLeft, distTop);
+
+				thisColor.setColor(gc);
+
+				gc.drawString(String.format("%.3f", maxValue), 3, distTop - textHeight - 2 - 2);
+
+				thisColor.setColor(gc);
+				double scale = 0.0;
+				String scaleText;
+				for (int i = 0; i <= 3
+						&& (ySpacing * i) + (textHeight + 10) < barDrawingRect.height; ++i, scale += 0.025) {
+					scaleText = String.format("%.3f", scale);
+					gc.drawText(scaleText, 3,
+							barDrawingRect.y + barDrawingRect.height - (ySpacing * i) - textHeight - 5);
+				}
+			}
+		}
+	}
+
+	private int calculateNumberingSpaces(int availableSpace) {
+		// Following constructs count the number of digits which should be printed to avoid overlapping
+		int multiplier = 1, digitCounter = 1, decimalPower = 10, digitsPerNumber = 1;
+
+		// this simple loops determines how many digits the current leftmost number in the graph
+		// has and sets digitsPerNumber and (next bigger) decimalPower
+		for (int i = 10; i < currentShift; i *= 10, ++digitsPerNumber, decimalPower *= 10)
+			;
+		boolean fitting = false;
+
+		while (!fitting) {
+			// This inner loop counts the number indexes the graph would show depending on the multiplier
+			// e.g. an multiplier of 1 displays it for every bar, 5 would display for every 5th bar.
+			for (int i = digitsPerNumber; i < barCount; i += multiplier) {
+				if (i % decimalPower == 0) {
+					digitsPerNumber++;
+					decimalPower *= 10;
+				}
+				digitCounter += digitsPerNumber;
+			}
+			//if it doesn't fit the multiplier is increased to 5, 50 or 500 and the loop run again
+			if (digitCounter * 10 > availableSpace) {
+				multiplier = multiplier == 1 ? 5 : multiplier * 10;
+				digitCounter = multiplier;
+			} else
+				fitting = true;
+		}
+		return multiplier;
 	}
 
 }
