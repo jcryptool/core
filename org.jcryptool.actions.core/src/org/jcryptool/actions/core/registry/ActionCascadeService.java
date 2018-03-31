@@ -29,7 +29,7 @@ import org.jcryptool.actions.core.types.ActionItem;
 public final class ActionCascadeService {
     private static ActionCascadeService service = null;
 
-    private IObservableList actionItems = new WritableList();
+    private IObservableList<ActionItem> actionItems = new WritableList<ActionItem>();
     private ActionCascade currentActionCascade;
 
     private ActionCascadeService() {
@@ -71,20 +71,18 @@ public final class ActionCascadeService {
         actionItems.remove(item);
     }
 
-    public void setActionItems(WritableList ai) {
+    public void setActionItems(WritableList<ActionItem> ai) {
         this.actionItems = ai;
     }
 
-    @SuppressWarnings("unchecked")
     public List<ActionItem> getActionItems() {
         return (List<ActionItem>) Collections.checkedList(actionItems, ActionItem.class);
     }
 
-    public IObservableList observeActionItems() {
+    public IObservableList<ActionItem> observeActionItems() {
         return actionItems;
     }
 
-    @SuppressWarnings("unchecked")
     public void moveUp(ActionItem item) {
         ArrayList<ActionItem> l = currentActionCascade.getAllItems();
         int i = l.indexOf(item);
@@ -97,7 +95,6 @@ public final class ActionCascadeService {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public void moveDown(ActionItem item) {
         ArrayList<ActionItem> l = currentActionCascade.getAllItems();
         int i = l.indexOf(item);
