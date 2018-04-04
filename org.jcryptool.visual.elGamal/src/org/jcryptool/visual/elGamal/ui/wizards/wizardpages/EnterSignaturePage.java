@@ -55,7 +55,8 @@ public class EnterSignaturePage extends TextWizardPage {
      *
      * @param parent the parent composite
      */
-    public final void createControl(final Composite parent) {
+    @Override
+	public final void createControl(final Composite parent) {
         final Composite composite = new Composite(parent, SWT.NONE);
         // do stuff like layout et al
         composite.setLayout(new GridLayout());
@@ -68,6 +69,7 @@ public class EnterSignaturePage extends TextWizardPage {
         text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         text.addModifyListener(new ModifyListener() {
 
+			@Override
 			public void modifyText(ModifyEvent e) {
 				String trimmed = text.getText().replaceAll(Lib.WHITESPACE, ""); //$NON-NLS-1$
 

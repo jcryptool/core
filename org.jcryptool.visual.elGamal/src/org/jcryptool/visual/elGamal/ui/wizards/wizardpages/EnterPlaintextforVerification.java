@@ -59,6 +59,7 @@ public class EnterPlaintextforVerification extends WizardPage {
 		SHA1Checkbox.setToolTipText(Messages.EnterSignaturePage_use_sha1_popup);
 		SHA1Checkbox.addSelectionListener(new SelectionAdapter() {
 
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				data.setSimpleHash(!SHA1Checkbox.getSelection());
 			}

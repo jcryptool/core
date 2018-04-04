@@ -10,13 +10,12 @@
 package org.jcryptool.visual.elGamal.ui.wizards.wizardpages;
 
 import static java.math.BigInteger.ONE;
-import static org.jcryptool.visual.library.Constants.TWOFIVESIX;
-
 import java.math.BigInteger;
 
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -30,6 +29,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.visual.elGamal.ElGamalData;
+import org.jcryptool.visual.elGamal.ElGamalPlugin;
 import org.jcryptool.visual.elGamal.Messages;
 import org.jcryptool.visual.library.Constants;
 import org.jcryptool.visual.library.Lib;
@@ -84,7 +84,7 @@ public class NewKeypairPage extends WizardPage {
     private Button saveKeypairButton;
 
     /** Drop-Down for selecting the p values. */
-    private Combo pfield;
+    private Combo dfield;
 
     /** field to enter q */
     private Text qfield;
@@ -93,13 +93,44 @@ public class NewKeypairPage extends WizardPage {
     private Combo gfield;
 
     /** field for entering the private a */
-    private Text afield;
+    private Text bfield;
 
     /** field for entering the public a */
-    private Text atext;
+    private Text btext;
     
     /** text for the p changed note */
-    private Label pchanged;
+    private CLabel pchanged;
+    
+    private ModifyListener listenerCalculateB = new ModifyListener() {
+		
+		@Override
+		public void modifyText(ModifyEvent e) {
+
+			 if (!bfield.getText().isEmpty()) {
+                 BigInteger b = new BigInteger(bfield.getText());
+                 if (dfield.getText().isEmpty()) {
+                 	return;
+                 }
+                 if (b.compareTo(Constants.TWO) < 0
+                         || b.compareTo(new BigInteger(dfield.getText()).subtract(Constants.TWO)) > 0) {
+                     setErrorMessage(Messages.NewKeypairPage_error_invalid_a);
+                     setPageComplete(false);
+                 } else {
+                 	// Check if a value in g is selected
+                 	if (gfield.getText().isEmpty()) {
+                 		setPageComplete(false);
+                 	} else {
+	                        btext.setText(new BigInteger(gfield.getText()).modPow(b, new BigInteger(dfield.getText()))
+	                                .toString());
+	                        setErrorMessage(null);
+	                        setPageComplete(true);
+                 	}
+                 }
+             } else {
+                 setPageComplete(false);
+             }
+		}
+	};
 
     /**
      * Constructor, setting description completeness-status and data-object.
@@ -118,7 +149,8 @@ public class NewKeypairPage extends WizardPage {
      *
      * @param parent the parent composite
      */
-    public void createControl(Composite parent) {
+    @Override
+	public void createControl(Composite parent) {
         Composite composite = new Composite(parent, SWT.NONE);
         // do stuff like layout et al
         // set layout
@@ -136,21 +168,26 @@ public class NewKeypairPage extends WizardPage {
         label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
         label.setText(Messages.NewKeypairPage_choose_q_text);
         
-        new Label(composite, SWT.NONE).setText("p = "); //$NON-NLS-1$
+        new Label(composite, SWT.NONE).setText("d = "); //$NON-NLS-1$
         
-        pfield = new Combo(composite, SWT.SINGLE);
-        pfield.addVerifyListener(VL);
-        pfield.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(final SelectionEvent e) {
+        dfield = new Combo(composite, SWT.SINGLE);
+        dfield.addVerifyListener(VL);
+        dfield.addSelectionListener(new SelectionAdapter() {
+        	
+            @Override
+			public void widgetSelected(final SelectionEvent e) {
                 qfield.setText(""); //$NON-NLS-1$
             }
         });
-		pfield.addModifyListener(new ModifyListener() {
+        
+		dfield.addModifyListener(new ModifyListener() {
+			
+			@Override
 			public void modifyText(ModifyEvent e) {
-				if (pfield.getText().isEmpty()) {
+				if (dfield.getText().isEmpty()) {
 					return;
 				}
-				BigInteger modulus = new BigInteger(pfield.getText());
+				BigInteger modulus = new BigInteger(dfield.getText());
 				String error = getErrorMessage();
 				if (!Lib.isPrime(modulus)) {
 					if (error == null) {
@@ -163,28 +200,35 @@ public class NewKeypairPage extends WizardPage {
 					setErrorMessage(null);
 					pchanged.setVisible(false);
 				}
-				if (modulus.compareTo(TWOFIVESIX) <= 0) {
-					setErrorMessage(Messages.NewKeypairPage_error_p_lt_256);
-				}
-				afield.setText(""); //$NON-NLS-1$
+//				if (modulus.compareTo(TWOFIVESIX) <= 0) {
+//					setErrorMessage(Messages.NewKeypairPage_error_p_lt_256);
+//				}
+				bfield.setText(""); //$NON-NLS-1$
+				btext.setText("");
 				gfield.setItems(Lib.calcG(modulus).toArray(new String[0]));
 			}
 		});
-        fillP();
+        filld();
         
-        new Label(composite, SWT.NONE).setText("q = "); //$NON-NLS-1$
+        Label qLabel = new Label(composite, SWT.NONE);
+        qLabel.setText("q = ");
+        GridData gd_qLable = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
+        gd_qLable.horizontalIndent = 20;
+        qLabel.setLayoutData(gd_qLable);
         
         qfield = new Text(composite, SWT.BORDER);
         qfield.addVerifyListener(VL);
         qfield.addModifyListener(new ModifyListener() {
-            public void modifyText(ModifyEvent e) {
+        	
+            @Override
+			public void modifyText(ModifyEvent e) {
                 if (qfield.getText().equals("")) { //$NON-NLS-1$
                     return;
                 }
                 BigInteger q = new BigInteger(qfield.getText());
                 if (Lib.isPrime(q)) {
                     setErrorMessage(null);
-                    pfield.setText(q.multiply(Constants.TWO).add(ONE).toString());
+                    dfield.setText(q.multiply(Constants.TWO).add(ONE).toString());
                     pchanged.setVisible(true);
                 } else {
                     setErrorMessage(Messages.NewKeypairPage_error_q_not_prime);
@@ -193,9 +237,10 @@ public class NewKeypairPage extends WizardPage {
             }
         });
         
-        pchanged = new Label(composite, SWT.NONE);
+        pchanged = new CLabel(composite, SWT.NONE);
         pchanged.setVisible(false);
         pchanged.setText(Messages.NewKeypairPage_pChanged);
+        pchanged.setImage(ElGamalPlugin.getImageDescriptor("platform:/plugin/org.eclipse.jface/org/eclipse/jface/dialogs/images/message_info.png").createImage());
         
         // Separator
         new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
@@ -212,6 +257,9 @@ public class NewKeypairPage extends WizardPage {
         new Label(composite, SWT.NONE).setText("g = "); //$NON-NLS-1$
         
         gfield = new Combo(composite, SWT.SINGLE | SWT.READ_ONLY);
+        gfield.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        gfield.addModifyListener(listenerCalculateB);
+        
         
         // Separator
         new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
@@ -226,35 +274,21 @@ public class NewKeypairPage extends WizardPage {
         
         new Label(composite, SWT.NONE).setText("b = "); //$NON-NLS-1$
         
-        afield = new Text(composite, SWT.SINGLE | SWT.BORDER);
-        afield.addVerifyListener(VL);
-        afield.addModifyListener(new ModifyListener() {
-
-            public void modifyText(ModifyEvent e) {
-                if (!afield.getText().isEmpty()) {
-                    BigInteger a = new BigInteger(afield.getText());
-                    if (pfield.getText().isEmpty()) {
-                    	return;
-                    }
-                    if (a.compareTo(Constants.TWO) < 0
-                            || a.compareTo(new BigInteger(pfield.getText()).subtract(Constants.TWO)) > 0) {
-                        setErrorMessage(Messages.NewKeypairPage_error_invalid_a);
-                        setPageComplete(false);
-                    } else {
-                        atext.setText(new BigInteger(gfield.getText()).modPow(a, new BigInteger(pfield.getText()))
-                                .toString());
-                        setErrorMessage(null);
-                        setPageComplete(true);
-                    }
-                } else {
-                    setPageComplete(false);
-                }
-            }
-        });
-
-        new Label(composite, SWT.NONE).setText("B = "); //$NON-NLS-1$
+        bfield = new Text(composite, SWT.SINGLE | SWT.BORDER);
+        bfield.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        bfield.addVerifyListener(VL);
+        bfield.addModifyListener(listenerCalculateB);
         
-        atext = new Text(composite, SWT.READ_ONLY | SWT.BORDER);
+
+        Label bLabel = new Label(composite, SWT.NONE); 
+        bLabel.setText("B = ");
+        GridData gd_bLabel = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
+        gd_bLabel.horizontalIndent = 20;
+        bLabel.setLayoutData(gd_bLabel);
+        
+        
+        btext = new Text(composite, SWT.READ_ONLY | SWT.BORDER);
+        btext.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
        
         // Separator
         new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
@@ -267,25 +301,28 @@ public class NewKeypairPage extends WizardPage {
         saveKeypairButton.setSelection(data.isStandalone());
         saveKeypairButton.setEnabled(!data.isStandalone());
         saveKeypairButton.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) {
+        	
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 getContainer().updateButtons();
             }
         });
 
         // fill in old data
         if (data.getA() != null) {
-            pfield.setText(data.getModulus().toString());
+            dfield.setText(data.getModulus().toString());
             gfield.setText(data.getGenerator().toString());
-            afield.setText(data.getA().toString());
+            bfield.setText(data.getA().toString());
         }
 
         // finish
         setControl(composite);
     }
 
-    private void fillP() {
-        for (final Integer i : Lib.POSSBLE_PS) {
-            pfield.add(i.toString());
+    private void filld() {
+//        for (final Integer i : Lib.POSSBLE_PS) {
+    	for (final Integer i : Lib.PRIMES) {
+            dfield.add(i.toString());
         }
     }
 
@@ -301,10 +338,10 @@ public class NewKeypairPage extends WizardPage {
     @Override
     public void setPageComplete(final boolean complete) {
         if (complete) {
-            data.setModulus(new BigInteger(pfield.getText()));
+            data.setModulus(new BigInteger(dfield.getText()));
             data.setGenerator(new BigInteger(gfield.getText()));
-            data.setA(new BigInteger(afield.getText()));
-            data.setPublicA(new BigInteger(atext.getText()));
+            data.setA(new BigInteger(bfield.getText()));
+            data.setPublicA(new BigInteger(btext.getText()));
         }
         super.setPageComplete(complete);
     }

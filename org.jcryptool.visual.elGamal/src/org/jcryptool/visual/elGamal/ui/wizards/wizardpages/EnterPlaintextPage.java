@@ -63,7 +63,8 @@ public class EnterPlaintextPage extends TextWizardPage {
      *
      * @param parent the parent composite
      */
-    public final void createControl(final Composite parent) {
+    @Override
+	public final void createControl(final Composite parent) {
         final Composite composite = new Composite(parent, SWT.NONE);
         // do stuff like layout et al
         GridLayout gl_composite = new GridLayout();
@@ -86,7 +87,8 @@ public class EnterPlaintextPage extends TextWizardPage {
         text.setLayoutData(gd_text);
         text.setTextLimit(TEXTLIMIT);
         text.addModifyListener(new ModifyListener() {
-            public void modifyText(final ModifyEvent e) {
+            @Override
+			public void modifyText(final ModifyEvent e) {
                 setPageComplete(!((Text) e.widget).getText().equals("")); //$NON-NLS-1$
             }
         });
@@ -98,7 +100,8 @@ public class EnterPlaintextPage extends TextWizardPage {
             SHA1Checkbox.setToolTipText(Messages.EnterPlaintextPage_use_sha1_popup);
             SHA1Checkbox.addSelectionListener(new SelectionAdapter() {
 
-                public void widgetSelected(final SelectionEvent e) {
+                @Override
+				public void widgetSelected(final SelectionEvent e) {
                     data.setSimpleHash(!SHA1Checkbox.getSelection());
                 }
             });

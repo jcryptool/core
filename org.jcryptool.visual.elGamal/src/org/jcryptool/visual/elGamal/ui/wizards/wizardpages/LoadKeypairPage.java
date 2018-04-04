@@ -101,7 +101,8 @@ public class LoadKeypairPage extends WizardPage {
         }
     }
 
-    public void createControl(final Composite parent) {
+    @Override
+	public void createControl(final Composite parent) {
         final Composite composite = new Composite(parent, SWT.NONE);
         // do stuff like layout et al
         final GridLayout gl = new GridLayout();
@@ -113,11 +114,13 @@ public class LoadKeypairPage extends WizardPage {
         combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         combo.setItems(keyStoreItems.keySet().toArray(new String[keyStoreItems.size()]));
         combo.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(final SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(final SelectionEvent e) {
                 // will not be called
             }
 
-            public void widgetSelected(final SelectionEvent e) {
+            @Override
+			public void widgetSelected(final SelectionEvent e) {
                 privateAlias = keyStoreItems.get(combo.getText());
                 publicAlias = getPublicForPrivate();
                 checkComplete();
@@ -138,7 +141,8 @@ public class LoadKeypairPage extends WizardPage {
         passfield = new Text(composite, SWT.BORDER | SWT.PASSWORD);
         passfield.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         passfield.addModifyListener(new ModifyListener() {
-            public void modifyText(final ModifyEvent e) {
+            @Override
+			public void modifyText(final ModifyEvent e) {
                 checkComplete();
             }
         });

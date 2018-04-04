@@ -43,7 +43,8 @@ public class ChooseKeytypePage extends WizardPage {
      */
     private final SelectionListener sl = new SelectionAdapter() {
 
-        public void widgetSelected(final SelectionEvent e) {
+        @Override
+		public void widgetSelected(final SelectionEvent e) {
             getContainer().updateButtons();
         }
     };
@@ -61,7 +62,8 @@ public class ChooseKeytypePage extends WizardPage {
      *
      * @param parent the parent composite.
      */
-    public final void createControl(final Composite parent) {
+    @Override
+	public final void createControl(final Composite parent) {
         final Composite composite = new Composite(parent, SWT.NONE);
         composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         GridLayout gl_composite = new GridLayout();

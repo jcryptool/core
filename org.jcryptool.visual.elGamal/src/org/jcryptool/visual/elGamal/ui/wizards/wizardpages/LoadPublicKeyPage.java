@@ -91,7 +91,8 @@ public class LoadPublicKeyPage extends WizardPage {
      * 
      * @param parent the parent composite.
      */
-    public final void createControl(final Composite parent) {
+    @Override
+	public final void createControl(final Composite parent) {
         final Composite composite = new Composite(parent, SWT.NONE);
 //      do stuff like layout et al
         final GridLayout gl = new GridLayout();
@@ -104,7 +105,8 @@ public class LoadPublicKeyPage extends WizardPage {
         combo.setItems(keystoreitems.keySet().toArray(new String[keystoreitems.size()]));
         
         combo.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(final SelectionEvent e) {
+            @Override
+			public void widgetSelected(final SelectionEvent e) {
                 final boolean complete = !combo.getText().equals(""); //$NON-NLS-1$
                 if (complete) {
                     publicAlias = keystoreitems.get(combo.getText());

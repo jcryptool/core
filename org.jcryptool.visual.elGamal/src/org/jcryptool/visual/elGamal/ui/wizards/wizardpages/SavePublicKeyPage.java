@@ -57,7 +57,8 @@ public class SavePublicKeyPage extends SaveWizardPage {
      *
      * @param parent the parent composite
      */
-    public final void createControl(final Composite parent) {
+    @Override
+	public final void createControl(final Composite parent) {
         final Composite composite = new Composite(parent, SWT.NONE);
         // do stuff like layout et al
         final GridLayout gl = new GridLayout();
@@ -69,7 +70,8 @@ public class SavePublicKeyPage extends SaveWizardPage {
 
         owner = new Text(composite, SWT.BORDER | SWT.SINGLE);
         owner.addModifyListener(new ModifyListener() {
-            public void modifyText(final ModifyEvent e) {
+            @Override
+			public void modifyText(final ModifyEvent e) {
                 setPageComplete(!owner.getText().equals("")); //$NON-NLS-1$
                 data.setContactName(owner.getText());
             }

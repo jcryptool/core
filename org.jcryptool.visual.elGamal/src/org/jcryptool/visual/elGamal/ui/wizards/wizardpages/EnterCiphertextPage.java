@@ -55,6 +55,7 @@ public class EnterCiphertextPage extends TextWizardPage {
 	 * sets up all the UI stuff.
 	 * @param parent the parent composite
 	 */
+	@Override
 	public final void createControl(final Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
 		// do stuff like layout et al
@@ -68,6 +69,7 @@ public class EnterCiphertextPage extends TextWizardPage {
 		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		text.addModifyListener(new ModifyListener() {
 
+			@Override
 			public void modifyText(final ModifyEvent e) {
 				final String trimmed = ((Text) e.widget).getText().replaceAll(Lib.WHITESPACE, ""); //$NON-NLS-1$
 				final boolean leer = trimmed.equals(""); //$NON-NLS-1$

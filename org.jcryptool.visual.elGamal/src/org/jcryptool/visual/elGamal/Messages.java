@@ -145,10 +145,13 @@ public class Messages extends NLS {
     public static String NewPublicKeyPage_2;
 	public static String NewPublicKeyPage_4;
 	public static String NewPublicKeyPage_7;
-    public static String NewPublicKeyPage_error_A_gt_p;
+    public static String NewPublicKeyPage_enter_d_first;
+	public static String NewPublicKeyPage_error_A_gt_p;
 	public static String NewPublicKeyPage_error_g_not_generator;
 	public static String NewPublicKeyPage_error_p_lt_256;
 	public static String NewPublicKeyPage_error_p_not_prime;
+	public static String NewPublicKeyPage_gProbablyNoGenerator;
+	public static String NewPublicKeyPage_pProbablyNotPrime;
 	public static String NewPublicKeyPage_save_pubkey;
 	public static String NewPublicKeyPage_save_pubkey_popup;
 	public static String NewPublicKeyPage_select_A;
@@ -156,6 +159,8 @@ public class Messages extends NLS {
 	public static String NewPublicKeyPage_select_p;
 	public static String NewPublicKeyPage_select_params;
 	public static String NewPublicKeyPage_select_params_text;
+	public static String NewPublicKeyPage_ToolTipgTooLong;
+	public static String NewPublicKeyPage_toolTippTooLong;
 	public static String PlaintextforSignatureVerificationWizard_enter_plaintext;
 	public static String SaveKeypairPage_enter_save_params;
 	public static String SaveKeypairPage_error_passwords_dont_match;

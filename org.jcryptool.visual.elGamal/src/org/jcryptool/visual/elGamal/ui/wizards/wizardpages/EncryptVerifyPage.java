@@ -51,7 +51,8 @@ public class EncryptVerifyPage extends WizardPage {
      *
      * @param parent the parent composite
      */
-    public final void createControl(Composite parent) {
+    @Override
+	public final void createControl(Composite parent) {
         Composite composite = new Composite(parent, SWT.NONE);
         // set layout
         GridLayout gl_composite = new GridLayout();

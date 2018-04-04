@@ -507,7 +507,7 @@ public class ElGamalComposite extends Composite {
         groupKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         
         Label plabel = new Label(groupKey, SWT.NONE);
-        plabel.setText("p = "); //$NON-NLS-1$
+        plabel.setText("d = "); //$NON-NLS-1$
         plabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         
         pText = new Text(groupKey, SWT.READ_ONLY | SWT.BORDER);

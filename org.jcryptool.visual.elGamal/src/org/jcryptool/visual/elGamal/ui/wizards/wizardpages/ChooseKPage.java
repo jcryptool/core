@@ -59,7 +59,8 @@ public class ChooseKPage extends WizardPage {
         
     }
 
-    public void createControl(final Composite parent) {
+    @Override
+	public void createControl(final Composite parent) {
         final Composite composite = new Composite(parent, SWT.NONE);
         composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         
@@ -85,7 +86,8 @@ public class ChooseKPage extends WizardPage {
         fill(combo);
 
         combo.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(final SelectionEvent e) {
+            @Override
+			public void widgetSelected(final SelectionEvent e) {
                 data.setK(new BigInteger(combo.getText()));
                 setPageComplete(!combo.getText().equals("")); //$NON-NLS-1$
             }
