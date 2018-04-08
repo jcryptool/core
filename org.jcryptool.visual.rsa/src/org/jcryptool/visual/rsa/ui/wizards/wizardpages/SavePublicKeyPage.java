@@ -46,7 +46,7 @@ public class SavePublicKeyPage extends SaveWizardPage {
 	public SavePublicKeyPage(final RSAData data) {
 		super(PAGENAME, TITLE, null);
 		setPageComplete(false);
-		this.setDescription(Messages.SavePublicKeyPage_enter_params);
+		setDescription(Messages.SavePublicKeyPage_enter_params);
 		this.data = data;
 	}
 

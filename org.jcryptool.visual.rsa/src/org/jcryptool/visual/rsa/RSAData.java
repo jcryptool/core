@@ -56,7 +56,7 @@ public class RSAData {
      * @return the contactName
      */
     public final String getContactName() {
-        return this.contactName;
+        return contactName;
     }
 
     /**
@@ -136,7 +136,8 @@ public class RSAData {
      * @return the randomPlaintext
      */
     public final boolean getrandomPlaintext() {
-        return this.randomPlaintext;
+//        return this.randomPlaintext;
+    	return randomPlaintext;
     }
     
     /**
@@ -145,7 +146,8 @@ public class RSAData {
      * @return the randomPlaintext
      */
     public final boolean getrandomKey() {
-        return this.randomKey;
+//        return this.randomKey;
+    	return randomKey;
     }
     
 //    /**
@@ -171,7 +173,8 @@ public class RSAData {
      * @return the cipherText
      */
     public final String getCipherText_Old() {
-        if (this.cipherText == null) {
+//        if (this.cipherText == null) {
+    	if (cipherText == null) {
             return ""; //$NON-NLS-1$
         } else {
 //            return this.cipherText;
@@ -185,7 +188,8 @@ public class RSAData {
      * @return the d
      */
     public final BigInteger getD() {
-        return this.d;
+//        return this.d;
+    	return d;
     }
 
     /**
@@ -194,7 +198,8 @@ public class RSAData {
      * @return the e
      */
     public final BigInteger getE() {
-        return this.e;
+//        return this.e;
+    	return e;
     }
 
     /**
@@ -203,7 +208,8 @@ public class RSAData {
      * @return the n
      */
     public final BigInteger getN() {
-        return this.N;
+//        return this.N;
+    	return N;
     }
 
     /**
@@ -212,7 +218,8 @@ public class RSAData {
      * @return the p
      */
     public final BigInteger getP() {
-        return this.p;
+//        return this.p;
+    	return p;
     }
 
     /**
@@ -221,7 +228,8 @@ public class RSAData {
      * @return the password
      */
     public final String getPassword() {
-        return this.password;
+//        return this.password;
+    	return password;
     }
 
     /**
@@ -230,7 +238,8 @@ public class RSAData {
      * @return the plainText
      */
     public final String getPlainText_Old() {
-        if (this.plainText == null) {
+//        if (this.plainText == null) {
+    	if (plainText == null) {
             return ""; //$NON-NLS-1$
         } else {
 //            return this.plainText;
@@ -244,7 +253,7 @@ public class RSAData {
      * @return the q
      */
     public final BigInteger getQ() {
-        return this.q;
+        return q;
     }
 
     /**
@@ -253,7 +262,8 @@ public class RSAData {
      * @return the signature
      */
     public final String getSignature_Old() {
-        if (this.signature == null) {
+//        if (this.signature == null) {
+    	if (signature == null) {
             return ""; //$NON-NLS-1$
         } else {
 //            return this.signature;
@@ -280,7 +290,7 @@ public class RSAData {
     }
     
     public void setTempAsNumbers(List<Integer> temp) {
-		this.tempAsNumbers = temp;
+		tempAsNumbers = temp;
 	}
     
     /**
@@ -373,7 +383,8 @@ public class RSAData {
      * @return the privateAlias
      */
     public final KeyStoreAlias getPrivateAlias() {
-        return this.privateAlias;
+//        return this.privateAlias;
+    	return privateAlias;
     }
 
     /**
@@ -400,7 +411,8 @@ public class RSAData {
      * @return the publicAlias
      */
     public final KeyStoreAlias getPublicAlias() {
-        return this.publicAlias;
+//        return this.publicAlias;
+    	return publicAlias;
     }
 
     /**
@@ -409,7 +421,8 @@ public class RSAData {
      * @return the simpleHash
      */
     public final boolean getSimpleHash() {
-        return this.simpleHash;
+//        return this.simpleHash;
+    	return simpleHash;
     }
 
     /**
@@ -425,7 +438,8 @@ public class RSAData {
      * @return if this belongs to a standalone keygeneration wizard
      */
     public final boolean isStandalone() {
-        return this.standalone;
+//        return this.standalone;
+    	return standalone;
     }
 
     /**
@@ -434,7 +448,8 @@ public class RSAData {
      * @return the current action
      */
     public final Action getAction() {
-        return this.action;
+//        return this.action;
+    	return action;
     }
 
     /**
@@ -444,43 +459,43 @@ public class RSAData {
      */
     public void inherit(final RSAData oldData) {
         // this we can always get
-        this.N = oldData.N;
-        this.e = oldData.e;
-        this.simpleHash = oldData.simpleHash;
+        N = oldData.N;
+        e = oldData.e;
+        simpleHash = oldData.simpleHash;
         // only available if key was saved, but we might have a problem
         // otherwise anyway.
-        this.publicAlias = oldData.publicAlias;
-        this.contactName = oldData.contactName;
+        publicAlias = oldData.publicAlias;
+        contactName = oldData.contactName;
         if (oldData.randomKey){
-            this.d = oldData.d;
-            this.p = oldData.p;
-            this.q = oldData.q;
+            d = oldData.d;
+            p = oldData.p;
+            q = oldData.q;
         }
         // sometimes we need everything
-        else if (this.action == Action.DecryptAction || this.action == Action.SignAction) {
+        else if (action == Action.DecryptAction || action == Action.SignAction) {
             // easy if the other action already has everything we need
             if (oldData.action == Action.DecryptAction || oldData.action == Action.SignAction) {
-                this.d = oldData.d;
-                this.p = oldData.p;
-                this.q = oldData.q;
+                d = oldData.d;
+                p = oldData.p;
+                q = oldData.q;
                 // only available if key was saved, but we might have a problem
                 // otherwise anyway.
-                this.privateAlias = oldData.privateAlias;
-                this.password = oldData.password;
+                privateAlias = oldData.privateAlias;
+                password = oldData.password;
             } else {
                 if (oldData.d != null){
-                	this.privateAlias = KeyStoreManager.getInstance().getPrivateForPublic(this.publicAlias);
+                	privateAlias = KeyStoreManager.getInstance().getPrivateForPublic(publicAlias);
                 	// get the password via some dialog
                 	final InputDialog passDialog = new InputDialog(Display.getCurrent().getActiveShell(),
                         Messages.RSAData_inherit_password_title, Messages.RSAData_inherit_password_text, "", null); //$NON-NLS-1$
                 	if (passDialog.open() == Window.OK) {
-                		this.password = passDialog.getValue();
+                		password = passDialog.getValue();
                 	} else {
                 		return;
                 	}
                 	
                 	try {
-                		this.getPrivateParams();
+                		getPrivateParams();
                 	}
                 	catch (UnrecoverableKeyException e) {
                 		JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, RSAPlugin.PLUGIN_ID,
@@ -494,15 +509,15 @@ public class RSAData {
                 } else {
             		JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, RSAPlugin.PLUGIN_ID,
             				Messages.RSAData_privateKeyNull));
-                        this.N = null;
-                        this.e = null;
+                        N = null;
+                        e = null;
                 }	
             }
         }
 
-        this.cipherTextAsNumbers = oldData.cipherTextAsNumbers;
-        this.plainTextAsNumbers = oldData.plainTextAsNumbers;
-        this.signatureAsNumbers = oldData.signatureAsNumbers;
+        cipherTextAsNumbers = oldData.cipherTextAsNumbers;
+        plainTextAsNumbers = oldData.plainTextAsNumbers;
+        signatureAsNumbers = oldData.signatureAsNumbers;
 
     }
 
@@ -513,13 +528,15 @@ public class RSAData {
 
     	switch (getAction()) {
     		case EncryptAction: {
-    			if (this.N == null || this.e == null) {
+//    			if (this.N == null || this.e == null) {
+    			if (N == null || e == null) {
     				return true;
     			}
     			break;
     		}
     		case SignAction: {
-    			if (this.N == null || this.d == null) {
+//    			if (this.N == null || this.d == null) {
+    			if (N == null || d == null) {
     				return true;
     				
     			}
@@ -542,6 +559,7 @@ public class RSAData {
     public boolean plainNeeded() {
 
     	if (this.plainTextAsNumbers == null) {
+//    	if (plainText == null) {
     		return true;
     	}
     	else{
@@ -554,25 +572,34 @@ public class RSAData {
      */
     
     public void randomKey() {
-    	this.randomKey = true;
-    	this.N = new BigInteger("323");
-        this.e = new BigInteger("19");
-        this.d = new BigInteger("91");
-        this.p = new BigInteger("17");
-        this.q = new BigInteger("19");
+//    	this.randomKey = true;
+//    	this.N = new BigInteger("323");
+//        this.e = new BigInteger("19");
+//        this.d = new BigInteger("91");
+//        this.p = new BigInteger("17");
+//        this.q = new BigInteger("19");
+    	randomKey = true;
+    	N = new BigInteger("323");
+        e = new BigInteger("19");
+        d = new BigInteger("91");
+        p = new BigInteger("17");
+        q = new BigInteger("19");
         randomPlain();
     }
     
     public void randomPlain() {
-    	this.randomPlaintext = true;
-        this.simpleHash = true;
+//    	this.randomPlaintext = true;
+//        this.simpleHash = true;
+    	randomPlaintext = true;
+        simpleHash = true;
         ArrayList<Integer> plain = new ArrayList<>();
         plain.add(72);
         plain.add(97);
         plain.add(108);
         plain.add(108);
         plain.add(111);
-        this.plainTextAsNumbers = plain;
+        plainTextAsNumbers = plain;
+//        plainText = plain;
     }
     
     
@@ -584,38 +611,44 @@ public class RSAData {
      */
     private void getPrivateParams() throws Exception {
         final KeyStoreManager ksm = KeyStoreManager.getInstance();
-        final PrivateKey key = ksm.getPrivateKey(this.privateAlias, this.password.toCharArray());
+        final PrivateKey key = ksm.getPrivateKey(privateAlias, password.toCharArray());
         final RSAPrivateCrtKey privkey = (RSAPrivateCrtKey) key;
-        this.N = privkey.getModulus();
-        this.d = privkey.getD().bigInt;
-        this.p = privkey.getP().bigInt;
-        this.q = privkey.getQ().bigInt;
-        this.e = privkey.getPublicExponent();
+//        this.N = privkey.getModulus();
+//        this.d = privkey.getD().bigInt;
+//        this.p = privkey.getP().bigInt;
+//        this.q = privkey.getQ().bigInt;
+//        this.e = privkey.getPublicExponent();
+        N = privkey.getModulus();
+        d = privkey.getD().bigInt;
+        p = privkey.getP().bigInt;
+        q = privkey.getQ().bigInt;
+        e = privkey.getPublicExponent();
     }
 
 	public void setPlainTextAsNumbers(List<Integer> loadedData) {
-		this.plainTextAsNumbers = loadedData;
+		plainTextAsNumbers = loadedData;
 	}
+	
 	public List<Integer> getPlainTextAsNumbers() {
 		return plainTextAsNumbers;
 	}
 
 	public void setCipherTextAsNumbers(List<Integer> loadedData) {
-		this.cipherTextAsNumbers = loadedData;
+		cipherTextAsNumbers = loadedData;
 	}
 	public List<Integer> getCipherTextAsNumbers() {
 		return cipherTextAsNumbers;
 	}
 
 	public void setSignatureAsNumbers(List<Integer> loadedData) {
-		this.signatureAsNumbers = loadedData;
+		signatureAsNumbers = loadedData;
 	}
 	public List<Integer> getSignatureAsNumbers() {
 		return signatureAsNumbers;
 	}
 
 	public void setPlainTextConversion(ConversionStringToBlocks blockConversion) {
-		this.plainTextConversion = blockConversion;
+		plainTextConversion = blockConversion;
 	}
 	public ConversionStringToBlocks getPlainTextConversion() {
 		return plainTextConversion;
@@ -627,23 +660,23 @@ public class RSAData {
 	@Override
 	public String toString() {
 		String output = "Primes:";
-		output += "\tp:" + (this.p != null ? this.p.toString() : "null");
-		output += "\tq:" + (this.q != null ? this.q.toString() : "null");
+		output += "\tp:" + (p != null ? p.toString() : "null");
+		output += "\tq:" + (q != null ? q.toString() : "null");
 		output += "\nKey:";
-		output += "\te:" + (this.e != null ? this.e.toString() : "null");
-		output += "\td:" + (this.d != null ? this.d.toString() : "null");
-		output += "\tN:" + (this.N != null ? this.N.toString() : "null");
-		output += "\nplainText:\t" + (this.plainText != null ? plainText.toString() : "null");
-		output += "\tplainTextAsNumbers:\t" + (this.plainTextAsNumbers != null ? plainTextAsNumbers.toString() : "null");
-		output += "\ncipherText:\t" + (this.plainText != null ? cipherText.toString() : "null");
-		output += "\tcipherTextAsNumbers:\t" + (this.cipherTextAsNumbers != null ? cipherTextAsNumbers.toString() : "null");
-		output += "\nsignature:\t" + (this.signature != null ? this.signature.toString() : "null"); 
-		output += "\tsignatureAsNumbers:\t" + (this.signatureAsNumbers != null ? signatureAsNumbers.toString() : "null");
-		output += "\n\t\t\ttempAsNumbers:\t\t" + (this.tempAsNumbers != null ? tempAsNumbers.toString() : "null");
-		output += "\nsimpleHash:\t" + this.simpleHash;
-		output += "\tstandalone:\t" + this.standalone;
-		output += "\trandomPlaintext:\t" + this.randomPlaintext;
-		output += "\trandomKey:\t" + this.randomKey;
+		output += "\te:" + (e != null ? e.toString() : "null");
+		output += "\td:" + (d != null ? d.toString() : "null");
+		output += "\tN:" + (N != null ? N.toString() : "null");
+		output += "\nplainText:\t" + (plainText != null ? plainText.toString() : "null");
+		output += "\tplainTextAsNumbers:\t" + (plainTextAsNumbers != null ? plainTextAsNumbers.toString() : "null");
+		output += "\ncipherText:\t" + (plainText != null ? cipherText.toString() : "null");
+		output += "\tcipherTextAsNumbers:\t" + (cipherTextAsNumbers != null ? cipherTextAsNumbers.toString() : "null");
+		output += "\nsignature:\t" + (signature != null ? signature.toString() : "null"); 
+		output += "\tsignatureAsNumbers:\t" + (signatureAsNumbers != null ? signatureAsNumbers.toString() : "null");
+		output += "\n\t\t\ttempAsNumbers:\t\t" + (tempAsNumbers != null ? tempAsNumbers.toString() : "null");
+		output += "\nsimpleHash:\t" + simpleHash;
+		output += "\tstandalone:\t" + standalone;
+		output += "\trandomPlaintext:\t" + randomPlaintext;
+		output += "\trandomKey:\t" + randomKey;
 		return output;
 	}
 }
