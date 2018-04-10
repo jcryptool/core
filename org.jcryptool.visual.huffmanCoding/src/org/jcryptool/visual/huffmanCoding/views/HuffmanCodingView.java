@@ -470,7 +470,7 @@ public class HuffmanCodingView extends ViewPart {
 		fileUncomp = null;
 
 		Group grpCompress = new Group(mainViewComposite, SWT.NONE);
-		grpCompress.setText(Messages.HuffmanCodingView_6);
+		grpCompress.setText(Messages.HuffmanCodingView_7);
 		grpCompress.setLayout(new GridLayout(7, false));
 		grpCompress.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
