@@ -35,6 +35,8 @@ public class FriedmanGraph extends Graph {
 	private int barCount = 0;
 	private double zoomFactor = 1.628;
 
+	final int textMarginY = 3;
+
 	private Rectangle barDrawingRect;
 	private Rectangle descDrawingRect;
 
@@ -132,7 +134,6 @@ public class FriedmanGraph extends Graph {
 			for (int i = currentShift; i < currentShift + barCount; i++) {
 				//Only shift when the bar is no overlay bar.
 				barBox = calculateBarContainer(barDrawingRect, bars.get(i).getIndex());
-				//barBox = calculateBarContainer(barDrawingRect, ((Bar)bars.get(i)).getIndex(), biggestBarIndex);
 				bars.get(i).setBox(barBox);
 				bars.get(i).setGC(gc);
 				bars.get(i).drawBar();
@@ -158,16 +159,9 @@ public class FriedmanGraph extends Graph {
 	@Override
 	protected final void paintDescTopArea(final Rectangle thisArea, final MColor thisBGColor,
 			final MColor thisFontColor) {
-		//thisArea.height = 150;
-		//thisArea.width = 0;
 
 		super.paintDescTopArea(thisArea, thisBGColor, thisFontColor);
 
-		//Old function body
-		//		thisBGColor.setColor(gc);
-		//		thisBGColor.setBGColor(gc);
-		//		gc.fillRectangle(thisArea);
-		//		thisFontColor.setColor(gc);
 	}
 
 	@Override
@@ -437,6 +431,12 @@ public class FriedmanGraph extends Graph {
 		this.maxValue = maxValue;
 	}
 
+	/**
+	 * Draws the Y-Axis description of the graph with a scale from 0 to maxValue
+	 * (usually from 0 to 1). Feel free to improve this function
+	 * 
+	 * @param thisBGColor
+	 */
 	private void drawYAxis(MColor thisBGColor) {
 		MColor thisColor = new MColor("FFFFFF");
 		thisBGColor.setBGColor(gc);
@@ -445,66 +445,82 @@ public class FriedmanGraph extends Graph {
 		int ySpacing;
 
 		int virtualScale = (int) Math.round(barDrawingRect.height / (maxValue * 10));
-		ySpacingUnround = virtualScale / 10D;
+		ySpacingUnround = virtualScale / 10D; //By default we try to go in steps of 10
 		ySpacing = (int) Math.floor(ySpacingUnround);
 
+		//Get the height a text would need to draw
 		org.eclipse.swt.graphics.Point textSize = gc.stringExtent("0.05");
 		int textHeight = textSize.y;
 
 		if (bars.size() > 0) {
+			//check if 10 steps with certain textHeight + spacing would fit into the axis
 			if (ySpacing > textHeight + 5) {
+
+				//Fill with Lines
 				for (int i = 0; ySpacing * i + ySpacing < barDrawingRect.height; ++i) {
-					gc.drawLine(3, barDrawingRect.y + barDrawingRect.height - (ySpacing * i) - 1, 3 + distLeft,
-							barDrawingRect.y + barDrawingRect.height - (ySpacing * i) - 1);
+					gc.drawLine(textMarginY, barDrawingRect.y + barDrawingRect.height - (ySpacing * i) - 1,
+							textMarginY + distLeft, barDrawingRect.y + barDrawingRect.height - (ySpacing * i) - 1);
 				}
 
-				gc.drawLine(3, distTop, distLeft, distTop);
+				//Final line top
+				gc.drawLine(textMarginY, distTop, distLeft, distTop);
 
+				//change color to white to text color 
 				thisColor.setColor(gc);
+				gc.drawString(String.format("%.3f", maxValue), textMarginY, distTop - textHeight - 2 - 2);
 
-				gc.drawString(String.format("%.3f", maxValue), 3, distTop - textHeight - 2 - 2);
-
+				//Draw axes labeling text
 				double scale = 0.0;
 				String scaleText;
-				for (int i = 0; /*i <= 9 &&*/ ySpacing * i + ySpacing < barDrawingRect.height; ++i, scale += 0.01) {
+				for (int i = 0; ySpacing * i + ySpacing < barDrawingRect.height; ++i, scale += 0.01) {
 					scaleText = String.format("%.2f", scale);
-					gc.drawText(scaleText, 3,
+					gc.drawText(scaleText, textMarginY,
 							barDrawingRect.y + barDrawingRect.height - (ySpacing * i) - textHeight - 5);
 				}
 				return;
 
 			} else {
+				//If steps of 10 does not fit try with steps of 4
 				ySpacingUnround = virtualScale / 4D;
 				ySpacing = (int) Math.floor(ySpacingUnround);
-				for (int i = 0; i <= 3; ++i) {
-					gc.drawLine(3, barDrawingRect.y + barDrawingRect.height - (ySpacing * i) - 1, 3 + distLeft,
-							barDrawingRect.y + barDrawingRect.height - (ySpacing * i) - 1);
+				for (int i = 0; ySpacing * i + ySpacing < barDrawingRect.height + 20; ++i) {
+					gc.drawLine(textMarginY, barDrawingRect.y + barDrawingRect.height - (ySpacing * i) - 1,
+							textMarginY + distLeft, barDrawingRect.y + barDrawingRect.height - (ySpacing * i) - 1);
 				}
 			}
 
-			if (ySpacing > textHeight + 5) {
-				gc.drawLine(3, distTop, distLeft, distTop);
+			//Check if text in steps of 4 also fits
+			if (ySpacing > textHeight + 20) {
+				gc.drawLine(textMarginY, distTop, distLeft, distTop);
 
 				thisColor.setColor(gc);
 
-				gc.drawString(String.format("%.3f", maxValue), 3, distTop - textHeight - 2 - 2);
+				gc.drawString(String.format("%.3f", maxValue), textMarginY, distTop - textHeight - 2 - 2);
 
 				thisColor.setColor(gc);
 				double scale = 0.0;
 				String scaleText;
-				for (int i = 0; i <= 3
-						&& (ySpacing * i) + (textHeight + 10) < barDrawingRect.height; ++i, scale += 0.025) {
+				for (int i = 0; ySpacing * i + ySpacing < barDrawingRect.height + 20; ++i, scale += 0.025) {
 					scaleText = String.format("%.3f", scale);
-					gc.drawText(scaleText, 3,
+					gc.drawText(scaleText, textMarginY,
 							barDrawingRect.y + barDrawingRect.height - (ySpacing * i) - textHeight - 5);
 				}
 			}
 		}
 	}
 
+	/**
+	 * Calculates the X-Axis spacing for the graph labels and returns how many can be labeled without overlapping
+	 * 
+	 * @param availableSpace
+	 *            The width of the descriptive x axis
+	 * @return Returns how many bars can be labeled. Mainly ranges from 1, 5 to 50, 500... etc.
+	 * 
+	 */
 	private int calculateNumberingSpaces(int availableSpace) {
 		// Following constructs count the number of digits which should be printed to avoid overlapping
 		int multiplier = 1, digitCounter = 1, decimalPower = 10, digitsPerNumber = 1;
+		int letterSize = gc.stringExtent("9").x + 3; //I add a little bit of extra space here, just to be sure
 
 		// this simple loops determines how many digits the current leftmost number in the graph
 		// has and sets digitsPerNumber and (next bigger) decimalPower
@@ -523,7 +539,7 @@ public class FriedmanGraph extends Graph {
 				digitCounter += digitsPerNumber;
 			}
 			//if it doesn't fit the multiplier is increased to 5, 50 or 500 and the loop run again
-			if (digitCounter * 10 > availableSpace) {
+			if (digitCounter * letterSize > availableSpace) {
 				multiplier = multiplier == 1 ? 5 : multiplier * 10;
 				digitCounter = multiplier;
 			} else
