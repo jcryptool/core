@@ -19,10 +19,10 @@ import org.jcryptool.visual.huffmanCoding.views.HuffmanCodingView;
 import org.jcryptool.visual.huffmanCoding.views.HuffmanCodingViewTree;
 
 /**
- * NOTE: THIS CLASS IS CURRENTLY UNUSED. IT MAY BE USED FOR GRAPH EXTENSION
- * FEATURES LIKE ZOOMING/CHANGING LAYOUT SO I LET THIS ONE IN
- * (michael@altenhuber.net)
- * 
+ * This handler changes the layout of the ZEST graph on the second tab in the huffman plugin
+ * The input comes from the upper right corner item change layout (3 dots) which issues the
+ * command org.jcryptool.visual.huffmanCoding.command.ChangeLayout.
+ *
  * @author Miray Inel
  *
  */
