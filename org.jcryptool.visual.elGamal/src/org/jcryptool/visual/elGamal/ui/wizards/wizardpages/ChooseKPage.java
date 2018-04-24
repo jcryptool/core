@@ -52,8 +52,11 @@ public class ChooseKPage extends WizardPage {
      * @param data {@link #data}
      */
     public ChooseKPage(final ElGamalData data) {
-        super(PAGENAME, TITLE, null);
-        this.data = data;
+    	super(PAGENAME);
+    	this.data = data;
+    	setTitle(TITLE);
+    	setDescription(Messages.ChooseKPage_select_k_text);
+        
     }
 
     public void createControl(final Composite parent) {
@@ -64,10 +67,6 @@ public class ChooseKPage extends WizardPage {
         gl_composite.marginWidth = 50;
         composite.setLayout(gl_composite);
         
-        Label label_text = new Label(composite, SWT.WRAP);
-        label_text.setText(Messages.ChooseKPage_select_k_text);
-        label_text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-        
         Label prime = new Label(composite, SWT.WRAP);
         GridData gd_prime = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
         prime.setLayoutData(gd_prime);
@@ -75,7 +74,7 @@ public class ChooseKPage extends WizardPage {
         
         Label modulus = new Label(composite, SWT.WRAP);
         GridData gd_modulus = new GridData(SWT.FILL, SWT.FILL, true, false);
-        gd_modulus.widthHint = 1000;
+        gd_modulus.widthHint = 900;
         modulus.setLayoutData(gd_modulus);
         modulus.setText(data.getModulus().toString());
         

@@ -19,3 +19,4 @@ Export-Package: org.jcryptool.crypto.classic.vigenere,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.crypto.classic.model.ui.wizard
+Automatic-Module-Name: org.jcryptool.crypto.classic.vigenere

@@ -142,6 +142,7 @@ public class Messages extends NLS {
 	public static String Constants_97;
 	public static String Constants_98;
 	public static String Constants_99;
+	public static String SPAView_description;
 
 	static {
 		// initialize resource bundle

@@ -73,7 +73,9 @@ public class IntroductionAndParameters {
 		Text text = new Text(compositeIntro, SWT.READ_ONLY | SWT.WRAP | SWT.MULTI);
 		text.setText(Messages.IntroductionAndParameters_1); //$NON-NLS-1$
 		text.setBackground(white);
-		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		GridData gd_text = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		gd_text.widthHint = 800;
+		text.setLayoutData(gd_text);
 
 		Group groupParameters = new Group(parent, SWT.NONE);
 		groupParameters.setLayout(new GridLayout(1, false));
@@ -218,9 +220,10 @@ public class IntroductionAndParameters {
 		});
 
 		label = new Label(panel, SWT.WRAP);
-		label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
-		label
-		.setText(Messages.IntroductionAndParameters_24);
+		GridData gd_label = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
+		gd_label.widthHint = 200;
+		label.setLayoutData(gd_label);
+		label.setText(Messages.IntroductionAndParameters_24);
 
 		group = new Group(groupParameters, SWT.NONE);
 		group.setLayout(new GridLayout(1, false));

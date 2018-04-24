@@ -18,6 +18,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
@@ -42,20 +43,15 @@ public class DefinitionAndDetails {
         groupDefinitions = new Group(parent, SWT.NONE);
         groupDefinitions.setText(Messages.DefinitionAndDetails_0);
         groupDefinitions.setLayout(new GridLayout(2, false));
-        GridData gridData = new GridData(SWT.FILL, SWT.TOP, true, false);
-        gridData.heightHint = 200;
-        gridData.horizontalSpan = 2;
-        groupDefinitions.setLayoutData(gridData);
+        groupDefinitions.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 2, 1));
 
         label = new Label(groupDefinitions, SWT.WRAP);
-        label.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 2, 1));
-        label
-                .setText(Messages.DefinitionAndDetails_1);
+        label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+        label.setText(Messages.DefinitionAndDetails_1);
 
         label = new Label(groupDefinitions, SWT.WRAP);
-        label.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 3));
-        label
-                .setText(Messages.DefinitionAndDetails_2
+        label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 3));
+        label.setText(Messages.DefinitionAndDetails_2
                         + Messages.DefinitionAndDetails_3
                         + Messages.DefinitionAndDetails_4
                         + Messages.DefinitionAndDetails_5
@@ -68,22 +64,23 @@ public class DefinitionAndDetails {
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         label.setText(Messages.DefinitionAndDetails_10 + Messages.DefinitionAndDetails_11
                 + Messages.DefinitionAndDetails_12);
+        
         labelPK = new Label(groupDefinitions, SWT.WRAP);
+        labelPK.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
         labelExplanation = new Label(groupDefinitions, SWT.WRAP);
         labelExplanation.setText(Messages.DefinitionAndDetails_13 + Messages.DefinitionAndDetails_14
                 + Messages.DefinitionAndDetails_15
                 + Messages.DefinitionAndDetails_16);
+        labelExplanation.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
         labelAuthetification = new Label(groupDefinitions, SWT.WRAP);
-        labelAuthetification.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 2, 1));
+        labelAuthetification.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 
         groupDetails = new Group(parent, SWT.NONE);
         groupDetails.setText(Messages.DefinitionAndDetails_17);
         groupDetails.setLayout(new GridLayout(1, false));
-        gridData = new GridData(SWT.FILL, SWT.TOP, true, false);
-        gridData.horizontalSpan = 2;
-        groupDetails.setLayoutData(gridData);
+        groupDetails.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 2, 1));
 
         final Composite userSelection = new Composite(groupDetails, SWT.NONE);
         userSelection.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -139,7 +136,8 @@ public class DefinitionAndDetails {
     public void displayUserDetails(UserData_BNP userData) {
         labelDetails.setText(userData.toString() + " "); //$NON-NLS-1$
         labelDetails.setEnabled(true);
-        groupDetails.layout();
+        //groupDetails.layout();
+        groupDetails.getParent().layout(new Control[] {labelDetails});
         // group_Details.getParent().layout();
         // group_Details.getParent().getParent().layout();
         // group_Details.getParent().getParent().getParent().layout();
@@ -148,7 +146,8 @@ public class DefinitionAndDetails {
     public void displayUserDetails(UserData_ECBDII userData) {
         labelDetails.setText(userData.toString() + " "); //$NON-NLS-1$
         labelDetails.setEnabled(true);
-        groupDetails.layout();
+        //groupDetails.layout();
+        groupDetails.getParent().layout(new Control[] {labelDetails});
         // group_Details.getParent().layout();
         // group_Details.getParent().getParent().layout();
         // group_Details.getParent().getParent().getParent().layout();
@@ -166,7 +165,7 @@ public class DefinitionAndDetails {
         labelUserIndex.setEnabled(false);
         labelDetails.setEnabled(false);
         spinnerUserIndex.setEnabled(false);
-        labelDetails.setText("\n\n\n\n\n\n\n\n\n"); //$NON-NLS-1$
+        labelDetails.setText("\n\n\n\n\n\n\n"); //$NON-NLS-1$
     }
 
     public void setMaximumNumberOfUsers(int numberOfUsers) {
@@ -178,7 +177,7 @@ public class DefinitionAndDetails {
         labelUserIndex.setEnabled(isvisible);
         spinnerUserIndex.setEnabled(isvisible);
         if (!isvisible) {
-            labelDetails.setText("\n\n\n\n\n\n\n\n\n"); //$NON-NLS-1$
+            labelDetails.setText("\n\n\n\n\n\n\n"); //$NON-NLS-1$
         }
     }
 

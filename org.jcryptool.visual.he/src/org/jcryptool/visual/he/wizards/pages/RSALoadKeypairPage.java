@@ -103,13 +103,14 @@ public class RSALoadKeypairPage extends WizardPage {
         combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         combo.setItems(keyStoreItems.keySet().toArray(new String[keyStoreItems.size()]));
         combo.addSelectionListener(new SelectionAdapter() {
-
             public void widgetSelected(SelectionEvent e) {
                 privateAlias = keyStoreItems.get(combo.getText());
                 publicAlias = getPublicForPrivate();
                 checkComplete();
             }
         });
+        combo.select(0);
+        combo.setFocus();
 
         new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
                 false));

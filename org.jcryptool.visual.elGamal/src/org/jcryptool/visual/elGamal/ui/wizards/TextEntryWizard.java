@@ -10,7 +10,6 @@
 package org.jcryptool.visual.elGamal.ui.wizards;
 
 import org.eclipse.jface.wizard.Wizard;
-import org.jcryptool.visual.elGamal.Action;
 import org.jcryptool.visual.elGamal.ElGamalData;
 import org.jcryptool.visual.elGamal.Messages;
 import org.jcryptool.visual.elGamal.ui.wizards.wizardpages.EnterCiphertextPage;
@@ -26,9 +25,6 @@ public class TextEntryWizard extends Wizard {
 	/** wizard title, displayed in the titlebar. */
 	private static final String TITLE = Messages.TextEntryWizard_textentry;
 
-	/** action, whether it's encrypt, decrypt, verify or sign. */
-	private final Action action;
-
 	/** shared data object for exchanging data. */
 	private final ElGamalData data;
 
@@ -37,18 +33,17 @@ public class TextEntryWizard extends Wizard {
 	 * @param action the cryptographic action
 	 * @param data the data object
 	 */
-	public TextEntryWizard(final Action action, final ElGamalData data) {
-		this.action = action;
+	public TextEntryWizard(final ElGamalData data) {
 		this.data = data;
 		this.setWindowTitle(TITLE);
 	}
 
 	@Override
 	public final void addPages() {
-		switch (action) {
+		switch (data.getAction()) {
 		case EncryptAction:
 		case SignAction:
-			addPage(new EnterPlaintextPage(action, data));
+			addPage(new EnterPlaintextPage(data));
 			break;
 		case DecryptAction:
 			addPage(new EnterCiphertextPage(data));
@@ -62,7 +57,7 @@ public class TextEntryWizard extends Wizard {
 
 	@Override
 	public final boolean performFinish() {
-		switch (action) {
+		switch (data.getAction()) {
 		case EncryptAction:
 		case SignAction:
 			data.setPlainText(((EnterPlaintextPage) getPage(EnterPlaintextPage.getPagename()))
@@ -75,8 +70,6 @@ public class TextEntryWizard extends Wizard {
 		case VerifyAction:
 			data.setSignature(((EnterSignaturePage) getPage(EnterSignaturePage.getPagename()))
 					.getText().trim());
-			data.setPlainText(((EnterSignaturePage) getPage(EnterSignaturePage.getPagename()))
-					.getPlaintext().trim());
 		default:
 			break;
 		}

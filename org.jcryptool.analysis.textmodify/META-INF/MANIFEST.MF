@@ -14,3 +14,4 @@ Import-Package: org.jcryptool.core.logging.dialogs,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.constants,
  org.jcryptool.crypto.ui.textmodify.wizard
+Automatic-Module-Name: org.jcryptool.analysis.textmodify

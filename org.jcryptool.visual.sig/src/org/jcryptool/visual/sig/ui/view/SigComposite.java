@@ -9,6 +9,8 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.sig.ui.view;
 
+import java.util.Arrays;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.Category;
 import org.eclipse.core.commands.Command;
@@ -20,12 +22,16 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
@@ -117,6 +123,7 @@ public class SigComposite extends Composite {
 	private Canvas c2;
 	private Canvas canvasBtmCenter;
 	private Canvas c3;
+	private MenuItem copy;
 
     /**
      * @return the hash
@@ -169,6 +176,8 @@ public class SigComposite extends Composite {
     public SigComposite(Composite parent, int style, SigView view) {
         super(parent, style);
         setLayout(new GridLayout());
+        
+        Clipboard clipboard = new Clipboard(getDisplay());
         
         Color white = new Color(Display.getCurrent(), 255, 255, 255);
         
@@ -257,6 +266,26 @@ public class SigComposite extends Composite {
 		        gc.dispose();			
 			}
         });
+        
+        //Add context menu for copying to clipboard
+        Menu c1Menu = new Menu(c1);
+        c1.setMenu(c1Menu);
+        copy = new MenuItem(c1Menu, SWT.NONE);
+        copy.setEnabled(false);
+        copy.setText(Messages.SigComposite_Copy);
+        copy.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String tooltipText = c1.getToolTipText();
+				if (tooltipText != null) {
+					clipboard.setContents(new Object[] {tooltipText}, new Transfer[] {TextTransfer.getInstance()});
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {} 	
+        });
+        
         
         btnHash = new Button(columnLeft, SWT.NONE);
         btnHash.setEnabled(false);
@@ -559,14 +588,19 @@ public class SigComposite extends Composite {
      * Adds SelectionListeners to the Controls that need them
      */
     public void createEvents() {
+    	
         // Adds a Listener for the document
         btnChooseInput.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
-                try {
-                    // If the user already finished other steps, reset
-                    // everything to this step (keep the chosen algorithms)
-                    reset(0);
-
+                try {               
+                    //Memorize first 1000 bytes of the old message
+                	int lengthOldMessage;
+                	byte[] oldMessage = null;
+                	if (Input.data != null) {
+                    	lengthOldMessage = Math.min(Input.data.length, 1000);
+                        oldMessage = Arrays.copyOfRange(Input.data, 0, lengthOldMessage);
+                	}
+                	
                     // Create the HashWizard
                     InputWizard wiz = new InputWizard();
                     // Display it
@@ -574,20 +608,50 @@ public class SigComposite extends Composite {
                         @Override
                         protected void configureShell(Shell newShell) {
                             super.configureShell(newShell);
-                            newShell.setSize(740, 480);  // set size of the wizard-window (x,y)
-                            newShell.setMinimumSize(740, 480);
+                            newShell.setSize(800, 480);  // set size of the wizard-window (x,y)
+                            newShell.setMinimumSize(800, 480);
                         }
                     };
-                    if (dialog.open() == Window.OK) {
-                        btnHash.setEnabled(true); // Enable to select the hash method
-                        tabDescription.setSelection(1); // Activate the second
-                                                        // tab of the
-                                                        // description
-                        c1.redraw();
-                        c2.redraw();
-                        c3.redraw();
-                        canvasBtmCenter.redraw();
-                        lblProgress.setText(String.format(Messages.SigComposite_lblProgress, 2));
+                 
+                    if (dialog.open() == Window.OK) {                 	
+                    	//Get the first 1000 bytes of the new message
+                    	int lengthNewMessage;
+                    	byte[] newMessage = null;
+                    	if (Input.data != null) {
+                        	lengthNewMessage = Math.min(Input.data.length, 1000);
+                        	newMessage = Arrays.copyOfRange(Input.data, 0, lengthNewMessage);
+                    	}
+                    	
+                    	// Only act if the user changed the input text (if the first 1000 bytes differ from old input)
+                    	if (Input.data == null || !Arrays.equals(oldMessage, newMessage)) { 
+                    		
+                            // If the user already finished other steps, reset
+                            // everything to this step (keep the chosen algorithms)
+                            reset(0);
+                        	
+                            btnHash.setEnabled(true); // Enable to select the hash method
+                            tabDescription.setSelection(1); // Activate the second
+                                                            // tab of the
+                                                            // description
+                            c1.redraw();
+                            c2.redraw();
+                            c3.redraw();
+                            
+                            if (Input.dataPlain != null) {
+                            	if (Input.filename != null) {
+                            		c1.setToolTipText(Input.filename + "\n\n" + Messages.SigComposite_FileInput_Tooltip + Input.dataPlain);
+                            	} else {
+                            		c1.setToolTipText(Input.dataPlain);
+                            	}
+                            	copy.setEnabled(true);
+                            }
+                            
+                            canvasBtmCenter.redraw();
+                            lblProgress.setText(String.format(Messages.SigComposite_lblProgress, 2));
+                    	}
+                    	//prevent memory leak
+                    	newMessage = null;
+                    	oldMessage = null;
                     }
 
                 } catch (Exception ex) {
@@ -600,7 +664,6 @@ public class SigComposite extends Composite {
         btnHash.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 try {
-                    reset(1);
                     // Create the HashWizard
                     HashWizard wiz = new HashWizard();
                     // Display it
@@ -612,8 +675,10 @@ public class SigComposite extends Composite {
                         }
                     };
                     if (dialog.open() == Window.OK) {
-                        hash = wiz.getHash(); // get hash method (an integer)
-                        lblHash.setText(hashes[hash]);
+                		hash = wiz.getHash();
+                		reset(1);
+                		
+                		lblHash.setText(hashes[hash]);
 
                         // Arguments: Hash method, data to hash
                         Hash.hashInput(hashes[hash], Input.data); // Hash the input
@@ -629,7 +694,7 @@ public class SigComposite extends Composite {
                         c3.redraw();
                         canvasBtmCenter.redraw();
                         lblProgress.setText(String.format(Messages.SigComposite_lblProgress, 3));
-                        txtHash.setText(Input.hashHex);
+                        txtHash.setText(Input.hashHex);  
                     }
                 } catch (Exception ex) {
                     LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
@@ -640,19 +705,19 @@ public class SigComposite extends Composite {
         // Adds a Listener for the Signature select button
         btnSignature.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
-                try {
-                    reset(2);
+                try {  	
                     SignatureWizard wiz = new SignatureWizard(hash);
                     WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
                         @Override
                         protected void configureShell(Shell newShell) {
                             super.configureShell(newShell);
                             // set size of the wizard-window (x,y)
-                            newShell.setSize(450, 700);
-                            newShell.setMinimumSize(450, 700);
+                            newShell.setSize(550, 700);
+                            newShell.setMinimumSize(550, 700);
                         }
                     };
                     if (dialog.open() == Window.OK) {
+                		reset(2);       	
                         // get signature method (integer)
                         signature = wiz.getSignature();
                         KeyStoreAlias alias = wiz.getAlias();
@@ -665,6 +730,18 @@ public class SigComposite extends Composite {
                         btnOpenInEditor.setEnabled(true);
                         // Activate the second tab of the description
                         tabDescription.setSelection(3);
+         
+                        if (alias != null && alias.getContactName() != null) {
+                        	if (signature == 2) {
+                        		c3.setToolTipText(lblSignature.getText());
+                        	} else {
+                        		 String keyDescription = alias.getContactName() + " - " + alias.getKeyLength() + " bit"; //$NON-NLS-1$ //$NON-NLS-2$
+                                 c3.setToolTipText(keyDescription);
+                        	}
+                        } else {
+                        	c3.setToolTipText(""); //$NON-NLS-1$
+                        }
+           
                         c1.redraw();
                         c2.redraw();
                         c3.redraw();
@@ -682,8 +759,8 @@ public class SigComposite extends Composite {
                         }
                     }
                 } catch (Exception ex) {
-                    LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
-                }
+                	LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
+                } 
             }
         });
 
@@ -691,6 +768,8 @@ public class SigComposite extends Composite {
         btnReset.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 reset(0);
+                Input.reset();
+                System.gc();
             }
         });
 
@@ -786,16 +865,31 @@ public class SigComposite extends Composite {
         switch (step) {
         case 0:
             btnHash.setEnabled(false);
+            c1.setToolTipText(null);
+            copy.setEnabled(false);
+            lblHash.setText(""); //$NON-NLS-1$
+            Input.hash = null;
+            Input.hashHex = null;
+            Input.h = -1;
         case 1:
             btnSignature.setEnabled(false);
+            c3.setToolTipText(null);
+            lblSignature.setText(""); //$NON-NLS-1$
             txtHash.setText(""); //$NON-NLS-1$
+            Input.signature = null;
+            Input.signatureHex = null;
+            Input.signatureOct = null;
+            Input.privateKey = null;
+            Input.publicKey = null;
+            Input.key = null;
+            Input.s = -1;
         case 2:
+        	Input.savePath = null;
             btnOpenInEditor.setEnabled(false);
             txtDescriptionOfStep4.setText(Messages.SigComposite_txtDescriptionOfStep4);
             if (!called) { // If not called by jctca, reset key
                 Input.privateKey = null;
             }
-            Input.key = null;
             break;
         default:
             break;

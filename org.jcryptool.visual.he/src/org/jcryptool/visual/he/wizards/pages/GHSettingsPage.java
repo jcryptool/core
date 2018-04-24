@@ -14,8 +14,8 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.layout.RowData;
-import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -46,26 +46,22 @@ public class GHSettingsPage extends WizardPage {
 
 	public final void createControl(Composite parent) {
 		Composite mainComposite = new Composite(parent, SWT.NONE);
-		final RowLayout mrl = new RowLayout(SWT.VERTICAL);
-		mainComposite.setLayout(mrl);
-
-		Composite subComposite = new Composite(mainComposite, SWT.NONE);
-		final RowLayout srl = new RowLayout(SWT.VERTICAL);
-		subComposite.setLayout(srl);
-		final RowData labelrd = new RowData(300,30);
-		final RowData combord = new RowData(300,18);
-		Label label = new Label(subComposite, SWT.NONE);
-		label.setLayoutData(labelrd);
+		GridLayout gl_mainComposite = new GridLayout();
+		mainComposite.setLayout(gl_mainComposite);
+		
+		Label label = new Label(mainComposite, SWT.NONE);
 		label.setText(Messages.GHChooseMultiplicationsText);
-		dim = new Combo(subComposite, SWT.READ_ONLY);
-		dim.setLayoutData(combord);
+		
+		dim = new Combo(mainComposite, SWT.READ_ONLY);
+		GridData gd_dim = new GridData(SWT.LEFT, SWT.FILL, true, false);
+		gd_dim.widthHint = 300;
+		dim.setLayoutData(gd_dim);
 		dim.add("", 0);
 		dim.add("1", 1);
 		dim.add("2", 2);
 		dim.add("3", 3);
 		dim.add("4", 4);
 		dim.select(data.getMaxMult());
-		
 		
 		dim.addModifyListener(new ModifyListener() {
 			public void modifyText(final ModifyEvent e) {

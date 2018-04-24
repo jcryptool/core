@@ -12,3 +12,4 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.directories,
  org.jcryptool.core.util.fonts,
  org.jcryptool.core.util.numbers
+Automatic-Module-Name: org.jcryptool.games.numbershark

@@ -176,7 +176,7 @@ public class NewPublicKeyPage extends WizardPage {
         GridData gd_label2 = new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1);
         gd_label2.verticalIndent = 10;
         label.setLayoutData(gd_label2);
-        new Label(composite, SWT.NONE).setText("A = "); //$NON-NLS-1$
+        new Label(composite, SWT.NONE).setText("B = "); //$NON-NLS-1$
         atext = new Text(composite, SWT.BORDER);
         atext.addVerifyListener(VL);
         atext.addModifyListener(ml);

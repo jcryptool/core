@@ -9,57 +9,52 @@
 <body>
 <h1>Simple Power Analysis (SPA) gegen RSA</h1>
 
-<p> Simple Power Analysis (SPA) umfasst visuell interpretieren Macht Spuren, oder Diagramme der elektrischen Aktivität im Laufe der Zeit. </p>
+<p>Simple Power Analysis (SPA) umfasst die visuelle Interpretation von Stromkurven (Power Traces) oder Diagrammen, die die elektrische Aktivität kryptografischer Geräte (Smartcards, integrierten Schaltkreisen, ...) im Laufe der Zeit abbilden. </p>
 
-<h2> RSA Parameter Erklärung </h2>
+<h2>RSA Parameter Erklärung</h2>
 
 <img src="rsa_parameter.jpg">
 
-<p> Chiffretext c (z. B. 5454): zeigt die verschlüsselten Geheimtext mit dem geheimen privaten Schlüssel d (zB 101) </p>.
+<p>Chiffretext c: Zeigt den, mit dem geheimen privaten Schlüssel d (z. B. 101) verschlüsselten Geheimtext (z. B. 5454).</p>
 
-<p> P und Q sind zwei copime Zahlen und der Modul n = P * Q </p>
+<p>P und Q sind zwei teilerfremde Zahlen. Das Modul n ist P * Q.</p>
 
-<p> R = c <sup> d </sup> mod n ist die entschlüsselte Klartext. Square and Multiply-Algorithmus wird in der Regel verwendet, um die Potenzierung durch c auszuführen <sup> d </sup>
-mod n. Es ist eine effiziente Algorithmen zur schnellen Berechnung von großen Integer-Potenzen einer Rufnummer verwendet. Es ist jedoch auch anfällig für Power Analysis. </p>
+<p>R = c<sup>d</sup> mod n ist der entschlüsselte Klartext. Der "Square and Multiply"-Algorithmus wird in der Regel verwendet, um die Potenz von c<sup>d</sup> mod n zu berechnen. Es ist ein effizienter Algorithmus zur schnellen Berechnung von großen Potenzen natürlicher Zahlen. Jedoch ist er anfällig für Power Analysis.</p>
 
-<h2> Unsichere "Square and Multiply"-Algorithmus Erklärung </h2>
+<h2>Unsicherer "Square and Multiply"-Algorithmus</h2>
 
 <img src="square_and_multiply.jpg">
 
-<p> "Square and Multiply"-Algorithmus verwendet, um die Potenzierung des privaten Schlüssels und der öffentliche Schlüssel während der Ver-und Entschlüsselung von execute
-RSA-Algorithmus. </p>
+<p>Der "Square and Multiply"-Algorithmus wird verwendet, um die Potenzierung des privaten und des öffentliche Schlüssels während der Ver- und Entschlüsselung des RSA-Algorithmus auszuführen. </p>
 
 <img src="executeprocessofsaq.jpg">
 
-<p> Wie oben gezeigt, wird der private Schlüssel in dezimaler zunächst in binärer Form umgewandelt werden. (zB 101 (Dezember) = 1.100.101 (bin.)). Danach berechnen wir die
-Exponentiation Ergebnis nach dem aktuellen Bit von links nach rechts: wenn das gegenwärtige Bit gleich 1 ist eine Multiplikationsoperation (Res = Res. * c mod n) wird
-nach einer Quadratur Operation durchgeführt (Res = Res <sup> 2 </sup> mod n), sonst führen wir nur die Quadratur Betrieb ohne Anschluss an eine Multiplikation
-Betrieb. </p>
+<p> Wie oben gezeigt, wird der private Schlüssel zunächst von der dezimalen Darstellung in binäre Darstellung umgewandelt (z.B. 101 (dezimal) zu 1100101 (binär)). Danach quadrieren wir die Bits von links nach rechts und verrechnen sie mit dem vorherigen Ergebnis: Ist das gegenwärtige Bit ein "1", wird eine Multiplikation (Res = Res * c mod n) 
+nach der Quadrierung (Res = Res <sup>2</sup> mod n) durchgeführt. Ist das gegenwärtige Bit eine "0", führen wir nur die Quadrierung aus.</p>
 
-<h2> SPA gegen RSA-Demonstration </h2>
+<h2> Demonstration von SPA gegen RSA </h2>
 
-<p> Da die Anwesenheit der if-Anweisung im Algorithmus "Square and Multiply" ist anfällig für "Power Analysis Attack". </p>
+<p> Der "Square and Multiply"-Algorithmus ist anfällig für "Power Analysis Attack", da die Operationen "Square and Multiply" und "Multiply" unterschiedliche Spuren in Stromkurven verursachen.</p>
 
 <img src="visual_of_sam.jpg">
 
-<p> Die Macht Spuren zwischen "Quadrierung und Multiplikation" und "Quadratur" sind unterschiedlich. "Simple Power Analysis" erholen kann jedes Bit des sicheren privaten
-Taste d durch den Vergleich und die Analyse der Macht Spuren in jeder Reihe. Gezeigt in der Abbildung oben ist der private Schlüssel 1100101. </p>
+<p> Die Stromkurve (Power Trace) ist zwischen den Operationen "Square and Multiply" und "Square" unterschiedlich. Dadurch kann die "Simple Power Analysis" jedes Bit des geheimen Exponenten d durch den Vergleich und die Analyse der Stromkurve feststellen. In der Abbildung oben wird die Stromkurve des privaten Schlüssel 1100101 gezeigt.</p>
 
-<h2> Sichern verbessert "Square and Multiply immer" Algorithmus Erklärung </h2>
+<h2> Verbesserter "Square and Multiply always"-Algorithmus </h2>
 
-<p> Das Original "Square and Multiply"-Algorithmus könnte durch Hinzufügen einer Dummy-Multiplikation in der Branche der Bit "0" verbessert werden. </p>
+<p> Der original "Square and Multiply"-Algorithmus kann durch hinzufügen einer Dummy-Multiplikation, wenn das gegenwärtige Bit gleich "0" ist, verbessert werden. </p>
 
 <img src="square_and_multiply_always.jpg"> <img src="processofsama.jpg">
 
-Egal <p> das gegenwärtige Bit gleich "1" oder "0", und Quadrieren Multiplikationsoperation wird immer durchgeführt werden. Wir haben gerade nach den aktuellen Bit zu wählen
-Res_ <sub> 0 </sub> oder res_ <sub> 1 </sub> als das Ergebnis in der nächsten Reihe. </p>
+<p>Egal, ob das gegenwärtige Bit gleich "1" oder "0" ist, es wird immer quadriert und multipliziert.</p>
 
 <img src="powertraceofsama.jpg">
 
-<p> Offensichtlich gibt es nicht mehr unterschieden Differenz zwischen den Zweigen von Bit "1" und das Bit "0", so Wiedergewinnen jedes Bit des privaten Schlüssels durch Vergleich der
-Macht Spuren mit SPA ist nicht mehr möglich. </p>
+<p> Offensichtlich gibt es keine Unterschiede mehr, ob eine "0" oder eine "1" verarbeitet wurde. Es kann nicht mehr herausgefunden werden, ob der private Schlüssel d eine "0" oder "1" an einer Stelle enthält.<\p>
 
 <p> Für weitere Informationen über elliptischen Kurve Berechnung, siehe Unterabschnitt "Simple Power Analysis" in "Power-Analyse" oder
-	<a href="http://en.wikipedia.org/wiki/Power_analysis#Simple_Power_Analysis">http://en.wikipedia.org/wiki/Power_analysis#Simple_Power_Analysis</a>.</p>
+<a href="http://en.wikipedia.org/wiki/Power_analysis#Simple_Power_Analysis">http://en.wikipedia.org/wiki/Power_analysis#Simple_Power_Analysis</a>.</p>
+
+<\p>
 </body>
 </html>

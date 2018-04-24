@@ -20,8 +20,8 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.RowData;
-import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -41,7 +41,7 @@ import org.jcryptool.visual.he.algo.GHKeyPair;
  */
 public class GHNewKeyPage extends WizardPage {
 	private static final String PAGENAME = "New key page"; //$NON-NLS-1$
-	private static final String TITLE=Messages.NewKeyPage_Title;
+	private static final String TITLE=Messages.GHNewKeyPage_Title;
 	private final GHKeyPair keyPair;
 	private final FHEParams fheParams;
 	private final Display display;
@@ -92,7 +92,7 @@ public class GHNewKeyPage extends WizardPage {
 
 	public GHNewKeyPage(GHKeyPair keyPair, FHEParams fheParams, Display display) {
 		super(PAGENAME, TITLE, null);
-		this.setDescription(Messages.NewKeyPage_Message);
+		this.setDescription(Messages.GHNewKeyPage_Message);
 		this.keyPair = keyPair;
 		this.fheParams = fheParams;
 		this.display = display;
@@ -131,23 +131,28 @@ public class GHNewKeyPage extends WizardPage {
 	}
 
 	public final void createControl(Composite parent) {
-		Composite mainComposite = new Composite(parent, SWT.NONE);
-		final RowLayout mrl = new RowLayout(SWT.VERTICAL);
-		mainComposite.setLayout(mrl);
+		Composite composite = new Composite(parent, SWT.NONE);
+		GridLayout gd_composite = new GridLayout(2, false);
+		gd_composite.horizontalSpacing = 20;
+		gd_composite.verticalSpacing = 10;
+		composite.setLayout(gd_composite);
 
-		Composite subComposite = new Composite(mainComposite, SWT.NONE);
-		final RowLayout srl = new RowLayout();
-		subComposite.setLayout(srl);
-		final RowData labelrd = new RowData(110,30);
-		final RowData combord = new RowData(150,18);
-		final RowData textrd = new RowData(347,18);
-		final RowData smalltextrd = new RowData(200,18);
-		final RowData textmultird = new RowData(330,50);
-		Label label = new Label(subComposite, SWT.NONE);
-		label.setLayoutData(labelrd);
-		label.setText(Messages.HEComposite_GH_Dimension);
-		dim = new Combo(subComposite, SWT.READ_ONLY);
-		dim.setLayoutData(combord);
+		Label lblDimension = new Label(composite, SWT.NONE);
+		lblDimension.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		lblDimension.setText(Messages.HEComposite_GH_Dimension);
+		
+		Composite dimensionComposite = new Composite(composite, SWT.NONE);
+		GridData gd_dimensionComposite = new GridData(SWT.FILL, SWT.FILL, true, false);
+		GridLayout gl_dimensionComposite = new GridLayout(2, false);
+		gl_dimensionComposite.verticalSpacing = 0;
+		gl_dimensionComposite.horizontalSpacing = 10;
+		dimensionComposite.setLayoutData(gd_dimensionComposite);
+		dimensionComposite.setLayout(gl_dimensionComposite);
+		
+		dim = new Combo(dimensionComposite, SWT.READ_ONLY);
+		GridData gd_dim = new GridData(SWT.LEFT, SWT.CENTER, false, false);
+		gd_dim.widthHint = 100;
+		dim.setLayoutData(gd_dim);
 		dim.add("", 0);
 		dim.add("4", 1);
 		dim.add("8", 2);
@@ -156,18 +161,10 @@ public class GHNewKeyPage extends WizardPage {
 		dim.add("64", 5);
 		dim.select(1);
 
-		label = new Label(subComposite, SWT.NONE);
-		label.setSize(50,22);
-
-		subComposite = new Composite(mainComposite, SWT.NONE);
-		subComposite.setLayout(srl);
-
-		label = new Label(subComposite, SWT.NONE);
-		label.setLayoutData(labelrd);
-
-		genButton = new Button(subComposite, SWT.PUSH);
+		genButton = new Button(dimensionComposite, SWT.PUSH);
 		genButton.setText(Messages.GHNewKeyPage_Generate);
-		genButton.setLayoutData(new RowData(180,22));
+		GridData gd_genButton = new GridData(SWT.LEFT, SWT.CENTER, true, false);
+		genButton.setLayoutData(gd_genButton);
 		genButton.addSelectionListener(new SelectionAdapter() {
         	@Override
 			public void widgetSelected(final SelectionEvent e) {
@@ -179,52 +176,54 @@ public class GHNewKeyPage extends WizardPage {
         	}
         });
 
-		subComposite = new Composite(mainComposite, SWT.NONE);
-		subComposite.setLayout(srl);
-		label = new Label(subComposite, SWT.NONE);
-		label.setLayoutData(labelrd);
-		label.setText(Messages.HEComposite_GH_KeyArea_Determinant);
-		detText = new Text(subComposite, SWT.MULTI | SWT.H_SCROLL);
-		detText.setLayoutData(textrd);
+		Label lblDet = new Label(composite, SWT.NONE);
+		lblDet.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		lblDet.setText(Messages.HEComposite_GH_KeyArea_Determinant);
+		detText = new Text(composite, SWT.MULTI | SWT.H_SCROLL | SWT.BORDER);
+		detText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		detText.setEditable(false);
 
-        subComposite = new Composite(mainComposite, SWT.NONE);
-        subComposite.setLayout(srl);
-        label = new Label(subComposite, SWT.NONE);
-		label.setLayoutData(labelrd);
-		label.setText(Messages.HEComposite_GH_KeyArea_Root);
-		rootText = new Text(subComposite, SWT.MULTI | SWT.H_SCROLL);
-		rootText.setLayoutData(textrd);
+        Label lblRoot = new Label(composite, SWT.NONE);
+		lblRoot.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		lblRoot.setText(Messages.HEComposite_GH_KeyArea_Root);
+		rootText = new Text(composite, SWT.MULTI | SWT.H_SCROLL | SWT.BORDER);
+		rootText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		rootText.setEditable(false);
 
-		subComposite = new Composite(mainComposite, SWT.NONE);
-        subComposite.setLayout(srl);
-        label = new Label(subComposite, SWT.NONE);
-		label.setLayoutData(labelrd);
-		label.setText(Messages.HEComposite_GH_KeyArea_Public_Key_Blocks);
-		pkBlocksText = new Text(subComposite, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		pkBlocksText.setLayoutData(textmultird);
+        Label lblBlocks = new Label(composite, SWT.NONE);
+		lblBlocks.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		lblBlocks.setText(Messages.HEComposite_GH_KeyArea_Public_Key_Blocks);
+		pkBlocksText = new Text(composite, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+		GridData gd_kpBlocksText = new GridData(SWT.FILL, SWT.FILL, true, false);
+		gd_kpBlocksText.heightHint = 50;
+		pkBlocksText.setLayoutData(gd_kpBlocksText);
 		pkBlocksText.setEditable(false);
 
-        subComposite = new Composite(mainComposite, SWT.NONE);
-        subComposite.setLayout(srl);
-        label = new Label(subComposite, SWT.NONE);
-		label.setLayoutData(labelrd);
-		label.setText(Messages.HEComposite_GH_KeyArea_Secret_Vector);
-		vectorText = new Text(subComposite, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		vectorText.setLayoutData(textmultird);
+        Label lblVector = new Label(composite, SWT.NONE);
+		lblVector.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		lblVector.setText(Messages.HEComposite_GH_KeyArea_Secret_Vector);
+		vectorText = new Text(composite, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+		GridData gd_vectorText = new GridData(SWT.FILL, SWT.FILL, true, false);
+		gd_vectorText.heightHint = 50;
+		vectorText.setLayoutData(gd_vectorText);
 		vectorText.setEditable(false);
 
-        subComposite = new Composite(mainComposite, SWT.NONE);
-        subComposite.setLayout(srl);
-        label = new Label(subComposite, SWT.NONE);
-		label.setLayoutData(labelrd);
-		label.setText(Messages.GHNewKeyPage_Save);
+        Label lblSave = new Label(composite, SWT.NONE);
+        lblSave.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        lblSave.setText(Messages.GHNewKeyPage_Save);
 
-		yesButton = new Button(subComposite, SWT.RADIO);
+        Composite radioButtons = new Composite(composite, SWT.NONE);
+        GridLayout gl_radioButtons = new GridLayout(2, false);
+        gl_radioButtons.verticalSpacing = 0;
+        gl_radioButtons.horizontalSpacing = 10;
+        radioButtons.setLayout(gl_radioButtons);
+        radioButtons.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		yesButton = new Button(radioButtons, SWT.RADIO);
 		yesButton.setText(Messages.GHNewKeyPage_Yes);
-		noButton = new Button(subComposite, SWT.RADIO);
+		yesButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		noButton = new Button(radioButtons, SWT.RADIO);
 		noButton.setText(Messages.GHNewKeyPage_No);
+		noButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		noButton.setSelection(true);
 		noButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -244,6 +243,7 @@ public class GHNewKeyPage extends WizardPage {
 				getContainer().updateButtons();
 				own.setVisible(true);
 				owner.setVisible(true);
+				owner.setFocus();
 				pass.setVisible(true);
 				password.setVisible(true);
 				passwordverify.setVisible(true);
@@ -251,37 +251,37 @@ public class GHNewKeyPage extends WizardPage {
 			}
 		});
 
-		subComposite = new Composite(mainComposite, SWT.NONE);
-	    subComposite.setLayout(new RowLayout());
-
-	    Composite subSubComposite = new Composite(subComposite, SWT.NONE);
-	    subSubComposite.setLayout(new RowLayout(SWT.VERTICAL));
-	    final RowData twolinelabelrd = new RowData(200,36);
-		own = new Label(subSubComposite, SWT.NONE);
+		Composite userDataComposite = new Composite(composite, SWT.NONE);
+		GridData gd_userDataComposite = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
+		gd_userDataComposite.widthHint = 600;
+		userDataComposite.setLayoutData(gd_userDataComposite);
+		GridLayout gl_userDataComposite = new GridLayout(2, true);
+		gl_userDataComposite.horizontalSpacing = 10;
+		userDataComposite.setLayout(gl_userDataComposite);
+		
+		own = new Label(userDataComposite, SWT.WRAP);
 		own.setText(Messages.RSASaveKeypairPage_name);
-		own.setLayoutData(twolinelabelrd);
+		own.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, true, false));
 		own.setVisible(false);
-
-		owner = new Text(subSubComposite, SWT.BORDER | SWT.SINGLE);
-		owner.addModifyListener(ml);
-		owner.setLayoutData(smalltextrd);
-		owner.setVisible(false);
-
-		subSubComposite = new Composite(subComposite, SWT.NONE);
-	    subSubComposite.setLayout(new RowLayout(SWT.VERTICAL));
-
-		pass = new Label(subSubComposite, SWT.NONE);
+	
+		pass = new Label(userDataComposite, SWT.WRAP);
 		pass.setText(Messages.RSASaveKeypairPage_password);
-		pass.setLayoutData(twolinelabelrd);
+		pass.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false));
 		pass.setVisible(false);
 
-		password = new Text(subSubComposite, SWT.BORDER | SWT.PASSWORD);
+		owner = new Text(userDataComposite, SWT.BORDER | SWT.SINGLE);
+		owner.addModifyListener(ml);
+		owner.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 2));
+		owner.setVisible(false);
+		
+		password = new Text(userDataComposite, SWT.BORDER | SWT.PASSWORD);
 		password.addModifyListener(ml);
-		password.setLayoutData(smalltextrd);
+		password.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		password.setVisible(false);
-		passwordverify = new Text(subSubComposite, SWT.BORDER | SWT.PASSWORD);
+		
+		passwordverify = new Text(userDataComposite, SWT.BORDER | SWT.PASSWORD);
 		passwordverify.addModifyListener(ml);
-		passwordverify.setLayoutData(smalltextrd);
+		passwordverify.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		passwordverify.setVisible(false);
 
 		/*combo = new Combo(subComposite, SWT.READ_ONLY);
@@ -294,7 +294,7 @@ public class GHNewKeyPage extends WizardPage {
         		getContainer().updateButtons();
         	}
         });*/
-		setControl(mainComposite);
+		setControl(composite);
 	}
 
 	public void keySet() {

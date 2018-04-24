@@ -93,12 +93,6 @@ public class RSAComposite extends Composite {
 	/** field for the rsa-modul. */
 	private Text nText;
 
-	/** field for the text entered in the wizard. */
-	// private Text textText;
-
-	/** field for the signature or the text translated to numbers. */
-	// private Text numberText;
-
 	/** the table to show the fast exponentiation. */
 	private Table fastExpTable;
 
@@ -329,7 +323,6 @@ public class RSAComposite extends Composite {
 	 *            the parent composite
 	 */
 	private void createButtonArea(final Composite parent) {
-		// Set up the canvas for the Buttons
 		
 		Composite compositeButtons = new Composite(parent, SWT.NONE);
 		compositeButtons.setLayout(new GridLayout());
@@ -359,7 +352,7 @@ public class RSAComposite extends Composite {
 					keySelected();
 				}
 			}
-
+			
 		});
 
 		Composite compLoadTextBtns = new Composite(compositeButtons, SWT.NONE);
@@ -517,16 +510,15 @@ public class RSAComposite extends Composite {
 
 		WizardDialog wizardDialog = new WizardDialog(getShell(), wizard);
 		wizardDialog.setHelpAvailable(false);
+		
 		int open = wizardDialog.open();
-
 		if (open == Window.OK) {
 			List<Integer> loadedData;
 			switch (data.getAction()) {
 			case EncryptAction:
 			case SignAction:
 				loadedData = wizard.getDataBlocks();
-				ConversionStringToBlocks blockConversion = wizard
-						.getSTBConversionUsed();
+				ConversionStringToBlocks blockConversion = wizard.getSTBConversionUsed();
 				data.setPlainTextConversion(blockConversion);
 				data.setPlainTextAsNumbers(loadedData);
 				break;
@@ -829,13 +821,12 @@ public class RSAComposite extends Composite {
 		stepButton.setEnabled(false);
 		stepButton.setToolTipText(Messages.RSAComposite_step_text);
 		stepButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-//		stepButton.addSelectionListener(startSelectionListener);
 		stepButton.addSelectionListener(stepButtonSelectionlistner);
 		
 		// Add Step Status
 		stepLabel = new Text(calcGroup, SWT.LEAD | SWT.BORDER);
 		GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false);
-		layoutData.widthHint = 100;
+		layoutData.widthHint = 120;
 		stepLabel.setLayoutData(layoutData);
 		stepLabel.setEditable(false);
 
@@ -913,6 +904,7 @@ public class RSAComposite extends Composite {
 			c.pack();
 		}
 		fastExpTable.setVisible(true);
+		
 		// get the graphics context
 		final GC gc = new GC(fastExpTable);
 		// get the standard font we're using everywhere
@@ -957,8 +949,10 @@ public class RSAComposite extends Composite {
 		final String binaryNumber = getExponent().toString(2);
 		stylor.setText((data.getAction() == Action.EncryptAction
 				|| data.getAction() == Action.VerifyAction ? "e=" : "d=") + number + "16=" + binaryNumber + "2"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-		stylor.setStyle(subscript, 2 + number.length(), number.length() + 3);
+		//Subscripted 16
+		stylor.setStyle(subscript, 2 + number.length(), 3 +  number.length());
 		final int fullLength = number.length() + 5 + binaryNumber.length();
+		//Subscripted 2
 		stylor.setStyle(subscript, fullLength, fullLength);
 		styledFastExtText.addListener(SWT.Paint, new Listener() {
 
@@ -1022,14 +1016,14 @@ public class RSAComposite extends Composite {
 	 */
 	private void updateTable() {
 
-		if (fastExpTable == null || fastExpTable.getItemCount() == 0)
+		if (fastExpTable == null || fastExpTable.getItemCount() == 0) {
 			return;
+		}
+		
 		final TableItem item = fastExpTable.getItem(0);
 		final BigInteger exponent = getExponent();
 		// add 2k to the text
 		final Integer base2 = numbers.get(numberIndex);
-		// final String base = numbers[numberIndex];
-		// final String basis = new BigInteger(base, HEXBASE).toString();
 		fastExpText.setText(Integer.toHexString(base2) + "2k"); //$NON-NLS-1$
 		int count = (int) Math.ceil(logb(base2, 16));
 		final int stellenzahl = (int) Math.ceil(logb(base2, 16));
@@ -1037,20 +1031,20 @@ public class RSAComposite extends Composite {
 		fastExpText.setStyle(superScript, count, count++);
 		// set double superscript style for the k
 		fastExpText.setStyle(superSuperScript, count, count);
+		
 		BigInteger value;
 		BigInteger result = BigInteger.ONE;
-		final BigInteger modul = data.getN();
-		String res = Integer.toHexString(base2) + Messages.RSAComposite_caret
-				+ exponent.toString(Constants.HEXBASE) + " = "; //$NON-NLS-1$
-		String text = Integer.toHexString(base2)
-				+ exponent.toString(Constants.HEXBASE) + " = "; //$NON-NLS-1$
+		
+		//Wird im Schrittergebnis angezeigt.
+		String res = Integer.toHexString(base2) + "^" + exponent.toString(Constants.HEXBASE) + " = "; //$NON-NLS-1$
+		String text = "me = " + Integer.toHexString(base2) + exponent.toString(Constants.HEXBASE) + " = "; //$NON-NLS-1$
 		for (int i = 0; i < fastExpTable.getColumnCount() - 1; i++) {
 			value = new BigInteger(Integer.toHexString(base2),
-					Constants.HEXBASE).modPow(Constants.TWO.pow(i), modul);
+					Constants.HEXBASE).modPow(Constants.TWO.pow(i), data.getN());
 			item.setText(i + 1, value.toString(Constants.HEXBASE));
 			if (exponent.testBit(i)) {
 				// calculate the result
-				result = result.multiply(value).mod(modul);
+				result = result.multiply(value).mod(data.getN());
 				if (!res.endsWith(" = ")) { //$NON-NLS-1$
 					res += Messages.RSAComposite_mult;
 				}
@@ -1062,30 +1056,26 @@ public class RSAComposite extends Composite {
 				text += Integer.toHexString(base2) + "2" + i; //$NON-NLS-1$
 			}
 		}
-		final StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(" mod "); //$NON-NLS-1$
-		stringBuilder.append(data.getN().toString(Constants.HEXBASE));
-		stringBuilder.append(" = "); //$NON-NLS-1$
-		// stringBuilder.append(result.toString());
-		//		stringBuilder.append(" = 0x"); //$NON-NLS-1$
-		stringBuilder.append(result.toString(Constants.HEXBASE));
-		res += stringBuilder.toString();
 
 		styl0r.setText(text);
-		styl0r.setStyle(superScript, stellenzahl, stellenzahl
-				+ exponent.toString(Constants.HEXBASE).length());
-		int start = stellenzahl * 2
-				+ exponent.toString(Constants.HEXBASE).length() + 3, end;
+		//Superscript the e
+		styl0r.setStyle(superScript, 1, 1);
+		styl0r.setStyle(superScript, stellenzahl + 5, stellenzahl + exponent.toString(Constants.HEXBASE).length() + 4);
+		
+		int start = stellenzahl * 2 + 8 + exponent.toString(Constants.HEXBASE).length();
+		int end = start;
 		for (int i = 0; i < fastExpTable.getColumnCount() - 1; i++) {
 			if (exponent.testBit(i)) {
 				styl0r.setStyle(superScript, start, start);
-				end = start + ("" + i).length(); //$NON-NLS-1$
+				end = start + ("" + i).length();//$NON-NLS-1$
 				styl0r.setStyle(superSuperScript, start + 1, end);
 				start = end + 4 + stellenzahl;
 			}
 		}
 
+		res += " mod " + data.getN().toString(Constants.HEXBASE) + " = " + result.toString(Constants.HEXBASE);
 		stepResult.setText(res);
+		
 		if (data.getTempAsNumbers().size() == 0) {
 			viewHex();
 		}
@@ -1150,7 +1140,7 @@ public class RSAComposite extends Composite {
 			reprForResultDisplay = Repr.ALL;
 			break;
 		}
-		resultDisplay = new NumberblocksAndTextViewer(group, SWT.NONE,reprForResultDisplay);
+		resultDisplay = new NumberblocksAndTextViewer(group, SWT.NONE, reprForResultDisplay);
 		resultDisplay.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		data.setTempAsNumbers(new LinkedList<Integer>());
 
@@ -1548,7 +1538,7 @@ public class RSAComposite extends Composite {
 	}
 
 	private void setTextfield1BlockContent(List<Integer> content) {
-		ConversionStringToBlocks stb = calcSTBForTextfield1Data(this.data);
+		ConversionStringToBlocks stb = calcSTBForTextfield1Data(data);
 		textText.setContent(content, stb);
 	}
 
@@ -1558,15 +1548,13 @@ public class RSAComposite extends Composite {
 	}
 
 	private ConversionStringToBlocks calcSTBForTextfield1Data(RSAData data2) {
+		
 		if (data2.getAction() == Action.EncryptAction) {
 			return data.getPlainTextConversion();
-		} else if (data2.getAction() == Action.DecryptAction) {
-			return null;
 		} else if (data2.getAction() == Action.SignAction) {
 			return data2.getPlainTextConversion();
-		} else if (data2.getAction() == Action.VerifyAction) {
-			return null;
 		}
+		
 		return null;
 	}
 

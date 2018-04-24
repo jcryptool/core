@@ -52,8 +52,7 @@ public class GHChooseModulusPage extends WizardPage{
     public final void createControl(final Composite parent) {
     	final Composite composite = new Composite(parent, SWT.NONE);
         composite.setLayout(new GridLayout());
-        Label label;
-        label = new Label(composite, SWT.NONE);
+        Label label = new Label(composite, SWT.NONE);
         label.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
         label.setText(Messages.GHChooseModulusPage_Textfield);
         text = new Text(composite, SWT.BORDER | SWT.WRAP);
@@ -65,6 +64,9 @@ public class GHChooseModulusPage extends WizardPage{
         label.setText(Messages.GHChooseModulusPage_UsedText);
        
         final Text usedText = new Text(composite, SWT.BORDER | SWT.WRAP);
+        GridData gd_usedText = new GridData(SWT.FILL, SWT.FILL, true, false);
+        gd_usedText.widthHint = 300;
+        usedText.setLayoutData(gd_usedText);
         usedText.setEditable(false);
         
         text.addModifyListener(new ModifyListener() {

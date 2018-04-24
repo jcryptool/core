@@ -19,7 +19,6 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.crypto.keystore.certificates.CertificateFactory;
 import org.jcryptool.crypto.keystore.keys.KeyType;
-import org.jcryptool.visual.elGamal.Action;
 import org.jcryptool.visual.elGamal.ElGamalData;
 import org.jcryptool.visual.elGamal.Messages;
 import org.jcryptool.visual.elGamal.ui.wizards.wizardpages.ChooseKeytypePage;
@@ -50,9 +49,6 @@ public class KeySelectionWizard extends Wizard {
     /** title of this wizard, displayed in the titlebar. */
     private static final String TITLE = Messages.KeySelectionWizard_keyselection;
 
-    /** action, whether it's encrypt, decrypt, verify or sign. */
-    private final Action action;
-
     /** shared data object for exchanging data. */
     private final ElGamalData data;
 
@@ -62,12 +58,10 @@ public class KeySelectionWizard extends Wizard {
     /**
      * Constructor, setting title, action and data.
      * 
-     * @param action the cryptographic action
      * @param data the data object
      * @param standalone selects whether this wizard is stand-alone. If it is there is no setting of any variables.
      */
-    public KeySelectionWizard(final Action action, final ElGamalData data, final boolean standalone) {
-        this.action = action;
+    public KeySelectionWizard(final ElGamalData data, final boolean standalone) {
         if (standalone) {
             this.data = new ElGamalData(null);
             this.data.setStandalone(standalone);
@@ -87,7 +81,7 @@ public class KeySelectionWizard extends Wizard {
             addPage(new NewPublicKeyPage(data));
             addPage(new SavePublicKeyPage(data));
         } else {
-            switch (action) {
+        	switch (data.getAction()) {
             case DecryptAction:
             case SignAction:
                 addPage(new DecryptSignPage());
@@ -118,7 +112,7 @@ public class KeySelectionWizard extends Wizard {
                             SavePublicKeyPage.getPagename()).isPageComplete());
         } else {
             IWizardPage page;
-            switch (action) {
+            switch (data.getAction()) {
             case DecryptAction:
             case SignAction:
                 page = getPage(DecryptSignPage.getPagename());
@@ -156,12 +150,12 @@ public class KeySelectionWizard extends Wizard {
 
     @Override
     public final boolean performFinish() {
-        if (action == null) {
+    	if (data.getAction() == null) {
             save(((ChooseKeytypePage) getPage(ChooseKeytypePage.getPagename())).keypair());
             return true;
         }
         try {
-            switch (action) {
+            switch (data.getAction()) {
             case DecryptAction:
             case SignAction:
                 if (((DecryptSignPage) getPage(DecryptSignPage.getPagename())).wantNewKey()) {

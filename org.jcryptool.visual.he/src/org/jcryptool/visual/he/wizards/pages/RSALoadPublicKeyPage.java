@@ -100,18 +100,25 @@ public class RSALoadPublicKeyPage extends WizardPage {
         combo.setLayoutData(gd);
         combo.setItems(keystoreitems.keySet().toArray(new String[keystoreitems.size()]));
         combo.addSelectionListener(new SelectionAdapter() {
-
             public void widgetSelected(SelectionEvent e) {
-                boolean complete = !combo.getText().equals(""); //$NON-NLS-1$
-                if (complete) {
-                    publicAlias = keystoreitems.get(combo.getText());
-                    data.setPublicAlias(publicAlias);
-                    data.setContactName(publicAlias.getContactName());
-                }
-                setPageComplete(complete);
+                itemSelected();
             }
         });
+        combo.select(0);
+        itemSelected();
+        combo.setFocus();
+        
         setControl(composite);
+    }
+    
+    private void itemSelected() {
+    	boolean complete = !combo.getText().equals(""); //$NON-NLS-1$
+        if (complete) {
+            publicAlias = keystoreitems.get(combo.getText());
+            data.setPublicAlias(publicAlias);
+            data.setContactName(publicAlias.getContactName());
+        }
+        setPageComplete(complete);
     }
 
     /**

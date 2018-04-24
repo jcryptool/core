@@ -24,7 +24,6 @@ import java.util.Hashtable;
 import java.util.Scanner;
 
 import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTError;
@@ -56,7 +55,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -103,7 +101,6 @@ public class HuffmanCodingView extends ViewPart {
 	private TabItem tbtmParameter;
 	private TabItem tbtmHuffmanTree;
 	private TabItem tbtmCodeTable;
-
 	private HuffmanCodingView mainView;
 	private HuffmanCodingViewTree treeView;
 	private HuffmanCodingViewTable tableView;
@@ -431,7 +428,6 @@ public class HuffmanCodingView extends ViewPart {
 			public void widgetSelected(SelectionEvent e) {
 				String message;
 				huffmanCode = new Huffman();
-
 				if (huffmanCodeBinary != null)
 					huffmanCode.uncompress(huffmanCodeBinary);
 
@@ -470,7 +466,7 @@ public class HuffmanCodingView extends ViewPart {
 		fileUncomp = null;
 
 		Group grpCompress = new Group(mainViewComposite, SWT.NONE);
-		grpCompress.setText(Messages.HuffmanCodingView_7);
+		grpCompress.setText(Messages.HuffmanCodingView_6);
 		grpCompress.setLayout(new GridLayout(7, false));
 		grpCompress.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
@@ -1144,6 +1140,8 @@ public class HuffmanCodingView extends ViewPart {
 		}
 
 		actionBar.updateActionBars();
+	}
+
 	}
 
 }

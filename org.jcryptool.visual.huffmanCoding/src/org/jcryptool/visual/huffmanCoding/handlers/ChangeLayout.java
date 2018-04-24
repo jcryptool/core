@@ -19,6 +19,9 @@ import org.jcryptool.visual.huffmanCoding.views.HuffmanCodingView;
 import org.jcryptool.visual.huffmanCoding.views.HuffmanCodingViewTree;
 
 /**
+ * NOTE: THIS CLASS IS CURRENTLY UNUSED. IT MAY BE USED FOR GRAPH EXTENSION
+ * FEATURES LIKE ZOOMING/CHANGING LAYOUT SO I LET THIS ONE IN
+ * (michael@altenhuber.net)
  * 
  * @author Miray Inel
  *

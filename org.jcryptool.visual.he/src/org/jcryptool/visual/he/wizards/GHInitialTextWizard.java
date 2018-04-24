@@ -12,6 +12,7 @@ package org.jcryptool.visual.he.wizards;
 import org.eclipse.jface.wizard.Wizard;
 import org.jcryptool.visual.he.Messages;
 import org.jcryptool.visual.he.algo.GHData;
+import org.jcryptool.visual.he.wizards.pages.GHChooseInitialTextPage;
 
 /**
  * Wizard to enter an initial number for Gentry & Halevi fully homomorphic visualization

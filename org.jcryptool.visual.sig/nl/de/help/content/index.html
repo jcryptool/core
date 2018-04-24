@@ -10,8 +10,8 @@
 		Willkommen in der Online Hilfe des Plug-Ins zur Signaturvisualisierung.
 		Nachfolgenden finden Sie einen Überblick des Plug-Ins sowie eine detaillierte Erklärung zu jeden Schritt des Signaturerstellungsprozesses.
         <br>
-		Die Visualisierung soll die Erzeugung einer Signatur für ein bestimmtes Dokument zeigen.
-		Eine digitale Signatur kann zur Authentisierung der Identität des Senders oder des Unterzeichners des Dokuments genutzt werden. 
+		Diese Visualisierung demonstriert die Erzeugung einer Signatur für ein gegebenes Dokument
+		(Nachricht). Eine digitale Signatur kann man benutzen, um den Unterzeichner der Nachricht zu verifizieren.
 		Sie sichert außerdem die Integrität des Dokumentes selbst.
 		</p>
 		<img src="MainStart.png">
@@ -22,19 +22,19 @@
 		<p>Alle vorgenommenen Änderungen oder Einstellungen sowie die ausgewählten Hash- und Signaturfunktionen werden auf den Ausgangszustand zurückgesetzt.</p>
               
         <h2>Schritt 1 – Input auswählen</h2>
-        <p>Um den Signaturerstellungsprozess zu starten, klicken Sie den Button "Input auswählen". Wählen Sie eine bereits vorhandene Datei oder geben Sie selbst einen Text ein. Wollen Sie eine bereits vorhandene Datei signieren, können Sie einen beliebigen Dateitypen wählen, die maximale Dateigröße beträgt allerdings 10 MB.</p>
+        <p>Um den Signaturerstellungsprozess zu starten, klicken Sie den Button "Input auswählen". Wählen Sie eine bereits vorhandene Datei oder geben Sie selbst einen Text ein. Wollen Sie eine bereits vorhandene Datei signieren, können Sie einen beliebigen Dateitypen wählen. Die Dateigröße wird (in etwa) durch den von JCT maximal anforderbaren Arbeitsspeicher begrenzt.</p>
       	<img src="InputWizard.png"> 
       	<img src="InputFile.png">
       	<img src="InputText.png">
         
         <h2>Schritt 2 – Hashfunktion auswählen</h2>
-        <p>Der zweite Schritt des Signaturerstellungsprozesses ist die Berechnung des Hashwertes des Dokumentes. Eine Hashfunktion ist ein Algorithmus oder eine Subroutine, die einen Datensatz variabler Länge auf einen Datensatz fixer Länge abbildet. Da die Größe des Hashwertes einer Datei normalerweise viel kleiner ist als die Datei selbst, wird direkt der Hashwert signiert. Dadurch wird die Effizient des Signaturerzeugungsprozesses gesteigert. Bei der Signaturerstellung sowie bei der Verifikation der Signatur muss der gleich Hashalgorithmus verwendet werden.</p>
+        <p>Der zweite Schritt des Signaturerstellungsprozesses ist die Berechnung des Hashwertes des Dokumentes. Eine Hashfunktion ist ein Algorithmus, der einen Datensatz variabler Länge (eine Nachricht) auf einen Datensatz fixer Länge (den Hashwert) abbildet. Da die Größe des Hashwertes normalerweise viel kleiner ist als die Nachricht, wird der Hashwert signiert. Dadurch wird die Effizient des Signaturerzeugungsprozesses gesteigert. Bei der Signaturerstellung sowie bei der Verifikation der Signatur muss der gleich Hashalgorithmus verwendet werden.</p>
         <img src="HashWizard.png">
         <h3>Beschreibung der unterstützten Hashfunktionen</h3>
         <h4>MD5</h4>
         <p>Der MD5-Algoritmus (veröffentlicht im Jahr 1992 und spezifiziert in RFC 1321) generiert aus einer gegebenen Nachricht einen 128-Bit langen "Fingerabdruck" oder "Hashwert". Der MD5-Algoritmus ist für digitale Signaturapplikationen vorgesehen, in der sehr große Dateien sicher "komprimiert" werden müssen, bevor sie, wie beispielsweise in einem Public-Key-Kryptosystem wie RSA, mit einem privaten Schlüssel verschlüsselt werden. </p>
         <h4>SHA-1</h4> 
-        <p>Der “Secure Hash Algoritm” (veröffentlicht im Jahr 1995 von der United States NIST) berechnet eine verkürzte Darstellung einer Nachricht oder einer Datei. SHA-1 generiert dabei aus einer Datei beliebige Länge (< 264 Bits), eine 160-Bit-Ausgabe. SHA-1 gilt als sicher, weil es praktisch unmöglich ist, eine Nachricht zu finden, die zu einem gegebenen Hashwert passt oder zwei verschiedene Nachrichten zu finden, die denselben Hashwert generieren. Jede Änderung der Nachricht hat, mit hoher Wahrscheinlichkeit, zu folge, dass der Hashwert sich ebenfalls ändert und die Verifikation der Signatur wäre nicht mehr möglich.</p>
+        <p>Der “Secure Hash Algoritm” (veröffentlicht im Jahr 1995 von der United States NIST) berechnet eine verkürzte Darstellung einer Nachricht oder einer Datei. SHA-1 generiert dabei aus einer Datei beliebige Länge (< 2&#8310;&#8308; bit), eine 160-Bit-Ausgabe. SHA-1 gilt als sicher, weil es praktisch unmöglich ist, eine Nachricht zu finden, die zu einem gegebenen Hashwert passt oder zwei verschiedene Nachrichten zu finden, die denselben Hashwert generieren. Jede Änderung der Nachricht hat, mit hoher Wahrscheinlichkeit, zu folge, dass der Hashwert sich ebenfalls ändert und die Verifikation der Signatur wäre nicht mehr möglich.</p>
         <h4>SHA-256</h4>
         <p>SHA-256 ist eine Nachfolger der SHA-1-Hashfunktion (allgemein auch als SHA-2 bezeichnet) und einer der stärksten zurzeit verfügbaren Hashfunktionen. Während SHA-1 praktisch noch nicht gebrochen wurde (in der Theorie allerdings schon), ist der SHA-256-Algorithum im Vergleich wesentlich komplexer. Es wird allgemein empfohlen diesen Algorithmus zu wählen, als SHA-1.</p>
         <h4>SHA-384</h4>
@@ -46,23 +46,23 @@
         <p>Um den von Ihnen gewählten Input zu signieren, können Sie zwischen verschieden Signaturfunktionen auswählen. Einige Signaturverfahren basieren auf asymmetrischer Verschlüsselung, wie beispielsweise RSA, andere Verfahren wurden eigens für diesen Zweck entwickelt, wie DSA.</p>
         <img src="SignatureWizard.png">
         <p>Um eine Signatur zu erstellen und anschließend zu verifizieren, benötigt man zwei verschiedene Schlüssel. Der private Schlüssel wird für die Erstellung der Signatur genutzt. Nur der Besitzer des Schlüssels kennt ihn und muss ihn geheim halten. Der öffentliche Schlüssel kann von jedem verwendet werden, um die Signatur zu verifizieren. <br> Um die Signatur zu erzeugen, müssen Sie einen Schlüssel wählen, die vom Standard-JCT-Keystore zu Verfügung gestellt werden.</p>
-        <a href="https://github.com/jcryptool/core/tree/master/org.jcryptool.crypto.keystore">Besuchen Sie den Standard-JCT-Keystore</a> 
+        <a href="https://github.com/jcryptool/core/tree/master/org.jcryptool.crypto.keystore" target="_blank">Besuchen Sie den Standard-JCT-Keystore</a> 
         <h3>Beschreibung der unterstützten Signaturfunktionen</h3>
         <h4>DSA</h4>
-        <p>Der “Digital Signature Algorithm“ (DSA) (veröffentlicht im Jahr 1991 von NIST) ist ein „United States Federal Government“-Standard für digitale Signaturen. Mit DSA ist die Entropie, Geheimhaltung, und die Einzigartigkeit des zufälligen Signatur-Wertes entscheidend. Jede Verletzung einer dieser drei Anforderungen kann dazu führen, dass der gesamte private Schlüssel dem Angreifer  offenbart wird. Wird der zufällige Signatur-Wert ein zweites Mal verwendet, ein vorhersehbarer Wert berechnet oder sind nur einige Bits des Wertes in jeder der Signaturwerte undicht, kann DAS gebrochen werden.</p>
-        <p>Lernen Sie mehr über DSA: <a href="https://github.com/jcryptool/crypto/tree/master/org.jcryptool.visual.dsa">Besuchen Sie JCT-DSA</a></p> 
+        <p>Der “Digital Signature Algorithm“ (DSA) (veröffentlicht im Jahr 1991 von NIST) ist ein „United States Federal Government“-Standard für digitale Signaturen. Entropie, Geheimhaltung und Einzigartigkeit des zufälligen Parameters k sind entscheidend für die Sicherheit von DSA. Jede Verletzung einer dieser drei Anforderungen kann dazu führen, dass der gesamte private Schlüssel dem Angreifer  offenbart wird. Wird der zufällige Signatur-Wert ein zweites Mal verwendet, ein vorhersehbarer Wert berechnet oder sind nur einige Bits des Wertes in jeder der Signaturwerte undicht, kann DSA gebrochen werden.</p>
+        <p> Lernen Sie mehr über DSA: <a href="https://de.wikipedia.org/wiki/Digital_Signature_Algorithm" target="_blank">DSA auf Wikipedia</a></p>
         <h4>RSA</h4>
         <p>RSA (veröffentlicht im Jahr 1977) ist ein Algorithmus für asymmetrische kryptographische Verfahren, die auf der mutmaßlichen Schwierigkeit der Faktorisierung von großen Zahlen, dem Faktorisierungsproblem, basiert. Jeder kann den öffentlichen Schlüssel zum Entschlüsseln einer Nachricht verwenden, aber mit den aktuelle veröffentlichten Methoden, kann nur jemand der die Primfaktoren kennt und vorausgesetzt der Schlüssel ist lang genug, die Nachricht tatsächlich dekodieren. Sichere Padding-Verfahren, wie beispielsweise RSA-PSS, sind für die Sicherheit der Signaturerstellung genauso notwendig wie für die der Verschlüsselung einer Nachricht. Der PKCS #1 Cryptography Standard definiert die Empfehlungen für die Implementierung asymmetrischer Kryptografie, die auf dem RSA-Algorithmus basieren.</p>
-        <p> Lernen Sie mehr über RSA: <a href="https://github.com/jcryptool/crypto/tree/master/org.jcryptool.visual.rsa">Besuchen Sie JCT-RSA</a></p> 
+        <p> Lernen Sie mehr über RSA: <a href="PLUGINS_ROOT/org.jcryptool.visual.rsa/$nl$/help/content/index.html">Besuchen Sie JCT-RSA</a></p> 
         <h4>ECDSA</h4>
         <p>Der “Elliptic Curve Digital Signature Algorithm” (ECDSA) (vorgeschlagen von Scott Vanstone im Jahr 1992) ist die elliptische Kurve analog dem “Digital Signature Algorithm“ (DSA). Im Gegensatz zum normalen diskreten Logarithmusproblem und dem Faktorisierungsproblem, sind für Elliptischen Kurven keine Probleme bekannt. Die Länge des privaten Schlüssels, der als sicher betrachtet wird, ist mit ECDSA wesentlich kürzer. Bei einem Sicherheitsniveau von 80 Bits, was bedeutet, ein Angreifer würde 2^80 Signaturerzeugungsprozesse benötigen um den privaten Schlüssel zu finden, ist die Größe eines öffentlichen DAS-Schlüssels mindestens 1024 Bit, während die Größe eines öffentlichen ECDA-Schlüssels 160 Bit wäre. </p>
         <h4>RSA and MGF1</h4>
         <p>Eine Mask Generation Function (MGF) ist eine Funktion zum Generieren von Pseudozufallszahlen in beliebiger Länge. Ohne Kenntnis über den Startwert (Seed), ist es praktisch nicht möglich die Zufallszahlen vorherzusagen. MGF1 ist ein in der PKCS#1 spezifiziertes Verfahren, welches Hash-Funktionen wie SHA-1 einsetzt, um Pseudozufallszahlen zu generieren. In der Public Key Kryptographie spielen Zufallszahlen eine wichtige Rolle. Durch den Einsatz von MGF1 und somit Zufallszahlen wird gewährleistet, dass es ohne Kenntnis über den Klartext praktisch unmöglich wird einen gültigen Schlüsseltext zu erzeugen. </p>
         <h3>Mehr Informationen zur Kryptografie-Bibliothek BouncyCastle:</h3>
        	<ul>
-        	<li><a href="http://www.bouncycastle.org/">Besuchen Sie BouncyCastle</a></li>
-        	<li><a href="https://github.com/jcryptool/core/tree/04fbe0efa19be7fee686b9fd4dcf3ee33b8e12d2/org.bouncycastle">Besuchen Sie BouncyCastle auf github</a></li>
-        	<li><a href="http://www.mobilefish.com/developer/bouncycastle/bouncycastle.html">Beispiele mit BouncyCastle</a></li>
+        	<li><a href="http://www.bouncycastle.org/" target="_blank">Besuchen Sie BouncyCastle</a></li>
+        	<li><a href="https://github.com/jcryptool/core/tree/04fbe0efa19be7fee686b9fd4dcf3ee33b8e12d2/org.bouncycastle" target="_blank">Besuchen Sie BouncyCastle auf github</a></li>
+        	<li><a href="http://www.mobilefish.com/developer/bouncycastle/bouncycastle.html" target="_blank">Beispiele mit BouncyCastle</a></li>
   		</ul>
         <br>
         <img src="MainFinished.png">
@@ -74,7 +74,7 @@
             <li>Informationen zu der Signaturfunktion,</li>
             <li>die hexadezimale, oktale oder die binäre Darstellung der signierten Datei sowie der erzeugten Signatur.</li>
         </ul>
-        <p>Klicken Sie auf den Button “Hex Editor öffnen” um die signierte Datei und die erzeugte Signatur im Hex Editor des JCrypTools anzuziegen, wo Sie diese auch speichern können. Die gespeicherte Datei benötigen Sie, falls Sie Ihre Signatur prüfen möchten.</p>
+        <p>Um die Signatur und die dazugehörige Nachricht abzuspeichern, klicken Sie auf "Speichern". Klicken Sie anschließend auf den Button “Im Hexeditor öffnen” um die signierte Datei und die erzeugte Signatur im Hex Editor des JCrypTools anzuziegen.</p>
 		<img src="ShowSigWizard.png">
 
     </body>

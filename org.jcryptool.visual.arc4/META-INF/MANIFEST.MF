@@ -11,3 +11,4 @@ Bundle-Vendor: %Bundle-Vendor
 Import-Package: org.jcryptool.core.util.colors,
  org.jcryptool.core.util.fonts,
  org.jcryptool.visual.library
+Automatic-Module-Name: org.jcryptool.visual.arc4

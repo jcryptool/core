@@ -110,8 +110,7 @@ public class RSANewKeypairPage extends WizardPage {
      */
     public RSANewKeypairPage(RSAData data) {
         super(PAGENAME, TITLE, null);
-        this.setDescription(Messages.RSANewKeypairPage_choose_params_text + "\n"
-                + Messages.RSANewKeypairPage_hard_calculations_text);
+        this.setDescription(Messages.RSANewKeypairPage_choose_params_text);
         setPageComplete(false);
         this.data = data;
     }
@@ -188,7 +187,9 @@ public class RSANewKeypairPage extends WizardPage {
         }
         if (!q.equals(Constants.MINUS_ONE) && !Lib.isPrime(q)) {
             String error = getErrorMessage();
-            if (error != null) {
+            if (error == null) {
+            	error = ""; //$NON-NLS-1$
+            } else {
                 error += "\n"; //$NON-NLS-1$
             }
             setErrorMessage(error + Messages.RSANewKeypairPage_error_q_not_prime);
@@ -224,21 +225,34 @@ public class RSANewKeypairPage extends WizardPage {
         GridData gd4 = new GridData(SWT.FILL, SWT.CENTER, true, false, ncol, 1);
         GridData gd5 = new GridData(SWT.FILL, SWT.CENTER, true, false, ncol, 1);
         GridData gd6 = new GridData(SWT.FILL, SWT.CENTER, true, false, ncol, 1);
+        GridData gd7 = new GridData(SWT.FILL, SWT.CENTER, true, false, ncol, 1);
+        
+        //Warning message
+        Label lblWarning = new Label(composite, SWT.WRAP);
+        lblWarning.setText(Messages.RSANewKeypairPage_hard_calculations_text);
+        GridData gd_lblWarning = new GridData(SWT.FILL, SWT.CENTER, true, false, ncol, 1);
+        lblWarning.setLayoutData(gd_lblWarning);
 
+        // Trennlinie
+        new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(gd7);
+        
         // "Wähle p und q"-text
         Label choosePrimes = new Label(composite, SWT.NONE);
         choosePrimes.setText(Messages.RSANewKeypairPage_eror_p_eq_q);
         choosePrimes.setLayoutData(gd);
         // p
-        new Label(composite, SWT.NONE).setText("p"); //$NON-NLS-1$
+        Label lblP = new Label(composite, SWT.NONE);
+        lblP.setText("p"); //$NON-NLS-1$
+        lblP.setLayoutData(new GridData(SWT.END, SWT.CENTER, false, false));
         plist = new Combo(composite, SWT.NONE);
         fillPrimesTo(plist);
         plist.addModifyListener(ml);
         plist.addVerifyListener(VL);
+        plist.setFocus();
         // q
-        Label qtext = new Label(composite, SWT.NONE);
-        qtext.setText("q"); //$NON-NLS-1$
-        qtext.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+        Label lblQ = new Label(composite, SWT.NONE);
+        lblQ.setText("q"); //$NON-NLS-1$
+        lblQ.setLayoutData(new GridData(SWT.END, SWT.CENTER, false, false));
         qlist = new Combo(composite, SWT.NONE);
         fillPrimesTo(qlist);
         qlist.addModifyListener(ml);
@@ -251,17 +265,30 @@ public class RSANewKeypairPage extends WizardPage {
         Label rsaModul = new Label(composite, SWT.NONE);
         rsaModul.setText(Messages.RSANewKeypairPage_n_result);
         rsaModul.setLayoutData(gd2);
+        
         // N
-        new Label(composite, SWT.NONE).setText("N"); //$NON-NLS-1$
+        Label lblN = new Label(composite, SWT.NONE);
+        lblN.setText("N"); //$NON-NLS-1$
+        lblN.setLayoutData(new GridData(SWT.END, SWT.CENTER, false, false));
+        
         modulfield = new Text(composite, SWT.BORDER | SWT.READ_ONLY);
+        GridData gd_modulfield = new GridData(SWT.LEFT, SWT.FILL, false, false);
+        gd_modulfield.widthHint = 50;
+        modulfield.setLayoutData(gd_modulfield);
         modulfield.addModifyListener(new ModifyListener() {
             public void modifyText(ModifyEvent e) {
                 checkParams();
             }
         });
         // phi(N)
-        new Label(composite, SWT.NONE).setText("φ(N)"); //$NON-NLS-1$
+        Label lblPhiN = new Label(composite, SWT.NONE);
+        lblPhiN.setText("φ(N)"); //$NON-NLS-1$
+        lblPhiN.setLayoutData(new GridData(SWT.END, SWT.CENTER, false, false));
+        
         phinfield = new Text(composite, SWT.BORDER | SWT.READ_ONLY);
+        GridData gd_phinfield = new GridData(SWT.LEFT, SWT.FILL, false, false);
+        gd_phinfield.widthHint = 50;
+        phinfield.setLayoutData(gd_phinfield);
 
         // Trennline
         new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(gd3);
@@ -270,11 +297,15 @@ public class RSANewKeypairPage extends WizardPage {
         Label selectetext = new Label(composite, SWT.NONE);
         selectetext.setText(Messages.RSANewKeypairPage_select_e);
         selectetext.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, ncol, 2));
-        new Label(composite, SWT.NONE).setText("e"); //$NON-NLS-1$
+        Label lblE = new Label(composite, SWT.NONE);
+        lblE.setText("e"); //$NON-NLS-1$
         // e
         elist = new Combo(composite, SWT.READ_ONLY | SWT.SIMPLE);
+        GridData gd_elist = new GridData(SWT.FILL, SWT.FILL, false, true);
+        gd_elist.heightHint = 150;
+        gd_elist.minimumHeight = 50;
+        elist.setLayoutData(gd_elist);
         elist.addSelectionListener(new SelectionAdapter() {
-
             @Override
             public void widgetSelected(SelectionEvent e) {
                 dfield.setText(calcd().toString());

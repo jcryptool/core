@@ -16,21 +16,22 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 public class CrtVerView extends ViewPart {
-    private Composite parent;
+	
+    private ScrolledComposite sc;
+    private CrtVerViewComposite c;
 
     /**
      * This is a callback that will allow us to create the viewer and initialize it.
      */
-    public void createPartControl(Composite parent) {
-        this.parent = parent;
-        final ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+    @Override
+	public void createPartControl(Composite parent) {
+        sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
         sc.setExpandHorizontal(true);
         sc.setExpandVertical(true);
-        CrtVerViewComposite c = new CrtVerViewComposite(sc, SWT.NONE, this);
+        c = new CrtVerViewComposite(sc, SWT.NONE, this);
         sc.setContent(c);
         sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-        c.setText();
-
+        
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), "org.jcryptool.visual.crtverification.views.CrtVerView"); //$NON-NLS-1$
     }
 
@@ -40,6 +41,6 @@ public class CrtVerView extends ViewPart {
 
     @Override
     public void setFocus() {
-        parent.setFocus();
+        c.setFocus();
     }
 }

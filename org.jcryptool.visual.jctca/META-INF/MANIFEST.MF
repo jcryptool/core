@@ -16,3 +16,4 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.fonts
 Export-Package: org.jcryptool.visual.jctca.notifiers
 Bundle-Vendor: %Bundle-Vendor
+Automatic-Module-Name: org.jcryptool.visual.jctca

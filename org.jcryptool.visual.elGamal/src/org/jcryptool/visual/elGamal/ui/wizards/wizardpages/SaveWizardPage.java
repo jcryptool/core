@@ -17,7 +17,6 @@ import org.eclipse.swt.widgets.Text;
  * abstract superclass for unified access to {@link SaveKeypairPage} and {@link SavePublicKeyPage}.
  *
  * @author Michael Gaber
- * @author Thorben Groos
  */
 public abstract class SaveWizardPage extends WizardPage {
 

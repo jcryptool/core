@@ -17,9 +17,15 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 
+import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -30,14 +36,20 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.ui.PartInitException;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.sig.SigPlugin;
 import org.jcryptool.visual.sig.algorithm.Input;
+import org.jcryptool.core.operations.util.PathEditorInput;
+import org.jcryptool.core.operations.editors.EditorsManager;
+import org.eclipse.core.runtime.Path;
 
 public class ShowSig extends Shell {
     private Table table;
@@ -45,6 +57,7 @@ public class ShowSig extends Shell {
 
     private int signatureLengh = Input.signature.length * 8;
     private int dataLength = Input.data.length * 8;
+	private Button btnOpenInHexEditor;
 
     /**
      * Create the shell.
@@ -52,11 +65,13 @@ public class ShowSig extends Shell {
      * @param display
      */
     public ShowSig(Display display, String signatureInformation) {
-        super(display, SWT.CLOSE | SWT.MIN | SWT.MAX | SWT.TITLE | SWT.APPLICATION_MODAL);
+    	super(display, SWT.SHELL_TRIM);
         setLayout(new GridLayout());
+        
+        Clipboard clipboard = new Clipboard(display);
 
         Composite composite = new Composite(this, SWT.NONE);
-        composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         composite.setLayout(new GridLayout(2, false));
 
         Label owner = new Label(composite, SWT.READ_ONLY | SWT.WRAP);
@@ -80,7 +95,7 @@ public class ShowSig extends Shell {
         Label keyType = new Label(composite, SWT.READ_ONLY);
         if (Input.privateKey == null && Input.key == null) {
             if (signatureInformation.contains("ECDSA")) {
-                keyType.setText("ANSI X9.62 prime256v1 (256 bits)");
+                keyType.setText("ANSI X9.62 prime256v1 (256 bit)");
             } else {
                 keyType.setText("-");
             }
@@ -107,7 +122,7 @@ public class ShowSig extends Shell {
         signature.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
         
         Composite sigComp = new Composite(composite, SWT.NONE);
-        GridData gd_sigComp = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
+        GridData gd_sigComp = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
         sigComp.setLayoutData(gd_sigComp);
         GridLayout gl_sigComp = new GridLayout();
         gl_sigComp.marginHeight = 0;
@@ -116,7 +131,7 @@ public class ShowSig extends Shell {
         
         // text field to show signature as hex, octal or decimal
         Label txtSigNum = new Label(sigComp, SWT.BORDER | SWT.WRAP );
-        GridData gd_txtSigNum = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
+        GridData gd_txtSigNum = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
         gd_txtSigNum.widthHint = 490;
         gd_txtSigNum.heightHint = 151;
         gd_txtSigNum.exclude = true;
@@ -124,30 +139,46 @@ public class ShowSig extends Shell {
         txtSigNum.setLayoutData(gd_txtSigNum);
         txtSigNum.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
         
+      //Context menu for coyping text field clipboard
+        Menu signatureMenu = new Menu(txtSigNum);
+        txtSigNum.setMenu(signatureMenu);
+        MenuItem copy = new MenuItem(signatureMenu, SWT.NONE);
+        copy.setText(Messages.ShowSig_ContextCopy);
+        copy.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (table.getSelectionCount() > 0) {
+					clipboard.setContents(new Object[] {txtSigNum.getText()}, new Transfer[] {TextTransfer.getInstance()});
+				}
+			}
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {}      	
+        });
+        
         // create table to show the generated signature
-        table = new Table(sigComp, SWT.BORDER | SWT.FULL_SELECTION);
+        Composite table1Composite = new Composite(sigComp, SWT.NONE);
+        GridData gd_table1Composite = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+        gd_table1Composite.widthHint = 490;
+        gd_table1Composite.heightHint = 151;
+        table1Composite.setLayoutData(gd_table1Composite);
+        TableColumnLayout table1Layout = new TableColumnLayout();
+        table1Composite.setLayout(table1Layout);
+        
+        table = new Table(table1Composite, SWT.BORDER | SWT.FULL_SELECTION);
         table.setLinesVisible(true);
         table.setHeaderVisible(true);
-        GridData gd_table = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
-        gd_table.widthHint = 490;
-        gd_table.heightHint = 151;
-        table.setLayoutData(gd_table);
 
         TableColumn tblclmnAddress = new TableColumn(table, SWT.NONE);
-        tblclmnAddress.setResizable(true);
-        tblclmnAddress.setWidth(90);
-        tblclmnAddress.setToolTipText("");
         tblclmnAddress.setText(Messages.ShowSig_tblAdr);
+        table1Layout.setColumnData(tblclmnAddress, new ColumnWeightData(15, 90, true));
 
         TableColumn tblclmnHex = new TableColumn(table, SWT.NONE);
-        tblclmnHex.setResizable(true);
-        tblclmnHex.setWidth(250);
         tblclmnHex.setText(Messages.ShowSig_tblHex);
+        table1Layout.setColumnData(tblclmnHex, new ColumnWeightData(60, 250, true));
 
         TableColumn tblclmnAscii = new TableColumn(table, SWT.NONE);
-        tblclmnAscii.setResizable(true);
-        tblclmnAscii.setWidth(150);
         tblclmnAscii.setText(Messages.ShowSig_tblAscii);
+        table1Layout.setColumnData(tblclmnAscii, new ColumnWeightData(25, 150, true));
 
         int stepSize = 14;
 
@@ -186,9 +217,50 @@ public class ShowSig extends Shell {
                 i1 = (len1 / (stepSize * 2)) + 5;
             }
         }
+        
+        //Context menu for coyping table content to clipboard
+        Menu tableMenu = new Menu(table);
+        table.setMenu(tableMenu);
+        MenuItem copyLine = new MenuItem(tableMenu, SWT.NONE);
+        copyLine.setText(Messages.ShowSig_ContextCopySelection);
+        copyLine.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (table.getSelectionCount() > 0) {
+					TableItem selection = table.getSelection()[0];
+					String address = "Address: " + selection.getText(0) + "\n";
+					String hex = "Hex: " + selection.getText(1) + "\n";
+					String ascii = "Ascii: " + selection.getText(2);
+					String result = address + hex + ascii;
+					clipboard.setContents(new Object[] {result}, new Transfer[] {TextTransfer.getInstance()});
+				}
+			}
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {}      	
+        });
+        
+        MenuItem copyAll = new MenuItem(tableMenu, SWT.NONE);
+        copyAll.setText(Messages.ShowSig_ContexstCopyAll);
+        copyAll.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem[] tableContents = table.getItems();
+				String result = "";
+				for (TableItem item : tableContents) {
+					String address = "Address: " + item.getText(0) + "\n";
+					String hex = "Hex: " + item.getText(1) + "\n";
+					String ascii = "Ascii: " + item.getText(2);
+					String lineResult = address + hex + ascii + "\n\n";
+					result+= lineResult;
+				}
+				clipboard.setContents(new Object[] {result}, new Transfer[] {TextTransfer.getInstance()});
+			}
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {}    	
+        });
 
         Label signatureLength = new Label(composite, SWT.READ_ONLY);
-        signatureLength.setText(Messages.ShowSig_lengthSig + signatureLengh + " Bits");
+        signatureLength.setText(Messages.ShowSig_lengthSig + signatureLengh + " bit");
         signatureLength.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
 
         Group options = new Group(composite, SWT.NONE);
@@ -202,7 +274,7 @@ public class ShowSig extends Shell {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 table.setVisible(false);
-                gd_table.exclude = true;
+                gd_table1Composite.exclude = true;
                 txtSigNum.setVisible(true);
                 gd_txtSigNum.exclude = false;
                 txtSigNum.setText(Input.signatureOct);
@@ -218,7 +290,7 @@ public class ShowSig extends Shell {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 table.setVisible(false);
-                gd_table.exclude = true;
+                gd_table1Composite.exclude = true;
                 txtSigNum.setVisible(true);
                 gd_txtSigNum.exclude = false;
                 txtSigNum.setText(hexToDecimal(Input.signatureHex));
@@ -233,7 +305,7 @@ public class ShowSig extends Shell {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 table.setVisible(false);
-                gd_table.exclude = true;
+                gd_table1Composite.exclude = true;
                 txtSigNum.setVisible(true);
                 gd_txtSigNum.exclude = false;
                 txtSigNum.setText(Input.signatureHex);
@@ -250,7 +322,7 @@ public class ShowSig extends Shell {
                 txtSigNum.setVisible(false);
                 gd_txtSigNum.exclude = true;
                 table.setVisible(true);
-                gd_table.exclude = false;
+                gd_table1Composite.exclude = false;
                 sigComp.layout();
             }
         });
@@ -259,40 +331,45 @@ public class ShowSig extends Shell {
         btnHexdump.setText(Messages.ShowSig_hexDump);
 
         Label signedMessage = new Label(composite, SWT.READ_ONLY);
-        signedMessage.setText(Messages.ShowSig_grpMessage);
-        signedMessage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
+        if (Input.data.length > Input.dataHex.length()) {
+        	signedMessage.setText(Messages.ShowSig_grpMessage + Messages.ShowSig_grpMessage_first10kB);
+        } else {
+        	signedMessage.setText(Messages.ShowSig_grpMessage);
+        }
+        GridData gd_signedMessage = new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1);
+        gd_signedMessage.verticalIndent = 20;
+        signedMessage.setLayoutData(gd_signedMessage);
 
         // create table to show signed message
-        tableSignedMessage = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
+        Composite table2Composite = new Composite(composite, SWT.NONE);
+        GridData gd_table2Composite = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+        gd_table2Composite.widthHint = 490;
+        gd_table2Composite.heightHint = 151;
+        table2Composite.setLayoutData(gd_table2Composite);
+        TableColumnLayout table2Layout = new TableColumnLayout();
+        table2Composite.setLayout(table2Layout);
+        
+        tableSignedMessage = new Table(table2Composite, SWT.BORDER | SWT.FULL_SELECTION);
         tableSignedMessage.setLinesVisible(true);
         tableSignedMessage.setHeaderVisible(true);
-        GridData gd_tableSignedMessage = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
-        gd_tableSignedMessage.widthHint = 490;
-        gd_tableSignedMessage.heightHint = 150;
-        tableSignedMessage.setLayoutData(gd_tableSignedMessage);
 
         TableColumn tblclmnAddress_1 = new TableColumn(tableSignedMessage, SWT.NONE);
-        tblclmnAddress_1.setResizable(true);
-        tblclmnAddress_1.setWidth(90);
-        tblclmnAddress_1.setToolTipText("");
         tblclmnAddress_1.setText(Messages.ShowSig_tblAdr);
+        table2Layout.setColumnData(tblclmnAddress_1, new ColumnWeightData(15, 90, true));
 
         TableColumn tblclmnHex_1 = new TableColumn(tableSignedMessage, SWT.NONE);
-        tblclmnHex_1.setResizable(true);
-        tblclmnHex_1.setWidth(250);
         tblclmnHex_1.setText(Messages.ShowSig_tblHex);
+        table2Layout.setColumnData(tblclmnHex_1, new ColumnWeightData(60, 250, true));
 
         TableColumn tblclmnAscii_1 = new TableColumn(tableSignedMessage, SWT.NONE);
-        tblclmnAscii_1.setResizable(true);
-        tblclmnAscii_1.setWidth(150);
         tblclmnAscii_1.setText(Messages.ShowSig_tblAscii);
+        table2Layout.setColumnData(tblclmnAscii_1, new ColumnWeightData(25, 150, true));
 
         int len2 = Input.dataHex.length();
         String asciistr2 = convertHexToString(Input.dataHex);
         int lenAscii2 = asciistr2.length();
 
-        // shows only 6 rows - optimize performance
-        for (int i2 = 0; i2 < 6; i2++) {
+        for (int i2= 0; i2 < len2; i2++) {
             // Create one item for each row
             TableItem item = new TableItem(tableSignedMessage, SWT.NONE);
 
@@ -321,19 +398,65 @@ public class ShowSig extends Shell {
                 bufferD2.append(asciistr2, startascii2, endascii2);
                 item.setText(2, bufferD2.toString());
             } else {
-                i2 = 10;
+            	break;
             }
         }
+        
+        //Context menu for coyping table to clipboard
+        Menu table2Menu = new Menu(tableSignedMessage);
+        tableSignedMessage.setMenu(table2Menu);
+        
+        MenuItem copyLineTable2 = new MenuItem(table2Menu, SWT.NONE);
+        copyLineTable2.setText(Messages.ShowSig_ContextCopySelection);
+        copyLineTable2.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (tableSignedMessage.getSelectionCount() > 0) {
+					TableItem selection = tableSignedMessage.getSelection()[0];
+					String address = "Address: " + selection.getText(0) + "\n";
+					String hex = "Hex: " + selection.getText(1) + "\n";
+					String ascii = "Ascii: " + selection.getText(2);
+					String result = address + hex + ascii;
+					clipboard.setContents(new Object[] {result}, new Transfer[] {TextTransfer.getInstance()});
+				}
+			}
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {}      	
+        });
+        
+        MenuItem copyAllTable2 = new MenuItem(table2Menu, SWT.NONE);
+        copyAllTable2.setText(Messages.ShowSig_ContexstCopyAll);
+        copyAllTable2.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem[] tableContents = tableSignedMessage.getItems();
+				String result = "";
+				for (TableItem item : tableContents) {
+					String address = "Address: " + item.getText(0) + "\n";
+					String hex = "Hex: " + item.getText(1) + "\n";
+					String ascii = "Ascii: " + item.getText(2);
+					String lineResult = address + hex + ascii + "\n\n";
+					result+= lineResult;
+				}
+				clipboard.setContents(new Object[] {result}, new Transfer[] {TextTransfer.getInstance()});
+			}
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {}    	
+        });
 
         Label signedMessageLength = new Label(composite, SWT.READ_ONLY);
-        signedMessageLength.setText(Messages.ShowSig_lengthMessage + dataLength + " Bits");
+        signedMessageLength.setText(Messages.ShowSig_lengthMessage + dataLength + " bit");
         signedMessageLength.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
         
         Label lblTextopeneditor = new Label(composite, SWT.WRAP | SWT.CENTER | SWT.V_SCROLL);
         lblTextopeneditor.setAlignment(SWT.LEFT);
         GridData gd_lblTextopeneditor = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
         lblTextopeneditor.setLayoutData(gd_lblTextopeneditor);
-        lblTextopeneditor.setText(Messages.ShowSig_editorDescripton);
+        if (Input.s != 1) {
+        	lblTextopeneditor.setText(Messages.ShowSig_editorDescripton + "\n\n" + Messages.ShowSig_randomizedMethods);
+        } else {
+        	lblTextopeneditor.setText(Messages.ShowSig_editorDescripton);
+        }
         lblTextopeneditor.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
         
         //Button Composite
@@ -349,7 +472,7 @@ public class ShowSig extends Shell {
             public void widgetSelected(SelectionEvent e) {
                 // Open File save dialog
                 FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
-                dialog.setFileName("signature_and_message");
+                dialog.setFileName("signature_and_message.bin"); //NON-NLS-1$
                 String savePath = dialog.open();
                 // Write the file
                 if (savePath != null) {
@@ -362,6 +485,15 @@ public class ShowSig extends Shell {
                             os.write(b.array());
                             os.write(Input.signature);
                             os.write(Input.data);
+                            
+                            Input.savePath = savePath;
+                            btnOpenInHexEditor.setEnabled(true);
+
+                            MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_INFORMATION
+                                    | SWT.OK);
+                            messageBox.setText(Messages.ShowSig_MessageBoxTitle);
+                            messageBox.setMessage(Messages.ShowSig_MessageBoxText + " " + savePath);
+                            messageBox.open();
                         } finally {
                             if (os != null) {
                                 os.close();
@@ -372,15 +504,32 @@ public class ShowSig extends Shell {
                     } catch (IOException ex) {
                         LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
                     }
-
-                    MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_INFORMATION
-                            | SWT.OK);
-                    messageBox.setText(Messages.ShowSig_MessageBoxTitle);
-                    messageBox.setMessage(Messages.ShowSig_MessageBoxText);
-                    messageBox.open();
                 }
             }
         });
+        
+        btnOpenInHexEditor = new Button(btnComp, SWT.NONE);
+        btnOpenInHexEditor.addSelectionListener(new SelectionAdapter() {
+        	@Override
+        	public void widgetSelected(SelectionEvent e) {
+        		if (Input.savePath != null) {
+        			try {
+        			PathEditorInput pathEditorInput = new PathEditorInput(new Path(Input.savePath));
+        			if (pathEditorInput.exists()) {
+            			EditorsManager.getInstance().openNewHexEditor(pathEditorInput);
+        			} else {
+                        btnOpenInHexEditor.setEnabled(false);
+        			}
+					} catch (PartInitException e1) {
+						 LogUtil.logError(SigPlugin.PLUGIN_ID, e1);
+					}
+        		} else {
+        			btnOpenInHexEditor.setEnabled(false);
+        		}
+        	}
+        });
+        btnOpenInHexEditor.setText(Messages.ShowSig_btnOpen);
+        btnOpenInHexEditor.setEnabled(Input.savePath != null);
 
         // close window button
         Button btnNewButton = new Button(btnComp, SWT.NONE);

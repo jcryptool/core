@@ -23,7 +23,6 @@ public class InputEditorWizardPage extends WizardPage {
 
     public InputEditorWizardPage(String pageName) {
         super(pageName);
-
         setTitle(Messages.InputEditorWizard_title);
         setDescription(Messages.InputEditorWizard_header);
     }
@@ -31,8 +30,14 @@ public class InputEditorWizardPage extends WizardPage {
     @Override
     public void createControl(Composite parent) {
         compositeEditor = new InputEditorComposite(parent, NONE, this);
-        compositeEditor.setFocus();
         setControl(compositeEditor);
         setPageComplete(false);
+    }
+    
+    @Override
+    public void setVisible(boolean visible) {
+    	super.setVisible(visible);
+    	if (visible)
+    		compositeEditor.setInitialFocus();
     }
 }

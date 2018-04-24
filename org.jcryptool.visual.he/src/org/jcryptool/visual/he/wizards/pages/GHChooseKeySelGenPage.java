@@ -52,7 +52,6 @@ public class GHChooseKeySelGenPage extends WizardPage {
 		existingKeyButton.setLayoutData(gd);
 		
 		setControl(composite);
-		
 	}
 	
 	@Override

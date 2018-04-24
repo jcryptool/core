@@ -54,17 +54,24 @@ public class DemonstrationPainter implements PaintListener {
 		} else if (demonstration.getCurrentStep() == 1) {
 			e.gc.setFont(FontService.getLargeFont());
 			int schablonenGrosse = demonstration.getSchablone().getSize();
-			e.gc.drawText((NLS.bind(Messages.getString("DemonstrationPainter.description"), 
-					new Object[] {schablonenGrosse*schablonenGrosse, demonstration.padding.length()})), 0, 0); 
-			if (!demonstration.padding.equals("")) { //$NON-NLS-1$
-				e.gc.drawText((NLS.bind(Messages.getString("DemonstrationPainter.padding"), 
+			//Wenn kein Padding gebraucht wird zeige diesen Text an.
+			if (demonstration.padding.length() == 0) {
+				e.gc.drawText((NLS.bind(Messages.getString("DemonstrationPainter.description"),  //$NON-NLS-1$
+						schablonenGrosse*schablonenGrosse, demonstration.padding.length())), 0, 0);
+			} else {
+				//Wenn ein padding nötig ist.
+				e.gc.drawText((NLS.bind(Messages.getString("DemonstrationPainter.description_1"), 
+						schablonenGrosse*schablonenGrosse, demonstration.padding.length())), 0, 0); 
+			}
+			if (!(demonstration.padding.length() == 0)) { //$NON-NLS-1$
+				e.gc.drawText((NLS.bind(Messages.getString("DemonstrationPainter.padding"),  //$NON-NLS-1$
 						demonstration.padding.length())), 0, 175);
 				Color savedColor = e.gc.getForeground();
 				e.gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
-				String padding = "";
+				String padding = ""; //$NON-NLS-1$
 				for (int i = 0; i < demonstration.padding.length(); i = i + 35) {
 					padding += demonstration.padding.substring(i, Math.min(demonstration.padding.length(), i + 35));
-					padding += "\n";
+					padding += "\n"; //$NON-NLS-1$
 				}
 				e.gc.drawText(padding, 0, 210);
 				e.gc.setForeground(savedColor);

@@ -183,8 +183,13 @@ public class GHKeySelectionWizard extends Wizard {
 
                 /** extract the private key */
 
-                new FileCrypto(filename.replace(".ghpub", ".ghpr"), filename.replace(".ghpub", ".tmp"), passwd,
-                        Cipher.DECRYPT_MODE);
+                try {
+                	new FileCrypto(filename.replace(".ghpub", ".ghpr"), filename.replace(".ghpub", ".tmp"), passwd,
+                			Cipher.DECRYPT_MODE);         	       
+	            } catch (Exception e) {
+	            	((GHLoadKeyPage) getPage(GHLoadKeyPage.getPagename())).setErrorMessage(Messages.Wrong_Password);
+	            	return false;
+	            }
                 fileData = new StringBuffer(1000);
                 reader = new BufferedReader(new FileReader(filename.replace(".ghpub", ".tmp")));
                 buf = new char[1024];
@@ -210,6 +215,7 @@ public class GHKeySelectionWizard extends Wizard {
                 }
             } catch (Exception ex) {
                 LogUtil.logError(ex);
+                return false;
             }
         }
         return true;

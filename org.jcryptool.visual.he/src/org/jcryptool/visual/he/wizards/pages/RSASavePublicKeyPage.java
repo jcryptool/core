@@ -26,13 +26,6 @@ import org.jcryptool.visual.he.rsa.RSAData;
  * @author Michael Gaber
  */
 public class RSASavePublicKeyPage extends RSASaveWizardPage {
-
-	/** margin width. */
-	private static final int MARGIN = 50;
-
-	/** minimum height for a textfield so it diesn't cut the text. */
-	private static final int TEXTFIELD_MIN_HEIGHT = 15;
-
 	/** unique pagename to get this page from inside a wizard. */
 	private static final String PAGENAME = "Save Public Key Page"; //$NON-NLS-1$
 
@@ -60,27 +53,23 @@ public class RSASavePublicKeyPage extends RSASaveWizardPage {
 	 */
 	public final void createControl(final Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
-		// do stuff like layout et al
-		final int ncol = 2;
-		final GridLayout gl = new GridLayout(ncol, true);
-		gl.marginWidth = MARGIN;
-		composite.setLayout(gl);
-		final GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		// needed so textfields don't cut text
-		gd.heightHint = TEXTFIELD_MIN_HEIGHT;
-		final GridData gd2 = new GridData(SWT.FILL, SWT.CENTER, false, false, ncol, 1);
-		final Label own = new Label(composite, SWT.NONE);
-		own.setText(Messages.RSASavePublicKeyPage_enter_name);
-		own.setLayoutData(gd2);
+		composite.setLayout(new GridLayout());
 
-		owner = new Text(composite, SWT.BORDER | SWT.SINGLE);
+        final Label own = new Label(composite, SWT.NONE);
+        own.setText(Messages.RSASaveKeypairPage_name);
+        GridData gd_own = new GridData(SWT.FILL, SWT.CENTER, false, false);
+        own.setLayoutData(gd_own);
+
+        owner = new Text(composite, SWT.BORDER | SWT.SINGLE);
+        GridData gd_owner = new GridData(SWT.FILL, SWT.CENTER, false, false);
+        gd_owner.widthHint = 300;
+        owner.setLayoutData(gd_owner);
 		owner.addModifyListener(new ModifyListener() {
 			public void modifyText(final ModifyEvent e) {
 				setPageComplete(!owner.getText().equals("")); //$NON-NLS-1$
 				data.setContactName(owner.getText());
 			}
 		});
-		owner.setLayoutData(gd);
 
 		// finish
 		setControl(composite);

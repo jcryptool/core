@@ -33,6 +33,10 @@ public class SignatureWizard extends Wizard {
         super();
         method = m;
         setWindowTitle(Messages.SignatureWizard_Title);
+        
+        if (Input.key != null) {
+        	alias = Input.key;
+        }
     }
 
     @Override
@@ -55,6 +59,8 @@ public class SignatureWizard extends Wizard {
             }
             i++;
         }
+        
+        Input.s = signature;
 
         // Get the Alias
         alias = page.getAlias();
@@ -62,6 +68,13 @@ public class SignatureWizard extends Wizard {
         if (alias != null) {
             Input.key = alias;
         }
+        
+        
+        //Reset / empty the key if ECDSA is selected
+        if (signature == 2) {
+        	Input.key = null;
+        }
+    
         return true;
     }
 

@@ -14,3 +14,4 @@ Export-Package: org.jcryptool.crypto.modern.stream.dragon,
  org.jcryptool.crypto.modern.stream.dragon.algorithm,
  org.jcryptool.crypto.modern.stream.dragon.ui
 Import-Package: org.jcryptool.core.logging.utils
+Automatic-Module-Name: org.jcryptool.crypto.modern.stream.dragon
