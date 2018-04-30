@@ -42,12 +42,6 @@ import de.flexiprovider.core.elgamal.ElGamalPrivateKey;
  */
 public class LoadKeypairPage extends WizardPage {
 
-    /** constant for the pagename. */
-    private static final String PAGENAME = "Load Keypair Page"; //$NON-NLS-1$
-
-    /** constant for the title */
-    private static final String TITLE = Messages.LoadKeypairPage_select_keypair;
-
     /** Keystore manager for accessing the keystore. */
     private KeyStoreManager ksm;
 
@@ -63,9 +57,6 @@ public class LoadKeypairPage extends WizardPage {
     /** the resulting private alias. */
     private KeyStoreAlias privateAlias;
 
-    /** shared data object. */
-    private final ElGamalData data;
-
     /** the resulting public alias. */
     private KeyStoreAlias publicAlias;
     
@@ -78,11 +69,10 @@ public class LoadKeypairPage extends WizardPage {
      * @param data {@link #data}
      */
     public LoadKeypairPage(final ElGamalData data) {
-        super(PAGENAME, TITLE, null);
-        this.setDescription(Messages.LoadKeypairPage_select_keypair_text);
-        initKeystoreConnection();
-        this.data = data;
+        super("Load Keypair Page", Messages.LoadKeypairPage_select_keypair, null);
+        setDescription(Messages.LoadKeypairPage_select_keypair_text);
         setPageComplete(false);
+        initKeystoreConnection();
     }
 
     /**
@@ -103,9 +93,8 @@ public class LoadKeypairPage extends WizardPage {
 
     @Override
 	public void createControl(final Composite parent) {
-        final Composite composite = new Composite(parent, SWT.NONE);
-        // do stuff like layout et al
-        final GridLayout gl = new GridLayout();
+        Composite composite = new Composite(parent, SWT.NONE);
+        GridLayout gl = new GridLayout();
         gl.marginWidth = 50;
         composite.setLayout(gl);
         new Label(composite, SWT.NONE).setText(Messages.LoadKeypairPage_select_keypair_from_list);
@@ -114,6 +103,7 @@ public class LoadKeypairPage extends WizardPage {
         combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         combo.setItems(keyStoreItems.keySet().toArray(new String[keyStoreItems.size()]));
         combo.addSelectionListener(new SelectionListener() {
+        	
             @Override
 			public void widgetDefaultSelected(final SelectionEvent e) {
                 // will not be called
@@ -132,11 +122,11 @@ public class LoadKeypairPage extends WizardPage {
         gd_seperator.verticalIndent = 30;
         new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(gd_seperator);
 
-        final Text l = new Text(composite, SWT.WRAP | SWT.MULTI | SWT.READ_ONLY);
-        l.setText(Messages.LoadKeypairPage_enter_password);
-        GridData gd_l = new GridData(SWT.FILL, SWT.CENTER, true, false);
-        gd_l.verticalIndent = 30;
-        l.setLayoutData(gd_l);
+        Text enterPasswordText = new Text(composite, SWT.WRAP | SWT.MULTI | SWT.READ_ONLY);
+        enterPasswordText.setText(Messages.LoadKeypairPage_enter_password);
+        GridData gd_enterPasswordText = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        gd_enterPasswordText.verticalIndent = 30;
+        enterPasswordText.setLayoutData(gd_enterPasswordText);
         
         passfield = new Text(composite, SWT.BORDER | SWT.PASSWORD);
         passfield.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -165,9 +155,9 @@ public class LoadKeypairPage extends WizardPage {
     /**
      * Sets the visibility for the hint for the password
      * True if it should be displayed. False if not.
-     * @param status true, if the passwort is right. false, if it is wrong
+     * @param status true, if the password is false. false, if it is right.
      */
-    public final void setPasswordHint(boolean status) {
+    public void setPasswordHint(boolean status) {
     	pwHint.setVisible(status);
     }
     
@@ -189,30 +179,39 @@ public class LoadKeypairPage extends WizardPage {
     }
 
     /**
-     * checks whether this page is already complete.
+     * checks whether this page is complete and sets setPageComplete.
      */
     private void checkComplete() {
-        final boolean complete = privateAlias != null && !passfield.getText().equals(""); //$NON-NLS-1$
-        if (complete) {
-            data.setPrivateAlias(privateAlias);
-            data.setPublicAlias(publicAlias);
-            data.setContactName(privateAlias.getContactName());
-            data.setPassword(passfield.getText());
-        }
-        setPageComplete(complete);
-    }
-
-    /**
-     * getter for the pagename.
-     * 
-     * @return the pagename
-     */
-    public static String getPagename() {
-        return PAGENAME;
+    	setPageComplete(privateAlias != null && !passfield.getText().isEmpty());
     }
 
     @Override
     public final IWizardPage getNextPage() {
         return null;
     }
+    
+    /**
+     * Getter for the selected private Alias.
+     * @return The selected private KeyStoreAlias.
+     */
+    public KeyStoreAlias getPrivateAlias() {
+    	return privateAlias;
+    }
+    
+    /**
+     * Getter for the selected public Alias.
+     * @return The public Alias for the selected private Alias.
+     */
+    public KeyStoreAlias getPublicAlias() {
+    	return publicAlias;
+    }
+    
+    /**
+     * Getter for the password of the alias.
+     * @return The Password for the KeyStoreAlias.
+     */
+    public String getPassword() {
+    	return passfield.getText();
+    }
+    
 }

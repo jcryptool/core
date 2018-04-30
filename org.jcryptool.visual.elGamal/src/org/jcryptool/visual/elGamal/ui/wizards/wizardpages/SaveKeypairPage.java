@@ -29,12 +29,6 @@ import org.jcryptool.visual.elGamal.Messages;
  */
 public class SaveKeypairPage extends SaveWizardPage {
 
-    /** unique pagename to get this page from inside a wizard. */
-    private static final String PAGENAME = "Save Keypair Page"; //$NON-NLS-1$
-
-    /** title of this page, displayed in the head of the wizard. */
-    private static final String TITLE = Messages.SaveKeypairPage_save_keypair;
-
     /** field for the password. */
     private Text password;
 
@@ -46,23 +40,16 @@ public class SaveKeypairPage extends SaveWizardPage {
 
         @Override
 		public void modifyText(final ModifyEvent e) {
-            final boolean pwmatch = password.getText().equals(passwordverify.getText());
-            setPageComplete(!owner.getText().equals("") && !password.getText().equals("") //$NON-NLS-1$ //$NON-NLS-2$
-                    && pwmatch);
+            boolean pwmatch = password.getText().equals(passwordverify.getText());
+            setPageComplete(!owner.getText().isEmpty() && !password.getText().isEmpty() && pwmatch);
+            
             if (pwmatch) {
-                data.setContactName(owner.getText());
-                data.setPassword(password.getText());
                 setErrorMessage(null);
             } else {
                 setErrorMessage(Messages.SaveKeypairPage_error_passwords_dont_match);
-                data.setPassword(null);
-                data.setContactName(null);
             }
         }
     };
-
-    /** shared data object. */
-    private final ElGamalData data;
 
     /**
      * Constructor, sets page incomplete and calls super and sets the description.
@@ -70,10 +57,9 @@ public class SaveKeypairPage extends SaveWizardPage {
      * @param data the data object
      */
     public SaveKeypairPage(final ElGamalData data) {
-        super(PAGENAME, TITLE, null);
+        super("Save Keypair Page", Messages.SaveKeypairPage_save_keypair, null);
         setPageComplete(false);
-        this.setDescription(Messages.SaveKeypairPage_enter_save_params);
-        this.data = data;
+        setDescription(Messages.SaveKeypairPage_enter_save_params);
     }
 
     /**
@@ -112,17 +98,21 @@ public class SaveKeypairPage extends SaveWizardPage {
         setControl(composite);
     }
 
-    /**
-     * getter for the pagename.
-     *
-     * @return the pagename
-     */
-    public static String getPagename() {
-        return PAGENAME;
-    }
-
     @Override
     public IWizardPage getNextPage() {
         return null;
     }
+
+	@Override
+	public String getOwner() {
+		return owner.getText();
+	}
+	
+	/**
+	 * Getter for the entered password
+	 * @return The password which the user has set
+	 */
+	public String getPassword() {
+		return password.getText();
+	}
 }

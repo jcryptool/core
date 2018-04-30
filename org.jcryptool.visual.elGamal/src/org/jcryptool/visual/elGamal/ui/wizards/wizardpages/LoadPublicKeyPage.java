@@ -38,15 +38,6 @@ import de.flexiprovider.core.elgamal.ElGamalPublicKey;
  */
 public class LoadPublicKeyPage extends WizardPage {
 
-    /** the pagename for accessing the wizardpage. */
-    private static final String PAGENAME = "Load Public Key Page"; //$NON-NLS-1$
-
-    /** title of this page. */
-    private static final String TITLE = Messages.LoadPublicKeyPage_select_pubkey;
-
-    /** shared data object. */
-    private final ElGamalData data;
-
     /** storage for the alias items. */
     private final HashMap<String, KeyStoreAlias> keystoreitems = new HashMap<String, KeyStoreAlias>();
 
@@ -62,11 +53,10 @@ public class LoadPublicKeyPage extends WizardPage {
      * @param data the {@link #data}
      */
     public LoadPublicKeyPage(final ElGamalData data) {
-        super(PAGENAME, TITLE, null);
-        this.setDescription(Messages.LoadPublicKeyPage_select_pubkey_text);
-        this.data = data;
-        this.setPageComplete(false);
-        this.initKeystoreConnection();
+        super("Load Public Key Page", Messages.LoadPublicKeyPage_select_pubkey, null);
+        setDescription(Messages.LoadPublicKeyPage_select_pubkey_text);
+        setPageComplete(false);
+        initKeystoreConnection();
     }
 
     /**
@@ -86,32 +76,24 @@ public class LoadPublicKeyPage extends WizardPage {
         }
     }
 
-    /**
-     * Set up the UI stuff.
-     * 
-     * @param parent the parent composite.
-     */
     @Override
 	public final void createControl(final Composite parent) {
-        final Composite composite = new Composite(parent, SWT.NONE);
-//      do stuff like layout et al
-        final GridLayout gl = new GridLayout();
+        Composite composite = new Composite(parent, SWT.NONE);
+        GridLayout gl = new GridLayout();
         gl.marginWidth = 50;
         composite.setLayout(gl);
-        new Label(composite, SWT.NONE).setText(Messages.LoadPublicKeyPage_select_from_list);
-        combo = new Combo(composite, SWT.READ_ONLY);
-        final GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, false);
-        combo.setLayoutData(gd);
-        combo.setItems(keystoreitems.keySet().toArray(new String[keystoreitems.size()]));
         
+        new Label(composite, SWT.NONE).setText(Messages.LoadPublicKeyPage_select_from_list);
+        
+        combo = new Combo(composite, SWT.READ_ONLY);
+        combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        combo.setItems(keystoreitems.keySet().toArray(new String[keystoreitems.size()])); 
         combo.addSelectionListener(new SelectionAdapter() {
             @Override
 			public void widgetSelected(final SelectionEvent e) {
-                final boolean complete = !combo.getText().equals(""); //$NON-NLS-1$
+                boolean complete = !combo.getText().equals(""); //$NON-NLS-1$
                 if (complete) {
                     publicAlias = keystoreitems.get(combo.getText());
-                    data.setPublicAlias(publicAlias);
-                    data.setContactName(publicAlias.getContactName());
                 }
                 setPageComplete(complete);
             }
@@ -123,21 +105,19 @@ public class LoadPublicKeyPage extends WizardPage {
         	combo.notifyListeners(SWT.Selection, new Event());
         }
         
-        // end TODO
         setControl(composite);
-    }
-
-    /**
-     * getter for the pagename.
-     * 
-     * @return the pagename
-     */
-    public static String getPagename() {
-        return PAGENAME;
     }
 
     @Override
     public final IWizardPage getNextPage() {
         return null;
+    }
+    
+    /**
+     * Getter for the combo box selection.
+     * @return The alias that is selected in the comboBox. If nothing is selected probably null
+     */
+    public KeyStoreAlias getPublicAlias() {
+    	return publicAlias;
     }
 }

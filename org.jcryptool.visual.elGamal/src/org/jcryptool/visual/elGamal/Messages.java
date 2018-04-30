@@ -57,8 +57,10 @@ public class Messages extends NLS {
 	public static String ElGamalComposite_enter_signature;
 	public static String ElGamalComposite_finish_calculations;
 	public static String ElGamalComposite_finish_calculations_text;
+	public static String ElGamalComposite_hashedInput;
 	public static String ElGamalComposite_hextext;
 	public static String ElGamalComposite_inherit_from;
+	public static String ElGamalComposite_inheritFail;
     public static String ElGamalComposite_invalid;
 	public static String ElGamalComposite_key;
 	public static String ElGamalComposite_key_generation;
@@ -73,6 +75,7 @@ public class Messages extends NLS {
 	public static String ElGamalComposite_result;
 	public static String ElGamalComposite_show_dialogs;
 	public static String ElGamalComposite_sign;
+	public static String ElGamalComposite_signature;
 	public static String ElGamalComposite_start;
 	public static String ElGamalComposite_start_calc;
 	public static String ElGamalComposite_step;
@@ -124,6 +127,12 @@ public class Messages extends NLS {
 	public static String LoadPublicKeyPage_select_from_list;
 	public static String LoadPublicKeyPage_select_pubkey;
 	public static String LoadPublicKeyPage_select_pubkey_text;
+	public static String NewChooseKeyTypePage_choseKey;
+	public static String NewChooseKeyTypePage_createKeypair;
+	public static String NewChooseKeyTypePage_createPublicKey;
+	public static String NewChooseKeyTypePage_keySelection;
+	public static String NewChooseKeyTypePage_loadKeypair;
+	public static String NewChooseKeyTypePage_loadPublicKey;
 	public static String NewKeypairPage_A_explanation;
 	public static String NewKeypairPage_choose_p_text;
 	public static String NewKeypairPage_choose_params;

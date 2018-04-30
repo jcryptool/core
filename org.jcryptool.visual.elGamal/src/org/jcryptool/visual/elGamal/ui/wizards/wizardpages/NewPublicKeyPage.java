@@ -27,9 +27,11 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.elGamal.ElGamalData;
 import org.jcryptool.visual.elGamal.ElGamalPlugin;
 import org.jcryptool.visual.elGamal.Messages;
+import org.jcryptool.visual.library.Constants;
 import org.jcryptool.visual.library.Lib;
 
 /**
@@ -39,17 +41,6 @@ import org.jcryptool.visual.library.Lib;
  * @author Thorben Groos
  */
 public class NewPublicKeyPage extends WizardPage {
-	/** unique pagename to get this page from inside a wizard. */
-	private static final String PAGENAME = "New Public Key Page"; //$NON-NLS-1$
-
-	/**
-	 * getter for the pagename constant for easy access.
-	 *
-	 * @return the pagename
-	 */
-	public static String getPagename() {
-		return PAGENAME;
-	}
 
 	/** verify listener for checking inputs. */
 	private static final VerifyListener VL = Lib.getVerifyListener(Lib.DIGIT);
@@ -57,7 +48,7 @@ public class NewPublicKeyPage extends WizardPage {
 	private final ModifyListener ml = new ModifyListener() {
 		@Override
 		public void modifyText(final ModifyEvent e) {
-			setPageComplete();
+			checkAndSetPageComplete();
 		}
 	};
 
@@ -79,16 +70,14 @@ public class NewPublicKeyPage extends WizardPage {
 	/** basic composite of this page */
 	private Composite composite;
 	
-	/**
-	 * Note that is displayed when p is too long
-	 */
+	/** Note that is displayed when p is too long */
 	private CLabel dTooLongLable;
 	
-	/**
-	 * Lable that is displayed when g is too long
-	 */
+	/** Lable that is displayed when g is too long */
 	private CLabel gTooLongLable;
-
+	
+	/** Button sugges Generator */
+	private Button suggestGenerator;
 	/**
 	 * Constructor for a new wizardpage getting the data object.
 	 *
@@ -96,7 +85,7 @@ public class NewPublicKeyPage extends WizardPage {
 	 *            the data object
 	 */
 	public NewPublicKeyPage(final ElGamalData data) {
-		super(PAGENAME, Messages.NewPublicKeyPage_select_params, null);
+		super("New Public Key Page", Messages.NewPublicKeyPage_select_params, null);
 		this.data = data;
 		this.setDescription(Messages.NewPublicKeyPage_select_params_text);
 		setPageComplete(false);
@@ -132,11 +121,11 @@ public class NewPublicKeyPage extends WizardPage {
 			public void widgetSelected(SelectionEvent e) {
 				if (dtext.getText().equals("")) { //$NON-NLS-1$
 					// Get a random Prime
-					int rndm = (int) (Math.random() * 19500);
-					dtext.setText(Integer.toString(Lib.PRIMES.lower(rndm)));
+					int rndm = (int) (Math.random() * 19500 + 257);
+					dtext.setText(Integer.toString(Lib.POSSBLE_PS.lower(rndm)));
 				} else {
 					// Get a prime near the entered value
-					dtext.setText(Integer.toString(Lib.PRIMES.lower(Integer.parseInt(dtext.getText()))));
+					dtext.setText(Integer.toString(Lib.POSSBLE_PS.lower(Integer.parseInt(dtext.getText()))));
 				}
 			}
 
@@ -167,7 +156,7 @@ public class NewPublicKeyPage extends WizardPage {
 		gtext.addVerifyListener(VL);
 		gtext.addModifyListener(ml);
 
-		Button suggestGenerator = new Button(composite, SWT.PUSH);
+		suggestGenerator = new Button(composite, SWT.PUSH);
 		suggestGenerator.setText(Messages.NewPublicKeyPage_7);
 		suggestGenerator.addSelectionListener(new SelectionListener() {
 
@@ -250,23 +239,29 @@ public class NewPublicKeyPage extends WizardPage {
 
 		// should this key be saved?
 		saveButton = new Button(composite, SWT.CHECK);
+		saveButton.setSelection(false);
 		saveButton.setText(Messages.NewPublicKeyPage_save_pubkey);
 		saveButton.setToolTipText(Messages.NewPublicKeyPage_save_pubkey_popup);
-		saveButton.setSelection(data.isStandalone());
-		saveButton.setEnabled(!data.isStandalone());
 		saveButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 		saveButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
-				getContainer().updateButtons();
+				checkAndSetPageComplete();
 			}
 		});
+
 
 		// fill in old data
 		if (data.getPublicA() != null) {
 			dtext.setText(data.getModulus().toString());
 			gtext.setText(data.getGenerator().toString());
 			btext.setText(data.getPublicA().toString());
+		}
+		
+		//Select the save field and disable it for the user when it is standalone (only key creation)
+		if (data.isStandalone()) {
+			saveButton.setSelection(true);
+			saveButton.setEnabled(false);
 		}
 
 		// finishing touch
@@ -292,21 +287,30 @@ public class NewPublicKeyPage extends WizardPage {
 
 	/**
 	 * checks whether this page is completed and sets the status accordingly
+	 * @return True if all Parameters are set correctly
 	 */
-	private void setPageComplete() {
+	private boolean checkAndSetPageComplete() {
 		boolean pageComplete = true;
 		setErrorMessage(null);
 		if (!dtext.getText().isEmpty()) { 
 			final BigInteger p = new BigInteger(dtext.getText());
-
+			
+			if (p.compareTo(Constants.TWOFIVESIX) < 0) {
+				setErrorMessage(Messages.NewPublicKeyPage_error_p_lt_256);
+				pageComplete = false;
+			}
+			
 			//If p is too long don't check if it is prime and display the note.
 			if (dtext.getText().length() > 6) {
 				dTooLongLable.setVisible(true);
+				suggestGenerator.setEnabled(false);
 			} else {
 				if (!Lib.isPrime(p)) {
 					setErrorMessage(Messages.NewPublicKeyPage_error_p_not_prime);
 					pageComplete = false;
 				}
+				dTooLongLable.setVisible(false);
+				suggestGenerator.setEnabled(true);
 			}
 
 			if (!gtext.getText().equals("")) { //$NON-NLS-1$
@@ -319,6 +323,7 @@ public class NewPublicKeyPage extends WizardPage {
 						setErrorMessage(Messages.NewPublicKeyPage_error_g_not_generator);
 						pageComplete = false;
 					}
+					gTooLongLable.setVisible(false);
 				}
 			} else {
 				pageComplete = false;
@@ -336,30 +341,9 @@ public class NewPublicKeyPage extends WizardPage {
 		} else {
 			pageComplete = false;
 		}
-
-		setPageComplete(pageComplete);
 		
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jface.wizard.WizardPage#setPageComplete(boolean)
-	 */
-	@Override
-	public void setPageComplete(boolean complete) {
-		if (complete) {
-			if (!gtext.getText().isEmpty()) {
-				data.setGenerator(new BigInteger(gtext.getText()));
-			}
-			if (!dtext.getText().isEmpty()) {
-				data.setModulus(new BigInteger(dtext.getText()));
-			}
-			if (!btext.getText().isEmpty()) {
-				data.setPublicA(new BigInteger(btext.getText()));
-			}
-		}
-		super.setPageComplete(complete);
+		setPageComplete(pageComplete);
+		return pageComplete;
 	}
 
 	@Override
@@ -373,10 +357,23 @@ public class NewPublicKeyPage extends WizardPage {
 
 	@Override
 	public final IWizardPage getNextPage() {
-		if (wantSave()) {
-			return super.getNextPage();
+		if (saveButton.getSelection()) {
+			return getWizard().getPage("Save Public Key Page");
 		} else {
 			return null;
+		}
+	}
+	
+	/**
+	 * Return true if the page is complete and the user wants to save the key. 
+	 * Else return false.
+	 */
+	@Override
+	public boolean canFlipToNextPage() {
+		if (isPageComplete() && wantSave()) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -385,7 +382,48 @@ public class NewPublicKeyPage extends WizardPage {
 	 *
 	 * @return whether the user wants to save the key
 	 */
-	public final boolean wantSave() {
+	public boolean wantSave() {
 		return saveButton.getSelection();
 	}
+
+	/**
+	 * @return the modulus d as BigInteger
+	 * If something went wrong null is returned.
+	 */
+	public BigInteger getModulus() {
+		try {
+			return new BigInteger(dtext.getText());
+		} catch (Exception e) {
+			LogUtil.logError(ElGamalPlugin.PLUGIN_ID, e.getMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * @return the generator g
+	 * If something went wrong null is returned.
+	 */
+	public BigInteger getGenerator() {
+		try {
+			return new BigInteger(gtext.getText());
+		} catch (Exception e) {
+			LogUtil.logError(ElGamalPlugin.PLUGIN_ID, e.getMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * @return the public Exponent B
+	 * If something went wrong null is returned.
+	 */
+	public BigInteger getExponentB() {
+		try {
+			return new BigInteger(btext.getText());
+		} catch (Exception e) {
+			LogUtil.logError(ElGamalPlugin.PLUGIN_ID, e.getMessage());
+		}
+		return null;
+	}
+	
+	
 }

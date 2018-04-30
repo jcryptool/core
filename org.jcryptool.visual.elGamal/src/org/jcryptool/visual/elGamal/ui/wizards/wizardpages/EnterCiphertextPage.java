@@ -10,10 +10,13 @@
 package org.jcryptool.visual.elGamal.ui.wizards.wizardpages;
 
 import java.math.BigInteger;
+import java.util.Iterator;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -21,7 +24,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.visual.elGamal.ElGamalData;
 import org.jcryptool.visual.elGamal.Messages;
-import org.jcryptool.visual.library.Constants;
 import org.jcryptool.visual.library.Lib;
 
 /**
@@ -47,8 +49,8 @@ public class EnterCiphertextPage extends TextWizardPage {
 	public EnterCiphertextPage(final ElGamalData data) {
 		super(PAGENAME, TITLE, null);
 		this.data = data;
-		this.setDescription(Messages.EnterCiphertextPage_ciphertext_text);
-		this.setPageComplete(false);
+		setDescription(Messages.EnterCiphertextPage_ciphertext_text);
+		setPageComplete(false);
 	}
 
 	/**
@@ -65,17 +67,18 @@ public class EnterCiphertextPage extends TextWizardPage {
 		final Label label = new Label(composite, SWT.NONE);
 		label.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 		label.setText(Messages.EnterCiphertextPage_textentry);
+		
 		text = new Text(composite, SWT.BORDER | SWT.WRAP);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		text.addModifyListener(new ModifyListener() {
 
 			@Override
-			public void modifyText(final ModifyEvent e) {
+			public void modifyText(ModifyEvent e) {
 				final String trimmed = ((Text) e.widget).getText().replaceAll(Lib.WHITESPACE, ""); //$NON-NLS-1$
 				final boolean leer = trimmed.equals(""); //$NON-NLS-1$
 				if (!leer) {
-					for (final String s : text.getText().trim().split(" ")) { //$NON-NLS-1$
-						if (new BigInteger(s, Constants.HEXBASE).compareTo(data.getModulus()) >= 0) {
+					for (String s : text.getText().trim().split(" ")) { //$NON-NLS-1$
+						if (new BigInteger(s).compareTo(data.getModulus()) >= 0) {
 							setErrorMessage(Messages.EnterCiphertextPage_error_param_gt_mod);
 							setPageComplete(false);
 							return;
@@ -86,10 +89,26 @@ public class EnterCiphertextPage extends TextWizardPage {
 				setPageComplete(!leer);
 			}
 		});
-		text.addVerifyListener(Lib.getVerifyListener(Lib.HEXDIGIT));
+		text.addVerifyListener(new VerifyListener() {
+			
+			@Override
+			public void verifyText(VerifyEvent e) {
+				// Hopefully all 123 or 12 1234 342 or 1
+				// at least one digit and then a space and another digit and so on.
+				if (e.text.matches("^(\\d*\\s+)*\\d*$")) {
+					e.doit = true;
+				} else {
+					e.doit = false;
+				}
+			}
+		});
 
 		// fill in old data
-		text.setText(data.getCipherText());
+		String oldValues  = "";
+		for (Iterator<Integer> it = data.getCipherTextAsNumbers().iterator(); it.hasNext();) {
+			oldValues += it.next() + " ";
+		}
+		text.setText(oldValues);
 
 		// finish
 		setControl(composite);

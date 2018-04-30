@@ -9,6 +9,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.elGamal.ui.wizards.wizardpages;
 
+import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -28,29 +29,15 @@ import org.jcryptool.visual.elGamal.Messages;
  */
 public class SavePublicKeyPage extends SaveWizardPage {
 
-    /** unique pagename to get this page from inside a wizard. */
-    private static final String PAGENAME = "Save Public Key Page"; //$NON-NLS-1$
-
-    /** title of this page, displayed in the head of the wizard. */
-    private static final String TITLE = Messages.SavePublicKeyPage_save_pubkey;
-
-    /** shared data object. */
-    private final ElGamalData data;
-
     /**
      * constructor, sets this page incomplete and the description.
-     *
      * @param data shared Data object
      */
-    public SavePublicKeyPage(final ElGamalData data) {
-        super(PAGENAME, TITLE, null);
+    public SavePublicKeyPage(ElGamalData data) {
+        super("Save Public Key Page", Messages.SavePublicKeyPage_save_pubkey, null);
         setPageComplete(false);
-        this.setDescription(Messages.SavePublicKeyPage_enter_save_params);
-        this.data = data;
-        
+        setDescription(Messages.SavePublicKeyPage_enter_save_params);
     }
-    
-    
 
     /**
      * Set up UI stuff.
@@ -72,8 +59,8 @@ public class SavePublicKeyPage extends SaveWizardPage {
         owner.addModifyListener(new ModifyListener() {
             @Override
 			public void modifyText(final ModifyEvent e) {
-                setPageComplete(!owner.getText().equals("")); //$NON-NLS-1$
-                data.setContactName(owner.getText());
+                setPageComplete(!owner.getText().isEmpty()); 
+                
             }
         });
         owner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -81,13 +68,16 @@ public class SavePublicKeyPage extends SaveWizardPage {
         // finish
         setControl(composite);
     }
-
-    /**
-     * getter for the pagename.
-     *
-     * @return the pagename
-     */
-    public static String getPagename() {
-        return PAGENAME;
+    
+    @Override
+    public IWizardPage getNextPage() {
+    	//There is no next page.
+    	return null;
     }
+    
+    @Override
+    public String getOwner() {
+    	return owner.getText();
+    }
+    
 }

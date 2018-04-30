@@ -39,8 +39,8 @@ public class PlaintextforSignatureVerificationWizard extends Wizard {
 
 	@Override
 	public boolean performFinish() {
-		data.setPlainText(((EnterPlaintextforVerification) getPage(EnterPlaintextforVerification
-				.getPagename())).getPlaintext().trim());
+		data.setPlainTextAsNumbers(data.getStb().convert(((EnterPlaintextforVerification) getPage(EnterPlaintextforVerification
+				.getPagename())).getPlaintext().trim()));
 		return true;
 	}
 

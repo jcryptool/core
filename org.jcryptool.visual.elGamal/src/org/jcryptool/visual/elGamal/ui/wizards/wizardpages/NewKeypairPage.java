@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.elGamal.ElGamalData;
 import org.jcryptool.visual.elGamal.ElGamalPlugin;
 import org.jcryptool.visual.elGamal.Messages;
@@ -42,40 +43,10 @@ import org.jcryptool.visual.library.Lib;
  */
 public class NewKeypairPage extends WizardPage {
 
-    /** unique pagename to get this page from inside a wizard. */
-    private static final String PAGENAME = "New Keypair Page"; //$NON-NLS-1$
-
-    /** title of this page, displayed in the head of the wizard. */
-    private static final String TITLE = Messages.NewKeypairPage_choose_params;
-
-    // /**
-    // * set up how many generators should be produced. might be that the actual count differs. this depends on the
-    // * implementation and the modulus.
-    // */
-    //	private static final BigInteger RESULTCOUNT = new BigInteger("50"); //$NON-NLS-1$
-
     /**
      * a {@link VerifyListener} instance that makes sure only digits are entered.
      */
     private static final VerifyListener VL = Lib.getVerifyListener(Lib.DIGIT);
-
-    // /**
-    // * a {@link ModifyListener} instance that calls {@link #calcParams()} whenever a value is changed.
-    // */
-    // private final ModifyListener ml = new ModifyListener() {
-    // public void modifyText(final ModifyEvent e) {
-    // // calcParams();
-    // }
-    // };
-
-    /**
-     * getter for the pagename constant for easy access.
-     *
-     * @return the pagename
-     */
-    public static String getPagename() {
-        return PAGENAME;
-    }
 
     /** shared data-object to push around. */
     private final ElGamalData data;
@@ -92,10 +63,10 @@ public class NewKeypairPage extends WizardPage {
     /** field for selecting a g */
     private Combo gfield;
 
-    /** field for entering the private a */
+    /** field for entering the private b */
     private Text bfield;
 
-    /** field for entering the public a */
+    /** field for entering the public B */
     private Text btext;
     
     /** text for the p changed note */
@@ -120,8 +91,7 @@ public class NewKeypairPage extends WizardPage {
                  	if (gfield.getText().isEmpty()) {
                  		setPageComplete(false);
                  	} else {
-	                        btext.setText(new BigInteger(gfield.getText()).modPow(b, new BigInteger(dfield.getText()))
-	                                .toString());
+	                        btext.setText(new BigInteger(gfield.getText()).modPow(b, new BigInteger(dfield.getText())).toString());
 	                        setErrorMessage(null);
 	                        setPageComplete(true);
                  	}
@@ -138,7 +108,7 @@ public class NewKeypairPage extends WizardPage {
      * @param data the data object to store the entered values
      */
     public NewKeypairPage(final ElGamalData data) {
-        super(PAGENAME, TITLE, null);
+        super("New Keypair Page", Messages.NewKeypairPage_choose_params, null);
         this.setDescription(Messages.NewKeypairPage_choose_params_text);
         this.data = data;
         setPageComplete(false);
@@ -200,9 +170,9 @@ public class NewKeypairPage extends WizardPage {
 					setErrorMessage(null);
 					pchanged.setVisible(false);
 				}
-//				if (modulus.compareTo(TWOFIVESIX) <= 0) {
-//					setErrorMessage(Messages.NewKeypairPage_error_p_lt_256);
-//				}
+				if (modulus.compareTo(Constants.TWOFIVESIX) <= 0) {
+					setErrorMessage(Messages.NewKeypairPage_error_p_lt_256);
+				}
 				bfield.setText(""); //$NON-NLS-1$
 				btext.setText("");
 				gfield.setItems(Lib.calcG(modulus).toArray(new String[0]));
@@ -314,37 +284,92 @@ public class NewKeypairPage extends WizardPage {
             gfield.setText(data.getGenerator().toString());
             bfield.setText(data.getA().toString());
         }
+        
+		//Select the save field and disable it for the user when it is standalone (only key creation)
+		if (data.isStandalone()) {
+			saveKeypairButton.setSelection(true);
+			saveKeypairButton.setEnabled(false);
+		}
 
         // finish
         setControl(composite);
     }
 
     private void filld() {
-//        for (final Integer i : Lib.POSSBLE_PS) {
-    	for (final Integer i : Lib.PRIMES) {
+        for (final Integer i : Lib.POSSBLE_PS) {
             dfield.add(i.toString());
         }
+    }
+    
+    @Override
+    public boolean canFlipToNextPage() {
+		if (isPageComplete() && wantSave()) {
+			return true;
+		} else {
+			return false;
+		}
     }
 
     @Override
     public final IWizardPage getNextPage() {
         if (saveKeypairButton.getSelection()) {
-            return super.getNextPage();
+        	return getWizard().getPage("Save Keypair Page");
         } else {
             return null;
         }
     }
-
-    @Override
-    public void setPageComplete(final boolean complete) {
-        if (complete) {
-            data.setModulus(new BigInteger(dfield.getText()));
-            data.setGenerator(new BigInteger(gfield.getText()));
-            data.setA(new BigInteger(bfield.getText()));
-            data.setPublicA(new BigInteger(btext.getText()));
-        }
-        super.setPageComplete(complete);
-    }
+    
+	/**
+	 * @return the modulus d as BigInteger
+	 * If something went wrong null is returned.
+	 */
+	public BigInteger getModulus() {
+		try {
+			return new BigInteger(dfield.getText());
+		} catch (Exception e) {
+			LogUtil.logError(ElGamalPlugin.PLUGIN_ID, e.getMessage());
+		}
+		return null;
+	}
+	
+	/**
+	 * @return the generator g
+	 * If something went wrong null is returned.
+	 */
+	public BigInteger getGenerator() {
+		try {
+			return new BigInteger(gfield.getText());
+		} catch (Exception e) {
+			LogUtil.logError(ElGamalPlugin.PLUGIN_ID, e.getMessage());
+		}
+		return null;
+	}
+	
+	/**
+	 * @return the public Exponent B
+	 * If something went wrong null is returned.
+	 */
+	public BigInteger getExponentB() {
+		try {
+			return new BigInteger(btext.getText());
+		} catch (Exception e) {
+			LogUtil.logError(ElGamalPlugin.PLUGIN_ID, e.getMessage());
+		}
+		return null;
+	}
+	
+	/**
+	 * @return the private b
+	 * If something went wrong null is returned.
+	 */
+	public BigInteger getPrivateb() {
+		try {
+			return new BigInteger(bfield.getText());
+		} catch (Exception e) {
+			LogUtil.logError(ElGamalPlugin.PLUGIN_ID, e.getMessage());
+		}
+		return null;
+	}
 
     /**
      * getter for the selection-status of the save-button.

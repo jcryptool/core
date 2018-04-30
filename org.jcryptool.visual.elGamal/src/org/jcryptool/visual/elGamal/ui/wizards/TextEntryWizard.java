@@ -9,6 +9,8 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.elGamal.ui.wizards;
 
+import java.util.List;
+
 import org.eclipse.jface.wizard.Wizard;
 import org.jcryptool.visual.elGamal.ElGamalData;
 import org.jcryptool.visual.elGamal.Messages;
@@ -60,16 +62,20 @@ public class TextEntryWizard extends Wizard {
 		switch (data.getAction()) {
 		case EncryptAction:
 		case SignAction:
-			data.setPlainText(((EnterPlaintextPage) getPage(EnterPlaintextPage.getPagename()))
-					.getText());
+			data.setPlainTextAsNumbers(data.getStb().convert(((EnterPlaintextPage) getPage(EnterPlaintextPage.getPagename()))
+					.getText()));
 			break;
 		case DecryptAction:
-			data.setCipherText(((EnterCiphertextPage) getPage(EnterCiphertextPage.getPagename()))
-					.getText().trim());
+			String[] temp = ((EnterCiphertextPage) getPage(EnterCiphertextPage.getPagename()))
+					.getText().trim().split(" ");
+			data.getCipherTextAsNumbers().clear();
+			for (String tmp : temp) {
+				data.getCipherTextAsNumbers().add(Integer.parseInt(tmp));
+			}
 			break;
 		case VerifyAction:
-			data.setSignature(((EnterSignaturePage) getPage(EnterSignaturePage.getPagename()))
-					.getText().trim());
+			data.setSignatureAsNumbers((List<Integer>) ((EnterSignaturePage) getPage(EnterSignaturePage.getPagename())).getSignaturefromInput());
+			
 		default:
 			break;
 		}

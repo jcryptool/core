@@ -33,5 +33,11 @@ public abstract class SaveWizardPage extends WizardPage {
     public SaveWizardPage(String pageName, String title, ImageDescriptor titleImage) {
         super(pageName, title, titleImage);
     }
+    
+    /**
+     * Getter for the owner
+     * @return The name the user has entered as Key owner
+     */
+    public abstract String getOwner();
 
 }

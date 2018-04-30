@@ -4,8 +4,10 @@
 package org.jcryptool.visual.elGamal;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.jcryptool.visual.library.Constants;
+import org.jcryptool.core.logging.utils.LogUtil;
 
 /**
  * possible actions, including a run method.
@@ -14,71 +16,93 @@ import org.jcryptool.visual.library.Constants;
  */
 public enum Action {
 
-    /** encryption. */
-    EncryptAction {
-        @Override
-        public String run(final ElGamalData data, final String... words) {
-            final StringBuilder rv = new StringBuilder(words.length * 3);
-            final BigInteger modulus = data.getModulus();
-            final BigInteger multiplicand = data.getPublicA().modPow(data.getB(), modulus);
-            for (final String word : words) {
-                rv.append(multiplicand.multiply(new BigInteger(word, Constants.HEXBASE)).mod(modulus)
-                        .toString(Constants.HEXBASE));
-                rv.append(" "); //$NON-NLS-1$
-            }
-            rv.delete(rv.length() - 1, rv.length() - 1);
-            return rv.toString();
-        }
-    },
+	/** encryption. */
+	EncryptAction,
 
-    /** decryption. */
-    DecryptAction {
-        @Override
-        public String run(final ElGamalData data, final String... words) {
-            final StringBuilder rv = new StringBuilder(words.length);
-            final BigInteger modulus = data.getModulus();
-            final BigInteger x = modulus.subtract(BigInteger.ONE).subtract(data.getA());
-            final BigInteger multiplicand = data.getGPowB().modPow(x, modulus);
-            for (final String word : words) {
-                rv.append((char) multiplicand.multiply(new BigInteger(word, Constants.HEXBASE)).mod(modulus).intValue());
-            }
-            return rv.toString();
-        }
-    },
+	/** decryption. */
+	DecryptAction,
 
-    /** signature. */
-    SignAction {
-        @Override
-        public String run(final ElGamalData data, final String... words) {
-            final BigInteger modulus = data.getModulus();
-            final BigInteger r = data.getGenerator().modPow(data.getK(), modulus);
-            data.setR(r);
-            final BigInteger s = new BigInteger(words[0], Constants.HEXBASE).subtract(data.getA().multiply(r))
-                    .multiply(data.getK().modInverse(modulus.subtract(BigInteger.ONE)))
-                    .mod(modulus.subtract(BigInteger.ONE));
-            return s.toString(Constants.HEXBASE);
-        }
-    },
+	/** signature. */
+	SignAction,
 
-    /** verification. */
-    VerifyAction {
-        @Override
-        public String run(final ElGamalData data, final String... words) {
-            final String[] rs = data.getSignature().substring(1, data.getSignature().length() - 1).split(","); //$NON-NLS-1$
-            final BigInteger r = new BigInteger(rs[0], Constants.HEXBASE);
-            data.setR(r);
-            final BigInteger s = new BigInteger(rs[1].trim(), Constants.HEXBASE);
-            final BigInteger modulus = data.getModulus();
-            final BigInteger result = data.getPublicA().modPow(r, modulus).multiply(r.modPow(s, modulus)).mod(modulus);
-            return result.toString(Constants.HEXBASE);
-        }
-    };
+	/** verification. */
+	VerifyAction;
 
-    /**
-     * runs the action on the specified array of hex-values.
-     * 
-     * @param words the "words"
-     * @return a string containing all words "translated" separated with spaces
-     */
-    public abstract String run(ElGamalData data, final String... words);
+
+	/**
+	 * Returns a single value in a list. Voraussichtlich für die Schrittweise
+	 * berechnung gedacht. Nachteil: Die begrenzung der Werte auf int (BigInteger
+	 * ist größer) -> keine 1024 bit keys möglich.
+	 * 
+	 * @param data
+	 * @param words
+	 *            Die Einzelnen Zeichen die verschlüsselt werden sollen
+	 * @return Irgendwas auf Basis 10. If something went wrong an Exception is
+	 *         thrown and the result will be empty.
+	 */
+	public List<Integer> run(ElGamalData data, List<Integer> words) {
+		List<Integer> result = new ArrayList<>();
+		int modulus, publicB, k, s;
+		try {
+
+			switch (data.getAction()) {
+			case EncryptAction:
+
+				modulus = data.getModulus().intValue();
+				publicB = data.getPublicA().intValueExact();
+				// Aus irgendeinem Grund wird das k nicht in k, sondern in b gespeichert. Sollte
+				// mal untersucht werden.
+				k = data.getB().intValue();
+
+				for (Integer word : words) {
+					result.add((int) (Math.pow(publicB, k) * word % modulus));
+				}
+
+				break;
+
+			case DecryptAction:
+
+				modulus = data.getModulus().intValue();
+				int multiplicand = data.getGPowB().modPow(data.getModulus().subtract(BigInteger.ONE).subtract(data.getA()), data.getModulus()).intValue();
+
+				for (Integer word : words) {
+					result.add(multiplicand * word % modulus);
+				}
+
+				break;
+			case SignAction:
+
+				modulus = data.getModulus().intValue();
+				BigInteger tempR = data.getGenerator().modPow(data.getK(), data.getModulus());
+				data.setR(tempR);
+				int inverseK = data.getK().modInverse(data.getModulus().subtract(BigInteger.ONE)).intValue();
+				s = ((words.get(0) - (data.getA().intValue() * tempR.intValue())) * inverseK) % (modulus - 1);
+				if (s < 0) {
+					s = (modulus - 1) + s;
+				}
+				result.add(s);
+
+				break;
+			case VerifyAction:
+
+				modulus = data.getModulus().intValue();
+				BigInteger bi_r = BigInteger.valueOf(data.getSignatureAsNumbers().get(0));
+				BigInteger bi_s = BigInteger.valueOf(data.getSignatureAsNumbers().get(1));
+				data.setR(bi_r);
+				BigInteger tempRes = data.getPublicA().modPow(bi_r, data.getModulus()).multiply(bi_r.modPow(bi_s, data.getModulus())).mod(data.getModulus());
+				result.add(tempRes.intValue());
+				break;
+			default:
+				break;
+			}
+
+		} catch (NumberFormatException nfe) {
+			LogUtil.logError(ElGamalPlugin.PLUGIN_ID, nfe);
+		} catch (Exception e) {
+			LogUtil.logError(ElGamalPlugin.PLUGIN_ID, e);
+		}
+
+		return result;
+
+	}
 }

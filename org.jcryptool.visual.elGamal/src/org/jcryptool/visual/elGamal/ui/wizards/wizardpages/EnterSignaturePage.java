@@ -10,6 +10,8 @@
 package org.jcryptool.visual.elGamal.ui.wizards.wizardpages;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -21,7 +23,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.visual.elGamal.ElGamalData;
 import org.jcryptool.visual.elGamal.Messages;
-import org.jcryptool.visual.library.Constants;
 import org.jcryptool.visual.library.Lib;
 
 /**
@@ -37,6 +38,11 @@ public class EnterSignaturePage extends TextWizardPage {
 
     /** Common data object fore storing the entries. */
     private final ElGamalData data;
+    
+	/**
+	 * the input as list
+	 */
+	private List<Integer> signatureList = new ArrayList<>();
 
     /**
      * Constructor storing the data-object for further usage, setting title, description, and page complete status.
@@ -79,13 +85,15 @@ public class EnterSignaturePage extends TextWizardPage {
 				// 3. a comma ([,])
 				// 4. a hex value ([0-9A-Fa-f]+?)
 				// 5. a closed bracket ([)])
-				if (trimmed.matches("[(][0-9A-Fa-f]+?[,][0-9A-Fa-f]+?[)]")) { //$NON-NLS-1$
+//				if (trimmed.matches("[(][0-9A-Fa-f]+?[,][0-9A-Fa-f]+?[)]")) {
+				
+				//new input validation is only for digits.
+				if (trimmed.matches("[(][0-9]+?[,][0-9]+?[)]")) { //$NON-NLS-1$
 					//Remove the brackets
 					trimmed = trimmed.replaceAll("[(]", "").replaceAll("[)]", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-					String[] rs = trimmed.split(","); //$NON-NLS-1$
-					BigInteger r = new BigInteger(rs[0], Constants.HEXBASE);
-					BigInteger s = new BigInteger(rs[1], Constants.HEXBASE);
-					data.setR(r);
+					String[] rs = trimmed.split(",");
+					BigInteger r = new BigInteger(rs[0]);
+					BigInteger s = new BigInteger(rs[1]);
 					if (r.compareTo(BigInteger.ZERO) <= 0 || r.compareTo(data.getModulus()) >= 0) {
 						setErrorMessage(Messages.EnterSignaturePage_error_invalid_r);
 						setPageComplete(false);
@@ -94,16 +102,24 @@ public class EnterSignaturePage extends TextWizardPage {
 						setErrorMessage(Messages.EnterSignaturePage_error_invalid_s);
 						setPageComplete(false);
 					} else {
+
+						signatureList.add(0, r.intValue());
+						signatureList.add(1, s.intValue());
+						data.setR(r);
 						setErrorMessage(null);
 						setPageComplete(true);
 					}
 				}
 			}
 		});
-        text.addVerifyListener(Lib.getVerifyListener("[" + Lib.WHITESPACE + Lib.HEXDIGIT + "\\(\\),]*")); //$NON-NLS-1$ //$NON-NLS-2$
-
+        text.addVerifyListener(Lib.getVerifyListener("[" + Lib.WHITESPACE + Lib.DIGIT + "\\(\\),]*")); //$NON-NLS-1$ //$NON-NLS-2$
+        
         // fill in old data
-        text.setText(data.getSignature());
+        //check if the list isn't empty 
+        if (!data.getSignatureAsNumbers().isEmpty()) {
+        	text.setText("(" + data.getSignatureAsNumbers().get(0) + ", " + data.getSignatureAsNumbers().get(1) + ")");
+        }
+        
 
 
         // finish
@@ -117,5 +133,9 @@ public class EnterSignaturePage extends TextWizardPage {
      */
     public static String getPagename() {
         return PAGENAME;
+    }
+    
+    public List<Integer> getSignaturefromInput() {
+    	return signatureList;
     }
 }

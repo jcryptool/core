@@ -66,7 +66,7 @@ public class EnterPlaintextforVerification extends WizardPage {
 		});
 
 		// fill in old data
-		plaintext.setText(data.getPlainText());
+		plaintext.setText(data.getStb().revert(data.getPlainTextAsNumbers()));
 		SHA1Checkbox.setSelection(!data.getSimpleHash());
 
 		setControl(composite);

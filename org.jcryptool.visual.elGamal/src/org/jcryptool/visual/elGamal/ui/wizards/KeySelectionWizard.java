@@ -7,31 +7,30 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
+
 package org.jcryptool.visual.elGamal.ui.wizards;
 
-import java.security.PrivateKey;
-import java.security.UnrecoverableEntryException;
+import java.math.BigInteger;
+import java.security.UnrecoverableKeyException;
 
-import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.crypto.keystore.certificates.CertificateFactory;
 import org.jcryptool.crypto.keystore.keys.KeyType;
+import org.jcryptool.visual.elGamal.Action;
 import org.jcryptool.visual.elGamal.ElGamalData;
+import org.jcryptool.visual.elGamal.ElGamalPlugin;
 import org.jcryptool.visual.elGamal.Messages;
-import org.jcryptool.visual.elGamal.ui.wizards.wizardpages.ChooseKeytypePage;
-import org.jcryptool.visual.elGamal.ui.wizards.wizardpages.DecryptSignPage;
-import org.jcryptool.visual.elGamal.ui.wizards.wizardpages.EncryptVerifyPage;
 import org.jcryptool.visual.elGamal.ui.wizards.wizardpages.LoadKeypairPage;
 import org.jcryptool.visual.elGamal.ui.wizards.wizardpages.LoadPublicKeyPage;
+import org.jcryptool.visual.elGamal.ui.wizards.wizardpages.NewChooseKeyTypePage;
 import org.jcryptool.visual.elGamal.ui.wizards.wizardpages.NewKeypairPage;
 import org.jcryptool.visual.elGamal.ui.wizards.wizardpages.NewPublicKeyPage;
 import org.jcryptool.visual.elGamal.ui.wizards.wizardpages.SaveKeypairPage;
 import org.jcryptool.visual.elGamal.ui.wizards.wizardpages.SavePublicKeyPage;
 
-import de.flexiprovider.api.exceptions.InvalidKeySpecException;
 import de.flexiprovider.common.math.FlexiBigInt;
 import de.flexiprovider.core.elgamal.ElGamalKeyFactory;
 import de.flexiprovider.core.elgamal.ElGamalPrivateKey;
@@ -42,205 +41,283 @@ import de.flexiprovider.core.elgamal.ElGamalPublicKeySpec;
 /**
  * wizard for key selection and creation.
  * 
- * @author Michael Gaber
+ * A revised version of KeySelectionWizard.
+ * 
+ * @author Thorben Groos
+ *
  */
 public class KeySelectionWizard extends Wizard {
+	
+	private ElGamalData data;
+	
+	public KeySelectionWizard(ElGamalData data) {
+		
+		if (data == null) {
+			this.data = new ElGamalData(Action.EncryptAction);
+			this.data.setStandalone(true);
+		} else {
+			this.data = data;
+		}
+		setWindowTitle(Messages.KeySelectionWizard_keyselection);
+	}
+	
+	@Override
+	public void addPages() {
 
-    /** title of this wizard, displayed in the titlebar. */
-    private static final String TITLE = Messages.KeySelectionWizard_keyselection;
+		//When the action is Decrypt or Sign just load the keypair pages for performance reasons.
+		addPage(new NewChooseKeyTypePage(data));
+		
+		switch (data.getAction()) {
+		default:
+		case EncryptAction:
+		case VerifyAction:
+			addPage(new NewPublicKeyPage(data));
+			addPage(new LoadPublicKeyPage(data));
+			addPage(new SavePublicKeyPage(data));
+		case DecryptAction:
+		case SignAction:
+			addPage(new NewKeypairPage(data));
+			addPage(new LoadKeypairPage(data));
+			addPage(new SaveKeypairPage(data));
+			break;
+		}
+	}
 
-    /** shared data object for exchanging data. */
-    private final ElGamalData data;
+	@Override
+	public boolean performFinish() {
+		
+		boolean result = true;
+		
+		int radiobutton = ((NewChooseKeyTypePage) getPage("NewChooseKeyTypePage")).getSelection();
+		
+		switch (data.getAction()) {
+		case EncryptAction:
+		case VerifyAction:
+			
+			//Create new Public Key
+			if (radiobutton == 0) {
+				BigInteger modulus = ((NewPublicKeyPage) getPage("New Public Key Page")).getModulus();
+				BigInteger generator = ((NewPublicKeyPage) getPage("New Public Key Page")).getGenerator();
+				BigInteger publicB = ((NewPublicKeyPage) getPage("New Public Key Page")).getExponentB();
+				
+				data.setModulus(modulus);
+				data.setGenerator(generator);
+				data.setPublicA(publicB);
+				
+				if (((NewPublicKeyPage) getPage("New Public Key Page")).wantSave()) {
+					String contactName = ((SavePublicKeyPage) getPage("Save Public Key Page")).getOwner();
+					result = saveKey(contactName, null, modulus, generator, publicB, null);
+				}
+			}
+			
+			//Load Public Key
+			if (radiobutton == 1) {
+				KeyStoreAlias publicAlias = ((LoadPublicKeyPage) getPage("Load Public Key Page")).getPublicAlias();
+				data.setPublicAlias(publicAlias);
+				data.setContactName(publicAlias.getContactName());
+				
+				result = loadParametersToDataObject(publicAlias, null);
+			}
+			
+		case DecryptAction:
+		case SignAction:
+			
+			//Create new keypair
+			if (radiobutton == 2) {
+				
+				BigInteger modulus = ((NewKeypairPage) getPage("New Keypair Page")).getModulus();
+				BigInteger generator = ((NewKeypairPage) getPage("New Keypair Page")).getGenerator();
+				BigInteger publicB = ((NewKeypairPage) getPage("New Keypair Page")).getExponentB();
+				BigInteger privateB = ((NewKeypairPage) getPage("New Keypair Page")).getPrivateb();
+				
+				data.setModulus(modulus);
+				data.setGenerator(generator);
+				data.setPublicA(publicB);
+				data.setA(privateB);
+				
+				if (((NewKeypairPage) getPage("New Keypair Page")).wantSave()) {
+					
+					String contactName = ((SaveKeypairPage) getPage("Save Keypair Page")).getOwner();
+					String password = ((SaveKeypairPage) getPage("Save Keypair Page")).getPassword();
+					
+					result = saveKey(contactName, password, modulus, generator, publicB, privateB);
+				}	
+			}
+			
+			//Load keypair
+			if (radiobutton == 3) {
+				KeyStoreAlias privateAlias = ((LoadKeypairPage) getPage("Load Keypair Page")).getPrivateAlias();
+				KeyStoreAlias publicAlias = ((LoadKeypairPage) getPage("Load Keypair Page")).getPublicAlias();
+				String password = ((LoadKeypairPage) getPage("Load Keypair Page")).getPassword();
+				
+				data.setPrivateAlias(privateAlias);
+				data.setContactName(privateAlias.getContactName());
+				data.setPublicAlias(publicAlias);
+				data.setPassword(password);
+				
+				result = loadParametersToDataObject(privateAlias, password);
+			}
+			break;
 
-    /** whether this Wizard is called as standalone or withing the algorithm. */
-    private final boolean standalone;
+		default:
+			break;
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * Set the modulus, generator, publicB and privateB (only if it is a private Key) to
+	 * the ElGamalData object.
+	 * @param keyStoreAlias The keyStoreAlias from the LoadPublicKeyPage or the LoadKeypairPage
+	 * @param password The password the user has entered on the LodKeyPairPage. If it is a publicKey it is 
+	 * 		does not matter what this argument is set to (Simply use null).
+	 * @return true if anything has worked, else false.
+	 */
+	private boolean loadParametersToDataObject(KeyStoreAlias keyStoreAlias, String password) {
+		try {
+			KeyStoreManager ksm = KeyStoreManager.getInstance();
+			
+			if (keyStoreAlias.getKeyStoreEntryType() == KeyType.KEYPAIR_PUBLIC_KEY) {
+				ElGamalPublicKey publicKey = (ElGamalPublicKey) ksm.getCertificate(keyStoreAlias).getPublicKey();
+				
+				data.setModulus(publicKey.getModulus().bigInt);
+				data.setGenerator(publicKey.getGenerator().bigInt);
+				data.setPublicA(publicKey.getPublicA().bigInt);
+			}
 
-    /**
-     * Constructor, setting title, action and data.
-     * 
-     * @param data the data object
-     * @param standalone selects whether this wizard is stand-alone. If it is there is no setting of any variables.
-     */
-    public KeySelectionWizard(final ElGamalData data, final boolean standalone) {
-        if (standalone) {
-            this.data = new ElGamalData(null);
-            this.data.setStandalone(standalone);
-        } else {
-            this.data = data;
-        }
-        this.setWindowTitle(TITLE);
-        this.standalone = standalone;
-    }
-
-    @Override
-    public final void addPages() {
-        if (standalone) {
-            addPage(new ChooseKeytypePage());
-            addPage(new NewKeypairPage(data));
-            addPage(new SaveKeypairPage(data));
-            addPage(new NewPublicKeyPage(data));
-            addPage(new SavePublicKeyPage(data));
-        } else {
-        	switch (data.getAction()) {
-            case DecryptAction:
-            case SignAction:
-                addPage(new DecryptSignPage());
-                addPage(new LoadKeypairPage(data));
-                addPage(new NewKeypairPage(data));
-                addPage(new SaveKeypairPage(data));
-                break;
-            case EncryptAction:
-            case VerifyAction:
-                addPage(new EncryptVerifyPage());
-                addPage(new LoadPublicKeyPage(data));
-                addPage(new NewPublicKeyPage(data));
-                addPage(new SavePublicKeyPage(data));
-                break;
-            default:
-                break;
-            }
-        }
-    }
-
-    @Override
-    public final boolean canFinish() {
-        boolean rv = true;
-        if (standalone) {
-            rv = (((ChooseKeytypePage) getPage(ChooseKeytypePage.getPagename())).keypair() && getPage(
-                    SaveKeypairPage.getPagename()).isPageComplete())
-                    || (!((ChooseKeytypePage) getPage(ChooseKeytypePage.getPagename())).keypair() && getPage(
-                            SavePublicKeyPage.getPagename()).isPageComplete());
-        } else {
-            IWizardPage page;
-            switch (data.getAction()) {
-            case DecryptAction:
-            case SignAction:
-                page = getPage(DecryptSignPage.getPagename());
-                rv &= page.isPageComplete();
-                if (((DecryptSignPage) page).wantNewKey()) {
-                    page = getPage(NewKeypairPage.getPagename());
-                    rv &= page.isPageComplete();
-                    if (((NewKeypairPage) page).wantSave()) {
-                        rv &= getPage(SaveKeypairPage.getPagename()).isPageComplete();
-                    }
-                } else {
-                    rv &= getPage(LoadKeypairPage.getPagename()).isPageComplete();
-                }
-                break;
-            case EncryptAction:
-            case VerifyAction:
-                page = getPage(EncryptVerifyPage.getPagename());
-                rv &= page.isPageComplete();
-                if (((EncryptVerifyPage) page).wantNewKey()) {
-                    page = getPage(NewPublicKeyPage.getPagename());
-                    rv &= page.isPageComplete();
-                    if (((NewPublicKeyPage) page).wantSave()) {
-                        rv &= getPage(SavePublicKeyPage.getPagename()).isPageComplete();
-                    }
-                } else {
-                    rv &= getPage(LoadPublicKeyPage.getPagename()).isPageComplete();
-                }
-                break;
-            default:
-                rv = false;
-            }
-        }
-        return rv;
-    }
-
-    @Override
-    public final boolean performFinish() {
-    	if (data.getAction() == null) {
-            save(((ChooseKeytypePage) getPage(ChooseKeytypePage.getPagename())).keypair());
-            return true;
-        }
-        try {
-            switch (data.getAction()) {
-            case DecryptAction:
-            case SignAction:
-                if (((DecryptSignPage) getPage(DecryptSignPage.getPagename())).wantNewKey()) {
-                    if (((NewKeypairPage) getPage(NewKeypairPage.getPagename())).wantSave()) {
-                        save(true);
-                    }
-                } else {
-                	try {
-                    final KeyStoreManager ksm = KeyStoreManager.getInstance();
-                    final KeyStoreAlias privAlias = data.getPrivateAlias();
-                    final String password = data.getPassword();
-                    final PrivateKey key = ksm.getPrivateKey(privAlias, password.toCharArray());
-                    final ElGamalPrivateKey privkey = (ElGamalPrivateKey) key;
-                    
-                    data.setModulus(privkey.getModulus().bigInt);
-                    data.setGenerator(privkey.getGenerator().bigInt);
-                    data.setPublicA(privkey.getPublicA().bigInt);
-                    data.setA(privkey.getA().bigInt);
-                	} catch (UnrecoverableEntryException uee) {
-                		((LoadKeypairPage) getPage(LoadKeypairPage.getPagename())).setPasswordHint(true);
-                		return false;
-                	}
-                }
-                break;
-            case EncryptAction:
-            case VerifyAction:
-                if (((EncryptVerifyPage) getPage(EncryptVerifyPage.getPagename())).wantNewKey()) {
-                    if (((NewPublicKeyPage) getPage(NewPublicKeyPage.getPagename())).wantSave()) {
-                        save(false);
-                    }
-                } else {
-                    final KeyStoreManager ksm = KeyStoreManager.getInstance();
-                    final KeyStoreAlias publicAlias = data.getPublicAlias();
-                    final ElGamalPublicKey pubkey = (ElGamalPublicKey) ksm.getCertificate(publicAlias).getPublicKey();
-                    data.setModulus(pubkey.getModulus().bigInt);
-                    data.setGenerator(pubkey.getGenerator().bigInt);
-                    data.setPublicA(pubkey.getPublicA().bigInt);
-                }
-                break;
-            default:
-                save(((ChooseKeytypePage) getPage(ChooseKeytypePage.getPagename())).keypair());
-            }
-            return true;
-        } catch (final Exception e) {
-            LogUtil.logError(e);
-        }
-        return false;
-    }
-
-    /**
-     * Saves the key pair or private key this wizard constructs to the platform keystore.
-     * 
-     * @param keypair <code>true</code> if the key to save is a key pair or <code>false</code> if it's only a public
-     *            key.
-     */
-    private void save(final boolean keypair) {
-        final KeyStoreManager ksm = KeyStoreManager.getInstance();
-        try {
-            final FlexiBigInt modulus = new FlexiBigInt(data.getModulus()), generator = new FlexiBigInt(
-                    data.getGenerator()), publicA = new FlexiBigInt(data.getPublicA());
-            final ElGamalKeyFactory factory = new ElGamalKeyFactory();
-            final ElGamalPublicKey pubkey = (ElGamalPublicKey) factory.generatePublic(new ElGamalPublicKeySpec(modulus,
-                    generator, publicA));
-
-            final KeyStoreAlias publicAlias = new KeyStoreAlias(
-                    data.getContactName(),
-                    KeyType.KEYPAIR_PUBLIC_KEY,
-                    "", data.getModulus().bitLength(), (data //$NON-NLS-1$
-                            .getContactName().concat(data.getModulus().toString())).hashCode() + "", pubkey.getClass().getName()); //$NON-NLS-1$
-            if (keypair) {
-                final ElGamalPrivateKey privkey = (ElGamalPrivateKey) factory
-                        .generatePrivate(new ElGamalPrivateKeySpec(modulus, generator, publicA, new FlexiBigInt(data
-                                .getA())));
-                final KeyStoreAlias privateAlias = new KeyStoreAlias(
-                        data.getContactName(),
-                        KeyType.KEYPAIR_PRIVATE_KEY,
-                        "", data.getModulus().bitLength(), (data //$NON-NLS-1$
-                                .getContactName().concat(data.getModulus().toString())).hashCode() + "", privkey.getClass().getName()); //$NON-NLS-1$
-                ksm.addKeyPair(privkey, CertificateFactory.createJCrypToolCertificate(pubkey), data.getPassword()
-                        .toCharArray(), privateAlias, publicAlias);
-            } else {
-                ksm.addCertificate(CertificateFactory.createJCrypToolCertificate(pubkey), publicAlias);
-            }
-        } catch (final InvalidKeySpecException e) {
-            LogUtil.logError(e);
-        }
-    }
+			if (keyStoreAlias.getKeyStoreEntryType() == KeyType.KEYPAIR_PRIVATE_KEY) {
+				ElGamalPrivateKey privateKey = (ElGamalPrivateKey) ksm.getPrivateKey(keyStoreAlias, password.toCharArray());
+				
+				data.setModulus(privateKey.getModulus().bigInt);
+				data.setGenerator(privateKey.getGenerator().bigInt);
+				data.setPublicA(privateKey.getPublicA().bigInt);
+				data.setA(privateKey.getA().bigInt);
+			}
+			
+		} catch (UnrecoverableKeyException uke) {
+			((LoadKeypairPage) getPage("Load Keypair Page")).setPasswordHint(true);
+			return false;
+		} catch (Exception e) {
+			LogUtil.logError(ElGamalPlugin.PLUGIN_ID, e);
+			return false;
+		} 
+		return true;
+	}
+	
+	/**
+	 * Save a Key in the keystore
+	 * @param contactName
+	 * @param password If it is a public key set the argument null
+	 * @param modulus
+	 * @param generator
+	 * @param publicB
+	 * @param privateB if it is a public key set this argument null
+	 * @return True, if the key was sucessfully saved in the keystore, false if not.
+	 */
+	private boolean saveKey(String contactName, String password, BigInteger modulus, BigInteger generator, BigInteger publicB, BigInteger privateB) {
+		KeyStoreManager ksm = KeyStoreManager.getInstance();
+		try {
+			ElGamalKeyFactory keyFactory = new ElGamalKeyFactory();
+			
+			FlexiBigInt flexiModulus = new FlexiBigInt(modulus);
+			FlexiBigInt flexiGenerator = new FlexiBigInt(generator);
+			FlexiBigInt flexiPublicB = new FlexiBigInt(publicB);
+			
+			ElGamalPublicKey publicKey = (ElGamalPublicKey) keyFactory.generatePublic(new ElGamalPublicKeySpec(flexiModulus, flexiGenerator, flexiPublicB));
+		
+			KeyStoreAlias publicAlias = new KeyStoreAlias(contactName, KeyType.KEYPAIR_PUBLIC_KEY, "", modulus.bitLength(), Integer.toString(contactName.concat(modulus.toString()).hashCode()), publicKey.getClass().getName());
+			
+			//If a private key should be saved
+			if (privateB != null) {
+				
+				FlexiBigInt flexiPrivateB = new FlexiBigInt(privateB);
+				
+				ElGamalPrivateKey privateKey = (ElGamalPrivateKey) keyFactory.generatePrivate(new ElGamalPrivateKeySpec(flexiModulus, flexiGenerator, flexiPublicB, flexiPrivateB));
+				KeyStoreAlias privateAlias = new KeyStoreAlias(contactName, KeyType.KEYPAIR_PRIVATE_KEY, "", modulus.bitLength(), Integer.toString(contactName.concat(modulus.toString()).hashCode()), privateKey.getClass().getName());
+				
+				//Save the keypair
+				ksm.addKeyPair(privateKey, CertificateFactory.createJCrypToolCertificate(publicKey), password.toCharArray(), privateAlias, publicAlias);
+			
+				//save the key in the data object
+				data.setPassword(password);
+				data.setPrivateAlias(privateAlias);
+				data.setContactName(contactName);
+			
+			} else {
+				//only save the public key
+				ksm.addCertificate(CertificateFactory.createJCrypToolCertificate(publicKey), publicAlias);
+				
+				//save the key in the data object
+				data.setPublicAlias(publicAlias);
+				data.setContactName(contactName);
+			}
+		} catch (Exception e) {
+			LogUtil.logError(ElGamalPlugin.PLUGIN_ID, e);
+			return false;
+		}
+		return true;
+	}
+	
+	
+	
+	@Override
+	public boolean canFinish() {
+		
+		int radiobutton = ((NewChooseKeyTypePage) getPage("NewChooseKeyTypePage")).getSelection();
+		
+		boolean canFinish = false;
+		switch (data.getAction()) {
+		case EncryptAction:
+		case VerifyAction:
+			
+			//Create new public Key
+			if (radiobutton == 0) {
+				if ((getPage("New Public Key Page").isPageComplete() && !((NewPublicKeyPage) getPage("New Public Key Page")).wantSave())
+						|| getPage("Save Public Key Page").isPageComplete()) {
+					canFinish = true;
+				} else {
+					canFinish = false;
+				}
+			}
+			
+			//Load public Key
+			if (radiobutton == 1) {
+				if (getPage("Load Public Key Page").isPageComplete()) {
+					canFinish = true;
+				} else {
+					canFinish = false;
+				}
+			}
+			
+		case DecryptAction:
+		case SignAction:
+			
+			//Create new keypair
+			if (radiobutton == 2) {
+				if ((getPage("New Keypair Page").isPageComplete() && !((NewKeypairPage) getPage("New Keypair Page")).wantSave())
+						|| getPage("Save Keypair Page").isPageComplete()) {
+					canFinish = true;
+				} else {
+					canFinish = false;
+				}
+			}
+			
+			//Load keypair
+			if (radiobutton == 3) {
+				if (getPage("Load Keypair Page").isPageComplete()) {
+					canFinish = true;
+				} else {
+					canFinish = false;
+				}
+			}
+			
+			break;
+			
+		default:
+			canFinish = false;
+			break;
+		}
+		return canFinish;
+	}
 }
