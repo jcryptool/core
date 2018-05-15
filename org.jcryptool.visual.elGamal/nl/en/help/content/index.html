@@ -48,6 +48,7 @@
   
   <p><b>Note 2:</b> The generator g is a special number and must be a primitive root (aka primitive element) of G.</p>
   
+  <p> <b> Note 3: </ b> d > 256 must be selected in this plugin. The reason for this is that your input text is saved as Extended ASCII. Extended ASCII consists of 256 characters, each of which must be mapped to an element of the G group.
   
   <h3 id="SchemeKeyGen">b) ElGamal Key Generation</h3>
 
@@ -317,7 +318,7 @@ table, th, td {
  
  <img src="red_greenButtons.PNG" width="700" alt="Example for the red an d green Buttons.">
  
-  <p>The fields <b>at the right</b> of the window are just for showing the data and the according calculations (view part). You can enter the necessary data only within dialog boxes &nbsp;&ndash; which come up after pressing the buttons at the left. These dialogs take care to check the entered data for correctness and whether the data fits for the algorithm.</p>
+  <p>The fields <b>at the right</b> of the window are just for showing the data and the according calculations. You can enter the necessary data only within dialog boxes &nbsp;&ndash; which come up after pressing the buttons at the left. These dialogs take care to check the entered data for correctness and whether the data fits for the algorithm. Pressing the button again loads the input dialog again and you can edit your already entered values.</p>
     
 <img src="calculations.PNG" width="700" alt"View of the calculations and entered values.">
 
