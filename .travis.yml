@@ -15,7 +15,9 @@ install: true
 script:
 - mvn -f org.jcryptool.releng/pom.xml -DskipTests=true -Dbuild=weekly
 before_deploy:
-- $TRAVIS_TAG = "Weekly-Build"
+- git config --local user.name "Dominik Schadow"
+- git config --local user.email "dominikschadow@gmail.com"
+- git tag "Weekly-Build-$(date +'%d.%m.%Y')"
 deploy:
   - provider: releases
     prerelease: true
@@ -38,10 +40,9 @@ deploy:
       - org.jcryptool.product/target/products/jcryptool-1.0.0-win32.win32.x86_64.zip.md5
       - org.jcryptool.product/target/products/jcryptool-1.0.0-win32.win32.x86_64.zip.sha1
     skip_cleanup: true
-    overwrite: true
     on:
       repo: jcryptool/core
-      tags: true
+      branch: develop
       condition: "$TRAVIS_EVENT_TYPE = cron"
   - provider: releases
     prerelease: false
