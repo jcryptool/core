@@ -17,7 +17,8 @@ script:
 before_deploy:
 - git config --local user.name "Dominik Schadow"
 - git config --local user.email "dominikschadow@gmail.com"
-- git tag "Weekly-Build"
+- git tag -d Weekly-Build
+- git tag Weekly-Build
 deploy:
   - provider: releases
     prerelease: true
