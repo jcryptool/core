@@ -10,7 +10,6 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.analysis.friedman.ui;
 
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -25,41 +24,40 @@ import org.jcryptool.analysis.graphtools.derivates.LabelBar;
 
 /**
  * @author SLeischnig
- * Custom Canvas for the Friedman test, utilizes the Graph class
+ *         Custom Canvas for the Friedman test, utilizes the Graph class
  */
-public class CustomFriedmanCanvas extends org.eclipse.swt.widgets.Canvas implements PaintListener, MouseMoveListener{
+public class CustomFriedmanCanvas extends org.eclipse.swt.widgets.Canvas implements PaintListener, MouseMoveListener {
 
 	private Composite mycomp;
 	private FriedmanCalc myAnalysis;
 	private FriedmanGraph graph = new FriedmanGraph(null, this.getSize().x, this.getSize().y);
-	
+
 	//graph dragging variables
-	private boolean draggingEnabled=true;
-	private boolean dragging, clicking=false;
+	private boolean draggingEnabled = true;
+	private boolean dragging, clicking = false;
 	private int dragBeginX, dragBeginY;
-	
-	
+
 	public CustomFriedmanCanvas(final org.eclipse.swt.widgets.Composite parent, final int style) {
-		super(parent, SWT.DOUBLE_BUFFERED);
+		super(parent, SWT.DOUBLE_BUFFERED/* | SWT.H_SCROLL*/);
 
 		mycomp = parent;
 
 		//myAnalysis = analysis;
 		setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
-		int width = 0, height=0;
+		int width = 0, height = 0;
 		width = mycomp.getSize().x;
 		height = mycomp.getSize().y;
 		setSize(width, height);
-		
+
 		addPaintListener(this);
 		this.addPaintListener(this);
 		this.addMouseMoveListener(this);
-		
+
 		this.addMouseTrackListener(new MouseTrackAdapter() {
 			@Override
 			public void mouseExit(final MouseEvent evt) {
 				dragging = false;
-				if(graph.setDraggedPixels(0, false)) {
+				if (graph.setDraggedPixels(0, false)) {
 					redraw(); //reset the drag
 				}
 			}
@@ -67,54 +65,53 @@ public class CustomFriedmanCanvas extends org.eclipse.swt.widgets.Canvas impleme
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(final MouseEvent evt) {
-				if(dragging && draggingEnabled)
-				{
+				if (dragging && draggingEnabled) {
 					int myPixelsDifference = evt.x - dragBeginX;
 					graph.setDraggedPixels(myPixelsDifference, false);
 				}
 				dragging = false;
-				if(clicking)
-				{
-					if(evt.button == 1) //zoom in
+				if (clicking) {
+					if (evt.button == 1) //zoom in
 					{
-						if(graph.zoomin())
-						{
+						if (graph.zoomin()) {
 							redraw();
-							//graph.paintArea();
 						}
 					}
-					if(evt.button == 3) //zoom out
+					if (evt.button == 3) //zoom out
 					{
-						if(graph.zoomout())
-						{
+						if (graph.zoomout()) {
 							redraw();
-							//graph.paintArea();
 						}
 					}
 					clicking = false;
 				}
 			}
-			
+
 			@Override
 			public void mouseDown(final MouseEvent evt) {
 				dragging = true;
-				dragBeginX = evt.x; dragBeginY = evt.y;
+				dragBeginX = evt.x;
+				dragBeginY = evt.y;
 				clicking = true;
 			}
-			
-			@Override
-			public void mouseDoubleClick(final MouseEvent evt) {
-				graph.resetDrag(40);
-				redraw();
-			}
+
+			// I do not think this is a good way of resetting the graph. If you try to zoom quite
+			// fast it's resetting the graph "on accident" and is not explained anywhere.
+			//			@Override
+			//			public void mouseDoubleClick(final MouseEvent evt) {
+			//				graph.resetDrag(40);
+			//				redraw();
+			//			}
 		});
 	}
 
-	/** sets the Friedman analysis data
-	 * @param in Friedman analysis data
+	/**
+	 * sets the Friedman analysis data
+	 * 
+	 * @param in
+	 *            Friedman analysis data
 	 */
-	public final void setAnalysis(final FriedmanCalc in)
-	{
+	public final void setAnalysis(final FriedmanCalc in) {
 		myAnalysis = in;
 		buildBars();
 		graph.resetDrag(40);
@@ -123,42 +120,47 @@ public class CustomFriedmanCanvas extends org.eclipse.swt.widgets.Canvas impleme
 	/**
 	 * Generates the bars for the drawing procedures
 	 */
-	private void buildBars()
-	{
-		
-		double barHeight=0;
-		double maxValue = max(myAnalysis.getAnalysis());
+	private void buildBars() {
 
+		double barHeight = 0;
+		double maxValue = max(myAnalysis.getAnalysis());
 		//generate Bars
 		graph.resetBars();
-		for(int i=0; i<myAnalysis.getAnalysis().length; i++)
-		{
-				barHeight = (myAnalysis.getAnalysis()[i]) / (maxValue);
-				graph.addBar(new LabelBar(barHeight, i, 10, ""+myAnalysis.getAnalysis()[i], ""+(i+1))); //$NON-NLS-1$ //$NON-NLS-2$
+		for (int i = 0; i < myAnalysis.getAnalysis().length; i++) {
+			barHeight = (myAnalysis.getAnalysis()[i]) / (maxValue);
+			graph.addBar(new LabelBar(barHeight, i, 10, "" + myAnalysis.getAnalysis()[i], "" + (i + 1))); //$NON-NLS-1$ //$NON-NLS-2$
 		}
-	graph.optimizeBarHeights(1);
+
+		/*
+		I took out the optimize to align the bars with the y-axis
+		*/
+		//graph.optimizeBarHeights(1);
+
+		graph.setMaxHeight(maxValue);
 
 	}
 
-	/** returns the highest value from the given array
-	 * @param t the array
+	/**
+	 * returns the highest value from the given array
+	 * 
+	 * @param t
+	 *            the array
 	 * @return the highest value
 	 */
 	private static double max(final double[] t) {
-	    double maximum = -9999;   // start with the first value
-	    for (int i=1; i<t.length; i++) {
-	        if (t[i] > maximum) {
-	            maximum = t[i];   // new maximum
-	        }
-	    }
-	    return maximum;
+		double maximum = -9999; // start with the first value
+		for (int i = 1; i < t.length; i++) {
+			if (t[i] > maximum) {
+				maximum = t[i]; // new maximum
+			}
+		}
+		return maximum;
 	}
 
 	@Override
-	public final void paintControl(final PaintEvent e)
-	{
+	public final void paintControl(final PaintEvent e) {
 		GC gc = e.gc;
-		int width = 0, height=0;
+		int width = 0, height = 0;
 		width = this.getSize().x;
 		height = this.getSize().y;
 
@@ -170,16 +172,14 @@ public class CustomFriedmanCanvas extends org.eclipse.swt.widgets.Canvas impleme
 
 	@Override
 	public final void mouseMove(final MouseEvent e) {
-		
-		if(dragging && draggingEnabled)
-		{
+
+		if (dragging && draggingEnabled) {
 			int myPixelsDifference = e.x - dragBeginX;
-			if(graph.setDraggedPixels(myPixelsDifference, true)) {
+			if (graph.setDraggedPixels(myPixelsDifference, true)) {
 				redraw();
 			}
 		}
-		if(e.x!=dragBeginX && e.y != dragBeginY && clicking) 
-		{
+		if (e.x != dragBeginX && e.y != dragBeginY && clicking) {
 			clicking = false;
 		}
 	}

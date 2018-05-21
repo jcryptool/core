@@ -15,5 +15,8 @@ Export-Package: org.jcryptool.analysis.friedman,
 Import-Package: org.jcryptool.analysis.graphtools,
  org.jcryptool.analysis.graphtools.derivates,
  org.jcryptool.core.logging.utils,
- org.jcryptool.core.util.constants
+ org.jcryptool.core.util.constants,
+ org.jcryptool.crypto.ui.textloader.ui,
+ org.jcryptool.crypto.ui.textloader.ui.wizard,
+ org.jcryptool.crypto.ui.textsource
 Automatic-Module-Name: org.jcryptool.analysis.friedman
