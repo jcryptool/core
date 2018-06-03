@@ -40,6 +40,7 @@ public class Messages extends NLS {
     public static String FullAnalysisUI_firsttablabel;
     public static String FullAnalysisUI_germanreftextname1;
     public static String FullAnalysisUI_germanreftextname2;
+    public static String FullAnalysisUI_frenchreftextname1;
     public static String FullAnalysisUI_graphlabel;
     public static String FullAnalysisUI_keylength;
     public static String FullAnalysisUI_keyoffset;
