@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="freqanalysis" title="Analyse de fréquence">
+      <description>L'analyse de fréquence fourni les moyens de travailler avec la distribution des occurences d'apparition des caractéres. Plusieurs options d´affichage du graphique facilitent diverses analyses.</description>
+      <topic href="$nl$/content/index.html" label="Analyse de fréquence" />
+   </context>
+
+</contexts>

@@ -357,6 +357,8 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
                                         Messages.FullAnalysisUI_1)); 
                                 reftexts.add(new Reftext(Messages.FullAnalysisUI_englishreftextname1,
                                         Messages.FullAnalysisUI_2)); 
+                                reftexts.add(new Reftext(Messages.FullAnalysisUI_frenchreftextname1,
+                                        Messages.FullAnalysisUI_3)); 
 
                                 for (int i = 0; i < reftexts.size(); i++)
                                     combo1.add(reftexts.get(i).name);
