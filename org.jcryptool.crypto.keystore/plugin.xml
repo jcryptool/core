@@ -15,8 +15,7 @@
             icon="icons/16x16/kgpg_info.png"
             category="org.jcryptool.crypto"
             class="org.jcryptool.crypto.keystore.ui.views.KeystoreView"
-            id="org.jcryptool.crypto.keystore.KeystoreView"
-            >
+            id="org.jcryptool.crypto.keystore.KeystoreView">
       </view>
    </extension>
    <extension point="org.eclipse.help.contexts">
@@ -66,6 +65,15 @@
             </visibleWhen>
       </command>
     </menuContribution>
+    <menuContribution
+    	allPopups="false"
+    	locationURI="toolbar:org.jcryptool.core.toolbar?after=additions">
+    	<command
+    		commandId="org.jcryptool.crypto.keystore.OpenKeystore"
+    		icon="icons/16x16/kgpg_info.png"
+    		style="push">
+    	</command>
+    </menuContribution>
  </extension>
  <extension
        point="org.eclipse.ui.commands">
@@ -79,12 +87,21 @@
             id="org.jcryptool.crypto.keystore.SelectKey"
             name="%selectkey.command.name">
       </command>
+      <command
+      		description="%openkeystore.command.description"
+      		id="org.jcryptool.crypto.keystore.OpenKeystore"
+      		name="%openkeystore.command.name">
+      </command>
  </extension>
  <extension
        point="org.eclipse.ui.handlers">
     <handler
-          class="org.jcryptool.crypto.keystore.commands.ShowPropertiesHandler"
-          commandId="org.jcryptool.crypto.keystore.ShowProperties">
+    	class="org.jcryptool.crypto.keystore.commands.ShowPropertiesHandler"
+    	commandId="org.jcryptool.crypto.keystore.ShowProperties">
+    </handler>
+    <handler
+    	class="org.jcryptool.crypto.keystore.commands.OpenKeystoreHandler"
+    	commandId="org.jcryptool.crypto.keystore.OpenKeystore">
     </handler>
  </extension>
 </plugin>
