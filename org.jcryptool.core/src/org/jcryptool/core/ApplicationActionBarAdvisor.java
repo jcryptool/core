@@ -17,11 +17,15 @@ import java.util.TreeMap;
 
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.CommandManager;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.ICoolBarManager;
 import org.eclipse.jface.action.IMenuManager;
@@ -44,8 +48,10 @@ import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.services.IServiceLocator;
 import org.jcryptool.core.actions.ShowPluginViewHandler;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.CommandInfo;
 import org.jcryptool.core.operations.OperationsPlugin;
+import org.jcryptool.crypto.keystore.commands.OpenKeystoreHandler;
 
 /**
  * <p>
@@ -393,7 +399,26 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         }
 
         menu.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+        
+        //This is the keystore entry in the algorithm drop down menu
+        IAction openKeystoreAction = new Action() {
+        	@Override
+        	public void run() {
+        		try {
+					new OpenKeystoreHandler().execute(new ExecutionEvent());
+				} catch (ExecutionException e) {
+					LogUtil.logError(e.getMessage());
+				}
+        		super.run();
+        	}
+        	
+        	@Override
+        	public String getText() {
+        		return Messages.ApplicationActionBarAdvisor_Keystore;
+        	}
 
+		};
+		menu.add(openKeystoreAction);
         return menu;
     }
 
