@@ -28,7 +28,8 @@ public class ResultDialOptimalStrategy extends AbstractResultDialog {
         super(shell, selectedStrategy);
     }
 
-    protected Control createDialogArea(Composite parent) {
+    @Override
+	protected Control createDialogArea(Composite parent) {
         setTitle(Messages.ShowOptStrategy_1);
         setMessage(Messages.ShowOptStrategy_2);
         Composite area = (Composite) super.createDialogArea(parent);

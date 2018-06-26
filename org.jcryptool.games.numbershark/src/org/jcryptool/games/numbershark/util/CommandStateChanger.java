@@ -28,7 +28,7 @@ public class CommandStateChanger {
 
     public void chageCommandState(Variable stateVariabe, State state) {
 
-        ISourceProviderService sourceProviderService = (ISourceProviderService) PlatformUI.getWorkbench()
+        ISourceProviderService sourceProviderService = PlatformUI.getWorkbench()
                 .getActiveWorkbenchWindow().getService(ISourceProviderService.class);
 
         CommandState commandStateService = (CommandState) sourceProviderService.getSourceProvider(CommandState

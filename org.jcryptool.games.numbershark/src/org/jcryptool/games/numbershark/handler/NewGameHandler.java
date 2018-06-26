@@ -27,7 +27,8 @@ import org.jcryptool.games.numbershark.views.NumberSharkView;
  * @version 0.9.5
  */
 public class NewGameHandler extends AbstractHandler {
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    @Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
         if (HandlerUtil.getActivePart(event) instanceof NumberSharkView) {
             NewGameDialog newGame = new NewGameDialog(HandlerUtil.getActiveShell(event));
             newGame.create();

@@ -12,13 +12,13 @@ package org.jcryptool.games.numbershark.strategies;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.games.numbershark.NumberSharkPlugin;
@@ -43,12 +43,13 @@ public class OptimalStrategyDialog extends AbstractStrategyDialog {
         Composite area = (Composite) super.createDialogArea(parent);
 
         Composite composite = new Composite(area, SWT.NONE);
-        GridData gd_composite = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        gd_composite.widthHint = 470;
+        GridData gd_composite = new GridData(SWT.FILL, SWT.FILL, true, true);
         composite.setLayoutData(gd_composite);
-        GridLayout gl_composite = new GridLayout(1, false);
+        GridLayout gl_composite = new GridLayout();
         gl_composite.marginTop = 15;
         gl_composite.marginLeft = 15;
+        gl_composite.marginBottom = 15;
+        gl_composite.marginRight = 15;
         composite.setLayout(gl_composite);
 
         Button showButton = new Button(composite, SWT.RADIO);
@@ -57,21 +58,26 @@ public class OptimalStrategyDialog extends AbstractStrategyDialog {
         Button calcButton = new Button(composite, SWT.RADIO);
         calcButton.setText(Messages.OptStratDialog_1);
 
-        final Group compositeSliders = createSliders(area, true, 400, 40);
+        final Group groupSliders = createSliders(composite, true, 400, 40);
 
         calcButton.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 selectedStrategy = 1;
-                compositeSliders.setVisible(true);
+                groupSliders.setVisible(true);
             }
         });
 
         showButton.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 selectedStrategy = 0;
-                compositeSliders.setVisible(false);
+                groupSliders.setVisible(false);
             }
         });
+        
+        Label separartor = new Label(area, SWT.SEPARATOR | SWT.HORIZONTAL);
+        separartor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, NumberSharkPlugin.PLUGIN_ID + ".optStratDialog"); //$NON-NLS-1$
 
@@ -83,9 +89,4 @@ public class OptimalStrategyDialog extends AbstractStrategyDialog {
         super.configureShell(newShell);
         newShell.setText(Messages.OptStratDialog_7);
     }
-
-    protected Point getInitialSize() {
-        return new Point(500, 370);
-    }
-
 }

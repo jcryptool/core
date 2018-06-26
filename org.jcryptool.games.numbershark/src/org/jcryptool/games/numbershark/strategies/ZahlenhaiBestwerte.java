@@ -1073,7 +1073,8 @@ public class ZahlenhaiBestwerte {
             this.vzw = vzw;
         }
 
-        public void run() {
+        @Override
+		public void run() {
             // stop = System.currentTimeMillis();
             // System.out.print(vzw+":"+((stop-start)/1000)+"s:");
             setze(vzw);

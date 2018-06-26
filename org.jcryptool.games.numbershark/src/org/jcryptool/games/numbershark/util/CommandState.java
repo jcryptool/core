@@ -89,7 +89,8 @@ public class CommandState extends AbstractSourceProvider {
 
     private State curState = State.DISABLED;
 
-    public void dispose() {
+    @Override
+	public void dispose() {
 
     }
 
