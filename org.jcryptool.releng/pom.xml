@@ -43,9 +43,9 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 
 	<repositories>
 		<repository>
-			<id>eclipse-oxygen</id>
+			<id>eclipse-photon</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/releases/oxygen</url>
+			<url>http://download.eclipse.org/releases/photon</url>
 		</repository>
 		<repository>
 			<id>eclipse-babel-oxygen</id>
