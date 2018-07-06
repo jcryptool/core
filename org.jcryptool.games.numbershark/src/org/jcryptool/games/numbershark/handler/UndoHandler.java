@@ -32,7 +32,8 @@ import org.jcryptool.games.numbershark.views.NumberSharkView;
  */
 public class UndoHandler extends AbstractHandler {
     // TODO disable undo icon in menu when score table is empty
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    @Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
         if (HandlerUtil.getActivePart(event) instanceof NumberSharkView) {
             NumberSharkView view = ((NumberSharkView) HandlerUtil.getActivePart(event));
 

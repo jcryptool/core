@@ -19,6 +19,8 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -26,8 +28,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowData;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -41,6 +41,7 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
@@ -62,9 +63,9 @@ public class NumberSharkView extends ViewPart {
     private int numberOfFields = 40;
     private Table scoreTable;
     private Number[] numberField;
-    private Label sharkScore;
-    private Label playerScore;
-    private Label requiredScore;
+    private Text sharkScore;
+    private Text playerScore;
+    private Text requiredScore;
     private Composite parent;
     private Composite playingField;
     public static final String ZERO_SCORE = "0"; //$NON-NLS-1$
@@ -79,6 +80,7 @@ public class NumberSharkView extends ViewPart {
     private ScoreTableRow scoreTableRow;
     private Hashtable<Integer, ScoreTableRow> scoreTableRowList = new Hashtable<Integer, ScoreTableRow>();
     private int playerMove;
+    
 
     @Override
     public void createPartControl(final Composite parent) {
@@ -94,37 +96,66 @@ public class NumberSharkView extends ViewPart {
         Composite lowerContent = new Composite(sashForm, SWT.NONE);
         lowerContent.setLayout(new GridLayout(1, false));
         lowerContent.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+        
         Group score = new Group(lowerContent, SWT.NONE);
-
         score.setText(Messages.NumberSetView_9);
-        score.setLayout(new RowLayout());
-        score.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
+        score.setLayout(new GridLayout(6, false));
+        score.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-        RowData fieldData = new RowData(60, 20);
-
-        Label playerScoreLabel = new Label(score, SWT.RIGHT);
+        Label playerScoreLabel = new Label(score, SWT.NONE);
         playerScoreLabel.setText(Messages.NumberSetView_13);
         playerScoreLabel.setFont(FontService.getLargeBoldFont());
 
-        playerScore = new Label(score, SWT.LEFT);
-        playerScore.setLayoutData(fieldData);
+        playerScore = new Text(score, SWT.NONE);
         playerScore.setFont(FontService.getLargeBoldFont());
+        playerScore.setEditable(false);
+        playerScore.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+        playerScore.addModifyListener(new ModifyListener() {
+			
+			@Override
+			public void modifyText(ModifyEvent e) {
+				score.layout();
+				
+			}
+		});
 
-        Label sharkScoreLabel = new Label(score, SWT.RIGHT);
+        Label sharkScoreLabel = new Label(score, SWT.NONE);
         sharkScoreLabel.setText(Messages.NumberSetView_12);
         sharkScoreLabel.setFont(FontService.getLargeBoldFont());
+        GridData gd_sharkScoreLabel = new GridData();
+        gd_sharkScoreLabel.horizontalIndent = 20;
+        sharkScoreLabel.setLayoutData(gd_sharkScoreLabel);
 
-        sharkScore = new Label(score, SWT.LEFT);
-        sharkScore.setLayoutData(fieldData);
+        sharkScore = new Text(score, SWT.NONE);
         sharkScore.setFont(FontService.getLargeBoldFont());
+        sharkScore.setEditable(false);
+        sharkScore.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+        sharkScore.addModifyListener(new ModifyListener() {
+			
+			@Override
+			public void modifyText(ModifyEvent e) {
+				score.layout();
+			}
+		});
 
-        Label requiredScoreLabel = new Label(score, SWT.RIGHT);
+        Label requiredScoreLabel = new Label(score, SWT.NONE);
         requiredScoreLabel.setText(Messages.NumberSetView_10);
         requiredScoreLabel.setFont(FontService.getLargeBoldFont());
+        GridData gd_requiredScoreLabel = new GridData();
+        gd_requiredScoreLabel.horizontalIndent = 20;
+        requiredScoreLabel.setLayoutData(gd_requiredScoreLabel);
 
-        requiredScore = new Label(score, SWT.LEFT);
-        requiredScore.setLayoutData(fieldData);
+        requiredScore = new Text(score, SWT.NONE);
         requiredScore.setFont(FontService.getLargeBoldFont());
+        requiredScore.setEditable(false);
+        requiredScore.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+        requiredScore.addModifyListener(new ModifyListener() {
+			
+			@Override
+			public void modifyText(ModifyEvent e) {
+				score.layout();
+			}
+		});
 
         detailedScore = new Group(lowerContent, SWT.NONE);
         detailedScore.setText(Messages.NumberSetView_14);
@@ -360,7 +391,6 @@ public class NumberSharkView extends ViewPart {
 
         @Override
         public void mouseDoubleClick(MouseEvent e) {
-            // TODO Auto-generated method stub
 
         }
 
@@ -375,7 +405,6 @@ public class NumberSharkView extends ViewPart {
 
         @Override
         public void mouseUp(MouseEvent e) {
-            // TODO Auto-generated method stub
 
         }
     };
@@ -422,7 +451,8 @@ public class NumberSharkView extends ViewPart {
     }
 
     Listener tabsSelect = new Listener() {
-        public void handleEvent(Event arg0) {
+        @Override
+		public void handleEvent(Event arg0) {
             if (arg0.type == SWT.Selection) {
                 initTab(((TabFolder) arg0.widget).getSelectionIndex());
             }
@@ -433,7 +463,8 @@ public class NumberSharkView extends ViewPart {
      * defines what happens if you press a button in the playing field
      */
     SelectionListener buttonsListener = new SelectionAdapter() {
-        public void widgetSelected(SelectionEvent se) {
+        @Override
+		public void widgetSelected(SelectionEvent se) {
 
             Button pressedButton = (Button) se.getSource();
             int numToDeactivate = Integer.parseInt(pressedButton.getText());
@@ -602,15 +633,15 @@ public class NumberSharkView extends ViewPart {
     }
 
     public ScoreTableRow getScoreTableRowByActualPlayerPosition() {
-        return (ScoreTableRow) this.scoreTableRowList.get(this.playerMove);
+        return this.scoreTableRowList.get(this.playerMove);
     }
 
     public ScoreTableRow getNextScoreTableRow() {
-        return (ScoreTableRow) this.scoreTableRowList.get(this.playerMove + 1);
+        return this.scoreTableRowList.get(this.playerMove + 1);
     }
 
     public ScoreTableRow getLastScoreTableRow() {
-        return (ScoreTableRow) this.scoreTableRowList.get(this.playerMove - 1);
+        return this.scoreTableRowList.get(this.playerMove - 1);
     }
 
     /**

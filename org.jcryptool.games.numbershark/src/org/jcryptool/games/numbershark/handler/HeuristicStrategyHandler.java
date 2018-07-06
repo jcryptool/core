@@ -32,7 +32,8 @@ import org.jcryptool.games.numbershark.views.NumberSharkView;
 public class HeuristicStrategyHandler extends AbstractHandler {
     public static final int PLAY = 9998;
 
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    @Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
         if (HandlerUtil.getActivePart(event) instanceof NumberSharkView) {
 
             NumberSharkView view = ((NumberSharkView) HandlerUtil.getActivePart(event));

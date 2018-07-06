@@ -9,9 +9,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.games.numbershark.strategies;
 
-import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -29,7 +27,8 @@ public class ResultDialHeuristicStrategy extends AbstractResultDialog {
         super(shell, selectedStrategy);
     }
 
-    protected Control createDialogArea(Composite parent) {
+    @Override
+	protected Control createDialogArea(Composite parent) {
         setTitle(Messages.ShowHeuStrategy_1);
         String algo = "";
         switch (this.getSelectedStrategy()) {
@@ -48,7 +47,9 @@ public class ResultDialHeuristicStrategy extends AbstractResultDialog {
         }
 
         String msg = NLS.bind(Messages.ShowHeuStrategy_2, new Object[] { algo });
-        setMessage(msg, IMessageProvider.INFORMATION);
+//        setMessage(msg, IMessageProvider.INFORMATION);
+        setMessage(msg);
+        
         Composite area = (Composite) super.createDialogArea(parent);
 
         columns[0].setText(Messages.ShowOptStrategy_3);
@@ -63,10 +64,10 @@ public class ResultDialHeuristicStrategy extends AbstractResultDialog {
         return area;
     }
 
-    @Override
-    protected Point getInitialSize() {
-        return new Point(640, 500);
-    }
+//    @Override
+//    protected Point getInitialSize() {
+//        return new Point(640, 500);
+//    }
 
     @Override
     protected void configureShell(Shell newShell) {
