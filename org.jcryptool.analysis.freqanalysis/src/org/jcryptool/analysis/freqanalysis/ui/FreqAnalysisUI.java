@@ -11,7 +11,6 @@
 package org.jcryptool.analysis.freqanalysis.ui;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -31,66 +30,40 @@ import org.jcryptool.core.util.fonts.FontService;
  *
  */
 
-public class FreqAnalysisUI extends org.eclipse.swt.widgets.Composite {
+public class FreqAnalysisUI extends Composite {
     private Group group1;
     private Button button2;
-    private Button fakebtn;
     private Button button1;
     private Composite headerComposite;
     private Label label;
-    private StyledText stDescription; 
     SimpleAnalysisUI C1;
     FullAnalysisUI C2;
 
-    public FreqAnalysisUI(final org.eclipse.swt.widgets.Composite parent, final int style) {
+    public FreqAnalysisUI(final Composite parent, final int style) {
         super(parent, style);
         initGUI();
-
-        // hideObject(C1, !button1.getSelection());
-        // hideObject(C2, button1.getSelection());
-        // this.layout();
     }
 
     private void initGUI() {
         try {
-            GridLayout thisLayout = new GridLayout();
-            thisLayout.makeColumnsEqualWidth = true;
-            this.setLayout(thisLayout);
-            this.setSize(525, 237);
+            setLayout(new GridLayout());
             headerComposite = new Composite(this, SWT.NONE);
     		headerComposite.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
     		headerComposite.setLayout(new GridLayout(1, false));
-            GridData headerLData = new GridData();
-            headerLData.grabExcessHorizontalSpace = true;
-            headerLData.horizontalAlignment = GridData.FILL;
-            headerComposite.setLayoutData(headerLData);
+            headerComposite.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
 
     		label = new Label(headerComposite, SWT.NONE);
     		label.setFont(FontService.getHeaderFont());
-    		label.setText("Frequency Analysis");
+    		label.setText(Messages.FreqAnalysisUI_frequency_analysis);
     		label.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-//    		stDescription = new StyledText(headerComposite, SWT.READ_ONLY | SWT.MULTI
-//    				| SWT.WRAP);
-//    		stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false,
-//    				false));
-//    		stDescription
-//    				.setText("");
+    		
             group1 = new Group(this, SWT.NONE);
-            GridLayout group1Layout = new GridLayout();
-            group1Layout.makeColumnsEqualWidth = true;
-            group1Layout.numColumns = 2;
-            group1.setLayout(group1Layout);
-            GridData group1LData = new GridData();
-            group1LData.grabExcessHorizontalSpace = true;
-            group1LData.horizontalAlignment = GridData.FILL;
-            // group1LData.heightHint = 9;
-            group1.setLayoutData(group1LData);
+            group1.setLayout(new GridLayout(2, true));
+            group1.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
             group1.setText(Messages.FreqAnalysisUI_usagedescisionlabel);
-            button1 = new Button(group1, SWT.RADIO | SWT.LEFT);
-            GridData button1LData = new GridData();
-            button1LData.grabExcessHorizontalSpace = true;
-            button1LData.horizontalAlignment = GridData.FILL;
-            button1.setLayoutData(button1LData);
+            
+            button1 = new Button(group1, SWT.RADIO);
+            button1.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
             button1.setText(Messages.FreqAnalysisUI_descision1label);
             button1.addSelectionListener(new SelectionAdapter() {
                 @Override
@@ -99,11 +72,9 @@ public class FreqAnalysisUI extends org.eclipse.swt.widgets.Composite {
                 }
             });
             button1.setSelection(false);
+            
             button2 = new Button(group1, SWT.RADIO | SWT.LEFT);
-            GridData button2LData = new GridData();
-            button2LData.grabExcessHorizontalSpace = true;
-            button2LData.horizontalAlignment = GridData.FILL;
-            button2.setLayoutData(button2LData);
+            button2.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
             button2.setText(Messages.FreqAnalysisUI_descision2label);
             button2.addSelectionListener(new SelectionAdapter() {
                 @Override
@@ -112,42 +83,25 @@ public class FreqAnalysisUI extends org.eclipse.swt.widgets.Composite {
                 }
             });
             button2.setSelection(false);
-            fakebtn = new Button(group1, SWT.RADIO | SWT.LEFT);
-            fakebtn.setText("button3"); //$NON-NLS-1$
-            GridData fakebtnLData = new GridData();
-            fakebtnLData.exclude = true;
-            fakebtn.setLayoutData(fakebtnLData);
-            fakebtn.setSelection(true);
+
             C1 = new SimpleAnalysisUI(this, SWT.NONE);
-            GridLayout C1Layout = new GridLayout();
-            C1Layout.makeColumnsEqualWidth = true;
-            GridData C1LData = new GridData();
-            C1LData.grabExcessHorizontalSpace = true;
-            C1LData.grabExcessVerticalSpace = true;
-            C1LData.horizontalAlignment = GridData.FILL;
-            C1LData.verticalAlignment = GridData.FILL;
+            GridData C1LData = new GridData(SWT.FILL, SWT.FILL, true, true);
             C1LData.exclude = true;
             C1.setLayoutData(C1LData);
-            C1.setLayout(C1Layout);
+            C1.setLayout(new GridLayout());
             C1.setVisible(false);
             
             C2 = new FullAnalysisUI(this, SWT.NONE);
-            GridLayout C2Layout = new GridLayout();
-            C2Layout.makeColumnsEqualWidth = true;
-            GridData C2LData = new GridData();
-            C2LData.grabExcessHorizontalSpace = true;
-            C2LData.grabExcessVerticalSpace = true;
-            C2LData.verticalAlignment = GridData.FILL;
-            C2LData.horizontalAlignment = GridData.FILL;
+            GridData C2LData = new GridData(SWT.FILL, SWT.FILL, true, true);
             C2LData.exclude = true;
             C2.setLayoutData(C2LData);
-            C2.setLayout(C2Layout);
+            C2.setLayout(new GridLayout());
             C2.setVisible(false);
-            this.layout();
+            layout();
         } catch (Exception e) {
             LogUtil.logError(FreqAnalysisPlugin.PLUGIN_ID, e);
         }
-    }
+}
 
     /**
      * Excludes a control from Layout calculation
@@ -194,14 +148,12 @@ public class FreqAnalysisUI extends org.eclipse.swt.widgets.Composite {
         if (simpleView) {
             button1.setSelection(true);
             button2.setSelection(false);
-            fakebtn.setSelection(false);
             switchComposites(null);
         } else {
             button1.setSelection(false);
             button2.setSelection(true);
-            fakebtn.setSelection(false);
             switchComposites(null);
-        }
+}
 
         if (simpleView) {
             C1.execute(keyLength, keyPos, resetShift, executeCalc);
