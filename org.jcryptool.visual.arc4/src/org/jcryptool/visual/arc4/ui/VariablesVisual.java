@@ -43,16 +43,15 @@ public class VariablesVisual extends Composite {
         GridLayout tlayout = new GridLayout(1, true);
         tlayout.marginHeight = 0;
         tlayout.marginWidth = 0;
-        this.setLayout(tlayout);
+        setLayout(tlayout);
 
         // one column for the labeling, one column for the values in decimal format and one column
-        // for hexadecimal
-        // format
-        this.group = new Group(this, SWT.SHADOW_IN);
-        this.group.setLayout(new GridLayout(ARC4Con.VAR_COL, true));
-        this.group.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
-        this.group.setText(Messages.VariablesVisualGroup);
-        this.group.setToolTipText(Messages.VariablesVisualTool);
+        // for hexadecimal format
+        group = new Group(this, SWT.NONE);
+        group.setLayout(new GridLayout(ARC4Con.VAR_COL, true));
+        group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        group.setText(Messages.VariablesVisualGroup);
+        group.setToolTipText(Messages.VariablesVisualTool);
 
         // create the labels and assign them their text
         createContent();
@@ -63,18 +62,18 @@ public class VariablesVisual extends Composite {
      */
     private void createContent() {
         // a empty label to fill the first field of the grid-layout
-        new Label(this.group, SWT.NONE);
+        new Label(group, SWT.NONE);
 
-        dec = new Label(this.group, SWT.CENTER);
-        dec.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1));
+        dec = new Label(group, SWT.CENTER);
+        dec.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
         dec.setText(Messages.VariablesVisualDec);
 
-        hex = new Label(this.group, SWT.CENTER);
-        hex.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1));
+        hex = new Label(group, SWT.CENTER);
+        hex.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
         hex.setText(Messages.VariablesVisualHex);
 
-        i = new Label(this.group, SWT.CENTER);
-        i.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1));
+        i = new Label(group, SWT.CENTER);
+        i.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
         i.setText(Messages.VariablesVisualLabelI);
 
         // It is important to set a minimum width for idec, ihex, jdec, jhex and stepvalue; if you
@@ -85,56 +84,46 @@ public class VariablesVisual extends Composite {
         // of the algorithm when in fact there is none and you do not see an incorrect result
         // displayed
         // in those labels, but rather only one character of the correct result
+        
+        //You don't need to set a fix size !!! Set the horizontalAlignment in the 
+        //GridData constructor to SWT.FILL. This will allocate the whole cell for the content
 
         // decimal value of i
-        idec = new Label(this.group, SWT.CENTER);
-        GridData idecData = new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1);
-        idecData.minimumWidth = ARC4Con.INST_MIN_IN_WIDTH;
-        idec.setLayoutData(idecData);
+        idec = new Label(group, SWT.CENTER);
+        idec.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
         idec.setText("0");
 
         // hexadecimal value of i
-        ihex = new Label(this.group, SWT.CENTER);
-        GridData ihexData = new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1);
-        ihexData.minimumWidth = ARC4Con.INST_MIN_IN_WIDTH;
-        ihex.setLayoutData(ihexData);
+        ihex = new Label(group, SWT.CENTER);
+        ihex.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
         ihex.setText("0");
 
-        j = new Label(this.group, SWT.CENTER);
-        j.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1));
+        j = new Label(group, SWT.CENTER);
+        j.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
         j.setText(Messages.VariablesVisualLabelJ);
 
         // decimal value of j
-        jdec = new Label(this.group, SWT.CENTER);
-        GridData jdecData = new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1);
-        jdecData.minimumWidth = ARC4Con.INST_MIN_IN_WIDTH;
-        jdec.setLayoutData(jdecData);
+        jdec = new Label(group, SWT.CENTER);
+        jdec.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
         jdec.setText("0");
 
         // hexadecimal value of j
-        jhex = new Label(this.group, SWT.CENTER);
-        GridData jhexData = new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1);
-        jhexData.minimumWidth = ARC4Con.INST_MIN_IN_WIDTH;
-        jhex.setLayoutData(jhexData);
+        jhex = new Label(group, SWT.CENTER);
+        jhex.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
         jhex.setText("0");
 
-        step = new Label(this.group, SWT.CENTER);
-        step.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1));
+        step = new Label(group, SWT.CENTER);
+        step.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
         step.setText(Messages.VariablesVisualLabelStep);
 
         // decimal value of step
         stepvaluedec = new Label(this.group, SWT.CENTER);
-        GridData stepvaluedecData = new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1);
-        stepvaluedecData.minimumWidth = ARC4Con.INST_MIN_IN_WIDTH;
-        stepvaluedec.setLayoutData(stepvaluedecData);
+        stepvaluedec.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
         stepvaluedec.setText("0");
 
         // hexadecimal value of step
         stepvaluehex = new Label(this.group, SWT.CENTER);
-        GridData stepvaluehexData = new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1);
-        stepvaluehexData = new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1);
-        stepvaluehexData.minimumWidth = ARC4Con.INST_MIN_IN_WIDTH;
-        stepvaluehex.setLayoutData(stepvaluehexData);
+        stepvaluehex.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
         stepvaluehex.setText("0");
     }
 

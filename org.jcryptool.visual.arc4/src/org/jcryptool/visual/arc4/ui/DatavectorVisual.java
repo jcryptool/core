@@ -85,24 +85,26 @@ public class DatavectorVisual extends Composite {
         // them out correctly this code is to
         // correct the fife pixels of miss-alignment that would occur with random and enc otherwise
         GridLayout tlayout = new GridLayout(ARC4Con.H_SPAN_MAIN, true);
-        this.setLayout(tlayout);
+        tlayout.marginWidth = 0;
+        tlayout.marginHeight = 0;
+        setLayout(tlayout);
 
         // set the type specific texts
         setTextForType(type);
 
         // the border around the data is initialized
-        this.group = new Group(this, SWT.SHADOW_IN);
-        this.group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, ARC4Con.H_SPAN_LEFT, 1));
+        group = new Group(this, SWT.NONE);
+        group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, ARC4Con.H_SPAN_LEFT, 2));
         // 17 and not 16 to keep proper alignment in ARC4Con
-        this.group.setLayout(new GridLayout(ARC4Con.DATAVECTOR_VISUAL_LENGTH + 1, true));
+        group.setLayout(new GridLayout(ARC4Con.DATAVECTOR_VISUAL_LENGTH + 1, true));
         // set the label of the box and its tool tip
-        this.group.setText(this.groupText);
-        this.group.setToolTipText(this.toolTip);
+        group.setText(groupText);
+        group.setToolTipText(toolTip);
 
         // a empty label to fill the first column and preserve alignment, this works because all
         // children of the
         // group are the same with
-        new Label(this.group, SWT.NONE);
+        new Label(group, SWT.NONE);
 
         // create the labels that show the actual content
         createDataLabels();
@@ -117,9 +119,9 @@ public class DatavectorVisual extends Composite {
 
         // to initialize key and plain with pseudorandom values
         if (type == ARC4Con.KEY) {
-            this.setData(alg.getKey());
+            setData(alg.getKey());
         } else if (type == ARC4Con.PLAIN) {
-            this.setData(alg.getPlain());
+            setData(alg.getPlain());
         }
     }
 
@@ -135,21 +137,21 @@ public class DatavectorVisual extends Composite {
         // As only KEY and PLAIN have got a button, only they get a text and tool tip for their
         // button
         if (type == ARC4Con.KEY) {
-            this.groupText = Messages.DatavectorVisualKEYGroup;
-            this.toolTip = Messages.DatavectorVisualKEYTool;
-            this.buttonText = Messages.DatavectorVisualKEYButton;
-            this.buttonTool = Messages.DatavectorVisualKEYButtonTool;
+            groupText = Messages.DatavectorVisualKEYGroup;
+            toolTip = Messages.DatavectorVisualKEYTool;
+            buttonText = Messages.DatavectorVisualKEYButton;
+            buttonTool = Messages.DatavectorVisualKEYButtonTool;
         } else if (type == ARC4Con.ENC) {
-            this.groupText = Messages.DatavectorVisualENCGroup;
-            this.toolTip = Messages.DatavectorVisualENCTool;
+            groupText = Messages.DatavectorVisualENCGroup;
+            toolTip = Messages.DatavectorVisualENCTool;
         } else if (type == ARC4Con.PLAIN) {
-            this.groupText = Messages.DatavectorVisualPLAINGroup;
-            this.buttonText = Messages.DatavectorVisualPLAINButton;
-            this.toolTip = Messages.DatavectorVisualPLAINTool;
-            this.buttonTool = Messages.DatavectorVisualPLAINButtonTool;
+            groupText = Messages.DatavectorVisualPLAINGroup;
+            buttonText = Messages.DatavectorVisualPLAINButton;
+            toolTip = Messages.DatavectorVisualPLAINTool;
+            buttonTool = Messages.DatavectorVisualPLAINButtonTool;
         } else if (type == ARC4Con.RAND) {
-            this.groupText = Messages.DatavectorVisualRANDGroup;
-            this.toolTip = Messages.DatavectorVisualRANDTool;
+            groupText = Messages.DatavectorVisualRANDGroup;
+            toolTip = Messages.DatavectorVisualRANDTool;
         }
     }
 
@@ -157,11 +159,11 @@ public class DatavectorVisual extends Composite {
      * Create the labels that show the actual data and style them
      */
     private void createDataLabels() {
-        this.data = new Label[ARC4Con.DATAVECTOR_VISUAL_LENGTH];
-        for (int i = 0; i < this.data.length; i++) {
+        data = new Label[ARC4Con.DATAVECTOR_VISUAL_LENGTH];
+        for (int i = 0; i < data.length; i++) {
             // center text on the labels
-            this.data[i] = new Label(this.group, SWT.CENTER);
-            this.data[i].setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
+            data[i] = new Label(group, SWT.CENTER);
+            data[i].setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
         }
     }
 
@@ -172,10 +174,7 @@ public class DatavectorVisual extends Composite {
      */
     private void createWizardButton(int type) {
         wizbutton = new Button(this, SWT.PUSH);
-        GridData dataBut = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-        dataBut.minimumHeight = ARC4Con.DATAVECTOR_VISUAL_L_B_HEIGHT;
-        dataBut.minimumWidth = ARC4Con.DATAVECTOR_VISUAL_L_B_WIDTH;
-        wizbutton.setLayoutData(dataBut);
+        wizbutton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
         // Actually for the sake of simplicity and proper alignment a button is created in any case,
         // even if the
         // type of datavector visual does not permit one, but in those cases it is just made
@@ -184,8 +183,8 @@ public class DatavectorVisual extends Composite {
             wizbutton.setVisible(false);
             return;
         }
-        wizbutton.setToolTipText(this.buttonTool);
-        wizbutton.setText(this.buttonText);
+        wizbutton.setToolTipText(buttonTool);
+        wizbutton.setText(buttonText);
         // add the action to the button; the two methods have been separated to keep them shorter
         // and the code
         // more readable even though one could argue that they belong together
@@ -219,11 +218,8 @@ public class DatavectorVisual extends Composite {
      * Create the button that allows you to copy the data from the datavector to the system clipboard
      */
     private void createClipButton(int type) {
-        clipbutton = new Button(this, SWT.PUSH | SWT.CENTER);
-        GridData dataClip = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-        dataClip.minimumHeight = ARC4Con.DATAVECTOR_VISUAL_L_B_HEIGHT;
-        dataClip.minimumWidth = ARC4Con.DATAVECTOR_VISUAL_L_B_WIDTH;
-        clipbutton.setLayoutData(dataClip);
+    	clipbutton = new Button(this, SWT.PUSH);
+    	clipbutton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
         clipbutton.setText(Messages.CopyToClipboard);
         clipbutton.setToolTipText(Messages.CopyToClipboardTool);
         addActionToClipButton(type);
@@ -236,7 +232,8 @@ public class DatavectorVisual extends Composite {
      */
     private void addActionToClipButton(final int type) {
         this.clipbutton.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 Clipboard clipboard = new Clipboard(DatavectorVisual.this.getDisplay());
                 int [] dataint = new int[ARC4Con.DATAVECTOR_VISUAL_LENGTH];
                 String datastring = "";
@@ -303,7 +300,7 @@ public class DatavectorVisual extends Composite {
      * @param par true to activate the button, false to deactivate it
      */
     public void switchButton(boolean par) {
-        this.wizbutton.setEnabled(par);
+        wizbutton.setEnabled(par);
     }
 
 }
