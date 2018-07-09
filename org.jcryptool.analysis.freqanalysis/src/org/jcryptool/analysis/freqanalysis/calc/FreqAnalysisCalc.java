@@ -19,7 +19,7 @@ import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 
 /**
  * @author SLeischnig
- * Calss for Frequency Analysis
+ * Class for Frequency Analysis
  */
 public class FreqAnalysisCalc {
 	private String text = ""; //$NON-NLS-1$
