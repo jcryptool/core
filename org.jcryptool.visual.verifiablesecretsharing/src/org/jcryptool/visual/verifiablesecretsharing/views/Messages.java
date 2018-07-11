@@ -97,7 +97,7 @@ public class Messages extends NLS {
 	public static String VerifiableSecretSharingComposite_description_coefficients_right;
 
 	public static String VerifiableSecretSharingComposite_description_commitments_left;
-	public static String VerifiableSecretSharingComposite_description_commitments_right;
+//	public static String VerifiableSecretSharingComposite_description_commitments_right;
 
 	public static String VerifiableSecretSharingComposite_description_shares_left;
 	public static String VerifiableSecretSharingComposite_description_shares_right;
