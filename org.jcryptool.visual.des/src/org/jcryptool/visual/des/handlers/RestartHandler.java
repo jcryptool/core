@@ -22,7 +22,8 @@ import org.jcryptool.visual.des.view.DesView;
  * @version 0.9.5
  */
 public class RestartHandler extends AbstractHandler {
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    @Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
         if (HandlerUtil.getActivePart(event) instanceof DesView) {
         	DesView view = ((DesView) HandlerUtil.getActivePart(event));
                 
