@@ -258,15 +258,23 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 			@Override
 			public void mouseDown(MouseEvent evt) {
 
+				//Enable deciphering 
 				if (!btnReferenceTools.getSelection()) {
-					enableReferenceTools(true);
-					if (myLimitedAnalysis == null) {
+					if (checkEditor()) {
+						enableReferenceTools(true);
+						if (myLimitedAnalysis == null) {
 						recalcGraph();
-					}
-					if (myLimitedAnalysis != null) {
-						myGraph.setAnalysis(myLimitedAnalysis);
+						}
+						if (myLimitedAnalysis != null) {
+							myGraph.setAnalysis(myLimitedAnalysis);
+						}
+						if (myAnalysis != null || myLimitedAnalysis != null) {
+							myGraph.setOverlayActivated(!btnReferenceTools.getSelection());
+							myGraph.redraw();
+						}
 					}
 				} else {
+					//disable deciphering
 					enableReferenceTools(false);
 					if (myAnalysis == null) {
 						recalcGraph();
@@ -274,11 +282,15 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 					if (myAnalysis != null) {
 						myGraph.setAnalysis(myAnalysis);
 					}
+					if (myAnalysis != null || myLimitedAnalysis != null) {
+						myGraph.setOverlayActivated(!btnReferenceTools.getSelection());
+						myGraph.redraw();
+					}
 				}
-				if (myAnalysis != null || myLimitedAnalysis != null) {
-					myGraph.setOverlayActivated(!btnReferenceTools.getSelection());
-					myGraph.redraw();
-				}
+//				if (myAnalysis != null || myLimitedAnalysis != null) {
+//					myGraph.setOverlayActivated(!btnReferenceTools.getSelection());
+//					myGraph.redraw();
+//				}
 			}
 		});
 
@@ -346,7 +358,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 			selectAppropriateAlphabet();
 			appropriateAlphabetToBeDetected = false;
 		}
-		// btnReferenceTools.setSelection(b);
+//		 btnReferenceTools.setSelection(b);
 	}
 
 	/**

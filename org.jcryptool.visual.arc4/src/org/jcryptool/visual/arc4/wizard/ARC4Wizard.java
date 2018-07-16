@@ -71,7 +71,8 @@ public class ARC4Wizard extends Wizard {
     /**
      * Create the single page and add it to the wizard
      */
-    public void addPages() {
+    @Override
+	public void addPages() {
     	this.setWindowTitle(pagename);
         page = new ARC4WizardPage(heading, description);
         addPage(page);
