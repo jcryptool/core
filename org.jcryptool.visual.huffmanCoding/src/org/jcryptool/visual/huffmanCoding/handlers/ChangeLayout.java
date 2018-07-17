@@ -13,12 +13,16 @@ package org.jcryptool.visual.huffmanCoding.handlers;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.handlers.HandlerUtil;
+import org.jcryptool.visual.huffmanCoding.views.HuffmanCodingView;
+import org.jcryptool.visual.huffmanCoding.views.HuffmanCodingViewTree;
 
 /**
- * NOTE: THIS CLASS IS CURRENTLY UNUSED. IT MAY BE USED FOR GRAPH EXTENSION
- * FEATURES LIKE ZOOMING/CHANGING LAYOUT SO I LET THIS ONE IN
- * (michael@altenhuber.net)
- * 
+ * This handler changes the layout of the ZEST graph on the second tab in the huffman plugin
+ * The input comes from the upper right corner item change layout (3 dots) which issues the
+ * command org.jcryptool.visual.huffmanCoding.command.ChangeLayout.
+ *
  * @author Miray Inel
  *
  */
@@ -26,10 +30,11 @@ public class ChangeLayout extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		// IViewPart findView =
-		// HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().findView(HuffmanCodingView.ID);
-		// HuffmanCodingView view = (HuffmanCodingView) findView;
-		// view.setLayoutManager();
+		IViewPart findView = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().findView(HuffmanCodingView.ID);
+		HuffmanCodingViewTree view = ((HuffmanCodingView) findView).getViewTree();
+
+		if (view != null)
+			view.setLayoutManager();
 		return null;
 	}
 

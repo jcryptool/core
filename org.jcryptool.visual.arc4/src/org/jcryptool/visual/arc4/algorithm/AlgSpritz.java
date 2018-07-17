@@ -32,7 +32,8 @@ public class AlgSpritz extends ARC4Algorithm {
     /**
      * Reset the step to zero; reset all internal variables accordingly
      */
-    public void reset() {
+    @Override
+	public void reset() {
         i = 0;
         j = 0;
         // default value for w is three; this is not part of the algorithm and has just been chosen arbitrarily by me
@@ -50,7 +51,8 @@ public class AlgSpritz extends ARC4Algorithm {
     /**
      * Generate pseudorandom numbers according to Spritz specification
      */
-    protected void createRandomAndEncrypt(int n) {
+    @Override
+	protected void createRandomAndEncrypt(int n) {
         int temp;
         i = (i + w) % ARC4Con.TWO_FIFE_SIX;
         j = (k + this.vector[(j + this.vector[i]) % ARC4Con.TWO_FIFE_SIX]) % ARC4Con.TWO_FIFE_SIX;

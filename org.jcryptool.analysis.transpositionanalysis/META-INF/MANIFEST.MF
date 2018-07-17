@@ -20,3 +20,4 @@ Bundle-Vendor: %Bundle-Vendor
 Export-Package: org.jcryptool.analysis.transpositionanalysis,
  org.jcryptool.analysis.transpositionanalysis.ui,
  org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs
+Automatic-Module-Name: org.jcryptool.analysis.transpositionanalysis

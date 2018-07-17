@@ -27,3 +27,4 @@ Export-Package: com.thoughtworks.xstream,
  com.thoughtworks.xstream.io.xml.xppdom,
  com.thoughtworks.xstream.mapper,
  com.thoughtworks.xstream.persistence
+Automatic-Module-Name: com.thoughtworks.xstream

@@ -26,3 +26,4 @@ Import-Package: org.jcryptool.core.logging.dialogs,
 Bundle-Vendor: %Bundle-Vendor
 Bundle-ClassPath: .,
  swing2swt.jar
+Automatic-Module-Name: org.jcryptool.visual.he

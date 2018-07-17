@@ -21,3 +21,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.directories,
  org.jcryptool.crypto.classic.model.ui.wizard
+Automatic-Module-Name: org.jcryptool.crypto.classic.xor

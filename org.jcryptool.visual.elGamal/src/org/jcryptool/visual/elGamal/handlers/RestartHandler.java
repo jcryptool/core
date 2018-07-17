@@ -23,6 +23,7 @@ import org.jcryptool.visual.elGamal.ui.ElGamalView;
  * @version 0.9.5
  */
 public class RestartHandler extends AbstractHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		if (HandlerUtil.getActivePart(event) instanceof ElGamalView) {
 			ElGamalView view = ((ElGamalView) HandlerUtil.getActivePart(event));

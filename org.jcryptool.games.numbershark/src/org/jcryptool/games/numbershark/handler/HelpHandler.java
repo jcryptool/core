@@ -23,7 +23,8 @@ import org.jcryptool.games.numbershark.NumberSharkPlugin;
  * @version 0.9.5
  */
 public class HelpHandler extends AbstractHandler {
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    @Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
         PlatformUI.getWorkbench().getHelpSystem().displayHelp(NumberSharkPlugin.PLUGIN_ID + ".view"); //$NON-NLS-1$
         return null;
     }

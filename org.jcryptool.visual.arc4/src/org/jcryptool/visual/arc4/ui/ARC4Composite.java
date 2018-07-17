@@ -96,22 +96,21 @@ public class ARC4Composite extends Composite {
         // The layout is intended as three to one, but as it is rather difficult to let the xor
         // image hover in the
         // 1.5th column (in the middle of the byte vectors) the layout is six to two
-        this.setLayout(new GridLayout(ARC4Con.H_SPAN_MAIN, true));
+        setLayout(new GridLayout(ARC4Con.H_SPAN_MAIN, true));
 
         // initialize the description of the plug-in
         initDsc();
 
         // the s-box of the algorithm
         vector = new VectorVisual(this, SWT.NONE);
-        vector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, ARC4Con.H_SPAN_LEFT, ARC4Con.S_BOX_HEIGTH));
-
+        vector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, ARC4Con.H_SPAN_LEFT, ARC4Con.S_BOX_HEIGTH));
         // initialize the variables section
         var = new VariablesVisual(this, SWT.NONE);
-        var.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, ARC4Con.H_SPAN_RIGHT, 1));
+        var.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, ARC4Con.H_SPAN_RIGHT, 1));
 
         // initialize the control section
         inst = new InstructionVisual(this, SWT.NONE);
-        inst.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, ARC4Con.H_SPAN_RIGHT, 1));
+        inst.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, ARC4Con.H_SPAN_RIGHT, 1));
 
         // initialize the section that allows you to choose a variant of the ARC4 algorithm
         initAlgoSec();    
@@ -121,15 +120,15 @@ public class ARC4Composite extends Composite {
 
         // initialize the key section
         key = new DatavectorVisual(this, SWT.BORDER, ARC4Con.KEY, alg);
-        key.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, ARC4Con.H_SPAN_MAIN, 1));
+        key.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, ARC4Con.H_SPAN_MAIN, 1));
         
         // a seperator to make the relation between plaintext, pseudorandom numbers and ciphertext clear
         Label sep1 = new Label(this, SWT.NONE);
-        sep1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, ARC4Con.H_SPAN_MAIN, 1));
+        sep1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, ARC4Con.H_SPAN_MAIN, 1));
         
         // initialize the plaintext section
         plain = new DatavectorVisual(this, SWT.BORDER, ARC4Con.PLAIN, alg);
-        plain.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, ARC4Con.H_SPAN_MAIN, 1));
+        plain.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, ARC4Con.H_SPAN_MAIN, 1));
 
         // initialize the xor
         // the xor just displays a image
@@ -141,7 +140,7 @@ public class ARC4Composite extends Composite {
 
         // initialize the vector with the pseudorandom numbers
         random = new DatavectorVisual(this, SWT.BORDER, ARC4Con.RAND, alg);
-        random.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, ARC4Con.H_SPAN_MAIN, 1));
+        random.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, ARC4Con.H_SPAN_MAIN, 1));
         
         // initialize the image of the arrow
         arrow = new Composite(this, SWT.NONE);
@@ -153,7 +152,7 @@ public class ARC4Composite extends Composite {
 
         // initialize the vector with the ciphertext
         enc = new DatavectorVisual(this, SWT.BORDER, ARC4Con.ENC, alg);
-        enc.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, ARC4Con.H_SPAN_MAIN, 1));
+        enc.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, ARC4Con.H_SPAN_MAIN, 1));
 
         // fetch the data from the algorithm object and fill it into the GUI
         syncronizeInternWithExtern();
@@ -164,8 +163,13 @@ public class ARC4Composite extends Composite {
      */
     private void initDsc() {
         // to make the text wrap lines automatically
-        descr = new Composite(this, SWT.WRAP | SWT.BORDER | SWT.LEFT);
-        descr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, ARC4Con.H_SPAN_MAIN, ARC4Con.DESC_HEIGHT));
+    	descr = new Composite(this, SWT.NONE);
+    	GridData gd_descr = new GridData(SWT.FILL, SWT.FILL, true, false, ARC4Con.H_SPAN_MAIN, ARC4Con.DESC_HEIGHT);
+    	//need to be set to cause the description text to wrap. Without it the text would be in one line.
+    	//FIXME the width hint is the reason why there is empty space at the bottom 
+    	//of the size. Would be nice, if this could be solved.
+    	gd_descr.widthHint = 1000;
+        descr.setLayoutData(gd_descr);
         descr.setLayout(new GridLayout(1, true));
         descr.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
 
@@ -180,7 +184,6 @@ public class ARC4Composite extends Composite {
         // while not allowing modification of either section
         StyledText descText = new StyledText(descr, SWT.WRAP);
         descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        descText.setCaret(null);
         descText.setText(Messages.PluginDescription);
         descText.setEditable(false);
     }
@@ -191,7 +194,7 @@ public class ARC4Composite extends Composite {
         algo.setText(Messages.AlgSelectionBoxText);
         algo.setToolTipText(Messages.AlgSelectionBoxTool);
         algo.setLayout(new GridLayout(2, true));
-        algo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+        algo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, ARC4Con.H_SPAN_RIGHT, 1));
         
         arc4 = new Button(algo, SWT.RADIO);
         arc4.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1));
@@ -211,8 +214,8 @@ public class ARC4Composite extends Composite {
             } 
         });
         
-        Label sep1 = new Label(algo, SWT.NONE);
-        sep1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        //Only a spacer
+        new Label(algo, SWT.NONE);
         
         spritz = new Button(algo, SWT.RADIO);
         spritz.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1));
@@ -273,15 +276,15 @@ public class ARC4Composite extends Composite {
      */
     private void initMisc() {
         // labeled border of the section
-        miscGroup = new Group(this, SWT.SHADOW_IN);
-        miscGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, ARC4Con.H_SPAN_RIGHT, 1));
+    	miscGroup = new Group(this, SWT.NONE);
+        miscGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, ARC4Con.H_SPAN_RIGHT, 1));
         miscGroup.setText(Messages.CompositeSettingsText);
         miscGroup.setToolTipText(Messages.CompositeSettingsTool);
         miscGroup.setLayout(new GridLayout(2, true));
 
         // the button for enabling highlighting
-        radioyes = new Button(miscGroup, SWT.RADIO | SWT.CENTER);
-        radioyes.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1));
+        radioyes = new Button(miscGroup, SWT.RADIO);
+        radioyes.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 2, 1));
         radioyes.setSelection(true);
         radioyes.setText(Messages.InstructionVisualRYESText);
         radioyes.setToolTipText(Messages.InstructionVisualRYESTool);
@@ -297,8 +300,8 @@ public class ARC4Composite extends Composite {
         });
 
         // the button for disabling highlighting
-        radiono = new Button(miscGroup, SWT.RADIO | SWT.CENTER);
-        radiono.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1));
+        radiono = new Button(miscGroup, SWT.RADIO);
+        radiono.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 2, 1));
         radiono.setSelection(false);
         radiono.setText(Messages.InstructionVisualRNOText);
         radiono.setToolTipText(Messages.InstructionVisualRNOTool);

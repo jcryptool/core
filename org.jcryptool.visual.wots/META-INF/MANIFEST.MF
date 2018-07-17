@@ -22,3 +22,4 @@ Import-Package: codec,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.fonts,
  org.jcryptool.visual.sig.algorithm
+Automatic-Module-Name: org.jcryptool.visual.wots

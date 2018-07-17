@@ -25,7 +25,8 @@ import org.jcryptool.visual.arc4.ARC4View;
  * @author Luca Rupp
  */
 public class RestartHandler extends AbstractHandler {
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    @Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
         if (HandlerUtil.getActivePart(event) instanceof ARC4View) {
             ARC4View view = ((ARC4View) HandlerUtil.getActivePart(event));
             view.reset();

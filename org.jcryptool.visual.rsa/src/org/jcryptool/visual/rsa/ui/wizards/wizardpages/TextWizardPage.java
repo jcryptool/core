@@ -34,8 +34,7 @@ public abstract class TextWizardPage extends WizardPage {
 	 * @param titleImage
 	 *            the ImageDescriptor of the image to be shown
 	 */
-	protected TextWizardPage(String pageName, String title,
-			ImageDescriptor titleImage) {
+	protected TextWizardPage(String pageName, String title, ImageDescriptor titleImage) {
 		super(pageName, title, titleImage);
 	}
 
@@ -70,10 +69,10 @@ public abstract class TextWizardPage extends WizardPage {
 	{   
     	canFlipToNextPage();
 		if (numbers){
-			this.getNextPage().setVisible(false);
+			getNextPage().setVisible(false);
 		}
 		else if (!numbers){
-			this.getNextPage().setVisible(true);
+			getNextPage().setVisible(true);
 		}
 	}
 

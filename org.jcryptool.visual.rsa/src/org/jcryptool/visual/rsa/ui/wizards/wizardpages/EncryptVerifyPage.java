@@ -79,8 +79,8 @@ public class EncryptVerifyPage extends WizardPage {
 	@Override
 	public final void createControl(Composite parent) {
 		Composite composite = new Composite(parent, SWT.NONE);
-		// set layout
 		composite.setLayout(new GridLayout());
+		
 		// add enter Pubkey button
 		newPubkeyButton = new Button(composite, SWT.RADIO);
 		newPubkeyButton.setText(Messages.EncryptVerifyPage_manual_entry);
@@ -88,29 +88,34 @@ public class EncryptVerifyPage extends WizardPage {
 		newPubkeyButton.setSelection(true);
 		newPubkeyButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		newPubkeyButton.addSelectionListener(sl);
+		
 		// add existing Pubkey button
 		existingPubkeyButton = new Button(composite, SWT.RADIO);
 		existingPubkeyButton.setText(Messages.EncryptVerifyPage_existing_key);
 		existingPubkeyButton.setToolTipText(Messages.EncryptVerifyPage_existing_key_popup);
 		existingPubkeyButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		existingPubkeyButton.addSelectionListener(sl);
+		
 		// add new Keypair button
 		newKeypairButton = new Button(composite, SWT.RADIO);
 		newKeypairButton.setText(Messages.ChooseKeytypePage_new_keypair);
 		newKeypairButton.setToolTipText(Messages.ChooseKeytypePage_new_keypair_popup);
 		newKeypairButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		newKeypairButton.addSelectionListener(sl);
+		
 		// add existing Keypair button
 		existingKeypairButton = new Button(composite, SWT.RADIO);
 		existingKeypairButton.setText(Messages.DecryptSignPage_existing_keypair);
 		existingKeypairButton.setToolTipText(Messages.DecryptSignPage_existing_keypair_popup);
 		existingKeypairButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		existingKeypairButton.addSelectionListener(sl);
+		
         //Separator label
 		Label separator = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
 		GridData gd_separator = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gd_separator.verticalIndent = 20;
 		separator.setLayoutData(gd_separator);
+		
 		// Add Note
 		Label selectdtext = new Label(composite, SWT.WRAP);
         selectdtext.setText(Messages.EncryptVerifyPage_note);

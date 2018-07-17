@@ -16,6 +16,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.arc4.ui.ARC4Composite;
@@ -47,16 +48,19 @@ public class ARC4View extends ViewPart {
         // that is capable of
         // dealing with 4K monitors
         scroll.setLayout(new GridLayout(1, true));
+        scroll.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE));
         arc4 = new ARC4Composite(scroll, SWT.NONE);
         arc4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        scroll.setMinSize(arc4.computeSize(ARC4Con.PLUGIN_WIDTH, ARC4Con.PLUGIN_HEIGTH));
         scroll.setContent(arc4);
+        scroll.setMinSize(arc4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+
         // makes the connection to the help of the plug-in
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), "org.jcryptool.visual.arc4.arc4view");
     }
 
     @Override
     public void setFocus() {
+    	parent.setFocus();
     }
 
     /**

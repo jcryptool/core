@@ -47,8 +47,8 @@ public class EnterCiphertextPage extends TextWizardPage {
 	public EnterCiphertextPage(final RSAData data) {
 		super(PAGENAME, TITLE, null);
 		this.data = data;
-		this.setDescription(Messages.EnterCiphertextPage_enter_ciphertext_text);
-		this.setPageComplete(false);
+		setDescription(Messages.EnterCiphertextPage_enter_ciphertext_text);
+		setPageComplete(false);
 	}
 
 	/**
@@ -58,11 +58,12 @@ public class EnterCiphertextPage extends TextWizardPage {
 	@Override
 	public final void createControl(final Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
-		// do stuff like layout et al
 		composite.setLayout(new GridLayout());
+		
 		final Label label = new Label(composite, SWT.NONE);
 		label.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 		label.setText(Messages.EnterCiphertextPage_textentry);
+		
 		text = new Text(composite, SWT.BORDER | SWT.WRAP);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		text.addModifyListener(new ModifyListener() {

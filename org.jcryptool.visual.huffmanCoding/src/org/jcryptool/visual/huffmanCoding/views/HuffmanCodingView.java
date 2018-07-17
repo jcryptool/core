@@ -24,6 +24,7 @@ import java.util.Hashtable;
 import java.util.Scanner;
 
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTError;
@@ -55,6 +56,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -76,6 +78,9 @@ public class HuffmanCodingView extends ViewPart {
 	public static final String ID = "org.jcryptool.visual.huffmanCoding.views.HuffmanCodingView"; //$NON-NLS-1$
 	public final static int COMPRESS = 1;
 	public final static int UNCOMPRESS = 2;
+	public final static int VIEWMAIN = 0;
+	public final static int VIEWTREE = 1;
+	public final static int VIEWTABLE = 2;
 	private int mode = HuffmanCodingView.COMPRESS;
 	private int MIN_WIDTH = 1550;
 	private int MIN_HEIGHT = 700;
@@ -98,7 +103,6 @@ public class HuffmanCodingView extends ViewPart {
 	private TabItem tbtmParameter;
 	private TabItem tbtmHuffmanTree;
 	private TabItem tbtmCodeTable;
-
 	private HuffmanCodingView mainView;
 	private HuffmanCodingViewTree treeView;
 	private HuffmanCodingViewTable tableView;
@@ -180,20 +184,24 @@ public class HuffmanCodingView extends ViewPart {
 			public void widgetSelected(SelectionEvent e) {
 				int selection = tabFolder.getSelectionIndex();
 
-				if (selection == 1 && (isCompressed || isUncompressed)) {
-					if (treeView == null)
-						treeView = new HuffmanCodingViewTree(tabFolder, SWT.NONE, huffmanCode.getResultNodeList());
+				if (selection == VIEWTREE && (isCompressed || isUncompressed)) {
+					if (treeView == null || treeView.isDisposed())
+						treeView = new HuffmanCodingViewTree(tabFolder, SWT.NONE, huffmanCode.getResultNodeList(),
+								getViewSite().getActionBars());
 					tbtmHuffmanTree.setControl(treeView);
+					visibleGraphMenu(true);
 					tabFolder.setSelection(selection);
 				}
-				if (selection == 2 && (isCompressed || isUncompressed)) {
-					if (tableView == null)
+				if (selection == VIEWTABLE && (isCompressed || isUncompressed)) {
+					if (tableView == null || treeView.isDisposed())
 						tableView = new HuffmanCodingViewTable(tabFolder, SWT.NONE, mainView);
+
+					visibleGraphMenu(false);
 					tbtmCodeTable.setControl(tableView);
 					tabFolder.setSelection(selection);
 				}
 
-				if (selection != 0 && (!isCompressed && !isUncompressed)) {
+				if (selection != VIEWMAIN && (!isCompressed && !isUncompressed)) {
 					tabFolder.setSelection(0);
 					MessageBox notReady = new MessageBox(tabFolder.getShell(), SWT.OK);
 					notReady.setText(Messages.HuffmanCodingView_28);
@@ -201,6 +209,8 @@ public class HuffmanCodingView extends ViewPart {
 					notReady.open();
 
 				}
+				if (selection == VIEWMAIN)
+					visibleGraphMenu(false);
 
 			}
 		});
@@ -209,6 +219,7 @@ public class HuffmanCodingView extends ViewPart {
 		mainViewComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmParameter.setControl(mainViewComposite);
 		mainViewComposite.setLayout(new GridLayout(2, false));
+		mainViewComposite.setLayoutData(new org.eclipse.draw2d.GridData(SWT.LEFT, SWT.TOP, false, true));
 
 		// Content of first tab
 		textTitle = new StyledText(mainViewComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
@@ -348,7 +359,7 @@ public class HuffmanCodingView extends ViewPart {
 		grpNextSteps.setText(Messages.HuffmanCodingView_grpNextSteps_text);
 
 		btnCompress = new Button(grpNextSteps, SWT.NONE);
-		GridData gd_btnCompress = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		GridData gd_btnCompress = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
 		gd_btnCompress.widthHint = 180;
 		btnCompress.setLayoutData(gd_btnCompress);
 		// btnCompress.setEnabled(false);
@@ -419,7 +430,6 @@ public class HuffmanCodingView extends ViewPart {
 			public void widgetSelected(SelectionEvent e) {
 				String message;
 				huffmanCode = new Huffman();
-
 				if (huffmanCodeBinary != null)
 					huffmanCode.uncompress(huffmanCodeBinary);
 
@@ -568,7 +578,6 @@ public class HuffmanCodingView extends ViewPart {
 		gdHorizontalSeparator.heightHint = 35;
 		horizontalSeparator.setLayoutData(gdHorizontalSeparator);
 
-		// FIXME CURRENT MARKER
 		compInputOutput = new Composite(grpCompress, SWT.NONE);
 		compInputOutput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 7, 1));
 		compInputOutput.setLayout(new GridLayout(7, false));
@@ -819,7 +828,6 @@ public class HuffmanCodingView extends ViewPart {
 		gdHorizontalSeparator.heightHint = 35;
 		horizontalSeparator.setLayoutData(gdHorizontalSeparator);
 
-		// FIXME CURRENT MARKER
 		compInputOutput = new Composite(grpCompress, SWT.NONE);
 		compInputOutput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 7, 1));
 		compInputOutput.setLayout(new GridLayout(7, false));
@@ -1114,6 +1122,26 @@ public class HuffmanCodingView extends ViewPart {
 
 	public int getMode() {
 		return mode;
+	}
+
+	public HuffmanCodingViewTree getViewTree() {
+		if (treeView != null)
+			return treeView;
+		else
+			return null;
+	}
+
+	public void visibleGraphMenu(boolean visible) {
+		IActionBars actionBar = getViewSite().getActionBars();
+		IContributionItem[] items = actionBar.getToolBarManager().getItems();
+
+		for (IContributionItem item : items) {
+			String id = item.getId();
+			if (id.contains("Zoom") || id.contains("ChangeLayout") || id.contains("Separator"))
+				item.setVisible(visible);
+		}
+
+		actionBar.updateActionBars();
 	}
 
 }

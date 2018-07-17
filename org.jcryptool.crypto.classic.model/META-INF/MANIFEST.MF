@@ -22,3 +22,4 @@ Export-Package: org.jcryptool.crypto.classic.model.algorithm,
 Bundle-Activator: org.jcryptool.crypto.classic.model.ClassicCryptoModelPlugin
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor
+Automatic-Module-Name: org.jcryptool.crypto.classic.model

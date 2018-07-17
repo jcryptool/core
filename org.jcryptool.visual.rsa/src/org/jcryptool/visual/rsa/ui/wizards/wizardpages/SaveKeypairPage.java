@@ -27,9 +27,6 @@ import org.jcryptool.visual.rsa.RSAData;
  */
 public class SaveKeypairPage extends SaveWizardPage {
 
-	/** minimal height for a textfield so it diesn't cut the entered text. */
-	private static final int TEXTFIELD_MIN_HEIGHT = 15;
-
 	/** unique pagename to get this page from inside a wizard. */
 	private static final String PAGENAME = "Save Keypair Page"; //$NON-NLS-1$
 
@@ -72,8 +69,7 @@ public class SaveKeypairPage extends SaveWizardPage {
 	public SaveKeypairPage(final RSAData data) {
 		super(PAGENAME, TITLE, null);
 		setPageComplete(false);
-		this
-				.setDescription(Messages.SaveKeypairPage_enter_params_text);
+		setDescription(Messages.SaveKeypairPage_enter_params_text);
 		this.data = data;
 	}
 
@@ -84,40 +80,25 @@ public class SaveKeypairPage extends SaveWizardPage {
 	@Override
 	public final void createControl(final Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
-		// do stuff like layout et al
-		final int ncol = 2;
-		final GridLayout gl = new GridLayout(ncol, false);
-		composite.setLayout(gl);
-		final GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		final GridData gd3 = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		final GridData gd4 = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		final GridData gd5 = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		// needed so textfields don't cut text
-		gd.heightHint = TEXTFIELD_MIN_HEIGHT;
-		gd3.heightHint = TEXTFIELD_MIN_HEIGHT;
-		gd4.heightHint = TEXTFIELD_MIN_HEIGHT;
-		gd5.heightHint = TEXTFIELD_MIN_HEIGHT;
-		final GridData gd1 = new GridData(SWT.FILL, SWT.CENTER, false, false, ncol, 1);
-		final GridData gd2 = new GridData(SWT.FILL, SWT.CENTER, false, false, ncol, 1);
+		composite.setLayout(new GridLayout());
+		
 		final Label own = new Label(composite, SWT.NONE);
 		own.setText(Messages.SaveKeypairPage_name);
-		own.setLayoutData(gd1);
 
 		owner = new Text(composite, SWT.BORDER | SWT.SINGLE);
 		owner.addModifyListener(ml);
-		owner.setLayoutData(gd);
+		owner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		final Label pass = new Label(composite, SWT.NONE);
 		pass.setText(Messages.SaveKeypairPage_password);
-		pass.setLayoutData(gd2);
 
 		password = new Text(composite, SWT.BORDER | SWT.PASSWORD);
 		password.addModifyListener(ml);
-		password.setLayoutData(gd3);
-		new Label(composite, SWT.NONE).setLayoutData(gd4);
+		password.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		
 		passwordverify = new Text(composite, SWT.BORDER | SWT.PASSWORD);
 		passwordverify.addModifyListener(ml);
-		passwordverify.setLayoutData(gd5);
+		passwordverify.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		// finish
 		setControl(composite);

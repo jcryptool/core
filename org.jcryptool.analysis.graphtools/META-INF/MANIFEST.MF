@@ -8,3 +8,4 @@ Export-Package: org.jcryptool.analysis.graphtools, org.jcryptool.analysis.grapht
 Bundle-Vendor: %Bundle-Vendor
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.ui;bundle-version="3.107.0"
+Automatic-Module-Name: org.jcryptool.analysis.graphtools

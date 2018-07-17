@@ -33,9 +33,6 @@ import org.jcryptool.visual.library.Lib;
  */
 public class EnterPlaintextPage extends TextWizardPage {
 
-    /** limit for the maximum number of characters to enter as plaintext */
-    private static final int TEXTLIMIT = 150;
-
     /** unique pagename to get this page from inside a wizard. */
     private static final String PAGENAME = "Enter Plaintext Page"; //$NON-NLS-1$
 
@@ -63,7 +60,8 @@ public class EnterPlaintextPage extends TextWizardPage {
      *
      * @param parent the parent composite
      */
-    public final void createControl(final Composite parent) {
+    @Override
+	public final void createControl(final Composite parent) {
         final Composite composite = new Composite(parent, SWT.NONE);
         // do stuff like layout et al
         GridLayout gl_composite = new GridLayout();
@@ -80,16 +78,18 @@ public class EnterPlaintextPage extends TextWizardPage {
         label = new Label(composite, SWT.NONE);
         label.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
         label.setText(Messages.EnterPlaintextPage_textentry);
+        
         text = new Text(composite, SWT.BORDER | SWT.WRAP);
         GridData gd_text = new GridData(SWT.FILL, SWT.FILL, true, true);
         gd_text.minimumHeight = 80;
         text.setLayoutData(gd_text);
-        text.setTextLimit(TEXTLIMIT);
         text.addModifyListener(new ModifyListener() {
-            public void modifyText(final ModifyEvent e) {
+            @Override
+			public void modifyText(final ModifyEvent e) {
                 setPageComplete(!((Text) e.widget).getText().equals("")); //$NON-NLS-1$
             }
-        });
+        });  
+        
         text.addVerifyListener(Lib.getVerifyListener(Lib.CHARACTERS));
         if (data.getAction() == Action.SignAction) {
             final Button SHA1Checkbox = new Button(composite, SWT.CHECK);
@@ -98,14 +98,15 @@ public class EnterPlaintextPage extends TextWizardPage {
             SHA1Checkbox.setToolTipText(Messages.EnterPlaintextPage_use_sha1_popup);
             SHA1Checkbox.addSelectionListener(new SelectionAdapter() {
 
-                public void widgetSelected(final SelectionEvent e) {
+                @Override
+				public void widgetSelected(final SelectionEvent e) {
                     data.setSimpleHash(!SHA1Checkbox.getSelection());
                 }
             });
             SHA1Checkbox.setSelection(!data.getSimpleHash());
         }
         // fill in old data
-        text.setText(data.getPlainText());
+        text.setText(data.getStb().revert(data.getPlainTextAsNumbers()));
 
         // finish
         setControl(composite);

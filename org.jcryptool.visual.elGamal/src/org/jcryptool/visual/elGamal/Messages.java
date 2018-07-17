@@ -57,8 +57,10 @@ public class Messages extends NLS {
 	public static String ElGamalComposite_enter_signature;
 	public static String ElGamalComposite_finish_calculations;
 	public static String ElGamalComposite_finish_calculations_text;
+	public static String ElGamalComposite_hashedInput;
 	public static String ElGamalComposite_hextext;
 	public static String ElGamalComposite_inherit_from;
+	public static String ElGamalComposite_inheritFail;
     public static String ElGamalComposite_invalid;
 	public static String ElGamalComposite_key;
 	public static String ElGamalComposite_key_generation;
@@ -73,6 +75,7 @@ public class Messages extends NLS {
 	public static String ElGamalComposite_result;
 	public static String ElGamalComposite_show_dialogs;
 	public static String ElGamalComposite_sign;
+	public static String ElGamalComposite_signature;
 	public static String ElGamalComposite_start;
 	public static String ElGamalComposite_start_calc;
 	public static String ElGamalComposite_step;
@@ -124,6 +127,12 @@ public class Messages extends NLS {
 	public static String LoadPublicKeyPage_select_from_list;
 	public static String LoadPublicKeyPage_select_pubkey;
 	public static String LoadPublicKeyPage_select_pubkey_text;
+	public static String NewChooseKeyTypePage_choseKey;
+	public static String NewChooseKeyTypePage_createKeypair;
+	public static String NewChooseKeyTypePage_createPublicKey;
+	public static String NewChooseKeyTypePage_keySelection;
+	public static String NewChooseKeyTypePage_loadKeypair;
+	public static String NewChooseKeyTypePage_loadPublicKey;
 	public static String NewKeypairPage_A_explanation;
 	public static String NewKeypairPage_choose_p_text;
 	public static String NewKeypairPage_choose_params;
@@ -145,10 +154,13 @@ public class Messages extends NLS {
     public static String NewPublicKeyPage_2;
 	public static String NewPublicKeyPage_4;
 	public static String NewPublicKeyPage_7;
-    public static String NewPublicKeyPage_error_A_gt_p;
+    public static String NewPublicKeyPage_enter_d_first;
+	public static String NewPublicKeyPage_error_A_gt_p;
 	public static String NewPublicKeyPage_error_g_not_generator;
 	public static String NewPublicKeyPage_error_p_lt_256;
 	public static String NewPublicKeyPage_error_p_not_prime;
+	public static String NewPublicKeyPage_gProbablyNoGenerator;
+	public static String NewPublicKeyPage_pProbablyNotPrime;
 	public static String NewPublicKeyPage_save_pubkey;
 	public static String NewPublicKeyPage_save_pubkey_popup;
 	public static String NewPublicKeyPage_select_A;
@@ -156,6 +168,8 @@ public class Messages extends NLS {
 	public static String NewPublicKeyPage_select_p;
 	public static String NewPublicKeyPage_select_params;
 	public static String NewPublicKeyPage_select_params_text;
+	public static String NewPublicKeyPage_ToolTipgTooLong;
+	public static String NewPublicKeyPage_toolTippTooLong;
 	public static String PlaintextforSignatureVerificationWizard_enter_plaintext;
 	public static String SaveKeypairPage_enter_save_params;
 	public static String SaveKeypairPage_error_passwords_dont_match;

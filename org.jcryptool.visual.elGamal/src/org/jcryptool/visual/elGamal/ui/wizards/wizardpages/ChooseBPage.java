@@ -67,7 +67,8 @@ public class ChooseBPage extends WizardPage {
     /**
      * Create the GUI of the Dialog
      */
-    public void createControl(final Composite parent) {
+    @Override
+	public void createControl(final Composite parent) {
         final Composite composite = new Composite(parent, SWT.NONE);
         GridLayout gl_composite = new GridLayout(3, false);
         gl_composite.marginWidth = 50;
@@ -81,7 +82,8 @@ public class ChooseBPage extends WizardPage {
         t.addVerifyListener(Lib.getVerifyListener(Lib.DIGIT));
         t.addModifyListener(new ModifyListener() {
 
-            public void modifyText(final ModifyEvent e) {
+            @Override
+			public void modifyText(final ModifyEvent e) {
                 setErrorMessage(null);
                 if (t.getText().equals("")) { //$NON-NLS-1$
                     return;

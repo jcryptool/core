@@ -36,6 +36,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
@@ -45,6 +46,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.games.numbershark.NumberSharkPlugin;
 import org.jcryptool.games.numbershark.util.CSVConverter;
@@ -73,15 +75,19 @@ public abstract class AbstractResultDialog extends TitleAreaDialog {
         this.selectedStrategy = selectedStrategy;
     }
 
-    protected Control createDialogArea(Composite parent) {
+    @Override
+	protected Control createDialogArea(Composite parent) {
         CalculationThread calculateSequences = new CalculationThread(min, max, selectedStrategy);
         final Shell shell = parent.getShell();
 
         try {
             new ProgressMonitorDialog(shell).run(true, true, calculateSequences);
         } catch (InvocationTargetException e) {
+        	
         } catch (InterruptedException e) {
+        	
         }
+        
         String[][] tableContent = calculateSequences.getSharkOutput();
         int stoppedAt = calculateSequences.getStoppedAt();
 
@@ -91,9 +97,19 @@ public abstract class AbstractResultDialog extends TitleAreaDialog {
         }
 
         Composite area = (Composite) super.createDialogArea(parent);
-        area.setLayout(new GridLayout(1, false));
-        createTable(area);
+//        area.setLayout(new GridLayout(1, false));
+        
+        Composite composite = new Composite(area, SWT.NONE);
+        composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        composite.setLayout(new GridLayout());
+        
+//        createTable(area);
+        createTable(composite);
         setTableContent(tableContent);
+        
+        Label separator = new Label(area, SWT.SEPARATOR | SWT.HORIZONTAL);
+        separator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        
         PlatformUI.getWorkbench().getHelpSystem()
                 .setHelp(parent, NumberSharkPlugin.PLUGIN_ID + ".optStratResultDialog"); //$NON-NLS-1$
 
@@ -102,13 +118,13 @@ public abstract class AbstractResultDialog extends TitleAreaDialog {
 
     @Override
     protected Point getInitialSize() {
-        return new Point(640, 500);
+        return new Point(700, 550);
     }
 
-    @Override
-    protected void configureShell(Shell newShell) {
-        super.configureShell(newShell);
-    }
+//    @Override
+//    protected void configureShell(Shell newShell) {
+//        super.configureShell(newShell);
+//    }
 
     /**
      * Create contents of the button bar.
@@ -123,7 +139,9 @@ public abstract class AbstractResultDialog extends TitleAreaDialog {
 
         Button saveAsButton = createButton(parent, SAVE, Messages.ShowOptStrategy_8, true);
         saveAsButton.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) {
+        	
+            @Override
+			public void widgetSelected(SelectionEvent e) {
 
                 int min = Integer.parseInt(sequences.getItem(0).getText(0));
                 int max = Integer.parseInt(sequences.getItem(sequences.getItemCount() - 1).getText(0));
@@ -149,6 +167,7 @@ public abstract class AbstractResultDialog extends TitleAreaDialog {
                     writer.flush();
                     writer.close();
                 } catch (Exception ex) {
+                	LogUtil.logError(NumberSharkPlugin.PLUGIN_ID, ex);
                 }
             }
         });
@@ -190,7 +209,8 @@ public abstract class AbstractResultDialog extends TitleAreaDialog {
 
                     copy.setImage(image);
                     copy.addSelectionListener(new SelectionAdapter() {
-                        public void widgetSelected(SelectionEvent e) {
+                        @Override
+						public void widgetSelected(SelectionEvent e) {
                             Clipboard cb = new Clipboard(sequences.getDisplay());
                             TextTransfer textTransfer = TextTransfer.getInstance();
                             StringBuffer sb = new StringBuffer(sequences.getSelection()[0].getText(0));
@@ -210,7 +230,8 @@ public abstract class AbstractResultDialog extends TitleAreaDialog {
         });
 
         sequences.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 if (sequences.getSelection().length > 0) {
                     playSelected.setEnabled(true);
                 }
@@ -244,7 +265,8 @@ public abstract class AbstractResultDialog extends TitleAreaDialog {
     }
 
     SelectionAdapter playSelection = new SelectionAdapter() {
-        public void widgetSelected(SelectionEvent e) {
+        @Override
+		public void widgetSelected(SelectionEvent e) {
             TableItem[] selectedTabItem = sequences.getSelection();
             setReturnCode(PLAY);
             play.add(Integer.parseInt(selectedTabItem[0].getText(0)));

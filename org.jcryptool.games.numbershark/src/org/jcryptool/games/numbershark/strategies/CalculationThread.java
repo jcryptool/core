@@ -34,7 +34,8 @@ public class CalculationThread implements IRunnableWithProgress {
         this.selectedStrategy = selectedStrategy;
     }
 
-    public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+    @Override
+	public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
         try {
             switch (selectedStrategy) {
             case 0:

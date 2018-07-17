@@ -10,20 +10,19 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.games.numbershark.dialogs;
 
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Slider;
@@ -38,6 +37,7 @@ public class NewGameDialog extends TitleAreaDialog {
         super(shell);
         setShellStyle(SWT.TITLE | SWT.APPLICATION_MODAL);
     }
+    
 
     @Override
     protected Control createDialogArea(Composite parent) {
@@ -47,21 +47,26 @@ public class NewGameDialog extends TitleAreaDialog {
         setTitleImage(resources.createImage(NumberSharkPlugin.getImageDescriptor("/icons/new_game.png"))); //$NON-NLS-1$
 
         Composite area = (Composite) super.createDialogArea(parent);
+        
+        Composite composite = new Composite(area, SWT.NONE);
+        composite.setLayout(new GridLayout());
+        composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-        Group maximumNumberGroup = new Group(area, SWT.NONE);
-        maximumNumberGroup.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false));
+        Group maximumNumberGroup = new Group(composite, SWT.NONE);
+        maximumNumberGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         maximumNumberGroup.setLayout(new GridLayout(2, false));
         maximumNumberGroup.setText(Messages.NewGameDialog_2);
 
-        final Slider numSlider = new Slider(maximumNumberGroup, SWT.NONE);
+        final Slider numSlider = new Slider(maximumNumberGroup, SWT.RIGHT);
         numSlider.setValues(numberOfFields, 1, 1024, 7, 1, 10);
-        numSlider.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+        numSlider.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-        final Spinner numSpinner = new Spinner(maximumNumberGroup, SWT.BORDER);
+        final Spinner numSpinner = new Spinner(maximumNumberGroup, SWT.LEFT);
         numSpinner.setValues(numberOfFields, 1, 1024, 0, 1, 10);
 
         numSpinner.addModifyListener(new ModifyListener() {
-            public void modifyText(ModifyEvent e) {
+            @Override
+			public void modifyText(ModifyEvent e) {
                 numSlider.setSelection(numSpinner.getSelection());
                 numberOfFields = numSlider.getSelection();
             }
@@ -69,11 +74,15 @@ public class NewGameDialog extends TitleAreaDialog {
         });
 
         numSlider.addListener(SWT.Selection, new Listener() {
-            public void handleEvent(Event e) {
+            @Override
+			public void handleEvent(Event e) {
                 numSpinner.setSelection(numSlider.getSelection());
                 numberOfFields = numSlider.getSelection();
             }
         });
+        
+        Label separator = new Label(area, SWT.SEPARATOR | SWT.HORIZONTAL);
+        separator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, NumberSharkPlugin.PLUGIN_ID + ".newGameDialog"); //$NON-NLS-1$
 
@@ -81,25 +90,9 @@ public class NewGameDialog extends TitleAreaDialog {
     }
 
     @Override
-    protected Point getInitialSize() {
-        return new Point(425, 250);
-    }
-
-    @Override
     protected void configureShell(Shell newShell) {
         super.configureShell(newShell);
         newShell.setText(Messages.NewGameDialog_4);
-    }
-
-    /**
-     * Create contents of the button bar.
-     * 
-     * @param parent
-     */
-    @Override
-    protected void createButtonsForButtonBar(Composite parent) {
-        createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
-        createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
     }
 
     public int getNumberOfFields() {

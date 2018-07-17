@@ -14,3 +14,4 @@ Bundle-ActivationPolicy: lazy
 Import-Package: org.jcryptool.core.logging.utils
 Bundle-Vendor: %Bundle-Vendor.0
 Bundle-ClassPath: .
+Automatic-Module-Name: org.jcryptool.visual.hashing
