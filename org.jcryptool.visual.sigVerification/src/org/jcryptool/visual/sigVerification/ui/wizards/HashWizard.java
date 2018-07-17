@@ -25,7 +25,7 @@ public class HashWizard extends Wizard {
     private String name;
     // Integer representing the chosen hash (0-4)
     private int hash;
-    Input input;
+    private Input input;
 
     public HashWizard(Input input) {
         super();
@@ -36,24 +36,23 @@ public class HashWizard extends Wizard {
 
     @Override
     public void addPages() {
-        page = new HashWizardPage(name, input);
+    	page = new HashWizardPage(name, input);
         addPage(page);
     }
 
     @Override
     public boolean performFinish() {
-        int i = 0; // 0-4
         // get all the radiobuttons from the WizardPage
-        Control[] radiobutton = (Control[]) page.getGrpHashes().getChildren();
+        Control[] radioButtons = (Control[]) page.getGrpHashes().getChildren();
+        
         // Check which radiobutton is selected
-        while (i <= 4) {
-            // Check if the current button is selected
-            if (((Button) radiobutton[i]).getSelection()) {
+        for (int i = 0; i < radioButtons.length; i++) {
+            if (((Button) radioButtons[i]).getSelection()) {
                 hash = i;
-                i = 5; // leave the loop
+                break;
             }
-            i++;
         }
+        
         return true;
     }
 

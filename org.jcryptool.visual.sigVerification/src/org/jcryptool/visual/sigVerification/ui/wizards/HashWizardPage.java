@@ -22,17 +22,17 @@ import org.jcryptool.visual.sigVerification.algorithm.Input;
  */
 public class HashWizardPage extends WizardPage {
     private HashComposite composite;
-    Input input;
+    private Input input;
 
     protected HashWizardPage(String pageName, Input input) {
         super(Messages.HashWizard_header);
         this.input = input;
-        setDescription(Messages.HashWizard_header);
+//        setDescription(Messages.HashWizard_header);
         setTitle(Messages.HashWizard_WindowTitle);
     }
 
     public void createControl(Composite parent) {
-        composite = new HashComposite(parent, NONE, input);
+    	composite = new HashComposite(parent, NONE, input);
         setControl(composite);
         setPageComplete(true);
     }

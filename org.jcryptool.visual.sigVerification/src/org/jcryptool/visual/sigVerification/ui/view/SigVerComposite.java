@@ -9,7 +9,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.sigVerification.ui.view;
 
-import java.util.Arrays;
+import java.io.File;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.Command;
@@ -17,6 +17,7 @@ import org.eclipse.core.commands.CommandManager;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -56,7 +57,6 @@ import org.jcryptool.visual.sigVerification.algorithm.Hash;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
 import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
 import org.jcryptool.visual.sigVerification.ui.wizards.HashWizard;
-import org.jcryptool.visual.sigVerification.ui.wizards.InputKeyWizard;
 import org.jcryptool.visual.sigVerification.ui.wizards.InputWizard;
 import org.jcryptool.visual.sigVerification.ui.wizards.SignaturResult;
 import org.jcryptool.visual.sigVerification.ui.wizards.SignatureWizard;
@@ -78,7 +78,7 @@ public class SigVerComposite extends Composite {
     private Button btnHash;
     private Button btnAddInput;
     private Button btnReset;
-    private Button btnDecrypt;
+    private Button btnVerify;
     private Button btnResult;
     private TabFolder tabFolderSteps;
     private Text textGeneralDescription;
@@ -91,15 +91,17 @@ public class SigVerComposite extends Composite {
     private boolean resultOk = false;
     private boolean resultErr = false;
     private int btnHeight = 90;
-
-    private int hash = 0; // Values: 0-4. Hash and signature contain the
+    private int btnWidth = 200; 
     // selected method; default is 0
     private String[] hashes = { org.jcryptool.visual.sigVerification.ui.wizards.Messages.HashWizard_rdomd5,
             org.jcryptool.visual.sigVerification.ui.wizards.Messages.HashWizard_rdosha1,
             org.jcryptool.visual.sigVerification.ui.wizards.Messages.HashWizard_rdosha256,
             org.jcryptool.visual.sigVerification.ui.wizards.Messages.HashWizard_rdosha384,
             org.jcryptool.visual.sigVerification.ui.wizards.Messages.HashWizard_rdosha512 };
-    private int signature = 0; // 0-3
+    private String[] signatures = { org.jcryptool.visual.sigVerification.ui.wizards.Messages.SignatureWizard_DSA,
+            org.jcryptool.visual.sigVerification.ui.wizards.Messages.SignatureWizard_RSA,
+            org.jcryptool.visual.sigVerification.ui.wizards.Messages.SignatureWizard_ECDSA,
+            org.jcryptool.visual.sigVerification.ui.wizards.Messages.SignatureWizard_RSAandMGF1 };
 
     // Erzeugen der benötigten Objekte
     Input input = new Input();
@@ -110,34 +112,11 @@ public class SigVerComposite extends Composite {
 	private Canvas canvasDocRight;
 	private Canvas canvasDocLeft;
 	private Composite centerTopComposite;
-
-    /**
-     * @return the hash
-     */
-    public int getHash() {
-        return hash;
-    }
-
-    /**
-     * @param hash the hash to set
-     */
-    public void setHash(int hash) {
-        this.hash = hash;
-    }
-
-    /**
-     * @return the signature
-     */
-    public int getSignature() {
-        return signature;
-    }
-
-    /**
-     * @param signature the signature to set
-     */
-    public void setSignature(int signature) {
-        this.signature = signature;
-    }
+	private Label lblHashMethod;
+	private Label lblSignatureMethod;
+	private Composite centerBtmComposite;
+	private Label fileNameLabel;
+	private Composite fileNameLabelComposite;
     
     /**
      * Sets the booleans resultOk and resultErr to the new values and redraws the canvas on the right.
@@ -168,19 +147,17 @@ public class SigVerComposite extends Composite {
         createContents(parent);
         createActions();
         this.sigVerView = view;
-
-        // Adds reset button to the Toolbar
-        IToolBarManager toolBarMenu = view.getViewSite().getActionBars().getToolBarManager();
-        final String resetCommandId = "org.jcryptool.visual.sigVerification.commands.reset.sigVer";
+    }
+    
+    protected void addResetIconHandler() {
         AbstractHandler resetHandler = new AbstractHandler() {
 	       	public Object execute(ExecutionEvent event) {
 	       		reset(0);
 	       		return null;
 	       	}
         };
-        defineCommand(resetCommandId, "Reset", resetHandler);
-        addContributionItem(toolBarMenu, resetCommandId,
-       		 SigVerificationPlugin.getImageDescriptor("/icons/reset.gif"), null, SWT.PUSH);
+        defineCommand(sigVerView.resetCommandId, "Reset", resetHandler);
+
     }
 
     private void defineCommand(final String commandId, final String name, AbstractHandler handler) {
@@ -190,18 +167,7 @@ public class SigVerComposite extends Composite {
     	command.setHandler(handler);
     }
 
-    private void addContributionItem(IContributionManager manager, final String commandId,
-           	final ImageDescriptor icon, final String tooltip, int Style)
-        {
-           	CommandContributionItemParameter param = new CommandContributionItemParameter(PlatformUI.getWorkbench(),
-           		null, commandId, Style);
-           	if(icon != null)
-           		param.icon = icon;
-           	if(tooltip != null && !tooltip.equals(""))
-           		param.tooltip = tooltip;
-           	CommandContributionItem item = new CommandContributionItem(param);
-           	manager.add(item);
-        }
+
 
     /**
      * Create contents of the application window.
@@ -273,6 +239,7 @@ public class SigVerComposite extends Composite {
         canvasDocLeft = new Canvas(groupInput, SWT.NONE);
         GridData gd_canvasDocLeft = new GridData(SWT.FILL, SWT.FILL, true, true);
         canvasDocLeft.setLayoutData(gd_canvasDocLeft);
+        canvasDocLeft.setLayout(new GridLayout());
         canvasDocLeft.addPaintListener(new PaintListener() {
             public void paintControl(PaintEvent e) {         
                 GC gc = e.gc;
@@ -289,13 +256,17 @@ public class SigVerComposite extends Composite {
             }
         });
         
+        fileNameLabel = new Label(canvasDocLeft, SWT.NONE);
+        GridData gd_fileNameLabel = new GridData(SWT.CENTER, SWT.FILL, true, false);
+        fileNameLabel.setLayoutData(gd_fileNameLabel);
+        
         @SuppressWarnings("unused") //dummy Composite 
 		Composite compositeBtmLeft = new Composite(compositeLeft, SWT.NONE);
         
         //CENTER AREA BETWEEN THE INPUT GROUP AND THE VERIFY GROUP
         Composite centerComposite = new Composite(mainGroup, SWT.NONE);
         GridData gd_centerComposite = new GridData(SWT.FILL, SWT.FILL, true, true);
-        gd_centerComposite.widthHint = 400;
+        gd_centerComposite.widthHint = 650;
         centerComposite.setLayoutData(gd_centerComposite);
         GridLayout gl_centerComposite = new GridLayout();
         gl_centerComposite.marginWidth = 0;
@@ -304,8 +275,7 @@ public class SigVerComposite extends Composite {
         centerTopComposite = new Composite(centerComposite, SWT.NONE);
         GridData gd_centerTopComposite = new GridData(SWT.FILL, SWT.FILL, true, true);
         centerTopComposite.setLayoutData(gd_centerTopComposite);
-        GridLayout gl_centerTopComposite = new GridLayout();
-        gl_centerTopComposite.verticalSpacing = 20;
+        GridLayout gl_centerTopComposite = new GridLayout(2, true);
         centerTopComposite.setLayout(gl_centerTopComposite);        
         centerTopComposite.addPaintListener(new PaintListener() {
             public void paintControl(PaintEvent e) {
@@ -322,34 +292,38 @@ public class SigVerComposite extends Composite {
                 //Compute values for drawing the arrows
                 int verticalCenter = height / 2;
                 int arrowHeight = 30;
-                int spacingBetweenButtons = gl_centerTopComposite.verticalSpacing;
+                int labelOffset = lblHashMethod.getBounds().height / 2 + ((GridLayout)centerTopComposite.getLayout()).verticalSpacing / 2;
+                int yCoord = verticalCenter + labelOffset - arrowHeight / 2;
                 
                 //First arrow
+                if (step > 0) {
+                	gc.setBackground(darkgrey);
+                } else {
+                	gc.setBackground(lightgrey);
+                }       
+                gc.fillRectangle(0, yCoord, width / 4, arrowHeight);
+                
+                //Second arrow
                 if (step > 1) {
                 	gc.setBackground(darkgrey);
                 } else {
                 	gc.setBackground(lightgrey);
                 }
-                int yCoordFirstArrow = verticalCenter - spacingBetweenButtons/2 - btnHeight/2 - arrowHeight/2;
-                gc.fillRectangle(0, yCoordFirstArrow , width - 30, arrowHeight);
-                gc.fillPolygon(new int[] { width - 30, yCoordFirstArrow - arrowHeight/2, 
-                		width - 30, yCoordFirstArrow + arrowHeight + arrowHeight/2, 
-                		width, yCoordFirstArrow + arrowHeight/2 });
+                gc.fillRectangle(width / 4, yCoord, width / 2, arrowHeight);
                 
-                //Second arrow
+                //Third arrow
                 if (step > 2) {
                 	gc.setBackground(darkgrey);
                 } else {
                 	gc.setBackground(lightgrey);
                 }
-                int yCoordSecondArrow = verticalCenter + spacingBetweenButtons/2 + btnHeight/2 - arrowHeight/2;
-                gc.fillRectangle(0, yCoordSecondArrow, width - 30 , arrowHeight);
-                gc.fillPolygon(new int[] { width - 30, yCoordSecondArrow - arrowHeight/2, 
-                		width - 30, yCoordSecondArrow + arrowHeight + arrowHeight/2, 
-                		width, yCoordSecondArrow + arrowHeight/2 });
+                gc.fillRectangle(width*3/4, yCoord, (width / 4) - 29, arrowHeight);
+                gc.fillPolygon(new int[] {	width - 31, yCoord - arrowHeight/2, 
+						width - 31, yCoord + arrowHeight + arrowHeight/2, 
+						width, yCoord + arrowHeight/2 });
                 
                 //Arrow pointing on key
-                gc.fillRectangle(width/2 - 15, yCoordSecondArrow, arrowHeight, height - yCoordSecondArrow);
+                gc.fillRectangle(width*3/4 - 15, height/2 + 15, arrowHeight, height/2 - 15);
                 
                 gc.setBackground(darkgrey);
 
@@ -357,25 +331,31 @@ public class SigVerComposite extends Composite {
             }
         });
         
+        lblHashMethod = new Label(centerTopComposite, SWT.NONE);
+        GridData gd_lblHashMethod = new GridData(SWT.CENTER, SWT.BOTTOM, false, true);
+        lblHashMethod.setLayoutData(gd_lblHashMethod);
         
-        
+        lblSignatureMethod = new Label(centerTopComposite, SWT.NONE);
+        GridData gd_lblSignatureMethod = new GridData(SWT.CENTER, SWT.BOTTOM, false, true);
+        lblSignatureMethod.setLayoutData(gd_lblSignatureMethod);
+         
         btnHash = new Button(centerTopComposite, SWT.NONE);
-        GridData gd_btnHash = new GridData(SWT.CENTER, SWT.BOTTOM, true, true);
-        gd_btnHash.widthHint = 200;
+        GridData gd_btnHash = new GridData(SWT.CENTER, SWT.TOP, true, true);
+        gd_btnHash.widthHint = btnWidth;
         gd_btnHash.heightHint = btnHeight;
         btnHash.setLayoutData(gd_btnHash);
         btnHash.setEnabled(false);
         btnHash.setText(Messages.SigVerComposite_btnHash);
 
-        btnDecrypt = new Button(centerTopComposite, SWT.NONE);
-        GridData gd_btnDecrypt = new GridData(SWT.CENTER, SWT.TOP, true, true);
-        gd_btnDecrypt.widthHint = 200;
-        gd_btnDecrypt.heightHint = btnHeight;
-        btnDecrypt.setLayoutData(gd_btnDecrypt);
-        btnDecrypt.setEnabled(false);
-        btnDecrypt.setText(Messages.SigVerComposite_btnDecrypt);
+        btnVerify = new Button(centerTopComposite, SWT.NONE);
+        GridData gd_btnVerify = new GridData(SWT.CENTER, SWT.TOP, true, true);
+        gd_btnVerify.widthHint = btnWidth;
+        gd_btnVerify.heightHint = btnHeight;
+        btnVerify.setLayoutData(gd_btnVerify);
+        btnVerify.setEnabled(false);
+        btnVerify.setText(Messages.SigVerComposite_btnDecrypt);
         
-        Composite centerBtmComposite = new Composite(centerComposite, SWT.NONE);
+        centerBtmComposite = new Composite(centerComposite, SWT.NONE);
         GridData gd_centerBtmComposite = new GridData(SWT.FILL, SWT.FILL, true, false);
         gd_centerBtmComposite.heightHint = 110;
         centerBtmComposite.setLayoutData(gd_centerBtmComposite);
@@ -391,7 +371,7 @@ public class SigVerComposite extends Composite {
                 ImageDescriptor id = SigVerificationPlugin.getImageDescriptor("icons/key.png"); //$NON-NLS-1$
                 ImageData imD = id.getImageData(100);
                 Image img = new Image(Display.getCurrent(), imD);
-                gc.drawImage(img, width/2 - imD.width/2, height - imD.height);
+                gc.drawImage(img, width*3/4 - imD.width/2, height - imD.height);
                 
                 gc.dispose();
             }
@@ -413,7 +393,6 @@ public class SigVerComposite extends Composite {
         gd_groupVerify.heightHint = 330;
         groupVerify.setLayoutData(gd_groupVerify);
         groupVerify.setLayout(new GridLayout());
-        groupVerify.setText(Messages.SigVerComposite_btnSignature);
         
         canvasDocRight = new Canvas(groupVerify, SWT.NONE);
         GridData gd_canvasDocRight = new GridData(SWT.FILL, SWT.FILL, true, true);
@@ -469,9 +448,10 @@ public class SigVerComposite extends Composite {
         
         btnReset = new Button(progressComposite, SWT.NONE);
         GridData gd_btnReset = new GridData(SWT.RIGHT, SWT.FILL, true, false);
-        gd_btnReset.widthHint = 130;
+        gd_btnReset.widthHint = 160;
         btnReset.setLayoutData(gd_btnReset);
         btnReset.setText(Messages.SigVerComposite_btnReset);
+        if (step == 0) btnReset.setEnabled(false);
 
         //TAB FOLDER (BOTTOM)
         tabFolderSteps = new TabFolder(mainGroup, SWT.NONE);
@@ -487,6 +467,7 @@ public class SigVerComposite extends Composite {
         lblDescriptionStep1.setEditable(false);
         lblDescriptionStep1.setText(Messages.SigVerComposite_txtDescriptionOfStep1);
         tabStep1.setControl(lblDescriptionStep1);
+        
         Menu menu1 = new Menu(lblDescriptionStep1);
         lblDescriptionStep1.setMenu(menu1);
         mntm1 = new MenuItem(menu1, SWT.NONE);
@@ -498,7 +479,8 @@ public class SigVerComposite extends Composite {
         lblDescriptionStep2.setBackground(SWTResourceManager.getColor(255, 255, 255));
         lblDescriptionStep2.setEditable(false);
         lblDescriptionStep2.setText(Messages.SigVerComposite_txtDescriptionOfStep2);
-        tabStep2.setControl(lblDescriptionStep2);        
+        tabStep2.setControl(lblDescriptionStep2);      
+        
         Menu menu2 = new Menu(lblDescriptionStep2);
         lblDescriptionStep2.setMenu(menu2);
         mntm2 = new MenuItem(menu2, SWT.NONE);
@@ -510,7 +492,8 @@ public class SigVerComposite extends Composite {
         lblDescriptionStep3.setBackground(SWTResourceManager.getColor(255, 255, 255));
         lblDescriptionStep3.setEditable(false);
         lblDescriptionStep3.setText(Messages.SigVerComposite_txtDescriptionOfStep3);
-        tabStep3.setControl(lblDescriptionStep3);      
+        tabStep3.setControl(lblDescriptionStep3);     
+        
         Menu menu3 = new Menu(lblDescriptionStep3);
         lblDescriptionStep3.setMenu(menu3);
         mntm3 = new MenuItem(menu3, SWT.NONE);
@@ -523,6 +506,7 @@ public class SigVerComposite extends Composite {
         lblDescriptionStep4.setEditable(false);
         lblDescriptionStep4.setText(Messages.SigVerComposite_txtDescriptionOfStep4);
         tabStep4.setControl(lblDescriptionStep4);        
+        
         Menu menu4 = new Menu(lblDescriptionStep4);
         lblDescriptionStep4.setMenu(menu4);
         mntm4 = new MenuItem(menu4, SWT.NONE);
@@ -535,14 +519,6 @@ public class SigVerComposite extends Composite {
         btnAddInput.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 try {
-                    //Memorize first 1000 bytes of the old message
-                	int lengthOldMessage;
-                	byte[] oldMessage = null;
-                	if (input.data != null) {
-                    	lengthOldMessage = Math.min(input.data.length, 1000);
-                        oldMessage = Arrays.copyOfRange(input.data, 0, lengthOldMessage);
-                	}
-
                     // Create the InputWizard and display it
                     InputWizard wiz = new InputWizard(input);
                     WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
@@ -550,41 +526,36 @@ public class SigVerComposite extends Composite {
                         protected void configureShell(Shell newShell) {
                             super.configureShell(newShell);
                             // set size of the wizard-window (x,y)
-                            newShell.setSize(800, 480);
-                            newShell.setMinimumSize(800, 480);
+                            newShell.setSize(800, 400);
+                            newShell.setMinimumSize(800, 400);
                         }
                     };
                     if (dialog.open() == Window.OK) { 
-                    	//Get the first 1000 bytes of the new message
-                    	int lengthNewMessage;
-                    	byte[] newMessage = null;
-                    	if (input.data != null) {
-                        	lengthNewMessage = Math.min(input.data.length, 1000);
-                        	newMessage = Arrays.copyOfRange(input.data, 0, lengthNewMessage);
-                    	}
-                    	
-                    	// Only act if the user changed the input text (if the first 1000 bytes differ from old input)
-                    	if (input.data == null || !Arrays.equals(oldMessage, newMessage)) { 
-                            // If the user already finished other steps, reset
-                            // everything to this step (keep the chosen algorithms)
-                            if (step > 0)
-                                reset(0);
-                            
-                            //Show tooltip information
-                            if (input.tooltipData != null) {
-                            	if (input.path != null) {
-                            		canvasDocLeft.setToolTipText(input.path + "\n\n" + Messages.SigVerComposite_FileInput_Tooltip + input.tooltipData);
-                            	}
-                            }
-
-                            // Enable to select the hash method Activate the second tab of the description
-                            btnHash.setEnabled(true);
-                            tabFolderSteps.setSelection(1);
-                            lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 2));
-                            step = 1;
-                            centerTopComposite.redraw();
+                    	if (step > 0) {
+                            reset(0);
                     	}
 
+                        //Show tooltip information
+                        if (input.tooltipData != null) {
+                        	if (input.path != null) {
+                        		canvasDocLeft.setToolTipText(input.path + "\n\n" + Messages.SigVerComposite_FileInput_Tooltip + input.tooltipData);
+                        		fileNameLabel.setText(input.filename);
+                        		fileNameLabel.setToolTipText(input.path);
+                        	}
+                        }
+
+                        // Enable to select the hash method Activate the second tab of the description
+                        btnHash.setEnabled(true);
+                        btnReset.setEnabled(true);
+                        tabFolderSteps.setSelection(1);
+                        lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 2));
+                        step = 1;
+                        
+                        fileNameLabel.requestLayout();
+                        canvasDocLeft.redraw();
+                        
+                        centerTopComposite.redraw();
+                        
                     }
                 } catch (Exception ex) {
                     LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
@@ -596,10 +567,6 @@ public class SigVerComposite extends Composite {
         btnHash.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 try {
-                    // If the user already finished other steps, reset
-                    // everything to this step (keep the chosen algorithms)
-                    if (step > 1)
-                        reset(1);
                     // Create the HashWizard and display it
                     HashWizard wiz = new HashWizard(input);
                     WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
@@ -607,14 +574,23 @@ public class SigVerComposite extends Composite {
                         protected void configureShell(Shell newShell) {
                             super.configureShell(newShell);
                             // set size of the wizard-window (x,y)
-                            newShell.setSize(350, 700);
+                            newShell.setSize(400, 600);
                         }
                     };
                     if (dialog.open() == Window.OK) {
-                        hash = wiz.getHash(); // get hash method (an integer)
+                        // If the user already finished other steps, reset
+                        // everything to this step (keep the chosen algorithms)
+//                        if (step > 1 && wiz.getHash() != input.h) {
+                            reset(1);
+//                        }
+                        	
+                        input.h = wiz.getHash(); //get hash method (an integer)
 
-                        // Enable to select the signature method Activate the third tab of the description
-                        btnDecrypt.setEnabled(true);
+                        // Update GUI
+                        lblHashMethod.setText(hashes[input.h]);
+                        lblHashMethod.requestLayout();
+                        //System.out.println(hashes[input.h]);
+                        btnVerify.setEnabled(true);
                         tabFolderSteps.setSelection(2);
                         lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 3));
                         step = 2;
@@ -627,96 +603,89 @@ public class SigVerComposite extends Composite {
         });
 
         // Adds a Listener for the Signature select button
-        btnDecrypt.addSelectionListener(new SelectionAdapter() {
+        btnVerify.addSelectionListener(new SelectionAdapter() {
             // @SuppressWarnings("deprecation")
             public void widgetSelected(SelectionEvent e) {
                 try {
-                    // If the user already finished other steps, reset
-                    // everything to this step (keep the chosen algorithms)
-                    if (step > 2)
-                        reset(2);
-
-                    SignatureWizard wiz = new SignatureWizard(hash, input);
+                    SignatureWizard wiz = new SignatureWizard(input.h, input);
                     WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
                         @Override
                         protected void configureShell(Shell newShell) {
                             super.configureShell(newShell);
                             // set size of the wizard-window (x,y)
-                            newShell.setSize(550, 700);
-                            newShell.setMinimumSize(550, 700);
+                            newShell.setSize(600, 500);
+                            newShell.setMinimumSize(600, 500);
                         }
                     };
                     if (dialog.open() == Window.OK) {
-                    	setResult(false, false);
+                        // If the user already finished other steps, reset
+                        // everything to this step (keep the chosen algorithms)
+                        reset(2);
 
-                        // get signature method (integer)
-                        signature = wiz.getSignature();
-                        // KeyStoreAlias alias = wiz.getAlias();
+                        input.s = wiz.getSignature(); // get signature method (integer)
+                        input.publicKeyAlias = wiz.getAlias(); //get public key / alias 
 
                         // Set method and size of signature (ex. RSA, 1024)
                         input.setSignaturemethod();
-                        input.setSignatureSize();
+                        //input.setSignatureSize();
+                        
+                        //read the input file and save the data and signature from it in memory temporarily
+                        File inputFile = new File(input.path);
+                        input.setSignatureSizeFromInputFile(inputFile);
+                        input.setSignatureFromInputFile(inputFile);
+                        input.setPlainFromInputFile(inputFile);
 
-                        // Divides signature and plaintext from imported file.
-                        input.divideSignaturePlaintext();
+                        input.setSignatureHex();
+                        input.setSignatureOct();
+                        
+                        boolean error = false;
+                        if (input.plain == null || input.signature == null) {
+                        	error = true;
+                        } else {
+                        	//Hash the input
+                            hashInst.hashInput(hashes[input.h], input.plain);
 
-                        // Arguments: Hash method, data to hash
-
-                        hashInst.hashInput(hashes[hash], input.plain); // Hash
-                                                                       // the
-                                                                       // input
-
-                        // Shows the description for the actual step
-                        tabFolderSteps.setSelection(3);
-                        lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 4));
-
-                    } else {
-                        input.signaturemethod = null;
-                    }
-                } catch (Exception ex) {
-                    LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
-                }
-
-                // Only if a signaturemethod was chosen, the wizard for the key should open.
-                if (input.signaturemethod != null) {
-                    // Input Key Wizard
-                    try {
-                        // If the user already finished other steps, reset
-                        // everything to this step (keep the chosen algorithms)
-                        if (step > 2)
-                            reset(2);
-
-                        // Create the InputKeyWizard
-                        InputKeyWizard wiz = new InputKeyWizard(input, sigVerification, hashInst);
-                        // Display it
-                        WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
-                            @Override
-                            protected void configureShell(Shell newShell) {
-                                super.configureShell(newShell);
-                                // set size of the wizard-window (x,y)
-                                newShell.setSize(550, 500);
-                            }
-                        };
-                        if (dialog.open() == Window.OK) {
+							//VERIFY SIGNATURE
+							sigVerification.verifySignature(input, hashInst);
+                        }
+      
+                        //free memory
+                        input.signature = null;
+                        input.plain = null; 
+                        System.gc();
+                        
+//                        if (error) { // Shows a dialog if the input file is not containing a valid signature
+//                        	MessageDialog.open(MessageDialog.ERROR, sigVerView.getSite().getShell(), "Error", "There seems to be a problem with the opened file.", SWT.NONE);
+//                        	input.signaturemethod = null;
+//                        	sigVerification.reset();
+//                        } else {
+                            // Update the GUI
+                            lblSignatureMethod.setText(signatures[input.s]);
+                            lblSignatureMethod.requestLayout();
+                            String keyDescription = input.publicKeyAlias.getContactName() + " - " + input.publicKeyAlias.getKeyLength() + " bit"; //$NON-NLS-1$ //$NON-NLS-2$
+                            centerBtmComposite.setToolTipText(keyDescription);
+                            step = 3;
+                            tabFolderSteps.setSelection(step);
+                            centerTopComposite.redraw();
+                            lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 4));                            
                             btnResult.setEnabled(true);
-
-                            // Shows green check mark or red fail sign if comparison is correct or false
-                            if (sigVerification.getResult() == true) {
+                            
+                        	if (!error && sigVerification.getResult() == true) { // Shows green check mark or red fail sign if comparison is correct or false
                             	lblDescriptionStep4.setText(Messages.SigVerComposite_resutTrueDescription+Messages.SigVerComposite_txtDescriptionOfStep4);
                             	setResult(true, false);
                             } else {
                             	lblDescriptionStep4.setText(Messages.SigVerComposite_resutFalseDescription+Messages.SigVerComposite_txtDescriptionOfStep4);
                             	setResult(false, true);
                             }
-                            step = 3;
-                            centerTopComposite.redraw();
-                        } else {
-                            sigVerification.reset();
-                        }
-
-                    } catch (Exception ex) {
-                        LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
+//                    	}
+            
+                    } else {
+                        input.signaturemethod = null;
+                                   
+                        sigVerification.reset();
                     }
+                } catch (Exception ex) {
+                    LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
                 }
             }
         });
@@ -724,11 +693,6 @@ public class SigVerComposite extends Composite {
         btnResult.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 try {
-                    // If the user already finished other steps, reset
-                    // everything to this step (keep the chosen algorithms)
-                    if (step > 3) {
-                        reset(3);
-                    }
                     // Show the result
                     // Create the Show signature shell
                     Display display = Display.getCurrent();
@@ -750,48 +714,88 @@ public class SigVerComposite extends Composite {
         // Adds a Listener for the reset button
         btnReset.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
-                if (step > 0) {
-                    step = step - 1;
-                }
-                reset(step);
+//                if (step > 0) {
+//                    step = step - 1;
+//                }
+//                reset(step);
+            	reset(step-1);
             }
         });
+        
+        
+        // Context menu entries to select all text
+        mntm0.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
+            	textGeneralDescription.selectAll();
+            }
+        });
+        mntm1.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
+            	lblDescriptionStep1.selectAll();
+            }
+        });
+        mntm2.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
+            	lblDescriptionStep2.selectAll();
+            }
+        });
+        mntm3.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
+            	lblDescriptionStep3.selectAll();
+            }
+        });
+        mntm4.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
+            	lblDescriptionStep4.selectAll();
+            }
+        });
+        
+        
+        
     }
 
     private void reset(int step) {
         // If the user already finished other steps, reset everything to this
         // step (keep the chosen algorithms)
-        switch (step) {
-        case 0:
-            btnHash.setEnabled(false);
-            btnDecrypt.setEnabled(false);
-            btnResult.setEnabled(false);
-            tabFolderSteps.setSelection(0);
-            lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 1));
-            canvasDocLeft.setToolTipText("");
-        	setResult(false, false);
-        	centerTopComposite.redraw();
-            break;
-        case 1:
-            btnDecrypt.setEnabled(false);
-            btnResult.setEnabled(false);
-            hashInst.reset();
-            tabFolderSteps.setSelection(1);
-            lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 2));
-        	setResult(false, false);
-        	centerTopComposite.redraw();
-            break;
-        case 2:
-            btnResult.setEnabled(false);
-            lblDescriptionStep4.setText(Messages.SigVerComposite_txtDescriptionOfStep4);
-            sigVerification.reset();
-            tabFolderSteps.setSelection(2);
-            lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 3));
-        	setResult(false, false);
-        	centerTopComposite.redraw();
-            break;
-        default:
-            break;
-        }
+    	while (this.step > step) {
+	    	this.step--;
+	    	
+	        switch (this.step) {
+	        case 0:	//select input file
+	            btnHash.setEnabled(false);
+	            btnVerify.setEnabled(false);
+	            btnResult.setEnabled(false);
+	        	btnReset.setEnabled(false);
+	            lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 1));
+	            canvasDocLeft.setToolTipText("");
+	            fileNameLabel.setText("");
+	            fileNameLabel.setToolTipText("");
+	            fileNameLabel.requestLayout();
+	            canvasDocLeft.redraw();
+	            break;
+	        case 1:	//choose hash method
+	            btnVerify.setEnabled(false);
+	            btnResult.setEnabled(false);
+	            hashInst.reset();
+	            lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 2));
+	            lblHashMethod.setText("");
+	            break;
+	        case 2: //choose signature method and key
+	            btnResult.setEnabled(false);
+	            lblDescriptionStep4.setText(Messages.SigVerComposite_txtDescriptionOfStep4);
+	            sigVerification.reset();
+	            lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 3));
+	            lblSignatureMethod.setText("");
+	            centerBtmComposite.setToolTipText("");
+	            break;
+	        default:
+	            break;
+	        }
+    	}
+
+        tabFolderSteps.setSelection(step);
+    	setResult(false, false);
+    	centerTopComposite.redraw();   
+    	centerBtmComposite.redraw();
     }
 }

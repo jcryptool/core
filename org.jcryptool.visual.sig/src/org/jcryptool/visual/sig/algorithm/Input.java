@@ -70,7 +70,7 @@ public class Input {
     /**
      * Contains the private key used to sign the data (given by JCTCA plugin)
      */
-    public static KeyStoreAlias privateKey;
+    public static KeyStoreAlias privateKeyJCTCA;
 
     /**
      * Contains the public key used to verify the data in the JCTCA plugin
@@ -80,7 +80,7 @@ public class Input {
     /**
      * Contains the private key used to sign the data (chosen in our plugin)
      */
-    public static KeyStoreAlias key;
+    public static KeyStoreAlias privateKey;
     
     /**
      * The path used to save the binary file
@@ -102,7 +102,7 @@ public class Input {
         signature = null;
         signatureHex = null;
         signatureOct = null;
-        privateKey = null;
+        privateKeyJCTCA = null;
         publicKey = null;
         savePath = null;
         h = -1;

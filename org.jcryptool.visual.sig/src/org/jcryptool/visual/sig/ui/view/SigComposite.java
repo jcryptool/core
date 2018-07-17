@@ -556,6 +556,7 @@ public class SigComposite extends Composite {
         gd_btnReset.widthHint = 110;
         btnReset.setLayoutData(gd_btnReset);
         btnReset.setText(Messages.SigComposite_btnReset);
+        btnReset.setEnabled(false);
 
         btnReturn = new Button(compSignatureGeneration, SWT.NONE);
         btnReturn.setText(Messages.SigComposite_btnReturn);
@@ -578,7 +579,7 @@ public class SigComposite extends Composite {
         addContributionItem(toolBarMenu, commandId, SigPlugin.getImageDescriptor("icons/reset.gif"), "Reset");	//$NON-NLS-1$
 
         // Check if called by JCT-CA
-        if (Input.privateKey != null) {
+        if (Input.privateKeyJCTCA != null) {
             btnReturn.setVisible(true); // Set button to return visible
             called = true;
         }
@@ -648,6 +649,7 @@ public class SigComposite extends Composite {
                             
                             canvasBtmCenter.redraw();
                             lblProgress.setText(String.format(Messages.SigComposite_lblProgress, 2));
+                            btnReset.setEnabled(true);
                     	}
                     	//prevent memory leak
                     	newMessage = null;
@@ -671,7 +673,6 @@ public class SigComposite extends Composite {
                         @Override
                         protected void configureShell(Shell newShell) {
                             super.configureShell(newShell);
-                            // set size of the wizard-window (x,y)
                         }
                     };
                     if (dialog.open() == Window.OK) {
@@ -712,15 +713,20 @@ public class SigComposite extends Composite {
                         protected void configureShell(Shell newShell) {
                             super.configureShell(newShell);
                             // set size of the wizard-window (x,y)
-                            newShell.setSize(550, 700);
-                            newShell.setMinimumSize(550, 700);
+                            newShell.setSize(550, 550);
+                            newShell.setMinimumSize(550, 550);
                         }
                     };
                     if (dialog.open() == Window.OK) {
                 		reset(2);       	
                         // get signature method (integer)
                         signature = wiz.getSignature();
+                        Input.s = signature;
+                        
+                        //get key
                         KeyStoreAlias alias = wiz.getAlias();
+                        Input.privateKey = alias;
+                        
                         lblSignature.setText(signatures[signature]);
 
                         // Creates the signature for the calculated hash.
@@ -767,9 +773,33 @@ public class SigComposite extends Composite {
         // Adds a Listener for the reset button
         btnReset.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
-                reset(0);
-                Input.reset();
-                System.gc();
+            	String stepString = lblProgress.getText();
+            	int currStep;
+            	boolean completeReset = false;
+            	
+            	if(stepString.contains("Schritt")) {
+            		currStep = Integer.parseInt(String.valueOf(stepString.charAt(8)))-1;
+            		if (currStep < 1) {
+            			currStep = 1;
+            			completeReset = true;
+            		}
+            		reset(currStep -1);
+            	} else if (stepString.contains("Step")) {
+            		currStep = Integer.parseInt(String.valueOf(stepString.charAt(5)))-1;
+            		if (currStep < 1) {
+            			currStep = 1;
+            			completeReset = true;
+            		}
+            		reset(currStep -1);
+            	} else {
+                    reset(0);
+                    completeReset = true;
+            	}
+            	
+            	if (completeReset) {
+                    Input.reset();
+                    System.gc();
+            	}
             }
         });
 
@@ -797,7 +827,7 @@ public class SigComposite extends Composite {
         btnReturn.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 try {
-                    Input.privateKey = null;
+                    Input.privateKeyJCTCA = null;
                     Input.publicKey = null;
                     IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
                     IViewReference ref = page.findViewReference("org.jcryptool.visual.sig.view"); //$NON-NLS-1$
@@ -864,6 +894,7 @@ public class SigComposite extends Composite {
         // step (keep the chosen algorithms)
         switch (step) {
         case 0:
+        	btnReset.setEnabled(false);
             btnHash.setEnabled(false);
             c1.setToolTipText(null);
             copy.setEnabled(false);
@@ -879,22 +910,22 @@ public class SigComposite extends Composite {
             Input.signature = null;
             Input.signatureHex = null;
             Input.signatureOct = null;
-            Input.privateKey = null;
+            Input.privateKeyJCTCA = null;
             Input.publicKey = null;
-            Input.key = null;
+            Input.privateKey = null;
             Input.s = -1;
         case 2:
         	Input.savePath = null;
             btnOpenInEditor.setEnabled(false);
             txtDescriptionOfStep4.setText(Messages.SigComposite_txtDescriptionOfStep4);
             if (!called) { // If not called by jctca, reset key
-                Input.privateKey = null;
+                Input.privateKeyJCTCA = null;
             }
             break;
         default:
             break;
         }
-
+        
         lblProgress.setText(s);
         tabDescription.setSelection(step);
         // redraw canvas (to reset the arrows)
@@ -914,7 +945,6 @@ public class SigComposite extends Composite {
         sigstring = ""; //$NON-NLS-1$
 
         // Temporary solution
-
         if (hashes[hash].contains("MD5")) { //$NON-NLS-1$
             sigstring = "MD5with"; //$NON-NLS-1$
         }

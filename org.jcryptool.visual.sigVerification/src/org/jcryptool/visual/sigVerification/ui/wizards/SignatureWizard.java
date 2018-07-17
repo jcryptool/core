@@ -12,6 +12,7 @@ package org.jcryptool.visual.sigVerification.ui.wizards;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
+import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
 
 /**
@@ -22,8 +23,9 @@ import org.jcryptool.visual.sigVerification.algorithm.Input;
 public class SignatureWizard extends Wizard {
     private SignatureWizardPage page;
     private int signature;
-    private int method = 0;
-    Input input;
+    private int method;
+    private Input input;
+    private KeyStoreAlias alias;
 
     public SignatureWizard(int m, Input input) {
         super();
@@ -34,31 +36,40 @@ public class SignatureWizard extends Wizard {
 
     @Override
     public void addPages() {
-        page = new SignatureWizardPage("SignatureWizard", method, input); //$NON-NLS-1$
-        addPage(page);
+    	page = new SignatureWizardPage("SignatureWizard", method, input); //$NON-NLS-1$
+        addPage(page); 
     }
 
     @Override
     public boolean performFinish() {
-        int i = 0; // 0-4
         // get all the radiobuttons from the WizardPage
-        Control[] radiobutton = (Control[]) page.getGrpSignatures().getChildren();
+        Control[] radioButtons = (Control[]) page.getGrpSignatures().getChildren();
+        
         // Check which radiobutton is selected
-        while (i <= 4) {
-            // Check if the current button is selected
-            if (((Button) radiobutton[i]).getSelection()) {
-                signature = i;
-                i = 5; // leave the loop
+        for (int i = 0; i < radioButtons.length; i++) {
+            if (((Button) radioButtons[i]).getSelection()) {
+                signature = i; //set this.signature to selected radioButton
+                break; // leave the loop
             }
-            i++;
         }
+        
+        // Get the Alias
+        alias = page.getAlias();
+
         return true;
     }
 
     /**
-     * @return the signature
+     * @return the selected signature
      */
     public int getSignature() {
         return signature;
+    }
+    
+    /**
+     * @return the selected KeyStoreAlias (containing the public key for the verification)
+     */
+    public KeyStoreAlias getAlias() {
+    	return alias;
     }
 }

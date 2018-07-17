@@ -8,11 +8,11 @@
         <h1>Signatur-Verifikation</h1>
         <p>
 		Willkommen in der Online Hilfe des Plug-Ins zur Visualisierung der Signaturverifizierung.
-		Nachfolgenden finden Sie einen &Uuml;berblick des Plug-Ins sowie eine detaillierte Erkl&auml;rung zu jeden Schritt des Signaturverifizierungsprozesses. 
+		Nachfolgenden finden Sie einen &Uuml;berblick des Plug-Ins, sowie eine detaillierte Erkl&auml;rung zu jedem Schritt des Signaturverifizierungsprozesses. 
 		Hier kommen Sie zur Hilfe der <a href="#GUI2">Validierung von Zertifikaten nach G&uuml;ltigkeitsmodellen. </a>
         <br>
-		Die Visualisierung soll die Verifizierung einer Signatur f&uuml;r ein bestimmtes signiertes Dokument zeigen.
-		Eine digitale Signatur kann zur Authentisierung der Identit&auml;t des Senders oder des Unterzeichners des Dokuments genutzt werden. 
+		Die Visualisierung soll die Verifizierung einer Signatur f&uuml;r ein bestimmtes, signiertes Dokument zeigen.
+		Eine digitale Signatur kann zur Authentifizierung der Identit&auml;t des Senders oder des Unterzeichners des Dokuments genutzt werden. 
 		Sie sichert au&szlig;erdem die Integrit&auml;t des Dokumentes selbst.
 		</p>
 		<img src="GUI1.png"> 
@@ -21,11 +21,12 @@
 		<p>Schrittweises zur&uuml;ckgehen. Alle vorgenommenen &Auml;nderungen oder Einstellungen bleiben gespeichert, bis zu dem Schritt zu dem man zur&uuml;ck geht.</p>
 		
 		<h2>Schritt 1 – Input ausw&auml;hlen</h2>
-        <p>Um den Signaturverifizierungsprozess zu starten, klicken Sie den Button "Input ausw&auml;hlen". W&auml;hlen Sie eine bereits vorhandene Signatur-Datei aus, die maximale Dateigr&ouml;&szlig;e betr&auml;gt 10 MB. Sollten Sie noch keine Signatur-Datei besitzen, k&ouml;nnen Sie sich unter Visualisierung mit dem Plug-In Signatur-Demo, eine erstellen lassen.: <a href="https://github.com/jcryptool/crypto/tree/master/org.jcryptool.visual.sig">Hier geht es zu Signatur-Demo</a></</p>
+        <p>Um den Signaturverifizierungsprozess zu starten, klicken Sie den Button "Input ausw&auml;hlen". W&auml;hlen Sie eine bereits vorhandene Signatur-Datei aus, die mit der "Signatur-Demo"-Visualisierung erzeugt wurde. Die maximale Dateigr&ouml;&szlig;e wird Ihnen in der Titelzeile des Fensters angezeigt. Sollten Sie noch keine signierte Datei besitzen, k&ouml;nnen Sie sich mit der Signatur-Demo Visualisierung eine solche Datei erstellen.</p>
       	<p><img src="DateiAuswahlen.png"></p>
 		
 		<h2>Schritt 2 – Hashfunktion ausw&auml;hlen</h2>
-        <p>Der zweite Schritt des Signaturverifizierungsprozesses ist die Berechnung des Hashwertes der Signatur. Mit der Neuberechnung des Hashwertes der Signatur, kann die Signatur auf Ver&auml;nderung gepr&uuml;ft werden. Es muss der gleich Hashalgorithmus verwendet werden wie bei der Signaturerstellung.</p>
+        <p>Der zweite Schritt des Signaturverifizierungsprozesses ist die Berechnung des Hashwertes der signierten Datei. Eine Hashfunktion bildet Daten variabler L&auml;nge auf einen Wert fester L&auml;nge ab. Statt der eigentlichen Nachricht wird nur deren Hashwert signiert (bzw. verifiziert). Dies erh&ouml;ht die Effizienz in der Regel deutlich, da der Hashwert oft deutlich kleiner ist als die eigentliche Nachricht. Mit der Neuberechnung des Hashwertes der Datei kann diese auf Ver&auml;nderung gepr&uuml;ft werden. 
+        Es muss der gleiche Hashalgorithmus verwendet werden wie bei der Signaturerstellung. Normalerweise enthält die Signatur eine Angabe dazu, welcher Algorithmus bei der Signierung verwendet wurde. Das ist hier nicht der Fall, sodass der Nutzer diese manuell angeben muss.</p>
         <img src="HashWahlen.png">
         <h3>Beschreibung der unterst&uuml;tzten Hashfunktionen</h3>
         <h4>MD5</h4>
@@ -40,60 +41,62 @@
         <p>SHA-256 und SHA-512 unterscheiden sich in der Wortl&auml;nge. SHA-256 verwendet 32-Bit-W&ouml;rter, wobei SHA-512 64-Bit-W&ouml;rter verwendet. Die angef&uuml;gte Nummer gibt die L&auml;nge der einzelnen Hashwerte (in Bits) an.</p>
         
         <h2>Schritt  3 – Signatur verifizieren</h2>
-        <p>Um die von Ihnen gew&auml;hlte Signatur zu verifizieren, m&uuml;ssen Sie die Signaturfunktionen ausw&auml;hlen mit der die Signatur erstellt wurde.</p>
+        <p>Um die von Ihnen gew&auml;hlte Signatur zu verifizieren, m&uuml;ssen Sie die Signaturfunktionen ausw&auml;hlen, mit der die Signatur erstellt wurde.</p>
         <img src="Signaturmethode.png">
         
         <h3>Beschreibung der unterst&uuml;tzten Signaturfunktionen</h3>
         <h4>DSA</h4>
         <p>Der “Digital Signature Algorithm“ (DSA) (ver&ouml;ffentlicht im Jahr 1991 von NIST) ist ein „United States Federal Government“-Standard f&uuml;r digitale Signaturen. Mit DSA ist die Entropie, Geheimhaltung, und die Einzigartigkeit des zuf&auml;lligen Signatur-Wertes entscheidend. Jede Verletzung einer dieser drei Anforderungen kann dazu f&uuml;hren, dass der gesamte private Schl&uuml;ssel dem Angreifer  offenbart wird. Wird der zuf&auml;llige Signatur-Wert ein zweites Mal verwendet, ein vorhersehbarer Wert berechnet oder sind nur einige Bits des Wertes in jeder der Signaturwerte undicht, kann DAS gebrochen werden.</p>
-        <p>Lernen Sie mehr &uuml;ber DSA: <a href="https://github.com/jcryptool/crypto/tree/master/org.jcryptool.visual.dsa">Besuchen Sie JCT-DSA</a></p> 
+        <p>Lernen Sie mehr über DSA: <a href="https://de.wikipedia.org/wiki/Digital_Signature_Algorithm" target="_blank">DSA auf Wikipedia</a></p>
         <h4>RSA</h4>
         <p>RSA (ver&ouml;ffentlicht im Jahr 1977) ist ein Algorithmus f&uuml;r asymmetrische kryptographische Verfahren, die auf der mutma&szlig;lichen Schwierigkeit der Faktorisierung von gro&szlig;en Zahlen, dem Faktorisierungsproblem, basiert. Jeder kann den &ouml;ffentlichen Schl&uuml;ssel zum Entschl&uuml;sseln einer Nachricht verwenden, aber mit den aktuelle ver&ouml;ffentlichten Methoden, kann nur jemand der die Primfaktoren kennt und vorausgesetzt der Schl&uuml;ssel ist lang genug, die Nachricht tats&auml;chlich dekodieren. Sichere Padding-Verfahren, wie beispielsweise RSA-PSS, sind f&uuml;r die Sicherheit der Signaturerstellung genauso notwendig wie f&uuml;r die der Verschl&uuml;sselung einer Nachricht. Der PKCS #1 Cryptography Standard definiert die Empfehlungen f&uuml;r die Implementierung asymmetrischer Kryptografie, die auf dem RSA-Algorithmus basieren.</p>
-        <p> Lernen Sie mehr &uuml;ber RSA: <a href="https://github.com/jcryptool/crypto/tree/master/org.jcryptool.visual.rsa">Besuchen Sie JCT-RSA</a></p> 
+        <p>Lernen Sie mehr über RSA: <a href="PLUGINS_ROOT/org.jcryptool.visual.rsa/$nl$/help/content/index.html">Besuchen Sie JCT-RSA</a></p>  
         <h4>ECDSA</h4>
         <p>Der “Elliptic Curve Digital Signature Algorithm” (ECDSA) (vorgeschlagen von Scott Vanstone im Jahr 1992) ist die elliptische Kurve analog dem “Digital Signature Algorithm“ (DSA). Im Gegensatz zum normalen diskreten Logarithmusproblem und dem Faktorisierungsproblem, sind f&uuml;r Elliptischen Kurven keine Probleme bekannt. Die L&auml;nge des privaten Schl&uuml;ssels, der als sicher betrachtet wird, ist mit ECDSA wesentlich k&uuml;rzer. Bei einem Sicherheitsniveau von 80 Bits, was bedeutet, ein Angreifer w&uuml;rde 2^80 Signaturerzeugungsprozesse ben&ouml;tigen um den privaten Schl&uuml;ssel zu finden, ist die Gr&ouml;&szlig;e eines &ouml;ffentlichen DAS-Schl&uuml;ssels mindestens 1024 Bit, w&auml;hrend die Gr&ouml;&szlig;e eines &ouml;ffentlichen ECDA-Schl&uuml;ssels 160 Bit w&auml;re. </p>
         <h4>RSA and MGF1</h4>
         <p>Eine Mask Generation Function (MGF) ist eine Funktion zum Generieren von Pseudozufallszahlen in beliebiger L&auml;nge. Ohne Kenntnis &uuml;ber den Startwert (Seed), ist es praktisch nicht m&ouml;glich die Zufallszahlen vorherzusagen. MGF1 ist ein in der PKCS#1 spezifiziertes Verfahren, welches Hash-Funktionen wie SHA-1 einsetzt, um Pseudozufallszahlen zu generieren.</p>
-        
+        <h3>Mehr Informationen zur Kryptografie-Bibliothek BouncyCastle:</h3>
+       	<ul>
+        	<li><a href="http://www.bouncycastle.org/" target="_blank">Besuchen Sie BouncyCastle</a></li>
+        	<li><a href="https://github.com/jcryptool/core/tree/04fbe0efa19be7fee686b9fd4dcf3ee33b8e12d2/org.bouncycastle" target="_blank">Besuchen Sie BouncyCastle auf github</a></li>
+        	<li><a href="http://www.mobilefish.com/developer/bouncycastle/bouncycastle.html" target="_blank">Beispiele mit BouncyCastle</a></li>
+  		</ul>
 		<h3>&Ouml;ffentlichen Schl&uuml;ssel ausw&auml;hlen</h3>
-		<p>Nun ben&ouml;tigen Sie noch den &ouml;ffentlichen Schl&uuml;ssel. Wurde die Signatur mit einen Schl&uuml;ssel signiert, der vom Standard-JCT-Keystore zu Verf&uuml;gung gestellt wurde, kann dieser mit der Option "&ouml;ffentlichen Schl&uuml;ssel aus Java Keystore laden" geladen werden.</p>
-		<img src="SchlusselAuswahlen.png">
-
+		<p>Nun ben&ouml;tigen Sie noch den &ouml;ffentlichen Schl&uuml;ssel, der zu dem privaten Schl&uuml;ssel passt, mit dem die Signatur erzeugt wurde. Wurde die Signatur mit einem Schl&uuml;ssel aus dem JCT-&uuml;sselspeicher signiert (was momentan die einzige M&ouml;glichkeit darstellt), so kann der entsprechende &ouml;ffentliche Schl&uuml;ssel hier geladen werden.</p>
 		
         <h2>Schritt 4 – Ergebnis anzeigen</h2>
         <img src="Hacken.png">
         <img src="Kreutz.png">
-        <p>Wenn die Signatur als g&uuml;ltig verifiziert wurde, erscheint ein gr&uuml;ner Hacken neben dem Button "Ergebnis anzeigen", ansonsten erscheint ein rotes Kreutz. F&uuml;r n&auml;here Informationen des Ergebnisses, klicken Sie auf den Button „Ergebnis anzeigen“. Dort finden Sie alle relevanten Informationen zu der verifizierten Signatur:</p>
+        <p>Wenn die Signatur als g&uuml;ltig verifiziert wurde, erscheint ein gr&uuml;ner Haken neben dem Button "Ergebnis anzeigen", ansonsten erscheint ein rotes Kreutz. F&uuml;r n&auml;here Informationen, klicken Sie auf den Button „Ergebnis anzeigen“. Dort finden Sie alle relevanten Informationen zu der verifizierten Signatur:</p>
         <ul>
-            <li>Den verwendeten Schl&uuml;ssel/ verwendete Kurve</li>
-            <li>Verifikationsmethode</li>
-            <li>die hexadezimale, oktale oder die bin&auml;re Darstellung der Signaturn sowie die L&auml;nge</li>
-			<li>die hexadezimale Darstellung des Hashwertes sowie die L&auml;nge des Hashwertes</li>
+            <li>Den verwendeten Schl&uuml;ssel</li>
+            <li>Die Verifikationsmethode</li>
+            <li>Die hexadezimale, oktale oder die bin&auml;re Darstellung der Signaturn sowie deren L&auml;nge</li>
+			<li>Die hexadezimale Darstellung des Hashwertes sowie dessen L&auml;nge</li>
 		</ul>
-        <p>Klicken Sie auf den Button “G&uuml;ltigkeitsmodelle” um sich die Verifizierung von Zertifikaten nach dem Schalenmodell genauer anzusehen.</p>
+        <!--<p>Klicken Sie auf den Button “G&uuml;ltigkeitsmodelle”, um sich die Verifizierung von Zertifikaten nach dem Schalenmodell genauer anzusehen.</p>-->
 		<img src="ErgebnisAnzeigen.png">
 		
-		<h1><a id=GUI2>Hilfe der Validierung von Zertifikaten nach G&uuml;ltigkeitsmodellen</a></h1>
-		<p>Diese f&uuml;r Lernzwecke erstellte Oberfl&auml;che zeigt, wie sich die Verwendung unterschiedlicher G&uuml;ltigkeitsmodelle (Schalenmodell, Kettenmodell) auf die G&uuml;ltigkeit von Zertifikaten auswirkt.</p>
+		<h1 id="GUI2">Hilfe zur Validierung von Zertifikaten nach G&uuml;ltigkeitsmodellen</h1>
+		<p>Diese f&uuml;r Lernzwecke erstellte Oberfl&auml;che zeigt, wie sich die Verwendung unterschiedlicher G&uuml;ltigkeitsmodelle (Schalenmodell, Kettenmodell) auf die G&uuml;ltigkeit von Zertifikaten auswirkt. Achtung! Bisher wrude nur das Schalenmodell implementiert, es steht somit momentan als einziges G&uuml;ltigkeitsmodell zur Verf&uuml;gung. Das Kettenmodell soll in einem Folgeprojekt noch implementiert werden.</p>
 		<img src="2ob.png">
 		<h2>Schalenmodell</h2>
-		<p>Beim Schalenmodell wird eine Signatur nur als g&uuml;ltig erkl&auml;rt, wenn zum &Uuml;berpr&uuml;fungszeitpunkt alle Zertifikate g&uuml;ltig sind. Dh. wenn zur &Uuml;berpr&uuml;fung zwar das Teilnehmer-Zertifikat und das Level 2-Zertifikat noch g&uuml;ltig, das Wurzel-Zertifikat aber nicht mehr g&uuml;ltig ist, dann wird die Signatur als ung&uuml;ltig erkl&auml;rt. Genauso k&ouml;nnen die unteren Zertifikate kein l&auml;ngeres G&uuml;ltigkeitsdatum als die h&ouml;hergestellten haben (z. B.: Level 2 als Wurzel)</p>
+		<p>Beim Schalenmodell wird eine Signatur nur f&uuml;r g&uuml;ltig erkl&auml;rt, wenn zum &Uuml;berpr&uuml;fungszeitpunkt alle Zertifikate g&uuml;ltig sind. Dh. wenn zum Zeitpunkt der &Uuml;berpr&uuml;fung zwar das Teilnehmer-Zertifikat und das Level 2-Zertifikat noch g&uuml;ltig sind, das Wurzel-Zertifikat aber nicht mehr g&uuml;ltig ist, dann wird die Signatur f&uuml;r ung&uuml;ltig erkl&auml;rt. Genauso k&ouml;nnen die unteren Zertifikate kein l&auml;ngeres G&uuml;ltigkeitsdatum als die h&ouml;hergestellten haben (z. B.: Level 2 als Wurzel)</p>
 		<h3>Zertifikate</h3>
 		<h4>Wurzel-Zertifikat</h4>
 		<p>Oberstes Zertifikat-Level, welches die G&uuml;ltigkeit aller untergeordneten Zertifikate best&auml;tigt.</p>
 		<h4>Level 2-Zertifikat</h4>
 		<p>Dieses Zertifikat verweist auf das Wurzel-Zertifikat, denn es wurde von diesem signiert um dessen Korrektheit zu signalisieren.</p>
 		<h4>Teilnehmen-Zertifikat</h4>
-		<p>Das Teilnehmer-Zertifikat ist das unterste Zertifikat in der Zertifikatskette. Damit dieses Zertifikat als g&uuml;ltig verifiziert wird, m&uuml;ssen sowohl das Teilnehmer-Zertifikat sowie auch alle anderen Zertifikate der Kette (in diesem Fall das Teilnehmer- und das Wurzel-Zertifikat) g&uuml;ltig sein.</p>
+		<p>Das Teilnehmer-Zertifikat ist das unterste Zertifikat in der Zertifikatskette. Damit dieses Zertifikat als g&uuml;ltig verifiziert wird, m&uuml;ssen sowohl das Teilnehmer-Zertifikat als auch alle anderen Zertifikate der Kette (in diesem Fall das Teilnehmer- und das Wurzel-Zertifikat) g&uuml;ltig sein.</p>
 		<h3>Aktionen</h3>
 		<h4>Schalenmodell | Kettenmodell</h4>
-		<p>Auswahlm&ouml;glichkeit zwischen dem Schalenmodell und dem Kettenmodell. Achtung! Bis jetzt ist nur das Schalenmodell implementiert und steht somit als einziges G&uuml;ltigkeitsmodell zur Verf&uuml;gung. Das Kettenmodell soll in einem Folgeprojekt noch implementiert werden.</p>
+		<p>Auswahlm&ouml;glichkeit zwischen dem Schalenmodell und dem Kettenmodell.</p>
 		<h4>Zur&uuml;ck</h4>
-		<p>Hier werden die Standard-Zertifikate wiederhergestellt. Der Zustand wird somit auf den Zeitpunkt des Startens zur&uuml;ckgesetzt</p>
+		<p>Hier werden die Standard-Zertifikate (bzw. deren standardm&auml;&szlig;ige Endg&uuml;ltigkeitsdaten) wiederhergestellt.</p>
 		<h4>Endg&uuml;ltigkeitsdaten</h4>
 		<p>Hier k&ouml;nnen Sie die Endg&uuml;ltigkeiten der einzelnen Zertifikate umstellen und die Auswirkungen auf die Gesamtg&uuml;ltigkeit betrachten. Dazu m&uuml;ssen Sie noch auf "Ergebnis neu berechnen" klicken.</p>
 		<h4>Ergebnis neu berechnen</h4>
 		<p>Berechnet die G&uuml;ltigkeit neu und entscheidet nach dem Schalenmodell ob die Zertifikatskette g&uuml;ltig ist oder nicht. Ist sie immer noch g&uuml;ltig, erscheint wieder ein gr&uuml;ner Hacken, ansonsten erscheind ein rotes Kreuz. Bitte bachten Sie, dass dieser Button bei ung&uuml;ltiger Datumseingabe deaktiviert wird.</p>
-		
     </body>
 </html>

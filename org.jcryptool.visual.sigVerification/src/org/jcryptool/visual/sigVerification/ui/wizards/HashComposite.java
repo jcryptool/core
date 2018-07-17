@@ -92,13 +92,20 @@ public class HashComposite extends Composite implements SelectionListener {
         grpDescription.setText(Messages.HashWizard_grpDescription);
         grpDescription.setLayout(new GridLayout());
 
-        txtDescription = new Text(grpDescription, SWT.WRAP | SWT.TRANSPARENT | SWT.V_SCROLL);
+//        txtDescription = new Text(grpDescription, SWT.WRAP | SWT.TRANSPARENT | SWT.V_SCROLL);
+//        GridData gd_txtDescription = new GridData(SWT.FILL, SWT.FILL, true, true);
+//        gd_txtDescription.heightHint = 200;
+//        txtDescription.setLayoutData(gd_txtDescription);
+//        txtDescription.setEditable(false);
+//        txtDescription.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
+//        txtDescription.setText(Messages.HashWizard_rdomd5_description);
+        
+        txtDescription = new Text(grpDescription, SWT.WRAP | SWT.TRANSPARENT);
         GridData gd_txtDescription = new GridData(SWT.FILL, SWT.FILL, true, true);
-        gd_txtDescription.heightHint = 200;
+        gd_txtDescription.heightHint = 100;
         txtDescription.setLayoutData(gd_txtDescription);
         txtDescription.setEditable(false);
-        txtDescription.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
-        txtDescription.setText(Messages.HashWizard_rdomd5_description);
+        txtDescription.setText(Messages.HashWizard_header + "\n\n" + Messages.HashWizard_FurtherInfoInOnlineHelp);
 
         menuHash = new Menu(txtDescription);
         txtDescription.setMenu(menuHash);
@@ -114,7 +121,7 @@ public class HashComposite extends Composite implements SelectionListener {
         
         pack();
         Point size = computeSize(width, SWT.DEFAULT);
-        size.y += 100;
+        size.y += 250;
         getShell().setMinimumSize(size);
         
         // Add event listeners
@@ -166,22 +173,17 @@ public class HashComposite extends Composite implements SelectionListener {
 
     @Override
     public void widgetSelected(SelectionEvent e) {
-        if (rdo1.getSelection()) {
-            txtDescription.setText(Messages.HashWizard_rdomd5_description);
-            input.h = 0;
-        } else if (rdo2.getSelection()) {
-            txtDescription.setText(Messages.HashWizard_rdosha1_description);
-            input.h = 1;
-        } else if (rdo3.getSelection()) {
-            txtDescription.setText(Messages.HashWizard_rdosha256_description);
-            input.h = 2;
-        } else if (rdo4.getSelection()) {
-            txtDescription.setText(Messages.HashWizard_rdosha384_description);
-            input.h = 3;
-        } else if (rdo5.getSelection()) {
-            txtDescription.setText(Messages.HashWizard_rdosha512_description);
-            input.h = 4;
-        }
+//        if (rdo1.getSelection()) {
+//            txtDescription.setText(Messages.HashWizard_rdomd5_description);
+//        } else if (rdo2.getSelection()) {
+//            txtDescription.setText(Messages.HashWizard_rdosha1_description);
+//        } else if (rdo3.getSelection()) {
+//            txtDescription.setText(Messages.HashWizard_rdosha256_description);
+//        } else if (rdo4.getSelection()) {
+//            txtDescription.setText(Messages.HashWizard_rdosha384_description);
+//        } else if (rdo5.getSelection()) {
+//            txtDescription.setText(Messages.HashWizard_rdosha512_description);
+//        }
     }
 
     @Override

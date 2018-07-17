@@ -22,12 +22,11 @@ import org.jcryptool.visual.sigVerification.algorithm.Input;
  */
 public class InputFileWizardPage extends WizardPage {
     private InputFileComposite compositeFile;
-    Input input;
+    private Input input;
 
     public InputFileWizardPage(String pageName, Input input) {
         super(pageName);
         this.input = input;
-
         setTitle(Messages.InputFileWizard_title);
     }
 

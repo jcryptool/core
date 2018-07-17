@@ -30,7 +30,7 @@ public class SignatureNotifier implements SignatureListener {
         Signature signature = new Signature(e.getSignature(), e.getPath(), e.getText(), new Date(
                 System.currentTimeMillis()), e.getPrivAlias(), e.getPubAlias(), e.getHashAlgorithm());
         CertificateCSRR.getInstance().addSignature(signature);
-        Input.privateKey = null;
+        Input.privateKeyJCTCA = null;
         Input.publicKey = null;
     }
 }
