@@ -2,12 +2,18 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.bouncycastle;singleton:=true
-Bundle-Version: 1.59.0
+Bundle-Version: 1.60.0
 Bundle-Activator: org.bouncycastle.BouncyCastlePlugin
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ClassPath: .,
+ src/org/bouncycastle/,
+ libs/bcprov-jdk15on-160.jar
+Import-Package: org.jcryptool.core.logging.utils,
+ org.jcryptool.core.operations.providers
+Automatic-Module-Name: org.bouncycastle
 Export-Package: org.bouncycastle,
  org.bouncycastle.asn1,
  org.bouncycastle.asn1.anssi,
@@ -124,6 +130,7 @@ Export-Package: org.bouncycastle,
  org.bouncycastle.math.ec.custom.sec,
  org.bouncycastle.math.ec.endo,
  org.bouncycastle.math.ec.rfc7748,
+ org.bouncycastle.math.ec.rfc8032,
  org.bouncycastle.math.ec.tools,
  org.bouncycastle.math.field,
  org.bouncycastle.math.raw,
@@ -156,9 +163,3 @@ Export-Package: org.bouncycastle,
  org.bouncycastle.x509,
  org.bouncycastle.x509.extension,
  org.bouncycastle.x509.util
-Bundle-ClassPath: .,
- src/org/bouncycastle/,
- libs/bcprov-jdk15on-159.jar
-Import-Package: org.jcryptool.core.logging.utils,
- org.jcryptool.core.operations.providers
-Automatic-Module-Name: org.bouncycastle
