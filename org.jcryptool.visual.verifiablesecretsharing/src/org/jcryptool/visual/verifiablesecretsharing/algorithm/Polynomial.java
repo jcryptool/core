@@ -94,6 +94,7 @@ public class Polynomial {
 		return c;
 	}
 
+	@Override
 	public String toString() {
 		if (deg == 0)
 			return "" + coef[0];

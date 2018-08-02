@@ -41,18 +41,23 @@ public class VerifiableSecretSharingView extends ViewPart {
 	 * This is a callback that will allow us to create the viewer and initialize
 	 * it.
 	 */
+	@Override
 	public void createPartControl(final Composite parent) {
 		this.parent = parent;
 		tf = new TabFolder(parent, SWT.TOP);
 
 		tiVssc = new TabItem(tf, SWT.NONE);
 		tiVssc.setText(Messages.VerifiableSecretSharingComposite_tab_title);
+		
 		scVssc = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
 		scVssc.setExpandHorizontal(true);
 		scVssc.setExpandVertical(true);
+		
 		vssc = new VerifiableSecretSharingComposite(scVssc, SWT.NONE, this);
+		
 		scVssc.setContent(vssc);
 		scVssc.setMinSize(vssc.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
 		tiVssc.setControl(scVssc);
 
 		tiCc = new TabItem(tf, SWT.NONE);
