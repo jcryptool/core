@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.Display;
  */
 public class ColorService {
     /** Colors for backgrounds. */
-    public static final Color WHITE, GREEN, RED, LIGHTGRAY, GRAY;
+    public static final Color WHITE, GREEN, RED, LIGHTGRAY, GRAY, BLACK;
 
     static {
         WHITE = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
@@ -31,5 +31,6 @@ public class ColorService {
         RED = Display.getDefault().getSystemColor(SWT.COLOR_RED);
         GREEN = Display.getDefault().getSystemColor(SWT.COLOR_GREEN);
         LIGHTGRAY = Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND);
+        BLACK = Display.getDefault().getSystemColor(SWT.COLOR_BLACK);
     }
 }
