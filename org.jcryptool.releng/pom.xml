@@ -48,35 +48,15 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 			<url>http://download.eclipse.org/releases/photon</url>
 		</repository>
 		<repository>
-			<id>eclipse-babel-oxygen</id>
+			<id>eclipse-babel-photon</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/technology/babel/update-site/R0.15.1/oxygen</url>
+			<url>http://download.eclipse.org/technology/babel/update-site/R0.16.0/photon</url>
 		</repository>
 	</repositories>
 
 	<build>
 		<defaultGoal>clean package</defaultGoal>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-enforcer-plugin</artifactId>
-				<version>1.4.1</version>
-				<executions>
-					<execution>
-						<id>enforce-maven</id>
-						<goals>
-							<goal>enforce</goal>
-						</goals>
-						<configuration>
-							<rules>
-								<requireMavenVersion>
-									<version>3.0</version>
-								</requireMavenVersion>
-							</rules>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
@@ -233,7 +213,7 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>2.9</version>
+				<version>3.0.0</version>
 			</plugin>
 		</plugins>
 	</reporting>
