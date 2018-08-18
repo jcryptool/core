@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><?pde version="3.8"?><target name="JCrypTool RCP" sequenceNumber="41">
 <locations>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
-<unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="4.7.0.v20171231020002"/>
-<repository location="http://download.eclipse.org/technology/babel/update-site/R0.15.1/oxygen"/>
-</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 		<unit id="org.eclipse.equinox.core.sdk.feature.group" version="3.14.0.v20180512-1130"/>
 		<unit id="org.eclipse.equinox.p2.sdk.feature.group" version="3.11.0.v20180515-1348"/>
@@ -13,6 +9,10 @@
 		<unit id="org.eclipse.sdk.ide" version="4.8.0.I20180611-0500"/>
 		<unit id="org.eclipse.zest.sdk.feature.group" version="1.7.0.201606061308"/>
 		<repository location="http://download.eclipse.org/releases/photon"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+		<unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="4.8.0.v20180815020001"/>
+		<repository location="http://download.eclipse.org/technology/babel/update-site/R0.16.0/photon/"/>
 	</location>
 </locations>
 <launcherArgs>
