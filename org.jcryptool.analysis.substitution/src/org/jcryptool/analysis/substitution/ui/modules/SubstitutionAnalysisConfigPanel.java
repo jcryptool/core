@@ -37,6 +37,8 @@ import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
+import org.jcryptool.core.util.colors.ColorService;
+import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite;
 import org.jcryptool.crypto.ui.textloader.ui.ControlHatcher;
 import org.jcryptool.crypto.ui.textloader.ui.wizard.TextLoadController;
@@ -300,28 +302,30 @@ public class SubstitutionAnalysisConfigPanel extends Composite {
 	public SubstitutionAnalysisConfigPanel(Composite parent, int style) {
 		super(parent, style);
 		this.observers = new LinkedList<Observer>();
-		GridLayout thisLayout = new GridLayout(1, false);
-		thisLayout.verticalSpacing = 13;
-		setLayout(thisLayout);
+//		GridLayout thisLayout = new GridLayout(1, false);
+//		thisLayout.verticalSpacing = 13;
+//		setLayout(thisLayout);
+		setLayout(new GridLayout());
 		
 		Label lblSubstitutionAnalysis = new Label(this, SWT.NONE);
-		lblSubstitutionAnalysis.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		lblSubstitutionAnalysis.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD)); //$NON-NLS-1$
+		lblSubstitutionAnalysis.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+//		lblSubstitutionAnalysis.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD)); //$NON-NLS-1$
+		lblSubstitutionAnalysis.setFont(FontService.getHeaderFont());
 		lblSubstitutionAnalysis.setText(Messages.SubstitutionAnalysisConfigPanel_8);
 		
 		Label lblBlablabla = new Label(this, SWT.NONE);
-		GridData lblBlablablaLData = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		lblBlablablaLData.verticalIndent = 5;
-		lblBlablabla.setLayoutData(lblBlablablaLData);
+//		GridData lblBlablablaLData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+//		lblBlablablaLData.verticalIndent = 5;
+//		lblBlablabla.setLayoutData(lblBlablablaLData);
 		lblBlablabla.setText(Messages.SubstitutionAnalysisConfigPanel_9);
 		
 		grpCiphertext = new Group(this, SWT.NONE);
-		grpCiphertext.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		grpCiphertext.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		grpCiphertext.setText(Messages.SubstitutionAnalysisConfigPanel_10);
 		grpCiphertext.setLayout(new GridLayout(1, false));
 		
 		Label lblPleaseSelectA = new Label(grpCiphertext, SWT.NONE);
-		lblPleaseSelectA.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		lblPleaseSelectA.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		lblPleaseSelectA.setText(Messages.SubstitutionAnalysisConfigPanel_11);
 		
 		textSelector = new TextLoadController(grpCiphertext, this, SWT.NONE, true, true);
