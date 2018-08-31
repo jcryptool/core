@@ -11,22 +11,16 @@
 package org.jcryptool.visual.sig.ui.wizards;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.Text;
 
 /**
  * Contains the elements (2 group boxes) of the HashWizard
@@ -41,8 +35,6 @@ public class HashComposite extends Composite implements SelectionListener {
     private Button rdo3;
     private Button rdo4;
     private Button rdo5;
-    private Menu menuHash;
-    private MenuItem mntmHash;
 
     public HashComposite(Composite parent, int style) {
         super(parent, style);

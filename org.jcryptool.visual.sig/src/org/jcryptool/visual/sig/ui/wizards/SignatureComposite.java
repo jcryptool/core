@@ -13,6 +13,7 @@ package org.jcryptool.visual.sig.ui.wizards;
 import java.util.Enumeration;
 import java.util.HashMap;
 
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -24,8 +25,6 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
@@ -55,9 +54,8 @@ public class SignatureComposite extends Composite implements SelectionListener {
 
     private int hashMethod;
     private int signatureMethod = -1;
-    private Menu menuSig;
-    private MenuItem mntmSig;
     private Label lblSelectAKey;
+    private String signatureMethodName;
 
     public SignatureComposite(Composite parent, int style, int hashMethod, SignatureWizardPage p) {
         super(parent, style);
@@ -117,28 +115,9 @@ public class SignatureComposite extends Composite implements SelectionListener {
             }
         });
 
-//        Group grpDescription = new Group(this, SWT.NONE);
-//        grpDescription.setText(Messages.SignatureWizard_grpDescription);
-//        grpDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-//        grpDescription.setLayout(new GridLayout());
-
-//        txtDescription = new Text(grpDescription, SWT.WRAP | SWT.NO_BACKGROUND | SWT.V_SCROLL);
         txtDescription = new Text(this, SWT.WRAP | SWT.NO_BACKGROUND);
         txtDescription.setEditable(false);
         txtDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-//        txtDescription.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
-
-        menuSig = new Menu(txtDescription);
-        txtDescription.setMenu(menuSig);
-
-        mntmSig = new MenuItem(menuSig, SWT.NONE);
-        mntmSig.setText(Messages.Wizard_menu);
-        // To select all text
-        mntmSig.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) {
-                txtDescription.selectAll();
-            }
-        });
 
         initializeHashMethodDependencies();
         initializeSignatureMethodDependencies();
@@ -172,6 +151,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
             rdo4.setEnabled(false);
             if (signatureMethod == -1) {
                 signatureMethod = 1;
+                signatureMethodName = Messages.SignatureWizard_RSA;
             }
             break;
         case 1: // SHA1: RSA, DSA, ECDSA, RSA + MGF1
@@ -181,6 +161,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
             rdo4.setEnabled(true);
             if (signatureMethod == -1) {
                 signatureMethod = 0;
+                signatureMethodName = Messages.SignatureWizard_DSA;
             }
             break;
         case 2:
@@ -192,6 +173,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
             rdo1.setEnabled(false);
             if (signatureMethod == -1) {
                 signatureMethod = 1;
+                signatureMethodName = Messages.SignatureWizard_RSA;
             }
             break;
     	}
@@ -204,19 +186,27 @@ public class SignatureComposite extends Composite implements SelectionListener {
         rdo4.setSelection(Input.s == 3);
     	switch (signatureMethod) {
     	case 0:
-//            txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_DSA_description);
+        	txtDescription.setText(Messages.SignatureWizard_Usage 
+        			+ Messages.SignatureWizard_DSA + Messages.SignatureWizard_Usage2 
+        			+ Messages.SignatureWizard_FurtherInfoInOnlineHelp);
         	lblSelectAKey.setText(Messages.SignatureWizard_labelKey);
             break;
     	case 1:
-//            txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_RSA_description);
+            txtDescription.setText(Messages.SignatureWizard_Usage 
+        			+ Messages.SignatureWizard_RSA + Messages.SignatureWizard_Usage2 
+        			+ Messages.SignatureWizard_FurtherInfoInOnlineHelp);
         	lblSelectAKey.setText(Messages.SignatureWizard_labelKey);
             break;
     	case 2:
-//            txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_ECDSA_description);
+            txtDescription.setText(Messages.SignatureWizard_Usage 
+        			+ Messages.SignatureWizard_ECDSA + Messages.SignatureWizard_Usage2
+        			+ Messages.SignatureWizard_FurtherInfoInOnlineHelp);
         	lblSelectAKey.setText(Messages.SignatureWizard_labelCurve);
             break;
     	case 3:
-//            txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_RSAandMGF1_description);
+        	txtDescription.setText(Messages.SignatureWizard_Usage 
+        			+ Messages.SignatureWizard_RSAandMGF1 + Messages.SignatureWizard_Usage2
+        			+ Messages.SignatureWizard_FurtherInfoInOnlineHelp);
         	lblSelectAKey.setText(Messages.SignatureWizard_labelKey);
             break;
     	}
@@ -260,23 +250,31 @@ public class SignatureComposite extends Composite implements SelectionListener {
                 }
             }
         }
-	    //select the last chosen key (if a previous key was chosen, before)
-        boolean keySelected = false;
-        if (alias != null) {
-            for (String item : combo.getItems()) {
-            	if (keystoreitems.get(item).toString().equals(alias.toString())) {
-            		combo.select(combo.indexOf(item));
-            		keySelected = true;
-            	}
+        
+        //if combo is still empty at this point, there is no key pair for the given signature method in the JCT-Keystore
+        if (combo.getItemCount() == 0) {
+            page.setPageComplete(false);
+            txtDescription.setText(txtDescription.getText() + NLS.bind(Messages.SignatureWizard_noKeysHint, signatureMethodName));
+        } else {
+    	    //select the last chosen key (if a previous key was chosen, before)
+            boolean keySelected = false;
+            if (alias != null) {
+                for (String item : combo.getItems()) {
+                	if (keystoreitems.get(item).toString().equals(alias.toString())) {
+                		combo.select(combo.indexOf(item));
+                		keySelected = true;
+                	}
+                }
             }
+            
+    	    //else select the first key item possible
+    	    if (!keySelected) {
+    		    combo.select(0);
+    	    }
+    	    alias = keystoreitems.get(combo.getText());
+        	
+    	    page.setPageComplete(true);
         }
-	    //else select the first key item possible
-	    if (!keySelected) {
-		    combo.select(0);
-	    }
-	    alias = keystoreitems.get(combo.getText());
-	    
-	    page.setPageComplete(true);
     }
 
 	/**
@@ -297,40 +295,31 @@ public class SignatureComposite extends Composite implements SelectionListener {
     // Checks if the radio buttons have changed and updates the text and keys from the keystore
     public void widgetSelected(SelectionEvent e) { 
         if (rdo1.getSelection()) {
-        	txtDescription.setText(Messages.SignatureWizard_Usage 
-        			+ Messages.SignatureWizard_DSA + Messages.SignatureWizard_Usage2 
-        			+ Messages.SignatureWizard_FurtherInfoInOnlineHelp);
-//        			+ Messages.SignatureWizard_DSA_description);
-            lblSelectAKey.setText(Messages.SignatureWizard_labelKey);
             signatureMethod = 0;
+            signatureMethodName = Messages.SignatureWizard_DSA;
+            lblSelectAKey.setText(Messages.SignatureWizard_labelKey);
         } else {
-            if (rdo2.getSelection()) {
-                txtDescription.setText(Messages.SignatureWizard_Usage 
-            			+ Messages.SignatureWizard_RSA + Messages.SignatureWizard_Usage2 
-            			+ Messages.SignatureWizard_FurtherInfoInOnlineHelp);
-//            			+ Messages.SignatureWizard_RSA_description);
-                lblSelectAKey.setText(Messages.SignatureWizard_labelKey);
+            if (rdo2.getSelection()) {   
                 signatureMethod = 1;
+                signatureMethodName = Messages.SignatureWizard_RSA;
+                lblSelectAKey.setText(Messages.SignatureWizard_labelKey);
             } else {
                 if (rdo3.getSelection()) {
-                    txtDescription.setText(Messages.SignatureWizard_Usage 
-                			+ Messages.SignatureWizard_ECDSA + Messages.SignatureWizard_Usage2
-                			+ Messages.SignatureWizard_FurtherInfoInOnlineHelp);
-//                			+ Messages.SignatureWizard_ECDSA_description);
-                    lblSelectAKey.setText(Messages.SignatureWizard_labelCurve);
                     signatureMethod = 2;
+                    signatureMethodName = Messages.SignatureWizard_ECDSA;
+                    lblSelectAKey.setText(Messages.SignatureWizard_labelCurve);
                 } else {
                     if (rdo4.getSelection()) {
-                    	txtDescription.setText(Messages.SignatureWizard_Usage 
-                    			+ Messages.SignatureWizard_RSAandMGF1 + Messages.SignatureWizard_Usage2
-                    			+ Messages.SignatureWizard_FurtherInfoInOnlineHelp);
-//                    			+ Messages.SignatureWizard_RSAandMGF1_description);
-                        lblSelectAKey.setText(Messages.SignatureWizard_labelKey);
                         signatureMethod = 3;
+                        signatureMethodName = Messages.SignatureWizard_RSAandMGF1;
+                        lblSelectAKey.setText(Messages.SignatureWizard_labelKey);
                     }
                 }
             }
         }
+    	txtDescription.setText(Messages.SignatureWizard_Usage 
+    			+ signatureMethodName + Messages.SignatureWizard_Usage2 
+    			+ Messages.SignatureWizard_FurtherInfoInOnlineHelp);
 
         keystoreitems.clear();
         combo.removeAll();

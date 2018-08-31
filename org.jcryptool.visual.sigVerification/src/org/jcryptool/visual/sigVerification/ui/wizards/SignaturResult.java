@@ -24,8 +24,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
 import org.jcryptool.visual.sigVerification.algorithm.Hash;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
 import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
@@ -123,7 +121,7 @@ public class SignaturResult extends Shell {
         Menu signatureMenu = new Menu(txtSigNum);
         txtSigNum.setMenu(signatureMenu);
         MenuItem copy = new MenuItem(signatureMenu, SWT.NONE);
-        copy.setText("Copy"); //TODO Multilingual
+        copy.setText(Messages.Copy);
         copy.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -206,7 +204,7 @@ public class SignaturResult extends Shell {
         tableSig.setMenu(tableMenu);
         
         MenuItem copyLine = new MenuItem(tableMenu, SWT.NONE);
-        copyLine.setText("Copy selected line"); //TODO
+        copyLine.setText(Messages.CopyLine);
         copyLine.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -224,7 +222,7 @@ public class SignaturResult extends Shell {
         });
         
         MenuItem copyAll = new MenuItem(tableMenu, SWT.NONE);
-        copyAll.setText("Copy table"); //TODO
+        copyAll.setText(Messages.CopyAll);
         copyAll.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -345,7 +343,7 @@ public class SignaturResult extends Shell {
             tableHash.setMenu(table2Menu);
             
             MenuItem copyLineTable2 = new MenuItem(table2Menu, SWT.NONE);
-            copyLineTable2.setText("Copy selected line");	//TODO 
+            copyLineTable2.setText(Messages.CopyLine);
             copyLineTable2.addSelectionListener(new SelectionListener() {
     			@Override
     			public void widgetSelected(SelectionEvent e) {
@@ -363,7 +361,7 @@ public class SignaturResult extends Shell {
             });
             
             MenuItem copyAllTable2 = new MenuItem(table2Menu, SWT.NONE);
-            copyAllTable2.setText("Copy table");	//TODO
+            copyAllTable2.setText(Messages.CopyAll);
             copyAllTable2.addSelectionListener(new SelectionListener() {
     			@Override
     			public void widgetSelected(SelectionEvent e) {
@@ -487,9 +485,8 @@ public class SignaturResult extends Shell {
      */
     protected void createContents() {
         setText(Messages.SignaturResult_title);
-//        setSize(512, 666);
-        setSize(computeSize(600, SWT.DEFAULT));
-        setMinimumSize(computeSize(600, SWT.DEFAULT));
+        setSize(computeSize(660, SWT.DEFAULT));
+        setMinimumSize(computeSize(660, SWT.DEFAULT));
 
     }
 

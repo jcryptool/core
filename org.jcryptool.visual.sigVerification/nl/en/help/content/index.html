@@ -75,8 +75,8 @@
         <!--<p>Click on the button "Validity models" to take a look at the verification of certificates using the shell model (chain model will follow)</p>-->
 		<img src="ErgebnisAnzeigen.png">
 		
-		<h1 id="GUI2">Certificate verification using validity models</h1>
-		<p>This user interface was included for learning purposes. It shows how the usage of different validity models(shell and chain model) affects the validation of certificates.</p>
+		<h1 id="GUI2">Certificate validation using the shell model</h1>
+		<p>This user interface was included for learning purposes. It shows how the validity dates of the different certificates affect the result of the shell model validation.</p>
 		<img src="2ob.png">
 		<h2>Shell model</h2>
 		<p>The shell model validation only succeeds if all certificates are valid at the time of the verification. I.e. if the user certificate and the level 2 certificate are valid at the time of the verification but the root certificate is not, the signature is considered invalid. At the same time, lower certificates are not allowed to have a longer validity period than those of a higher level(e.g.: Level 2 compared to root).</p>
@@ -88,14 +88,12 @@
 		<h4>User certificate</h4>
 		<p>Certificate of the lowest level. In order for it to be valid all higher certificates (in this case root and level 2 certificate) have to be considered valid.</p>
 		<h3>Actions</h3>
-		<h4>Shell model | Chain model</h4>
-		<p>Option to choose whether to validate using the shell or the chain model. Attention: For now only the shell model has been implemented, the chain model will be implemented in a follow up project. </p>
-		<h4>Back</h4>
-		<p>Restores the default certificates, which were created by first opening the 2nd user interface.</p>
 		<h4>New validity dates</h4>
 		<p>This enables you to change the validity dates of all certificates. In order to see the new results, press the button "Recalculate".</p>
+		<h4>Reset the dates of the 3 certificates</h4>
+		<p>Restores the default certificates, which were created by first opening the 2nd user interface.</p>
 		<h4>Recalculate</h4>
-		<p>Starts the recalculation according to the shell model. If the certificates are still valid, you will see a green tick. If not, you will see a red cross. Please note that this button is only enabled if the given date is a real valid date.</p>
+		<p>Starts the recalculation according to the shell model. If the certificates are still valid, you will see a green tick. If not, you will see a red cross. Please note that this button is only enabled if all given dates are real valid dates.</p>
 		
     </body>
 </html>

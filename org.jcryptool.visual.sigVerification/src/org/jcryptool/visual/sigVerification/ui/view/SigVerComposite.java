@@ -15,9 +15,6 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.CommandManager;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jface.action.IContributionManager;
-import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -47,8 +44,6 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
-import org.eclipse.ui.menus.CommandContributionItem;
-import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.sigVerification.Messages;
@@ -116,7 +111,10 @@ public class SigVerComposite extends Composite {
 	private Label lblSignatureMethod;
 	private Composite centerBtmComposite;
 	private Label fileNameLabel;
-	private Composite fileNameLabelComposite;
+	private TabItem tabStep1;
+	private TabItem tabStep2;
+	private TabItem tabStep3;
+	private TabItem tabStep4;
     
     /**
      * Sets the booleans resultOk and resultErr to the new values and redraws the canvas on the right.
@@ -389,6 +387,7 @@ public class SigVerComposite extends Composite {
         compositeRight.setLayout(gl_compositeRight);
         
         Group groupVerify = new Group(compositeRight, SWT.NONE);
+        groupVerify.setText(Messages.SigVerComposite_resultTitle);
         GridData gd_groupVerify = new GridData(SWT.FILL, SWT.CENTER, true, true);
         gd_groupVerify.heightHint = 330;
         groupVerify.setLayoutData(gd_groupVerify);
@@ -460,9 +459,9 @@ public class SigVerComposite extends Composite {
         gd_tabFolderSteps.heightHint = 170;
         tabFolderSteps.setLayoutData(gd_tabFolderSteps);
         
-        TabItem tabStep1 = new TabItem(tabFolderSteps, SWT.NONE);
-        tabStep1.setText(Messages.SigVerComposite_tbtmNewItem_0);
-        lblDescriptionStep1 = new Text(tabFolderSteps, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
+        tabStep1 = new TabItem(tabFolderSteps, SWT.NONE);
+        tabStep1.setText(Messages.SigVerComposite_tbtmNewItem_0 + Messages.SigVerComposite_tabNextStep);
+        lblDescriptionStep1 = new Text(tabFolderSteps, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY | SWT.V_SCROLL);
         lblDescriptionStep1.setBackground(SWTResourceManager.getColor(255, 255, 255));
         lblDescriptionStep1.setEditable(false);
         lblDescriptionStep1.setText(Messages.SigVerComposite_txtDescriptionOfStep1);
@@ -473,9 +472,9 @@ public class SigVerComposite extends Composite {
         mntm1 = new MenuItem(menu1, SWT.NONE);
         mntm1.setText(Messages.SigVerComposite_menu);
         
-	    TabItem tabStep2 = new TabItem(tabFolderSteps, SWT.NONE);
+	    tabStep2 = new TabItem(tabFolderSteps, SWT.NONE);
 	    tabStep2.setText(Messages.SigVerComposite_tbtmNewItem_1);
-        lblDescriptionStep2 = new Text(tabFolderSteps, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
+        lblDescriptionStep2 = new Text(tabFolderSteps, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY | SWT.V_SCROLL);
         lblDescriptionStep2.setBackground(SWTResourceManager.getColor(255, 255, 255));
         lblDescriptionStep2.setEditable(false);
         lblDescriptionStep2.setText(Messages.SigVerComposite_txtDescriptionOfStep2);
@@ -486,9 +485,9 @@ public class SigVerComposite extends Composite {
         mntm2 = new MenuItem(menu2, SWT.NONE);
         mntm2.setText(Messages.SigVerComposite_menu);
         
-        TabItem tabStep3 = new TabItem(tabFolderSteps, SWT.NONE);
+        tabStep3 = new TabItem(tabFolderSteps, SWT.NONE);
         tabStep3.setText(Messages.SigVerComposite_tbtmNewItem_2);
-        lblDescriptionStep3 = new Text(tabFolderSteps, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
+        lblDescriptionStep3 = new Text(tabFolderSteps, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY | SWT.V_SCROLL);
         lblDescriptionStep3.setBackground(SWTResourceManager.getColor(255, 255, 255));
         lblDescriptionStep3.setEditable(false);
         lblDescriptionStep3.setText(Messages.SigVerComposite_txtDescriptionOfStep3);
@@ -499,9 +498,9 @@ public class SigVerComposite extends Composite {
         mntm3 = new MenuItem(menu3, SWT.NONE);
         mntm3.setText(Messages.SigVerComposite_menu);
         
-        TabItem tabStep4 = new TabItem(tabFolderSteps, SWT.NONE);
+        tabStep4 = new TabItem(tabFolderSteps, SWT.NONE);
         tabStep4.setText(Messages.SigVerComposite_tbtmNewItem_3);
-        lblDescriptionStep4 = new Text(tabFolderSteps, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
+        lblDescriptionStep4 = new Text(tabFolderSteps, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY | SWT.V_SCROLL);
         lblDescriptionStep4.setBackground(SWTResourceManager.getColor(255, 255, 255));
         lblDescriptionStep4.setEditable(false);
         lblDescriptionStep4.setText(Messages.SigVerComposite_txtDescriptionOfStep4);
@@ -526,8 +525,8 @@ public class SigVerComposite extends Composite {
                         protected void configureShell(Shell newShell) {
                             super.configureShell(newShell);
                             // set size of the wizard-window (x,y)
-                            newShell.setSize(800, 400);
-                            newShell.setMinimumSize(800, 400);
+                            newShell.setSize(870, 400);
+                            newShell.setMinimumSize(870, 400);
                         }
                     };
                     if (dialog.open() == Window.OK) { 
@@ -549,6 +548,13 @@ public class SigVerComposite extends Composite {
                         btnReset.setEnabled(true);
                         tabFolderSteps.setSelection(1);
                         lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 2));
+                        
+                        tabStep1.setText(Messages.SigVerComposite_tbtmNewItem_0);
+                        tabStep2.setText(Messages.SigVerComposite_tbtmNewItem_1 + Messages.SigVerComposite_tabNextStep);
+                        tabStep3.setText(Messages.SigVerComposite_tbtmNewItem_2);
+                        tabStep4.setText(Messages.SigVerComposite_tbtmNewItem_3);
+                        tabFolderSteps.requestLayout();
+                        
                         step = 1;
                         
                         fileNameLabel.requestLayout();
@@ -574,7 +580,7 @@ public class SigVerComposite extends Composite {
                         protected void configureShell(Shell newShell) {
                             super.configureShell(newShell);
                             // set size of the wizard-window (x,y)
-                            newShell.setSize(400, 600);
+                            newShell.setSize(450, 650);
                         }
                     };
                     if (dialog.open() == Window.OK) {
@@ -593,6 +599,13 @@ public class SigVerComposite extends Composite {
                         btnVerify.setEnabled(true);
                         tabFolderSteps.setSelection(2);
                         lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 3));
+                        
+                        tabStep1.setText(Messages.SigVerComposite_tbtmNewItem_0);
+                        tabStep2.setText(Messages.SigVerComposite_tbtmNewItem_1);
+                        tabStep3.setText(Messages.SigVerComposite_tbtmNewItem_2 + Messages.SigVerComposite_tabNextStep);
+                        tabStep4.setText(Messages.SigVerComposite_tbtmNewItem_3);
+                        tabFolderSteps.requestLayout();
+                        
                         step = 2;
                         centerTopComposite.redraw();
                     }
@@ -666,6 +679,14 @@ public class SigVerComposite extends Composite {
                             centerBtmComposite.setToolTipText(keyDescription);
                             step = 3;
                             tabFolderSteps.setSelection(step);
+                            
+                            tabStep1.setText(Messages.SigVerComposite_tbtmNewItem_0);
+                            tabStep2.setText(Messages.SigVerComposite_tbtmNewItem_1);
+                            tabStep3.setText(Messages.SigVerComposite_tbtmNewItem_2);
+                            tabStep4.setText(Messages.SigVerComposite_tbtmNewItem_3 + Messages.SigVerComposite_tabNextStep);
+                            
+                            tabFolderSteps.requestLayout();
+                            
                             centerTopComposite.redraw();
                             lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 4));                            
                             btnResult.setEnabled(true);
@@ -699,6 +720,7 @@ public class SigVerComposite extends Composite {
                     SignaturResult shell = new SignaturResult(display, input, hashInst, sigVerification, sigVerView);
                     shell.open();
                     shell.layout();
+                    tabStep4.setText(Messages.SigVerComposite_tbtmNewItem_3 + Messages.SigVerComposite_tabLastStep);
                     while (!shell.isDisposed()) {
                         if (!display.readAndDispatch()) {
                             display.sleep();
@@ -749,9 +771,7 @@ public class SigVerComposite extends Composite {
             	lblDescriptionStep4.selectAll();
             }
         });
-        
-        
-        
+
     }
 
     private void reset(int step) {
@@ -772,6 +792,11 @@ public class SigVerComposite extends Composite {
 	            fileNameLabel.setToolTipText("");
 	            fileNameLabel.requestLayout();
 	            canvasDocLeft.redraw();
+                tabStep1.setText(Messages.SigVerComposite_tbtmNewItem_0 + Messages.SigVerComposite_tabNextStep);
+                tabStep2.setText(Messages.SigVerComposite_tbtmNewItem_1);
+                tabStep3.setText(Messages.SigVerComposite_tbtmNewItem_2);
+                tabStep4.setText(Messages.SigVerComposite_tbtmNewItem_3);
+                tabFolderSteps.requestLayout();
 	            break;
 	        case 1:	//choose hash method
 	            btnVerify.setEnabled(false);
@@ -779,6 +804,11 @@ public class SigVerComposite extends Composite {
 	            hashInst.reset();
 	            lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 2));
 	            lblHashMethod.setText("");
+                tabStep1.setText(Messages.SigVerComposite_tbtmNewItem_0);
+                tabStep2.setText(Messages.SigVerComposite_tbtmNewItem_1 + Messages.SigVerComposite_tabNextStep);
+                tabStep3.setText(Messages.SigVerComposite_tbtmNewItem_2);
+                tabStep4.setText(Messages.SigVerComposite_tbtmNewItem_3);
+                tabFolderSteps.requestLayout();
 	            break;
 	        case 2: //choose signature method and key
 	            btnResult.setEnabled(false);
@@ -787,6 +817,11 @@ public class SigVerComposite extends Composite {
 	            lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 3));
 	            lblSignatureMethod.setText("");
 	            centerBtmComposite.setToolTipText("");
+                tabStep1.setText(Messages.SigVerComposite_tbtmNewItem_0);
+                tabStep2.setText(Messages.SigVerComposite_tbtmNewItem_1);
+                tabStep3.setText(Messages.SigVerComposite_tbtmNewItem_2 + Messages.SigVerComposite_tabNextStep);
+                tabStep4.setText(Messages.SigVerComposite_tbtmNewItem_3);
+                tabFolderSteps.requestLayout();
 	            break;
 	        default:
 	            break;

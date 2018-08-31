@@ -69,6 +69,7 @@ public class Messages {
     public static String Wizard_menu;
     public static String SignatureWizard_labelKey;
     public static String SignatureWizard_labelCurve;
+	public static String SignatureWizard_noKeysHint;
 
     // InputWizard
     // Page 1

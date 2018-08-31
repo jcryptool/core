@@ -11,7 +11,11 @@ import org.eclipse.osgi.util.NLS;
 public class Messages {
     // Name of the files that contain the string values
     private static final String BUNDLE_NAME = "org.jcryptool.visual.sigVerification.ui.wizards.messages"; //$NON-NLS-1$
-    public static String SignatureWizard_Usage;
+    
+    public static String Copy;
+    public static String CopyLine;
+    public static String CopyAll;
+    
     // Create strings for all the values
     // Group box 1 text
     public static String HashWizard_grpHashes;
@@ -34,6 +38,9 @@ public class Messages {
     // Group box 1 text
     public static String SignatureWizard_grpSignatures;
     public static String SignatureWizard_FurtherInfoInOnlineHelp;
+    public static String SignatureWizard_Usage;
+    public static String SignatureWizard_Usage2;
+    public static String SignatureWizard_noKeysHint;
     // Group box 2 text
     public static String SignatureWizard_grpDescription;
     public static String SignatureWizard_DSA_description;
@@ -45,6 +52,7 @@ public class Messages {
     public static String SignatureWizard_ECDSA;
     public static String SignatureWizard_RSAandMGF1;
     public static String SignatureWizard_header;
+    
     public static String HashWizard_header;
     public static String HashWizard_WindowTitle;
     public static String SignatureWizard_WindowTitle;

@@ -46,6 +46,7 @@ public class InputFileWizardPage extends WizardPage {
     		compositeFile.setInitialFocus();
     		compositeFile.updateMaxSize();
     		setDescription(Messages.InputFileWizard_header + " " + compositeFile.getMaxSizeInMB() + "MB.");
+    		setPageComplete(compositeFile.txtPath.getText() != null && !compositeFile.txtPath.getText().equals(""));
     	}
     }
 }

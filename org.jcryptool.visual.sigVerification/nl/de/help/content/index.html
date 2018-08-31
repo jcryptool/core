@@ -77,8 +77,8 @@
         <!--<p>Klicken Sie auf den Button “G&uuml;ltigkeitsmodelle”, um sich die Verifizierung von Zertifikaten nach dem Schalenmodell genauer anzusehen.</p>-->
 		<img src="ErgebnisAnzeigen.png">
 		
-		<h1 id="GUI2">Hilfe zur Validierung von Zertifikaten nach G&uuml;ltigkeitsmodellen</h1>
-		<p>Diese f&uuml;r Lernzwecke erstellte Oberfl&auml;che zeigt, wie sich die Verwendung unterschiedlicher G&uuml;ltigkeitsmodelle (Schalenmodell, Kettenmodell) auf die G&uuml;ltigkeit von Zertifikaten auswirkt. Achtung! Bisher wrude nur das Schalenmodell implementiert, es steht somit momentan als einziges G&uuml;ltigkeitsmodell zur Verf&uuml;gung. Das Kettenmodell soll in einem Folgeprojekt noch implementiert werden.</p>
+		<h1 id="GUI2">G&uuml;ltigkeitsvalidierung von Zertifikaten mit dem Schalenmodell</h1>
+		<p>Diese f&uuml;r Lernzwecke erstellte Oberfl&auml;che zeigt, wie sich bei der Validierung nach dem Schalenmodell verschiedene Zertifikat-G&uuml;ltigkeiten auf das Ergebnis auswirken.</p>
 		<img src="2ob.png">
 		<h2>Schalenmodell</h2>
 		<p>Beim Schalenmodell wird eine Signatur nur f&uuml;r g&uuml;ltig erkl&auml;rt, wenn zum &Uuml;berpr&uuml;fungszeitpunkt alle Zertifikate g&uuml;ltig sind. Dh. wenn zum Zeitpunkt der &Uuml;berpr&uuml;fung zwar das Teilnehmer-Zertifikat und das Level 2-Zertifikat noch g&uuml;ltig sind, das Wurzel-Zertifikat aber nicht mehr g&uuml;ltig ist, dann wird die Signatur f&uuml;r ung&uuml;ltig erkl&auml;rt. Genauso k&ouml;nnen die unteren Zertifikate kein l&auml;ngeres G&uuml;ltigkeitsdatum als die h&ouml;hergestellten haben (z. B.: Level 2 als Wurzel)</p>
@@ -90,13 +90,11 @@
 		<h4>Teilnehmen-Zertifikat</h4>
 		<p>Das Teilnehmer-Zertifikat ist das unterste Zertifikat in der Zertifikatskette. Damit dieses Zertifikat als g&uuml;ltig verifiziert wird, m&uuml;ssen sowohl das Teilnehmer-Zertifikat als auch alle anderen Zertifikate der Kette (in diesem Fall das Teilnehmer- und das Wurzel-Zertifikat) g&uuml;ltig sein.</p>
 		<h3>Aktionen</h3>
-		<h4>Schalenmodell | Kettenmodell</h4>
-		<p>Auswahlm&ouml;glichkeit zwischen dem Schalenmodell und dem Kettenmodell.</p>
-		<h4>Zur&uuml;ck</h4>
+		<h4>Start- und Endg&uuml;ltigkeitsdaten</h4>
+		<p>Hier k&ouml;nnen Sie die Start- und Endg&uuml;ltigkeiten der einzelnen Zertifikate umstellen und die Auswirkungen auf die Gesamtg&uuml;ltigkeit betrachten. Dazu m&uuml;ssen Sie noch auf "Ergebnis neu berechnen" klicken.</p>
+		<h4>Daten der 3 Zertifikate zur&uuml;cksetzen</h4>
 		<p>Hier werden die Standard-Zertifikate (bzw. deren standardm&auml;&szlig;ige Endg&uuml;ltigkeitsdaten) wiederhergestellt.</p>
-		<h4>Endg&uuml;ltigkeitsdaten</h4>
-		<p>Hier k&ouml;nnen Sie die Endg&uuml;ltigkeiten der einzelnen Zertifikate umstellen und die Auswirkungen auf die Gesamtg&uuml;ltigkeit betrachten. Dazu m&uuml;ssen Sie noch auf "Ergebnis neu berechnen" klicken.</p>
 		<h4>Ergebnis neu berechnen</h4>
-		<p>Berechnet die G&uuml;ltigkeit neu und entscheidet nach dem Schalenmodell ob die Zertifikatskette g&uuml;ltig ist oder nicht. Ist sie immer noch g&uuml;ltig, erscheint wieder ein gr&uuml;ner Hacken, ansonsten erscheind ein rotes Kreuz. Bitte bachten Sie, dass dieser Button bei ung&uuml;ltiger Datumseingabe deaktiviert wird.</p>
+		<p>Berechnet die G&uuml;ltigkeit neu und entscheidet nach dem Schalenmodell ob die Zertifikatskette g&uuml;ltig ist oder nicht. Ist sie immer noch g&uuml;ltig, erscheint wieder ein gr&uuml;ner Hacken, ansonsten erscheind ein rotes Kreuz. Bitte bachten Sie, dass dieser Button bei einer ung&uuml;ltiger Datumseingabe in einem der Datumsfelder deaktiviert wird.</p>
     </body>
 </html>

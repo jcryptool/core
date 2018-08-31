@@ -30,6 +30,8 @@ public class Messages {
     public static String SigComposite_tbtmNewItem_1;
     public static String SigComposite_tbtmNewItem_2;
     public static String SigComposite_tbtmNewItem_3;
+    public static String SigComposite_nextStep;
+    public static String SigComposite_lastStep;
     public static String SigComposite_txtDescriptionOfStep1;
     public static String SigComposite_txtDescriptionOfStep2;
     public static String SigComposite_txtDescriptionOfStep3;

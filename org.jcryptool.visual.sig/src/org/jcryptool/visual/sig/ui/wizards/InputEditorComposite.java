@@ -28,7 +28,7 @@ import org.jcryptool.visual.sig.algorithm.Input;
 public class InputEditorComposite extends Composite {
     // Limit for the length of the text that might be entered into the plaintext field
     private static final int TEXTLIMIT = 1000;
-    private Text text = null;
+    protected Text text = null;
     private InputEditorWizardPage page;
 
     public InputEditorComposite(Composite parent, int style, InputEditorWizardPage p) {
