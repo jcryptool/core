@@ -102,8 +102,11 @@ public class WotsView extends ViewPart {
 	private int ctr;
 	private Text[] txtToEnableOrDisable;
 	private Button[] btnToEnableOrDisable;
+	
+	private static String language = getLanguage();
 
-	public static String currentImg = "icons/Overview2.JPG";
+	public static String currentImg = "icons/" + language + "/Overview2.PNG";
+//	public static String currentImg;;
 
 	private ScrolledComposite scrolledContainer;
 	private Composite container;
@@ -111,6 +114,7 @@ public class WotsView extends ViewPart {
 	private Text txtTheWinternitzonetimesignatureIs;
 	private Text txtWinternitzOtsignaturewots;
 	private Composite header;
+
 
 	/**
 	 * Create contents of the view part. The layout manager has no option to define
@@ -124,6 +128,8 @@ public class WotsView extends ViewPart {
 		// set context help
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, WOTSPlugin.PLUGIN_ID + ".kontextHilfe"); //$NON-NLS-1$
 
+//		language = getLanguage();
+		
 		scrolledContainer = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledContainer.setExpandHorizontal(true);
 		scrolledContainer.setExpandVertical(true);
@@ -234,6 +240,7 @@ public class WotsView extends ViewPart {
 		txt_Output = new Text(container, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		GridData gd_txt_Output = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 5);
 		gd_txt_Output.widthHint = 400;
+		gd_txt_Output.heightHint = 300;
 		txt_Output.setLayoutData(gd_txt_Output);
 		txt_Output.setText(Descriptions.outWelcome_txt);
 
@@ -343,11 +350,12 @@ public class WotsView extends ViewPart {
 				txt_Sigkey.setText("");
 				txt_Verifkey.setText("");
 				txt_Sig.setText("");
-				currentImg = "icons/Overview2.JPG";
-				Image tmp = new Image(img_right.getDisplay(), WOTSPlugin.getImageDescriptor(WotsView.currentImg)
-						.createImage().getImageData()
-						.scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
-				img_right.setImage(tmp);
+//				currentImg = "icons/" + language + "/Overview2.PNG";
+//				Image tmp = new Image(img_right.getDisplay(), WOTSPlugin.getImageDescriptor(WotsView.currentImg)
+//						.createImage().getImageData()
+//						.scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
+//				img_right.setImage(tmp);
+				setRightImage("icons/" + language + "/Overview2.PNG");
 				
 				txt_Output.setText(Descriptions.outWelcome_txt);
 
@@ -446,11 +454,13 @@ public class WotsView extends ViewPart {
 				txt_Sigkey.setText("");
 				txt_Verifkey.setText("");
 				txt_Sig.setText("");
-				currentImg = "icons/WOTSPlus.JPG";
-				Image tmp = new Image(img_right.getDisplay(), WOTSPlugin.getImageDescriptor(WotsView.currentImg)
-						.createImage().getImageData()
-						.scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
-				img_right.setImage(tmp);
+//				currentImg = "icons/" + language + "/WOTSPlus.PNG";
+//				Image tmp = new Image(img_right.getDisplay(), WOTSPlugin.getImageDescriptor(WotsView.currentImg)
+//						.createImage().getImageData()
+//						.scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
+//				img_right.setImage(tmp);
+//				setRightImage("icons/" + language + "/WOTSPlus.PNG");
+				setRightImage("icons/" + language + "/Overview2.PNG");
 				txt_Output.setText(Descriptions.outWelcome_txt);
 
 				updateLengths();
@@ -572,7 +582,13 @@ public class WotsView extends ViewPart {
 		gd_img_right.widthHint = 50;
 		gd_img_right.heightHint = 50;
 		img_right.setLayoutData(gd_img_right);
-		img_right.setImage(WOTSPlugin.getImageDescriptor("icons/Overview2.JPG").createImage());
+//		String locale = System.getProperty("user.language");
+//		String locale = System.getProperty("osgi.nl.user");
+//		Locale current = Locale.getDefault();
+//		Properties props = System.getProperties();
+//		System.out.println(System.getProperties().toString());
+//		System.out.println(locale);
+		img_right.setImage(WOTSPlugin.getImageDescriptor("icons/" + language + "/Overview2.PNG").createImage());
 		img_right.addControlListener(new ResizeListener(img_right, composite));
 
 		txt_SigKeySize = new Label(container, SWT.NONE);
@@ -701,21 +717,28 @@ public class WotsView extends ViewPart {
 
 					// Set Image & Output field for WOTS
 					txt_Output.setText(Descriptions.outGenKeys_txt);
-					currentImg = "icons/Key_Generation.JPG";
-					Image tmp = new Image(img_right.getDisplay(), WOTSPlugin.getImageDescriptor(WotsView.currentImg)
-							.createImage().getImageData()
-							.scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
-					img_right.setImage(tmp);
+//					currentImg = "icons/" + language + "/Key_Generation.PNG";
+//					Image tmp = new Image(img_right.getDisplay(), WOTSPlugin.getImageDescriptor(WotsView.currentImg)
+//							.createImage().getImageData()
+//							.scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
+//					img_right.setImage(tmp);
+					setRightImage("icons/" + language + "/Key_Generation.PNG");
 
 				} else if (!btnWots.getSelection() && btnWotsPlus.getSelection()) {
 
 					// Set Image & Output field for WOTS+
 					txt_Output.setText(Descriptions.outGenKeysPlus_txt);
-					currentImg = "/icons/WOTSPlus.JPG";
-					Image tmp = new Image(img_right.getDisplay(), WOTSPlugin.getImageDescriptor(WotsView.currentImg)
-							.createImage().getImageData()
-							.scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
-					img_right.setImage(tmp);
+//					currentImg = "/icons/" + language + "/WOTSPlus.PNG";
+//					Image tmp = new Image(img_right.getDisplay(), WOTSPlugin.getImageDescriptor(WotsView.currentImg)
+//							.createImage().getImageData()
+//							.scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
+//					img_right.setImage(tmp);
+//					currentImg = "icons/" + language + "/Key_Generation.PNG";
+//					Image tmp = new Image(img_right.getDisplay(), WOTSPlugin.getImageDescriptor(WotsView.currentImg)
+//							.createImage().getImageData()
+//							.scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
+//					img_right.setImage(tmp);
+					setRightImage("icons/" + language + "/Key_Generation.PNG");
 
 				} else {
 
@@ -755,22 +778,23 @@ public class WotsView extends ViewPart {
 
 					// Set Image & Output field for WOTS
 					txt_Output.setText(Descriptions.outGenSig_txt);
-					currentImg = "icons/Signature_Generation.JPG";
-					Image tmp = new Image(img_right.getDisplay(), WOTSPlugin.getImageDescriptor(WotsView.currentImg)
-							.createImage().getImageData()
-							.scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
-					img_right.setImage(tmp);
+//					currentImg = "icons/" + language + "/Signature_Generation.PNG";
+//					Image tmp = new Image(img_right.getDisplay(), WOTSPlugin.getImageDescriptor(WotsView.currentImg)
+//							.createImage().getImageData()
+//							.scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
+//					img_right.setImage(tmp);
+					setRightImage("icons/" + language + "/Signature_Generation.PNG");
 
 				} else if (!btnWots.getSelection() && btnWotsPlus.getSelection()) {
 
 					// Set Image & Output field for WOTS+
 					txt_Output.setText(Descriptions.outGenSigPlus_txt);
-					currentImg = "icons/WOTSPlus.JPG";
-					Image tmp = new Image(img_right.getDisplay(), WOTSPlugin.getImageDescriptor(WotsView.currentImg)
-							.createImage().getImageData()
-							.scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
-					img_right.setImage(tmp);
-
+//					currentImg = "icons/" + language + "/WOTSPlus.PNG";
+//					Image tmp = new Image(img_right.getDisplay(), WOTSPlugin.getImageDescriptor(WotsView.currentImg)
+//							.createImage().getImageData()
+//							.scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
+//					img_right.setImage(tmp);
+					setRightImage("icons/" + language + "/Signature_Generation.PNG");
 				} else {
 					btnWots.setSelection(true);
 					btnWotsPlus.setSelection(false);
@@ -805,21 +829,23 @@ public class WotsView extends ViewPart {
 
 					// Set Image & Output field for WOTS
 					txt_Output.setText(Descriptions.outVerSig_txt);
-					currentImg = "icons/Signature_Verification.JPG";
-					Image tmp = new Image(img_right.getDisplay(), WOTSPlugin.getImageDescriptor(WotsView.currentImg)
-							.createImage().getImageData()
-							.scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
-					img_right.setImage(tmp);
+//					currentImg = "icons/" + language + "/Signature_Verification.PNG";
+//					Image tmp = new Image(img_right.getDisplay(), WOTSPlugin.getImageDescriptor(WotsView.currentImg)
+//							.createImage().getImageData()
+//							.scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
+//					img_right.setImage(tmp);
+					setRightImage("icons/" + language + "/Signature_Verification.PNG");
 
 				} else if (!btnWots.getSelection() && btnWotsPlus.getSelection()) {
 
 					// Set Image & Output field for WOTS+
 					txt_Output.setText(Descriptions.outVerSigPlus_txt);
-					currentImg = "icons/WOTSPlus.JPG";
-					Image tmp = new Image(img_right.getDisplay(), WOTSPlugin.getImageDescriptor(WotsView.currentImg)
-							.createImage().getImageData()
-							.scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
-					img_right.setImage(tmp);
+//					currentImg = "icons/" + language + "/WOTSPlus.PNG";
+//					Image tmp = new Image(img_right.getDisplay(), WOTSPlugin.getImageDescriptor(WotsView.currentImg)
+//							.createImage().getImageData()
+//							.scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
+//					img_right.setImage(tmp);
+					setRightImage("icons/" + language + "/Signature_Verification.PNG");
 
 				} else {
 					btnWots.setSelection(true);
@@ -879,6 +905,38 @@ public class WotsView extends ViewPart {
 	@Override
 	public void setFocus() {
 		container.setFocus();
+	}
+	
+	/**
+	 * Get the language the user uses.
+	 * This is important for the img_right pictures. Thea are available in de and en.
+	 * I don't know how the language ist specified correctly.
+	 */
+	private static String getLanguage() {
+//		String nl = System.getProperty("osgi.nl.user");
+		if (System.getProperty("osgi.nl.user").equals("de_DE") || System.getProperty("osgi.nl.user").equals("de")) {
+			return "de";
+		} else {
+			return "en";
+		}
+//		if (Locale.getDefault().getLanguage().equals(new Locale("de").getLanguage())) {
+//			return "de";
+//		} else {
+//			return "en";
+//		}
+		
+	}
+	
+	/**
+	 * Sets the image in the bottom right corner
+	 * @param path
+	 */
+	private void setRightImage(String path) {
+		currentImg = path;
+		Image tmp = new Image(img_right.getDisplay(), WOTSPlugin.getImageDescriptor(path)
+				.createImage().getImageData()
+				.scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
+		img_right.setImage(tmp);
 	}
 
 	/**
@@ -973,11 +1031,12 @@ public class WotsView extends ViewPart {
 		txt_Sig.setText("");
 		txt_Verifkey.setText("");
 		txt_Output.setText(Descriptions.outWelcome_txt);
-		currentImg = "icons/Overview2.JPG";
-		Image tmp = new Image(img_right.getDisplay(), WOTSPlugin.getImageDescriptor(WotsView.currentImg)
-				.createImage().getImageData()
-				.scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
-		img_right.setImage(tmp);
+//		currentImg = "icons/" + language + "/Overview2.PNG";
+		setRightImage("icons/" + language + "/Overview2.PNG");
+//		Image tmp = new Image(img_right.getDisplay(), WOTSPlugin.getImageDescriptor(WotsView.currentImg)
+//				.createImage().getImageData()
+//				.scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
+//		img_right.setImage(tmp);
 		txt_Hash.setText(messageHash);
 		txt_Bi.setText(b);
 
@@ -1074,12 +1133,12 @@ public class WotsView extends ViewPart {
 		txt_Bi.setText(b);
 		disableDetails();
 
-		currentImg = "icons/Overview2.JPG";
-		Image tmp = new Image(img_right.getDisplay(), WOTSPlugin.getImageDescriptor(WotsView.currentImg)
-				.createImage().getImageData()
-				.scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
-
-		img_right.setImage(tmp);
+//		currentImg = "icons/" + language + "/Overview2.PNG";
+//		Image tmp = new Image(img_right.getDisplay(), WOTSPlugin.getImageDescriptor(WotsView.currentImg)
+//				.createImage().getImageData()
+//				.scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
+//		img_right.setImage(tmp);
+		setRightImage("icons/" + language + "/Overview2.PNG");
 		cmb_Hash.select(0);
 
 		txt_Sig.setText("");
