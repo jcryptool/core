@@ -9,7 +9,7 @@
         <p>
 		Welcome to the online help of the Signature Verification plug-in.
 		Below, you find an overview of the plug-in and a more detailed description of each step of the signature verification process.
-		Please click to skip the first part and scroll forward to the help for the <a href="#GUI2">Verification of certificates using different validity models.</a>
+		Please click to skip the first part and scroll forward to the help for the <a href="#GUI2">Verification of certificates using the shell validity model.</a>
         <br>
 		This visualization shows the verification process of a signature of a signed document. A digital signature ensures the authenticity of the sender and the integrity of the sent document. 
 		</p>
@@ -76,7 +76,8 @@
 		<img src="ErgebnisAnzeigen.png">
 		
 		<h1 id="GUI2">Certificate validation using the shell model</h1>
-		<p>This user interface was included for learning purposes. It shows how the validity dates of the different certificates affect the result of the shell model validation.</p>
+		<p>This user interface was included for learning purposes. It shows how the validity dates of the different certificates affect the result of the shell model validation.
+		In the menu "Visuals -> Certificate verification", you can find a more comprehensive visualization with 3 validity models, in which you can adjust the dates with sliders.</p>
 		<img src="2ob.png">
 		<h2>Shell model</h2>
 		<p>The shell model validation only succeeds if all certificates are valid at the time of the verification. I.e. if the user certificate and the level 2 certificate are valid at the time of the verification but the root certificate is not, the signature is considered invalid. At the same time, lower certificates are not allowed to have a longer validity period than those of a higher level(e.g.: Level 2 compared to root).</p>

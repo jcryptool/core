@@ -9,7 +9,7 @@
         <p>
 		Willkommen in der Online Hilfe des Plug-Ins zur Visualisierung der Signaturverifizierung.
 		Nachfolgenden finden Sie einen &Uuml;berblick des Plug-Ins, sowie eine detaillierte Erkl&auml;rung zu jedem Schritt des Signaturverifizierungsprozesses. 
-		Hier kommen Sie zur Hilfe der <a href="#GUI2">Validierung von Zertifikaten nach G&uuml;ltigkeitsmodellen. </a>
+		Hier kommen Sie zur Hilfe der <a href="#GUI2">Validierung von Zertifikaten nach dem Schalenmodell. </a>
         <br>
 		Die Visualisierung soll die Verifizierung einer Signatur f&uuml;r ein bestimmtes, signiertes Dokument zeigen.
 		Eine digitale Signatur kann zur Authentifizierung der Identit&auml;t des Senders oder des Unterzeichners des Dokuments genutzt werden. 
@@ -78,7 +78,8 @@
 		<img src="ErgebnisAnzeigen.png">
 		
 		<h1 id="GUI2">G&uuml;ltigkeitsvalidierung von Zertifikaten mit dem Schalenmodell</h1>
-		<p>Diese f&uuml;r Lernzwecke erstellte Oberfl&auml;che zeigt, wie sich bei der Validierung nach dem Schalenmodell verschiedene Zertifikat-G&uuml;ltigkeiten auf das Ergebnis auswirken.</p>
+		<p>Diese f&uuml;r Lernzwecke erstellte Oberfl&auml;che zeigt, wie sich bei der Validierung nach dem Schalenmodell verschiedene Zertifikat-G&uuml;ltigkeiten auf das Ergebnis auswirken.
+		Eine ausf&uuml;hrlichere Visualisierung mit 3 G&uuml;ltigkeitsmodellen, in der man die Zeitpunkte auch mit Slidern einstellen kann, finden Sie im Men&uuml; "Visualisierungen -> Zertifikat-Verifikation".</p>
 		<img src="2ob.png">
 		<h2>Schalenmodell</h2>
 		<p>Beim Schalenmodell wird eine Signatur nur f&uuml;r g&uuml;ltig erkl&auml;rt, wenn zum &Uuml;berpr&uuml;fungszeitpunkt alle Zertifikate g&uuml;ltig sind. Dh. wenn zum Zeitpunkt der &Uuml;berpr&uuml;fung zwar das Teilnehmer-Zertifikat und das Level 2-Zertifikat noch g&uuml;ltig sind, das Wurzel-Zertifikat aber nicht mehr g&uuml;ltig ist, dann wird die Signatur f&uuml;r ung&uuml;ltig erkl&auml;rt. Genauso k&ouml;nnen die unteren Zertifikate kein l&auml;ngeres G&uuml;ltigkeitsdatum als die h&ouml;hergestellten haben (z. B.: Level 2 als Wurzel)</p>
