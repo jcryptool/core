@@ -86,15 +86,15 @@ public class WotsView extends ViewPart {
 	private GridData gd_txt_Sigkey;
 
 	// Parameter for WOTS/WOTS+
-	private String hashFunction = "SHA-256";
+	private String hashFunction = "SHA-256"; //$NON-NLS-1$
 	private OTS instance = new WinternitzOTS(4, hashFunction);
-	private String privateKey = "";
-	private String publicKey = "";
-	private String signature = "";
+	private String privateKey = ""; //$NON-NLS-1$
+	private String publicKey = ""; //$NON-NLS-1$
+	private String signature = ""; //$NON-NLS-1$
 	private int w = 4;
 	private int n = instance.getN();
 	private int l = instance.getL();
-	private String message = Descriptions.defaultMessage_txt;
+	private String message = Messages.defaultMessage_txt;
 	private String messageHash = Converter._byteToHex(instance.hashMessage(message));
 	private String b = Converter._byteToHex(instance.initB());
 	private boolean details = false;
@@ -103,8 +103,8 @@ public class WotsView extends ViewPart {
 	private Text[] txtToEnableOrDisable;
 	private Button[] btnToEnableOrDisable;
 	
-	private static String language = getLanguage();
-	public static String currentImg = "icons/" + language + "/Overview2.PNG";
+//	private static String language = getLanguage();
+	public static String currentImg = Messages.WotsView_Overview2;
 
 	private ScrolledComposite scrolledContainer;
 	private Composite container;
@@ -141,28 +141,28 @@ public class WotsView extends ViewPart {
 		txtWinternitzOtsignaturewots = new Text(header, SWT.NONE);
 		txtWinternitzOtsignaturewots.setFont(FontService.getHeaderFont());
 		txtWinternitzOtsignaturewots.setBackground(ColorService.WHITE);
-		txtWinternitzOtsignaturewots.setText(Descriptions.headline_txt);
+		txtWinternitzOtsignaturewots.setText(Messages.headline_txt);
 		txtWinternitzOtsignaturewots.setEditable(false);
 
 		txtTheWinternitzonetimesignatureIs = new Text(header, SWT.NONE);
 		txtTheWinternitzonetimesignatureIs.setBackground(ColorService.WHITE);
-		txtTheWinternitzonetimesignatureIs.setText(Descriptions.header_txt);
+		txtTheWinternitzonetimesignatureIs.setText(Messages.header_txt);
 		txtTheWinternitzonetimesignatureIs.setEditable(false);
 
 		lblMessage = new Label(container, SWT.NONE);
 		lblMessage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
-		lblMessage.setText(Descriptions.message_txt);
+		lblMessage.setText(Messages.message_txt);
 
 		lblMessageHash = new Label(container, SWT.NONE);
 		lblMessageHash.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 4, 1));
-		lblMessageHash.setText(Descriptions.hash_txt);
+		lblMessageHash.setText(Messages.hash_txt);
 
 		txt_message = new Text(container, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		gd_txt_message = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
 		gd_txt_message.minimumHeight = 100;
 		gd_txt_message.heightHint = 100;
 		txt_message.setLayoutData(gd_txt_message);
-		txt_message.setText(Descriptions.defaultMessage_txt);
+		txt_message.setText(Messages.defaultMessage_txt);
 		txt_message.addModifyListener(new ModifyListener() {
 
 			@Override
@@ -203,7 +203,7 @@ public class WotsView extends ViewPart {
 				if (checkHex(txt_Hash.getText())) {
 					txt_Hash.setBackground(ColorService.RED);
 					setDisabled(txt_Hash);
-					txt_HashSize.setText(Descriptions.invalidChar_txt);
+					txt_HashSize.setText(Messages.invalidChar_txt);
 				} else {
 
 					txt_Hash.setBackground(ColorService.WHITE);
@@ -214,8 +214,8 @@ public class WotsView extends ViewPart {
 					} else {
 						messageHash = txt_Hash.getText();
 						txt_HashSize.setText(Integer.toString(
-								Converter._stringToByte(messageHash).length / 2) + "/"
-								+ n + " Bytes");
+								Converter._stringToByte(messageHash).length / 2) + "/" //$NON-NLS-1$
+								+ n + " Bytes"); //$NON-NLS-1$
 
 						if (Converter._stringToByte(messageHash).length / 2 == n) {
 
@@ -238,21 +238,21 @@ public class WotsView extends ViewPart {
 		gd_txt_Output.widthHint = 400;
 		gd_txt_Output.heightHint = 300;
 		txt_Output.setLayoutData(gd_txt_Output);
-		txt_Output.setText(Descriptions.outWelcome_txt);
+		txt_Output.setText(Messages.outWelcome_txt);
 
 		txt_MessageSize = new Label(container, SWT.TOP);
 		txt_MessageSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 
 		btnLoadMessageFrom = new Button(container, SWT.NONE);
 		btnLoadMessageFrom.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		btnLoadMessageFrom.setText(Descriptions.loadMessage_txt);
+		btnLoadMessageFrom.setText(Messages.loadMessage_txt);
 		btnLoadMessageFrom.addSelectionListener(new SelectionAdapter() {
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog fd = new FileDialog(Display.getCurrent().getActiveShell(), SWT.OPEN);
 				fd.setFilterExtensions(new String[] { "*.txt" }); //$NON-NLS-1$
-				fd.setFilterNames(new String[] { Descriptions.fileType_txt });
+				fd.setFilterNames(new String[] { Messages.fileType_txt });
 				String filePath = fd.open();
 
 				if (filePath != null) {
@@ -279,13 +279,13 @@ public class WotsView extends ViewPart {
 		GridData gd_lblWinternitzParameterw = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		gd_lblWinternitzParameterw.verticalIndent = 15;
 		lblWinternitzParameterw.setLayoutData(gd_lblWinternitzParameterw);
-		lblWinternitzParameterw.setText(Descriptions.winPara_txt);
+		lblWinternitzParameterw.setText(Messages.winPara_txt);
 
 		txt_winternitzP = new Text(container, SWT.BORDER);
 		GridData gd_txt_winternitzP = new GridData(SWT.LEFT, SWT.CENTER, false, false);
 		gd_txt_winternitzP.verticalIndent = 15;
 		txt_winternitzP.setLayoutData(gd_txt_winternitzP);
-		txt_winternitzP.setText("4");
+		txt_winternitzP.setText("4"); //$NON-NLS-1$
 		txt_winternitzP.addModifyListener(new ModifyListener() {
 			
 			@Override
@@ -293,7 +293,7 @@ public class WotsView extends ViewPart {
 
 				clearOutput(false);
 
-				if (txt_winternitzP.getText().equals("")) {
+				if (txt_winternitzP.getText().equals("")) { //$NON-NLS-1$
 					setDisabled(txt_winternitzP);
 					txt_Hash.setBackground(ColorService.LIGHTGRAY);
 					txt_Sigkey.setBackground(ColorService.LIGHTGRAY);
@@ -303,9 +303,9 @@ public class WotsView extends ViewPart {
 				} else {
 					// Changes Winternitz Parameter if modified
 					w = Integer.parseInt(txt_winternitzP.getText());
-					privateKey = "";
-					publicKey = "";
-					signature = "";
+					privateKey = ""; //$NON-NLS-1$
+					publicKey = ""; //$NON-NLS-1$
+					signature = ""; //$NON-NLS-1$
 					setOutputs();
 					instance.initB();
 					getOutputs();
@@ -321,12 +321,17 @@ public class WotsView extends ViewPart {
 				}
 			}
 		});
+		
+		//The Buttons WOTS and WOTS+ should be exactly one below the other.
+		//Therefore this Label is here to create space between the input field to 
+		//the left.
+		new Label(container, SWT.NONE);
 
 		btnWots = new Button(container, SWT.RADIO);
-		GridData gd_btnWots = new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1);
+		GridData gd_btnWots = new GridData(SWT.NONE, SWT.CENTER, false, false, 1, 1);
 		gd_btnWots.verticalIndent = 15;
 		btnWots.setLayoutData(gd_btnWots);
-		btnWots.setText("WOTS");
+		btnWots.setText("WOTS"); //$NON-NLS-1$
 		btnWots.setSelection(true);
 		btnWots.addSelectionListener(new SelectionListener() {
 			
@@ -340,15 +345,15 @@ public class WotsView extends ViewPart {
 				// Changes type to WOTS and resets what is necessary to do
 				// so
 				instance = new WinternitzOTS(w, hashFunction);
-				privateKey = "";
-				publicKey = "";
-				signature = "";
-				txt_Sigkey.setText("");
-				txt_Verifkey.setText("");
-				txt_Sig.setText("");
-				setRightImage("icons/" + language + "/Overview2.PNG");
+				privateKey = ""; //$NON-NLS-1$
+				publicKey = ""; //$NON-NLS-1$
+				signature = ""; //$NON-NLS-1$
+				txt_Sigkey.setText(""); //$NON-NLS-1$
+				txt_Verifkey.setText(""); //$NON-NLS-1$
+				txt_Sig.setText(""); //$NON-NLS-1$
+				setRightImage(Messages.WotsView_Overview2);
 				
-				txt_Output.setText(Descriptions.outWelcome_txt);
+				txt_Output.setText(Messages.outWelcome_txt);
 
 				updateLengths();
 				disable = true;
@@ -364,13 +369,13 @@ public class WotsView extends ViewPart {
 
 		lblHashFunction = new Label(container, SWT.NONE);
 		lblHashFunction.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		lblHashFunction.setText(Descriptions.hashFunction_txt);
+		lblHashFunction.setText(Messages.hashFunction_txt);
 
 		cmb_Hash = new Combo(container, SWT.READ_ONLY);
 		cmb_Hash.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-		cmb_Hash.add("SHA-256");
-		cmb_Hash.add("SHA-1");
-		cmb_Hash.add("MD5");
+		cmb_Hash.add("SHA-256"); //$NON-NLS-1$
+		cmb_Hash.add("SHA-1"); //$NON-NLS-1$
+		cmb_Hash.add("MD5"); //$NON-NLS-1$
 		cmb_Hash.select(0);
 		cmb_Hash.addSelectionListener(new SelectionListener() {
 
@@ -387,22 +392,22 @@ public class WotsView extends ViewPart {
 
 				switch (index) {
 				case 0:
-					hashFunction = "SHA-256";
+					hashFunction = "SHA-256"; //$NON-NLS-1$
 					break;
 				case 1:
-					hashFunction = "SHA-1";
+					hashFunction = "SHA-1"; //$NON-NLS-1$
 					break;
 				case 2:
-					hashFunction = "MD5";
+					hashFunction = "MD5"; //$NON-NLS-1$
 					break;
 				default:
-					hashFunction = "SHA-256";
+					hashFunction = "SHA-256"; //$NON-NLS-1$
 					cmb_Hash.select(0);
 				}
 
-				privateKey = "";
-				publicKey = "";
-				signature = "";
+				privateKey = ""; //$NON-NLS-1$
+				publicKey = ""; //$NON-NLS-1$
+				signature = ""; //$NON-NLS-1$
 
 				setOutputs();
 				getOutputs();
@@ -424,10 +429,15 @@ public class WotsView extends ViewPart {
 				
 			}
 		});
-
+		
+		//The Buttons WOTS and WOTS+ should be exactly one below the other.
+		//Therefore this Label is here to create space between the combo box to 
+		//the left.
+		new Label(container, SWT.NONE);
+		
 		btnWotsPlus = new Button(container, SWT.RADIO);
-		btnWotsPlus.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1));
-		btnWotsPlus.setText("WOTS+");
+		btnWotsPlus.setLayoutData(new GridData(SWT.NONE, SWT.CENTER, false, false, 1, 1));
+		btnWotsPlus.setText("WOTS+"); //$NON-NLS-1$
 		btnWotsPlus.addSelectionListener(new SelectionListener() {
 			
 			@Override
@@ -439,14 +449,14 @@ public class WotsView extends ViewPart {
 
 				// Changes type to WOTS+ and resets what is necessary to do so
 				instance = new WOTSPlus(w, hashFunction);
-				privateKey = "";
-				publicKey = "";
-				signature = "";
-				txt_Sigkey.setText("");
-				txt_Verifkey.setText("");
-				txt_Sig.setText("");
-				setRightImage("icons/" + language + "/Overview2.PNG");
-				txt_Output.setText(Descriptions.outWelcome_txt);
+				privateKey = ""; //$NON-NLS-1$
+				publicKey = ""; //$NON-NLS-1$
+				signature = ""; //$NON-NLS-1$
+				txt_Sigkey.setText(""); //$NON-NLS-1$
+				txt_Verifkey.setText(""); //$NON-NLS-1$
+				txt_Sig.setText(""); //$NON-NLS-1$
+				setRightImage(Messages.WotsView_Overview2); //$NON-NLS-1$ //$NON-NLS-2$
+				txt_Output.setText(Messages.outWelcome_txt);
 
 				updateLengths();
 
@@ -465,13 +475,13 @@ public class WotsView extends ViewPart {
 		GridData gd_lblSignatureKey = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
 		gd_lblSignatureKey.verticalIndent = 15;
 		lblSignatureKey.setLayoutData(gd_lblSignatureKey);
-		lblSignatureKey.setText(Descriptions.privateKey_txt);
+		lblSignatureKey.setText(Messages.privateKey_txt);
 
 		lblVerificationKey = new Label(container, SWT.NONE);
 		GridData gd_lblVerificationKey = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
 		gd_lblVerificationKey.verticalIndent = 15;
 		lblVerificationKey.setLayoutData(gd_lblVerificationKey);
-		lblVerificationKey.setText(Descriptions.publicKey_txt);
+		lblVerificationKey.setText(Messages.publicKey_txt);
 
 		txt_Sigkey = new Text(container, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		gd_txt_Sigkey = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
@@ -492,7 +502,7 @@ public class WotsView extends ViewPart {
 				if (checkHex(txt_Sigkey.getText())) {
 					txt_Sigkey.setBackground(ColorService.RED);
 					setDisabled(txt_Sigkey);
-					txt_SigKeySize.setText(Descriptions.invalidChar_txt);
+					txt_SigKeySize.setText(Messages.invalidChar_txt);
 				} else {
 
 					txt_Sigkey.setBackground(ColorService.WHITE);
@@ -502,8 +512,8 @@ public class WotsView extends ViewPart {
 					} else {
 						privateKey = txt_Sigkey.getText();
 						txt_SigKeySize.setText(Integer.toString(
-								Converter._stringToByte(privateKey).length / 2) + "/"
-								+ (n * l) + " " + Descriptions.byte_txt);
+								Converter._stringToByte(privateKey).length / 2) + "/" //$NON-NLS-1$
+								+ (n * l) + " " + Messages.byte_txt); //$NON-NLS-1$
 
 						if (Converter._stringToByte(privateKey).length / 2 == n * l) {
 							clearOutput(false);
@@ -533,7 +543,7 @@ public class WotsView extends ViewPart {
 				if (checkHex(txt_Verifkey.getText())) {
 					txt_Verifkey.setBackground(ColorService.RED);
 					setDisabled(txt_Verifkey);
-					txt_VerKeySize.setText(Descriptions.invalidChar_txt);
+					txt_VerKeySize.setText(Messages.invalidChar_txt);
 				} else {
 					txt_Verifkey.setBackground(ColorService.WHITE);
 					if (ctr % 2 != 0 && disable) {
@@ -543,7 +553,7 @@ public class WotsView extends ViewPart {
 						publicKey = txt_Verifkey.getText();
 						txt_VerKeySize.setText(Integer
 								.toString(Converter._stringToByte(publicKey).length / 2)
-								+ "/" + (n * instance.getPublicKeyLength()) + " Bytes");
+								+ "/" + (n * instance.getPublicKeyLength()) + " Bytes"); //$NON-NLS-1$ //$NON-NLS-2$
 
 						if (Converter._stringToByte(publicKey).length
 								/ 2 == (n * instance.getPublicKeyLength())) {
@@ -567,7 +577,7 @@ public class WotsView extends ViewPart {
 		gd_img_right.widthHint = 50;
 		gd_img_right.heightHint = 50;
 		img_right.setLayoutData(gd_img_right);
-		img_right.setImage(WOTSPlugin.getImageDescriptor("icons/" + language + "/Overview2.PNG").createImage());
+		img_right.setImage(WOTSPlugin.getImageDescriptor(Messages.WotsView_Overview2).createImage()); //$NON-NLS-1$ //$NON-NLS-2$
 		img_right.addControlListener(new ResizeListener(img_right, composite));
 
 		txt_SigKeySize = new Label(container, SWT.NONE);
@@ -580,13 +590,13 @@ public class WotsView extends ViewPart {
 		GridData gd_lblSignature = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
 		gd_lblSignature.verticalIndent = 15;
 		lblSignature.setLayoutData(gd_lblSignature);
-		lblSignature.setText(Descriptions.signature_txt);
+		lblSignature.setText(Messages.signature_txt);
 
 		lblBi = new Label(container, SWT.NONE);
 		GridData gd_lblBi = new GridData(SWT.FILL, SWT.BOTTOM, false, false, 2, 1);
 		gd_lblBi.verticalIndent = 15;
 		lblBi.setLayoutData(gd_lblBi);
-		lblBi.setText("b_i");
+		lblBi.setText("b_i"); //$NON-NLS-1$
 
 		txt_Sig = new Text(container, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		gd_txt_Sig = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
@@ -606,7 +616,7 @@ public class WotsView extends ViewPart {
 				if (checkHex(txt_Sig.getText())) {
 					txt_Sig.setBackground(ColorService.RED);
 					setDisabled(txt_Sig);
-					txt_SignatureSize.setText(Descriptions.invalidChar_txt);
+					txt_SignatureSize.setText(Messages.invalidChar_txt);
 				} else {
 					txt_Sig.setBackground(ColorService.WHITE);
 					if (ctr % 2 != 0 && disable) {
@@ -616,7 +626,7 @@ public class WotsView extends ViewPart {
 						signature = txt_Sig.getText();
 						txt_SignatureSize.setText(Integer
 								.toString(Converter._stringToByte(signature).length / 2)
-								+ "/" + (n * l) + " Bytes");
+								+ "/" + (n * l) + " Bytes"); //$NON-NLS-1$ //$NON-NLS-2$
 
 						if (Converter._stringToByte(signature).length / 2 == n * l) {
 							setEnabled();
@@ -646,7 +656,7 @@ public class WotsView extends ViewPart {
 				if (checkHex(txt_Bi.getText())) {
 					txt_Bi.setBackground(ColorService.RED);
 					setDisabled(txt_Bi);
-					txt_BSize.setText(Descriptions.invalidChar_txt);
+					txt_BSize.setText(Messages.invalidChar_txt);
 				} else {
 
 					txt_Bi.setBackground(ColorService.WHITE);
@@ -658,7 +668,7 @@ public class WotsView extends ViewPart {
 						instance.setBi(Converter._hexStringToByte(b));
 						txt_BSize.setText(
 								Integer.toString(Converter._stringToByte(b).length / 2)
-										+ "/" + l + " Bytes");
+										+ "/" + l + " Bytes"); //$NON-NLS-1$ //$NON-NLS-2$
 
 						if (Converter._stringToByte(b).length / 2 == l) {
 							clearOutput(false);
@@ -680,14 +690,17 @@ public class WotsView extends ViewPart {
 		GridData gd_btn_Genkey = new GridData(SWT.CENTER, SWT.CENTER, false, false);
 		gd_btn_Genkey.verticalIndent = 15;
 		btn_Genkey.setLayoutData(gd_btn_Genkey);
-		btn_Genkey.setText(Descriptions.btnGenKeys_txt);
+		btn_Genkey.setText(Messages.btnGenKeys_txt);
 		btn_Genkey.addSelectionListener(new SelectionAdapter() {
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
 				clearOutput(false);
-
+				//TODO
+//				getOutputs();
+				signature = "";
+//				txt_Sig.setText("");
 				// KEY GENERATION
 
 				disable = false;
@@ -695,22 +708,23 @@ public class WotsView extends ViewPart {
 				if (btnWots.getSelection() && !btnWotsPlus.getSelection()) {
 
 					// Set Image & Output field for WOTS
-					txt_Output.setText(Descriptions.outGenKeys_txt);
-					setRightImage("icons/" + language + "/Key_Generation.PNG");
+					txt_Output.setText(Messages.outGenKeys_txt);
+					setRightImage(Messages.WotsView_Key_Generation);
 
 				} else if (!btnWots.getSelection() && btnWotsPlus.getSelection()) {
 
 					// Set Image & Output field for WOTS+
-					txt_Output.setText(Descriptions.outGenKeysPlus_txt);
-					setRightImage("icons/" + language + "/Key_Generation.PNG");
+					txt_Output.setText(Messages.outGenKeysPlus_txt);
+					setRightImage(Messages.WotsView_Key_Generation); //$NON-NLS-1$ //$NON-NLS-2$
 
 				} else {
 
-					txt_Output.setText(Descriptions.error_txt);
+					txt_Output.setText(Messages.error_txt);
 
 				}
 
 				// Generate Keys
+//				instance.setSignature(null);
 				setOutputs();
 				instance.generateKeyPair();
 				getOutputs();
@@ -725,7 +739,7 @@ public class WotsView extends ViewPart {
 		GridData gd_btn_Sign = new GridData(SWT.CENTER, SWT.CENTER, false, false);
 		gd_btn_Sign.verticalIndent = 15;
 		btn_Sign.setLayoutData(gd_btn_Sign);
-		btn_Sign.setText(Descriptions.btnGenSig_txt);
+		btn_Sign.setText(Messages.btnGenSig_txt);
 		btn_Sign.setEnabled(false);
 		btn_Sign.addSelectionListener(new SelectionAdapter() {
 			
@@ -741,14 +755,14 @@ public class WotsView extends ViewPart {
 				if (btnWots.getSelection() && !btnWotsPlus.getSelection()) {
 
 					// Set Image & Output field for WOTS
-					txt_Output.setText(Descriptions.outGenSig_txt);
-					setRightImage("icons/" + language + "/Signature_Generation.PNG");
+					txt_Output.setText(Messages.outGenSig_txt);
+					setRightImage(Messages.WotsView_Signature_Generation);
 
 				} else if (!btnWots.getSelection() && btnWotsPlus.getSelection()) {
 
 					// Set Image & Output field for WOTS+
-					txt_Output.setText(Descriptions.outGenSigPlus_txt);
-					setRightImage("icons/" + language + "/Signature_Generation.PNG");
+					txt_Output.setText(Messages.outGenSigPlus_txt);
+					setRightImage(Messages.WotsView_Signature_Generation); 
 				} else {
 					btnWots.setSelection(true);
 					btnWotsPlus.setSelection(false);
@@ -768,7 +782,7 @@ public class WotsView extends ViewPart {
 		GridData gd_btn_VerifySig = new GridData(SWT.CENTER, SWT.CENTER, false, false);
 		gd_btn_VerifySig.verticalIndent = 15;
 		btn_VerifySig.setLayoutData(gd_btn_VerifySig);
-		btn_VerifySig.setText(Descriptions.btnVerSig_txt);
+		btn_VerifySig.setText(Messages.btnVerSig_txt);
 		btn_VerifySig.setEnabled(false);
 		btn_VerifySig.addSelectionListener(new SelectionAdapter() {
 			
@@ -782,14 +796,14 @@ public class WotsView extends ViewPart {
 				if (btnWots.getSelection() && !btnWotsPlus.getSelection()) {
 
 					// Set Image & Output field for WOTS
-					txt_Output.setText(Descriptions.outVerSig_txt);
-					setRightImage("icons/" + language + "/Signature_Verification.PNG");
+					txt_Output.setText(Messages.outVerSig_txt);
+					setRightImage(Messages.WotsView_Signature_Verification);
 
 				} else if (!btnWots.getSelection() && btnWotsPlus.getSelection()) {
 
 					// Set Image & Output field for WOTS+
-					txt_Output.setText(Descriptions.outVerSigPlus_txt);
-					setRightImage("icons/" + language + "/Signature_Verification.PNG");
+					txt_Output.setText(Messages.outVerSigPlus_txt);
+					setRightImage(Messages.WotsView_Signature_Verification);
 
 				} else {
 					btnWots.setSelection(true);
@@ -827,7 +841,7 @@ public class WotsView extends ViewPart {
 					disableDetails();
 
 				} else {
-					txt_Output.setText(Descriptions.error_txt);
+					txt_Output.setText(Messages.error_txt);
 				}
 				container.layout();
 				txt_HashSize.setBackground(ColorService.LIGHTGRAY);
@@ -849,19 +863,6 @@ public class WotsView extends ViewPart {
 	@Override
 	public void setFocus() {
 		container.setFocus();
-	}
-	
-	/**
-	 * Get the language the user uses.
-	 * This is important for the img_right pictures. Thea are available in de and en.
-	 * I don't know how the language ist specified correctly.
-	 */
-	private static String getLanguage() {
-		if (System.getProperty("osgi.nl.user").equals("de_DE") || System.getProperty("osgi.nl.user").equals("de")) {
-			return "de";
-		} else {
-			return "en";
-		}
 	}
 	
 	/**
@@ -958,17 +959,17 @@ public class WotsView extends ViewPart {
 	 */
 	public void reset() {
 
-		privateKey = "";
-		publicKey = "";
-		signature = "";
+		privateKey = ""; //$NON-NLS-1$
+		publicKey = ""; //$NON-NLS-1$
+		signature = ""; //$NON-NLS-1$
 		messageHash = Converter._byteToHex(instance.hashMessage(message));
 		b = Converter._byteToHex(instance.initB());
 
-		txt_Sigkey.setText("");
-		txt_Sig.setText("");
-		txt_Verifkey.setText("");
-		txt_Output.setText(Descriptions.outWelcome_txt);
-		setRightImage("icons/" + language + "/Overview2.PNG");
+		txt_Sigkey.setText(""); //$NON-NLS-1$
+		txt_Sig.setText(""); //$NON-NLS-1$
+		txt_Verifkey.setText(""); //$NON-NLS-1$
+		txt_Output.setText(Messages.outWelcome_txt);
+		setRightImage(Messages.WotsView_Overview2);
 		txt_Hash.setText(messageHash);
 		txt_Bi.setText(b);
 
@@ -995,22 +996,22 @@ public class WotsView extends ViewPart {
 	private void updateLengths() {
 
 		txt_MessageSize
-				.setText(Integer.toString(Converter._stringToByte(message).length) + " "
-						+ Descriptions.byte_txt);
+				.setText(Integer.toString(Converter._stringToByte(message).length) + " " //$NON-NLS-1$
+						+ Messages.byte_txt);
 		txt_SigKeySize.setText(
-				Integer.toString(Converter._stringToByte(privateKey).length / 2) + "/"
-						+ (n * l) + " " + Descriptions.byte_txt);
+				Integer.toString(Converter._stringToByte(privateKey).length / 2) + "/" //$NON-NLS-1$
+						+ (n * l) + " " + Messages.byte_txt); //$NON-NLS-1$
 		txt_VerKeySize
 				.setText(Integer.toString(Converter._stringToByte(publicKey).length / 2)
-						+ "/" + (n * instance.getPublicKeyLength()) + " " + Descriptions.byte_txt);
+						+ "/" + (n * instance.getPublicKeyLength()) + " " + Messages.byte_txt); //$NON-NLS-1$ //$NON-NLS-2$
 		txt_HashSize.setText(
-				Integer.toString(Converter._hexStringToByte(messageHash).length) + "/"
-						+ n + " " + Descriptions.byte_txt);
+				Integer.toString(Converter._hexStringToByte(messageHash).length) + "/" //$NON-NLS-1$
+						+ n + " " + Messages.byte_txt); //$NON-NLS-1$
 		txt_SignatureSize
 				.setText(Integer.toString(Converter._stringToByte(signature).length / 2)
-						+ "/" + (n * l) + " " + Descriptions.byte_txt);
-		txt_BSize.setText(Integer.toString(Converter._hexStringToByte(b).length) + "/"
-				+ l + " " + Descriptions.byte_txt);
+						+ "/" + (n * l) + " " + Messages.byte_txt); //$NON-NLS-1$ //$NON-NLS-2$
+		txt_BSize.setText(Integer.toString(Converter._hexStringToByte(b).length) + "/" //$NON-NLS-1$
+				+ l + " " + Messages.byte_txt); //$NON-NLS-1$
 	}
 
 	/**
@@ -1022,7 +1023,7 @@ public class WotsView extends ViewPart {
 		} else {
 			txt_Sig.setBackground(ColorService.WHITE);
 		}
-		btn_VerifySig.setText(Descriptions.btnVerSig_txt);
+		btn_VerifySig.setText(Messages.btnVerSig_txt);
 	}
 
 	/**
@@ -1030,15 +1031,15 @@ public class WotsView extends ViewPart {
 	 */
 	public void restart() {
 
-		hashFunction = "SHA-256";
+		hashFunction = "SHA-256"; //$NON-NLS-1$
 		instance = new WinternitzOTS(4, hashFunction);
-		privateKey = "";
-		publicKey = "";
-		signature = "";
+		privateKey = ""; //$NON-NLS-1$
+		publicKey = ""; //$NON-NLS-1$
+		signature = ""; //$NON-NLS-1$
 		w = 4;
 		n = instance.getN();
 		l = instance.getL();
-		message = Descriptions.defaultMessage_txt;
+		message = Messages.defaultMessage_txt;
 		messageHash = Converter._byteToHex(instance.hashMessage(message));
 		b = Converter._byteToHex(instance.initB());
 		details = false;
@@ -1046,7 +1047,7 @@ public class WotsView extends ViewPart {
 
 		// Set Attributes for Objects
 
-		btn_Details.setText(Descriptions.showDetails_txt);
+		btn_Details.setText(Messages.showDetails_txt);
 
 		btnWots.setSelection(true);
 		btnWotsPlus.setSelection(false);
@@ -1057,20 +1058,20 @@ public class WotsView extends ViewPart {
 		lblBi.setEnabled(false);
 		lblBi.setVisible(false);
 
-		txt_winternitzP.setText("4");
-		txt_Sigkey.setText("");
-		txt_message.setText(Descriptions.defaultMessage_txt);
-		txt_Output.setText(Descriptions.outWelcome_txt);
+		txt_winternitzP.setText("4"); //$NON-NLS-1$
+		txt_Sigkey.setText(""); //$NON-NLS-1$
+		txt_message.setText(Messages.defaultMessage_txt);
+		txt_Output.setText(Messages.outWelcome_txt);
 		txt_Hash.setText(messageHash);
 		txt_Bi.setText(b);
 		disableDetails();
 
-		setRightImage("icons/" + language + "/Overview2.PNG");
+		setRightImage(Messages.WotsView_Overview2);
 		cmb_Hash.select(0);
 
-		txt_Sig.setText("");
-		txt_Sigkey.setText("");
-		txt_Verifkey.setText("");
+		txt_Sig.setText(""); //$NON-NLS-1$
+		txt_Sigkey.setText(""); //$NON-NLS-1$
+		txt_Verifkey.setText(""); //$NON-NLS-1$
 
 		updateLengths();
 		setEnabled();
@@ -1092,7 +1093,7 @@ public class WotsView extends ViewPart {
 	 */
 	private void disableDetails() {
 
-		btn_Details.setText(Descriptions.showDetails_txt);
+		btn_Details.setText(Messages.showDetails_txt);
 
 		// make Message and Hash
 		gd_txt_Hash.exclude = true;
@@ -1118,7 +1119,7 @@ public class WotsView extends ViewPart {
 	 */
 	private void enableDetails() {
 
-		btn_Details.setText(Descriptions.hideDetails_txt);
+		btn_Details.setText(Messages.hideDetails_txt);
 
 		// make Message and Hash
 		gd_txt_Hash.exclude = false;

@@ -2,9 +2,8 @@ package org.jcryptool.visual.wots;
 
 import org.eclipse.osgi.util.NLS;
 
-public class Descriptions extends NLS {
-	private static final String BUNDLE_NAME = "org.jcryptool.visual.wots.descriptions";
-
+public class Messages extends NLS {
+	private static final String BUNDLE_NAME = "org.jcryptool.visual.wots.messages"; //$NON-NLS-1$
 	public static String invalidChar_txt;
 	public static String headline_txt;
 	public static String header_txt;
@@ -35,13 +34,18 @@ public class Descriptions extends NLS {
 	public static String outGenSigPlus_txt;
 	public static String outVerSigPlus_txt;
 	public static String fileType_txt;
+	
+	public static String WotsView_Key_Generation;
+	public static String WotsView_Overview2;
+	public static String WotsView_Signature_Generation;
+	public static String WotsView_Signature_Verification;
+
 
 	static {
 		// initialize resource bundle
-		NLS.initializeMessages(BUNDLE_NAME, Descriptions.class);
+		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
 	}
 
-	private Descriptions() {
+	private Messages() {
 	}
-
 }
