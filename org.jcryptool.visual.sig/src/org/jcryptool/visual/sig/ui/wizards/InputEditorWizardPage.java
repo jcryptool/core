@@ -37,7 +37,10 @@ public class InputEditorWizardPage extends WizardPage {
     @Override
     public void setVisible(boolean visible) {
     	super.setVisible(visible);
-    	if (visible)
+    	if (visible) {
     		compositeEditor.setInitialFocus();
+    		setPageComplete(compositeEditor.text.getText() != null && !compositeEditor.text.getText().equals(""));
+    	}
+    	
     }
 }

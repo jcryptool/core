@@ -124,6 +124,10 @@ public class SigComposite extends Composite {
 	private Canvas canvasBtmCenter;
 	private Canvas c3;
 	private MenuItem copy;
+	private TabItem tbtmStep1;
+	private TabItem tbtmStep2;
+	private TabItem tbtmStep3;
+	private TabItem tbtmStep4;
 
     /**
      * @return the hash
@@ -186,10 +190,11 @@ public class SigComposite extends Composite {
         introComposite.setLayout(new GridLayout());
         introComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-        Label lblHeader = new Label(introComposite, SWT.NONE);
+        Text lblHeader = new Text(introComposite, SWT.NONE);
         lblHeader.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         lblHeader.setText(Messages.SigComposite_lblHeader);
         lblHeader.setBackground(white);
+        lblHeader.setEditable(false);
         FontData fontData = lblHeader.getFont().getFontData()[0];
         Font font = new Font(this.getDisplay(), new FontData(fontData.getName(), 12, SWT.BOLD));
         lblHeader.setFont(font);
@@ -324,6 +329,7 @@ public class SigComposite extends Composite {
         gd_txtHash.widthHint = 160;
         txtHash.setLayoutData(gd_txtHash);
         txtHash.setEditable(false);
+        txtHash.setEnabled(false);
         
         /** columnRight contains the tabbed text box with the explanations, as well as canvasBtmCenter with
             all the arrows and images below it, the "Signature function" button and the "Signed document" group */         
@@ -348,8 +354,8 @@ public class SigComposite extends Composite {
         gd_tabDescription.heightHint = btnChooseInputHeight + c1Height + (btnHashHeight / 2) - 35;
         tabDescription.setLayoutData(gd_tabDescription);
 
-        TabItem tbtmStep1 = new TabItem(tabDescription, SWT.NONE);
-        tbtmStep1.setText(Messages.SigComposite_tbtmNewItem_0);
+        tbtmStep1 = new TabItem(tabDescription, SWT.NONE);
+        tbtmStep1.setText(Messages.SigComposite_tbtmNewItem_0 + Messages.SigComposite_nextStep);
 
         txtDescriptionOfStep1 = new Text(tabDescription, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY | SWT.V_SCROLL);
         txtDescriptionOfStep1.setBackground(white);
@@ -363,7 +369,7 @@ public class SigComposite extends Composite {
         mntm1 = new MenuItem(menu1, SWT.NONE);
         mntm1.setText(Messages.SigComposite_menu);
 
-        TabItem tbtmStep2 = new TabItem(tabDescription, SWT.NONE);
+        tbtmStep2 = new TabItem(tabDescription, SWT.NONE);
         tbtmStep2.setText(Messages.SigComposite_tbtmNewItem_1);
 
         txtDescriptionOfStep2 = new Text(tabDescription, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY | SWT.V_SCROLL);
@@ -378,7 +384,7 @@ public class SigComposite extends Composite {
         mntm2 = new MenuItem(menu2, SWT.NONE);
         mntm2.setText(Messages.SigComposite_menu);
 
-        TabItem tbtmStep3 = new TabItem(tabDescription, SWT.NONE);
+        tbtmStep3 = new TabItem(tabDescription, SWT.NONE);
         tbtmStep3.setText(Messages.SigComposite_tbtmNewItem_2);
 
         txtDescriptionOfStep3 = new Text(tabDescription, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY | SWT.V_SCROLL);
@@ -393,7 +399,7 @@ public class SigComposite extends Composite {
         mntm3 = new MenuItem(menu3, SWT.NONE);
         mntm3.setText(Messages.SigComposite_menu);
 
-        TabItem tbtmStep4 = new TabItem(tabDescription, SWT.NONE);
+        tbtmStep4 = new TabItem(tabDescription, SWT.NONE);
         tbtmStep4.setText(Messages.SigComposite_tbtmNewItem_3);
 
         txtDescriptionOfStep4 = new Text(tabDescription, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY | SWT.V_SCROLL);
@@ -545,17 +551,18 @@ public class SigComposite extends Composite {
         
         lblProgress = new Label(bottomRow, SWT.NONE);
         GridData gd_lblProgress = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
-        gd_lblProgress.verticalIndent = 5;
+        gd_lblProgress.verticalIndent = 25;
         gd_lblProgress.widthHint = 145;
         lblProgress.setLayoutData(gd_lblProgress);
         lblProgress.setText(String.format(Messages.SigComposite_lblProgress, 1));
       
         btnReset = new Button(bottomRow, SWT.NONE);
         GridData gd_btnReset = new GridData(SWT.RIGHT, SWT.FILL, false, false);
-        gd_btnReset.verticalIndent = 5;
+        gd_btnReset.verticalIndent = 25;
         gd_btnReset.widthHint = 110;
         btnReset.setLayoutData(gd_btnReset);
         btnReset.setText(Messages.SigComposite_btnReset);
+        btnReset.setEnabled(false);
 
         btnReturn = new Button(compSignatureGeneration, SWT.NONE);
         btnReturn.setText(Messages.SigComposite_btnReturn);
@@ -578,7 +585,7 @@ public class SigComposite extends Composite {
         addContributionItem(toolBarMenu, commandId, SigPlugin.getImageDescriptor("icons/reset.gif"), "Reset");	//$NON-NLS-1$
 
         // Check if called by JCT-CA
-        if (Input.privateKey != null) {
+        if (Input.privateKeyJCTCA != null) {
             btnReturn.setVisible(true); // Set button to return visible
             called = true;
         }
@@ -588,8 +595,7 @@ public class SigComposite extends Composite {
      * Adds SelectionListeners to the Controls that need them
      */
     public void createEvents() {
-    	
-        // Adds a Listener for the document
+        // Adds a Listener for the input button
         btnChooseInput.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 try {               
@@ -601,7 +607,7 @@ public class SigComposite extends Composite {
                         oldMessage = Arrays.copyOfRange(Input.data, 0, lengthOldMessage);
                 	}
                 	
-                    // Create the HashWizard
+                    // Create the InputWizard
                     InputWizard wiz = new InputWizard();
                     // Display it
                     WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
@@ -648,6 +654,13 @@ public class SigComposite extends Composite {
                             
                             canvasBtmCenter.redraw();
                             lblProgress.setText(String.format(Messages.SigComposite_lblProgress, 2));
+                            
+                            tbtmStep1.setText(Messages.SigComposite_tbtmNewItem_0);
+                            tbtmStep2.setText(Messages.SigComposite_tbtmNewItem_1 + Messages.SigComposite_nextStep); 
+                            tbtmStep3.setText(Messages.SigComposite_tbtmNewItem_2);
+                            tbtmStep4.setText(Messages.SigComposite_tbtmNewItem_3);
+                            
+                            btnReset.setEnabled(true);
                     	}
                     	//prevent memory leak
                     	newMessage = null;
@@ -671,7 +684,6 @@ public class SigComposite extends Composite {
                         @Override
                         protected void configureShell(Shell newShell) {
                             super.configureShell(newShell);
-                            // set size of the wizard-window (x,y)
                         }
                     };
                     if (dialog.open() == Window.OK) {
@@ -694,6 +706,13 @@ public class SigComposite extends Composite {
                         c3.redraw();
                         canvasBtmCenter.redraw();
                         lblProgress.setText(String.format(Messages.SigComposite_lblProgress, 3));
+                        
+                        tbtmStep1.setText(Messages.SigComposite_tbtmNewItem_0);
+                        tbtmStep2.setText(Messages.SigComposite_tbtmNewItem_1);
+                        tbtmStep3.setText(Messages.SigComposite_tbtmNewItem_2 + Messages.SigComposite_nextStep); 
+                        tbtmStep4.setText(Messages.SigComposite_tbtmNewItem_3);
+                        
+                        txtHash.setEnabled(true);
                         txtHash.setText(Input.hashHex);  
                     }
                 } catch (Exception ex) {
@@ -712,15 +731,20 @@ public class SigComposite extends Composite {
                         protected void configureShell(Shell newShell) {
                             super.configureShell(newShell);
                             // set size of the wizard-window (x,y)
-                            newShell.setSize(550, 700);
-                            newShell.setMinimumSize(550, 700);
+                            newShell.setSize(550, 550);
+                            newShell.setMinimumSize(550, 550);
                         }
                     };
                     if (dialog.open() == Window.OK) {
                 		reset(2);       	
                         // get signature method (integer)
                         signature = wiz.getSignature();
+                        Input.s = signature;
+                        
+                        //get key
                         KeyStoreAlias alias = wiz.getAlias();
+                        Input.privateKey = alias;
+                        
                         lblSignature.setText(signatures[signature]);
 
                         // Creates the signature for the calculated hash.
@@ -747,6 +771,12 @@ public class SigComposite extends Composite {
                         c3.redraw();
                         canvasBtmCenter.redraw();
                         lblProgress.setText(String.format(Messages.SigComposite_lblProgress, 4));
+                        
+                        tbtmStep1.setText(Messages.SigComposite_tbtmNewItem_0);
+                        tbtmStep2.setText(Messages.SigComposite_tbtmNewItem_1);
+                        tbtmStep3.setText(Messages.SigComposite_tbtmNewItem_2);
+                        tbtmStep4.setText(Messages.SigComposite_tbtmNewItem_3 +Messages.SigComposite_nextStep);
+                        
                         txtDescriptionOfStep4.setText(Messages.SigComposite_txtDescriptionOfStep4_Success
                                 + Messages.SigComposite_txtDescriptionOfStep4);
 
@@ -767,9 +797,33 @@ public class SigComposite extends Composite {
         // Adds a Listener for the reset button
         btnReset.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
-                reset(0);
-                Input.reset();
-                System.gc();
+            	String stepString = lblProgress.getText();
+            	int currStep;
+            	boolean completeReset = false;
+            	
+            	if(stepString.contains("Schritt")) {
+            		currStep = Integer.parseInt(String.valueOf(stepString.charAt(8)))-1;
+            		if (currStep < 1) {
+            			currStep = 1;
+            			completeReset = true;
+            		}
+            		reset(currStep -1);
+            	} else if (stepString.contains("Step")) {
+            		currStep = Integer.parseInt(String.valueOf(stepString.charAt(5)))-1;
+            		if (currStep < 1) {
+            			currStep = 1;
+            			completeReset = true;
+            		}
+            		reset(currStep -1);
+            	} else {
+                    reset(0);
+                    completeReset = true;
+            	}
+            	
+            	if (completeReset) {
+                    Input.reset();
+                    System.gc();
+            	}
             }
         });
 
@@ -782,6 +836,8 @@ public class SigComposite extends Composite {
                     ShowSig shell = new ShowSig(display, sigstring);
                     shell.open();
                     shell.layout();
+                    tbtmStep4.setText(Messages.SigComposite_tbtmNewItem_3 +Messages.SigComposite_lastStep); 
+                    tabDescription.requestLayout();
                     while (!shell.isDisposed()) {
                         if (!display.readAndDispatch()) {
                             display.sleep();
@@ -797,7 +853,7 @@ public class SigComposite extends Composite {
         btnReturn.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 try {
-                    Input.privateKey = null;
+                    Input.privateKeyJCTCA = null;
                     Input.publicKey = null;
                     IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
                     IViewReference ref = page.findViewReference("org.jcryptool.visual.sig.view"); //$NON-NLS-1$
@@ -864,6 +920,7 @@ public class SigComposite extends Composite {
         // step (keep the chosen algorithms)
         switch (step) {
         case 0:
+        	btnReset.setEnabled(false);
             btnHash.setEnabled(false);
             c1.setToolTipText(null);
             copy.setEnabled(false);
@@ -873,28 +930,56 @@ public class SigComposite extends Composite {
             Input.h = -1;
         case 1:
             btnSignature.setEnabled(false);
-            c3.setToolTipText(null);
-            lblSignature.setText(""); //$NON-NLS-1$
             txtHash.setText(""); //$NON-NLS-1$
+            txtHash.setEnabled(false);
             Input.signature = null;
             Input.signatureHex = null;
             Input.signatureOct = null;
-            Input.privateKey = null;
+            Input.privateKeyJCTCA = null;
             Input.publicKey = null;
-            Input.key = null;
+            Input.privateKey = null;
             Input.s = -1;
         case 2:
+            c3.setToolTipText(null);
+            lblSignature.setText(""); //$NON-NLS-1$
         	Input.savePath = null;
             btnOpenInEditor.setEnabled(false);
             txtDescriptionOfStep4.setText(Messages.SigComposite_txtDescriptionOfStep4);
             if (!called) { // If not called by jctca, reset key
-                Input.privateKey = null;
+                Input.privateKeyJCTCA = null;
             }
+
             break;
         default:
             break;
         }
-
+        
+        switch(step) {
+        case 0:
+            tbtmStep1.setText(Messages.SigComposite_tbtmNewItem_0+Messages.SigComposite_nextStep);
+            tbtmStep2.setText(Messages.SigComposite_tbtmNewItem_1);
+            tbtmStep3.setText(Messages.SigComposite_tbtmNewItem_2);
+            tbtmStep4.setText(Messages.SigComposite_tbtmNewItem_3);
+            break;
+        case 1:
+            tbtmStep1.setText(Messages.SigComposite_tbtmNewItem_0);
+            tbtmStep2.setText(Messages.SigComposite_tbtmNewItem_1 +Messages.SigComposite_nextStep);
+            tbtmStep3.setText(Messages.SigComposite_tbtmNewItem_2);
+            tbtmStep4.setText(Messages.SigComposite_tbtmNewItem_3);
+        	break;
+        case 2: 
+            tbtmStep1.setText(Messages.SigComposite_tbtmNewItem_0);
+            tbtmStep2.setText(Messages.SigComposite_tbtmNewItem_1);
+            tbtmStep3.setText(Messages.SigComposite_tbtmNewItem_2 +Messages.SigComposite_nextStep);
+            tbtmStep4.setText(Messages.SigComposite_tbtmNewItem_3);
+        	break;
+        case 3: 
+        default:
+        	break;
+        }
+        
+        tabDescription.requestLayout();
+        
         lblProgress.setText(s);
         tabDescription.setSelection(step);
         // redraw canvas (to reset the arrows)
@@ -914,7 +999,6 @@ public class SigComposite extends Composite {
         sigstring = ""; //$NON-NLS-1$
 
         // Temporary solution
-
         if (hashes[hash].contains("MD5")) { //$NON-NLS-1$
             sigstring = "MD5with"; //$NON-NLS-1$
         }

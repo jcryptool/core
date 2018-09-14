@@ -21,6 +21,7 @@ public class Messages {
     private static final String BUNDLE_NAME = "org.jcryptool.visual.sigVerification.messages"; //$NON-NLS-1$
 
     // Create strings for all the values
+    public static String SigVerComposite_resultTitle;
     public static String SigVerComposite_resutFalseDescription;
     public static String SigVerComposite_resutTrueDescription;
     public static String SigVerComposite_lblProgress;
@@ -28,6 +29,8 @@ public class Messages {
     public static String SigVerComposite_tbtmNewItem_1;
     public static String SigVerComposite_tbtmNewItem_2;
     public static String SigVerComposite_tbtmNewItem_3;
+    public static String SigVerComposite_tabNextStep;
+    public static String SigVerComposite_tabLastStep;
     public static String SigVerComposite_txtDescriptionOfStep1;
     public static String SigVerComposite_txtDescriptionOfStep2;
     public static String SigVerComposite_txtDescriptionOfStep3;
@@ -49,14 +52,20 @@ public class Messages {
     public static String ModelComposite_description;
     public static String ModelComposite_lblHeader;
     public static String ModelComposite_lblTitle;
+    public static String ModelComposite_lblTitleChainModel;
+    public static String ModelComposite_lblCertificateVerification;
     public static String ModelComposite_btnShellM;
     public static String ModelComposite_btnChainM;
     public static String ModelComposite_lblroot;
     public static String ModelComposite_lbllevel2;
     public static String ModelComposite_lbllevel3;
     public static String ModelComposite_btnNewResult;
-    public static String ModelComposite_Choose;
+    public static String ModelComposite_certLayer;
+    public static String ModelComposite_ChooseEnd;
+    public static String ModelComposite_ChooseStart;
     public static String ModelComposite_btnReset;
+	public static String ModelComposite_validDate;
+    public static String SigVerComposite_FileInput_Tooltip;
 
     static {
         // initialize resource bundle

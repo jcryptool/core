@@ -25,6 +25,7 @@ public class Messages {
     public static String HashWizard_grpHashes;
     // Group box 2 text
     public static String HashWizard_grpDescription;
+    public static String HashWizard_FurtherInfoInOnlineHelp;
     // The Texts for the descriptions of the methods
     public static String HashWizard_rdomd5_description;
     public static String HashWizard_rdosha1_description;
@@ -40,6 +41,7 @@ public class Messages {
     // SignatureWizard
     public static String SignatureWizard_Usage;
     public static String SignatureWizard_Usage2;
+    public static String SignatureWizard_FurtherInfoInOnlineHelp;
     // Group box 1 text
     public static String SignatureWizard_grpSignatures;
     // Group box 2 text
@@ -67,6 +69,7 @@ public class Messages {
     public static String Wizard_menu;
     public static String SignatureWizard_labelKey;
     public static String SignatureWizard_labelCurve;
+	public static String SignatureWizard_noKeysHint;
 
     // InputWizard
     // Page 1

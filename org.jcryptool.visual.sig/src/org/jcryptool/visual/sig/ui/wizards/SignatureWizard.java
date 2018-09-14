@@ -34,8 +34,8 @@ public class SignatureWizard extends Wizard {
         method = m;
         setWindowTitle(Messages.SignatureWizard_Title);
         
-        if (Input.key != null) {
-        	alias = Input.key;
+        if (Input.privateKey != null) {
+        	alias = Input.privateKey;
         }
     }
 
@@ -47,34 +47,20 @@ public class SignatureWizard extends Wizard {
 
     @Override
     public boolean performFinish() {
-        int i = 0; // 0-4
         // get all the radiobuttons from the WizardPage
-        Control[] radiobutton = (Control[]) page.getGrpSignatures().getChildren();
+        Control[] radioButtons = (Control[]) page.getGrpSignatures().getChildren();
+        
         // Check which radiobutton is selected
-        while (i <= 4) {
-            // Check if the current button is selected
-            if (((Button) radiobutton[i]).getSelection()) {
-                signature = i;
-                i = 5; // leave the loop
+        for (int i = 0; i < radioButtons.length; i++) {
+            if (((Button) radioButtons[i]).getSelection()) {
+                signature = i; //set this.signature to selected radioButton
+                break; // leave the loop
             }
-            i++;
         }
         
-        Input.s = signature;
-
         // Get the Alias
         alias = page.getAlias();
-        // Store the key
-        if (alias != null) {
-            Input.key = alias;
-        }
-        
-        
-        //Reset / empty the key if ECDSA is selected
-        if (signature == 2) {
-        	Input.key = null;
-        }
-    
+
         return true;
     }
 

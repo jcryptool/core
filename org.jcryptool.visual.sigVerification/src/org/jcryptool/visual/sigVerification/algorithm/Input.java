@@ -1,5 +1,14 @@
 package org.jcryptool.visual.sigVerification.algorithm;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+
+import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+
 /**
  * This class is used to share data between classes.
  * 
@@ -9,16 +18,20 @@ public class Input {
     /**
      * Contains the input data (signature + plaintext) (byte array)
      */
-    public byte[] data;
+//    public byte[] data;
 
     /**
      * Contains the path to the input data
      */
     public String path = ""; //$NON-NLS-1$
+    
+    public String filename = ""; //$NON-NLS-1$
+    
+    public String tooltipData;
 
     public int h = -1; // the chosen hash (integer)
 
-    public int s = -1; // the chosen string (integer)
+    public int s = -1; // the chosen signature method (integer)
 
     /**
      * Contains the plain text of the input data (byte array)
@@ -54,13 +67,19 @@ public class Input {
      * The size in bit of the chosen signature method ("RSA" = 1024 etc.)
      */
     public int signatureSize;
+    
+    /**
+     * The public key used for signature verification
+     */
+    public KeyStoreAlias publicKeyAlias = null;
 
     /**
      * This method resets all variables in this class to their initial value
      */
     public void reset(Hash hash, Hash hashNew, SigVerification sigVerification) {
-        data = null;
+//        data = null;
         path = null;
+        filename = null;
         hash.hash = null;
         hash.hashHex = null;
         hashNew.hash = null;
@@ -70,6 +89,7 @@ public class Input {
         signatureOct = null;
         sigVerification.reset();
         h = -1;
+        publicKeyAlias = null;
     }
 
     /**
@@ -98,45 +118,107 @@ public class Input {
     }
 
     /**
-     * Sets signatureSize to the size of the signature in bit.
+     * Sets signatureSize to the size of the signature in byte.
      * 
      * @return void
      */
-    public void setSignatureSize() {
-        switch (this.s) {
-        case 0: // DSA 368 Bit -> 46 Byte
-            this.signatureSize = 368;
-            break;
-        case 1: // RSA, RSA und MGF1 1024 Bit -> 128 Byte
-        case 3:
-            this.signatureSize = 1024;
-            //this.signatureSize = 2048;
-            break;
-        case 2: // ECDSA 560 Bit -> 70 Byte
-            this.signatureSize = 560;
-            break;
-        default:
-            this.signatureSize = -1;
-            break;
+    public void setSignatureSizeFromInputFile(File inputFile) throws IOException {
+//        switch (this.s) {
+//        case 0: // DSA 368 Bit -> 46 Byte
+//            this.signatureSize = 368;
+//            break;
+//        case 1: // RSA, RSA und MGF1 1024 Bit -> 128 Byte
+//        case 3:
+//            this.signatureSize = 1024;
+//            //this.signatureSize = 2048;
+//            break;
+//        case 2: // ECDSA 560 Bit -> 70 Byte (?) // 440 Bit
+//            this.signatureSize = 440;
+//            break;
+//        default:
+//            this.signatureSize = -1;
+//            break;
+//        }
+    	byte[] arrSigSize = getBytesFromFile(inputFile, 0, 4);
+        final ByteBuffer bb = ByteBuffer.wrap(arrSigSize);
+        bb.order(ByteOrder.LITTLE_ENDIAN);
+        int signatureSizeTemp = bb.getInt();
+        if (signatureSizeTemp > 8192) {
+        	//if signature is too big, eg because the user opened a wrong file where the first 4 bytes do not contain the correct signatire size
+        	//the size is set to -1 to avoid OutOfMemoryError in setSignatureFromInputFile(file)-method and setPlainFromInputFile(file)-method
+        	this.signatureSize = -1;
+        } else {
+        	this.signatureSize = signatureSizeTemp;
         }
     }
-
-    /**
-     * Takes the input data and divides it into the signature and the plaintext.
-     * 
-     * @return void
-     */
-    public void divideSignaturePlaintext() {
-        int sigSize = this.signatureSize / 8; // Länge der Signatur von Bit in Byte umwandeln.
-
-        // Trennt in die Inputdaten auf in Signatur und Plaintext. Der vordere Teil ist Signatur.
-        //this.signature = java.util.Arrays.copyOfRange(this.data, 0, sigSize + 0);
-        //this.plain = java.util.Arrays.copyOfRange(this.data, sigSize + 0, this.data.length);
-        
-        this.signature = java.util.Arrays.copyOfRange(this.data, 4, sigSize + 4);
-        this.plain = java.util.Arrays.copyOfRange(this.data, sigSize + 4, this.data.length);
-
+    
+    public void setSignatureFromInputFile(File file) throws IOException {  	
+    	if (signatureSize != -1) {
+    		this.signature = getBytesFromFile(file, 4, signatureSize/8); //4 bytes contain the length of the signature as an integer value
+    	} else {
+    		this.signature = null;
+    	}
     }
+    
+    public void setPlainFromInputFile(File file) throws IOException {
+    	if (signatureSize != -1) {
+    		this.plain = getBytesFromFile(file, signatureSize/8 + 4, file.length() - signatureSize/8 - 4);
+    	} else {
+    		this.plain = null;
+    	}
+    }
+    
+    /**
+     * Converts the input file to a byte array
+     * 
+     * @param file The file elected by the user
+     * @return The byte array
+     */
+    public static byte[] getBytesFromFile(File file) throws IOException {
+    	return getBytesFromFile(file, 0, file.length());
+    }
+    
+    /**
+     * Converts the input file to a byte array
+     * 
+     * @param file The file elected by the user
+     * @param length the length of the result array. The method stops after this number of bytes
+     * @return The byte array
+     */
+    public static byte[] getBytesFromFile(File file,long start, long length) throws IOException {
+        InputStream is = new FileInputStream(file);
+        
+        // Check if the file isn't 0
+        if (length <= 0) {
+            is.close();
+            return null;
+        }
+     
+        //skip bytes until start position in the file is reached
+        for (int i = 0; i < start; i++) {
+            int curr = is.read();
+            if (curr == -1) {
+            	is.close();
+            	return null;
+            }
+        }
+        
+        int offset = 0;
+        int numRead = 0;  
+
+        // Create the byte array to hold the data
+        byte[] bytes = new byte[(int) length];
+        
+        //read and save the rest of the file bytes into the byte array
+        while ((offset < bytes.length) && ((numRead = is.read(bytes, offset, bytes.length - offset)) >= 0)) {
+            offset += numRead;
+        }
+
+        is.close();
+        return bytes;
+    }
+    
+    
 
     /**
      * Converts a given byte array (signature, hash, ...) to it's hexadecimal representation
@@ -190,7 +272,9 @@ public class Input {
      * the signature.
      */
     public void setSignatureHex() {
-        this.signatureHex = bytesToHex(this.signature);
+    	if (this.signature != null) {
+    		this.signatureHex = bytesToHex(this.signature);
+    	}
     }
 
     /**
@@ -198,7 +282,9 @@ public class Input {
      * the signature.
      */
     public void setSignatureOct() {
-        this.signatureOct = bytesToOct(this.signature, "");
+    	if (this.signature != null) {
+    		this.signatureOct = bytesToOct(this.signature, "");
+    	}
     }
 
     /**
@@ -207,7 +293,12 @@ public class Input {
      * @return signaturHex (a String)
      */
     public String getSignatureHex() {
-        return this.signatureHex;
+    	if (this.signatureHex != null) {
+            return this.signatureHex;
+    	} else {
+    		return "";
+    	}
+
     }
 
     /**
@@ -216,6 +307,10 @@ public class Input {
      * @return signaturOct (a String)
      */
     public String getSignatureOct() {
-        return this.signatureOct;
+    	if (this.signatureHex != null) {
+            return this.signatureOct;
+		} else {
+			return "";
+		}
     }
 }

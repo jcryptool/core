@@ -39,7 +39,7 @@ import org.jcryptool.visual.sig.algorithm.Input;
  * @author Grebe
  */
 public class InputFileComposite extends Composite implements SelectionListener {
-    private Text txtPath;
+    protected Text txtPath;
     private InputFileWizardPage page;
     private int maxSize = 10485760; // Maximal size of the file (initial 10 MB but gets computed from free heap space later)
 	private Button btnBrowse;

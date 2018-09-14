@@ -13,12 +13,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Menu;
@@ -53,21 +52,58 @@ public class HashComposite extends Composite implements SelectionListener {
      * Draws all the controls of the composite
      */
     private void initialize() {
-        GridData gd_grpSignatures = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gd_grpSignatures.widthHint = 141;
+    	setLayout(new GridLayout());
+    	int width = 400;
 
+        grpHashes = new Group(this, SWT.NONE);
+        GridData gd_grpHashes = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        gd_grpHashes.widthHint = width;
+        grpHashes.setLayoutData(gd_grpHashes);
+        grpHashes.setLayout(new GridLayout());
+        grpHashes.setText(Messages.HashWizard_grpHashes);
+
+        rdo1 = new Button(grpHashes, SWT.RADIO);
+        rdo1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+        rdo1.setText("MD5 (128)"); //$NON-NLS-1$
+
+        rdo2 = new Button(grpHashes, SWT.RADIO);
+        rdo2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+        rdo2.setText("SHA-1 (160)"); //$NON-NLS-1$
+
+        rdo3 = new Button(grpHashes, SWT.RADIO);
+        rdo3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+        rdo3.setText(Messages.HashWizard_rdosha256);
+
+        rdo4 = new Button(grpHashes, SWT.RADIO);
+        rdo4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+        rdo4.setText(Messages.HashWizard_rdosha384);
+
+        rdo5 = new Button(grpHashes, SWT.RADIO);
+        rdo5.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+        rdo5.setText(Messages.HashWizard_rdosha512);
+        
         Group grpDescription = new Group(this, SWT.NONE);
-        GridData gd_grpDescription = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gd_grpDescription.widthHint = 129;
+        GridData gd_grpDescription = new GridData(SWT.FILL, SWT.FILL, true, true);
+        gd_grpDescription.widthHint = width;
+        gd_grpDescription.heightHint = 200;
         grpDescription.setLayoutData(gd_grpDescription);
         grpDescription.setText(Messages.HashWizard_grpDescription);
-        grpDescription.setBounds(10, 187, 300, 246);
+        grpDescription.setLayout(new GridLayout());
 
+//        txtDescription = new Text(grpDescription, SWT.WRAP | SWT.TRANSPARENT | SWT.V_SCROLL);
+//        GridData gd_txtDescription = new GridData(SWT.FILL, SWT.FILL, true, true);
+//        gd_txtDescription.heightHint = 200;
+//        txtDescription.setLayoutData(gd_txtDescription);
+//        txtDescription.setEditable(false);
+//        txtDescription.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
+//        txtDescription.setText(Messages.HashWizard_rdomd5_description);
+        
         txtDescription = new Text(grpDescription, SWT.WRAP | SWT.TRANSPARENT);
+        GridData gd_txtDescription = new GridData(SWT.FILL, SWT.FILL, true, true);
+        gd_txtDescription.heightHint = 100;
+        txtDescription.setLayoutData(gd_txtDescription);
         txtDescription.setEditable(false);
-        txtDescription.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
-        txtDescription.setBounds(10, 18, 275, 201);
-        txtDescription.setText(Messages.HashWizard_rdomd5_description);
+        txtDescription.setText(Messages.HashWizard_header + "\n\n" + Messages.HashWizard_FurtherInfoInOnlineHelp);
 
         menuHash = new Menu(txtDescription);
         txtDescription.setMenu(menuHash);
@@ -80,34 +116,13 @@ public class HashComposite extends Composite implements SelectionListener {
                 txtDescription.selectAll();
             }
         });
-
-        setSize(new Point(321, 443));
-
-        grpHashes = new Group(this, SWT.NONE);
-        grpHashes.setLayoutData(gd_grpSignatures);
-        grpHashes.setText(Messages.HashWizard_grpHashes);
-        grpHashes.setBounds(10, 10, 300, 171);
-
-        rdo1 = new Button(grpHashes, SWT.RADIO);
-        rdo1.setBounds(10, 19, 91, 18);
-        rdo1.setText("MD5 (128)"); //$NON-NLS-1$
-
-        rdo2 = new Button(grpHashes, SWT.RADIO);
-        rdo2.setBounds(10, 43, 91, 18);
-        rdo2.setText("SHA-1 (160)"); //$NON-NLS-1$
-
-        rdo3 = new Button(grpHashes, SWT.RADIO);
-        rdo3.setBounds(10, 67, 91, 18);
-        rdo3.setText(Messages.HashWizard_rdosha256);
-
-        rdo4 = new Button(grpHashes, SWT.RADIO);
-        rdo4.setBounds(10, 91, 91, 18);
-        rdo4.setText(Messages.HashWizard_rdosha384);
-
-        rdo5 = new Button(grpHashes, SWT.RADIO);
-        rdo5.setBounds(10, 115, 91, 18);
-        rdo5.setText(Messages.HashWizard_rdosha512);
-
+        
+        pack();
+        Point size = computeSize(width, SWT.DEFAULT);
+        size.y += 200;
+        size.x += 50;
+        getShell().setMinimumSize(size);
+        
         // Add event listeners
         rdo1.addSelectionListener(this);
         rdo2.addSelectionListener(this);
@@ -157,22 +172,17 @@ public class HashComposite extends Composite implements SelectionListener {
 
     @Override
     public void widgetSelected(SelectionEvent e) {
-        if (rdo1.getSelection()) {
-            txtDescription.setText(Messages.HashWizard_rdomd5_description);
-            input.h = 0;
-        } else if (rdo2.getSelection()) {
-            txtDescription.setText(Messages.HashWizard_rdosha1_description);
-            input.h = 1;
-        } else if (rdo3.getSelection()) {
-            txtDescription.setText(Messages.HashWizard_rdosha256_description);
-            input.h = 2;
-        } else if (rdo4.getSelection()) {
-            txtDescription.setText(Messages.HashWizard_rdosha384_description);
-            input.h = 3;
-        } else if (rdo5.getSelection()) {
-            txtDescription.setText(Messages.HashWizard_rdosha512_description);
-            input.h = 4;
-        }
+//        if (rdo1.getSelection()) {
+//            txtDescription.setText(Messages.HashWizard_rdomd5_description);
+//        } else if (rdo2.getSelection()) {
+//            txtDescription.setText(Messages.HashWizard_rdosha1_description);
+//        } else if (rdo3.getSelection()) {
+//            txtDescription.setText(Messages.HashWizard_rdosha256_description);
+//        } else if (rdo4.getSelection()) {
+//            txtDescription.setText(Messages.HashWizard_rdosha384_description);
+//        } else if (rdo5.getSelection()) {
+//            txtDescription.setText(Messages.HashWizard_rdosha512_description);
+//        }
     }
 
     @Override

@@ -16,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -79,10 +80,10 @@ public class ShowSig extends Shell {
         owner.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         
         String userName = "-";
-        if (Input.key != null) {
-            userName = Input.key.getContactName();
-        } else if (Input.privateKey != null) {
+        if (Input.privateKey != null) {
             userName = Input.privateKey.getContactName();
+        } else if (Input.privateKeyJCTCA != null) {
+            userName = Input.privateKeyJCTCA.getContactName();
         }
         Label username = new Label(composite, SWT.READ_ONLY | SWT.WRAP);
         username.setText(userName);
@@ -93,17 +94,17 @@ public class ShowSig extends Shell {
         key.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 
         Label keyType = new Label(composite, SWT.READ_ONLY);
-        if (Input.privateKey == null && Input.key == null) {
+        if (Input.privateKeyJCTCA == null && Input.privateKey == null) {
             if (signatureInformation.contains("ECDSA")) {
                 keyType.setText("ANSI X9.62 prime256v1 (256 bit)");
             } else {
                 keyType.setText("-");
             }
         } else {
-            if (Input.key != null) {
-                keyType.setText(Input.key.getClassName());
-            } else {
+            if (Input.privateKey != null) {
                 keyType.setText(Input.privateKey.getClassName());
+            } else {
+                keyType.setText(Input.privateKeyJCTCA.getClassName());
             }
         }
         keyType.setBounds(182, 24, 302, 21);
@@ -139,7 +140,7 @@ public class ShowSig extends Shell {
         txtSigNum.setLayoutData(gd_txtSigNum);
         txtSigNum.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
         
-      //Context menu for coyping text field clipboard
+        //Context menu for coyping text field clipboard
         Menu signatureMenu = new Menu(txtSigNum);
         txtSigNum.setMenu(signatureMenu);
         MenuItem copy = new MenuItem(signatureMenu, SWT.NONE);
@@ -147,9 +148,7 @@ public class ShowSig extends Shell {
         copy.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (table.getSelectionCount() > 0) {
-					clipboard.setContents(new Object[] {txtSigNum.getText()}, new Transfer[] {TextTransfer.getInstance()});
-				}
+				clipboard.setContents(new Object[] {txtSigNum.getText()}, new Transfer[] {TextTransfer.getInstance()});
 			}
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {}      	
@@ -279,7 +278,6 @@ public class ShowSig extends Shell {
                 gd_txtSigNum.exclude = false;
                 txtSigNum.setText(Input.signatureOct);
                 sigComp.layout();
-                
             }
         });
         btnOkt.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
@@ -480,6 +478,7 @@ public class ShowSig extends Shell {
                         OutputStream os = null;
                         try {
                             ByteBuffer b = ByteBuffer.allocate(4);
+                            b.order(ByteOrder.LITTLE_ENDIAN);
                             b.putInt(signatureLengh);
                             os = new BufferedOutputStream(new FileOutputStream(savePath));
                             os.write(b.array());
