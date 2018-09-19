@@ -244,7 +244,7 @@ public class RSAKeyView extends Composite {
     public RSAKeyView(final Composite parent, final int style, KleptoView kleptoView) {
         // Set up the basic appearance.
         super(parent, style);
-        setLayout(new GridLayout(3, true));
+        setLayout(new GridLayout(3, false));
         setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
         // Save a reference to the driver class and initialize the sequencing.
@@ -316,7 +316,7 @@ public class RSAKeyView extends Composite {
         // Define the main control.
         gKeyGen = new Group(localParent, SWT.NONE);
         gKeyGen.setLayout(new GridLayout());
-        GridData gd = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
+        GridData gd = new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1);
         gKeyGen.setLayoutData(gd);
         gKeyGen.setText(Messages.RSAKeyView_Keygen);
 
@@ -627,7 +627,6 @@ public class RSAKeyView extends Composite {
         // The text here depends on the current step - hence initialize it to be blank.
         stSpecificDescription = new StyledText(cDescription, SWT.READ_ONLY | SWT.WRAP);
         stSpecificDescription.setText(""); //$NON-NLS-1$
-        // stSpecificDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         gd = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         gd.minimumHeight = 300;
         gd.heightHint = 300;
@@ -1883,12 +1882,14 @@ public class RSAKeyView extends Composite {
         // Save the bitCount value. setBits() does all the checking and updating.
         // The focusGained() part has to be there but it will do nothing.
         tBits.addFocusListener(new FocusListener() {
-            public void focusLost(FocusEvent e) {
+            @Override
+			public void focusLost(FocusEvent e) {
                 // Save the local change.
                 setBits(getBitsAsString());
             }
 
-            public void focusGained(FocusEvent e) {
+            @Override
+			public void focusGained(FocusEvent e) {
                 // do nothing.
             }
         });
@@ -1896,237 +1897,283 @@ public class RSAKeyView extends Composite {
         // Save the bitCount value. setBits() does all the checking and updating.
         // This is activated when the user selects an entry from the dropdown or hits enter.
         tBits.addSelectionListener(new SelectionListener() {
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 // Save the local change.
                 setBits(getBitsAsString());
             }
 
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
         });
 
         cAttack.addSelectionListener(new SelectionListener() {
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 changeAttackMode();
             }
 
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
         });
 
         bGenPrimes.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 generatePrimes();
             }
         });
 
         textP.addKeyListener(new KeyListener() {
-            public void keyReleased(KeyEvent e) {
+            @Override
+			public void keyReleased(KeyEvent e) {
                 primeEntered();
 //                if(e.keyCode == '\r') {
 //                	textQ.setFocus();
 //                }
             }
 
-            public void keyPressed(KeyEvent e) {
+            @Override
+			public void keyPressed(KeyEvent e) {
                 // Do nothing.
             }
         });
 
         textQ.addKeyListener(new KeyListener() {
-            public void keyReleased(KeyEvent e) {
+            @Override
+			public void keyReleased(KeyEvent e) {
                 primeEntered();
             }
 
-            public void keyPressed(KeyEvent e) {
+            @Override
+			public void keyPressed(KeyEvent e) {
                 // Do nothing.
             }
         });
 
         bCalcN.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent se) {
+            @Override
+			public void widgetSelected(SelectionEvent se) {
                 calculateN();
             }
         });
 
         bGenE.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 generateE();
             }
         });
 
         bResetE.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 resetE();
             }
         });
 
         textE.addKeyListener(new KeyListener() {
-            public void keyReleased(KeyEvent e) {
+            @Override
+			public void keyReleased(KeyEvent e) {
                 eEntered();
             }
 
-            public void keyPressed(KeyEvent e) {
+            @Override
+			public void keyPressed(KeyEvent e) {
                 // Do nothing.
             }
         });
 
         bCalcD.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent se) {
+            @Override
+			public void widgetSelected(SelectionEvent se) {
                 calculateD();
             }
         });
 
         bGenAll.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 generateAll();
             }
         });
 
         radioBinary.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 changeRadix(2);
             }
         });
 
         radioDecimal.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 changeRadix(10);
             }
         });
 
         radioHex.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 changeRadix(16);
             }
         });
 
         tMessage.addModifyListener(new ModifyListener() {
-            public void modifyText(ModifyEvent e) {
+            @Override
+			public void modifyText(ModifyEvent e) {
                 messageChanged();
             }
         });
 
         bEncrypt.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 encryptMessage();
             }
         });
 
         bSave.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 savePublicData();
             }
         });
 
         bDecrypt.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 decryptCiphertext();
             }
         });
 
         bResetIDAndIndex.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 resetIDAndIndex();
             }
         });
 
         tID.addKeyListener(new KeyListener() {
-            public void keyReleased(KeyEvent e) {
+            @Override
+			public void keyReleased(KeyEvent e) {
                 idEntered();
             }
 
-            public void keyPressed(KeyEvent e) {
+            @Override
+			public void keyPressed(KeyEvent e) {
                 // Do nothing.
             }
         });
 
         bGenSeed.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 generateSeed();
             }
         });
 
         tSeed.addKeyListener(new KeyListener() {
-            public void keyReleased(KeyEvent e) {
+            @Override
+			public void keyReleased(KeyEvent e) {
                 seedEntered();
             }
 
-            public void keyPressed(KeyEvent e) {
+            @Override
+			public void keyPressed(KeyEvent e) {
                 // Do nothing.
             }
         });
 
         bGenAttacker.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 generateAttackerKeys();
             }
         });
 
         textP.addTraverseListener(new TraverseListener() {
-            public void keyTraversed(TraverseEvent e) {
+            @Override
+			public void keyTraversed(TraverseEvent e) {
                 if (e.detail == SWT.TRAVERSE_TAB_NEXT || e.detail == SWT.TRAVERSE_TAB_PREVIOUS) {
                     e.doit = true;
                 }
@@ -2134,7 +2181,8 @@ public class RSAKeyView extends Composite {
         });
 
         textQ.addTraverseListener(new TraverseListener() {
-            public void keyTraversed(TraverseEvent e) {
+            @Override
+			public void keyTraversed(TraverseEvent e) {
                 if (e.detail == SWT.TRAVERSE_TAB_NEXT || e.detail == SWT.TRAVERSE_TAB_PREVIOUS) {
                     e.doit = true;
                 }
@@ -2142,7 +2190,8 @@ public class RSAKeyView extends Composite {
         });
 
         textE.addTraverseListener(new TraverseListener() {
-            public void keyTraversed(TraverseEvent e) {
+            @Override
+			public void keyTraversed(TraverseEvent e) {
                 if (e.detail == SWT.TRAVERSE_TAB_NEXT || e.detail == SWT.TRAVERSE_TAB_PREVIOUS) {
                     e.doit = true;
                 }
@@ -2150,7 +2199,8 @@ public class RSAKeyView extends Composite {
         });
 
         tID.addTraverseListener(new TraverseListener() {
-            public void keyTraversed(TraverseEvent e) {
+            @Override
+			public void keyTraversed(TraverseEvent e) {
                 if (e.detail == SWT.TRAVERSE_TAB_NEXT || e.detail == SWT.TRAVERSE_TAB_PREVIOUS) {
                     e.doit = true;
                 }
@@ -2158,7 +2208,8 @@ public class RSAKeyView extends Composite {
         });
 
         tSeed.addTraverseListener(new TraverseListener() {
-            public void keyTraversed(TraverseEvent e) {
+            @Override
+			public void keyTraversed(TraverseEvent e) {
                 if (e.detail == SWT.TRAVERSE_TAB_NEXT || e.detail == SWT.TRAVERSE_TAB_PREVIOUS) {
                     e.doit = true;
                 }
@@ -2166,7 +2217,8 @@ public class RSAKeyView extends Composite {
         });
 
         tMessage.addTraverseListener(new TraverseListener() {
-            public void keyTraversed(TraverseEvent e) {
+            @Override
+			public void keyTraversed(TraverseEvent e) {
                 if (e.detail == SWT.TRAVERSE_TAB_NEXT || e.detail == SWT.TRAVERSE_TAB_PREVIOUS) {
                     e.doit = true;
                 }
@@ -2174,7 +2226,8 @@ public class RSAKeyView extends Composite {
         });
 
         tCiphertext.addTraverseListener(new TraverseListener() {
-            public void keyTraversed(TraverseEvent e) {
+            @Override
+			public void keyTraversed(TraverseEvent e) {
                 if (e.detail == SWT.TRAVERSE_TAB_NEXT || e.detail == SWT.TRAVERSE_TAB_PREVIOUS) {
                     e.doit = true;
                 }
