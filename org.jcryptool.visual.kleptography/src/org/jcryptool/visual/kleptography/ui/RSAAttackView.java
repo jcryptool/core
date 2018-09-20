@@ -106,10 +106,12 @@ public class RSAAttackView extends Composite {
 	private Label lCalculationsFixed;
 	private Label lCipherTextFixed;
 	private Label lDecryptionsFixed;
+	private Label lhorizontalSeparatorFixed;
 	private Label lPublicKeysSETUP;
 	private Label lCalculationsSETUP;
 	private Label lCipherTextSETUP;
 	private Label lDecryptionsSETUP;
+	private Label lhorizontalSeparatorSETUP;
 	private Composite cDescriptionFixed;
 	private Label lDescTitleFixed;
 	private StyledText stSpecDescFixed;
@@ -127,10 +129,6 @@ public class RSAAttackView extends Composite {
 	private StyledText tAttackersD;
 	private Label lEncryptedP;
 	private StyledText tEncryptedP;
-
-	private Label lhorizontalSeparatorFixed;
-
-	private Label lhorizontalSeparatorSETUP;
 
 	/**
 	 * Constructor for the attack view. Sets up the layout of the tab.
