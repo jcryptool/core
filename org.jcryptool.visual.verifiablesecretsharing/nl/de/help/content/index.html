@@ -9,83 +9,85 @@
 <h1>Verifiable Secret Sharing</h1>
 
 <p>
-	Der <b>Verifiable Secret Sharing</b> Algorithmus wurde 1987 von Paul Feldman entwickelt und
-	basiert auf dem von Adi Shamir 1979 entwickelten Secret Sharing Verfahren Shamir's Secret Sharing. Mit diesem Algorithmus ist es möglich,
-	ein Geheimnis auf mehrere Personen aufzuteilen, wobei eine gewisse Untermenge dieser Personen erforderlich ist,
-	um das Geheimnis zu rekonstruieren. Im Gegensatz zum ursprünglichen Algorithmus von Shamir, kann beim <b>Verifiable Secret Sharing</b>
-	jeder Spieler seinen Share auf Korrektheit überprüfen. Vor der Rekonstruktion können auch die Shares der anderen beteiligten Spieler verifiziert werden.
-</p>
+	Der hier implementierte
+	<a href="vssAlgorithm.html"><b>Verifiable Secret Sharing</b>-Algorithmus</a>
+	wurde 1987 von Paul Feldman entworfen und
+	basiert auf dem von Adi Shamir 1979 entwickelten <a href="PLUGINS_ROOT/org.jcryptool.visual.secretsharing/$nl$/help/content/index.html">Shamirs Secret Sharing</a>-Verfahren.
+	Mit diesem Algorithmus ist es möglich, ein Geheimnis auf mehrere Personen aufzuteilen, wobei nur eine gewisse Untermenge dieser Personen erforderlich ist, um das Geheimnis zu rekonstruieren.
+	Diese Art des Secret-Sharing nennt sich auch Schwellwert-Verfahren (threshold scheme). Die minimale nötige Anzahl an Personen in der Untermenge wird der Threshold genannt.</p>
 
+<p> Im Gegensatz zum ursprünglichen Algorithmus von Shamir kann beim <b>Verifiable Secret
+    Sharing (VSS)</b> jeder Spieler alle Shares auf Korrektheit überprüfen. Vor der Rekonstruktion können so die Shares der beteiligten Spieler verifiziert werden.
+</p>
 <p>
-	Im Folgenden wird die Funktionsweise des <b>Verifiable Secret Sharing</b> Plug-ins anhand einiger Screenshots und Erklärungen gezeigt.
+	Im Folgenden wird die Funktionsweise des VSS-Plug-ins anhand einiger Screenshots und Erklärungen gezeigt.
 </p>
-
 <p>
-	Das <b >Verifiable Secret Sharing</b> Plug-in lässt sich über das Menü Visualisierungen oder über die View
-	<b >Algorithmen</b> im Reiter <b >Visualisierungen</b> starten und in seiner Ansicht maximieren.
+	Das Plug-in lässt sich starten über das Hauptmenü <b>Visualisierungen</b>, oder über die Menüfolge Fenster -> Sicht anzeigen -> Andere -> Visualisierungen, oder durch Doppelklick in der Standardansicht rechts im Krypto-Explorer im Reiter Visualisierungen.
 </p>
-
 <p>
 	<img src="vss_plugin_1.jpg" width="60%">
 </p>
-
 <p>
-	Das Plug-in gliedert sich in vier Bereiche: <b>Header</b>, <b>Eingabemasken</b>, <b>Erklärungsboxen</b> sowie den Reiter <b>Rekonstrunktionsgraph</b>.
-	Im <b>Header</b> wird eine kurze Beschreibung des Plug-ins angezeigt.</p>
-
-	<p>Die <b>Eingabemasken</b> dienen zur Eingabe der Parameter durch den Benutzer und zur Anzeige der Ergebnisse der verschiedenen Berechnungen.</p>
-
-	<p>Am unteren Bildschirmrand gibt es noch einen Bereich <b>Erklärungen</b>, wo zusätzliche Informationen zum aktuellen Arbeitsschritt angezeigt werden.</p>
-
-	<p>Im Reiter <b>Rekonstruktionsgraph</b> werden nach erfolgter Rekonstruktion der Graph und das rekonstruierte Polynom angezeigt.</p>
-
-
-<h3>Festlegung der Parameter für die Berechnung</h3>
-
+	Das Plug-in selbst gliedert sich in vier Bereiche: <b>Header</b>, <b>Ein-/Ausgabe-Bereich</b>, <b>Erklärungsbox</b> sowie den Reiter <b>Rekonstruktionsgraph</b>. Die ersten 3 Bereiche füllen vertikal den 1. Reiter <b>Verifiable-Secret-Sharing</b>.</p>
+  <ul>
+  <li>Im <b>Header</b> wird eine kurze Beschreibung des Plug-ins angezeigt.</li>
+  <li>Der <b>Ein-/Ausgabe-Bereich</b> zeigt die Boxen zur Eingabe der Parameter durch den Benutzer und zur Anzeige der Ergebnisse der verschiedenen Berechnungen.</li>
+  <li>Am unteren Bildschirmrand gibt es noch einen Bereich <b>Erklärungen</b>, wo zusätzliche Informationen zum aktuellen Arbeitsschritt angezeigt werden.</li>
+  <li>Im 2. Reiter <b>Rekonstruktionsgraph</b> werden nach erfolgter Rekonstruktion der Graph und das rekonstruierte Polynom angezeigt.</li>
+  </ul>	
+	
+	
 <p>
-	In der Eingabemaske <b>Parameter</b> werden die nötigen Parameter für den Ablauf des Algorithmus eingestellt.
-	Man wählt die Anzahl der <b>Personen n</b> aus, an die die <b>Shares</b> verteilt werden und die
+	Die Durchführung des VSS-Verfahrens wurde in 3 Schritte aufgeteilt.
+</p>
 
-	Anzahl der <b>Personen t</b>, die für die Rekonstruktion des Geheimnisses nötig sind. Die Anzahl der Personen
-	für die Rekonstruktion darf höchstens der Anzahl der gesamten Personen entsprechen und
 
+<h3>Schritt 1: Festlegung der Parameter</h3>
+<p>
+	In der Box <b>Parameter</b> werden die nötigen Parameter für den Ablauf des Algorithmus eingestellt.</p>
+<p>
+	Zuerst wählt man die Anzahl der <b>Personen n</b> aus, an die die <b>Shares</b> des Geheimnisses verteilt werden, und die Anzahl der <b>Personen t</b>, die für die Rekonstruktion des Geheimnisses nötig sind. Die Anzahl <b>t</b> der Personen
+	für die Rekonstruktion darf höchstens der Anzahl <b>n</b> aller Personen entsprechen und
 	beide müssen <b>mindestens 2</b> sein, da sonst die Idee des Secret Sharing ad absurdum geführt werden würde.
 </p>
 
+<p>Dann gibt man das <b>Geheimnis s</b> ein. Größere Werte werden auf 2.000.000 beschränkt, damit die Anwendung noch sofort reagieren kann.</p>
+
 <p>
-	Nachdem als nächstes das <b>Geheimnis s</b> gewählt wurde, wird automatisch der <b>Modul p</b> berechnet,
-	da dieser eine Safe Prime sein muss. Da das Finden von Safe Primes relativ aufwendig ist, wird empfohlen die
-	vorgeschlagenen Werte zu verwenden. Es kann jedoch auch selbst ein Modul gewählt werden. Auch in diesem Fall
-	muss der Modul wieder eine Safe Prime sein und mindestens doppelt so groß wie das <b>Geheimnis s</b>. Des Weiteren wird der größte <b>Primfaktor q</b> von (p-1) benötigt.
-	Der Primfaktor berechnet sich automatisch aus der Safe Prime p wie folgt: q = (p-1)/2. Der letzte Parameter ist der <b>Generator g</b>, welcher automatisch berechnet wird.
-	<b>g</b> ist ein Element des Körpers Z_p mit der multiplikativen Ordnung <b>q</b>. Aufgrund eines erhöhten Rechenaufwandes bei der Bestimmung der Ordnung des Generators -
-	wenn der Generator g groß gewählt wird - kann dieser nicht verändert werden.
+	Nachdem <b>s</b> gewählt wurde, wird automatisch der <b>Modul p</b> berechnet, da er mehr als doppelt so groß wie die Zahl des Geheimnisses sein muss. Zusätzlich muss <b>p</b> eine <a href="https://de.wikipedia.org/wiki/Sichere_Primzahl"><b>Safe Prime</b></a> sein. Da das Finden von Safe Primes relativ aufwändig ist, wird empfohlen, die vorgeschlagenen Werte zu verwenden. Man kann jedoch auch selbst ein Modul wählen. Auch in diesem Fall muss der Modul wieder eine Safe Prime sein und mindestens doppelt so groß wie das Geheimnis s.</p>
+<p>
+	Des Weiteren wird der größte <b>Primfaktor q</b> von (p-1) benötigt.
+	Der Primfaktor berechnet sich automatisch aus der Safe Prime p wie folgt: q = (p-1)/2.
+	Der letzte Parameter ist der <b>Generator g</b>, der nicht geändert werden kann: Er wird ebenso wie p automatisch berechnet.
+	<b>g</b> ist ein Element des Körpers Z_p* mit der multiplikativen Ordnung <b>q</b>.
+	Aufgrund des hohen Rechenaufwands bei der Bestimmung der Ordnung des Generators&nbsp;&ndash; wenn der Generator g groß gewählt wird&nbsp;&ndash; kann dieser nicht verändert werden.
 </p>
 
 <p><img src="vss_parameter_2.jpg"></p>
 
 <p>
-	Sind alle Parameter korrekt gewählt, ist es möglich mit einem Klick auf <b>Koeffizienten bestimmen</b> zum nächsten Schritt fortzufahren.
+	Sind alle Parameter korrekt gewählt, muss man auf <b>Koeffizienten bestimmen</b> klicken. Damit werden die t Koeffizienten angelegt (jeder gefüllt mit dem Initialwert 1) und man kann mit dem nächsten Schritt fortfahren.
 </p>
 
-<h3>Festlegung der Koeffizienten für das Polynom und Berechnung der Commitments</h3>
+
+
+
+<h3>Schritt 2: Festlegung der Koeffizienten für das Polynom und Berechnung der Commitments</h3>
 
 <p>
-	In der Eingabemaske <b>Koeffizienten</b> werden die Koeffizienten für das Polynom festgelegt. Diese können entweder vom Plug-in,
-	mittels Klick auf den Button <b>Generieren</b>, generiert werden lassen oder wieder selbst gewählt werden.
+	In der Box <b>Koeffizienten</b> werden die Koeffizienten für das Polynom festgelegt. Diese können Sie sich entweder vom Plug-in, mittels Klick auf den Button <b>Generieren</b>, zufällig erzeugen lassen oder wieder selbst wählen. Nur zufällige Koeffizienten schützen das Geheimnis wirklich.
 
-	Die Koeffizienten müssen natürliche Zahlen sein und kleiner als der <b>Modul q</b>. Zusätzlich darf der letzte Koeffizient nicht 0 sein,
-	da sonst der Grad des Polynoms verringert werden würde und weniger Spieler als <b>t</b> eine erfolgreiche Rekonstruktion durchführen könnten.
-	Der Koeffizient <b>a_0</b> ist das zuvor festgelegte <b>Geheimnis s</b>.
+	Die Koeffizienten müssen natürliche Zahlen sein und kleiner als der <b>Modul q</b>. 
+	Der erste Koeffizient <b><i>a<sub>0</sub></i></b> ist das zuvor festgelegte <b>Geheimnis s</b>.
+	Zusätzlich darf der letzte Koeffizient nicht 0 sein, da sonst der Grad des Polynoms verringert werden würde und weniger Spieler als <b>t</b> eine erfolgreiche Rekonstruktion durchführen könnten.
 </p>
 
 <p><img src="vss_coefficients_3.jpg"></p>
 
 <p>
-	Weiters gibt es in diesem Schritt den Button <b>Commit</b>. Die Berechnung der <b>Commitments</b> ist notwendig,
-	 wenn man im weiteren Verlauf die verteilten <b>Shares</b> überprüfen möchte.
-
-	 Nach der Berechnung werden die Commitments in einer eigenen Eingabemaske angezeigt.
+	Weiters gibt es in dieser Box den Button <b>Commit</b>. Die Berechnung der <b>Commitments</b> ist notwendig, wenn man im weiteren Verlauf die verteilten <b>Shares</b> überprüfen möchte.
+	Nach der Berechnung werden die Commitments in einer eigenen Box angezeigt.
 </p>
 
 <p>
@@ -94,28 +96,33 @@
 
 <p>
 	Die Berechnung der Commitments ist <b>optional</b>, da diese nur für die Überprüfung der Shares und nicht für die Rekonstruktion des Geheimnisses benötigt werden.
-
-	Falls man auf die Überprüfung verzichten möchte, kann man diesen Schritt überspringen.
+	Falls man auf die Überprüfung verzichten möchte, kann man diesen Schritt überspringen. Dann reduziert sich VSS auf Shamirs Secret-Sharing-Verfahren.
 </p>
 
 <p>
 	Um die Shares zu berechnen und zum nächsten Schritt zu gelangen, klickt man auf <b>Shares berechnen</b>.
 </p>
 
-<h3>Überprüfung der Shares und Rekonstruktion</h3>
+
+
+
+
+<h3>Schritt 3: Überprüfung der Shares und Rekonstruktion</h3>
 
 <p>
-	Der letzte Schritt verteilt sich auf die beiden Eingabemasken <b>Shares</b> und <b>Rekonstruktion</b>.
-
-	In der <b>Shares</b>-Eingabemaske werden die Zwischenergebnisse vor der Reduktion modulo q und die Shares modulo q angezeigt.
-	Alle nachfolgenden Berechnungen werden mit den Shares modulo q durchgeführt. Das Zwischenergebnis vor der Reduktion modulo q wird nicht mehr benötigt.
+	Der letzte Schritt verteilt sich auf die beiden Boxen <b>Shares</b> und <b>Rekonstruktion</b>.
+</p>
+<p> In der <b>Shares</b>-Box werden die Zwischenergebnisse vor der Reduktion
+    modulo q und die Shares modulo q angezeigt.
+	Alle nachfolgenden Berechnungen hier werden mit den Shares modulo q durchgeführt.
+	Das Zwischenergebnis vor der Reduktion modulo q wird nicht mehr benötigt.
 	Es wird trotzdem angezeigt, damit der Benutzer nach der Rekonstruktion den Graphen des Polynoms auf seine Richtigkeit kontrollieren kann.
 </p>
 
 <p>
-	Über die <b>Check</b>-Buttons können die Shares überprüft werden. Hierzu ist es notwendig, dass zuvor die Commitments berechnet worden sind, da diese für die Berechnungen beim <b>Check</b> notwendig sind.
-	Nach einer erfolgreichen Überprüfung eines Shares wird das jeweilige Feld <b>grün</b> eingefärbt. Liefert die Überprüfung kein positives Ergebnis, wird das Feld rot eingefärbt.
-	Versuchsweise können die Shares verändert werden, um ein inkorrektes Checkergebnis zu erzeugen.
+	Mit den <b>Check</b>-Buttons können die Shares überprüft werden. Hierzu ist es notwendig, dass zuvor die Commitments berechnet worden sind, da diese für die Berechnungen beim <b>Check</b> notwendig sind.
+	Nach einer erfolgreichen Überprüfung eines Shares wird das jeweilige Feld <b>grün</b> eingefärbt. Liefert die Überprüfung kein positives Ergebnis, wird das Feld <b>rot</b> eingefärbt.
+	Versuchsweise können die Shares verändert werden, um ein inkorrektes Prüfergebnis zu erzeugen. Die Änderung einer oder mehrerer Shares hat 2 Konsequenzen: Erstens wird die Prüfung des geänderten Shares nicht mehr erfolgreich sein. Und zweitens wird die Rekonstruktion nicht das ursprüngliche Geheimnis zurück liefern.	
 </p>
 
 
@@ -124,16 +131,26 @@
 </p>
 
 <p>
-	Die Rekonstruktion erfolgt über den Button <b>Rekonstruieren</b>. Zuvor müssen noch die für die Rekonstruktion
-	gewünschten Shares ausgewählt werden. Damit die Rekonstruktion möglich ist, muss die Anzahl der gewählten Shares
-	mindestens <b>t</b> sein. Werden zu wenig Shares ausgewählt, wird ein falsches Polynom und somit auch ein falsches
-	Geheimnis rekonstruiert. Das Ergebnis der Rekonstruktion wird im Reiter <b>Rekonstruktionsgraph</b> angezeigt.
-	Dies umfasst das rekonstruierte Polynom sowie eine graphische Darstellung davon.
+	Die Rekonstruktion erfolgt in der Box <b>Rekonstruktion</b>. Bevor Sie den Button <b>Rekonstruieren</b> drücken, müssen noch die gewünschten Shares ausgewählt werden. Es ist egal, welche Shares Sie wählen, solange die Anzahl der gewählten Shares
+	mindestens <b>t</b> ist. Werden zu wenig Shares ausgewählt, wird ein falsches Polynom und somit auch ein falsches Geheimnis rekonstruiert. Das Ergebnis der Rekonstruktion wird im Reiter <b>Rekonstruktionsgraph</b> angezeigt.
+	Dies umfasst das rekonstruierte Polynom sowie dessen graphische Darstellung.
 </p>
 
 <p>
 	<img src="vss_reconstruct_6.jpg" width="60%">
 </p>
 
+ <br/>  
+  <h3 id="Sig">Weitere Informationen / Referenzen</h3>
+  <ul>
+  <li><a href="https://www.cs.umd.edu/~gasarch/TOPICS/secretsharing/feldmanVSS.pdf">Paul Feldman (MIT): A Practical Scheme for Non-interactive Verifiable Secret Sharing, 1987, IEEE</a></li>
+  <li><a href="https://www.cs.umd.edu/~gasarch/TOPICS/secretsharing/secretsharing.html">William Gasarch: A WebPage on Secret Sharing, 2017  (letzter Aufruf 2018-09-18)</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Verifiable_secret_sharing">Wikipedia: Verifiable secret sharing [Hierzu gibt es noch keinen deutschen Wikipedia-Artikel (Stand 2018-09-18).]</a></li>
+  <li><a href="https://de.wikipedia.org/wiki/Secret-Sharing">Wikipedia: Secret-Sharing</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Commitment_scheme">Wikipedia: Commitment scheme</a></li>
+  </ul>
+
+  <br/>
 </body>
+<!-- Comment: Last Change and Check: be, 2018-09-19 -->
 </html>
