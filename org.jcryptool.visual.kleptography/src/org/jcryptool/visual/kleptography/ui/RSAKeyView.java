@@ -1599,6 +1599,8 @@ public class RSAKeyView extends Composite {
         // Set up each of the style ranges for the step numerators
         // and add them all to an array.
         // Each must be bold and have a length of seven for English or ten for German.
+        // FIXME "Schritt 2:" and "Schritt 4:" and "Schritt 6:" are not bold.
+        // In de and en.
         StyleRange[] styles = new StyleRange[styleCount];
         for (int i = 0; i < styles.length - 1; i++) {
             StyleRange sr = new StyleRange();
