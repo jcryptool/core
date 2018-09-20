@@ -244,7 +244,7 @@ public class RSAKeyView extends Composite {
     public RSAKeyView(final Composite parent, final int style, KleptoView kleptoView) {
         // Set up the basic appearance.
         super(parent, style);
-        setLayout(new GridLayout(3, false));
+        setLayout(new GridLayout(3, true));
         setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
         // Save a reference to the driver class and initialize the sequencing.
@@ -316,7 +316,7 @@ public class RSAKeyView extends Composite {
         // Define the main control.
         gKeyGen = new Group(localParent, SWT.NONE);
         gKeyGen.setLayout(new GridLayout());
-        GridData gd = new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1);
+        GridData gd = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
         gKeyGen.setLayoutData(gd);
         gKeyGen.setText(Messages.RSAKeyView_Keygen);
 
@@ -609,7 +609,7 @@ public class RSAKeyView extends Composite {
     private void setUpDescription(Composite localParent) {
         cDescription = new Composite(localParent, SWT.NONE);
         cDescription.setBackground(KleptoView.WHITE);
-        GridData gd = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        GridData gd = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
         gd.minimumHeight = 300;
         gd.heightHint = 300;
         gd.minimumWidth = 10;
