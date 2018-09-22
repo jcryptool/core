@@ -2,7 +2,6 @@ package org.jcryptool.visual.sigVerification.algorithm;
 
 import java.security.PublicKey;
 import java.security.Signature;
-import java.util.Arrays;
 
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
