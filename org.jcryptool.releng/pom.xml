@@ -43,12 +43,12 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 
 	<repositories>
 		<repository>
-			<id>eclipse-photon</id>
+			<id>eclipse</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/releases/photon</url>
+			<url>http://download.eclipse.org/releases/2018-09</url>
 		</repository>
 		<repository>
-			<id>eclipse-babel-photon</id>
+			<id>eclipse-babel</id>
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/technology/babel/update-site/R0.16.0/photon</url>
 		</repository>
