@@ -90,6 +90,7 @@ public class OverwriteDialog extends Dialog {
 		bFirst.setLayoutData(data);
 
 		bFirst.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent event) {
 				setSelection(1);
 				shell.close();
@@ -102,6 +103,7 @@ public class OverwriteDialog extends Dialog {
 		bSecond.setLayoutData(data);
 
 		bSecond.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent event) {
 				setSelection(2);
 				shell.close();
@@ -114,6 +116,7 @@ public class OverwriteDialog extends Dialog {
 		bCancel.setLayoutData(data);
 
 		bCancel.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent event) {
 				setSelection(-1);
 				shell.close();
