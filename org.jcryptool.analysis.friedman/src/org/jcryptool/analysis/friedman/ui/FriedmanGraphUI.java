@@ -73,14 +73,14 @@ public class FriedmanGraphUI extends org.eclipse.swt.widgets.Composite implement
 			composite1.setLayoutData(composite1LData);
 			composite1.setLayout(composite1Layout);
 			{
-				Label spacer = new Label(composite1, SWT.NONE);
-				spacer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-
+				TextLoadController textSelector = new TextLoadController(composite1, this, SWT.NONE, true, true);
+				GridData textSelectorLData = new GridData(SWT.CENTER, SWT.CENTER, true, false, 4, 1);
+				textSelectorLData.widthHint = 275;
+				textSelector.setLayoutData(textSelectorLData);
+				
 				Button button2 = new Button(composite1, SWT.PUSH | SWT.CENTER);
-				GridData button2LData = new GridData();
-				button2LData.horizontalAlignment = GridData.FILL;
-				button2LData.grabExcessHorizontalSpace = true;
-				button2LData.horizontalSpan = 2;
+				GridData button2LData = new GridData(SWT.CENTER, SWT.CENTER, true, false, 4, 1);
+				button2LData.widthHint = 275;
 				button2.setLayoutData(button2LData);
 				button2.setText(Messages.FriedmanGraphUI_start);
 				button2.setEnabled(false);
@@ -91,33 +91,6 @@ public class FriedmanGraphUI extends org.eclipse.swt.widgets.Composite implement
 					}
 				});
 
-				Label spacer2 = new Label(composite1, SWT.NONE);
-				spacer2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-				Label spacer3 = new Label(composite1, SWT.NONE);
-				spacer3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-
-				btnShowTable = new Button(composite1, SWT.PUSH | SWT.CENTER);
-				GridData btnShowTableLData = new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1);
-				btnShowTableLData.widthHint = 275;
-				btnShowTable.setLayoutData(btnShowTableLData);
-				btnShowTable.setText(Messages.FriedmanGraphUI_showastable);
-				btnShowTable.setEnabled(false);
-				btnShowTable.addSelectionListener(new SelectionAdapter() {
-					@Override
-					public void widgetSelected(SelectionEvent e) {
-						showTableDialog(e);
-					}
-				});
-
-				Label spacer4 = new Label(composite1, SWT.NONE);
-				spacer4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-				Label spacer5 = new Label(composite1, SWT.NONE);
-				spacer5.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-
-				TextLoadController textSelector = new TextLoadController(composite1, this, SWT.NONE, true, true);
-				GridData textSelectorLData = new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1);
-				textSelectorLData.widthHint = 275;
-				textSelector.setLayoutData(textSelectorLData);
 				textSelector.addObserver(new Observer() {
 
 					@Override
@@ -140,7 +113,24 @@ public class FriedmanGraphUI extends org.eclipse.swt.widgets.Composite implement
 						}
 					}
 				});
+				
+				btnShowTable = new Button(composite1, SWT.PUSH | SWT.CENTER);
+				GridData btnShowTableLData = new GridData(SWT.CENTER, SWT.CENTER, true, false, 4, 1);
+				btnShowTableLData.widthHint = 275;
+				btnShowTable.setLayoutData(btnShowTableLData);
+				btnShowTable.setText(Messages.FriedmanGraphUI_showastable);
+				btnShowTable.setEnabled(false);
+				btnShowTable.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						showTableDialog(e);
+					}
+				});
 
+				Label spacer4 = new Label(composite1, SWT.NONE);
+				spacer4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+				Label spacer5 = new Label(composite1, SWT.NONE);
+				spacer5.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 			}
 			group1 = new Group(this, SWT.NONE);
 			GridLayout group1Layout = new GridLayout();
