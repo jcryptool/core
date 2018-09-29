@@ -85,7 +85,7 @@
 			<plugin>
 				<groupId>net.nicoulaj.maven.plugins</groupId>
 				<artifactId>checksum-maven-plugin</artifactId>
-				<version>1.6</version>
+				<version>1.8</version>
 				<executions>
 					<!-- calculate the hashes of the generated files -->
 					<execution>
