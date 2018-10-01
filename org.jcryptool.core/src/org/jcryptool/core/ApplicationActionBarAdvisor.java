@@ -90,7 +90,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
     private MenuManager hiddenMenu = new MenuManager("Hidden", "org.jcryptool.core.hidden"); //$NON-NLS-1$ //$NON-NLS-2$
 
     private static Comparator<String> menuStringsComparator = new Comparator<String>() {
-        public int compare(String o1, String o2) {
+        @Override
+		public int compare(String o1, String o2) {
             return o1.toLowerCase().compareTo(o2.toLowerCase());
         }
     };
@@ -140,7 +141,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
      * 
      * @param menuBar the menu manager for the menu bar
      */
-    protected void fillMenuBar(IMenuManager menuBar) {
+    @Override
+	protected void fillMenuBar(IMenuManager menuBar) {
         menuBar.add(createFileMenu());
         menuBar.add(createEditMenu());
 
@@ -171,7 +173,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
     }
 
     private IMenuManager createExtensionsMenu(String name, String type) {
-        ICommandService commandService = (ICommandService) PlatformUI.getWorkbench().getService(ICommandService.class);
+        ICommandService commandService = PlatformUI.getWorkbench().getService(ICommandService.class);
         MenuManager menu = new MenuManager(name, CorePlugin.PLUGIN_ID + "." + type); //$NON-NLS-1$
 
         IConfigurationElement[] elements = Platform.getExtensionRegistry()
@@ -224,7 +226,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         }
     }
 
-    protected void makeActions(IWorkbenchWindow window) {
+    @Override
+	protected void makeActions(IWorkbenchWindow window) {
         this.window = window;
 
         registerActionsForCommands();
@@ -334,7 +337,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
      * @return the menu manager
      */
     public static IMenuManager createAlgorithmMenu() {
-        ICommandService commandService = (ICommandService) PlatformUI.getWorkbench().getService(ICommandService.class);
+        ICommandService commandService = PlatformUI.getWorkbench().getService(ICommandService.class);
         MenuManager menu = new MenuManager(Messages.applicationActionBarAdvisor_Menu_Algorithms,
                 CorePlugin.PLUGIN_ID + ".algorithms"); //$NON-NLS-1$
 
@@ -343,7 +346,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
         // id-comparator (compares the names derived from the ids over the map (above)
         Comparator<String> idComparator = new Comparator<String>() {
-            public int compare(String id1, String id2) {
+            @Override
+			public int compare(String id1, String id2) {
                 return menuStringsComparator.compare(idNameMap.get(id1), idNameMap.get(id2));
             }
         };

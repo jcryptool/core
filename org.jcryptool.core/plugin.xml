@@ -15,11 +15,34 @@
    </extension>
 
    <extension point="org.eclipse.ui.commands">
-      <command description="%command.description" id="org.jcryptool.core.commands.showHelp" name="%command.name"/>
+      <command 
+            description="%command.description" 
+            id="org.jcryptool.core.commands.showHelp" 
+            name="%command.name">
+      </command>
+      
+      <!-- Commands für das neue Editor Dropdown in der coolbar -->
       <command
             id="org.jcryptool.core.command.editorsPulldown"
-            name="%command.name.0">
-      </command>
+            name="neuen Editor öffnen">
+      </command>  
+      <command
+      		id="org.jcryptool.core.command.openEmptyTextEditor"
+      		name="leere Datei im Texteditor">
+      </command>        
+      <command
+      		id="org.jcryptool.core.command.openEmptyHexEditor"
+      		name="leere Datei im Hexeditor">
+      </command>  
+      <command
+      		id="org.jcryptool.core.command.openSampleTextEditor"
+      		name="Beispieldatei im Texteditor">
+      </command>        
+      <command
+      		id="org.jcryptool.core.command.openSampleHexEditor"
+      		name="Beispieldatei im Hexeditor">
+      </command>  
+            
       <command
             defaultHandler="org.jcryptool.core.commands.OpenFileHandler"
             id="org.jcryptool.core.action.open"
@@ -28,14 +51,39 @@
    </extension>
 
    <extension point="org.eclipse.ui.handlers">
-      <handler class="org.jcryptool.core.commands.ShowHelpContents" commandId="org.jcryptool.core.commands.showHelp"/>
-      <handler
-            class="org.jcryptool.core.commands.ShowEditorsPulldownMenu"
-            commandId="org.jcryptool.core.command.editorsPulldown">
+      <handler 
+          class="org.jcryptool.core.commands.ShowHelpContents" 
+          commandId="org.jcryptool.core.commands.showHelp">
       </handler>
+      
+      
+      <!-- handler für das neue Editor Dropdown in der coolbar
+           Die Handler verweisen auf die entsprechenden Klassen in 
+           org.jcryptool.core.commands -->
+      <handler
+            class="org.jcryptool.core.commands.OpenNewSampleTextEditorCommand"
+            commandId="org.jcryptool.core.command.editorsPulldown">
+      </handler>     
+      <handler
+      		class="org.jcryptool.core.commands.OpenNewEmptyTextEditorCommand"
+      		commandId="org.jcryptool.core.command.openEmptyTextEditor">
+      </handler>
+      <handler
+      		class="org.jcryptool.core.commands.OpenNewEmptyHexEditorCommand"
+      		commandId="org.jcryptool.core.command.openEmptyHexEditor">
+      </handler>
+      <handler
+      		class="org.jcryptool.core.commands.OpenNewSampleTextEditorCommand"
+      		commandId="org.jcryptool.core.command.openSampleTextEditor">
+      </handler>
+      <handler
+      		class="org.jcryptool.core.commands.OpenNewSampleHexEditorCommand"
+      		commandId="org.jcryptool.core.command.openSampleHexEditor">
+      </handler>
+      
    </extension>
 
-   <extension
+<!--   <extension
          point="org.eclipse.ui.actionSets">
       <actionSet
             id="org.jcryptool.core.editorsActionSet"
@@ -51,12 +99,64 @@
                tooltip="%editors.action.tooltip">
          </action>
       </actionSet>
-   </extension>
+   </extension>    -->
+
 
    <extension point="org.eclipse.ui.menus">
+      <!-- Hilfe -->
       <menuContribution locationURI="toolbar:org.jcryptool.core.toolbar?after=additions">
-         <command commandId="org.jcryptool.core.commands.showHelp" icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png" style="push" tooltip="%command.tooltip"/>
+         <command 
+         	commandId="org.jcryptool.core.commands.showHelp" 
+         	icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png" 
+         	style="push" 
+         	tooltip="%command.tooltip"/>
       </menuContribution>
+      
+
+	  <!-- neuen Editor öffnen Dropdown -->
+      <menuContribution 
+      	  allPopups="false"
+          locationURI="toolbar:org.jcryptool.core.toolbar?before=fileStart">
+         <command 
+             commandId="org.jcryptool.core.command.editorsPulldown" 
+             icon="icons/editors.gif" 
+             style="pulldown" 
+             tooltip="neuen Editor öffnen">
+         </command>
+      </menuContribution>
+      <menuContribution
+      		allPopups="false"
+      		locationURI="menu:org.jcryptool.core.command.editorsPulldown">
+      	<command
+      		commandId="org.jcryptool.core.command.openEmptyTextEditor"
+      		icon="icons/editors.gif"
+      		style="push">
+        </command>
+      	<command
+      		commandId="org.jcryptool.core.command.openEmptyHexEditor"
+      		icon="icons/hex.png"
+      		style="push">
+        </command>
+        <separator name="emptyEditors" visible="true">
+        </separator>
+        <command
+      		commandId="org.jcryptool.core.command.openSampleTextEditor"
+      		icon="icons/editors.gif"
+      		style="push">
+        </command>
+        <command
+      		commandId="org.jcryptool.core.command.openSampleHexEditor"
+      		icon="icons/hex.png"
+      		style="push">
+        </command>
+
+       </menuContribution>	
+      	
+      
+      
+      
+      
+      <!-- Hilfe -->
       <menuContribution allPopups="false" locationURI="menu:org.eclipse.ui.main.menu">
          <menu id="org.jcryptool.menu.help" label="%menu.label">
             <command commandId="org.eclipse.ui.help.quickStartAction" icon="icons/icon_16.gif" style="push"/>
@@ -100,6 +200,7 @@
       </menuContribution>
    </extension>
 
+	<!-- The prefrence pages -->
    <extension point="org.eclipse.ui.preferencePages">
       <page class="org.jcryptool.core.preferences.pages.GeneralPage" id="org.jcryptool.preferences.general" name="%preference.page.general"/>
       <page category="org.jcryptool.preferences.general" class="org.eclipse.ui.ExtensionFactory:fileAssociationsPreferencePage" id="org.jcryptool.core.preferences.fileAssociations" name="%preference.page.file_associations"/>
@@ -132,6 +233,8 @@
       </perspectiveExtension>
    </extension>
 
+   <!-- here you can add new languages 
+   simply copy the code and adapt ist to the wished language -->
    <extension point="org.jcryptool.core.platformLanguage">
       <language languageCode="en_EN" languageDescription="%language.languageEnglish"/>
    </extension>
@@ -146,6 +249,8 @@
       <theme basestylesheeturi="css/jcryptool.css" id="org.jcryptool.themes.default" label="Default Theme"/>
    </extension>
 
+   <!-- The about window
+        Help -> About -->
    <extension id="product" point="org.eclipse.core.runtime.products">
       <product application="org.jcryptool.core.application" name="JCrypTool">
          <property name="appName" value="JCrypTool"/>

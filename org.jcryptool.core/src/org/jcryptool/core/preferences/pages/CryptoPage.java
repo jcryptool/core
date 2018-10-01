@@ -41,6 +41,7 @@ public class CryptoPage extends FieldEditorPreferencePage implements IWorkbenchP
     protected void createFieldEditors() {
     }
 
-    public void init(IWorkbench workbench) {
+    @Override
+	public void init(IWorkbench workbench) {
     }
 }

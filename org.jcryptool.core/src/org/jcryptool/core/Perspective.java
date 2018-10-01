@@ -28,7 +28,8 @@ public class Perspective implements IPerspectiveFactory {
      * Add views to the default perspective using <b>org.eclipse.ui.perspectiveExtensions</b> in
      * plugin.xml.
      */
-    public void createInitialLayout(IPageLayout layout) {
+    @Override
+	public void createInitialLayout(IPageLayout layout) {
         String editorArea = layout.getEditorArea();
 
         IPlaceholderFolderLayout flGames = layout.createPlaceholderFolder(

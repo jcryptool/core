@@ -28,7 +28,8 @@ public class CorePlugin extends AbstractUIPlugin {
     /**
      * The method uses the superclass method which refreshes the plug-in actions.
      */
-    public void start(BundleContext context) throws Exception {
+    @Override
+	public void start(BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
     }
@@ -37,7 +38,8 @@ public class CorePlugin extends AbstractUIPlugin {
      * The method uses the superclass method which saves this plug-in's preference and dialog stores
      * and shuts down its image registry (if they are in use).
      */
-    public void stop(BundleContext context) throws Exception {
+    @Override
+	public void stop(BundleContext context) throws Exception {
         plugin = null;
         super.stop(context);
     }
