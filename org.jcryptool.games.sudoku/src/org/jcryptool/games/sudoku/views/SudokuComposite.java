@@ -41,10 +41,9 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowData;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -67,7 +66,7 @@ public class SudokuComposite extends Composite {
 
     public final int NORMAL = 1, KILLER = 2, HEX = 3;
 
-    public final int BOX_SIZE_NORMAL = 54, BOX_SIZE_KILLER = 54, BOX_SIZE_HEX = 54;
+    public final int BOX_SIZE_NORMAL = 66, BOX_SIZE_KILLER = 66, BOX_SIZE_HEX = 54;
     final private int ADDITION = 0, SUBTRACTION = 1, MULTIPLICATION = 2, DIVISION = 3;
 
     public int tabChoice, numberOfGuesses = 0;
@@ -419,32 +418,32 @@ public class SudokuComposite extends Composite {
     }
 
     public void createHead() {
-        final Composite head = new Composite(this, SWT.NONE);
-        head.setBackground(WHITE);
-        GridData gd = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        gd.minimumWidth = 300;
-        gd.widthHint = 300;
-        head.setLayoutData(gd);
-        head.setLayout(new GridLayout());
+        final Composite headComposite = new Composite(this, SWT.NONE);
+//        headComposite.setBackground(WHITE);
+        GridData gd_headComposite = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        gd_headComposite.minimumWidth = 300;
+        gd_headComposite.widthHint = 300;
+        headComposite.setLayoutData(gd_headComposite);
+        headComposite.setLayout(new GridLayout());
 
-        final Label label = new Label(head, SWT.NONE);
-        label.setFont(FontService.getHeaderFont());
-        label.setBackground(WHITE);
+        final StyledText title = new StyledText(headComposite, SWT.READ_ONLY);
+        title.setFont(FontService.getHeaderFont());
+        title.setBackground(WHITE);
 
         /** Deals with the choice of scheme */
         switch (tabChoice) {
             case NORMAL:
-                label.setText(Messages.SudokuComposite_Normal_Title);
+                title.setText(Messages.SudokuComposite_Normal_Title);
                 break;
             case KILLER:
-                label.setText(Messages.SudokuComposite_Killer_Title);
+                title.setText(Messages.SudokuComposite_Killer_Title);
                 break;
             case HEX:
-                label.setText(Messages.SudokuComposite_Hex_Title);
+                title.setText(Messages.SudokuComposite_Hex_Title);
                 break;
         }
 
-        final StyledText stDescription = new StyledText(head, SWT.READ_ONLY | SWT.WRAP);
+        final StyledText stDescription = new StyledText(headComposite, SWT.READ_ONLY | SWT.WRAP);
         switch (tabChoice) {
             case NORMAL:
                 stDescription.setText(Messages.SudokuComposite_Normal_Desc);
@@ -460,12 +459,13 @@ public class SudokuComposite extends Composite {
     }
 
     public void createMain() {
-        final Group g = new Group(this, SWT.NONE);
-        g.setLayout(new GridLayout(2, false));
-        g.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, true));
-        g.setText(Messages.SudokuComposite_MainGroup_Title);
-        this.createButtonArea(g);
-        this.createPlayFieldArea(g);
+        final Group mainGroup = new Group(this, SWT.NONE);
+        mainGroup.setLayout(new GridLayout(2, false));
+        GridData gd_mainGroup = new GridData(SWT.FILL, SWT.FILL, true, true);
+        mainGroup.setLayoutData(gd_mainGroup); 
+        mainGroup.setText(Messages.SudokuComposite_MainGroup_Title);
+        this.createButtonArea(mainGroup);
+        this.createPlayFieldArea(mainGroup);
         makeWhite();
 
         SudokuComposite.this.display.asyncExec(refresh);
@@ -474,18 +474,15 @@ public class SudokuComposite extends Composite {
     public void createButtonArea(final Composite parent) {
         final Composite mainComposite = new Composite(parent, SWT.SHADOW_NONE);
         mainComposite.setLayout(new GridLayout());
-        mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        mainComposite.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
 
-        final RowLayout mrl = new RowLayout(SWT.VERTICAL);
-        final RowData buttonrd = new RowData(135, 30);
-        //final RowData radiord = new RowData(63,30);
+        Group grpModeChoice = new Group(mainComposite, SWT.SHADOW_NONE);
+        grpModeChoice.setText(Messages.SudokuComposite_ModeAreaTitle);
+        grpModeChoice.setLayout(new GridLayout(2, false));
+        grpModeChoice.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-        Group choiceComposite = new Group(mainComposite, SWT.SHADOW_NONE);
-        choiceComposite.setText(Messages.SudokuComposite_ModeAreaTitle);
-        choiceComposite.setLayout(new RowLayout(SWT.HORIZONTAL));
-
-        this.solveModeButton = new Button(choiceComposite, SWT.RADIO);
-        this.solveModeButton.setLayoutData(new RowData(50,30));
+        this.solveModeButton = new Button(grpModeChoice, SWT.RADIO);
+        this.solveModeButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         this.solveModeButton.setText(Messages.SudokuComposite_SolveModeButton);
         this.solveModeButton.addSelectionListener(new SelectionListener(){
 
@@ -569,8 +566,8 @@ public class SudokuComposite extends Composite {
 
         });
 
-        this.enterModeButton = new Button(choiceComposite, SWT.RADIO);
-        this.enterModeButton.setLayoutData(new RowData(76,30));
+        this.enterModeButton = new Button(grpModeChoice, SWT.RADIO);
+        this.enterModeButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         this.enterModeButton.setSelection(true);
         this.enterModeButton.setText(Messages.SudokuComposite_EnterModeButton);
         this.enterModeButton.addSelectionListener(new SelectionListener(){
@@ -634,13 +631,14 @@ public class SudokuComposite extends Composite {
 			}
 
         });
+   
+        Group grpActionButtons = new Group(mainComposite, SWT.SHADOW_NONE);
+        grpActionButtons.setText(Messages.SudokuComposite_ActionsAreaTitle);
+        grpActionButtons.setLayout(new GridLayout());
+        grpActionButtons.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-        Group subComposite = new Group(mainComposite, SWT.SHADOW_NONE);
-        subComposite.setText(Messages.SudokuComposite_ActionsAreaTitle);
-        subComposite.setLayout(mrl);
-
-        this.solveButton = new Button(subComposite, SWT.PUSH);
-        this.solveButton.setLayoutData(buttonrd);
+        this.solveButton = new Button(grpActionButtons, SWT.PUSH);
+        this.solveButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         this.solveButton.setEnabled(false);
         this.solveButton.setText(Messages.SudokuComposite_SolveButton);
         this.solveButton.setToolTipText(Messages.SudokuComposite_SolveButton_Tooltip);
@@ -653,8 +651,8 @@ public class SudokuComposite extends Composite {
             }
         });
 
-        this.hintButton = new Button(subComposite, SWT.PUSH);
-        this.hintButton.setLayoutData(buttonrd);
+        this.hintButton = new Button(grpActionButtons, SWT.PUSH);
+        this.hintButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         this.hintButton.setEnabled(false);
         this.hintButton.setText(Messages.SudokuComposite_HintButton);
         this.hintButton.setToolTipText(Messages.SudokuComposite_HintButton_Tooltip);
@@ -705,8 +703,8 @@ public class SudokuComposite extends Composite {
             }
         });
 
-        this.undoButton = new Button (subComposite, SWT.PUSH);
-        this.undoButton.setLayoutData(buttonrd);
+        this.undoButton = new Button (grpActionButtons, SWT.PUSH);
+        this.undoButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         this.undoButton.setEnabled(false);
         this.undoButton.setText(Messages.SudokuComposite_UndoButton);
         this.undoButton.setToolTipText(Messages.SudokuComposite_UndoButton_Tooltip);
@@ -749,8 +747,8 @@ public class SudokuComposite extends Composite {
         });
 
         if (tabChoice == KILLER) {
-            this.boxRuleButton = new Button(subComposite, SWT.PUSH);
-            this.boxRuleButton.setLayoutData(buttonrd);
+            this.boxRuleButton = new Button(grpActionButtons, SWT.PUSH);
+            this.boxRuleButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
             this.boxRuleButton.setBackground(GREEN);
             this.boxRuleButton.setEnabled(true);
             this.boxRuleButton.setText(Messages.SudokuComposite_BoxRuleButton);
@@ -769,8 +767,8 @@ public class SudokuComposite extends Composite {
             });
         }
 
-        this.showPossibleButton = new Button(subComposite, SWT.PUSH);
-        this.showPossibleButton.setLayoutData(buttonrd);
+        this.showPossibleButton = new Button(grpActionButtons, SWT.PUSH);
+        this.showPossibleButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         this.showPossibleButton.setEnabled(false);
         this.showPossibleButton.setText(Messages.SudokuComposite_ShowPossibleButton);
         this.showPossibleButton.setToolTipText(Messages.SudokuComposite_ShowPossibleButton_Tooltip);
@@ -798,8 +796,8 @@ public class SudokuComposite extends Composite {
             }
         });
 
-        this.autoFillOneButton = new Button(subComposite, SWT.PUSH);
-        this.autoFillOneButton.setLayoutData(buttonrd);
+        this.autoFillOneButton = new Button(grpActionButtons, SWT.PUSH);
+        this.autoFillOneButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         this.autoFillOneButton.setEnabled(false);
         this.autoFillOneButton.setText(Messages.SudokuComposite_AutoFillOneButton);
         this.autoFillOneButton.setToolTipText(Messages.SudokuComposite_AutoFillOneButton_Tooltip);
@@ -820,8 +818,8 @@ public class SudokuComposite extends Composite {
             }
         });
 
-        this.loadStandardPuzzle = new Button(subComposite, SWT.PUSH);
-        this.loadStandardPuzzle.setLayoutData(buttonrd);
+        this.loadStandardPuzzle = new Button(grpActionButtons, SWT.PUSH);
+        this.loadStandardPuzzle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         this.loadStandardPuzzle.setText(Messages.SudokuComposite_LoadStandardPuzzle);
         this.loadStandardPuzzle.setToolTipText(Messages.SudokuComposite_LoadStandardPuzzle_Tooltip);
         this.loadStandardPuzzle.addSelectionListener(new SelectionAdapter() {
@@ -862,8 +860,8 @@ public class SudokuComposite extends Composite {
             }
         });
 
-        this.loadButton = new Button(subComposite, SWT.PUSH);
-        this.loadButton.setLayoutData(buttonrd);
+        this.loadButton = new Button(grpActionButtons, SWT.PUSH);
+        this.loadButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         this.loadButton.setEnabled(true);
         this.loadButton.setText(Messages.SudokuComposite_LoadButton);
         this.loadButton.setToolTipText(Messages.SudokuComposite_LoadButton_Tooltip);
@@ -884,8 +882,8 @@ public class SudokuComposite extends Composite {
             }
         });
 
-        this.saveButton = new Button(subComposite, SWT.PUSH);
-        this.saveButton.setLayoutData(buttonrd);
+        this.saveButton = new Button(grpActionButtons, SWT.PUSH);
+        this.saveButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         this.saveButton.setEnabled(true);
         this.saveButton.setText(Messages.SudokuComposite_SaveButton);
         this.saveButton.setToolTipText(Messages.SudokuComposite_SaveButton_Tooltip);
@@ -905,8 +903,8 @@ public class SudokuComposite extends Composite {
             }
         });
 
-        this.clearButton = new Button(subComposite, SWT.PUSH);
-        this.clearButton.setLayoutData(buttonrd);
+        this.clearButton = new Button(grpActionButtons, SWT.PUSH);
+        this.clearButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         this.clearButton.setEnabled(true);
         this.clearButton.setText(Messages.SudokuComposite_ClearButton);
         this.clearButton.setToolTipText(Messages.SudokuComposite_ClearButton_Tooltip);
@@ -940,11 +938,13 @@ public class SudokuComposite extends Composite {
         });
 
         if (tabChoice == HEX) {
-            subComposite = new Group(mainComposite, SWT.SHADOW_NONE);
-            subComposite.setText(Messages.SudokuComposite_StrategiesAreaTitle);
-            subComposite.setLayout(mrl);
-            this.onePossibleButton = new Button(subComposite, SWT.PUSH);
-            this.onePossibleButton.setLayoutData(buttonrd);
+            Group grpStrategiesButtons = new Group(mainComposite, SWT.SHADOW_NONE);
+            grpStrategiesButtons.setText(Messages.SudokuComposite_StrategiesAreaTitle);
+            grpStrategiesButtons.setLayout(new GridLayout());
+            grpStrategiesButtons.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+            
+            this.onePossibleButton = new Button(grpStrategiesButtons, SWT.PUSH);
+            this.onePossibleButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
             this.onePossibleButton.setEnabled(false);
             this.onePossibleButton.setText(Messages.SudokuComposite_OnePossibleButton);
             this.onePossibleButton.setToolTipText(Messages.SudokuComposite_OnePossibleButton_Tooltip);
@@ -956,8 +956,8 @@ public class SudokuComposite extends Composite {
                 }
             });
 
-            this.nakedSingleButton = new Button(subComposite, SWT.PUSH);
-            this.nakedSingleButton.setLayoutData(buttonrd);
+            this.nakedSingleButton = new Button(grpStrategiesButtons, SWT.PUSH);
+            this.nakedSingleButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
             this.nakedSingleButton.setEnabled(false);
             this.nakedSingleButton.setText(Messages.SudokuComposite_NakedSingleButton);
             this.nakedSingleButton.setToolTipText(Messages.SudokuComposite_NakedSingleButton_Tooltip);
@@ -968,8 +968,8 @@ public class SudokuComposite extends Composite {
                 }
             });
 
-            this.hiddenSingleButton = new Button(subComposite, SWT.PUSH);
-            this.hiddenSingleButton.setLayoutData(buttonrd);
+            this.hiddenSingleButton = new Button(grpStrategiesButtons, SWT.PUSH);
+            this.hiddenSingleButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
             this.hiddenSingleButton.setEnabled(false);
             this.hiddenSingleButton.setText(Messages.SudokuComposite_HiddenSingleButton);
             this.hiddenSingleButton.setToolTipText(Messages.SudokuComposite_HiddenSingleButton_Tooltip);
@@ -980,8 +980,8 @@ public class SudokuComposite extends Composite {
                 }
             });
 
-            this.blockAndCRButton = new Button(subComposite, SWT.PUSH);
-            this.blockAndCRButton.setLayoutData(buttonrd);
+            this.blockAndCRButton = new Button(grpStrategiesButtons, SWT.PUSH);
+            this.blockAndCRButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
             this.blockAndCRButton.setEnabled(false);
             this.blockAndCRButton.setText(Messages.SudokuComposite_BlockAndCRButton);
             this.blockAndCRButton.setToolTipText(Messages.SudokuComposite_BlockAndCRButton_Tooltip);
@@ -992,8 +992,8 @@ public class SudokuComposite extends Composite {
                 }
             });
 
-            this.nakedSubsetButton = new Button(subComposite, SWT.PUSH);
-            this.nakedSubsetButton.setLayoutData(buttonrd);
+            this.nakedSubsetButton = new Button(grpStrategiesButtons, SWT.PUSH);
+            this.nakedSubsetButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
             this.nakedSubsetButton.setEnabled(false);
             this.nakedSubsetButton.setText(Messages.SudokuComposite_NakedSubsetButton);
             this.nakedSubsetButton.setToolTipText(Messages.SudokuComposite_NakedSubsetButton_Tooltip);
@@ -1004,8 +1004,8 @@ public class SudokuComposite extends Composite {
                 }
             });
 
-            this.candidateLineButton = new Button(subComposite, SWT.PUSH);
-            this.candidateLineButton.setLayoutData(buttonrd);
+            this.candidateLineButton = new Button(grpStrategiesButtons, SWT.PUSH);
+            this.candidateLineButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
             this.candidateLineButton.setEnabled(false);
             this.candidateLineButton.setText(Messages.SudokuComposite_CandidateLineButton);
             this.candidateLineButton.setToolTipText(Messages.SudokuComposite_CandidateLineButton_Tooltip);
@@ -1016,8 +1016,8 @@ public class SudokuComposite extends Composite {
                 }
             });
 
-            this.doublePairButton = new Button(subComposite, SWT.PUSH);
-            this.doublePairButton.setLayoutData(buttonrd);
+            this.doublePairButton = new Button(grpStrategiesButtons, SWT.PUSH);
+            this.doublePairButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
             this.doublePairButton.setEnabled(false);
             this.doublePairButton.setText(Messages.SudokuComposite_DoublePairButton);
             this.doublePairButton.setToolTipText(Messages.SudokuComposite_DoublePairButton_Tooltip);
@@ -1028,8 +1028,8 @@ public class SudokuComposite extends Composite {
                 }
             });
 
-            this.multipleLinesButton = new Button(subComposite, SWT.PUSH);
-            this.multipleLinesButton.setLayoutData(buttonrd);
+            this.multipleLinesButton = new Button(grpStrategiesButtons, SWT.PUSH);
+            this.multipleLinesButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
             this.multipleLinesButton.setEnabled(false);
             this.multipleLinesButton.setText(Messages.SudokuComposite_MultipleLinesButton);
             this.multipleLinesButton.setToolTipText(Messages.SudokuComposite_MultipleLinesButton_Tooltip);
@@ -1042,11 +1042,13 @@ public class SudokuComposite extends Composite {
         }
 
         if (tabChoice == KILLER) {
-            subComposite = new Group(mainComposite, SWT.SHADOW_NONE);
-            subComposite.setText(Messages.SudokuComposite_OperatorsAreaTitle);
-            subComposite.setLayout(mrl);
-            this.additionButton = new Button(subComposite, SWT.PUSH);
-            this.additionButton.setLayoutData(buttonrd);
+            Group grpOperatorsButtons = new Group(mainComposite, SWT.SHADOW_NONE);
+            grpOperatorsButtons.setText(Messages.SudokuComposite_OperatorsAreaTitle);
+            grpOperatorsButtons.setLayout(new GridLayout());
+            grpOperatorsButtons.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+            
+            this.additionButton = new Button(grpOperatorsButtons, SWT.PUSH);
+            this.additionButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
             this.additionButton.setEnabled(true);
             this.additionButton.setText(Messages.SudokuComposite_AdditionButton);
             this.additionButton.setToolTipText(Messages.SudokuComposite_AdditionButton_Tooltip);
@@ -1081,8 +1083,8 @@ public class SudokuComposite extends Composite {
                 }
             });
 
-            this.subtractionButton = new Button(subComposite, SWT.PUSH);
-            this.subtractionButton.setLayoutData(buttonrd);
+            this.subtractionButton = new Button(grpOperatorsButtons, SWT.PUSH);
+            this.subtractionButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
             this.subtractionButton.setEnabled(true);
             this.subtractionButton.setText(Messages.SudokuComposite_SubtractionButton);
             this.subtractionButton.setToolTipText(Messages.SudokuComposite_SubtractionButton_Tooltip);
@@ -1121,8 +1123,8 @@ public class SudokuComposite extends Composite {
                 }
             });
 
-            this.multiplicationButton = new Button(subComposite, SWT.PUSH);
-            this.multiplicationButton.setLayoutData(buttonrd);
+            this.multiplicationButton = new Button(grpOperatorsButtons, SWT.PUSH);
+            this.multiplicationButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
             this.multiplicationButton.setEnabled(true);
             this.multiplicationButton.setText(Messages.SudokuComposite_MultiplicationButton);
             this.multiplicationButton.setToolTipText(Messages.SudokuComposite_MultiplicationButton_Tooltip);
@@ -1157,8 +1159,8 @@ public class SudokuComposite extends Composite {
                 }
             });
 
-            this.divisionButton = new Button(subComposite, SWT.PUSH);
-            this.divisionButton.setLayoutData(buttonrd);
+            this.divisionButton = new Button(grpOperatorsButtons, SWT.PUSH);
+            this.divisionButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
             this.divisionButton.setEnabled(true);
             this.divisionButton.setText(Messages.SudokuComposite_DivisionButton);
             this.divisionButton.setToolTipText(Messages.SudokuComposite_DivisionButton_Tooltip);
@@ -1704,7 +1706,8 @@ public class SudokuComposite extends Composite {
     public void createPlayFieldArea(final Composite parent) {
         final Composite playField = new Composite(parent, SWT.SHADOW_NONE);
         playField.setLayout(new GridLayout());
-        playField.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, true));
+        GridData gd_playField = new GridData(SWT.FILL, SWT.FILL, true, true); //25.09. changed from left, top, true, true
+        playField.setLayoutData(gd_playField); 
         switch (tabChoice) {
             case NORMAL: {
                 boardNormal = new int[9][9];
@@ -1769,21 +1772,15 @@ public class SudokuComposite extends Composite {
     }
 
     public void createFieldNormal(final Composite parent) {
-        GridLayout layout = new GridLayout(9, false);
-        layout.verticalSpacing = 0;
-        layout.horizontalSpacing = 0;
-
         playField = new Composite(parent, SWT.NONE);
+        GridData gd_playField = new GridData(SWT.FILL, SWT.FILL, true, true); 
+        gd_playField.widthHint = gd_playField.heightHint = 600; 
+        playField.setLayoutData(gd_playField);
+        GridLayout layout = new GridLayout(9, false);
+        layout.verticalSpacing = layout.horizontalSpacing = 0;
         playField.setLayout(layout);
 
-        GridData gridData = new GridData();
-        gridData.horizontalAlignment = GridData.FILL;
-        gridData.grabExcessHorizontalSpace = true;
-        gridData.grabExcessVerticalSpace = true;
-        gridData.heightHint = BOX_SIZE_NORMAL;
-        gridData.widthHint = BOX_SIZE_NORMAL;
-        gridData.verticalAlignment = GridData.VERTICAL_ALIGN_CENTER;
-
+        GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 labelCellNormal[i][j] = new Composite(playField, SWT.NONE);
@@ -1798,63 +1795,36 @@ public class SudokuComposite extends Composite {
                     }
 
                 });
-
                 labelCellNormal[i][j].setLayoutData(gridData);
-                if (i + 1 != 9 && j + 1 != 9) {
-                    labelCellNormal[i][j].addPaintListener(new PaintListener() {
-
-                        public void paintControl(PaintEvent e) {
-                            e.gc.drawRectangle(0, 0, BOX_SIZE_NORMAL, BOX_SIZE_NORMAL);
-                        }
-
-                    });
-                } else if (i + 1 != 9) {
-                    labelCellNormal[i][j].addPaintListener(new PaintListener() {
-
-                        public void paintControl(PaintEvent e) {
-                            e.gc.drawRectangle(0, 0, BOX_SIZE_NORMAL - 1, BOX_SIZE_NORMAL);
-                        }
-
-                    });
-                } else if (j + 1 != 9) {
-                    labelCellNormal[i][j].addPaintListener(new PaintListener() {
-
-                        public void paintControl(PaintEvent e) {
-                            e.gc.drawRectangle(0, 0, BOX_SIZE_NORMAL, BOX_SIZE_NORMAL - 1);
-                        }
-
-                    });
-                } else {
-                    labelCellNormal[i][j].addPaintListener(new PaintListener() {
-
-                        public void paintControl(PaintEvent e) {
-                            e.gc.drawRectangle(0, 0, BOX_SIZE_NORMAL - 1, BOX_SIZE_NORMAL - 1);
-                        }
-
-                    });
-                }
-
-                if ((j + 1) % 3 == 0 && (j + 1) != 9) {
-                    labelCellNormal[i][j].addPaintListener(new PaintListener() {
-                        public void paintControl(PaintEvent e) {
-                            e.gc.drawLine(BOX_SIZE_NORMAL - 1, BOX_SIZE_NORMAL - 1, BOX_SIZE_NORMAL - 1, 0);
-                        }
-                    });
-                }
-
-                if ((i + 1) % 3 == 0 && (i + 1) != 9) {
-                    labelCellNormal[i][j].addPaintListener(new PaintListener() {
-                        public void paintControl(PaintEvent e) {
-                            e.gc.drawLine(BOX_SIZE_NORMAL - 1, BOX_SIZE_NORMAL - 1, 0, BOX_SIZE_NORMAL - 1);
-                        }
-                    });
-                }
+                final int f_i = i, f_j = j; //Final variables allow access in listener class 
+                labelCellNormal[i][j].addPaintListener(new PaintListener() {
+                    public void paintControl(PaintEvent e) {
+                    	Rectangle a = ((Composite) e.getSource()).getClientArea();
+                    	
+                    	if (f_i != 8 && f_j != 8) { //draws rectangles 
+                    		e.gc.drawRectangle(0, 0, a.width, a.height);
+                    	} else if (f_i != 8) {
+                    		e.gc.drawRectangle(0, 0, a.width - 1, a.height);
+                    	}  else if (f_j != 8) {
+                    		e.gc.drawRectangle(0, 0, a.width, a.height - 1);
+                    	} else {
+                    		e.gc.drawRectangle(0, 0, a.width - 1, a.height - 1);
+                    	}
+                    	
+                    	if ((f_j + 1) % 3 == 0 && (f_j + 1) != 9) { //draws bold lines
+                    		e.gc.drawLine(a.width - 1, a.height - 1, a.width - 1, 0);
+                    	}
+                    	if ((f_i + 1) % 3 == 0 && (f_i + 1) != 9) {
+                    		e.gc.drawLine(a.width - 1, a.height - 1, 0, a.height - 1);
+                    	}
+                    }
+                });
 
                 labelCellNormal[i][j].setBackground(WHITE);
-                GridLayout gridlayout = new GridLayout(3, true);
-                gridlayout.verticalSpacing = 0;
-                gridlayout.horizontalSpacing = 0;
-                labelCellNormal[i][j].setLayout(gridlayout);
+                GridLayout cellNormalLayout = new GridLayout(3, true);
+                cellNormalLayout.verticalSpacing = 0;
+                cellNormalLayout.horizontalSpacing = 0;
+                labelCellNormal[i][j].setLayout(cellNormalLayout);
                 for (int k = 0; k < 4; k++) {
                     boardLabelsNormal[i][j][k] = createLabelNormal(labelCellNormal[i][j]);
                 }
@@ -1876,29 +1846,16 @@ public class SudokuComposite extends Composite {
         }
     }
 
-    public boolean adjacent(Point point) {
-    	if (selected.size() == 0) return true;
-    	for (int i = 0; i < selected.size(); i++) {
-    		if (Math.abs(selected.get(i).x - point.x) + Math.abs(selected.get(i).y - point.y) <= 1) return true;
-    	}
-    	return false;
-    }
-
     public void createFieldKiller(final Composite parent) {
-        GridLayout layout = new GridLayout(9, false);
-        layout.verticalSpacing = 0;
-        layout.horizontalSpacing = 0;
-
         playField = new Composite(parent, SWT.NONE);
+        GridData gd_playField = new GridData(SWT.FILL, SWT.FILL, true, true); 
+        gd_playField.widthHint = gd_playField.heightHint = 600; 
+        playField.setLayoutData(gd_playField);
+        GridLayout layout = new GridLayout(9, false);
+        layout.verticalSpacing = layout.horizontalSpacing = 0;
         playField.setLayout(layout);
 
-        GridData gridData = new GridData();
-        gridData.horizontalAlignment = GridData.FILL;
-        gridData.grabExcessHorizontalSpace = true;
-        gridData.grabExcessVerticalSpace = true;
-        gridData.heightHint = BOX_SIZE_KILLER;
-        gridData.widthHint = BOX_SIZE_KILLER;
-        gridData.verticalAlignment = GridData.VERTICAL_ALIGN_CENTER;
+        GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -1934,77 +1891,47 @@ public class SudokuComposite extends Composite {
                     }
 
                 });
-
-                if (i + 1 != 9 && j + 1 != 9) {
-                    labelCellKiller[i][j].addPaintListener(new PaintListener() {
-
-                        public void paintControl(PaintEvent e) {
-                            e.gc.drawRectangle(0, 0, BOX_SIZE_KILLER, BOX_SIZE_KILLER);
-                        }
-
-                    });
-                } else if (i + 1 != 9) {
-                    labelCellKiller[i][j].addPaintListener(new PaintListener() {
-
-                        public void paintControl(PaintEvent e) {
-                            e.gc.drawRectangle(0, 0, BOX_SIZE_KILLER - 1, BOX_SIZE_KILLER);
-                        }
-
-                    });
-                } else if (j + 1 != 9) {
-                    labelCellKiller[i][j].addPaintListener(new PaintListener() {
-
-                        public void paintControl(PaintEvent e) {
-                            e.gc.drawRectangle(0, 0, BOX_SIZE_KILLER, BOX_SIZE_KILLER - 1);
-                        }
-
-                    });
-                } else {
-                    labelCellKiller[i][j].addPaintListener(new PaintListener() {
-
-                        public void paintControl(PaintEvent e) {
-                            e.gc.drawRectangle(0, 0, BOX_SIZE_KILLER - 1, BOX_SIZE_KILLER - 1);
-                        }
-
-                    });
-                }
-
-                if ((j + 1) % 3 == 0 && (j + 1) != 9) {
-                    labelCellKiller[i][j].addPaintListener(new PaintListener() {
-                        public void paintControl(PaintEvent e) {
-                            if (boxRule)
-                                e.gc.drawLine(BOX_SIZE_KILLER - 1, BOX_SIZE_KILLER - 1, BOX_SIZE_KILLER - 1, 0);
-                        }
-                    });
-                }
-
-                if ((i + 1) % 3 == 0 && (i + 1) != 9) {
-                    labelCellKiller[i][j].addPaintListener(new PaintListener() {
-                        public void paintControl(PaintEvent e) {
-                            if (boxRule)
-                                e.gc.drawLine(BOX_SIZE_KILLER - 1, BOX_SIZE_KILLER - 1, 0, BOX_SIZE_KILLER - 1);
-                        }
-                    });
-                }
-
+                
+                final int f_i = i, f_j = j; //Final variables allow access in listener class
                 labelCellKiller[i][j].addPaintListener(new PaintListener() {
+                    public void paintControl(PaintEvent e) {
+                    	Rectangle a = ((Composite) e.getSource()).getClientArea();
+                    	if (f_i + 1 != 9 && f_j + 1 != 9) {
+                    		e.gc.drawRectangle(0, 0, a.width, a.height);
+                    	} else if (f_i + 1 != 9) {
+                            e.gc.drawRectangle(0, 0, a.width - 1, a.height);
+                        } else if (f_j + 1 != 9) {
+                            e.gc.drawRectangle(0, 0, a.width, a.height - 1);
+                        } else {
+                            e.gc.drawRectangle(0, 0, a.width - 1, a.height - 1);
+                        }
 
+                        if ((f_j + 1) % 3 == 0 && (f_j + 1) != 9 && boxRule) {
+                            e.gc.drawLine(a.width - 1, a.height - 1, a.width - 1, 0);
+                        }
+                        if ((f_i + 1) % 3 == 0 && (f_i + 1) != 9 && boxRule) {
+                            e.gc.drawLine(a.width - 1, a.height - 1, 0, a.height - 1);
+                        }
+                    }
+                });
+                
+                labelCellKiller[i][j].addPaintListener(new PaintListener() {
                     public void paintControl(PaintEvent e) {
                         Font tempFont = e.gc.getFont();
                         e.gc.setFont(FontService.getTinyFont());
                         e.gc.setForeground(RED);
-                        Composite composite = (Composite) e.widget;
-                        Point point = compositeBoxesKiller.get(composite);
+                        Point point = compositeBoxesKiller.get((Composite) e.widget);
+                        Rectangle a = ((Composite) e.getSource()).getClientArea();
                         if (leftLine(point))
-                            e.gc.drawLine(2, 2, 2, BOX_SIZE_KILLER - 3);
+                            e.gc.drawLine(2, 2, 2, a.height - 3);
                         if (topLine(point))
-                            e.gc.drawLine(2, 2, BOX_SIZE_KILLER - 3, 2);
+                            e.gc.drawLine(2, 2, a.width - 3, 2);
                         if (topLabel(point))
                             e.gc.drawString(topLabelValue(point), 1, 1);
                         if (bottomLine(point))
-                            e.gc.drawLine(2, BOX_SIZE_KILLER - 3, BOX_SIZE_KILLER - 3, BOX_SIZE_KILLER - 3);
+                            e.gc.drawLine(2, a.height - 3, a.width - 3, a.height - 3);
                         if (rightLine(point))
-                            e.gc.drawLine(BOX_SIZE_KILLER - 3, 2, BOX_SIZE_KILLER - 3, BOX_SIZE_KILLER - 3);
+                            e.gc.drawLine(a.width - 3, 2, a.width - 3, a.height - 3);
                         e.gc.setFont(tempFont);
                         e.gc.setForeground(BLACK);
                     }
@@ -2034,6 +1961,90 @@ public class SudokuComposite extends Composite {
                 }
             }
         }
+    }
+
+
+    public void createFieldHex(final Composite parent) {
+        playField = new Composite(parent, SWT.NONE);
+        GridData gd_playField = new GridData(SWT.FILL, SWT.FILL, true, true); 
+        gd_playField.widthHint = gd_playField.heightHint = 870; 
+        playField.setLayoutData(gd_playField);
+        GridLayout layout = new GridLayout(16, false);
+        layout.verticalSpacing = layout.horizontalSpacing = 0;
+        playField.setLayout(layout);
+
+        GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+        for (int i = 0; i < 16; i++) {
+            for (int j = 0; j < 16; j++) {
+                labelCellHex[i][j] = new Composite(playField, SWT.NONE);
+
+                compositeBoxesHex.put(labelCellHex[i][j], new Point(i, j));
+
+                labelCellHex[i][j].setLayoutData(gridData);
+                labelCellHex[i][j].addListener(SWT.MouseDown, new Listener() {
+                    public void handleEvent(Event event) {
+                        Composite composite = (Composite) event.widget;
+                        Point point = compositeBoxesHex.get(composite);
+                        boardTextHex[point.x][point.y].setFocus();
+                    }
+
+                });
+                final int f_i = i, f_j = j; //Final variables allow access in listener class 
+                labelCellHex[i][j].addPaintListener(new PaintListener() { 
+                    public void paintControl(PaintEvent e) {
+                    	Rectangle a = ((Composite) e.getSource()).getClientArea();
+                    	if (f_i + 1 != 16 && f_j + 1 != 16) {
+                    		e.gc.drawRectangle(0, 0, a.width, a.height);
+                        } else if (f_i + 1 != 16) {
+                        	e.gc.drawRectangle(0, 0, a.width - 1,  a.height);
+                        } else if (f_j + 1 != 16) {
+                        	e.gc.drawRectangle(0, 0, a.width,  a.height - 1);
+                        } else {
+                        	e.gc.drawRectangle(0, 0, a.width - 1,  a.height - 1);
+                        }
+                    	
+                        if ((f_j + 1) % 4 == 0 && (f_j + 1) != 16) {
+                        	e.gc.drawLine(a.width - 1,  a.height - 1, a.width - 1, 0);
+                        }
+                        if ((f_i + 1) % 4 == 0 && (f_i + 1) != 16) {
+                        	e.gc.drawLine(a.width - 1,  a.height - 1, 0,  a.height - 1);
+                        }
+                    }
+                });
+
+                labelCellHex[i][j].setBackground(WHITE);
+                GridLayout gridlayout = new GridLayout(3, true);
+                gridlayout.verticalSpacing = 0;
+                gridlayout.horizontalSpacing = 0;
+                labelCellHex[i][j].setLayout(gridlayout);
+                for (int k = 0; k < 4; k++) {
+                    boardLabelsHex[i][j][k] = createLabelHex(labelCellHex[i][j],k);
+
+                }
+                boardTextHex[i][j] = createTextHex(labelCellHex[i][j]);
+                inputBoxesHex.put(boardTextHex[i][j], new UserInputPoint(i, j));
+                for (int k = 4; k < 8; k++) {
+                    boardLabelsHex[i][j][k] = createLabelHex(labelCellHex[i][j],k);
+                }
+                if (boardHex[i][j] != -1)
+                    boardTextHex[i][j].setText(Integer.toString(boardHex[i][j]));
+                else {
+                    if (possibleHex.get(i).get(j).size() < 9) {
+                        for (int k = 0; k < possibleHex.get(i).get(j).size(); k++) {
+                            boardLabelsHex[i][j][k].setText(Integer.toString(possibleHex.get(i).get(j).get(k)));
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    public boolean adjacent(Point point) {
+    	if (selected.size() == 0) return true;
+    	for (int i = 0; i < selected.size(); i++) {
+    		if (Math.abs(selected.get(i).x - point.x) + Math.abs(selected.get(i).y - point.y) <= 1) return true;
+    	}
+    	return false;
     }
 
     public boolean leftLine(Point point) {
@@ -2175,123 +2186,11 @@ public class SudokuComposite extends Composite {
         return false;
     }
 
-    public void createFieldHex(final Composite parent) {
-        GridLayout layout = new GridLayout(16, false);
-        layout.verticalSpacing = 0;
-        layout.horizontalSpacing = 0;
-
-        playField = new Composite(parent, SWT.NONE);
-        playField.setLayout(layout);
-
-        GridData gridData = new GridData();
-        gridData.horizontalAlignment = GridData.FILL;
-        gridData.grabExcessHorizontalSpace = true;
-        gridData.grabExcessVerticalSpace = true;
-        gridData.heightHint = BOX_SIZE_HEX;
-        gridData.widthHint = BOX_SIZE_HEX;
-        gridData.verticalAlignment = GridData.VERTICAL_ALIGN_CENTER;
-
-        for (int i = 0; i < 16; i++) {
-            for (int j = 0; j < 16; j++) {
-                labelCellHex[i][j] = new Composite(playField, SWT.NONE);
-
-                compositeBoxesHex.put(labelCellHex[i][j], new Point(i, j));
-
-                labelCellHex[i][j].setLayoutData(gridData);
-
-                labelCellHex[i][j].addListener(SWT.MouseDown, new Listener() {
-
-                    public void handleEvent(Event event) {
-                        Composite composite = (Composite) event.widget;
-                        Point point = compositeBoxesHex.get(composite);
-                        boardTextHex[point.x][point.y].setFocus();
-                    }
-
-                });
-
-                if (i + 1 != 16 && j + 1 != 16) {
-                    labelCellHex[i][j].addPaintListener(new PaintListener() {
-
-                        public void paintControl(PaintEvent e) {
-                            e.gc.drawRectangle(0, 0, BOX_SIZE_HEX, BOX_SIZE_HEX);
-                        }
-
-                    });
-                } else if (i + 1 != 16) {
-                    labelCellHex[i][j].addPaintListener(new PaintListener() {
-
-                        public void paintControl(PaintEvent e) {
-                            e.gc.drawRectangle(0, 0, BOX_SIZE_HEX - 1, BOX_SIZE_HEX);
-                        }
-
-                    });
-                } else if (j + 1 != 16) {
-                    labelCellHex[i][j].addPaintListener(new PaintListener() {
-
-                        public void paintControl(PaintEvent e) {
-                            e.gc.drawRectangle(0, 0, BOX_SIZE_HEX, BOX_SIZE_HEX - 1);
-                        }
-
-                    });
-                } else {
-                    labelCellHex[i][j].addPaintListener(new PaintListener() {
-
-                        public void paintControl(PaintEvent e) {
-                            e.gc.drawRectangle(0, 0, BOX_SIZE_HEX - 1, BOX_SIZE_HEX - 1);
-                        }
-
-                    });
-                }
-                if ((j + 1) % 4 == 0 && (j + 1) != 16) {
-                    labelCellHex[i][j].addPaintListener(new PaintListener() {
-                        public void paintControl(PaintEvent e) {
-
-                            e.gc.drawLine(BOX_SIZE_HEX - 1, BOX_SIZE_HEX - 1, BOX_SIZE_HEX - 1, 0);
-                        }
-                    });
-                }
-
-                if ((i + 1) % 4 == 0 && (i + 1) != 16) {
-                    labelCellHex[i][j].addPaintListener(new PaintListener() {
-                        public void paintControl(PaintEvent e) {
-                            e.gc.drawLine(BOX_SIZE_HEX - 1, BOX_SIZE_HEX - 1, 0, BOX_SIZE_HEX - 1);
-                        }
-                    });
-                }
-
-                labelCellHex[i][j].setBackground(WHITE);
-                GridLayout gridlayout = new GridLayout(3, true);
-                gridlayout.verticalSpacing = 0;
-                gridlayout.horizontalSpacing = 0;
-                labelCellHex[i][j].setLayout(gridlayout);
-                for (int k = 0; k < 4; k++) {
-                    boardLabelsHex[i][j][k] = createLabelHex(labelCellHex[i][j],k);
-
-                }
-                boardTextHex[i][j] = createTextHex(labelCellHex[i][j]);
-                inputBoxesHex.put(boardTextHex[i][j], new UserInputPoint(i, j));
-                for (int k = 4; k < 8; k++) {
-                    boardLabelsHex[i][j][k] = createLabelHex(labelCellHex[i][j],k);
-                }
-                if (boardHex[i][j] != -1)
-                    boardTextHex[i][j].setText(Integer.toString(boardHex[i][j]));
-                else {
-                    if (possibleHex.get(i).get(j).size() < 9) {
-                        for (int k = 0; k < possibleHex.get(i).get(j).size(); k++) {
-                            boardLabelsHex[i][j][k].setText(Integer.toString(possibleHex.get(i).get(j).get(k)));
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     public Label createLabelNormal(Composite parent) {
         Label label = new Label(parent, SWT.NONE);
         label.setAlignment(SWT.CENTER);
-        label.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
-        label.setSize(BOX_SIZE_NORMAL / 3, BOX_SIZE_NORMAL / 3);
-        label.setFont(FontService.getSmallFont());
+        label.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true)); 
+        label.setFont(FontService.getTinyFont());
         return label;
     }
 
@@ -2300,8 +2199,7 @@ public class SudokuComposite extends Composite {
         label.setAlignment(SWT.CENTER);
         label.setBackground(WHITE);
         label.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
-        label.setSize(BOX_SIZE_KILLER / 3, BOX_SIZE_KILLER / 3);
-        label.setFont(FontService.getSmallFont());
+        label.setFont(FontService.getTinyFont());
         label.setForeground(RED);
         return label;
     }
@@ -2351,12 +2249,10 @@ public class SudokuComposite extends Composite {
     }
 
     public Text createTextNormal(Composite parent) {
-        Text input = new Text(parent, SWT.NONE);
+        Text input = new Text(parent, SWT.CENTER);
         input.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
-        input.setSize(BOX_SIZE_NORMAL / 3, BOX_SIZE_NORMAL / 3);
         input.setTextLimit(1);
         input.setFont(FontService.getSmallFont());
-        // input.setForeground(GREEN);
 
         input.addListener(SWT.Verify, new Listener() {
             public void handleEvent(Event e) {
@@ -2384,9 +2280,8 @@ public class SudokuComposite extends Composite {
     }
 
     public Text createTextKiller(Composite parent) {
-        Text input = new Text(parent, SWT.NONE);
+        Text input = new Text(parent, SWT.CENTER);
         input.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
-        input.setSize(BOX_SIZE_KILLER / 3, BOX_SIZE_KILLER / 3);
         input.setTextLimit(1);
         input.setFont(FontService.getSmallFont());
 
@@ -2417,9 +2312,8 @@ public class SudokuComposite extends Composite {
     }
 
     public Text createTextHex(Composite parent) {
-        Text input = new Text(parent, SWT.RIGHT);
+        Text input = new Text(parent, SWT.CENTER);
         input.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
-        input.setSize(BOX_SIZE_HEX / 3, BOX_SIZE_HEX / 3);
         // input.setForeground(GREEN);
         input.setTextLimit(1);
         input.setFont(FontService.getSmallFont());
@@ -2753,7 +2647,7 @@ public class SudokuComposite extends Composite {
                             if (autoFillOne && possibleNormal.get(i).get(k).size() == 1) {
                                 boardNormal[i][k] = possibleNormal.get(i).get(k).get(0);
                                 boardTextNormal[i][k].setText(Integer.toString(boardNormal[i][k]));
-                                labelCellNormal[i][k].layout();
+                                labelCellNormal[i][k].requestLayout();
                                 changed = true;
                             }
                         }
@@ -2776,7 +2670,7 @@ public class SudokuComposite extends Composite {
                             if (autoFillOne && possibleNormal.get(k).get(i).size() == 1) {
                                 boardNormal[k][i] = possibleNormal.get(k).get(i).get(0);
                                 boardTextNormal[k][i].setText(Integer.toString(boardNormal[k][i]));
-                                labelCellNormal[k][i].layout();
+                                labelCellNormal[k][i].requestLayout();
                                 changed = true;
                             }
                         }
@@ -2806,7 +2700,7 @@ public class SudokuComposite extends Composite {
                                                 possibleNormal.get(3 * i + l).get(3 * j + m).get(0);
                                         boardTextNormal[3 * i + l][3 * j + m].setText(Integer.toString(boardNormal[3
                                                 * i + l][3 * j + m]));
-                                        labelCellNormal[3 * i + l][3 * j + m].layout();
+                                        labelCellNormal[3 * i + l][3 * j + m].requestLayout();
                                         changed = true;
                                     }
                                 }
@@ -2834,7 +2728,8 @@ public class SudokuComposite extends Composite {
                     for (int k = 0; k < 8; k++)
                         boardLabelsNormal[i][j][k].setText("");
                 }
-                labelCellNormal[i][j].layout();
+                labelCellNormal[i][j].requestLayout();
+                boardTextNormal[i][j].redraw();
             }
         }
         if (changed)
@@ -3159,7 +3054,7 @@ public class SudokuComposite extends Composite {
                             if (autoFillOne && possibleKiller.get(i).get(k).size() == 1) {
                                 boardKiller[i][k] = possibleKiller.get(i).get(k).get(0);
                                 boardTextKiller[i][k].setText(Integer.toString(boardKiller[i][k]));
-                                labelCellKiller[i][k].layout();
+                                labelCellKiller[i][k].requestLayout();
                                 changed = true;
                             }
                         }
@@ -3182,7 +3077,7 @@ public class SudokuComposite extends Composite {
                             if (autoFillOne && possibleKiller.get(k).get(i).size() == 1) {
                                 boardKiller[k][i] = possibleKiller.get(k).get(i).get(0);
                                 boardTextKiller[k][i].setText(Integer.toString(boardKiller[k][i]));
-                                labelCellKiller[k][i].layout();
+                                labelCellKiller[k][i].requestLayout();
                                 changed = true;
                             }
                         }
@@ -3209,7 +3104,8 @@ public class SudokuComposite extends Composite {
                     for (int k = 0; k < 8; k++)
                         boardLabelsKiller[i][j][k].setText("");
                 }
-                labelCellKiller[i][j].layout();
+                labelCellKiller[i][j].requestLayout();
+                boardTextKiller[i][j].redraw();
             }
         }
         if (changed)
@@ -3241,7 +3137,7 @@ public class SudokuComposite extends Composite {
             case HEX:
                 for (int i = 0; i < 16; i++) {
                     for (int j = 0; j < 16; j++) {
-                        labelCellHex[i][j].layout();
+                        labelCellHex[i][j].requestLayout();
                     }
                 }
                 break;
@@ -3369,7 +3265,7 @@ public class SudokuComposite extends Composite {
                                 board[i][k] = possibilities.get(i).get(k).get(0);
                                 if (button) {
                                 	boardTextHex[i][k].setText(valToTextHex(board[i][k]));
-                                    labelCellHex[i][k].layout();
+                                    labelCellHex[i][k].requestLayout();
                                 }
                                 changed = true;
                             }
@@ -3394,7 +3290,7 @@ public class SudokuComposite extends Composite {
                                 board[k][i] = possibilities.get(k).get(i).get(0);
                                 if (button) {
 	                                boardTextHex[k][i].setText(valToTextHex(board[k][i]));
-	                                labelCellHex[k][i].layout();
+	                                labelCellHex[k][i].requestLayout();
                                 }
                                 changed = true;
                             }
@@ -3426,7 +3322,7 @@ public class SudokuComposite extends Composite {
                                         if (button) {
 	                                        boardTextHex[4 * i + l][4 * j + m].setText(valToTextHex(board[4 * i + l][4
 	                                                * j + m]));
-	                                        labelCellHex[4 * i + l][4 * j + m].layout();
+	                                        labelCellHex[4 * i + l][4 * j + m].requestLayout();
                                         }
                                         changed = true;
                                     }
@@ -3457,7 +3353,7 @@ public class SudokuComposite extends Composite {
 	                        boardLabelsHex[i][j][k].setText("");
 	                }
 	                boardTextHex[i][j].redraw();
-	                labelCellHex[i][j].layout();
+	                labelCellHex[i][j].requestLayout();
 	            }
 	        }
     	}
