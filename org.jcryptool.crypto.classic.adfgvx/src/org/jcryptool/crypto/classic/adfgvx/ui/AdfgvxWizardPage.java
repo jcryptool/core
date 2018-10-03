@@ -380,188 +380,152 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
             throw new IllegalArgumentException("Alphabet is not ADFGVX-compatible (must be 36 characters)"); //$NON-NLS-1$
         }
         if (i < y) {
-
             rc11.setText(Character.valueOf(cAlph[i]).toString());
             rc11.redraw();
             i++;
         }
         if (i < y) {
-
             rc12.setText(Character.valueOf(cAlph[i]).toString());
             rc12.redraw();
             i++;
         }
         if (i < y) {
-
             rc13.setText(Character.valueOf(cAlph[i]).toString());
             rc13.redraw();
             i++;
         }
         if (i < y) {
-
             rc14.setText(Character.valueOf(cAlph[i]).toString());
             rc14.redraw();
             i++;
         }
         if (i < y) {
-
             rc15.setText(Character.valueOf(cAlph[i]).toString());
             rc15.redraw();
             i++;
         }
         if (i < y) {
-
             rc16.setText(Character.valueOf(cAlph[i]).toString());
             rc16.redraw();
             i++;
         }
         if (i < y) {
-
             rc21.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc22.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc23.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc24.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc25.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc26.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc31.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc32.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc33.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc34.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc35.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc36.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc41.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc42.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc43.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc44.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc45.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc46.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc51.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc52.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc53.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc54.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc55.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc56.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc61.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc62.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc63.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc64.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc65.setText(Character.valueOf(cAlph[i]).toString());
             i++;
         }
         if (i < y) {
-
             rc66.setText(String.valueOf(cAlph[i]));
         }
 
