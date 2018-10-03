@@ -36,29 +36,22 @@ public class AdfgvxCmd extends ClassicAlgorithmCmd {
 	char[] substitutionKeyForDataobject = null;
 	char[] transpositionKeyForDataobject = null;
 	
-	@SuppressWarnings("static-access")
 	@Override
 	protected void createKeyOptions(Options options) {
 		OptionBuilder.withLongOpt("keySubstitution");
 		OptionBuilder.hasArg(true) //$NON-NLS-1$
 ;
-		OptionBuilder
-				.withArgName("SUBSTITUTION_KEY");
+		OptionBuilder.withArgName("SUBSTITUTION_KEY");
 		OptionBuilder.isRequired();
-		OptionBuilder.withDescription( //$NON-NLS-1$
-						Messages.AdfgvxCmd_substKeyDescription);
-		options.addOption(OptionBuilder.create(
-						"kS")); //$NON-NLS-1$
+		OptionBuilder.withDescription(Messages.AdfgvxCmd_substKeyDescription);
+		options.addOption(OptionBuilder.create("kS")); //$NON-NLS-1$
 		OptionBuilder.withLongOpt("keyTransposition");
 		OptionBuilder.hasArg(true) //$NON-NLS-1$
 ;
-		OptionBuilder
-				.withArgName("TRANSPOSITION_KEY");
+		OptionBuilder.withArgName("TRANSPOSITION_KEY");
 		OptionBuilder.isRequired();
-		OptionBuilder.withDescription( //$NON-NLS-1$
-						Messages.AdfgvxCmd_transpKeyDescription);
-		options.addOption(OptionBuilder.create(
-						"kT")); //$NON-NLS-1$
+		OptionBuilder.withDescription(Messages.AdfgvxCmd_transpKeyDescription);
+		options.addOption(OptionBuilder.create("kT")); //$NON-NLS-1$
 	}
 
 
