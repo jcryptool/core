@@ -27,6 +27,7 @@ public class Messages extends NLS {
 
 	public static String VerifiableSecretSharingComposite_error;
 
+	public static String VerifiableSecretSharingComposite_title;
 	public static String VerifiableSecretSharingComposite_tab_title;
 	public static String VerifiableSecretSharingComposite_description;
 	public static String VerifiableSecretSharingComposite_parameters_title;

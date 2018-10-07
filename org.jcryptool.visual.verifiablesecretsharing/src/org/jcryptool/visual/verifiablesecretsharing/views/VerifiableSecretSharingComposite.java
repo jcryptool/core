@@ -167,7 +167,7 @@ public class VerifiableSecretSharingComposite extends Composite {
         final Label label = new Label(head, SWT.NONE);
         label.setFont(FontService.getHeaderFont());
         label.setBackground(WHITE);
-        label.setText(Messages.VerifiableSecretSharingComposite_tab_title);
+        label.setText(Messages.VerifiableSecretSharingComposite_title);
 
         stDescription = new StyledText(head, SWT.READ_ONLY | SWT.WRAP);
         GridData gd_stDescription = new GridData(SWT.FILL, SWT.FILL, true, false);
