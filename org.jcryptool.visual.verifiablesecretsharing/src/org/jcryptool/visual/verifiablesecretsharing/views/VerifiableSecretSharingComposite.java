@@ -938,8 +938,8 @@ public class VerifiableSecretSharingComposite extends Composite {
                         String errorText = Messages.VerifiableSecretSharingComposite_commitment_not_calculated;
                         MessageDialog.openError(getShell(), Messages.VerifiableSecretSharingComposite_error, errorText);
                         enableCoefficientsGroupWithoutDispose(true);
-                        enableSharesGroup(false, players);
-                        enableReconstructionGroup(false, players);
+                        //enableSharesGroup(false, players);
+                        //enableReconstructionGroup(false, players);
 
                         ;
                     }
