@@ -151,8 +151,8 @@ public class VerifiableSecretSharingComposite extends Composite {
         setLayout(new GridLayout());
         createHead();
         createBody();
-        
-        
+        showDescription(1);
+   
     }
 
     /**
