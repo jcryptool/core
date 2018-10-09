@@ -11,6 +11,7 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: %Bundle-Vendor
 Import-Package: org.jcryptool.core.logging.utils,
+ org.jcryptool.core.util.colors,
  org.jcryptool.core.util.directories,
  org.jcryptool.core.util.fonts
 Automatic-Module-Name: org.jcryptool.games.sudoku

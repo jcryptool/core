@@ -33,6 +33,8 @@ import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -55,6 +57,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.games.sudoku.Messages;
@@ -79,7 +82,7 @@ public class SudokuComposite extends Composite {
 
     public List<List<List<Integer>>> possibleNormal, possibleKiller, possibleHex, guessPossibleHex, tempPossibleKiller, tempPossibleHex;
 
-    public Color WHITE, GREEN, GRAY, RED, BLACK, BLUE;
+    public Color WHITE, GREEN, GRAY, RED, BLACK;
 
     public Button solveButton, showPossibleButton, autoFillOneButton, loadButton, saveButton, clearButton,
             boxRuleButton, loadStandardPuzzle;
@@ -125,12 +128,11 @@ public class SudokuComposite extends Composite {
         this.display = SudokuComposite.this.getDisplay();
         this.tabChoice = tabChoice;
         this.initialize();
-        this.WHITE = this.display.getSystemColor(SWT.COLOR_WHITE);
-        this.GREEN = this.display.getSystemColor(SWT.COLOR_GREEN);
-        this.GRAY = this.display.getSystemColor(SWT.COLOR_GRAY);
-        this.RED = this.display.getSystemColor(SWT.COLOR_RED);
-        this.BLACK = this.display.getSystemColor(SWT.COLOR_BLACK);
-        this.BLUE = this.display.getSystemColor(SWT.COLOR_BLUE);
+        this.WHITE = ColorService.WHITE;
+        this.GREEN = ColorService.GREEN;
+        this.GRAY = ColorService.GRAY;
+        this.RED = ColorService.RED;
+        this.BLACK = ColorService.BLACK;
         this.showPossible = true;
         this.boxRule = false;
         this.killerFirstPossible = false;
@@ -194,7 +196,6 @@ public class SudokuComposite extends Composite {
         };
 
         this.dummyJob = new Job(Messages.SudokuComposite_SolvingPuzzle) {
-
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				while (backgroundSolve.getState() == Job.RUNNING) {
@@ -210,7 +211,6 @@ public class SudokuComposite extends Composite {
         };
 
         this.solveComplete = new Runnable() {
-
         	public void run() {
                 switch (tabChoice) {
                 case NORMAL: {
@@ -236,7 +236,6 @@ public class SudokuComposite extends Composite {
         };
 
         this.backgroundSolveComplete = new Runnable() {
-
 			@Override
 			public void run() {
 				backgroundSolved = true;
@@ -1708,6 +1707,23 @@ public class SudokuComposite extends Composite {
         playField.setLayout(new GridLayout());
         GridData gd_playField = new GridData(SWT.FILL, SWT.FILL, true, true); //25.09. changed from left, top, true, true
         playField.setLayoutData(gd_playField); 
+        playField.addControlListener(new ControlListener() {
+			@Override
+			public void controlMoved(ControlEvent e) { }
+
+			@Override
+			public void controlResized(ControlEvent e) {
+				// Ensures that the playField is always quadratic
+				Rectangle controlSize = playField.getBounds();
+                if (controlSize.height < controlSize.width) {
+                	playField.setSize(controlSize.height, controlSize.height);                	
+                }
+                else {
+                	playField.setSize(controlSize.width, controlSize.width);
+                }
+			}
+        	
+        });
         switch (tabChoice) {
             case NORMAL: {
                 boardNormal = new int[9][9];
@@ -2647,7 +2663,7 @@ public class SudokuComposite extends Composite {
                             if (autoFillOne && possibleNormal.get(i).get(k).size() == 1) {
                                 boardNormal[i][k] = possibleNormal.get(i).get(k).get(0);
                                 boardTextNormal[i][k].setText(Integer.toString(boardNormal[i][k]));
-                                labelCellNormal[i][k].requestLayout();
+                                labelCellNormal[i][k].layout();
                                 changed = true;
                             }
                         }
@@ -2670,7 +2686,7 @@ public class SudokuComposite extends Composite {
                             if (autoFillOne && possibleNormal.get(k).get(i).size() == 1) {
                                 boardNormal[k][i] = possibleNormal.get(k).get(i).get(0);
                                 boardTextNormal[k][i].setText(Integer.toString(boardNormal[k][i]));
-                                labelCellNormal[k][i].requestLayout();
+                                labelCellNormal[k][i].layout();
                                 changed = true;
                             }
                         }
@@ -2700,7 +2716,7 @@ public class SudokuComposite extends Composite {
                                                 possibleNormal.get(3 * i + l).get(3 * j + m).get(0);
                                         boardTextNormal[3 * i + l][3 * j + m].setText(Integer.toString(boardNormal[3
                                                 * i + l][3 * j + m]));
-                                        labelCellNormal[3 * i + l][3 * j + m].requestLayout();
+                                        labelCellNormal[3 * i + l][3 * j + m].layout();
                                         changed = true;
                                     }
                                 }
@@ -2728,8 +2744,8 @@ public class SudokuComposite extends Composite {
                     for (int k = 0; k < 8; k++)
                         boardLabelsNormal[i][j][k].setText("");
                 }
-                labelCellNormal[i][j].requestLayout();
-                boardTextNormal[i][j].redraw();
+                labelCellNormal[i][j].layout();
+//                boardTextNormal[i][j].redraw();
             }
         }
         if (changed)
@@ -3054,7 +3070,7 @@ public class SudokuComposite extends Composite {
                             if (autoFillOne && possibleKiller.get(i).get(k).size() == 1) {
                                 boardKiller[i][k] = possibleKiller.get(i).get(k).get(0);
                                 boardTextKiller[i][k].setText(Integer.toString(boardKiller[i][k]));
-                                labelCellKiller[i][k].requestLayout();
+                                labelCellKiller[i][k].layout();
                                 changed = true;
                             }
                         }
@@ -3077,7 +3093,7 @@ public class SudokuComposite extends Composite {
                             if (autoFillOne && possibleKiller.get(k).get(i).size() == 1) {
                                 boardKiller[k][i] = possibleKiller.get(k).get(i).get(0);
                                 boardTextKiller[k][i].setText(Integer.toString(boardKiller[k][i]));
-                                labelCellKiller[k][i].requestLayout();
+                                labelCellKiller[k][i].layout();
                                 changed = true;
                             }
                         }
@@ -3104,8 +3120,8 @@ public class SudokuComposite extends Composite {
                     for (int k = 0; k < 8; k++)
                         boardLabelsKiller[i][j][k].setText("");
                 }
-                labelCellKiller[i][j].requestLayout();
-                boardTextKiller[i][j].redraw();
+                labelCellKiller[i][j].layout();
+//                boardTextKiller[i][j].redraw();
             }
         }
         if (changed)
@@ -3137,7 +3153,7 @@ public class SudokuComposite extends Composite {
             case HEX:
                 for (int i = 0; i < 16; i++) {
                     for (int j = 0; j < 16; j++) {
-                        labelCellHex[i][j].requestLayout();
+                        labelCellHex[i][j].layout();
                     }
                 }
                 break;
@@ -3265,7 +3281,7 @@ public class SudokuComposite extends Composite {
                                 board[i][k] = possibilities.get(i).get(k).get(0);
                                 if (button) {
                                 	boardTextHex[i][k].setText(valToTextHex(board[i][k]));
-                                    labelCellHex[i][k].requestLayout();
+                                    labelCellHex[i][k].layout();
                                 }
                                 changed = true;
                             }
@@ -3290,7 +3306,7 @@ public class SudokuComposite extends Composite {
                                 board[k][i] = possibilities.get(k).get(i).get(0);
                                 if (button) {
 	                                boardTextHex[k][i].setText(valToTextHex(board[k][i]));
-	                                labelCellHex[k][i].requestLayout();
+	                                labelCellHex[k][i].layout();
                                 }
                                 changed = true;
                             }
@@ -3322,7 +3338,7 @@ public class SudokuComposite extends Composite {
                                         if (button) {
 	                                        boardTextHex[4 * i + l][4 * j + m].setText(valToTextHex(board[4 * i + l][4
 	                                                * j + m]));
-	                                        labelCellHex[4 * i + l][4 * j + m].requestLayout();
+	                                        labelCellHex[4 * i + l][4 * j + m].layout();
                                         }
                                         changed = true;
                                     }
@@ -3353,7 +3369,7 @@ public class SudokuComposite extends Composite {
 	                        boardLabelsHex[i][j][k].setText("");
 	                }
 	                boardTextHex[i][j].redraw();
-	                labelCellHex[i][j].requestLayout();
+	                labelCellHex[i][j].layout();
 	            }
 	        }
     	}
