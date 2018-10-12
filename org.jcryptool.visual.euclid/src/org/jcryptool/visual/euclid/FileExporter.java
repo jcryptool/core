@@ -72,7 +72,6 @@ public class FileExporter {
 			
 			for (int i=0; i<size; i++) {
 			    table.addCell(new Phrase(euclid[i]));
-			    System.out.println("3 "+i);
 			}
 
 			document.add(new Paragraph("Extended Euclidian"));

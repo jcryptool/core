@@ -94,7 +94,6 @@ public class CommandState extends AbstractSourceProvider {
 
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     public Map getCurrentState() {
 
