@@ -14,10 +14,6 @@
 		<unit id="org.eclipse.zest.sdk.feature.group" version="1.7.0.201606061308"/>
 		<repository location="http://download.eclipse.org/releases/2018-09"/>
 	</location>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
-        <unit id="org.eclipse.nebula.cwt.feature.feature.group" version="1.1.0.201804281520"/>
-        <repository location="http://download.eclipse.org/nebula/releases/2.0.1"/>
-    </location>
 </locations>
 <launcherArgs>
 <vmArgs>-Xms40m -Xmx512m</vmArgs>
