@@ -24,23 +24,23 @@
       <!-- Commands für das neue Editor Dropdown in der coolbar -->
       <command
             id="org.jcryptool.core.command.editorsPulldown"
-            name="neuen Editor öffnen">
+            name="%command.tooltip.0">
       </command>  
       <command
       		id="org.jcryptool.core.command.openEmptyTextEditor"
-      		name="leere Datei im Texteditor">
+      		name="%command.emptyTextFile">
       </command>        
       <command
       		id="org.jcryptool.core.command.openEmptyHexEditor"
-      		name="leere Datei im Hexeditor">
+      		name="%command.emptyHexFile">
       </command>  
       <command
       		id="org.jcryptool.core.command.openSampleTextEditor"
-      		name="Beispieldatei im Texteditor">
+      		name="%command.newTextSample">
       </command>        
       <command
       		id="org.jcryptool.core.command.openSampleHexEditor"
-      		name="Beispieldatei im Hexeditor">
+      		name="%command.newHexSample">
       </command>  
             
       <command
@@ -83,25 +83,6 @@
       
    </extension>
 
-<!--   <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            id="org.jcryptool.core.editorsActionSet"
-            label="%editors.actionSet.label"
-            visible="true">
-         <action
-               class="org.jcryptool.core.actions.ShowEditorsPulldownMenuAction"
-               icon="icons/editors.gif"
-               id="EditorsToolbar.EditorsPulldownAction"
-               label="%editors.action.label"
-               style="pulldown"
-               toolbarPath="org.jcryptool.core.toolbar/fileStart"
-               tooltip="%editors.action.tooltip">
-         </action>
-      </actionSet>
-   </extension>    -->
-
-
    <extension point="org.eclipse.ui.menus">
       <!-- Hilfe -->
       <menuContribution locationURI="toolbar:org.jcryptool.core.toolbar?after=additions">
@@ -121,7 +102,7 @@
              commandId="org.jcryptool.core.command.editorsPulldown" 
              icon="icons/editors.gif" 
              style="pulldown" 
-             tooltip="neuen Editor öffnen">
+             tooltip="%command.tooltip.0">
          </command>
       </menuContribution>
       <menuContribution
@@ -130,32 +111,34 @@
       	<command
       		commandId="org.jcryptool.core.command.openEmptyTextEditor"
       		icon="icons/editors.gif"
+      		tooltip="%command.tooltip.emptyTextFile"
       		style="push">
         </command>
       	<command
       		commandId="org.jcryptool.core.command.openEmptyHexEditor"
       		icon="icons/hex.png"
+      		tooltip="%command.tooltip.emptyHexFile"
       		style="push">
         </command>
-        <separator name="emptyEditors" visible="true">
+        <separator name="separator" visible="true">
         </separator>
         <command
       		commandId="org.jcryptool.core.command.openSampleTextEditor"
       		icon="icons/editors.gif"
+      		tooltip="%command.tooltip.newTextSample"
       		style="push">
         </command>
         <command
       		commandId="org.jcryptool.core.command.openSampleHexEditor"
       		icon="icons/hex.png"
+      		tooltip="%command-tooltip.newHexSample"
       		style="push">
         </command>
 
        </menuContribution>	
       	
       
-      
-      
-      
+
       <!-- Hilfe -->
       <menuContribution allPopups="false" locationURI="menu:org.eclipse.ui.main.menu">
          <menu id="org.jcryptool.menu.help" label="%menu.label">
