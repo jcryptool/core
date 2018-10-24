@@ -73,7 +73,7 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
         nl = new String[ext.length];
         nlText = new String[ext.length];
         for (int i = 0; i < ext.length; i++) {
-            IConfigurationElement element = (IConfigurationElement) ext[i].getConfigurationElements()[0];
+            IConfigurationElement element = ext[i].getConfigurationElements()[0];
             nl[i] = element.getAttribute("languageCode").substring(0, 2); //$NON-NLS-1$
             nlText[i] = element.getAttribute("languageDescription"); //$NON-NLS-1$
         }
@@ -154,7 +154,8 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
         super.performDefaults();
     }
 
-    public void init(IWorkbench workbench) {
+    @Override
+	public void init(IWorkbench workbench) {
     }
 
     /**

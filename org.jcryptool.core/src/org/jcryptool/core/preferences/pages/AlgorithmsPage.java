@@ -41,6 +41,7 @@ public class AlgorithmsPage extends FieldEditorPreferencePage implements IWorkbe
     protected void createFieldEditors() {
     }
 
-    public void init(IWorkbench workbench) {
+    @Override
+	public void init(IWorkbench workbench) {
     }
 }

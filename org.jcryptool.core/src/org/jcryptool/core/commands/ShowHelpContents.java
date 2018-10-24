@@ -40,7 +40,8 @@ public class ShowHelpContents extends AbstractHandler {
     @Override
     public Object execute(final ExecutionEvent event) throws ExecutionException {
         BusyIndicator.showWhile(null, new Runnable() {
-            public void run() {
+            @Override
+			public void run() {
                 IToc[] tocs = HelpSystem.getTocs();
                 boolean foundTopic = false;
                 String contextId = findContextId();

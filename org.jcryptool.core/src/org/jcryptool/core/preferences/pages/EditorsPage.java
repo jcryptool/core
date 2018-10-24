@@ -42,6 +42,7 @@ public class EditorsPage extends FieldEditorPreferencePage implements IWorkbench
 
     }
 
-    public void init(IWorkbench workbench) {
+    @Override
+	public void init(IWorkbench workbench) {
     }
 }

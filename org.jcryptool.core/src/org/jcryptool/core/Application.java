@@ -29,7 +29,8 @@ public class Application implements IApplication {
      * (non-Javadoc)
      * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.IApplicationContext)
      */
-    public Object start(IApplicationContext context) throws Exception {
+    @Override
+	public Object start(IApplicationContext context) throws Exception {
         try {
             if (!Locale.GERMAN.equals(Locale.getDefault()) && !Locale.ENGLISH.equals(Locale.getDefault())) {
                 System.setProperty("osgi.nl", "en"); // fixes Platform.getNL()
@@ -57,14 +58,16 @@ public class Application implements IApplication {
      * (non-Javadoc)
      * @see org.eclipse.equinox.app.IApplication#stop()
      */
-    public void stop() {
+    @Override
+	public void stop() {
         final IWorkbench workbench = PlatformUI.getWorkbench();
         if (workbench == null) {
             return;
         }
         final Display display = workbench.getDisplay();
         display.syncExec(new Runnable() {
-            public void run() {
+            @Override
+			public void run() {
                 if (!display.isDisposed()) {
                     workbench.close();
                 }

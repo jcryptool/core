@@ -42,11 +42,13 @@ public class ShowPluginViewHandler extends AbstractHandler {
         this.name = name;
     }
 
-    public boolean isEnabled() {
+    @Override
+	public boolean isEnabled() {
         return true;
     }
 
-    public Object execute(ExecutionEvent event) {
+    @Override
+	public Object execute(ExecutionEvent event) {
         try {
             IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
             page.showView(viewId);

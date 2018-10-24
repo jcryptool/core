@@ -53,7 +53,8 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
      * @return the id of the perspective for the initial window, or <code>null</code> if no initial perspective should
      *         be shown
      */
-    public String getInitialWindowPerspectiveId() {
+    @Override
+	public String getInitialWindowPerspectiveId() {
         return Perspective.PERSPECTIVE_ID;
     }
 
@@ -64,7 +65,8 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
      * Specifically a part listener is added to the workbench page. The algorithm actions will be enabled if at least
      * the text or hex editor is active. Otherwise the will be disabled.
      */
-    public void postStartup() {
+    @Override
+	public void postStartup() {
         super.postStartup();
 
         if (OperationsPlugin.getDefault().getAlgorithmsManager() != null) {
@@ -72,21 +74,26 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
                     .getActivePage();
 
             activePage.addPartListener(new IPartListener() {
-                public void partActivated(IWorkbenchPart part) {
+                @Override
+				public void partActivated(IWorkbenchPart part) {
                     setAlgorithmActionStatus(part);
                 }
 
-                public void partBroughtToTop(IWorkbenchPart part) {
+                @Override
+				public void partBroughtToTop(IWorkbenchPart part) {
                 }
 
-                public void partClosed(IWorkbenchPart part) {
+                @Override
+				public void partClosed(IWorkbenchPart part) {
                 }
 
-                public void partDeactivated(IWorkbenchPart part) {
+                @Override
+				public void partDeactivated(IWorkbenchPart part) {
                     setAlgorithmActionStatus(part);
                 }
 
-                public void partOpened(IWorkbenchPart part) {
+                @Override
+				public void partOpened(IWorkbenchPart part) {
                 }
             });
 
@@ -99,7 +106,8 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
     /**
      * @see org.eclipse.ui.application.WorkbenchAdvisor#preShutdown()
      */
-    public boolean preShutdown() {
+    @Override
+	public boolean preShutdown() {
         String unsavedRegex = Messages.ApplicationWorkbenchAdvisor_4 + "\\d\\d\\d.txt"; //$NON-NLS-1$
         String name;
         IEditorReference[] editorReferences = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getEditorReferences();

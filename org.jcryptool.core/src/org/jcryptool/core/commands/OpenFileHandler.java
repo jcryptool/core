@@ -25,7 +25,8 @@ import org.jcryptool.core.util.directories.DirectoryService;
 
 public class OpenFileHandler extends AbstractHandler {
 
-    public void dispose() {
+    @Override
+	public void dispose() {
     }
 
     public void init(final IWorkbenchWindow window) {

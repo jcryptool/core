@@ -41,6 +41,7 @@ public class VisualsPage extends FieldEditorPreferencePage implements IWorkbench
     protected void createFieldEditors() {
     }
 
-    public void init(IWorkbench workbench) {
+    @Override
+	public void init(IWorkbench workbench) {
     }
 }

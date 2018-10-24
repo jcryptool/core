@@ -41,6 +41,7 @@ public class GamesPage extends FieldEditorPreferencePage implements IWorkbenchPr
     protected void createFieldEditors() {
     }
 
-    public void init(IWorkbench workbench) {
+    @Override
+	public void init(IWorkbench workbench) {
     }
 }
