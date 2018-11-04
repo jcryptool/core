@@ -134,8 +134,8 @@ public class VerifiableSecretSharingComposite extends Composite {
     private GridLayout gl_nextStep;
     private Composite nextStepParametersComposite;
     private Button reconstructButton;
-    private Label descriptionLeft;
-    private Label descriptionRight;
+    private Text descriptionLeft;
+    private Text descriptionRight;
     private Label primeFactorLabel;
     private Text primeFactorText;
 
@@ -264,9 +264,14 @@ public class VerifiableSecretSharingComposite extends Composite {
                 BigInteger secret;
                 int bitlength = 0;
                 if (!text.isEmpty()) {
-                    if (Integer.parseInt(text) > 2000000) {
-                        secretText.setText("2000000"); //$NON-NLS-1$
-                        text = "2000000"; //$NON-NLS-1$
+                	int maxSize = (int) Math.pow(10, 9);
+//                    if (Integer.parseInt(text) > 2000000) {
+//                        secretText.setText("2000000"); //$NON-NLS-1$
+//                        text = "2000000"; //$NON-NLS-1$
+                	if (Integer.parseInt(text) > maxSize) {
+                		secretText.setText(Integer.toString(maxSize));
+                		text = Integer.toString(maxSize);
+                        MessageDialog.openError(getShell(), Messages.VerifiableSecretSharingComposite_error, Messages.VerifiableSecretSharingComposite_descrption_secret_limit);
                     } else if (Integer.parseInt(text) == 0) {
                         Random randomGenerator = new Random();
                         String newSecret = String.valueOf(randomGenerator.nextInt(2000000));
@@ -1170,12 +1175,16 @@ public class VerifiableSecretSharingComposite extends Composite {
         for (Control control : descriptionGroup.getChildren()) {
             control.dispose();
         }
-        descriptionLeft = new Label(descriptionGroup, SWT.WRAP);
+        descriptionLeft = new Text(descriptionGroup, SWT.WRAP);
+        descriptionLeft.setEditable(false);
+        //descriptionLeft = new Text(descriptionGroup, SWT.WRAP);
         GridData gd_descriptionLeft = new GridData(SWT.FILL, SWT.FILL, true, false);
         gd_descriptionLeft.widthHint = 400;
         descriptionLeft.setLayoutData(gd_descriptionLeft);
         descriptionLeft.setBackground(WHITE);
-        descriptionRight = new Label(descriptionGroup, SWT.WRAP);
+        descriptionRight = new Text(descriptionGroup, SWT.WRAP);
+        descriptionRight.setEditable(false);
+        //descriptionRight = new Text(descriptionGroup, SWT.WRAP);
         GridData gd_descriptionRight = new GridData(SWT.FILL, SWT.FILL, true, false);
         gd_descriptionRight.widthHint = 400;
         descriptionRight.setLayoutData(gd_descriptionRight);
