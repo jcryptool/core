@@ -179,7 +179,7 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-jarsigner-plugin</artifactId>
-						<version>1.4</version>
+						<version>3.0.0</version>
 						<executions>
 							<execution>
 								<id>sign</id>
