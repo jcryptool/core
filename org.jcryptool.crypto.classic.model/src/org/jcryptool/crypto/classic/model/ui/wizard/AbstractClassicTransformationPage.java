@@ -67,56 +67,47 @@ public class AbstractClassicTransformationPage extends WizardPage {
 
 	@Override
 	public void createControl(Composite parent) {
-		Composite pageComposite = new Composite(parent, SWT.NULL);
-			GridData pageCompositeLayoutData = new GridData();
-			GridLayout pageCompositeLayout = new GridLayout();
-			pageCompositeLayoutData.grabExcessHorizontalSpace = true; pageCompositeLayoutData.grabExcessVerticalSpace = true;
-			pageCompositeLayoutData.horizontalAlignment = SWT.FILL; pageCompositeLayoutData.verticalAlignment = SWT.FILL;
-			pageComposite.setLayout(pageCompositeLayout);
-			pageComposite.setLayoutData(pageCompositeLayoutData);
+		Composite pageComposite = new Composite(parent, SWT.NONE);
+		pageComposite.setLayout(new GridLayout());
+		pageComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-			transformComposite = new ModifySelectionComposite(pageComposite, SWT.NONE, new TransformData(), Mode.SINGLE_COMBO_BOX_WITH_CUSTOM_ALPHABETS);
-				GridData composite1LData = new GridData();
-				composite1LData.grabExcessHorizontalSpace = true;
-				composite1LData.horizontalAlignment = GridData.FILL;
-				composite1LData.verticalAlignment = GridData.FILL;
-				GridLayout composite1Layout1 = new GridLayout();
-				composite1Layout1.makeColumnsEqualWidth = true;
-				composite1Layout1.marginWidth = 0;
-				composite1Layout1.marginHeight = 0;
-				transformComposite.setLayout(composite1Layout1);
-				GridLayout composite1Layout = new GridLayout();
-				composite1Layout.makeColumnsEqualWidth = true;
-				composite1Layout.marginWidth = 0;
-				transformComposite.setLayoutData(composite1LData);
+		transformComposite = new ModifySelectionComposite(pageComposite, SWT.NONE, new TransformData(),
+				Mode.SINGLE_COMBO_BOX_WITH_CUSTOM_ALPHABETS);
+		transformComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		
+		GridLayout composite1Layout1 = new GridLayout();
+		composite1Layout1.makeColumnsEqualWidth = true;
+		composite1Layout1.marginWidth = 0;
+		composite1Layout1.marginHeight = 0;
+		transformComposite.setLayout(composite1Layout1);
+		
 
-				if(firstTransformData != null) transformComposite.setTransformData(firstTransformData);
-				didCreate=true;
+		if (firstTransformData != null)
+			transformComposite.setTransformData(firstTransformData);
+		didCreate = true;
 
-			/**infoLabel = new Label(pageComposite, SWT.NONE);
-				GridData label2LData = new GridData();
-				label2LData.grabExcessHorizontalSpace = false;
-				label2LData.grabExcessVerticalSpace = false;
-				label2LData.horizontalAlignment = GridData.FILL;
-				label2LData.verticalAlignment = GridData.END;
-				label2LData.verticalIndent = 10;
-				infoLabel.setLayoutData(label2LData);
-				infoLabel.setText("You can change the standard transformations in: Cryptography->Alphabets->Default transformations");
-					"Kryptographie->Alphabete->Standard-Transformationen"
-					"Cryptography->Alphabets->Default transformations"
-				**/
+		/**
+		 * infoLabel = new Label(pageComposite, SWT.NONE); GridData label2LData = new
+		 * GridData(); label2LData.grabExcessHorizontalSpace = false;
+		 * label2LData.grabExcessVerticalSpace = false; label2LData.horizontalAlignment
+		 * = GridData.FILL; label2LData.verticalAlignment = GridData.END;
+		 * label2LData.verticalIndent = 10; infoLabel.setLayoutData(label2LData);
+		 * infoLabel.setText("You can change the standard transformations in:
+		 * Cryptography->Alphabets->Default transformations");
+		 * "Kryptographie->Alphabete->Standard-Transformationen"
+		 * "Cryptography->Alphabets->Default transformations"
+		 **/
 
 		setControl(pageComposite);
 		setPageComplete(true);
-		
+
 		TransformData myTransformation;
 		AbstractAlphabet alpha = ((AbstractClassicWizard) getWizard()).page.getSelectedAlphabet();
-        if (alpha == null) {
-        	myTransformation = new TransformData();
-        } else {
-            myTransformation = AbstractClassicTransformationPage.getTransformFromName(alpha);
-        }
-        
+		if (alpha == null) {
+			myTransformation = new TransformData();
+		} else {
+			myTransformation = AbstractClassicTransformationPage.getTransformFromName(alpha);
+		}
 
 		setHelpAvailable();
 	}
