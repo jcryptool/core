@@ -36,17 +36,22 @@ public class AdfgvxCmd extends ClassicAlgorithmCmd {
 	char[] substitutionKeyForDataobject = null;
 	char[] transpositionKeyForDataobject = null;
 	
-	@SuppressWarnings("static-access")
 	@Override
 	protected void createKeyOptions(Options options) {
-		options.addOption(OptionBuilder.withLongOpt("keySubstitution").hasArg(true) //$NON-NLS-1$
-				.withArgName("SUBSTITUTION_KEY").isRequired().withDescription( //$NON-NLS-1$
-						Messages.AdfgvxCmd_substKeyDescription).create(
-						"kS")); //$NON-NLS-1$
-		options.addOption(OptionBuilder.withLongOpt("keyTransposition").hasArg(true) //$NON-NLS-1$
-				.withArgName("TRANSPOSITION_KEY").isRequired().withDescription( //$NON-NLS-1$
-						Messages.AdfgvxCmd_transpKeyDescription).create(
-						"kT")); //$NON-NLS-1$
+		OptionBuilder.withLongOpt("keySubstitution");
+		OptionBuilder.hasArg(true) //$NON-NLS-1$
+;
+		OptionBuilder.withArgName("SUBSTITUTION_KEY");
+		OptionBuilder.isRequired();
+		OptionBuilder.withDescription(Messages.AdfgvxCmd_substKeyDescription);
+		options.addOption(OptionBuilder.create("kS")); //$NON-NLS-1$
+		OptionBuilder.withLongOpt("keyTransposition");
+		OptionBuilder.hasArg(true) //$NON-NLS-1$
+;
+		OptionBuilder.withArgName("TRANSPOSITION_KEY");
+		OptionBuilder.isRequired();
+		OptionBuilder.withDescription(Messages.AdfgvxCmd_transpKeyDescription);
+		options.addOption(OptionBuilder.create("kT")); //$NON-NLS-1$
 	}
 
 
