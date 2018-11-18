@@ -17,7 +17,7 @@ public class MenuBarActivation {
     }
 
     public static void enableNewGameState(boolean isEnabled) {
-        ISourceProviderService service = (ISourceProviderService) PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+        ISourceProviderService service = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                 .getService(ISourceProviderService.class);
         if (service != null) {
             NewGameStateSourceProvider provider = (NewGameStateSourceProvider) service
@@ -29,7 +29,7 @@ public class MenuBarActivation {
     }
 
     public static void enableSaveGameState(boolean isEnabled) {
-        ISourceProviderService service = (ISourceProviderService) PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+        ISourceProviderService service = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                 .getService(ISourceProviderService.class);
         if (service != null) {
             SaveStateSourceProvider provider = (SaveStateSourceProvider) service
@@ -41,7 +41,7 @@ public class MenuBarActivation {
     }
 
     public static void enableUndo(boolean isEnabled) {
-        ISourceProviderService service = (ISourceProviderService) PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+        ISourceProviderService service = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                 .getService(ISourceProviderService.class);
         if (service != null) {
             UndoSourceProvider provider = (UndoSourceProvider) service
@@ -53,7 +53,7 @@ public class MenuBarActivation {
     }
 
     public static void enableRedo(boolean isEnabled) {
-        ISourceProviderService service = (ISourceProviderService) PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+        ISourceProviderService service = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                 .getService(ISourceProviderService.class);
         if (service != null) {
             RedoSourceProvider provider = (RedoSourceProvider) service
