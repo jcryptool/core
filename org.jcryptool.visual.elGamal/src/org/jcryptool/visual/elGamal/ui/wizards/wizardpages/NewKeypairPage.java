@@ -64,7 +64,7 @@ public class NewKeypairPage extends WizardPage {
     private Combo gfield;
 
     /** field for entering the private b */
-    private Text bfield;
+    private Combo bfield;
 
     /** field for entering the public B */
     private Text btext;
@@ -244,8 +244,11 @@ public class NewKeypairPage extends WizardPage {
         
         new Label(composite, SWT.NONE).setText("b = "); //$NON-NLS-1$
         
-        bfield = new Text(composite, SWT.SINGLE | SWT.BORDER);
+        bfield = new Combo(composite, SWT.SINGLE | SWT.BORDER);
         bfield.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        for (int i = 2; i < 100; i++) {
+			bfield.add(Integer.toString(i));
+		}
         bfield.addVerifyListener(VL);
         bfield.addModifyListener(listenerCalculateB);
         
