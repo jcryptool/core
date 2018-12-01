@@ -22,7 +22,8 @@ import org.jcryptool.games.divide.DividePlugin;
  * @version 0.9.8
  */
 public class HelpHandler extends AbstractHandler {
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    @Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
         PlatformUI.getWorkbench().getHelpSystem().displayHelp(DividePlugin.PLUGIN_ID + ".helpView"); //$NON-NLS-1$
 
         return null;
