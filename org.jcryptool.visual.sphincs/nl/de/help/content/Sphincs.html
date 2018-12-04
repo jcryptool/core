@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+  
+<head>	  
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title>Sphincs-Verfahren</title>
+      
+      <style>
+      
+     
+      	#explanation {
+      					float: left;
+      					margin-left: 30px;
+      					margin-right: 30px;
+      					padding-bottom: 5px;
+      					
+      				 	
+      				 
+      				 }
+      			  
+      
+      </style>
+</head>
+
+<body>
+	<h1>
+		Sphincs
+	</h1>
+	
+	<p>In diesem Plugin wird das Signaturverfahren Sphincs erläutert.</p>  
+	<p>Sphincs generiert einen Baum aus mehreren Strukturen, die wiederum wie ein Baum aufgebaut sind.</p>
+	<p>Diese gesamten Baum, der aus mehreren Strukturen besteht, bezeichnet man als Hypertree.</p>
+	
+	<p>Es sind folgende Punkte im Plugin enthalten: </p>
+	
+	<ul>
+		<li><a href=#structure>Sphincs-Struktur</a></li>
+		<li><a href=#keygen>Schl&uuml;sselgenerierung</a></li>
+		<li><a href=#signature>Signatur</a></li>
+		<li><a href=#verifikation">Verifizierung</a></li>
+	</ul>
+
+	<p>Die folgenden Abschnitte werden diese 4 Operationen, sowie ihre Funktionsweise im Plug-in genauer erl&auml;utern.</p>
+	<br />
+	<h2 id="structure">Sphincs-Struktur</h2>
+	
+	<p>Sphincs basiert auf mehreren Ebeneen mit mehreren Baumstrukturen, die wiederum Baumstrukturen enthalten. Also ein Baum in einem Baum, das nennt man einen HyperTree.</p>
+	<p>In Sphincs gibt es zwei Arten von  Baumstrukturen, einmal WOTS+-Strukturen und einmal Horst-Strukturen. WOTS+ ist ein Einmal Signaturverfahren, das, in Sphincs, zum Signieren darunterliegender Strukturen verwendet wird. HORST ist ein Mehrfachsignaturverfahren, das auf der untersten Ebene zum Signieren von Nachrichten verwendet wird.</p>
+	<p>Eine Sphincs-Struktur hat eine H&oumlhe h . Jede Struktur, sowohl WOTS+ als auch HORST bestehen wiederum aus einem Baum mit der H&ouml;he (h/d).</p> 
+	<p>Jeder Baum beinhaltet Schl&uuml;ssel, die an einer Adresse A liegen. Adressen beschreiben die Position der Schl&uuml;ssel innerhalb der Sphincs-Struktur.</p>
+	<br />
+	<h3>Visualisierung der Sphincs-Struktur</h3>
+	<img src=images/explanation.png alt="Legende" id=explanation />
+	<br />
+	<img src=images/structure.png alt="Sphincs-Struktur" id=struktur />
+	<p><b> Obenstehendes Bild zeigt einen HyperTree</b></p>
+	<p>Dies ist im Sphincs-&Uuml;bersicht Reiter zu sehen.</p>
+	<br />
+	<p>Eine WOTS+-Struktur besteht aus mehreren WOTS+-Public Key Knoten die wiederum ein Schl&uuml;sselpaar ergeben, wie in der folgenden Grafik dargestellt.</p>
+	<br />
+	<img src=images/tree.jpg alt="WOTS+-Baum" id=baum />
+	<p>Jede Struktur enthält 2^(h/d) Knoten</p> 
+	<br />
+	<h2 id="keygen">Schl&uuml;sselgenerierung</h2>
+	
+	<p>Bei der Generierung der Schl&uuml;ssel werden zuerst zwei Bitfolgen SK1 und SK2 generiert. SK1 dient dabei als Seed für die pseudozuf&auml;llige Schl&uuml;sselgenerierung.</p>
+	<p>Ist die Operation der Schl&uuml;sselerzeugung abgeschlossen, hat man das WOTS+-Schl&uuml;sselpaar der Struktur auf der obersten Ebene der gesamten Sphincs-Struktur.</p>
+	<p>SK2 wird verwendet um beim Signieren die Nachricht und somit auch den Hash der Nachricht zu randomisieren.</p>
+	<p>Au&szlig;erdem werden Bitmasken Q, die ebenfalls im Public Key enthalten sind, für jede WOTS+-Struktur und jede HORST-Struktur generiert. Die Schl&uuml;sselerzeugung des Sphincs-Verfahren hat unter anderem zum Ziel, den Wurzelknoten der gesamten Sphincs-Struktur zu berechnen, da dieser als Public Key verwendet wird.</p>
+	<p>Der Seed wird pseudozuf&auml;llig generiert. Mit diesem Seed und Bitmasken wird dann der WOTS+-Public Key der letzten WOTS+-Struktur berechnet.</p> 
+	<p>Dieser Public-Key der WOTS+-Struktur wird xor Bitmasken genommen und ergibt PK1 der als Hash im Public Key ist.</p>
+	<p>Der Wurzelknoten PK1 dieses Hashbaums ist ein Teil des Sphincs-Public Keys.</p>
+	<p>Sphincs Private Key = {SK1, SK2, Q}; Sphincs Public Key = {PK1, Q}</p>
+	
+	<br />
+	<h2 id="signature">Signieren</h2>
+	
+	<p>Signiert wird eine Nachricht M mit einem Sphincs Private Key {SK1, SK2, Q}.</p>
+	<p>Zunächst wird ein Hash D &uuml;ber M und Zufallswerte gebildet. Dieser Hash D wird dann signiert.</p>
+	<p>Zunächst wird also ein pseudozuf&auml;lliger Bitstrom R bestehend aus zwei Teilwerten R1 und R2, gebildet. R2 wird geteilt um den Index des zu verwendenden Schlüsselpaares anzugeben.</p>
+	<p>Ein Teil des Indexes bestimmt die HORST-Struktur, der andere Teil bestimmt welcher konkreter Schl&uuml;ssel innerhalb der HORST-Struktur verwendet werden soll um zu signieren.</p>
+	<p>Die HORST-Signatur wird aus einem Seed, dem Hash D und Bitmasken berechnet.</p>
+	<p>Die Sphincs-Signatur beinhaltet neben der HORST-Signatur, einem Index i, und Zufallsbits R1 auch noch eine WOTS+-Signatur und einen Authentifizierungspfad pro Ebene.</p>
+	<p>Der Index wir jedoch immer deterministisch ausgewählt, da bei einer Struktur dieser Größe kein zuverlässiger Zufall existiert, der die Indizes bestimmen k&ouml;nnte
+	<p>Die Sphincs-Signatur besteht aus (i; R1; &sigma;H; &sigma;W_0; Auth_A0;...; &sigma;W_d−1; Auth_A_d−1) (&sigma...Signatur, &sigma;H...HORST-Signatur).</p>
+	<br />
+	<img src=images/signierung_final.jpg alt=Signatur />
+	  
+	
+	<br />
+	<h2 id="verifikation">Verifikation</h2>
+	
+	<p>Um verifizieren zu können, werden ein Sphincs-Public Key und eine  vollst&auml;ndige Sphincs-Signatur ben&ouml;tigt.</p> 
+	<p>Zun&auml;chst wird ein Hash D &uuml;ber die Nachricht und dem Zufallswert R1, welcher in der Signatur enthalten ist, gebildet.</p>
+	<p>Der Hash D und die im Public Key enthaltenen Bitmasken Q werden dazu verwendet um, mithilfe der HORST Verifikationsfunktion(D,&sigma;_HORST, Q_HORST), den HORST Public Key zu berechnen. Wenn die Verifizierung der HORST-Signatur, die in der Sphincs-Signatur enthalten ist, fehlschl&auml;gt, dann ist auch die Sphincs-Signatur ung&uuml;ltig.</p>
+	<p>Mit der, in der Sphincs-Signatur enthaltenen WOTS+-Signatur wird der Public Key der ersten WOTS+-Struktur berechnet. Danach wird das Blatt der Struktur berechnet.</p>
+	<p>Mit diesem Blatt wird der Root Knoten der Struktur berechnet. Dieser Vorgang wird bis zur untersten Ebene der Sphincs-Struktur wiederholt.</p> 
+	<p>Jedoch mit zwei Unterschieden:<p>
+	</p>
+	<ol>
+		<li>Der Root-Knoten der vorigen Struktur wird nun benötigt um den Public-Key der dar&uuml;berliegenden Struktur zu berechnen.</li>
+		<li>Die Blätter der Strukturen werden berechnet in dem die letzten j*(h/d) Bits von i abgeschnitten werden und davon die letzten (h/d) Bits verwendet werden.</p>
+	</ol>
+	<p>Diese zwei Besonderheiten werden aber erst in der zweiten Ebene der Sphincs-Struktur relevant.</p>
+	<p>Nachdem der Authentifizierungspfad durchgerechnet wurde, ist das Resultat der Root-Knoten der Ebene d-1. Diesen vergleicht man dann mit dem Sphincs-Public Key.</p>
+	<p>Sind die beiden Keys identisch, gelingt die Verifikation, sind die beiden Keys jedoch nicht identisch, so schl&auml;gt die Verifikation fehl.</p>
+	
+	<br />
+	
+	
+	 <h1>Bedienungsanleitung zu dieser Visualisierung</h1>
+	 
+	 <p>In dieser Visualisierung wird das Signaturverfahren Sphincs erläutert. Au&szlig;erdem können die Operationen Schl&uuml;sselgenerierung, Signieren sowie Verifizieren durchgef&uuml;hrt werden.</p>
+	 
+	 <h2>Reiter 1: Sphincs-Übersicht</h2>
+	 <p>Der erste Reiter zeigt einen Auschnitt eines HyperTrees und gibt Informationen &uuml;ber die Struktur in Sphincs. Weiters k&ouml;nnen die Daten für jedes einzelne Blatt eingesehen werden, indem man auf das Blatt klickt.</p>
+	 <p>Die einzelnen Ebenen der Struktur sind farblich gekennzeichnet so, dass man sieht, welches Blatt, welcher Ebene angeh&ouml;hrt.</p>
+	 
+	 <h2>Reiter 2: Schlüsselerzeugung</h2>
+	 <p>Der zweite Reiter zeigt die Bestandteile der verwendeten Schlüssel: den Seed, die verwendeten Bitmasken und gibt die Schl&uuml;ssel aus.</p>
+	 <p>Desweiteren werden noch Informationen zur Schl&uuml;ssell&auml;nge ausgegeben.</p>
+	 <p>Reiter 2 und 3 funktionieren nur, wenn in Reiter 1 bereits Schlüssel erzeugt worden sind.</p>
+	 <p>Außerdem werden die Bitmasken eingefärbt. Da der Public Key standardisiert ausgegeben wird stimmen der farblich markierte Wert nicht mit dem im Feld "Bitmasken" überein. Semantisch sind sie aber dasselbe.</p> 
+	 
+	 <h2> Reiter 3: Signatur und Verifikation</h2>
+	 <p>Der dritte Reiter bietet die M&ouml;glichkeit eine Nachricht zu signieren und zu verifizieren und die Bestandteile der Signatur hevorzuheben.</p>
+	 <p>Mit den folgenden drei Buttons können verschiedene Teile der Signatur hervorgehoben werden:</p>
+	 <p>Der Button "Authentifizierungspfad" färbt den verwendenten Weg durch den Baum ein.</p>
+	 <p>Der Authentifizierungspfad gibt an, welche Strukturen für die Signatur verwendet wurden.</p>
+	 <p>Der Button "Aktuelles Blatt" hebt das, in der Signatur, enthaltene HORST-Blatt hervor.</p>     
+	 <p>Der "Signatur"-Button zeigt die HORST-Signatur im Signaturfeld.</p>
+	 <br />
+	 
+	 <h2>Weitere Informationen</h2>
+	
+	<p>F&uuml;r weitere Informationen besuchen Sie die offizielle Website des <a href="https://Sphincs.cr.yp.to/">Sphincs-Verfahrens</a>.</p>
+	<p>Auf der Website finden Sie diverse Papers und Pr&auml;sentationen zum Thema Sphincs. Eine Referenzimplementierung steht ebenfalls zum Download zur Verfügung.</p>
+	<p>Die Sphincs-Struktur basiert auf einem MerkleTree. Weitere Plugins, in JCrypTool, die quantensicher sind:</p>
+	
+	<ul>	
+		<li><a href="PLUGINS_ROOT/org.jcryptool.visual.merkletree/$nl$/help/content/index.html">MerkleTree</a></li>
+		<li><a href="PLUGINS_ROOT/org.jcryptool.visual.merkleHellman/$nl$/help/content/index.html">Merkle-Hellman</a></li>
+		<li><a href="PLUGINS_ROOT/org.jcryptool.visual.wots/$nl$/help/content/index.html">WOTS</a></li>
+		
+	 </body>
