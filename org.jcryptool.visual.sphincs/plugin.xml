@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	<extension point="org.eclipse.ui.views">
+		<view
+			category="org.jcryptool.visual"
+			class="org.jcryptool.visual.sphincs.SphincsView"
+			id="org.jcryptool.visual.sphincs.view"
+			name="%visual.name"
+			restorable="true">
+		</view>
+	</extension>
+	<extension point="org.jcryptool.core.operations.visuals">
+		<Visual
+			contextHelpId="org.jcryptool.visual.sphincs.SphincsView"
+			name="%visual.name"
+			viewId="org.jcryptool.visual.sphincs.view">
+		</Visual>
+	</extension>
+	<extension point="org.eclipse.help.toc">
+		<toc
+			file="$nl$/toc.xml"
+			primary="false">
+		</toc>
+	</extension>
+	<extension point="org.eclipse.help.contexts">
+		<contexts file="$nl$/contexts.xml"></contexts>
+	</extension>
+	<extension point="org.eclipse.ui.handlers">
+		<handler
+			class="org.jcryptool.visual.sphincs.handlers.RestartHandler"
+			commandId="org.jcryptool.visual.sphincs.restartCommand">
+		</handler>
+	</extension>
+	<extension point="org.eclipse.ui.commands">
+		<command
+			id="org.jcryptool.visual.sphincs.restartCommand"
+			name="%restart.command.name">
+		</command>
+	</extension>
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution
+			locationURI="toolbar:org.jcryptool.visual.sphincs.view">
+			<command
+				commandId="org.jcryptool.visual.sphincs.restartCommand"
+				icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
+				style="push">
+			</command>
+		</menuContribution>
+	</extension>
+</plugin>
