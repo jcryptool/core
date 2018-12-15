@@ -1,41 +1,36 @@
-+-------+-------+-------+
-| a b b | c c c | d d e |
-| a f f | c g c | h h e |
-| i i f | j g k | h l l |
-+-------+-------+-------+
-| i m j | j n k | k o l |
-| m m m | n n n | o o o |
-| p m q | q n r | r o s |
-+-------+-------+-------+
-| p p t | q u r | v s s |
-| w t t | x u x | v v y |
-| w z z | x x x | * * y |
-+-------+-------+-------+
-
-a = 11
-b = 11
-c = 26
-d = 15
-e =  4
-f = 18
-g = 14
-h = 15
-i = 13
-j =  9
-k =  9
-l = 20
-m = 29
-n = 21
-o = 18
-p = 18
-q = 11
-r = 20
-s = 21
-t = 12
-u = 11
-v = 13
-w =  8
-x = 28
-y = 12
-z = 11
-* =  7
+:;;<<<==>
+:??<@<AA>
+BB?C@DAEE
+BFCCGDDHE
+FFFGGGHHH
+IFJJGKKHL
+IIMJNKOLL
+PMMQNQOOR
+PSSQQQTTR
+:+11
+;+11
+<+26
+=+15
+>+4
+?+18
+@+14
+A+15
+B+13
+C+9
+D+9
+E+20
+F+29
+G+21
+H+18
+I+18
+J+11
+K+20
+L+21
+M+12
+N+11
+O+13
+P+8
+Q+28
+R+12
+S+11
+T+7
