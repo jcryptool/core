@@ -7,7 +7,7 @@ branches:
   - develop
 before_install:
 - git clone https://github.com/jcryptool/crypto.git ~/build/jcryptool/crypto
-- echo "MAVEN_OPTS=-Xmx2048m" > ~/.mavenrc
+- echo "MAVEN_OPTS=-Xmx3072m" > ~/.mavenrc
 install: true
 script:
 - mvn -f org.jcryptool.releng/pom.xml -DskipTests=true -Dbuild=weekly
