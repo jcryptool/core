@@ -68,7 +68,8 @@ public class SudokuComposite extends Composite {
 
 	public Display display;
 
-	public final int NORMAL = 1, KILLER = 2, HEX = 3;
+//	public final int NORMAL = 1, KILLER = 2, HEX = 3;
+	public final int KILLER = 2, HEX = 3;
 
 	public final int BOX_SIZE_NORMAL = 66, BOX_SIZE_KILLER = 66, BOX_SIZE_HEX = 54;
 	final private int ADDITION = 0, SUBTRACTION = 1, MULTIPLICATION = 2, DIVISION = 3;
@@ -97,7 +98,7 @@ public class SudokuComposite extends Composite {
 
 	Map<Text, UserInputPoint> inputBoxesKiller = new HashMap<Text, UserInputPoint>();
 
-	Map<Composite, Point> compositeBoxesNormal = new HashMap<Composite, Point>();
+//	Map<Composite, Point> compositeBoxesNormal = new HashMap<Composite, Point>();
 
 	Map<Composite, Point> compositeBoxesKiller = new HashMap<Composite, Point>();
 
@@ -111,7 +112,7 @@ public class SudokuComposite extends Composite {
 
 	public Composite[][] labelCellNormal, labelCellKiller, labelCellHex;
 
-	public Composite playField;
+//	public Composite playField;
 
 	public boolean showPossible, autoFillOne, solved, loading, solving, boxRule, killerFirstPossible, loadedKiller,
 			solveMode = false, backgroundSolved = false;
@@ -120,8 +121,10 @@ public class SudokuComposite extends Composite {
 
 	public Job backgroundSolve, dummyJob;
 
-	public Thread blinkerRed = null, blinkerWhite = null, makeWhite;
+//	public Thread blinkerRed = null, blinkerWhite = null, makeWhite;
+	public Thread blinkerRed = null, blinkerWhite = null;
 
+	
 	public Random rnd;
 
 	public Vector<Point> movesNormal, movesKiller, movesHex;
@@ -154,9 +157,9 @@ public class SudokuComposite extends Composite {
 			for (int j = 0; j < 16; j++) {
 				if (i < 9 && j < 9) {
 					switch (tabChoice) {
-					case NORMAL:
-						givenNormal[i][j] = 0;
-						break;
+//					case NORMAL:
+//						givenNormal[i][j] = 0;
+//						break;
 					case KILLER:
 						givenKiller[i][j] = 0;
 						break;
@@ -175,13 +178,13 @@ public class SudokuComposite extends Composite {
 			@Override
 			public void run() {
 				switch (tabChoice) {
-				case NORMAL:
-					for (int i = 0; i < 9; i++) {
-						for (int j = 0; j < 9; j++) {
-							labelCellNormal[i][j].layout();
-						}
-					}
-					break;
+//				case NORMAL:
+//					for (int i = 0; i < 9; i++) {
+//						for (int j = 0; j < 9; j++) {
+//							labelCellNormal[i][j].layout();
+//						}
+//					}
+//					break;
 				case KILLER:
 					for (int i = 0; i < 9; i++) {
 						for (int j = 0; j < 9; j++) {
@@ -220,12 +223,12 @@ public class SudokuComposite extends Composite {
 			@Override
 			public void run() {
 				switch (tabChoice) {
-				case NORMAL: {
-					if (solvePuzzleNormal()) {
-						refresh();
-					}
-				}
-					break;
+//				case NORMAL: {
+//					if (solvePuzzleNormal()) {
+//						refresh();
+//					}
+//				}
+//					break;
 				case KILLER: {
 					if (solvePuzzleKiller()) {
 						refresh();
@@ -255,18 +258,18 @@ public class SudokuComposite extends Composite {
 			@Override
 			public IStatus run(final IProgressMonitor monitor) {
 				switch (tabChoice) {
-				case NORMAL: {
-					tempBoard = new int[9][9];
-					for (int i = 0; i < 9; i++) {
-						for (int j = 0; j < 9; j++) {
-							tempBoard[i][j] = boardNormal[i][j];
-						}
-					}
-					if (solveNormal(tempBoard)) {
-						display.asyncExec(backgroundSolveComplete);
-					}
-				}
-					break;
+//				case NORMAL: {
+//					tempBoard = new int[9][9];
+//					for (int i = 0; i < 9; i++) {
+//						for (int j = 0; j < 9; j++) {
+//							tempBoard[i][j] = boardNormal[i][j];
+//						}
+//					}
+//					if (solveNormal(tempBoard)) {
+//						display.asyncExec(backgroundSolveComplete);
+//					}
+//				}
+//					break;
 				case KILLER: {
 					tempBoard = new int[9][9];
 					tempPossibleKiller = new ArrayList<List<List<Integer>>>();
@@ -332,9 +335,9 @@ public class SudokuComposite extends Composite {
 			@Override
 			public void run() {
 				switch (tabChoice) {
-				case NORMAL:
-					labelCellNormal[x][y].setBackground(RED);
-					break;
+//				case NORMAL:
+//					labelCellNormal[x][y].setBackground(RED);
+//					break;
 				case KILLER:
 					labelCellKiller[x][y].setBackground(RED);
 					break;
@@ -353,9 +356,9 @@ public class SudokuComposite extends Composite {
 			@Override
 			public void run() {
 				switch (tabChoice) {
-				case NORMAL:
-					labelCellNormal[x][y].setBackground(WHITE);
-					break;
+//				case NORMAL:
+//					labelCellNormal[x][y].setBackground(WHITE);
+//					break;
 				case KILLER:
 					labelCellKiller[x][y].setBackground(WHITE);
 					break;
@@ -377,20 +380,20 @@ public class SudokuComposite extends Composite {
 	}
 
 	public void makeWhite() {
-		makeWhite = new Thread() {
+		Thread makeWhite = new Thread() {
 			@Override
 			public void run() {
 				switch (tabChoice) {
-				case NORMAL:
-					for (int i = 0; i < 9; i++) {
-						for (int j = 0; j < 9; j++) {
-							labelCellNormal[i][j].setBackground(WHITE);
-							for (int k = 0; k < 8; k++) {
-								boardLabelsNormal[i][j][k].setBackground(WHITE);
-							}
-						}
-					}
-					break;
+//				case NORMAL:
+//					for (int i = 0; i < 9; i++) {
+//						for (int j = 0; j < 9; j++) {
+//							labelCellNormal[i][j].setBackground(WHITE);
+//							for (int k = 0; k < 8; k++) {
+//								boardLabelsNormal[i][j][k].setBackground(WHITE);
+//							}
+//						}
+//					}
+//					break;
 				case KILLER:
 					for (int i = 0; i < 9; i++) {
 						for (int j = 0; j < 9; j++) {
@@ -421,8 +424,9 @@ public class SudokuComposite extends Composite {
 		setLayout(new GridLayout());
 		createHead();
 		createMain();
-		if (tabChoice == KILLER)
+		if (tabChoice == KILLER) {
 			boxRuleButton.setBackground(RED);
+		}
 		showPossibleButton.setBackground(GREEN);
 	}
 
@@ -441,9 +445,9 @@ public class SudokuComposite extends Composite {
 
 		/** Deals with the choice of scheme */
 		switch (tabChoice) {
-		case NORMAL:
-			title.setText(Messages.SudokuComposite_Normal_Title);
-			break;
+//		case NORMAL:
+//			title.setText(Messages.SudokuComposite_Normal_Title);
+//			break;
 		case KILLER:
 			title.setText(Messages.SudokuComposite_Killer_Title);
 			break;
@@ -454,9 +458,9 @@ public class SudokuComposite extends Composite {
 
 		final StyledText stDescription = new StyledText(headComposite, SWT.READ_ONLY | SWT.WRAP);
 		switch (tabChoice) {
-		case NORMAL:
-			stDescription.setText(Messages.SudokuComposite_Normal_Desc);
-			break;
+//		case NORMAL:
+//			stDescription.setText(Messages.SudokuComposite_Normal_Desc);
+//			break;
 		case KILLER:
 			stDescription.setText(Messages.SudokuComposite_Killer_Desc);
 			break;
@@ -506,19 +510,19 @@ public class SudokuComposite extends Composite {
 				loadStandardPuzzle.setEnabled(false);
 				loadButton.setEnabled(false);
 
-				if (tabChoice == NORMAL)
-					movesNormal.clear();
+//				if (tabChoice == NORMAL)
+//					movesNormal.clear();
 
 				for (int i = 0; i < (tabChoice == HEX ? 16 : 9); i++) {
 					for (int j = 0; j < (tabChoice == HEX ? 16 : 9); j++) {
 						switch (tabChoice) {
-						case NORMAL: {
-							if (boardNormal[i][j] > 0) {
-								boardTextNormal[i][j].setEditable(false);
-								givenNormal[i][j] = 1;
-							}
-						}
-							break;
+//						case NORMAL: {
+//							if (boardNormal[i][j] > 0) {
+//								boardTextNormal[i][j].setEditable(false);
+//								givenNormal[i][j] = 1;
+//							}
+//						}
+//							break;
 						case KILLER: {
 							if (boardKiller[i][j] > 0) {
 								boardTextKiller[i][j].setEditable(false);
@@ -599,10 +603,10 @@ public class SudokuComposite extends Composite {
 				for (int i = 0; i < (tabChoice == HEX ? 16 : 9); i++) {
 					for (int j = 0; j < (tabChoice == HEX ? 16 : 9); j++) {
 						switch (tabChoice) {
-						case NORMAL: {
-							boardTextNormal[i][j].setEditable(true);
-						}
-							break;
+//						case NORMAL: {
+//							boardTextNormal[i][j].setEditable(true);
+//						}
+//							break;
 						case KILLER: {
 							boardTextKiller[i][j].setEditable(true);
 						}
@@ -669,19 +673,19 @@ public class SudokuComposite extends Composite {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
 				switch (tabChoice) {
-				case NORMAL: {
-					if (backgroundSolved && getEmptySquare(boardNormal) != null) {
-						Point square = new Point(rnd.nextInt(9), rnd.nextInt(9));
-						while (boardNormal[square.x][square.y] > 0)
-							square = new Point(rnd.nextInt(9), rnd.nextInt(9));
-						boardNormal[square.x][square.y] = tempBoard[square.x][square.y];
-						for (int k = 0; k < 8; k++)
-							boardLabelsNormal[square.x][square.y][k].setText("");
-						boardTextNormal[square.x][square.y].setText(Integer.toString(boardNormal[square.x][square.y]));
-						startBlinkingArea(square.x, square.y);
-					}
-				}
-					break;
+//				case NORMAL: {
+//					if (backgroundSolved && getEmptySquare(boardNormal) != null) {
+//						Point square = new Point(rnd.nextInt(9), rnd.nextInt(9));
+//						while (boardNormal[square.x][square.y] > 0)
+//							square = new Point(rnd.nextInt(9), rnd.nextInt(9));
+//						boardNormal[square.x][square.y] = tempBoard[square.x][square.y];
+//						for (int k = 0; k < 8; k++)
+//							boardLabelsNormal[square.x][square.y][k].setText("");
+//						boardTextNormal[square.x][square.y].setText(Integer.toString(boardNormal[square.x][square.y]));
+//						startBlinkingArea(square.x, square.y);
+//					}
+//				}
+//					break;
 				case KILLER: {
 					if (backgroundSolved && getEmptySquare(boardKiller) != null) {
 						Point square = new Point(rnd.nextInt(9), rnd.nextInt(9));
@@ -721,17 +725,17 @@ public class SudokuComposite extends Composite {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
 				switch (tabChoice) {
-				case NORMAL: {
-					if (movesNormal.size() > 0) {
-						Point pt = movesNormal.get(movesNormal.size() - 1);
-						movesNormal.remove(movesNormal.size() - 1);
-						boardTextNormal[pt.x][pt.y].setText("");
-						updateBoardDataWithUserInputNormal(boardTextNormal[pt.x][pt.y], "");
-						if (movesNormal.size() == 0)
-							undoButton.setEnabled(false);
-					}
-				}
-					break;
+//				case NORMAL: {
+//					if (movesNormal.size() > 0) {
+//						Point pt = movesNormal.get(movesNormal.size() - 1);
+//						movesNormal.remove(movesNormal.size() - 1);
+//						boardTextNormal[pt.x][pt.y].setText("");
+//						updateBoardDataWithUserInputNormal(boardTextNormal[pt.x][pt.y], "");
+//						if (movesNormal.size() == 0)
+//							undoButton.setEnabled(false);
+//					}
+//				}
+//					break;
 				case KILLER: {
 					if (movesKiller.size() > 0) {
 						Point pt = movesKiller.get(movesKiller.size() - 1);
@@ -796,9 +800,9 @@ public class SudokuComposite extends Composite {
 					showPossibleButton.setBackground(GREEN);
 				}
 				switch (tabChoice) {
-				case NORMAL:
-					updatePossibilitiesNormal();
-					break;
+//				case NORMAL:
+//					updatePossibilitiesNormal();
+//					break;
 				case KILLER:
 					updatePossibilitiesKiller(boardKiller, possibleKiller);
 					break;
@@ -819,9 +823,9 @@ public class SudokuComposite extends Composite {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
 				switch (tabChoice) {
-				case NORMAL:
-					fillOneNormal();
-					break;
+//				case NORMAL:
+//					fillOneNormal();
+//					break;
 				case KILLER:
 					fillOneKiller();
 					break;
@@ -851,16 +855,16 @@ public class SudokuComposite extends Composite {
 				path.append(fileName.getFile());
 				path.append("data/");
 				switch (tabChoice) {
-				case NORMAL:
-					puzzle = rnd.nextInt(5) + 1;
-					path.append("sudoku" + puzzle + ".sud");
-					// Load normal puzzle. If it fails jump out of the method.
-					if (!loadNormal(path.toString())) {
-						return;
-					}
-					break;
+//				case NORMAL:
+//					puzzle = rnd.nextInt(5) + 1;
+//					path.append("sudoku" + puzzle + ".sud");
+//					// Load normal puzzle. If it fails jump out of the method.
+//					if (!loadNormal(path.toString())) {
+//						return;
+//					}
+//					break;
 				case KILLER:
-					// FIXME: data/killer2.sud is corrupted.
+					// data/killer2.sud is corrupted.
 //					puzzle = rnd.nextInt(2) + 1;
 //					path.append("killer" + puzzle + ".sud");
 					path.append("killer1.sud");
@@ -895,9 +899,9 @@ public class SudokuComposite extends Composite {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
 				switch (tabChoice) {
-				case NORMAL:
-					loadPuzzleNormal();
-					break;
+//				case NORMAL:
+//					loadPuzzleNormal();
+//					break;
 				case KILLER:
 					loadPuzzleKiller();
 					break;
@@ -918,9 +922,9 @@ public class SudokuComposite extends Composite {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
 				switch (tabChoice) {
-				case NORMAL:
-					savePuzzleNormal();
-					break;
+//				case NORMAL:
+//					savePuzzleNormal();
+//					break;
 				case KILLER:
 					savePuzzleKiller();
 					break;
@@ -945,9 +949,9 @@ public class SudokuComposite extends Composite {
 				backgroundSolve.cancel();
 				loading = true;
 				switch (tabChoice) {
-				case NORMAL:
-					clearPuzzleNormal();
-					break;
+//				case NORMAL:
+//					clearPuzzleNormal();
+//					break;
 				case KILLER:
 					clearPuzzleKiller();
 
@@ -1234,6 +1238,9 @@ public class SudokuComposite extends Composite {
 		}
 	}
 
+	/**
+	 * Opens a dialog where the user can select an .sud that should be loaded.
+	 */
 	public void loadPuzzleNormal() {
 		String fileName = openFileDialog(SWT.OPEN);
 
@@ -1717,6 +1724,9 @@ public class SudokuComposite extends Composite {
 		LogUtil.logError(SudokuPlugin.PLUGIN_ID, "Puzzle could not be saved. An IOException occured.", ioe, false);
 	}
 
+	/**
+	 * Removes all entries from the current sudoku
+	 */
 	public void clearPuzzleNormal() {
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
@@ -1813,25 +1823,25 @@ public class SudokuComposite extends Composite {
 
 		});
 		switch (tabChoice) {
-		case NORMAL: {
-			boardNormal = new int[9][9];
-			labelCellNormal = new Composite[9][9];
-			boardLabelsNormal = new Label[9][9][8];
-			boardTextNormal = new Text[9][9];
-			possibleNormal = new ArrayList<List<List<Integer>>>();
-			for (int i = 0; i < 9; i++) {
-				possibleNormal.add(new ArrayList<List<Integer>>());
-				for (int j = 0; j < 9; j++) {
-					boardNormal[i][j] = 0;
-					possibleNormal.get(i).add(new ArrayList<Integer>());
-					for (int k = 1; k <= 9; k++) {
-						possibleNormal.get(i).get(j).add(k);
-					}
-				}
-			}
-			createFieldNormal(playField);
-		}
-			break;
+//		case NORMAL: {
+//			boardNormal = new int[9][9];
+//			labelCellNormal = new Composite[9][9];
+//			boardLabelsNormal = new Label[9][9][8];
+//			boardTextNormal = new Text[9][9];
+//			possibleNormal = new ArrayList<List<List<Integer>>>();
+//			for (int i = 0; i < 9; i++) {
+//				possibleNormal.add(new ArrayList<List<Integer>>());
+//				for (int j = 0; j < 9; j++) {
+//					boardNormal[i][j] = 0;
+//					possibleNormal.get(i).add(new ArrayList<Integer>());
+//					for (int k = 1; k <= 9; k++) {
+//						possibleNormal.get(i).get(j).add(k);
+//					}
+//				}
+//			}
+//			createFieldNormal(playField);
+//		}
+//			break;
 		case KILLER: {
 			boardKiller = new int[9][9];
 			labelCellKiller = new Composite[9][9];
@@ -1876,7 +1886,7 @@ public class SudokuComposite extends Composite {
 	}
 
 	public void createFieldNormal(final Composite parent) {
-		playField = new Composite(parent, SWT.NONE);
+		Composite playField = new Composite(parent, SWT.NONE);
 		GridData gd_playField = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gd_playField.widthHint = gd_playField.heightHint = 600;
 		playField.setLayoutData(gd_playField);
@@ -1885,6 +1895,7 @@ public class SudokuComposite extends Composite {
 		playField.setLayout(layout);
 
 		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		Map<Composite, Point> compositeBoxesNormal = new HashMap<Composite, Point>();
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
 				labelCellNormal[i][j] = new Composite(playField, SWT.NONE);
@@ -1953,7 +1964,7 @@ public class SudokuComposite extends Composite {
 	}
 
 	public void createFieldKiller(final Composite parent) {
-		playField = new Composite(parent, SWT.NONE);
+		Composite playField = new Composite(parent, SWT.NONE);
 		GridData gd_playField = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gd_playField.widthHint = gd_playField.heightHint = 600;
 		playField.setLayoutData(gd_playField);
@@ -2074,7 +2085,7 @@ public class SudokuComposite extends Composite {
 	}
 
 	public void createFieldHex(final Composite parent) {
-		playField = new Composite(parent, SWT.NONE);
+		Composite playField = new Composite(parent, SWT.NONE);
 		GridData gd_playField = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gd_playField.widthHint = gd_playField.heightHint = 870;
 		playField.setLayoutData(gd_playField);
@@ -2645,15 +2656,15 @@ public class SudokuComposite extends Composite {
 	public boolean checkErroneousEntries() {
 		if (backgroundSolved) {
 			switch (tabChoice) {
-			case NORMAL:
-				for (int i = 0; i < 9; i++) {
-					for (int j = 0; j < 9; j++) {
-						if (boardNormal[i][j] != 0 && boardNormal[i][j] != tempBoard[i][j]) {
-							return true;
-						}
-					}
-				}
-				break;
+//			case NORMAL:
+//				for (int i = 0; i < 9; i++) {
+//					for (int j = 0; j < 9; j++) {
+//						if (boardNormal[i][j] != 0 && boardNormal[i][j] != tempBoard[i][j]) {
+//							return true;
+//						}
+//					}
+//				}
+//				break;
 			case KILLER:
 				for (int i = 0; i < 9; i++) {
 					for (int j = 0; j < 9; j++) {
@@ -2680,16 +2691,16 @@ public class SudokuComposite extends Composite {
 	public void showErroneousEntries() {
 		if (backgroundSolved) {
 			switch (tabChoice) {
-			case NORMAL:
-				for (int i = 0; i < 9; i++) {
-					for (int j = 0; j < 9; j++) {
-						if (boardNormal[i][j] != 0 && boardNormal[i][j] != tempBoard[i][j]) {
-							labelCellNormal[i][j].setBackground(RED);
-							boardTextNormal[i][j].setBackground(RED);
-						}
-					}
-				}
-				break;
+//			case NORMAL:
+//				for (int i = 0; i < 9; i++) {
+//					for (int j = 0; j < 9; j++) {
+//						if (boardNormal[i][j] != 0 && boardNormal[i][j] != tempBoard[i][j]) {
+//							labelCellNormal[i][j].setBackground(RED);
+//							boardTextNormal[i][j].setBackground(RED);
+//						}
+//					}
+//				}
+//				break;
 			case KILLER:
 				for (int i = 0; i < 9; i++) {
 					for (int j = 0; j < 9; j++) {
@@ -3263,13 +3274,13 @@ public class SudokuComposite extends Composite {
 
 	public void refresh() {
 		switch (tabChoice) {
-		case NORMAL:
-			for (int i = 0; i < 9; i++) {
-				for (int j = 0; j < 9; j++) {
-					labelCellNormal[i][j].layout();
-				}
-			}
-			break;
+//		case NORMAL:
+//			for (int i = 0; i < 9; i++) {
+//				for (int j = 0; j < 9; j++) {
+//					labelCellNormal[i][j].layout();
+//				}
+//			}
+//			break;
 		case KILLER:
 			for (int i = 0; i < 9; i++) {
 				for (int j = 0; j < 9; j++) {
