@@ -399,7 +399,7 @@ public class Graph {
      * @return a point which coordinates you can use directly in your drawText() call
      */
     protected Point calcTextXY(String myText, int midX, int topMidY, FontMetrics metrics) {
-        int leftX = midX - (myText.length() * metrics.getAverageCharWidth()) / 2;
+        int leftX = (int) (midX - (myText.length() * metrics.getAverageCharacterWidth()) / 2);
         int leftY = topMidY;
         return new Point(leftX, leftY);
     }

@@ -8,7 +8,6 @@ import java.util.Observer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -151,14 +150,6 @@ public abstract class ClassicAlgorithmConfiguration {
 //		Composite preOpTransformDisplay = generatePreOpTransformDisplay(main, editor);
 
 		return main;
-	}
-
-	private Button generateFilterNonalphaDisplay(Composite main, IEditorPart editor) {
-		Button b = new Button(main, SWT.CHECK);
-		b.setEnabled(false);
-		b.setSelection(filterNonalpha);
-
-		return b;
 	}
 
 	private Composite generateAlphabetDisplay(Composite main, IEditorPart editor) {
