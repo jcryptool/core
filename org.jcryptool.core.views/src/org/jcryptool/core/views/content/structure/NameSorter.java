@@ -10,7 +10,7 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.core.views.content.structure;
 
-import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.viewers.ViewerComparator;
 
 /**
  * Sorter which implements as standard the sorting by names
@@ -18,5 +18,5 @@ import org.eclipse.jface.viewers.ViewerSorter;
  * @author mwalthart
  *
  */
-public class NameSorter extends ViewerSorter {
+public class NameSorter extends ViewerComparator {
 }
