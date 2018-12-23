@@ -1018,7 +1018,8 @@ public class ZahlenhaiBestwerte {
         int[] ket = new int[DS.aktiv >> 1], // kleine echte Teiler
         nres = new int[DS.aktiv >> 2]; // was nicht in res soll
         final T[] TAB = DS.tab;
-        int ir = 0, ik = 0, inr = 0, az, t1, t2;
+//        int ir = 0, ik = 0, inr = 0, az, t1, t2;
+        int ir = 0, ik = 0, inr = 0, t1, t2;
         for (int i = g; i > 3; i--)
             if (TAB[i].az == 3) {
                 t2 = TAB[i].groesste();
@@ -1031,10 +1032,12 @@ public class ZahlenhaiBestwerte {
             }
         for (int i = g2; i > 3; i--)
             // die 2er der unteren Haelfte
-            if ((az = TAB[i].az) == 2 && !enthaelt(nres, i, inr))
+//            if ((az = TAB[i].az) == 2 && !enthaelt(nres, i, inr))
+        	if ((TAB[i].az) == 2 && !enthaelt(nres, i, inr))
                 res[ir++] = (short) i;
         for (int i = g; i > 3; i--)
-            if ((az = TAB[i].az) > 3 && kandidat(i, TAB)) {
+//            if ((az = TAB[i].az) > 3 && kandidat(i, TAB)) {
+        	if ((TAB[i].az) > 3 && kandidat(i, TAB)) {
                 t1 = TAB[i].kleinste();
                 if (!enthaelt(ket, t1, ik))
                     ket[ik++] = t1;
