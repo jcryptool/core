@@ -118,7 +118,7 @@ public class AlgorithmTreeViewer extends TreeViewer implements ISearchable {
 
         setContentProvider(new ViewContentProvider());
         setLabelProvider(new ViewLabelProvider());
-        setSorter(new NameSorter());
+        setComparator(new NameSorter());
         setInput(invisibleRoot);
         expandToLevel(invisibleRoot, 2); // expand all
 
