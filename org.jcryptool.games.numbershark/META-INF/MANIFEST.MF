@@ -4,7 +4,9 @@ Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.games.numbershark; singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.games.numbershark.NumberSharkPlugin
-Require-Bundle: org.eclipse.help.ui;bundle-version="3.5.100"
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.help
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

@@ -5,9 +5,9 @@ Bundle-SymbolicName: org.jcryptool.visual.euclid;singleton:=true
 Bundle-Version: 1.0.0
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.jcryptool.core.operations;bundle-version="1.0.0",
  org.eclipse.help,
- com.lowagie.itext
+ com.lowagie.itext,
+ org.jcryptool.core.operations;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor

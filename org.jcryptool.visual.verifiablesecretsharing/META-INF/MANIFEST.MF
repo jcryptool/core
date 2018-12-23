@@ -4,8 +4,8 @@ Bundle-Name: %Bundle-Name.0
 Bundle-SymbolicName: org.jcryptool.visual.verifiablesecretsharing;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.visual.verifiablesecretsharing.VerifiableSecretSharingPlugin
-Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
- org.eclipse.ui;bundle-version="3.7.0",
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
  org.jcryptool.visual.verifiablesecretsharing.lib;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
