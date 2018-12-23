@@ -1,9 +1,7 @@
 package org.jcryptool.visual.sphincs.algorithm;
 
-import java.awt.List;
 import java.util.Arrays;
 import java.util.Base64;
-import java.util.LinkedList;
 import java.util.Base64.Encoder;
 
 public class PrivateKey {

@@ -4,9 +4,6 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Base64.Encoder;
 
-import org.jcryptool.visual.sphincs.algorithm.bc_code.SPHINCS256Config;
-import org.jcryptool.visual.sphincs.algorithm.bc_code.Tree;
-
 public class Signature {
 	byte[] _i;
 	byte[] _r;
