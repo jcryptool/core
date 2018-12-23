@@ -9,7 +9,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,
  org.eclipse.ui.workbench.texteditor,
- org.jcryptool.core.operations;bundle-version="0.9.8"
+ org.jcryptool.core.operations;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: net.sourceforge.ehep,net.sourceforge.ehep.actions,net.sourceforge.ehep.core,net.sourceforge.ehep.editors,net.sourceforge.ehep.events,net.sourceforge.ehep.gui,net.sourceforge.ehep.popup.actions,net.sourceforge.ehep.preferences
 Bundle-ManifestVersion: 2
