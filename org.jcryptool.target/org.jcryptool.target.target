@@ -13,6 +13,7 @@
 		<unit id="org.eclipse.sdk.ide" version="4.10.0.I20181206-0815"/>
 		<unit id="org.eclipse.zest.sdk.feature.group" version="1.7.0.201606061308"/>
 		<repository location="http://download.eclipse.org/releases/2018-12"/>
+		<unit id="org.eclipse.equinox.executable.feature.group" version="3.8.200.v20180922-1751"/>
 	</location>
 </locations>
 <launcherArgs>
