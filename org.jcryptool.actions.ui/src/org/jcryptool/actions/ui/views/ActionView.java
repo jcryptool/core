@@ -56,7 +56,7 @@ import org.jcryptool.core.util.directories.DirectoryService;
  * @author Dominik Schadow
  * @version 0.9.3
  */
-public class ActionView extends ViewPart implements IListChangeListener {
+public class ActionView extends ViewPart implements IListChangeListener<Object> {
     public static final String ID = "org.jcryptool.actions.views.ActionView"; //$NON-NLS-1$
     private static final Color colorLightShadow =
             Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_LIGHT_SHADOW);
@@ -248,12 +248,12 @@ public class ActionView extends ViewPart implements IListChangeListener {
     }
 
 	@Override
-	public void handleListChange(ListChangeEvent event) {
+	public void handleListChange(ListChangeEvent<?> event) {
 
 		// list changes are either additions or removals
 
 		ListDiffEntry[] listDiffs = event.diff.getDifferences();
-		for (ListDiffEntry listDiffEntry : listDiffs) {
+		for (ListDiffEntry<?> listDiffEntry : listDiffs) {
 			if(listDiffEntry.isAddition()) handleAddition();
 			else handleRemoval();
 		}
