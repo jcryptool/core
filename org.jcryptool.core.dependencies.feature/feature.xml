@@ -339,14 +339,6 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ui.forms.nl_de"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.zest.core"
          download-size="0"
          install-size="0"
@@ -411,6 +403,13 @@ litigation.
 
    <plugin
          id="org.eclipse.ecf.identity"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.forms"
          download-size="0"
          install-size="0"
          version="0.0.0"
