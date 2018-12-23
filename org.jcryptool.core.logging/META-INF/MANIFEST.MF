@@ -6,15 +6,10 @@ Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.core.logging.LoggingPlugin
 Bundle-Vendor: %bundleProvider
 Bundle-ActivationPolicy: lazy
-Export-Package: org.jcryptool.core.logging.dialogs;
-  uses:="org.eclipse.core.runtime,
-   org.eclipse.osgi.util,
-   org.eclipse.swt.graphics,
-   org.eclipse.swt.widgets,
-   org.eclipse.jface.dialogs",
- org.jcryptool.core.logging.utils
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.help
 Automatic-Module-Name: org.jcryptool.core.logging
+Export-Package: org.jcryptool.core.logging.dialogs,
+ org.jcryptool.core.logging.utils
