@@ -1037,8 +1037,8 @@ public class GHComposite extends Composite {
 	protected DataBindingContext initDataBindings() {
 		DataBindingContext bindingContext = new DataBindingContext();
 		//
-		IObservableValue sizeLabel_1ObserveValue = PojoProperties.value("size").observe(labelDeterminant);
-		IObservableValue sizeLabel_3ObserveValue = PojoProperties.value("size").observe(labelBlocks);
+		IObservableValue<?> sizeLabel_1ObserveValue = PojoProperties.value("size").observe(labelDeterminant);
+		IObservableValue<?> sizeLabel_3ObserveValue = PojoProperties.value("size").observe(labelBlocks);
 		bindingContext.bindValue(sizeLabel_1ObserveValue, sizeLabel_3ObserveValue, null, null);
 		//
 		return bindingContext;

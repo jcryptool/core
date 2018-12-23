@@ -95,7 +95,7 @@ public class CommandState extends AbstractSourceProvider {
     }
 
     @Override
-    public Map getCurrentState() {
+    public Map<String, String> getCurrentState() {
 
         Map<String, String> map = new HashMap<String, String>(1);
         if (curState == State.UNDO_ENABLED)

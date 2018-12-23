@@ -271,7 +271,7 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
         verificationDisplayHandler = new WidgetBubbleUIInputHandler(shell) {
 
             @Override
-            protected void changeTooltipDurationAtCleaninputButNotHidden(AbstractUIInput input) {
+            protected void changeTooltipDurationAtCleaninputButNotHidden(AbstractUIInput<?> input) {
                 // vanish instantly when it is the "not changing the encryption" tooltip
                 if (getLastDisplayedResultType(input) == ClassicAlgorithmSpecification.RESULT_TYPE_NOKEY) {
                     tooltipMap.get(input).setTimeToVanish(-1);
@@ -282,7 +282,7 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
 
 
             @Override
-            public Control mapInputToWidget(AbstractUIInput input) {
+            public Control mapInputToWidget(AbstractUIInput<?> input) {
                 if (input.equals(operationInput)) {
                     return (Control) operationLastSelected;
                 }
