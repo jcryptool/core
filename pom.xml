@@ -25,6 +25,7 @@
     <module>net.sourceforge.ehep.nl_de</module>
     <module>org.apache.commons.cli</module>
     <module>org.bouncycastle</module>
+    <module>org.jdom</module>
     <module>org.jcryptool.actions.core</module>
     <module>org.jcryptool.actions.ui</module>
     <module>org.jcryptool.commands.core</module>
@@ -53,11 +54,10 @@
     <module>org.jcryptool.editor.text</module>
     <module>org.jcryptool.editors.feature</module>
     <module>org.jcryptool.fileexplorer</module>
-    <module>org.jcryptool.providers.feature</module>
     <module>org.jcryptool.product</module>
+    <module>org.jcryptool.providers.feature</module>
     <module>org.jcryptool.target</module>
     <module>org.jcryptool.views.feature</module>
     <module>org.jcryptool.webbrowser</module>
-    <module>org.jdom</module>
   </modules>
 </project>
