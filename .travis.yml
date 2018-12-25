@@ -10,7 +10,7 @@ before_install:
 - echo "MAVEN_OPTS=-Xmx3072m" > ~/.mavenrc
 install: true
 script:
-- mvn -f org.jcryptool.releng/pom.xml -DskipTests=true -Dbuild=weekly
+- mvn -f org.jcryptool.releng/pom.xml -DskipTests=true clean verify
 before_deploy:
 - git config --local user.name "Dominik Schadow"
 - git config --local user.email "dominikschadow@gmail.com"
