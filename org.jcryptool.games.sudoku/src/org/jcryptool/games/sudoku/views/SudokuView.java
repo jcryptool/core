@@ -48,7 +48,8 @@ public class SudokuView extends ViewPart {
         ScrolledComposite sc2 = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
         sc2.setExpandHorizontal(true);
         sc2.setExpandVertical(true);
-        SudokuComposite c2 = new SudokuComposite(sc2, KILLER, SWT.NONE);
+//        SudokuComposite c2 = new SudokuComposite(sc2, KILLER, SWT.NONE);
+        KillerPuzzle c2 = new KillerPuzzle(sc2, SWT.NONE);
         sc2.setContent(c2);
         sc2.setMinSize(c2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti2.setControl(sc2);

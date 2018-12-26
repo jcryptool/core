@@ -87,7 +87,6 @@ public class NormalPuzzle extends Composite {
 	protected Vector<Point> movesNormal = new Vector<Point>();
 	protected int[][] givenNormal = new int[9][9];
 	protected Random rnd = new Random(System.currentTimeMillis());
-//	private int[][] board;
 	protected int[][] tempBoard;
 	private boolean solved;
 	private boolean autoFillOne = false;
@@ -133,7 +132,7 @@ public class NormalPuzzle extends Composite {
 					
 		// Defining some jobs for the calculations
 		
-		backgroundSolve = new Job("Solving Puzzle in Background") {
+		backgroundSolve = new Job("Solving Puzzle in Background") { //$NON-NLS-1$
 			public IStatus run(IProgressMonitor monitor) {
 					tempBoard = new int[9][9];
 					for (int i = 0; i < 9; i++) {
@@ -228,7 +227,7 @@ public class NormalPuzzle extends Composite {
 			for (int i = 0; i < 9; i++) {
 				for (int j = 0; j < 9; j++) {
 					for (int k = 0; k < 8; k++)
-						boardLabelsNormal[i][j][k].setText("");
+						boardLabelsNormal[i][j][k].setText(""); //$NON-NLS-1$
 					boardTextNormal[i][j].setText(Integer.toString(boardNormal[i][j]));
 				}
 			}
@@ -718,119 +717,6 @@ public class NormalPuzzle extends Composite {
 		grpActionButtons.setLayout(new GridLayout());
 		grpActionButtons.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		
-		solveButton = new Button(grpActionButtons, SWT.PUSH);
-		solveButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		solveButton.setEnabled(false);
-		solveButton.setText(Messages.SudokuComposite_SolveButton);
-		solveButton.setToolTipText(Messages.SudokuComposite_SolveButton_Tooltip);
-		solveButton.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				dummyJob.setUser(true);
-				dummyJob.schedule();
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				
-			}
-		});
-		
-		hintButton = new Button(grpActionButtons, SWT.PUSH);
-		hintButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		hintButton.setEnabled(false);
-		hintButton.setText(Messages.SudokuComposite_HintButton);
-		hintButton.setToolTipText(Messages.SudokuComposite_HintButton_Tooltip);
-		hintButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(final SelectionEvent e) {
-					if (backgroundSolved && getEmptySquare(boardNormal) != null) {
-						Point square = new Point(rnd.nextInt(9), rnd.nextInt(9));
-						while (boardNormal[square.x][square.y] > 0) {
-							square = new Point(rnd.nextInt(9), rnd.nextInt(9));
-						}
-						boardNormal[square.x][square.y] = tempBoard[square.x][square.y];
-						for (int k = 0; k < 8; k++) {
-							boardLabelsNormal[square.x][square.y][k].setText("");
-						}
-						boardTextNormal[square.x][square.y].setText(Integer.toString(boardNormal[square.x][square.y]));
-						startBlinkingArea(square.x, square.y);
-				}
-			}
-		});
-		
-		undoButton = new Button(grpActionButtons, SWT.PUSH);
-		undoButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		undoButton.setEnabled(false);
-		undoButton.setText(Messages.SudokuComposite_UndoButton);
-		undoButton.setToolTipText(Messages.SudokuComposite_UndoButton_Tooltip);
-		undoButton.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (movesNormal.size() > 0) {
-					Point pt = movesNormal.get(movesNormal.size() - 1);
-					movesNormal.remove(movesNormal.size() - 1);
-					boardTextNormal[pt.x][pt.y].setText("");
-					updateBoardDataWithUserInputNormal(boardTextNormal[pt.x][pt.y], "");
-					if (movesNormal.size() == 0) {
-						undoButton.setEnabled(false);
-					}
-				}
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				
-			}
-		});
-		
-		showPossibleButton = new Button(grpActionButtons, SWT.PUSH);
-		showPossibleButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		showPossibleButton.setEnabled(false);
-		showPossibleButton.setText(Messages.SudokuComposite_ShowPossibleButton);
-		showPossibleButton.setToolTipText(Messages.SudokuComposite_ShowPossibleButton_Tooltip);
-		showPossibleButton.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (showPossible) {
-					showPossible = false;
-					showPossibleButton.setBackground(ColorService.RED);
-				} else {
-					showPossible = true;
-					showPossibleButton.setBackground(ColorService.GREEN);
-				}
-				updatePossibilitiesNormal();
-				refresh();
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				
-			}
-		});
-		
-		autoFillOneButton = new Button(grpActionButtons, SWT.PUSH);
-		autoFillOneButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		autoFillOneButton.setEnabled(false);
-		autoFillOneButton.setText(Messages.SudokuComposite_AutoFillOneButton);
-		autoFillOneButton.setToolTipText(Messages.SudokuComposite_AutoFillOneButton_Tooltip);
-		autoFillOneButton.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				fillOneNormal();
-				refresh();
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				
-			}
-		});
-		
 		loadStandardPuzzle = new Button(grpActionButtons, SWT.PUSH);
 		loadStandardPuzzle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		loadStandardPuzzle.setText(Messages.SudokuComposite_LoadStandardPuzzle);
@@ -842,15 +728,15 @@ public class NormalPuzzle extends Composite {
 				int puzzle;
 				URL fileName = null;
 				try {
-					fileName = FileLocator.toFileURL((SudokuPlugin.getDefault().getBundle().getEntry("/")));
+					fileName = FileLocator.toFileURL((SudokuPlugin.getDefault().getBundle().getEntry("/"))); //$NON-NLS-1$
 				} catch (IOException ex) {
 					LogUtil.logError(SudokuPlugin.PLUGIN_ID, ex);
 				}
 				StringBuilder path = new StringBuilder();
 				path.append(fileName.getFile());
-				path.append("data/");
+				path.append("data/"); //$NON-NLS-1$
 				puzzle = rnd.nextInt(5) + 1;
-				path.append("sudoku" + puzzle + ".sud");
+				path.append("sudoku" + puzzle + ".sud"); //$NON-NLS-1$ //$NON-NLS-2$
 				// Load normal puzzle. If it fails jump out of the method.
 				if (!loadNormal(path.toString())) {
 					return;
@@ -889,7 +775,126 @@ public class NormalPuzzle extends Composite {
 			}
 		});
 		
-		saveButton = new Button(grpActionButtons, SWT.PUSH);
+		Group grpOptionButtons = new Group(mainComposite, SWT.NONE);
+		grpOptionButtons.setLayout(new GridLayout());
+		grpOptionButtons.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		grpOptionButtons.setText(Messages.SudokuComposite_optionsAreaTitle);
+		
+		
+		solveButton = new Button(grpOptionButtons, SWT.PUSH);
+		solveButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		solveButton.setEnabled(false);
+		solveButton.setText(Messages.SudokuComposite_SolveButton);
+		solveButton.setToolTipText(Messages.SudokuComposite_SolveButton_Tooltip);
+		solveButton.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				dummyJob.setUser(true);
+				dummyJob.schedule();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				
+			}
+		});
+		
+		hintButton = new Button(grpOptionButtons, SWT.PUSH);
+		hintButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		hintButton.setEnabled(false);
+		hintButton.setText(Messages.SudokuComposite_HintButton);
+		hintButton.setToolTipText(Messages.SudokuComposite_HintButton_Tooltip);
+		hintButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent e) {
+					if (backgroundSolved && getEmptySquare(boardNormal) != null) {
+						Point square = new Point(rnd.nextInt(9), rnd.nextInt(9));
+						while (boardNormal[square.x][square.y] > 0) {
+							square = new Point(rnd.nextInt(9), rnd.nextInt(9));
+						}
+						boardNormal[square.x][square.y] = tempBoard[square.x][square.y];
+						for (int k = 0; k < 8; k++) {
+							boardLabelsNormal[square.x][square.y][k].setText(""); //$NON-NLS-1$
+						}
+						boardTextNormal[square.x][square.y].setText(Integer.toString(boardNormal[square.x][square.y]));
+						startBlinkingArea(square.x, square.y);
+				}
+			}
+		});
+		
+		autoFillOneButton = new Button(grpOptionButtons, SWT.PUSH);
+		autoFillOneButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		autoFillOneButton.setEnabled(false);
+		autoFillOneButton.setText(Messages.SudokuComposite_AutoFillOneButton);
+		autoFillOneButton.setToolTipText(Messages.SudokuComposite_AutoFillOneButton_Tooltip);
+		autoFillOneButton.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				fillOneNormal();
+				refresh();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				
+			}
+		});
+		
+		showPossibleButton = new Button(grpOptionButtons, SWT.PUSH);
+		showPossibleButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		showPossibleButton.setEnabled(false);
+		showPossibleButton.setText(Messages.SudokuComposite_ShowPossibleButton);
+		showPossibleButton.setToolTipText(Messages.SudokuComposite_ShowPossibleButton_Tooltip);
+		showPossibleButton.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (showPossible) {
+					showPossible = false;
+					showPossibleButton.setBackground(ColorService.RED);
+				} else {
+					showPossible = true;
+					showPossibleButton.setBackground(ColorService.GREEN);
+				}
+				updatePossibilitiesNormal();
+				refresh();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				
+			}
+		});
+		
+		undoButton = new Button(grpOptionButtons, SWT.PUSH);
+		undoButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		undoButton.setEnabled(false);
+		undoButton.setText(Messages.SudokuComposite_UndoButton);
+		undoButton.setToolTipText(Messages.SudokuComposite_UndoButton_Tooltip);
+		undoButton.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (movesNormal.size() > 0) {
+					Point pt = movesNormal.get(movesNormal.size() - 1);
+					movesNormal.remove(movesNormal.size() - 1);
+					boardTextNormal[pt.x][pt.y].setText(""); //$NON-NLS-1$
+					updateBoardDataWithUserInputNormal(boardTextNormal[pt.x][pt.y], ""); //$NON-NLS-1$
+					if (movesNormal.size() == 0) {
+						undoButton.setEnabled(false);
+					}
+				}
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				
+			}
+		});
+		
+		saveButton = new Button(grpOptionButtons, SWT.PUSH);
 		saveButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		saveButton.setEnabled(true);
 		saveButton.setText(Messages.SudokuComposite_SaveButton);
@@ -907,7 +912,7 @@ public class NormalPuzzle extends Composite {
 			}
 		});
 		
-		clearButton = new Button(grpActionButtons, SWT.PUSH);
+		clearButton = new Button(grpOptionButtons, SWT.PUSH);
 		clearButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		clearButton.setEnabled(true);
 		clearButton.setText(Messages.SudokuComposite_ClearButton);
@@ -982,8 +987,8 @@ public class NormalPuzzle extends Composite {
 			return false;
 		} catch (IOException e) {
 			MessageBox ioExceptionDialog = new MessageBox(getDisplay().getActiveShell(), SWT.OK);
-			ioExceptionDialog.setText("Saving puzzle encountered a problem");
-			ioExceptionDialog.setMessage("An IOException occured. See the error log for further information.");
+			ioExceptionDialog.setText("Saving puzzle encountered a problem"); //$NON-NLS-1$
+			ioExceptionDialog.setMessage("An IOException occured. See the error log for further information."); //$NON-NLS-1$
 			ioExceptionDialog.open();
 			LogUtil.logError(SudokuPlugin.PLUGIN_ID, e);
 			return false;
@@ -1008,11 +1013,11 @@ public class NormalPuzzle extends Composite {
 	private void printFileNotFoundExceptionDialogSaving(FileNotFoundException fnfe) {
 		// Print a message that puzzle is not saved.
 		MessageBox emptyFileDialog = new MessageBox(getDisplay().getActiveShell(), SWT.OK);
-		emptyFileDialog.setText("Saving puzzle encountered a problem");
-		emptyFileDialog.setMessage("Puzzle could not be saved. Invalid file path.");
+		emptyFileDialog.setText("Saving puzzle encountered a problem"); //$NON-NLS-1$
+		emptyFileDialog.setMessage("Puzzle could not be saved. Invalid file path."); //$NON-NLS-1$
 		emptyFileDialog.open();
 		// Log the error in the error log.
-		LogUtil.logError(SudokuPlugin.PLUGIN_ID, "File Name for puzzle is empty.", fnfe, false);
+		LogUtil.logError(SudokuPlugin.PLUGIN_ID, "File Name for puzzle is empty.", fnfe, false); //$NON-NLS-1$
 	}
 	
 	/**
@@ -1023,8 +1028,8 @@ public class NormalPuzzle extends Composite {
 	private String openFileDialog(int type) {
 		FileDialog dialog = new FileDialog(getDisplay().getActiveShell(), type);
 		dialog.setFilterPath(DirectoryService.getUserHomeDir());
-		dialog.setFilterExtensions(new String[] { "*.sud" });
-		dialog.setFilterNames(new String[] { "Sudoku Files (*.sud)" });
+		dialog.setFilterExtensions(new String[] { "*.sud" }); //$NON-NLS-1$
+		dialog.setFilterNames(new String[] { "Sudoku Files (*.sud)" }); //$NON-NLS-1$
 		dialog.setOverwrite(true);
 		return dialog.open();
 	}
@@ -1046,11 +1051,13 @@ public class NormalPuzzle extends Composite {
 	 * @param fileName The path to the file that should be read.
 	 */
 	public boolean loadNormal(String fileName) {
+		long wholeLoadNormalTime = System.currentTimeMillis();
 		solved = false;
 		BufferedReader reader = null;
 		clearPuzzleNormal();
 		loading = true;
 		try {
+			long t1 = System.currentTimeMillis();
 			reader = new BufferedReader(new FileReader(fileName));
 			int count = 0;
 			String line;
@@ -1063,11 +1070,13 @@ public class NormalPuzzle extends Composite {
 				}
 				count++;
 			}
+			long t2 = System.currentTimeMillis();
+			System.out.println("Laufzeit des try blocks " + ( t2 - t1));
 		} catch (NumberFormatException nfe) {
 			LogUtil.logError(SudokuPlugin.PLUGIN_ID, nfe);
 			MessageBox brokenFile = new MessageBox(getDisplay().getActiveShell(), SWT.OK);
-			brokenFile.setText("Loading puzzle encountered a problem");
-			brokenFile.setMessage("Puzzle could not be loadeed. There is a wrong character in the loaded file.\n");
+			brokenFile.setText("Loading puzzle encountered a problem"); //$NON-NLS-1$
+			brokenFile.setMessage("Puzzle could not be loadeed. There is a wrong character in the loaded file.\n"); //$NON-NLS-1$
 			brokenFile.open();
 			return false;
 		} catch (FileNotFoundException e) {
@@ -1085,6 +1094,8 @@ public class NormalPuzzle extends Composite {
 		}
 		loading = false;
 		updatePossibilitiesNormal();
+		long l = System.currentTimeMillis();
+		System.out.println("Laufzeit der kompletten Schleife " + (l - wholeLoadNormalTime));
 		return true;
 	}
 	
@@ -1094,8 +1105,8 @@ public class NormalPuzzle extends Composite {
 	 */
 	private void printIOExceptionDialogLoading(IOException ioe) {
 		MessageBox fileNotFound = new MessageBox(getDisplay().getActiveShell(), SWT.OK);
-		fileNotFound.setText("Loading puzzle encountered a problem");
-		fileNotFound.setMessage("An IOException occured. See the error log for more information.");
+		fileNotFound.setText("Loading puzzle encountered a problem"); //$NON-NLS-1$
+		fileNotFound.setMessage("An IOException occured. See the error log for more information."); //$NON-NLS-1$
 		fileNotFound.open();
 		LogUtil.logError(SudokuPlugin.PLUGIN_ID, ioe);
 	}
@@ -1106,28 +1117,33 @@ public class NormalPuzzle extends Composite {
 	private void printFileNotFoundExceptionDialogLoading(FileNotFoundException fnfe) {
 		// Print a message that puzzle is not loaded.
 		MessageBox emptyFileDialog = new MessageBox(getDisplay().getActiveShell(), SWT.OK);
-		emptyFileDialog.setText("Loading puzzle encountered a problem");
-		emptyFileDialog.setMessage("Puzzle could not be loaded. Invalid file path.");
+		emptyFileDialog.setText("Loading puzzle encountered a problem"); //$NON-NLS-1$
+		emptyFileDialog.setMessage("Puzzle could not be loaded. Invalid file path."); //$NON-NLS-1$
 		emptyFileDialog.open();
 		// Log the error in the error log.
-		LogUtil.logError(SudokuPlugin.PLUGIN_ID, "File Name for puzzle is empty.", fnfe, false);
+		LogUtil.logError(SudokuPlugin.PLUGIN_ID, "File Name for puzzle is empty.", fnfe, false); //$NON-NLS-1$
 	}
 
 	/**
 	 * Removes all entries from the current sudoku
 	 */
 	private void clearPuzzleNormal() {
+		long t1 = System.currentTimeMillis();
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
 				boardNormal[i][j] = 0;
-				boardTextNormal[i][j].setText("");
-				for (int k = 0; k < 8; k++)
-					boardLabelsNormal[i][j][k].setText("");
+				boardTextNormal[i][j].setText(""); //$NON-NLS-1$
+				for (int k = 0; k < 8; k++) {
+					boardLabelsNormal[i][j][k].setText(""); //$NON-NLS-1$
+				}
 				possibleNormal.get(i).get(j).clear();
-				for (int k = 1; k <= 9; k++)
+				for (int k = 1; k <= 9; k++) {
 					possibleNormal.get(i).get(j).add(k);
+				}
 			}
 		}
+		long t2 = System.currentTimeMillis();
+		System.out.println("Laufzeit clearPuzzleNormal " + ( t2 - t1));
 	}
 
 	/**
@@ -1283,16 +1299,16 @@ public class NormalPuzzle extends Composite {
 						boardLabelsNormal[i][j][k].setText(Integer.toString(possibleNormal.get(i).get(j).get(k)));
 					}
 					for (int k = possibleNormal.get(i).get(j).size(); k < 8; k++) {
-						boardLabelsNormal[i][j][k].setText("");
+						boardLabelsNormal[i][j][k].setText(""); //$NON-NLS-1$
 					}
 				}
 				if (!showPossible) {
 					for (int k = 0; k < 8; k++)
-						boardLabelsNormal[i][j][k].setText("");
+						boardLabelsNormal[i][j][k].setText(""); //$NON-NLS-1$
 				}
 				if (possibleNormal.get(i).get(j).size() == 9) {
 					for (int k = 0; k < 8; k++)
-						boardLabelsNormal[i][j][k].setText("");
+						boardLabelsNormal[i][j][k].setText(""); //$NON-NLS-1$
 				}
 				labelCellNormal[i][j].layout();
 			}
