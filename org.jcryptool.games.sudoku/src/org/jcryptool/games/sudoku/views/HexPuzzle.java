@@ -366,94 +366,7 @@ public class HexPuzzle extends Composite {
 		grpActionButtons.setText(Messages.SudokuComposite_ActionsAreaTitle);
 		grpActionButtons.setLayout(new GridLayout());
 		grpActionButtons.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-
-		solveButton = new Button(grpActionButtons, SWT.PUSH);
-		solveButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		solveButton.setEnabled(false);
-		solveButton.setText(Messages.SudokuComposite_SolveButton);
-		solveButton.setToolTipText(Messages.SudokuComposite_SolveButton_Tooltip);
-		solveButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(final SelectionEvent e) {
-				dummyJob.setUser(true);
-				dummyJob.schedule();
-			}
-		});
-
-		hintButton = new Button(grpActionButtons, SWT.PUSH);
-		hintButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		hintButton.setEnabled(false);
-		hintButton.setText(Messages.SudokuComposite_HintButton);
-		hintButton.setToolTipText(Messages.SudokuComposite_HintButton_Tooltip);
-		hintButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(final SelectionEvent e) {
-				if (backgroundSolved && getEmptySquare(boardHex) != null) {
-					Point square = new Point(rnd.nextInt(16), rnd.nextInt(16));
-					while (boardHex[square.x][square.y] > -1)
-						square = new Point(rnd.nextInt(9), rnd.nextInt(9));
-					boardHex[square.x][square.y] = tempBoard[square.x][square.y];
-					for (int k = 0; k < 8; k++) {
-						boardLabelsHex[square.x][square.y][k].setText("");
-					}
-					boardTextHex[square.x][square.y].setText(valToTextHex(boardHex[square.x][square.y]));
-					startBlinkingArea(square.x, square.y);
-				}
-			}
-		});
-
-		undoButton = new Button(grpActionButtons, SWT.PUSH);
-		undoButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		undoButton.setEnabled(false);
-		undoButton.setText(Messages.SudokuComposite_UndoButton);
-		undoButton.setToolTipText(Messages.SudokuComposite_UndoButton_Tooltip);
-		undoButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(final SelectionEvent e) {
-				if (movesHex.size() > 0) {
-					Point pt = movesHex.get(movesHex.size() - 1);
-					movesHex.remove(movesHex.size() - 1);
-					boardTextHex[pt.x][pt.y].setText("");
-					updateBoardDataWithUserInputHex(boardTextHex[pt.x][pt.y], "");
-					if (movesHex.size() == 0)
-						undoButton.setEnabled(false);
-				}
-			}
-		});
-
-		showPossibleButton = new Button(grpActionButtons, SWT.PUSH);
-		showPossibleButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		showPossibleButton.setEnabled(false);
-		showPossibleButton.setText(Messages.SudokuComposite_ShowPossibleButton);
-		showPossibleButton.setToolTipText(Messages.SudokuComposite_ShowPossibleButton_Tooltip);
-		showPossibleButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(final SelectionEvent e) {
-				if (showPossible) {
-					showPossible = false;
-					showPossibleButton.setBackground(ColorService.RED);
-				} else {
-					showPossible = true;
-					showPossibleButton.setBackground(ColorService.GREEN);
-				}
-				updatePossibilitiesHex(boardHex, possibleHex, true);
-				refresh();
-			}
-		});
-
-		autoFillOneButton = new Button(grpActionButtons, SWT.PUSH);
-		autoFillOneButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		autoFillOneButton.setEnabled(false);
-		autoFillOneButton.setText(Messages.SudokuComposite_AutoFillOneButton);
-		autoFillOneButton.setToolTipText(Messages.SudokuComposite_AutoFillOneButton_Tooltip);
-		autoFillOneButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(final SelectionEvent e) {
-				fillOneHex();
-				refresh();
-			}
-		});
-
+		
 		loadStandardPuzzle = new Button(grpActionButtons, SWT.PUSH);
 		loadStandardPuzzle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		loadStandardPuzzle.setText(Messages.SudokuComposite_LoadStandardPuzzle);
@@ -497,8 +410,100 @@ public class HexPuzzle extends Composite {
 				refresh();
 			}
 		});
+		
+		Group grpOptionButtons = new Group(mainComposite, SWT.NONE);
+		grpOptionButtons.setLayout(new GridLayout());
+		grpOptionButtons.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		grpOptionButtons.setText(Messages.SudokuComposite_optionsAreaTitle);
 
-		saveButton = new Button(grpActionButtons, SWT.PUSH);
+		solveButton = new Button(grpOptionButtons, SWT.PUSH);
+		solveButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		solveButton.setEnabled(false);
+		solveButton.setText(Messages.SudokuComposite_SolveButton);
+		solveButton.setToolTipText(Messages.SudokuComposite_SolveButton_Tooltip);
+		solveButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent e) {
+				dummyJob.setUser(true);
+				dummyJob.schedule();
+			}
+		});
+
+		hintButton = new Button(grpOptionButtons, SWT.PUSH);
+		hintButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		hintButton.setEnabled(false);
+		hintButton.setText(Messages.SudokuComposite_HintButton);
+		hintButton.setToolTipText(Messages.SudokuComposite_HintButton_Tooltip);
+		hintButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent e) {
+				if (backgroundSolved && getEmptySquare(boardHex) != null) {
+					Point square = new Point(rnd.nextInt(16), rnd.nextInt(16));
+					while (boardHex[square.x][square.y] > -1)
+						square = new Point(rnd.nextInt(9), rnd.nextInt(9));
+					boardHex[square.x][square.y] = tempBoard[square.x][square.y];
+					for (int k = 0; k < 8; k++) {
+						boardLabelsHex[square.x][square.y][k].setText("");
+					}
+					boardTextHex[square.x][square.y].setText(valToTextHex(boardHex[square.x][square.y]));
+					startBlinkingArea(square.x, square.y);
+				}
+			}
+		});
+
+		undoButton = new Button(grpOptionButtons, SWT.PUSH);
+		undoButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		undoButton.setEnabled(false);
+		undoButton.setText(Messages.SudokuComposite_UndoButton);
+		undoButton.setToolTipText(Messages.SudokuComposite_UndoButton_Tooltip);
+		undoButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent e) {
+				if (movesHex.size() > 0) {
+					Point pt = movesHex.get(movesHex.size() - 1);
+					movesHex.remove(movesHex.size() - 1);
+					boardTextHex[pt.x][pt.y].setText("");
+					updateBoardDataWithUserInputHex(boardTextHex[pt.x][pt.y], "");
+					if (movesHex.size() == 0)
+						undoButton.setEnabled(false);
+				}
+			}
+		});
+
+		showPossibleButton = new Button(grpOptionButtons, SWT.PUSH);
+		showPossibleButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		showPossibleButton.setEnabled(false);
+		showPossibleButton.setText(Messages.SudokuComposite_ShowPossibleButton);
+		showPossibleButton.setToolTipText(Messages.SudokuComposite_ShowPossibleButton_Tooltip);
+		showPossibleButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent e) {
+				if (showPossible) {
+					showPossible = false;
+					showPossibleButton.setBackground(ColorService.RED);
+				} else {
+					showPossible = true;
+					showPossibleButton.setBackground(ColorService.GREEN);
+				}
+				updatePossibilitiesHex(boardHex, possibleHex, true);
+				refresh();
+			}
+		});
+
+		autoFillOneButton = new Button(grpOptionButtons, SWT.PUSH);
+		autoFillOneButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		autoFillOneButton.setEnabled(false);
+		autoFillOneButton.setText(Messages.SudokuComposite_AutoFillOneButton);
+		autoFillOneButton.setToolTipText(Messages.SudokuComposite_AutoFillOneButton_Tooltip);
+		autoFillOneButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent e) {
+				fillOneHex();
+				refresh();
+			}
+		});
+
+		saveButton = new Button(grpOptionButtons, SWT.PUSH);
 		saveButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		saveButton.setEnabled(true);
 		saveButton.setText(Messages.SudokuComposite_SaveButton);
@@ -510,7 +515,7 @@ public class HexPuzzle extends Composite {
 			}
 		});
 
-		clearButton = new Button(grpActionButtons, SWT.PUSH);
+		clearButton = new Button(grpOptionButtons, SWT.PUSH);
 		clearButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		clearButton.setEnabled(true);
 		clearButton.setText(Messages.SudokuComposite_ClearButton);
