@@ -1407,7 +1407,7 @@ public class NormalPuzzle extends Composite {
 	 * Creates the title and description
 	 * @param normalPuzzle The parent Composite
 	 */
-	private void createHead(NormalPuzzle normalPuzzle) {
+	private void createHead(Composite normalPuzzle) {
 		Composite headComposite = new Composite(normalPuzzle, SWT.NONE);
 		headComposite.setLayout(new GridLayout());
 		GridData gd_headComposite = new GridData(SWT.FILL, SWT.FILL, true, false);

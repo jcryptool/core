@@ -60,7 +60,8 @@ public class SudokuView extends ViewPart {
         ScrolledComposite sc3 = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
         sc3.setExpandHorizontal(true);
         sc3.setExpandVertical(true);
-        SudokuComposite c3 = new SudokuComposite(sc3, HEX, SWT.NONE);
+//        SudokuComposite c3 = new SudokuComposite(sc3, HEX, SWT.NONE);
+        HexPuzzle c3 = new HexPuzzle(sc3, SWT.NONE);
         sc3.setContent(c3);
         sc3.setMinSize(c3.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti3.setControl(sc3);

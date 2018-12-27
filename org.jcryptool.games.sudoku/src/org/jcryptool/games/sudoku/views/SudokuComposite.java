@@ -41,7 +41,7 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Color;
+//import org.eclipse.swt.graphics.Color;
 //import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -49,7 +49,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
+//import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
@@ -66,7 +66,7 @@ import org.jcryptool.games.sudoku.SudokuPlugin;
 
 public class SudokuComposite extends Composite {
 
-	public Display display;
+//	public Display display;
 
 //	public final int NORMAL = 1, KILLER = 2, HEX = 3;
 //	public final int KILLER = 2, HEX = 3;
@@ -100,7 +100,11 @@ public class SudokuComposite extends Composite {
 //	public List<List<List<Integer>>> possibleHex, guessPossibleHex, tempPossibleKiller, tempPossibleHex;
 	public List<List<List<Integer>>> possibleHex, guessPossibleHex, tempPossibleHex;
 
-	public Color WHITE, GREEN, GRAY, RED, BLACK;
+//	public Color WHITE, GREEN, GRAY, RED, BLACK;
+//	public Color GREEN, GRAY, RED, BLACK;
+//	public Color GRAY, RED, BLACK;
+//	public Color RED, BLACK;
+//	public Color BLACK;
 
 	public Button solveButton, showPossibleButton, autoFillOneButton, loadButton, saveButton, clearButton,
 			boxRuleButton, loadStandardPuzzle;
@@ -131,8 +135,14 @@ public class SudokuComposite extends Composite {
 
 //	public Composite playField;
 
-	public boolean showPossible, autoFillOne, solved, loading, solving, boxRule, killerFirstPossible, loadedKiller,
-			solveMode = false, backgroundSolved = false;
+//	public boolean showPossible, autoFillOne, solved, loading, solving, boxRule, killerFirstPossible, loadedKiller,
+//			solveMode = false, backgroundSolved = false;
+//	public boolean showPossible, autoFillOne, solved, loading, solving, killerFirstPossible, loadedKiller,
+//	solveMode = false, backgroundSolved = false;
+//	public boolean showPossible, autoFillOne, solved, loading, solving, loadedKiller,
+//	solveMode = false, backgroundSolved = false;
+	public boolean showPossible, autoFillOne, solved, loading, solving,
+	solveMode = false, backgroundSolved = false;
 
 	public Runnable refresh, backgroundSolveComplete, solveComplete;
 
@@ -150,20 +160,20 @@ public class SudokuComposite extends Composite {
 
 	public SudokuComposite(final Composite parent, final int tabChoice, final int style) {
 		super(parent, style);
-		display = getDisplay();
+//		display = getDisplay();
 		this.tabChoice = tabChoice;
 		initialize();
-		WHITE = ColorService.WHITE;
-		GREEN = ColorService.GREEN;
-		GRAY = ColorService.GRAY;
-		RED = ColorService.RED;
-		BLACK = ColorService.BLACK;
+//		WHITE = ColorService.WHITE;
+//		GREEN = ColorService.GREEN;
+//		GRAY = ColorService.GRAY;
+//		RED = ColorService.RED;
+//		BLACK = ColorService.BLACK;
 		showPossible = true;
-		boxRule = false;
-		killerFirstPossible = false;
+//		boxRule = false;
+//		killerFirstPossible = false;
 		autoFillOne = false;
 		solved = false;
-		loadedKiller = false;
+//		loadedKiller = false;
 		loading = false;
 		rnd = new Random(System.currentTimeMillis());
 //		movesNormal = new Vector<Point>();
@@ -285,7 +295,7 @@ public class SudokuComposite extends Composite {
 //						}
 //					}
 //					if (solveNormal(tempBoard)) {
-//						display.asyncExec(backgroundSolveComplete);
+//						getDisplay().asyncExec(backgroundSolveComplete);
 //					}
 //				}
 //					break;
@@ -310,7 +320,7 @@ public class SudokuComposite extends Composite {
 //						singleOuttie(tempBoard);
 //					humanStrategiesKiller(tempBoard, tempPossibleKiller);
 //					if (solveKiller(tempBoard, monitor)) {
-//						display.asyncExec(backgroundSolveComplete);
+//						getDisplay().asyncExec(backgroundSolveComplete);
 //					} else {
 //						return Status.CANCEL_STATUS;
 //					}
@@ -336,7 +346,7 @@ public class SudokuComposite extends Composite {
 					humanStrategiesHex(tempBoard, tempPossibleHex);
 					guessOnDiagonalHex(tempBoard, tempPossibleHex);
 					if (solveHex(tempBoard, monitor)) {
-						display.asyncExec(backgroundSolveComplete);
+						getDisplay().asyncExec(backgroundSolveComplete);
 					} else {
 						return Status.CANCEL_STATUS;
 					}
@@ -355,13 +365,13 @@ public class SudokuComposite extends Composite {
 			public void run() {
 				switch (tabChoice) {
 //				case NORMAL:
-//					labelCellNormal[x][y].setBackground(RED);
+//					labelCellNormal[x][y].setBackground(ColorService.RED);
 //					break;
 //				case KILLER:
-//					labelCellKiller[x][y].setBackground(RED);
+//					labelCellKiller[x][y].setBackground(ColorService.RED);
 //					break;
 				case HEX:
-					labelCellHex[x][y].setBackground(RED);
+					labelCellHex[x][y].setBackground(ColorService.RED);
 					break;
 				}
 				try {
@@ -376,13 +386,13 @@ public class SudokuComposite extends Composite {
 			public void run() {
 				switch (tabChoice) {
 //				case NORMAL:
-//					labelCellNormal[x][y].setBackground(WHITE);
+//					labelCellNormal[x][y].setBackground(ColorService.WHITE);
 //					break;
 //				case KILLER:
-//					labelCellKiller[x][y].setBackground(WHITE);
+//					labelCellKiller[x][y].setBackground(ColorService.WHITE);
 //					break;
 				case HEX:
-					labelCellHex[x][y].setBackground(WHITE);
+					labelCellHex[x][y].setBackground(ColorService.WHITE);
 					break;
 				}
 				try {
@@ -406,9 +416,9 @@ public class SudokuComposite extends Composite {
 //				case NORMAL:
 //					for (int i = 0; i < 9; i++) {
 //						for (int j = 0; j < 9; j++) {
-//							labelCellNormal[i][j].setBackground(WHITE);
+//							labelCellNormal[i][j].setBackground(ColorService.WHITE);
 //							for (int k = 0; k < 8; k++) {
-//								boardLabelsNormal[i][j][k].setBackground(WHITE);
+//								boardLabelsNormal[i][j][k].setBackground(ColorService.WHITE);
 //							}
 //						}
 //					}
@@ -416,9 +426,9 @@ public class SudokuComposite extends Composite {
 //				case KILLER:
 //					for (int i = 0; i < 9; i++) {
 //						for (int j = 0; j < 9; j++) {
-//							labelCellKiller[i][j].setBackground(WHITE);
+//							labelCellKiller[i][j].setBackground(ColorService.WHITE);
 //							for (int k = 0; k < 8; k++) {
-//								boardLabelsKiller[i][j][k].setBackground(WHITE);
+//								boardLabelsKiller[i][j][k].setBackground(ColorService.WHITE);
 //							}
 //						}
 //					}
@@ -426,9 +436,9 @@ public class SudokuComposite extends Composite {
 				case HEX:
 					for (int i = 0; i < 16; i++) {
 						for (int j = 0; j < 16; j++) {
-							labelCellHex[i][j].setBackground(WHITE);
+							labelCellHex[i][j].setBackground(ColorService.WHITE);
 							for (int k = 0; k < 8; k++) {
-								boardLabelsHex[i][j][k].setBackground(WHITE);
+								boardLabelsHex[i][j][k].setBackground(ColorService.WHITE);
 							}
 						}
 					}
@@ -444,14 +454,14 @@ public class SudokuComposite extends Composite {
 		createHead();
 		createMain();
 //		if (tabChoice == KILLER) {
-//			boxRuleButton.setBackground(RED);
+//			boxRuleButton.setBackground(ColorService.RED);
 //		}
-		showPossibleButton.setBackground(GREEN);
+		showPossibleButton.setBackground(ColorService.GREEN);
 	}
 
 	public void createHead() {
 		final Composite headComposite = new Composite(this, SWT.NONE);
-//        headComposite.setBackground(WHITE);
+//        headComposite.setBackground(ColorService.WHITE);
 		GridData gd_headComposite = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gd_headComposite.minimumWidth = 300;
 		gd_headComposite.widthHint = 300;
@@ -460,7 +470,7 @@ public class SudokuComposite extends Composite {
 
 		final StyledText title = new StyledText(headComposite, SWT.READ_ONLY);
 		title.setFont(FontService.getHeaderFont());
-		title.setBackground(WHITE);
+		title.setBackground(ColorService.WHITE);
 
 		/** Deals with the choice of scheme */
 		switch (tabChoice) {
@@ -500,7 +510,7 @@ public class SudokuComposite extends Composite {
 		createPlayFieldArea(mainGroup);
 		makeWhite();
 
-		display.asyncExec(refresh);
+		getDisplay().asyncExec(refresh);
 	}
 
 	public void createButtonArea(final Composite parent) {
@@ -568,8 +578,8 @@ public class SudokuComposite extends Composite {
 //					divisionButton.setEnabled(false);
 //					if (selected.size() > 0) {
 //						for (int i = 0; i < selected.size(); i++) {
-//							labelCellKiller[selected.get(i).x][selected.get(i).y].setBackground(WHITE);
-//							boardTextKiller[selected.get(i).x][selected.get(i).y].setBackground(WHITE);
+//							labelCellKiller[selected.get(i).x][selected.get(i).y].setBackground(ColorService.WHITE);
+//							boardTextKiller[selected.get(i).x][selected.get(i).y].setBackground(ColorService.WHITE);
 //						}
 //						selected.clear();
 //					}
@@ -784,7 +794,7 @@ public class SudokuComposite extends Composite {
 //		if (tabChoice == KILLER) {
 //			boxRuleButton = new Button(grpActionButtons, SWT.PUSH);
 //			boxRuleButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-//			boxRuleButton.setBackground(GREEN);
+//			boxRuleButton.setBackground(ColorService.GREEN);
 //			boxRuleButton.setEnabled(true);
 //			boxRuleButton.setText(Messages.SudokuComposite_BoxRuleButton);
 //			boxRuleButton.setToolTipText(Messages.SudokuComposite_BoxRuleButton_Tooltip);
@@ -793,10 +803,10 @@ public class SudokuComposite extends Composite {
 //				public void widgetSelected(final SelectionEvent e) {
 //					if (boxRule) {
 //						boxRule = false;
-//						boxRuleButton.setBackground(RED);
+//						boxRuleButton.setBackground(ColorService.RED);
 //					} else {
 //						boxRule = true;
-//						boxRuleButton.setBackground(GREEN);
+//						boxRuleButton.setBackground(ColorService.GREEN);
 //					}
 //					refresh();
 //				}
@@ -813,10 +823,10 @@ public class SudokuComposite extends Composite {
 			public void widgetSelected(final SelectionEvent e) {
 				if (showPossible) {
 					showPossible = false;
-					showPossibleButton.setBackground(RED);
+					showPossibleButton.setBackground(ColorService.RED);
 				} else {
 					showPossible = true;
-					showPossibleButton.setBackground(GREEN);
+					showPossibleButton.setBackground(ColorService.GREEN);
 				}
 				switch (tabChoice) {
 //				case NORMAL:
@@ -1133,8 +1143,8 @@ public class SudokuComposite extends Composite {
 //							areas.add(new Area(ADDITION, selected, value));
 //						}
 //						for (int i = 0; i < selected.size(); i++) {
-//							labelCellKiller[selected.get(i).x][selected.get(i).y].setBackground(WHITE);
-//							boardTextKiller[selected.get(i).x][selected.get(i).y].setBackground(WHITE);
+//							labelCellKiller[selected.get(i).x][selected.get(i).y].setBackground(ColorService.WHITE);
+//							boardTextKiller[selected.get(i).x][selected.get(i).y].setBackground(ColorService.WHITE);
 //						}
 //						selected.clear();
 //						updateInitialPossibilitiesKiller();
@@ -1171,8 +1181,8 @@ public class SudokuComposite extends Composite {
 //							}
 //						}
 //						for (int i = 0; i < selected.size(); i++) {
-//							labelCellKiller[selected.get(i).x][selected.get(i).y].setBackground(WHITE);
-//							boardTextKiller[selected.get(i).x][selected.get(i).y].setBackground(WHITE);
+//							labelCellKiller[selected.get(i).x][selected.get(i).y].setBackground(ColorService.WHITE);
+//							boardTextKiller[selected.get(i).x][selected.get(i).y].setBackground(ColorService.WHITE);
 //						}
 //						selected.clear();
 //						updateInitialPossibilitiesKiller();
@@ -1207,8 +1217,8 @@ public class SudokuComposite extends Composite {
 //							areas.add(new Area(MULTIPLICATION, selected, value));
 //						}
 //						for (int i = 0; i < selected.size(); i++) {
-//							labelCellKiller[selected.get(i).x][selected.get(i).y].setBackground(WHITE);
-//							boardTextKiller[selected.get(i).x][selected.get(i).y].setBackground(WHITE);
+//							labelCellKiller[selected.get(i).x][selected.get(i).y].setBackground(ColorService.WHITE);
+//							boardTextKiller[selected.get(i).x][selected.get(i).y].setBackground(ColorService.WHITE);
 //						}
 //						selected.clear();
 //						updateInitialPossibilitiesKiller();
@@ -1245,8 +1255,8 @@ public class SudokuComposite extends Composite {
 //							}
 //						}
 //						for (int i = 0; i < selected.size(); i++) {
-//							labelCellKiller[selected.get(i).x][selected.get(i).y].setBackground(WHITE);
-//							boardTextKiller[selected.get(i).x][selected.get(i).y].setBackground(WHITE);
+//							labelCellKiller[selected.get(i).x][selected.get(i).y].setBackground(ColorService.WHITE);
+//							boardTextKiller[selected.get(i).x][selected.get(i).y].setBackground(ColorService.WHITE);
 //						}
 //						selected.clear();
 //						updateInitialPossibilitiesKiller();
@@ -1306,7 +1316,7 @@ public class SudokuComposite extends Composite {
 //			}
 //		} catch (NumberFormatException nfe) {
 //			LogUtil.logError(SudokuPlugin.PLUGIN_ID, nfe);
-//			MessageBox brokenFile = new MessageBox(display.getActiveShell(), SWT.OK);
+//			MessageBox brokenFile = new MessageBox(getDisplay().getActiveShell(), SWT.OK);
 //			brokenFile.setText("Loading puzzle encountered a problem");
 //			brokenFile.setMessage("Puzzle could not be loadeed. There is a wrong character in the loaded file.\n");
 //			brokenFile.open();
@@ -1330,7 +1340,7 @@ public class SudokuComposite extends Composite {
 //	}
 
 	private String openFileDialog(int type) {
-		FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), type);
+		FileDialog dialog = new FileDialog(getDisplay().getActiveShell(), type);
 		dialog.setFilterPath(DirectoryService.getUserHomeDir());
 		dialog.setFilterExtensions(new String[] { "*.sud" });
 		dialog.setFilterNames(new String[] { "Sudoku Files (*.sud)" });
@@ -1371,7 +1381,7 @@ public class SudokuComposite extends Composite {
 //			printFileNotFoundExceptionDialogSaving(e);
 //			return false;
 //		} catch (IOException e) {
-//			MessageBox ioExceptionDialog = new MessageBox(display.getActiveShell(), SWT.OK);
+//			MessageBox ioExceptionDialog = new MessageBox(getDisplay().getActiveShell(), SWT.OK);
 //			ioExceptionDialog.setText("Saving puzzle encountered a problem");
 //			ioExceptionDialog.setMessage("An IOException occured. See the error log for further information.");
 //			ioExceptionDialog.open();
@@ -1405,7 +1415,7 @@ public class SudokuComposite extends Composite {
 	 * @param ioe Logs the exception in the error log.
 	 */
 	private void printIOExceptionDialogLoading(IOException ioe) {
-		MessageBox fileNotFound = new MessageBox(display.getActiveShell(), SWT.OK);
+		MessageBox fileNotFound = new MessageBox(getDisplay().getActiveShell(), SWT.OK);
 		fileNotFound.setText("Loading puzzle encountered a problem");
 		fileNotFound.setMessage("An IOException occured. See the error log for more information.");
 		fileNotFound.open();
@@ -1463,7 +1473,7 @@ public class SudokuComposite extends Composite {
 //				} else if (val.equals(":")) {
 //					areas.get(area).setOperator(DIVISION);
 //				} else {
-//					MessageBox fileNotFound = new MessageBox(display.getActiveShell(), SWT.OK);
+//					MessageBox fileNotFound = new MessageBox(getDisplay().getActiveShell(), SWT.OK);
 //					fileNotFound.setText("Invalid Operator in loaded file");
 //					fileNotFound.setMessage(
 //							"An invalid operator was found in the loaded file. Operator must be \"+\", \"-\", \"*\", \":\".");
@@ -1506,7 +1516,7 @@ public class SudokuComposite extends Composite {
 	 */
 	private void printFileNotFoundExceptionDialogSaving(FileNotFoundException fnfe) {
 		// Print a message that puzzle is not saved.
-		MessageBox emptyFileDialog = new MessageBox(display.getActiveShell(), SWT.OK);
+		MessageBox emptyFileDialog = new MessageBox(getDisplay().getActiveShell(), SWT.OK);
 		emptyFileDialog.setText("Saving puzzle encountered a problem");
 		emptyFileDialog.setMessage("Puzzle could not be saved. Invalid file path.");
 		emptyFileDialog.open();
@@ -1576,7 +1586,7 @@ public class SudokuComposite extends Composite {
 	 */
 	private void printFileNotFoundExceptionDialogLoading(FileNotFoundException fnfe) {
 		// Print a message that puzzle is not loaded.
-		MessageBox emptyFileDialog = new MessageBox(display.getActiveShell(), SWT.OK);
+		MessageBox emptyFileDialog = new MessageBox(getDisplay().getActiveShell(), SWT.OK);
 		emptyFileDialog.setText("Loading puzzle encountered a problem");
 		emptyFileDialog.setMessage("Puzzle could not be loaded. Invalid file path.");
 		emptyFileDialog.open();
@@ -1735,7 +1745,7 @@ public class SudokuComposite extends Composite {
 	 * @param ioeLogs the given exception in the error log.
 	 */
 	private void printIOExceptionDialogSaving(IOException ioe) {
-		MessageBox emptyFileDialog = new MessageBox(display.getActiveShell(), SWT.OK);
+		MessageBox emptyFileDialog = new MessageBox(getDisplay().getActiveShell(), SWT.OK);
 		emptyFileDialog.setText("Saving puzzle encountered a problem");
 		emptyFileDialog.setMessage("Puzzle could not be saved. An IOException occured.\n"
 				+ "See the error log for further information.");
@@ -1774,8 +1784,8 @@ public class SudokuComposite extends Composite {
 //		}
 //		areas.clear();
 //		for (int i = 0; i < selected.size(); i++) {
-//			labelCellKiller[selected.get(i).x][selected.get(i).y].setBackground(WHITE);
-//			boardTextKiller[selected.get(i).x][selected.get(i).y].setBackground(WHITE);
+//			labelCellKiller[selected.get(i).x][selected.get(i).y].setBackground(ColorService.WHITE);
+//			boardTextKiller[selected.get(i).x][selected.get(i).y].setBackground(ColorService.WHITE);
 //		}
 //		selected.clear();
 //	}
@@ -1956,7 +1966,7 @@ public class SudokuComposite extends Composite {
 //					}
 //				});
 //
-//				labelCellNormal[i][j].setBackground(WHITE);
+//				labelCellNormal[i][j].setBackground(ColorService.WHITE);
 //				GridLayout cellNormalLayout = new GridLayout(3, true);
 //				cellNormalLayout.verticalSpacing = 0;
 //				cellNormalLayout.horizontalSpacing = 0;
@@ -1998,7 +2008,7 @@ public class SudokuComposite extends Composite {
 //				labelCellKiller[i][j] = new Composite(playField, SWT.NONE);
 //				compositeBoxesKiller.put(labelCellKiller[i][j], new Point(i, j));
 //				labelCellKiller[i][j].setLayoutData(gridData);
-//				labelCellKiller[i][j].setBackground(WHITE);
+//				labelCellKiller[i][j].setBackground(ColorService.WHITE);
 //				labelCellKiller[i][j].addListener(SWT.MouseDown, new Listener() {
 //
 //					@Override
@@ -2008,14 +2018,14 @@ public class SudokuComposite extends Composite {
 //						if (!solveMode) {
 //							if (!loadedKiller) {
 //								if (selected.contains(point)) {
-//									composite.setBackground(WHITE);
-//									boardTextKiller[point.x][point.y].setBackground(WHITE);
+//									composite.setBackground(ColorService.WHITE);
+//									boardTextKiller[point.x][point.y].setBackground(ColorService.WHITE);
 //									selected.remove(point);
 //
 //								} else {
 //									if (adjacent(point)) {
-//										composite.setBackground(RED);
-//										boardTextKiller[point.x][point.y].setBackground(RED);
+//										composite.setBackground(ColorService.RED);
+//										boardTextKiller[point.x][point.y].setBackground(ColorService.RED);
 //										selected.add(point);
 //									}
 //								}
@@ -2058,7 +2068,7 @@ public class SudokuComposite extends Composite {
 //					public void paintControl(PaintEvent e) {
 //						Font tempFont = e.gc.getFont();
 //						e.gc.setFont(FontService.getTinyFont());
-//						e.gc.setForeground(RED);
+//						e.gc.setForeground(ColorService.RED);
 //						Point point = compositeBoxesKiller.get(e.widget);
 //						Rectangle a = ((Composite) e.getSource()).getClientArea();
 //						if (leftLine(point))
@@ -2072,7 +2082,7 @@ public class SudokuComposite extends Composite {
 //						if (rightLine(point))
 //							e.gc.drawLine(a.width - 3, 2, a.width - 3, a.height - 3);
 //						e.gc.setFont(tempFont);
-//						e.gc.setForeground(BLACK);
+//						e.gc.setForeground(ColorService.BLACK);
 //					}
 //				});
 //				GridLayout gridlayout = new GridLayout(3, true);
@@ -2095,7 +2105,7 @@ public class SudokuComposite extends Composite {
 //						for (int k = 0; k < possibleKiller.get(i).get(j).size(); k++) {
 //							boardLabelsKiller[i][j][k + 1]
 //									.setText(Integer.toString(possibleKiller.get(i).get(j).get(k)));
-//							boardLabelsKiller[i][j][k + 1].setBackground(WHITE);
+//							boardLabelsKiller[i][j][k + 1].setBackground(ColorService.WHITE);
 //						}
 //					}
 //				}
@@ -2153,7 +2163,7 @@ public class SudokuComposite extends Composite {
 					}
 				});
 
-				labelCellHex[i][j].setBackground(WHITE);
+				labelCellHex[i][j].setBackground(ColorService.WHITE);
 				GridLayout gridlayout = new GridLayout(3, true);
 				gridlayout.verticalSpacing = 0;
 				gridlayout.horizontalSpacing = 0;
@@ -2341,10 +2351,10 @@ public class SudokuComposite extends Composite {
 //	private Label createLabelKiller(Composite parent) {
 //		final Label label = new Label(parent, SWT.NONE);
 //		label.setAlignment(SWT.CENTER);
-//		label.setBackground(WHITE);
+//		label.setBackground(ColorService.WHITE);
 //		label.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
 //		label.setFont(FontService.getTinyFont());
-//		label.setForeground(RED);
+//		label.setForeground(ColorService.RED);
 //		return label;
 //	}
 
@@ -2443,7 +2453,7 @@ public class SudokuComposite extends Composite {
 //			public void handleEvent(Event e) {
 //				String input = e.text;
 //				Text textbox = (Text) e.widget;
-//				// textbox.setForeground(GREEN);
+//				// textbox.setForeground(ColorService.GREEN);
 //				if (input.length() == 0 && !loading && !solving)
 //					updateBoardDataWithUserInputKiller(textbox, input);
 //				if (!solved && !loading && !solving) {
@@ -2468,7 +2478,7 @@ public class SudokuComposite extends Composite {
 	public Text createTextHex(Composite parent) {
 		Text input = new Text(parent, SWT.CENTER);
 		input.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
-		// input.setForeground(GREEN);
+		// input.setForeground(ColorService.GREEN);
 		input.setTextLimit(1);
 		input.setFont(FontService.getSmallFont());
 
@@ -2714,8 +2724,8 @@ public class SudokuComposite extends Composite {
 //				for (int i = 0; i < 9; i++) {
 //					for (int j = 0; j < 9; j++) {
 //						if (boardNormal[i][j] != 0 && boardNormal[i][j] != tempBoard[i][j]) {
-//							labelCellNormal[i][j].setBackground(RED);
-//							boardTextNormal[i][j].setBackground(RED);
+//							labelCellNormal[i][j].setBackground(ColorService.RED);
+//							boardTextNormal[i][j].setBackground(ColorService.RED);
 //						}
 //					}
 //				}
@@ -2724,8 +2734,8 @@ public class SudokuComposite extends Composite {
 //				for (int i = 0; i < 9; i++) {
 //					for (int j = 0; j < 9; j++) {
 //						if (boardKiller[i][j] != 0 && boardKiller[i][j] != tempBoard[i][j]) {
-//							labelCellKiller[i][j].setBackground(RED);
-//							boardTextKiller[i][j].setBackground(RED);
+//							labelCellKiller[i][j].setBackground(ColorService.RED);
+//							boardTextKiller[i][j].setBackground(ColorService.RED);
 //						}
 //					}
 //				}
@@ -2734,8 +2744,8 @@ public class SudokuComposite extends Composite {
 				for (int i = 0; i < 16; i++) {
 					for (int j = 0; j < 16; j++) {
 						if (boardHex[i][j] != -1 && boardHex[i][j] != tempBoard[i][j]) {
-							labelCellHex[i][j].setBackground(RED);
-							boardTextHex[i][j].setBackground(RED);
+							labelCellHex[i][j].setBackground(ColorService.RED);
+							boardTextHex[i][j].setBackground(ColorService.RED);
 						}
 					}
 				}
@@ -2757,8 +2767,8 @@ public class SudokuComposite extends Composite {
 //		if (num == 0 && boardNormal[point.x][point.y] != 0)
 //			addPossibleNormal(point.x, point.y, boardNormal[point.x][point.y]);
 //		boardNormal[point.x][point.y] = num;
-//		labelCellNormal[point.x][point.y].setBackground(WHITE);
-//		boardTextNormal[point.x][point.y].setBackground(WHITE);
+//		labelCellNormal[point.x][point.y].setBackground(ColorService.WHITE);
+//		boardTextNormal[point.x][point.y].setBackground(ColorService.WHITE);
 //		updatePossibilitiesNormal();
 //	}
 
@@ -2775,8 +2785,8 @@ public class SudokuComposite extends Composite {
 //		if (num == 0 && boardKiller[point.x][point.y] != 0)
 //			addPossibleKiller(point.x, point.y, boardKiller[point.x][point.y]);
 //		boardKiller[point.x][point.y] = num;
-//		labelCellKiller[point.x][point.y].setBackground(WHITE);
-//		boardTextKiller[point.x][point.y].setBackground(WHITE);
+//		labelCellKiller[point.x][point.y].setBackground(ColorService.WHITE);
+//		boardTextKiller[point.x][point.y].setBackground(ColorService.WHITE);
 //		updatePossibilitiesKiller(boardKiller, possibleKiller);
 //	}
 
@@ -2793,8 +2803,8 @@ public class SudokuComposite extends Composite {
 		if (num == -1 && boardHex[point.x][point.y] != -1)
 			addPossibleHex(point.x, point.y, boardHex[point.x][point.y]);
 		boardHex[point.x][point.y] = num;
-		labelCellHex[point.x][point.y].setBackground(WHITE);
-		boardTextHex[point.x][point.y].setBackground(WHITE);
+		labelCellHex[point.x][point.y].setBackground(ColorService.WHITE);
+		boardTextHex[point.x][point.y].setBackground(ColorService.WHITE);
 		updatePossibilitiesHex(boardHex, possibleHex, true);
 	}
 
@@ -2969,7 +2979,7 @@ public class SudokuComposite extends Composite {
 	}
 
 	public boolean sameLineKiller(List<Point> points) {
-		boolean horizontal = true, vertical = true, box = true;
+		boolean horizontal = true, vertical = true, box = true, boxRule = false;
 		for (int i = 0; i < points.size() - 1; i++) {
 			if (points.get(i).x != points.get(i + 1).x)
 				horizontal = false;
@@ -3269,7 +3279,7 @@ public class SudokuComposite extends Composite {
 //				if (showPossible && possibleKiller.get(i).get(j).size() < 8) {
 //					for (int k = 0; k < possibleKiller.get(i).get(j).size(); k++) {
 //						boardLabelsKiller[i][j][k + 1].setText(Integer.toString(possibleKiller.get(i).get(j).get(k)));
-//						boardLabelsKiller[i][j][k + 1].setBackground(WHITE);
+//						boardLabelsKiller[i][j][k + 1].setBackground(ColorService.WHITE);
 //					}
 //					for (int k = possibleKiller.get(i).get(j).size() + 1; k < 8; k++) {
 //						boardLabelsKiller[i][j][k].setText("");
@@ -3305,11 +3315,11 @@ public class SudokuComposite extends Composite {
 //			for (int i = 0; i < 9; i++) {
 //				for (int j = 0; j < 9; j++) {
 //					if (selected.contains(new Point(i, j))) {
-//						labelCellKiller[i][j].setBackground(WHITE);
-//						labelCellKiller[i][j].setBackground(RED);
+//						labelCellKiller[i][j].setBackground(ColorService.WHITE);
+//						labelCellKiller[i][j].setBackground(ColorService.RED);
 //					} else {
-//						labelCellKiller[i][j].setBackground(RED);
-//						labelCellKiller[i][j].setBackground(WHITE);
+//						labelCellKiller[i][j].setBackground(ColorService.RED);
+//						labelCellKiller[i][j].setBackground(ColorService.WHITE);
 //					}
 //				}
 //			}
