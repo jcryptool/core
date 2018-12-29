@@ -70,6 +70,7 @@ public class Messages extends NLS {
 	public static String SudokuComposite_OnePossibleButton;
 	public static String SudokuComposite_OnePossibleButton_Tooltip;
 	public static String SudokuComposite_OperatorsAreaTitle;
+	public static String SudokuComposite_optionsAreaTitle;
 	public static String SudokuComposite_SaveButton;
 	public static String SudokuComposite_SaveButton_Tooltip;
 	public static String SudokuComposite_ShowPossibleButton;

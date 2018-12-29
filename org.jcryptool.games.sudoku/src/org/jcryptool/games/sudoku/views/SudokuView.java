@@ -23,7 +23,8 @@ public class SudokuView extends ViewPart {
 
     public SudokuView() { }
 
-    public final int NORMAL = 1, KILLER = 2, HEX = 3;
+//    public final int NORMAL = 1, KILLER = 2, HEX = 3;
+    public final int KILLER = 2, HEX = 3;
 
 	@Override
 	public void createPartControl(final Composite parent) {
@@ -35,7 +36,8 @@ public class SudokuView extends ViewPart {
         ScrolledComposite sc = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
         sc.setExpandHorizontal(true);
         sc.setExpandVertical(true);
-        SudokuComposite c = new SudokuComposite(sc, NORMAL, SWT.NONE);
+//        SudokuComposite c = new SudokuComposite(sc, NORMAL, SWT.NONE);
+        NormalPuzzle c = new NormalPuzzle(sc, SWT.NONE);
         sc.setContent(c);
         sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti.setControl(sc);
@@ -46,7 +48,8 @@ public class SudokuView extends ViewPart {
         ScrolledComposite sc2 = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
         sc2.setExpandHorizontal(true);
         sc2.setExpandVertical(true);
-        SudokuComposite c2 = new SudokuComposite(sc2, KILLER, SWT.NONE);
+//        SudokuComposite c2 = new SudokuComposite(sc2, KILLER, SWT.NONE);
+        KillerPuzzle c2 = new KillerPuzzle(sc2, SWT.NONE);
         sc2.setContent(c2);
         sc2.setMinSize(c2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti2.setControl(sc2);
@@ -57,7 +60,8 @@ public class SudokuView extends ViewPart {
         ScrolledComposite sc3 = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
         sc3.setExpandHorizontal(true);
         sc3.setExpandVertical(true);
-        SudokuComposite c3 = new SudokuComposite(sc3, HEX, SWT.NONE);
+//        SudokuComposite c3 = new SudokuComposite(sc3, HEX, SWT.NONE);
+        HexPuzzle c3 = new HexPuzzle(sc3, SWT.NONE);
         sc3.setContent(c3);
         sc3.setMinSize(c3.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti3.setControl(sc3);
