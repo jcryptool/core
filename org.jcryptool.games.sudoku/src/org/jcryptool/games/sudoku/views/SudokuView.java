@@ -12,6 +12,7 @@ package org.jcryptool.games.sudoku.views;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.ui.PlatformUI;
@@ -20,15 +21,19 @@ import org.jcryptool.games.sudoku.Messages;
 import org.jcryptool.games.sudoku.SudokuPlugin;
 
 public class SudokuView extends ViewPart {
+	
+	private TabFolder tf;
+	private NormalPuzzle normalSudoku;
+	private KillerPuzzle killerSudoku;
+	private HexPuzzle hexadecimalSudoku;
+	
 
     public SudokuView() { }
 
-//    public final int NORMAL = 1, KILLER = 2, HEX = 3;
-    public final int KILLER = 2, HEX = 3;
-
 	@Override
 	public void createPartControl(final Composite parent) {
-		final TabFolder tf = new TabFolder(parent, SWT.TOP);
+		
+		tf = new TabFolder(parent, SWT.TOP);
 
 		//Normal 9*9 Sudoku Tab
         TabItem ti = new TabItem(tf, SWT.NONE);
@@ -36,10 +41,9 @@ public class SudokuView extends ViewPart {
         ScrolledComposite sc = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
         sc.setExpandHorizontal(true);
         sc.setExpandVertical(true);
-//        SudokuComposite c = new SudokuComposite(sc, NORMAL, SWT.NONE);
-        NormalPuzzle c = new NormalPuzzle(sc, SWT.NONE);
-        sc.setContent(c);
-        sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        normalSudoku = new NormalPuzzle(sc, SWT.NONE);
+        sc.setContent(normalSudoku);
+        sc.setMinSize(normalSudoku.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti.setControl(sc);
 
         //Killer Sudoku Tab
@@ -48,10 +52,9 @@ public class SudokuView extends ViewPart {
         ScrolledComposite sc2 = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
         sc2.setExpandHorizontal(true);
         sc2.setExpandVertical(true);
-//        SudokuComposite c2 = new SudokuComposite(sc2, KILLER, SWT.NONE);
-        KillerPuzzle c2 = new KillerPuzzle(sc2, SWT.NONE);
-        sc2.setContent(c2);
-        sc2.setMinSize(c2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        killerSudoku = new KillerPuzzle(sc2, SWT.NONE);
+        sc2.setContent(killerSudoku);
+        sc2.setMinSize(killerSudoku.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti2.setControl(sc2);
 
         //Hex Sudoku Tab (16*16)
@@ -60,10 +63,9 @@ public class SudokuView extends ViewPart {
         ScrolledComposite sc3 = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
         sc3.setExpandHorizontal(true);
         sc3.setExpandVertical(true);
-//        SudokuComposite c3 = new SudokuComposite(sc3, HEX, SWT.NONE);
-        HexPuzzle c3 = new HexPuzzle(sc3, SWT.NONE);
-        sc3.setContent(c3);
-        sc3.setMinSize(c3.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        hexadecimalSudoku = new HexPuzzle(sc3, SWT.NONE);
+        sc3.setContent(hexadecimalSudoku);
+        sc3.setMinSize(hexadecimalSudoku.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti3.setControl(sc3);
 
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), SudokuPlugin.PLUGIN_ID + ".sudokuview");
@@ -71,6 +73,33 @@ public class SudokuView extends ViewPart {
 
 	@Override
 	public void setFocus() {
+		
+	}
+	
+	/**
+	 * Resets the current Tabitem.</br>
+	 * Very ugly. Strong link between GUI and logic.</br>
+	 * Checks if the current tab item has a child which is an 
+	 * instance of NormalPuzzle, HexPuzzle or KillerPuzzle. If so
+	 * it calls the reset method of this class. 
+	 */
+	public void reset() {
+
+		//Get the current tab item 
+		TabItem tit = tf.getItem(tf.getSelectionIndex());
+		Control ctr = tit.getControl();
+		// ctr has only one child. NormalPuzzle or KillerPuzzle or HexPuzzle.
+		Control [] childs = ((Composite) ctr).getChildren();
+		if (childs[0] instanceof NormalPuzzle) {
+			NormalPuzzle np = (NormalPuzzle) childs[0];
+			np.reset();
+		} else if (childs[0] instanceof KillerPuzzle) {
+			KillerPuzzle kp = (KillerPuzzle) childs[0];
+			kp.reset();
+		} else if (childs[0] instanceof HexPuzzle) {
+			HexPuzzle hp = (HexPuzzle) childs[0];
+			hp.reset();
+		}	
 	}
 
 

@@ -20,6 +20,8 @@ public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.games.sudoku.messages"; //$NON-NLS-1$
 	public static String HexTabTitle;
 	public static String KillerTabTitle;
+	public static String NormalPuzzle_restartPuzzle;
+	public static String NormalPuzzle_restartPuzzleTooltip;
 	public static String NormalTabTitle;
 	public static String SudokuComposite_ActionsAreaTitle;
 	public static String SudokuComposite_AdditionButton;

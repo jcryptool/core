@@ -65,7 +65,7 @@ public class HexPuzzle extends Composite {
 	private Button loadStandardPuzzle;
 	private Button loadButton;
 	private Button saveButton;
-	private Button clearButton;
+	private Button restartButton;
 	private Button onePossibleButton;
 	private Button nakedSingleButton;
 	private Button hiddenSingleButton;
@@ -87,18 +87,34 @@ public class HexPuzzle extends Composite {
 	private boolean solved = false;
 	private boolean loading = false;
 	private Vector<Point> movesHex = new Vector<Point>();
-	private int[][] givenHex = new int[16][16];
+	/**
+	 * This are the fields of the sudoku that contain the possible values (boardLabelsNormal) and the entered
+	 * value in the middle of a field .
+	 */
 	protected Composite[][] labelCellHex;
 	protected int[][] tempBoard;
+	/**
+	 * contains the values that are entered in the sudoku.
+	 */
 	protected int[][] boardHex;
 	protected List<List<List<Integer>>> possibleHex;
 	private boolean solving;
 	private int numberOfGuesses = 0;
+	/**
+	 * The possibilities of each field.
+	 */
 	private Label[][][] boardLabelsHex;
+	/**
+	 * The value in the middle of each field in the sudoku.
+	 */
 	private Text[][] boardTextHex;
 	private Map<Text, UserInputPoint> inputBoxesHex = new HashMap<Text, UserInputPoint>();
 	
-	
+	/**
+	 * Saves the sudoku when changing from enter mode to solve mode. Used to save the initial values 
+	 * of the sudoku to enable a restart.
+	 */
+	protected int [][] originalSudoku = new int[16][16];
 	
 	
 /**
@@ -116,11 +132,11 @@ public class HexPuzzle extends Composite {
 		
 		showPossibleButton.setBackground(ColorService.GREEN);
 		
-		for (int i = 0; i < 16; i++) {
-			for (int j = 0; j < 16; j++) {
-					givenHex[i][j] = 0;
-			}
-		}
+//		for (int i = 0; i < 16; i++) {
+//			for (int j = 0; j < 16; j++) {
+//					givenHex[i][j] = 0;
+//			}
+//		}
 
 		refresh = new Runnable() {
 			@Override
@@ -283,14 +299,17 @@ public class HexPuzzle extends Composite {
 
 				loadStandardPuzzle.setEnabled(false);
 				loadButton.setEnabled(false);
+				
+				restartButton.setEnabled(true);
 
 				for (int i = 0; i < 16; i++) {
 					for (int j = 0; j < 16; j++) {
 						if (boardHex[i][j] > -1) {
 							boardTextHex[i][j].setEditable(false);
-							givenHex[i][j] = 1;
+							boardTextHex[i][j].setFont(FontService.getSmallBoldFont());
+//							givenHex[i][j] = 1;
 						}
-
+						originalSudoku[i][j] = boardHex[i][j];
 					}
 				}
 
@@ -337,10 +356,11 @@ public class HexPuzzle extends Composite {
 
 				loadStandardPuzzle.setEnabled(true);
 				loadButton.setEnabled(true);
+				
+				restartButton.setEnabled(false);
 
 				for (int i = 0; i < 16; i++) {
 					for (int j = 0; j < 16; j++) {
-
 						boardTextHex[i][j].setEditable(true);
 					}
 				}
@@ -515,23 +535,26 @@ public class HexPuzzle extends Composite {
 			}
 		});
 
-		clearButton = new Button(grpOptionButtons, SWT.PUSH);
-		clearButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		clearButton.setEnabled(true);
-		clearButton.setText(Messages.SudokuComposite_ClearButton);
-		clearButton.setToolTipText(Messages.SudokuComposite_ClearButton_Tooltip);
-		clearButton.addSelectionListener(new SelectionAdapter() {
+		restartButton = new Button(grpOptionButtons, SWT.PUSH);
+		restartButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		restartButton.setEnabled(false);
+		restartButton.setText(Messages.NormalPuzzle_restartPuzzle);
+		restartButton.setToolTipText(Messages.NormalPuzzle_restartPuzzleTooltip);
+		restartButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
-				enterModeButton.setSelection(true);
-				solveModeButton.setSelection(false);
-				enterModeButton.notifyListeners(SWT.Selection, null);
-				backgroundSolve.cancel();
-				loading = true;
-
-				clearPuzzleHex();
-
-				loading = false;
+				reset();
+				
+				if (originalSudoku != null) {
+					for (int i = 0; i < 16; i++) {
+						for (int j = 0; j < 16; j++) {
+							boardHex[i][j] = originalSudoku[i][j];
+							boardTextHex[i][j].setText(Integer.toHexString(originalSudoku[i][j]).toUpperCase());
+						}
+					}
+				}
+				updatePossibilitiesHex(boardHex, possibleHex, true);
+				solveModeButton.notifyListeners(SWT.Selection, new Event());
 				refresh();
 			}
 		});
@@ -647,6 +670,26 @@ public class HexPuzzle extends Composite {
 	}
 
 	/**
+	 * Resets the current puzzle.
+	 */
+	protected void reset() {
+		backgroundSolve.cancel();
+		dummyJob.cancel();
+		
+		enterModeButton.setSelection(true);
+		solveModeButton.setSelection(false);
+		restartButton.setEnabled(false);
+		enterModeButton.notifyListeners(SWT.Selection, null);
+		backgroundSolve.cancel();
+		loading = true;
+
+		clearPuzzleHex();
+
+		loading = false;
+		refresh();
+	}
+
+	/**
 	 * Creates the Title and Description of the Hex Sudoku tab.
 	 * @param hexPuzzle The parent composite
 	 */
@@ -721,8 +764,9 @@ public class HexPuzzle extends Composite {
 		if (solved) {
 			for (int i = 0; i < 16; i++) {
 				for (int j = 0; j < 16; j++) {
-					for (int k = 0; k < 8; k++)
+					for (int k = 0; k < 8; k++) {
 						boardLabelsHex[i][j][k].setText("");
+					}
 					boardTextHex[i][j].setText(valToTextHex(boardHex[i][j]));
 				}
 			}
@@ -908,7 +952,6 @@ public class HexPuzzle extends Composite {
 				labelCellHex[i][j].setLayout(gridlayout);
 				for (int k = 0; k < 4; k++) {
 					boardLabelsHex[i][j][k] = createLabelHex(labelCellHex[i][j], k);
-
 				}
 				boardTextHex[i][j] = createTextHex(labelCellHex[i][j]);
 				inputBoxesHex.put(boardTextHex[i][j], new UserInputPoint(i, j));
@@ -945,21 +988,22 @@ public class HexPuzzle extends Composite {
 	 * @return A string 'A', 'B', 'C', 'D', 'E' or 'F'.
 	 */
 	private String valToTextHex(int val) {
-		switch (val) {
-		case 10:
-			return "A";
-		case 11:
-			return "B";
-		case 12:
-			return "C";
-		case 13:
-			return "D";
-		case 14:
-			return "E";
-		case 15:
-			return "F";
-		}
-		return Integer.toString(val);
+//		switch (val) {
+//		case 10:
+//			return "A";
+//		case 11:
+//			return "B";
+//		case 12:
+//			return "C";
+//		case 13:
+//			return "D";
+//		case 14:
+//			return "E";
+//		case 15:
+//			return "F";
+//		}
+//		return Integer.toString(val);
+		return Integer.toHexString(val).toUpperCase();
 	}
 	
 	/**
@@ -1028,8 +1072,9 @@ public class HexPuzzle extends Composite {
 			movesHex.add(pt);
 			undoButton.setEnabled(true);
 		}
-		if (num == -1 && boardHex[point.x][point.y] != -1)
+		if (num == -1 && boardHex[point.x][point.y] != -1) {
 			addPossibleHex(point.x, point.y, boardHex[point.x][point.y]);
+		}
 		boardHex[point.x][point.y] = num;
 		labelCellHex[point.x][point.y].setBackground(ColorService.WHITE);
 		boardTextHex[point.x][point.y].setBackground(ColorService.WHITE);
@@ -1240,11 +1285,13 @@ public class HexPuzzle extends Composite {
 			for (int j = 0; j < 16; j++) {
 				boardHex[i][j] = -1;
 				boardTextHex[i][j].setText("");
-				for (int k = 0; k < 8; k++)
+				for (int k = 0; k < 8; k++) {
 					boardLabelsHex[i][j][k].setText("");
+				}
 				possibleHex.get(i).get(j).clear();
-				for (int k = 0; k < 16; k++)
+				for (int k = 0; k < 16; k++) {
 					possibleHex.get(i).get(j).add(k);
+				}
 			}
 		}
 	}
@@ -2623,7 +2670,7 @@ public class HexPuzzle extends Composite {
 	private Text createTextHex(Composite parent) {
 		Text input = new Text(parent, SWT.CENTER);
 		input.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
-		// input.setForeground(ColorService.GREEN);
+		input.setBackground(ColorService.WHITE);
 		input.setTextLimit(1);
 		input.setFont(FontService.getSmallFont());
 		input.addListener(SWT.Verify, new Listener() {
@@ -2632,26 +2679,34 @@ public class HexPuzzle extends Composite {
 				String input = e.text;
 				Text textbox = (Text) e.widget;
 				UserInputPoint point = inputBoxesHex.get(textbox);
-				if (input.length() == 0 && !loading && !solving)
+				//The case when an entry is removed
+				if (input.length() == 0 && !loading && !solving) {
 					updateBoardDataWithUserInputHex(textbox, input);
+				}
 				if (!solved && !loading && !solving) {
 					if (input.toUpperCase().equals("A") && possibleHex.get(point.x).get(point.y).indexOf(10) != -1) {
-						updateBoardDataWithUserInputHex(textbox, Integer.toString(10));
+//						updateBoardDataWithUserInputHex(textbox, Integer.toString(10));
+						updateBoardDataWithUserInputHex(textbox, "10");
 					} else if (input.toUpperCase().equals("B")
 							&& possibleHex.get(point.x).get(point.y).indexOf(11) != -1) {
-						updateBoardDataWithUserInputHex(textbox, Integer.toString(11));
+//						updateBoardDataWithUserInputHex(textbox, Integer.toString(11));
+						updateBoardDataWithUserInputHex(textbox, "11");
 					} else if (input.toUpperCase().equals("C")
 							&& possibleHex.get(point.x).get(point.y).indexOf(12) != -1) {
-						updateBoardDataWithUserInputHex(textbox, Integer.toString(12));
+//						updateBoardDataWithUserInputHex(textbox, Integer.toString(12));
+						updateBoardDataWithUserInputHex(textbox, "12");
 					} else if (input.toUpperCase().equals("D")
 							&& possibleHex.get(point.x).get(point.y).indexOf(13) != -1) {
-						updateBoardDataWithUserInputHex(textbox, Integer.toString(13));
+//						updateBoardDataWithUserInputHex(textbox, Integer.toString(13));
+						updateBoardDataWithUserInputHex(textbox, "13");
 					} else if (input.toUpperCase().equals("E")
 							&& possibleHex.get(point.x).get(point.y).indexOf(14) != -1) {
-						updateBoardDataWithUserInputHex(textbox, Integer.toString(14));
+//						updateBoardDataWithUserInputHex(textbox, Integer.toString(14));
+						updateBoardDataWithUserInputHex(textbox, "14");
 					} else if (input.toUpperCase().equals("F")
 							&& possibleHex.get(point.x).get(point.y).indexOf(15) != -1) {
-						updateBoardDataWithUserInputHex(textbox, Integer.toString(15));
+//						updateBoardDataWithUserInputHex(textbox, Integer.toString(15));
+						updateBoardDataWithUserInputHex(textbox, "15");
 					} else {
 						char[] chars = new char[input.length()];
 						input.getChars(0, chars.length, chars, 0);
@@ -2663,6 +2718,7 @@ public class HexPuzzle extends Composite {
 								return;
 							}
 						}
+						input = input.toUpperCase();
 						updateBoardDataWithUserInputHex(textbox, input);
 					}
 				}
@@ -2676,39 +2732,34 @@ public class HexPuzzle extends Composite {
 		Vector<Point> affectedPointsH = new Vector<Point>();
 		Vector<Point> affectedPointsV = new Vector<Point>();
 		Vector<Point> affectedPointsS = new Vector<Point>();
-//		if (tabChoice == HEX) {
-			int x = 4 * (int) Math.floor(point.x / 4);
-			int y = 4 * (int) Math.floor(point.y / 4);
-			for (int i = 0; i < 16; i++) {
-				if (point.y != i && possibleHex.get(point.x).get(i).size() == 1
-						&& possibleHex.get(point.x).get(i).get(0) == input)
-					returnValue = true;
-				if (point.x != i && possibleHex.get(i).get(point.y).size() == 1
-						&& possibleHex.get(i).get(point.y).get(0) == input)
-					returnValue = true;
-				if (point.y != i && boardHex[point.x][i] == -1)
-					affectedPointsH.add(new Point(point.x, i));
-				if (point.x != i && boardHex[i][point.y] == -1)
-					affectedPointsV.add(new Point(i, point.y));
-			}
-			for (int i = 0; i < 4; i++) {
-				for (int j = 0; j < 4; j++) {
-					if ((point.x != x + i || point.y != y + j) && possibleHex.get(x + i).get(y + j).size() == 1
-							&& possibleHex.get(x + i).get(y + j).size() == input)
-						returnValue = true;
-					if ((point.x != x + i || point.y != y + j) && boardHex[x + i][y + j] == -1)
-						affectedPointsS.add(new Point(x + i, y + j));
-				}
-			}
-			if (checkSubset(affectedPointsH, possibleHex, input) || checkSubset(affectedPointsV, possibleHex, input)
-					|| checkSubset(affectedPointsS, possibleHex, input))
+
+		int x = 4 * (int) Math.floor(point.x / 4);
+		int y = 4 * (int) Math.floor(point.y / 4);
+		for (int i = 0; i < 16; i++) {
+			if (point.y != i && possibleHex.get(point.x).get(i).size() == 1
+					&& possibleHex.get(point.x).get(i).get(0) == input)
 				returnValue = true;
-//		}
-//		} else {
-//			affectedPointsH = new Vector<Point>();
-//			affectedPointsV = new Vector<Point>();
-//			affectedPointsS = new Vector<Point>();
-//		}
+			if (point.x != i && possibleHex.get(i).get(point.y).size() == 1
+					&& possibleHex.get(i).get(point.y).get(0) == input)
+				returnValue = true;
+			if (point.y != i && boardHex[point.x][i] == -1)
+				affectedPointsH.add(new Point(point.x, i));
+			if (point.x != i && boardHex[i][point.y] == -1)
+				affectedPointsV.add(new Point(i, point.y));
+		}
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				if ((point.x != x + i || point.y != y + j) && possibleHex.get(x + i).get(y + j).size() == 1
+						&& possibleHex.get(x + i).get(y + j).size() == input)
+					returnValue = true;
+				if ((point.x != x + i || point.y != y + j) && boardHex[x + i][y + j] == -1)
+					affectedPointsS.add(new Point(x + i, y + j));
+			}
+		}
+		if (checkSubset(affectedPointsH, possibleHex, input) || checkSubset(affectedPointsV, possibleHex, input)
+				|| checkSubset(affectedPointsS, possibleHex, input)) {
+			returnValue = true;
+		}
 		if (returnValue) {
 			if (backgroundSolved && checkErroneousEntries()) {
 				MessageBox dialog = new MessageBox(getShell(), SWT.ICON_ERROR | SWT.YES | SWT.NO);

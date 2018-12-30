@@ -85,22 +85,35 @@ public class KillerPuzzle extends Composite {
 	private Button loadStandardPuzzle;
 	private Button loadButton;
 	private Button saveButton;
-	private Button clearButton;
+	private Button restartButton;
 	private Button additionButton;
 	private Button subtractionButton;
 	private Button multiplicationButton;
 	private Button divisionButton;
+	
 	protected boolean solveMode;
+	/**
+	 * contains the values that are entered in the sudoku.
+	 */
 	protected int[][] boardKiller;
+	/**
+	 * The value in the middle of each field in the sudoku.
+	 */
 	protected Text[][] boardTextKiller;
-	protected int[][] givenKiller = new int[9][9];
 	protected Vector<Point> movesKiller = new Vector<Point>();
 	protected List<Point> selected;
+	/**
+	 * This are the fields of the sudoku that contain the possible values (boardLabelsNormal) and the entered
+	 * value in the middle of a field .
+	 */
 	protected Composite[][] labelCellKiller;
 	protected Job backgroundSolve;
-	protected boolean backgroundSolved;
 	protected Job dummyJob;
+	protected boolean backgroundSolved;
 	protected Random rnd = new Random(System.currentTimeMillis());
+	/**
+	 * The possibilities of each field.
+	 */
 	protected Label[][][] boardLabelsKiller;
 	protected int[][] tempBoard;
 	private boolean solved;
@@ -117,10 +130,16 @@ public class KillerPuzzle extends Composite {
 	private Runnable refresh;
 	protected Runnable solveComplete;
 	protected Runnable backgroundSolveComplete;
+	/**
+	 * Used to save the initial areas before solving a sudoku. Used by the restart button.
+	 */
+	protected List<Area> originalAreas;
+	/**
+	 * Used to save the initial values before solving a sudoku. Used by the restart button.
+	 */
+	protected int[][] originalSudoku = new int[9][9];
 	
 
-	
-	
 	/**
 	 * A constructor
 	 * @param parent The parent Composite
@@ -136,14 +155,6 @@ public class KillerPuzzle extends Composite {
 		
 		createHead(this);
 		createMain(this);
-		
-		for (int i = 0; i < 16; i++) {
-			for (int j = 0; j < 16; j++) {
-				if (i < 9 && j < 9) {
-					givenKiller[i][j] = 0;
-				}
-			}
-		}
 		
 		refresh = new Runnable() {
 			@Override
@@ -260,8 +271,9 @@ public class KillerPuzzle extends Composite {
 		if (solved) {
 			for (int i = 0; i < 9; i++) {
 				for (int j = 0; j < 9; j++) {
-					for (int k = 0; k < 8; k++)
+					for (int k = 0; k < 8; k++) {
 						boardLabelsKiller[i][j][k].setText("");
+					}
 					boardTextKiller[i][j].setText(Integer.toString(boardKiller[i][j]));
 				}
 			}
@@ -1263,8 +1275,6 @@ public class KillerPuzzle extends Composite {
 		layout.verticalSpacing = layout.horizontalSpacing = 0;
 		playField.setLayout(layout);
 
-//		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
-
 		Map<Composite, Point> compositeBoxesKiller = new HashMap<Composite, Point>();
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
@@ -1348,13 +1358,13 @@ public class KillerPuzzle extends Composite {
 						e.gc.setForeground(ColorService.BLACK);
 					}
 				});
+				
 				GridLayout gridlayout = new GridLayout(3, true);
 				gridlayout.verticalSpacing = 0;
 				gridlayout.horizontalSpacing = 0;
 				labelCellKiller[i][j].setLayout(gridlayout);
 				for (int k = 0; k < 4; k++) {
 					boardLabelsKiller[i][j][k] = createLabelKiller(labelCellKiller[i][j]);
-
 				}
 				boardTextKiller[i][j] = createTextKiller(labelCellKiller[i][j]);
 				inputBoxesKiller.put(boardTextKiller[i][j], new UserInputPoint(i, j));
@@ -1376,18 +1386,17 @@ public class KillerPuzzle extends Composite {
 		}
 	}
 	
-	public Text createTextKiller(Composite parent) {
+	private Text createTextKiller(Composite parent) {
 		Text input = new Text(parent, SWT.CENTER);
 		input.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
 		input.setTextLimit(1);
 		input.setFont(FontService.getSmallFont());
-
 		input.addListener(SWT.Verify, new Listener() {
 			@Override
 			public void handleEvent(Event e) {
+				//Validate the input
 				String input = e.text;
 				Text textbox = (Text) e.widget;
-				// textbox.setForeground(GREEN);
 				if (input.length() == 0 && !loading && !solving)
 					updateBoardDataWithUserInputKiller(textbox, input);
 				if (!solved && !loading && !solving) {
@@ -1531,17 +1540,23 @@ public class KillerPuzzle extends Composite {
 		return false;
 	}
 	
+	/**
+	 * Creates a Label in the given Composite.</br>
+	 * White Background, Centered, tiny font, red foreground.
+	 * @param parent
+	 * @return
+	 */
 	private Label createLabelKiller(Composite parent) {
 		final Label label = new Label(parent, SWT.NONE);
 		label.setAlignment(SWT.CENTER);
 		label.setBackground(ColorService.WHITE);
 		label.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
 		label.setFont(FontService.getTinyFont());
-		label.setForeground(ColorService.RED);
+		label.setForeground(ColorService.BLACK);
 		return label;
 	}
 	
-	public boolean rightLine(Point point) {
+	private boolean rightLine(Point point) {
 		boolean test = false;
 		Area area = null;
 		for (int i = 0; i < areas.size(); i++) {
@@ -1562,7 +1577,7 @@ public class KillerPuzzle extends Composite {
 		return false;
 	}
 	
-	public boolean bottomLine(Point point) {
+	private boolean bottomLine(Point point) {
 		boolean test = false;
 		Area area = null;
 		for (int i = 0; i < areas.size(); i++) {
@@ -1583,7 +1598,7 @@ public class KillerPuzzle extends Composite {
 		return false;
 	}
 	
-	public String topLabelValue(Point point) {
+	private String topLabelValue(Point point) {
 		boolean test = false;
 		Area area = null;
 		for (int i = 0; i < areas.size(); i++) {
@@ -1633,7 +1648,7 @@ public class KillerPuzzle extends Composite {
 		return false;
 	}
 	
-	public boolean topLine(Point point) {
+	private boolean topLine(Point point) {
 		boolean test = false;
 		Area area = null;
 		for (int i = 0; i < areas.size(); i++) {
@@ -1717,14 +1732,23 @@ public class KillerPuzzle extends Composite {
 				loadStandardPuzzle.setEnabled(false);
 				loadButton.setEnabled(false);
 				
+				restartButton.setEnabled(true);
+				
 				for (int i = 0; i < 9; i++) {
 					for (int j = 0; j < 9; j++) {
 						if (boardKiller[i][j] > 0) {
 							boardTextKiller[i][j].setEditable(false);
-							givenKiller[i][j] = 1;
+							boardTextKiller[i][j].setFont(FontService.getSmallBoldFont());
 						}
+						// Copy values in a new int[][]. Used for getting the initial state for 
+						// the possibility of restarting a sudoku.
+						originalSudoku[i][j] = boardKiller[i][j];
 					}
 				}
+				
+				// Copy the list with the areas into a new List
+				// Also used for restarting a sudoku.
+				originalAreas = new ArrayList<Area>(areas);
 				
 				movesKiller.clear();
 				additionButton.setEnabled(false);
@@ -1773,6 +1797,8 @@ public class KillerPuzzle extends Composite {
 
 				loadStandardPuzzle.setEnabled(true);
 				loadButton.setEnabled(true);
+				
+				restartButton.setEnabled(false);
 				
 				for (int i = 0; i < 9; i++) {
 					for (int j = 0; j < 9; j++) {
@@ -1906,8 +1932,7 @@ public class KillerPuzzle extends Composite {
 			}
 			
 			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				
+			public void widgetDefaultSelected(SelectionEvent e) {	
 				
 			}
 		});
@@ -2030,31 +2055,32 @@ public class KillerPuzzle extends Composite {
 			}
 		});
 		
-		clearButton = new Button(grpOptionButtons, SWT.PUSH);
-		clearButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		clearButton.setEnabled(true);
-		clearButton.setText(Messages.SudokuComposite_ClearButton);
-		clearButton.setToolTipText(Messages.SudokuComposite_ClearButton_Tooltip);
-		clearButton.addSelectionListener(new SelectionListener() {
+		restartButton = new Button(grpOptionButtons, SWT.PUSH);
+		restartButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		restartButton.setEnabled(false);
+		restartButton.setText(Messages.SudokuComposite_ClearButton);
+		restartButton.setToolTipText(Messages.SudokuComposite_ClearButton_Tooltip);
+		restartButton.addSelectionListener(new SelectionListener() {
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				enterModeButton.setSelection(true);
-				solveModeButton.setSelection(false);
-				enterModeButton.notifyListeners(SWT.Selection, null);
-				backgroundSolve.cancel();
-				loading = true;
+				reset();
 				
-				clearPuzzleKiller();
-
-				loadedKiller = false;
-				additionButton.setEnabled(true);
-				subtractionButton.setEnabled(true);
-				multiplicationButton.setEnabled(true);
-				divisionButton.setEnabled(true);
+				for (int i = 0; i < 9; i++) {
+					for (int j = 0; j < 9; j++) {
+						boardKiller[i][j] = originalSudoku[i][j];
+						boardTextKiller[i][j].setText(Integer.toString(originalSudoku[i][j]));
+					}
+				}
 				
-				loading = false;
+				areas.clear();
+				areas = new ArrayList<>(originalAreas);
+				originalAreas.clear();
+				updateInitialPossibilitiesKiller();
+				updatePossibilitiesKiller(boardKiller, possibleKiller);
+				solveModeButton.notifyListeners(SWT.Selection, new Event());
 				refresh();
+				
 			}
 			
 			@Override
@@ -2241,6 +2267,32 @@ public class KillerPuzzle extends Composite {
 			}
 		});
 		
+	}
+
+	/**
+	 * Resets the current puzzle
+	 */
+	protected void reset() {
+		backgroundSolve.cancel();
+		dummyJob.cancel();
+		
+		enterModeButton.setSelection(true);
+		solveModeButton.setSelection(false);
+		enterModeButton.notifyListeners(SWT.Selection, null);
+		backgroundSolve.cancel();
+		loading = true;
+		
+		clearPuzzleKiller();
+
+		loadedKiller = false;
+		additionButton.setEnabled(true);
+		subtractionButton.setEnabled(true);
+		multiplicationButton.setEnabled(true);
+		divisionButton.setEnabled(true);
+		restartButton.setEnabled(false);
+		
+		loading = false;
+		refresh();
 	}
 
 	protected boolean savePuzzleKiller() {
@@ -2562,11 +2614,13 @@ public class KillerPuzzle extends Composite {
 			for (int j = 0; j < 9; j++) {
 				boardKiller[i][j] = 0;
 				boardTextKiller[i][j].setText("");
-				for (int k = 0; k < 8; k++)
+				for (int k = 0; k < 8; k++) {
 					boardLabelsKiller[i][j][k].setText("");
+				}
 				possibleKiller.get(i).get(j).clear();
-				for (int k = 1; k <= 9; k++)
+				for (int k = 1; k <= 9; k++) {
 					possibleKiller.get(i).get(j).add(k);
+				}
 			}
 		}
 		areas.clear();
@@ -2596,10 +2650,8 @@ public class KillerPuzzle extends Composite {
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
 				if (selected.contains(new Point(i, j))) {
-					labelCellKiller[i][j].setBackground(ColorService.WHITE);
 					labelCellKiller[i][j].setBackground(ColorService.RED);
 				} else {
-					labelCellKiller[i][j].setBackground(ColorService.RED);
 					labelCellKiller[i][j].setBackground(ColorService.WHITE);
 				}
 			}
@@ -2828,7 +2880,6 @@ public class KillerPuzzle extends Composite {
 						boardLabelsKiller[i][j][k].setText("");
 				}
 				labelCellKiller[i][j].layout();
-//                boardTextKiller[i][j].redraw();
 			}
 		}
 		if (changed) {
