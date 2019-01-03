@@ -131,12 +131,6 @@ public class HexPuzzle extends Composite {
 		createMain(this);
 		
 		showPossibleButton.setBackground(ColorService.GREEN);
-		
-//		for (int i = 0; i < 16; i++) {
-//			for (int j = 0; j < 16; j++) {
-//					givenHex[i][j] = 0;
-//			}
-//		}
 
 		refresh = new Runnable() {
 			@Override
@@ -549,7 +543,7 @@ public class HexPuzzle extends Composite {
 					for (int i = 0; i < 16; i++) {
 						for (int j = 0; j < 16; j++) {
 							boardHex[i][j] = originalSudoku[i][j];
-							boardTextHex[i][j].setText(Integer.toHexString(originalSudoku[i][j]).toUpperCase());
+							boardTextHex[i][j].setText(valToTextHex(originalSudoku[i][j]));
 						}
 					}
 				}
@@ -959,7 +953,8 @@ public class HexPuzzle extends Composite {
 					boardLabelsHex[i][j][k] = createLabelHex(labelCellHex[i][j], k);
 				}
 				if (boardHex[i][j] != -1)
-					boardTextHex[i][j].setText(Integer.toString(boardHex[i][j]));
+//					boardTextHex[i][j].setText(Integer.toString(boardHex[i][j]));
+					boardTextHex[i][j].setText(valToTextHex(boardHex[i][j]));
 				else {
 					if (possibleHex.get(i).get(j).size() < 9) {
 						for (int k = 0; k < possibleHex.get(i).get(j).size(); k++) {
@@ -983,26 +978,12 @@ public class HexPuzzle extends Composite {
 	}
 	
 	/**
-	 * Converts an int into a corresponding string value.
+	 * Converts an int into a corresponding string value.<br>
+	 * The method is only a <code>Integer.toHexString(val).toUpperCase();</code>
 	 * @param val The value that should be converted.
 	 * @return A string 'A', 'B', 'C', 'D', 'E' or 'F'.
 	 */
 	private String valToTextHex(int val) {
-//		switch (val) {
-//		case 10:
-//			return "A";
-//		case 11:
-//			return "B";
-//		case 12:
-//			return "C";
-//		case 13:
-//			return "D";
-//		case 14:
-//			return "E";
-//		case 15:
-//			return "F";
-//		}
-//		return Integer.toString(val);
 		return Integer.toHexString(val).toUpperCase();
 	}
 	
@@ -1211,7 +1192,9 @@ public class HexPuzzle extends Composite {
 			for (int j = 0; j < 16 & !changed; j++) {
 				if (possibleHex.get(i).get(j).size() == 1) {
 					boardHex[i][j] = possibleHex.get(i).get(j).get(0);
-					boardTextHex[i][j].setText(Integer.toString(boardHex[i][j]));
+//					boardTextHex[i][j].setText(Integer.toString(boardHex[i][j]));
+//					boardTextHex[i][j].setText(Integer.toHexString(boardHex[i][j]).toUpperCase());
+					boardTextHex[i][j].setText(valToTextHex(boardHex[i][j]));
 					labelCellHex[i][j].layout();
 					startBlinkingArea(i, j);
 					changed = true;
@@ -2673,6 +2656,14 @@ public class HexPuzzle extends Composite {
 		input.setBackground(ColorService.WHITE);
 		input.setTextLimit(1);
 		input.setFont(FontService.getSmallFont());
+//		input.addVerifyListener(new VerifyListener() {
+//			
+//			@Override
+//			public void verifyText(VerifyEvent e) {
+//				// TODO Auto-generated method stub
+//			}
+//		});
+
 		input.addListener(SWT.Verify, new Listener() {
 			@Override
 			public void handleEvent(Event e) {
@@ -2684,30 +2675,21 @@ public class HexPuzzle extends Composite {
 					updateBoardDataWithUserInputHex(textbox, input);
 				}
 				if (!solved && !loading && !solving) {
-					if (input.toUpperCase().equals("A") && possibleHex.get(point.x).get(point.y).indexOf(10) != -1) {
-//						updateBoardDataWithUserInputHex(textbox, Integer.toString(10));
+					input = input.toUpperCase();
+					if (input.equals("A") && possibleHex.get(point.x).get(point.y).indexOf(10) != -1) {
 						updateBoardDataWithUserInputHex(textbox, "10");
-					} else if (input.toUpperCase().equals("B")
-							&& possibleHex.get(point.x).get(point.y).indexOf(11) != -1) {
-//						updateBoardDataWithUserInputHex(textbox, Integer.toString(11));
+					} else if (input.equals("B") && possibleHex.get(point.x).get(point.y).indexOf(11) != -1) {
 						updateBoardDataWithUserInputHex(textbox, "11");
-					} else if (input.toUpperCase().equals("C")
-							&& possibleHex.get(point.x).get(point.y).indexOf(12) != -1) {
-//						updateBoardDataWithUserInputHex(textbox, Integer.toString(12));
+					} else if (input.equals("C") && possibleHex.get(point.x).get(point.y).indexOf(12) != -1) {
 						updateBoardDataWithUserInputHex(textbox, "12");
-					} else if (input.toUpperCase().equals("D")
-							&& possibleHex.get(point.x).get(point.y).indexOf(13) != -1) {
-//						updateBoardDataWithUserInputHex(textbox, Integer.toString(13));
+					} else if (input.equals("D") && possibleHex.get(point.x).get(point.y).indexOf(13) != -1) {
 						updateBoardDataWithUserInputHex(textbox, "13");
-					} else if (input.toUpperCase().equals("E")
-							&& possibleHex.get(point.x).get(point.y).indexOf(14) != -1) {
-//						updateBoardDataWithUserInputHex(textbox, Integer.toString(14));
+					} else if (input.equals("E") && possibleHex.get(point.x).get(point.y).indexOf(14) != -1) {
 						updateBoardDataWithUserInputHex(textbox, "14");
-					} else if (input.toUpperCase().equals("F")
-							&& possibleHex.get(point.x).get(point.y).indexOf(15) != -1) {
-//						updateBoardDataWithUserInputHex(textbox, Integer.toString(15));
+					} else if (input.equals("F") && possibleHex.get(point.x).get(point.y).indexOf(15) != -1) {
 						updateBoardDataWithUserInputHex(textbox, "15");
 					} else {
+						//Der check auf Längen > 1 ist sinnlos, da das text Limit von Text input 1 ist.
 						char[] chars = new char[input.length()];
 						input.getChars(0, chars.length, chars, 0);
 						for (int i = 0; i < chars.length; i++) {
@@ -2718,12 +2700,14 @@ public class HexPuzzle extends Composite {
 								return;
 							}
 						}
-						input = input.toUpperCase();
 						updateBoardDataWithUserInputHex(textbox, input);
 					}
+					e.text = input;
 				}
 			}
 		});
+
+		//Return the textfield
 		return input;
 	}
 	

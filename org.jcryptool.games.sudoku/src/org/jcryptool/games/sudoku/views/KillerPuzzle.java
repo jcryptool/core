@@ -1252,6 +1252,7 @@ public class KillerPuzzle extends Composite {
 		possibleKiller = new ArrayList<List<List<Integer>>>();
 		selected = new ArrayList<Point>();
 		areas = new ArrayList<Area>();
+		
 		for (int i = 0; i < 9; i++) {
 			possibleKiller.add(new ArrayList<List<Integer>>());
 			for (int j = 0; j < 9; j++) {
@@ -1294,7 +1295,6 @@ public class KillerPuzzle extends Composite {
 									composite.setBackground(ColorService.WHITE);
 									boardTextKiller[point.x][point.y].setBackground(ColorService.WHITE);
 									selected.remove(point);
-
 								} else {
 									if (adjacent(point)) {
 										composite.setBackground(ColorService.RED);
@@ -1371,9 +1371,9 @@ public class KillerPuzzle extends Composite {
 				for (int k = 4; k < 8; k++) {
 					boardLabelsKiller[i][j][k] = createLabelKiller(labelCellKiller[i][j]);
 				}
-				if (boardKiller[i][j] != 0)
+				if (boardKiller[i][j] != 0) {
 					boardTextKiller[i][j].setText(Integer.toString(boardKiller[i][j]));
-				else {
+				} else {
 					if (possibleKiller.get(i).get(j).size() < 8) {
 						for (int k = 0; k < possibleKiller.get(i).get(j).size(); k++) {
 							boardLabelsKiller[i][j][k + 1]
@@ -1853,6 +1853,12 @@ public class KillerPuzzle extends Composite {
 				}
 				
 				refresh();
+				
+				for (int i = 0; i < 9; i++) {
+					for (int j = 0; j < 9; j++) {
+						labelCellKiller[i][j].redraw();
+					}
+				}
 
 				enterModeButton.setSelection(false);
 				solveModeButton.setSelection(true);
@@ -1876,6 +1882,7 @@ public class KillerPuzzle extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				loadPuzzleKiller();
 				refresh();
+				
 			}
 			
 			@Override
