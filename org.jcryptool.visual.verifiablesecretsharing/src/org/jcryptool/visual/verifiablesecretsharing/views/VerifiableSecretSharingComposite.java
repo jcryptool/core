@@ -286,9 +286,8 @@ public class VerifiableSecretSharingComposite extends Composite {
                     }
                     secret = new BigInteger(text);
                     bitlength = secret.bitLength();
-                    //21
-                    //add warning pop-up that computation might take a while
-                    if (firstShowing && Integer.parseInt(text) >= (int) Math.pow(10, 7)) {
+                    //add warning pop-up that computation might take a while if big length greater than 21
+                    if (firstShowing && bitlength > 21) {
                     	MessageDialog.openInformation(getShell(), Messages.VerifiableSecretSharingComposite_notice, Messages.VerifiableSecretSharingComposite_notice_secret_calc_time);
                     	firstShowing = false;
                     }
