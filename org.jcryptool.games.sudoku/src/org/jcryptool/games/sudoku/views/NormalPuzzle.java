@@ -75,13 +75,26 @@ public class NormalPuzzle extends Composite {
 	private Button loadStandardPuzzle;
 	private Button loadButton;
 	private Button saveButton;
-	private Button clearButton;
+	private Button restartButton;
 	
+	/**
+	 * contains the values that are entered in the sudoku.
+	 */
 	private int[][] boardNormal;
+	/**
+	 * This are the fields of the sudoku that contain the possible values (boardLabelsNormal) and the entered
+	 * value in the middle of a field .
+	 */
 	private Composite[][] labelCellNormal;
+	/**
+	 * The possibilities of each field.
+	 */
 	private Label[][][] boardLabelsNormal;
+	/**
+	 * The value in the middle of each field in the sudoku.
+	 */
 	private Text[][] boardTextNormal;
-	private ArrayList<List<List<Integer>>> possibleNormal;
+	private List<List<List<Integer>>> possibleNormal;
 	private Map<Text, UserInputPoint> inputBoxesNormal = new HashMap<Text, UserInputPoint>();
 	protected boolean solveMode;
 	protected Vector<Point> movesNormal = new Vector<Point>();
@@ -93,12 +106,18 @@ public class NormalPuzzle extends Composite {
 	private boolean showPossible = true;
 	private boolean loading = false;
 	private Job backgroundSolve;
+	private Job dummyJob;
 	private Runnable backgroundSolveComplete;
 	protected boolean backgroundSolved;
-	private Job dummyJob;
 	private Runnable solveComplete;
 	private boolean solving;
 	private Runnable refresh;
+	
+	/**
+	 * Saves the sudoku when changing from enter mode to solve mode. Used to save the initial values 
+	 * of the sudoku to enable a restart.
+	 */
+	private int[][] originalSudoku = new int[9][9];
 	
 
 	
@@ -654,23 +673,28 @@ public class NormalPuzzle extends Composite {
 				autoFillOneButton.setEnabled(true);
 				loadStandardPuzzle.setEnabled(false);
 				loadButton.setEnabled(false);
+				restartButton.setEnabled(true);
+				
 				
 				movesNormal.clear();
 				
 				for (int i = 0; i < 9; i++) {
 					for (int j = 0; j < 9; j++) {
-							if (boardNormal[i][j] > 0) {
-								boardTextNormal[i][j].setEditable(false);
-								givenNormal[i][j] = 1;
-							}
+						if (boardNormal[i][j] > 0) {
+							boardTextNormal[i][j].setEditable(false);
+							boardTextNormal[i][j].setFont(FontService.getSmallBoldFont());
+							givenNormal[i][j] = 1;
 						}
+						//Das Ausgangssudoku speichern.
+						originalSudoku[i][j] = boardNormal[i][j];
 					}
+				}
 				
 				if (backgroundSolve.getState() != Job.RUNNING) {
 					backgroundSolve.setSystem(true);
 				}
 				backgroundSolve.schedule();
-				}
+			}
 			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
@@ -698,6 +722,9 @@ public class NormalPuzzle extends Composite {
 
 				loadStandardPuzzle.setEnabled(true);
 				loadButton.setEnabled(true);
+				
+				restartButton.setEnabled(false);
+				
 
 				for (int i = 0; i < 9; i++) {
 					for (int j = 0; j < 9; j++) {
@@ -912,24 +939,26 @@ public class NormalPuzzle extends Composite {
 			}
 		});
 		
-		clearButton = new Button(grpOptionButtons, SWT.PUSH);
-		clearButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		clearButton.setEnabled(true);
-		clearButton.setText(Messages.SudokuComposite_ClearButton);
-		clearButton.setToolTipText(Messages.SudokuComposite_ClearButton_Tooltip);
-		clearButton.addSelectionListener(new SelectionListener() {
+		restartButton = new Button(grpOptionButtons, SWT.PUSH);
+		restartButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		restartButton.setEnabled(false);
+		restartButton.setText(Messages.NormalPuzzle_restartPuzzle);
+		restartButton.setToolTipText(Messages.NormalPuzzle_restartPuzzleTooltip);
+		restartButton.addSelectionListener(new SelectionListener() {
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				enterModeButton.setSelection(true);
-				solveModeButton.setSelection(false);
-				enterModeButton.notifyListeners(SWT.Selection, null);
-				backgroundSolve.cancel();
-				loading = true;
-				
-				clearPuzzleNormal();
-				
-				loading = false;
+				reset();
+				if (originalSudoku != null) {
+					for (int i = 0; i < 9; i++) {
+						for (int j = 0; j < 9; j++) {
+							boardNormal[i][j] = originalSudoku[i][j];
+							boardTextNormal[i][j].setText(Integer.toString(originalSudoku[i][j]));
+						}
+					}
+				}
+				updatePossibilitiesNormal();
+				solveModeButton.notifyListeners(SWT.Selection, new Event());
 				refresh();
 			}
 			
@@ -938,6 +967,26 @@ public class NormalPuzzle extends Composite {
 				
 			}
 		});
+	}
+
+	/**
+	 * resets the puzzle
+	 */
+	protected void reset() {
+		backgroundSolve.cancel();
+		dummyJob.cancel();
+		
+		enterModeButton.setSelection(true);
+		solveModeButton.setSelection(false);
+		restartButton.setEnabled(false);
+		enterModeButton.notifyListeners(SWT.Selection, null);
+		backgroundSolve.cancel();
+		loading = true;
+		
+		clearPuzzleNormal();
+		
+		loading = false;
+		refresh();
 	}
 
 	/**
@@ -966,7 +1015,7 @@ public class NormalPuzzle extends Composite {
 	 * 007209050
 	 * @return True, if saving was successful. False, if something went wrong.
 	 */
-	public boolean savePuzzleNormal() {
+	private boolean savePuzzleNormal() {
 		String fileName = openFileDialog(SWT.SAVE);
 		FileOutputStream out = null;
 
@@ -1050,14 +1099,14 @@ public class NormalPuzzle extends Composite {
 	 *<b>Note:</b> This method is pretty slow!
 	 * @param fileName The path to the file that should be read.
 	 */
-	public boolean loadNormal(String fileName) {
-		long wholeLoadNormalTime = System.currentTimeMillis();
+	private boolean loadNormal(String fileName) {
+//		long wholeLoadNormalTime = System.currentTimeMillis();
 		solved = false;
 		BufferedReader reader = null;
 		clearPuzzleNormal();
 		loading = true;
 		try {
-			long t1 = System.currentTimeMillis();
+//			long t1 = System.currentTimeMillis();
 			reader = new BufferedReader(new FileReader(fileName));
 			int count = 0;
 			String line;
@@ -1070,8 +1119,8 @@ public class NormalPuzzle extends Composite {
 				}
 				count++;
 			}
-			long t2 = System.currentTimeMillis();
-			System.out.println("Laufzeit des try blocks " + ( t2 - t1));
+//			long t2 = System.currentTimeMillis();
+//			System.out.println("Laufzeit des try blocks " + ( t2 - t1));
 		} catch (NumberFormatException nfe) {
 			LogUtil.logError(SudokuPlugin.PLUGIN_ID, nfe);
 			MessageBox brokenFile = new MessageBox(getDisplay().getActiveShell(), SWT.OK);
@@ -1094,8 +1143,8 @@ public class NormalPuzzle extends Composite {
 		}
 		loading = false;
 		updatePossibilitiesNormal();
-		long l = System.currentTimeMillis();
-		System.out.println("Laufzeit der kompletten Schleife " + (l - wholeLoadNormalTime));
+//		long l = System.currentTimeMillis();
+//		System.out.println("Laufzeit der kompletten Schleife " + (l - wholeLoadNormalTime));
 		return true;
 	}
 	
@@ -1125,25 +1174,39 @@ public class NormalPuzzle extends Composite {
 	}
 
 	/**
-	 * Removes all entries from the current sudoku
+	 * Removes all entries from the current sudoku.
 	 */
 	private void clearPuzzleNormal() {
-		long t1 = System.currentTimeMillis();
+//		long laufzeitArray = 0;
+//		long laufzeitListe = 0;
+//		long t1a;
+//		long t2a;
+//		long t1l;
+//		long t2l;
+//		long t1 = System.currentTimeMillis();
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
+//				t1a = System.currentTimeMillis();
 				boardNormal[i][j] = 0;
 				boardTextNormal[i][j].setText(""); //$NON-NLS-1$
 				for (int k = 0; k < 8; k++) {
 					boardLabelsNormal[i][j][k].setText(""); //$NON-NLS-1$
 				}
+//				t2a = System.currentTimeMillis();
+//				laufzeitArray += t2a - t1a;
+//				t1l = System.currentTimeMillis();
 				possibleNormal.get(i).get(j).clear();
 				for (int k = 1; k <= 9; k++) {
 					possibleNormal.get(i).get(j).add(k);
 				}
+//				t2l = System.currentTimeMillis();
+//				laufzeitListe += t2l - t1l;
 			}
 		}
-		long t2 = System.currentTimeMillis();
-		System.out.println("Laufzeit clearPuzzleNormal " + ( t2 - t1));
+//		long t2 = System.currentTimeMillis();
+//		System.out.println("Laufzeit clearPuzzleNormal " + ( t2 - t1));
+//		System.out.println("Laufzeit die Arrays zu resetten: " + laufzeitArray);
+//		System.out.println("Laufzeit die Liste zu reseten: " + laufzeitListe);
 	}
 
 	/**

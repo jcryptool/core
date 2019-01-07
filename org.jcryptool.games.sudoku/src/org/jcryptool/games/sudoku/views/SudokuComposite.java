@@ -513,7 +513,7 @@ public class SudokuComposite extends Composite {
 		getDisplay().asyncExec(refresh);
 	}
 
-	public void createButtonArea(final Composite parent) {
+	private void createButtonArea(final Composite parent) {
 		final Composite mainComposite = new Composite(parent, SWT.SHADOW_NONE);
 		mainComposite.setLayout(new GridLayout());
 		mainComposite.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
