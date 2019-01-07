@@ -64,9 +64,13 @@ public class VerifiableSecretSharingComposite extends Composite {
      * list of safe primes, array-index is bit-length. value is biggest safe prime for this bit-length if value is -1,
      * there is no safe prime for this bit-length
      */
-    private static int[] safePrimes = new int[] { -1, -1, 5, 7, 11, 23, 59, 107, 227, 503, 1019, 2039, 4079, 8147,
-            16223, 32603, 65267, 130787, 262127, 524243, 1048343, 2097143, 4194287 };
-
+    //private static int[] safePrimes = new int[] { -1, -1, 5, 7, 11, 23, 59, 107, 227, 503, 1019, 2039, 4079, 8147,
+    //				16223, 32603, 65267, 130787, 262127, 524243, 1048343, 2097143, 4194287 };
+    private static int[] safePrimes = new int[] { -1, -1, 7, 11, 23, 59, 107, 227, 503, 1019, 2039, 4079, 8147,
+    				16223, 32603, 65267, 130787, 262127, 524243, 1048343, 2097143, 4194287, 8388287, 16776899,
+    				33553799, 67108187, 134217323, 268435019, 536870723, 1073740439, 2147483579, /*4294967087 */ };
+    
+    
     /* if true, commit-Button got clicked */
     private boolean commitmentsChecked = false;
 
@@ -257,6 +261,7 @@ public class VerifiableSecretSharingComposite extends Composite {
 
         });
         secretText.addListener(SWT.Modify, new Listener() {
+            boolean firstShowing = true;
             @Override
 			public void handleEvent(Event e) {
                 int nextPrime;
@@ -269,18 +274,25 @@ public class VerifiableSecretSharingComposite extends Composite {
 //                        secretText.setText("2000000"); //$NON-NLS-1$
 //                        text = "2000000"; //$NON-NLS-1$
                 	if (Integer.parseInt(text) > maxSize) {
-                		secretText.setText(Integer.toString(maxSize));
                 		text = Integer.toString(maxSize);
-                        MessageDialog.openError(getShell(), Messages.VerifiableSecretSharingComposite_error, Messages.VerifiableSecretSharingComposite_descrption_secret_limit);
-                    } else if (Integer.parseInt(text) == 0) {
+                        MessageDialog.openError(getShell(), Messages.VerifiableSecretSharingComposite_error, Messages.VerifiableSecretSharingComposite_error_secret_limit);
+                		secretText.setText(text);
+                	} else if (Integer.parseInt(text) == 0) {
                         Random randomGenerator = new Random();
-                        String newSecret = String.valueOf(randomGenerator.nextInt(2000000));
+                        //String newSecret = String.valueOf(randomGenerator.nextInt(2000000));
+                        String newSecret = String.valueOf(randomGenerator.nextInt(maxSize));
                         secretText.setText(newSecret);
                         text = newSecret;
                     }
                     secret = new BigInteger(text);
                     bitlength = secret.bitLength();
-                    if (bitlength >= 3 && bitlength <= 21) {
+                    //21
+                    //add warning pop-up that computation might take a while
+                    if (firstShowing && Integer.parseInt(text) >= (int) Math.pow(10, 7)) {
+                    	MessageDialog.openInformation(getShell(), Messages.VerifiableSecretSharingComposite_notice, Messages.VerifiableSecretSharingComposite_notice_secret_calc_time);
+                    	firstShowing = false;
+                    }
+                    if (bitlength >= 3 && bitlength <= 40) {
                         nextPrime = safePrimes[bitlength];
                         if (nextPrime <= Integer.parseInt(text) || (nextPrime - 1) / 2 <= Integer.parseInt(text)) {
                             nextPrime = safePrimes[bitlength + 1];
@@ -288,7 +300,7 @@ public class VerifiableSecretSharingComposite extends Composite {
                                 nextPrime = safePrimes[bitlength + 2];
                             }
                         }
-                        moduleText.setText(nextPrime + ""); //$NON-NLS-1$
+                        moduleText.setText(Integer.toString(nextPrime)); //$NON-NLS-1$
                     } else {
                         moduleText.setText(""); //$NON-NLS-1$
                     }
@@ -297,7 +309,7 @@ public class VerifiableSecretSharingComposite extends Composite {
                 }
             }
         });
-
+        
         moduleLabel = new Label(parametersGroup, SWT.NONE);
         moduleLabel.setBackground(WHITE);
         moduleLabel.setText(Messages.VerifiableSecretSharingComposite_parameters_primeMod);

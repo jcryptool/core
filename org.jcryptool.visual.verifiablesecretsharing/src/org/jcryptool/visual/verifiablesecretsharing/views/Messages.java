@@ -107,7 +107,10 @@ public class Messages extends NLS {
 	public static String VerifiableSecretSharingComposite_description_reconstruction_right;
 	public static String VerifiableSecretSharingComposite_description_reconstruction_right_part2;
 	
-	protected static String VerifiableSecretSharingComposite_descrption_secret_limit;
+	public static String VerifiableSecretSharingComposite_error_secret_limit;
+	
+	public static String VerifiableSecretSharingComposite_notice;
+	public static String VerifiableSecretSharingComposite_notice_secret_calc_time;
 
 
 	static {
