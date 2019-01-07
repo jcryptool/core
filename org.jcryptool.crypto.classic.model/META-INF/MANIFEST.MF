@@ -3,18 +3,16 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.crypto.classic.model;singleton:=true
 Bundle-Version: 1.0.0
-Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.apache.commons.cli;bundle-version="1.2.0",
  org.jcryptool.core.operations;bundle-version="1.0.0",
  org.jcryptool.core.util;bundle-version="1.0.0",
- org.apache.commons.cli;bundle-version="1.2.0",
  org.jcryptool.commands.core;bundle-version="1.0.0",
- org.eclipse.jface;bundle-version="3.7.0",
  org.jcryptool.crypto.classic.alphabets;bundle-version="1.0.0",
  org.jcryptool.analysis.textmodify;bundle-version="1.0.0",
- org.eclipse.ui.workbench;bundle-version="3.7.0",
  org.jcryptool.crypto.ui;bundle-version="1.0.0",
- org.jcryptool.core.logging;bundle-version="1.0.0",
- org.eclipse.ui
+ org.jcryptool.core.logging;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.jcryptool.crypto.classic.model.algorithm,
  org.jcryptool.crypto.classic.model.ui.wizard,

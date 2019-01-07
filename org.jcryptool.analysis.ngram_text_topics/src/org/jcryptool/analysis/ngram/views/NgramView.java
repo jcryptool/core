@@ -256,8 +256,7 @@ public class NgramView extends ViewPart {
 					fd_ChooseFile.setFilterPath("\\"); //$NON-NLS-1$
 					fd_ChooseFile.setFilterExtensions(new String[] { "*.*" }); //$NON-NLS-1$
 					File file_LoadReferenceText = new File(fd_ChooseFile.open());
-					FileInputStream fis;
-					fis = new FileInputStream(file_LoadReferenceText);
+					FileInputStream fis = new FileInputStream(file_LoadReferenceText);
 					byte[] content = new byte[fis.available()];
 					referenceText = new String(content);
 					txt_Reference.setEnabled(true);
@@ -267,6 +266,7 @@ public class NgramView extends ViewPart {
 					String path = file_LoadReferenceText.getAbsolutePath();
 					if (fis.available() < 512) {
 						lbl_FileInfo.setText(Messages.NgramView_36);
+						fis.close();
 						throw new Exception();
 					} else {
 						lbl_FileInfo.setText(Messages.NgramView_37 + (path.length() - 60 < 0 ? "" : "...") //$NON-NLS-1$//$NON-NLS-2$

@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -64,7 +64,7 @@ public class NewKeypairPage extends WizardPage {
     private Combo gfield;
 
     /** field for entering the private b */
-    private Text bfield;
+    private Combo bfield;
 
     /** field for entering the public B */
     private Text btext;
@@ -244,8 +244,11 @@ public class NewKeypairPage extends WizardPage {
         
         new Label(composite, SWT.NONE).setText("b = "); //$NON-NLS-1$
         
-        bfield = new Text(composite, SWT.SINGLE | SWT.BORDER);
+        bfield = new Combo(composite, SWT.SINGLE | SWT.BORDER);
         bfield.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        for (int i = 2; i < 100; i++) {
+			bfield.add(Integer.toString(i));
+		}
         bfield.addVerifyListener(VL);
         bfield.addModifyListener(listenerCalculateB);
         

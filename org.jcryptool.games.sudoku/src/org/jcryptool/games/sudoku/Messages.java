@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -20,6 +20,8 @@ public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.games.sudoku.messages"; //$NON-NLS-1$
 	public static String HexTabTitle;
 	public static String KillerTabTitle;
+	public static String NormalPuzzle_restartPuzzle;
+	public static String NormalPuzzle_restartPuzzleTooltip;
 	public static String NormalTabTitle;
 	public static String SudokuComposite_ActionsAreaTitle;
 	public static String SudokuComposite_AdditionButton;
@@ -70,6 +72,7 @@ public class Messages extends NLS {
 	public static String SudokuComposite_OnePossibleButton;
 	public static String SudokuComposite_OnePossibleButton_Tooltip;
 	public static String SudokuComposite_OperatorsAreaTitle;
+	public static String SudokuComposite_optionsAreaTitle;
 	public static String SudokuComposite_SaveButton;
 	public static String SudokuComposite_SaveButton_Tooltip;
 	public static String SudokuComposite_ShowPossibleButton;

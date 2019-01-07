@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2017 JCrypTool Team and Contributors
+* Copyright (c) 2019 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -31,8 +31,6 @@ public class Messages extends NLS {
 	public static String AbstractClassicCryptoPage_transform_name;
 	public static String AbstractClassicTransformationPage_pageMessage;
 	public static String AbstractClassicTransformationPage_pageTitle;
-	public static String WidgetBubbleUIInputHandler_balloon_errorhandling_title;
-	public static String WidgetBubbleUIInputHandler_inputreset_reason_balloon_message;
 	public static String WizardPage_alpha;
 	public static String WizardPage_decrypt;
 	public static String WizardPage_encrypt;

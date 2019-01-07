@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
@@ -404,8 +404,8 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
 //					"Please first load as input a ciphertext to be analyzed. You can do this by either generate the "
 //					+ "ciphertext in the first tab or by loading a stored running-key ciphertext from a file.\n\n"
 //					+ "Bitte laden Sie als Eingabe zuerst einen Geheimtext zum Analysieren. "
-//					+ "Den Geheimtext können Sie entweder im ersten Reiter erzeugen oder indem Sie eine "
-//					+ "Datei laden, die einen abgespeicherten Running-Key-Geheimtext enthält.");
+//					+ "Den Geheimtext kï¿½nnen Sie entweder im ersten Reiter erzeugen oder indem Sie eine "
+//					+ "Datei laden, die einen abgespeicherten Running-Key-Geheimtext enthï¿½lt.");
 //		}
     	
     	if (ViterbiComposite.this.isRunning) {

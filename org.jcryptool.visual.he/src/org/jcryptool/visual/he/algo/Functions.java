@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -11,7 +11,7 @@ package org.jcryptool.visual.he.algo;
 import java.math.BigInteger;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 
 /**
  * Functions necessary for the fully homomorphic encryption scheme by Gentry & Halevi
@@ -367,7 +367,7 @@ public class Functions {
 			for (int j = 0; j < bTemp.length; j++) {
 				//temp2[j] = GHReCrypt.recrypt(fheparams, temp2[j], det, root, pkBlocksX, ctxts);
 			}
-			SubProgressMonitor sm = new SubProgressMonitor(monitor, work/aTemp.length);
+			SubMonitor sm = SubMonitor.convert(monitor, work/aTemp.length);
 			sm.beginTask("", work/aTemp.length);
 			if (i == 0) {
 				for (int j = 0; j < temp2.length; j++) temp[j] = temp2[j];

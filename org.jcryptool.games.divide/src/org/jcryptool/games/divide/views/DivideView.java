@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  * 
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -17,8 +17,7 @@ import java.util.Observer;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.VerifyEvent;
@@ -42,6 +41,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.games.divide.DividePlugin;
 import org.jcryptool.games.divide.dialogs.ChoosePlayerDialog;
@@ -65,10 +65,12 @@ public class DivideView extends ViewPart implements Observer {
 
     // instance vars
     private Composite parent;
-    private SashForm sashForm;
+    private Composite content;
     private Composite upperContent;
     private Group optionsGroup;
-    private Group descriptionGroup;
+    private Composite descriptionComposite;
+    private Text titleText;
+    private Text descriptionText;
     private Button buttonStartGame;
     private Composite playingField;
     private Composite lowerContent;
@@ -99,47 +101,59 @@ public class DivideView extends ViewPart implements Observer {
     @Override
     public void createPartControl(Composite parent) {
         this.parent = parent;
-
-        sashForm = new SashForm(parent, SWT.VERTICAL);
-        sashForm.setLayout(new GridLayout(1, false));
-        sashForm.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
-
-        upperContent = new Composite(sashForm, SWT.NONE);
-        upperContent.setLayout(new GridLayout(1, true));
-        upperContent.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
+        
+        ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+        scrolledComposite.setExpandHorizontal(true);
+        scrolledComposite.setExpandVertical(true);
+        scrolledComposite.setLayout(new GridLayout());
+        
+        content = new Composite(scrolledComposite, SWT.NONE);
+        GridLayout gl_content = new GridLayout();
+        gl_content.marginWidth = 0;
+        gl_content.marginHeight = 0;
+        content.setLayout(gl_content);
 
         // description
-        descriptionGroup = new Group(upperContent, SWT.V_SCROLL);
-        descriptionGroup.setText(Messages.DivideView_19);
-        descriptionGroup.setLayout(new GridLayout(1, false));
-        descriptionGroup.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
-        StyledText description = new StyledText(descriptionGroup, SWT.WRAP | SWT.READ_ONLY);
-        description.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        description.setText(Messages.DivideView_20);
-
+        descriptionComposite = new Composite(content, SWT.NONE);
+        descriptionComposite.setLayout(new GridLayout(1, false));
+        descriptionComposite.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
+        descriptionComposite.setBackground(ColorService.WHITE);
+        
+        scrolledComposite.setContent(content);
+        
+        titleText = new Text(descriptionComposite, SWT.NONE);
+        titleText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        titleText.setFont(FontService.getHeaderFont());
+        titleText.setText(Messages.DivideView_19);
+        titleText.setBackground(ColorService.WHITE);
+        titleText.setEditable(false);
+        
+        descriptionText = new Text(descriptionComposite, SWT.WRAP);
+        GridData gd_descriptionText = new GridData(SWT.FILL, SWT.FILL, true, false);
+        //Needed that the text will wrap
+        gd_descriptionText.widthHint = 800;
+        descriptionText.setLayoutData(gd_descriptionText);
+        descriptionText.setText(Messages.DivideView_20);
+        descriptionText.setBackground(ColorService.WHITE);
+        descriptionText.setEditable(false);
+        
+        upperContent = new Composite(content, SWT.NONE);
+        upperContent.setLayout(new GridLayout(1, true));
+        upperContent.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
+       
         // options pane
-
-        // gaps
-        RowData smallGapLayout = new RowData(1, SWT.DEFAULT);
-        RowData mediumGapLayout = new RowData(25, SWT.DEFAULT);
-        // RowData largeGapLayout = new RowData(15, SWT.DEFAULT);
-        RowData hugeGapLayout = new RowData(50, SWT.DEFAULT);
-
         optionsGroup = new Group(upperContent, SWT.NONE);
         optionsGroup.setText(Messages.DivideView_0);
-        optionsGroup.setLayout(new RowLayout());
+        optionsGroup.setLayout(new GridLayout(7, false));
         optionsGroup.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
-        // RowData fieldData = new RowData(SWT.DEFAULT, SWT.DEFAULT);
 
-        Label labelStartValue = new Label(optionsGroup, SWT.LEFT);
+        Label labelStartValue = new Label(optionsGroup, SWT.NONE);
+        labelStartValue.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 2));
         labelStartValue.setText(Messages.DivideView_4);
         labelStartValue.setFont(FontService.getNormalBoldFont());
 
-        Label gap1 = new Label(optionsGroup, SWT.LEFT);
-        gap1.setLayoutData(smallGapLayout);
-
-        textStartValue = new Text(optionsGroup, SWT.LEFT);
-        textStartValue.setLayoutData(new RowData(60, SWT.DEFAULT));
+        textStartValue = new Text(optionsGroup, SWT.NONE);
+        textStartValue.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 2));
         textStartValue.setTextLimit(9);
         textStartValue.setText(Messages.DivideView_18);
         textStartValue.addVerifyListener(new VerifyListener() {
@@ -153,55 +167,29 @@ public class DivideView extends ViewPart implements Observer {
             }
         });
 
-        Label gap2 = new Label(optionsGroup, SWT.LEFT);
-        gap2.setLayoutData(mediumGapLayout);
-
-        gameType = new Label(optionsGroup, SWT.LEFT);
+        gameType = new Label(optionsGroup, SWT.NONE);
+        GridData gd_gameType = new GridData();
+        gd_gameType.horizontalIndent = 40;
+        gd_gameType.verticalAlignment = SWT.TOP;
+        gd_gameType.verticalSpan = 2;
+        gameType.setLayoutData(gd_gameType);
         gameType.setText(Messages.DivideView_1);
         gameType.setFont(FontService.getNormalBoldFont());
 
-        Label gap3 = new Label(optionsGroup, SWT.LEFT);
-        gap3.setLayoutData(smallGapLayout);
-
-        Composite gameTypeOptions = new Composite(optionsGroup, SWT.LEFT);
-        gameTypeOptions.setLayout(new GridLayout(1, true));
-
-        button1pVsComp = new Button(gameTypeOptions, SWT.RADIO);
-        // button1pVsComp.setLayoutData(fieldData);
+        button1pVsComp = new Button(optionsGroup, SWT.RADIO);
         button1pVsComp.setText(Messages.DivideView_2);
         button1pVsComp.setFont(FontService.getNormalFont());
         button1pVsComp.setSelection(true);
 
-        button1pVs2P = new Button(gameTypeOptions, SWT.RADIO);
-        // button1pVs2P.setLayoutData(fieldData);
-        button1pVs2P.setText(Messages.DivideView_3);
-        button1pVs2P.setFont(FontService.getNormalFont());
-        button1pVs2P.setSelection(false);
-        button1pVs2P.addListener(SWT.Selection, new Listener() {
-
-            @Override
-            public void handleEvent(Event event) {
-                if (button1pVsComp.getSelection()) {
-                    labelStrategy.setEnabled(true);
-                    strategyCombo.setEnabled(true);
-                } else {
-                    labelStrategy.setEnabled(false);
-                    strategyCombo.setEnabled(false);
-                }
-            }
-        });
-
-        Label gap4 = new Label(optionsGroup, SWT.LEFT);
-        gap4.setLayoutData(mediumGapLayout);
-
-        labelStrategy = new Label(optionsGroup, SWT.LEFT);
+        labelStrategy = new Label(optionsGroup, SWT.NONE);
+        GridData gd_labelStrategy = new GridData();
+        gd_labelStrategy.horizontalIndent = 40;
+        labelStrategy.setLayoutData(gd_labelStrategy);
         labelStrategy.setText(Messages.DivideView_21);
         labelStrategy.setFont(FontService.getNormalBoldFont());
 
-        Label gap5 = new Label(optionsGroup, SWT.LEFT);
-        gap5.setLayoutData(smallGapLayout);
-
         strategyCombo = new Combo(optionsGroup, SWT.READ_ONLY);
+        
         for (IStrategy strategy : strategies) {
             if (strategy != null && strategy.getName() != null) {
                 strategyCombo.add(strategy.getName());
@@ -209,10 +197,11 @@ public class DivideView extends ViewPart implements Observer {
         }
         strategyCombo.select(0);
 
-        Label gap6 = new Label(optionsGroup, SWT.LEFT);
-        gap6.setLayoutData(hugeGapLayout);
-
         buttonStartGame = new Button(optionsGroup, SWT.PUSH);
+        GridData gd_buttonStartGame = new GridData();
+        gd_buttonStartGame.horizontalIndent = 60;
+        gd_buttonStartGame.verticalSpan = 2;
+        buttonStartGame.setLayoutData(gd_buttonStartGame);
         buttonStartGame.setText(Messages.DivideView_5);
         buttonStartGame.setFont(FontService.getNormalFont());
         buttonStartGame.addListener(SWT.Selection, new Listener() {
@@ -243,6 +232,23 @@ public class DivideView extends ViewPart implements Observer {
                 }
             }
         });
+        
+        button1pVs2P = new Button(optionsGroup, SWT.RADIO);
+        button1pVs2P.setText(Messages.DivideView_3);
+        button1pVs2P.setFont(FontService.getNormalFont());
+        button1pVs2P.addListener(SWT.Selection, new Listener() {
+
+            @Override
+            public void handleEvent(Event event) {
+                if (button1pVsComp.getSelection()) {
+                    labelStrategy.setEnabled(true);
+                    strategyCombo.setEnabled(true);
+                } else {
+                    labelStrategy.setEnabled(false);
+                    strategyCombo.setEnabled(false);
+                }
+            }
+        });
 
         // create initial playing field according to default number input from config
         playingField = new Composite(upperContent, SWT.NONE);
@@ -252,8 +258,11 @@ public class DivideView extends ViewPart implements Observer {
         IMathEngine tmpMathEngine = new TrivialMathEngine();
         createPlayingField(tmpMathEngine.getDivider(startingNumber));
 
-        lowerContent = new Composite(sashForm, SWT.NONE);
-        lowerContent.setLayout(new GridLayout(1, false));
+        lowerContent = new Composite(content, SWT.NONE);
+        GridLayout gl_lowerContent = new GridLayout();
+        gl_lowerContent.marginWidth = 0;
+        gl_lowerContent.marginHeight = 0;
+        lowerContent.setLayout(gl_lowerContent);
         lowerContent.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
 
         // game information
@@ -267,11 +276,15 @@ public class DivideView extends ViewPart implements Observer {
         detailedGameInformationGroup.setText(Messages.DivideView_11);
         detailedGameInformationGroup.setLayout(new GridLayout());
         detailedGameInformationGroup.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+        
         scoreTable = new Table(detailedGameInformationGroup, SWT.BORDER);
         scoreTable.setLinesVisible(true);
         scoreTable.setHeaderVisible(true);
-        scoreTable.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+        GridData gd_scoreTable = new GridData(GridData.FILL, GridData.FILL, true, true);
+        gd_scoreTable.heightHint = 150;
+        scoreTable.setLayoutData(gd_scoreTable);
         scoreTable.setFocus();
+        
         TableColumn[] columns = new TableColumn[5];
         for (int i = 0; i < columns.length; i++) {
             columns[i] = new TableColumn(scoreTable, SWT.NONE);
@@ -285,6 +298,8 @@ public class DivideView extends ViewPart implements Observer {
             columns[i].pack();
         }
 
+        scrolledComposite.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, DividePlugin.PLUGIN_ID + ".helpView");
     }
 
@@ -426,7 +441,8 @@ public class DivideView extends ViewPart implements Observer {
         for (int i = 0; i < labels.length; i++) {
             labels[i] = new CLabel(playingField, SWT.PUSH | SWT.CENTER);
             labels[i].setText(listOfNumbers.get(i).toString());
-            labels[i].setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+            GridData gd_labels = new GridData(SWT.FILL, SWT.FILL, true, true);
+            labels[i].setLayoutData(gd_labels);
             labels[i].setFont(FontService.getLargeBoldFont());
             labels[i].setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
             labels[i].setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));

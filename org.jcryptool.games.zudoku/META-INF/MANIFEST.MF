@@ -6,7 +6,7 @@ Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.games.zudoku.ZudokuPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.help.ui;bundle-version="3.5.100"
+ org.eclipse.help
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor

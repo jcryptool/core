@@ -4,9 +4,11 @@ Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.analysis.transpositionanalysis; singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.analysis.transpositionanalysis.TranspositionAnalysisPlugin
-Require-Bundle: org.jcryptool.core.operations;bundle-version="1.0.0",
- org.eclipse.help.ui;bundle-version="3.5.100",
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.help,
  org.jcryptool.core.util;bundle-version="1.0.0",
+ org.jcryptool.core.operations;bundle-version="1.0.0",
  org.jcryptool.editor.text;bundle-version="1.0.0",
  org.jcryptool.crypto.classic.transposition;bundle-version="1.0.0",
  org.jcryptool.crypto.ui;bundle-version="1.0.0"

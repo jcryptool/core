@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2017 JCrypTool Team and Contributors
+* Copyright (c) 2019 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -85,7 +85,7 @@ public class LabelBar extends Bar {
     }
 
     protected Point calcTextXY(String myText, int midX, int topMidY, FontMetrics metrics) {
-        int leftX = midX - (myText.length() * metrics.getAverageCharWidth()) / 2;
+        int leftX = (int) (midX - (myText.length() * metrics.getAverageCharacterWidth()) / 2);
         int leftY = topMidY - metrics.getAscent() / 2 - 1;
         return new Point(leftX, leftY);
     }

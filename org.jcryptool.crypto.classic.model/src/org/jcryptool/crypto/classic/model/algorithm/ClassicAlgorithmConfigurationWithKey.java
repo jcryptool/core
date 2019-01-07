@@ -20,7 +20,6 @@ public class ClassicAlgorithmConfigurationWithKey extends
 		super(encryptMode, algorithmName, plaintextAlpha, filterNonalpha,
 				preOpTransformData);
 		this.setKey(key);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -37,11 +36,6 @@ public class ClassicAlgorithmConfigurationWithKey extends
 		}
 
 		return main;
-	}
-	
-	private Text generateKeyDisplay(Composite main,
-			IEditorPart editor) {
-		return generateKeyDisplay(main, editor, getKey());
 	}
 	
 	public static Text generateKeyDisplay(Composite main, IEditorPart editor, String key) {
