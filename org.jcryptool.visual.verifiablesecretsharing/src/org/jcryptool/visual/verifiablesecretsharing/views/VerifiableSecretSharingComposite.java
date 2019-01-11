@@ -64,9 +64,13 @@ public class VerifiableSecretSharingComposite extends Composite {
      * list of safe primes, array-index is bit-length. value is biggest safe prime for this bit-length if value is -1,
      * there is no safe prime for this bit-length
      */
-    private static int[] safePrimes = new int[] { -1, -1, 5, 7, 11, 23, 59, 107, 227, 503, 1019, 2039, 4079, 8147,
-            16223, 32603, 65267, 130787, 262127, 524243, 1048343, 2097143, 4194287 };
-
+    //private static int[] safePrimes = new int[] { -1, -1, 5, 7, 11, 23, 59, 107, 227, 503, 1019, 2039, 4079, 8147,
+    //				16223, 32603, 65267, 130787, 262127, 524243, 1048343, 2097143, 4194287 };
+    private static int[] safePrimes = new int[] { -1, -1, 7, 11, 23, 59, 107, 227, 503, 1019, 2039, 4079, 8147,
+    				16223, 32603, 65267, 130787, 262127, 524243, 1048343, 2097143, 4194287, 8388287, 16776899,
+    				33553799, 67108187, 134217323, 268435019, 536870723, 1073740439, 2147483579, /*4294967087 */ };
+    
+    
     /* if true, commit-Button got clicked */
     private boolean commitmentsChecked = false;
 
@@ -134,8 +138,8 @@ public class VerifiableSecretSharingComposite extends Composite {
     private GridLayout gl_nextStep;
     private Composite nextStepParametersComposite;
     private Button reconstructButton;
-    private Label descriptionLeft;
-    private Label descriptionRight;
+    private Text descriptionLeft;
+    private Text descriptionRight;
     private Label primeFactorLabel;
     private Text primeFactorText;
 
@@ -151,8 +155,8 @@ public class VerifiableSecretSharingComposite extends Composite {
         setLayout(new GridLayout());
         createHead();
         createBody();
-        
-        
+        showDescription(1);
+   
     }
 
     /**
@@ -167,7 +171,7 @@ public class VerifiableSecretSharingComposite extends Composite {
         final Label label = new Label(head, SWT.NONE);
         label.setFont(FontService.getHeaderFont());
         label.setBackground(WHITE);
-        label.setText(Messages.VerifiableSecretSharingComposite_tab_title);
+        label.setText(Messages.VerifiableSecretSharingComposite_title);
 
         stDescription = new StyledText(head, SWT.READ_ONLY | SWT.WRAP);
         GridData gd_stDescription = new GridData(SWT.FILL, SWT.FILL, true, false);
@@ -257,6 +261,7 @@ public class VerifiableSecretSharingComposite extends Composite {
 
         });
         secretText.addListener(SWT.Modify, new Listener() {
+            boolean firstShowing = true;
             @Override
 			public void handleEvent(Event e) {
                 int nextPrime;
@@ -264,18 +269,29 @@ public class VerifiableSecretSharingComposite extends Composite {
                 BigInteger secret;
                 int bitlength = 0;
                 if (!text.isEmpty()) {
-                    if (Integer.parseInt(text) > 2000000) {
-                        secretText.setText("2000000"); //$NON-NLS-1$
-                        text = "2000000"; //$NON-NLS-1$
-                    } else if (Integer.parseInt(text) == 0) {
+                	int maxSize = (int) Math.pow(10, 9);
+//                    if (Integer.parseInt(text) > 2000000) {
+//                        secretText.setText("2000000"); //$NON-NLS-1$
+//                        text = "2000000"; //$NON-NLS-1$
+                	if (Integer.parseInt(text) > maxSize) {
+                		text = Integer.toString(maxSize);
+                        MessageDialog.openError(getShell(), Messages.VerifiableSecretSharingComposite_error, Messages.VerifiableSecretSharingComposite_error_secret_limit);
+                		secretText.setText(text);
+                	} else if (Integer.parseInt(text) == 0) {
                         Random randomGenerator = new Random();
-                        String newSecret = String.valueOf(randomGenerator.nextInt(2000000));
+                        //String newSecret = String.valueOf(randomGenerator.nextInt(2000000));
+                        String newSecret = String.valueOf(randomGenerator.nextInt(maxSize));
                         secretText.setText(newSecret);
                         text = newSecret;
                     }
                     secret = new BigInteger(text);
                     bitlength = secret.bitLength();
-                    if (bitlength >= 3 && bitlength <= 21) {
+                    //add warning pop-up that computation might take a while if big length greater than 21
+                    if (firstShowing && bitlength > 21) {
+                    	MessageDialog.openInformation(getShell(), Messages.VerifiableSecretSharingComposite_notice, Messages.VerifiableSecretSharingComposite_notice_secret_calc_time);
+                    	firstShowing = false;
+                    }
+                    if (bitlength >= 3 && bitlength <= 40) {
                         nextPrime = safePrimes[bitlength];
                         if (nextPrime <= Integer.parseInt(text) || (nextPrime - 1) / 2 <= Integer.parseInt(text)) {
                             nextPrime = safePrimes[bitlength + 1];
@@ -283,7 +299,7 @@ public class VerifiableSecretSharingComposite extends Composite {
                                 nextPrime = safePrimes[bitlength + 2];
                             }
                         }
-                        moduleText.setText(nextPrime + ""); //$NON-NLS-1$
+                        moduleText.setText(Integer.toString(nextPrime)); //$NON-NLS-1$
                     } else {
                         moduleText.setText(""); //$NON-NLS-1$
                     }
@@ -292,7 +308,7 @@ public class VerifiableSecretSharingComposite extends Composite {
                 }
             }
         });
-
+        
         moduleLabel = new Label(parametersGroup, SWT.NONE);
         moduleLabel.setBackground(WHITE);
         moduleLabel.setText(Messages.VerifiableSecretSharingComposite_parameters_primeMod);
@@ -938,8 +954,8 @@ public class VerifiableSecretSharingComposite extends Composite {
                         String errorText = Messages.VerifiableSecretSharingComposite_commitment_not_calculated;
                         MessageDialog.openError(getShell(), Messages.VerifiableSecretSharingComposite_error, errorText);
                         enableCoefficientsGroupWithoutDispose(true);
-                        enableSharesGroup(false, players);
-                        enableReconstructionGroup(false, players);
+                        //enableSharesGroup(false, players);
+                        //enableReconstructionGroup(false, players);
 
                         ;
                     }
@@ -1170,12 +1186,16 @@ public class VerifiableSecretSharingComposite extends Composite {
         for (Control control : descriptionGroup.getChildren()) {
             control.dispose();
         }
-        descriptionLeft = new Label(descriptionGroup, SWT.WRAP);
+        descriptionLeft = new Text(descriptionGroup, SWT.WRAP);
+        descriptionLeft.setEditable(false);
+        //descriptionLeft = new Text(descriptionGroup, SWT.WRAP);
         GridData gd_descriptionLeft = new GridData(SWT.FILL, SWT.FILL, true, false);
         gd_descriptionLeft.widthHint = 400;
         descriptionLeft.setLayoutData(gd_descriptionLeft);
         descriptionLeft.setBackground(WHITE);
-        descriptionRight = new Label(descriptionGroup, SWT.WRAP);
+        descriptionRight = new Text(descriptionGroup, SWT.WRAP);
+        descriptionRight.setEditable(false);
+        //descriptionRight = new Text(descriptionGroup, SWT.WRAP);
         GridData gd_descriptionRight = new GridData(SWT.FILL, SWT.FILL, true, false);
         gd_descriptionRight.widthHint = 400;
         descriptionRight.setLayoutData(gd_descriptionRight);
