@@ -228,6 +228,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 				instrGroup = new Group(this, SWT.NONE);
 				instrGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 				instrGroup.setLayout(new GridLayout(1, false));
+				
 		        {
 					lblNewLabel = new Label(instrGroup, SWT.NONE | SWT.WRAP);
 					lblNewLabel.setText(Messages.TranspAnalysisUI_view_description);
