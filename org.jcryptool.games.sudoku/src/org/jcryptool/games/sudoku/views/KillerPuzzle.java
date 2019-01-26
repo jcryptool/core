@@ -101,6 +101,9 @@ public class KillerPuzzle extends Composite {
 	 */
 	protected Text[][] boardTextKiller;
 	protected Vector<Point> movesKiller = new Vector<Point>();
+	/**
+	 * List contains the points that are marked red while entering a new soduko.
+	 */
 	protected List<Point> selected;
 	/**
 	 * This are the fields of the sudoku that contain the possible values (boardLabelsNormal) and the entered
@@ -117,7 +120,6 @@ public class KillerPuzzle extends Composite {
 	protected Label[][][] boardLabelsKiller;
 	protected int[][] tempBoard;
 	private boolean solved;
-//	private Map<Text, UserInputPoint> inputBoxesKiller = new HashMap<Text, UserInputPoint>();
 	private Map<Text, Point> inputBoxesKiller = new HashMap<Text, Point>();
 	private List<List<List<Integer>>> possibleKiller;
 	private boolean killerFirstPossible;
@@ -1278,6 +1280,7 @@ public class KillerPuzzle extends Composite {
 		playField.setLayout(layout);
 
 		Map<Composite, Point> compositeBoxesKiller = new HashMap<Composite, Point>();
+		
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
 				labelCellKiller[i][j] = new Composite(playField, SWT.NONE);
@@ -1292,6 +1295,14 @@ public class KillerPuzzle extends Composite {
 						Point point = compositeBoxesKiller.get(composite);
 						if (!solveMode) {
 							if (!loadedKiller) {
+								//This checks if the point is already in use by another area.
+								//This prevents adding a composite to two areas.
+								for (Area area : areas) {
+									if (area.pointUsed(point)) {
+										return;
+									}
+								}
+								//Checks if the composite is already selected (red).
 								if (selected.contains(point)) {
 									composite.setBackground(ColorService.WHITE);
 									boardTextKiller[point.x][point.y].setBackground(ColorService.WHITE);
@@ -1398,8 +1409,9 @@ public class KillerPuzzle extends Composite {
 				//Validate the input
 				String input = e.text;
 				Text textbox = (Text) e.widget;
-				if (input.length() == 0 && !loading && !solving)
+				if (input.length() == 0 && !loading && !solving) {
 					updateBoardDataWithUserInputKiller(textbox, input);
+				}
 				if (!solved && !loading && !solving) {
 					char[] chars = new char[input.length()];
 					input.getChars(0, chars.length, chars, 0);
@@ -1698,11 +1710,13 @@ public class KillerPuzzle extends Composite {
 	}
 	
 	private boolean adjacent(Point point) {
-		if (selected.size() == 0)
+		if (selected.size() == 0) {
 			return true;
+		}
 		for (int i = 0; i < selected.size(); i++) {
-			if (Math.abs(selected.get(i).x - point.x) + Math.abs(selected.get(i).y - point.y) <= 1)
+			if (Math.abs(selected.get(i).x - point.x) + Math.abs(selected.get(i).y - point.y) <= 1) {
 				return true;
+			}
 		}
 		return false;
 	}
