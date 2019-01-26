@@ -108,7 +108,6 @@ public class HexPuzzle extends Composite {
 	 * The value in the middle of each field in the sudoku.
 	 */
 	private Text[][] boardTextHex;
-//	private Map<Text, UserInputPoint> inputBoxesHex = new HashMap<Text, UserInputPoint>();
 	private Map<Text, Point> inputBoxesHex = new HashMap<Text, Point>();
 	
 	/**
@@ -286,7 +285,6 @@ public class HexPuzzle extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-//				solveMode = true;
 				solveButton.setEnabled(true);
 				hintButton.setEnabled(false);
 				showPossibleButton.setEnabled(true);
@@ -302,7 +300,6 @@ public class HexPuzzle extends Composite {
 						if (boardHex[i][j] > -1) {
 							boardTextHex[i][j].setEditable(false);
 							boardTextHex[i][j].setFont(FontService.getSmallBoldFont());
-//							givenHex[i][j] = 1;
 						}
 						originalSudoku[i][j] = boardHex[i][j];
 					}
@@ -346,7 +343,6 @@ public class HexPuzzle extends Composite {
 				showPossibleButton.setEnabled(false);
 				autoFillOneButton.setEnabled(false);
 
-//				solveMode = false;
 				solveButton.setEnabled(false);
 
 				loadStandardPuzzle.setEnabled(true);
@@ -1024,7 +1020,8 @@ public class HexPuzzle extends Composite {
 	}
 	
 	/**
-	 * Marks a field on the playfield red for 2 seconds
+	 * Marks a field on the playfield red for 10 seconds.<br>
+	 * This methods blocks the user interface.
 	 * @param x
 	 * @param y
 	 */
@@ -1034,7 +1031,7 @@ public class HexPuzzle extends Composite {
 			public void run() {
 				labelCellHex[x][y].setBackground(ColorService.RED);
 				try {
-					Thread.sleep(2000);
+					Thread.sleep(10000);
 				} catch (InterruptedException ex) {
 					LogUtil.logError(SudokuPlugin.PLUGIN_ID, ex);
 				}
@@ -1442,7 +1439,9 @@ public class HexPuzzle extends Composite {
 					if (button) {
 						boardTextHex[i][j].setText(valToTextHex(board[i][j]));
 						labelCellHex[i][j].layout();
+						//TODO
 						markRed(i, j);
+						labelCellHex[i][j].setBackground(ColorService.RED);
 					}
 					changed = true;
 				}
@@ -1450,7 +1449,6 @@ public class HexPuzzle extends Composite {
 		}
 		if (changed) {
 			updatePossibilitiesHex(board, possibilities, button);
-			
 		}
 		return changed;
 	}
@@ -2661,7 +2659,7 @@ public class HexPuzzle extends Composite {
 //			
 //			@Override
 //			public void verifyText(VerifyEvent e) {
-//				// TODO Auto-generated method stub
+//		
 //			}
 //		});
 
