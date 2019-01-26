@@ -60,7 +60,7 @@ import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.games.sudoku.Messages;
 import org.jcryptool.games.sudoku.SudokuPlugin;
-import org.jcryptool.games.sudoku.views.SudokuComposite.UserInputPoint;
+
 
 /**
  * GUI and Logic for the Killer Sudoku Tab.
@@ -117,7 +117,8 @@ public class KillerPuzzle extends Composite {
 	protected Label[][][] boardLabelsKiller;
 	protected int[][] tempBoard;
 	private boolean solved;
-	private Map<Text, UserInputPoint> inputBoxesKiller = new HashMap<Text, UserInputPoint>();
+//	private Map<Text, UserInputPoint> inputBoxesKiller = new HashMap<Text, UserInputPoint>();
+	private Map<Text, Point> inputBoxesKiller = new HashMap<Text, Point>();
 	private List<List<List<Integer>>> possibleKiller;
 	private boolean killerFirstPossible;
 	private List<Area> areas;
@@ -1367,7 +1368,7 @@ public class KillerPuzzle extends Composite {
 					boardLabelsKiller[i][j][k] = createLabelKiller(labelCellKiller[i][j]);
 				}
 				boardTextKiller[i][j] = createTextKiller(labelCellKiller[i][j]);
-				inputBoxesKiller.put(boardTextKiller[i][j], new UserInputPoint(i, j));
+				inputBoxesKiller.put(boardTextKiller[i][j], new Point(i, j));
 				for (int k = 4; k < 8; k++) {
 					boardLabelsKiller[i][j][k] = createLabelKiller(labelCellKiller[i][j]);
 				}
@@ -1402,7 +1403,7 @@ public class KillerPuzzle extends Composite {
 				if (!solved && !loading && !solving) {
 					char[] chars = new char[input.length()];
 					input.getChars(0, chars.length, chars, 0);
-					UserInputPoint point = inputBoxesKiller.get(textbox);
+					Point point = inputBoxesKiller.get(textbox);
 					for (int i = 0; i < chars.length; i++) {
 						if (!('1' <= chars[i] && chars[i] <= '9')
 								|| possibleKiller.get(point.x).get(point.y).indexOf(Integer.parseInt(input)) == -1
@@ -2667,7 +2668,7 @@ public class KillerPuzzle extends Composite {
 
 	protected void updateBoardDataWithUserInputKiller(Text inputBox, String inputStr) {
 		solved = false;
-		UserInputPoint point = inputBoxesKiller.get(inputBox);
+		Point point = inputBoxesKiller.get(inputBox);
 		int num = 0;
 		if (inputStr.length() > 0) {
 			num = Integer.parseInt(inputStr);

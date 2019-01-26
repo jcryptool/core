@@ -46,7 +46,7 @@ import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.games.sudoku.Messages;
 import org.jcryptool.games.sudoku.SudokuPlugin;
-import org.jcryptool.games.sudoku.views.SudokuComposite.UserInputPoint;
+
 
 /**
  * Class for the GUI and logic of the hex-sudokus.
@@ -108,7 +108,8 @@ public class HexPuzzle extends Composite {
 	 * The value in the middle of each field in the sudoku.
 	 */
 	private Text[][] boardTextHex;
-	private Map<Text, UserInputPoint> inputBoxesHex = new HashMap<Text, UserInputPoint>();
+//	private Map<Text, UserInputPoint> inputBoxesHex = new HashMap<Text, UserInputPoint>();
+	private Map<Text, Point> inputBoxesHex = new HashMap<Text, Point>();
 	
 	/**
 	 * Saves the sudoku when changing from enter mode to solve mode. Used to save the initial values 
@@ -948,7 +949,7 @@ public class HexPuzzle extends Composite {
 					boardLabelsHex[i][j][k] = createLabelHex(labelCellHex[i][j], k);
 				}
 				boardTextHex[i][j] = createTextHex(labelCellHex[i][j]);
-				inputBoxesHex.put(boardTextHex[i][j], new UserInputPoint(i, j));
+				inputBoxesHex.put(boardTextHex[i][j], new Point(i, j));
 				for (int k = 4; k < 8; k++) {
 					boardLabelsHex[i][j][k] = createLabelHex(labelCellHex[i][j], k);
 				}
@@ -1045,7 +1046,7 @@ public class HexPuzzle extends Composite {
 	
 	private void updateBoardDataWithUserInputHex(Text inputBox, String inputStr) {
 		solved = false;
-		UserInputPoint point = inputBoxesHex.get(inputBox);
+		Point point = inputBoxesHex.get(inputBox);
 		int num = -1;
 		if (inputStr.length() > 0) {
 			num = Integer.parseInt(inputStr);
@@ -2669,7 +2670,7 @@ public class HexPuzzle extends Composite {
 			public void handleEvent(Event e) {
 				String input = e.text;
 				Text textbox = (Text) e.widget;
-				UserInputPoint point = inputBoxesHex.get(textbox);
+				Point point = inputBoxesHex.get(textbox);
 				//The case when an entry is removed
 				if (input.length() == 0 && !loading && !solving) {
 					updateBoardDataWithUserInputHex(textbox, input);
