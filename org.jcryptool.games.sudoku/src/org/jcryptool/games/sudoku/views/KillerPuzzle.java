@@ -79,7 +79,7 @@ public class KillerPuzzle extends Composite {
 	private Button solveButton;
 	private Button hintButton;
 	private Button undoButton;
-	private Button boxRuleButton;
+//	private Button boxRuleButton;
 	private Button showPossibleButton;
 	private Button autoFillOneButton;
 	private Button loadStandardPuzzle;
@@ -1847,7 +1847,6 @@ public class KillerPuzzle extends Composite {
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-//				int puzzle;
 				URL fileName = null;
 				try {
 					fileName = FileLocator.toFileURL((SudokuPlugin.getDefault().getBundle().getEntry("/")));
@@ -1859,8 +1858,6 @@ public class KillerPuzzle extends Composite {
 				path.append("data/");
 				
 				// data/killer2.sud is corrupted.
-//				puzzle = rnd.nextInt(2) + 1;
-//				path.append("killer" + puzzle + ".sud");
 				path.append("killer1.sud");
 				//load killer sudoku. If it fails jump out of the method.
 				if (!loadKiller(path.toString())) {
@@ -1985,32 +1982,32 @@ public class KillerPuzzle extends Composite {
 			}
 		});
 		
-		boxRuleButton = new Button(grpOptionButtons, SWT.PUSH);
-		boxRuleButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		boxRuleButton.setBackground(ColorService.GREEN);
-		boxRuleButton.setEnabled(true);
-		boxRuleButton.setBackground(ColorService.RED);
-		boxRuleButton.setText(Messages.SudokuComposite_BoxRuleButton);
-		boxRuleButton.setToolTipText(Messages.SudokuComposite_BoxRuleButton_Tooltip);
-		boxRuleButton.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (boxRule) {
-					boxRule = false;
-					boxRuleButton.setBackground(ColorService.RED);
-				} else {
-					boxRule = true;
-					boxRuleButton.setBackground(ColorService.GREEN);
-				}
-				refresh();
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				
-			}
-		});
+//		boxRuleButton = new Button(grpOptionButtons, SWT.PUSH);
+//		boxRuleButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+//		boxRuleButton.setBackground(ColorService.GREEN);
+//		boxRuleButton.setEnabled(true);
+//		boxRuleButton.setBackground(ColorService.RED);
+//		boxRuleButton.setText(Messages.SudokuComposite_BoxRuleButton);
+//		boxRuleButton.setToolTipText(Messages.SudokuComposite_BoxRuleButton_Tooltip);
+//		boxRuleButton.addSelectionListener(new SelectionListener() {
+//			
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				if (boxRule) {
+//					boxRule = false;
+//					boxRuleButton.setBackground(ColorService.RED);
+//				} else {
+//					boxRule = true;
+//					boxRuleButton.setBackground(ColorService.GREEN);
+//				}
+//				refresh();
+//			}
+//			
+//			@Override
+//			public void widgetDefaultSelected(SelectionEvent e) {
+//				
+//			}
+//		});
 		
 		showPossibleButton = new Button(grpOptionButtons, SWT.PUSH);
 		showPossibleButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
