@@ -104,6 +104,10 @@ public class NormalPuzzle extends Composite {
 	private boolean solved;
 	private boolean autoFillOne = false;
 	private boolean showPossible = true;
+	/**
+	 * Flag that is set to true if the GUI should not be updated by some actions.<br>
+	 * Is not the best way to force the GUI to does not update.
+	 */
 	private boolean loading = false;
 	private Job backgroundSolve;
 	private Job dummyJob;
@@ -1102,13 +1106,14 @@ public class NormalPuzzle extends Composite {
 	 * @param fileName The path to the file that should be read.
 	 */
 	private boolean loadNormal(String fileName) {
-//		long wholeLoadNormalTime = System.currentTimeMillis();
 		solved = false;
-		BufferedReader reader = null;
-		clearPuzzleNormal();
 		loading = true;
+		
+		BufferedReader reader = null;
+		
+		clearPuzzleNormal();
+		
 		try {
-//			long t1 = System.currentTimeMillis();
 			reader = new BufferedReader(new FileReader(fileName));
 			int count = 0;
 			String line;
@@ -1121,8 +1126,6 @@ public class NormalPuzzle extends Composite {
 				}
 				count++;
 			}
-//			long t2 = System.currentTimeMillis();
-//			System.out.println("Laufzeit des try blocks " + ( t2 - t1));
 		} catch (NumberFormatException nfe) {
 			LogUtil.logError(SudokuPlugin.PLUGIN_ID, nfe);
 			MessageBox brokenFile = new MessageBox(getDisplay().getActiveShell(), SWT.OK);
@@ -1145,8 +1148,6 @@ public class NormalPuzzle extends Composite {
 		}
 		loading = false;
 		updatePossibilitiesNormal();
-//		long l = System.currentTimeMillis();
-//		System.out.println("Laufzeit der kompletten Schleife " + (l - wholeLoadNormalTime));
 		return true;
 	}
 	
