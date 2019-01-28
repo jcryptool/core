@@ -29,10 +29,6 @@ public class SudokuView extends ViewPart {
 	private KillerPuzzle killerSudoku;
 	private HexPuzzle hexadecimalSudoku;
 	
-//	private boolean normalSudokuCreated = false;
-	private boolean killerSudokuCreated = false;
-	private boolean hexSudokuCreateed = false;
-	
 
     public SudokuView() { }
 
@@ -55,59 +51,24 @@ public class SudokuView extends ViewPart {
         //Killer Sudoku Tab
         TabItem ti2 = new TabItem(tf, SWT.NONE);
         ti2.setText(Messages.KillerTabTitle);
+        ScrolledComposite sc2 = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
+        sc2.setExpandHorizontal(true);
+        sc2.setExpandVertical(true);
+        killerSudoku = new KillerPuzzle(sc2, SWT.NONE);
+        sc2.setContent(killerSudoku);
+        sc2.setMinSize(killerSudoku.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        ti2.setControl(sc2);
 
         //Hex Sudoku Tab (16*16)
         TabItem ti3 = new TabItem(tf, SWT.NONE);
         ti3.setText(Messages.HexTabTitle);
-
-
-        tf.addSelectionListener(new SelectionListener() {
-			//The killer-Sudoku and Hex-Sudoku are only created if the user selects the specific tab.
-        	//This is used to improve the performance.
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				
-				if (tf.getSelectionIndex() == 0) {
-//					if (!normalSudokuCreated) {
-//				        ScrolledComposite sc = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
-//				        sc.setExpandHorizontal(true);
-//				        sc.setExpandVertical(true);
-//				        normalSudoku = new NormalPuzzle(sc, SWT.NONE);
-//				        sc.setContent(normalSudoku);
-//				        sc.setMinSize(normalSudoku.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-//				        ti1.setControl(sc);
-//				        normalSudokuCreated = true;
-//					}
-				} else if (tf.getSelectionIndex() == 1) {
-					if (!killerSudokuCreated) {
-				        ScrolledComposite sc2 = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
-				        sc2.setExpandHorizontal(true);
-				        sc2.setExpandVertical(true);
-				        killerSudoku = new KillerPuzzle(sc2, SWT.NONE);
-				        sc2.setContent(killerSudoku);
-				        sc2.setMinSize(killerSudoku.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				        ti2.setControl(sc2);
-				        killerSudokuCreated = true;
-					}
-				} else if (tf.getSelectionIndex() == 2) {
-					if (!hexSudokuCreateed) {
-				        ScrolledComposite sc3 = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
-				        sc3.setExpandHorizontal(true);
-				        sc3.setExpandVertical(true);
-				        hexadecimalSudoku = new HexPuzzle(sc3, SWT.NONE);
-				        sc3.setContent(hexadecimalSudoku);
-				        sc3.setMinSize(hexadecimalSudoku.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				        ti3.setControl(sc3);
-				        hexSudokuCreateed = true;
-					}
-				}
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				widgetSelected(e);
-			}
-		});
+        ScrolledComposite sc3 = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
+        sc3.setExpandHorizontal(true);
+        sc3.setExpandVertical(true);
+        hexadecimalSudoku = new HexPuzzle(sc3, SWT.NONE);
+        sc3.setContent(hexadecimalSudoku);
+        sc3.setMinSize(hexadecimalSudoku.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        ti3.setControl(sc3);
 
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), SudokuPlugin.PLUGIN_ID + ".sudokuview");
 	}
