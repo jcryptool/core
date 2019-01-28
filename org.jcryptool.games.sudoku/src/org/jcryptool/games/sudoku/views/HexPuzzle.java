@@ -1475,7 +1475,7 @@ public class HexPuzzle extends Composite {
 				}
 			}
 		}
-s		if (changed) {
+		if (changed) {
 			updatePossibilitiesHex(board, possibilities, button);
 		}
 		return changed;
