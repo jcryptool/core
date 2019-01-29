@@ -11,8 +11,6 @@ package org.jcryptool.games.sudoku.views;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TabFolder;
@@ -98,6 +96,7 @@ public class SudokuView extends ViewPart {
 		} else if (childs[0] instanceof KillerPuzzle) {
 			KillerPuzzle kp = (KillerPuzzle) childs[0];
 			kp.reset();
+			kp.layout(true);
 		} else if (childs[0] instanceof HexPuzzle) {
 			HexPuzzle hp = (HexPuzzle) childs[0];
 			hp.reset();
