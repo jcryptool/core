@@ -55,7 +55,6 @@ import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.games.sudoku.Messages;
 import org.jcryptool.games.sudoku.SudokuPlugin;
-import org.jcryptool.games.sudoku.views.SudokuComposite.UserInputPoint;
 
 /**
  * GUI and Logic for the normal sudoku.<br>
@@ -95,7 +94,8 @@ public class NormalPuzzle extends Composite {
 	 */
 	private Text[][] boardTextNormal;
 	private List<List<List<Integer>>> possibleNormal;
-	private Map<Text, UserInputPoint> inputBoxesNormal = new HashMap<Text, UserInputPoint>();
+//	private Map<Text, UserInputPoint> inputBoxesNormal = new HashMap<Text, UserInputPoint>();
+	private Map<Text, Point> inputBoxesNormal = new HashMap<Text, Point>();
 	protected boolean solveMode;
 	protected Vector<Point> movesNormal = new Vector<Point>();
 	protected int[][] givenNormal = new int[9][9];
@@ -104,6 +104,10 @@ public class NormalPuzzle extends Composite {
 	private boolean solved;
 	private boolean autoFillOne = false;
 	private boolean showPossible = true;
+	/**
+	 * Flag that is set to true if the GUI should not be updated by some actions.<br>
+	 * Is not the best way to force the GUI to does not update.
+	 */
 	private boolean loading = false;
 	private Job backgroundSolve;
 	private Job dummyJob;
@@ -477,13 +481,14 @@ public class NormalPuzzle extends Composite {
 					boardLabelsNormal[i][j][k] = createLabelNormal(labelCellNormal[i][j]);
 				}
 				boardTextNormal[i][j] = createTextNormal(labelCellNormal[i][j]);
-				inputBoxesNormal.put(boardTextNormal[i][j], new UserInputPoint(i, j));
+//				inputBoxesNormal.put(boardTextNormal[i][j], new UserInputPoint(i, j));
+				inputBoxesNormal.put(boardTextNormal[i][j], new Point(i, j));
 				for (int k = 4; k < 8; k++) {
 					boardLabelsNormal[i][j][k] = createLabelNormal(labelCellNormal[i][j]);
 				}
-				if (boardNormal[i][j] != 0)
+				if (boardNormal[i][j] != 0) {
 					boardTextNormal[i][j].setText(Integer.toString(boardNormal[i][j]));
-				else {
+				} else {
 					if (possibleNormal.get(i).get(j).size() < 9) {
 						for (int k = 0; k < possibleNormal.get(i).get(j).size(); k++) {
 							boardLabelsNormal[i][j][k].setText(Integer.toString(possibleNormal.get(i).get(j).get(k)));
@@ -509,7 +514,8 @@ public class NormalPuzzle extends Composite {
 				if (!solved && !loading && !solving) {
 					char[] chars = new char[input.length()];
 					input.getChars(0, chars.length, chars, 0);
-					UserInputPoint point = inputBoxesNormal.get(textbox);
+//					UserInputPoint point = inputBoxesNormal.get(textbox);
+					Point point = inputBoxesNormal.get(textbox);
 					for (int i = 0; i < chars.length; i++) {
 						if (!('1' <= chars[i] && chars[i] <= '9')
 								|| possibleNormal.get(point.x).get(point.y).indexOf(Integer.parseInt(input)) == -1
@@ -1100,13 +1106,14 @@ public class NormalPuzzle extends Composite {
 	 * @param fileName The path to the file that should be read.
 	 */
 	private boolean loadNormal(String fileName) {
-//		long wholeLoadNormalTime = System.currentTimeMillis();
 		solved = false;
-		BufferedReader reader = null;
-		clearPuzzleNormal();
 		loading = true;
+		
+		BufferedReader reader = null;
+		
+		clearPuzzleNormal();
+		
 		try {
-//			long t1 = System.currentTimeMillis();
 			reader = new BufferedReader(new FileReader(fileName));
 			int count = 0;
 			String line;
@@ -1119,8 +1126,6 @@ public class NormalPuzzle extends Composite {
 				}
 				count++;
 			}
-//			long t2 = System.currentTimeMillis();
-//			System.out.println("Laufzeit des try blocks " + ( t2 - t1));
 		} catch (NumberFormatException nfe) {
 			LogUtil.logError(SudokuPlugin.PLUGIN_ID, nfe);
 			MessageBox brokenFile = new MessageBox(getDisplay().getActiveShell(), SWT.OK);
@@ -1143,8 +1148,6 @@ public class NormalPuzzle extends Composite {
 		}
 		loading = false;
 		updatePossibilitiesNormal();
-//		long l = System.currentTimeMillis();
-//		System.out.println("Laufzeit der kompletten Schleife " + (l - wholeLoadNormalTime));
 		return true;
 	}
 	
@@ -1245,7 +1248,8 @@ public class NormalPuzzle extends Composite {
 	 */
 	protected void updateBoardDataWithUserInputNormal(Text inputBox, String inputStr) {
 		solved = false;
-		UserInputPoint point = inputBoxesNormal.get(inputBox);
+//		UserInputPoint point = inputBoxesNormal.get(inputBox);
+		Point point = inputBoxesNormal.get(inputBox);
 		int num = 0;
 		if (inputStr.length() > 0) {
 			num = Integer.parseInt(inputStr);

@@ -60,7 +60,7 @@ import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.games.sudoku.Messages;
 import org.jcryptool.games.sudoku.SudokuPlugin;
-import org.jcryptool.games.sudoku.views.SudokuComposite.UserInputPoint;
+
 
 /**
  * GUI and Logic for the Killer Sudoku Tab.
@@ -79,7 +79,7 @@ public class KillerPuzzle extends Composite {
 	private Button solveButton;
 	private Button hintButton;
 	private Button undoButton;
-	private Button boxRuleButton;
+//	private Button boxRuleButton;
 	private Button showPossibleButton;
 	private Button autoFillOneButton;
 	private Button loadStandardPuzzle;
@@ -101,6 +101,9 @@ public class KillerPuzzle extends Composite {
 	 */
 	protected Text[][] boardTextKiller;
 	protected Vector<Point> movesKiller = new Vector<Point>();
+	/**
+	 * List contains the points that are marked red while entering a new soduko.
+	 */
 	protected List<Point> selected;
 	/**
 	 * This are the fields of the sudoku that contain the possible values (boardLabelsNormal) and the entered
@@ -117,7 +120,7 @@ public class KillerPuzzle extends Composite {
 	protected Label[][][] boardLabelsKiller;
 	protected int[][] tempBoard;
 	private boolean solved;
-	private Map<Text, UserInputPoint> inputBoxesKiller = new HashMap<Text, UserInputPoint>();
+	private Map<Text, Point> inputBoxesKiller = new HashMap<Text, Point>();
 	private List<List<List<Integer>>> possibleKiller;
 	private boolean killerFirstPossible;
 	private List<Area> areas;
@@ -1277,6 +1280,7 @@ public class KillerPuzzle extends Composite {
 		playField.setLayout(layout);
 
 		Map<Composite, Point> compositeBoxesKiller = new HashMap<Composite, Point>();
+		
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
 				labelCellKiller[i][j] = new Composite(playField, SWT.NONE);
@@ -1291,6 +1295,14 @@ public class KillerPuzzle extends Composite {
 						Point point = compositeBoxesKiller.get(composite);
 						if (!solveMode) {
 							if (!loadedKiller) {
+								//This checks if the point is already in use by another area.
+								//This prevents adding a composite to two areas.
+								for (Area area : areas) {
+									if (area.pointUsed(point)) {
+										return;
+									}
+								}
+								//Checks if the composite is already selected (red).
 								if (selected.contains(point)) {
 									composite.setBackground(ColorService.WHITE);
 									boardTextKiller[point.x][point.y].setBackground(ColorService.WHITE);
@@ -1367,7 +1379,7 @@ public class KillerPuzzle extends Composite {
 					boardLabelsKiller[i][j][k] = createLabelKiller(labelCellKiller[i][j]);
 				}
 				boardTextKiller[i][j] = createTextKiller(labelCellKiller[i][j]);
-				inputBoxesKiller.put(boardTextKiller[i][j], new UserInputPoint(i, j));
+				inputBoxesKiller.put(boardTextKiller[i][j], new Point(i, j));
 				for (int k = 4; k < 8; k++) {
 					boardLabelsKiller[i][j][k] = createLabelKiller(labelCellKiller[i][j]);
 				}
@@ -1397,12 +1409,13 @@ public class KillerPuzzle extends Composite {
 				//Validate the input
 				String input = e.text;
 				Text textbox = (Text) e.widget;
-				if (input.length() == 0 && !loading && !solving)
+				if (input.length() == 0 && !loading && !solving) {
 					updateBoardDataWithUserInputKiller(textbox, input);
+				}
 				if (!solved && !loading && !solving) {
 					char[] chars = new char[input.length()];
 					input.getChars(0, chars.length, chars, 0);
-					UserInputPoint point = inputBoxesKiller.get(textbox);
+					Point point = inputBoxesKiller.get(textbox);
 					for (int i = 0; i < chars.length; i++) {
 						if (!('1' <= chars[i] && chars[i] <= '9')
 								|| possibleKiller.get(point.x).get(point.y).indexOf(Integer.parseInt(input)) == -1
@@ -1697,11 +1710,13 @@ public class KillerPuzzle extends Composite {
 	}
 	
 	private boolean adjacent(Point point) {
-		if (selected.size() == 0)
+		if (selected.size() == 0) {
 			return true;
+		}
 		for (int i = 0; i < selected.size(); i++) {
-			if (Math.abs(selected.get(i).x - point.x) + Math.abs(selected.get(i).y - point.y) <= 1)
+			if (Math.abs(selected.get(i).x - point.x) + Math.abs(selected.get(i).y - point.y) <= 1) {
 				return true;
+			}
 		}
 		return false;
 	}
@@ -1832,7 +1847,6 @@ public class KillerPuzzle extends Composite {
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-//				int puzzle;
 				URL fileName = null;
 				try {
 					fileName = FileLocator.toFileURL((SudokuPlugin.getDefault().getBundle().getEntry("/")));
@@ -1844,8 +1858,6 @@ public class KillerPuzzle extends Composite {
 				path.append("data/");
 				
 				// data/killer2.sud is corrupted.
-//				puzzle = rnd.nextInt(2) + 1;
-//				path.append("killer" + puzzle + ".sud");
 				path.append("killer1.sud");
 				//load killer sudoku. If it fails jump out of the method.
 				if (!loadKiller(path.toString())) {
@@ -1970,32 +1982,32 @@ public class KillerPuzzle extends Composite {
 			}
 		});
 		
-		boxRuleButton = new Button(grpOptionButtons, SWT.PUSH);
-		boxRuleButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		boxRuleButton.setBackground(ColorService.GREEN);
-		boxRuleButton.setEnabled(true);
-		boxRuleButton.setBackground(ColorService.RED);
-		boxRuleButton.setText(Messages.SudokuComposite_BoxRuleButton);
-		boxRuleButton.setToolTipText(Messages.SudokuComposite_BoxRuleButton_Tooltip);
-		boxRuleButton.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (boxRule) {
-					boxRule = false;
-					boxRuleButton.setBackground(ColorService.RED);
-				} else {
-					boxRule = true;
-					boxRuleButton.setBackground(ColorService.GREEN);
-				}
-				refresh();
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				
-			}
-		});
+//		boxRuleButton = new Button(grpOptionButtons, SWT.PUSH);
+//		boxRuleButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+//		boxRuleButton.setBackground(ColorService.GREEN);
+//		boxRuleButton.setEnabled(true);
+//		boxRuleButton.setBackground(ColorService.RED);
+//		boxRuleButton.setText(Messages.SudokuComposite_BoxRuleButton);
+//		boxRuleButton.setToolTipText(Messages.SudokuComposite_BoxRuleButton_Tooltip);
+//		boxRuleButton.addSelectionListener(new SelectionListener() {
+//			
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				if (boxRule) {
+//					boxRule = false;
+//					boxRuleButton.setBackground(ColorService.RED);
+//				} else {
+//					boxRule = true;
+//					boxRuleButton.setBackground(ColorService.GREEN);
+//				}
+//				refresh();
+//			}
+//			
+//			@Override
+//			public void widgetDefaultSelected(SelectionEvent e) {
+//				
+//			}
+//		});
 		
 		showPossibleButton = new Button(grpOptionButtons, SWT.PUSH);
 		showPossibleButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -2667,7 +2679,7 @@ public class KillerPuzzle extends Composite {
 
 	protected void updateBoardDataWithUserInputKiller(Text inputBox, String inputStr) {
 		solved = false;
-		UserInputPoint point = inputBoxesKiller.get(inputBox);
+		Point point = inputBoxesKiller.get(inputBox);
 		int num = 0;
 		if (inputStr.length() > 0) {
 			num = Integer.parseInt(inputStr);
