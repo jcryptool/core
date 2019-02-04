@@ -96,7 +96,6 @@ public class SudokuView extends ViewPart {
 		} else if (childs[0] instanceof KillerPuzzle) {
 			KillerPuzzle kp = (KillerPuzzle) childs[0];
 			kp.reset();
-			kp.layout(true);
 		} else if (childs[0] instanceof HexPuzzle) {
 			HexPuzzle hp = (HexPuzzle) childs[0];
 			hp.reset();
