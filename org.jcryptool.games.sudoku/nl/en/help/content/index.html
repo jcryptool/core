@@ -38,60 +38,120 @@
 	<p>After entering a puzzle switch to Solve mode to start solving. To solve a sudoku, simply click a square and type in the number that should go there. The plug-in prevents you from entering a number that violates one of the rules. If you want to make solving a bit easier, you can let the plug-in show which numbers are possible for each square. If you're stuck; you can ask for a hint. The plug-in will select an empty square at random and fill out the correct number. Note that the Hint-button might not be available immediately when switching to Solve Mode, the plug-in will first solve the puzzle in the background.</p>
 	<p>The plug-in has the possibility to save and load puzzles so you can stop at any time. Also, you could download puzzles from the Internet and open them in JCT. The file format demands are different for each type of puzzle, see <a href="#filehandling">file handling</a>.</p>
 	
+	<p>The autofill button can be clicked to fill out one square where only one number is possible. The square 
+	that is filled out will blink red after this is done. </p>
+	
+	<p>In case of the hexadecimal puzzle, the strategy buttons apply one of the strategies to the puzzle and fill 
+	out the results. The strategy is repeated until no new entries are discovered. </p>
+	
 	<h2 id="filehandling">File Handling</h2>
 	<p>	The plug-in supports different types of file formats for the different puzzles. Below it is explained what is expected in a file.</p>
-	<p>	For normal sudokus, the file format should not matter. The plug-in tries to find 81 numbers including a number for empty squares (usually 0 or '.'). </p>
-	<p>Killer sudokus require a strict file format. Each square in a field is denoted by the same character. These characters are unique for each field. The characters should be in place in the file exactly as the puzzle looks. Then below this puzzle, for each character a value must be defined, e.g. a x 24 or b + 12. If '=' is used instead of an operator, the plug-in assumes addition. For an example, see <a href="#killerfile">below</a>. </p>
-	<p>For a hexadecimal puzzle, two formats are accepted. Either an empty square is denoted by a '.' or by a space. In the former case, the entries are expected row by row with no spaces in between. In the latter case, the entries are expected row by row with a space in between each entry. Which type is used should be indicated with a 1 or 2 respectively in the first line of the file. </p>
-	<p>The autofill button can be clicked to fill out one square where only one number is possible. The square that is filled out will blink red after this is done. <br />
-	In case of the hexadecimal puzzle, the strategy buttons apply one of the strategies to the puzzle and fill out the results. The strategy is repeated until no new entries are discovered. </p>
+	
+	<h3 id="killerfile">Normal Sudoku Example File</h3>
+	
+	<p>The file consists of 9 lines of 9 characters each. The file is constructed like a Soduko. Thus, 
+	the value 4 in the second line represents the first sign that the first character in the sudoku in the 
+	second line is a 4. A 0 represents a non-existent value.</p>
+	
+	<p>At the end of each line in the normal sudoku file is a \n.</p>
+	
+		<pre>
+060301050
+400809006
+080050010
+009000600
+520000031
+004000200
+070010080
+100402003
+040507090
+	</pre>
 	
 	<h3 id="killerfile">Killer Sudoku Example File</h3>
 	
-	<pre>
-	+-------+-------+-------+
-	| a a b | b c d | d e e |
-	| f g b | b c h | h e e |
-	| f g g | i c c | h e j |
-	+-------+-------+-------+
-	| k k i | i l m | n n j |
-	| o o p | l l m | m m   | 
-	| q q p | p r s | t u u |
-	+-------+-------+-------+
-	| v q w | p r s | t x y |
-	| v q w | & z z | x x y |
-	| v * * | & # # | # # y |
-	+-------+-------+-------+
-
-	a x 12
-	b x 648
-	c x 1440
-	d x 56
-	e + 24
-	f : 7
-	g + 13
-	h x 50
-	i x 27
-	j - 4
-	k - 3
-	l + 16
-	m x 192
-	n : 4
-	o - 7
-	p x 560
-	q + 16
-	r x 12
-	s - 4
-	t + 12
-	u - 1
-	v x 135
-	w : 5
-	x + 15
-	y x 216
-	z : 2
-	* + 10
-	# x 144
-	& - 1
+	<p>Each square in a field is denoted by the same character. These characters are unique for each field. 
+	The characters should be in place in the file exactly as the puzzle looks. Then below this puzzle, 
+	for each character a value must be defined, e.g. a x 24 or b + 12.</p>
+	
+	
+	
+		<pre>
+:;;&lt;&lt;&lt;==>
+:??<@&lt;AA>
+BB?C@DAEE
+BFCCGDDHE
+FFFGGGHHH
+IFJJGKKHL
+IIMJNKOLL
+PMMQNQOOR
+PSSQQQTTR
+:+11
+;+11
+&lt;+26
+=+15
+>+4
+?+18
+@+14
+A+15
+B+13
+C+9
+D+9
+E+20
+F+29
+G+21
+H+18
+I+18
+J+11
+K+20
+L+21
+M+12
+N+11
+O+13
+P+8
+Q+28
+R+12
+S+11
+T+7
 	</pre>
+	
+	<h4>Explanation of the structure of the killer sudoku file</h4>
+	
+	<p>The upper block consists of 81 characters (9 x 9 fields) and represents the areas in the killer 
+	sudoku that belong together. The fields with the same character always belong to an area. For example, 
+	the fields with a colon form an area.</p>
+
+	<p>From the 10th line of the file, the areas indicated in the upper area are provided with the information 
+	whether they are added (+), subtracted (-), multiplied (*) or divided (:). For example, the area Colon 
+	defined above is an area in which the specified values in Sudoku must be 11 in total.</p>
+
+	<p>At the end of each line in the killer sudoku file is a \n.</p>
+		
+	
+	<h3>Example of a hex sudoku file</h3>
+	
+	<p>The file consists of 256 characters representing the 256 fields in a 16 x 16 sudoku. The possible value 
+	range is from 0 to F. A 0 stands for an empty field. A = 10, B = 11, C = 12, D = 13, E = 14 and F = 15.</p>
+	
+	<p>At the end of each line in the hex sudoku file is a \n.</p>
+	
+		<pre>
+0009100000000000
+003B0000A51F0000
+0C10000B6D9E2000
+7E0000F80B43A900
+800000DA0006E590
+930005400000B02F
+E2000F60590004D1
+5100097240000083
+2A000030BCD00058
+C57000BD0A000046
+498E000006700030
+0B0D7000210000FA
+00AC30E7DF0000B9
+0005AB1FC0000870
+0000248600005100
+0000000000010000
+	</pre>
+
 </body>
 </html>

@@ -11,6 +11,8 @@ package org.jcryptool.games.sudoku.views;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TabFolder;
@@ -36,16 +38,16 @@ public class SudokuView extends ViewPart {
 		tf = new TabFolder(parent, SWT.TOP);
 
 		//Normal 9*9 Sudoku Tab
-        TabItem ti = new TabItem(tf, SWT.NONE);
-        ti.setText(Messages.NormalTabTitle);
+        TabItem ti1 = new TabItem(tf, SWT.NONE);
+        ti1.setText(Messages.NormalTabTitle);
         ScrolledComposite sc = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
         sc.setExpandHorizontal(true);
         sc.setExpandVertical(true);
         normalSudoku = new NormalPuzzle(sc, SWT.NONE);
         sc.setContent(normalSudoku);
         sc.setMinSize(normalSudoku.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-        ti.setControl(sc);
-
+        ti1.setControl(sc);
+        
         //Killer Sudoku Tab
         TabItem ti2 = new TabItem(tf, SWT.NONE);
         ti2.setText(Messages.KillerTabTitle);

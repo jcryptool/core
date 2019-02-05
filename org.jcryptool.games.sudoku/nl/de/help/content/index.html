@@ -44,62 +44,117 @@
 	<p>Mit dem Plug-in kan man Sudokus nicht nur laden, sondern auch abspeichern, so dass man jederzeit unterbrechen kann. <br />
 	Man kann sich auch Sudokus aus dem Internet herunterladen und diese in diesem JCrypTool-Plug-in &ouml;ffnen: Diese m&uuml;ssen nur zu den jeweiligen Dateiformaten f&uuml;r die drei unterschiedlichen Sudoku-Typen passen (siehe <a href="#filehandling">Datei-Support</a>).</p>
 
-
-	<h2 id="filehandling">Datei-Support</h2>
-	<p>Das Plug-in unterst&uuml;tzt unterschiedliche Dateiformate f&uuml;r die verschiedenen Sudoku-Typen. Im Folgenden wird erkl&auml;rt, wie die Datei aussehen soll.</p>
-	<p>F&uuml;r normale Sudokus ist das Format sehr flexibel: Das Plug-in versucht, 81 unterscheidbare Zahlen zu finden (wobei die leeren Einzelfelder normalerweise als '0' oder '.' dargestellt werden).</p>
-	<p>Killer-Sudokus erfodern ein striktes Dateiformat: Alle Einzelfelder, die zu einer Rechenbox geh&ouml;ren, m&uuml;ssen dasselbe Zeichen (Character) enthalten. Diese Zeichen sind pro Rechenbox eindeutig. Die Zeichen m&uuml;ssen so angeordnet werden, wie sie auch im Sudoku stehen. Unterhalb des Sudokus ist dann f&uuml;r jedes Zeichen ein String anzugeben, der die Operation und das Ergebnis enth&auml;lt, z.B. a x 24 or b + 12. Anstelle von '+' kann man als Operator auch '=' angeben. Ein komplettes Beispiel finden Sie <a href="#killerfile">unten</a>.</p>
-	<p>Bei hexadezimalen Sudokus werden zwei Formate akzeptiert: Ein leeres Einzelfeld kann entweder per '.' oder per Leerzeichen gekennzeichnet werden. Im ersten Fall werden die Eingaben zeilenweise ohne Leerzeichen dazwischen erwartet. Im zweiten Fall werden die Eingaben auch zeilenweisen erwartet -- mit einem Leerzeichen zwischen jedem Zeichen.	
-	Welcher Typ benutzt wird, muss 	mit einer '1' oder '2' in der ersten Zeile der Datei angezeigt werden.</p>
 	<p>Das Klicken des "Autofill"-Buttons f&uuml;llt ein leeres Einzelfeld, in dem nur eine Zahl m&ouml;glich war. Das gef&uuml;llte Einzelfeld blinkt danach rot.
 	Im Fall des hexadezimalen Sudokus wird durch Klick auf einen der Strategie-Buttons die entsprechende Strategie angewandt und die entspechenden Eintr&auml;ge vorgenommen. Die gew&auml;hlte Strategie wird (ohne weitere Benutzereingabe) so oft wiederholt, bis damit keine weiteren leeren Einzelfelder mehr gef&uuml;llt werden k&ouml;nnen.	</p>
 
-	<h3 id="killerfile">Beispiel für eine Killer-Sudoku-Datei</h3>
+
+	<h2 id="filehandling">Datei-Support</h2>
+	Das Plug-in unterst&uuml;tzt unterschiedliche Dateiformate f&uuml;r die verschiedenen Sudoku-Typen. 
+	Im Folgenden wird erkl&auml;rt, wie die Dateien aussehen sollen.
+	
+	<h3 id="normalfile">Beispiel für eine Normale-Sudoku-Datei</h3>
+	
+	<p>Die Datei besteht aus 9 Zeilen mit jeweils 9 Zeichen. Die Datei ist wie ein Soduko aufgebaut. So steht der Wert
+	4 in der zweiten Zeile das erste Zeichen dafür, dass im Sudoku in der zweiten Zeile das erste Zeichen eine 4 ist.
+	Eine 0 steht für einen nicht vorhandene Wert.</p>
+	<p>Am Ende jeder Zeile in der Normalen-Sudoku-Datei steht ein \n.</p>
 	
 	<pre>
-	+-------+-------+-------+
-	| a a b | b c d | d e e |
-	| f g b | b c h | h e e |
-	| f g g | i c c | h e j |
-	+-------+-------+-------+
-	| k k i | i l m | n n j |
-	| o o p | l l m | m m   | 
-	| q q p | p r s | t u u |
-	+-------+-------+-------+
-	| v q w | p r s | t x y |
-	| v q w | & z z | x x y |
-	| v * * | & # # | # # y |
-	+-------+-------+-------+
-
-	a x 12
-	b x 648
-	c x 1440
-	d x 56
-	e + 24
-	f : 7
-	g + 13
-	h x 50
-	i x 27
-	j - 4
-	k - 3
-	l + 16
-	m x 192
-	n : 4
-	o - 7
-	p x 560
-	q + 16
-	r x 12
-	s - 4
-	t + 12
-	u - 1
-	v x 135
-	w : 5
-	x + 15
-	y x 216
-	z : 2
-	* + 10
-	# x 144
-	& - 1
+060301050
+400809006
+080050010
+009000600
+520000031
+004000200
+070010080
+100402003
+040507090
 	</pre>
+
+	<h3 id="killerfile">Beispiel für eine Killer-Sudoku-Datei</h3>
+	
+	<p>Alle Einzelfelder, die zu einer Rechenbox geh&ouml;ren, 
+	m&uuml;ssen dasselbe Zeichen (Character) enthalten. Diese Zeichen sind pro Rechenbox eindeutig. Die Zeichen 
+	m&uuml;ssen so angeordnet werden, wie sie auch im Sudoku stehen. Unterhalb des Sudokus ist dann f&uuml;r jedes 
+	Zeichen ein String anzugeben, der die Operation und das Ergebnis enth&auml;lt, z.B. a x 24 or b + 12. Einkomplettes Beispiel finden 
+	Sie <a href="#killerfile">unten</a>.</p>
+	
+	
+	<pre>
+:;;&lt;&lt;&lt;==>
+:??<@&lt;AA>
+BB?C@DAEE
+BFCCGDDHE
+FFFGGGHHH
+IFJJGKKHL
+IIMJNKOLL
+PMMQNQOOR
+PSSQQQTTR
+:+11
+;+11
+&lt;+26
+=+15
+>+4
+?+18
+@+14
+A+15
+B+13
+C+9
+D+9
+E+20
+F+29
+G+21
+H+18
+I+18
+J+11
+K+20
+L+21
+M+12
+N+11
+O+13
+P+8
+Q+28
+R+12
+S+11
+T+7
+	</pre>
+	
+	<h4>Erklärung der Struktur der Killer-Sudoku-Datei</h4>
+	<p>Der obere Block besteht aus 81 Zeichen (9 x 9 Felder) und repräsentiert die Bereiche im Killer Sudoku die 
+	zusammengehören. Es gehören immer die Felder mit gleichem Zeichen zu einem Bereich. 
+	So bilden beispielsweise die Felder mit einem Doppelpunkt einen Bereich. </p>
+	
+	<p>Ab der 10. Zeile der Datei werden die im oberen Bereich angegebenen Bereiche mit der Information versehen, 
+	ob sie addiert (+), subtrahiert (-), multipliziert (*) oder dividiert (:) werden. Der oben definierte Bereich Doppelpunkt 
+	ist beispielsweise ein Bereich in dem die angegebenen Werte im Sudoku in Summe 11 sein müssen.</p>
+	
+	<p>Am Ende jeder Zeile in der Killer-Sudoku-Datei steht ein \n.</p>
+	
+	<h3 id="hexfile">Beispiel für eine Hex-Sudoku-Datei</h3>
+	
+	<p>Die Datei besteht aus 256 Zeichen welche für die 256 Felder in einem 16 x 16 Sudoku stehen. Der mögliche Wertebereich 
+	ist von 0 bis F. Eine 0 steht für ein leeres Feld. A = 10, B = 11, C = 12, D = 13, E = 14 und F = 15.</p>
+	
+	<p><p>Am Ende jeder Zeile in der Hex-Sudoku-Datei steht ein \n.</p>
+	
+	<pre>
+0009100000000000
+003B0000A51F0000
+0C10000B6D9E2000
+7E0000F80B43A900
+800000DA0006E590
+930005400000B02F
+E2000F60590004D1
+5100097240000083
+2A000030BCD00058
+C57000BD0A000046
+498E000006700030
+0B0D7000210000FA
+00AC30E7DF0000B9
+0005AB1FC0000870
+0000248600005100
+0000000000010000
+	</pre>
+	
 </body>
 </html>
