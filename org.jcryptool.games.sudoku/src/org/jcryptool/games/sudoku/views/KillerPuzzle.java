@@ -110,6 +110,7 @@ public class KillerPuzzle extends Composite {
 	 * value in the middle of a field .
 	 */
 	protected Composite[][] labelCellKiller;
+	private Composite playField;
 	protected Job backgroundSolve;
 	protected Job dummyJob;
 	protected boolean backgroundSolved;
@@ -239,8 +240,9 @@ public class KillerPuzzle extends Composite {
 	}
 	
 	private boolean solvePuzzleKiller() {
-		if (backgroundSolve.getState() == Job.RUNNING)
+		if (backgroundSolve.getState() == Job.RUNNING) {
 			backgroundSolve.cancel();
+		}
 		solving = true;
 		if (backgroundSolved) {
 			for (int i = 0; i < 9; i++) {
@@ -1227,7 +1229,7 @@ public class KillerPuzzle extends Composite {
 	}
 
 	private void createPlayFieldArea(Composite parent) {
-		Composite playField = new Composite(parent, SWT.SHADOW_NONE);
+		playField = new Composite(parent, SWT.SHADOW_NONE);
 		playField.setLayout(new GridLayout());																	// true
 		playField.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		playField.addControlListener(new ControlListener() {
@@ -2088,7 +2090,9 @@ public class KillerPuzzle extends Composite {
 				for (int i = 0; i < 9; i++) {
 					for (int j = 0; j < 9; j++) {
 						boardKiller[i][j] = originalSudoku[i][j];
-						boardTextKiller[i][j].setText(Integer.toString(originalSudoku[i][j]));
+						if (originalSudoku[i][j] != 0) {
+							boardTextKiller[i][j].setText(Integer.toString(originalSudoku[i][j]));
+						}
 					}
 				}
 				
@@ -2299,11 +2303,12 @@ public class KillerPuzzle extends Composite {
 		solveModeButton.setSelection(false);
 		enterModeButton.notifyListeners(SWT.Selection, null);
 		backgroundSolve.cancel();
-		loading = true;
+		undoButton.setEnabled(false);
 		
+		loading = true;
 		clearPuzzleKiller();
-
 		loadedKiller = false;
+		
 		additionButton.setEnabled(true);
 		subtractionButton.setEnabled(true);
 		multiplicationButton.setEnabled(true);
@@ -2628,11 +2633,17 @@ public class KillerPuzzle extends Composite {
 		LogUtil.logError(SudokuPlugin.PLUGIN_ID, "File Name for puzzle is empty.", fnfe, false);
 	}
 
+	/**
+	 * Clears the playfield, that means all values are removed from the gui.
+	 * The background is set to white and some other things.
+	 */
 	private void clearPuzzleKiller() {
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
 				boardKiller[i][j] = 0;
 				boardTextKiller[i][j].setText("");
+				labelCellKiller[i][j].setBackground(ColorService.WHITE);
+
 				for (int k = 0; k < 8; k++) {
 					boardLabelsKiller[i][j][k].setText("");
 				}
@@ -2642,6 +2653,10 @@ public class KillerPuzzle extends Composite {
 				}
 			}
 		}
+		
+		//This is used to remove the red lines painted by the paint listener.
+		getDisplay().getActiveShell().layout(true, true);
+		
 		areas.clear();
 		for (int i = 0; i < selected.size(); i++) {
 			labelCellKiller[selected.get(i).x][selected.get(i).y].setBackground(ColorService.WHITE);
@@ -2650,6 +2665,9 @@ public class KillerPuzzle extends Composite {
 		selected.clear();
 	}
 
+	/**
+	 * Fills a field in which only one value is possible.
+	 */
 	protected void fillOneKiller() {
 		boolean changed = false;
 		for (int i = 0; i < 9 & !changed; i++) {

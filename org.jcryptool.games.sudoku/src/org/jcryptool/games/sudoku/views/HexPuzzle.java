@@ -77,14 +77,15 @@ public class HexPuzzle extends Composite {
 	
 	private Random rnd = new Random(System.currentTimeMillis());
 	private Job backgroundSolve;
+	private Job dummyJob;
 	private Runnable backgroundSolveComplete;
 	private Runnable solveComplete;
-	private Job dummyJob;
 	private Runnable refresh;
-	private boolean showPossible = true;
 	protected boolean backgroundSolved;
 	private boolean autoFillOne = false;
+	private boolean showPossible = true;
 	private boolean solved = false;
+	private boolean solving;
 	private boolean loading = false;
 	private Vector<Point> movesHex = new Vector<Point>();
 	/**
@@ -93,12 +94,14 @@ public class HexPuzzle extends Composite {
 	 */
 	protected Composite[][] labelCellHex;
 	protected int[][] tempBoard;
+	private int [][] guessBoardHex;
 	/**
 	 * contains the values that are entered in the sudoku.
 	 */
 	protected int[][] boardHex;
 	protected List<List<List<Integer>>> possibleHex;
-	private boolean solving;
+	protected List<List<List<Integer>>> tempPossibleHex;
+	private ArrayList<List<List<Integer>>> guessPossibleHex;
 	private int numberOfGuesses = 0;
 	/**
 	 * The possibilities of each field.
@@ -124,6 +127,17 @@ public class HexPuzzle extends Composite {
 //		backgroundSolve.cancel();
 //		dummyJob.cancel();
 //	}
+	
+	//There is a failure in the recursive call of generateSubsetsb
+	//but i could not fix it. 
+//	protected int counterBackgroundSolve = 0;
+//	protected int counterHumanStrategiesHex = 0;
+//	protected int counterGuessOnDiagonalHex = 0;
+//	protected int counterBackgroundSolveComplete = 0;
+//	protected int counterSolveHex = 0;
+//	protected int counterCheckPuzzleHex = 0;
+//	protected int counterGenerateSubsets = 0;
+//	protected int counterGenerateSubsetsRecursiveCalls = 0;
 	
 /**
  * The constructor of HexPuzzle.
@@ -155,8 +169,9 @@ public class HexPuzzle extends Composite {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				while (backgroundSolve.getState() == Job.RUNNING) {
-					if (monitor.isCanceled())
+					if (monitor.isCanceled()) {
 						return Status.CANCEL_STATUS;
+					}
 				}
 				if (backgroundSolve.getResult() == Status.OK_STATUS) {
 					getDisplay().asyncExec(solveComplete);
@@ -179,6 +194,8 @@ public class HexPuzzle extends Composite {
 		backgroundSolveComplete = new Runnable() {
 			@Override
 			public void run() {
+//				counterBackgroundSolveComplete++;
+//				System.out.println("Aufrufe backgroundSolveComplete:\t" + counterBackgroundSolveComplete);
 				backgroundSolved = true;
 				hintButton.setEnabled(true);
 			}
@@ -188,8 +205,10 @@ public class HexPuzzle extends Composite {
 		backgroundSolve = new Job("Solving Puzzle in Background") {
 			@Override
 			public IStatus run(final IProgressMonitor monitor) {
+//				counterBackgroundSolve++;
+//				System.out.println("Aufrufe backgroundSolve:\t" + counterBackgroundSolve);
 				tempBoard = new int[16][16];
-				ArrayList<List<List<Integer>>> tempPossibleHex = new ArrayList<List<List<Integer>>>();
+				tempPossibleHex = new ArrayList<List<List<Integer>>>();
 				for (int i = 0; i < 16; i++) {
 					for (int j = 0; j < 16; j++) {
 						tempBoard[i][j] = boardHex[i][j];
@@ -204,8 +223,10 @@ public class HexPuzzle extends Composite {
 						}
 					}
 				}
+				
 				humanStrategiesHex(tempBoard, tempPossibleHex);
 				guessOnDiagonalHex(tempBoard, tempPossibleHex);
+				
 				if (solveHex(tempBoard, monitor)) {
 					getDisplay().asyncExec(backgroundSolveComplete);
 				} else {
@@ -215,10 +236,11 @@ public class HexPuzzle extends Composite {
 				return Status.OK_STATUS;
 			}
 		};
+
 	}
 
 	/**
-	 * 
+	 * Creates the major part of the GUI. 
 	 * @param hexPuzzle
 	 */
 	private void createMain(HexPuzzle hexPuzzle) {
@@ -258,6 +280,7 @@ public class HexPuzzle extends Composite {
 			}
 
 		});
+		
 		boardHex = new int[16][16];
 		labelCellHex = new Composite[16][16];
 		boardLabelsHex = new Label[16][16][8];
@@ -483,8 +506,9 @@ public class HexPuzzle extends Composite {
 					movesHex.remove(movesHex.size() - 1);
 					boardTextHex[pt.x][pt.y].setText("");
 					updateBoardDataWithUserInputHex(boardTextHex[pt.x][pt.y], "");
-					if (movesHex.size() == 0)
+					if (movesHex.size() == 0) {
 						undoButton.setEnabled(false);
+					}
 				}
 			}
 		});
@@ -542,8 +566,11 @@ public class HexPuzzle extends Composite {
 		restartButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
-				//TODO
+
 				reset();
+				
+				solved = false;
+				autoFillOne = false;
 				
 				if (originalSudoku != null) {
 					for (int i = 0; i < 16; i++) {
@@ -553,7 +580,10 @@ public class HexPuzzle extends Composite {
 						}
 					}
 				}
+//				loading = true;
+
 				updatePossibilitiesHex(boardHex, possibleHex, true);
+//				loading = false;
 				solveModeButton.notifyListeners(SWT.Selection, new Event());
 				refresh();
 			}
@@ -681,11 +711,14 @@ public class HexPuzzle extends Composite {
 		restartButton.setEnabled(false);
 		enterModeButton.notifyListeners(SWT.Selection, null);
 		backgroundSolve.cancel();
+		undoButton.setEnabled(false);
+		
 		loading = true;
-
+		
 		clearPuzzleHex();
-
+		
 		loading = false;
+		
 		refresh();
 	}
 
@@ -779,19 +812,27 @@ public class HexPuzzle extends Composite {
 	}
 	
 	private void humanStrategiesHex(int[][] board, List<List<List<Integer>>> possibilities) {
+//		counterHumanStrategiesHex++;
+//		System.out.println("Aufrufe humanStrategiesHex:\t" + counterHumanStrategiesHex);
 		boolean changed = true;
 		while (changed) {
 			changed = false;
-			changed = changed || onePossibleHex(board, possibilities, false)
-					|| nakedSingleHex(board, possibilities, false) || hiddenSingleHex(board, possibilities, false)
-					|| blockAndCRHex(board, possibilities) || nakedSubsetHex(board, possibilities)
-					|| candidateLineHex(board, possibilities) || doublePairHex(board, possibilities)
+			changed = changed 
+					|| onePossibleHex(board, possibilities, false)
+					|| nakedSingleHex(board, possibilities, false) 
+					|| hiddenSingleHex(board, possibilities, false)
+					|| blockAndCRHex(board, possibilities) 
+					|| nakedSubsetHex(board, possibilities)
+					|| candidateLineHex(board, possibilities) 
+					|| doublePairHex(board, possibilities)
 					|| multipleLinesHex(board, possibilities);
 		}
 	}
 	
 	private void guessOnDiagonalHex(int[][] board, List<List<List<Integer>>> possibilities) {
 		numberOfGuesses = numberOfGuesses + 1;
+//		counterGuessOnDiagonalHex++;
+//		System.out.println("Aufrufe guessOnDiagonalHex:\t" + counterGuessOnDiagonalHex);
 		int i = 2;
 		int j = 0;
 		int guessPointX = -1;
@@ -816,16 +857,17 @@ public class HexPuzzle extends Composite {
 			}
 		}
 		if (guessPointX != -1) {
-			int [][] guessBoardHex = new int[16][16];
-			ArrayList<List<List<Integer>>> guessPossibleHex = new ArrayList<List<List<Integer>>>();
+			guessBoardHex = new int[16][16];
+			guessPossibleHex = new ArrayList<List<List<Integer>>>();
 
 			for (i = 0; i < 16; i++) {
 				guessPossibleHex.add(new ArrayList<List<Integer>>());
 				for (j = 0; j < 16; j++) {
 					guessPossibleHex.get(i).add(new ArrayList<Integer>());
 					guessBoardHex[i][j] = board[i][j];
-					for (int k = 0; k < possibilities.get(i).get(j).size(); k++)
+					for (int k = 0; k < possibilities.get(i).get(j).size(); k++) {
 						guessPossibleHex.get(i).get(j).add(possibilities.get(i).get(j).get(k));
+					}
 				}
 			}
 			boolean correct = false;
@@ -852,6 +894,8 @@ public class HexPuzzle extends Composite {
 	}
 	
 	private boolean solveHex(int[][] board, final IProgressMonitor monitor) {
+//		counterSolveHex++;
+//		System.out.println("Aufrufe solveHex:\t" + counterSolveHex);
 		Point start = getEmptySquare(board);
 		if (start == null) {
 			return true;
@@ -1102,8 +1146,9 @@ public class HexPuzzle extends Composite {
 		for (int i = 0; i < 16; i++) {
 			used = new ArrayList<Integer>();
 			for (int j = 0; j < 16; j++)
-				if (board[i][j] != -1)
+				if (board[i][j] != -1) {
 					used.add(board[i][j]);
+				}
 			if (used.size() > 0) {
 				for (int j = 0; j < used.size(); j++) {
 					for (int k = 0; k < 16; k++) {
@@ -1127,8 +1172,9 @@ public class HexPuzzle extends Composite {
 		for (int i = 0; i < 16; i++) {
 			used = new ArrayList<Integer>();
 			for (int j = 0; j < 16; j++)
-				if (board[j][i] != -1)
+				if (board[j][i] != -1) {
 					used.add(board[j][i]);
+				}
 			if (used.size() > 0) {
 				for (int j = 0; j < used.size(); j++) {
 					for (int k = 0; k < 16; k++) {
@@ -1212,17 +1258,18 @@ public class HexPuzzle extends Composite {
 		}
 	}
 	
+	/**
+	 * Searchs for a field that has just one opportunity for a value and 
+	 * fills the boardHex, boardTextHex and LabelCellHex  with it.
+	 */
 	private void fillOneHex() {
 		boolean changed = false;
 		for (int i = 0; i < 16 & !changed; i++) {
 			for (int j = 0; j < 16 & !changed; j++) {
 				if (possibleHex.get(i).get(j).size() == 1) {
 					boardHex[i][j] = possibleHex.get(i).get(j).get(0);
-//					boardTextHex[i][j].setText(Integer.toString(boardHex[i][j]));
-//					boardTextHex[i][j].setText(Integer.toHexString(boardHex[i][j]).toUpperCase());
 					boardTextHex[i][j].setText(valToTextHex(boardHex[i][j]));
 					labelCellHex[i][j].layout();
-//					startBlinkingArea(i, j);
 					markRed(i, j);
 					changed = true;
 				}
@@ -1237,12 +1284,12 @@ public class HexPuzzle extends Composite {
 	 */
 	private boolean loadHex(String fileName) {
 		solved = false;
+		loading = true;
 
 		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(new FileReader(fileName));
 
-			loading = true;
 			clearPuzzleHex();
 			for (int i = 0; i < 16; i++) {
 				String line = reader.readLine();
@@ -1295,6 +1342,8 @@ public class HexPuzzle extends Composite {
 			for (int j = 0; j < 16; j++) {
 				boardHex[i][j] = -1;
 				boardTextHex[i][j].setText("");
+				boardTextHex[i][j].setFont(FontService.getSmallFont());
+				labelCellHex[i][j].setBackground(ColorService.WHITE);
 				for (int k = 0; k < 8; k++) {
 					boardLabelsHex[i][j][k].setText("");
 				}
@@ -1908,7 +1957,8 @@ public class HexPuzzle extends Composite {
 	}
 	
 	private boolean nakedSubsetHex(int[][] board, List<List<List<Integer>>> possibilities) {
-		boolean changed = false, temp;
+		boolean changed = false;
+		boolean temp;
 		int total, idx;
 		int[] intSet;
 		Vector<Integer> set, values;
@@ -1932,8 +1982,9 @@ public class HexPuzzle extends Composite {
 				} else {
 					for (int k = set.size() - 1; k > 0; k--) {
 						if (!possibilities.get(j).get(set.elementAt(0))
-								.equals(possibilities.get(j).get(set.elementAt(k))))
+								.equals(possibilities.get(j).get(set.elementAt(k)))) {
 							set.remove(k);
+						}
 					}
 					break;
 				}
@@ -1956,8 +2007,9 @@ public class HexPuzzle extends Composite {
 		for (int j = 0; j < 16; j++) {
 			set = new Vector<Integer>();
 			for (int k = 0; k < 16; k++) {
-				if (possibilities.get(k).get(j).size() == i & board[k][j] == -1)
+				if (possibilities.get(k).get(j).size() == i & board[k][j] == -1) {
 					set.add(k);
+				}
 			}
 			while (set.size() >= i) {
 				total = 1;
@@ -1970,8 +2022,9 @@ public class HexPuzzle extends Composite {
 				} else {
 					for (int k = set.size() - 1; k > 0; k--) {
 						if (!possibilities.get(set.elementAt(0)).get(j)
-								.equals(possibilities.get(set.elementAt(k)).get(j)))
+								.equals(possibilities.get(set.elementAt(k)).get(j))) {
 							set.remove(k);
+						}
 					}
 					break;
 				}
@@ -1997,24 +2050,27 @@ public class HexPuzzle extends Composite {
 				for (int k1 = 0; k1 < 4; k1++) {
 					for (int k2 = 0; k2 < 4; k2++) {
 						if (possibilities.get(4 * j1 + k1).get(4 * j2 + k2).size() == i
-								& board[4 * j1 + k1][4 * j2 + k2] == -1)
+								& board[4 * j1 + k1][4 * j2 + k2] == -1) {
 							pointSet.add(new Point(4 * j1 + k1, 4 * j2 + k2));
+						}
 					}
 				}
 				while (pointSet.size() >= i) {
 					total = 1;
 					for (int k = 1; k < pointSet.size(); k++) {
 						if (possibilities.get(pointSet.elementAt(0).x).get(pointSet.elementAt(0).y)
-								.equals(possibilities.get(pointSet.elementAt(k).x).get(pointSet.elementAt(k).y)))
+								.equals(possibilities.get(pointSet.elementAt(k).x).get(pointSet.elementAt(k).y))) {
 							total++;
+						}
 					}
 					if (total != i) {
 						pointSet.remove(0);
 					} else {
 						for (int k = pointSet.size() - 1; k > 0; k--) {
 							if (!possibilities.get(pointSet.elementAt(0).x).get(pointSet.elementAt(0).y)
-									.equals(possibilities.get(pointSet.elementAt(0).x).get(pointSet.elementAt(0).y)))
+									.equals(possibilities.get(pointSet.elementAt(0).x).get(pointSet.elementAt(0).y))) {
 								pointSet.remove(k);
+							}
 						}
 						break;
 					}
@@ -2046,13 +2102,16 @@ public class HexPuzzle extends Composite {
 				allSubsets = new Vector<Integer[]>();
 				goodSubsets = new Vector<Integer[]>();
 				for (int k = 0; k < 16; k++) {
-					if (possibilities.get(j).get(k).size() <= i & board[j][k] == -1)
+					if (possibilities.get(j).get(k).size() <= i & board[j][k] == -1) {
 						set.add(k);
+					}
 				}
 				if (set.size() >= i) {
 					intSet = new int[set.size()];
-					for (int k = 0; k < set.size(); k++)
+					for (int k = 0; k < set.size(); k++) {
 						intSet[k] = set.elementAt(k);
+					}
+//					System.out.println("Zeile 2106 vor Aufruf von generateSubsets");
 					generateSubsets(allSubsets, intSet, new int[i], 0, 0);
 					for (int k1 = 0; k1 < allSubsets.size(); k1++) {
 						for (int k2 = 0; k2 < allSubsets.elementAt(k1).length; k2++) {
@@ -2083,8 +2142,9 @@ public class HexPuzzle extends Composite {
 						for (int k2 = 0; k2 < 16; k2++) {
 							temp = true;
 							for (int k3 = 0; k3 < goodSubsets.elementAt(k1).length; k3++) {
-								if (goodSubsets.elementAt(k1)[k3] == k2)
+								if (goodSubsets.elementAt(k1)[k3] == k2) {
 									temp = false;
+								}
 							}
 							if (temp) {
 								for (int l = 0; l < values.size(); l++) {
@@ -2106,13 +2166,16 @@ public class HexPuzzle extends Composite {
 				allSubsets = new Vector<Integer[]>();
 				goodSubsets = new Vector<Integer[]>();
 				for (int k = 0; k < 16; k++) {
-					if (possibilities.get(k).get(j).size() <= i & board[k][j] == -1)
+					if (possibilities.get(k).get(j).size() <= i & board[k][j] == -1) {
 						set.add(k);
+					}
 				}
 				if (set.size() >= i) {
 					intSet = new int[set.size()];
-					for (int k = 0; k < set.size(); k++)
+					for (int k = 0; k < set.size(); k++) {
 						intSet[k] = set.elementAt(k);
+					}
+//					System.out.println("Zeile 2170 vor Aufruf von generateSubsets");
 					generateSubsets(allSubsets, intSet, new int[i], 0, 0);
 					for (int k1 = 0; k1 < allSubsets.size(); k1++) {
 						for (int k2 = 0; k2 < allSubsets.elementAt(k1).length; k2++) {
@@ -2171,14 +2234,17 @@ public class HexPuzzle extends Composite {
 					for (int k1 = 0; k1 < 4; k1++) {
 						for (int k2 = 0; k2 < 4; k2++) {
 							if (possibilities.get(4 * j1 + k1).get(4 * j2 + k2).size() <= i
-									& board[4 * j1 + k1][4 * j2 + k2] == -1)
+									& board[4 * j1 + k1][4 * j2 + k2] == -1) {
 								pointSet.add(new Point(4 * j1 + k1, 4 * j2 + k2));
+							}
 						}
 					}
 					if (pointSet.size() >= i) {
 						intSet = new int[pointSet.size()];
-						for (int k = 0; k < pointSet.size(); k++)
+						for (int k = 0; k < pointSet.size(); k++) {
 							intSet[k] = k;
+						}
+//						System.out.println("Zeile 2239 vor Aufruf von generateSubsets");
 						generateSubsets(allSubsets, intSet, new int[i], 0, 0);
 						for (int k1 = 0; k1 < allSubsets.size(); k1++) {
 							for (int k2 = 0; k2 < allSubsets.elementAt(k1).length; k2++) {
@@ -2219,8 +2285,9 @@ public class HexPuzzle extends Composite {
 									temp = true;
 									for (int k4 = 0; k4 < goodSubsets.elementAt(k1).length; k4++) {
 										if (pointSet.elementAt(goodSubsets.elementAt(k1)[k4])
-												.equals(new Point(4 * j1 + k2, 4 * j2 + k3)) == true)
+												.equals(new Point(4 * j1 + k2, 4 * j2 + k3)) == true) {
 											temp = false;
+										}
 									}
 									if (temp) {
 										for (int l = 0; l < values.size(); l++) {
@@ -2543,6 +2610,8 @@ public class HexPuzzle extends Composite {
 	 * @return
 	 */
 	private boolean checkPuzzleHex(int[][] board) {
+//		counterCheckPuzzleHex++;
+//		System.out.println("Anzahl checkPuzzleHex:\t" + counterCheckPuzzleHex);
 		for (int i = 0; i < 16; i++) {
 			for (int j = 0; j < 16; j++) {
 				if (board[i][j] != -1) {
@@ -2686,13 +2755,6 @@ public class HexPuzzle extends Composite {
 		input.setBackground(ColorService.WHITE);
 		input.setTextLimit(1);
 		input.setFont(FontService.getSmallFont());
-//		input.addVerifyListener(new VerifyListener() {
-//			
-//			@Override
-//			public void verifyText(VerifyEvent e) {
-//		
-//			}
-//		});
 
 		input.addListener(SWT.Verify, new Listener() {
 			@Override
@@ -2806,10 +2868,16 @@ public class HexPuzzle extends Composite {
 	}
 	
 	private void generateSubsets(Vector<Integer[]> subsets, int[] set, int[] subset, int subsetSize, int nextIndex) {
+//		counterGenerateSubsets++;
+//		System.out.print("Aufruf generateSubsets:\t" + counterGenerateSubsets);
+//		counterGenerateSubsetsRecursiveCalls++;
+//		System.out.println("\t generateSubsetsRecursiceCall:\t" + counterGenerateSubsetsRecursiveCalls);
+
 		if (subsetSize == subset.length) {
 			Integer[] temp = new Integer[subset.length];
-			for (int i = 0; i < subset.length; i++)
+			for (int i = 0; i < subset.length; i++) {
 				temp[i] = new Integer(subset[i]);
+			}
 			subsets.add(temp);
 		} else {
 			for (int j = nextIndex; j < set.length; j++) {
@@ -2817,6 +2885,7 @@ public class HexPuzzle extends Composite {
 				generateSubsets(subsets, set, subset, subsetSize + 1, j + 1);
 			}
 		}
+//		counterGenerateSubsetsRecursiveCalls = 0;
 	}
 	
 	/**
@@ -2850,12 +2919,14 @@ public class HexPuzzle extends Composite {
 				maxIndex = j;
 				for (int k = 0; k < possible.get(sortedPoints.get(j).x).get(sortedPoints.get(j).y).size(); k++) {
 					if (possible.get(sortedPoints.get(j).x).get(sortedPoints.get(j).y).get(k) != input && maxSubset
-							.indexOf(possible.get(sortedPoints.get(j).x).get(sortedPoints.get(j).y).get(k)) == -1)
+							.indexOf(possible.get(sortedPoints.get(j).x).get(sortedPoints.get(j).y).get(k)) == -1) {
 						maxSubset.add(possible.get(sortedPoints.get(j).x).get(sortedPoints.get(j).y).get(k));
+					}
 				}
 			}
-			if (maxSubset.size() < maxIndex + 1)
+			if (maxSubset.size() < maxIndex + 1) {
 				return true;
+			}
 		}
 		return false;
 	}
