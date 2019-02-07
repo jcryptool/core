@@ -204,19 +204,47 @@
 
    <extension point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension targetID="org.jcryptool.core.perspective">
+      <!-- This are the views that are listed in Window -> Show view. All other views
+      are listed under Window -> Show view -> Others.-->
          <perspectiveShortcut id="org.jcryptool.crypto.flexiprovider.ui.perspective.FlexiProviderPerspective"/>
          <viewShortcut id="org.jcryptool.core.views.AlgorithmView"/>
-         <viewShortcut id="org.jcryptool.fileexplorer.views.FileExplorerView"/>
+         <viewShortcut id="org.jcryptool.fileexplorer.views.FileExplorerView"/> 
          <viewShortcut id="org.eclipse.help.ui.HelpView"/>
          <viewShortcut id="org.jcryptool.actions.views.ActionView"/>
-         <view id="org.jcryptool.fileexplorer.views.FileExplorerView" minimized="false" ratio="0.25f" relationship="left" relative="org.eclipse.ui.editorss"/>
-         <view id="org.jcryptool.actions.views.ActionView" minimized="false" ratio="0.25f" relationship="stack" relative="org.jcryptool.fileexplorer.views.FileExplorerView"/>
-         <view id="org.jcryptool.core.views.AlgorithmView" minimized="false" ratio="0.68f" relationship="right" relative="org.eclipse.ui.editorss"/>
-         <view id="org.eclipse.help.ui.HelpView" minimized="false" ratio="0.5" relationship="bottom" relative="org.jcryptool.fileexplorer.views.FileExplorerView"/>
+         
+         <!-- Here you can specify which views should be opened in the standard
+         perspective of the JCT at startup. -->
+         <!-- The following code is an example how you can stack multiple 
+         views to one position(relationship) (left, right, op, bottom). In this example the 
+         ActionView and the FileExplorerView are on the same position relationship=left. -->
+         <view 
+         	id="org.jcryptool.actions.views.ActionView" 
+         	minimized="false" 
+         	ratio="0.25f" 
+         	relationship="left" 
+         	relative="org.eclipse.ui.editorss"/>
+         <view 
+         	id="org.jcryptool.fileexplorer.views.FileExplorerView" 
+         	minimized="false" 
+         	ratio="0.25f" 
+         	relationship="stack" 
+         	relative="org.jcryptool.actions.views.ActionView"/> 
+         <view 
+         	id="org.jcryptool.core.views.AlgorithmView" 
+         	minimized="false" 
+         	ratio="0.68f" 
+         	relationship="right" 
+         	relative="org.eclipse.ui.editorss"/>
+         <view 
+         	id="org.eclipse.help.ui.HelpView" 
+         	minimized="false" 
+         	ratio="0.5" 
+         	relationship="bottom" 
+         	relative="org.jcryptool.actions.views.ActionView"/>
       </perspectiveExtension>
    </extension>
 
-   <!-- here you can add new languages 
+   <!-- here you can add new languages. 
    simply copy the code and adapt ist to the wished language -->
    <extension point="org.jcryptool.core.platformLanguage">
       <language languageCode="en_EN" languageDescription="%language.languageEnglish"/>
