@@ -24,12 +24,15 @@
 		3.1) <a href="#bitstring">Bitstring R</a></br>
 		3.2) <a href="#example">Beispiel</a></br></br>
 		4) <a href="#security">Sicherheit</a></br></br>
-                5) <a href="#links">Weiterführende Verweise</a></p>
+        5) <a href="#links">Weiterführende Verweise</a></p>
 		
-		<p>Diese Visualisierung demonstriert das Winternitz Einmal-Signaturverfahren (WOTS).</p>
+		<p>Diese Visualisierung demonstriert das Winternitz Einmal-Signaturverfahren (Winternitz One-Time Signature) (WOTS).</p>
 		<p>WOTS ist ein Verfahren zum digitalen Signieren von Nachrichten.</br>
 		   Bei einem <b>Einmal</b>-Signaturverfahren wird ein Schlüsselpaar nur zum einmaligen
 		   Signieren einer einzigen Nachricht verwendet.</p>
+		
+		<p>JCT enthält in mehreren Plugins eine Folge von Visualisierungen der modernen PQC-Signaturen (wie XMSS und SPHINCS) &ndash; eine gute und aktuelle Übersicht zu solchen Verfahren findet sich in der Wikipedia [1,2]. WOTS in der Variante WOTS+ ist ein Baustein von  <a href="PLUGINS_ROOT/org.jcryptool.visual.merkletree/$nl$/help/content/index.html">XMSS</a> und  <a href="PLUGINS_ROOT/org.jcryptool.visual.sphincs/$nl$/help/content/Sphincs.html">SPHINCS</a>.</p>
+		
 		
 		<p> </br> </p>
 		<h2 id="general">1) Generelle Funktionsweise des Plugins</h2>
@@ -83,7 +86,7 @@ Signaturen, erhöht allerdings die Laufzeit der Algorithmen.
 		       </li>			
 	       	</ul>
 
-		<p><b>Generelles zur Vermeidung von Falscheingaben:</b></br>
+		<p><b>Generelles zur Vermeidung von Falsch-Eingaben:</b></br>
 	       	Unterhalb jedes editierbaren Feldes befindet sich eine Anzeige mit dem Ist- und Soll-Wert der Länge des Feldinhalts. Beim Editieren der Felder verändert sich der Ist-Wert dynamisch und färbt sich rot, wenn der Wert vom Soll-Wert der Länge abweicht.</br>
 		Im Nachrichtenfeld sind beliebige Zeichen verwendbar, in den restlichen Feldern jedoch nur gültige Hexadezimalziffern (0-9 und A-F). Wenn ungültige Zeichen eingegeben werden, färbt sich das jeweilige Feld rot.</br>
 		Solange ungültige Eingaben oder falsche Längen eingegeben sind, ist die Bearbeitung der restlichen Felder deaktiviert.</p>
@@ -147,17 +150,17 @@ Signaturen, erhöht allerdings die Laufzeit der Algorithmen.
 	       	</ul>
 
 		<h4 id="privkey">2.1.2) Privater Schlüssel (X)</h4>
-		Der private Schlüssel X besteht aus t Blöcken. Jeder Block besteht aus n pseudozufällig erzeugten Bytes.</p>
+		<p>Der private Schlüssel X besteht aus t Blöcken. Jeder Block besteht aus n pseudozufällig erzeugten Bytes.</p>
 
 		<h4 id="pubkey">2.1.3) Öffentlicher Schlüssel (Y)</h4>
-		Der öffentliche Schlüssel Y besteht ebenfalls aus t Blöcken. Y leitet sich vom privaten Schlüssel X ab, indem die einzelnen Blöcke des privaten Schlüssels jeweils w-1 mal die Hashfunktion durchlaufen.</p>
+		<p>Der öffentliche Schlüssel Y besteht ebenfalls aus t Blöcken. Y leitet sich vom privaten Schlüssel X ab, indem die einzelnen Blöcke des privaten Schlüssels jeweils w-1 mal die Hashfunktion durchlaufen.</p>
 
 		<img src="images/keys.PNG" alt="keys">
 		
 		<p> </br> </p>
 		<h3 id="siggen">2.2) Signaturerzeugung</h3>
 		<h4 id="genB">2.2.1) Erzeugung des Vektors B</h4>
-		<b>B</b> setzt sich aus t Blöcken zusammen. Zur Berechnung wird zum Nachrichtenhash m (mit m ist hier immer der Hashwert der eigentlichen Nachricht gemeint) eine Checksum C berechnet. Dazu wird vorher m zur Basis w dargestellt.</p>
+		<p><b>B</b> setzt sich aus t Blöcken zusammen. Zur Berechnung wird zum Nachrichtenhash m (mit m ist hier immer der Hashwert der eigentlichen Nachricht gemeint) eine Checksum C berechnet. Dazu wird vorher m zur Basis w dargestellt.</p>
 		<p><b>C</b> = Checksum = Summe aus w-1-M_i mit 1 <= i <= l_1. </p>
 		<p>Nun werden beide Werte m und C jeweils zur Basis w dargestellt; das Ergebnis bilden insgesamt t Werte (m zur Basis w resultiert in t_1 Werte, C resultiert in t_2 Werte). Um genau auf die Werte  t_1 und t_2 zu kommen, wird eine ausreichende Anzahl an "0" vorangestellt.</p>
 		<p>Zur weiteren Berechnung werden diese t Blöcke des Vektors B als natürliche Zahl (Integer) interpretiert.</p>
@@ -165,13 +168,13 @@ Signaturen, erhöht allerdings die Laufzeit der Algorithmen.
 
 		<p> </br> </p>
 		<h4 id="signature">2.2.2) Signatur</h4>
-		Zur Erstellung der Signatur (welche ebenfalls aus t Blöcken besteht) durchläuft jeder Block X_i des privaten Schlüssels genau b_i mal die verwendete Hashfunktion. Das Ergebnis ist die Signatur sig.</p>
+		<p>Zur Erstellung der Signatur (welche ebenfalls aus t Blöcken besteht) durchläuft jeder Block X_i des privaten Schlüssels genau b_i mal die verwendete Hashfunktion. Das Ergebnis ist die Signatur sig.</p>
 
 		<img src="images/signature.PNG" alt="signature">
 
 		<p> </br> </p>
 		<h3 id="sigver">2.3) Signaturprüfung</h3>
-		Um die Signatur zu überprüfen, wird der Vektor B berechnet wie in Punkt <a href="#genB">2.2.1</a>.
+		<p>Um die Signatur zu überprüfen, wird der Vektor B berechnet wie in Punkt <a href="#genB">2.2.1</a>.
 		Nun durchläuft jeder Block sig_i der Signatur genau w - 1 - b_i mal die verwendete Hashfunktion. Diese Prüfsignatur besteht also aus den Blöcken des privaten Schlüssels, die jeweils w-1 mal (b_i + w - 1 - b_i) die Hashfunktion durchlaufen haben. Da das die gleiche Berechnung wie die des öffentlichen Schlüssels ist, werden nun die Blöcke mit denen des öffentlichen Schlüssels verglichen. Wenn keine Abweichungen vorhanden sind, ist die Signatur korrekt.</p>
 
 		<img src="images/validated.PNG" alt="validated">
@@ -181,10 +184,10 @@ Signaturen, erhöht allerdings die Laufzeit der Algorithmen.
 		<p>Bei WOTS+ unterscheidet sich die Verarbeitung der einzelnen Blöcke geringfügig gegenüber WOTS. Hier wird zuerst ein zusätzlicher Bitstring R erzeugt, der aus w-1, n-bit großen Blöcken besteht. Bei der Berechnung des x-ten Hashes wird der Wert vorher mit dem x-ten Block von R geXORt.</p>
 
 		<h3 id="bitstring">3.1) Bitstring R</h3>
-		<b>R</b> besteht aus w-1 Blöcken, die jeweils aus n pseudozufälligen Bits bestehen. Diese Blöcke werden beim öffentlichen Schlüssel Y vorne angehängt.</p>
+		<p><b>R</b> besteht aus w-1 Blöcken, die jeweils aus n pseudozufälligen Bits bestehen. Diese Blöcke werden beim öffentlichen Schlüssel Y vorne angehängt.</p>
 
 		<h3 id="example">3.2) Beispiel</h3>
-		<b>Berechnung des ersten Blocks des öffentlichen Schlüssels (Y_1):</b> Bevor der Block X_1 von der Hashfunktion verarbeitet wird, wird auf ihn ein XOR mit dem ersten Block des Vektors R, also R_1, angewandt. Vor dem zweiten Hashvorgang wird ein XOR mit R_2 durchgeführt. Da der Block w-1 mal die Hashfunktion durchläuft, besteht R auch aus w-1 Blöcken. </br></br>
+		<p><b>Berechnung des ersten Blocks des öffentlichen Schlüssels (Y_1):</b> Bevor der Block X_1 von der Hashfunktion verarbeitet wird, wird auf ihn ein XOR mit dem ersten Block des Vektors R, also R_1, angewandt. Vor dem zweiten Hashvorgang wird ein XOR mit R_2 durchgeführt. Da der Block w-1 mal die Hashfunktion durchläuft, besteht R auch aus w-1 Blöcken. </br></br>
 		<b>Berechnung des ersten Blocks der Prüfsignatur:</b> Angenommen b_1 = 6 und w = 10, dann wird sig_1 in w - 1 - b_i = 3 Runden bearbeitet.  Beim ersten Block wird nicht R_1 verwendet, sondern R_(b_i + 1), um auf den korrekten Wert zu kommen, der sich mit Y_1 (erster Block des öffentlichen Schlüssels) abgleichen lässt.</p>
 
 		<img src="images/wotsplus.PNG" alt="wotsplus">
@@ -198,16 +201,18 @@ Signaturen, erhöht allerdings die Laufzeit der Algorithmen.
                 
                 
 
-                <h2 id="links">5.) Weiterführende Verweise</h2>
-                <p>Weitere Informationen zum Thema Kryptographie und Winternitz Einmal-Signaturverfahren (WOTS) finden Sie beispielsweise unter:</p>
-                <ul>
-                        <li><a href="https://de.wikipedia.org/wiki/Merkle-Signatur">Merkle-Signatur in der deutschen Wikipedia</a></li>
-                        <li><a href="https://eprint.iacr.org/2011/191.pdf">Sicherheit von WOTS ("On the Security of the Winternitz One-Time Signature Scheme", 2011)</a></li>
-						<li><a href="https://eprint.iacr.org/2011/484.pdf">XMSS ("XMSS -- A Practical Forward Secure Signature Scheme based on Minimal Security Assumptions", 2011)</a></li>
-						<li><a href="https://tools.ietf.org/id/draft-irtf-cfrg-xmss-hash-based-signatures-10.html">https://tools.ietf.org/id/draft-irtf-cfrg-xmss-hash-based-signatures-10.html</a></li>
-						<!--<li></li>-->
-                
-                </ul>
+        <h2 id="links">5.) Weiterführende Verweise</h2>
+        <p>Weitere Informationen zum Thema Post-Quanten-Kryptographie (PQC) und Winternitz Einmal-Signaturverfahren (WOTS) finden Sie beispielsweise unter:</p>
+        <ul>
+			<li>[1] <a href="https://en.wikipedia.org/wiki/Post-quantum_cryptography">https://en.wikipedia.org/wiki/Post-quantum_cryptography</a></li>
+			<li>[2] <a href="https://en.wikipedia.org/wiki/Hash-based_cryptography">https://en.wikipedia.org/wiki/Hash-based_cryptography</a></li>
+            <li><a href="https://de.wikipedia.org/wiki/Merkle-Signatur">Merkle-Signatur in der deutschen Wikipedia</a></li>
+            <li><a href="https://eprint.iacr.org/2011/191.pdf">Sicherheit von WOTS ("On the Security of the Winternitz One-Time Signature Scheme", 2011)</a></li>
+			<li><a href="https://eprint.iacr.org/2011/484.pdf">XMSS ("XMSS &ndash; A Practical Forward Secure Signature Scheme based on Minimal Security Assumptions", 2011)</a></li>
+			<li><a href="https://tools.ietf.org/id/draft-irtf-cfrg-xmss-hash-based-signatures-10.html">https://tools.ietf.org/id/draft-irtf-cfrg-xmss-hash-based-signatures-10.html</a></li>
+			<!--<li></li>-->
+        </ul>
 		<p> </br> </p>
+		
 	</body>
 </html>
