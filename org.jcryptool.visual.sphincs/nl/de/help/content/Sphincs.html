@@ -32,7 +32,7 @@
 
 	<p>SPHINCS [7,8] kam beim (im Dezember 2016 gestarteten) NIST-Wettbewerb für PQC-Verfahren (NIST PQC competition) [3,4] inzwischen in die 2. Runde (Stand 30.1.2019, Variante SPHINCS+ 256).</p>
 	
-	<p>Die Sicherheit von SPHINCS beruht wie die bei MerkleTrees nur auf der Sicherheit der verwendeten Hashfunktionen und gehört deshalb zu den Hash-basierten Signaturfunktionen (HBS). Im Gegensatz zu MerkleTrees ist SPHINCS jedoch <b>zustandslos</b>, was für die Sicherheit der meisten Anwendungen ein großer Vorteil ist. Generell ist die Schlüssellänge bei QC-resistenten Signaturverfahren (auch Post-Quantum-Signaturverfahren genannt) deutlich größer als bei konventionellen Signaturverfahren.</p>  
+	<p>Die Sicherheit von SPHINCS beruht wie die bei Merkle-Signaturen nur auf der Sicherheit der verwendeten Hashfunktionen und gehört deshalb zu den Hash-basierten Signaturfunktionen (HBS). Im Gegensatz zu Merkle-Signaturen ist SPHINCS jedoch <b>zustandslos</b>, was für die Sicherheit der meisten Anwendungen ein großer Vorteil ist. Generell ist die Schlüssellänge bei QC-resistenten Signaturverfahren (auch Post-Quantum-Signaturverfahren genannt) deutlich größer als bei konventionellen Signaturverfahren.</p>  
 	
 	<p>Das Paper [0] fasst SPHINCS so zusammen: "Signatures are 41 kB, public keys are 1 kB, and private keys are 1 kB. The signature scheme is designed to provide long-term 2^128 security even against attackers equipped with quantum computers."</p>
 	
@@ -61,7 +61,7 @@
 	
 	<p>In SPHINCS gibt es zwei Arten von Baumstrukturen, einmal WOTS+-Strukturen und einmal HORST-Strukturen. WOTS+ ist ein Einmal-Signaturverfahren, das in SPHINCS zum Signieren darunter liegender Strukturen verwendet wird. HORST ist ein Mehrfach-Signaturverfahren, das auf der untersten Ebene zum Signieren von Nachrichten verwendet wird.</p>
 	
-	<p>Eine SPHINCS-256-Struktur hat die Gesamthöhe h=60. Jede Struktur, sowohl WOTS+ als auch HORST, besteht wiederum aus einem Baum mit der Höhe (h/d=5), wobei d=12 die Anzahl der Ebenen ist.</p> 
+	<p>Eine SPHINCS-256-Struktur hat die Gesamthöhe h=60. Jede Struktur, sowohl WOTS+ als auch HORST, besteht wiederum aus einem Baum mit der Höhe (h/d=5), wobei d=12 die Anzahl der Ebenen ist. SPHINCS-256 ist eine Instanziierung von SPHINCS+ (und legt damit diese Parameter fest; in SPHINCS+ als Konzept sind diese Parameter variabel). Das ist analog zu bspw. RSASSA-PKCS1-v1_5-1024-SHA1, einer Instanziierung des RSA-Algorithmus, die genau festlegte, wie RSA zum Signieren zu verwenden ist.</p> 
 	
 	<p>Jeder Baum beinhaltet Schlüssel, die an einer Adresse A liegen.
 <!-- be: TODO: Frage klären und in Text hinzufügen:
@@ -73,7 +73,7 @@
 <p> </br> </p>
 	<h3 id="visual">1.1) Visualisierung der SPHINCS-Struktur</h3>
 	
-	<p>Die folgende Grafik zeigt einen HyperTree.</p>
+	<p>Die folgende Grafik zeigt einen Hypertree.</p>
 	<img src=images/explanation.png alt="Legende" id=explanation />
 	<img src=images/structure.png alt="SPHINCS-Struktur" id=struktur />
 <!-- be: TODO in Abbildung:
@@ -82,13 +82,13 @@
 3) Bitte einen Rechteckrahmen reinmalen, welchen Ausschnitt die Abb. 2 darstellt.
 4) Bitte einzeichnen, was genau ist der unten genannte Wurzelknoten?
 -->	
-	<p>Dieser HyperTree ist (ausschnittsweise) auch im Plugin im Reiter "SPHINCS-Übersicht" zu sehen.
+	<p>Dieser Hypertree ist (ausschnittsweise) auch im Plugin im Reiter "SPHINCS-Übersicht" zu sehen.
 <!-- be: TODO: Text klarer formulieren:
 	((( Bitte genauer, was zu sehen ist. )))
 -->	
 	</p>
 	
-	<p>Die folgende Grafik zoomt in einen Teil des obigen HyperTrees hinein: Eine WOTS+-Struktur besteht aus mehreren WOTS+-Public-Key-Knoten, die jeweils ein Schlüsselpaar
+	<p>Die folgende Grafik zoomt in einen Teil des obigen Hypertrees hinein: Eine WOTS+-Struktur besteht aus mehreren WOTS+-Public-Key-Knoten, die jeweils ein Schlüsselpaar
 <!-- be: TODO: Text klarer formulieren:
 	((( ein Schlüsselpaar (aus 2 öffentlichen Schlüsseln oder ein Paar aus einem geheimen und einem öffentlichen Schlüssel) oder nur einen Public-Key ? ))) 
 -->	
@@ -346,7 +346,7 @@ HORST-Public Key zu signieren.)))-->
 <p> </br> </p>
 	<h3>Reiter 3: SPHINCS-Übersicht</h3>
 	
-	<p>Der 3. Reiter zeigt einen Ausschnitt eines HyperTrees und gibt Informationen über die Struktur in SPHINCS. Steht der Mauszeiger über einem Blatt, werden dessen Daten als Balloontext angzeigt. Klickt man auf das Blatt, werden die Daten zusätzlich in das Ausgabefeld oben unter der Beschreibung ausgegeben.
+	<p>Der 3. Reiter zeigt einen Ausschnitt eines Hypertrees und gibt Informationen über die Struktur in SPHINCS. Steht der Mauszeiger über einem Blatt, werden dessen Daten als Balloontext angzeigt. Klickt man auf das Blatt, werden die Daten zusätzlich in das Ausgabefeld oben unter der Beschreibung ausgegeben.
 	<!-- be: TODO: Fragen beantworten und im Text ergänzen:
 	((( - Ich bekam bei einem Klick die gleiche Info wie im Balloontext. Ist das ok?
         - Klickt man auf ein Blatt, erscheint z.B.
@@ -395,7 +395,7 @@ HORST-Public Key zu signieren.)))-->
 	
 	<p> Weitere Plugins in JCrypTool zu Quantencomputer-sicheren Verfahren:
 	<ul>	
-		<li><a href="PLUGINS_ROOT/org.jcryptool.visual.merkletree/$nl$/help/content/index.html">MerkleTree</a></li>
+		<li><a href="PLUGINS_ROOT/org.jcryptool.visual.merkletree/$nl$/help/content/index.html">Merkle-Signaturen</a></li>
 		<li><a href="PLUGINS_ROOT/org.jcryptool.visual.wots/$nl$/help/content/index.html">WOTS / WOTS+</a></li>
 	</ul></p>
 
