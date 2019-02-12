@@ -12,7 +12,7 @@
 
 <p>This plug-in visualizes the usage of RSA for message encryption. In most usage scenarios, this algorithm utilizes two prime numbers for key generation, and has – as every asymmetric algorithm – a private and a public key.</p>
 
-<p>This algorithm can also be used with more than two prime numbers – which is then called <strong>multi-prime RSA</strong>. The key generation and the encryption are working analogously to the classic RSA-algorithm with two prime numbers (N is the product of all chosen prime numbers).</p>
+<p>This algorithm can also be used with more than two prime numbers – which is then called <strong>multi-prime RSA</strong>. The key generation and the encryption are working analogously to the classic RSA-algorithm (then, N is the product of all chosen prime numbers).</p>
 
 <p><b>Please note </b>that in this visualization the operations are performed on each single character. In practice, though the operations are performed on blocks or even the whole message. However, in the typical use cases RSA is not used to encrypt large amounts of data. Instead it is used to encrypt a session key, with which the actual data is encrypted (using a symmetric cipher like AES or 3DES). This is typically referred to as ‘hybrid encryption’. (Another typical use case is to sign the hash value of a message.)</p>
 
@@ -37,7 +37,7 @@ The product p*q = N and e then serve as the public key, the exponent d as the pr
 
 <p>The secret exponent d = e^(-1) mod phi(N) is calculated as the multiplicative inverse of the public exponent e modulo phi(N). In a different notation: e*d = 1 mod phi(N).</p>
 
-<p>After the RSA key generation, N and e can be published. Then, anyone could encrypt a message for the owner of the according secret RSA key d (or check a digital signature  &nbsp;&ndash;  using only the public key).</p>
+<p>After the RSA key generation, N and e can be published. Then, anyone could encrypt a message for the owner of the according secret RSA key d (or check a digital signature &nbsp;&ndash; using only the public key).</p>
 
 <h3>RSA Encryption / Decryption</h3>
 <p>To encrypt data with the RSA scheme, the ciphertext is calculated using the public key e of the recipient and the plaintext. The encryption function is c = m^e mod N. This means that anyone can encrypt a message using the public key. But only the owner of the associated secret key d can then decrypt the message again.</p>
@@ -54,7 +54,7 @@ The product p*q = N and e then serve as the public key, the exponent d as the pr
 
 <p>For further information please refer to:</p>
 <ul>
-  <li><a href="../../../../../org.jcryptool.visual.rsa/nl/en/help/content/index.html">JCT Plugin: RSA Cryptosystem (Encrypt, Decrypt, Sign, and Verify)</a>
+  <li><a href="PLUGINS_ROOT/org.jcryptool.visual.rsa/$nl$/help/content/index.html">JCT Plugin: RSA Cryptosystem (Encrypt, Decrypt, Sign, and Verify)</a>
 
   <li><a href="https://en.wikipedia.org/wiki/RSA_cryptosystem">http://en.wikipedia.org/wiki/RSA_cryptosystem</a></li>
 

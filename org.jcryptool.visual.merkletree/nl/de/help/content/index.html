@@ -10,13 +10,14 @@
 
 <h1>Merkle-Signaturen (MSS, XMSS, XMSS^MT)</h1>
 
-<p>Diese Onlinehilfe erklärt die Funktionsweise des Plugins <b>Merkle-Signature-Scheme</b>.</p>
+<p>Diese Onlinehilfe erklärt die Funktionsweise des Plugins <b>Merkle-Signaturverfahren</b>.</p>
 <p>Das Plugin lässt sich über das Menü <b>Visualisierungen</b> oder über den Krypto-Explorer im Reiter <b>Visualisierungen</b> starten.</p>
 
 <p>Neben den Merkle-Signaturen enthält JCT auch <a href="PLUGINS_ROOT/org.jcryptool.visual.sphincs/$nl$/help/content/Sphincs.html">SPHINCS</a> als Beispiel eines modernen PQC-Signaturverfahrens &ndash; eine gute und aktuelle Übersicht zu solchen Verfahren findet sich in der Wikipedia [1,2]. <a href="PLUGINS_ROOT/org.jcryptool.visual.wots/$nl$/help/content/index.html">WOTS</a> in der Variante WOTS+ ist ein Baustein sowohl von XMSS wie von SPHINCS.</p>
 
-<p>XMSS wurde inzwischen von der IETF <b>standardisiert</b>: Der Request for Comments (RFC) 8931 [6] wurde im Mai 2018 für die Varianten XMSS (ein Einzel-Baum-Verfahren) und XMSS^MT (eine Mehrfach-Baum-Variante von XMSS) veröffentlicht.</br>
-Anfang 2019 bekundete das US National Institute of Standards and Technology (NIST) seine Absicht [5], auch Standards bekannt zu machen für zustandsbehaftete (stateful) Hash-basierte Signaturen (HBS), basierend auf XMSS- und Leighton-Micali-Signaturen (LMS) (zusätzlich zur NIST PQC competition [3,4]).</p>
+<p>XMSS wurde inzwischen von der IETF <b>standardisiert</b>: Der Request for Comments (RFC) 8391 [6] wurde im Mai 2018 für die Varianten XMSS (ein Einzel-Baum-Verfahren) und XMSS^MT (eine Mehrfach-Baum-Variante von XMSS) veröffentlicht.</p>
+
+<p>Anfang 2019 bekundete das US National Institute of Standards and Technology (NIST) seine Absicht [5], auch Standards bekannt zu machen für zustandsbehaftete (stateful) Hash-basierte Signaturen (HBS), basierend auf XMSS- und Leighton-Micali-Signaturen (LMS) (zusätzlich zur NIST PQC competition [3,4]). Hanno Boeck [10] stated: "XMSS is assumed to be postquantum secure, but it’s a stateful scheme and thus often not a drop-in replacement for existing signature schemes."</p>
 
 
 
@@ -214,7 +215,7 @@ Die Signatur hat den folgenden Aufbau: Index des Schl&uumlsselpaares | Einmalsig
   <li>[3] Wikipedia: <br>
   <a href="https://en.wikipedia.org/wiki/Post-Quantum_Cryptography_Standardization">https://en.wikipedia.org/wiki/Post-Quantum_Cryptography_Standardization</a></li>
   
-  <li>[4] Wikipedia: <br>
+  <li>[4] NIST: <br>
   <a href="https://csrc.nist.gov/projects/post-quantum-cryptography">https://csrc.nist.gov/projects/post-quantum-cryptography</a></li>
   
   <li>[5] Wikipedia: <br>
@@ -226,6 +227,8 @@ Die Signatur hat den folgenden Aufbau: Index des Schl&uumlsselpaares | Einmalsig
   <li>[9] Bouncy Castle: Die Signaturen XMSS, GMSS und SPHINCS sind seit Januar 2019 in der<br>
   <a href="https://github.com/bcgit/bc-java/tree/master/core/src/main/java/org/bouncycastle/pqc/crypto">Krypto-API der Java Bouncy Castle</a> enthalten.</li>
   
+  <li>[10] Hanno Böck:<br>
+  <a href="https://www.feistyduck.com/bulletproof-tls-newsletter/issue_42_does_tls_have_to_change_constantly_to_make_it_future_proof.html">Bulletproof TLS Newsletter #42</a>, Juni 2018</li>
 </ul>
 <br>
 
