@@ -22,17 +22,35 @@
 
 	<p>At the moment, this English online help is only a stub. In the German version the usage and the algorithm are already described in detail (the English version will be there too in the release version of JCT 1.0. You can see the English online help already in the Weekly Build).</p>
 	
-	<p>Below you find further information about the algorithm from external sources.</p>
+	<p><br>Kudelski Security summarized the tree structure this way (Kudelski Security submitted "Gravity-SPHINCS" to the NIST competition, a variant of SPHINCS which &ndash; in the opposite to SPHINCS+-256 &ndash; did not manage to get in round 2):</p>
+
+<h4>The 4 trees in SPHINCS</h4>
+
+<p>The SPHINCS signature scheme is not of the simplest kind, and is hard to understand by only reading its <a href="http://sphincs.cr.yp.to/sphincs-20150202.pdf">informal specification</a>. So instead of trying to explain it fully, we&#8217;ll just describe its general structure, which can be seen as the combination of four types of trees:</p>
+
+<ol>
+<li><strong>The main hyper tree</strong>, of height denoted h (60 in SPHINCS-256). The root of this tree is part of the public key. The leaves of this tree are HORST instances. This hyper-tree is divided into d (12 in SPHINCS-256) layers.</li>
+
+<li><strong>The subtrees</strong>, which are Merkle trees of height h/d (60/12=5 in SPHINCS-256). The leaves of these trees are roots of trees; said roots are compressed public keys of WOTS instances, that connect to a tree at the next layer.</li>
+
+<li><strong>The WOTS public key compression trees</strong>, which are L-trees (and not necessarily complete binary trees), of height log_2(l) when there are l leaves. The leaves of this tree are components of a WOTS public key (67 values of 256 bit each in SPHINCS-256). The associated WOTS instance signs a tree root at the next layer.</li>
+
+<li> <strong>The HORST public key compression trees</strong>, at the bottom of the hyper-tree, are Merkle trees of height &#964; = log_2(t), where t is the number of public key elements in the HORST instances (2^{16} in SPHINCS-256).</li>
+</ol>
+
+	
+	<br><p>Below you find further information about the algorithm from external sources.</p>
 
 	<h2>Further information</h2>
 
 	<p>There is an official website about the <a href="https://sphincs.cr.yp.to/">SPHINCS algorithm</a>, where you can find papers, presentations and software about SPHINCS.</p>
 	
-	<p>The SPHINCS structure is based on Merkle trees, which you can also find in JCrypTool (see linked below).</p>
+	<p>The SPHINCS structure is based on Merkle trees, which you can also find in JCrypTool (see links below).</p>
 
 	<p>Additional Information about Post-Quantum Cryptography (PQC) and SPHINCS signatures can be found here:</p>
 <ul>		
-	<li>[0] <a href="https://cryptojedi.org/papers/sphincs-20141001.pdf">SPHINCS: practical stateless hash-based signatures</a> by Daniel J. Bernstein, Daira Hopwood, Andreas Hülsing, Tanja Lange, Ruben Niederhagen, Louiza Papachristodoulou, Peter Schwabe, and Zooko Wilcox O'Hearn (2014) is the original paper about the SPHINCS signature scheme. It discusses very intelligently the design criteria of the procedure.</li>
+	<li>[0] <a href="https://cryptojedi.org/papers/sphincs-20141001.pdf">SPHINCS: practical stateless hash-based signatures</a> by Daniel J. Bernstein, Daira Hopwood, Andreas Hülsing, Tanja Lange, Ruben Niederhagen, Louiza Papachristodoulou, Peter Schwabe, and Zooko Wilcox O'Hearn (2014) is the original paper about the SPHINCS signature scheme. It discusses very intelligently the design criteria of the procedure.<br>
+	See also <a href="http://sphincs.cr.yp.to/sphincs-20150202.pdf">http://sphincs.cr.yp.to/sphincs-20150202.pdf.</a></li>
 		
 	<li>[1] Wikipedia: <br>
 	<a href="https://en.wikipedia.org/wiki/Post-quantum_cryptography">Post-quantum cryptography</a></li>
@@ -60,5 +78,7 @@
 		<li><a href="PLUGINS_ROOT/org.jcryptool.visual.tree/$nl$/help/content/index.html">Merkle Tree</a></li>
 		<li><a href="PLUGINS_ROOT/org.jcryptool.visual.wots/$nl$/help/content/index.html">WOTS / WOTS+</a></li>
 	</ul>
+
+<p> </br> </p>
 
 </body>
