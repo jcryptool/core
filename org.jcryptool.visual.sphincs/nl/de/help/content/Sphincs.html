@@ -3,10 +3,15 @@
 
 <!-- be: Hier eingearbeitetes Feedback bisher:
      - JCT_Feedback_SPHINCS-Onlinehilfe_deutsch_18-03-06_Korr-BE.pdf
+	 - Die Hauptquelle [0] referenziert und Struktur klarer.
 	 
 	 Später nochmal checken (noch älter):
 	 - JCT_Feedback_SPHINCS-deutsch_WB-18-01-27.pdf
 	 - Screenshots zum Plugin für den Usage-Teil machen (wenn fertig implementiert).
+	 - Gibt es Testdaten zu SPHINCS oder Vergleiche mit der Referenzimplementierung?
+	   Dazu muss man die Seeds, die SK1, SK2 und die Bitmasken auch direkt eingeben können!
+	   Dazu muss man diese auch abspeichern könnte.
+	   Damit man sieht, ob das JCT-Plugin richtig rechnet.
 -->	
 
 <head>	  
@@ -30,11 +35,11 @@
 
     <p>SPHINCS ist sicher, auch wenn Quantencomputer funktionieren: Deshalb zählt es zu den sogenannten Post-Quantencomputer-Verfahren (PQC). Mit SPHINCS-256 können ebenso wie mit <a href="PLUGINS_ROOT/org.jcryptool.visual.merkletree/$nl$/help/content/index.html">Merkle-Signaturen</a> sichere digitale Signaturen erstellt werden. Eine gute und aktuelle Übersicht zu PQC-Verfahren findet sich in der Wikipedia [1,2]. <a href="PLUGINS_ROOT/org.jcryptool.visual.wots/$nl$/help/content/index.html">WOTS</a> in der Variante WOTS+ ist ein Baustein sowohl von XMSS wie von SPHINCS.</p>
 
-	<p>SPHINCS [7,8] kam beim (im Dezember 2016 gestarteten) NIST-Wettbewerb für PQC-Verfahren (NIST PQC competition) [3,4] inzwischen in die 2. Runde (Stand 30.1.2019, Variante SPHINCS+ 256).</p>
+	<p>SPHINCS [7,8] erreichte beim (im Dezember 2016 gestarteten) NIST-Wettbewerb für PQC-Verfahren (NIST PQC competition) [3,4] inzwischen in die 2. Runde (Stand 30.1.2019, Variante SPHINCS+-256).</p>
 	
 	<p>Die Sicherheit von SPHINCS beruht wie die bei Merkle-Signaturen nur auf der Sicherheit der verwendeten Hashfunktionen und gehört deshalb zu den Hash-basierten Signaturfunktionen (HBS). Im Gegensatz zu Merkle-Signaturen ist SPHINCS jedoch <b>zustandslos</b>, was für die Sicherheit der meisten Anwendungen ein großer Vorteil ist. Generell ist die Schlüssellänge bei QC-resistenten Signaturverfahren (auch Post-Quantum-Signaturverfahren genannt) deutlich größer als bei konventionellen Signaturverfahren.</p>  
 	
-	<p>Das Paper [0] fasst SPHINCS so zusammen: "Signatures are 41 kB, public keys are 1 kB, and private keys are 1 kB. The signature scheme is designed to provide long-term 2^128 security even against attackers equipped with quantum computers."</p>
+	<p>Das hervorragende Paper [0] fasst SPHINCS so zusammen: "Signatures are 41 kB, public keys are 1 kB, and private keys are 1 kB. The signature scheme is designed to provide long-term 2^128 security even against attackers equipped with quantum computers."</p>
 	
 	<p>Die Abkürzung SPHINCS bedeutet: <b>S</b>tateless <b>P</b>ractical <b>H</b>ash-based <b>I</b>ncredibly <b>N</b>ice <b>C</b>ollision-resilient <b>S</b>ignatures.</p>  
 
@@ -57,48 +62,55 @@
 <p> </br> </p>
 	<h2 id="Chap1">1) Übersicht SPHINCS-Struktur</h2>
 	
-	<p>SPHINCS generiert einen Baum aus mehreren Strukturen, die wiederum wie ein Baum aufgebaut sind. Diese Gesamtstruktur bezeichnet man als <b>Hypertree</b> oder SPHINCS-Struktur.</p>
+	<p>SPHINCS generiert einen Baum aus mehreren Strukturen, die wiederum wie ein Baum aufgebaut sind. Diese Gesamtstruktur bezeichnet man als <b>Hyper-Tree</b> oder SPHINCS-Struktur.</p>
 	
 	<p>In SPHINCS gibt es zwei Arten von Baumstrukturen, einmal WOTS+-Strukturen und einmal HORST-Strukturen. WOTS+ ist ein Einmal-Signaturverfahren, das in SPHINCS zum Signieren darunter liegender Strukturen verwendet wird. HORST ist ein Mehrfach-Signaturverfahren, das auf der untersten Ebene zum Signieren von Nachrichten verwendet wird.</p>
 	
-	<p>Eine SPHINCS-256-Struktur hat die Gesamthöhe h=60. Jede Struktur, sowohl WOTS+ als auch HORST, besteht wiederum aus einem Baum mit der Höhe (h/d=5), wobei d=12 die Anzahl der Ebenen ist. SPHINCS-256 ist eine Instanziierung von SPHINCS+ (und legt damit diese Parameter fest; in SPHINCS+ als Konzept sind diese Parameter variabel). Das ist analog zu bspw. RSASSA-PKCS1-v1_5-1024-SHA1, einer Instanziierung des RSA-Algorithmus, die genau festlegte, wie RSA zum Signieren zu verwenden ist.</p> 
+	<p>Eine SPHINCS-256-Struktur hat die Gesamthöhe h=60. Jede Unterstruktur, sowohl WOTS+ als auch HORST, besteht wiederum aus einem Baum &ndash; jeweils mit der Höhe h/d=5, wobei d=12 die Anzahl der Ebenen ist. SPHINCS-256 ist eine Instanziierung von SPHINCS+ (und legt damit diese Parameter fest; in SPHINCS+ als Konzept sind diese Parameter variabel). Das ist analog zu bspw. RSASSA-PKCS1-v1_5-1024-SHA1, einer Instanziierung des RSA-Algorithmus, die genau festlegt, wie RSA zum Signieren zu verwenden ist.</p> 
 	
+<!-- be: TODO: M.E. muss man das Design in einem extra Abschnitt erklären. Dann kann man auch die Adressen der WOTS-Schlüsselpaare einführen. Siehe Kap. 2.2, S. 10 im Original-Paper ([0]):
+ "The address of the HORST key pair is obtained using the address of the WOTS+ key pair used to sign its public key and placing d as the layer value in the address string, encoded as dlog(d + 1)e bit string. To give an example: In SPHINCS-256, an address needs 64 bits".
+
+	(((Welcher Baumtyp und wieviele Schlüssel welcher Art enthält ein Baum?)))
+	(((==> Solange das nicht klar ist, diesen Absatz erstmal auskommentieren.
+
 	<p>Jeder Baum beinhaltet Schlüssel, die an einer Adresse A liegen.
-<!-- be: TODO: Frage klären und in Text hinzufügen:
-	(((Ist "Adressen" das richtige Wort?)))
--->	
 	Adressen beschreiben die Position der Schlüssel innerhalb der SPHINCS-Struktur.</p>
+-->	
 
 	
 <p> </br> </p>
 	<h3 id="visual">1.1) Visualisierung der SPHINCS-Struktur</h3>
 	
-	<p>Die folgende Grafik zeigt einen Hypertree.</p>
+	<p>Die folgende Grafik zeigt einen Hyper-Tree.</p>
 	<img src=images/explanation.png alt="Legende" id=explanation />
 	<img src=images/structure.png alt="SPHINCS-Struktur" id=struktur />
-<!-- be: TODO in Abbildung:
-1) Bitte angeben,wo hier h und d.
-2) Was ist die auf S. 6 genannte "erste und zweite Ebene" (s. Dokument 6.3.18)?
-3) Bitte einen Rechteckrahmen reinmalen, welchen Ausschnitt die Abb. 2 darstellt.
-4) Bitte einzeichnen, was genau ist der unten genannte Wurzelknoten?
+<!-- be: TODO in Abbildungen:
+0) Haben wir die Sourcen der Texte, um schnelle Umformulierungen/Übersetzungen machen zu können?
+1) In den Grafiken noch ein paar Texte korrigieren:
+   - Legende: linker/rechter Wurzelknoten der darunterliegenden Struktur
+     (ohne Komma)
+   - h = Gesamthöhe der SPHINCS-Gesamtstruktur  ==> gehört noch in den Legenden-Kasten!
+   - d = Anzahl der Ebenen der SPHINCS-Gesamtstruktur  ==> gehört noch in den Legenden-Kasten!
+2) Bitte einen Rechteckrahmen in Abb. 1 reinmalen, welchen Ausschnitt die Abb. 2 darstellt.
+   Der jetzige rote Rahmen in Abb. 1 ist m.E. mehr als das, was Abb. 2 zeigt.
+3) Bitte einzeichnen, was genau ist der unten genannte Wurzelknoten?
 -->	
-	<p>Dieser Hypertree ist (ausschnittsweise) auch im Plugin im Reiter "SPHINCS-Übersicht" zu sehen.
+	<p>Dieser Hyper-Tree ist (ausschnittsweise) auch im Plugin im Reiter "SPHINCS-Übersicht" zu sehen. Die unterste der 12 Ebenen wird auch als erste Ebene bezeichnet.
 <!-- be: TODO: Text klarer formulieren:
 	((( Bitte genauer, was zu sehen ist. )))
 -->	
 	</p>
 	
-	<p>Die folgende Grafik zoomt in einen Teil des obigen Hypertrees hinein: Eine WOTS+-Struktur besteht aus mehreren WOTS+-Public-Key-Knoten, die jeweils ein Schlüsselpaar
+	<p>Die folgende Grafik zoomt in einen Teil des obigen Hyper-Trees hinein: Eine WOTS+-Struktur besteht aus mehreren WOTS+-Public-Key-Knoten, die jeweils ein Schlüsselpaar
 <!-- be: TODO: Text klarer formulieren:
 	((( ein Schlüsselpaar (aus 2 öffentlichen Schlüsseln oder ein Paar aus einem geheimen und einem öffentlichen Schlüssel) oder nur einen Public-Key ? ))) 
 -->	
-	ergeben, wie in der folgenden Grafik dargestellt:</p>
+	ergeben:</p>
 	<img src=images/tree.jpg alt="WOTS+-Baum" id=baum />
-	<p>Jede WOTS+-Struktur enthält 2^(h/d) = 2^5 = 32 Knoten.</p> 
+	<p>Jede WOTS+-Struktur ist ein binärer Hash-Baum (binary hash tree) und enthält 2^(h/d) = 2^5 = 32 Knoten.</p> 
 <!-- be: TODO in Abbildung:
-Entweder als Legende in der Grafik oder im Text:
-- Stimmt die Anzahk der Ebenen mit 32?
-- Wieviele Ebenen hat man hier?
+- Dazu sagen, wieviele Ebenen Abb. 2 anzeigt.
 -->	
 	
 	<p>Die folgenden Abschnitte erläutern die 3 Haupt-Operationen genauer. Danach wird die Bedienung des Plugin anhand seiner 3 Reiter erläutert.</p>
@@ -106,109 +118,71 @@ Entweder als Legende in der Grafik oder im Text:
 	
 
 <p> </br> </p>
-	<h3 id="keygen">1.2) Schlüsselgenerierung</h3>
+	<h3 id="keygen">1.2) Schlüssel und Hyper-Tree erzeugen</h3>
 	
-	<p>Die Schlüsselerzeugung des SPHINCS-Verfahrens hat zum Ziel, den Wurzelknoten (Root) der gesamten SPHINCS-Struktur zu berechnen. Dieser wird dann als Public-Key verwendet.</p>
-	
-	<p>Bei der Generierung der Schlüssel werden zuerst zwei Bitfolgen SK1 und SK2 generiert. SK1 wird pseudozufällig generiert und dient als Seed für die pseudozufällige Schlüsselgenerierung.
-<!-- be: TODO: Fragen klären und in Text hinzufügen:
-	(((Ist SK2 die "Bitmaske", die im ersten Reiter in der Mitte dargestellt wird?
-       Sind beide, SK1 und SK2 geheim zu halten?
-	   Werden beide pseudozufällig generiert?)))
--->	
-	</p>
-	
-	<p>Ist die Operation der Schlüsselerzeugung abgeschlossen, hat man das WOTS+-Schlüsselpaar der Struktur auf der obersten Ebene der gesamten SPHINCS-Struktur.</p>
-	
-	<p>SK2 wird verwendet, um beim Signieren die Nachricht und somit auch den Hashwert der Nachricht zu randomisieren.</p>
-	
-	<p>Außerdem werden Bitmasken Q
+	<p>Die Schlüsselerzeugung des SPHINCS-Verfahrens hat zum Ziel, den Public Key PK des Wurzelknotens (Root) der gesamten SPHINCS-Struktur zu berechnen. Dieses PK ist ebenfalls ein Hashwert.</p>
 <!-- be: TODO: Frage klären und in Text hinzufügen:
-	(((Sollte hier nicht, weil es mehrere sind, Q_i stehen?)))
+	(((Bitte in er Grafik oben schreiben: Public Key PK = H(...) )))
 -->	
-	für jede WOTS+-Struktur und jede HORST-Struktur generiert. Alle Q_i gehen
-<!-- be: TODO: Wort ergänzen? ((( indirekt? ))) -->	
-	in den obersten Public-Key ein.</p>
 	
-	<p>Mit dem Seed und den Bitmasken wird dann der WOTS+-Public-Key der letzten
-<!-- be: TODO: Frage klären: (((Müsste das nicht der "oberste" heißen?)))
--->	
-	WOTS+-Struktur berechnet.</p> 
-	<p>Dieser Public-Key der WOTS+-Struktur wird mit den Bitmasken ge-XOR-ed und ergibt PK1, der als Hashwert im Public-Key ist.
-<!-- be: TODO: Frage klären und in Text hinzufügen:
-	(((Wo ist PK1 in der Grafik zu sehen?)))
--->	
-	</p>
-	<p>Der Wurzelknoten PK1 dieses Hashbaums ist ein Teil des SPHINCS-Public-Keys.
-<!-- be: TODO: Frage klären und in Text hinzufügen:  ((( mir nicht klar ?))) -->	
-	</p>
+	<p>Ist die Operation der Schlüsselerzeugung abgeschlossen, hat man das WOTS+-Schlüsselpaar der SPHINCS-Gesamtstruktur. Dessen Public Key ist der Wurzelknoten der SPHINCS-Struktur.</p>
+<!-- be: TODO: Frage klären: (((Ist das so richtig?)))
+-->		
 	
-	<p>Es gilt: SPHINCS-Private-Key = {SK1, SK2, Q}; SPHINCS-Public-Key = {PK1, Q}
+	<p>Dazu werden zunächst zwei 256*256 Bit große, geheime Schlüssel SK_1 und SK_2 erstellt. SK_1 dient zur pseudozufälligen Schlüsselgenerierung. SK_2 wird verwendet, um den Index von sign (Funktion undefiniert eingeführt in [0, Seite 10, zweiter Absatz]; gemeint ist der Index eines OTS-Schlüsselpaars in einem Baum) unvorhersagbar zu machen und um den Hashwert der Nachricht zu randomisieren.
 <!-- be: TODO: Fragen klären und in Text hinzufügen:
-	((( Mir nicht klar, welche Wurzel und welches Q ?
-    	Reden wir hier von irgendeinem WOTS+-Knoten oder von einem HORST-Knoten oder vom obersten Knoten? )))
+	(((M.E. sind die beiden SK_i und die Bitmasken etwas Verschiedenes.
+	Was ist die "Bitmaske", die im ersten Reiter in der Mitte dargestellt wird?)))
 -->	
 	</p>
+	
+	<p>Zusätzlich werden p n-Bit lange Bitmasken Q_i erzeugt, die für jede WOTS+-Struktur und jede HORST-Struktur benutzt werden. Alle Q_i gehen per Konkatenation in den obersten Public-Key (PK des Wurzelknoten) ein. Weitere Details in [0, Seite 10].</p>
+	
+	<p>Anschließend werden die WOTS+-Schlüsselpaare der einzelnen Ebenen erzeugt. Dazu wird für jedes Schlüsselpaar ein Seed erzeugt, in den die Adresse A des Schlüsselpaars und SK_1 einfließen.</p>
+		
+	<p>Es gilt:<br>SPHINCS-Private/Secret Key SK = {SK_1, SK_2, Q};<br>SPHINCS-Public Key = {PK1, Q}.</p>
+	<p>Tabelle 1 in [0, Seite 19] zeigt die Größe der Schlüssel in SPHINCS-256:<br> Private/Secret Key = 1088 Byte;<br> Public Key = 1056 Byte.</p>
+	
+	<p>Wieviele Seeds gibt es? Im SK einen, allerdings wird fast alles pseudozufällig aus kurzen Seeds erzeugt.<br>
+	Wieviele Bitmasken gibt es? 32 256-Bitmasken.</p>
+
 
 	
 	
 <p> </br> </p>
-	<h3 id="signature">1.3) Signieren</h3>
+	<h3 id="signature">1.3) Nachricht signieren</h3>
 	
-	<p>Signiert wird eine Nachricht M mit einem SPHINCS-Private-Key {SK1, SK2, Q}.</p>
+	<p>Signiert wird eine Nachricht M mit dem SPHINCS-Private-Key SK.</p>
 	
-	<p>Dazu wird ein Hash D über M und Zufallswerte gebildet. Dieser Hash D wird dann signiert.</p>
-	
-	<p>Davor wird zunächst ein pseudozufälliger Bitstrom R, bestehend aus zwei Teilwerten R1 und R2, gebildet. R2 wird
-<!-- be: TODO: Frage beantworten und Text klarer formulieren:
-	((( nochmal? Wird also zuerst R geteilt, und dann wird auch R2 nochmal aufgeteilt? )))
--->	
-	aufgeteilt, um den Index
-<!-- be: TODO: Frage beantworten und Text klarer formulieren:
-	(((Ist Index das, was weiter oben als Adresse bezeichnet wurde?)))
--->	
-	des zu verwendenden Schlüsselpaars anzugeben.</p>
-	<p>Ein Teil des Indexes bestimmt die HORST-Struktur, der andere Teil bestimmt, welcher konkrete
-<!-- be: TODO: (((Ich nehme an, gemeint ist hier der private Schlüssel?)))
--->	
-	Schlüssel innerhalb der HORST-Struktur verwendet werden soll, um zu signieren.</p>
-	<p>Die HORST-Signatur wird aus einem Seed, dem Hash D und Bitmasken
-<!-- be: TODO: Frage beantworten und Text klarer formulieren:
-	(((Was ist der Unterschied zwischen dem obigen Bitstrom R und der "Bitmaske" hier?
-	Welchen Bezeichner hat diese Bitmaske?
-	Ist diese Bitmaske auch zufällig?)))
--->	
-	berechnet.</p>
-	
-	<p>Die SPHINCS-Signatur beinhaltet neben der HORST-Signatur, einem Index i, und Zufallsbits R1 auch noch eine WOTS+-Signatur und einen Authentifizierungspfad durch alle Ebenen.</p>
-	
-	<p>Der Index wir jedoch immer deterministisch ausgewählt, da bei einer Struktur dieser Größe kein zuverlässiger Zufall existiert, der die Indizes bestimmen könnte.
-<!-- be: TODO: Frage beantworten und Text klarer formulieren:
-	((( Verstehe ich nicht? )))
--->	
+	<p>Dazu wird ein Randomizer, also ein zufälliges R = (R_1, R_2) gebildet und ein randomisierter Message-Digest D aus M, SK_2 und R_1 berechnet. Dieser Hash D wird dann signiert.</p>
 
-<!-- be: TODO: Frage beantworten und klären, ob man das noch mit aufnimmt:
-	(((VORHER stand da noch: Das WOTS+-Schlüsselpaar mit der Adresse A_0 wird verwendet, um den
-HORST-Public Key zu signieren.)))-->
-	</p>
-	
-	<p>Die SPHINCS-Signatur besteht aus (i; R1; &sigma;H; &sigma;W_0; Auth_A0;...; &sigma;W_d−1; Auth_A_d−1), wobei (&sigma; = Signatur, &sigma;H = HORST-Signatur).
-<!-- be: TODO: Frage beantworten und Text klarer formulieren:
-	((( Was genau ist das i? Wo kommt diese Variable her?)))
+	<p>Zum Signieren wird das HORST-Schlüsselpaar an der ausgewählten Adresse verwendet. Die HORST-Signatur wird aus einem Seed, dem Hashwert D und HORST-Bitmasken	berechnet.</p>
+	<!-- be: Frage: Sind die HORST bitmasks und das pseudorandom R = (R1;R2) dasselbe?
 -->	
-	</p>
 	
-<!-- be: TODO: Frage beantworten und Text klarer formulieren:
-	((( Zur ff. Grafik:
-		- Sprache: R2 ist Index von verwendeten HORST-Blattes
-		       ==> R2 ist Index des verwendeten HORST-Blatts
-		- Unten rechts im mittleren blauen Block sind 3 Sätze: Brechen Sie den Text um:
-			- die 1. Zeile auf zwei Zeilen verteilen.
-			- die unteren 4 Zeilen auf 3 ca. gleich lange Zeilen verteilen.
-		- Letzter Satz unten rechts: Typo: Stuktur ==> Struktur
+	<p>Die ganze SPHINCS-Signatur ("the full SPHINCS signature &Sigma;") beinhaltet neben der HORST-Signatur noch einen Index i, Zufallsbits R_1, einer XMSS_MT-Signatur und einen Authentifizierungspfad (authentication path) durch alle Ebenen. Die  XMSS_MT-Signatur besteht aus d WOTS+-Signaturen.</p>
+	
+	<p>Der Index wird deterministisch ausgewählt, da bei einer Struktur dieser Größe kein zuverlässiger Zufall existiert, der die Indizes bestimmen könnte. Das WOTS+-Schlüsselpaar mit der Adresse A_0 wird verwendet, um den HORST-Public Key zu signieren.</p>
+	
+	<p>Die SPHINCS-Signatur &Sigma; besteht also aus (i; R_1; &sigma;H; &sigma;W,0; Auth_A_0;...; &sigma;W,d−1; Auth_A_d−1), wobei (&sigma;H = HORST-Signatur, &sigma;W,i = WOTS+-Signatur).</p>
+	
+	<p>Die ff. Grafik zeigt das Zusammenwirken der Parameter. Weitere Details in [0, Seite 11].</p>
+	
+<!-- be: TODO: Zur ff. Grafik, die ansonsten sehr gut aussieht:
+	((( - SPHINCS überall groß schreiben.
+	    - Indizes tiefer stellen wie in der 1. Grafik: SK2, R1, R2, 
+		- In der großen blauen Box:
+		  - Bitte die Schrift kleiner und den Abstand geringer bei den 3 ersten Schritten,
+		    da dies nur vorbereitende Schritte sind:
+			Pseudozufällige Bitfolge ..., R=(R1,R2), R2 ist der Index des ...
+		  - Dafür den 4. Schritt "Randomisierte Nachricht ..." größer machen,
+            da das das Entscheidende ist.
+		  - Text ändern:
+		    R2 ist der Index des verwendeten HORST-Blattes
+		    ==> Mit Hilfe von R_2 wird der Index des verwendeten HORST-Blatts berechnet.
+          - Letzter Satz unten rechts: Typo: Stuktur ==> Struktur
 		- Unterer blauer Block:
-			- Gleiche Schreibweise in Grafik wie im Text der Onlinehilfe: W0 ==> W_0, AuthA0 ==> AuthA_0, ...
-			- Ist mit dem Summen-Zeichen am Ende der Grafik eine Konkatenation oder eine wiederholte Anwendung gemeint?
+		  Gleiche Schreibweise in Grafik wie im Text der Onlinehilfe: W0 ==> W_0, AuthA0 ==> Auth_A_0, ...
 	)))
 -->	
 	<img src=images/signierung_final.jpg alt=Signatur />
@@ -217,142 +191,104 @@ HORST-Public Key zu signieren.)))-->
 	  
 	
 <p> </br> </p>
-	<h3 id="verification">1.4) Verifikation</h3>
+	<h3 id="verification">1.4) Signatur verifizieren</h3>
 	
-	<p>Zum Verifizieren werden ein SPHINCS-Public-Key (also der Wurzelknoten und ein Authentisierungspfad), die Nachricht M und eine vollständige
-<!-- be: TODO: Frage beantworten und Text klarer formulieren:
-	((( Was ist mit vollständig gemeint? Gibt es auch unvollständige Signaturen? )))
--->
+	<p>Zum Verifizieren werden der SPHINCS-Public-Key (also das PK des Wurzelknotens), die Nachricht M und eine ganze
 	SPHINCS-Signatur benötigt.</p> 
 	
-	<p>Zunächst wird ein Hash D über die Nachricht und den Zufallswert R1
-<!-- be: TODO: Frage beantworten und Text klarer formulieren:
-	((( nicht über R2 ? )))
--->
-	, welcher in der Signatur enthalten ist, gebildet: D = H(M, R1).</p>
+	<p>Zunächst wird ein Hashwert D aus der die Nachricht und aus dem (in der Signatur enthaltenen) Zufallswert R1 gebildet: D = H(M, R1).</p>
 	
-	<p>Der Hash D und die im Public-Key enthaltenen Bitmasken Q werden dazu verwendet, um mithilfe der HORST-Verifikationsfunktion (D, &sigma;_HORST, Q_HORST) den HORST-Public-Key zu berechnen. Wenn die Verifizierung der HORST-Signatur, die in der SPHINCS-Signatur enthalten ist, fehlschlägt, dann ist auch die SPHINCS-Signatur ungültig.</p>
+	<p>Der Hashwert D und die im Public-Key PK enthaltenen HORST-Bitmasken Q_HORST werden dazu verwendet, um mithilfe der HORST-Verifikationsfunktion (D, &sigma;_HORST, Q_HORST) den HORST-Public Key zu berechnen. Wenn die Verifizierung der HORST-Signatur, die in der SPHINCS-Signatur enthalten ist, fehlschlägt, dann ist auch die SPHINCS-Signatur ungültig.</p>
 	
-	<p>Mit der in der SPHINCS-Signatur enthaltenen WOTS+-Signatur wird der Public-Key der ersten WOTS+-Struktur berechnet.
-<!-- be: TODO: Frage beantworten und Text klarer formulieren:
-	(((  Ist das so richtig? )))
--->
-	Danach wird das Blatt der Struktur berechnet.</p>
-	<p>Mit diesem Blatt
-<!-- be: TODO: Frage beantworten und Text klarer formulieren:
-	((( Welches Blatt ? )))
--->
-	wird der Wurzelknoten (Root) der Struktur berechnet. Dieser Vorgang wird bis zur untersten
-<!-- be: TODO: Frage beantworten und Text klarer formulieren:
-	(((Ist hier nicht die "oberste" Ebene, also die oberste Root gemeint?)))
--->
-	Ebene der SPHINCS-Struktur wiederholt.</p> 
-	<p>Jedoch mit zwei Unterschieden:</p>
+	<p>Mit der in der SPHINCS-Signatur enthaltenen WOTS+-Signatur wird der Public-Key der ersten WOTS+-Struktur PK_W,0 berechnet.
+	Danach wird das Blatt dieser ersten Ebene berechnet.</p>
+	<p>Mit diesem Blatt	wird der Wurzelknoten (Root_0) der ersten Ebene berechnet. Dieser Vorgang wird bis zur obersten Ebene der SPHINCS-Struktur wiederholt ("repeated for layers 1 to d-1"), jedoch mit zwei Unterschieden:</p>
 	<ol>
-		<li>Der Wurzelknoten der vorherigen Struktur wird nun verwendet, um den Public-Key der darüber liegenden Struktur zu berechnen.</li>
-		<li>Die Blätter der Strukturen werden berechnet, indem die letzten j*(h/d) Bits von i
-<!-- be: TODO: Frage beantworten und Text klarer formulieren:
-		((( Was ist j? Was ist i? )))
--->
-		abgeschnitten werden und davon die letzten (h/d) Bits verwendet werden.</li>
+		<li>Der Wurzelknoten der vorherigen Struktur wird nun verwendet, um den WOTS+-Public Key der darüber liegenden Struktur zu berechnen.</li>
+		<li>Das Blatt der Struktur wird berechnet, indem die letzten j*(h/d) Bits von i
+<!-- be: TODO Hülsing: Was ist hier i.  Siehe auch [0, Seite 12 oben -->
+		abgeschnitten werden und vom Rest die letzten (h/d) Bits verwendet werden.</li>
 	</ol>
 	
-	<p>Diese zwei Besonderheiten werden aber erst ab der zweiten Ebene
-<!-- be: TODO: In die Grafik einzeichnen, was Ebene 1, Ebene 2, ... -->
-	der SPHINCS-Struktur relevant.</p>
+	<p>Diese zwei Besonderheiten werden aber erst ab der zweiten Ebene der SPHINCS-Struktur relevant.</p>
 	
-	<p>Nachdem der Authentifizierungspfad durchgerechnet wurde, erhält man den Wurzelknoten der Ebene d-1.
-	Diesen vergleicht man dann mit dem SPHINCS-Public-Key.</p>
+	<p>Nachdem der Authentifizierungspfad durchgerechnet wurde, erhält man den Wurzelknoten der Ebene d-1 (Root_d-1).
+	Diesen vergleicht man dann mit dem ersten Element PK_1 im SPHINCS-Public Key PK.</p>
 	
-	<p>Sind die beiden Schlüssel identisch, gelingt die Verifikation, sind die beiden Schlüssel jedoch nicht identisch, so schlägt die Verifikation fehl.</p>
+	<p>Sind die beiden Schlüssel identisch, gelingt die Verifikation; sind die beiden Schlüssel nicht identisch, so schlägt die Verifikation fehl. Weitere Details in [0, Seite 11 und 12].</p>
 
 	
-
 
 	
 
 <p> </br> </p>
 	<h2 id="Chap2">2) Bedienungsanleitung zu dieser Visualisierung</h2>
-	 
-	<p>In dieser Visualisierung werden das Signaturverfahren SPHINCS und die dahinterliegende SPHINCS-Struktur erläutert. Außerdem können die 3 Operationen Schlüsselgenerierung, Signieren und Verifizieren durchgeführt werden.</p>
-	
-	<!-- be: TODO: Frage beantworten und im Text ergänzen:
-	(((Ist der Parameter d fixiert auf 12, oder kann d eingegeben werden?)))
+
+	<!-- be: TODO: Hier noch Screenshots rein, wenn die GUI komplett ist und sich dort auch die Bezeichnungen aus dieser Onlinehilfe wiederfinden.
 -->
+	 
+	<p>Diese Visualisierung erläutert das Signaturverfahren SPHINCS-256 und die dahinter liegende SPHINCS-Struktur. Außerdem können die 3 Operationen Schlüsselgenerierung, Signieren und Verifizieren durchgeführt werden.</p>
+	
+	<p>In der Instanziierung SPHINC-256 sind die Parameter d=12, h=60, w=16, n=256 und m=512 schon festgelegt (siehe Tabelle 1 in [0, Seite 19]).</p>
 	 
 	<h3>Reiter 1: Bitmasken- und Schlüsselerzeugung</h3>
-	<p>Der 1. Reiter zeigt die Bestandteile der verwendeten Schlüssel (Seed und Bitmasken) und er gibt diese und den zugehörigen einen öffentlichen SPHINCS-Schlüssel
-	<!-- be: TODO: Frage beantworten: (((Ist das so korrekt?)))
-	(((- Bitte noch ergänzen, wie viele Schlüssel generiert werden und wie viel Speicherplatz diese im Normalfalls in Summe benötigen.]
-)))
--->
-	aus. Des weiteren werden noch Informationen zur Schlüssellänge ausgegeben.</p>
+	<p>Im 1. Reiter werden die Bestandteile der verwendeten Schlüssel (Seed und Bitmasken) und des erzeugten öffentlichen SPHINCS-Schlüssels PK ausgegeben. Des weiteren werden noch Informationen zur Schlüssellänge angezeigt.</p>
 	
-	<p>Dazu müssen Sie den Button <b>Erzeugen</b> drücken. Bei jedem weiteren Drücken des Buttons wird erneut ein zufälliger Seed generiert und damit ein neuer Public Key erzeugt.</p>
-	 
-	
-<!-- be: TODO: Den ff. Absatz hae ich rausgenommen, da ich nicht sehe, wo Bitmasken derzeit gefärbt sind.
-	<p>Außerdem werden die Bitmasken eingefärbt. Da der Public-Key standardisiert
-	ausgegeben wird, stimmt der farblich markierte Wert nicht mit dem im Feld "Bitmasken" überein. Semantisch sind sie aber dasselbe.
+	<p>Dazu müssen Sie den Button <b>Erzeugen</b> drücken. Bei jedem weiteren Drücken des Buttons wird erneut ein zufälliger Seed generiert und damit ein neuer Public Key PK erzeugt.</p>
+	 	
+<!-- be: TODO: Den ff. Absatz habe ich rausgenommen, da ich nicht sehe,
+         wo Bitmasken derzeit gefärbt sind. Der ganze Text ist in schwarz.
+
+	<p>Außerdem werden die Bitmasken eingefärbt. Da der Public-Key standardisiert ausgegeben wird, stimmt der farblich markierte Wert nicht mit dem im Feld "Bitmasken" überein. Semantisch sind sie aber dasselbe.</p> 
 -->
 	
-	<!-- be: TODO: Fragen beantworten und im Text ergänzen:
+<!-- be: TODO: Fragen beantworten und im Text ergänzen:
 	(((
 	- Was ist mit "standardisiert" gemeint?
-	- Wie kann ich die semantische Gleichheit nachprüfen? Bitte ein Beispiel angeben.
-	- Bei Bitmasks sehe ich keine unterschiedliche Färbung -- der ganze Text ist in schwarz.
+	- Wie kann ich die semantische Gleichheit nachprüfen? Bitte hier ein Beispiel angeben.
 	- Wie viele Bitmasken sind das?
 	- Beim Public Key ist der lange Anfang rot und am Ende gibt es einen kurzen Teil in schwarz.
-	- Was stellt das jeweils dar? Ist das ein Base64-Format? )))
+	- Was stellt das jeweils dar -- ist das Q und PK1??
+    - Ist das ein Base64-Format? )))
 -->
-	</p> 
 	 
-	<p>Die folgenden Reiter 2 und 3 funktionieren erst, nachdem in Reiter 1 ein Schlüssel erzeugt wurde.</p>
+	<p>Die folgenden Reiter 2 und 3 funktionieren erst, nachdem in Reiter 1 die Schlüssel erzeugt und der Hyper-Tree aufgebaut wurde.</p>
 
+	
 	 
 <p> </br> </p>
 	<h3>Reiter 2: Signierung und Verifikation</h3>
 	 
 	<p>Der 2. Reiter bietet die Möglichkeit, eine Nachricht zu signieren und zu verifizieren.</p>
 	 
-	<p>Bitte geben Sie einen Nachrichtentext ein (oder lassen den Standardvorschlag) und drücken dann den Button <b>Nachricht signieren</b>.</p>
+	<p>Bitte geben Sie einen Nachrichtentext ein (oder lassen Sie den Standardvorschlag) und drücken dann den Button <b>Nachricht signieren</b>.</p>
 	 
-	<p>Mit den folgenden 3 Buttons können verschiedene Teile der Signatur hervorgehoben werden:</p>
+	<p>Mit den folgenden 3 Buttons können verschiedene Teile der Signatur &Sigma; hervorgehoben werden:</p>
 	<ul>
 		<li>Der Button <b>Authentifizierungspfad</b> färbt den verwendeten Weg durch den
-	<!-- be: TODO: Frage beantworten und im Text ergänzen:
-		((( Welchen Baum? Den Gesamtbaum? )))
--->
-		Baum ein (wird ganz am Anfang in hellblau angezeigt).</br> Ein Authentifizierungspfad gibt an, welche Strukturen
-	<!-- be: TODO: Frage beantworten und im Text ergänzen:
-		((( Kann man "Strukturen" nicht genauer bezeichnen? )))
--->
-		für die Signatur verwendet wurden.</li>
+		Baum ein (wird ganz am Anfang in hellblau angezeigt).</br> Ein Authentifizierungspfad gibt an, welche Teilbäume auf dem Weg nach oben für die Signatur verwendet wurden.</li>
 		
 		<li>Der Button <b>Aktuelles Blatt</b> hebt das in der Signatur enthaltene HORST-Blatt hervor (wird ganz am Ende in lila angezeigt).</li>
 		
-		<li>Der Button <b>Signatur</b> hebt die HORST-Signatur
-	<!-- be: TODO: Frage beantworten und im Text ergänzen:
-		((( Bisher sprachen wir von der SPHINCS-Signatur.
-		Ist die HORST-Signatur die eigentliche SPHINCS-Signatur? Wenn ja würde ich nur von der "Signatur" sprechen.
-		Gibt es einen Unterschied zwischen der "SPHINCS-Signatur" und der "HORST-Signatur"? Wenn ja, was zeigt er an? Liegt die eine Signatur in der anderen? )))
--->
-		im Signatur-Feld hervor (wird in der Mitte in hellgrün angezeigt).</li>
+		<li>Der Button <b>Signatur</b> hebt die HORST-Signatur im Signatur-Feld hervor (wird in der Mitte in hellgrün angezeigt). Die HORST-Signatur ist ein Teil der Signatur.</li>
 	</ul>
 	 
-	<p>Wenn Sie auf den Button <b>Signatur verifizieren</b> drücken, wird die Signatur geprüft und das Ergebnis in der Mitte angezeigt (in grün, wenn Nachricht und Signatur zueinander passen, die Validierung also positiv ausfällt). Dass die Verifikation fehlschlägt, also negativ ausfällt, können Sie erreichen, indem Sie die Nachricht oben ändern (dann erscheint das Prüfergebnis in rot).</p>
+	<p>Wenn Sie auf den Button <b>Signatur verifizieren</b> drücken, wird die Signatur geprüft und das Ergebnis in der Mitte angezeigt (in grün, wenn Nachricht, öffentlicher Schlüssel und Signatur zueinander passen, die Validierung also positiv ausfällt). Dass die Verifikation fehlschlägt, also negativ ausfällt, können Sie erreichen, indem Sie die Nachricht oben ändern (dann erscheint das Prüfergebnis in rot).</p>
 
+	 
 	 
 <p> </br> </p>
 	<h3>Reiter 3: SPHINCS-Übersicht</h3>
 	
-	<p>Der 3. Reiter zeigt einen Ausschnitt eines Hypertrees und gibt Informationen über die Struktur in SPHINCS. Steht der Mauszeiger über einem Blatt, werden dessen Daten als Balloontext angzeigt. Klickt man auf das Blatt, werden die Daten zusätzlich in das Ausgabefeld oben unter der Beschreibung ausgegeben.
+	<p>Der 3. Reiter zeigt einen Ausschnitt des Hyper-Trees und gibt Informationen über die SPHINCS-Struktur. Steht der Mauszeiger über einem Blatt, werden dessen Daten als Balloontext angzeigt. Klickt man auf das Blatt, werden die Daten zusätzlich in das Ausgabefeld oben unter der Beschreibung ausgegeben.
 	<!-- be: TODO: Fragen beantworten und im Text ergänzen:
 	((( - Ich bekam bei einem Klick die gleiche Info wie im Balloontext. Ist das ok?
         - Klickt man auf ein Blatt, erscheint z.B.
 		  Inhalt des Wots-Baums = odtOBzzua3tcZyObrt4+nq3Mxp6xF0nBkU6uM2g8G3Y=
 		  Was ist mit "Inhalt des Wots-Baums" gemeint?
-		- Wichtig wäre mir noch: Wie ist der Zusammenhang zwischen diesem Hypertree und dem in der ersten Grafik unter 1.1 ? )))
+		- Gibt es für "Inhalt des Wots-Baums" eine bessere Bezeichnung?
+		- Wichtig wäre mir noch: Wie ist der Zusammenhang zwischen diesem
+          Hyper-Tree im Plugin und dem in der ersten Grafik unter 1.1 ? )))
 -->
 	</p>
 
@@ -360,6 +296,10 @@ HORST-Public Key zu signieren.)))-->
 	Mit dem Maus-Rad können Sie in den Baum hinein und heraus zoomen.</p>
 
 
+	<p> </br> </p>
+	<h2>Anmerkung</h3>
+    <p>In JCT wurde nur die SPHINCS-256-Variante implementiert.
+	Welche Varianten gibt es noch? SPHINCS+- & Gravity-SPHINCS als Konzepte plus all deren Instanziierungen.</p>
 	
 
 <p> </br> </p>
@@ -370,7 +310,7 @@ HORST-Public Key zu signieren.)))-->
 	<p>Weitere Informationen zum Thema Post-Quanten-Kryptographie (PQC) und zu SPHINCS-Signaturen finden Sie beispielsweise unter:</p>
 
 <ul>
-	<li>[0] <a href="https://cryptojedi.org/papers/sphincs-20141001.pdf">SPHINCS: practical stateless hash-based signatures</a> von Daniel J. Bernstein, Daira Hopwood, Andreas Hülsing, Tanja Lange, Ruben Niederhagen, Louiza Papachristodoulou, Peter Schwabe und Zooko Wilcox O'Hearn (2014) ist das Originalpaper zum SPHINCS-Verfahren.</li>
+	<li>[0] <a href="https://cryptojedi.org/papers/sphincs-20141001.pdf">SPHINCS: practical stateless hash-based signatures</a> von Daniel J. Bernstein, Daira Hopwood, Andreas Hülsing, Tanja Lange, Ruben Niederhagen, Louiza Papachristodoulou, Peter Schwabe und Zooko Wilcox O'Hearn (2014) ist das Originalpaper zum SPHINCS-Verfahren. Es diskutiert sehr verständig die Design-Kriterien des Verfahrens.</li>
 
 	<li>[1] Wikipedia: <br>
 	<a href="https://en.wikipedia.org/wiki/Post-quantum_cryptography">Post-quantum cryptography</a></li>

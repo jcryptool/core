@@ -10,7 +10,7 @@
 
 <h1>Merkle Signature Schemes (MSS, XMSS, XMSS^MT)</h1>
 
-<p>This online help explains the basic functions of the <b>Merkle Signature Scheme</b> plugin.</p>
+<p>This online help explains the basic functions of the <b>Merkle signature scheme</b> plugin.</p>
 <p>The plugin can be started either from the menu <b>Visuals</b> or from the Crypto Explorer in the <b>Visuals</b> tab.</p>
 
 <p>Besides Merkle signatures, JCT also contains <a href="PLUGINS_ROOT/org.jcryptool.visual.sphincs/$nl$/help/content/Sphincs.html">SPHINCS</a> as an example of a modern PQC signature scheme &ndash; a good and up-to-date overview of such schemes can be found in Wikipedia [1,2]. <a href="PLUGINS_ROOT/org.jcryptool.visual.wots/$nl$/help/content/index.html">WOTS</a> in the variant WOTS+ is a component of both, XMSS and SPHINCS.</p>
@@ -47,7 +47,7 @@
 
 <h4>Introduction</h4>
 
-<p>Using the Merkle Signature Scheme, messages can be signed quantum computer resistant. The signature consists of two parts: the one-time signature (OTS) and the MerkleTree (a binary hashtree). The advantage of MerkleTrees is, that only one Merkle public key is needed for several one-time signature's public keys.</p>
+<p>Using the Merkle signature scheme, messages can be signed quantum computer resistant. The signature consists of two parts: the one-time signature (OTS) and the MerkleTree (a binary hashtree). The advantage of MerkleTrees is, that only one Merkle public key is needed for several one-time signature's public keys.</p>
 <p>This is implemented by merging the hash values of the one-time public keys as leafs into a single hash value at the top of the tree. This value is the root node and is the major part of the Merkle public key.</p>
 
 
@@ -101,7 +101,7 @@ Altogether, 2^h messages with a length of m bytes can be signed.</p>
 <p> </br> </p>
 <h2 id="Chapter3">3) eXtended Merkle signature scheme MultiTree (XMSS^MT)</h2>
 
-<p>The eXtended Merkle MultiTree signature scheme (XMSS^MT) is based on multiple XMSS trees chained together. The advantage compared to a simple XMSS tree which has the same size, is the reduced computation effort to create the key pair. The single trees are connected, by signing the XMSS root node of a lower layer. The lowest layer eventually is used to sign messages.</p>
+<p>The "eXtended Merkle MultiTree signature scheme" (XMSS^MT) is based on multiple XMSS trees chained together. The advantage compared to a simple XMSS tree which has the same size, is the reduced computation effort to create the key pair. The single trees are connected, by signing the XMSS root node of a lower layer. The lowest layer eventually is used to sign messages.</p>
 
 <p>Why is MultiTree key generation faster?</p>
 <p>The single trees can be generated separately. The main tree is formed by each single tree, signing the lower levels' next tree. Of course the lowest level does not sign single trees anymore, but actual messages. So the point in time when a single tree signs the root node of another single tree, does not necessarily have be at the key generation. Certain single trees can be created just before they are needed.</p>  
