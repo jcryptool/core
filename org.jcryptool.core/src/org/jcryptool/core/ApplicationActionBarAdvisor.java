@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2010, 2014 JCrypTool Team and Contributors
+ * Copyright (c) 2010, 2019 JCrypTool Team and Contributors
  * 
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -17,11 +17,15 @@ import java.util.TreeMap;
 
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.CommandManager;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.ICoolBarManager;
 import org.eclipse.jface.action.IMenuManager;
@@ -44,8 +48,10 @@ import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.services.IServiceLocator;
 import org.jcryptool.core.actions.ShowPluginViewHandler;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.CommandInfo;
 import org.jcryptool.core.operations.OperationsPlugin;
+import org.jcryptool.crypto.keystore.commands.OpenKeystoreHandler;
 
 /**
  * <p>
@@ -84,7 +90,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
     private MenuManager hiddenMenu = new MenuManager("Hidden", "org.jcryptool.core.hidden"); //$NON-NLS-1$ //$NON-NLS-2$
 
     private static Comparator<String> menuStringsComparator = new Comparator<String>() {
-        public int compare(String o1, String o2) {
+        @Override
+		public int compare(String o1, String o2) {
             return o1.toLowerCase().compareTo(o2.toLowerCase());
         }
     };
@@ -134,7 +141,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
      * 
      * @param menuBar the menu manager for the menu bar
      */
-    protected void fillMenuBar(IMenuManager menuBar) {
+    @Override
+	protected void fillMenuBar(IMenuManager menuBar) {
         menuBar.add(createFileMenu());
         menuBar.add(createEditMenu());
 
@@ -165,7 +173,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
     }
 
     private IMenuManager createExtensionsMenu(String name, String type) {
-        ICommandService commandService = (ICommandService) PlatformUI.getWorkbench().getService(ICommandService.class);
+        ICommandService commandService = PlatformUI.getWorkbench().getService(ICommandService.class);
         MenuManager menu = new MenuManager(name, CorePlugin.PLUGIN_ID + "." + type); //$NON-NLS-1$
 
         IConfigurationElement[] elements = Platform.getExtensionRegistry()
@@ -218,7 +226,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         }
     }
 
-    protected void makeActions(IWorkbenchWindow window) {
+    @Override
+	protected void makeActions(IWorkbenchWindow window) {
         this.window = window;
 
         registerActionsForCommands();
@@ -328,7 +337,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
      * @return the menu manager
      */
     public static IMenuManager createAlgorithmMenu() {
-        ICommandService commandService = (ICommandService) PlatformUI.getWorkbench().getService(ICommandService.class);
+        ICommandService commandService = PlatformUI.getWorkbench().getService(ICommandService.class);
         MenuManager menu = new MenuManager(Messages.applicationActionBarAdvisor_Menu_Algorithms,
                 CorePlugin.PLUGIN_ID + ".algorithms"); //$NON-NLS-1$
 
@@ -337,7 +346,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
         // id-comparator (compares the names derived from the ids over the map (above)
         Comparator<String> idComparator = new Comparator<String>() {
-            public int compare(String id1, String id2) {
+            @Override
+			public int compare(String id1, String id2) {
                 return menuStringsComparator.compare(idNameMap.get(id1), idNameMap.get(id2));
             }
         };
@@ -393,7 +403,26 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         }
 
         menu.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+        
+        //This is the keystore entry in the algorithm drop down menu
+        IAction openKeystoreAction = new Action() {
+        	@Override
+        	public void run() {
+        		try {
+					new OpenKeystoreHandler().execute(new ExecutionEvent());
+				} catch (ExecutionException e) {
+					LogUtil.logError(e.getMessage());
+				}
+        		super.run();
+        	}
+        	
+        	@Override
+        	public String getText() {
+        		return Messages.ApplicationActionBarAdvisor_Keystore;
+        	}
 
+		};
+		menu.add(openKeystoreAction);
         return menu;
     }
 

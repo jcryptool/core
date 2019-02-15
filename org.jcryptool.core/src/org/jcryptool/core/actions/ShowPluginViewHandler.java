@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2010, 2014 JCrypTool Team and Contributors
+ * Copyright (c) 2010, 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -42,11 +42,13 @@ public class ShowPluginViewHandler extends AbstractHandler {
         this.name = name;
     }
 
-    public boolean isEnabled() {
+    @Override
+	public boolean isEnabled() {
         return true;
     }
 
-    public Object execute(ExecutionEvent event) {
+    @Override
+	public Object execute(ExecutionEvent event) {
         try {
             IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
             page.showView(viewId);

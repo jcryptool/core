@@ -13,3 +13,4 @@ Export-Package: org.jdom,
  org.jdom.transform,
  org.jdom.xpath
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.jdom

@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2010, 2014 JCrypTool Team and Contributors
+ * Copyright (c) 2010, 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -118,7 +118,7 @@ public class AlgorithmTreeViewer extends TreeViewer implements ISearchable {
 
         setContentProvider(new ViewContentProvider());
         setLabelProvider(new ViewLabelProvider());
-        setSorter(new NameSorter());
+        setComparator(new NameSorter());
         setInput(invisibleRoot);
         expandToLevel(invisibleRoot, 2); // expand all
 

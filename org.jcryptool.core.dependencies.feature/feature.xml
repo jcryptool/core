@@ -12,7 +12,7 @@ dependency plug-ins required to run JCrypTool.
    </description>
 
    <copyright url="https://github.com/jcryptool/core">
-      Copyright (c) 2017 JCrypTool team and contributors
+      Copyright (c) 2019 JCrypTool team and contributors
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License
 v1.0 which accompanies this distribution, and is available at
@@ -339,14 +339,6 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ui.forms.nl_de"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.zest.core"
          download-size="0"
          install-size="0"
@@ -411,6 +403,20 @@ litigation.
 
    <plugin
          id="org.eclipse.ecf.identity"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.forms"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.concurrent"
          download-size="0"
          install-size="0"
          version="0.0.0"

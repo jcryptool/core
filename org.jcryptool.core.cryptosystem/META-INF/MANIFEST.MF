@@ -5,9 +5,10 @@ Bundle-SymbolicName: org.jcryptool.core.cryptosystem;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.core.cryptosystem.CryptosystemPlugin
 Bundle-Vendor: %Bundle-Vendor
-Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0"
+Require-Bundle: org.eclipse.core.runtime
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.jcryptool.core.cryptosystem.core,
  org.jcryptool.core.cryptosystem.core.exception,
  org.jcryptool.core.cryptosystem.core.text
+Automatic-Module-Name: org.jcryptool.core.cryptosystem

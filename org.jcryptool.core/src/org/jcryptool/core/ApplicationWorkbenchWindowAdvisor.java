@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
@@ -43,7 +43,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
      * @param configurer the action bar configurer for the window
      * @return the action bar advisor for the window
      */
-    public ActionBarAdvisor createActionBarAdvisor(IActionBarConfigurer configurer) {
+    @Override
+	public ActionBarAdvisor createActionBarAdvisor(IActionBarConfigurer configurer) {
         return new ApplicationActionBarAdvisor(configurer);
     }
 

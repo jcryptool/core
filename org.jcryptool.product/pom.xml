@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
 		<groupId>org.jcryptool</groupId>
@@ -9,16 +10,17 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>org.jcryptool.product</artifactId>
 	<packaging>eclipse-repository</packaging>
+
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-p2-repository-plugin</artifactId>
-				<version>${tycho.version}</version>
-				<configuration>
-					<includeAllDependencies>true</includeAllDependencies>
-				</configuration>
-			</plugin>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-p2-repository-plugin</artifactId>
+					<version>${tycho.version}</version>
+					<configuration>
+						<includeAllDependencies>true</includeAllDependencies>
+					</configuration>
+				</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-director-plugin</artifactId>
@@ -65,7 +67,8 @@
 						<phase>package</phase>
 						<configuration>
 							<target>
-								<move verbose="true" todir="${project.build.directory}/products">
+								<move verbose="true"
+									todir="${project.build.directory}/products">
 									<mapper type="regexp" from="^(jcryptool-)(.*)$$"
 										to="${product.id}-${product.version}-\2" />
 
@@ -85,7 +88,7 @@
 			<plugin>
 				<groupId>net.nicoulaj.maven.plugins</groupId>
 				<artifactId>checksum-maven-plugin</artifactId>
-				<version>1.6</version>
+				<version>1.8</version>
 				<executions>
 					<!-- calculate the hashes of the generated files -->
 					<execution>

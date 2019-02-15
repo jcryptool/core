@@ -5,14 +5,14 @@ Bundle-SymbolicName: org.jcryptool.actions.ui;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.actions.ui.ActionsUIPlugin
 Bundle-Vendor: %BundleVendor
-Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
- org.eclipse.core.runtime;bundle-version="3.7.0",
- org.eclipse.jface.databinding;bundle-version="1.5.0",
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.jface.databinding,
+ org.eclipse.core.expressions,
+ org.eclipse.core.databinding,
  org.jcryptool.core.operations;bundle-version="1.0.0",
  org.jcryptool.crypto.flexiprovider;bundle-version="1.0.0",
  org.jcryptool.crypto.keystore;bundle-version="1.0.0",
- org.eclipse.core.expressions;bundle-version="3.4.300",
- org.eclipse.core.databinding;bundle-version="1.4.0",
  de.flexiprovider;bundle-version="1.7.0",
  org.jcryptool.core;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -29,3 +29,4 @@ Import-Package: org.eclipse.core.filesystem,
  org.jcryptool.editor.text.startup
 Export-Package: org.jcryptool.actions.ui,
  org.jcryptool.actions.ui.views
+Automatic-Module-Name: org.jcryptool.actions.ui

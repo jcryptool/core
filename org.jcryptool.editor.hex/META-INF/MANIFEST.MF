@@ -13,3 +13,4 @@ Export-Package: org.jcryptool.editor.hex,
  org.jcryptool.editor.hex.commands,
  org.jcryptool.editor.hex.service
 Bundle-Vendor: jcryptool.org
+Automatic-Module-Name: org.jcryptool.editor.hex

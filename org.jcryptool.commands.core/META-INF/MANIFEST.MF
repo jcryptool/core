@@ -8,10 +8,11 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.commands.core.api,
  org.jcryptool.commands.core.evaluator
-Require-Bundle: org.apache.commons.cli;bundle-version="1.2.0",
- org.eclipse.core.runtime;bundle-version="3.7.0",
- org.eclipse.ui;bundle-version="3.7.0"
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.apache.commons.cli;bundle-version="1.2.0"
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.editors,
  org.jcryptool.core.util.constants
 Bundle-Activator: org.jcryptool.commands.core.CommandsCorePlugin
+Automatic-Module-Name: org.jcryptool.commands.core
