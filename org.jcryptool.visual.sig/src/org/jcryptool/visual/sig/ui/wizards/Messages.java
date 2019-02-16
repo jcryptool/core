@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2017 JCrypTool Team and Contributors
+* Copyright (c) 2019 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -20,12 +20,12 @@ import org.eclipse.osgi.util.NLS;
 public class Messages {
     // Name of the files that contain the string values
     private static final String BUNDLE_NAME = "org.jcryptool.visual.sig.ui.wizards.messages"; //$NON-NLS-1$
-    public static String SignatureWizard_Usage;
     // Create strings for all the values
     // Group box 1 text
     public static String HashWizard_grpHashes;
     // Group box 2 text
     public static String HashWizard_grpDescription;
+    public static String HashWizard_FurtherInfoInOnlineHelp;
     // The Texts for the descriptions of the methods
     public static String HashWizard_rdomd5_description;
     public static String HashWizard_rdosha1_description;
@@ -39,6 +39,9 @@ public class Messages {
     public static String HashWizard_rdosha512;
     public static String InputWizard_FileOpenDialog;
     // SignatureWizard
+    public static String SignatureWizard_Usage;
+    public static String SignatureWizard_Usage2;
+    public static String SignatureWizard_FurtherInfoInOnlineHelp;
     // Group box 1 text
     public static String SignatureWizard_grpSignatures;
     // Group box 2 text
@@ -66,6 +69,7 @@ public class Messages {
     public static String Wizard_menu;
     public static String SignatureWizard_labelKey;
     public static String SignatureWizard_labelCurve;
+	public static String SignatureWizard_noKeysHint;
 
     // InputWizard
     // Page 1
@@ -96,6 +100,7 @@ public class Messages {
     public static String ShowSig_hexDump;
 
     public static String ShowSig_grpMessage;
+    public static String ShowSig_grpMessage_first10kB;
     public static String ShowSig_lengthMessage;
 
     public static String ShowSig_btnClose;
@@ -106,11 +111,15 @@ public class Messages {
     public static String ShowSig_tblAscii;
 
     public static String ShowSig_editorDescripton;
+    public static String ShowSig_randomizedMethods;
     
     public static String EnterText;
     public static String ShowSig_btnSave;
     public static String ShowSig_MessageBoxTitle;
     public static String ShowSig_MessageBoxText;
+    public static String ShowSig_ContextCopy;
+    public static String ShowSig_ContextCopySelection;
+    public static String ShowSig_ContexstCopyAll;
     
     static {
         // initialize resource bundle

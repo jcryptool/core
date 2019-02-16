@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2017 JCrypTool Team and Contributors
+* Copyright (c) 2019 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -441,4 +441,10 @@ public class WinternitzOTS implements OTS {
             throw new RuntimeException(ex);
         }
     }
+
+	@Override
+	public boolean verify(String message, String signature) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

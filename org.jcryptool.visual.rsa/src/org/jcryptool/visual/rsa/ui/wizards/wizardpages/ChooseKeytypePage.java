@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -36,7 +36,8 @@ public class ChooseKeytypePage extends WizardPage {
     /** the selection listener which updates the buttons when changing from keypair to pubkey and vice versa. */
     private final SelectionListener sl = new SelectionAdapter() {
 
-        public void widgetSelected(SelectionEvent e) {
+        @Override
+		public void widgetSelected(SelectionEvent e) {
             getContainer().updateButtons();
         }
     };
@@ -54,7 +55,8 @@ public class ChooseKeytypePage extends WizardPage {
      *
      * @param parent the parent composite.
      */
-    public final void createControl(Composite parent) {
+    @Override
+	public final void createControl(Composite parent) {
         Composite composite = new Composite(parent, SWT.NONE);
         composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         composite.setLayout(new GridLayout(1, false));

@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2017 JCrypTool Team and Contributors
+* Copyright (c) 2019 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -23,7 +23,6 @@ public class InputEditorWizardPage extends WizardPage {
 
     public InputEditorWizardPage(String pageName) {
         super(pageName);
-
         setTitle(Messages.InputEditorWizard_title);
         setDescription(Messages.InputEditorWizard_header);
     }
@@ -31,8 +30,17 @@ public class InputEditorWizardPage extends WizardPage {
     @Override
     public void createControl(Composite parent) {
         compositeEditor = new InputEditorComposite(parent, NONE, this);
-        compositeEditor.setFocus();
         setControl(compositeEditor);
         setPageComplete(false);
+    }
+    
+    @Override
+    public void setVisible(boolean visible) {
+    	super.setVisible(visible);
+    	if (visible) {
+    		compositeEditor.setInitialFocus();
+    		setPageComplete(compositeEditor.text.getText() != null && !compositeEditor.text.getText().equals(""));
+    	}
+    	
     }
 }

@@ -33,11 +33,11 @@
             description="%command.description"
             name="adfgvx">
          <example
-               commandline="#commandname# -E -ed -kS SUBST -kT TRANSP"
+               commandline="#commandname# -E -ed -kS SUBTI -kT TRANSP"
                explanation="%example.explanation">
          </example>
          <example
-               commandline="#commandname# -D -ed -kS SUBST -kT TRANSP"
+               commandline="#commandname# -D -ed -kS SUBTI -kT TRANSP"
                explanation="%example.explanation.0">
          </example>
       </command>

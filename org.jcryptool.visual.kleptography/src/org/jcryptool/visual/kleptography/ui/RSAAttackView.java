@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -34,7 +34,7 @@ public class RSAAttackView extends Composite {
 
 	private Composite cAttackFixed;
 	private Composite cFieldsFixed;
-	private Composite cButtonsFixed;
+	private Group cButtonsFixed;
 	private Group gPublicKeysFixed;
 	private Group gCalculationsFixed;
 	private Group gCipherTextFixed;
@@ -91,7 +91,7 @@ public class RSAAttackView extends Composite {
 	private Text tTextSETUP1;
 	private Text tTextSETUP2;
 	private Composite cAttackSETUP;
-	private Composite cButtonsSETUP;
+	private Group cButtonsSETUP;
 	private Button bCalcPrivateKeysSETUP;
 	private Button bDecryptTextsSETUP;
 	private Label lQSETUP1;
@@ -106,10 +106,12 @@ public class RSAAttackView extends Composite {
 	private Label lCalculationsFixed;
 	private Label lCipherTextFixed;
 	private Label lDecryptionsFixed;
+	private Label lhorizontalSeparatorFixed;
 	private Label lPublicKeysSETUP;
 	private Label lCalculationsSETUP;
 	private Label lCipherTextSETUP;
 	private Label lDecryptionsSETUP;
+	private Label lhorizontalSeparatorSETUP;
 	private Composite cDescriptionFixed;
 	private Label lDescTitleFixed;
 	private StyledText stSpecDescFixed;
@@ -209,17 +211,21 @@ public class RSAAttackView extends Composite {
 	 * @param localParent The Fixed P composite contained in the StackLayout.
 	 */
 	private void setUpAttackFixed(Composite localParent) {
-		cButtonsFixed = new Composite(localParent, SWT.BORDER);
+
+		cFieldsFixed = new Composite(localParent, SWT.NONE);
+		GridLayout gl_cFieldsFixed = new GridLayout(1, false);
+		gl_cFieldsFixed.marginWidth = 0;
+		gl_cFieldsFixed.marginHeight = 0;
+		cFieldsFixed.setLayout(gl_cFieldsFixed);
+		cFieldsFixed.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+
+		setUpFieldsFixed(cFieldsFixed);
+		
+		cButtonsFixed = new Group(localParent, SWT.NONE);
 		cButtonsFixed.setLayout(new GridLayout(1, false));
 		cButtonsFixed.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
 
 		setUpButtonsFixed(cButtonsFixed);
-
-		cFieldsFixed = new Composite(localParent, SWT.BORDER);
-		cFieldsFixed.setLayout(new GridLayout(1, false));
-		cFieldsFixed.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
-
-		setUpFieldsFixed(cFieldsFixed);
 	}
 
 	/**
@@ -238,6 +244,11 @@ public class RSAAttackView extends Composite {
 		bDecryptTextsFixed = new Button(localParent, SWT.PUSH);
 		bDecryptTextsFixed.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		bDecryptTextsFixed.setText(Messages.RSAAttackView_Fixed_Decrypt_Cipher);
+		
+		lhorizontalSeparatorFixed = new Label(localParent, SWT.HORIZONTAL | SWT.SEPARATOR);
+		GridData gd_lhorizontalSeparatorFixed = new GridData(SWT.FILL, SWT.CENTER, false, false);
+		gd_lhorizontalSeparatorFixed.verticalIndent = 15;
+		lhorizontalSeparatorFixed.setLayoutData(gd_lhorizontalSeparatorFixed);
 
 		bBackFixed = new Button(localParent, SWT.PUSH);
 		bBackFixed.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
@@ -524,17 +535,21 @@ public class RSAAttackView extends Composite {
 	 * @param localParent The parent control of the SETUP fields.
 	 */
 	private void setUpAttackSETUP(Composite localParent) {
-		cButtonsSETUP = new Composite(localParent, SWT.BORDER);
+
+		cFieldsSETUP = new Composite(localParent, SWT.NONE);
+		GridLayout gl_cFieldsSETUP = new GridLayout(1, false);
+		gl_cFieldsSETUP.marginWidth = 0;
+		gl_cFieldsSETUP.marginHeight = 0;
+		cFieldsSETUP.setLayout(gl_cFieldsSETUP);
+		cFieldsSETUP.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+
+		setUpFieldsSETUP(cFieldsSETUP);
+		
+		cButtonsSETUP = new Group(localParent, SWT.NONE);
 		cButtonsSETUP.setLayout(new GridLayout(1, false));
 		cButtonsSETUP.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
 
 		setUpButtonsSETUP(cButtonsSETUP);
-
-		cFieldsSETUP = new Composite(localParent, SWT.BORDER);
-		cFieldsSETUP.setLayout(new GridLayout(1, false));
-		cFieldsSETUP.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
-
-		setUpFieldsSETUP(cFieldsSETUP);
 	}
 
 	/**
@@ -553,6 +568,11 @@ public class RSAAttackView extends Composite {
 		bDecryptTextsSETUP = new Button(localParent, SWT.PUSH);
 		bDecryptTextsSETUP.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		bDecryptTextsSETUP.setText(Messages.RSAAttackView_SETUP_Decrypt_Cipher);
+		
+		lhorizontalSeparatorSETUP = new Label(localParent, SWT.HORIZONTAL | SWT.SEPARATOR);
+		GridData gd_lhorizontalSeparatorSETUP = new GridData(SWT.FILL, SWT.CENTER, false, false);
+		gd_lhorizontalSeparatorSETUP.verticalIndent = 15;
+		lhorizontalSeparatorSETUP.setLayoutData(gd_lhorizontalSeparatorSETUP);
 
 		bBackSETUP = new Button(localParent, SWT.PUSH);
 		bBackSETUP.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
@@ -948,9 +968,11 @@ public class RSAAttackView extends Composite {
 	 */
 	private void setUpAttackListeners() {
 		bCalcGCD.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
 			}
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// If the user used the same N to generate both saved ciphertexts,
 				// the attack won't work. Let the user know and don't bother trying.
@@ -972,9 +994,11 @@ public class RSAAttackView extends Composite {
 		});
 
 		bCalcPrivateKeysFixed.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
 			}
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				kleptoView.currentStep = 18;
 				kleptoView.klepto.attack.calculatePrivateKeysFixed();
@@ -992,9 +1016,11 @@ public class RSAAttackView extends Composite {
 		});
 
 		bDecryptTextsFixed.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
 			}
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				kleptoView.currentStep = 19;
 				kleptoView.klepto.attack.decryptFixed();
@@ -1005,9 +1031,11 @@ public class RSAAttackView extends Composite {
 		});
 
 		bDecryptP.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
 			}
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				kleptoView.currentStep = 10;
 				kleptoView.klepto.attack.getPFromN(
@@ -1022,9 +1050,11 @@ public class RSAAttackView extends Composite {
 		});
 
 		bCalcPrivateKeysSETUP.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
 			}
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				kleptoView.currentStep = 11;
 				kleptoView.klepto.attack.calculatePrivateKeysSETUP();
@@ -1042,9 +1072,11 @@ public class RSAAttackView extends Composite {
 		});
 
 		bDecryptTextsSETUP.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
 			}
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				kleptoView.currentStep = 12;
 				kleptoView.klepto.attack.decryptSETUP();
@@ -1055,18 +1087,22 @@ public class RSAAttackView extends Composite {
 		});
 
 		bBackFixed.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
 			}
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				kleptoView.setTabSelection(0);
 			}
 		});
 
 		bBackSETUP.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
 			}
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				kleptoView.setTabSelection(0);
 			}

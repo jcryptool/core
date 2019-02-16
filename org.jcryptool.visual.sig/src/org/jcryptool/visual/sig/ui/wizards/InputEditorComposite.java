@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2017 JCrypTool Team and Contributors
+* Copyright (c) 2019 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -14,6 +14,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -27,19 +28,26 @@ import org.jcryptool.visual.sig.algorithm.Input;
 public class InputEditorComposite extends Composite {
     // Limit for the length of the text that might be entered into the plaintext field
     private static final int TEXTLIMIT = 1000;
-    private Text text = null;
+    protected Text text = null;
     private InputEditorWizardPage page;
 
     public InputEditorComposite(Composite parent, int style, InputEditorWizardPage p) {
         super(parent, style);
-        text = new Text(this, SWT.BORDER | SWT.WRAP);
-        text.setBounds(10, 10, 430, 215);
+        setLayout(new GridLayout());
+        
+        text = new Text(this, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
         text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         text.setTextLimit(TEXTLIMIT);
         text.setFocus();
         
+        //Restore the former text, if existing 
+        if (Input.dataPlain != null && Input.filename == null) {
+        	text.setText(Input.dataPlain);
+        }
+        
         Label lblToSaveThe = new Label(this, SWT.NONE);
-        lblToSaveThe.setBounds(10, 231, 400, 15);
+        GridData gd_lblToSaveThe = new GridData(SWT.FILL, SWT.FILL, false, false);
+        gd_lblToSaveThe.widthHint = 400;
         lblToSaveThe.setText(Messages.InputEditorWizard_Label);
 
         page = p;
@@ -50,7 +58,9 @@ public class InputEditorComposite extends Composite {
                 if (text.getText().length() > 0) {
                     page.setPageComplete(true);
                     page.canFlipToNextPage();
+                    Input.dataPlain = text.getText();
                     Input.data = text.getText().getBytes();
+                    Input.filename = null;
                     page.getWizard().getContainer().updateButtons();
                 } else {
                     page.setPageComplete(false);
@@ -63,5 +73,9 @@ public class InputEditorComposite extends Composite {
 
     public String getText() {
         return text.getText();
+    }
+    
+    public void setInitialFocus() {
+    	text.setFocus();
     }
 }

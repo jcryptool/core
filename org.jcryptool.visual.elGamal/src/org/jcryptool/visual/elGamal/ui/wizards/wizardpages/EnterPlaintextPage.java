@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -29,20 +29,15 @@ import org.jcryptool.visual.library.Lib;
  * Page for entering a plaintext to sign or encrypt.
  *
  * @author Michael Gaber
+ * @author Thorben Groos
  */
 public class EnterPlaintextPage extends TextWizardPage {
-
-    /** limit for the maximum number of characters to enter as plaintext */
-    private static final int TEXTLIMIT = 150;
 
     /** unique pagename to get this page from inside a wizard. */
     private static final String PAGENAME = "Enter Plaintext Page"; //$NON-NLS-1$
 
     /** title of this page, displayed in the head of the wizard. */
     private static final String TITLE = Messages.EnterPlaintextPage_enter_plaintext;
-
-    /** the action of this run, decides whether to display the hash-method description. */
-    private final Action action;
 
     /** common data object to store the entries. */
     private final ElGamalData data;
@@ -53,11 +48,10 @@ public class EnterPlaintextPage extends TextWizardPage {
      * @param action the cryptographic action
      * @param data the shared data object
      */
-    public EnterPlaintextPage(final Action action, final ElGamalData data) {
+    public EnterPlaintextPage(final ElGamalData data) {
         super(PAGENAME, TITLE, null);
         this.setDescription(Messages.EnterPlaintextPage_enter_plaintext_text);
         this.setPageComplete(false);
-        this.action = action;
         this.data = data;
     }
 
@@ -66,15 +60,17 @@ public class EnterPlaintextPage extends TextWizardPage {
      *
      * @param parent the parent composite
      */
-    public final void createControl(final Composite parent) {
+    @Override
+	public final void createControl(final Composite parent) {
         final Composite composite = new Composite(parent, SWT.NONE);
         // do stuff like layout et al
-        composite.setLayout(new GridLayout());
+        GridLayout gl_composite = new GridLayout();
+        gl_composite.marginWidth = 50;
+        composite.setLayout(gl_composite);
         Label label;
-        if (action == Action.SignAction) {
+        if (data.getAction() == Action.SignAction) {
             label = new Label(composite, SWT.WRAP);
             label.setText(Messages.EnterPlaintextPage_simple_hash);
-
             // separator
             new Label(composite, SWT.HORIZONTAL | SWT.SEPARATOR).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
                     false));
@@ -82,30 +78,35 @@ public class EnterPlaintextPage extends TextWizardPage {
         label = new Label(composite, SWT.NONE);
         label.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
         label.setText(Messages.EnterPlaintextPage_textentry);
+        
         text = new Text(composite, SWT.BORDER | SWT.WRAP);
-        text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        text.setTextLimit(TEXTLIMIT);
+        GridData gd_text = new GridData(SWT.FILL, SWT.FILL, true, true);
+        gd_text.minimumHeight = 80;
+        text.setLayoutData(gd_text);
         text.addModifyListener(new ModifyListener() {
-            public void modifyText(final ModifyEvent e) {
+            @Override
+			public void modifyText(final ModifyEvent e) {
                 setPageComplete(!((Text) e.widget).getText().equals("")); //$NON-NLS-1$
             }
-        });
+        });  
+        
         text.addVerifyListener(Lib.getVerifyListener(Lib.CHARACTERS));
-        if (action == Action.SignAction) {
+        if (data.getAction() == Action.SignAction) {
             final Button SHA1Checkbox = new Button(composite, SWT.CHECK);
             SHA1Checkbox.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
             SHA1Checkbox.setText(Messages.EnterPlaintextPage_use_sha1);
             SHA1Checkbox.setToolTipText(Messages.EnterPlaintextPage_use_sha1_popup);
             SHA1Checkbox.addSelectionListener(new SelectionAdapter() {
 
-                public void widgetSelected(final SelectionEvent e) {
+                @Override
+				public void widgetSelected(final SelectionEvent e) {
                     data.setSimpleHash(!SHA1Checkbox.getSelection());
                 }
             });
             SHA1Checkbox.setSelection(!data.getSimpleHash());
         }
         // fill in old data
-        text.setText(data.getPlainText());
+        text.setText(data.getStb().revert(data.getPlainTextAsNumbers()));
 
         // finish
         setControl(composite);

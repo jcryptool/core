@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2017 JCrypTool Team and Contributors
+* Copyright (c) 2019 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -11,6 +11,7 @@
 package org.jcryptool.visual.sig.ui.wizards;
 
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
@@ -23,13 +24,12 @@ public class HashWizardPage extends WizardPage {
     private HashComposite composite;
 
     protected HashWizardPage(String pageName) {
-        super(Messages.HashWizard_header);
-        setDescription(Messages.HashWizard_header);
+        super(pageName);
         setTitle(Messages.HashWizard_WindowTitle);
     }
 
     public void createControl(Composite parent) {
-        composite = new HashComposite(parent, NONE);
+        composite = new HashComposite(parent, SWT.NONE);
         setControl(composite);
         setPageComplete(true);
     }

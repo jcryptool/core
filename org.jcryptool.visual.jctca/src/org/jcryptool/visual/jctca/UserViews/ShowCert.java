@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2017 JCrypTool Team and Contributors
+* Copyright (c) 2019 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -46,7 +46,7 @@ public class ShowCert implements Views {
     public ShowCert(Composite content, Composite exp) {
         composite = new Composite(content, SWT.NONE);
         composite.setLayout(new GridLayout(2, false));
-        GridData gd_comp = new GridData(SWT.FILL, SWT.TOP, true, true);
+        GridData gd_comp = new GridData(SWT.FILL, SWT.FILL, true, true);
         composite.setLayoutData(gd_comp);
 
         Group showCertGroup = new Group(composite, SWT.NONE);

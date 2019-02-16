@@ -8,88 +8,130 @@
 <h1>Verifiable Secret Sharing</h1>
 
 <p>
-	The <b>Verifiable Secret Sharing</b> algorithm has been developed by Paul Feldman in 1987
-	and is based on the Shamir's Secret Sharing algorithm from Adi Shamir from 1979. With this algorithm it is possible
-	to divide a secret into parts and distribute it to multiple persons. For retrieving the secret, just a few of this persons is necessary.
+	The <a href="vssAlgorithm.html"><b>Verifiable Secret Sharing</b> algorithm</a>
+	implemented here has been designed by Paul Feldman in 1987
+	and is based on <a href="PLUGINS_ROOT/org.jcryptool.visual.secretsharing/$nl$/help/content/index.html">Shamir's Secret Sharing</a> algorithm
+	developed by Adi Shamir in 1979. With this algorithm it is possible
+	to divide a secret into parts and distribute them to multiple persons. For retrieving the secret, only a subset (consisting of a predefined minimal number of these persons) is necessary.
+	This kind of secret-sharing scheme is called a threshold scheme and the minimal number of persons needed is called the threshold.</p>
+
+	<p>	In contrast to Shamir's original algorithm, <b>Verifiable Secret Sharing (VSS)</b> allows each player to check all shares for correctness. So before the reconstruction, the shares of all participating players can be verified.
 </p>
 
 <p>
-	The following explains how the <b>Verifiable Secret Sharing</b> plug-in works.
+	The following explains how the VSS plug-in works.
 </p>
 
 <p>
-	The plug-in can be started in the menu bar at <b>Visualization</b> or at the view <b>Algorithms</b> at the tab <b>Visualization</b>.
+	The plug-in can be started in the main menu <b>Visualization</b>, or using the menu sequence Window -> Show View -> Others -> Visuals, or via double-click in the default perspective at the right side within the <b>Crypto Explorer</b> at the tab <b>Visuals</b>.
 </p>
 
 
 <p><img src="vss_plugin_1.jpg" width="60%" height="60%"></p>
 
-<p>The plug-in is splitted into 4 parts: <b>header</b>, <b>input mask</b>, <b>description</b> and the tab <b>reconstruction chart</b>.
-<p>The <b>Header</b> shows a short description of the plug-in.</p>
+<p>The plug-in is split into 4 parts: <b>header</b>, <b>input/output area</b>, <b>description</b> and the tab <b>Reconstruction Chart</b>. The first 3 areas vertically fill the first tab <b>Verifiable Secret Sharing</b>.</p>
+  <ul>
+  <li>The <b>header</b> shows a short description of the plug-in.</li>
+  <li>The <b>input/output area</b> contains the boxes to input the parameters by the user and to get the different computations of the Verifiable Secret Sharing algorithm.</li>
+  <li>At the bottom of the screen you can find the area <b>description</b> where additional information for the current step is shown.</li>
+  <li>Additionally, there is a tab <b>Reconstruction Chart</b> where the reconstruction is visualized.</li>
+  </ul>
 
-<p>The <b>input mask</b> contains the boxes to set the parameters and all other computations of the Verifiable Secret Sharing-algorithm. The results are also shown there.</p>
+<p>
+	The execution of the VSS scheme was divided into 3 steps.
+</p>
+  
+  
 
-<p>At the bottom of the screen you can find the area <b>description</b> where additional information for the current step is shown.</p>
+<h3>Step 1: Setting the parameters</h3>
 
-<p>Additionally there is a tab <b>Reconstruction Chart</b> where the reconstruction is visualized.</p>
-
-<h3>Setting the parameters</h3>
 <p>The parameters, which are necessary for the algorithm, are set in the box <b>Parameters</b>.</p>
-<p>At first there will be chosen the number <b>persons n</b>, which are concerned to get a share of the secret.
-Furthermore you have to decide about a number <b> persons t</b> how many persons will be needed to reconstruct it.
-The number of <b>persons t</b> may not be bigger than <b>persons n</b>. Both numbers have to be at least 2, as far
-as <b>Verifiable Secret Sharing</b> doesn't make sense for less involved people than 2.</p>
 
-<p>The next parameter to choose is the <b>secret s</b>. After that, the <b>module p</b>, which have to be a
-safe prime, is calculated automatically. As far as the calculation of safe primes is quite complex, it is
-highly recommended to use the given value. If you don't like to use the proposed safe prime, you still have
-the possibility to enter any other safe prime as long it is at least twice as big than the <b>secret s</b>.
-The last parameter is the <b>generator g</b> and is calculated automatically and cannot be changed.
-The <b>generator g</b> will be calculated automatically like <b>p</b>. The <b>generator g</b> is an element of the field Z_p* and has the order <b>q</b>.
+<p>First the number of <b>persons n</b> will be chosen, who will get a <b>share</b> of the secret.
+Furthermore, you have to decide about a number of <b> persons t</b> needed to reconstruct the secret.
+The number of <b>persons t</b> may not be bigger than the number <b>n</b> of all persons. Both numbers have to be at least 2, because Verifiable Secret Sharing doesn't make sense if less than 2 people are involved.</p>
+
+<p>The next parameter to choose is the <b>secret s</b>. Bigger values are limited to 2,000,000 in order to let the application react quickly.</p>
+
+<p>After entering <b>s</b>, the <b>module p</b> is calculated automatically because it has to bigger than twice the number of the secret. In addition, <b>p</b> has to be a <a href="https://en.wikipedia.org/wiki/Safe_prime"><b>safe prime</b></a>.
+As far as the calculation of safe primes is quite complex, it is
+highly recommended to use the given value. If you don't like to use the proposed safe prime, you still have the possibility to enter any other safe prime as long it is at least twice as big as the secret s.</p>
+<p>
+Furthermore, the largest <b>prime factor q</b> of (p-1) is required. The prime factor is calculated automatically from the safe prime p as follows: q = (p-1) / 2.
+The last parameter is the <b>generator g</b> which cannot be changed: It will be calculated automatically like <b>p</b>. The generator g is an element of the field Z_p* and has the multiplicative order <b>q</b>.
 </p>
 
 <p><img src="vss_parameter_2.jpg"></p>
 
-<p>If all parameters are set correctly, it is possible to go on to the next step with a click on <b>Determine coefficients</b>.</p>
+<p>If all parameters are set correctly, you have to click on the button <b>Determine coefficients</b>. So t coefficients are created (each filled with the initial value 1) and you can go to the next step.
+</p>
 
-<h3>Determining the coefficients for the polynomial and calculating the commitments</h3>
 
-<p>The <b>coefficients</b> for the polynomial are set in this box.
-They can be generated by <b>JCrypTool</b> or chosen by yourself.
-The coefficients have to be natural numbers smaller than the <b>module p</b>
-The first coefficient is fixed, and is the <b>secret s</b> which already has been chosen.</p>
+
+
+<h3>Step 2: Determining the coefficients for the polynomial and calculating the commitments</h3>
+
+<p>The <b>coefficients</b> for the polynomial are set in the box <b>Coefficients</b>.
+They can be generated randomly via clicking the button <b>Generate</b> or can be chosen by yourself. Random values for the coefficients are necessary to secure the secret.
+The coefficients have to be natural numbers smaller than the <b>module q</b>.
+The first coefficient <b><i>a<sub>0</sub></i></b> is fixed and is the given <b>secret s</b>.
+In addition, the last coefficient must not be 0, otherwise the degree of the polynomial would be reduced and fewer players than <b>t</b> could perform a successful reconstruction.
+</p>
 
 <p><img src="vss_coefficients_3.jpg"></p>
 
-<p>In this box you can also find the button <b>Commit</b>. The computation of the commitments is necessary for the verification of the shares afterwards.
+<p>In this box, you can also find the button <b>Commit</b>. The computation of the commitments is necessary for the verification of the shares afterwards.
 The commitments are shown in a separate box after they are calculated.
 </p>
 
 <p><img src="vss_commitments_4.jpg"></p>
 
-<p>The computation of the commitments is optional, as far as they are just needed to check the shares afterwards.
-They are not needed for the reconstruction of the secret. If you want to do the reconstruction without checking the shares, you don't need the commitments.
+<p>The computation of the commitments is optional, because they are only needed to check the shares afterwards.
+They are not needed for the reconstruction of the secret. If you want to do the reconstruction without checking the shares, you can skip this step. Then VSS reduces itself to Shamir's Secret Sharing.
 </p>
 
-<p>Go on to the next step for calculating the shares with a click on <b>Calculate shares</b></p>
+<p>Go on to the next step for calculating the shares with a click on <b>Calculate shares</b>.</p>
 
-<h3>Checking the shares and reconstruction</h3>
 
-<p>The last step is splitted up in 2 boxes: <b>Shares</b> and <b>Reconstruction</b></p>
 
-<p>The box <b>Shares</b> shows the shares and the shares mod q. For checking the shares, a click on the respective <b>Check</b>-button is necessary.
-Keep in mind that the check won't be successful if you didn't have done the calculating of the commitments first. To show the sense of checking the shares
-it is possible to change one or more shares. The change of one or more shares has 2 consequences. At first the check for the modified share won't be successful anymore.
-And second the reconstruct won't return the primordial secret.
+
+
+<h3>Step 3: Checking the shares and reconstruction</h3>
+
+<p>The last step is split up in the 2 boxes <b>Shares</b> and <b>Reconstruction</b>.</p>
+
+<p>The box <b>Shares</b> shows the intermediate results and the shares mod q.</p>
+
+<p>All subsequent calculations here are performed with the shares modulo q. The intermediate result before the reduction modulo q is no longer needed. It is nevertheless displayed so that the user can check the correctness of the graph of the polynomial after reconstruction.</p>
+
+<p> For checking a share, a click on the according <b>Check</b> button is necessary.
+Keep in mind that the check won't be successful if you haven't calculated the commitments before. 
+After a successful check of a share, the respective field is colored <b>green</b>. If the check does not return a positive result, the field turns <b>red</b>.
+To show the effectiveness of checking the shares it is possible to change one or more shares. The change of one or more shares has 2 consequences: First, the check for the modified share won't be successful anymore. And secondly, the reconstruction won't return the original secret.
 </p>
 
 <p><img src="vss_shares_5.jpg"></p>
 
-<p>The reconstruction can be done in the box <b>Reconstruction</b>. Before you can start with a click on <b>reconstruct</b>
-it is essential to choose the shares you want to use. It is irrelevant which ones you take as long as equal or more than the minimum.
-The minimum is the number of <b>persons t</b> you have chosen in the beginning.</p>
+<p>The reconstruction can be done in the box <b>Reconstruction</b>. Before clicking on <b>Reconstruct</b> it is essential to choose the shares you want to use. It is irrelevant which ones you take as long as equal or more than the minimum. The minimum is the number <b>t</b> you have chosen in the beginning.
+If too few shares are selected, a wrong polynomial and thus a false secret is reconstructed. The result of the reconstruction is displayed in the tab <b> Reconstruction Chart</b>. This includes the reconstructed polynomial as well as its graphical representation.
+</p>
 
-<p><img src="vss_reconstruct_6.jpg"></p>
+<p>
+<img src="vss_reconstruct_6.jpg" width="60%">
+</p>
 
+
+ <br/>  
+  <h3 id="Sig">Further information / References</h3>
+  <ul>
+  <li><a href="https://www.cs.umd.edu/~gasarch/TOPICS/secretsharing/feldmanVSS.pdf">Paul Feldman (MIT): A Practical Scheme for Non-interactive Verifiable Secret Sharing, 1987, IEEE</a></li>
+  <li><a href="https://www.cs.umd.edu/~gasarch/TOPICS/secretsharing/secretsharing.html">William Gasarch: A WebPage on Secret Sharing, 2017  (last call 2018-09-18)</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Verifiable_secret_sharing">Wikipedia: Verifiable secret sharing</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Secret_sharing">Wikipedia: Secret sharing</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Commitment_scheme">Wikipedia: Commitment scheme</a></li>
+  </ul>
+
+  <br/>
 </body>
+<!-- Comment: Last Change and Check: be, 2018-09-19 -->
 </html>

@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
@@ -9,13 +9,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.grille.ui;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.util.HashMap;
-
-import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
@@ -24,68 +18,66 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
-import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
-import org.jcryptool.visual.grille.GrillePlugin;
 import org.jcryptool.visual.grille.algorithm.Schablone;
 
 public class DemonstrationPainter implements PaintListener {
 
     private Demonstration demonstration;
-    private HashMap<Character, Point> charSize;
     private int width;
     private int height;
     private int cellWidth;
     private int cellHeight;
     private Canvas parent;
 
-    @SuppressWarnings("unchecked")
+    /**
+     * painter for the visualization
+     * @param parent The parent canvas
+     * @param demonstration
+     */
     public DemonstrationPainter(Canvas parent, Demonstration demonstration) {
         this.demonstration = demonstration;
         this.parent = parent;
-
-        ObjectInputStream ois = null;
-
-        try {
-            File file = new File(FileLocator.toFileURL(GrillePlugin.getDefault().getBundle().getEntry("/")).getFile() //$NON-NLS-1$
-                    + "files" + File.separatorChar + "charSize.map"); //$NON-NLS-1$ //$NON-NLS-2$
-            ois = new ObjectInputStream(new FileInputStream(file));
-            charSize = (HashMap<Character, Point>) ois.readObject();
-        } catch (Exception e) {
-            LogUtil.logError(GrillePlugin.PLUGIN_ID, e);
-        } finally {
-            try {
-                if (ois != null) {
-                    ois.close();
-                }
-            } catch (IOException e) {
-                LogUtil.logError(GrillePlugin.PLUGIN_ID, e);
-            }
-        }
     }
 
-    public void paintControl(PaintEvent e) {
-        width = parent.getSize().x;
-        height = parent.getSize().y;
-        if (demonstration.getCurrentStep() == 0) {
-            e.gc.fillRectangle(0, 0, width, height);
-        } else if (demonstration.getCurrentStep() == 1) {
-            e.gc.setFont(FontService.getLargeFont());
-            e.gc.drawText(Messages.getString("DemonstrationPainter.description"), 0, 0); //$NON-NLS-1$
-            if (!demonstration.padding.equals("")) { //$NON-NLS-1$
-                e.gc.drawText(Messages.getString("DemonstrationPainter.padding"), 0, 40); //$NON-NLS-1$
-                Color savedColor = e.gc.getForeground();
-                e.gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
-                e.gc.drawString(demonstration.padding.substring(0, Math.min(25, demonstration.padding.length())), 70,
-                        40);
-                for (int i = 25; i < demonstration.padding.length(); i = i + 40)
-                    e.gc.drawString(
-                            demonstration.padding.substring(i, Math.min(demonstration.padding.length(), i + 40)), 0,
-                            40 + (i / 25) * 20);
-                e.gc.setForeground(savedColor);
+	@Override
+	public void paintControl(PaintEvent e) {
+		width = parent.getSize().x;
+		height = parent.getSize().y;
+		if (width > height) {
+			width = height;
+		} else {
+			height = width;
+		}
+		if (demonstration.getCurrentStep() == 0) {
+			e.gc.fillRectangle(0, 0, width, height);
+		} else if (demonstration.getCurrentStep() == 1) {
+			e.gc.setFont(FontService.getLargeFont());
+			int schablonenGrosse = demonstration.getSchablone().getSize();
+			//Wenn kein Padding gebraucht wird zeige diesen Text an.
+			if (demonstration.padding.length() == 0) {
+				e.gc.drawText((NLS.bind(Messages.getString("DemonstrationPainter.description"),  //$NON-NLS-1$
+						schablonenGrosse*schablonenGrosse, demonstration.padding.length())), 0, 0);
+			} else {
+				//Wenn ein padding nötig ist.
+				e.gc.drawText((NLS.bind(Messages.getString("DemonstrationPainter.description_1"), 
+						schablonenGrosse*schablonenGrosse, demonstration.padding.length())), 0, 0); 
+			}
+			if (!(demonstration.padding.length() == 0)) { //$NON-NLS-1$
+				e.gc.drawText((NLS.bind(Messages.getString("DemonstrationPainter.padding"),  //$NON-NLS-1$
+						demonstration.padding.length())), 0, 175);
+				Color savedColor = e.gc.getForeground();
+				e.gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
+				String padding = ""; //$NON-NLS-1$
+				for (int i = 0; i < demonstration.padding.length(); i = i + 35) {
+					padding += demonstration.padding.substring(i, Math.min(demonstration.padding.length(), i + 35));
+					padding += "\n"; //$NON-NLS-1$
+				}
+				e.gc.drawText(padding, 0, 210);
+				e.gc.setForeground(savedColor);
 
-            }
-        } else if (demonstration.getCurrentStep() <= 5) {
+			}
+		} else if (demonstration.getCurrentStep() <= 5) {
             Schablone crypt = demonstration.getSchablone();
             cellWidth = width / crypt.getSize();
             cellHeight = cellWidth;
@@ -182,12 +174,18 @@ public class DemonstrationPainter implements PaintListener {
         }
     }
 
+	/**
+	 * 
+	 * @param e
+	 * @param x
+	 * @param y
+	 * @param c
+	 */
     private void fillCell(PaintEvent e, int x, int y, char c) {
         Point eckeLO = new Point(x * cellWidth, y * cellHeight);
-        int fontSize = (int) Math.round(10 / (double) 17 * cellHeight * 0.9);
+        int fontSize =  (int) (0.5 * cellHeight);
         e.gc.setFont(new Font(Display.getCurrent(), "Times Roman", fontSize, SWT.NORMAL)); //$NON-NLS-1$
-        e.gc.drawString(
-                "" + c, eckeLO.x + (int) Math.round(cellWidth - charSize.get(c).x / (double) 10 * fontSize) / 2, eckeLO.y + (cellHeight - fontSize - (int) Math.round(5 / (double) 10 * fontSize)) / 2); //$NON-NLS-1$
+        e.gc.drawString("" + c, eckeLO.x + (cellWidth / 5), eckeLO.y); //$NON-NLS-1$
     }
 
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="grille" title="Grille">
+      <description>The Turning Grille is a historical cryptographic cipher, invented by Eduard Fleißner von Wostrowitz in 1881. It was used in 1916 by the Germans in WW1.</description>
+      <topic href="$nl$/content/index.html" label="Grille" />
+   </context>
+</contexts>

@@ -93,5 +93,6 @@
 	<module>org.jcryptool.visual.verifiablesecretsharing.lib</module>
 	<module>org.jcryptool.visual.wots</module>
 	<module>org.jcryptool.visual.zeroknowledge</module>
+	<module>org.jcryptool.visual.sphincs</module>
   </modules>
 </project>

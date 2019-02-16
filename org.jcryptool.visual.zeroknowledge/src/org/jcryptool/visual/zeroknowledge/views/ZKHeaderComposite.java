@@ -10,13 +10,12 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.core.util.fonts.FontService;
 
-public class ZKHeaderComposite extends Composite{
-	private static final Color WHITE = Display.getDefault().getSystemColor(
-			SWT.COLOR_WHITE);
-	
+public class ZKHeaderComposite extends Composite {
+	private static final Color WHITE = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
+
 	private Label label;
 	private StyledText stDescription;
-	
+
 	/**
 	 * Generates the head of the tab. The head has a title and a description.
 	 */
@@ -29,19 +28,16 @@ public class ZKHeaderComposite extends Composite{
 		label.setFont(FontService.getHeaderFont());
 		label.setText(Messages.Header_title);
 		label.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-		stDescription = new StyledText(this, SWT.READ_ONLY | SWT.MULTI
-				| SWT.WRAP);
-		stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false,
-				false));
-		stDescription
-				.setText(Messages.Header_text);
+		stDescription = new StyledText(this, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
+		stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		stDescription.setText(Messages.Header_text);
 	}
-	
-	public void setTitle(String title) {
-		label.setText(title);
-	}
-	
+
 	public void setDescription(String description) {
 		stDescription.setText(description);
+	}
+
+	public void setTitle(String title) {
+		label.setText(title);
 	}
 }

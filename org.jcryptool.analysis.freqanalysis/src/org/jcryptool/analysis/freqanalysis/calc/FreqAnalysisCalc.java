@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2017 JCrypTool Team and Contributors
+* Copyright (c) 2019 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -19,7 +19,7 @@ import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 
 /**
  * @author SLeischnig
- * Calss for Frequency Analysis
+ * Class for Frequency Analysis
  */
 public class FreqAnalysisCalc {
 	private String text = ""; //$NON-NLS-1$

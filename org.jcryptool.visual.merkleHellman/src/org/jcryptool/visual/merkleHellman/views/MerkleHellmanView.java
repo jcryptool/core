@@ -15,7 +15,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -169,16 +168,11 @@ public class MerkleHellmanView extends ViewPart {
 
 		Composite compositeMain = new Composite(scrolledComposite, SWT.NONE);
 		compositeMain.setLayout(new GridLayout(2, false));
-
+		
 		styledTextDescription = new StyledText(compositeMain, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
 		styledTextDescription.setEditable(false);
 		GridData gd_styledTextDescription = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
-		gd_styledTextDescription.widthHint = 300;
-		if (System.getProperty("os.name").compareToIgnoreCase("Windows 8") == 0) {
-			gd_styledTextDescription.heightHint = 80;
-		} else {
-			gd_styledTextDescription.heightHint = 60;			
-		}
+		gd_styledTextDescription.widthHint = 400;
 		styledTextDescription.setLayoutData(gd_styledTextDescription);
 		styledTextDescription.setText(Messages.MerkleHellmanView_0000 + Messages.MerkleHellmanView_0);
 
@@ -237,16 +231,7 @@ public class MerkleHellmanView extends ViewPart {
 		comboStartValue.select(0);
 
 		btnGenerateNewKey = new Button(compositeSelection, SWT.NONE);
-		GridData gd_btnGenerateNewKey = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
-		gd_btnGenerateNewKey.widthHint = 200;
-		
-		if (System.getProperty("os.name").compareToIgnoreCase("Windows 8") == 0) {
-			gd_btnGenerateNewKey.widthHint = 220;						
-		} else {
-			gd_btnGenerateNewKey.widthHint = 180;			
-		}
-		
-		btnGenerateNewKey.setLayoutData(gd_btnGenerateNewKey);
+		btnGenerateNewKey.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 		btnGenerateNewKey.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -475,14 +460,7 @@ public class MerkleHellmanView extends ViewPart {
 				}
 			}
 		});
-		GridData gd_btnCreateKeys = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_btnCreateKeys.widthHint = 200;
-		if (System.getProperty("os.name").compareToIgnoreCase("Windows 8") == 0) {
-			gd_btnCreateKeys.widthHint = 220;
-		} else {
-			gd_btnCreateKeys.widthHint = 180;
-		}
-		btnCreateKeys.setLayoutData(gd_btnCreateKeys);
+		btnCreateKeys.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		btnCreateKeys.setText(Messages.MerkleHellmanView_7);
 
 		Group grpPublicKey = new Group(grpGroup, SWT.NONE);
@@ -934,11 +912,7 @@ public class MerkleHellmanView extends ViewPart {
 		btnDecrypt.setLayoutData(gd_btnDecrypt);
 		btnDecrypt.setText(Messages.MerkleHellmanView_17);
 		scrolledComposite.setContent(compositeMain);
-		if (System.getProperty("os.name").compareToIgnoreCase("Windows 8") == 0) {
-			scrolledComposite.setMinSize(new Point(1310, 566));
-		} else {
-			scrolledComposite.setMinSize(new Point(1010, 566));			
-		}
+		scrolledComposite.setMinSize(compositeMain.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		int numberOfElements = Integer.parseInt(comboKeyElements.getText());
 		int startValue = Integer.parseInt(comboStartValue.getText());
 

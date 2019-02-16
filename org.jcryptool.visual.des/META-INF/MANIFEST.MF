@@ -5,11 +5,13 @@ Bundle-SymbolicName: org.jcryptool.visual.des;singleton:=true
 Bundle-Version: 1.0.0
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.jcryptool.core.operations;bundle-version="1.0.0",
+ org.eclipse.help,
  de.flexiprovider;bundle-version="1.7.0",
- org.eclipse.help
+ org.jcryptool.core.operations;bundle-version="1.0.0",
+ org.jcryptool.core.util
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.fonts
 Bundle-Vendor: %Bundle-Vendor.0
+Automatic-Module-Name: org.jcryptool.visual.des

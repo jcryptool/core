@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2017 JCrypTool Team and Contributors
+* Copyright (c) 2019 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -71,7 +71,8 @@ public class ARC4Wizard extends Wizard {
     /**
      * Create the single page and add it to the wizard
      */
-    public void addPages() {
+    @Override
+	public void addPages() {
     	this.setWindowTitle(pagename);
         page = new ARC4WizardPage(heading, description);
         addPage(page);

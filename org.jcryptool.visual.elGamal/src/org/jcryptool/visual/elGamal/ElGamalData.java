@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -11,7 +11,8 @@ package org.jcryptool.visual.elGamal;
 
 import java.math.BigInteger;
 import java.security.PrivateKey;
-import java.security.UnrecoverableKeyException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -19,9 +20,13 @@ import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Display;
 import org.jcryptool.core.logging.dialogs.JCTMessageDialog;
-import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.crypto.ui.textblockloader.CharsToNumbersComposite;
+import org.jcryptool.crypto.ui.textblockloader.ConversionCharsToNumbers;
+import org.jcryptool.crypto.ui.textblockloader.conversion.AlphabetCharsToNumbers;
+import org.jcryptool.crypto.ui.textblockloader.conversion.ConversionStringToBlocks;
+import org.jcryptool.crypto.ui.textblockloader.conversion.NumbersToBlocksConversion;
 
 import de.flexiprovider.core.elgamal.ElGamalPrivateKey;
 
@@ -47,20 +52,11 @@ public class ElGamalData {
     /** the generator */
     private BigInteger generator;
 
-    /** the public a */
+    /** the public A */
     private BigInteger publicA;
 
     /** the private a */
     private BigInteger a;
-
-    /** the plaintext */
-    private String plainText;
-
-    /** the ciphertext */
-    private String cipherText;
-
-    /** the signature */
-    private String signature;
 
     /** whether simplehash should be used */
     private boolean simpleHash;
@@ -82,14 +78,38 @@ public class ElGamalData {
 
     /** the current action */
     private final Action action;
+    
+    private ConversionStringToBlocks plainTextConversion;
+    
+    /** is the cipherText in number representation */
+    private List<Integer> cipherTextAsNumbers;
+    
+    /** is the plainText in number representation */
+    private List<Integer> plainTextAsNumbers;
+    
+    /** is the signature in number representation */
+    private List<Integer> signatureAsNumbers;
+    
+	/**
+	 * The following is for the textfields that display the entered text
+	 * It is used to define to which base the text should be calculated and which blockklength is used.
+	 * Here the extended ASCII is used as base and block length is 1
+	 */
+    private ConversionCharsToNumbers ctn = new AlphabetCharsToNumbers(CharsToNumbersComposite.ASCII_ALPHABET);
+    private NumbersToBlocksConversion ntb = new NumbersToBlocksConversion(1, 1);
 
-    /**
+    private ConversionStringToBlocks stb = new ConversionStringToBlocks(ctn, ntb);
+
+	/**
      * constructor, setting {@link #action}
      *
      * @param action the {@link Action} to set to {@link #action}
      */
     public ElGamalData(final Action action) {
         this.action = action;
+        plainTextAsNumbers = new ArrayList<>();
+        cipherTextAsNumbers = new ArrayList<>();
+        signatureAsNumbers = new ArrayList<>();
     }
 
     /**
@@ -97,49 +117,73 @@ public class ElGamalData {
      *
      * @param oldData the other {@link ElGamalData} to copy data from
      */
-    public void inherit(final ElGamalData oldData) {
-        this.publicA = oldData.publicA;
-        this.simpleHash = oldData.simpleHash;
-        this.modulus = oldData.modulus;
-        this.generator = oldData.generator;
-        this.k = oldData.k;
-        this.r = oldData.r;
-        this.b = oldData.b;
+    public boolean inherit(ElGamalData oldData) {
+        publicA = oldData.publicA;
+        simpleHash = oldData.simpleHash;
+        modulus = oldData.modulus;
+        generator = oldData.generator;
+        k = oldData.k;
+        r = oldData.r;
+        b = oldData.b;
 
-        this.publicAlias = oldData.publicAlias;
-        this.contactName = oldData.contactName;
+        publicAlias = oldData.publicAlias;
+        contactName = oldData.contactName;
 
-        if (this.action == Action.DecryptAction || this.action == Action.SignAction) {
+        //Only do if the private key is required
+        if (action == Action.DecryptAction || action == Action.SignAction) {
+        	//If the old data had a private key inherit the private parameters
             if (oldData.action == Action.DecryptAction || oldData.action == Action.SignAction) {
-                this.a = oldData.a;
-                this.privateAlias = oldData.privateAlias;
-                this.password = oldData.password;
-            } else {
-                this.privateAlias = KeyStoreManager.getInstance().getPrivateForPublic(this.privateAlias);
-                final InputDialog passDialog = new InputDialog(Display.getCurrent().getActiveShell(),
-                        Messages.ElGamalData_inherit_password_text, Messages.ElGamalData_inherit_password_title, "",
-                        null);
-                if (passDialog.open() == Window.OK) {
-                    this.password = passDialog.getValue();
-                } else {
-                    return;
-                }
-                try {
-                    this.getPrivateParams();
-                } catch (UnrecoverableKeyException e) {
-                    JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, ElGamalPlugin.PLUGIN_ID,
-                            Messages.ElGamalData_ExAccessKeystorePassword, e));
-                } catch (final Exception e) {
-                    LogUtil.logError(e);
-                }
-            }
+                a = oldData.a;
+                privateAlias = oldData.privateAlias;
+                password = oldData.password;
+			} else {
+				if (publicAlias != null) {
+					privateAlias = KeyStoreManager.getInstance().getPrivateForPublic(publicAlias);
+					if (!enterPasswordDialog()) {
+						return false;
+					}
+				} else {
+					return false;
+				}
+			}
         }
 
-        this.cipherText = oldData.cipherText;
-        this.plainText = oldData.plainText;
-        this.signature = oldData.signature;
+        cipherTextAsNumbers = oldData.cipherTextAsNumbers;
+        plainTextAsNumbers = oldData.plainTextAsNumbers;
+        signatureAsNumbers = oldData.signatureAsNumbers;    
+        return true;
     }
 
+    /**
+     * Opens the Enter Password Dialog when inheriting data.
+     * If the entered Password is correct {@link #getPrivateParams()} is called.
+     * @return False if the user has closed the dialog with the x in the top right corner or canceled the dialog.
+     * True if he has entered the right password
+     */
+    private boolean enterPasswordDialog() {
+    	boolean result = false;
+    	do {
+	    	InputDialog passDialog = new InputDialog(Display.getCurrent().getActiveShell(),
+					Messages.ElGamalData_inherit_password_text, Messages.ElGamalData_inherit_password_title, "", null);
+	    	try {
+	    		if (passDialog.open() == Window.OK) {
+					password = passDialog.getValue();
+				} else {
+					return false;
+				}
+	    		getPrivateParams();
+	    		return true;
+	    	} catch (Exception e) {
+	    		JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, ElGamalPlugin.PLUGIN_ID,
+						Messages.ElGamalData_ExAccessKeystorePassword, e));
+	    		result =  false;
+	    	}
+    	} while (!result);
+    	
+    	return true;
+    }
+    
+    
     /**
      * extracts the parameters of the private key from the keystore via the {@link #privateAlias}
      *
@@ -147,12 +191,12 @@ public class ElGamalData {
      */
     private void getPrivateParams() throws Exception {
         final KeyStoreManager ksm = KeyStoreManager.getInstance();
-        final PrivateKey key = ksm.getPrivateKey(this.privateAlias, this.password.toCharArray());
+        final PrivateKey key = ksm.getPrivateKey(privateAlias, password.toCharArray());
         final ElGamalPrivateKey privKey = (ElGamalPrivateKey) key;
-        this.a = privKey.getA().bigInt;
-        this.generator = privKey.getGenerator().bigInt;
-        this.modulus = privKey.getModulus().bigInt;
-        this.publicA = privKey.getPublicA().bigInt;
+        a = privKey.getA().bigInt;
+        generator = privKey.getGenerator().bigInt;
+        modulus = privKey.getModulus().bigInt;
+        publicA = privKey.getPublicA().bigInt;
     }
 
     /**
@@ -161,7 +205,7 @@ public class ElGamalData {
      * @return the {@link #standalone}
      */
     public final boolean isStandalone() {
-        return this.standalone;
+        return standalone;
     }
 
     /**
@@ -179,7 +223,7 @@ public class ElGamalData {
      * @return the {@link #modulus}
      */
     public BigInteger getModulus() {
-        return this.modulus;
+        return modulus;
     }
 
     /**
@@ -188,7 +232,7 @@ public class ElGamalData {
      * @return the {@link #generator}
      */
     public BigInteger getGenerator() {
-        return this.generator;
+        return generator;
     }
 
     /**
@@ -197,7 +241,7 @@ public class ElGamalData {
      * @return the {@link #publicA}
      */
     public BigInteger getPublicA() {
-        return this.publicA;
+        return publicA;
     }
 
     /**
@@ -206,46 +250,7 @@ public class ElGamalData {
      * @return the private {@link #a}
      */
     public BigInteger getA() {
-        return this.a;
-    }
-
-    /**
-     * getter for the {@link #plainText}
-     *
-     * @return the {@link #plainText} or an empty string if none is set
-     */
-    public String getPlainText() {
-        if (this.plainText == null) {
-            return ""; //$NON-NLS-1$
-        } else {
-            return this.plainText;
-        }
-    }
-
-    /**
-     * getter for the {@link #cipherText}
-     *
-     * @return the {@link #cipherText} or an empty string if none is set
-     */
-    public String getCipherText() {
-        if (this.cipherText == null) {
-            return ""; //$NON-NLS-1$
-        } else {
-            return this.cipherText;
-        }
-    }
-
-    /**
-     * getter for the {@link #signature}
-     *
-     * @return the {@link #signature} or an empty string if none is set
-     */
-    public String getSignature() {
-        if (this.signature == null) {
-            return ""; //$NON-NLS-1$
-        } else {
-            return this.signature;
-        }
+        return a;
     }
 
     /**
@@ -254,7 +259,7 @@ public class ElGamalData {
      * @return the {@link #simpleHash} property
      */
     public boolean getSimpleHash() {
-        return this.simpleHash;
+        return simpleHash;
     }
 
     /**
@@ -263,7 +268,7 @@ public class ElGamalData {
      * @return the {@link #privateAlias}
      */
     public KeyStoreAlias getPrivateAlias() {
-        return this.privateAlias;
+        return privateAlias;
     }
 
     /**
@@ -272,7 +277,7 @@ public class ElGamalData {
      * @return the {@link #password}
      */
     public String getPassword() {
-        return this.password;
+        return password;
     }
 
     /**
@@ -317,7 +322,7 @@ public class ElGamalData {
      * @return the {@link #publicAlias}
      */
     public KeyStoreAlias getPublicAlias() {
-        return this.publicAlias;
+        return publicAlias;
     }
 
     /**
@@ -326,34 +331,7 @@ public class ElGamalData {
      * @return the {@link #contactName}
      */
     public String getContactName() {
-        return this.contactName;
-    }
-
-    /**
-     * setter for the {@link #plainText}
-     *
-     * @param plainText the new {@link #plainText}
-     */
-    public void setPlainText(final String plainText) {
-        this.plainText = plainText;
-    }
-
-    /**
-     * setter for the {@link #cipherText}
-     *
-     * @param cipherText the new {@link #cipherText}
-     */
-    public void setCipherText(final String cipherText) {
-        this.cipherText = cipherText;
-    }
-
-    /**
-     * setter for the {@link #signature}
-     *
-     * @param signature the new {@link #signature}
-     */
-    public void setSignature(final String signature) {
-        this.signature = signature;
+        return contactName;
     }
 
     /**
@@ -398,7 +376,7 @@ public class ElGamalData {
      * @return the {@link #action}
      */
     public Action getAction() {
-        return this.action;
+        return action;
     }
 
     /**
@@ -407,7 +385,7 @@ public class ElGamalData {
      * @return {@link #generator}^{@link #b} mod {@link #modulus}
      */
     public BigInteger getGPowB() {
-        return this.generator.modPow(this.b, this.modulus);
+        return generator.modPow(b, modulus);
     }
 
     /**
@@ -425,7 +403,7 @@ public class ElGamalData {
      * @return the {@link #r}
      */
     public BigInteger getR() {
-        return this.r;
+        return r;
     }
 
     /**
@@ -443,7 +421,7 @@ public class ElGamalData {
      * @return the {@link #k}
      */
     public BigInteger getK() {
-        return this.k;
+        return k;
     }
 
     /**
@@ -461,7 +439,7 @@ public class ElGamalData {
      * @return the {@link #b}
      */
     public BigInteger getB() {
-        return this.b;
+        return b;
     }
 
     /**
@@ -472,5 +450,57 @@ public class ElGamalData {
     public void setB(final BigInteger b) {
         this.b = b;
     }
+    
+    /**
+     * Used for showing the right conversion in the NumberblocksAndTextViewer Fields in the GUI.
+     * @param blockConversion
+     */
+	public void setPlainTextConversion(ConversionStringToBlocks blockConversion) {
+		plainTextConversion = blockConversion;
+	}
+	
+	/**
+	 * Used for showing the right conversion in the NumberblocksAndTextViewer Fields in the GUI.
+	 * @return the used ConversionStringToBlocks.
+	 */
+	public ConversionStringToBlocks getPlainTextConversion() {
+		return plainTextConversion;
+	}
+
+	public List<Integer> getPlainTextAsNumbers() {
+		return plainTextAsNumbers;
+	}
+
+	public void setPlainTextAsNumbers(List<Integer> plainTextAsNumbers) {
+		this.plainTextAsNumbers = plainTextAsNumbers;
+	}
+
+	public List<Integer> getCipherTextAsNumbers() {
+		return cipherTextAsNumbers;
+	}
+
+	public void setCipherTextAsNumbers(List<Integer> cipherTextAsNumbers) {
+		this.cipherTextAsNumbers = cipherTextAsNumbers;
+	}
+	
+    public ConversionStringToBlocks getStb() {
+		return stb;
+	}
+
+    /**
+     * 
+     * @return First Element is r as decimal, second element is s as decimal.
+     */
+	public List<Integer> getSignatureAsNumbers() {
+		return signatureAsNumbers;
+	}
+
+	/**
+	 * First Element is r as decimal. Second Element is s as decimal.
+	 * @param signatureAsNumbers
+	 */
+	public void setSignatureAsNumbers(List<Integer> signatureAsNumbers) {
+		this.signatureAsNumbers = signatureAsNumbers;
+	}
 
 }

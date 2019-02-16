@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -9,10 +9,10 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.games.sudoku.views;
 
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.ui.PlatformUI;
@@ -20,76 +20,86 @@ import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.games.sudoku.Messages;
 import org.jcryptool.games.sudoku.SudokuPlugin;
 
-
-/**
- * This sample class demonstrates how to plug-in a new
- * workbench view. The view shows data obtained from the
- * model. The sample creates a dummy model on the fly,
- * but a real implementation would connect to the model
- * available either in this or another plug-in (e.g. the workspace).
- * The view is connected to the model using a content provider.
- * <p>
- * The view uses a label provider to define how model
- * objects should be presented in the view. Each
- * view can present the same model objects using
- * different labels and icons, if needed. Alternatively,
- * a single label provider can be shared between views
- * in order to ensure that objects of the same type are
- * presented in the same way everywhere.
- * <p>
- */
-
 public class SudokuView extends ViewPart {
+	
+	private TabFolder tf;
+	private NormalPuzzle normalSudoku;
+	private KillerPuzzle killerSudoku;
+	private HexPuzzle hexadecimalSudoku;
+	
 
-    public SudokuView() {
-
-    }
-
-    public final int NORMAL = 1, KILLER = 2, HEX = 3;
+    public SudokuView() { }
 
 	@Override
 	public void createPartControl(final Composite parent) {
-		final TabFolder tf = new TabFolder(parent, SWT.TOP);
+		
+		tf = new TabFolder(parent, SWT.TOP);
 
-		// Gentry & Halevi
-        TabItem ti = new TabItem(tf, SWT.NONE);
-        ti.setText(Messages.NormalTabTitle);
+		//Normal 9*9 Sudoku Tab
+        TabItem ti1 = new TabItem(tf, SWT.NONE);
+        ti1.setText(Messages.NormalTabTitle);
         ScrolledComposite sc = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
         sc.setExpandHorizontal(true);
         sc.setExpandVertical(true);
-        SudokuComposite c = new SudokuComposite(sc, NORMAL, SWT.NONE);
-        sc.setContent(c);
-        sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-        ti.setControl(sc);
+        normalSudoku = new NormalPuzzle(sc, SWT.NONE);
+        sc.setContent(normalSudoku);
+        sc.setMinSize(normalSudoku.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        ti1.setControl(sc);
+        
+        //Killer Sudoku Tab
+        TabItem ti2 = new TabItem(tf, SWT.NONE);
+        ti2.setText(Messages.KillerTabTitle);
+        ScrolledComposite sc2 = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
+        sc2.setExpandHorizontal(true);
+        sc2.setExpandVertical(true);
+        killerSudoku = new KillerPuzzle(sc2, SWT.NONE);
+        sc2.setContent(killerSudoku);
+        sc2.setMinSize(killerSudoku.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        ti2.setControl(sc2);
 
-        // RSA
-        ti = new TabItem(tf, SWT.NONE);
-        ti.setText(Messages.KillerTabTitle);
-        sc = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
-        sc.setExpandHorizontal(true);
-        sc.setExpandVertical(true);
-        c = new SudokuComposite(sc, KILLER, SWT.NONE);
-        sc.setContent(c);
-        sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-        ti.setControl(sc);
-
-        // Paillier
-        ti = new TabItem(tf, SWT.NONE);
-        ti.setText(Messages.HexTabTitle);
-        sc = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
-        sc.setExpandHorizontal(true);
-        sc.setExpandVertical(true);
-        c = new SudokuComposite(sc, HEX, SWT.NONE);
-        sc.setContent(c);
-        sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-        ti.setControl(sc);
+        //Hex Sudoku Tab (16*16)
+        TabItem ti3 = new TabItem(tf, SWT.NONE);
+        ti3.setText(Messages.HexTabTitle);
+        ScrolledComposite sc3 = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
+        sc3.setExpandHorizontal(true);
+        sc3.setExpandVertical(true);
+        hexadecimalSudoku = new HexPuzzle(sc3, SWT.NONE);
+        sc3.setContent(hexadecimalSudoku);
+        sc3.setMinSize(hexadecimalSudoku.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        ti3.setControl(sc3);
 
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), SudokuPlugin.PLUGIN_ID + ".sudokuview");
-
 	}
 
 	@Override
 	public void setFocus() {
+		
+	}
+	
+	/**
+	 * Resets the current Tabitem.</br>
+	 * Very ugly. Strong link between GUI and logic.</br>
+	 * Checks if the current tab item has a child which is an 
+	 * instance of NormalPuzzle, HexPuzzle or KillerPuzzle. If so
+	 * it calls the reset method of this class. 
+	 */
+	public void reset() {
+
+		//Get the current tab item 
+		TabItem tit = tf.getItem(tf.getSelectionIndex());
+		Control ctr = tit.getControl();
+		// ctr has only one child. NormalPuzzle or KillerPuzzle or HexPuzzle.
+		Control [] childs = ((Composite) ctr).getChildren();
+		if (childs[0] instanceof NormalPuzzle) {
+			NormalPuzzle np = (NormalPuzzle) childs[0];
+			np.reset();
+		} else if (childs[0] instanceof KillerPuzzle) {
+			KillerPuzzle kp = (KillerPuzzle) childs[0];
+			kp.reset();
+		} else if (childs[0] instanceof HexPuzzle) {
+			HexPuzzle hp = (HexPuzzle) childs[0];
+			hp.reset();
+		}	
 	}
 
 

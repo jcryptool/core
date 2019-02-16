@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -17,9 +17,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.elGamal.Action;
 import org.jcryptool.visual.elGamal.ElGamalData;
+import org.jcryptool.visual.elGamal.ElGamalPlugin;
 import org.jcryptool.visual.elGamal.Messages;
 
 /**
@@ -83,13 +85,13 @@ public class ElGamalView extends ViewPart {
 		sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		ti.setControl(sc);
 
-		// Sofern ich noch ne help schreibe
-		// PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(),
-		// "org.jcryptool.visual.rsa.rsahelp");
+		 PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(),
+				 ElGamalPlugin.PLUGIN_ID + ".elGamalHelp");
 	}
 
 	@Override
 	public void setFocus() {
+		parent.setFocus();
 	}
 
 	public void reset() {

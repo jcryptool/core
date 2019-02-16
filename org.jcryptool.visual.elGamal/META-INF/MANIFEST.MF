@@ -4,16 +4,20 @@ Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.visual.elGamal;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.jcryptool.crypto.keystore;bundle-version="1.0.0",
- org.eclipse.ui;bundle-version="3.7.0",
- org.eclipse.core.runtime;bundle-version="3.7.0",
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
  de.flexiprovider;bundle-version="1.7.0",
+ net.sourceforge.codec;bundle-version="1.7.0",
  org.jcryptool.visual.library;bundle-version="1.0.0",
- net.sourceforge.codec;bundle-version="1.7.0"
+ org.jcryptool.crypto.keystore;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.jcryptool.visual.elGamal.ElGamalPlugin
 Import-Package: org.jcryptool.core.logging.dialogs,
  org.jcryptool.core.logging.utils,
+ org.jcryptool.core.operations.alphabets,
  org.jcryptool.core.util.colors,
- org.jcryptool.core.util.fonts
+ org.jcryptool.core.util.fonts,
+ org.jcryptool.crypto.ui.textblockloader,
+ org.jcryptool.crypto.ui.textblockloader.conversion
 Bundle-Vendor: %Bundle-Vendor
+Automatic-Module-Name: org.jcryptool.visual.elGamal

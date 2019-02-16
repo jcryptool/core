@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  * 
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -19,7 +19,7 @@ import org.jcryptool.visual.sigVerification.algorithm.Input;
  */
 public class InputWizard extends Wizard {
     private InputFileWizardPage page;
-    Input input;
+    private Input input;
 
     public InputWizard(Input input) {
         super();
@@ -29,14 +29,12 @@ public class InputWizard extends Wizard {
 
     @Override
     public void addPages() {
-        page = new InputFileWizardPage("InputFile Wizard", input); //$NON-NLS-1$
-        addPage(page);
+    	page = new InputFileWizardPage("InputFile Wizard", input); //$NON-NLS-1$
+        addPage(page); 
     }
 
     @Override
     public boolean performFinish() {
-        if (page.isPageComplete())
-            return true;
-        return false;
+    	return page.isPageComplete();
     }
 }

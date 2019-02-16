@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2017 JCrypTool Team and Contributors
+* Copyright (c) 2019 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -27,6 +27,7 @@ public class Messages extends NLS {
 
 	public static String VerifiableSecretSharingComposite_error;
 
+	public static String VerifiableSecretSharingComposite_title;
 	public static String VerifiableSecretSharingComposite_tab_title;
 	public static String VerifiableSecretSharingComposite_description;
 	public static String VerifiableSecretSharingComposite_parameters_title;
@@ -97,7 +98,7 @@ public class Messages extends NLS {
 	public static String VerifiableSecretSharingComposite_description_coefficients_right;
 
 	public static String VerifiableSecretSharingComposite_description_commitments_left;
-	public static String VerifiableSecretSharingComposite_description_commitments_right;
+//	public static String VerifiableSecretSharingComposite_description_commitments_right;
 
 	public static String VerifiableSecretSharingComposite_description_shares_left;
 	public static String VerifiableSecretSharingComposite_description_shares_right;
@@ -105,6 +106,11 @@ public class Messages extends NLS {
 	public static String VerifiableSecretSharingComposite_description_reconstruction_left;
 	public static String VerifiableSecretSharingComposite_description_reconstruction_right;
 	public static String VerifiableSecretSharingComposite_description_reconstruction_right_part2;
+	
+	public static String VerifiableSecretSharingComposite_error_secret_limit;
+	
+	public static String VerifiableSecretSharingComposite_notice;
+	public static String VerifiableSecretSharingComposite_notice_secret_calc_time;
 
 
 	static {

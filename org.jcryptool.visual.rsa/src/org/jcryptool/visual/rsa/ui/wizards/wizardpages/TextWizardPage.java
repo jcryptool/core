@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -34,8 +34,7 @@ public abstract class TextWizardPage extends WizardPage {
 	 * @param titleImage
 	 *            the ImageDescriptor of the image to be shown
 	 */
-	protected TextWizardPage(String pageName, String title,
-			ImageDescriptor titleImage) {
+	protected TextWizardPage(String pageName, String title, ImageDescriptor titleImage) {
 		super(pageName, title, titleImage);
 	}
 
@@ -59,6 +58,7 @@ public abstract class TextWizardPage extends WizardPage {
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
 	 */
+	@Override
 	public void createControl(Composite parent) {
 	    Composite container = new Composite(parent, SWT.NULL);
         setControl(container);
@@ -69,10 +69,10 @@ public abstract class TextWizardPage extends WizardPage {
 	{   
     	canFlipToNextPage();
 		if (numbers){
-			this.getNextPage().setVisible(false);
+			getNextPage().setVisible(false);
 		}
 		else if (!numbers){
-			this.getNextPage().setVisible(true);
+			getNextPage().setVisible(true);
 		}
 	}
 

@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -12,7 +12,7 @@ import java.math.BigInteger;
 import java.util.Random;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 
 /**
  * Key generation for the fully homomorphic encryption scheme by Gentry & Halevi
@@ -61,7 +61,7 @@ public class GHKeyGen {
 		t = fheparams.t;
 		n = 1 << fheparams.logn;
 		
-		SubProgressMonitor sm = new SubProgressMonitor(monitor, work/3);
+		SubMonitor sm = SubMonitor.convert(monitor, work/3);
 		sm.beginTask("", work/3);
 		do { //try until HNF has the desired form, i.e. determinant is odd and lattice contains the vector (-r,1,0,...,0)
 			//generate random polynomial with coefficients uniformly random in [-2^t,2^t]

@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -40,8 +40,8 @@ public class Equation implements Constants {
 	private Text textfieldM;
 	private Button plusButton;
 	private Button minusButton;
-	private VerifyListener aTextfieldVerifyListiner;
-	private VerifyListener mTextfieldVerifyListiner;
+	private VerifyListener aTextfieldVerifyListener;
+	private VerifyListener mTextfieldVerifyListener;
 
 	public Equation(int equationIndex, Equations equationSet, Composite equationGroup, CRTGroup mainGroup) {
 		this.mainGroup = mainGroup;
@@ -53,53 +53,46 @@ public class Equation implements Constants {
 	public void addEquationToGroup() {
 		xLabel = new Label(equationGroup, SWT.NONE);
 		xLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		xLabel.setText("x");
+		xLabel.setText("x"); //$NON-NLS-1$
 
 		congruenceLabel = new Label(equationGroup, SWT.NONE);
-		congruenceLabel.setLayoutData(new GridData());
+		congruenceLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		congruenceLabel.setText(uCongruence);
 
 		textfieldA = new Text(equationGroup, SWT.BORDER);
-		final GridData gd_text = new GridData(SWT.FILL, SWT.CENTER, false, false);
-		gd_text.widthHint = 80;
-		textfieldA.setLayoutData(gd_text);
-		aTextfieldVerifyListiner = new VerifyListener() {
+		textfieldA.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		aTextfieldVerifyListener = new VerifyListener() {
+			@Override
 			public void verifyText(VerifyEvent e) {
 				/*
 				 * keyCode == 8 is BACKSPACE and keyCode == 48 is ZERO and keyCode == 127 is DEL
 				 */
-				if (e.text.matches("[0-9]") || e.keyCode == 8 || e.keyCode == 127) {
-					if (textfieldA.getText().length() == 0 && e.text.compareTo("0") == 0) {
-						e.doit = false;
-					} else if (textfieldA.getSelection().x == 0 && e.keyCode == 48) {
-						e.doit = false;
-					} else {
-						e.doit = true;
-					}
+				if (e.text.matches("^[0-9]*") || e.keyCode == 8 || e.keyCode == 127) { //$NON-NLS-1$
+					e.doit = true;
 				} else {
 					e.doit = false;
 				}
 			}
 
 		};
-		textfieldA.addVerifyListener(aTextfieldVerifyListiner);
+		textfieldA.addVerifyListener(aTextfieldVerifyListener);
 
 		modLabel = new Label(equationGroup, SWT.NONE);
-		modLabel.setText("mod");
+		modLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		modLabel.setText("mod"); //$NON-NLS-1$
 
 		textfieldM = new Text(equationGroup, SWT.BORDER);
-		final GridData gd_text_1 = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		gd_text_1.widthHint = 80;
-		textfieldM.setLayoutData(gd_text_1);
-		mTextfieldVerifyListiner = new VerifyListener() {
+		textfieldM.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		mTextfieldVerifyListener = new VerifyListener() {
+			@Override
 			public void verifyText(VerifyEvent e) {
 				/*
 				 * keyCode == 8 is BACKSPACE and keyCode == 48 is ZERO and keyCode == 127 is DEL
 				 */
-				if (e.text.matches("[0-9]") || e.keyCode == 8 || e.keyCode == 127) {
-					if (textfieldM.getText().length() == 0 && e.text.compareTo("0") == 0) {
-						e.doit = false;
-					} else if (textfieldM.getSelection().x == 0 && e.keyCode == 48) {
+				// Nur 0 bis 9 und BACKSPACE und DEL zulassen
+				if (e.text.matches("^[0-9]*") || e.keyCode == 8 || e.keyCode == 127) { //$NON-NLS-1$
+					// Keine 0 am anfang zulassen
+					if (textfieldM.getSelection().x == 0 && e.text.matches("^[0]\\d*")) {
 						e.doit = false;
 					} else {
 						e.doit = true;
@@ -110,11 +103,12 @@ public class Equation implements Constants {
 			}
 
 		};
-		textfieldM.addVerifyListener(mTextfieldVerifyListiner);
+		textfieldM.addVerifyListener(mTextfieldVerifyListener);
 
 		plusButton = new Button(equationGroup, SWT.NONE);
-		plusButton.setLayoutData(new GridData(30, 20));
-		plusButton.setText("+");
+		plusButton.setLayoutData(new GridData(30, 25));
+		plusButton.setText("+"); //$NON-NLS-1$
+		plusButton.setToolTipText(Messages.Equation_0);
 		plusButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
@@ -127,28 +121,25 @@ public class Equation implements Constants {
 				equations.createEquation(tmpIndex + 1, equationGroup, mainGroup);
 
 				for (Equation equation : equationSet) {
-					equation.textfieldA.removeVerifyListener(equation.aTextfieldVerifyListiner);
-					equation.textfieldM.removeVerifyListener(equation.mTextfieldVerifyListiner);
+					equation.textfieldA.removeVerifyListener(equation.aTextfieldVerifyListener);
+					equation.textfieldM.removeVerifyListener(equation.mTextfieldVerifyListener);
 				}
 				for (int i = equationSet.size() - 1; i > tmpIndex; i--) {
 					equationSet.get(i).setTextfieldA(equationSet.get(i - 1).getTextfieldA());
 					equationSet.get(i).setTextfieldM(equationSet.get(i - 1).getTextfieldM());
 				}
-				equationSet.get(tmpIndex + 1).setTextfieldA("");
-				equationSet.get(tmpIndex + 1).setTextfieldM("");
+				equationSet.get(tmpIndex + 1).setTextfieldA(""); //$NON-NLS-1$
+				equationSet.get(tmpIndex + 1).setTextfieldM(""); //$NON-NLS-1$
 
 				for (Equation equation : equationSet) {
-					equation.textfieldA.addVerifyListener(equation.aTextfieldVerifyListiner);
-					equation.textfieldM.addVerifyListener(equation.mTextfieldVerifyListiner);
+					equation.textfieldA.addVerifyListener(equation.aTextfieldVerifyListener);
+					equation.textfieldM.addVerifyListener(equation.mTextfieldVerifyListener);
 				}
-				equationGroup.pack();
-				if (equationSet.size() <= 4) {
-					ScrolledComposite scroll = (ScrolledComposite) equationGroup.getParent();
-					scroll.setExpandVertical(true);
-				} else {
-					ScrolledComposite scroll = (ScrolledComposite) equationGroup.getParent();
-					scroll.setExpandVertical(false);
-				}
+				
+				//Resize the scrolledComposite
+				equationGroup.layout();
+				ScrolledComposite scroll = (ScrolledComposite) equationGroup.getParent();
+				scroll.setMinSize(equationGroup.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 				if (equations.getNumberOfEquations() < 3) {
 					minusButton.setEnabled(false);
@@ -157,16 +148,13 @@ public class Equation implements Constants {
 						equation.minusButton.setEnabled(true);
 					}
 				}
-
-				// equationGroup.setSize(328, 175);
-
 			}
-
 		});
 
 		minusButton = new Button(equationGroup, SWT.NONE);
-		minusButton.setLayoutData(new GridData(30, 20));
-		minusButton.setText("-");
+		minusButton.setLayoutData(new GridData(30, 25));
+		minusButton.setText("-"); //$NON-NLS-1$
+		minusButton.setToolTipText(Messages.Equation_1);
 		if (equations.getNumberOfEquations() < 3) {
 			minusButton.setEnabled(false);
 		}
@@ -187,14 +175,9 @@ public class Equation implements Constants {
 						equationSet.firstElement().setEnableMinusButton(false);
 						equationSet.get(1).setEnableMinusButton(false);
 					}
-					equationGroup.pack();
-					if (equationSet.size() <= 5) {
-						ScrolledComposite scroll = (ScrolledComposite) equationGroup.getParent();
-						scroll.setExpandVertical(true);
-					} else {
-						ScrolledComposite scroll = (ScrolledComposite) equationGroup.getParent();
-						scroll.setExpandVertical(false);
-					}
+					equationGroup.layout();
+					ScrolledComposite scroll = (ScrolledComposite) equationGroup.getParent();
+					scroll.setMinSize(equationGroup.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				}
 			}
 		});
@@ -248,10 +231,10 @@ public class Equation implements Constants {
 	}
 
 	public void removetextfieldMVerifyListener() {
-		textfieldM.removeVerifyListener(mTextfieldVerifyListiner);
+		textfieldM.removeVerifyListener(mTextfieldVerifyListener);
 	}
 
 	public void addTextfieldMVerifyListener() {
-		textfieldM.addVerifyListener(mTextfieldVerifyListiner);
+		textfieldM.addVerifyListener(mTextfieldVerifyListener);
 	}
 }

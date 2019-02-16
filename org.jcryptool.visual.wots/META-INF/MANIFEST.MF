@@ -3,12 +3,11 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name.0
 Bundle-SymbolicName: org.jcryptool.visual.wots;singleton:=true
 Bundle-Version: 1.0.0
-Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
- org.eclipse.core.runtime;bundle-version="3.7.0"
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.wb.swt,
- org.jcryptool.visual.wots,
+Export-Package: org.jcryptool.visual.wots,
  org.jcryptool.visual.wots.files
 Bundle-Vendor: %Bundle-Vendor.0
 Import-Package: codec,
@@ -20,5 +19,7 @@ Import-Package: codec,
  org.bouncycastle.jce,
  org.bouncycastle.x509,
  org.jcryptool.core.logging.utils,
+ org.jcryptool.core.util.colors,
  org.jcryptool.core.util.fonts,
  org.jcryptool.visual.sig.algorithm
+Automatic-Module-Name: org.jcryptool.visual.wots

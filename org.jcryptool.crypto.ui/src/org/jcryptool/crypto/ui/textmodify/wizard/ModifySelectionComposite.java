@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
@@ -37,31 +37,25 @@ import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite;
 import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite.Mode;
 
 /**
- * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI Builder, which is free for non-commercial
- * use. If Jigloo is being used commercially (ie, by a corporation, company or business for any purpose whatever) then
- * you should purchase a license for each developer using Jigloo. Please visit www.cloudgarden.com for details. Use of
- * Jigloo implies acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR THIS MACHINE, SO
- * JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
- */
-/**
  * @author Simon
  *
  */
 
 public class ModifySelectionComposite extends Composite implements Listener {
 
-    private Composite alphabetGroup;
+//    private Composite alphabetGroup;
     private Button alphabetYESNO;
-    private Composite uppercaseGroup;
+//    private Composite uppercaseGroup;
     private Button uppercaseYESNO;
     private Button uppercase;
     private Button lowercase;
-    private Composite umlautGroup;
+//    private Composite umlautGroup;
     private Button umlautYESNO;
-    private Composite leerGroup;
+//    private Composite leerGroup;
     private Button leerYESNO;
-    private Composite tryComposite;
+//    private Composite tryComposite;
     private Button tryButton;
+    private Composite content;
 
     /** The operation */
     private boolean doUppercase = true;
@@ -99,15 +93,18 @@ public class ModifySelectionComposite extends Composite implements Listener {
 
         this.customAlphabetMode = customAlphaMode;
 
-        GridLayout layout = new GridLayout();
-        this.setLayout(layout);
+        content = new Composite(this, SWT.NONE);
+        GridLayout contentLayout = new GridLayout();
+        contentLayout.verticalSpacing = 15;
+        content.setLayout(contentLayout);
+        content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
         try {
-            createUppercaseGroup(this);
-            createUmlautGroup(this);
-            createLeerGroup(this);
-            createAlphabetGroup(this);
-            createTryComposite(this);
+            createUppercaseGroup(content);
+            createUmlautGroup(content);
+            createLeerGroup(content);
+            createAlphabetGroup(content);
+            createTryComposite(content);
         } catch (Exception e) {
             LogUtil.logError(CryptoUIPlugin.PLUGIN_ID, e);
         }
@@ -169,6 +166,7 @@ public class ModifySelectionComposite extends Composite implements Listener {
      * Initializes the alphabet composites. An empty string leads to the selection of the first alphabet
      */
     private void initAlphabetComposites(AbstractAlphabet selectAlphabet) {
+    	
         alphabetComboNew.getAlphabetInput().writeContent(selectAlphabet);
         alphabetComboNew.getAlphabetInput().synchronizeWithUserSide();
     }
@@ -216,58 +214,25 @@ public class ModifySelectionComposite extends Composite implements Listener {
      *
      */
     private void createUppercaseGroup(final Composite parent) {
-        GridData uppercaseButtonGridData = new GridData();
-        uppercaseButtonGridData.horizontalAlignment = SWT.FILL;
-        uppercaseButtonGridData.grabExcessHorizontalSpace = true;
 
-        GridData lowercaseButtonGridData = new GridData();
-        lowercaseButtonGridData.horizontalAlignment = SWT.FILL;
-        lowercaseButtonGridData.grabExcessHorizontalSpace = true;
-
-        GridLayout singleTransformationBoxLayout = new GridLayout();
-        singleTransformationBoxLayout.numColumns = 1;
-
-        GridData singleTransformationBoxGData = new GridData();
-        singleTransformationBoxGData.horizontalAlignment = SWT.FILL;
-        singleTransformationBoxGData.grabExcessHorizontalSpace = true;
-        singleTransformationBoxGData.verticalAlignment = SWT.BEGINNING;
-        singleTransformationBoxGData.grabExcessVerticalSpace = false;
-        singleTransformationBoxGData.verticalIndent = 5;
-
-        GridData singleTransformationCheckboxGData = new GridData();
-        singleTransformationCheckboxGData.grabExcessHorizontalSpace = true;
-        singleTransformationCheckboxGData.horizontalAlignment = SWT.FILL;
-        singleTransformationCheckboxGData.grabExcessVerticalSpace = false;
-        singleTransformationCheckboxGData.verticalAlignment = SWT.BEGINNING;
-
-        GridData singleTransformationInnerBoxGData = new GridData();
-        singleTransformationInnerBoxGData.horizontalAlignment = SWT.FILL;
-        singleTransformationInnerBoxGData.grabExcessHorizontalSpace = true;
-        singleTransformationInnerBoxGData.verticalAlignment = SWT.FILL;
-        singleTransformationInnerBoxGData.grabExcessVerticalSpace = false;
-        singleTransformationInnerBoxGData.horizontalIndent = 15;
-
-        uppercaseGroup = new Composite(parent, SWT.NONE);
-        uppercaseGroup.setLayoutData(singleTransformationBoxGData);
-        uppercaseGroup.setLayout(singleTransformationBoxLayout);
-
-        uppercaseYESNO = new Button(uppercaseGroup, SWT.CHECK);
+        uppercaseYESNO = new Button(parent, SWT.CHECK);
         uppercaseYESNO.setText(Messages.ModifyWizardPage_upperLower);
-        uppercaseYESNO.setLayoutData(singleTransformationCheckboxGData);
         uppercaseYESNO.addListener(SWT.Selection, this);
 
-        Composite innerGroup = new Composite(uppercaseGroup, SWT.NONE);
+        Composite innerGroup = new Composite(parent, SWT.NONE);
+        GridData singleTransformationInnerBoxGData = new GridData(SWT.FILL, SWT.FILL, true, false);
+        singleTransformationInnerBoxGData.horizontalIndent = 20;
         innerGroup.setLayoutData(singleTransformationInnerBoxGData);
         innerGroup.setLayout(new GridLayout(2, true));
 
         uppercase = new Button(innerGroup, SWT.RADIO);
         uppercase.setText(Messages.ModifyWizardPage_alltoupper);
-        uppercase.setLayoutData(uppercaseButtonGridData);
+        uppercase.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
         uppercase.addListener(SWT.Selection, this);
 
         lowercase = new Button(innerGroup, SWT.RADIO);
         lowercase.setText(Messages.ModifyWizardPage_alltolower);
-        lowercase.setLayoutData(lowercaseButtonGridData);
+        lowercase.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
         lowercase.addListener(SWT.Selection, this);
     }
 
@@ -276,36 +241,9 @@ public class ModifySelectionComposite extends Composite implements Listener {
      *
      */
     private void createLeerGroup(final Composite parent) {
-        GridLayout singleTransformationBoxLayout = new GridLayout();
-        singleTransformationBoxLayout.numColumns = 1;
 
-        GridData singleTransformationBoxGData = new GridData();
-        singleTransformationBoxGData.horizontalAlignment = SWT.FILL;
-        singleTransformationBoxGData.grabExcessHorizontalSpace = true;
-        singleTransformationBoxGData.verticalAlignment = SWT.BEGINNING;
-        singleTransformationBoxGData.grabExcessVerticalSpace = false;
-        singleTransformationBoxGData.verticalIndent = 5;
-
-        GridData singleTransformationCheckboxGData = new GridData();
-        singleTransformationCheckboxGData.grabExcessHorizontalSpace = true;
-        singleTransformationCheckboxGData.horizontalAlignment = SWT.FILL;
-        singleTransformationCheckboxGData.grabExcessVerticalSpace = false;
-        singleTransformationCheckboxGData.verticalAlignment = SWT.BEGINNING;
-
-        GridData singleTransformationInnerBoxGData = new GridData();
-        singleTransformationInnerBoxGData.horizontalAlignment = SWT.FILL;
-        singleTransformationInnerBoxGData.grabExcessHorizontalSpace = true;
-        singleTransformationInnerBoxGData.verticalAlignment = SWT.FILL;
-        singleTransformationInnerBoxGData.grabExcessVerticalSpace = false;
-        singleTransformationInnerBoxGData.horizontalIndent = 15;
-
-        leerGroup = new Composite(parent, SWT.NONE);
-        leerGroup.setLayoutData(singleTransformationBoxGData);
-        leerGroup.setLayout(singleTransformationBoxLayout);
-
-        leerYESNO = new Button(leerGroup, SWT.CHECK);
+        leerYESNO = new Button(parent, SWT.CHECK);
         leerYESNO.setText(Messages.ModifyWizardPage_replaceblanks);
-        leerYESNO.setLayoutData(singleTransformationCheckboxGData);
         leerYESNO.addListener(SWT.Selection, this);
     }
 
@@ -314,36 +252,9 @@ public class ModifySelectionComposite extends Composite implements Listener {
      *
      */
     private void createUmlautGroup(final Composite parent) {
-
-        GridLayout singleTransformationBoxLayout = new GridLayout();
-        singleTransformationBoxLayout.numColumns = 1;
-
-        GridData singleTransformationBoxGData = new GridData();
-        singleTransformationBoxGData.horizontalAlignment = SWT.FILL;
-        singleTransformationBoxGData.grabExcessHorizontalSpace = true;
-        singleTransformationBoxGData.verticalAlignment = SWT.BEGINNING;
-        singleTransformationBoxGData.grabExcessVerticalSpace = false;
-        singleTransformationBoxGData.verticalIndent = 5;
-
-        GridData singleTransformationCheckboxGData = new GridData();
-        singleTransformationCheckboxGData.grabExcessHorizontalSpace = true;
-        singleTransformationCheckboxGData.horizontalAlignment = SWT.FILL;
-        singleTransformationCheckboxGData.grabExcessVerticalSpace = false;
-        singleTransformationCheckboxGData.verticalAlignment = SWT.BEGINNING;
-
-        GridData singleTransformationInnerBoxGData = new GridData();
-        singleTransformationInnerBoxGData.horizontalAlignment = SWT.FILL;
-        singleTransformationInnerBoxGData.grabExcessHorizontalSpace = true;
-        singleTransformationInnerBoxGData.verticalAlignment = SWT.FILL;
-        singleTransformationInnerBoxGData.grabExcessVerticalSpace = false;
-        singleTransformationInnerBoxGData.horizontalIndent = 15;
-        umlautGroup = new Composite(parent, SWT.NONE);
-        umlautGroup.setLayoutData(singleTransformationBoxGData);
-        umlautGroup.setLayout(singleTransformationBoxLayout);
-
-        umlautYESNO = new Button(umlautGroup, SWT.CHECK);
+    	
+        umlautYESNO = new Button(parent, SWT.CHECK);
         umlautYESNO.setText(Messages.ModifyWizardPage_umlauts);
-        umlautYESNO.setLayoutData(singleTransformationCheckboxGData);
         umlautYESNO.addListener(SWT.Selection, this);
 
     }
@@ -353,45 +264,16 @@ public class ModifySelectionComposite extends Composite implements Listener {
      *
      */
     private void createAlphabetGroup(final Composite parent) {
-        GridData filterComboGridData = new GridData();
-        filterComboGridData.horizontalAlignment = SWT.FILL;
-        filterComboGridData.grabExcessHorizontalSpace = true;
 
-        GridLayout singleTransformationBoxLayout = new GridLayout();
-        singleTransformationBoxLayout.numColumns = 1;
-
-        GridData singleTransformationBoxGData = new GridData();
-        singleTransformationBoxGData.horizontalAlignment = SWT.FILL;
-        singleTransformationBoxGData.grabExcessHorizontalSpace = true;
-        singleTransformationBoxGData.verticalAlignment = SWT.BEGINNING;
-        singleTransformationBoxGData.grabExcessVerticalSpace = false;
-        singleTransformationBoxGData.verticalIndent = 5;
-
-        GridData singleTransformationCheckboxGData = new GridData();
-        singleTransformationCheckboxGData.grabExcessHorizontalSpace = true;
-        singleTransformationCheckboxGData.horizontalAlignment = SWT.FILL;
-        singleTransformationCheckboxGData.grabExcessVerticalSpace = false;
-        singleTransformationCheckboxGData.verticalAlignment = SWT.BEGINNING;
-
-        GridData singleTransformationInnerBoxGData = new GridData();
-        singleTransformationInnerBoxGData.horizontalAlignment = SWT.FILL;
-        singleTransformationInnerBoxGData.grabExcessHorizontalSpace = true;
-        singleTransformationInnerBoxGData.verticalAlignment = SWT.FILL;
-        singleTransformationInnerBoxGData.grabExcessVerticalSpace = false;
-        singleTransformationInnerBoxGData.horizontalIndent = 15;
-
-        alphabetGroup = new Composite(parent, SWT.NONE);
-        alphabetGroup.setLayoutData(singleTransformationBoxGData);
-        alphabetGroup.setLayout(singleTransformationBoxLayout);
-
-        alphabetYESNO = new Button(alphabetGroup, SWT.CHECK);
+        alphabetYESNO = new Button(parent, SWT.CHECK);
         alphabetYESNO.setText(Messages.ModifyWizardPage_filteralpha);
-        alphabetYESNO.setLayoutData(singleTransformationCheckboxGData);
         alphabetYESNO.addListener(SWT.Selection, this);
 
-        Composite innerGroup = new Composite(alphabetGroup, SWT.NONE);
+        Composite innerGroup = new Composite(parent, SWT.NONE);
+        innerGroup.setLayout(new GridLayout());
+        GridData singleTransformationInnerBoxGData = new GridData(SWT.FILL, SWT.FILL, true, false);
+        singleTransformationInnerBoxGData.horizontalIndent = 20;
         innerGroup.setLayoutData(singleTransformationInnerBoxGData);
-        innerGroup.setLayout(new GridLayout(1, true));
 
         alphabetComboNew = new AlphabetSelectorComposite(innerGroup, null, customAlphabetMode);
         alphabetComboNew.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -403,30 +285,9 @@ public class ModifySelectionComposite extends Composite implements Listener {
      */
     private void createTryComposite(final Composite parent) {
 
-        GridLayout tryCompositeGridLayout = new GridLayout();
-        tryCompositeGridLayout.numColumns = 1;
-
-        GridData tryCompositeGridData = new GridData();
-        tryCompositeGridData.horizontalAlignment = SWT.FILL;
-        tryCompositeGridData.grabExcessHorizontalSpace = true;
-        tryCompositeGridData.grabExcessVerticalSpace = false;
-        tryCompositeGridData.verticalAlignment = SWT.BEGINNING;
-        tryCompositeGridData.verticalIndent = 7;
-
-        tryComposite = new Composite(parent, SWT.NONE);
-        tryComposite.setLayoutData(tryCompositeGridData);
-        tryComposite.setLayout(tryCompositeGridLayout);
-
-        GridData tryButtonGridData = new GridData();
-        tryButtonGridData.horizontalSpan = 2;
-        tryButtonGridData.verticalAlignment = SWT.CENTER;
-        tryButtonGridData.grabExcessHorizontalSpace = true;
-        tryButtonGridData.grabExcessVerticalSpace = false;
-        tryButtonGridData.horizontalAlignment = SWT.RIGHT;
-
-        tryButton = new Button(tryComposite, SWT.PUSH);
+        tryButton = new Button(parent, SWT.PUSH);
         tryButton.setText(Messages.ModifySelectionComposite_howwillitlooklike);
-        tryButton.setLayoutData(tryButtonGridData);
+        tryButton.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, true, false));
         tryButton.addListener(SWT.Selection, this);
     }
 

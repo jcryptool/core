@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2017 JCrypTool Team and Contributors
+* Copyright (c) 2019 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -20,8 +20,6 @@ import java.util.Set;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
@@ -272,21 +270,7 @@ public class SubstitutionWizardPage extends AbstractClassicCryptoPage {
 	}
 
 	@Override
-	protected void createKeyGroup(Composite parent) {
-		keyGroup = new Group(parent, SWT.NONE);
-		
-		GridLayout keyGroupGridLayout = new GridLayout();
-		keyGroupGridLayout.numColumns = 4;
-		
-		GridData keyGroupGridData = new GridData();
-		keyGroupGridData.horizontalAlignment = GridData.FILL;
-		keyGroupGridData.grabExcessHorizontalSpace = true;
-		keyGroupGridData.grabExcessVerticalSpace = false;
-		keyGroupGridData.verticalAlignment = SWT.CENTER;
-		
-		keyGroup.setLayoutData(keyGroupGridData);
-		keyGroup.setLayout(keyGroupGridLayout);
-		keyGroup.setText(""); //$NON-NLS-1$
+	protected void createKeyInputWidgets() {
 
 		initializeKeyEditor(keyGroup, getSelectedAlphabet());
 	}

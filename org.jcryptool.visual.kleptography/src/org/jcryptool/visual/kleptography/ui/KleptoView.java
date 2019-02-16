@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
@@ -14,11 +14,11 @@ import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.visual.kleptography.KleptographyPlugin;
 import org.jcryptool.visual.kleptography.algorithm.Kleptography;
 
@@ -69,19 +69,11 @@ public class KleptoView extends ViewPart {
     private Composite parent;
 
     // Define all the colors at once.
-    public static final Color WHITE;
-    public static final Color BACKGROUND_GRAY;
-    public static final Color FOREGROUND_GRAY;
-    public static final Color BLACK;
-    public static final Color YELLOW;
-    static {
-        final Display d = Display.getDefault();
-        WHITE = d.getSystemColor(SWT.COLOR_WHITE);
-        BACKGROUND_GRAY = d.getSystemColor(SWT.COLOR_WIDGET_BACKGROUND);
-        FOREGROUND_GRAY = d.getSystemColor(SWT.COLOR_GRAY);
-        BLACK = d.getSystemColor(SWT.COLOR_BLACK);
-        YELLOW = d.getSystemColor(SWT.COLOR_YELLOW);
-    }
+    public static final Color WHITE = ColorService.WHITE;
+    public static final Color BACKGROUND_GRAY = ColorService.LIGHTGRAY;
+    public static final Color FOREGROUND_GRAY = ColorService.GRAY;
+    public static final Color BLACK = ColorService.BLACK;
+    public static final Color YELLOW = ColorService.YELLOW;
 
     @Override
     public void createPartControl(final Composite parent) {

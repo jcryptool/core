@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2017 JCrypTool Team and Contributors
+* Copyright (c) 2019 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -33,6 +33,10 @@ public class SignatureWizard extends Wizard {
         super();
         method = m;
         setWindowTitle(Messages.SignatureWizard_Title);
+        
+        if (Input.privateKey != null) {
+        	alias = Input.privateKey;
+        }
     }
 
     @Override
@@ -43,25 +47,20 @@ public class SignatureWizard extends Wizard {
 
     @Override
     public boolean performFinish() {
-        int i = 0; // 0-4
         // get all the radiobuttons from the WizardPage
-        Control[] radiobutton = (Control[]) page.getGrpSignatures().getChildren();
+        Control[] radioButtons = (Control[]) page.getGrpSignatures().getChildren();
+        
         // Check which radiobutton is selected
-        while (i <= 4) {
-            // Check if the current button is selected
-            if (((Button) radiobutton[i]).getSelection()) {
-                signature = i;
-                i = 5; // leave the loop
+        for (int i = 0; i < radioButtons.length; i++) {
+            if (((Button) radioButtons[i]).getSelection()) {
+                signature = i; //set this.signature to selected radioButton
+                break; // leave the loop
             }
-            i++;
         }
-
+        
         // Get the Alias
         alias = page.getAlias();
-        // Store the key
-        if (alias != null) {
-            Input.key = alias;
-        }
+
         return true;
     }
 

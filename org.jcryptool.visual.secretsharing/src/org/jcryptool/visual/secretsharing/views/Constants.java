@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -115,6 +115,7 @@ public interface Constants {
 	String MESSAGE_INFO_GROUP = Messages.SSSConstants_Info_Group;
 	String MESSAGE_P_ = "P'(x)"; //$NON-NLS-1$
 	String MESSAGE_LAGRANGE = Messages.SSSConstants_Title_Info_Formula;
+	String MESSAGE_RESET = Messages.SSSConstants_Reset;
 
 	/*
 	 * MESSAGE COEFFICIENTS DIALOG

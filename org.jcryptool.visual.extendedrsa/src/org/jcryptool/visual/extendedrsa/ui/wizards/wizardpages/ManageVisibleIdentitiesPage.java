@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
@@ -59,7 +59,7 @@ public class ManageVisibleIdentitiesPage extends WizardPage {
 
         Label lbl = new Label(container, SWT.WRAP);
         lbl.setText(Messages.ManageVisibleIdentitiesPage_3);
-        GridData gdLbl = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2);
+        GridData gdLbl = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
         lbl.setLayoutData(gdLbl);
 
         Vector<String> identites_vector = new Vector<String>();
@@ -114,8 +114,7 @@ public class ManageVisibleIdentitiesPage extends WizardPage {
             }
         });
 
-        GridData gdTable = new GridData(SWT.LEFT, SWT.LEFT, true, false, 1, 1);
-        gdTable.widthHint = 150;
+        GridData gdTable = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
         gdTable.heightHint = 150;
         table.setLayoutData(gdTable);
 

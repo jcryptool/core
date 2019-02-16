@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2017 JCrypTool Team and Contributors
+* Copyright (c) 2019 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -113,7 +113,7 @@ public class SubstitutionAnalysisView extends ViewPart {
 	 */
 	public SubstitutionAnalysisView() {
 		super();
-		this.state = new State(State.Step.CONFIG);
+		state = new State(State.Step.CONFIG);
 	}
 
 	private Composite getMainComposite() {
@@ -123,9 +123,9 @@ public class SubstitutionAnalysisView extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 		mainComposite = new Composite(parent, SWT.NONE);
-		mainComposite.setLayout(new GridLayout(1, false));
+		mainComposite.setLayout(new GridLayout());
 
-		createAppropriatePanel(this.state);
+		createAppropriatePanel(state);
 
 		defineAllCommands();
 		serviceLocator = PlatformUI.getWorkbench();
@@ -135,8 +135,8 @@ public class SubstitutionAnalysisView extends ViewPart {
 	}
 
 	private void createAppropriatePanel(State state) {
-		if(this.mainPanel != null && !this.mainPanel.isDisposed()) {
-			this.mainPanel.dispose();
+		if(mainPanel != null && !mainPanel.isDisposed()) {
+			mainPanel.dispose();
 		}
 		if(state.getStep() == Step.CONFIG) {
 			SubstitutionAnalysisConfigPanel panel = createConfigPanel(mainComposite);

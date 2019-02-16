@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
@@ -9,11 +9,9 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.sig.algorithm;
 
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
-import java.security.SecureRandom;
 import java.security.Signature;
+import java.util.Arrays;
 import java.util.Date;
 
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
@@ -51,32 +49,24 @@ public class SigGeneration {
 
         Input.chosenHash = signaturemethod.replace("withRSA", ""); //$NON-NLS-1$ //$NON-NLS-2$
 
-        if (signaturemethod.contains("ECDSA")) { // Generate a key because there are no ECDSA Keys in the keystore //$NON-NLS-1$
-            // Generate a key pair
-            KeyPairGenerator keyGen = KeyPairGenerator.getInstance("EC"); //$NON-NLS-1$
-            keyGen.initialize(256, SecureRandom.getInstance("SHA1PRNG")); //$NON-NLS-1$
+        KeyStoreManager ksm = KeyStoreManager.getInstance();
 
-            KeyPair pair = keyGen.generateKeyPair();
-            k = pair.getPrivate();
-        } else {
-            KeyStoreManager ksm = KeyStoreManager.getInstance();
-
-            // Check if called by JCT-CA
-            if (Input.privateKey != null) { // Use their key
-                Input.privateKey.getAliasString();
-                k = ksm.getPrivateKey(Input.privateKey, KeyStoreManager.KEY_PASSWORD);
-            } else { // Use own Key from given alias
-                k = ksm.getPrivateKey(alias, KeyStoreManager.KEY_PASSWORD);
-            }
+        // Check if called by JCT-CA
+        if (Input.privateKeyJCTCA != null) { // Use their key
+            Input.privateKeyJCTCA.getAliasString();
+            k = ksm.getPrivateKey(Input.privateKeyJCTCA, KeyStoreManager.KEY_PASSWORD);
+        } else { // Use own Key from given alias
+            k = ksm.getPrivateKey(alias, KeyStoreManager.KEY_PASSWORD);
         }
 
         // Get a signature object using the specified combo and sign the data with the private key
         Signature sig = Signature.getInstance(signaturemethod);
         sig.initSign(k);
         sig.update(input);
+        
         signature = sig.sign();
 
-        if (Input.privateKey != null) {
+        if (Input.privateKeyJCTCA != null) {
             String p = null;
             String t = null;
             if (Input.data != null) {
@@ -100,7 +90,23 @@ public class SigGeneration {
         Input.signature = signature; // Store the generated original signature
         Input.signatureHex = Input.bytesToHex(signature); // Hex String
         Input.signatureOct = Input.toOctalString(signature, ""); //$NON-NLS-1$
-        Input.dataHex = Input.bytesToHex(Input.data);
+        
+        //debugging
+    	//System.out.println("Hash value generation data:");
+        //System.out.print(Input.bytesToHex(Arrays.copyOf(Input.data, 10)));
+        //System.out.println();
+        
+        //debugging
+    	//System.out.println("Signature value generation data:");
+    	//System.out.print(Input.bytesToHex(Input.signature));
+    	//System.out.println();
+        
+        //The first 1024 bytes of data get converted to hex representation
+        int maxHexLength = 1024; //1kB
+        if (Input.data.length > maxHexLength)
+        	Input.dataHex = Input.bytesToHex(Arrays.copyOfRange(Input.data, 0, maxHexLength));
+        else
+        	Input.dataHex = Input.bytesToHex(Input.data);
 
         return signature;
     }

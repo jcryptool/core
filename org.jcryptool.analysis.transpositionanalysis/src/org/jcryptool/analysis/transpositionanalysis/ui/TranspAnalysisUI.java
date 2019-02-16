@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,24 +10,29 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.analysis.transpositionanalysis.ui;
 
+import java.awt.Event;
 import java.util.Observable;
 import java.util.Observer;
 
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.ISharedImages;
@@ -38,6 +43,7 @@ import org.jcryptool.analysis.transpositionanalysis.ui.wizards.TranspTextWizardP
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
+import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.input.ButtonInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.crypto.classic.alphabets.ui.AddAlphabetWizard;
@@ -63,7 +69,8 @@ import org.jcryptool.editor.text.JCTTextEditorPlugin;
 public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implements Observer {
 
 	private TranspositionTableComposite transpTable;
-
+	
+	private Group instrGroup;
 	private TextInputWithSource text = null;
 	private Composite composite7;
 	private Label labelReadDir;
@@ -102,6 +109,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 	private Label lblColumnCount;
 	private Spinner spinner;
 	private Composite compTextSource;
+	private Label title;
 	private Label label;
 	private Label lblYouHaveSelected;
 	private TextInputWithSourceDisplayer sourceDisplayer;
@@ -128,7 +136,11 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 	private Label lblTheseTextSettings;
 
 	private Composite compSolvableWarning;
-
+	
+	//composites to enable scrolling
+	private ScrolledComposite scrolledComposite;
+	private Composite content;
+	
 	/**
 	 * @param text
 	 *            the text to set
@@ -201,7 +213,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 			previewPlaintext();
 		}
 	}
-
+	
 	/**
 	 * Auto-generated method to display this org.eclipse.swt.widgets.Composite
 	 * inside a new Shell.
@@ -209,22 +221,35 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 
 	public TranspAnalysisUI(org.eclipse.swt.widgets.Composite parent, int style) {
 		super(parent, style);
+		
 		initGUI();
 	}
 
 	private void initGUI() {
 		try {
-			GridLayout thisLayout = new GridLayout();
-			thisLayout.numColumns = 2;
-			this.setLayout(thisLayout);
+			FillLayout fillLayout = new FillLayout();
+		    fillLayout.type = SWT.VERTICAL;
+			this.setLayout(fillLayout);
+
+			scrolledComposite = new ScrolledComposite(this, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+			scrolledComposite.setExpandHorizontal(true);
+			scrolledComposite.setExpandVertical(true);
+			
+			content = new Composite(scrolledComposite, SWT.NONE);
+			GridLayout thisLayout = new GridLayout(1, true);
+			content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+			content.setLayout(thisLayout);
+			
 			{
-				compLoadTextBtn = new Composite(this, SWT.NONE);
-				compLoadTextBtn.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-				GridLayout compLoadTextBtnLayout = new GridLayout(2, false);
-				compLoadTextBtnLayout.marginHeight = 3;
-				compLoadTextBtn.setLayout(compLoadTextBtnLayout);
-				{
-					lblNewLabel = new Label(compLoadTextBtn, SWT.NONE | SWT.WRAP);
+				title = new Label(content, SWT.NONE);
+				title.setText(Messages.TranspAnalysisUI_view_title);
+		        title.setFont(FontService.getHeaderFont());
+				instrGroup = new Group(content, SWT.NONE);
+				instrGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+				instrGroup.setLayout(new GridLayout(1, false));
+				
+		        {
+					lblNewLabel = new Label(instrGroup, SWT.NONE | SWT.WRAP);
 					lblNewLabel.setText(Messages.TranspAnalysisUI_view_description);
 					GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
 					layoutData.widthHint = 200;
@@ -238,36 +263,43 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 						}
 					});
 				}
+			}
+			{
+				compLoadTextBtn = new Composite(instrGroup, SWT.NONE);
+				compLoadTextBtn.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
+				GridLayout compLoadTextBtnLayout = new GridLayout(2, false);
+				compLoadTextBtnLayout.marginHeight = 3;
+				compLoadTextBtn.setLayout(compLoadTextBtnLayout);
 				{
-					lblLoadA = new Label(compLoadTextBtn, SWT.NONE);
-					lblLoadA.setBounds(0, 0, 55, 15);
+					lblLoadA = new Label(compLoadTextBtn, SWT.PUSH);
+					lblLoadA.setBounds(0, 0, 0, 0);
 					lblLoadA.setText("1)"); //$NON-NLS-1$
 				}
 				{
-					btnOpenTextWizard = new Button(compLoadTextBtn, SWT.NONE);
+					btnOpenTextWizard = new Button(compLoadTextBtn, SWT.PUSH);
 					btnOpenTextWizard.addSelectionListener(new SelectionAdapter() {
 						@Override
 						public void widgetSelected(SelectionEvent e) {
 							mainButton();
 						}
 					});
-					btnOpenTextWizard.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+					btnOpenTextWizard.setLayoutData(new GridData(SWT.PUSH, SWT.CENTER, false, false, 1, 1));
 					btnOpenTextWizard.setText(Messages.TranspAnalysisUI_btnOpenTextWizard_text);
 				}
 			}
 			{
-				compTextSource = new Composite(this, SWT.NONE);
-				compTextSource.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+				compTextSource = new Composite(instrGroup, SWT.PUSH);
+				compTextSource.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
 				GridLayout compTextSourceLayout = new GridLayout(3, false);
 				compTextSourceLayout.verticalSpacing = 2;
 				compTextSourceLayout.marginHeight = 3;
 				compTextSource.setLayout(compTextSourceLayout);
 				{
-					label = new Label(compTextSource, SWT.NONE);
+					label = new Label(compTextSource, SWT.PUSH);
 					label.setText("1)"); //$NON-NLS-1$
 				}
 				{
-					lblYouHaveSelected = new Label(compTextSource, SWT.NONE);
+					lblYouHaveSelected = new Label(compTextSource, SWT.PUSH);
 					lblYouHaveSelected.setText(Messages.TranspAnalysisUI_lblYouHaveSelected_text);
 				}
 				{
@@ -277,10 +309,10 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 					sourceDisplayer.setLayoutData(sourceDisplayerLData); //$hide$
 				}
 				{
-					new Label(compTextSource, SWT.NONE);
+					new Label(compTextSource, SWT.PUSH);
 				}
 				{
-					linkChooseText = new Link(compTextSource, SWT.NONE);
+					linkChooseText = new Link(compTextSource, SWT.PUSH);
 					linkChooseText.setText(Messages.TranspAnalysisUI_lblChooseAnotherText);
 					linkChooseText.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false, 2, 1));
 					linkChooseText.addSelectionListener(new SelectionAdapter() {
@@ -292,7 +324,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 				}
 			}
 			{
-				compInstructions = new Composite(this, SWT.NONE);
+				compInstructions = new Composite(instrGroup, SWT.NONE);
 				compInstructions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 				GridLayout compInstructionsLayout = new GridLayout(2, false);
 				compInstructionsLayout.marginHeight = 3;
@@ -318,17 +350,26 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 				}
 			}
 			{
-				compTable = new Group(this, SWT.NONE);
+				compTable = new Group(content, SWT.NONE);
 				GridLayout gl_compTable = new GridLayout();
 				gl_compTable.makeColumnsEqualWidth = true;
-				GridData gd_compTable = new GridData();
+				GridData gd_compTable = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 				gd_compTable.grabExcessHorizontalSpace = true;
 				gd_compTable.horizontalAlignment = GridData.FILL;
 				gd_compTable.verticalAlignment = GridData.FILL;
 				gd_compTable.grabExcessVerticalSpace = true;
+				gd_compTable.minimumHeight = 200;
+				gd_compTable.heightHint = 150;
 				compTable.setText(Messages.TranspAnalysisUI_grpEditText);
+				compTable.setFont(FontService.getLargeFont());
 				compTable.setLayoutData(gd_compTable);
 				compTable.setLayout(gl_compTable);
+			
+//				{
+//					label = new Label(compTable, SWT.NONE);
+//					label.setText(Messages.TranspAnalysisUI_grpEditText);
+//					label.setFont(FontService.getLargeBoldFont());
+//				}
 				{
 					compApplyTransform = new Composite(compTable, SWT.NONE);
 					GridLayout compApplyTransformLayout = new GridLayout();
@@ -427,21 +468,14 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 							}
 						});
 					}
-				}
-				{
-					composite_2 = new Composite(compTable, SWT.NONE);
-					composite_2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-					GridLayout gl_composite_2 = new GridLayout(2, false);
-					gl_composite_2.marginHeight = 0;
-					gl_composite_2.marginWidth = 0;
-					composite_2.setLayout(gl_composite_2);
+					
 					{
-						lblColumnCount = new Label(composite_2, SWT.NONE);
+						lblColumnCount = new Label(compReadDir, SWT.NONE);
 						lblColumnCount.setBounds(0, 0, 55, 15);
 						lblColumnCount.setText(Messages.TranspAnalysisUI_lblColumnCount_text_1);
 					}
 					{
-						spinner = new Spinner(composite_2, SWT.BORDER);
+						spinner = new Spinner(compReadDir, SWT.BORDER);
 						spinner.setMaximum(1000);
 						spinner.setMinimum(1);
 						spinner.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true, false, 1, 1));
@@ -485,15 +519,15 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 					transpTableLData.verticalAlignment = GridData.FILL;
 					transpTableLData.grabExcessVerticalSpace = true;
 					// transpTableLData.minimumWidth = 200;
-					// transpTableLData.widthHint = 370;
+					transpTableLData.minimumHeight = 70;
+					transpTableLData.heightHint = 70;
 					transpTable = new TranspositionTableComposite(compTable, SWT.NONE);
 					transpTable.setLayoutData(transpTableLData);
-
 					transpTable.setColReorderObserver(this);
 				}
 			}
 			{
-				compResults = new Composite(this, SWT.NONE);
+				compResults = new Composite(content, SWT.NONE);
 				GridLayout gl_compResults = new GridLayout();
 				gl_compResults.marginHeight = 0;
 				gl_compResults.marginWidth = 0;
@@ -517,6 +551,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 					previewGroupLData.verticalAlignment = GridData.FILL;
 					previewGroup.setLayoutData(previewGroupLData);
 					previewGroup.setText(Messages.TranspAnalysisUI_Results);
+					previewGroup.setFont(FontService.getLargeFont());
 					{
 						composite4 = new Composite(previewGroup, SWT.NONE);
 						GridLayout composite4Layout = new GridLayout();
@@ -528,6 +563,11 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 						composite4LData.horizontalAlignment = GridData.FILL;
 						composite4.setLayoutData(composite4LData);
 						composite4.setLayout(composite4Layout);
+//						{
+//							label = new Label(composite4, SWT.NONE);
+//							label.setText(Messages.TranspAnalysisUI_Results);
+//							label.setFont(FontService.getLargeBoldFont());
+//						}
 						{
 							label2 = new Label(composite4, SWT.NONE);
 							GridData label2LData = new GridData();
@@ -606,7 +646,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 							GridData data = new GridData(SWT.FILL, SWT.CENTER, true, false);
 							data.widthHint = 100;
 							lblParameters.setLayoutData(data);
-							lblParameters.setText(Messages.TranspAnalysisUI_lblNewLabel_1_text);
+							
 						}
 						{
 							composite7 = new Composite(composite4, SWT.NONE);
@@ -660,6 +700,9 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 			displaySolvableWarningLabel(false, false);
 			displayTextTransformBtn(false, false, new TransformData());
 			displayTextSource(null, false, false);
+			scrolledComposite.setContent(content);
+			scrolledComposite.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+			content.setSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 			this.layout();
 			pack();
 		} catch (Exception e) {
@@ -895,8 +938,6 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 			this.keyUsedToEncrypt = null;
 //			btnDecipher.setEnabled(false);
 			labelKeypreview.setText(Messages.TranspAnalysisUI_keypreview_zerocolumns);
-
-			lblParameters.setText(Messages.TranspAnalysisUI_lblNewLabel_1_text);
 
 			actualKeyLength = 0;
 			labelKeypreview.setEnabled(false);

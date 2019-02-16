@@ -3,15 +3,13 @@
  */
 package org.jcryptool.visual.elGamal.ui;
 
-import static org.jcryptool.visual.library.Constants.BIGBUTTONHEIGHT;
-import static org.jcryptool.visual.library.Constants.BIGBUTTONVERTICALSPACE;
-import static org.jcryptool.visual.library.Constants.BIGBUTTONWIDTH;
-import static org.jcryptool.visual.library.Constants.HORIZONTAL_SPACING;
-import static org.jcryptool.visual.library.Constants.MARGIN_WIDTH;
-
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.osgi.util.NLS;
@@ -22,37 +20,39 @@ import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.FontMetrics;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.TextLayout;
 import org.eclipse.swt.graphics.TextStyle;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.core.logging.dialogs.JCTMessageDialog;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.crypto.ui.textblockloader.NumberblocksAndTextViewer;
+import org.jcryptool.crypto.ui.textblockloader.Repr;
 import org.jcryptool.visual.elGamal.Action;
 import org.jcryptool.visual.elGamal.ElGamalData;
+import org.jcryptool.visual.elGamal.ElGamalPlugin;
 import org.jcryptool.visual.elGamal.Messages;
 import org.jcryptool.visual.elGamal.ui.wizards.KeySelectionWizard;
+import org.jcryptool.visual.elGamal.ui.wizards.PlaintextforSignatureVerificationWizard;
 import org.jcryptool.visual.elGamal.ui.wizards.TextEntryWizard;
 import org.jcryptool.visual.elGamal.ui.wizards.UniqueKeyWizard;
 import org.jcryptool.visual.library.Constants;
@@ -62,36 +62,26 @@ import org.jcryptool.visual.library.Lib;
  * composite, display of everything this visual shows, that is not contained within wizards.
  *
  * @author Michael Gaber
+ * @author Thorben Groos
  */
 public class ElGamalComposite extends Composite {
 
     /** buttons for running the wizards and finishing up. */
-    private Button keysel, textEnter, runCalc;
+    private Button keysel, textEnter, runCalc, plaintextForVerification;
 
     /** shared data object. */
     private ElGamalData data;
 
-    /** field for the text entered in the wizard. */
-    private Text textText;
-
-    /** field for the signature or the text translated to numbers. */
-    private Text numberText;
-
-    /** field for displaying the result. */
-    private Text resultText;
+    /** field for the signature or the plaintext summed up. */
+    private Text signatureText;
 
     /** button to copy the result to the clipboard. */
     private Button copyButton;
 
-    /** array containing the split up numbertext. */
-    private String[] numbers;
-
     /** current index for the stepping through the fast exponentiation. */
-    private int numberIndex;
+    private int numberIndex = 0;
 
-    /**
-     * small field showing whether the signature is ok when we chose to verify a signature and entered plaintext.
-     */
+    /** small field showing whether the signature is ok when we chose to verify a signature and entered plaintext. */
     private StyledText verifiedText;
 
     /** Textstyle constant for superscript. */
@@ -125,7 +115,7 @@ public class ElGamalComposite extends Composite {
     private Composite fastExpTable;
 
     /** {@link TextLayout} to be able to display superscripts */
-    private final TextLayout fastExpText = new TextLayout(this.getDisplay());
+    private final TextLayout fastExpText = new TextLayout(getDisplay());
 
     /** Button for starting the unique key entering wizard */
     private Button uniqueKeyButton;
@@ -133,66 +123,56 @@ public class ElGamalComposite extends Composite {
     /** map of all the data objects */
     private final HashMap<Action, ElGamalData> datas;
 
-    /** whether dialogs are wanted TODO: default to true. */
+    /** whether dialogs are wanted */
     public boolean dialog = false;
 
     /** combo to list all pages to inherit data from another operation */
     private Combo inheritCombo;
 
-    /** label to display the current step count */
-    private Label stepLabel;
+    /** text that replaces stepLabel */
+    private Text stepText;
+    
+    /** Group for the key arguments */
+    private Group groupKey;
+    
+    /** Group for the Text */
+    private Group groupText;
+    
+    /** Group for the calculations */
+    private Group groupCalculations;
+    
+    /** Group for the results */
+    private Group groupResult;
+    
+    /** to check if it is the first step of a decryption/encryption */
+    private boolean firstRun = true;
 
-    /** listener for stepping through the calculation */
-    private final SelectionAdapter stepSelectionListener = new SelectionAdapter() {
+    /** displays, if it is a private or public key */
+	private Text text_keyType;
 
-        @Override
-        public void widgetSelected(final SelectionEvent e) {
-            ++ElGamalComposite.this.numberIndex;
-            ElGamalComposite.this.updateTable();
-            ElGamalComposite.this.updateLabel();
-            if (ElGamalComposite.this.numberIndex == ElGamalComposite.this.numbers.length - 1) {
-                ElGamalComposite.this.stepButton.setEnabled(false);
-                ElGamalComposite.this.runCalc.setEnabled(false);
-                ElGamalComposite.this.runCalc.setBackground(ColorService.GREEN);
-                ElGamalComposite.this.finish();
-            }
-        }
-    };
+	/** A copy Button for the result of the current step */
+	private Button copyStepResult;
+	
+	/** field for the text entered in the wizard. */
+	private NumberblocksAndTextViewer textViewer;
+	
+	/** field for displaying the result. */
+	private NumberblocksAndTextViewer resultViewer;
+	
 
-    /** listener for starting the stepwise calculation */
-    private final SelectionAdapter startSelectionListener = new SelectionAdapter() {
-
-        @Override
-        public void widgetSelected(final SelectionEvent e) {
-            ElGamalComposite.this.uniqueKeyButton.setEnabled(false);
-            ElGamalComposite.this.textEnter.setEnabled(false);
-            ElGamalComposite.this.numbers = ElGamalComposite.this.numberText.getText().split(" "); //$NON-NLS-1$
-            ElGamalComposite.this.numberIndex = 0;
-            ElGamalComposite.this.stepButton
-                    .setEnabled(ElGamalComposite.this.numberIndex != ElGamalComposite.this.numbers.length - 1);
-            // startButton.setEnabled(false);
-            ElGamalComposite.this.initTable();
-            ElGamalComposite.this.updateTable();
-            ElGamalComposite.this.updateLabel();
-            if (ElGamalComposite.this.numberIndex == ElGamalComposite.this.numbers.length - 1) {
-                ElGamalComposite.this.runCalc.setEnabled(false);
-                ElGamalComposite.this.runCalc.setBackground(ColorService.GREEN);
-                ElGamalComposite.this.finish();
-            }
-            ElGamalComposite.this.stepButton.removeSelectionListener(ElGamalComposite.this.startSelectionListener);
-            ElGamalComposite.this.stepButton.addSelectionListener(ElGamalComposite.this.stepSelectionListener);
-            ElGamalComposite.this.stepButton.setText(Messages.ElGamalComposite_step);
-            ElGamalComposite.this.stepButton.pack();
-        }
-
-    };
 
     /**
      * updates the label that shows the current calculated step
      */
-    private void updateLabel() {
-        this.stepLabel.setText(NLS.bind(Messages.ElGamalComposite_step1, new Object[] {this.numberIndex + 1, this.numbers.length}));
-    }
+	private void updateLabel() {
+		if (data.getAction() == Action.DecryptAction) {
+			stepText.setText(
+					NLS.bind(Messages.ElGamalComposite_step1, new Object[] { numberIndex + 1, data.getCipherTextAsNumbers().size()}));
+		} else {
+			stepText.setText(
+					NLS.bind(Messages.ElGamalComposite_step1, new Object[] { numberIndex + 1, data.getPlainTextAsNumbers().size()}));
+		}
+	}
 
     /**
      * constructor calls super and saves a reference to the view.
@@ -203,13 +183,13 @@ public class ElGamalComposite extends Composite {
      * @param action the action of this tab
      * @see Composite#Composite(Composite, int)
      */
-    public ElGamalComposite(final Composite parent, final int style, final Action action,
-            final HashMap<Action, ElGamalData> datas) {
+    public ElGamalComposite(Composite parent, int style, Action action,
+            HashMap<Action, ElGamalData> datas) {
         super(parent, style);
-        this.data = new ElGamalData(action);
-        datas.put(action, this.data);
+        data = new ElGamalData(action);
+        datas.put(action, data);
         this.datas = datas;
-        this.initialize();
+        initialize();
     }
 
     /**
@@ -217,65 +197,88 @@ public class ElGamalComposite extends Composite {
      */
     private void initialize() {
         // basic layout is a
-        this.setLayout(new GridLayout());
-        this.createHead();
-        // createActionChoice();
-        this.createMainArea();
-        this.createOptionsArea();
+        setLayout(new GridLayout());
+        createHead();
+        createMainArea();
+        createOptionsArea();
     }
 
-    /**
-     * creates the description head of the window to display informations about the Algorithm itself.
-     */
-    private void createHead() {
-        final Composite head = new Composite(this, SWT.NONE);
-        head.setBackground(ColorService.WHITE);
-        head.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        head.setLayout(new GridLayout());
+	/**
+	 * creates the description head of the window to display informations about the
+	 * Algorithm itself.
+	 */
+	private void createHead() {
+		Composite head = new Composite(this, SWT.NONE);
+		head.setBackground(ColorService.WHITE);
+		head.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		head.setLayout(new GridLayout());
 
-        final Label label = new Label(head, SWT.NONE);
-        label.setFont(FontService.getHeaderFont());
-        label.setBackground(ColorService.WHITE);
-        label.setText(Messages.ElGamalComposite_title);
+		Label label = new Label(head, SWT.NONE);
+		label.setFont(FontService.getHeaderFont());
+		label.setBackground(ColorService.WHITE);
+		label.setText(Messages.ElGamalComposite_title);
 
-        final StyledText stDescription = new StyledText(head, SWT.READ_ONLY);
-        stDescription.setText(Messages.ElGamalComposite_description);
-        stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-    }
+		StyledText stDescription = new StyledText(head, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
+		switch (data.getAction()) {
+		case EncryptAction:
+			stDescription.setText(Messages.ElGamalComposite_description_encrypt);
+			break;
+		case DecryptAction:
+			stDescription.setText(Messages.ElGamalComposite_description_decrypt);
+			break;
+		case SignAction:
+			stDescription.setText(Messages.ElGamalComposite_description_sign);
+			break;
+		case VerifyAction:
+			stDescription.setText(Messages.ElGamalComposite_description_verify);
+		default:
+			break;
+		}
+		
+		stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+	}
 
     /**
      * creates the main area where everything except head and options is contained.
      */
     private void createMainArea() {
-        final Group g = new Group(this, SWT.NONE);
-        g.setText(Messages.ElGamalComposite_algorithm);
-        final GridLayout gl = new GridLayout(2, false);
-        gl.marginWidth = MARGIN_WIDTH;
-        gl.horizontalSpacing = HORIZONTAL_SPACING;
-        g.setLayout(gl);
-        g.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        this.createButtonArea(g);
-        this.createAlgoArea(g);
+        Group groupAlgorithm = new Group(this, SWT.NONE);
+        groupAlgorithm.setText(Messages.ElGamalComposite_algorithm);
+        GridLayout gl = new GridLayout(2, false);
+        groupAlgorithm.setLayout(gl);
+        groupAlgorithm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        createButtonArea(groupAlgorithm);
+        createAlgoArea(groupAlgorithm);
     }
 
-    /**
+	/**
      * called to set the values of the key selection to their fields.
      */
     private void keySelected() {
-        this.keysel.setBackground(ColorService.GREEN);
-        this.textEnter.setEnabled(true);
-        if (this.data.getModulus() != null) {
-            this.pText.setText(this.data.getModulus().toString());
+        keysel.setBackground(ColorService.GREEN);
+        if (data.getAction() == Action.VerifyAction) {
+        	plaintextForVerification.setEnabled(true);
         }
-        if (this.data.getGenerator() != null) {
-            this.gText.setText(this.data.getGenerator().toString());
+        textEnter.setEnabled(true);
+        if (data.getModulus() != null) {
+            pText.setText(data.getModulus().toString());
         }
-        if (this.data.getPublicA() != null) {
-            this.bigAText.setText(this.data.getPublicA().toString());
+        if (data.getGenerator() != null) {
+            gText.setText(data.getGenerator().toString());
         }
-        if (this.data.getA() != null) {
-            this.aText.setText(this.data.getA().toString());
+        if (data.getPublicA() != null) {
+            bigAText.setText(data.getPublicA().toString());
         }
+        if (data.getA() != null) {
+            aText.setText(data.getA().toString());
+        }
+		//Check if it is a public key or private key. If it is a private key d is set
+		if (data.getModulus() != null && data.getGenerator() != null && data.getPublicA() != null && data.getA() != null) {
+			text_keyType.setText(Messages.ElGamalComposite_keyType_private);
+		} else if (data.getModulus() != null && data.getGenerator() != null && data.getPublicA() != null) {
+			//if it is a public key d isn't set.
+			text_keyType.setText(Messages.ElGamalComposite_keyType_public);
+		}
     }
 
     /**
@@ -285,131 +288,217 @@ public class ElGamalComposite extends Composite {
      */
     private void createButtonArea(final Composite parent) {
         // set up the canvas for the Buttons
-        final Canvas canvas = new Canvas(parent, SWT.NONE);
-        canvas.setLayout(new FormLayout());
-        canvas.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, true));
-
-        // Form data to place Key selection Button
-        final FormData fDkeysel = new FormData(BIGBUTTONWIDTH, BIGBUTTONHEIGHT);
-        fDkeysel.left = new FormAttachment(4);
-        fDkeysel.top = new FormAttachment(4);
+    	Composite compositeButtons = new Composite(parent, SWT.NONE);
+        compositeButtons.setLayout(new GridLayout());
+        GridData gd_btnComposite = new GridData(SWT.FILL, SWT.FILL, false, true);
+        gd_btnComposite.verticalIndent = 10;
+        compositeButtons.setLayoutData(gd_btnComposite);
 
         // Key selection Button
-        this.keysel = new Button(canvas, SWT.PUSH);
-        this.keysel.setBackground(ColorService.RED);
-        this.keysel.setEnabled(true);
-        this.keysel.setText(Messages.ElGamalComposite_key_selection);
-        this.keysel.setLayoutData(fDkeysel);
-        this.keysel.addSelectionListener(new SelectionAdapter() {
+        keysel = new Button(compositeButtons, SWT.PUSH);
+        keysel.setBackground(ColorService.RED);
+        keysel.setEnabled(true);
+        keysel.setText(Messages.ElGamalComposite_key_selection);
+        GridData gd_keysel = new GridData(SWT.FILL, SWT.FILL, false, false);
+        gd_keysel.heightHint = 60;
+        keysel.setLayoutData(gd_keysel);
+        keysel.addSelectionListener(new SelectionAdapter() {
 
             @Override
-            public void widgetSelected(final SelectionEvent e) {
-                if (ElGamalComposite.this.dialog) {
-                    final MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_INFORMATION
-                            | SWT.OK);
+            public void widgetSelected(SelectionEvent e) {
+                if (dialog) {
+                    MessageBox messageBox = new MessageBox(getShell(), SWT.ICON_INFORMATION | SWT.OK);
                     messageBox.setText(Messages.ElGamalComposite_key_selection);
                     messageBox.setMessage(Messages.ElGamalComposite_key_selection_message_text);
                     messageBox.open();
                 }
-                if (new WizardDialog(ElGamalComposite.this.getShell(), new KeySelectionWizard(
-                        ElGamalComposite.this.data.getAction(), ElGamalComposite.this.data, false)).open() == Window.OK) {
-                    ElGamalComposite.this.keySelected();
-                }
+//				WizardDialog keySelDialog = new WizardDialog(getShell(), new KeySelectionWizard(
+//						data, false));
+                WizardDialog keySelDialog = new WizardDialog(getShell(), new KeySelectionWizard(data));
+				keySelDialog.setHelpAvailable(false);
+				if (keySelDialog.open() == Window.OK) {
+					keySelected();
+				}
             }
         });
 
-        // Form data to place Text enter button
-        final FormData fDtextEnter = new FormData(BIGBUTTONWIDTH, BIGBUTTONHEIGHT);
-        fDtextEnter.left = new FormAttachment(4);
-        fDtextEnter.top = new FormAttachment(this.keysel, BIGBUTTONVERTICALSPACE, SWT.BOTTOM);
+     // Text enter Button
+		textEnter = new Button(compositeButtons, SWT.PUSH);
+		textEnter.setBackground(ColorService.RED);
+		textEnter.setEnabled(false);
+		switch (data.getAction()) {
+		case EncryptAction:
+			textEnter.setText(Messages.ElGamalComposite_enter_plaintext);
+			break;
+		case DecryptAction:
+			textEnter.setText(Messages.ElGamalComposite_enter_ciphertext);
+			break;
+		case SignAction:
+			textEnter.setText(Messages.ElGamalComposite_enter_plaintext); // $NON-NLS-1$
+			break;
+		case VerifyAction:
+			textEnter.setText(Messages.ElGamalComposite_enter_signature); 
+			break;
+		default:
+			break;
+		}
+		GridData gd_textEnter = new GridData(SWT.FILL, SWT.FILL, false, false);
+		gd_textEnter.verticalIndent = 10;
+		gd_textEnter.heightHint = 60;
+		textEnter.setLayoutData(gd_textEnter);
+		textEnter.addSelectionListener(new SelectionAdapter() {
 
-        // Text enter Button
-        this.textEnter = new Button(canvas, SWT.PUSH);
-        this.textEnter.setBackground(ColorService.RED);
-        this.textEnter.setEnabled(false);
-        this.textEnter.setText(Messages.ElGamalComposite_enter_text);
-        this.textEnter.setLayoutData(fDtextEnter);
-        this.textEnter.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent e) {
+				if (dialog) {
+					MessageBox messageBox = new MessageBox(getShell(), SWT.ICON_INFORMATION | SWT.OK);
+					messageBox.setText(Messages.ElGamalComposite_textentry);
+					messageBox.setMessage(Messages.ElGamalComposite_textentry_text);
+					messageBox.open();
+				}
+				WizardDialog textEnterDialog = new WizardDialog(getShell(), new TextEntryWizard(data));
+				textEnterDialog.setHelpAvailable(false);
+				if (textEnterDialog.open() == Window.OK) {
+					textEntered();
+				}
+				
+			}
+		});
 
-            @Override
-            public void widgetSelected(final SelectionEvent e) {
-                if (ElGamalComposite.this.dialog) {
-                    final MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_INFORMATION
-                            | SWT.OK);
-                    messageBox.setText(Messages.ElGamalComposite_textentry);
-                    messageBox.setMessage(Messages.ElGamalComposite_textentry_text);
-                    messageBox.open();
-                }
-                if (new WizardDialog(ElGamalComposite.this.getShell(), new TextEntryWizard(ElGamalComposite.this.data
-                        .getAction(), ElGamalComposite.this.data)).open() == Window.OK) {
-                    ElGamalComposite.this.textEntered();
-                }
-            }
-
-        });
-
-        // form data to place unique parameter button
-        final FormData fDkey = new FormData(BIGBUTTONWIDTH, BIGBUTTONHEIGHT);
-        fDkey.left = new FormAttachment(4);
-        fDkey.top = new FormAttachment(this.textEnter, BIGBUTTONVERTICALSPACE, SWT.BOTTOM);
-
+		if (data.getAction() == Action.VerifyAction) {
+			plaintextForVerification = new Button(compositeButtons, SWT.PUSH);
+			plaintextForVerification.setEnabled(false);
+			plaintextForVerification.setText(Messages.ElGamalComposite_enter_plaintext);
+			GridData gd_signatureEnter = new GridData(SWT.FILL, SWT.FILL, false, false);
+			gd_signatureEnter.heightHint = 60;
+			plaintextForVerification.setLayoutData(gd_signatureEnter);
+			plaintextForVerification.addSelectionListener(new SelectionListener() {
+				
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					if (dialog) {
+						MessageBox messageBox = new MessageBox(getShell(), SWT.ICON_INFORMATION | SWT.OK);
+						messageBox.setText(Messages.ElGamalComposite_enter_plaintext_optional);
+						messageBox.setMessage(Messages.ElGamalComposite_dialog_button_plaintext_verification);
+						messageBox.open();
+					}
+					
+					WizardDialog plaintextforverification = new WizardDialog(getShell(), 
+							new PlaintextforSignatureVerificationWizard(data));
+					plaintextforverification.setHelpAvailable(false);
+					if (plaintextforverification.open() == Window.OK) {
+						textViewer.setContent(data.getPlainTextAsNumbers(), data.getStb());
+					}
+				}
+				
+				@Override
+				public void widgetDefaultSelected(SelectionEvent e) {
+					
+				}
+			});
+		}
+        
         // unique parameter button
-        this.uniqueKeyButton = new Button(canvas, SWT.PUSH);
-        this.uniqueKeyButton.setBackground(ColorService.RED);
-        this.uniqueKeyButton.setEnabled(false);
-        this.uniqueKeyButton.setText(Messages.ElGamalComposite_enter_param);
-        this.uniqueKeyButton.setToolTipText(Messages.ElGamalComposite_enter_param_text);
-        this.uniqueKeyButton.setLayoutData(fDkey);
-        this.uniqueKeyButton.addSelectionListener(new SelectionAdapter() {
+        uniqueKeyButton = new Button(compositeButtons, SWT.PUSH);
+        uniqueKeyButton.setBackground(ColorService.RED);
+        uniqueKeyButton.setEnabled(false);
+        uniqueKeyButton.setText(Messages.ElGamalComposite_enter_param);
+        uniqueKeyButton.setToolTipText(Messages.ElGamalComposite_enter_param_text);
+        GridData gd_uniqueKeyButton = new GridData(SWT.FILL, SWT.FILL, false, false);
+        if (data.getAction() == Action.VerifyAction) {
+        	gd_uniqueKeyButton.verticalIndent = 20;
+        } else {
+        	gd_uniqueKeyButton.verticalIndent = 50;
+        }
+        
+        gd_uniqueKeyButton.heightHint = 60;
+        uniqueKeyButton.setLayoutData(gd_uniqueKeyButton);
+        uniqueKeyButton.addSelectionListener(new SelectionAdapter() {
 
             @Override
             public void widgetSelected(final SelectionEvent e) {
-                if (new WizardDialog(ElGamalComposite.this.getShell(), new UniqueKeyWizard(ElGamalComposite.this.data))
-                        .open() == Window.OK) {
-                    ElGamalComposite.this.bEntered();
+            	WizardDialog uniqueKeyButtonDialog = new WizardDialog(getShell(), 
+            			new UniqueKeyWizard(data));
+            	uniqueKeyButtonDialog.setHelpAvailable(false);
+            	if (uniqueKeyButtonDialog.open() == Window.OK) {
+                    bEntered();
                 }
             }
         });
-
-        // Form Data to place Calculate Button
-        final FormData fDcalc = new FormData(BIGBUTTONWIDTH, BIGBUTTONHEIGHT);
-        fDcalc.left = new FormAttachment(4);
-        fDcalc.top = new FormAttachment(this.uniqueKeyButton, BIGBUTTONVERTICALSPACE, SWT.BOTTOM);
 
         // Run Calculations Button
-        this.runCalc = new Button(canvas, SWT.PUSH);
-        this.runCalc.setBackground(ColorService.RED);
-        this.runCalc.setEnabled(false);
-        this.runCalc.setText(Messages.ElGamalComposite_calculate);
-        this.runCalc.setToolTipText(Messages.ElGamalComposite_calculate_popup);
-        this.runCalc.setLayoutData(fDcalc);
-        this.runCalc.addSelectionListener(new SelectionAdapter() {
+        runCalc = new Button(compositeButtons, SWT.PUSH);
+        runCalc.setBackground(ColorService.RED);
+        runCalc.setEnabled(false);
+        switch (data.getAction()) {
+        case EncryptAction:
+        	runCalc.setText(Messages.ElGamalComposite_Action_Encrypt);
+        	break;
+		case DecryptAction:
+			runCalc.setText(Messages.ElGamalComposite_Action_Decrypt);
+			break;
+		case SignAction:
+			runCalc.setText(Messages.ElGamalComposite_Action_Sign);
+			break;
+		case VerifyAction:
+			runCalc.setText(Messages.ElGamalComposite_Action_Verify);
+			break;
+		default:
+			break;
+        }
+        runCalc.setToolTipText(Messages.ElGamalComposite_calculate_popup);
+        GridData gd_runCalc = new GridData(SWT.FILL, SWT.FILL, false, false);
+        if (data.getAction() == Action.VerifyAction) {
+        	gd_runCalc.verticalIndent = 55;
+        } else {
+        	gd_runCalc.verticalIndent = 90;
+        }
+        gd_runCalc.heightHint = 60;
+        runCalc.setLayoutData(gd_runCalc);
+        runCalc.addSelectionListener(new SelectionAdapter() {
 
             @Override
-            public void widgetSelected(final SelectionEvent e) {
-                ElGamalComposite.this.uniqueKeyButton.setEnabled(false);
-                ElGamalComposite.this.textEnter.setEnabled(false);
-                ElGamalComposite.this.runCalc.setEnabled(false);
-                ElGamalComposite.this.runCalc.setBackground(ColorService.GREEN);
+            public void widgetSelected(SelectionEvent e) {
+                uniqueKeyButton.setEnabled(false);
+                textEnter.setEnabled(false);
+                if (data.getAction() == Action.VerifyAction) {
+                	plaintextForVerification.setEnabled(false);
+                }
+                runCalc.setEnabled(false);
+                runCalc.setBackground(ColorService.GREEN);
                 // startButton.setEnabled(false);
-                ElGamalComposite.this.stepButton.setEnabled(false);
-                if (ElGamalComposite.this.dialog) {
-                    final MessageBox message = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_INFORMATION
-                            | SWT.OK);
+                stepButton.setEnabled(false);
+                if (dialog) {
+                    MessageBox message = new MessageBox(getShell(), SWT.ICON_INFORMATION | SWT.OK);
                     message.setText(Messages.ElGamalComposite_finish_calculations);
                     message.setMessage(Messages.ElGamalComposite_finish_calculations_text);
                     message.open();
                 }
-                if (ElGamalComposite.this.data.getAction() == Action.SignAction) {
-                    final String value = ElGamalComposite.this.data.getAction().run(ElGamalComposite.this.data,
-                            ElGamalComposite.this.numberText.getText().split(" ")); //$NON-NLS-1$
-                    ElGamalComposite.this.resultText
-                            .setText("(" + ElGamalComposite.this.data.getR().toString(Constants.HEXBASE) + ", " + value + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                if (data.getAction() == Action.SignAction) {
+                	//calculate the value s and set it to the resultView.
+                	List<Integer> temp = data.getAction().run(data, new ArrayList<Integer>() {/**
+						 * 
+						 */
+						private static final long serialVersionUID = 1L;
+
+					{add(Integer.parseInt(signatureText.getText()));}});
+                    resultViewer.setContent(temp, data.getStb());
+                    resultViewer.setContent("(" + data.getR().toString() + ", " + temp.get(0) + ")" , data.getStb()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                    enableCopyButton();
+                    
+                    
+                    //set the signature to the data object.
+                    List<Integer> tempSignature = data.getSignatureAsNumbers();
+                    tempSignature.add(0, temp.get(0));
+                    tempSignature.add(1, data.getR().intValue());
+                    data.setSignatureAsNumbers(tempSignature);
+                    
                 } else {
-                    ElGamalComposite.this.resultText.setText(ElGamalComposite.this.data.getAction().run(
-                            ElGamalComposite.this.data, ElGamalComposite.this.numberText.getText().split(" "))); //$NON-NLS-1$
+                    resultViewer.setContent(data.getAction().run(data, textViewer.getContent()), data.getStb());
+                    enableCopyButton();
+                    
                 }
-                ElGamalComposite.this.finish();
+                finish();
             }
         });
     }
@@ -419,14 +508,14 @@ public class ElGamalComposite extends Composite {
      *
      * @param parent the parent
      */
-    private void createAlgoArea(final Composite parent) {
-        final Composite g = new Composite(parent, SWT.SHADOW_NONE);
-        g.setLayout(new GridLayout());
-        g.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        this.createKeyGroup(g);
-        this.createTextGroup(g);
-        this.createCalcGroup(g);
-        this.createResultGroup(g);
+    private void createAlgoArea(Composite parent) {
+        Composite compositeMain = new Composite(parent, SWT.SHADOW_NONE);
+        compositeMain.setLayout(new GridLayout());
+        compositeMain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        createKeyGroup(compositeMain);
+        createTextGroup(compositeMain);
+        createCalcGroup(compositeMain);
+        createResultGroup(compositeMain);
     }
 
     /**
@@ -434,37 +523,56 @@ public class ElGamalComposite extends Composite {
      *
      * @param parent the parent
      */
-    private void createKeyGroup(final Composite parent) {
-        final GridLayout gl = new GridLayout(9, true);
-        final Group g = new Group(parent, SWT.SHADOW_NONE);
-        g.setText(Messages.ElGamalComposite_key);
-        g.setLayout(gl);
-        g.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        Label l = new Label(g, SWT.NONE);
-        l.setText("p"); //$NON-NLS-1$
-        l.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-        this.pText = new Text(g, SWT.READ_ONLY | SWT.BORDER);
-        this.pText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        l = new Label(g, SWT.NONE);
-        l.setText("g"); //$NON-NLS-1$
-        l.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-        this.gText = new Text(g, SWT.READ_ONLY | SWT.BORDER);
-        this.gText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        l = new Label(g, SWT.NONE);
-        l.setText("A"); //$NON-NLS-1$
-        l.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-        this.bigAText = new Text(g, SWT.READ_ONLY | SWT.BORDER);
-        this.bigAText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        // Spacer
-        l = new Label(g, SWT.NONE);
-        l.setText("a"); //$NON-NLS-1$
-        l.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-        this.aText = new Text(g, SWT.READ_ONLY | SWT.BORDER);
-        this.aText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        // Spacer
-        l = new Label(g, SWT.NONE);
-        l.setText("    "); //$NON-NLS-1$
-        l.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+    private void createKeyGroup(Composite parent) {
+        groupKey = new Group(parent, SWT.SHADOW_NONE);
+        groupKey.setText(Messages.ElGamalComposite_key);
+        groupKey.setLayout(new GridLayout(10, false));
+        groupKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        
+        Label plabel = new Label(groupKey, SWT.NONE);
+        plabel.setText("d = "); //$NON-NLS-1$
+        plabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        
+        pText = new Text(groupKey, SWT.READ_ONLY | SWT.BORDER);
+        pText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        
+        Label qlabel = new Label(groupKey, SWT.NONE);
+        qlabel.setText("g = "); //$NON-NLS-1$
+        GridData gd_qlabel = new GridData(SWT.FILL, SWT.CENTER, false, false);
+        gd_qlabel.horizontalIndent = 30;
+        qlabel.setLayoutData(gd_qlabel);
+        
+        gText = new Text(groupKey, SWT.READ_ONLY | SWT.BORDER);
+        gText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        
+        Label Alabel = new Label(groupKey, SWT.NONE);
+        Alabel.setText("B = "); //$NON-NLS-1$
+        GridData gd_ALabel = new GridData(SWT.FILL, SWT.CENTER, false, false);
+        gd_ALabel.horizontalIndent = 30;
+        Alabel.setLayoutData(gd_ALabel);
+        
+        bigAText = new Text(groupKey, SWT.READ_ONLY | SWT.BORDER);
+        bigAText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        
+        Label alabel = new Label(groupKey, SWT.NONE);
+        alabel.setText("b = "); //$NON-NLS-1$
+        GridData gd_aLabel = new GridData(SWT.FILL, SWT.CENTER, false, false);
+        gd_aLabel.horizontalIndent = 30;
+        alabel.setLayoutData(gd_aLabel);
+        
+        aText = new Text(groupKey, SWT.READ_ONLY | SWT.BORDER);
+        aText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+		Label label_keyType = new Label(groupKey, SWT.NONE);
+		GridData gd_keyType = new GridData(SWT.FILL, SWT.CENTER, false, false);
+		gd_keyType.horizontalIndent = 30;
+		label_keyType.setLayoutData(gd_keyType);
+		label_keyType.setText(Messages.ElGamalComposite_keyType_keyType);
+		
+		text_keyType = new Text(groupKey, SWT.READ_ONLY | SWT.BORDER);
+		text_keyType.setEnabled(false);
+		GridData gd_text_keyType = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		text_keyType.setLayoutData(gd_text_keyType);
     }
 
     /**
@@ -473,38 +581,43 @@ public class ElGamalComposite extends Composite {
      * @param parent the parent
      */
     private void createTextGroup(final Composite parent) {
-        final Group g = new Group(parent, SWT.NONE);
-        g.setLayout(new GridLayout());
-        g.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        new Label(g, SWT.NONE).setText(Messages.ElGamalComposite_text);
-        this.textText = new Text(g, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP);
-        this.textText.setText("\n\n\n"); //$NON-NLS-1$
-        this.textText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 3));
-        this.textText.addModifyListener(new ModifyListener() {
-            public void modifyText(final ModifyEvent e) {
-                if (ElGamalComposite.this.textText.getText().equals("")) { //$NON-NLS-1$
-                    return;
-                }
-                if (ElGamalComposite.this.data.getAction() == Action.SignAction) {
-                    ElGamalComposite.this.numberText.setText(Lib.hash(ElGamalComposite.this.textText.getText(),
-                            ElGamalComposite.this.data.getSimpleHash(), ElGamalComposite.this.data.getModulus()));
-                } else {
-                    final StringBuffer sb = new StringBuffer();
-                    final String s = ((Text) e.widget).getText();
-                    for (int i = 0; i < s.length(); ++i) {
-                        sb.append(Integer.toHexString(s.charAt(i)));
-                        if (i != s.length() - 1) {
-                            sb.append(' ');
-                        }
-                    }
-                    ElGamalComposite.this.numberText.setText(sb.toString());
-                }
-            }
-        });
-        new Label(g, SWT.NONE).setText(Messages.ElGamalComposite_hextext);
-        this.numberText = new Text(g, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP);
-        this.numberText.setText("\n\n\n"); //$NON-NLS-1$
-        this.numberText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 3));
+        groupText = new Group(parent, SWT.NONE);
+        groupText.setLayout(new GridLayout(2, false));
+        groupText.setText(Messages.ElGamalComposite_text);
+        groupText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        
+        switch (data.getAction()) {
+		case EncryptAction:
+		case SignAction:
+		case VerifyAction:
+			textViewer = new NumberblocksAndTextViewer(groupText, SWT.NONE, Repr.ALL);
+			break;
+		case DecryptAction:
+			textViewer = new NumberblocksAndTextViewer(groupText, SWT.NONE, Repr.ALLNUM);
+			break;
+		default:
+			textViewer = new NumberblocksAndTextViewer(groupText, SWT.NONE, Repr.ALL);
+			break;
+		}
+        
+        GridData gdTextViewer = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
+        gdTextViewer.minimumHeight = 100;
+        gdTextViewer.heightHint = 100;
+        textViewer.setLayoutData(gdTextViewer);
+
+        if (data.getAction() == Action.SignAction) {
+        	new Label(groupText, SWT.NONE).setText(Messages.ElGamalComposite_hashedInput);
+        	signatureText = new Text(groupText, SWT.BORDER);
+            signatureText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+            signatureText.setEditable(false);
+        }
+        
+        if (data.getAction() == Action.VerifyAction) {
+        	new Label(groupText, SWT.NONE).setText(Messages.ElGamalComposite_signature);
+        	signatureText = new Text(groupText, SWT.BORDER);
+            signatureText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+            signatureText.setEditable(false);
+        }
     }
 
     /**
@@ -512,34 +625,155 @@ public class ElGamalComposite extends Composite {
      *
      * @param parent the parent
      */
-    private void createCalcGroup(final Composite parent) {
-        final Group g = new Group(parent, SWT.NONE);
-        final int numColumns = 3;
-        g.setLayout(new GridLayout(numColumns, false));
-        g.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        g.setText(Messages.ElGamalComposite_calculations);
+    private void createCalcGroup(Composite parent) {
+        groupCalculations = new Group(parent, SWT.NONE);
+        groupCalculations.setLayout(new GridLayout(3, false));
+        groupCalculations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        groupCalculations.setText(Messages.ElGamalComposite_calculations);
+        
+        Label stepwiseCalculation = new Label(groupCalculations, SWT.NONE);
+        stepwiseCalculation.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false));
+        stepwiseCalculation.setText(Messages.ElGamalComposite_stepwiseCalculation);
 
-        this.stepButton = new Button(g, SWT.PUSH);
-        this.stepButton.setText(Messages.ElGamalComposite_start);
-        this.stepButton.setEnabled(false);
-        this.stepButton.setToolTipText(Messages.ElGamalComposite_start_calc);
-        this.stepButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
-        this.stepButton.addSelectionListener(this.startSelectionListener);
+        stepButton = new Button(groupCalculations, SWT.PUSH);
+        stepButton.setText(Messages.ElGamalComposite_start);
+        stepButton.setEnabled(false);
+        stepButton.setToolTipText(Messages.ElGamalComposite_start_calc);
+        stepButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false));
+        stepButton.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (firstRun) {
+					uniqueKeyButton.setEnabled(false);
+					textEnter.setEnabled(false);
+					numberIndex = 0;
+					if (data.getAction() == Action.DecryptAction) {
+						stepButton.setEnabled(numberIndex != data.getCipherTextAsNumbers().size() - 1);
+					} else {
+						stepButton.setEnabled(numberIndex != data.getPlainTextAsNumbers().size() - 1);
+					}
+					initTable();
+					updateTable();
+					
+					if (data.getAction() == Action.SignAction || data.getAction() == Action.VerifyAction) {
+						stepButton.setEnabled(false);
+						runCalc.setEnabled(false);
+						runCalc.setBackground(ColorService.GREEN);
+						stepText.setText(NLS.bind(Messages.ElGamalComposite_step1, new Object[] {1, 1}));
+						finish();
+						if (data.getAction() == Action.VerifyAction) {
+							plaintextForVerification.setEnabled(false);
+						}
+					} else {
+						updateLabel();
+					}
+					
+					if (data.getAction() == Action.DecryptAction) {
+						if (numberIndex == data.getCipherTextAsNumbers().size() - 1) {
+							runCalc.setEnabled(false);
+							runCalc.setBackground(ColorService.GREEN);
+							finish();
+						}
+					} else {
+						if (numberIndex == data.getPlainTextAsNumbers().size() - 1) {
+							runCalc.setEnabled(false);
+							runCalc.setBackground(ColorService.GREEN);
+							finish();
+						}
+					}
+					
+					stepButton.setText(Messages.ElGamalComposite_step);
+					stepButton.setToolTipText(Messages.ElGamalComposite_step);
+					stepButton.pack();
+					firstRun = false;
+					
+				} else {
+					++numberIndex;
+					updateTable();
+					updateLabel();
+					if (data.getAction() == Action.DecryptAction) {
+						if (numberIndex == data.getCipherTextAsNumbers().size()- 1) {
+							stepButton.setEnabled(false);
+							if (data.getAction() == Action.VerifyAction) {
+								plaintextForVerification.setEnabled(false);
+							}
+							runCalc.setEnabled(false);
+							runCalc.setBackground(ColorService.GREEN);
+							finish();
+						}
+					} else {
+						if (numberIndex == data.getPlainTextAsNumbers().size()- 1) {
+							stepButton.setEnabled(false);
+							if (data.getAction() == Action.VerifyAction) {
+								plaintextForVerification.setEnabled(false);
+							}
+							runCalc.setEnabled(false);
+							runCalc.setBackground(ColorService.GREEN);
+							finish();
+						}
+					}
+				}
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
 
-        this.stepLabel = new Label(g, SWT.LEAD | SWT.BORDER);
-        this.stepLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+			}
+		});
+
+        stepText = new Text(groupCalculations, SWT.BORDER);
+        stepText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        stepText.setEnabled(false);
 
         // set up a composite to draw final the fast exp shit on
-        this.fastExpTable = new Composite(g, SWT.NONE);
-        this.fastExpTable.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, numColumns, 1));
-        this.fastExpTable.setBackground(ColorService.WHITE);
-        this.fastExpTable.setVisible(false);
+        fastExpTable = new Composite(groupCalculations, SWT.NONE);
+        GridData gd_fastExpTable = new GridData(SWT.FILL, SWT.CENTER, true, true, 3, 1);
+        gd_fastExpTable.minimumHeight = 130;
+        fastExpTable.setLayoutData(gd_fastExpTable);
+        fastExpTable.setVisible(false);
 
-        final Label l = new Label(g, SWT.NONE);
-        l.setText(Messages.ElGamalComposite_stepresult);
-        this.stepResult = new Text(g, SWT.BORDER | SWT.READ_ONLY);
-        this.stepResult.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        new Label(g, SWT.NONE);
+        Label labelStepResult = new Label(groupCalculations, SWT.NONE);
+        labelStepResult.setText(Messages.ElGamalComposite_stepresult);
+        labelStepResult.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+        
+        Composite stepResultComposite = new Composite(groupCalculations, SWT.NONE);
+        GridLayout gl_stepResultComposite = new GridLayout(2, false);
+        gl_stepResultComposite.marginHeight = 0;
+        gl_stepResultComposite.marginWidth = 0;
+        stepResultComposite.setLayout(gl_stepResultComposite);
+        stepResultComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
+        
+        stepResult = new Text(stepResultComposite, SWT.BORDER | SWT.READ_ONLY);
+        stepResult.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        stepResult.addModifyListener(new ModifyListener() {
+			
+			@Override
+			public void modifyText(ModifyEvent e) {
+				if (!(stepResult.getText().isEmpty())) {
+					copyStepResult.setEnabled(true);
+				}
+			}
+		});
+        
+        copyStepResult = new Button(stepResultComposite, SWT.PUSH);
+        copyStepResult.setText(Messages.ElGamalComposite_copy);
+        copyStepResult.setToolTipText(Messages.ElGamalComposite_copy_to_clipboard);
+        copyStepResult.setEnabled(false);
+        copyStepResult.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+                Clipboard cb = new Clipboard(Display.getCurrent());
+                cb.setContents(new Object[] {stepResult.getText()},
+                        new Transfer[] {TextTransfer.getInstance()});
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				
+			}
+		});
     }
 
     /**
@@ -547,7 +781,7 @@ public class ElGamalComposite extends Composite {
      */
     private void initTable() {
         // get the graphics context
-        final GC gc = new GC(this.fastExpTable);
+        final GC gc = new GC(fastExpTable);
         // get the standard font we're using everywhere
         final Font normalFont = this.getDisplay().getSystemFont();
         // get the associated fontData
@@ -566,115 +800,95 @@ public class ElGamalComposite extends Composite {
         // something to calculate the actual place of the superscripts
         final int baseline = metrics.getAscent() + metrics.getLeading();
         // set the font to standard
-        this.fastExpText.setFont(normalFont);
+        fastExpText.setFont(normalFont);
         // small and very small textstyles for the super- and subscripts
-        this.superScript = new TextStyle(smallFont, null, null);
-        this.superSuperScript = new TextStyle(verySmallFont, null, null);
-        this.subscript = new TextStyle(verySmallFont, null, null);
+        superScript = new TextStyle(smallFont, null, null);
+        superSuperScript = new TextStyle(verySmallFont, null, null);
+        subscript = new TextStyle(verySmallFont, null, null);
         // rises, values found by experiment
-        this.superScript.rise = baseline / 2 - 1;
-        this.superSuperScript.rise = baseline - 2;
-        this.subscript.rise = -baseline / 2 + 2;
-        this.fastExpTable.setVisible(true);
+        superScript.rise = baseline / 2 - 1;
+        superSuperScript.rise = baseline - 2;
+        subscript.rise = -baseline / 2 + 2;
+        fastExpTable.setVisible(true);
         // add a paint listener which paints the text everytime it's needed
-        this.fastExpTable.addListener(SWT.Paint, new Listener() {
-
-            public void handleEvent(final Event event) {
-                ElGamalComposite.this.fastExpText.draw(event.gc, 0, 0);
-            }
-        });
+        fastExpTable.addPaintListener(new PaintListener() {
+			@Override
+			public void paintControl(PaintEvent e) {
+				fastExpText.draw(e.gc, 0, 0);
+			}
+		});
     }
 
     /**
      * updates the fast exponentiation table i.e. displays the next step
      */
     private void updateTable() {
-        // reset resultText if it contains \n (only first run)
-        if (this.resultText.getText().contains("\n")) { //$NON-NLS-1$
-            this.resultText.setText(""); //$NON-NLS-1$
-        }
-        switch (this.data.getAction()) {
+        switch (data.getAction()) {
             case EncryptAction:
-                // TODO das hier in ne konstante bei initialisierung der tabelle
-                this.updateEncrypt();
+                updateEncrypt();
                 break;
             case DecryptAction:
-                this.updateDecrypt();
+                updateDecrypt();
                 break;
             case SignAction:
-                this.updateSign();
+                updateSign();
                 break;
             case VerifyAction:
-                this.updateVerify();
+                updateVerify();
                 break;
         }
-        this.fastExpTable.redraw();
+        fastExpTable.redraw();
     }
 
     /**
      * Sets up the table for verification
      */
     private void updateVerify() {
-        final BigInteger modulus = this.data.getModulus();
+        final BigInteger modulus = data.getModulus();
         final StringBuilder sb = new StringBuilder();
-        BigInteger value;
-        int offset0;
-        int offset1 = 0;
-        int offset2;
-        value = new BigInteger(this.data.getAction().run(this.data, (String) null), Constants.HEXBASE);
-        sb.append("r = "); //$NON-NLS-1$
-        sb.append(this.data.getR().toString(Constants.HEXBASE));
-        sb.append("\ns = "); //$NON-NLS-1$
-        final BigInteger s = new BigInteger(
-                this.data.getSignature().split(",")[1].replace(')', ' ').trim(), Constants.HEXBASE); //$NON-NLS-1$
-        sb.append(s.toString(Constants.HEXBASE));
-        sb.append("\n"); //$NON-NLS-1$
+        int offset0, offset1 = 0, offset2;
+        List<Integer> res = data.getAction().run(data, (ArrayList<Integer>) null);
+        sb.append("K = " + data.getR().toString() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+        int s = data.getSignatureAsNumbers().get(1);
+        sb.append("s = " + s + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
         offset0 = sb.length();
         sb.append("gH(m) = "); //$NON-NLS-1$
         BigInteger ghm = null, hash = null;
-        if (this.data.getPlainText().length() > 0) {
-            sb.append(this.data.getGenerator().toString(Constants.HEXBASE));
-            hash = new BigInteger(
-                    Lib.hash(this.data.getPlainText(), this.data.getSimpleHash(), this.data.getModulus()),
-                    Constants.HEXBASE);
+        if (data.getPlainTextAsNumbers().size() > 0) {
+        	sb.append(data.getGenerator().toString());
+            hash = new BigInteger(Lib.hash(data.getStb().revert(data.getPlainTextAsNumbers()), data.getSimpleHash(), data.getModulus()), Constants.HEXBASE);
             offset1 = sb.length();
-            sb.append(hash.toString(Constants.HEXBASE));
-            sb.append(" mod "); //$NON-NLS-1$
-            sb.append(modulus.toString(Constants.HEXBASE));
-            sb.append(" = "); //$NON-NLS-1$
-            sb.append((ghm = this.data.getGenerator().modPow(hash, modulus)).toString(Constants.HEXBASE));
+            sb.append(hash.toString() + " mod " + modulus.toString() + " = "); //$NON-NLS-1$ //$NON-NLS-2$
+            sb.append((ghm = data.getGenerator().modPow(hash, modulus)).toString());
         }
         sb.append("\n"); //$NON-NLS-1$
         offset2 = sb.length();
-        sb.append("Arrs = "); //$NON-NLS-1$
-        sb.append(this.data.getPublicA().toString(Constants.HEXBASE));
-        sb.append(this.data.getR().toString(Constants.HEXBASE));
-        sb.append(" ∙ "); //$NON-NLS-1$
-        sb.append(this.data.getR().toString(Constants.HEXBASE));
-        sb.append(s.toString(Constants.HEXBASE));
-        sb.append(" mod "); //$NON-NLS-1$
-        sb.append(modulus.toString(Constants.HEXBASE));
-        sb.append(" = "); //$NON-NLS-1$
-        sb.append(value.toString(Constants.HEXBASE));
+        sb.append("BKKs = " + data.getPublicA().toString() + data.getR().toString() + " ∙ "); //$NON-NLS-1$ //$NON-NLS-2$
+        sb.append(data.getR().toString() + s + " mod " + modulus.toString() + " = " + res.get(0)); //$NON-NLS-1$ //$NON-NLS-2$
         // set style
-        this.fastExpText.setText(sb.toString());
-        this.fastExpText.setStyle(this.superScript, offset0 + 1, offset0 + 3);
-        if (this.data.getPlainText().length() > 0) {
-            this.fastExpText.setStyle(this.superScript, offset1, offset1 + hash.toString(Constants.HEXBASE).length()
-                    - 1);
+        fastExpText.setText(sb.toString());
+        fastExpText.setStyle(superScript, offset0 + 1, offset0 + 4);
+
+        if (data.getPlainTextAsNumbers().size() > 0) {	
+        	fastExpText.setStyle(superScript, offset1, offset1 + hash.toString().length() - 1);
         }
-        this.fastExpText.setStyle(this.superScript, offset2 + 1, offset2 + 1);
-        this.fastExpText.setStyle(this.superScript, offset2 + 3, offset2 + 3);
-        offset2 = offset2 + 7 + this.data.getPublicA().toString(Constants.HEXBASE).length();
-        this.fastExpText.setStyle(this.superScript, offset2, offset2
-                + this.data.getR().toString(Constants.HEXBASE).length() - 1);
-        offset2 = offset2 + this.data.getR().toString(Constants.HEXBASE).length() + 5;
-        this.fastExpText.setStyle(this.superScript, offset2, offset2 + s.toString(Constants.HEXBASE).length() - 1);
+        
+        fastExpText.setStyle(superScript, offset2 + 1, offset2 + 1);
+        fastExpText.setStyle(superScript, offset2 + 3, offset2 + 3);
+        offset2 = offset2 + 7 + data.getPublicA().toString().length();
+        fastExpText.setStyle(superScript, offset2, offset2 + data.getR().toString().length() - 1);
+        offset2 = offset2 + data.getR().toString().length() + 5;
+        fastExpText.setStyle(superScript, offset2, offset2 + String.valueOf(s).length() - 1);
 
         // set results
-        this.stepResult.setText("A^r*r^s = " + value.toString(Constants.HEXBASE)); //$NON-NLS-1$
-        this.verifiedText.setData(ghm.toString(Constants.HEXBASE));
-        this.resultText.setText(value.toString(Constants.HEXBASE));
+        stepResult.setText("B^K*K^s = " + res.get(0)); //$NON-NLS-1$
+        
+        if (!(ghm == null)) {
+        	verifiedText.setData(ghm.intValue());
+        }
+
+        resultViewer.setContent(res, data.getStb());
+        enableCopyButton();
     }
 
     /**
@@ -682,48 +896,43 @@ public class ElGamalComposite extends Composite {
      */
     private void updateSign() {
         final StringBuilder sb = new StringBuilder();
-        final BigInteger modulus = this.data.getModulus();
-        BigInteger value;
-        int offset0;
-        int offset1;
-        value = new BigInteger(this.data.getAction().run(this.data, this.numbers[this.numberIndex]), Constants.HEXBASE);
-        sb.append("k = "); //$NON-NLS-1$
-        sb.append(this.data.getK().toString(Constants.HEXBASE));
-        sb.append("\n"); //$NON-NLS-1$
+        final BigInteger modulus = data.getModulus();
+        int offset0, offset1;
+        List<Integer> res = data.getAction().run(data, new ArrayList<Integer>() {/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+		{add(Integer.parseInt(signatureText.getText()));}});
+        
+        sb.append("k = " + data.getK() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
         offset0 = sb.length();
-        sb.append("r = gk = "); //$NON-NLS-1$
-        sb.append(this.data.getGenerator().toString(Constants.HEXBASE));
-        sb.append(this.data.getK().toString(Constants.HEXBASE));
-        sb.append(" mod "); //$NON-NLS-1$
-        sb.append(modulus.toString(Constants.HEXBASE));
-        sb.append(" = "); //$NON-NLS-1$
-        sb.append(this.data.getR().toString(Constants.HEXBASE));
-        sb.append("\n"); //$NON-NLS-1$
+        sb.append("K = gk = " + data.getGenerator() + data.getK()); //$NON-NLS-1$
+        sb.append(" mod " + modulus + " = " + data.getR() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         offset1 = sb.length();
-        sb.append("s = (H(m) - ar)k-1 = ("); //$NON-NLS-1$
-        sb.append(this.numbers[this.numberIndex]);
-        sb.append(" - "); //$NON-NLS-1$
-        sb.append(this.data.getA().toString(Constants.HEXBASE));
-        sb.append(" ∙ "); //$NON-NLS-1$
-        sb.append(this.data.getR().toString(Constants.HEXBASE));
-        sb.append(") ∙ "); //$NON-NLS-1$
-        sb.append(this.data.getK().modInverse(modulus.subtract(BigInteger.ONE)).toString(Constants.HEXBASE));
-        sb.append(" mod "); //$NON-NLS-1$
-        sb.append(modulus.subtract(BigInteger.ONE).toString(Constants.HEXBASE));
-        sb.append(" = "); //$NON-NLS-1$
-        sb.append(value.toString(Constants.HEXBASE));
+        sb.append("s = (H(m) - aK)k-1 = (" + signatureText.getText() + " - "); //$NON-NLS-1$ //$NON-NLS-2$
+        sb.append(data.getA() + " ∙ " + data.getR() + ") ∙ "); //$NON-NLS-1$ //$NON-NLS-2$
+        sb.append(data.getK().modInverse(modulus.subtract(BigInteger.ONE)));
+        sb.append(" mod " + modulus.subtract(BigInteger.ONE) + " = " + res.get(0)); //$NON-NLS-1$ //$NON-NLS-2$
+        
         // style it
-        this.fastExpText.setText(sb.toString());
-        this.fastExpText.setStyle(this.superScript, offset0 + 5, offset0 + 5);
-        offset0 = offset0 + 9 + this.data.getGenerator().toString(Constants.HEXBASE).length();
-        this.fastExpText.setStyle(this.superScript, offset0, offset0
-                + this.data.getK().toString(Constants.HEXBASE).length() - 1);
-        this.fastExpText.setStyle(this.superScript, offset1 + 16, offset1 + 17);
+        fastExpText.setText(sb.toString());
+        fastExpText.setStyle(superScript, offset0 + 5, offset0 + 5);
+        offset0 = offset0 + 9 + data.getGenerator().toString().length();
+        fastExpText.setStyle(superScript, offset0, offset0 + data.getK().toString().length() - 1);
+        fastExpText.setStyle(superScript, offset1 + 16, offset1 + 17);
+        
         // set result
-        this.stepResult
-                .setText("r = " + this.data.getR().toString(Constants.HEXBASE) + ", s = " + value.toString(Constants.HEXBASE)); //$NON-NLS-1$ //$NON-NLS-2$
-        this.resultText
-                .setText("(" + this.data.getR().toString(Constants.HEXBASE) + ", " + value.toString(Constants.HEXBASE) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        stepResult.setText("K = " + data.getR() + ", s = " + res.get(0)); //$NON-NLS-1$ //$NON-NLS-2$
+        resultViewer.setContent("(" + data.getR().toString(256) + ", " + String.valueOf(res.get(0)) + ")", data.getStb()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        enableCopyButton();
+        
+        //save the resulting signatur in the data object.
+        List<Integer> tempSignature = data.getSignatureAsNumbers();
+        tempSignature.add(0, res.get(0));
+        tempSignature.add(1, data.getR().intValue());
+        data.setSignatureAsNumbers(tempSignature);
+        
     }
 
     /**
@@ -731,52 +940,44 @@ public class ElGamalComposite extends Composite {
      */
     private void updateDecrypt() {
         final StringBuilder sb = new StringBuilder();
-        final BigInteger modulus = this.data.getModulus();
-        BigInteger value;
-        int offset0;
-        int offset1;
-        int offset2;
+        final BigInteger modulus = data.getModulus();
+        int offset0, offset1, offset2;
         BigInteger x;
-        sb.append("x = p - a - 1 = "); //$NON-NLS-1$
-        sb.append(modulus.toString(Constants.HEXBASE));
-        sb.append(" - "); //$NON-NLS-1$
-        sb.append(this.data.getA().toString(Constants.HEXBASE));
-        sb.append(" - 1 = "); //$NON-NLS-1$
-        sb.append((x = modulus.subtract(this.data.getA()).subtract(BigInteger.ONE)).toString(Constants.HEXBASE));
-        sb.append("\n"); //$NON-NLS-1$
+        
+        sb.append("x = d - b - 1 = " + modulus + " - " + data.getA() + " - 1 = "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        sb.append((x = modulus.subtract(data.getA()).subtract(BigInteger.ONE)) + "\n"); //$NON-NLS-1$
         offset0 = sb.length();
-        sb.append("B = gb mod p = "); //$NON-NLS-1$
-        sb.append(this.data.getGenerator().toString(Constants.HEXBASE));
-        sb.append(this.data.getB().toString(Constants.HEXBASE));
-        sb.append(" mod "); //$NON-NLS-1$
-        sb.append(modulus.toString(Constants.HEXBASE));
-        sb.append(" = "); //$NON-NLS-1$
-        sb.append(this.data.getGPowB().toString(Constants.HEXBASE));
-        sb.append("\n"); //$NON-NLS-1$
+        sb.append("K = gk mod d = " + data.getGenerator() + data.getB() + " mod " + modulus + " = "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        sb.append(data.getGPowB() + "\n"); //$NON-NLS-1$
         offset1 = sb.length();
-        sb.append("m = Bxc = "); //$NON-NLS-1$
-        sb.append(this.data.getGPowB().toString(Constants.HEXBASE));
+        sb.append("m = KxM = " + data.getGPowB()); //$NON-NLS-1$
         offset2 = sb.length();
-        sb.append(x.toString(Constants.HEXBASE));
-        sb.append(" ∙ "); //$NON-NLS-1$
-        sb.append(this.numbers[this.numberIndex]);
-        sb.append(" mod "); //$NON-NLS-1$
-        sb.append(modulus.toString(Constants.HEXBASE));
-        sb.append(" = "); //$NON-NLS-1$
-        value = new BigInteger(
-                "" + (int) this.data.getAction().run(this.data, this.numbers[this.numberIndex]).charAt(0)); //$NON-NLS-1$
-        sb.append(value.toString(Constants.HEXBASE));
+        sb.append(x + " ∙ " + data.getCipherTextAsNumbers().get(numberIndex) + " mod " + modulus + " = "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        List<Integer> res = data.getAction().run(data, new ArrayList<Integer>() {/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+		{add(data.getCipherTextAsNumbers().get(numberIndex));}});
+        sb.append(res.get(0));
+        
         // set style
-        this.fastExpText.setText(sb.toString());
-        this.fastExpText.setStyle(this.superScript, offset0 + 5, offset0 + 5);
-        offset0 = offset0 + 15 + this.data.getGenerator().toString(Constants.HEXBASE).length();
-        this.fastExpText.setStyle(this.superScript, offset0, offset0
-                + this.data.getB().toString(Constants.HEXBASE).length() - 1);
-        this.fastExpText.setStyle(this.superScript, offset1 + 5, offset1 + 5);
-        this.fastExpText.setStyle(this.superScript, offset2, offset2 + x.toString(Constants.HEXBASE).length() - 1);
+        fastExpText.setText(sb.toString());
+        fastExpText.setStyle(superScript, offset0 + 5, offset0 + 5);
+        offset0 = offset0 + 15 + data.getGenerator().toString().length();
+        fastExpText.setStyle(superScript, offset0, offset0
+                + data.getB().toString().length() - 1);
+        fastExpText.setStyle(superScript, offset1 + 5, offset1 + 5);
+        fastExpText.setStyle(superScript, offset2, offset2 + x.toString().length() - 1);
+        
         // set result
-        this.stepResult.setText("m = " + (char) value.intValue()); //$NON-NLS-1$
-        this.resultText.setText(this.resultText.getText() + (char) value.intValue());
+        stepResult.setText("M = " + res.get(0)); //$NON-NLS-1$
+        
+        List<Integer> tempContent = resultViewer.getContent() == null ? new ArrayList<>() : resultViewer.getContent();
+        tempContent.add(res.get(0));
+        resultViewer.setContent(tempContent, data.getStb());
+        enableCopyButton();
+        
     }
 
     /**
@@ -784,50 +985,44 @@ public class ElGamalComposite extends Composite {
      */
     private void updateEncrypt() {
         final StringBuilder sb = new StringBuilder();
-        final BigInteger modulus = this.data.getModulus();
-        BigInteger value;
-        int offset0;
-        int offset1;
-        int offset2;
-        sb.append("b = "); //$NON-NLS-1$
-        sb.append(this.data.getB().toString());
-        sb.append("\n"); //$NON-NLS-1$
+        final BigInteger modulus = data.getModulus();
+        int offset0, offset1, offset2;
+        sb.append("k = " + data.getB() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
         offset0 = sb.length();
-        sb.append("B = gb mod p = "); //$NON-NLS-1$
-        sb.append(this.data.getGenerator().toString(Constants.HEXBASE));
-        sb.append(this.data.getB().toString(Constants.HEXBASE));
-        sb.append(" mod "); //$NON-NLS-1$
-        sb.append(modulus.toString(Constants.HEXBASE));
-        sb.append(" = "); //$NON-NLS-1$
-        sb.append(this.data.getGPowB().toString(Constants.HEXBASE));
-        sb.append("\n"); //$NON-NLS-1$
-        // TODO bis hier
+        sb.append("K = gk mod d = " + data.getGenerator()); //$NON-NLS-1$
+        sb.append(data.getB() + " mod " + modulus); //$NON-NLS-1$
+        sb.append(" = " + data.getGPowB() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
         offset1 = sb.length();
-        sb.append("c = Abm mod p = "); //$NON-NLS-1$
-        sb.append(this.data.getPublicA().toString(Constants.HEXBASE));
+        sb.append("M = Bkm mod d = " + data.getPublicA()); //$NON-NLS-1$
         offset2 = sb.length();
-        sb.append(this.data.getB().toString(Constants.HEXBASE));
-        sb.append(" ∙ "); //$NON-NLS-1$
-        sb.append(this.numbers[this.numberIndex]);
-        sb.append(" mod "); //$NON-NLS-1$
-        sb.append(modulus);
-        sb.append(" = "); //$NON-NLS-1$
-        value = new BigInteger(this.data.getAction().run(this.data, this.numbers[this.numberIndex]).trim(),
-                Constants.HEXBASE);
-        sb.append(value.toString(Constants.HEXBASE));
-        int tmp;
+        sb.append(data.getB() + " ∙ " + data.getPlainTextAsNumbers().get(numberIndex)); //$NON-NLS-1$
+        sb.append(" mod " + modulus + " = "); //$NON-NLS-1$ //$NON-NLS-2$
+        
+        List<Integer> res = data.getAction().run(data, new ArrayList<Integer>() {/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+		{add(data.getPlainTextAsNumbers().get(numberIndex));}});
+        
+        sb.append(res.get(0));
+        
         // set style
-        this.fastExpText.setText(sb.toString());
-        this.fastExpText.setStyle(this.superScript, offset0 + 5, offset0 + 5);
-        this.fastExpText.setStyle(this.superScript,
-                tmp = offset0 + 15 + this.data.getGenerator().toString(Constants.HEXBASE).length(), tmp
-                        + this.data.getB().toString(Constants.HEXBASE).length());
-        this.fastExpText.setStyle(this.superScript, offset1 + 5, offset1 + 5);
-        this.fastExpText.setStyle(this.superScript, offset2, offset2
-                + this.data.getB().toString(Constants.HEXBASE).length() - 1);
-        // set to stepresult
-        this.stepResult.setText("c = " + value.toString(Constants.HEXBASE)); //$NON-NLS-1$
-        this.resultText.setText(this.resultText.getText() + " " + value.toString(Constants.HEXBASE)); //$NON-NLS-1$
+        int tmp;
+        fastExpText.setText(sb.toString());
+        fastExpText.setStyle(superScript, offset0 + 5, offset0 + 5);
+        fastExpText.setStyle(superScript,
+                tmp = offset0 + 15 + data.getGenerator().toString().length(), tmp
+                        + data.getB().toString().length());
+        fastExpText.setStyle(superScript, offset1 + 5, offset1 + 5);
+        fastExpText.setStyle(superScript, offset2, offset2
+                + data.getB().toString().length() - 1);
+        stepResult.setText("M = " + res.get(0)); //$NON-NLS-1$
+        // If no value is in the temp result. Create a new empty list in which the values can be entered.
+        List<Integer> tempContent = resultViewer.getContent() == null ? new ArrayList<>() : resultViewer.getContent();
+        tempContent.add(res.get(0));
+        resultViewer.setContent(tempContent, data.getStb());
+        enableCopyButton();
     }
 
     /**
@@ -836,59 +1031,78 @@ public class ElGamalComposite extends Composite {
      * @param parent the parent
      */
     private void createResultGroup(final Composite parent) {
-        final Group group = new Group(parent, SWT.NONE);
-        group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        group.setLayout(new GridLayout(3, false));
-        group.setText(Messages.ElGamalComposite_result);
-        this.resultText = new Text(group, SWT.V_SCROLL | SWT.READ_ONLY | SWT.BORDER | SWT.MULTI | SWT.WRAP);
-        this.resultText.setText("\n\n"); //$NON-NLS-1$
-        this.resultText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        this.resultText.addModifyListener(new ModifyListener() {
+        groupResult = new Group(parent, SWT.NONE);
+        groupResult.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        groupResult.setLayout(new GridLayout(3, false));
+        groupResult.setText(Messages.ElGamalComposite_result);
+        
+        // Change the optional format in which the result can be displayed dependent on the current action
+        switch (data.getAction()) {
+		case EncryptAction:
+		case VerifyAction:
+			resultViewer = new NumberblocksAndTextViewer(groupResult, SWT.NONE, Repr.ALLNUM);
+			break;
+		case SignAction:
+			//Little trick. If Repr.String is only once in the array there will be no radio button that can be displayed.
+			resultViewer = new NumberblocksAndTextViewer(groupResult, SWT.NONE, new Repr[] {Repr.STRING, Repr.STRING} );
+			break;
+		case DecryptAction: 
+			resultViewer = new NumberblocksAndTextViewer(groupResult, SWT.NONE, Repr.ALL);
+			break;
+		default:
+			resultViewer = new NumberblocksAndTextViewer(groupResult, SWT.NONE, Repr.ALL);
+			break;
+		}
+        
+        GridData gd_resultViewer = new GridData(SWT.FILL, SWT.FILL, true, false);
+        gd_resultViewer.minimumHeight = 60;
+        resultViewer.setLayoutData(gd_resultViewer);
 
-            public void modifyText(final ModifyEvent e) {
-                ElGamalComposite.this.copyButton.setEnabled(true);
-                if (ElGamalComposite.this.data.getAction() == Action.VerifyAction
-                        && !ElGamalComposite.this.textText.getText().equals("")) { //$NON-NLS-1$
-                    String text;
-                    if (ElGamalComposite.this.verifiedText.getData() != null
-                            && ElGamalComposite.this.resultText.getText().trim()
-                                    .equals(ElGamalComposite.this.verifiedText.getData())) {
-                        text = Messages.ElGamalComposite_valid;
-                        ElGamalComposite.this.verifiedText.setForeground(ColorService.GREEN);
-                    } else {
-                        text = Messages.ElGamalComposite_invalid;
-                        ElGamalComposite.this.verifiedText.setForeground(ColorService.RED);
-                    }
-                    ElGamalComposite.this.verifiedText.setText(text);
-                }
+        verifiedText = new StyledText(groupResult, SWT.READ_ONLY);
+        verifiedText.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
+        verifiedText.setText("                "); //$NON-NLS-1$
+
+		copyButton = new Button(groupResult, SWT.PUSH);
+		copyButton.setEnabled(false);
+		copyButton.setText(Messages.ElGamalComposite_copy);
+		copyButton.setToolTipText(Messages.ElGamalComposite_copy_to_clipboard);
+		copyButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+		copyButton.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(final SelectionEvent e) {
+				final Clipboard cb = new Clipboard(Display.getCurrent());
+				cb.setContents(new Object[] { data.getStb().revert(resultViewer.getContent()) },
+						new Transfer[] { TextTransfer.getInstance() });
+			}
+		});
+	}
+    
+    /**
+     * Enables the copy button in the bottom right corner.
+     * In case of Action.VerifyAction it check whether the signature
+     * is valid or not an display it to the left of the copy
+     * button.
+     */
+    private void enableCopyButton() {
+    	copyButton.setEnabled(true);
+    	if (data.getAction() == Action.VerifyAction && !textViewer.getContent().isEmpty()) {
+			String text;
+			if (verifiedText.getData() != null && resultViewer.getContent().get(0).equals(verifiedText.getData())) {
+				text = Messages.ElGamalComposite_valid;
+                verifiedText.setForeground(ColorService.GREEN);
+            } else {
+                text = Messages.ElGamalComposite_invalid;
+                verifiedText.setForeground(ColorService.RED);
             }
-        });
-
-        this.verifiedText = new StyledText(group, SWT.READ_ONLY);
-        this.verifiedText.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
-        this.verifiedText.setText("                "); //$NON-NLS-1$
-
-        this.copyButton = new Button(group, SWT.PUSH);
-        this.copyButton.setEnabled(false);
-        this.copyButton.setText(Messages.ElGamalComposite_copy);
-        this.copyButton.setToolTipText(Messages.ElGamalComposite_copy_to_clipboard);
-        this.copyButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-        this.copyButton.addSelectionListener(new SelectionAdapter() {
-
-            @Override
-            public void widgetSelected(final SelectionEvent e) {
-                final Clipboard cb = new Clipboard(Display.getCurrent());
-                cb.setContents(new Object[] {ElGamalComposite.this.resultText.getText()},
-                        new Transfer[] {TextTransfer.getInstance()});
-            }
-        });
+            verifiedText.setText(text);
+    	}
     }
 
     /**
      * creates the bottom options area.
      */
     private void createOptionsArea() {
-
         // setup the main layout for this group
         final Group optionsGroup = new Group(this, SWT.NONE);
         optionsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -902,55 +1116,98 @@ public class ElGamalComposite extends Composite {
         keyButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false));
         keyButton.addSelectionListener(new SelectionAdapter() {
 
-            @Override
-            public void widgetSelected(final SelectionEvent e) {
-                new WizardDialog(new Shell(Display.getDefault()), new KeySelectionWizard(null, null, true)).open();
-            }
+			@Override
+			public void widgetSelected(final SelectionEvent e) {
+				WizardDialog keyButtonDialog = new WizardDialog(new Shell(), new KeySelectionWizard(null));
+				keyButtonDialog.setHelpAvailable(false);
+				keyButtonDialog.open();
+			}
         });
 
         // initialize copy data selector
         final Label l = new Label(optionsGroup, SWT.NONE);
         l.setText(Messages.ElGamalComposite_inherit_from);
-        this.inheritCombo = new Combo(optionsGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
-        this.inheritCombo.add(""); //$NON-NLS-1$
-        this.inheritCombo.add(Messages.ElGamalComposite_encrypt);
-        this.inheritCombo.setData("1", Action.EncryptAction); //$NON-NLS-1$
-        this.inheritCombo.add(Messages.ElGamalComposite_decrypt);
-        this.inheritCombo.setData("2", Action.DecryptAction); //$NON-NLS-1$
-        this.inheritCombo.add(Messages.ElGamalComposite_sign);
-        this.inheritCombo.setData("3", Action.SignAction); //$NON-NLS-1$
-        this.inheritCombo.add(Messages.ElGamalComposite_verify);
-        this.inheritCombo.setData("4", Action.VerifyAction); //$NON-NLS-1$
-        this.inheritCombo.addSelectionListener(new SelectionAdapter() {
+        inheritCombo = new Combo(optionsGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
+        inheritCombo.add(""); //$NON-NLS-1$
+        
+        switch (data.getAction()) {
+		case DecryptAction:
+			inheritCombo.add(Messages.ElGamalComposite_encrypt);
+	        inheritCombo.setData("1", Action.EncryptAction); //$NON-NLS-1$
+	        inheritCombo.add(Messages.ElGamalComposite_sign);
+	        inheritCombo.setData("2", Action.SignAction); //$NON-NLS-1$
+	        inheritCombo.add(Messages.ElGamalComposite_verify);
+	        inheritCombo.setData("3", Action.VerifyAction); //$NON-NLS-1$
+			break;
+		case EncryptAction:
+	        inheritCombo.add(Messages.ElGamalComposite_decrypt);
+	        inheritCombo.setData("1", Action.DecryptAction); //$NON-NLS-1$
+	        inheritCombo.add(Messages.ElGamalComposite_sign);
+	        inheritCombo.setData("2", Action.SignAction); //$NON-NLS-1$
+	        inheritCombo.add(Messages.ElGamalComposite_verify);
+	        inheritCombo.setData("3", Action.VerifyAction); //$NON-NLS-1$
+			break;
+		case SignAction:
+			inheritCombo.add(Messages.ElGamalComposite_encrypt);
+	        inheritCombo.setData("1", Action.EncryptAction); //$NON-NLS-1$
+	        inheritCombo.add(Messages.ElGamalComposite_decrypt);
+	        inheritCombo.setData("2", Action.DecryptAction); //$NON-NLS-1$
+	        inheritCombo.add(Messages.ElGamalComposite_verify);
+	        inheritCombo.setData("3", Action.VerifyAction); //$NON-NLS-1$
+			break;
+		case VerifyAction:
+			inheritCombo.add(Messages.ElGamalComposite_encrypt);
+	        inheritCombo.setData("1", Action.EncryptAction); //$NON-NLS-1$
+	        inheritCombo.add(Messages.ElGamalComposite_decrypt);
+	        inheritCombo.setData("2", Action.DecryptAction); //$NON-NLS-1$
+	        inheritCombo.add(Messages.ElGamalComposite_sign);
+	        inheritCombo.setData("3", Action.SignAction); //$NON-NLS-1$
+			break;
+		default:
+			break;
+        
+        }
+        inheritCombo.addSelectionListener(new SelectionAdapter() {
 
             @Override
             public void widgetSelected(final SelectionEvent e) {
-                final Action newAction = (Action) ElGamalComposite.this.inheritCombo.getData("" //$NON-NLS-1$
+                final Action newAction = (Action) inheritCombo.getData("" //$NON-NLS-1$
                         + ((Combo) e.widget).getSelectionIndex());
-                if (((Combo) e.widget).getSelectionIndex() == 0 || newAction == ElGamalComposite.this.data.getAction()) {
+                if (((Combo) e.widget).getSelectionIndex() == 0 || newAction == data.getAction()) {
+                	//Return if the user tries to inherit data to the dame tab or select no tab to inherit from
                     return;
                 } else {
-                    final MessageBox mb = new MessageBox(ElGamalComposite.this.getShell(), SWT.ICON_QUESTION | SWT.OK
-                            | SWT.CANCEL);
+                	boolean proceed = true;
+                	MessageBox mb = new MessageBox(getShell(), SWT.ICON_QUESTION | SWT.OK | SWT.CANCEL);
                     mb.setText(Messages.ElGamalComposite_sure);
                     mb.setMessage(Messages.ElGamalComposite_data_loss);
-                    if (mb.open() == SWT.OK) {
-                        final ElGamalData oldData = ElGamalComposite.this.datas.get(newAction);
-                        ElGamalComposite.this.reset();
-                        ElGamalComposite.this.data.inherit(oldData);
-                        // if we got any data at all insert the key parameters to
-                        // their fields
-                        if (ElGamalComposite.this.data.getModulus() != null) {
-                            ElGamalComposite.this.keySelected();
-                            // if we got plaintext/ciphertext/signature, set
-                            // them up as well
-                            if (ElGamalComposite.this.data.getPlainText().length() != 0
-                                    || ElGamalComposite.this.data.getCipherText().length() != 0) {
-                                ElGamalComposite.this.textEntered();
-                                if (ElGamalComposite.this.data.getB() != null) {
-                                    ElGamalComposite.this.bEntered();
-                                }
-                            }
+                    //Check if the warning that data will be lost is necessary
+                	if (data.getModulus() != null) {
+                        proceed = mb.open() == SWT.OK;
+                	}
+                	//If Ok is pressed in the dialog continue. 
+                	//If no data will be lot continue automatically.
+                    if (proceed) {
+                        final ElGamalData oldData = datas.get(newAction);
+                        reset();
+                        
+                        //Only insert Data in the textfields if the inherit() returns true 
+                        if (data.inherit(oldData)) {
+	                        if (data.getModulus() != null) {
+	                            keySelected();
+	                            // if we got plaintext/ciphertext/signature, set
+	                            // them up as well
+	                            if (!data.getPlainTextAsNumbers().isEmpty() || !data.getCipherTextAsNumbers().isEmpty()) {
+	                                textEntered();
+	                                if (data.getB() != null) {
+	                                    bEntered();
+	                                    uniqueKeyButton.setEnabled(false);
+	                                }
+	                            }
+	                        }
+                        } else {
+            	    		JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, ElGamalPlugin.PLUGIN_ID,
+            	    				Messages.ElGamalComposite_inheritFail));
                         }
                     }
                 }
@@ -962,12 +1219,12 @@ public class ElGamalComposite extends Composite {
         final Button dialogButton = new Button(optionsGroup, SWT.CHECK);
         dialogButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
         dialogButton.setText(Messages.ElGamalComposite_show_dialogs);
-        dialogButton.setSelection(this.dialog);
+        dialogButton.setSelection(dialog);
         dialogButton.addSelectionListener(new SelectionAdapter() {
 
             @Override
             public void widgetSelected(final SelectionEvent e) {
-                ElGamalComposite.this.dialog = ((Button) e.widget).getSelection();
+                dialog = ((Button) e.widget).getSelection();
             }
         });
 
@@ -979,7 +1236,7 @@ public class ElGamalComposite extends Composite {
 
             @Override
             public void widgetSelected(final SelectionEvent e) {
-                ElGamalComposite.this.reset();
+            	softreset();
             }
         });
     }
@@ -988,57 +1245,131 @@ public class ElGamalComposite extends Composite {
      * reset the tab to its initial state
      */
     private void reset() {
-        this.keysel.setEnabled(true);
-        this.keysel.setBackground(ColorService.RED);
-        this.textEnter.setEnabled(false);
-        this.textEnter.setBackground(ColorService.RED);
-        this.uniqueKeyButton.setEnabled(false);
-        this.uniqueKeyButton.setBackground(ColorService.RED);
-        this.runCalc.setEnabled(false);
-        this.runCalc.setBackground(ColorService.RED);
-        this.data = new ElGamalData(this.data.getAction());
-        this.datas.put(this.data.getAction(), this.data);
-        this.pText.setText(""); //$NON-NLS-1$
-        this.gText.setText(""); //$NON-NLS-1$
-        this.bigAText.setText(""); //$NON-NLS-1$
-        this.aText.setText(""); //$NON-NLS-1$
-        this.textText.setText(""); //$NON-NLS-1$
-        this.numberText.setText(""); //$NON-NLS-1$
-        this.fastExpTable.setVisible(false);
-        this.stepResult.setText(""); //$NON-NLS-1$
-        this.stepButton.setEnabled(false);
-        this.stepButton.removeSelectionListener(this.stepSelectionListener);
-        this.stepButton.addSelectionListener(this.startSelectionListener);
-        this.stepButton.setText(Messages.ElGamalComposite_start);
-        this.stepButton.setToolTipText(Messages.ElGamalComposite_start_calc);
-        this.stepButton.pack();
-        this.resultText.setText(""); //$NON-NLS-1$
-        this.copyButton.setEnabled(false);
-        this.verifiedText.setText(""); //$NON-NLS-1$
+        keysel.setEnabled(true);
+        keysel.setBackground(ColorService.RED);
+        textEnter.setEnabled(false);
+        textEnter.setBackground(ColorService.RED);
+        
+        if (data.getAction() == Action.VerifyAction) {
+        	plaintextForVerification.setEnabled(false);
+        }
+        if (data.getAction() == Action.VerifyAction || data.getAction() == Action.SignAction) {
+        	signatureText.setText(""); //$NON-NLS-1$
+        }
+        
+        uniqueKeyButton.setEnabled(false);
+        uniqueKeyButton.setBackground(ColorService.RED);
+        runCalc.setEnabled(false);
+        runCalc.setBackground(ColorService.RED);
+        data = new ElGamalData(data.getAction());
+        datas.put(data.getAction(), data);
+        pText.setText(""); //$NON-NLS-1$
+        gText.setText(""); //$NON-NLS-1$
+        bigAText.setText(""); //$NON-NLS-1$
+        aText.setText(""); //$NON-NLS-1$
+        text_keyType.setText(""); //$NON-NLS-1$
+        textViewer.setContent("", data.getStb()); //$NON-NLS-1$
+        fastExpTable.setVisible(false);
+        stepResult.setText(""); //$NON-NLS-1$
+        stepButton.setEnabled(false);
+        
+        firstRun = true;
+        numberIndex = 0;
+
+        stepButton.setText(Messages.ElGamalComposite_start);
+        stepButton.setToolTipText(Messages.ElGamalComposite_start_calc);
+        stepButton.pack();
+        stepText.setText(""); //$NON-NLS-1$
+        resultViewer.setContent("", data.getStb()); //$NON-NLS-1$
+        copyButton.setEnabled(false);
+        copyStepResult.setEnabled(false);
+        verifiedText.setText(""); //$NON-NLS-1$
+    }
+    
+    /*
+     * resets the tab but keep the key
+     */
+    private void softreset() {
+    	
+    	//check if a key is entered
+    	if (data.getModulus() == null) {
+    		return;
+    	}
+
+    	textEnter.setEnabled(true);
+        textEnter.setBackground(ColorService.RED);
+        if (data.getAction() == Action.VerifyAction) {
+        	plaintextForVerification.setEnabled(true);
+        }
+        if (data.getAction() == Action.VerifyAction || data.getAction() == Action.SignAction) {
+        	signatureText.setText(""); //$NON-NLS-1$
+        }
+        uniqueKeyButton.setEnabled(false);
+        uniqueKeyButton.setBackground(ColorService.RED);
+        runCalc.setEnabled(false);
+        runCalc.setBackground(ColorService.RED);
+        
+        //Keep the old data of the keys
+        ElGamalData oldData = data;
+        data = new ElGamalData(data.getAction());
+        datas.put(data.getAction(), data);
+        data.setA(oldData.getA());
+        data.setB(oldData.getB());
+        data.setContactName(oldData.getContactName());
+        data.setGenerator(oldData.getGenerator());
+        data.setModulus(oldData.getModulus());
+        data.setPassword(data.getPassword());
+        data.setPrivateAlias(oldData.getPrivateAlias());
+        data.setPublicA(oldData.getPublicA());
+        data.setPublicAlias(oldData.getPublicAlias());
+        data.setR(oldData.getR());
+        
+        textViewer.setContent("", data.getStb()); //$NON-NLS-1$
+        fastExpTable.setVisible(false);
+        stepResult.setText(""); //$NON-NLS-1$
+        stepButton.setEnabled(false);
+        
+        firstRun = true;
+        numberIndex = 0;
+
+        stepButton.setText(Messages.ElGamalComposite_start);
+        stepButton.setToolTipText(Messages.ElGamalComposite_start_calc);
+        stepButton.pack();
+        stepText.setText(""); //$NON-NLS-1$
+        
+        resultViewer.setContent("", data.getStb()); //$NON-NLS-1$
+        copyButton.setEnabled(false);
+        copyStepResult.setEnabled(false);
+        verifiedText.setText(""); //$NON-NLS-1$
     }
 
     /**
      * called when the textentry has finished
      */
     private void textEntered() {
-        this.keysel.setEnabled(false);
-        this.textEnter.setBackground(ColorService.GREEN);
-        this.uniqueKeyButton.setEnabled(true);
-        switch (this.data.getAction()) {
+        keysel.setEnabled(false);
+        textEnter.setBackground(ColorService.GREEN);
+        uniqueKeyButton.setEnabled(true);
+        
+        switch (data.getAction()) {
             case EncryptAction:
-            case SignAction:
-                this.textText.setText(this.data.getPlainText());
+            	textViewer.setContent(data.getPlainTextAsNumbers(), data.getStb());
                 break;
+            case SignAction:
+            	textViewer.setContent(data.getPlainTextAsNumbers(), data.getStb());
+            	signatureText.setText(Integer.toString(Integer.parseInt(Lib.hash(data.getStb().revert(data.getPlainTextAsNumbers()), data.getSimpleHash(), data.getModulus()), 16)));
+            	break;
             case DecryptAction:
-                this.numberText.setText(this.data.getCipherText());
+            	textViewer.setContent(data.getCipherTextAsNumbers(), data.getStb());
                 break;
             case VerifyAction:
-                this.textText.setText(this.data.getPlainText());
-                this.numberText.setText(this.data.getSignature().split(",")[1].replace(')', ' ').trim()); //$NON-NLS-1$
-                this.uniqueKeyButton.setEnabled(false);
-                this.uniqueKeyButton.setBackground(ColorService.GREEN);
-                this.runCalc.setEnabled(true);
-                this.stepButton.setEnabled(true);
+            	textViewer.setContent(data.getPlainTextAsNumbers(), data.getStb());
+                plaintextForVerification.setEnabled(true);
+                signatureText.setText("(" + data.getSignatureAsNumbers().get(0) + ", " + data.getSignatureAsNumbers().get(1) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                uniqueKeyButton.setEnabled(false);
+                uniqueKeyButton.setBackground(ColorService.GREEN);
+                runCalc.setEnabled(true);
+                stepButton.setEnabled(true);
                 break;
             default:
                 break;
@@ -1048,18 +1379,21 @@ public class ElGamalComposite extends Composite {
     /**
      * finished up after the operation by setting the plaintext ciphertext or signature to the data object
      */
-    @SuppressWarnings("incomplete-switch")
     private void finish() {
-        switch (this.data.getAction()) {
+        switch (data.getAction()) {
             case EncryptAction:
-                this.data.setCipherText(this.resultText.getText());
+            	data.setCipherTextAsNumbers(resultViewer.getContent());
                 break;
             case DecryptAction:
-                this.data.setPlainText(this.resultText.getText());
+            	data.setPlainTextAsNumbers(resultViewer.getContent());
                 break;
             case SignAction:
-                this.data.setSignature(this.resultText.getText());
+            	List<Integer> temp = data.getSignatureAsNumbers();
+            	temp.set(1, data.getR().intValue());
+            	data.setSignatureAsNumbers(temp);
                 break;
+		default:
+			break;
         }
     }
 
@@ -1067,10 +1401,10 @@ public class ElGamalComposite extends Composite {
      * called when b has been entered via the wizard or inheritance
      */
     private void bEntered() {
-        this.textEnter.setEnabled(false);
-        this.uniqueKeyButton.setBackground(ColorService.GREEN);
-        this.runCalc.setEnabled(true);
-        this.stepButton.setEnabled(true);
+        textEnter.setEnabled(false);
+        uniqueKeyButton.setBackground(ColorService.GREEN);
+        runCalc.setEnabled(true);
+        stepButton.setEnabled(true);
     }
 
 }

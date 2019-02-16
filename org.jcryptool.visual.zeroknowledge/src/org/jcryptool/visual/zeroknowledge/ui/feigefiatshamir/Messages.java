@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -46,7 +46,8 @@ public class Messages extends NLS {
     public static String FFS_ParamsBob_4;
     public static String FFS_ParamsBob_5;
     public static String FFS_ParamsBob_6;
-    public static String ShowVector_4;
+    public static String ShowVector_0;
+	public static String ShowVector_4;
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

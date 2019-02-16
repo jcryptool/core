@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -142,7 +142,13 @@ public class PaillierKeySelectionWizard extends Wizard {
                     return false;
                 }
 
-                new FileCrypto(filename.replace(".papub", ".papr"), filename.replace(".papub", ".tmp"), passwd, Cipher.DECRYPT_MODE);
+                try {
+                	new FileCrypto(filename.replace(".papub", ".papr"), filename.replace(".papub", ".tmp"), passwd, Cipher.DECRYPT_MODE);
+                } catch (Exception e) {
+                	((PaillierLoadKeyPage) getPage(PaillierLoadKeyPage.getPagename())).setErrorMessage(Messages.Wrong_Password);
+                	return false;
+                }
+                
                 fileData = new StringBuffer(1000);
                 reader = new BufferedReader(new FileReader(filename.replace(".papub", ".tmp")));
                 buf = new char[1024];
@@ -170,9 +176,11 @@ public class PaillierKeySelectionWizard extends Wizard {
                     ((PaillierLoadKeyPage) getPage(PaillierLoadKeyPage.getPagename())).setErrorMessage(Messages.Wrong_Password);
                     new File(filename.replace(".papub", ".tmp")).delete();
                     return false;
-                }
-            } catch (Exception ex) {
+                }    
+            }
+            catch (Exception ex) {
                 LogUtil.logError(ex);
+                return false;
             }
 
         }

@@ -8,9 +8,81 @@
             class="org.jcryptool.visual.wots.WotsView"
             icon="icons/view.gif"
             id="org.jcryptool.visual.wots.WotsView"
-            name="Winternitz OT-Signature (WOTS / WOTS+)">
+            name="%view.name">
       </view>
    </extension>
+   
+   
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.jcryptool.visual.wots.WotsView">
+         <command
+               commandId="org.jcryptool.visual.wots.RestartCommand"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
+               style="push"
+               tooltip="%menu.restart.tooltip">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.jcryptool.visual.wots.WotsView">
+         <command
+               commandId="org.jcryptool.visual.wots.ResetCommand"
+               icon="icons/restart_task.gif"
+               style="push"
+               tooltip="%menu.reset.tooltip">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.jcryptool.visual.wots.WotsView">
+         <command
+               commandId="org.jcryptool.visual.wots.HelpCommand"
+               icon="platform:/plugin/org.eclipse.help.ui/icons/view16/help_view.gif"
+               style="push"
+               tooltip="%menu.help.tooltip">
+         </command>
+      </menuContribution>
+      
+     
+  </extension>
+  <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.jcryptool.visual.wots.RestartCommand"
+            name="%command.restart.name">
+      </command>
+      <command
+            id="org.jcryptool.visual.wots.ResetCommand"
+            name="%command.reset.name">
+      </command>
+      <command
+            id="org.jcryptool.visual.wots.HelpCommand"
+            name="%command.help.name">
+      </command>
+  </extension>
+  
+  
+  <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.jcryptool.visual.wots.files.RestartHandler"
+            commandId="org.jcryptool.visual.wots.RestartCommand">
+      </handler>
+      <handler
+            class="org.jcryptool.visual.wots.files.ResetHandler"
+            commandId="org.jcryptool.visual.wots.ResetCommand">
+      </handler>
+      <handler
+            class="org.jcryptool.visual.wots.files.HelpHandler"
+            commandId="org.jcryptool.visual.wots.HelpCommand">
+      </handler>
+  </extension>
+  
+  
+  
   <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
@@ -18,4 +90,21 @@
             viewId="org.jcryptool.visual.wots.WotsView">
       </Visual>
    </extension> 
+   
+   
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="$nl$/help/toc.xml"
+            primary="false">
+      </toc>
+   </extension>
+   
+   
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="$nl$/help/contexts.xml">
+      </contexts>
+   </extension>
 </plugin>

@@ -3,7 +3,7 @@
 
 <toc label="Verifiable Secret Sharing" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins" topic="nl/en/help/content/index.html">
 	<topic href="nl/en/help/content/index.html" label="Verifiable Secret Sharing">
-    <topic href="nl/en/help/content/vssAlgorithm.html" label="Verifiable Secret Sharing Algorithmus">
+    <topic href="nl/en/help/content/vssAlgorithm.html" label="Verifiable Secret Sharing Algorithm">
     </topic>
  </topic>
 </toc>

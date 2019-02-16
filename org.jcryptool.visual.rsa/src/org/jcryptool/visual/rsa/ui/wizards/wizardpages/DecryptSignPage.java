@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -15,7 +15,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -35,11 +34,10 @@ public class DecryptSignPage extends WizardPage {
 	private Button newKeypairButton;
 	private Button existingKeypairButton;
 
-	/** Determine which action we got */
-
 	/** selection listener that updates the buttons. */
 	private final SelectionListener sl = new SelectionAdapter() {
 
+		@Override
 		public void widgetSelected(SelectionEvent e) {
 			getContainer().updateButtons();
 		}
@@ -52,11 +50,11 @@ public class DecryptSignPage extends WizardPage {
 		super(PAGENAME, Messages.DecryptSignPage_choose_action, null);
 
 	    switch (data.getAction()) {
-        case EncryptAction:
-    		this.setDescription(Messages.DecryptSignPage_choose_action_text_dec);
+        case DecryptAction:
+    		setDescription(Messages.DecryptSignPage_choose_action_text_dec);
            break;
-        case VerifyAction:
-   			this.setDescription(Messages.DecryptSignPage_choose_action_text_sig);
+        case SignAction:
+   			setDescription(Messages.DecryptSignPage_choose_action_text_sig);
    			break;
         default:
           break;
@@ -67,26 +65,24 @@ public class DecryptSignPage extends WizardPage {
 	 * sets up all the UI stuff.
 	 * @param parent the parent composite
 	 */
+	@Override
 	public final void createControl(Composite parent) {
 		Composite composite = new Composite(parent, SWT.NONE);
-		// set layout
 		composite.setLayout(new GridLayout());
-		// create grid data
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER);
-		GridData gd1 = new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER);
+		
 		// add new Keypair button
 		newKeypairButton = new Button(composite, SWT.RADIO);
 		newKeypairButton.setText(Messages.ChooseKeytypePage_new_keypair);
 		newKeypairButton.setToolTipText(Messages.ChooseKeytypePage_new_keypair_popup);
 		newKeypairButton.setSelection(true);
-		newKeypairButton.setLayoutData(gd);
 		newKeypairButton.addSelectionListener(sl);
+		
 		// add existing Keypair button
 		existingKeypairButton = new Button(composite, SWT.RADIO);
 		existingKeypairButton.setText(Messages.DecryptSignPage_existing_keypair);
 		existingKeypairButton.setToolTipText(Messages.DecryptSignPage_existing_keypair_popup);
-		existingKeypairButton.setLayoutData(gd1);
 		existingKeypairButton.addSelectionListener(sl);
+		
 		// finally set control something
 		setControl(composite);
 	}

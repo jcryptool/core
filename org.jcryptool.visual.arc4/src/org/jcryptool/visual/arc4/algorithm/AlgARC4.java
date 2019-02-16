@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2017 JCrypTool Team and Contributors
+* Copyright (c) 2019 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -26,7 +26,8 @@ public class AlgARC4 extends ARC4Algorithm {
      * @param n number of this createRandomAndEncrypt step (index without the initialization steps
      *            that came before)
      */
-    protected void createRandomAndEncrypt(int n) {
+    @Override
+	protected void createRandomAndEncrypt(int n) {
         int temp;
         this.i = (i + 1) % ARC4Con.TWO_FIFE_SIX;
         this.j = (j + vector[i]) % ARC4Con.TWO_FIFE_SIX;
@@ -41,7 +42,8 @@ public class AlgARC4 extends ARC4Algorithm {
     /**
      * Reset all internal variables
      */
-    public void reset() {
+    @Override
+	public void reset() {
         i = 0;
         j = 0;
         currentStep = 0;

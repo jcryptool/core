@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -51,19 +51,24 @@ public class AntColDescriptionComposite extends Composite {
 		descriptionGroup.setText(Messages.Description_title);
 		descriptionGroup.setToolTipText(Messages.Description_tooltip);
 		descriptionGroup.setLayout(new GridLayout(1, false));
+		
 		sc = new ScrolledComposite(descriptionGroup,
 				SWT.H_SCROLL | SWT.V_SCROLL);
-		sc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		GridData gd_sc = new GridData(SWT.FILL, SWT.FILL, true, true);
+		gd_sc.widthHint = 600;
+		gd_sc.heightHint = 200;
+		sc.setLayoutData(gd_sc);
+		
 		innerComp = new Composite(sc, SWT.NONE);
 		innerComp.setLayout(new GridLayout(2, true));
-
 		sc.setContent(innerComp);
-		descriptionLeft = new Label(innerComp, SWT.NONE);
-		descriptionLeft.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-				true));
-		descriptionRight = new Label(innerComp, SWT.NONE);
-		descriptionRight.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-				true));
+		
+		descriptionLeft = new Label(innerComp, SWT.WRAP);
+		descriptionLeft.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		descriptionRight = new Label(innerComp, SWT.WRAP);
+		descriptionRight.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
 		setDescriptionText(0);
 		sc.setMinSize(innerComp.computeSize(SWT.DEFAULT,SWT.DEFAULT));
 		sc.setExpandHorizontal(true);

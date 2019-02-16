@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -15,12 +15,10 @@ import java.util.Vector;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -32,12 +30,11 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.visual.crt.xeuclid.XEuclid;
 
-public class CheckingEquationDialog extends TitleAreaDialog implements Constants{
+public class CheckingEquationDialog extends TitleAreaDialog implements Constants {
 
 	private int[] marking;
 	private Button okButton;
 	private Composite area;
-	private ScrolledComposite scrolledComposite;
 	private Group dialogGroup;
 	private Vector<Equation> equationSet;
 	private Label xLabel;
@@ -57,6 +54,7 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 
 	/**
 	 * Create the dialog
+	 * 
 	 * @param parentShell
 	 * @param marking
 	 */
@@ -69,46 +67,99 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 		verifyButtonSet = new Button[equationSet.size()];
 		mTextVerifyListenerSet = new VerifyListener[equationSet.size()];
 		suggestionButtonSet = new Vector<Button>();
-		suggestionValue = new BigInteger("1");
+		suggestionValue = new BigInteger("1"); //$NON-NLS-1$
+		
+	}
+	
+	/**
+	 * checks if all verifyButtons are disabled
+	 * 
+	 * @return true if all verifyButtons are disabled
+	 */
+	private boolean checkVerifyButtons() {
+		boolean value = true;
+		for (int j = 0; j < verifyButtonSet.length; j++) {
+			if (verifyButtonSet[j].isEnabled() == true) {
+				value = false;
+				break;
+			}
+		}
+		return value;
+	}
 
+	/**
+	 * Return the initial size of the dialog
+	 */
+//	@Override
+//	protected Point getInitialSize() {
+////		return super.dialogArea.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+////		return new Point(525, 375);
+//		return area.getSize();
+////		return this.getContents().computeSize(SWT.DEFAULT, SWT.DEFAULT);
+//	}
+
+	@Override
+	protected void configureShell(Shell newShell) {
+		super.configureShell(newShell);
+		newShell.setText(MESSAGE_DIALOG_VERIFY_INPUT);
+	}
+
+	/**
+	 * Create contents of the button bar
+	 * 
+	 * @param parent
+	 */
+	@Override
+	protected void createButtonsForButtonBar(Composite parent) {
+		okButton = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
+		okButton.setEnabled(false);
+		okButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(final MouseEvent e) {
+				for (int i = 0; i < textfieldASet.length; i++) {
+					equationSet.get(i).removetextfieldMVerifyListener();
+					if (equationSet.get(i).getTextfieldA().compareTo(textfieldASet[i].getText()) == 0) {
+						equationSet.get(i).setTextfieldM(textfieldMSet[i].getText());
+					}
+					equationSet.get(i).addTextfieldMVerifyListener();
+				}
+			}
+		});
+		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
 	}
 
 	/**
 	 * Create contents of the dialog
+	 * 
 	 * @param parent
 	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
-		area = (Composite) super.createDialogArea(parent);
-
-		scrolledComposite = new ScrolledComposite(area, SWT.V_SCROLL | SWT.BORDER);
-		final GridData gd_scrolledComposite = new GridData(SWT.FILL, SWT.FILL, true, true);
-		gd_scrolledComposite.heightHint = 357;
-		gd_scrolledComposite.widthHint = 543;
-		scrolledComposite.setLayoutData(gd_scrolledComposite);
-
-		dialogGroup = new Group(scrolledComposite, SWT.NONE);
-		dialogGroup.setText(MESSAGE_GROUP_EQUATION);
-		final GridLayout gridLayout = new GridLayout();
-		gridLayout.numColumns = 7;
-		dialogGroup.setLayout(gridLayout);
-		dialogGroup.setSize(484, 220);
-		scrolledComposite.setContent(dialogGroup);
-
+		
 		setTitle(MESSAGE_DIALOG_TITLE);
 		setMessage(MESSAGE_DIALOG_INFO);
+		
+		area = new Composite(parent, SWT.NONE);
+		area.setLayout(new GridLayout());
+		area.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		dialogGroup = new Group(area, SWT.NONE);
+		dialogGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		dialogGroup.setText(MESSAGE_GROUP_EQUATION);
+		dialogGroup.setLayout(new GridLayout(7, false));
+
 		int i = 0;
 		for (Equation e : equationSet) {
 			xLabel = new Label(dialogGroup, SWT.NONE);
 			xLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-			xLabel.setText("x");
+			xLabel.setText("x"); //$NON-NLS-1$
 
 			congruenceLabel = new Label(dialogGroup, SWT.NONE);
-			congruenceLabel.setLayoutData(new GridData());
-			congruenceLabel.setText("\u2261");
+			congruenceLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+			congruenceLabel.setText("\u2261"); //$NON-NLS-1$
 
 			textfieldA = new Text(dialogGroup, SWT.BORDER);
-			final GridData gd_textfieldA = new GridData(SWT.FILL, SWT.CENTER, false, false);
+			final GridData gd_textfieldA = new GridData(SWT.FILL, SWT.CENTER, true, false);
 			gd_textfieldA.widthHint = 90;
 			textfieldA.setLayoutData(gd_textfieldA);
 			textfieldA.setEnabled(false);
@@ -116,27 +167,29 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 			textfieldASet[i] = textfieldA;
 
 			modLabel = new Label(dialogGroup, SWT.NONE);
-			modLabel.setText("mod");
+			modLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+			modLabel.setText("mod"); //$NON-NLS-1$
 
 			textfieldM = new Text(dialogGroup, SWT.BORDER);
-			final GridData gd_textfieldM = new GridData(SWT.FILL, SWT.CENTER, false, false);
+			final GridData gd_textfieldM = new GridData(SWT.FILL, SWT.CENTER, true, false);
 			gd_textfieldM.widthHint = 110;
 			textfieldM.setLayoutData(gd_textfieldM);
 			textfieldM.setText(e.getTextfieldM());
 			mTextfieldVerifyListener = new VerifyListener() {
+				@Override
 				public void verifyText(VerifyEvent e) {
 					/*
 					 * keyCode == 8 is BACKSPACE and keyCode == 48 is ZERO and keyCode == 127 is DEL
 					 */
-					if (e.text.matches("[0-9]") || e.keyCode == 8 || e.keyCode == 127){
-						if (textfieldM.getText().length() == 0 && e.text.compareTo("0") == 0){
+					if (e.text.matches("[0-9]") || e.keyCode == 8 || e.keyCode == 127) { //$NON-NLS-1$
+						if (textfieldM.getText().length() == 0 && e.text.compareTo("0") == 0) { //$NON-NLS-1$
 							e.doit = false;
-						}else if(textfieldM.getSelection().x == 0 && e.keyCode == 48){
+						} else if (textfieldM.getSelection().x == 0 && e.keyCode == 48) {
 							e.doit = false;
-						}else{
+						} else {
 							e.doit = true;
 						}
-					}else{
+					} else {
 						e.doit = false;
 					}
 				}
@@ -146,11 +199,10 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 			textfieldMSet[i] = textfieldM;
 
 			suggestionButton = new Button(dialogGroup, SWT.NONE);
-			final GridData gd_suggestionButton = new GridData(SWT.FILL, SWT.FILL, false, false);
-			gd_suggestionButton.heightHint = 20;
-			gd_suggestionButton.widthHint = 80;
+			final GridData gd_suggestionButton = new GridData(SWT.RIGHT, SWT.FILL, false, false);
 			suggestionButton.setLayoutData(gd_suggestionButton);
 			suggestionButton.setText(MESSAGE_DIALOG_SUGGESTION);
+			suggestionButton.setToolTipText(Messages.CheckingEquationDialog_6);
 			suggestionButton.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseUp(final MouseEvent e) {
@@ -171,8 +223,8 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 					boolean search = true;
 					while (search) {
 						for (int k = 0; k < textfieldMSet.length; k++) {
-							BigInteger tmpGcd = gcd
-									.xeuclid(new BigInteger(textfieldMSet[k].getText()), suggestionValue);
+							BigInteger tmpGcd = gcd.xeuclid(new BigInteger(textfieldMSet[k].getText()),
+									suggestionValue);
 							if (new BigInteger(textfieldMSet[k].getText()).compareTo(suggestionValue) == 0
 									|| tmpGcd.compareTo(BigInteger.ONE) != 0) {
 
@@ -193,11 +245,10 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 			suggestionButtonSet.add(suggestionButton);
 
 			verifyButton = new Button(dialogGroup, SWT.NONE);
-			final GridData gd_verifyButton = new GridData(SWT.FILL, SWT.FILL, false, false);
-			gd_verifyButton.heightHint = 20;
-			gd_verifyButton.widthHint = 80;
-			verifyButton.setLayoutData(gd_suggestionButton);
+			final GridData gd_verifyButton = new GridData(SWT.RIGHT, SWT.FILL, false, false);
+			verifyButton.setLayoutData(gd_verifyButton);
 			verifyButton.setText(MESSAGE_DIALOG_VERIFY);
+			verifyButton.setToolTipText(Messages.CheckingEquationDialog_7);
 			verifyButton.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseUp(final MouseEvent e) {
@@ -248,59 +299,9 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 
 			i++;
 		}
-		dialogGroup.pack();
+
 		return area;
 	}
-
-	/**
-	 * Create contents of the button bar
-	 * @param parent
-	 */
-	@Override
-	protected void createButtonsForButtonBar(Composite parent) {
-		okButton = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
-		okButton.setEnabled(false);
-		okButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseUp(final MouseEvent e) {
-				for (int i = 0; i < textfieldASet.length; i++) {
-					equationSet.get(i).removetextfieldMVerifyListener();
-					if (equationSet.get(i).getTextfieldA().compareTo(textfieldASet[i].getText()) == 0) {
-						equationSet.get(i).setTextfieldM(textfieldMSet[i].getText());
-					}
-					equationSet.get(i).addTextfieldMVerifyListener();
-				}
-			}
-		});
-		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
-	}
-
-	/**
-	 * Return the initial size of the dialog
-	 */
-	@Override
-	protected Point getInitialSize() {
-		return new Point(487, 375);
-	}
-
-	@Override
-	protected void configureShell(Shell newShell) {
-		super.configureShell(newShell);
-		newShell.setText(MESSAGE_DIALOG_VERIFY_INPUT);
-	}
-
-	/**
-	 * checks if all verifyButtons are disabled
-	 * @return true if all verifyButtons are disabled
-	 */
-	private boolean checkVerifyButtons() {
-		boolean value = true;
-		for (int j = 0; j < verifyButtonSet.length; j++) {
-			if (verifyButtonSet[j].isEnabled() == true) {
-				value = false;
-				break;
-			}
-		}
-		return value;
-	}
+	
+	
 }

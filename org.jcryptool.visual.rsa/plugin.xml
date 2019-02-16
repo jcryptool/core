@@ -33,7 +33,7 @@
             file="$nl$/contexts.xml">
       </contexts>
    </extension>
-<extension
+	<extension
          point="org.eclipse.ui.handlers">
       <handler
             class="org.jcryptool.visual.rsa.handlers.RestartHandler"
@@ -46,24 +46,15 @@
             id="org.jcryptool.visual.rsa.restartCommand"
             name="%restart.command.name">
       </command>
-   </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="menu:org.jcryptool.visual.rsa.view">
-         <command
-               commandId="org.jcryptool.visual.rsa.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
-               style="push">
-         </command>
-      </menuContribution>
-      <menuContribution
-            locationURI="toolbar:org.jcryptool.visual.rsa.view">
-         <command
-               commandId="org.jcryptool.visual.rsa.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
-               style="push">
-         </command>
-      </menuContribution>
-   </extension>
+	</extension>
+	<extension 
+		point="org.eclipse.ui.menus">
+			<menuContribution
+				locationURI="toolbar:org.jcryptool.visual.rsa.view">
+			<command commandId="org.jcryptool.visual.rsa.restartCommand" 
+				icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png" 
+				style="push">
+			</command>
+		</menuContribution>
+	</extension>
 </plugin>

@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -42,15 +42,13 @@ public class View extends ViewPart {
 		protocol = new DefinitionAndDetails(scrolledContent);
 		tryagain = new Logging(scrolledContent);
 
-		Model.getDefault()
-				.setLinks(situation, illustration, protocol, tryagain);
+		Model.getDefault().setLinks(situation, illustration, protocol, tryagain);
 		Model.getDefault().setNumberOfUsers(4);
 		Model.getDefault().reset();
 		Model.getDefault().setupStep1();
 
 		scrolledComposite.setContent(scrolledContent);
-		scrolledComposite.setMinSize(scrolledContent.computeSize(800,
-				SWT.DEFAULT));
+		scrolledComposite.setMinSize(scrolledContent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
 		scrolledComposite.getVerticalBar().setIncrement(20);

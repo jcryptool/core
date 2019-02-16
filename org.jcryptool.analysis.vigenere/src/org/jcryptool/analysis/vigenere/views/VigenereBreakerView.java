@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -13,6 +13,7 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchActionConstants;
@@ -44,6 +45,8 @@ public class VigenereBreakerView extends ViewPart {
 
     private ScrolledComposite scroll;
 
+	private Composite pageComposite;
+
     /**
      * Constructs a new view of the Vigenère plug-in.
      */
@@ -55,12 +58,14 @@ public class VigenereBreakerView extends ViewPart {
         scroll = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
         scroll.setExpandHorizontal(true);
         scroll.setExpandVertical(true);
-        gui = new VigenereBreakerGui(scroll, SWT.NONE);
-        gui.setView(this);
-        gui.layout();
-        scroll.setContent(gui);
-        scroll.setMinSize(780, 720);
-        scroll.layout();
+        
+        pageComposite = new Composite(scroll, SWT.NONE);
+        pageComposite.setLayout(new GridLayout());
+        
+        gui = new VigenereBreakerGui(pageComposite, SWT.NONE);
+        
+        scroll.setContent(pageComposite);
+        scroll.setMinSize(pageComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
             VigenereBreakerPlugin.PLUGIN_ID + ".vigenerebreaker"); //$NON-NLS-1$

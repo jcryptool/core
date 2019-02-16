@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -18,7 +18,7 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Composite;
 import org.jcryptool.visual.zeroknowledge.algorithm.graphenisomorphie.math.Graph;
 import org.jcryptool.visual.zeroknowledge.algorithm.graphenisomorphie.math.Kante;
 import org.jcryptool.visual.zeroknowledge.algorithm.graphenisomorphie.math.Knoten;
@@ -59,7 +59,8 @@ public class Zeichenflaeche extends Canvas {
      * @param color_vorher Farbe für den zweiten Teil der Erklärung zu dne Punkten
      * @param vorher gibt an, ob ausgegeben werden soll, welche Nummer der Punkt vorher hatte
      */
-    public Zeichenflaeche(Group parent, Graph graph, int color, int color_vorher, boolean vorher) {
+//    public Zeichenflaeche(Group parent, Graph graph, int color, int color_vorher, boolean vorher) {
+    public Zeichenflaeche(Composite parent, Graph graph, int color, int color_vorher, boolean vorher) {
         super(parent, SWT.NONE | SWT.BORDER | SWT.BACKGROUND);
 
         // Farben etc. setzen
@@ -84,7 +85,6 @@ public class Zeichenflaeche extends Canvas {
 
         // allgemeine Angaben
         setSize(130, 130);
-        setLocation(5, 15);
         setLayout(new FillLayout());
         this.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
 

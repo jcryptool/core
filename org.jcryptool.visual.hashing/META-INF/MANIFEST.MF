@@ -6,11 +6,12 @@ Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.visual.hashing.HashingPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.jcryptool.core.operations;bundle-version="1.0.0",
  org.eclipse.help,
+ org.jcryptool.core.operations;bundle-version="1.0.0",
  org.bouncycastle
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: org.jcryptool.core.logging.utils
 Bundle-Vendor: %Bundle-Vendor.0
 Bundle-ClassPath: .
+Automatic-Module-Name: org.jcryptool.visual.hashing

@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -90,6 +90,7 @@ public class OverwriteDialog extends Dialog {
 		bFirst.setLayoutData(data);
 
 		bFirst.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent event) {
 				setSelection(1);
 				shell.close();
@@ -102,6 +103,7 @@ public class OverwriteDialog extends Dialog {
 		bSecond.setLayoutData(data);
 
 		bSecond.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent event) {
 				setSelection(2);
 				shell.close();
@@ -114,6 +116,7 @@ public class OverwriteDialog extends Dialog {
 		bCancel.setLayoutData(data);
 
 		bCancel.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent event) {
 				setSelection(-1);
 				shell.close();

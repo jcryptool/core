@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2017 JCrypTool Team and Contributors
+* Copyright (c) 2019 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -50,7 +50,7 @@ public class Logging {
         group_Logging = new Group(parent, SWT.NONE);
         group_Logging.setText(Messages.Logging_0);
         group_Logging.setLayout(new GridLayout(2, false));
-        GridData gridData = new GridData(SWT.FILL, SWT.TOP, true, false);
+        GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, false);
         gridData.horizontalSpan = 2;
         group_Logging.setLayoutData(gridData);
 

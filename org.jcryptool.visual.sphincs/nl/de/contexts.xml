@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="Sphincs" title="Sphincs-Signaturverfahren">
+      <description>Diese Visualisierung demonstriert das quantensichere Signaturverfahren SPHINCS.</description>
+      <topic href="nl/de/help/content/deSphincs.html" label="Sphincs-Signaturverfahren"/>
+   </context>
+</contexts>

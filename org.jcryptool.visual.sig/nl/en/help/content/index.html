@@ -10,8 +10,8 @@
         Welcome to the online help of the Signature Visualization plug in. 
 		Below you find an overview of the plug in and a more detailed description of each step of the signature generation.
 		<br>
-		This visualization demonstrates the creation of a digital signature for a specific document. 
-		A digital signature can be used to authenticate the sender’s identity or the identity of the document's signer. 
+		This visualization demonstrates the creation of a digital signature for a given document (message).
+		A digital signature can be used to verify the identity of the message's signer.
 		It also ensures the document's integrity.</p>
 		<img src="MainStart.png">
         <h2>General information</h2>
@@ -21,19 +21,19 @@
 		<p>Everything is reset to the initial state of the plug in, including the selected hash and signature function.</p>
               
         <h2>Step 1 – Choose input</h2>
-        <p>Use the button “Choose input” to start the signature process. Select an existing file or enter a text by yourself. If you want to sign an existing file, you can choose any file type you want, but the maximum file size is 10 MB.</p>
+        <p>Use the button “Choose input” to start the signature process. Select an existing file or enter a text by yourself. If you want to sign an existing file, you can choose any file type you want. The file size is (approximately) limited by the maximum working memory that JCT is able to acquire.</p>
       	<img src="InputWizard.png"> 
       	<img src="InputFile.png">
       	<img src="InputText.png">
         
         <h2>Step 2 – Hash function</h2>
-        <p>The second step of the signature process is to calculate the message digest or hash value of the document. A hash function is an algorithm or subroutine that maps data sets of variable length to data sets of a fixed length (digest). Signing the message digest rather than the documents (the message or the file) improves the efficiency of the process because the message digest is usually much smaller in size than the document. The same hash algorithm used by the creator of the digital signature must be used by the verifier of a digital signature.</p>
+        <p>The second step of the signature process is to calculate the message digest or hash value of the document. A hash function is an algorithm that maps a data set of variable length (the message) to a data set of a fixed length (hash value or message digest). Signing the hash value rather than the message improves the efficiency of the process because the hash value is usually much smaller in size than the message. The same hash algorithm used by the creator of the digital signature must be used by the verifier of a digital signature.</p>
         <img src="HashWizard.png">
         <h3>Description of provided hash functions</h3>
         <h4>MD5</h4>
         <p>The MD5 algorithm (published in 1992 and specified in RFC 1321) takes as input a message of arbitrary length and produces as output a 128-bit "fingerprint" or "message digest". The MD5 algorithm is intended for digital signature applications, where a large file must be "compressed" in a secure manner before being encrypted with a private key under a public-key cryptosystem such as RSA.</p>
         <h4>SHA-1</h4>
-        <p>The “Secure Hash Algorithm“ (published in 1995 by the United States NIST) computes a condensed representation of a message or a data file. When a message of any length < 264 bits is input, the SHA-1 produces a 160-bit output. The SHA-1 is called secure because it was computationally infeasible to find a message which corresponds to a given message digest, or to find two different messages which produce the same message digest. Any change to a message in transit will, with very high probability, result in a different message digest, and the signature will fail to verify.</p>
+        <p>The “Secure Hash Algorithm“ (published in 1995 by the United States NIST) computes a condensed representation of a message or a data file. When a message of any length < 2&#8310;&#8308; bits is input, the SHA-1 produces a 160-bit output. The SHA-1 is called secure because it was computationally infeasible to find a message which corresponds to a given message digest, or to find two different messages which produce the same message digest. Any change to a message in transit will, with very high probability, result in a different message digest, and the signature will fail to verify.</p>
         <h4>SHA-256</h4>
         <p>SHA-256 is one of the successor hash functions to SHA-1 (collectively referred to as SHA-2), and is one of the strongest hash functions available. While SHA-1 has not been compromised in real-world conditions (however in theory), SHA-256 is not much more complex to code. It is recommended to use this method instead of SHA-1.</p>
         <h4>SHA-384</h4>
@@ -45,23 +45,23 @@
         <p>You can choose between different signature functions to sign the input. Some signature procedures are based on asymmetric encryption like RSA, other methods have been developed only for this purpose, for example DSA.</p>
         <img src="SignatureWizard.png">
         <p>To sign a file and verify the signature, you need two different keys. The private key is for generating the signature. Only the owner of the key knows it and it has to be kept secret. The public key can be used by anybody else to verify the signature. <br> To create a signature, you have to select one of the given keys from the Standard-JCT-Keystore.</p>
-        <a href="https://github.com/jcryptool/core/tree/master/org.jcryptool.crypto.keystore">Visit Standard-JCT-Keystore</a> 
+        <a href="https://github.com/jcryptool/core/tree/master/org.jcryptool.crypto.keystore" target="_blank">Visit Standard-JCT-Keystore</a> 
         <h3>Description of provided signature functions</h3>
         <h4>DSA</h4>
-        <p>The Digital Signature Algorithm (DSA) (published by the NIST in 1991) is a United States Federal Government standard for digital signatures. With DSA, the entropy, secrecy, and uniqueness of the random signature value is critical. It is so critical that violating any one of those three requirements can reveal the entire private key to an attacker. Using the same value twice (even while keeping random signature value secret), using a predictable value, or leaking even a few bits of random signature value in each of several signatures, is enough to break DSA.</p>
-        <p>To learn more about DSA:  <a href="https://github.com/jcryptool/crypto/tree/master/org.jcryptool.visual.dsa">Visit JCT-DSA</a></p>
+        <p>The Digital Signature Algorithm (DSA) (published by the NIST in 1991) is a United States Federal Government standard for digital signatures. Entropy, secrecy, and uniqueness of the random parameter k are critical for the security of DSA. It is so critical that violating any one of those three requirements can reveal the entire private key to an attacker. Using the same value twice (even while keeping random signature value secret), using a predictable value, or leaking even a few bits of random signature value in each of several signatures, is enough to break DSA.</p>
+        <p>To learn more about DSA: <a href="https://en.wikipedia.org/wiki/Digital_Signature_Algorithm" target="_blank">Visit DSA on Wikipedia</a></p>
         <h4>RSA</h4>
         <p>RSA (the algorithm was published in 1977) is an algorithm for public-key cryptography that is based on the presumed difficulty of factoring large integers, the factoring problem. Anyone can use the public key to encrypt a message, but with currently published methods, if the public key is large enough, only someone with knowledge of the prime factors can feasibly decode the message. Secure padding schemes such as RSA-PSS are as essential for the security of message signing as they are for message encryption. The PKCS #1 cryptography standard provides recommendations for the implementation of public-key cryptography based on the RSA algorithm.</p>
-        <p>To learn more about RSA: <a href="https://github.com/jcryptool/crypto/tree/master/org.jcryptool.visual.rsa">Visit JCT-RSA</a></p>
+        <p>To learn more about RSA: <a href="PLUGINS_ROOT/org.jcryptool.visual.rsa/$nl$/help/content/index.html">Visit JCT-RSA</a></p>
         <h4>ECDSA</h4>
         <p>The Elliptic Curve Digital Signature Algorithm (ECDSA) (proposed in 1992 by Scott Vanstone) is the elliptic curve analog of the Digital Signature Algorithm (DSA). Unlike the ordinary discrete logarithm problem and the integer factorization problem, no sub exponential-time algorithm is known for the elliptic curve discrete logarithm problem. The size of a private key that is considered secure is much smaller with ECDSA. At a security level of 80 bits, meaning an attacker requires the equivalent of about 2^80 signature generations to find the private key, the size of a DSA public key is at least 1024 bits, whereas the size of an ECDSA public key would be 160 bits.</p>
         <h4>RSA and MGF1</h4>
         <p>A Mask Generation Function (MGF) is used to generate pseudo random numbers in an arbitrary length. Without knowing the initial value (seed) it is infeasible to predict these random numbers. MGF1, specified in PKCS#1, is a method to archive this goal by using Hash functions like SHA-1. Random numbers are an important part of Public Key Cryptography. Using MGF1 and therefore random Numbers ensure plaintext awareness. Without knowing anything about the plaintext it is basically impossible to generate a valid ciphertext.</p>
         <h3>More information about the advanced cryptographic library BouncyCastle:</h3>
        	<ul>
-        	<li><a href="http://www.bouncycastle.org/">Visit BouncyCastle</a></li>
-        	<li><a href="https://github.com/jcryptool/core/tree/04fbe0efa19be7fee686b9fd4dcf3ee33b8e12d2/org.bouncycastle">Visit BouncyCastle on github</a></li>
-        	<li><a href="http://www.mobilefish.com/developer/bouncycastle/bouncycastle.html">Examples using BouncyCastle</a></li>
+        	<li><a href="http://www.bouncycastle.org/" target="_blank">Visit BouncyCastle</a></li>
+        	<li><a href="https://github.com/jcryptool/core/tree/master/org.bouncycastle" target="_blank">Visit BouncyCastle on github</a></li>
+        	<li><a href="http://www.mobilefish.com/developer/bouncycastle/bouncycastle.html" target="_blank">Examples using BouncyCastle</a></li>
   		</ul>
   		<br>
   		<img src="MainFinished.png">
@@ -73,7 +73,7 @@
             <li>information about the signature method,</li>
             <li>the hexadecimal, octal or binary representation of the signed file and the generated signature.</li>
         </ul>
-        <p>To show the signed file and the generated signature in the hex editor of JCrypTool, use the button “Open in hex editor”. There you can also save the signed file. You need this, if you want to verify the signature.</p>
+        <p>To store the signature and the according message in a file, click on "Save". To show the signed file and the generated signature in the hex editor of JCrypTool, use the button “Open in hex editor”.</p>
 		<img src="ShowSigWizard.png">
 
     </body>

@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -25,17 +25,9 @@ import org.jcryptool.visual.elGamal.Messages;
  * page for saving a keypair.
  *
  * @author Michael Gaber
+ * @author Thorben Groos
  */
 public class SaveKeypairPage extends SaveWizardPage {
-
-    /** minimal height for a textfield so it diesn't cut the entered text. */
-    private static final int TEXTFIELD_MIN_HEIGHT = 15;
-
-    /** unique pagename to get this page from inside a wizard. */
-    private static final String PAGENAME = "Save Keypair Page"; //$NON-NLS-1$
-
-    /** title of this page, displayed in the head of the wizard. */
-    private static final String TITLE = Messages.SaveKeypairPage_save_keypair;
 
     /** field for the password. */
     private Text password;
@@ -46,24 +38,18 @@ public class SaveKeypairPage extends SaveWizardPage {
     /** modifyListener for the fields. */
     private final ModifyListener ml = new ModifyListener() {
 
-        public void modifyText(final ModifyEvent e) {
-            final boolean pwmatch = password.getText().equals(passwordverify.getText());
-            setPageComplete(!owner.getText().equals("") && !password.getText().equals("") //$NON-NLS-1$ //$NON-NLS-2$
-                    && pwmatch);
+        @Override
+		public void modifyText(final ModifyEvent e) {
+            boolean pwmatch = password.getText().equals(passwordverify.getText());
+            setPageComplete(!owner.getText().isEmpty() && !password.getText().isEmpty() && pwmatch);
+            
             if (pwmatch) {
-                data.setContactName(owner.getText());
-                data.setPassword(password.getText());
                 setErrorMessage(null);
             } else {
                 setErrorMessage(Messages.SaveKeypairPage_error_passwords_dont_match);
-                data.setPassword(null);
-                data.setContactName(null);
             }
         }
     };
-
-    /** shared data object. */
-    private final ElGamalData data;
 
     /**
      * Constructor, sets page incomplete and calls super and sets the description.
@@ -71,10 +57,9 @@ public class SaveKeypairPage extends SaveWizardPage {
      * @param data the data object
      */
     public SaveKeypairPage(final ElGamalData data) {
-        super(PAGENAME, TITLE, null);
+        super("Save Keypair Page", Messages.SaveKeypairPage_save_keypair, null);
         setPageComplete(false);
-        this.setDescription(Messages.SaveKeypairPage_enter_save_params);
-        this.data = data;
+        setDescription(Messages.SaveKeypairPage_enter_save_params);
     }
 
     /**
@@ -82,51 +67,52 @@ public class SaveKeypairPage extends SaveWizardPage {
      *
      * @param parent the parent composite
      */
-    public final void createControl(final Composite parent) {
+    @Override
+	public final void createControl(final Composite parent) {
         final Composite composite = new Composite(parent, SWT.NONE);
         // do stuff like layout et al
-        final int ncol = 2;
-        final GridLayout gl = new GridLayout(ncol, false);
-        composite.setLayout(gl);
-        final GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-        // needed so textfields don't cut text
-        gd.heightHint = TEXTFIELD_MIN_HEIGHT;
-        final GridData gd2 = new GridData(SWT.FILL, SWT.CENTER, false, false, ncol, 1);
+        GridLayout gl_composite = new GridLayout();
+        gl_composite.marginWidth = 50;
+        composite.setLayout(gl_composite);
         final Label own = new Label(composite, SWT.NONE);
         own.setText(Messages.SaveKeypairPage_name);
-        own.setLayoutData(gd2);
+        own.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
         owner = new Text(composite, SWT.BORDER | SWT.SINGLE);
         owner.addModifyListener(ml);
-        owner.setLayoutData(gd);
+        owner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
         final Label pass = new Label(composite, SWT.NONE);
         pass.setText(Messages.SaveKeypairPage_password);
-        pass.setLayoutData(gd2);
+        pass.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
         password = new Text(composite, SWT.BORDER | SWT.PASSWORD);
         password.addModifyListener(ml);
-        password.setLayoutData(gd);
-        new Label(composite, SWT.NONE).setLayoutData(gd);
+        password.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        
         passwordverify = new Text(composite, SWT.BORDER | SWT.PASSWORD);
         passwordverify.addModifyListener(ml);
-        passwordverify.setLayoutData(gd);
+        passwordverify.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
         // finish
         setControl(composite);
-    }
-
-    /**
-     * getter for the pagename.
-     *
-     * @return the pagename
-     */
-    public static String getPagename() {
-        return PAGENAME;
     }
 
     @Override
     public IWizardPage getNextPage() {
         return null;
     }
+
+	@Override
+	public String getOwner() {
+		return owner.getText();
+	}
+	
+	/**
+	 * Getter for the entered password
+	 * @return The password which the user has set
+	 */
+	public String getPassword() {
+		return password.getText();
+	}
 }

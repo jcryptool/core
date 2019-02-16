@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2017 JCrypTool Team and Contributors
+* Copyright (c) 2019 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -29,10 +29,12 @@ public class Messages extends NLS {
     public static String FreqAnalysisGraph_shiftgraph1;
     public static String FreqAnalysisUI_descision1label;
     public static String FreqAnalysisUI_descision2label;
+    public static String FreqAnalysisUI_frequency_analysis;
     public static String FreqAnalysisUI_usagedescisionlabel;
     public static String FullAnalysisUI_0;
     public static String FullAnalysisUI_1;
     public static String FullAnalysisUI_2;
+    public static String FullAnalysisUI_3;
     public static String FullAnalysisUI_5;
     public static String FullAnalysisUI_alphabetused;
     public static String FullAnalysisUI_enabledecrOverlay;
@@ -40,6 +42,7 @@ public class Messages extends NLS {
     public static String FullAnalysisUI_firsttablabel;
     public static String FullAnalysisUI_germanreftextname1;
     public static String FullAnalysisUI_germanreftextname2;
+    public static String FullAnalysisUI_frenchreftextname1;
     public static String FullAnalysisUI_graphlabel;
     public static String FullAnalysisUI_keylength;
     public static String FullAnalysisUI_keyoffset;

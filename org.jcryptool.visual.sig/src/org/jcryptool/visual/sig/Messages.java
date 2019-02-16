@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2017 JCrypTool Team and Contributors
+* Copyright (c) 2019 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -30,6 +30,8 @@ public class Messages {
     public static String SigComposite_tbtmNewItem_1;
     public static String SigComposite_tbtmNewItem_2;
     public static String SigComposite_tbtmNewItem_3;
+    public static String SigComposite_nextStep;
+    public static String SigComposite_lastStep;
     public static String SigComposite_txtDescriptionOfStep1;
     public static String SigComposite_txtDescriptionOfStep2;
     public static String SigComposite_txtDescriptionOfStep3;
@@ -46,6 +48,8 @@ public class Messages {
     public static String SigComposite_MessageTextReturn;
     public static String SigComposite_txtDescriptionOfStep4_Success;
     public static String SigComposite_menu;
+    public static String SigComposite_FileInput_Tooltip;
+    public static String SigComposite_Copy;
 
     static {
         // initialize resource bundle

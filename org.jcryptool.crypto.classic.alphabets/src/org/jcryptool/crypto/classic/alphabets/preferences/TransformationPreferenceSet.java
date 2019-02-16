@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -102,7 +102,7 @@ public class TransformationPreferenceSet {
     					true, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
     					false, // upper/lowercase transformation activate flag
     					false, // delete-blanks-transformation activate flag
-    					true, // alphabet transformation activate flag
+    					false, // alphabet transformation activate flag
     					false  // umlaut transformation activate flag
     			)
     	);
@@ -111,8 +111,8 @@ public class TransformationPreferenceSet {
     					AlphabetsManager.getInstance().getAlphabetByName("Upper and lower Latin (A-Z,a-z)"), //$NON-NLS-1$
     					true, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
     					false, // upper/lowercase transformation activate flag
-    					true, // delete-blanks-transformation activate flag
-    					true, // alphabet transformation activate flag
+    					false, // delete-blanks-transformation activate flag
+    					false, // alphabet transformation activate flag
     					true  // umlaut transformation activate flag
     					)
     			);
@@ -121,8 +121,8 @@ public class TransformationPreferenceSet {
     					AlphabetsManager.getInstance().getAlphabetByName("Upper Latin (A-Z)"), //$NON-NLS-1$
     					true, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
     					true, // upper/lowercase transformation activate flag
-    					true, // delete-blanks-transformation activate flag
-    					true, // alphabet transformation activate flag
+    					false, // delete-blanks-transformation activate flag
+    					false, // alphabet transformation activate flag
     					true  // umlaut transformation activate flag
     					)
     			);
@@ -131,8 +131,8 @@ public class TransformationPreferenceSet {
     					AlphabetsManager.getInstance().getAlphabetByName("Lower Latin (a-z)"), //$NON-NLS-1$
     					false, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
     					true, // upper/lowercase transformation activate flag
-    					true, // delete-blanks-transformation activate flag
-    					true, // alphabet transformation activate flag
+    					false, // delete-blanks-transformation activate flag
+    					false, // alphabet transformation activate flag
     					true  // umlaut transformation activate flag
     					)
     			);
@@ -141,8 +141,8 @@ public class TransformationPreferenceSet {
     					AlphabetsManager.getInstance().getAlphabetByName("Playfair/alike alphabet (25chars, w/o \"J\")"), //$NON-NLS-1$
     					true, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
     					true, // upper/lowercase transformation activate flag
-    					true, // delete-blanks-transformation activate flag
-    					true, // alphabet transformation activate flag
+    					false, // delete-blanks-transformation activate flag
+    					false, // alphabet transformation activate flag
     					true  // umlaut transformation activate flag
     					)
     			);
@@ -151,8 +151,8 @@ public class TransformationPreferenceSet {
     					AlphabetsManager.getInstance().getAlphabetByName("ADFGVX Alphabet"), //$NON-NLS-1$
     					true, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
     					true, // upper/lowercase transformation activate flag
-    					true, // delete-blanks-transformation activate flag
-    					true, // alphabet transformation activate flag
+    					false, // delete-blanks-transformation activate flag
+    					false, // alphabet transformation activate flag
     					true  // umlaut transformation activate flag
     					)
     			);
@@ -161,8 +161,8 @@ public class TransformationPreferenceSet {
     					AlphabetsManager.getInstance().getAlphabetByName("Xor Alphabet with 32 characters"), //$NON-NLS-1$
     					true, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
     					true, // upper/lowercase transformation activate flag
-    					true, // delete-blanks-transformation activate flag
-    					true, // alphabet transformation activate flag
+    					false, // delete-blanks-transformation activate flag
+    					false, // alphabet transformation activate flag
     					true  // umlaut transformation activate flag
     					)
     			);
@@ -171,8 +171,8 @@ public class TransformationPreferenceSet {
     					AlphabetsManager.getInstance().getAlphabetByName("Xor Alphabet with 64 characters"), //$NON-NLS-1$
     					true, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
     					false, // upper/lowercase transformation activate flag
-    					true, // delete-blanks-transformation activate flag
-    					true, // alphabet transformation activate flag
+    					false, // delete-blanks-transformation activate flag
+    					false, // alphabet transformation activate flag
     					true  // umlaut transformation activate flag
     					)
     			);
@@ -181,16 +181,20 @@ public class TransformationPreferenceSet {
     	
     }
     
-    public static boolean hasStandardSetting(String alphabetName) {
-    	return standardSettings().containsKey(alphabetName);
+    public static boolean hasDefaultSetting(String alphabetName) {
+    	return hasStandardForAlphaName(alphabetName);
     }
     
     public static TransformData getDefaultSetting(String alphabetName) {
-    	if(standardSettings().containsKey(alphabetName)) {
+    	if(hasStandardForAlphaName(alphabetName)) {
     		return standardSettings().get(alphabetName);
     	}
 
         return new TransformData();
     }
+
+	private static boolean hasStandardForAlphaName(String alphabetName) {
+		return standardSettings().containsKey(alphabetName);
+	}
 
 }

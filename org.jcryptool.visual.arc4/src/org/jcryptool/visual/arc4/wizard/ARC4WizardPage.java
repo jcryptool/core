@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2017 JCrypTool Team and Contributors
+* Copyright (c) 2019 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -55,15 +55,16 @@ public class ARC4WizardPage extends WizardPage {
      */
     protected ARC4WizardPage(String pageName, String description) {
         super(pageName);
-        this.setTitle(pageName);
-        this.setDescription(description);
+        setTitle(pageName);
+        setDescription(description);
         setPageComplete(false);
     }
 
     /**
      * Initialize the page
      */
-    public void createControl(final Composite parent) {
+    @Override
+	public void createControl(final Composite parent) {
 
         // create the background
         page = new Composite(parent, SWT.NONE);
@@ -71,11 +72,12 @@ public class ARC4WizardPage extends WizardPage {
         page.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
         setControl(page);
 
-        input = new Text(page, SWT.NONE);
+        input = new Text(page, SWT.BORDER);
         input.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
         input.setTextLimit(ARC4Con.HEXLEN);
         input.addVerifyListener(new VerifyListener() {
-            public void verifyText(VerifyEvent e) {
+            @Override
+			public void verifyText(VerifyEvent e) {
                 e.doit = true;
                 // delete all whitespace characters
                 e.text = e.text.replaceAll("\\s+", "");

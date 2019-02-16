@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2017 JCrypTool Team and Contributors
+* Copyright (c) 2019 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -35,7 +35,7 @@ public class VectorVisual extends Composite {
     private Label[] vector = new Label[(ARC4Con.DATAVECTOR_VISUAL_LENGTH + 1) * (ARC4Con.DATAVECTOR_VISUAL_LENGTH + 1)];
 
     // style data for every label; in SWT GridData objects should not be reused
-    private GridData[] data = new GridData[vector.length];
+    //private GridData[] data = new GridData[vector.length];
 
     /**
      * Constructor for the VectorVisual class
@@ -47,19 +47,24 @@ public class VectorVisual extends Composite {
         super(parent, SWT.NONE);
         // contains only one object: the group (It has to be that way, because Group dosn't allow to
         // inherit from it)
-        this.setLayout(new GridLayout(1, true));
-        this.group = new Group(this, SWT.SHADOW_IN);
-        // the group in term holds the contents; +1 because of the column names
-        this.group.setLayout(new GridLayout(ARC4Con.DATAVECTOR_VISUAL_LENGTH + 1, true));
-        this.group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        this.group.setText(Messages.VectorVisualGroup);
-        this.group.setToolTipText(Messages.VectorVisualTool);
+        GridLayout gl_this = new GridLayout();
+        gl_this.marginHeight = 0;
+        gl_this.marginWidth = 0;
+        setLayout(gl_this);
+        
+        group = new Group(this, SWT.NONE);
+        group.setLayout(new GridLayout(ARC4Con.DATAVECTOR_VISUAL_LENGTH + 1, true));
+        group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        group.setText(Messages.VectorVisualGroup);
+        group.setToolTipText(Messages.VectorVisualTool);
+        
         // create the labels that hold the data
         drawVector();
         // label those labels that are column names
         setColumnNames();
         // label those labels that are row names
         setRowNames();
+        
     }
 
     /**
@@ -68,14 +73,15 @@ public class VectorVisual extends Composite {
     private void drawVector() {
         for (int a = 0; a < vector.length; a++) {
             // SWT.CENTER for centering text on the label
-            vector[a] = new Label(this.group, SWT.CENTER);
-            data[a] = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+            vector[a] = new Label(group, SWT.CENTER);
+            //data[a] = new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1);
             // make the labels big enough from the beginning as they do not resign themselves when
             // you assign them
             // a text that is to long for their current size
-            data[a].minimumHeight = ARC4Con.VECTOR_VISUAL_LABEL_HEIGHT;
-            data[a].minimumWidth = ARC4Con.VECTOR_VISUAL_LABEL_WIDTH;
-            vector[a].setLayoutData(data[a]);
+			//data[a].minimumHeight = ARC4Con.VECTOR_VISUAL_LABEL_HEIGHT;
+			//data[a].minimumWidth = ARC4Con.VECTOR_VISUAL_LABEL_WIDTH;
+			//vector[a].setLayoutData(data[a]);
+            vector[a].setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
             // they get their groups tool tip in order to have it displayed even if the use
             // technically hovers
             // his mouse over one of the labels and not the group itself
@@ -165,5 +171,6 @@ public class VectorVisual extends Composite {
             vector[convertPosition(i)].setBackground(ColorService.LIGHTGRAY);
         }
     }
+
 
 }

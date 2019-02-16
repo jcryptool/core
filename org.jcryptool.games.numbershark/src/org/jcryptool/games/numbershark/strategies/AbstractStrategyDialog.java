@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2017 JCrypTool Team and Contributors
+* Copyright (c) 2019 JCrypTool Team and Contributors
 * 
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -10,12 +10,10 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.games.numbershark.strategies;
 
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -43,55 +41,49 @@ public class AbstractStrategyDialog extends TitleAreaDialog {
         setShellStyle(SWT.TITLE | SWT.APPLICATION_MODAL);
     }
 
-    protected Group createSliders(Composite parent, final boolean showWarning, int max, int defaultSelection) {
+    protected Group createSliders(Composite parent, final boolean showWarning, int max, int defaultSelection) {   	
+    	
+        final Group groupSliders = new Group(parent, SWT.NONE);
+        GridData gd_groupSliders = new GridData(SWT.FILL, SWT.FILL, true, false);
+        gd_groupSliders.widthHint = 200;
+        groupSliders.setLayoutData(gd_groupSliders);
+        groupSliders.setText(Messages.OptStratDialog_8);
+        groupSliders.setLayout(new GridLayout(3, false));
 
-        final Group compositeSliders = new Group(parent, SWT.NONE);
-        GridData gd_compositeSliders = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gd_compositeSliders.verticalIndent = 5;
-        gd_compositeSliders.widthHint = 430;
-        gd_compositeSliders.horizontalIndent = 27;
-        compositeSliders.setLayoutData(gd_compositeSliders);
-        compositeSliders.setText(Messages.OptStratDialog_8);
-        GridLayout gl_compositeSliders = new GridLayout(3, false);
-        gl_compositeSliders.marginTop = 5;
-        gl_compositeSliders.marginLeft = 2;
-        compositeSliders.setLayout(gl_compositeSliders);
-
-        final Slider minValueSlider = new Slider(compositeSliders, SWT.NONE);
-
+        final Slider minValueSlider = new Slider(groupSliders, SWT.NONE);
+        minValueSlider.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         minValueSlider.setValues(2, 2, max, 1, 1, 10);
 
-        final Spinner minValueSpinner = new Spinner(compositeSliders, SWT.NONE);
+        final Spinner minValueSpinner = new Spinner(groupSliders, SWT.NONE);
         minValueSpinner.setValues(2, 2, max, 0, 1, 10);
 
-        Label lblMinimalValue = new Label(compositeSliders, SWT.NONE);
+        Label lblMinimalValue = new Label(groupSliders, SWT.NONE);
         lblMinimalValue.setText(Messages.OptStratDialog_3);
-        final Slider maxValueSlider = new Slider(compositeSliders, SWT.NONE);
+        
+        final Slider maxValueSlider = new Slider(groupSliders, SWT.NONE);
+        maxValueSlider.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         maxValueSlider.setValues(defaultSelection, 2, max, 1, 1, 10);
 
-        final Spinner maxValueSpinner = new Spinner(compositeSliders, SWT.NONE);
+        final Spinner maxValueSpinner = new Spinner(groupSliders, SWT.NONE);
         maxValueSpinner.setValues(defaultSelection, 2, max, 0, 1, 10);
 
-        Label lblMaximalValue = new Label(compositeSliders, SWT.NONE);
+        Label lblMaximalValue = new Label(groupSliders, SWT.NONE);
         lblMaximalValue.setText(Messages.OptStratDialog_4);
 
-        Label lblNumOfPlayingFields = new Label(compositeSliders, SWT.NONE);
+        Label lblNumOfPlayingFields = new Label(groupSliders, SWT.NONE);
         lblNumOfPlayingFields.setText(Messages.AbstStratDialog_0);
-        GridData gd_numOfPlayFields = new GridData();
-        gd_numOfPlayFields.horizontalSpan = 2;
-        lblNumOfPlayingFields.setLayoutData(gd_numOfPlayFields);
-        final Label lblNumOfPlayingFieldsNumber = new Label(compositeSliders, SWT.RIGHT);
+        
+        final Label lblNumOfPlayingFieldsNumber = new Label(groupSliders, SWT.CENTER);
         lblNumOfPlayingFieldsNumber.setText("\t" + String.valueOf(defaultSelection - 1));
+        
         final Label longRunningProcessWarning = new Label(parent, SWT.NONE);
-        GridData gd_longRunningProcessWarning = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
-        gd_longRunningProcessWarning.verticalIndent = 5;
-        gd_longRunningProcessWarning.horizontalIndent = 37;
-        longRunningProcessWarning.setLayoutData(gd_longRunningProcessWarning);
+        longRunningProcessWarning.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         longRunningProcessWarning.setText(Messages.OptStratDialog_6);
         longRunningProcessWarning.setVisible(false);
 
         maxValueSpinner.addModifyListener(new ModifyListener() {
-            public void modifyText(ModifyEvent e) {
+            @Override
+			public void modifyText(ModifyEvent e) {
                 int max = maxValueSpinner.getSelection();
                 maxValueSlider.setSelection(max);
                 maxSelected = max;
@@ -113,7 +105,8 @@ public class AbstractStrategyDialog extends TitleAreaDialog {
         });
 
         maxValueSlider.addListener(SWT.Selection, new Listener() {
-            public void handleEvent(Event e) {
+            @Override
+			public void handleEvent(Event e) {
                 int max = maxValueSlider.getSelection();
                 maxValueSpinner.setSelection(max);
                 maxSelected = max;
@@ -135,7 +128,8 @@ public class AbstractStrategyDialog extends TitleAreaDialog {
         });
 
         minValueSlider.addListener(SWT.Selection, new Listener() {
-            public void handleEvent(Event e) {
+            @Override
+			public void handleEvent(Event e) {
                 int min = minValueSlider.getSelection();
                 minValueSpinner.setSelection(min);
                 int max = maxValueSlider.getSelection();
@@ -148,8 +142,10 @@ public class AbstractStrategyDialog extends TitleAreaDialog {
                 minSelected = min;
             }
         });
+        
         minValueSpinner.addModifyListener(new ModifyListener() {
-            public void modifyText(ModifyEvent e) {
+            @Override
+			public void modifyText(ModifyEvent e) {
                 int min = minValueSpinner.getSelection();
                 minValueSlider.setSelection(min);
                 int max = maxValueSlider.getSelection();
@@ -163,23 +159,8 @@ public class AbstractStrategyDialog extends TitleAreaDialog {
             }
 
         });
-        return compositeSliders;
-    }
 
-    @Override
-    protected Point getInitialSize() {
-        return new Point(500, 350);
-    }
-
-    /**
-     * Create contents of the button bar.
-     * 
-     * @param parent
-     */
-    @Override
-    protected void createButtonsForButtonBar(Composite parent) {
-        createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
-        createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+        return groupSliders;
     }
 
     public int getMin() {

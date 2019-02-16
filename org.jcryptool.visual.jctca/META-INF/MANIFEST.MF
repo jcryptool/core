@@ -4,15 +4,16 @@ Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.visual.jctca;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
- org.jcryptool.crypto.keystore;bundle-version="1.0.0",
- org.eclipse.ui;bundle-version="3.7.0",
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.bouncycastle,
  net.sourceforge.codec;bundle-version="2.3.0",
- org.bouncycastle;bundle-version="1.48.0",
- org.jcryptool.visual.sig;bundle-version="1.0.0"
+ org.jcryptool.visual.sig;bundle-version="1.0.0",
+ org.jcryptool.crypto.keystore;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.jcryptool.visual.jctca.Activator
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.fonts
 Export-Package: org.jcryptool.visual.jctca.notifiers
 Bundle-Vendor: %Bundle-Vendor
+Automatic-Module-Name: org.jcryptool.visual.jctca

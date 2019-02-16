@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2017 JCrypTool Team and Contributors
+ * Copyright (c) 2019 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -47,25 +47,28 @@ public class EnterCiphertextPage extends TextWizardPage {
 	public EnterCiphertextPage(final RSAData data) {
 		super(PAGENAME, TITLE, null);
 		this.data = data;
-		this.setDescription(Messages.EnterCiphertextPage_enter_ciphertext_text);
-		this.setPageComplete(false);
+		setDescription(Messages.EnterCiphertextPage_enter_ciphertext_text);
+		setPageComplete(false);
 	}
 
 	/**
 	 * sets up all the UI stuff.
 	 * @param parent the parent composite
 	 */
+	@Override
 	public final void createControl(final Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
-		// do stuff like layout et al
 		composite.setLayout(new GridLayout());
+		
 		final Label label = new Label(composite, SWT.NONE);
 		label.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 		label.setText(Messages.EnterCiphertextPage_textentry);
+		
 		text = new Text(composite, SWT.BORDER | SWT.WRAP);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		text.addModifyListener(new ModifyListener() {
 
+			@Override
 			public void modifyText(final ModifyEvent e) {
 				final String trimmed = ((Text) e.widget).getText().replaceAll(WHITESPACE, ""); //$NON-NLS-1$
 				final boolean leer = trimmed.equals(""); //$NON-NLS-1$
@@ -83,6 +86,7 @@ public class EnterCiphertextPage extends TextWizardPage {
 			}
 		});
 		text.addVerifyListener(new VerifyListener() {
+			@Override
 			public void verifyText(final VerifyEvent e) {
 				switch (e.keyCode) {
 				case SWT.DEL:

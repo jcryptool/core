@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2017 JCrypTool Team and Contributors
+* Copyright (c) 2019 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -57,7 +57,7 @@ public class SigVisPluginOpenListener implements SelectionListener {
         KeyStoreAlias pubAlias = (KeyStoreAlias) cmb_keys.getData(cmb_keys.getText());
         KeyStoreAlias privAlias = KeyStoreManager.getInstance().getPrivateForPublic(pubAlias);
         org.jcryptool.visual.sig.algorithm.Input.publicKey = pubAlias;
-        org.jcryptool.visual.sig.algorithm.Input.privateKey = privAlias;
+        org.jcryptool.visual.sig.algorithm.Input.privateKeyJCTCA = privAlias;
         org.jcryptool.visual.sig.algorithm.Input.data = (!lbl_file.getText().isEmpty() ? lbl_file //$NON-NLS-1$
                 .getText() : txt_sign.getText()).getBytes();
         org.jcryptool.visual.sig.algorithm.Input.path = lbl_file.getText();

@@ -40,7 +40,7 @@
       </command>
       <command
             id="org.jcryptool.visual.huffmanCoding.command.ChangeLayout"
-            name="%changeLayout.comand.name">
+            name="%changeLayout.command.name">
       </command>
    </extension>
    <extension
@@ -53,11 +53,12 @@
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
                style="push">
          </command>
+         
          <command
                commandId="org.jcryptool.visual.huffmanCoding.command.ChangeLayout"
                icon="platform:/plugin/org.eclipse.ui/icons/full/obj16/generic_elements.png"
-               style="push"
-               tooltip="%changeLayout.comand.tooltip">
+               style="push"    
+               tooltip="%changeLayout.command.tooltip">
          </command>
       </menuContribution>
    </extension>
