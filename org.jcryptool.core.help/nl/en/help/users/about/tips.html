@@ -11,37 +11,36 @@
 
 	<h2>Using JCrypTool in a network environment or on a USB stick</h2>
 
-	<p>In principle it is possible to use JCrypTool in a network environment or on an external storage medium like a USB stick or a USB hard disk. To
-	enable this you have to do a minor change in one of the configuration files. It is necessary to change the path to the default workspace folder.
-	This folder is used by all plug-ins to store your specific preferences.</p>
+	<p>In principle it is possible to use JCrypTool in a network environment or on an external storage medium like a USB stick or a USB hard disk. To enable this you have to do a minor change in one of the configuration files: It is necessary to change the path to the default workspace folder. This folder is used by all plug-ins to store your specific preferences.</p>
 
-	<p><strong>Windows/ Linux:</strong> Open the file <strong>JCrypTool.ini</strong> in your installation folder and search for the line
-	<strong>-data @user.home/documents/.jcryptool</strong>. Replace <strong>@user.home/documents/.jcryptool</strong> with the absolute path to a folder available in
-	your environment.</p>
+	<p><strong>Windows/ Linux:</strong><br>
+	Open the file <strong>JCrypTool.ini</strong> in your installation folder and search for the line
+	<strong>-data @user.home/documents/.jcryptool</strong>. Replace <strong>@user.home/documents/.jcryptool</strong> with the absolute path to a folder available in your environment.</p>
 
-	<p><strong>Mac OS X:</strong> The required changes are identical with the ones described above for Windows/ Linux. However the file
+	<p><strong>Mac OS X:</strong><br>
+	The required changes are identical with the ones described above for Windows/Linux. However, the file
 	<strong>JCrypTool.ini</strong> is located at <strong>JCrypTool.app\Contents\MacOS</strong> in your installation folder.</p>
 
+<p> </br> </p>
 	<h2>Updating JCrypTool</h2>
 
-	<p>JCrypTool contains an integrated <a href="../general/updates.html">update mechanism</a>. Use the <strong>Help</strong> menu for all update
-	operations. This menu contains the entries <strong>Check for Updates</strong> and <strong>Install new Software</strong>. However JCrypTool does
-	not automatically search for new updates. You can either call the update search manually via the menu entry or you can change the
-	<a href="../general/preferences.html">Preferences</a> on the <strong>Automatic Updates</strong> page to search automatically.</p>
+	<p>JCrypTool contains an integrated <a href="../general/updates.html">update mechanism</a>. Use the <strong>Help</strong> menu for all update operations. This menu contains the entries <strong>Check for Updates</strong> and <strong>Install new Software</strong>. However, JCrypTool does not automatically search for new updates. You can either call the update search manually via the menu entry or you can change the <a href="../general/preferences.html">Preferences</a> on the <strong>Automatic Updates</strong> page to search automatically.</p>
 
 	<div class="screenshot">
 		<img src="../general/images/preferences_updates.png" width="670" height="537" alt="Preferences - Automatic Updates"/>
 	</div>
 
+<p> </br> </p>
 	<h2>Updates are not visible</h2>
 
-	<p>It is possible that even after a successful installation the updates/ changes are not visible. This may occur for newly installed plug-ins as well
-	as updates for existing ones. The reason for that is the JCrypTool workspace folder, which caches and stores all plug-in information. Sometimes this
-	information is not updated and the data stored there does not reflect the current installation any more.</p>
+	<p>It is possible that even after a successful installation the updates/changes are not visible. This may occur for newly installed plug-ins as well as updates for existing ones. The reason for that is the JCrypTool workspace folder, which caches and stores all plug-in information. Sometimes this information is not updated and the data stored there does not reflect the current installation any more.</p>
 
-	<p>To solve this you can either delete the <strong>.jcryptool</strong> folder in your document directory (inside your user home directory) manually or you
-	can tell JCrypTool to do that job. Remember when trying to delete this folder that it is hidden on Mac OS X and Linux. To let JCrypTool delete this folder
-	simply add the parameter <strong>-clean</strong> add the end when launching JCrypTool (e.g. add it to the shortcut on Windows). This automatically deletes the
-	workspace folder. This folder is automatically recreated and initialized when starting JCrypTool the next time. Remember to remove the parameter afterwards.</p>
+	<p>To solve this, you can either delete the <strong>.jcryptool</strong> folder in your document directory (inside your user home directory) manually or you can tell JCrypTool to do that job. For the first case (when trying to delete this folder), please remember that this folder is hidden on Mac OS X and Linux. For the second case (to let JCrypTool delete this folder at each new start) simply add the parameter <strong>-clean</strong> at the end when launching JCrypTool (e.g. add it to the shortcut on Windows). This automatically deletes the workspace folder. This folder is automatically recreated and initialized when starting JCrypTool the next time. Remember to remove the parameter afterwards.</p>
+
+	<p>Here are two examples under Windows how the target command line call could lool like:</br>
+	F:\Downloads\jcryptool\JCrypTool.exe -clean</br>
+	F:\Downloads\jcryptool\JCrypTool.exe -nl de -data %LOCALAPPDATA%\jct-de -clean</br>
+	</p></br></br>
+
 </body>
 </html>
