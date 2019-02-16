@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %BundleName
 Bundle-SymbolicName: org.jcryptool.actions.ui;singleton:=true
-Bundle-Version: 0.9.10
+Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.actions.ui.ActionsUIPlugin
 Bundle-Vendor: %BundleVendor
 Require-Bundle: org.eclipse.ui,
@@ -10,11 +10,11 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jface.databinding,
  org.eclipse.core.expressions,
  org.eclipse.core.databinding,
- org.jcryptool.core.operations;bundle-version="0.9.10",
- org.jcryptool.crypto.flexiprovider;bundle-version="0.9.10",
- org.jcryptool.crypto.keystore;bundle-version="0.9.10",
+ org.jcryptool.core.operations;bundle-version="1.0.0",
+ org.jcryptool.crypto.flexiprovider;bundle-version="1.0.0",
+ org.jcryptool.crypto.keystore;bundle-version="1.0.0",
  de.flexiprovider;bundle-version="1.7.0",
- org.jcryptool.core;bundle-version="0.9.10"
+ org.jcryptool.core;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.core.filesystem,
