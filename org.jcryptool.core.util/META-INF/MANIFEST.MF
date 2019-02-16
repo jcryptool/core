@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.core.util;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 0.9.10
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.core.resources,
- org.jcryptool.core.logging;bundle-version="1.0.0"
+ org.jcryptool.core.logging;bundle-version="0.9.10"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.core.util,
