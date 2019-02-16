@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jcryptool.core;singleton:=true
-Bundle-Version: 0.9.10
+Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.core.CorePlugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
@@ -10,7 +10,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui.intro,
  org.eclipse.equinox.p2.ui.sdk,
  org.eclipse.help,
- org.jcryptool.core.operations;bundle-version="0.9.10"
+ org.jcryptool.core.operations;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %bundleProvider
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
