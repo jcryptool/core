@@ -2,17 +2,17 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.analysis.vigenere; singleton:=true
-Bundle-Version: 0.9.10
+Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.analysis.vigenere.VigenereBreakerPlugin
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.help,
- org.jcryptool.crypto.classic.vigenere;bundle-version="0.9.10",
- org.jcryptool.analysis.freqanalysis;bundle-version="0.9.10",
- org.jcryptool.analysis.friedman;bundle-version="0.9.10",
- org.jcryptool.core.operations;bundle-version="0.9.10",
- org.jcryptool.core.util;bundle-version="0.9.10"
+ org.jcryptool.crypto.classic.vigenere;bundle-version="1.0.0",
+ org.jcryptool.analysis.freqanalysis;bundle-version="1.0.0",
+ org.jcryptool.analysis.friedman;bundle-version="1.0.0",
+ org.jcryptool.core.operations;bundle-version="1.0.0",
+ org.jcryptool.core.util;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: org.jcryptool.core.logging.utils,
