@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jcryptool.crypto.flexiprovider.keystore;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 0.9.10
 Bundle-Activator: org.jcryptool.crypto.flexiprovider.keystore.FlexiProviderKeystorePlugin
 Bundle-Vendor: %bundleProvider
 Require-Bundle: org.eclipse.core.runtime,
@@ -10,7 +10,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.filesystem,
  net.sourceforge.codec;bundle-version="1.7.0",
  de.flexiprovider;bundle-version="1.7.0",
- org.jcryptool.crypto.keystore;bundle-version="1.0.0"
+ org.jcryptool.crypto.keystore;bundle-version="0.9.10"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.jcryptool.core.logging.utils,
