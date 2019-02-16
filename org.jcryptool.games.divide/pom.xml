@@ -10,5 +10,5 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>org.jcryptool.games.divide</artifactId>
 	<packaging>eclipse-plugin</packaging>
-	<version>1.0.0</version>
+	<version>0.9.10</version>
 </project>
