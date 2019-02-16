@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jcryptool.analysis.friedman;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 0.9.10
 Bundle-Activator: org.jcryptool.analysis.friedman.FriedmanPlugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.help,
- org.jcryptool.core.operations;bundle-version="1.0.0"
+ org.jcryptool.core.operations;bundle-version="0.9.10"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: %Bundle-Vendor
