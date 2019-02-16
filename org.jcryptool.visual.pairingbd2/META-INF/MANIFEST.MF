@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.visual.PairingBDII;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 0.9.10
 Bundle-Activator: org.jcryptool.visual.PairingBDII.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.flexiprovider;bundle-version="1.7.0",
- org.jcryptool.webbrowser;bundle-version="1.0.0"
+ org.jcryptool.webbrowser;bundle-version="0.9.10"
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
