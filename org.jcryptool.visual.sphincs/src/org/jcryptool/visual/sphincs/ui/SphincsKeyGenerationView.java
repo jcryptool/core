@@ -215,7 +215,7 @@ public class SphincsKeyGenerationView extends Composite {
 		new Label(this, SWT.NONE);
 		new Label(this, SWT.NONE);
 
-		txtInformationOutput = new Text(this, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
+		txtInformationOutput = new Text(this, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI | SWT.WRAP);
 		GridData gd_txtInformationOutput = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
 		gd_txtInformationOutput.minimumHeight = 15;
 

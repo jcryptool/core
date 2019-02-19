@@ -17,7 +17,7 @@
     <url>https://github.com/jcryptool/crypto/issues</url>
   </issueManagement>
 
-  <modules>  
+  <modules>
     <module>com.lowagie.itext</module>
 	<module>com.thoughtworks.xstream</module>
 	<module>org.jcryptool.analysis</module>

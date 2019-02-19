@@ -959,11 +959,15 @@ public class NormalPuzzle extends Composite {
 					for (int i = 0; i < 9; i++) {
 						for (int j = 0; j < 9; j++) {
 							boardNormal[i][j] = originalSudoku[i][j];
-							boardTextNormal[i][j].setText(Integer.toString(originalSudoku[i][j]));
+							if (!(originalSudoku[i][j] == 0)) {
+								boardTextNormal[i][j].setText(Integer.toString(originalSudoku[i][j]));
+							}
 						}
 					}
 				}
 				updatePossibilitiesNormal();
+				enterModeButton.setSelection(false);
+				solveModeButton.setSelection(true);
 				solveModeButton.notifyListeners(SWT.Selection, new Event());
 				refresh();
 			}
@@ -987,11 +991,12 @@ public class NormalPuzzle extends Composite {
 		restartButton.setEnabled(false);
 		enterModeButton.notifyListeners(SWT.Selection, null);
 		backgroundSolve.cancel();
+		undoButton.setEnabled(false);
+		
 		loading = true;
-		
 		clearPuzzleNormal();
-		
 		loading = false;
+		
 		refresh();
 	}
 
@@ -1178,6 +1183,8 @@ public class NormalPuzzle extends Composite {
 
 	/**
 	 * Removes all entries from the current sudoku.
+	 * Sets all fields a white background.
+	 * Sets the font to FontService.SmallFount.
 	 */
 	private void clearPuzzleNormal() {
 //		long laufzeitArray = 0;
@@ -1192,6 +1199,8 @@ public class NormalPuzzle extends Composite {
 //				t1a = System.currentTimeMillis();
 				boardNormal[i][j] = 0;
 				boardTextNormal[i][j].setText(""); //$NON-NLS-1$
+				boardTextNormal[i][j].setFont(FontService.getSmallFont());
+				boardTextNormal[i][j].setBackground(ColorService.WHITE);
 				for (int k = 0; k < 8; k++) {
 					boardLabelsNormal[i][j][k].setText(""); //$NON-NLS-1$
 				}
@@ -1204,6 +1213,8 @@ public class NormalPuzzle extends Composite {
 				}
 //				t2l = System.currentTimeMillis();
 //				laufzeitListe += t2l - t1l;
+				
+				labelCellNormal[i][j].setBackground(ColorService.WHITE);
 			}
 		}
 //		long t2 = System.currentTimeMillis();
@@ -1427,36 +1438,37 @@ public class NormalPuzzle extends Composite {
 	 * @param y The y coordinate og the field.
 	 */
 	protected void startBlinkingArea(int x, int y) {
-		Thread blinkerRed = new Thread() {
+
+		Thread t = new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
-				labelCellNormal[x][y].setBackground(ColorService.RED);
 				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					LogUtil.logError(SudokuPlugin.PLUGIN_ID, e);
+					for (int i = 0; i < 3; i++) {
+						getDisplay().asyncExec(new Runnable() {
+							
+							@Override
+							public void run() {
+								labelCellNormal[x][y].setBackground(ColorService.RED);
+							}
+						});
+						Thread.sleep(500);
+						getDisplay().asyncExec(new Runnable() {
+							
+							@Override
+							public void run() {
+								labelCellNormal[x][y].setBackground(ColorService.WHITE);
+							}
+						});
+						Thread.sleep(500);
+					}
+				} catch (InterruptedException ex) {
+					LogUtil.logError(SudokuPlugin.PLUGIN_ID, ex);
 				}
 			}
-		};
+		});
 		
-		Thread blinkerWhite = new Thread() {
-			
-			@Override
-			public void run() {
-				labelCellNormal[x][y].setBackground(ColorService.WHITE);
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					LogUtil.logError(SudokuPlugin.PLUGIN_ID, e);
-				}
-			}
-		};
-		
-		for (int i = 0; i < 3; i++) {
-			getDisplay().asyncExec(blinkerRed);
-			getDisplay().asyncExec(blinkerWhite);
-		}
+		t.start();
 	}
 
 	protected Point getEmptySquare(int[][] board) {
