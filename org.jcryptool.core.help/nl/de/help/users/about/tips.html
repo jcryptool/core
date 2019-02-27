@@ -11,38 +11,36 @@
 
 	<h2>JCrypTool im Netzwerk oder auf einem USB-Stick verwenden</h2>
 
-	<p>Prinzipiell kann JCrypTool auch im Netzwerk oder auf einem externen Speichermedium wie einem USB-Stick oder einer USB-Festplatte verwendet werden.
-	Dazu müssen Sie jedoch eine Änderung in einer Konfigurationsdatei vornehmen. Konkret müssen Sie den Pfad zum Workspace-Ordner anpassen. In diesem
-	Ordner speichern alle Plug-ins die von Ihnen getroffenen Einstellungen.</p>
+	<p>Prinzipiell kann JCrypTool auch im Netzwerk oder auf einem externen Speichermedium wie einem USB-Stick oder einer USB-Festplatte verwendet werden. Dazu müssen Sie jedoch eine Änderung in einer Konfigurationsdatei vornehmen. Konkret müssen Sie den Pfad zum Workspace-Ordner anpassen. In diesem Ordner speichern alle Plug-ins die von Ihnen getroffenen Einstellungen.</p>
 
-	<p><strong>Windows/ Linux:</strong> Öffnen Sie die <strong>JCrypTool.ini</strong> in Ihrem Installationsordner und suchen Sie nach der Zeile
-	<strong>-data @user.home/documents/.jcryptool</strong>. Hier müssen Sie <strong>@user.home/documents/.jcryptool</strong> durch einen in Ihrer Umgebung verfügbaren
-	absoluten Pfad ersetzen.</p>
+	<p><strong>Windows/ Linux:</strong><br>
+	Öffnen Sie die <strong>JCrypTool.ini</strong> in Ihrem Installationsordner und suchen Sie nach der Zeile <strong>-data @user.home/documents/.jcryptool</strong>. Hier müssen Sie <strong>@user.home/documents/.jcryptool</strong> durch einen in Ihrer Umgebung verfügbaren absoluten Pfad ersetzen.</p>
 
-	<p><strong>Mac OS X:</strong> Die durchzuführende Änderung ist identisch wie unter Windows oder Linux. Allerdings befindet sich die
-	<strong>JCrypTool.ini</strong> auf Mac OS X unter <strong>JCrypTool.app\Contents\MacOS</strong> in Ihrem Installationsordner.</p>
+	<p><strong>Mac OS X:</strong><br>
+	Die durchzuführende Änderung ist identisch wie unter Windows oder Linux. Allerdings befindet sich die <strong>JCrypTool.ini</strong> auf Mac OS X unter <strong>JCrypTool.app\Contents\MacOS</strong> in Ihrem Installationsordner.</p>
 
+	
+<p> </br> </p>
 	<h2>JCrypTool aktualisieren</h2>
 
-	<p>JCrypTool verfügt über einen integrierten <a href="../general/updates.html">Aktualisierungsmechanismus</a>. Diesen können Sie über das Menü
-	<strong>Hilfe</strong> aufrufen. Dort finden Sie die beiden Einträge <strong>Nach Aktualisierungen suchen</strong> und
-	<strong>Neue Erweiterungen installieren...</strong>. JCrypTool sucht nicht automatisch regelmäßig nach Aktualisierungen. Sie müssen dies entweder manuell
-	aufrufen oder in den <a href="../general/preferences.html">Benutzervorgaben</a> auf der Seite <strong>Automatische Aktualisierungen</strong>
-	die entsprechenden Vorgaben festlegen.</p>
+	<p>JCrypTool verfügt über einen integrierten <a href="../general/updates.html">Aktualisierungsmechanismus</a>. Diesen können Sie über das Menü <strong>Hilfe</strong> aufrufen. Dort finden Sie die beiden Einträge <strong>Nach Aktualisierungen suchen</strong> und <strong>Neue Erweiterungen installieren...</strong>. JCrypTool sucht nicht automatisch regelmäßig nach Aktualisierungen. Sie müssen dies entweder manuell aufrufen oder in den <a href="../general/preferences.html">Benutzervorgaben</a> auf der Seite <strong>Automatische Aktualisierungen</strong> die entsprechenden Vorgaben festlegen.</p>
 
 	<div class="screenshot">
 		<img src="../general/images/preferences_updates.png" width="670" height="537" alt="Benutzervorgaben - Automatische Aktualisierungen"/>
 	</div>
 
+	
+<p> </br> </p>
 	<h2>Aktualisierungen werden nicht angezeigt</h2>
 
-	<p>Es kann vorkommen, dass Aktualisierungen/ Änderungen trotz erfolgreicher Installation nicht angezeigt werden. Das kann bei neuen Plug-ins und auch bei
-	Aktualisierungen von vorhandenen Plug-ins der Fall sein. Ursache hierfür ist der von JCrypTool verwendete Workspace Ordner, in dem die Informationen über
-	alle installierten Plug-ins gespeichert werden. Bei Änderungen kann es nun passieren, dass die dort gespeicherten Einstellungen nicht aktualisiert werden.</p>
+	<p>Es kann vorkommen, dass Aktualisierungen/Änderungen trotz erfolgreicher Installation nicht angezeigt werden. Das kann bei neuen Plug-ins und auch bei Aktualisierungen von vorhandenen Plug-ins der Fall sein. Ursache hierfür ist der von JCrypTool verwendete Workspace Ordner, in dem die Informationen über alle installierten Plug-ins gespeichert werden. Bei Änderungen kann es nun vorkommen, dass die dort gespeicherten Einstellungen nicht aktualisiert werden.</p>
 
-	<p>In diesem Fall können Sie entweder das <strong>.jcryptool</strong> Verzeichnis in Ihrem Dokumente Verzeichnis (innerhalb Ihres Benutzerverzeichnisses)
-	von Hand löschen. Unter Mac OS X und Linux ist dieser Ordner standardmäßig versteckt. Alternativ können Sie einmalig den Parameter <strong>-clean</strong>
-	beim Aufruf von JCrypTool anhängen (z.B. über die Verknüpfung unter Windows). Hiermit wird der Workspace automatisch gelöscht und beim nächsten Start neu angelegt
-	und initialisiert. Anschließend sollten Sie den Parameter wieder entfernen.</p>
+	<p>In diesem Fall können Sie entweder das <strong>.jcryptool</strong> Verzeichnis in Ihrem Dokumente Verzeichnis (innerhalb Ihres Benutzerverzeichnisses) von Hand löschen. Unter Mac OS X und Linux ist dieser Ordner standardmäßig versteckt. Alternativ können Sie einmalig den Parameter <strong>-clean</strong> beim Aufruf von JCrypTool anhängen (z.B. über die Verknüpfung unter Windows). Hiermit wird der Workspace automatisch gelöscht und beim nächsten Start neu angelegt und initialisiert. Anschließend sollten Sie den Parameter wieder entfernen.</p>
+
+	<p>Hier sind zwei Beispiele unter Windows, wie der Kommandozeilen-Aufruf (in dem Eigenschaften-Fenster nach dem Feld "Ziel") aussehen kann:</br>
+	F:\Downloads\jcryptool\JCrypTool.exe -clean</br>
+	F:\Downloads\jcryptool\JCrypTool.exe -nl de -data %LOCALAPPDATA%\jct-de -clean</br>
+	</p></br></br>
+
 </body>
 </html>
