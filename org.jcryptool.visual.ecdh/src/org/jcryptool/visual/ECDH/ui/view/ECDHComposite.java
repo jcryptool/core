@@ -198,7 +198,7 @@ public class ECDHComposite extends Composite {
 				return null;
 			}
 		};
-		defineCommand(resetCommandId, Messages.getString("ECDHComposite.4"), resetHandler); // $NON_NLS-1$
+		defineCommand(resetCommandId, Messages.getString("ECDHComposite.4"), resetHandler); // $NON_NLS-1$ //$NON-NLS-1$
 		addContributionItem(toolBarMenu, resetCommandId, ECDHPlugin.getImageDescriptor("icons/reset.gif"), null, //$NON-NLS-1$
 				SWT.PUSH);
 	}
@@ -207,12 +207,12 @@ public class ECDHComposite extends Composite {
 		settings = new Group(this, SWT.NONE);
 		settings.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		settings.setLayout(new GridLayout());
-		settings.setText("Einstellungen"); //$NON-NLS-1$
+		settings.setText(Messages.getString("ECDHComposite.settingsGroupTitle")); //$NON-NLS-1$
 		
 		btn_showInfos = new Button(settings, SWT.CHECK);
 		btn_showInfos.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
 		btn_showInfos.setSelection(showInformationDialogs);
-		btn_showInfos.setText(Messages.getString("ECDHComposite.5")); //$NON-NLS-1$
+		btn_showInfos.setText(Messages.getString("ECDHComposite.5"));  //$NON-NLS-1$
 		btn_showInfos.addSelectionListener(new SelectionListener() {
 			
 			@Override
@@ -277,7 +277,7 @@ public class ECDHComposite extends Composite {
 							largeCurve = wiz.getLargeCurve();
 							pointG = wiz.getLargeGenerator();
 							largeOrder = wiz.getLargeOrder();
-							textCurve.setText(largeCurve.toString().replace("\n", " ").replace("<sup>", "^").replace("</sup>", ""));
+							textCurve.setText(largeCurve.toString().replace("\n", " ").replace("<sup>", "^").replace("</sup>", "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
 							textGenerator.setText("" + pointG.getXAffin() + ", " + pointG.getYAffin() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						} else {
 							curve = wiz.getCurve();
@@ -554,7 +554,7 @@ public class ECDHComposite extends Composite {
 			
 			@Override
 			public void paintControl(PaintEvent e) {
-				id = ECDHPlugin.getImageDescriptor("icons/key.png").createImage();
+				id = ECDHPlugin.getImageDescriptor("icons/key.png").createImage(); //$NON-NLS-1$
 				if (keyAPressed && keyBPressed) {	
 					e.gc.drawImage(id, 305, 0);
 				}
