@@ -1,80 +1,81 @@
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	  <title>Demonstration of Diffie-Hellman key exchange over elliptic curves (ECDH)</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>Demonstration des Diffie-Hellman Schl&uuml;sselaustausch mittels elliptischen Kurven (ECDH)</title>
 </head>
 
 <body>
 
-<h1>Demonstration of Diffie-Hellman key exchange over elliptic curves (ECDH)</h1>
+<h1>Demonstration des Diffie-Hellman Schl&uuml;sselaustausch mittels elliptischen Kurven (ECDH)</h1>
 
-<p>The Diffie-Hellman key exchange is a protocol that allows two parties to establish a shared secret key over an insecure communications channel.<br>
-The Diffie-Hellman protocol is possible over  mathematical functions, like the multiplicative group of integers mod p or over elliptic curves. Here we use elliptic curves.</p>
-<h2>Protocol explanation</h2>
-  <h3>Step 1. Establish public parameters</h3>
-    <p>Alice and Bob agree on an elliptic curve and a generator <i>G</i> which is a point on the curve.</p>
-  <h3>Step 2. Create secret keys</h3>
-    <p>Alice an Bob both choose a secret key <i>d</i> which they will keep to themselves.</p>
-  <h3>Step 3. Create shared keys</h3>
-    <p>Alice and Bob will now multiply <i>G</i> by their own secret keys (scalar multiplication).</p>
-  <h3>Step 4. Exchange shared keys</h3>
-    <p>Alice and Bob will exchange their shared keys.</p>
-  <h3>Step 5. Create session key</h3>
-    <p>Alice and Bob will now both multiply each others shared key with their own secret key.<br>
-       The session key is the X-value of the calculated key-point.</p>
+<p>Der Diffie-Hellman-Schl&uuml;sselaustausch ist ein Protocol, dass zwei Partien erm&ouml;glicht einen geteilten geheimen Schl&uuml;ssel &uuml;ber eine ungesicherte Leitung zu vereinbaren.<br>
+Das Diffie-Hellman Protokoll beruht auf mathematischen Funktionen, sowie multiplakativen Gruppen von ganzen Zahlen mod p oder elliptischen Kurven. In diesem Beispiel werden elliptische Kurven benutzt.</p>
 
-<h2>Curve demands for cryptography</h2>
-  <p>In order to use elliptic curves for (safe) cryptography, the curve needs to meet some demands.<br>
-  In the demonstration it's possible to perform the exchange using small elliptic curves. This form is not safe for the actual key exchange because small elliptic curves cannot meet these demands.<br>
-  These demands are described in e.g. "SEC 1: Elliptic Curve Cryptography" from Certicom Research (<a href="http://www.secg.org/collateral/sec1_final.pdf">download here</a>).</p>
+<h2>Erl&auml;uterung des Protokolls</h2>
+  <h3>Schritt 1. Das Etablieren von &ouml;ffentlichen Parametern</h3>
+  	<p>Alice und Bob einigen sich auf eine elliptische Kurve und einen Generator <i>G</i>, welcher ein Punkt auf der Kurve ist.</p>
+  <h3>Schritt 2. Das Erstellen von privaten Schl&uuml;sseln</h3>
+  	<p>Alice und Bob suchen sich beide einen privaten Schl&uuml;ssel <i>d</i> aus, den sie geheim halten.</p>
+  <h3>Schritt 3. Das Erstellen von &ouml;ffentlichen Schl&uuml;sseln</h3>
+    <p>Alice und Bob multiplizieren jetzt <i>G</i> mit ihrem privaten Schl&uuml;ssel (Skalarmultiplikation).</p>
+  <h3>Schritt 4. Der Austausch der &ouml;ffentlichen Schl&uuml;ssel</h3>
+    <p>Alice und Bob teilen nun jeweils ihren &ouml;ffentlichen Schl&uuml;ssel miteinander.</p>
+  <h3>Schritt 5. Das Erstellen eines Sitzungsschl&uuml;ssels</h3>
+    <p>Alice und Bob multiplizieren nun jeweils den &ouml;ffentlichen Schl&uuml;ssel des Anderen mit ihrem eigenem geheimen Schl&uuml;ssel. Der Sitzungsschl&uuml;ssel ist der X-Wert des berechneten Schl&uuml;sselpunkts.</p>
+
+<h2>Voraussetzungen f&uuml;r elliptische Kurven in der Kryptographie</h2>
+  <p>F&uuml;r das sichere Anwenden elliptischer Kurven in der Kryptographie m&uuml;ssen bestimmte Vorrausetzungen gegeben sein.<br>
+  In dieser Demonstration k&ouml;nnen auch kleine elliptische Kurven verwendet werden. Diese Form der Berechnung ist f&uuml;r den echten Schl&uuml;sselaustausch ungeeignet, 
+  da kleine elliptische Kurven den Anspr&uuml;chen nicht entsprechen. Die Voraussetzungen an elliptische Kurven k&ouml;nnen nachgeschlagen werden, 
+  zum Beispiel in "SEC 1: Elliptic Curve Cryptography" from Certicom Research (<a href="http://www.secg.org/collateral/sec1_final.pdf">Hier herunterzuladen</a>).</p>
   <h3>E(Fp):</h3>
-    <b>E(Fp):</b> the curve itself.<br>
-    <b>t:</b> the desired security level in bits. <i>t</i> can be {56, 64, 80, 96, 112, 128, 192, 256}<br>
-    <b>p:</b> is prime such that [log2(<i>p</i>)] = 2<i>t</i> if <i>t</i> != 256 and such that [log2(<i>p</i>)] = 521 if <i>t</i> = 256.<br>
-    <b>G:</b> a point on the curve used as base.<br>
-    <b>n:</b> a prime number which is the order of <i>G</i>.<br>
-    <b>h:</b> the cofactor. <i>h</i> = #<i>E(Fp)</i> / <i>n</i>.<br><br>
+    <b>E(Fp):</b> die Kurve selbst.<br>
+    <b>t:</b> das gew&uuml;nschte Sicherheitslevel in Bits. <i>t</i> kann einen der folgenden Werte halten {56, 64, 80, 96, 112, 128, 192, 256}<br>
+    <b>p:</b> ist eine Primzahl so das [log2(<i>p</i>)] = 2<i>t</i> wenn <i>t</i> != 256 und so das [log2(<i>p</i>)] = 521 wenn <i>t</i> = 256.<br>
+    <b>G:</b> ein Punkt auf der Kurve, welcher als Basis dient.<br>
+    <b>n:</b> eine Primzahl der Ordnung <i>G</i>.<br>
+    <b>h:</b> der Kofaktor. <i>h</i> = #<i>E(Fp)</i> / <i>n</i>.<br><br>
     - #<i>E(Fp)</i> != <i>p</i><br>
-    - <i>p</i>^B != 1 mod(<i>n</i>) for any 1 <= B < 20<br>
-    - <i>h</i> is a whole number<br>
-    - <i>h</i> is <= 4
+    - <i>p</i>^B != 1 mod(<i>n</i>) &uuml;ber alle 1 <= B < 20<br>
+    - <i>h</i> ist eine nat&uuml;rliche Zahl<br>
+    - <i>h</i> ist <= 4
 
   <h3>E(F2^m):</h3>
-    <b>E(F2^m):</b> the curve itself.<br>
-    <b>t:</b> the desired security level in bits. <i>t</i> can be {56, 64, 80, 96, 112, 128, 192, 256}<br>
-    <b>'t:</b> the smallest integer in the set {64, 80, 96, 112, 128, 192, 256, 512} that is greater than <i>t</i><br>
-    <b>m:</b> an integer in the set {113, 131, 163, 193, 233, 239, 283, 409, 571} so that 2<i>t</i> < m < 2<i>'t</i>.<br>
-    <b>f(x):</b> an irreducible polynomial to act as generator of <i>F(2^m)</i>.<br>
-    <b>G:</b> a base point on the curve.<br>
-    <b>n:</b> a prime number which is the order of <i>G</i>.<br>
-    <b>h:</b> the cofactor. <i>h</i> = #<i>E(F2^m)</i> / <i>n</i>.<br><br>
-    - <i>b</i> is not 0<br>
+    <b>E(F2^m):</b> die Kurve selbst.<br>
+    <b>t:</b> das gew&uuml;nschte Sicherheitslevel in Bits. <i>t</i> kann einen der folgenden Werte halten {56, 64, 80, 96, 112, 128, 192, 256}<br>
+    <b>'t:</b> die kleinste ganze Zahl in der Menge {64, 80, 96, 112, 128, 192, 256, 512} that is greater than <i>t</i><br>
+    <b>m:</b> eine ganze Zahl aus der Menge {113, 131, 163, 193, 233, 239, 283, 409, 571} so that 2<i>t</i> < m < 2<i>'t</i>.<br>
+    <b>f(x):</b> ein irreduzibles Polynom, welches als Generator f&uuml;r <i>F(2^m)</i> genutzt wird.<br>
+    <b>G:</b> der Basispunkt auf der Kurve.<br>
+    <b>n:</b> eine Primzahl der Ordnung <i>G</i>.<br>
+    <b>h:</b> der Kofactor. <i>h</i> = #<i>E(F2^m)</i> / <i>n</i>.<br><br>
+    - <i>b</i> ist nicht 0<br>
     - #<i>E(F2^m)</i> != <i>2^m</i><br>
-    - <i>2^mB</i> != 1 mod(<i>n</i>) for any 1 <= B < 20<br>
-    - <i>h</i> is a whole number<br>
-    - <i>h</i> is <= 4
+    - <i>2^mB</i> != 1 mod(<i>n</i>) &uuml;ber alle 1 <= B < 20<br>
+    - <i>h</i> ist eine ganze Zahl<br>
+    - <i>h</i> ist <= 4
 
-<h2>The ECDH demonstration</h2>
-<p>The demonstration shows how Alice and Bob establish a shared key using the Diffie-Hellman key exchange protocol over elliptic curves.<br>
-It's possible to perform the protocol with small or large elliptic curves.<br><br>
-By pressing each large button in the demonstration, the protocol will proceed to its next step.<br>
-It's possible to get a description for each action by selecting the "Show information dialogs" checkbox in the Options panel.<br>
-<img src="showInfo.PNG">
+<h2>Die ECDH Demonstration</h2>
+
+
+<p>Die Demonstration veranschaulicht den Austausch eines &ouml;ffentlichen Schl&uuml;ssels zwischen Alice und Bob 
+durch den Diffie-Hellman Schl&uuml;sselaustausch &uuml;ber elliptische Kurven. Das Protokoll kann mit kleinen oder gro&szlig;en elliptischen Kurven ausgef&uuml;hrt werden.<br><br>
+Um den n&auml;chsten Schritt im Protokoll auszuf&uuml;hren, dr&uuml;cken Sie die beiden gro&szlig;en Schaltkn&ouml;pfe.<br>
+Selektieren Sie das Feld „Zeige Info-Popups“ im unteren Einstellungsbereich des Fensters um eine Beschreibung des jeweiligen Schrittes zu erhalten.<br>
+<img src="showInfo.PNG" style="width:30%;">
 <br><br>
-After pressing the button "Set public parameters" it's possible to select an elliptic curve and a generator point <i>G</i>.<br>
-<img src="setParameters.PNG"><br><br>
-When the parameters are set, they will appear in the "Public parameters" panel.<br>
-<img src="parameters.PNG"><br><br>
-By selecting each active button, other buttons will become active. When a step is completed the outline of the button will change from red to green.<br>
-<img src="greenButton.PNG"><br><br>
-When every step is completed, and Alice and Bob successfully created a session key, a key will appear at the bottom of the screen.<br>
-<img src="key.PNG"><br><br>
-To start over, press the "Reset" button in the right corner of the demonstration and all the settings will be erased.<br>
-To save the results of the demonstration, select  to where you want to save the results and press "Save".<br>
-<img src="save.PNG"><br><br>
+Nachdem bet&auml;tigen des Schaltknopfes mit der Beschriftung „&ouml;ff. Parameter Einstellen“, ist es m&ouml;glich eine elliptische Kurve und einen Generatorpunkt <i>G</i> auszuw&auml;hlen.<br>
+<img src="setParameters.PNG" style="width:80%;"><br><br>
+Sobald die Parameter ausgew&auml;hlt sind, erscheinen sie im Feld das als „&ouml;ffentliche Parameter“ markiert ist.<br>
+<img src="parameters.PNG" style="width:80%;"><br><br>
+Nachdem die aktiven Schaltkn&ouml;pfe ausgew&auml;hlt sind, wird der n&auml;chste Schaltknopf aktiv. Nachdem ein Schritt im Protokoll erfolgreich ausgef&uuml;hrt ist, ver&auml;ndert sich die Farbe des Knopfes von Rot zu Gr&uuml;n.<br>
+<img src="greenButton.PNG" style="width:30%;"><br><br>
+Wenn alle Schritte abgeschlossen sind und Alice und Bob erfolgreich einen Sitzungsschl&uuml;ssel etabliert haben erscheint ein Schl&uuml;ssel unten im Fenster.<br>
+<img src="key.PNG" style="width:30%;"><br><br>
 
+Um erneut zu Beginnen dr&uuml;cken Sie den „Zur&uuml;cksetzen“ Schaltknopf oben rechts. Dieser setzt alle Einstellungen zur&uuml;ck.<br>
 
-<p>For more information on elliptic curve calculations, see the "Demonstration of point addition over elliptic curves (EC)" or <a href="http://en.wikipedia.org/wiki/Elliptic_curves">http://en.wikipedia.org/wiki/Elliptic_curves</a>.</p><br>
+<p>F&uuml;r mehr Information zu Berechnungen mit elliptischen Kurven, besuchen Sie "Demonstration of point addition over elliptic curves (EC)" or <a href="https://de.wikipedia.org/wiki/Elliptische_Kurve">https://de.wikipedia.org/wiki/Elliptische_Kurve</a>.</p><br>
 
 </body>
 </html>
