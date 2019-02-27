@@ -10,14 +10,14 @@
 
 <h1>Merkle Signature Schemes (MSS, XMSS, XMSS^MT)</h1>
 
-<p>This online help explains the basic functions of the <b>Merkle Signature Scheme</b> plugin.</p>
+<p>This online help explains the basic functions of the <b>Merkle signature scheme</b> plugin.</p>
 <p>The plugin can be started either from the menu <b>Visuals</b> or from the Crypto Explorer in the <b>Visuals</b> tab.</p>
 
 <p>Besides Merkle signatures, JCT also contains <a href="PLUGINS_ROOT/org.jcryptool.visual.sphincs/$nl$/help/content/Sphincs.html">SPHINCS</a> as an example of a modern PQC signature scheme &ndash; a good and up-to-date overview of such schemes can be found in Wikipedia [1,2]. <a href="PLUGINS_ROOT/org.jcryptool.visual.wots/$nl$/help/content/index.html">WOTS</a> in the variant WOTS+ is a component of both, XMSS and SPHINCS.</p>
 
 <p>XMSS has been <b>standardized</b> by the IETF: The Request for Comments (RFC) 8391 [6] was published in May 2018 for the variants XMSS (a single-tree scheme) and XMSS^MT (a multi-tree variant of XMSS).</p>
 
-<p>In 2019, the US National Institute of Standards and Technology (NIST) announced its intention [5] to promulgate standards for stateful hash-based signatures (HBS) based on XMSS and Leighton-Micali signatures (LMS) &ndash; in addition to the NIST PQC competition [3,4]. Hanno Boeck [10] stated: "XMSS is assumed to be postquantum secure, but it’s a stateful scheme and thus often not a drop-in replacement for existing signature schemes."</p>
+<p>In 2019, the US National Institute of Standards and Technology (NIST) announced its intention [5] to promulgate standards for stateful hash-based signatures (HBS) based on XMSS and Leighton-Micali signatures (LMS) &ndash; in addition to the NIST PQC competition [3,4]. Hanno Boeck [10] stated: "XMSS is assumed to be post-quantum secure, but it’s a stateful scheme and thus often not a drop-in replacement for existing signature schemes."</p>
 
 
 
@@ -47,8 +47,11 @@
 
 <h4>Introduction</h4>
 
-<p>Using the Merkle Signature Scheme, messages can be signed quantum computer resistant. The signature consists of two parts: the one-time signature (OTS) and the MerkleTree (a binary hashtree). The advantage of MerkleTrees is, that only one Merkle public key is needed for several one-time signature's public keys.</p>
-<p>This is implemented by merging the hash values of the one-time public keys as leafs into a single hash value at the top of the tree. This value is the root node and is the major part of the Merkle public key.</p>
+<p>Using the Merkle signature scheme, messages can be signed quantum computer resistant. Merkle signatures belong to the category of hash-based signatures using so-called one-time signatures (OTS). As the term implies, a single key pair must only be used once. More details can be found in [11,12].</p>
+
+<p> The Merkle signature consists of two parts: the one-time signature (OTS) and the Merkle tree (a binary hashtree). The advantage of Merkle trees is, that only one Merkle public key is needed for several one-time signature's public keys.</p>
+
+<p>This is implemented by merging the hash values of the one-time public keys (leafs) into a single hash value at the top of the tree. This value is the root node and is the major part of the Merkle public key.</p>
 
 
 <h4>Structure</h4>
@@ -65,8 +68,8 @@
 
 <h4>Introduction</h4>
 
-<p>The eXtended Merkle signature scheme (XMSS) is a method based on the Merkle signature scheme. The main difference to MSS is the usage of bitmasks and L-Trees. Because of these two extensions no collision-resistant hash function is needed any more. Only a second preimage resistant hash function is needed to guarantee security. This has two advantages:
-a) As a second preimage-resistant hash function is a weaker prerequisite, the XMSS is stronger (harder to break).
+<p>The eXtended Merkle signature scheme (XMSS) is a method based on the Merkle signature scheme. The main difference to MSS is the usage of bitmasks and L-Trees. Because of these two extensions no collision-resistant hash function is needed any more. Only a second preimage resistant hash function is needed to guarantee security. This has two advantages:<br>
+a) As a second preimage-resistant hash function is a weaker prerequisite, the XMSS is stronger (harder to break).<br>
 b) The signature can be smaller with the same level of security as when using MSS.</p>
 
 <p>As one-time signature the XMSS uses the Winternitz one-time signature (WOTS). There are two different variations, WOTS+ or WOTS$. In this plugin we use the WOTS+ scheme. In both variations, there is a freely chosen number of WOTS key pairs generated out of a random seed with the help of a pseudo-random key generator.
@@ -101,7 +104,7 @@ Altogether, 2^h messages with a length of m bytes can be signed.</p>
 <p> </br> </p>
 <h2 id="Chapter3">3) eXtended Merkle signature scheme MultiTree (XMSS^MT)</h2>
 
-<p>The eXtended Merkle MultiTree signature scheme (XMSS^MT) is based on multiple XMSS trees chained together. The advantage compared to a simple XMSS tree which has the same size, is the reduced computation effort to create the key pair. The single trees are connected, by signing the XMSS root node of a lower layer. The lowest layer eventually is used to sign messages.</p>
+<p>The "eXtended Merkle MultiTree signature scheme" (XMSS^MT) is based on multiple XMSS trees chained together. The advantage compared to a simple XMSS tree which has the same size, is the reduced computation effort to create the key pair. The single trees are connected, by signing the XMSS root node of a lower layer. The lowest layer eventually is used to sign messages.</p>
 
 <p>Why is MultiTree key generation faster?</p>
 <p>The single trees can be generated separately. The main tree is formed by each single tree, signing the lower levels' next tree. Of course the lowest level does not sign single trees anymore, but actual messages. So the point in time when a single tree signs the root node of another single tree, does not necessarily have be at the key generation. Certain single trees can be created just before they are needed.</p>  
@@ -133,9 +136,9 @@ Altogether, 2^h messages with a length of m bytes can be signed.</p>
 
 
 <br>
-<h4>Tab 2: MerkleTree</h4>
+<h4>Tab 2: Merkle Tree</h4>
 	
-<img src="img/page2.png" alt="MerkleTree" width="70%"/>  <!-- be: Statt width="1200" -->
+<img src="img/page2.png" alt="Merkle Tree" width="70%"/>  <!-- be: Statt width="1200" -->
 <p>This tab is used to display the created Merkle tree. The tree consists of leafs, the nodes, and the root node. The root node is also known as the Merkle public key.
 If a node is chosen, the path to the root node is marked yellow.
 The verification path, which is part of the signature, is marked red.
@@ -143,7 +146,7 @@ If a node or a leaf is chosen its hash value is displayed in the upper left area
 The full tree can be viewed by clicking <b>Hide Description</b>.
 If you are in the XMSS^MT mode, the multitrees will display in different colors.</p>
 
-<img src="img/extended.png" alt="MerkleTree" width="70%"/>  <!-- be: Statt width="1200" -->
+<img src="img/extended.png" alt="Merkle Tree" width="70%"/>  <!-- be: Statt width="1200" -->
 
 
 
@@ -151,7 +154,7 @@ If you are in the XMSS^MT mode, the multitrees will display in different colors.
 <h4>Tab 3: Key Pair</h4>
 
 <p>The public key and the private key are shown in the third tab.</p>
-<img src="img/keypair.png" alt="MerkleTree" width="70%"/>  <!-- be: Statt width="1200" -->
+<img src="img/keypair.png" alt="Merkle Tree" width="70%"/>  <!-- be: Statt width="1200" -->
 
 
 <p></p><br>
@@ -187,7 +190,7 @@ Clicking on <b>Verify</b> tries to verify the signature with the selected leaf b
 <p> </br> </p>
 <h2 id="Chapter5">5) References and Sources</h2>
 
-<p>Additional Information about Post-Quantum Cryptography (PQC) and MerkleTree-based signatures can be found here:</p>
+<p>Additional Information about Post-Quantum Cryptography (PQC) and Merkle tree-based signatures can be found here:</p>
 
 <ul>
   <li>[1] Wikipedia: <br>
@@ -224,6 +227,13 @@ Clicking on <b>Verify</b> tries to verify the signature with the selected leaf b
   
   <li>[10] Hanno Boeck:<br>
   <a href="https://www.feistyduck.com/bulletproof-tls-newsletter/issue_42_does_tls_have_to_change_constantly_to_make_it_future_proof.html">Bulletproof TLS Newsletter #42</a>, June 2018</li>
+  
+  <li>[11] Andreas Hülsing:<br>
+  <a href="http://tuprints.ulb.tu-darmstadt.de/3651/1/Thesis.pdf">Practical Forward Secure Signatures using Minimal Security Assumptions</a>, Ph.D. thesis, 2013</li>
+  
+  <li>[12] TU Darmstadt:<br>
+  <a href="http://www.pqsignatures.org/index/hbs.html">Project "Practical Hash-based Signatures"</a>, 2013</li>
+
 </ul>	
 <br>
 

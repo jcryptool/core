@@ -17,7 +17,7 @@
 
 <p>XMSS wurde inzwischen von der IETF <b>standardisiert</b>: Der Request for Comments (RFC) 8391 [6] wurde im Mai 2018 für die Varianten XMSS (ein Einzel-Baum-Verfahren) und XMSS^MT (eine Mehrfach-Baum-Variante von XMSS) veröffentlicht.</p>
 
-<p>Anfang 2019 bekundete das US National Institute of Standards and Technology (NIST) seine Absicht [5], auch Standards bekannt zu machen für zustandsbehaftete (stateful) Hash-basierte Signaturen (HBS), basierend auf XMSS- und Leighton-Micali-Signaturen (LMS) (zusätzlich zur NIST PQC competition [3,4]). Hanno Boeck [10] stated: "XMSS is assumed to be postquantum secure, but it’s a stateful scheme and thus often not a drop-in replacement for existing signature schemes."</p>
+<p>Anfang 2019 bekundete das US National Institute of Standards and Technology (NIST) seine Absicht [5], auch Standards bekannt zu machen für zustandsbehaftete (stateful) Hash-basierte Signaturen (HBS), basierend auf XMSS- und Leighton-Micali-Signaturen (LMS) (zusätzlich zur NIST PQC competition [3,4]). Hanno Boeck [10] stated: "XMSS is assumed to be post-quantum secure, but it’s a stateful scheme and thus often not a drop-in replacement for existing signature schemes."</p>
 
 
 
@@ -40,7 +40,11 @@
 
 <h4>Einleitung</h4>
 
-<p>Mit dem Merkle Signaturverfahren l&aumlsst sich eine Nachricht Quantencomputer-resistent signieren.</p>
+<p>Mit dem Merkle-Signaturverfahren l&aumlsst sich eine Nachricht Quantencomputer-resistent signieren. Merkle-Signaturen gehören zur Kategorie der Hash-basierten Signaturen, die sogenannte Einmal-Signaturen (OTS) verwenden. Wie die Bezeichnung impliziert, darf man ein einzelnes Schlüsselpaar nur einmal verwenden. Weitere Details finden sich bspw. in [11,12].</p>
+
+<p> Eine Merkle-Signatur besteht aus 2 Teilen: der Einmal-Signatur (OTS) und dem Merkle tree (einem binären Hashbaum). Der Vorteil von Merkle trees ist, dass man nur einen Merkle Public Key braucht für die verschiedenen OTS-Public Keys.</p>
+
+<p>Implementiert wird dies, indem man die Hash-Werte der OTS-Public Keys (Blätter) mit dem einen Hashwert an der Spitze des Baumes verschmilzt. Dieser Wert im Wurzelknoten ist der entscheidende Teil des Merkle Public Key.</p>
 
 <h4>Aufbau</h4>
 
@@ -62,8 +66,8 @@
 -->
 
 <h4>Einleitung</h4>
-<p>Das eXtended Merkle-Signature-Scheme (XMSS) basiert auf dem Merkle-Signature-Scheme (MSS) und erweitert dieses Verfahren. Die Hauptunterschiede zum MSS-Verfahren sind der Einsatz einer Bitmaske und eines sogenannten L-Trees. Durch diese beiden Erweiterungen kann auf eine kollisionsresistente Hashfunktion verzichtet werden und diese durch eine Second-Preeimage-resistente Hashfunktion ersetzt werden. Das hat zwei Vorteile:
-a) Da eine Second-Preeimage-resistente Hashfunktion eine schw&aumlchere Annahme ist, ist das XMSS-Verfahren st&aumlrker (schwerer zu brechen).
+<p>Das eXtended Merkle-Signature-Scheme (XMSS) basiert auf dem Merkle-Signature-Scheme (MSS) und erweitert dieses Verfahren. Die Hauptunterschiede zum MSS-Verfahren sind der Einsatz einer Bitmaske und eines sogenannten L-Trees. Durch diese beiden Erweiterungen kann auf eine kollisionsresistente Hashfunktion verzichtet werden und diese durch eine Second-Preeimage-resistente Hashfunktion ersetzt werden. Das hat zwei Vorteile:<br>
+a) Da eine Second-Preeimage-resistente Hashfunktion eine schw&aumlchere Annahme ist, ist das XMSS-Verfahren st&aumlrker (schwerer zu brechen).<br>
 b) Die erstellte Signatur ist kleiner.</p>
 <p>XMSS benutzt als Einmalsignatur (OTS) die Winternitz-OTS (WOTS). Es gibt zwei verschiedene Varianten, WOTS+ und WOTS$. In diesem Plug-in verwenden wir WOTS+. In beiden Varianten kann eine beliebige Anzahl von Einmalschl&uumlsselpaaren mit Hilfe eines Seedwertes und eines Pseudozufallszahlengenerators erzeugt werden.
 Es k&ouml;nnen insgesamt 2^h Nachrichten signiert werden. Die L&auml;nge der Nachricht (Anzahl an Bytes m) h&auml;ngt von der verwendeten Hashfunktion ab, ist also in der praktischen Anwendung zu vernachl&auml;ssigen.</p>
@@ -97,7 +101,7 @@ Es k&ouml;nnen insgesamt 2^h Nachrichten signiert werden. Die L&auml;nge der Nac
 <p> </br> </p>
 <h2 id="Kapitel3">3) eXtended Merkle-Signatur MultiTree (XMSS^MT)</h2>
 
-<p>Das MultiTree eXtended Merkle signature scheme (XMSS^MT) beruht auf mehreren miteinander verkn&uumlpften XMSS-B&aumlumen. Der Vorteil im Vergleich zu einem einfachen, gleich gro&szligen XMSS-Baum liegt im verringerten Berechnungsaufwand bei der Schl&uumlsselerzeugung. Die Teilb&aumlume werden verkn&uumlpft, indem ein XMSS-Baum die Wurzel des n&aumlchsten Baumes signiert. Dadurch entstehen Ebenen (layer). Die unterste Ebene signiert schlie&szlig;lich Nachrichten.</p>
+<p>Das "MultiTree eXtended Merkle signature scheme" (XMSS^MT) beruht auf mehreren miteinander verkn&uumlpften XMSS-B&aumlumen. Der Vorteil im Vergleich zu einem einfachen, gleich gro&szligen XMSS-Baum liegt im verringerten Berechnungsaufwand bei der Schl&uumlsselerzeugung. Die Teilb&aumlume werden verkn&uumlpft, indem ein XMSS-Baum die Wurzel des n&aumlchsten Baumes signiert. Dadurch entstehen Ebenen (layer). Die unterste Ebene signiert schlie&szlig;lich Nachrichten.</p>
 
 <p>Warum ist die MultiTree Schl&uuml;sselerzeugung schneller?<p>
 
@@ -132,17 +136,17 @@ Es k&ouml;nnen insgesamt 2^h Nachrichten signiert werden. Die L&auml;nge der Nac
 
 
 <br>
-<h4>Tab 2: MerkleTree</h4>
+<h4>Tab 2: Merkle Tree</h4>
 	
-<img src="img/page2.png" alt="MerkleTree" width="70%"/>  <!-- be: Statt width="1200" -->
-<p>In diesem Tab kann der MerkleTree inspiziert werden. Der Baum besteht aus den Leafs (Bl&aumlttern, unterste Ebene), den Nodes und dem Root-Node, auch Merkle-Public-Key genannt.
+<img src="img/page2.png" alt="Merkle Tree" width="70%"/>  <!-- be: Statt width="1200" -->
+<p>In diesem Tab kann der Merkle tree inspiziert werden. Der Baum besteht aus den Leafs (Bl&aumlttern, unterste Ebene), den Nodes und dem Root-Node, auch Merkle-Public-Key genannt.
 Wird auf einen Node geklickt, dann wird in Gelb der Pfad zur Wurzel angezeigt.
 In Rot wird der Verifizierungspfad angezeigt, welcher ein Teil der Signatur ist.
 Klickt man einen Node oder ein Blatt (Leaf) an, wird oben links der zugeh&oumlrige Hashwert angezeigt.
 Mit einem Klick auf <b>Beschreibung ausblenden</b> wird der ganze Baum sichtbar.
 In der XMSS^MT Varriante werden die einzelnen Bäume farblich hervorgehoben.</p>
 
-<img src="img/expanded.png" alt="MerkleTree" width="70%"/>  <!-- be: Statt width="1200" -->
+<img src="img/expanded.png" alt="Merkle Tree" width="70%"/>  <!-- be: Statt width="1200" -->
 
 
 
@@ -151,7 +155,7 @@ In der XMSS^MT Varriante werden die einzelnen Bäume farblich hervorgehoben.</p>
 <h4>Tab 3: Schl&uumlsselpaar</h4>
 
 <p>Im dritten Tab wird der &oumlffentliche Schl&uumlssel und der private Schl&uumlssel angezeigt.</p>
-<img src="img/schluesselpaar.png" alt="MerkleTree" width="70%"/>  <!-- be: Statt width="1200" -->
+<img src="img/schluesselpaar.png" alt="Merkle Tree" width="70%"/>  <!-- be: Statt width="1200" -->
 
 
 
@@ -184,7 +188,7 @@ Die Signatur hat den folgenden Aufbau: Index des Schl&uumlsselpaares | Einmalsig
 
 <p> </br> </p>
 <h2 id="Kapitel5">5) Referenzen und Quellen</h2>
-<p>Weitere Informationen zum Thema Post-Quanten-Kryptographie (PQC) und auf MerkleTrees basierenden Signaturen finden Sie beispielsweise unter:</p>
+<p>Weitere Informationen zum Thema Post-Quanten-Kryptographie (PQC) und auf Merkle trees basierenden Signaturen finden Sie beispielsweise unter:</p>
 
 <!-- be: taken out because syntax is not professional.
 <br>
@@ -195,10 +199,10 @@ Die Signatur hat den folgenden Aufbau: Index des Schl&uumlsselpaares | Einmalsig
 
 <ul>
 
-  <li>[1] Wikipedia: <br>
+  <li>[1] Wikipedia:<br>
   <a href="https://en.wikipedia.org/wiki/Post-quantum_cryptography">https://en.wikipedia.org/wiki/Post-quantum_cryptography</a></li>
   
-  <li>[2] Wikipedia: <br>
+  <li>[2] Wikipedia:<br>
   <a href="https://en.wikipedia.org/wiki/Hash-based_cryptography">https://en.wikipedia.org/wiki/Hash-based_cryptography</a></li>
 
   <li>A. H&uumllsing, D. Butin und S. Gazdag:<br>
@@ -212,16 +216,16 @@ Die Signatur hat den folgenden Aufbau: Index des Schl&uumlsselpaares | Einmalsig
   <li>Wikipedia:<br>
   <a href="https://de.wikipedia.org/wiki/Merkle-Signatur">Merkle-Signatur</a></li>
   
-  <li>[3] Wikipedia: <br>
+  <li>[3] Wikipedia:<br>
   <a href="https://en.wikipedia.org/wiki/Post-Quantum_Cryptography_Standardization">https://en.wikipedia.org/wiki/Post-Quantum_Cryptography_Standardization</a></li>
   
-  <li>[4] NIST: <br>
+  <li>[4] NIST:<br>
   <a href="https://csrc.nist.gov/projects/post-quantum-cryptography">https://csrc.nist.gov/projects/post-quantum-cryptography</a></li>
   
-  <li>[5] Wikipedia: <br>
+  <li>[5] Wikipedia:<br>
   <a href="https://csrc.nist.gov/news/2019/stateful-hbs-request-for-public-comments">Request for Public Comments on Stateful Hash-Based Signatures (HBS), February 04, 2019</a></li>
   
-  <li>[6] IETF: <br>
+  <li>[6] IETF:<br>
   <a href="https://www.rfc-editor.org/info/rfc8391">RFC 8391: XMSS: eXtended Merkle Signature Scheme, May 2018</a></li>
   
   <li>[9] Bouncy Castle: Die Signaturen XMSS, GMSS und SPHINCS sind seit Januar 2019 in der<br>
@@ -229,7 +233,14 @@ Die Signatur hat den folgenden Aufbau: Index des Schl&uumlsselpaares | Einmalsig
   
   <li>[10] Hanno Böck:<br>
   <a href="https://www.feistyduck.com/bulletproof-tls-newsletter/issue_42_does_tls_have_to_change_constantly_to_make_it_future_proof.html">Bulletproof TLS Newsletter #42</a>, Juni 2018</li>
-</ul>
+  
+  <li>[11] Andreas Hülsing:<br>
+  <a href="http://tuprints.ulb.tu-darmstadt.de/3651/1/Thesis.pdf">Practical Forward Secure Signatures using Minimal Security Assumptions</a>, Ph.D. thesis, 2013</li>
+  
+  <li>[12] TU Darmstadt:<br>
+  <a href="http://www.pqsignatures.org/index/hbs.html">Projekt "Practical Hash-based Signatures"</a>, 2013</li>
+
+  </ul>
 <br>
 
 </body>
