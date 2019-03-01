@@ -16,6 +16,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 public class View extends ViewPart {
@@ -54,6 +55,9 @@ public class View extends ViewPart {
 		scrolledComposite.getVerticalBar().setIncrement(20);
 		scrolledComposite.getVerticalBar().setPageIncrement(250);
 		scrolledComposite.layout();
+		
+		PlatformUI.getWorkbench().getHelpSystem()
+			.setHelp(parent.getShell(), "org.jcryptool.visual.pairingbd2.pairingBD2HelpContextId");
 	}
 
 	@Override

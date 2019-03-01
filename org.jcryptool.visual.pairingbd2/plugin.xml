@@ -16,10 +16,21 @@
        point="org.jcryptool.core.operations.visuals">
     <Visual
           name="%Visual.name"
-          viewId="org.jcryptool.visual.ecbd2">
+          viewId="org.jcryptool.visual.ecbd2"
+          contextHelpId="org.jcryptool.visual.pairingbd2.pairingBD2HelpContextId">
     </Visual>
  </extension>
-
+ <!-- Extension of the online help -->
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="$nl$/toc.xml"
+            primary="false">
+      </toc>
+   </extension>
+	<extension point="org.eclipse.help.contexts">
+		<contexts file="$nl$/contexts.xml"></contexts>
+	</extension>
  <extension
          point="org.eclipse.ui.handlers">
       <handler
