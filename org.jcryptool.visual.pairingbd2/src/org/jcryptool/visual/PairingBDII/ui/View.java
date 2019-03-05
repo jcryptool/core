@@ -59,7 +59,7 @@ public class View extends ViewPart {
 		scrolledComposite.layout();
 		
 		PlatformUI.getWorkbench().getHelpSystem()
-			.setHelp(parent.getShell(), "org.jcryptool.visual.pairingbd2.pairingBD2HelpContextId");
+			.setHelp(parent.getShell(),"org.jcryptool.visual.PairingBDII.pairingBD2HelpContextId");
 	}
 
 	@Override
