@@ -86,37 +86,37 @@ public class UserData_BNP {
         String s = ""; //$NON-NLS-1$
 
         if (SK != null) {
-            s += Messages.UserData_BNP_1 + SK.toString().substring(0, SK.toString().indexOf('\n')) + "\n"; //$NON-NLS-2$
+            s += Messages.UserData_BNP_1 + SK.toString().substring(0, SK.toString().indexOf('\n')) + "\n"; 
         }
         if (PK != null) {
-            s += Messages.UserData_BNP_3 + PK.toString().substring(0, PK.toString().indexOf('\n')) + "\n"; //$NON-NLS-2$
+            s += Messages.UserData_BNP_3 + PK.toString().substring(0, PK.toString().indexOf('\n')) + "\n"; 
         }
         if (nonce != null) {
-            s += Messages.UserData_BNP_5 + nonce.toString() + "\n"; //$NON-NLS-2$
+            s += Messages.UserData_BNP_5 + nonce.toString() + "\n"; 
         }
         if (DHKeyPair != null) {
             if (DHKeyPair.GetSK() != null) {
-                s += Messages.UserData_BNP_7 + DHKeyPair.GetSK().toString() + "\n"; //$NON-NLS-2$
+                s += Messages.UserData_BNP_7 + DHKeyPair.GetSK().toString() + "\n"; 
             }
 
             s += Messages.UserData_BNP_9;
             if (DHKeyPair.HasPKR() && !DHKeyPair.GetPKR().toString().equals("")) { //$NON-NLS-1$
                 s += "R(i) = " + DHKeyPair.GetPKR() + "\n"; //$NON-NLS-1$ //$NON-NLS-2$
             } else {
-                s += "R(i) = " + Messages.UserData_BNP_14 + "\n"; //$NON-NLS-1$ //$NON-NLS-3$
+                s += "R(i) = " + Messages.UserData_BNP_14 + "\n"; //$NON-NLS-1$ 
             }
             if (DHKeyPair.HasPKS() && !DHKeyPair.GetPKS().toString().equals("")) { //$NON-NLS-1$
                 s += "S(i) = " + DHKeyPair.GetPKS() + "\n"; //$NON-NLS-1$ //$NON-NLS-2$
             } else {
-                s += "S(i) = " + Messages.UserData_BNP_20 + "\n"; //$NON-NLS-1$ //$NON-NLS-3$
+                s += "S(i) = " + Messages.UserData_BNP_20 + "\n"; //$NON-NLS-1$ 
             }
         }
 
         if (Xvalue != null) {
-            s += Messages.UserData_BNP_22 + Xvalue + "\n"; //$NON-NLS-2$
+            s += Messages.UserData_BNP_22 + Xvalue + "\n"; 
         }
         if (key != null) {
-            s += Messages.UserData_BNP_24 + key + "\n"; //$NON-NLS-2$
+            s += Messages.UserData_BNP_24 + key + "\n"; 
         }
 
         return s;

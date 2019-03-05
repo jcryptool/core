@@ -30,10 +30,10 @@ public class DefinitionAndDetails {
     private final Group groupDefinitions;
     private final Group groupDetails;
 
-    private Label label;
-    private final Label labelAuthetification;
-    private final Label labelPK;
-    private final Label labelExplanation;
+    private Text label;
+    private final Text labelAuthetification;
+    private final Text labelPK;
+    private final Text labelExplanation;
     private final Text labelDetails;
 
     private final Spinner spinnerUserIndex;
@@ -45,11 +45,11 @@ public class DefinitionAndDetails {
         groupDefinitions.setLayout(new GridLayout(2, false));
         groupDefinitions.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 2, 1));
 
-        label = new Label(groupDefinitions, SWT.WRAP);
+        label = new Text(groupDefinitions, SWT.WRAP | SWT.READ_ONLY);
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
         label.setText(Messages.DefinitionAndDetails_1);
 
-        label = new Label(groupDefinitions, SWT.WRAP);
+        label = new Text(groupDefinitions, SWT.WRAP | SWT.READ_ONLY);
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 3));
         label.setText(Messages.DefinitionAndDetails_2
                         + Messages.DefinitionAndDetails_3
@@ -60,21 +60,21 @@ public class DefinitionAndDetails {
                         + Messages.DefinitionAndDetails_8
                         + Messages.DefinitionAndDetails_9);
 
-        label = new Label(groupDefinitions, SWT.WRAP);
+        label = new Text(groupDefinitions, SWT.WRAP | SWT.READ_ONLY);
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         label.setText(Messages.DefinitionAndDetails_10 + Messages.DefinitionAndDetails_11
                 + Messages.DefinitionAndDetails_12);
         
-        labelPK = new Label(groupDefinitions, SWT.WRAP);
+        labelPK = new Text(groupDefinitions, SWT.WRAP | SWT.READ_ONLY);
         labelPK.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-        labelExplanation = new Label(groupDefinitions, SWT.WRAP);
+        labelExplanation = new Text(groupDefinitions, SWT.WRAP | SWT.READ_ONLY);
         labelExplanation.setText(Messages.DefinitionAndDetails_13 + Messages.DefinitionAndDetails_14
                 + Messages.DefinitionAndDetails_15
                 + Messages.DefinitionAndDetails_16);
         labelExplanation.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-        labelAuthetification = new Label(groupDefinitions, SWT.WRAP);
+        labelAuthetification = new Text(groupDefinitions, SWT.WRAP | SWT.READ_ONLY);
         labelAuthetification.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 
         groupDetails = new Group(parent, SWT.NONE);
@@ -91,11 +91,13 @@ public class DefinitionAndDetails {
         spinnerUserIndex = new Spinner(userSelection, SWT.BORDER);
         spinnerUserIndex.setMinimum(1);
         spinnerUserIndex.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 Model.getDefault().infoUserIndex = spinnerUserIndex.getSelection()-1;
 
                 if (!Model.getDefault().isOnBNCurve) {
@@ -109,7 +111,8 @@ public class DefinitionAndDetails {
         labelDetails = new Text(groupDetails, SWT.MULTI | SWT.READ_ONLY | SWT.H_SCROLL);
         labelDetails.addMouseMoveListener(new MouseMoveListener() {
             // work around to ensure parent can be scrolled when entering this text field
-            public void mouseMove(MouseEvent e) {
+            @Override
+			public void mouseMove(MouseEvent e) {
                 groupDetails.getParent().setFocus();
             }
         });
@@ -136,21 +139,15 @@ public class DefinitionAndDetails {
     public void displayUserDetails(UserData_BNP userData) {
         labelDetails.setText(userData.toString() + " "); //$NON-NLS-1$
         labelDetails.setEnabled(true);
-        //groupDetails.layout();
+        
         groupDetails.getParent().layout(new Control[] {labelDetails});
-        // group_Details.getParent().layout();
-        // group_Details.getParent().getParent().layout();
-        // group_Details.getParent().getParent().getParent().layout();
     }
 
     public void displayUserDetails(UserData_ECBDII userData) {
         labelDetails.setText(userData.toString() + " "); //$NON-NLS-1$
         labelDetails.setEnabled(true);
-        //groupDetails.layout();
+        
         groupDetails.getParent().layout(new Control[] {labelDetails});
-        // group_Details.getParent().layout();
-        // group_Details.getParent().getParent().layout();
-        // group_Details.getParent().getParent().getParent().layout();
     }
 
     public Composite getGroupDefinitions() {
@@ -195,8 +192,4 @@ public class DefinitionAndDetails {
                 + Messages.DefinitionAndDetails_35);
         groupDefinitions.layout();
     }
-
-    // public static void refresh() {
-    // group_Definitions.layout();
-    // }
 }

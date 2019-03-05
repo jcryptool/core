@@ -41,7 +41,7 @@ public class Logging_BNP {
         s.append(Messages.Logging_BNP_1);
         s.append("\n\n"); //$NON-NLS-1$
         s.append(Messages.Logging_BNP_4);
-        s.append(nusers); //$NON-NLS-1$
+        s.append(nusers); 
         s.append(Messages.Logging_BNP_5);
         s.append("\n"); //$NON-NLS-1$
         s.append(Messages.Logging_BNP_7);
