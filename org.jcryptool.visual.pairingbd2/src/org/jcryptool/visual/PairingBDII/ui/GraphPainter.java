@@ -177,7 +177,8 @@ public class GraphPainter implements PaintListener {
         return direction;
     }
 
-    public void paintControl(PaintEvent e) {
+    @Override
+	public void paintControl(PaintEvent e) {
         final Color COLOR_BLACK = Display.getCurrent().getSystemColor(SWT.COLOR_BLACK);
         final Color yellow = new Color(Display.getCurrent(), 230, 230, 10);
         final Color green = new Color(Display.getCurrent(), 100, 200, 10);

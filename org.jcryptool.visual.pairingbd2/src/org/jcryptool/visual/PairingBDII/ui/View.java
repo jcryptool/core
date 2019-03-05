@@ -37,7 +37,9 @@ public class View extends ViewPart {
 
 		final Composite scrolledContent = new Composite(scrolledComposite,
 				SWT.NONE);
+
 		scrolledContent.setLayout(new GridLayout(2, false));
+		
 		situation = new IntroductionAndParameters(scrolledContent);
 		illustration = new Illustration(scrolledContent);
 		protocol = new DefinitionAndDetails(scrolledContent);
