@@ -63,7 +63,8 @@ public class ECView extends ViewPart {
     /**
      * This is a callback that will allow us to create the viewer and initialize it.
      */
-    public void createPartControl(Composite parent) {
+    @Override
+	public void createPartControl(Composite parent) {
         this.parent = parent;
 
         layout = new StackLayout();
@@ -148,7 +149,7 @@ public class ECView extends ViewPart {
 
     private void saveToEditor() {
         if (logFile == null) {
-            logFile = new File(new File(DirectoryService.getTempDir()), "calculations.txt"); //$NON-NLS-1$ //$NON-NLS-2$
+            logFile = new File(new File(DirectoryService.getTempDir()), "calculations.txt"); //$NON-NLS-1$ 
             logFile.deleteOnExit();
         }
 
@@ -202,7 +203,7 @@ public class ECView extends ViewPart {
         FileDialog dialog = new FileDialog(layout.topControl.getShell(), SWT.SAVE);
         dialog.setFilterNames(new String[] {IConstants.TXT_FILTER_NAME, IConstants.ALL_FILTER_NAME});
         dialog.setFilterExtensions(new String[] {IConstants.TXT_FILTER_EXTENSION, IConstants.ALL_FILTER_EXTENSION});
-        dialog.setFilterPath(DirectoryService.getUserHomeDir()); //$NON-NLS-1$
+        dialog.setFilterPath(DirectoryService.getUserHomeDir()); 
         dialog.setFileName("calculations.txt"); //$NON-NLS-1$
         dialog.setOverwrite(true);
         saveLocation = dialog.open();

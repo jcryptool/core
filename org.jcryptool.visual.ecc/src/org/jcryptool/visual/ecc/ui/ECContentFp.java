@@ -158,7 +158,9 @@ public class ECContentFp extends Composite{
 		btnDeletePoints.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false));
 		btnDeletePoints.setEnabled(false);
 		btnDeletePoints.addSelectionListener(new SelectionListener(){
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				btnPQ.setSelection(true);
 				btnPQ.setEnabled(false);
@@ -181,7 +183,9 @@ public class ECContentFp extends Composite{
 		sliderZoom.setMinimum(0);
 		sliderZoom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		sliderZoom.addSelectionListener(new SelectionListener(){
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				curve.updateCurve(spnrA.getSelection(), spnrB.getSelection(), 50 - sliderZoom.getSelection(), canvasCurve.getSize());
 				points = curve.getPoints();
@@ -217,6 +221,7 @@ public class ECContentFp extends Composite{
 		groupPoints.setLayout(new GridLayout(1, false));
 		groupPoints.setText(Messages.getString("ECView.Points")); //$NON-NLS-1$
 		groupPoints.addListener(SWT.Resize, new Listener(){
+			@Override
 			public void handleEvent(Event event) {
 				fillTablePoints();
 			}
@@ -228,7 +233,9 @@ public class ECContentFp extends Composite{
 		tcPoints = new TableCursor(tablePoints, SWT.NONE);
 		tcPoints.setForeground(red);
 		tcPoints.addSelectionListener(new SelectionListener(){
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				int index = -1;
 				for(int i = 0; i < tiPoints.length; i++) {
@@ -268,7 +275,9 @@ public class ECContentFp extends Composite{
 		rbtnLarge.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false));
 		rbtnLarge.setText(Messages.getString("ECView.Large")); //$NON-NLS-1$
 		rbtnLarge.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) { }
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				view.showLarge();
 			}
@@ -288,9 +297,11 @@ public class ECContentFp extends Composite{
 		canvasCurve.setLayoutData(gridData);
 		canvasCurve.setSize(500,500);
 		canvasCurve.addPaintListener(new PaintListener(){
+			@Override
 			public void paintControl(PaintEvent e) {drawDiscrete(e);}
 		});
 		canvasCurve.addMouseMoveListener(new MouseMoveListener(){
+			@Override
 			public void mouseMove(MouseEvent e) {
 				Point size = canvasCurve.getSize();
 				if (points != null){
@@ -306,6 +317,7 @@ public class ECContentFp extends Composite{
 			}
 		});
 		canvasCurve.addListener(SWT.MouseDown, new Listener(){
+			@Override
 			public void handleEvent(Event event) {
 				if(pointSelect != null) {
 					if(pointP == null) {
@@ -317,7 +329,9 @@ public class ECContentFp extends Composite{
 			}
 		});
 		canvasCurve.addMouseTrackListener(new MouseTrackListener(){
+			@Override
 			public void mouseEnter(MouseEvent e) {}
+			@Override
 			public void mouseExit(MouseEvent e) {
 				pointSelect = null;
 				updateCurve(false);
@@ -327,6 +341,7 @@ public class ECContentFp extends Composite{
 				if(pointQ == null)
 					lblQ.setText(""); //$NON-NLS-1$
 			}
+			@Override
 			public void mouseHover(MouseEvent e) {}
 		});
 	}
@@ -348,11 +363,13 @@ public class ECContentFp extends Composite{
         cSaveResults.select(view.saveTo);
         cSaveResults.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 2, 1));
         cSaveResults.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 view.saveTo = cSaveResults.getSelectionIndex();
                 btnBrowse.setEnabled(view.saveTo == 2);
                 btnSave.setEnabled(view.saveTo != 0);
@@ -367,11 +384,13 @@ public class ECContentFp extends Composite{
         btnBrowse.setText(Messages.getString("ECView.Browse")); //$NON-NLS-1$
         btnBrowse.setEnabled(view.saveTo == 2);
         btnBrowse.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 view.selectFileLocation();
                 lblSaveResults.setText(view.saveTo == 2 ? view.getFileName() : ""); //$NON-NLS-1$
             }
@@ -380,11 +399,13 @@ public class ECContentFp extends Composite{
         btnSave.setText(Messages.getString("ECView.SaveNow")); //$NON-NLS-1$
         btnSave.setEnabled(view.saveTo != 0);
         btnSave.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 view.saveLog();
                 lblSaveResults.setText(view.saveTo == 2 ? view.getFileName() : ""); //$NON-NLS-1$
             }
@@ -394,11 +415,13 @@ public class ECContentFp extends Composite{
         cbAutoSave.setEnabled(view.autoSave);
         cbAutoSave.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 2, 1));
         cbAutoSave.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 view.autoSave = cbAutoSave.getSelection();
                 lblSaveResults.setText(view.saveTo == 2 ? view.getFileName() : ""); //$NON-NLS-1$
             }
@@ -422,7 +445,9 @@ public class ECContentFp extends Composite{
 		rbtnReal.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false));
 		rbtnReal.setSelection(false);
 		rbtnReal.addSelectionListener(new SelectionListener(){
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				view.showReal();
 			}
@@ -433,7 +458,9 @@ public class ECContentFp extends Composite{
 		rbtnFP.setSelection(true);
 		rbtnFP.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false));
 		rbtnFP.addSelectionListener(new SelectionListener(){
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				view.showFp();
 			}
@@ -443,7 +470,9 @@ public class ECContentFp extends Composite{
 		rbtnFM.setSelection(false);
 		rbtnFM.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false));
 		rbtnFM.addSelectionListener(new SelectionListener(){
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				view.showFm();
 			}
@@ -474,7 +503,9 @@ public class ECContentFp extends Composite{
 		spnrA.setSelection(10);
 		spnrA.setMinimum(0);
 		spnrA.addSelectionListener(new SelectionListener(){
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				btnPQ.setSelection(true);
 				btnKP.setSelection(false);
@@ -496,7 +527,9 @@ public class ECContentFp extends Composite{
 		spnrB.setSelection(15);
 		spnrB.setMinimum(0);
 		spnrB.addSelectionListener(new SelectionListener(){
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				btnPQ.setSelection(true);
 				btnKP.setSelection(false);
@@ -518,7 +551,9 @@ public class ECContentFp extends Composite{
 		spnrP.setMinimum(3);
 		spnrP.setMaximum(1000);
 		spnrP.addSelectionListener(new SelectionListener(){
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				btnPQ.setSelection(true);
 				btnKP.setSelection(false);
@@ -598,7 +633,9 @@ public class ECContentFp extends Composite{
 		btnPQ.setSelection(true);
 		btnPQ.setEnabled(false);
 		btnPQ.addSelectionListener(new SelectionListener(){
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				setPointQ(null);
 			}
@@ -610,7 +647,9 @@ public class ECContentFp extends Composite{
 		btnKP.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
 		btnKP.setEnabled(false);
 		btnKP.addSelectionListener(new SelectionListener(){
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				spnrK.setEnabled(btnKP.getSelection());
 				FpPoint q = curve.multiplyPoint(pointP, spnrK.getSelection());
@@ -627,7 +666,9 @@ public class ECContentFp extends Composite{
 		spnrK.setMaximum(1000);
 		spnrK.setEnabled(false);
 		spnrK.addSelectionListener(new SelectionListener(){
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				FpPoint q = curve.multiplyPoint(pointP, spnrK.getSelection());
 				setPointQ(q);
@@ -773,6 +814,7 @@ public class ECContentFp extends Composite{
 		for(int i = 0; i < tiPoints.length; i++) {
 			tiPoints[i] = new TableItem(tablePoints, SWT.NONE);
 			tiPoints[i].addListener(SWT.Settings, new Listener(){
+				@Override
 				public void handleEvent(Event event) {
 					if((event.detail & SWT.SELECTED) != 0 ){
 						tablePoints.deselectAll();

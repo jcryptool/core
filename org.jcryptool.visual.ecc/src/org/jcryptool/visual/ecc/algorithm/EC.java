@@ -93,7 +93,7 @@ public class EC {
 		ArrayList<Double> listX = new ArrayList<Double>();
 		ArrayList<Double> listY = new ArrayList<Double>();
 		numPoints = 1;
-		double xStep = Math.pow((double)gridSize, -1);
+		double xStep = Math.pow(gridSize, -1);
 		double xVal;
 		double yVal;
 		boolean lastPoint = false;
@@ -249,6 +249,7 @@ public class EC {
 		return r;
 	}
 
+	@Override
 	public String toString() {
 		String s = "y\u00b2 = x\u00b3"; //$NON-NLS-1$
 		if(A == 1)
