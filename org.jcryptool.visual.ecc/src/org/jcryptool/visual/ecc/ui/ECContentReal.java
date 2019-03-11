@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Spinner;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.ecc.ECCPlugin;
 import org.jcryptool.visual.ecc.Messages;
@@ -53,8 +54,8 @@ public class ECContentReal extends Composite {
     private Button btnSave = null;
     private Canvas canvasCurve = null;
     private Button cbAutoSave = null;
-    private Color black = Display.getCurrent().getSystemColor(SWT.COLOR_BLACK);
-    private Color white = Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
+    private Color black = ColorService.BLACK;
+    private Color white = ColorService.WHITE;
     private Color lightBlue = new Color(this.getDisplay(), 0, 255, 255);
     private Color blue = new Color(this.getDisplay(), 0, 0, 255);
     private Color purple = new Color(this.getDisplay(), 255, 0, 255);
@@ -149,10 +150,13 @@ public class ECContentReal extends Composite {
         groupCurve.setLayout(new GridLayout(3, false));
         groupCurve.setText(Messages.getString("ECContentReal.0")); //$NON-NLS-1$
         groupCurve.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        
         createCanvasCurve();
+        
         lblCurve = new Label(groupCurve, SWT.NONE);
         lblCurve.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
         lblCurve.setText(""); //$NON-NLS-1$
+        
         btnDeletePoints = new Button(groupCurve, SWT.NONE);
         btnDeletePoints.setToolTipText(Messages.getString("ECContentReal.3")); //$NON-NLS-1$
         btnDeletePoints.setText(Messages.getString("ECView.RemoveSelection")); //$NON-NLS-1$
@@ -272,8 +276,9 @@ public class ECContentReal extends Composite {
                     double x = ((e.x - size.x / 2) * (step * 100));
                     double y = -((e.y - size.y / 2) * (step * 100));
                     FpPoint nearestPoint = findNearestPoint(x, y);
-                    if (nearestPoint != null)
+                    if (nearestPoint != null) {
                         setPointSelect(nearestPoint);
+                    }
                 }
             }
         });
@@ -321,8 +326,7 @@ public class ECContentReal extends Composite {
         groupSave.setText(Messages.getString("ECView.SaveResults")); //$NON-NLS-1$
 
         cSaveResults = new Combo(groupSave, SWT.READ_ONLY);
-        cSaveResults
-                .setItems(new String[] {
+        cSaveResults.setItems(new String[] {
                         Messages.getString("ECView.No"), Messages.getString("ECView.ToTextEditor"), Messages.getString("ECView.ToTextFile")}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         cSaveResults.select(view.saveTo);
         cSaveResults.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 2, 1));
@@ -338,8 +342,9 @@ public class ECContentReal extends Composite {
                 btnBrowse.setEnabled(view.saveTo == 2);
                 btnSave.setEnabled(view.saveTo != 0);
                 cbAutoSave.setEnabled(view.saveTo != 0);
-                if (view.saveTo != 0 && view.autoSave)
+                if (view.saveTo != 0 && view.autoSave) {
                     view.saveLog();
+                }
                 lblSaveResults.setText(view.saveTo == 2 ? view.getFileName() : ""); //$NON-NLS-1$
             }
         });
@@ -404,6 +409,7 @@ public class ECContentReal extends Composite {
         groupCurveType.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         groupCurveType.setLayout(new GridLayout(3, true));
         groupCurveType.setText(Messages.getString("ECView.SelectCurveType")); //$NON-NLS-1$
+        
         rbtnReal = new Button(groupCurveType, SWT.RADIO);
         rbtnReal.setText(Messages.getString("ECView.RealNumbers")); //$NON-NLS-1$
         rbtnReal.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false));
@@ -1053,7 +1059,7 @@ public class ECContentReal extends Composite {
                         + (points[i].y - y) * (points[i].y - y));
                 if (currentDistance < minimum) {
                     minimum = currentDistance;
-                    nearestPoint = points[i];
+                    nearestPoint = points[i];      
                 }
             }
         }
