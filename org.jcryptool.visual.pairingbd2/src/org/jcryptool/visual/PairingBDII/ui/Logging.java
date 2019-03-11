@@ -25,9 +25,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.visual.PairingBDII.basics.Logging_BNP;
@@ -39,11 +39,11 @@ public class Logging {
 
     private final Button buttonSaveLogfile;
 
-    private final Label label_Title;
-    private final Label label_TimePerBurdenedUser;
-    private final Label label_TimePerUnburdenedUser;
-    private final Label timePerBurdenedUser;
-    private final Label timePerUnburdenedUser;
+    private final Text label_Title;
+    private final Text label_TimePerBurdenedUser;
+    private final Text label_TimePerUnburdenedUser;
+    private final Text timePerBurdenedUser;
+    private final Text timePerUnburdenedUser;
 
     public Logging(Composite parent) {
 
@@ -54,28 +54,30 @@ public class Logging {
         gridData.horizontalSpan = 2;
         group_Logging.setLayoutData(gridData);
 
-        label_Title = new Label(group_Logging, SWT.NONE);
+        label_Title = new Text(group_Logging, SWT.READ_ONLY);
         label_Title.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
         label_Title.setText(Messages.Logging_1);
 
-        label_TimePerBurdenedUser = new Label(group_Logging, SWT.NONE);
+        label_TimePerBurdenedUser = new Text(group_Logging, SWT.READ_ONLY);
         label_TimePerBurdenedUser.setText(Messages.Logging_2);
 
-        timePerBurdenedUser = new Label(group_Logging, SWT.NONE);
+        timePerBurdenedUser = new Text(group_Logging, SWT.READ_ONLY);
 
-        label_TimePerUnburdenedUser = new Label(group_Logging, SWT.NONE);
+        label_TimePerUnburdenedUser = new Text(group_Logging, SWT.READ_ONLY);
         label_TimePerUnburdenedUser.setText(Messages.Logging_3);
 
-        timePerUnburdenedUser = new Label(group_Logging, SWT.NONE);
+        timePerUnburdenedUser = new Text(group_Logging, SWT.READ_ONLY);
 
         buttonSaveLogfile = new Button(group_Logging, SWT.PUSH);
         buttonSaveLogfile.setText(Messages.Logging_4);
         buttonSaveLogfile.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
                 dialog.setFilterPath(DirectoryService.getUserHomeDir());
                 dialog.setFileName(Messages.Logging_6);
@@ -90,14 +92,12 @@ public class Logging {
 
                 if (filename != null) {
                     if (!Model.getDefault().isOnBNCurve) {
-                        log =
-                                new Logging_ECBDII(Model.getDefault().algorithm,
+                        log = new Logging_ECBDII(Model.getDefault().algorithm,
                                         Model.getDefault().sk, Model.getDefault().pk,
                                         Model.getDefault().nonces, Model.getDefault().usersData);
                         log.SetAsTime(Model.getDefault().bduser, Model.getDefault().unbduser);
                     } else {
-                        logBN =
-                                new Logging_BNP(Model.getDefault().numberOfUsers, 160,
+                        logBN = new Logging_BNP(Model.getDefault().numberOfUsers, 160,
                                         Model.getDefault().algorithmBN, Model.getDefault().bnpuData);
                         logBN.setAsTime(Model.getDefault().bduser, Model.getDefault().unbduser);
                     }

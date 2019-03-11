@@ -85,13 +85,13 @@ public class UserData_ECBDII {
 
         // s += "This is the user data for user " +i + ": " + "\n";
         if (SK != null) {
-            s += Messages.UserData_ECBDII_1 + SK.toString().substring(0, SK.toString().indexOf('\n')) + "\n"; //$NON-NLS-2$
+            s += Messages.UserData_ECBDII_1 + SK.toString().substring(0, SK.toString().indexOf('\n')) + "\n"; 
         }
         if (PK != null) {
-            s += Messages.UserData_ECBDII_3 + PK.toString().substring(0, PK.toString().indexOf('\n')) + "\n"; //$NON-NLS-2$
+            s += Messages.UserData_ECBDII_3 + PK.toString().substring(0, PK.toString().indexOf('\n')) + "\n"; 
         }
         if (nonce != null) {
-            s += Messages.UserData_ECBDII_5 + nonce.toString() + "\n"; //$NON-NLS-2$
+            s += Messages.UserData_ECBDII_5 + nonce.toString() + "\n"; 
         }
         if (DHKeyPair != null) {
             if (DHKeyPair.getSK() != null && !DHKeyPair.getSK().toString().equals("")) { //$NON-NLS-1$
@@ -105,10 +105,10 @@ public class UserData_ECBDII {
 
         }
         if (Xvalue != null && !Xvalue.PrintP().equals("")) { //$NON-NLS-1$
-            s += Messages.UserData_ECBDII_14 + Xvalue.PrintP() + "\n"; //$NON-NLS-2$
+            s += Messages.UserData_ECBDII_14 + Xvalue.PrintP() + "\n"; 
         }
         if (key != null && !key.PrintP().equals("")) { //$NON-NLS-1$
-            s += Messages.UserData_ECBDII_17 + key.PrintP() + "\n"; //$NON-NLS-2$
+            s += Messages.UserData_ECBDII_17 + key.PrintP() + "\n"; 
         }
 
         return s;

@@ -37,7 +37,9 @@ public class View extends ViewPart {
 
 		final Composite scrolledContent = new Composite(scrolledComposite,
 				SWT.NONE);
+
 		scrolledContent.setLayout(new GridLayout(2, false));
+		
 		situation = new IntroductionAndParameters(scrolledContent);
 		illustration = new Illustration(scrolledContent);
 		protocol = new DefinitionAndDetails(scrolledContent);
@@ -57,7 +59,7 @@ public class View extends ViewPart {
 		scrolledComposite.layout();
 		
 		PlatformUI.getWorkbench().getHelpSystem()
-			.setHelp(parent.getShell(), "org.jcryptool.visual.pairingbd2.pairingBD2HelpContextId");
+			.setHelp(parent.getShell(),"org.jcryptool.visual.PairingBDII.pairingBD2HelpContextId");
 	}
 
 	@Override

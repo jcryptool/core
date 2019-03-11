@@ -106,23 +106,23 @@ public class Logging_ECBDII {
 
     public String PrintLog() {
         String s = ""; //$NON-NLS-1$
-        s = s + Messages.Logging_ECBDII_1 + "\n" + "\n"; //$NON-NLS-2$ //$NON-NLS-3$
-        s = s + Messages.Logging_ECBDII_4 + nusers + Messages.Logging_ECBDII_5 + "\n" + Messages.Logging_ECBDII_7 + keysize + Messages.Logging_ECBDII_8 + "\n"; //$NON-NLS-3$ //$NON-NLS-6$
-        s = s + Messages.Logging_ECBDII_10 + "\n" + "p = " + p.toString(10) + "\n" + "l = " + order.toString(10) //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+        s = s + Messages.Logging_ECBDII_1 + "\n" + "\n"; //$NON-NLS-2$ 
+        s = s + Messages.Logging_ECBDII_4 + nusers + Messages.Logging_ECBDII_5 + "\n" + Messages.Logging_ECBDII_7 + keysize + Messages.Logging_ECBDII_8 + "\n"; 
+        s = s + Messages.Logging_ECBDII_10 + "\n" + "p = " + p.toString(10) + "\n" + "l = " + order.toString(10) //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ 
                 + "\n"; //$NON-NLS-1$
-        s = s + Messages.Logging_ECBDII_0 + "\n" + P.GetPrintP() + "\n" + "\n"; //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-        s = s + Messages.Logging_ECBDII_20 + "pol = " + "\n"; //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        s = s + Messages.Logging_ECBDII_0 + "\n" + P.GetPrintP() + "\n" + "\n"; //$NON-NLS-2$ //$NON-NLS-3$ 
+        s = s + Messages.Logging_ECBDII_20 + "pol = " + "\n"; //$NON-NLS-2$ 
         s = s + pol.PrintP() + "\n"; //$NON-NLS-1$
-        s = s + Messages.Logging_ECBDII_25 + withelim + "\n" + Messages.Logging_ECBDII_27 + Tatepairing + "\n"; //$NON-NLS-2$ //$NON-NLS-4$
+        s = s + Messages.Logging_ECBDII_25 + withelim + "\n" + Messages.Logging_ECBDII_27 + Tatepairing + "\n"; //$NON-NLS-2$ 
 
         for (int i = 0; i < nusers; i++) {
-            s += Messages.Logging_ECBDII_29 + (i + 1) + ": " + "\n"; //$NON-NLS-2$ //$NON-NLS-3$
+            s += Messages.Logging_ECBDII_29 + (i + 1) + ": " + "\n"; //$NON-NLS-2$ 
             s += udata.get(i).toString() + "\n" + "\n"; //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         if (timepbduser != 0 || timepubduser != 0) {
-            s = s + Messages.Logging_ECBDII_34 + "\n" + Messages.Logging_ECBDII_36 + timepbduser + " ms.\n"; //$NON-NLS-2$ //$NON-NLS-4$
-            s = s + Messages.Logging_ECBDII_38 + timepubduser + " ms."; //$NON-NLS-2$
+            s = s + Messages.Logging_ECBDII_34 + "\n" + Messages.Logging_ECBDII_36 + timepbduser + " ms.\n"; //$NON-NLS-2$ 
+            s = s + Messages.Logging_ECBDII_38 + timepubduser + " ms."; 
         }
         return s;
     }
