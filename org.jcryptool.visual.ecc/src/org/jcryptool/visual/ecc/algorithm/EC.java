@@ -127,7 +127,7 @@ public class EC {
 					//Es wird ein yVal gesucht, welcher näher an 0 liegt 
 					//als der yVal der sich bei einsetzen von xVal ergibt.
 					do {
-						sXVNZ = sXVNZ - xStep *  0.01;
+						sXVNZ = sXVNZ - xStep *  0.001;
 					} while ((Math.pow(sXVNZ, 3) + A * sXVNZ + B) >= 0);
 					
 					//Werte auf zwei Nachkommastellen runden
@@ -179,29 +179,9 @@ public class EC {
 				pointsY[i] = listY.get(i);
 
 				points[i] = new FpPoint((int)(listX.get(i) * 100), (int)(listY.get(i) * 100));
-				
-                // ---- Mein Scheiss zum debuggen
-//                if (pointsX[i] < 2) {
-//                	System.out.print("i:" + i + "\tpointsX:" + listX.get(i));
-//                	System.out.print("\tpointsY:" + listY.get(i));
-//                	System.out.println("\tpoints" + points[i].toString());
-//                }
 			}
 		}
 	}
-	
-	/**
-	 * Approximates the value to an accuracy of 0.01
-	 * @param xValue
-	 * @param xStep
-	 * @return
-	 */
-//	private double approximateNearestXValue(double xValue, double xStep) {
-//		do {
-//			xValue = xValue - xStep *  0.01;
-//		} while ((Math.pow(xValue, 3) + A * xValue + B) >= 0);
-//		return xValue;
-//	}
 
 	public FpPoint[] getPoints() {
 		return points;
