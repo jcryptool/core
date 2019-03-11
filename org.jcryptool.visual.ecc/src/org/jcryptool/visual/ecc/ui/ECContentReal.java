@@ -37,6 +37,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
@@ -70,10 +71,10 @@ public class ECContentReal extends Composite {
     private Group groupCurveType = null;
     private Group groupSettings = null;
     private Group groupSave = null;
-    private Label lblCurve = null;
-    private Label lblP = null;
-    private Label lblQ = null;
-    private Label lblR = null;
+    private Text lblCurve = null;
+    private Text lblP = null;
+    private Text lblQ = null;
+    private Text lblR = null;
     private Label lblSaveResults = null;
     private FpPoint pointP;
     private FpPoint pointQ;
@@ -153,7 +154,7 @@ public class ECContentReal extends Composite {
         
         createCanvasCurve();
         
-        lblCurve = new Label(groupCurve, SWT.NONE);
+        lblCurve = new Text(groupCurve, SWT.READ_ONLY);
         lblCurve.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
         lblCurve.setText(""); //$NON-NLS-1$
         
@@ -564,7 +565,7 @@ public class ECContentReal extends Composite {
         groupCalculations.setLayout(new GridLayout(3, false));
         groupCalculations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));    
 
-        Label label = new Label(groupCalculations, SWT.WRAP);
+        Text label = new Text(groupCalculations, SWT.WRAP | SWT.READ_ONLY);
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
         label.setText(Messages.getString("ECContentReal.36")); //$NON-NLS-1$
 
@@ -621,28 +622,28 @@ public class ECContentReal extends Composite {
             }
         });
 
-        label = new Label(groupCalculations, SWT.NONE);
+        label = new Text(groupCalculations, SWT.READ_ONLY);
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1));
         label.setText(Messages.getString("ECContentReal.39")); //$NON-NLS-1$
 
-        label = new Label(groupCalculations, SWT.NONE);
+        label = new Text(groupCalculations, SWT.READ_ONLY);
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
         label.setText("P ="); //$NON-NLS-1$
-        lblP = new Label(groupCalculations, SWT.NONE);
+        lblP = new Text(groupCalculations, SWT.READ_ONLY);
         lblP.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
         lblP.setText(""); //$NON-NLS-1$
 
-        label = new Label(groupCalculations, SWT.NONE);
+        label = new Text(groupCalculations, SWT.READ_ONLY);
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
         label.setText("Q ="); //$NON-NLS-1$
-        lblQ = new Label(groupCalculations, SWT.NONE);
+        lblQ = new Text(groupCalculations, SWT.READ_ONLY);
         lblQ.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
         lblQ.setText(""); //$NON-NLS-1$
 
-        label = new Label(groupCalculations, SWT.NONE);
+        label = new Text(groupCalculations, SWT.READ_ONLY);
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
         label.setText("R = P + Q ="); //$NON-NLS-1$
-        lblR = new Label(groupCalculations, SWT.NONE);
+        lblR = new Text(groupCalculations, SWT.READ_ONLY);
         lblR.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
         lblR.setText(""); //$NON-NLS-1$
     }
