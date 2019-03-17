@@ -83,6 +83,13 @@ public class EC {
 		points = p;
 	}
 
+	/**
+	 * Diese Methode berechnet Punkte auf der Elliptischen Kurve
+	 * die in der GUI als Werte für P und Q mit der Maus gewählt werden können.
+	 * In der Nähe von Nullstellen wird die Schrittweite auf 1/1000 der normalen
+	 * Schrittweite (xStep) herabgesetzt um ein möglichst genaues Ergebnis für 
+	 * y-Werte (yVal) nahe 0  zu erhalten. 
+	 */
 	private void updateCurve() {
 		if(4 * Math.pow(A, 3) + 27 * Math.pow(B, 2) == 0) {
 			points = null;
@@ -93,23 +100,45 @@ public class EC {
 		ArrayList<Double> listX = new ArrayList<Double>();
 		ArrayList<Double> listY = new ArrayList<Double>();
 		numPoints = 1;
-		double xStep = Math.pow((double)gridSize, -1);
+		double xStep = Math.pow(gridSize, -1);
 		double xVal;
 		double yVal;
 		boolean lastPoint = false;
-		for(int x = -(canvasSize.x / 2); x < canvasSize.x / 2; x++) {
+		boolean firstPoint = false;
+		for (int x = -(canvasSize.x / 2); x < canvasSize.x / 2; x++) {
 			xVal = x * xStep;
 			double ans = Math.pow(xVal, 3) + A * xVal + B;
-			if(ans >= 0) {//found point
+			//Man kann nur Wurzeln aus positiven Zahlen ziehen.
+			//Daraus folgt, wenn ans kleiner als 0 ist exisitiert 
+			//für diesen xVal keine Lösung.
+			//Nur für xVal für die es auch einen yVal gibt wird weiter gerechnet.
+			if(ans >= 0) {
 				yVal = Math.sqrt(ans);
-
-				if((x!=-(canvasSize.x / 2) && numPoints == 1) || (numPoints > 1 && !lastPoint)) {
-					double xV = (x - 1) * xStep;
-					listX.add(xV);
+				
+				//Den ersten gefundene Punkt mit y Wert = 0 einspeichern.
+				//Hier wird geprüft, ob 
+				//A: Es der erste Punkt ist der eingespeichert wird (numPoints == 1).
+				//Dieser muss eine Nullstelle der Funktion sein. 
+				//B: Ob die Funktion eine Lücke hat (firstPoint) und es nach der
+				//Lücke wieder Funktionswerte gibt.
+				if (numPoints == 1 || firstPoint) {
+					//smallest X Value Near Zero
+					double sXVNZ = xVal;
+					//Es wird ein yVal gesucht, welcher näher an 0 liegt 
+					//als der yVal der sich bei einsetzen von xVal ergibt.
+					do {
+						sXVNZ = sXVNZ - xStep *  0.001;
+					} while ((Math.pow(sXVNZ, 3) + A * sXVNZ + B) >= 0);
+					
+					//Werte auf zwei Nachkommastellen runden
+					listX.add((double) ((Math.round(sXVNZ*100))) / 100);
 					listY.add(0.0);
+					firstPoint = false;
 					numPoints++;
 				}
 
+				//Falls y!=0 dann füge den positiven und den negativen 
+				//y-Wert zur Liste listY hinzu.
 				if (yVal != 0) {
 					listX.add(xVal);
 					listY.add(yVal);
@@ -119,11 +148,25 @@ public class EC {
 				}
 				lastPoint = true;
 			} else if (lastPoint) {
-				listX.add(xVal);
+				double sXVNZ = xVal;
+				//Es wird ein yVal gesucht, welcher näher an 0 liegt 
+				//als der yVal der sich bei einsetzen von xVal ergibt.
+				do {
+					sXVNZ = sXVNZ - xStep *  0.001;
+					//Der Unterschied zur oberen Schleife zur Annäherung
+					//an die exakte Nullstelle ist, dass in diesem Fall mit
+					//einem xVal gestartet wird, für den es keine yVal gibt,
+					//Der erste sXVNZ für den es einen yVal gibt wird genommen
+					//und es wird angenommen, dass dieser die Nullstelle ist.
+				} while ((Math.pow(sXVNZ, 3) + A * sXVNZ + B) <= 0);
+				//Werte auf zwei Nachkommastellen runden.
+				listX.add((double) ((Math.round(sXVNZ * 100))) / 100);
 				listY.add(0.0);
 				numPoints++;
 				lastPoint = false;
+				firstPoint = true;
 			}
+			
 		}
 
 		pointsX = new double[listX.size()];
@@ -132,7 +175,9 @@ public class EC {
 		for(int i = 0; i < points.length; i++) {
 			if(listX.get(i) != null){
 				pointsX[i] = listX.get(i);
+				
 				pointsY[i] = listY.get(i);
+
 				points[i] = new FpPoint((int)(listX.get(i) * 100), (int)(listY.get(i) * 100));
 			}
 		}
@@ -249,6 +294,7 @@ public class EC {
 		return r;
 	}
 
+	@Override
 	public String toString() {
 		String s = "y\u00b2 = x\u00b3"; //$NON-NLS-1$
 		if(A == 1)

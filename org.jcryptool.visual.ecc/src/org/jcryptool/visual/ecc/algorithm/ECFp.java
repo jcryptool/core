@@ -26,6 +26,7 @@ public class ECFp extends EC{
 		return P;
 	}
 
+	@Override
 	public int getType() {
 		return ECFp;
 	}
@@ -78,6 +79,7 @@ public class ECFp extends EC{
 			points[i] = list.get(i);
 	}
 
+	@Override
 	public FpPoint addPoints(FpPoint p, FpPoint q) {
 		if(p == null || q == null)
 			return null;
@@ -142,6 +144,7 @@ public class ECFp extends EC{
 			return b[1];
 	}
 
+	@Override
 	public String toString() {
 		String s = "y\u00b2 mod " + P + " = (x\u00b3"; //$NON-NLS-1$ //$NON-NLS-2$
 		if(A == 1)

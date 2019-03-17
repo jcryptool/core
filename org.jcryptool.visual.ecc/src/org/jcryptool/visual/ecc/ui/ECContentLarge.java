@@ -152,7 +152,9 @@ public class ECContentLarge extends Composite {
 		rbtnSmall.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false));
 		rbtnSmall.setText(Messages.getString("ECView.Small")); //$NON-NLS-1$
 		rbtnSmall.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) { }
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if(rbtnSmall.getSelection()) {
 					if(rbtnFP.getSelection())
@@ -233,7 +235,9 @@ public class ECContentLarge extends Composite {
 		rbtnFP.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false));
 		rbtnFP.setSelection(true);
 		rbtnFP.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) { }
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if(rbtnFP.getSelection())
 					fillCSelection();
@@ -243,7 +247,9 @@ public class ECContentLarge extends Composite {
 		rbtnFM.setText("F(2^m)"); //$NON-NLS-1$
 		rbtnFM.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false));
 		rbtnFM.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) { }
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if(rbtnFM.getSelection())
 					fillCSelection();
@@ -284,7 +290,9 @@ public class ECContentLarge extends Composite {
 		cStandard = new Combo(groupSelectAttributes, SWT.NONE);
 		cStandard.setLayoutData(gridData9);
 		cStandard.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) { }
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				fillCCurve();
 			}
@@ -303,7 +311,9 @@ public class ECContentLarge extends Composite {
 		cCurve = new Combo(groupSelectAttributes, SWT.NONE);
 		cCurve.setLayoutData(gridData10);
 		cCurve.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) { }
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				setCurve();
 			}
@@ -341,7 +351,9 @@ public class ECContentLarge extends Composite {
 		btnClearPoints.setText(Messages.getString("ECView.ClearPoints")); //$NON-NLS-1$
 		btnClearPoints.setLayoutData(gridData45);
 		btnClearPoints.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) { }
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				pointP = null;
 				pointQ = null;
@@ -354,7 +366,9 @@ public class ECContentLarge extends Composite {
 		rbtnPQ.setLayoutData(gridData6);
 		rbtnPQ.setSelection(true);
 		rbtnPQ.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) { }
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				pointR = null;
 				updateScreen();
@@ -364,7 +378,9 @@ public class ECContentLarge extends Composite {
 		rbtnKP.setText(Messages.getString("ECContentLarge.18")); //$NON-NLS-1$
 		rbtnKP.setLayoutData(gridData5);
 		rbtnKP.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) { }
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if(rbtnKP.getSelection()) {
 					pointQ = null;
@@ -391,7 +407,9 @@ public class ECContentLarge extends Composite {
 		spnrK.setLayoutData(gridData29);
 		spnrK.setMaximum(Integer.MAX_VALUE);
 		spnrK.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) { }
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				int i = spnrK.getSelection();
 				String s = "R = P + " + (i > 2 ? i - 1 : "") + "P"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -650,7 +668,9 @@ public class ECContentLarge extends Composite {
 		rbtnRadix2 = new Button(groupRadix, SWT.RADIO);
 		rbtnRadix2.setText(Messages.getString("ECView.Binary")); //$NON-NLS-1$
 		rbtnRadix2.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) { }
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if(rbtnRadix2.getSelection()) {
 					radix = 2;
@@ -661,7 +681,9 @@ public class ECContentLarge extends Composite {
 		rbtnRadix8 = new Button(groupRadix, SWT.RADIO);
 		rbtnRadix8.setText(Messages.getString("ECView.Octal")); //$NON-NLS-1$
 		rbtnRadix8.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) { }
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if(rbtnRadix8.getSelection()) {
 					radix = 8;
@@ -673,7 +695,9 @@ public class ECContentLarge extends Composite {
 		rbtnRadix10.setText(Messages.getString("ECView.Decimal")); //$NON-NLS-1$
 		rbtnRadix10.setSelection(true);
 		rbtnRadix10.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) { }
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if(rbtnRadix10.getSelection()) {
 					radix = 10;
@@ -684,7 +708,9 @@ public class ECContentLarge extends Composite {
 		rbtnRadix16 = new Button(groupRadix, SWT.RADIO);
 		rbtnRadix16.setText(Messages.getString("ECView.Hexadecimal")); //$NON-NLS-1$
 		rbtnRadix16.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) { }
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if(rbtnRadix16.getSelection()) {
 					radix = 16;
@@ -708,7 +734,9 @@ public class ECContentLarge extends Composite {
 		btnPGenerate.setText(Messages.getString("ECView.GenerateRandomPoint")); //$NON-NLS-1$
 		btnPGenerate.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		btnPGenerate.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) { }
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if(curve != null) {
 					if(pointP == null)
@@ -748,7 +776,9 @@ public class ECContentLarge extends Composite {
 		btnPGenerator.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		btnPGenerator.setText(Messages.getString("ECView.UseGeneratorG")); //$NON-NLS-1$
 		btnPGenerator.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) { }
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if(curve != null) {
 					if(pointP == null)
@@ -804,7 +834,9 @@ public class ECContentLarge extends Composite {
 		btnQGenerate.setText(Messages.getString("ECView.GenerateRandomPoint")); //$NON-NLS-1$
 		btnQGenerate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		btnQGenerate.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) { }
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if(curve != null) {
 					if(rbtnFP.getSelection())
@@ -827,7 +859,9 @@ public class ECContentLarge extends Composite {
 		btnQGenerator.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 2, 1));
 		btnQGenerator.setText(Messages.getString("ECView.UseGeneratorG")); //$NON-NLS-1$
 		btnQGenerator.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {}
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				pointQ = pointG;
 				view.log("\n" + Messages.getString("ECView.Point") + " Q = " + pointQ.toString() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
@@ -891,11 +925,13 @@ public class ECContentLarge extends Composite {
         cSaveResults.select(view.saveTo);
         cSaveResults.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 2, 1));
         cSaveResults.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 view.saveTo = cSaveResults.getSelectionIndex();
                 btnBrowse.setEnabled(view.saveTo == 2);
                 btnSave.setEnabled(view.saveTo != 0);
@@ -910,11 +946,13 @@ public class ECContentLarge extends Composite {
         btnBrowse.setText(Messages.getString("ECView.Browse")); //$NON-NLS-1$
         btnBrowse.setEnabled(view.saveTo == 2);
         btnBrowse.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 view.selectFileLocation();
                 lblSaveResults.setText(view.saveTo == 2 ? view.getFileName() : ""); //$NON-NLS-1$
             }
@@ -923,11 +961,13 @@ public class ECContentLarge extends Composite {
         btnSave.setText(Messages.getString("ECView.SaveNow")); //$NON-NLS-1$
         btnSave.setEnabled(view.saveTo != 0);
         btnSave.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 view.saveLog();
                 lblSaveResults.setText(view.saveTo == 2 ? view.getFileName() : ""); //$NON-NLS-1$
             }
@@ -937,11 +977,13 @@ public class ECContentLarge extends Composite {
         cbAutoSave.setEnabled(view.autoSave);
         cbAutoSave.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 2, 1));
         cbAutoSave.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 view.autoSave = cbAutoSave.getSelection();
                 lblSaveResults.setText(view.saveTo == 2 ? view.getFileName() : ""); //$NON-NLS-1$
             }

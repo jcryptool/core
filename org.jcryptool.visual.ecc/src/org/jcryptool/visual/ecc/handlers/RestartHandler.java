@@ -22,7 +22,8 @@ import org.jcryptool.visual.ecc.ui.ECView;
  * @version 0.9.5
  */
 public class RestartHandler extends AbstractHandler {
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    @Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
         if (HandlerUtil.getActivePart(event) instanceof ECView) {
         	ECView view = ((ECView) HandlerUtil.getActivePart(event));
                 
