@@ -81,6 +81,7 @@ public class SphincsDescriptions extends NLS {
 	public static String SphincsSign_Button_3;
 
 	// Verify status/button
+	public static String SphincsVerify_Generated;
 	public static String SphincsVerify_Success;
 	public static String SphincsVerify_Fail;
 	public static String SphincsVerify_Button_0;
@@ -90,7 +91,6 @@ public class SphincsDescriptions extends NLS {
 	 * Sphincs tab "Overview"
 	 */
 	// Label + Text
-	public static String SphincsDecription_Label_0;
 	public static String SphincsDecription_Text_0;
 	public static String SphincsDecription_Text_1;
 
