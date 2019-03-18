@@ -37,7 +37,11 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.widgets.Text;
+import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.visual.ecc.ECCPlugin;
 import org.jcryptool.visual.ecc.Messages;
 import org.jcryptool.visual.ecc.algorithm.EC;
 import org.jcryptool.visual.ecc.algorithm.FpPoint;
@@ -51,8 +55,8 @@ public class ECContentReal extends Composite {
     private Button btnSave = null;
     private Canvas canvasCurve = null;
     private Button cbAutoSave = null;
-    private Color black = Display.getCurrent().getSystemColor(SWT.COLOR_BLACK);
-    private Color white = Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
+    private Color black = ColorService.BLACK;
+    private Color white = ColorService.WHITE;
     private Color lightBlue = new Color(this.getDisplay(), 0, 255, 255);
     private Color blue = new Color(this.getDisplay(), 0, 0, 255);
     private Color purple = new Color(this.getDisplay(), 255, 0, 255);
@@ -67,10 +71,10 @@ public class ECContentReal extends Composite {
     private Group groupCurveType = null;
     private Group groupSettings = null;
     private Group groupSave = null;
-    private Label lblCurve = null;
-    private Label lblP = null;
-    private Label lblQ = null;
-    private Label lblR = null;
+    private Text lblCurve = null;
+    private Text lblP = null;
+    private Text lblQ = null;
+    private Text lblR = null;
     private Label lblSaveResults = null;
     private FpPoint pointP;
     private FpPoint pointQ;
@@ -116,10 +120,12 @@ public class ECContentReal extends Composite {
         createGroupAttributesR();
 
         Display.getCurrent().asyncExec(new Runnable() {
-            public void run() {
+            @Override
+			public void run() {
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
+                	LogUtil.logError(ECCPlugin.PLUGIN_ID, e);
                 }
                 updateCurve(true);
             }
@@ -145,21 +151,26 @@ public class ECContentReal extends Composite {
         groupCurve.setLayout(new GridLayout(3, false));
         groupCurve.setText(Messages.getString("ECContentReal.0")); //$NON-NLS-1$
         groupCurve.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        
         createCanvasCurve();
-        lblCurve = new Label(groupCurve, SWT.NONE);
+        
+        lblCurve = new Text(groupCurve, SWT.READ_ONLY);
         lblCurve.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
         lblCurve.setText(""); //$NON-NLS-1$
+        
         btnDeletePoints = new Button(groupCurve, SWT.NONE);
         btnDeletePoints.setToolTipText(Messages.getString("ECContentReal.3")); //$NON-NLS-1$
         btnDeletePoints.setText(Messages.getString("ECView.RemoveSelection")); //$NON-NLS-1$
         btnDeletePoints.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false));
         btnDeletePoints.setEnabled(false);
         btnDeletePoints.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 btnPQ.setSelection(true);
                 btnPQ.setEnabled(false);
                 btnKP.setSelection(false);
@@ -181,11 +192,13 @@ public class ECContentReal extends Composite {
         sliderZoom.setMinimum(0);
         sliderZoom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
         sliderZoom.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 curve.updateCurve(spnrA.getSelection(), spnrB.getSelection(), 50 - sliderZoom
                         .getSelection(), canvasCurve.getSize());
                 points = curve.getPoints();
@@ -211,10 +224,12 @@ public class ECContentReal extends Composite {
         rbtnLarge.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false));
         rbtnLarge.setText(Messages.getString("ECView.Large")); //$NON-NLS-1$
         rbtnLarge.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 view.showLarge();
             }
         });
@@ -247,26 +262,30 @@ public class ECContentReal extends Composite {
         GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
         canvasCurve.setLayoutData(gridData);
         canvasCurve.addPaintListener(new PaintListener() {
-            public void paintControl(PaintEvent e) {
+            @Override
+			public void paintControl(PaintEvent e) {
                 drawGraph(e);
             }
         });
         canvasCurve.addMouseMoveListener(new MouseMoveListener() {
-            public void mouseMove(MouseEvent e) {
+            @Override
+			public void mouseMove(MouseEvent e) {
                 Point size = canvasCurve.getSize();
                 if (points != null) {
                     int gridSize = 50 - sliderZoom.getSelection();
-                    double step = Math.pow((double) gridSize, -1);
+                    double step = Math.pow(gridSize, -1);
                     double x = ((e.x - size.x / 2) * (step * 100));
                     double y = -((e.y - size.y / 2) * (step * 100));
                     FpPoint nearestPoint = findNearestPoint(x, y);
-                    if (nearestPoint != null)
+                    if (nearestPoint != null) {
                         setPointSelect(nearestPoint);
+                    }
                 }
             }
         });
         canvasCurve.addListener(SWT.MouseDown, new Listener() {
-            public void handleEvent(Event event) {
+            @Override
+			public void handleEvent(Event event) {
                 if (pointSelect != null) {
                     if (pointP == null) {
                         setPointP(pointSelect);
@@ -277,10 +296,12 @@ public class ECContentReal extends Composite {
             }
         });
         canvasCurve.addMouseTrackListener(new MouseTrackListener() {
-            public void mouseEnter(MouseEvent e) {
+            @Override
+			public void mouseEnter(MouseEvent e) {
             }
 
-            public void mouseExit(MouseEvent e) {
+            @Override
+			public void mouseExit(MouseEvent e) {
                 pointSelect = null;
                 updateCurve(false);
                 if (pointP == null)
@@ -289,7 +310,8 @@ public class ECContentReal extends Composite {
                     lblQ.setText(""); //$NON-NLS-1$
             }
 
-            public void mouseHover(MouseEvent e) {
+            @Override
+			public void mouseHover(MouseEvent e) {
             }
         });
     }
@@ -305,23 +327,25 @@ public class ECContentReal extends Composite {
         groupSave.setText(Messages.getString("ECView.SaveResults")); //$NON-NLS-1$
 
         cSaveResults = new Combo(groupSave, SWT.READ_ONLY);
-        cSaveResults
-                .setItems(new String[] {
+        cSaveResults.setItems(new String[] {
                         Messages.getString("ECView.No"), Messages.getString("ECView.ToTextEditor"), Messages.getString("ECView.ToTextFile")}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         cSaveResults.select(view.saveTo);
         cSaveResults.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 2, 1));
         cSaveResults.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 view.saveTo = cSaveResults.getSelectionIndex();
                 btnBrowse.setEnabled(view.saveTo == 2);
                 btnSave.setEnabled(view.saveTo != 0);
                 cbAutoSave.setEnabled(view.saveTo != 0);
-                if (view.saveTo != 0 && view.autoSave)
+                if (view.saveTo != 0 && view.autoSave) {
                     view.saveLog();
+                }
                 lblSaveResults.setText(view.saveTo == 2 ? view.getFileName() : ""); //$NON-NLS-1$
             }
         });
@@ -330,11 +354,13 @@ public class ECContentReal extends Composite {
         btnBrowse.setText(Messages.getString("ECView.Browse")); //$NON-NLS-1$
         btnBrowse.setEnabled(view.saveTo == 2);
         btnBrowse.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 view.selectFileLocation();
                 lblSaveResults.setText(view.saveTo == 2 ? view.getFileName() : ""); //$NON-NLS-1$
             }
@@ -343,11 +369,13 @@ public class ECContentReal extends Composite {
         btnSave.setText(Messages.getString("ECView.SaveNow")); //$NON-NLS-1$
         btnSave.setEnabled(view.saveTo != 0);
         btnSave.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 view.saveLog();
                 lblSaveResults.setText(view.saveTo == 2 ? view.getFileName() : ""); //$NON-NLS-1$
             }
@@ -357,11 +385,13 @@ public class ECContentReal extends Composite {
         cbAutoSave.setEnabled(view.autoSave);
         cbAutoSave.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 2, 1));
         cbAutoSave.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 view.autoSave = cbAutoSave.getSelection();
                 lblSaveResults.setText(view.saveTo == 2 ? view.getFileName() : ""); //$NON-NLS-1$
             }
@@ -380,16 +410,19 @@ public class ECContentReal extends Composite {
         groupCurveType.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         groupCurveType.setLayout(new GridLayout(3, true));
         groupCurveType.setText(Messages.getString("ECView.SelectCurveType")); //$NON-NLS-1$
+        
         rbtnReal = new Button(groupCurveType, SWT.RADIO);
         rbtnReal.setText(Messages.getString("ECView.RealNumbers")); //$NON-NLS-1$
         rbtnReal.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false));
         rbtnReal.setSelection(true);
         rbtnReal.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 view.showReal();
             }
 
@@ -399,11 +432,13 @@ public class ECContentReal extends Composite {
         rbtnFP.setSelection(false);
         rbtnFP.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false));
         rbtnFP.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 view.showFp();
             }
         });
@@ -412,11 +447,13 @@ public class ECContentReal extends Composite {
         rbtnFM.setSelection(false);
         rbtnFM.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false));
         rbtnFM.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 view.showFm();
             }
         });
@@ -448,11 +485,13 @@ public class ECContentReal extends Composite {
         spnrA.setSelection(-10);
         spnrA.setMinimum(-100000);
         spnrA.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 btnPQ.setSelection(true);
                 btnKP.setSelection(false);
                 btnPQ.setEnabled(false);
@@ -473,11 +512,13 @@ public class ECContentReal extends Composite {
         spnrB.setSelection(15);
         spnrB.setMinimum(-100000);
         spnrB.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 btnPQ.setSelection(true);
                 btnKP.setSelection(false);
                 btnPQ.setEnabled(false);
@@ -524,7 +565,7 @@ public class ECContentReal extends Composite {
         groupCalculations.setLayout(new GridLayout(3, false));
         groupCalculations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));    
 
-        Label label = new Label(groupCalculations, SWT.WRAP);
+        Text label = new Text(groupCalculations, SWT.WRAP | SWT.READ_ONLY);
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
         label.setText(Messages.getString("ECContentReal.36")); //$NON-NLS-1$
 
@@ -534,11 +575,13 @@ public class ECContentReal extends Composite {
         btnPQ.setSelection(true);
         btnPQ.setEnabled(false);
         btnPQ.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 setPointQ(null);
             }
         });
@@ -548,11 +591,13 @@ public class ECContentReal extends Composite {
         btnKP.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
         btnKP.setEnabled(false);
         btnKP.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 spnrK.setEnabled(btnKP.getSelection());
                 FpPoint q = curve.multiplyPoint(pointP, spnrK.getSelection());
                 setPointQ(q);
@@ -564,39 +609,41 @@ public class ECContentReal extends Composite {
         spnrK.setMinimum(1);
         spnrK.setEnabled(false);
         spnrK.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 FpPoint q = curve.multiplyPoint(pointP, spnrK.getSelection());
                 setPointQ(q);
                 updateCurve(false);
             }
         });
 
-        label = new Label(groupCalculations, SWT.NONE);
+        label = new Text(groupCalculations, SWT.READ_ONLY);
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1));
         label.setText(Messages.getString("ECContentReal.39")); //$NON-NLS-1$
 
-        label = new Label(groupCalculations, SWT.NONE);
+        label = new Text(groupCalculations, SWT.READ_ONLY);
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
         label.setText("P ="); //$NON-NLS-1$
-        lblP = new Label(groupCalculations, SWT.NONE);
+        lblP = new Text(groupCalculations, SWT.READ_ONLY);
         lblP.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
         lblP.setText(""); //$NON-NLS-1$
 
-        label = new Label(groupCalculations, SWT.NONE);
+        label = new Text(groupCalculations, SWT.READ_ONLY);
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
         label.setText("Q ="); //$NON-NLS-1$
-        lblQ = new Label(groupCalculations, SWT.NONE);
+        lblQ = new Text(groupCalculations, SWT.READ_ONLY);
         lblQ.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
         lblQ.setText(""); //$NON-NLS-1$
 
-        label = new Label(groupCalculations, SWT.NONE);
+        label = new Text(groupCalculations, SWT.READ_ONLY);
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
         label.setText("R = P + Q ="); //$NON-NLS-1$
-        lblR = new Label(groupCalculations, SWT.NONE);
+        lblR = new Text(groupCalculations, SWT.READ_ONLY);
         lblR.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
         lblR.setText(""); //$NON-NLS-1$
     }
@@ -766,7 +813,7 @@ public class ECContentReal extends Composite {
 
         if (points != null) {
             gc.setForeground(blue);
-            double step = Math.pow((double) gridSize, -1);
+            double step = Math.pow(gridSize, -1);
             double x1, y1, x2, y2;
             for (int i = 2; i < points.length; i++) {
                 if (points[i - 2].y == 0) {
@@ -890,7 +937,7 @@ public class ECContentReal extends Composite {
 
                 if (startY < 0) {
                     double alfa = (double) (rX - lX) / (double) (rY - lY);
-                    startX += (double) (-startY) * alfa;
+                    startX += (-startY) * alfa;
                     startY = 0;
                 } else if (startY > size.y) {
                     double alfa = (double) (rX - lX) / (double) (rY - lY);
@@ -900,11 +947,11 @@ public class ECContentReal extends Composite {
 
                 if (endY < 0) {
                     double alfa = (double) (rX - lX) / (double) (rY - lY);
-                    endX += (double) (-endY - 1) * alfa;
+                    endX += (-endY - 1) * alfa;
                     endY = -1;
                 } else if (endY > size.y) {
                     double alfa = (double) (rX - lX) / (double) (rY - lY);
-                    endX -= (double) (endY - size.y) * alfa + 0.5;
+                    endX -= (endY - size.y) * alfa + 0.5;
                     endY = size.y;
                 }
 
@@ -1013,7 +1060,7 @@ public class ECContentReal extends Composite {
                         + (points[i].y - y) * (points[i].y - y));
                 if (currentDistance < minimum) {
                     minimum = currentDistance;
-                    nearestPoint = points[i];
+                    nearestPoint = points[i];      
                 }
             }
         }

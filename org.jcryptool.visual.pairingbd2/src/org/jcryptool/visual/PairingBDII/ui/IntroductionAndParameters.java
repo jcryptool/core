@@ -22,7 +22,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.util.fonts.FontService;
@@ -38,15 +37,15 @@ public class IntroductionAndParameters {
 	private static final int PARAMETER_k = 7;
 	private static final int PARAMETER_e = 8;
 
-	private final Label parameters_u;
-	private final Label parameters_q;
-	private final Label parameters_E;
-	private final Label parameters_E2;
-	private final Label parameters_l;
-	private final Label parameters_P;
-	private final Label parameters_Q2;
-	private final Label parameters_k;
-	private final Label parameters_e;
+	private final Text parameters_u;
+	private final Text parameters_q;
+	private final Text parameters_E;
+	private final Text parameters_E2;
+	private final Text parameters_l;
+	private final Text parameters_P;
+	private final Text parameters_Q2;
+	private final Text parameters_k;
+	private final Text parameters_e;
 
 	private Color white = Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
 
@@ -65,13 +64,13 @@ public class IntroductionAndParameters {
 		compositeIntro.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		compositeIntro.setLayout(new GridLayout(1, false));
 
-		Label label = new Label(compositeIntro, SWT.WRAP);
-		label.setFont(FontService.getHeaderFont());
-		label.setBackground(white);
-		label.setText(Messages.IntroductionAndParameters_0); //$NON-NLS-1$
+		Text headerTitle = new Text(compositeIntro, SWT.WRAP | SWT.READ_ONLY);
+		headerTitle.setFont(FontService.getHeaderFont());
+		headerTitle.setBackground(white);
+		headerTitle.setText(Messages.IntroductionAndParameters_0); 
 
 		Text text = new Text(compositeIntro, SWT.READ_ONLY | SWT.WRAP | SWT.MULTI);
-		text.setText(Messages.IntroductionAndParameters_1); //$NON-NLS-1$
+		text.setText(Messages.IntroductionAndParameters_1); 
 		text.setBackground(white);
 		GridData gd_text = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gd_text.widthHint = 800;
@@ -79,27 +78,26 @@ public class IntroductionAndParameters {
 
 		Group groupParameters = new Group(parent, SWT.NONE);
 		groupParameters.setLayout(new GridLayout(1, false));
-		GridData gridData = new GridData(SWT.FILL, SWT.FILL, false, false);
-		gridData.minimumWidth = SWT.DEFAULT;
-		groupParameters.setLayoutData(gridData);
+		groupParameters.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		groupParameters.setText(Messages.IntroductionAndParameters_6);
-		parameters_u = new Label(groupParameters, SWT.NONE);
+		
+		parameters_u = new Text(groupParameters, SWT.READ_ONLY);
 		displayParameter(PARAMETER_u, ""); //$NON-NLS-1$
-		parameters_q = new Label(groupParameters, SWT.NONE);
+		parameters_q = new Text(groupParameters, SWT.READ_ONLY);
 		displayParameter(PARAMETER_q, ""); //$NON-NLS-1$
-		parameters_E = new Label(groupParameters, SWT.NONE);
+		parameters_E = new Text(groupParameters, SWT.READ_ONLY);
 		displayParameter(PARAMETER_E, ""); //$NON-NLS-1$
-		parameters_E2 = new Label(groupParameters, SWT.NONE);
+		parameters_E2 = new Text(groupParameters, SWT.READ_ONLY);
 		displayParameter(PARAMETER_E2, ""); //$NON-NLS-1$
-		parameters_l = new Label(groupParameters, SWT.NONE);
+		parameters_l = new Text(groupParameters, SWT.READ_ONLY);
 		displayParameter(PARAMETER_l, ""); //$NON-NLS-1$
-		parameters_P = new Label(groupParameters, SWT.NONE);
+		parameters_P = new Text(groupParameters, SWT.READ_ONLY);
 		displayParameter(PARAMETER_P, ""); //$NON-NLS-1$
-		parameters_Q2 = new Label(groupParameters, SWT.NONE);
+		parameters_Q2 = new Text(groupParameters, SWT.READ_ONLY);
 		displayParameter(PARAMETER_Q2, ""); //$NON-NLS-1$
-		parameters_k = new Label(groupParameters, SWT.NONE);
+		parameters_k = new Text(groupParameters, SWT.READ_ONLY);
 		displayParameter(PARAMETER_k, ""); //$NON-NLS-1$
-		parameters_e = new Label(groupParameters, SWT.NONE);
+		parameters_e = new Text(groupParameters, SWT.READ_ONLY);
 		displayParameter(PARAMETER_e, ""); //$NON-NLS-1$
 
 		groupParameters = new Group(parent, SWT.NONE);
@@ -111,14 +109,17 @@ public class IntroductionAndParameters {
 		group.setLayout(new GridLayout(1, false));
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		group.setText(Messages.IntroductionAndParameters_17);
+		
 		radio_EmbeddedDegreeSmall = new Button(group, SWT.RADIO);
 		radio_EmbeddedDegreeSmall.setText(Messages.IntroductionAndParameters_18);
 		radio_EmbeddedDegreeSmall.setSelection(true);
 		radio_EmbeddedDegreeSmall.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
 			}
 
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (((Button) e.widget).getSelection()) {
 					Model.getDefault().reset();
@@ -141,10 +142,12 @@ public class IntroductionAndParameters {
 		radio_EmbeddedDegreeLarge = new Button(group, SWT.RADIO);
 		radio_EmbeddedDegreeLarge.setText(Messages.IntroductionAndParameters_19);
 		radio_EmbeddedDegreeLarge.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
 			}
 
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (((Button) e.widget).getSelection()) {
 					Model.getDefault().reset();
@@ -166,15 +169,18 @@ public class IntroductionAndParameters {
 		group.setLayout(new GridLayout(1, false));
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		group.setText(Messages.IntroductionAndParameters_20);
+		
 		radio_PenAndPaper = new Button(group, SWT.RADIO);
 		radio_PenAndPaper.setText(Messages.IntroductionAndParameters_21);
 		radio_PenAndPaper.setSelection(false);
 		radio_PenAndPaper.setEnabled(false);
 		radio_PenAndPaper.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
 			}
 
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Model.getDefault().setParameter(Model.PENANDPAPER);
 				Model.getDefault().setupStep1();
@@ -184,10 +190,12 @@ public class IntroductionAndParameters {
 		radio_IndustrialSecurity.setText(Messages.IntroductionAndParameters_22);
 		radio_IndustrialSecurity.setEnabled(false);
 		radio_IndustrialSecurity.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
 			}
 
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Model.getDefault().setParameter(Model.INDUSTRIALSECURITY);
 				Model.getDefault().setupStep1();
@@ -197,17 +205,21 @@ public class IntroductionAndParameters {
 		final Composite panel = new Composite(groupParameters, SWT.NONE);
 		panel.setLayout(new GridLayout(3, false));
 		panel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		label = new Label(panel, SWT.NONE);
-		label.setText(Messages.IntroductionAndParameters_23);
+		
+		headerTitle = new Text(panel, SWT.READ_ONLY);
+		headerTitle.setText(Messages.IntroductionAndParameters_23);
+		
 		spinner_NumberOfUsers = new Spinner(panel, SWT.BORDER);
 		spinner_NumberOfUsers.setSelection(4);
 		spinner_NumberOfUsers.setMinimum(3);
 		spinner_NumberOfUsers.setMaximum(101);
 		spinner_NumberOfUsers.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
 			}
 
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (spinner_NumberOfUsers.getSelection() == spinner_NumberOfUsers.getMinimum()) {
 					spinner_NumberOfUsers.setSelection(spinner_NumberOfUsers.getMaximum() - 1);
@@ -219,25 +231,28 @@ public class IntroductionAndParameters {
 			}
 		});
 
-		label = new Label(panel, SWT.WRAP);
+		headerTitle = new Text(panel, SWT.WRAP | SWT.READ_ONLY);
 		GridData gd_label = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
 		gd_label.widthHint = 200;
-		label.setLayoutData(gd_label);
-		label.setText(Messages.IntroductionAndParameters_24);
+		headerTitle.setLayoutData(gd_label);
+		headerTitle.setText(Messages.IntroductionAndParameters_24);
 
 		group = new Group(groupParameters, SWT.NONE);
 		group.setLayout(new GridLayout(1, false));
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		group.setText(Messages.IntroductionAndParameters_25);
+		
 		radio_TatePairing = new Button(group, SWT.RADIO);
 		radio_TatePairing.setText(Messages.IntroductionAndParameters_26);
 		radio_TatePairing.setSelection(false);
 		radio_TatePairing.setEnabled(false);
 		radio_TatePairing.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
 			}
 
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Model.getDefault().setParameter(Model.TATEPAIRING);
 				Model.getDefault().setupStep1();
@@ -247,10 +262,12 @@ public class IntroductionAndParameters {
 		radio_WeilPairing.setText(Messages.IntroductionAndParameters_27);
 		radio_WeilPairing.setEnabled(false);
 		radio_WeilPairing.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
 			}
 
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Model.getDefault().setParameter(Model.WEILPARING);
 				Model.getDefault().setupStep1();

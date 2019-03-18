@@ -38,6 +38,7 @@ public class ECFm extends EC{
 		setM(m);
 	}
 
+	@Override
 	public FpPoint addPoints(FpPoint p, FpPoint q) {
 		if(p == null || q == null)
 			return null;
@@ -100,6 +101,7 @@ public class ECFm extends EC{
 		return M;
 	}
 
+	@Override
 	public int getType() {
 		return ECFm;
 	}
@@ -302,6 +304,7 @@ public class ECFm extends EC{
 			return b[1];
 	}
 
+	@Override
 	public String toString() {
 		String s = "y\u00b2 + xy = x\u00b3 + "; //$NON-NLS-1$
 		if(indexA == 0)

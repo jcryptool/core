@@ -16,6 +16,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 public class View extends ViewPart {
@@ -36,7 +37,9 @@ public class View extends ViewPart {
 
 		final Composite scrolledContent = new Composite(scrolledComposite,
 				SWT.NONE);
+
 		scrolledContent.setLayout(new GridLayout(2, false));
+		
 		situation = new IntroductionAndParameters(scrolledContent);
 		illustration = new Illustration(scrolledContent);
 		protocol = new DefinitionAndDetails(scrolledContent);
@@ -54,6 +57,9 @@ public class View extends ViewPart {
 		scrolledComposite.getVerticalBar().setIncrement(20);
 		scrolledComposite.getVerticalBar().setPageIncrement(250);
 		scrolledComposite.layout();
+		
+		PlatformUI.getWorkbench().getHelpSystem()
+			.setHelp(parent.getShell(),"org.jcryptool.visual.PairingBDII.pairingBD2HelpContextId");
 	}
 
 	@Override
