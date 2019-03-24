@@ -9,6 +9,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.core;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.TrayDialog;
 import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.graphics.Point;
@@ -60,6 +61,14 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
     	configurer.addEditorAreaTransfer(FileTransfer.getInstance());
     	configurer.configureEditorAreaDropListener(new EditorAreaDropTargetListener());
+    	
+    	//Add to the title you enter in the jcryptool.product file the Version of the JCT (that is also
+    	//entered in the jcryptool.product file) and the maven build timestamp.
+    	configurer.setTitle(Platform.getProduct().getName()
+    			+ " "
+    			+ Platform.getProduct().getDefiningBundle().getVersion()
+    			+ " "
+    			+ Platform.getProduct().getProperty("mavenBuildTimestamp"));
         
         PlatformUI.getPreferenceStore().setValue(IWorkbenchPreferenceConstants.PERSPECTIVE_BAR_EXTRAS, Perspective.PERSPECTIVE_ID
                 + ", org.jcryptool.crypto.flexiprovider.ui.perspective.FlexiProviderPerspective"); //$NON-NLS-1$
