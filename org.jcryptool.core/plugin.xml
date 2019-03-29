@@ -274,7 +274,10 @@
          <property name="startupMessageRect" value="7,238,445,20"/>
          <property name="startupProgressRect" value="5,275,445,15"/>
          <property name="mavenBuildTimestamp" value="%maven.timestamp"/>
-         <property name="preferenceCustomization" value="plugin_customization.ini"/>
+         <property
+               name="preferenceCustomization"
+               value="plugin_customization.ini">
+         </property>
 
       </product>
    </extension>
