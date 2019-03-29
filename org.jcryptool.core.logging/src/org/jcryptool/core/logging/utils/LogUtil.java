@@ -179,8 +179,18 @@ public class LogUtil {
                 logMessage = ex.getMessage();
             }
 
+            // Logging the currently used JCT version.
+            Status versionInfoStatus = new Status(0, "JCT Version Information", 
+            		"Currently used JCT Version: " + 
+            		Platform.getProduct().getDefiningBundle().getVersion() + 
+            		" " + 
+            		Platform.getProduct().getProperty("mavenBuildTimestamp"));
+            Platform.getLog(Platform.getBundle(bundleId)).log(versionInfoStatus);
+            
+            //Logging of the error.
             Status status = new Status(severity, bundleId, logMessage, ex);
             Platform.getLog(Platform.getBundle(bundleId)).log(status);
+
 
             if (showErrorDialog) {
                 JCTMessageDialog.showErrorDialog(status, message);
