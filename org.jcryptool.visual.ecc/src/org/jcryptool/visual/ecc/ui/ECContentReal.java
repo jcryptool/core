@@ -9,6 +9,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.ecc.ui;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
@@ -708,10 +709,15 @@ public class ECContentReal extends Composite {
             pointR = null;
             lblR.setText(""); //$NON-NLS-1$
         } else {
-            pointR = r;
-            lblR.setText("(" + ((double) pointR.x / 100) + "|" + ((double) pointR.y / 100) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            view
-                    .log(Messages.getString("ECView.Point") + " R = P + Q = " + "(" + ((double) pointR.x / 100) + "|" + ((double) pointR.y / 100) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+        	if (false) {
+        		pointR = r;
+                lblR.setText("O"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                MessageDialog.openInformation(getShell(), Messages.getString("ECView.InfinityPoint"), Messages.getString("ECView.InfinityPointExplanation"));
+        	} else {
+        		pointR = r;
+                lblR.setText("(" + ((double) pointR.x / 100) + "|" + ((double) pointR.y / 100) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                view.log(Messages.getString("ECView.Point") + " R = P + Q = " + "(" + ((double) pointR.x / 100) + "|" + ((double) pointR.y / 100) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+        	}
         }
     }
 

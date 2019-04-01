@@ -9,6 +9,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.ecc.ui;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
@@ -774,9 +775,15 @@ public class ECContentFp extends Composite{
 			pointR = null;
 			lblR.setText(""); //$NON-NLS-1$
 		} else {
-			pointR = r;
-			lblR.setText(pointR.toString());
-			view.log(Messages.getString("ECView.Point") + " R = P + Q = " + pointR.toString()); //$NON-NLS-1$ //$NON-NLS-2$
+			if (r.isInfinite()) {
+        		pointR = r;
+                lblR.setText("O"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                MessageDialog.openInformation(getShell(), Messages.getString("ECView.InfinityPoint"), Messages.getString("ECView.InfinityPointExplanation"));
+        	} else {
+        		pointR = r;
+    			lblR.setText(pointR.toString());
+    			view.log(Messages.getString("ECView.Point") + " R = P + Q = " + pointR.toString()); //$NON-NLS-1$ //$NON-NLS-2$
+        	}
 		}
 	}
 
