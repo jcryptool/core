@@ -709,7 +709,7 @@ public class ECContentReal extends Composite {
             pointR = null;
             lblR.setText(""); //$NON-NLS-1$
         } else {
-        	if (false) {
+        	if (r.isInfinite()) {
         		pointR = r;
                 lblR.setText("O"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 MessageDialog.openInformation(getShell(), Messages.getString("ECView.InfinityPoint"), Messages.getString("ECView.InfinityPointExplanation"));
