@@ -34,6 +34,7 @@ import org.jcryptool.core.logging.dialogs.JCTMessageDialog;
 public class LogUtil {
     public static final String LOGGER_LOG_LEVEL = "org.jcryptool.core.logging.logLevel"; //$NON-NLS-1$
     private static int loglevel = IStatus.ERROR;
+    private static boolean jctVersionLogged = false;
 
     /**
      * Sets a new logging level.
@@ -178,9 +179,23 @@ public class LogUtil {
             if (ex != null) {
                 logMessage = ex.getMessage();
             }
+            
+            if (!jctVersionLogged) {
+                // Logging the currently used JCT version.
+                Status versionInfoStatus = new Status(0, "JCT Version Information", 
+                		"Currently used JCT Version: " + 
+                		Platform.getProduct().getDefiningBundle().getVersion() + 
+                		" " + 
+                		Platform.getProduct().getProperty("mavenBuildTimestamp"));
+                Platform.getLog(Platform.getBundle(bundleId)).log(versionInfoStatus);
+                jctVersionLogged = true;
+            }
 
+            
+            //Logging of the error.
             Status status = new Status(severity, bundleId, logMessage, ex);
             Platform.getLog(Platform.getBundle(bundleId)).log(status);
+
 
             if (showErrorDialog) {
                 JCTMessageDialog.showErrorDialog(status, message);

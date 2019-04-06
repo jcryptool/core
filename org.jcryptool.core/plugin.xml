@@ -260,22 +260,25 @@
       <theme basestylesheeturi="css/jcryptool.css" id="org.jcryptool.themes.default" label="Default Theme"/>
    </extension>
 
-   <!-- The about window
-        Help -> About -->
+
    <extension id="product" point="org.eclipse.core.runtime.products">
       <product application="org.jcryptool.core.application" name="JCrypTool">
+      <!--  You can access a property via Platform.getProduct().getProperty("appName") -->
          <property name="appName" value="JCrypTool"/>
          <property name="cssTheme" value="org.jcryptool.themes.default"/>
          <property name="aboutImage" value="icons/about_dialog.gif"/>
+            <!-- The about window Help -> About -->
          <property name="aboutText" value="%about.text"/>
          <property name="windowImages" value="icons/icon_16.gif,icons/icon_32.gif,icons/icon_48.gif,icons/icon_64.gif,icons/icon_128.gif,icons/icon_256.gif"/>
          <property name="startupForegroundColor" value="C0C0C0"/>
          <property name="startupMessageRect" value="7,238,445,20"/>
          <property name="startupProgressRect" value="5,275,445,15"/>
+         <property name="mavenBuildTimestamp" value="%maven.timestamp"/>
          <property
                name="preferenceCustomization"
                value="plugin_customization.ini">
          </property>
+
       </product>
    </extension>
 
