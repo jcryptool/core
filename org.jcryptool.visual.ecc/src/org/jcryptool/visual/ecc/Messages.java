@@ -90,20 +90,12 @@ public class Messages extends NLS {
 	public static String ECView_InfinityPointExplanation;
 
 
-//	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
-//			.getBundle(BUNDLE_NAME);
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
 	}
 
 	private Messages() {
+		
 	}
 
-//	public static String getString(String key) {
-//		try {
-//			return RESOURCE_BUNDLE.getString(key);
-//		} catch (MissingResourceException e) {
-//			return '!' + key + '!';
-//		}
-//	}
 }
