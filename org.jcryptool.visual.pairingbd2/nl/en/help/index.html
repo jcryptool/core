@@ -2,14 +2,70 @@
 
 <html>
 <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	  <title>Multipartite Key Exchange</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Multi-partite Key Exchange</title>
 </head>
 
 <body>
+  <h1>Multi-partite Key Exchange</h1>
 
-<h1>Multipartite Key Exchange</h1>
-<h2>under construction</h2>
+  <p>This help file describes two things:<br/>
+  1) <a href="#scheme-general">Multi-partite Key Exchange Algorithms</a><br/>
+  2) <a href="#plugin">Handling Instructions: How to Use this Visualization</a> </p>
 
+
+
+<br/>  
+  <h2 id="scheme-general">1) Multi-partite Key Exchange Algorithms</h2>
+  
+  <p>Multi-party or multi-partite key agreement (MPKA) [other names used are group key exchange (GKE) protocols or conference key establishment protocols] are methods to securely exchange information over an unsecure/public channel in order to agree on a common cryptographic key between more than 2 parties. The first scheme of this kind was the <a href="PLUGINS_ROOT/org.jcryptool.visual.ecdh/$nl$/help/content/index.html">Diffie-Hellman key exchange (DH)</a> which described this protocol for 2 parties.</p>
+  
+  <p>Multi-partite key agreement protocols are part of the research area of secure multi-party computation and these protocols are relevant e.g. for mobile phones or 3G, 4G, or 5G.</p>
+  
+  <p>Here we consider only such multi-partite key agreement protocols which do not require any trusted third party. The original Diffie-Hellman key exchange (DHKE) was originally implemented only in finite fields of prime order. However, also other cryptographic primitives can be used namely elliptic curves and pairings on elliptic curves.</p>
+  
+  <p>This visualization shows for an arbitrary number of users the BD II key exchange protocol (named after its inventors <b>B</b>urmester and <b>D</b>esmedt), presented in the pairings from Weil and Tate for a small degree and xx-pairings for a higher, more secure degree. More details can be found in [Onete 2008].</p>
+  
+  <p>xxxxxxxxxxxxxx.</p>
+ 
+
+
+
+
+  
+<br/>  
+  <h2 id="plugin">2) Handling Instructions: How to Use this Visualization</h2>
+  <p> xxxWhen the xxx visualization is started, you can select the desired operation xxx by choosing the corresponding setting.</p>
+  
+  <p>xxxxxxxxxxxxxx.</p>
+
+
+
+
+ <br/>  
+  <h3 id="Sig">Further Information / References</h3>
+  <p>For further information about the xxx please refer to:</p>
+  <ul>
+  <li><a href="http://www.springer.com/de/book/9783662484234">Joachim von zur Gathen: CryptoSchool, Springer, 2015, Chapters 4.2 and 8.2</a></li>
+  <li>Cristina Onete: Visualisation of Modern Key Exchange Schemes for more than two Parties in JCrypTool and their Security Analysis, Eindhoven, 2008, Master Thesis</li>
+  <li><a href="https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange">Wikipedia: Diffie-Hellman key exchange</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Secure_multi-party_computation">Wikipedia: Secure multi-party computation</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Password-authenticated_key_agreement">Wikipedia: Password-authenticated key agreement</a></li>
+  </ul>
+
+  <br/>
 </body>
 </html>
+
+<!-- ################
+Also the DH key exchange protocol can be operated with more than two parties but there is a lot of overhead then. [https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange]
+
+More modern readable literature:
+
+https://is.muni.cz/th/l407o/thesis.pdf
+Conference key establishment protocols  BACHELOR THESIS  Zuzana Melšová  2014
+
+https://is.muni.cz/th/w2027/m_thesis.pdf
+Key Agreement for Mobile Phones   MASTER’S THESIS  Shkodran Gerguri  2011
+##################### -->
+
