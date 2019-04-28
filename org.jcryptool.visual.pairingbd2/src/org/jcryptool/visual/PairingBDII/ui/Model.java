@@ -47,6 +47,10 @@ public class Model {
     public int currentStep = 0;
     public int laststep;
     public int infoUserIndex;
+    /**
+     * The security level selected by the user. Either 2 (PENANDPAPER) or 3 (INDUSTRIALSECURITY).
+     */
+    public int securityLevel = PENANDPAPER;
     public boolean parsgenerated;
     public boolean isTatePairing;
     public boolean haselimtrue;
@@ -168,6 +172,7 @@ public class Model {
 
         }
         if (parameter == PENANDPAPER) {
+        	securityLevel = PENANDPAPER;
             situation.setLowSecurity();
 
             q = new FlexiBigInt("103"); //$NON-NLS-1$
@@ -210,29 +215,21 @@ public class Model {
             parsgenerated = true;
         }
         if (parameter == INDUSTRIALSECURITY) {
+        	securityLevel = INDUSTRIALSECURITY;
             situation.setHighSecurity();
 
-            q = new FlexiBigInt(
-                    "13407807929942597099574024998205846127479365820656611338971283446046867015142005411144178117863615299181622743868603093972561776274533618051815316861876223"); //$NON-NLS-1$
+            q = new FlexiBigInt("13407807929942597099574024998205846127479365820656611338971283446046867015142005411144178117863615299181622743868603093972561776274533618051815316861876223"); //$NON-NLS-1$
             l = new FlexiBigInt("1461501637330902918203684832716283019655932542983"); //$NON-NLS-1$
 
             final Vector<GFPElement> Pcoords = new Vector<GFPElement>(2);
             Pcoords.setSize(2);
 
-            Pcoords
-                    .set(
-                            0,
-                            new GFPElement(
-                                    new FlexiBigInt(
-                                            "9537989506416121095013645232844302091864464324522274801469622143083463242058243968851316630179778495427481368972301592029924677781896780819879883466109076"), //$NON-NLS-1$
-                                    q));
-            Pcoords
-                    .set(
-                            1,
-                            new GFPElement(
-                                    new FlexiBigInt(
-                                            "8774011707516965344315296795300650636428511623440304200728507178506743028554747280637296913461842283569539440038315214430606251757242375714832950517160787"), //$NON-NLS-1$
-                                    q));
+            Pcoords.set(0, new GFPElement(
+            	new FlexiBigInt("9537989506416121095013645232844302091864464324522274801469622143083463242058243968851316630179778495427481368972301592029924677781896780819879883466109076"), //$NON-NLS-1$
+                q));
+            Pcoords.set(1, new GFPElement(
+                new FlexiBigInt("8774011707516965344315296795300650636428511623440304200728507178506743028554747280637296913461842283569539440038315214430606251757242375714832950517160787"), //$NON-NLS-1$
+                q));
 
             P = new PointGFP1(q, true, Pcoords);
             keysize = 160;

@@ -15,6 +15,7 @@ import java.security.PublicKey;
 import java.util.Vector;
 
 import org.jcryptool.visual.PairingBDII.algorithm.ECBDII;
+import org.jcryptool.visual.PairingBDII.ui.Model;
 
 import de.flexiprovider.common.math.FlexiBigInt;
 import de.flexiprovider.common.math.finitefields.GFPElement;
@@ -48,7 +49,6 @@ public class Logging_ECBDII {
         pol = protocol.Getpol();
         withelim = protocol.GetWithElim();
         Tatepairing = protocol.GetTateWeil();
-
         udata = users;
     }
 
@@ -104,30 +104,38 @@ public class Logging_ECBDII {
         return YShift;
     }
 
+    /**
+     * Creates the content of the logfile for ECBDII
+     * @return a string that contains the log
+     */
     public String PrintLog() {
-        String s = ""; //$NON-NLS-1$
-        s = s + Messages.Logging_ECBDII_1 + "\n" + "\n"; //$NON-NLS-2$ 
-        s = s + Messages.Logging_ECBDII_4 + nusers + Messages.Logging_ECBDII_5 + "\n" + Messages.Logging_ECBDII_7 + keysize + Messages.Logging_ECBDII_8 + "\n"; 
-        s = s + Messages.Logging_ECBDII_10 + "\n" + "p = " + p.toString(10) + "\n" + "l = " + order.toString(10) //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ 
-                + "\n"; //$NON-NLS-1$
-        s = s + Messages.Logging_ECBDII_0 + "\n" + P.GetPrintP() + "\n" + "\n"; //$NON-NLS-2$ //$NON-NLS-3$ 
-        s = s + Messages.Logging_ECBDII_20 + "pol = " + "\n"; //$NON-NLS-2$ 
-        s = s + pol.PrintP() + "\n"; //$NON-NLS-1$
-        s = s + Messages.Logging_ECBDII_25 + withelim + "\n" + Messages.Logging_ECBDII_27 + Tatepairing + "\n"; //$NON-NLS-2$ 
+    	StringBuilder s = new StringBuilder();
+    	s.append("Log Information for BD II with pairings (embedding degree k = 2;");
+    	s.append(" pairing type: " + ((Tatepairing == true) ? "Tate" : "Weil"));
+    	s.append("; security level: " + ((Model.getDefault().securityLevel == Model.PENANDPAPER) ? "Pen & Paper (8 bit)" : "Industrial security (512 bit)")+ ")\n\n");
+    	s.append("There were " + nusers + " users.\n");
+    	s.append("The key size is " + keysize + " bits.\n");
+    	s.append("Parameters of the system:\n");
+    	s.append("p = " + p.toString(10) +"\n");
+    	s.append("l = " + order.toString(10) + "\n");
+    	s.append("P is a point on the curve, such that:\n");
+    	s.append(P.GetPrintP() + "\n");
+    	s.append("The distortion map is (x, y) --> (-x, [X] y), where [X]\\u00b3 + 1 = 0 pol = " + pol.PrintP() + "\n");
+    	s.append("Denominator elimination is " + withelim + "\n\n\n");
+    	
+    	for (int i = 0; i < nusers; i++) {
+    		s.append("This is the user data for user " + (i + 1) + ":\n");
+    		s.append(udata.get(i).toString() + "\n\n");
+    	}
+    	
+    	if (timepbduser != 0 || timepubduser != 0) {
+    		s.append("The average computation time per user is:\n");
+    		s.append("Burdened user:" + timepbduser + " ms\n");
+    		s.append("Unburdened user:" + timepubduser + " ms\n");
+    	}
 
-        for (int i = 0; i < nusers; i++) {
-            s += Messages.Logging_ECBDII_29 + (i + 1) + ": " + "\n"; //$NON-NLS-2$ 
-            s += udata.get(i).toString() + "\n" + "\n"; //$NON-NLS-1$ //$NON-NLS-2$
-        }
-
-        if (timepbduser != 0 || timepubduser != 0) {
-            s = s + Messages.Logging_ECBDII_34 + "\n" + Messages.Logging_ECBDII_36 + timepbduser + " ms.\n"; //$NON-NLS-2$ 
-            s = s + Messages.Logging_ECBDII_38 + timepubduser + " ms."; 
-        }
-        return s;
+    	return s.toString();
     }
-
-    // i is indexed 1 to n
 
     public void SetAsTime(long time1, long time2) {
         timepbduser = time1;
