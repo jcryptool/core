@@ -211,6 +211,8 @@ public class ECContentLarge extends Composite {
 		createGroupCalculations();
 		createGroupSave();
 	}
+	
+	
 
 	/**
 	 * This method initializes groupType
@@ -427,6 +429,7 @@ public class ECContentLarge extends Composite {
 			}
 		});
 	}
+	
 
 	/**
 	 * This method initializes groupCurve

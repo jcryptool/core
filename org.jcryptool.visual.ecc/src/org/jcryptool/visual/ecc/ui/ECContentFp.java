@@ -55,6 +55,7 @@ public class ECContentFp extends Composite{
 	private Button btnDeletePoints = null;
 	private Button btnKP = null;
 	private Button btnPQ = null;
+	private Button btnClearMouseQ = null;
 	private Button btnSave = null;
 	private Canvas canvasCurve = null;
 	private Button cbAutoSave = null;
@@ -165,6 +166,7 @@ public class ECContentFp extends Composite{
 			public void widgetSelected(SelectionEvent e) {
 				btnPQ.setSelection(true);
 				btnPQ.setEnabled(false);
+				btnClearMouseQ.setEnabled(false);
 				btnKP.setSelection(false);
 				btnKP.setEnabled(false);
 				spnrK.setEnabled(false);
@@ -512,6 +514,7 @@ public class ECContentFp extends Composite{
 				btnKP.setSelection(false);
 				btnPQ.setEnabled(false);
 				btnKP.setEnabled(false);
+				btnClearMouseQ.setEnabled(false);
 				spnrK.setEnabled(false);
 				spnrK.setSelection(1);
 				setPointP(null);
@@ -535,6 +538,7 @@ public class ECContentFp extends Composite{
 				btnPQ.setSelection(true);
 				btnKP.setSelection(false);
 				btnPQ.setEnabled(false);
+				btnClearMouseQ.setEnabled(false);
 				btnKP.setEnabled(false);
 				spnrK.setEnabled(false);
 				spnrK.setSelection(1);
@@ -559,6 +563,7 @@ public class ECContentFp extends Composite{
 				btnPQ.setSelection(true);
 				btnKP.setSelection(false);
 				btnPQ.setEnabled(false);
+				btnClearMouseQ.setEnabled(false);
 				btnKP.setEnabled(false);
 				spnrK.setEnabled(false);
 				spnrK.setSelection(1);
@@ -642,6 +647,24 @@ public class ECContentFp extends Composite{
 			}
 
 		});
+		
+		btnClearMouseQ = new Button(groupCalculations, SWT.PUSH);
+        btnClearMouseQ.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
+        btnClearMouseQ.setText(Messages.getString("ECView.ClearQ"));
+        btnClearMouseQ.setEnabled(false);
+        
+        btnClearMouseQ.addSelectionListener(new SelectionListener() {
+        	@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+                widgetSelected(e);
+            }
+        	
+        	@Override
+			public void widgetSelected(SelectionEvent e) {
+                setPointQ(null);
+                btnClearMouseQ.setEnabled(false);
+            }
+        });
 
 		btnKP = new Button(groupCalculations, SWT.RADIO);
 		btnKP.setText(Messages.getString("ECContentFp.40")); //$NON-NLS-1$
@@ -736,6 +759,7 @@ public class ECContentFp extends Composite{
 			btnKP.setEnabled(false);
 			btnPQ.setEnabled(false);
 			btnPQ.setSelection(true);
+			btnClearMouseQ.setEnabled(false);
 		} else {
 			btnKP.setEnabled(true);
 			btnPQ.setEnabled(true);
@@ -757,6 +781,10 @@ public class ECContentFp extends Composite{
 			pointQ = null;
 			lblQ.setText(""); //$NON-NLS-1$
 			setPointR(null);
+			
+			if (btnPQ.getSelection()) {
+            	btnClearMouseQ.setEnabled(false);
+            }
 		} else {
 			pointQ = q;
 			lblQ.setText(pointQ.toString());
@@ -765,6 +793,10 @@ public class ECContentFp extends Composite{
 
 			view.log(Messages.getString("ECView.Point") + " Q = " + pointQ.toString()); //$NON-NLS-1$ //$NON-NLS-2$
 			setPointR(curve.addPoints(pointP, pointQ));
+			
+			if (btnPQ.getSelection()) {
+            	btnClearMouseQ.setEnabled(true);
+            }
 		}
 		fillTablePoints();
 		updateCurve(false);
