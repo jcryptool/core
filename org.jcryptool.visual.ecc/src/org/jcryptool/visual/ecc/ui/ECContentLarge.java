@@ -211,6 +211,8 @@ public class ECContentLarge extends Composite {
 		createGroupCalculations();
 		createGroupSave();
 	}
+	
+	
 
 	/**
 	 * This method initializes groupType
@@ -264,7 +266,7 @@ public class ECContentLarge extends Composite {
 	private void createGroupSelectAttributes() {
 		GridData gridData48 = new GridData();
 		gridData48.grabExcessHorizontalSpace = true;
-		gridData48.horizontalAlignment = GridData.FILL;
+		gridData48.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
 		GridLayout gridLayout2 = new GridLayout();
 		gridLayout2.numColumns = 2;
 		groupSelectAttributes = new Group(groupSettings, SWT.NONE);
@@ -327,22 +329,22 @@ public class ECContentLarge extends Composite {
 	private void createGroupCalculations() {
 		GridData gridData45 = new GridData();
 		gridData45.horizontalSpan = 2;
-		gridData45.horizontalAlignment = GridData.FILL;
+		gridData45.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
 		GridData gridData29 = new GridData();
-		gridData29.horizontalAlignment = GridData.FILL;
+		gridData29.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
 		GridLayout gridLayout3 = new GridLayout();
 		gridLayout3.numColumns = 2;
 		GridData gridData7 = new GridData();
-		gridData7.horizontalAlignment = GridData.END;
+		gridData7.horizontalAlignment = org.eclipse.swt.layout.GridData.END;
 		GridData gridData6 = new GridData();
-		gridData6.horizontalAlignment = GridData.FILL;
+		gridData6.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
 		gridData6.grabExcessHorizontalSpace = true;
 		gridData6.horizontalSpan = 2;
 		GridData gridData5 = new GridData();
-		gridData5.horizontalAlignment = GridData.FILL;
+		gridData5.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
 		gridData5.horizontalSpan = 2;
 		GridData gridData4 = new GridData();
-		gridData4.horizontalAlignment = GridData.FILL;
+		gridData4.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
 		groupCalculations = new Group(groupSettings, SWT.NONE);
 		groupCalculations.setLayoutData(gridData4);
 		groupCalculations.setLayout(gridLayout3);
@@ -370,7 +372,13 @@ public class ECContentLarge extends Composite {
 			public void widgetDefaultSelected(SelectionEvent e) { }
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				pointR = null;
+				if (pointP != null && pointQ != null) {
+					pointR = pointP.add(pointQ);
+				} else {
+					pointR = null;
+				}
+				txtQX.setEnabled(true);
+				txtQY.setEnabled(true);
 				updateScreen();
 			}
 		});
@@ -383,7 +391,7 @@ public class ECContentLarge extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if(rbtnKP.getSelection()) {
-					pointQ = null;
+					//pointQ = null;
 					int i = spnrK.getSelection();
 					String s = "R = P + " + (i > 2 ? i - 1 : "") + "P"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 					if(i > 3) {
@@ -397,6 +405,8 @@ public class ECContentLarge extends Composite {
 					view.log("\n" + s); //$NON-NLS-1$
 					view.log(Messages.ECView_Point + " R = " + pointR.toString()); //$NON-NLS-1$ //$NON-NLS-2$
 					updateScreen();
+					txtQX.setEnabled(false);
+					txtQY.setEnabled(false);
 				}
 			}
 		});
@@ -427,6 +437,7 @@ public class ECContentLarge extends Composite {
 			}
 		});
 	}
+	
 
 	/**
 	 * This method initializes groupCurve
@@ -451,36 +462,36 @@ public class ECContentLarge extends Composite {
 	 */
 	private void createGroupAttributes() {
 		GridData gridData28 = new GridData();
-		gridData28.horizontalAlignment = GridData.FILL;
+		gridData28.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
 		GridData gridData27 = new GridData();
-		gridData27.horizontalAlignment = GridData.FILL;
+		gridData27.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
 		GridData gridData26 = new GridData();
-		gridData26.horizontalAlignment = GridData.FILL;
+		gridData26.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
 		GridData gridData25 = new GridData();
-		gridData25.horizontalAlignment = GridData.FILL;
+		gridData25.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
 		GridData gridData24 = new GridData();
-		gridData24.horizontalAlignment = GridData.FILL;
+		gridData24.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
 		GridData gridData22 = new GridData();
 		gridData22.grabExcessHorizontalSpace = true;
-		gridData22.horizontalAlignment = GridData.FILL;
+		gridData22.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
 		GridLayout gridLayout5 = new GridLayout();
 		gridLayout5.numColumns = 2;
 		GridData gridData19 = new GridData();
-		gridData19.horizontalAlignment = GridData.END;
+		gridData19.horizontalAlignment = org.eclipse.swt.layout.GridData.END;
 		GridData gridData18 = new GridData();
-		gridData18.horizontalAlignment = GridData.END;
+		gridData18.horizontalAlignment = org.eclipse.swt.layout.GridData.END;
 		GridData gridData16 = new GridData();
-		gridData16.horizontalAlignment = GridData.END;
+		gridData16.horizontalAlignment = org.eclipse.swt.layout.GridData.END;
 		GridData gridData15 = new GridData();
-		gridData15.horizontalAlignment = GridData.END;
+		gridData15.horizontalAlignment = org.eclipse.swt.layout.GridData.END;
 		GridData gridData14 = new GridData();
-		gridData14.horizontalAlignment = GridData.END;
+		gridData14.horizontalAlignment = org.eclipse.swt.layout.GridData.END;
 		GridData gridData13 = new GridData();
-		gridData13.horizontalAlignment = GridData.END;
+		gridData13.horizontalAlignment = org.eclipse.swt.layout.GridData.END;
 		GridData gridData12 = new GridData();
-		gridData12.horizontalAlignment = GridData.END;
+		gridData12.horizontalAlignment = org.eclipse.swt.layout.GridData.END;
 		GridData gridData11 = new GridData();
-		gridData11.horizontalAlignment = GridData.FILL;
+		gridData11.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
 		gridData11.grabExcessHorizontalSpace = true;
 		groupAttributes = new Group(groupCurve, SWT.NONE);
 		groupAttributes.setLayoutData(gridData11);
@@ -659,8 +670,8 @@ public class ECContentLarge extends Composite {
 	private void createGroupRadix() {
 		GridData gridData30 = new GridData();
 		gridData30.grabExcessHorizontalSpace = true;
-		gridData30.verticalAlignment = GridData.FILL;
-		gridData30.horizontalAlignment = GridData.FILL;
+		gridData30.verticalAlignment = org.eclipse.swt.layout.GridData.FILL;
+		gridData30.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
 		groupRadix = new Group(groupSettings, SWT.NONE);
 		groupRadix.setLayout(new GridLayout());
 		groupRadix.setLayoutData(gridData30);

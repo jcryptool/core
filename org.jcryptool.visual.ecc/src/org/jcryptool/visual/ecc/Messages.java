@@ -88,6 +88,9 @@ public class Messages extends NLS {
 	public static String ECView_UseGeneratorG;
 	public static String ECView_InfinityPoint;
 	public static String ECView_InfinityPointExplanation;
+	public static String ECView_PLimit;
+	public static String ECView_PLimitExplanation;
+	public static String ECView_ClearQ;
 
 
 	static {

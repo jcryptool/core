@@ -56,6 +56,7 @@ public class ECContentFm extends Composite{
 	private Button btnDeletePoints = null;
 	private Button btnKP = null;
 	private Button btnPQ = null;
+	private Button btnClear = null;
 	private Button btnSave = null;
 	private Canvas canvasCurve = null;
 	private Button cbAutoSave = null;
@@ -170,6 +171,7 @@ public class ECContentFm extends Composite{
 			public void widgetSelected(SelectionEvent e) {
 				btnPQ.setSelection(true);
 				btnPQ.setEnabled(false);
+				btnClear.setEnabled(false);
 				btnKP.setSelection(false);
 				btnKP.setEnabled(false);
 				spnrK.setEnabled(false);
@@ -258,7 +260,7 @@ public class ECContentFm extends Composite{
 		groupPoints = new Group(content, SWT.NONE);
 		groupPoints.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
 		groupPoints.setLayout(new GridLayout(1, false));
-		groupPoints.setText(Messages.ECView_Point); //$NON-NLS-1$
+		groupPoints.setText(Messages.ECView_Points); //$NON-NLS-1$
 		groupPoints.addListener(SWT.Resize, new Listener(){
 			@Override
 			public void handleEvent(Event event) {
@@ -712,6 +714,24 @@ public class ECContentFm extends Composite{
 			}
 
 		});
+		
+		btnClear = new Button(groupCalculations, SWT.PUSH);
+        btnClear.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
+        btnClear.setText(Messages.ECView_ClearQ);
+        btnClear.setEnabled(false);
+        
+        btnClear.addSelectionListener(new SelectionListener() {
+        	@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+                widgetSelected(e);
+            }
+        	
+        	@Override
+			public void widgetSelected(SelectionEvent e) {
+                setPointQ(null);
+                btnClear.setEnabled(false);
+            }
+        });
 
 		btnKP = new Button(groupCalculations, SWT.RADIO);
 		btnKP.setText(Messages.ECContentFm_48); //$NON-NLS-1$
@@ -824,12 +844,14 @@ public class ECContentFm extends Composite{
 			btnKP.setEnabled(false);
 			btnPQ.setEnabled(false);
 			btnPQ.setSelection(true);
+			btnClear.setEnabled(false);
 		} else {
 			btnKP.setEnabled(true);
 			btnPQ.setEnabled(true);
 			btnKP.setEnabled(true);
 			btnPQ.setEnabled(true);
 			btnPQ.setSelection(true);
+			btnClear.setEnabled(true);
 			btnDeletePoints.setEnabled(true);
 			pointP = p;
 			view.log("\n" + Messages.ECView_Curve + ": " + lblCurve.getText()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$

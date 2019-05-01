@@ -53,6 +53,7 @@ public class ECContentReal extends Composite {
     private Button btnDeletePoints = null;
     private Button btnKP = null;
     private Button btnPQ = null;
+    private Button btnClear = null;
     private Button btnSave = null;
     private Canvas canvasCurve = null;
     private Button cbAutoSave = null;
@@ -95,7 +96,7 @@ public class ECContentReal extends Composite {
     private Composite content;
     private Group groupSize;
     private Button rbtnSmall;
-
+    
     public ECContentReal(Composite parent, int style, ECView view) {
         super(parent, style);
         this.view = view;
@@ -174,6 +175,7 @@ public class ECContentReal extends Composite {
 			public void widgetSelected(SelectionEvent e) {
                 btnPQ.setSelection(true);
                 btnPQ.setEnabled(false);
+                btnClear.setEnabled(false);
                 btnKP.setSelection(false);
                 btnKP.setEnabled(false);
                 spnrK.setEnabled(false);
@@ -496,6 +498,7 @@ public class ECContentReal extends Composite {
                 btnPQ.setSelection(true);
                 btnKP.setSelection(false);
                 btnPQ.setEnabled(false);
+                btnClear.setEnabled(false);
                 btnKP.setEnabled(false);
                 spnrK.setEnabled(false);
                 spnrK.setSelection(1);
@@ -523,6 +526,7 @@ public class ECContentReal extends Composite {
                 btnPQ.setSelection(true);
                 btnKP.setSelection(false);
                 btnPQ.setEnabled(false);
+                btnClear.setEnabled(false);
                 btnKP.setEnabled(false);
                 spnrK.setEnabled(false);
                 spnrK.setSelection(1);
@@ -566,7 +570,7 @@ public class ECContentReal extends Composite {
         groupCalculations.setLayout(new GridLayout(3, false));
         groupCalculations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));    
 
-        Text label = new Text(groupCalculations, SWT.WRAP | SWT.READ_ONLY);
+        Label label = new Label(groupCalculations, SWT.WRAP);
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
         label.setText(Messages.ECContentReal_36); //$NON-NLS-1$
 
@@ -575,6 +579,7 @@ public class ECContentReal extends Composite {
         btnPQ.setText(Messages.ECContentReal_37); //$NON-NLS-1$
         btnPQ.setSelection(true);
         btnPQ.setEnabled(false);
+        
         btnPQ.addSelectionListener(new SelectionListener() {
             @Override
 			public void widgetDefaultSelected(SelectionEvent e) {
@@ -586,6 +591,24 @@ public class ECContentReal extends Composite {
                 setPointQ(null);
             }
         });
+        
+        btnClear = new Button(groupCalculations, SWT.PUSH);
+        btnClear.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
+        btnClear.setText(Messages.ECView_ClearQ);
+        btnClear.setEnabled(false);
+        
+        btnClear.addSelectionListener(new SelectionListener() {
+        	@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+                widgetSelected(e);
+            }
+        	
+        	@Override
+			public void widgetSelected(SelectionEvent e) {
+                setPointQ(null);
+                btnClear.setEnabled(false);
+            }
+        });
 
         btnKP = new Button(groupCalculations, SWT.RADIO);
         btnKP.setText(Messages.ECContentReal_38); //$NON-NLS-1$
@@ -594,11 +617,13 @@ public class ECContentReal extends Composite {
         btnKP.addSelectionListener(new SelectionListener() {
             @Override
 			public void widgetDefaultSelected(SelectionEvent e) {
+            	btnClear.setEnabled(false);
                 widgetSelected(e);
             }
 
             @Override
 			public void widgetSelected(SelectionEvent e) {
+            	btnClear.setEnabled(false);
                 spnrK.setEnabled(btnKP.getSelection());
                 FpPoint q = curve.multiplyPoint(pointP, spnrK.getSelection());
                 setPointQ(q);
@@ -623,25 +648,25 @@ public class ECContentReal extends Composite {
             }
         });
 
-        label = new Text(groupCalculations, SWT.READ_ONLY);
+        label = new Label(groupCalculations, SWT.READ_ONLY);
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1));
         label.setText(Messages.ECContentReal_39); //$NON-NLS-1$
 
-        label = new Text(groupCalculations, SWT.READ_ONLY);
+        label = new Label(groupCalculations, SWT.READ_ONLY);
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
         label.setText("P ="); //$NON-NLS-1$
         lblP = new Text(groupCalculations, SWT.READ_ONLY);
         lblP.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
         lblP.setText(""); //$NON-NLS-1$
 
-        label = new Text(groupCalculations, SWT.READ_ONLY);
+        label = new Label(groupCalculations, SWT.READ_ONLY);
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
         label.setText("Q ="); //$NON-NLS-1$
         lblQ = new Text(groupCalculations, SWT.READ_ONLY);
         lblQ.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
         lblQ.setText(""); //$NON-NLS-1$
 
-        label = new Text(groupCalculations, SWT.READ_ONLY);
+        label = new Label(groupCalculations, SWT.READ_ONLY);
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
         label.setText("R = P + Q ="); //$NON-NLS-1$
         lblR = new Text(groupCalculations, SWT.READ_ONLY);
@@ -670,9 +695,9 @@ public class ECContentReal extends Composite {
             btnKP.setEnabled(false);
             btnPQ.setEnabled(false);
             btnPQ.setSelection(true);
+            btnClear.setEnabled(false);
         } else {
             btnKP.setEnabled(true);
-            btnPQ.setEnabled(true);
             btnKP.setEnabled(true);
             btnPQ.setEnabled(true);
             btnPQ.setSelection(true);
@@ -691,15 +716,22 @@ public class ECContentReal extends Composite {
             pointQ = null;
             lblQ.setText(""); //$NON-NLS-1$
             setPointR(null);
+            
+            if (btnPQ.getSelection()) {
+            	btnClear.setEnabled(false);
+            }
         } else {
             pointQ = q;
             lblQ.setText("(" + ((double) pointQ.x / 100) + "|" + ((double) pointQ.y / 100) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
             btnDeletePoints.setEnabled(true);
 
-            view
-                    .log(Messages.ECView_Point + " Q = " + "(" + ((double) pointQ.x / 100) + "|" + ((double) pointQ.y / 100) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+            view.log(Messages.ECView_Point + " Q = " + "(" + ((double) pointQ.x / 100) + "|" + ((double) pointQ.y / 100) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
             setPointR(curve.addPoints(pointP, pointQ));
+            
+            if (btnPQ.getSelection()) {
+            	btnClear.setEnabled(true);
+            }
         }
         updateCurve(false);
     }

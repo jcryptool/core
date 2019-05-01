@@ -55,6 +55,7 @@ public class ECContentFp extends Composite{
 	private Button btnDeletePoints = null;
 	private Button btnKP = null;
 	private Button btnPQ = null;
+	private Button btnClearMouseQ = null;
 	private Button btnSave = null;
 	private Canvas canvasCurve = null;
 	private Button cbAutoSave = null;
@@ -165,6 +166,7 @@ public class ECContentFp extends Composite{
 			public void widgetSelected(SelectionEvent e) {
 				btnPQ.setSelection(true);
 				btnPQ.setEnabled(false);
+				btnClearMouseQ.setEnabled(false);
 				btnKP.setSelection(false);
 				btnKP.setEnabled(false);
 				spnrK.setEnabled(false);
@@ -512,6 +514,7 @@ public class ECContentFp extends Composite{
 				btnKP.setSelection(false);
 				btnPQ.setEnabled(false);
 				btnKP.setEnabled(false);
+				btnClearMouseQ.setEnabled(false);
 				spnrK.setEnabled(false);
 				spnrK.setSelection(1);
 				setPointP(null);
@@ -535,6 +538,7 @@ public class ECContentFp extends Composite{
 				btnPQ.setSelection(true);
 				btnKP.setSelection(false);
 				btnPQ.setEnabled(false);
+				btnClearMouseQ.setEnabled(false);
 				btnKP.setEnabled(false);
 				spnrK.setEnabled(false);
 				spnrK.setSelection(1);
@@ -550,7 +554,8 @@ public class ECContentFp extends Composite{
 		spnrP = new Spinner(groupCurveAttributes, SWT.BORDER);
 		spnrP.setSelection(23);
 		spnrP.setMinimum(3);
-		spnrP.setMaximum(1000);
+		//spnrP.setMaximum(1001);
+		
 		spnrP.addSelectionListener(new SelectionListener(){
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
@@ -559,21 +564,37 @@ public class ECContentFp extends Composite{
 				btnPQ.setSelection(true);
 				btnKP.setSelection(false);
 				btnPQ.setEnabled(false);
+				btnClearMouseQ.setEnabled(false);
 				btnKP.setEnabled(false);
 				spnrK.setEnabled(false);
 				spnrK.setSelection(1);
 				setPointP(null);
 				setPointQ(null);
 				setPointR(null);
+				
+				Integer val = Integer.parseInt(spnrP.getText());
+				if (val > 1000) {
+					String str = Integer.toString(val);
+					Integer intVal = Integer.parseInt(str.substring(0, 3));
+					spnrP.setSelection(intVal);
+	                MessageDialog.openInformation(getShell(), Messages.ECView_PLimit, Messages.ECView_PLimitExplanation);
+				}
 
-				boolean up = spnrP.getSelection() > lastPrime;
+				boolean up = val > lastPrime;
+				boolean ifUpdated = false;
 				for(int i = 0; i < prime.length; i++) {
-					if(prime[i] > spnrP.getSelection()) {
+					if(prime[i] > val) {
+						ifUpdated = true;
 						spnrP.setSelection(up ? prime[i] : prime[i - 1]);
 						lastPrime = spnrP.getSelection();
 						break;
 					}
 				}
+				if (!ifUpdated) {
+					spnrP.setSelection(prime[prime.length - 1]);
+					lastPrime = spnrP.getSelection();
+				}
+				
 				if(spnrA.getSelection() >= lastPrime)
 					spnrA.setSelection(spnrA.getSelection() % lastPrime);
 				spnrA.setMaximum(lastPrime - 1);
@@ -642,6 +663,24 @@ public class ECContentFp extends Composite{
 			}
 
 		});
+		
+		btnClearMouseQ = new Button(groupCalculations, SWT.PUSH);
+        btnClearMouseQ.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
+        btnClearMouseQ.setText(Messages.ECView_ClearQ);
+        btnClearMouseQ.setEnabled(false);
+        
+        btnClearMouseQ.addSelectionListener(new SelectionListener() {
+        	@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+                widgetSelected(e);
+            }
+        	
+        	@Override
+			public void widgetSelected(SelectionEvent e) {
+                setPointQ(null);
+                btnClearMouseQ.setEnabled(false);
+            }
+        });
 
 		btnKP = new Button(groupCalculations, SWT.RADIO);
 		btnKP.setText(Messages.ECContentFp_40); //$NON-NLS-1$
@@ -736,6 +775,7 @@ public class ECContentFp extends Composite{
 			btnKP.setEnabled(false);
 			btnPQ.setEnabled(false);
 			btnPQ.setSelection(true);
+			btnClearMouseQ.setEnabled(false);
 		} else {
 			btnKP.setEnabled(true);
 			btnPQ.setEnabled(true);
@@ -757,6 +797,10 @@ public class ECContentFp extends Composite{
 			pointQ = null;
 			lblQ.setText(""); //$NON-NLS-1$
 			setPointR(null);
+			
+			if (btnPQ.getSelection()) {
+            	btnClearMouseQ.setEnabled(false);
+            }
 		} else {
 			pointQ = q;
 			lblQ.setText(pointQ.toString());
@@ -765,6 +809,10 @@ public class ECContentFp extends Composite{
 
 			view.log(Messages.ECView_Point + " Q = " + pointQ.toString()); //$NON-NLS-1$ //$NON-NLS-2$
 			setPointR(curve.addPoints(pointP, pointQ));
+			
+			if (btnPQ.getSelection()) {
+            	btnClearMouseQ.setEnabled(true);
+            }
 		}
 		fillTablePoints();
 		updateCurve(false);
