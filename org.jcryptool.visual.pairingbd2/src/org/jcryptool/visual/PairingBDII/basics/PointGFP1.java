@@ -248,8 +248,10 @@ public class PointGFP1 {
     }
 
     public String GetPrintP() {
-        return Messages.PointGFP1_6 + xcoord.toString() + Messages.PointGFP1_0 + ycoord.toString() + Messages.PointGFP1_8
-                + zcoord.toString() + Messages.PointGFP1_9 + p;
+        return Messages.PointGFP1_6 + xcoord.toString() 
+        	+ Messages.PointGFP1_0 + ycoord.toString() 
+        	+ Messages.PointGFP1_8 + zcoord.toString() 
+        	+ Messages.PointGFP1_9 + p;
     }
 
     public GFPElement GetX() {

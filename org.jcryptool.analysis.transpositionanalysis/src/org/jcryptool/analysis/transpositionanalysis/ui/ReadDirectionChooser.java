@@ -14,9 +14,9 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
-import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.input.AbstractUIInput;
 import org.jcryptool.core.util.input.ButtonInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
@@ -38,7 +38,7 @@ import org.jcryptool.core.util.input.InputVerificationResult;
  * 
  * @author Simon L
  */
-public class ReadDirectionChooser extends org.eclipse.swt.widgets.Composite {
+public class ReadDirectionChooser extends Composite {
 	private static final int HEIGHT_FLAT = 18;
 	private static final int HEIGHT_NORMAL = 21;
 	private AbstractUIInput<Boolean> input;
@@ -56,11 +56,11 @@ public class ReadDirectionChooser extends org.eclipse.swt.widgets.Composite {
 	protected void checkSubclass() {
 	}
 
-	public ReadDirectionChooser(org.eclipse.swt.widgets.Composite parent) {
+	public ReadDirectionChooser(Composite parent) {
 		this(parent, false);
 	}
 
-	public ReadDirectionChooser(org.eclipse.swt.widgets.Composite parent, boolean flat) {
+	public ReadDirectionChooser(Composite parent, boolean flat) {
 		super(parent, SWT.NONE);
 		this.flat = flat;
 		initGUI();
@@ -84,42 +84,46 @@ public class ReadDirectionChooser extends org.eclipse.swt.widgets.Composite {
 			}
 		};
 
-		try {
-			GridLayout thisLayout = new GridLayout();
-			thisLayout.marginWidth = 0;
-			thisLayout.marginHeight = 0;
-			thisLayout.numColumns = 2;
-			thisLayout.horizontalSpacing = 0;
-			thisLayout.makeColumnsEqualWidth = true;
-			this.setLayout(thisLayout);
-			{
-				btnColumnar = new Button(this, SWT.TOGGLE | SWT.FLAT | SWT.CENTER);
-				GridData btnColumnarLData = new GridData();
-				btnColumnarLData.grabExcessHorizontalSpace = true;
-				btnColumnarLData.horizontalAlignment = GridData.FILL;
-				btnColumnarLData.verticalAlignment = GridData.FILL;
-				btnColumnarLData.heightHint = HEIGHT_NORMAL;
-				if (flat) btnColumnarLData.heightHint = HEIGHT_FLAT;
-				btnColumnar.setLayoutData(btnColumnarLData);
-				btnColumnar.setText(Messages.ReadDirectionChooser_0);
-				btnColumnar.addListener(SWT.Selection, radioGroup);
-			}
-			{
-				btnRowwise = new Button(this, SWT.TOGGLE | SWT.FLAT | SWT.CENTER);
-				GridData btnRowwiseLData = new GridData();
-				btnRowwiseLData.grabExcessHorizontalSpace = true;
-				btnRowwiseLData.horizontalAlignment = GridData.FILL;
-				btnRowwiseLData.verticalAlignment = GridData.FILL;
-				btnRowwiseLData.heightHint = HEIGHT_NORMAL;
-				if (flat) btnRowwiseLData.heightHint = HEIGHT_FLAT;
-				btnRowwise.setLayoutData(btnRowwiseLData);
-				btnRowwise.setText(Messages.ReadDirectionChooser_1);
-				btnRowwise.addListener(SWT.Selection, radioGroup);
-			}
-			this.layout();
-		} catch (Exception e) {
-			LogUtil.logError(e);
-		}
+//		try {
+		GridLayout thisLayout = new GridLayout();
+		thisLayout.marginWidth = 0;
+		thisLayout.marginHeight = 0;
+		thisLayout.numColumns = 2;
+		thisLayout.horizontalSpacing = 0;
+		thisLayout.makeColumnsEqualWidth = true;
+		this.setLayout(thisLayout);
+
+		btnColumnar = new Button(this, SWT.TOGGLE | SWT.FLAT | SWT.CENTER);
+		GridData btnColumnarLData = new GridData();
+		btnColumnarLData.grabExcessHorizontalSpace = true;
+		btnColumnarLData.horizontalAlignment = GridData.FILL;
+		btnColumnarLData.verticalAlignment = GridData.CENTER;
+		btnColumnarLData.heightHint = HEIGHT_NORMAL;
+//		btnColumnarLData.heightHint = SWT.DEFAULT;
+		if (flat)
+			btnColumnarLData.heightHint = HEIGHT_FLAT;
+		btnColumnar.setLayoutData(btnColumnarLData);
+		btnColumnar.setText(Messages.ReadDirectionChooser_0);
+		btnColumnar.addListener(SWT.Selection, radioGroup);
+
+		btnRowwise = new Button(this, SWT.TOGGLE | SWT.FLAT | SWT.CENTER);
+		GridData btnRowwiseLData = new GridData();
+		btnRowwiseLData.grabExcessHorizontalSpace = true;
+		btnRowwiseLData.horizontalAlignment = GridData.FILL;
+		btnRowwiseLData.verticalAlignment = GridData.CENTER;
+//		btnRowwiseLData.heightHint = HEIGHT_NORMAL;
+//		btnRowwiseLData.heightHint = SWT.DEFAULT;
+//		btnRowwiseLData.heightHint = btnRowwiseLData.heightHint - (btnRowwiseLData.heightHint / 6);
+		if (flat)
+			btnRowwiseLData.heightHint = HEIGHT_FLAT;
+		btnRowwise.setLayoutData(btnRowwiseLData);
+		btnRowwise.setText(Messages.ReadDirectionChooser_1);
+		btnRowwise.addListener(SWT.Selection, radioGroup);
+
+		this.layout();
+//		} catch (Exception e) {
+//			LogUtil.logError(e);
+//		}
 		initInput();
 	}
 
@@ -156,8 +160,7 @@ public class ReadDirectionChooser extends org.eclipse.swt.widgets.Composite {
 	/**
 	 * sets the direction selection
 	 * 
-	 * @param direction
-	 *            true: columnwise; false: rowwise.
+	 * @param direction true: columnwise; false: rowwise.
 	 */
 	public void setDirection(boolean direction) {
 		input.writeContent(direction);

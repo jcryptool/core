@@ -62,14 +62,16 @@ public class DefinitionAndDetails {
 
         label = new Text(groupDefinitions, SWT.WRAP | SWT.READ_ONLY);
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        label.setText(Messages.DefinitionAndDetails_10 + Messages.DefinitionAndDetails_11
+        label.setText(Messages.DefinitionAndDetails_10 
+        		+ Messages.DefinitionAndDetails_11
                 + Messages.DefinitionAndDetails_12);
         
         labelPK = new Text(groupDefinitions, SWT.WRAP | SWT.READ_ONLY);
         labelPK.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
         labelExplanation = new Text(groupDefinitions, SWT.WRAP | SWT.READ_ONLY);
-        labelExplanation.setText(Messages.DefinitionAndDetails_13 + Messages.DefinitionAndDetails_14
+        labelExplanation.setText(Messages.DefinitionAndDetails_13 
+        		+ Messages.DefinitionAndDetails_14
                 + Messages.DefinitionAndDetails_15
                 + Messages.DefinitionAndDetails_16);
         labelExplanation.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -88,6 +90,7 @@ public class DefinitionAndDetails {
 
         labelUserIndex = new Label(userSelection, SWT.NONE);
         labelUserIndex.setText(Messages.DefinitionAndDetails_18);
+        
         spinnerUserIndex = new Spinner(userSelection, SWT.BORDER);
         spinnerUserIndex.setMinimum(1);
         spinnerUserIndex.addSelectionListener(new SelectionListener() {
@@ -116,7 +119,7 @@ public class DefinitionAndDetails {
                 groupDetails.getParent().setFocus();
             }
         });
-        labelDetails.setEnabled(false);
+
         labelDetails.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         parent.getParent().layout();
     }

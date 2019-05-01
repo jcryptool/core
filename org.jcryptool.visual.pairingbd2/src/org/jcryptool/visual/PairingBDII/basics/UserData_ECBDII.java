@@ -85,10 +85,27 @@ public class UserData_ECBDII {
 
         // s += "This is the user data for user " +i + ": " + "\n";
         if (SK != null) {
-            s += Messages.UserData_ECBDII_1 + SK.toString().substring(0, SK.toString().indexOf('\n')) + "\n"; 
+        	// prepare output
+        	String tempSK = SK.toString();
+        	// take only first line 
+        	tempSK = tempSK.substring(0, SK.toString().indexOf('\n'));
+        	// replace all superfluous empty spaces.
+        	tempSK = tempSK.replaceAll("\\s+", " ");
+        	// add a line break to the end of the line.
+        	tempSK += "\n";
+            s += Messages.UserData_ECBDII_1 + tempSK; 
         }
         if (PK != null) {
-            s += Messages.UserData_ECBDII_3 + PK.toString().substring(0, PK.toString().indexOf('\n')) + "\n"; 
+        	//prepare output 
+        	String tempPK = PK.toString();
+        	// take only first line 
+        	tempPK = tempPK.substring(0, PK.toString().indexOf('\n'));
+        	// Remove empty space an equal sign with a colon to get a similar 
+        	// output like the secret key
+        	tempPK = tempPK.replace(" =", ":");
+        	// add a line break to the end of the line.
+        	tempPK += "\n";
+            s += Messages.UserData_ECBDII_3 + tempPK; 
         }
         if (nonce != null) {
             s += Messages.UserData_ECBDII_5 + nonce.toString() + "\n"; 

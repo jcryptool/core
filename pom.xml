@@ -23,6 +23,7 @@
 	<module>org.jcryptool.analysis</module>
 	<module>org.jcryptool.analysis.entropy</module>
 	<module>org.jcryptool.analysis.feature</module>
+	<module>org.jcryptool.analysis.fleissner</module>
 	<module>org.jcryptool.analysis.freqanalysis</module>
 	<module>org.jcryptool.analysis.friedman</module>
 	<module>org.jcryptool.analysis.graphtools</module>
@@ -93,6 +94,5 @@
 	<module>org.jcryptool.visual.verifiablesecretsharing.lib</module>
 	<module>org.jcryptool.visual.wots</module>
 	<module>org.jcryptool.visual.zeroknowledge</module>
-	<module>org.jcryptool.visual.sphincs</module>
   </modules>
 </project>
