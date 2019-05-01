@@ -372,7 +372,11 @@ public class ECContentLarge extends Composite {
 			public void widgetDefaultSelected(SelectionEvent e) { }
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				pointR = null;
+				if (pointQ != null & pointP != null) {
+					pointR = pointP.add(pointQ);
+				} else {
+					pointR = null;
+				}
 				updateScreen();
 			}
 		});
@@ -385,7 +389,7 @@ public class ECContentLarge extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if(rbtnKP.getSelection()) {
-					pointQ = null;
+					//pointQ = null;
 					int i = spnrK.getSelection();
 					String s = "R = P + " + (i > 2 ? i - 1 : "") + "P"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 					if(i > 3) {
@@ -399,6 +403,8 @@ public class ECContentLarge extends Composite {
 					view.log("\n" + s); //$NON-NLS-1$
 					view.log(Messages.getString("ECView.Point") + " R = " + pointR.toString()); //$NON-NLS-1$ //$NON-NLS-2$
 					updateScreen();
+					txtQX.setEnabled(false);
+					txtQY.setEnabled(false);
 				}
 			}
 		});
@@ -620,6 +626,8 @@ public class ECContentLarge extends Composite {
 		}
 
 		if(pointQ != null) {
+			txtQX.setEnabled(true);
+			txtQY.setEnabled(true);
 			if(pointQ.isZero()) {
 				txtQX.setText("O"); //$NON-NLS-1$
 				txtQY.setText("O"); //$NON-NLS-1$
