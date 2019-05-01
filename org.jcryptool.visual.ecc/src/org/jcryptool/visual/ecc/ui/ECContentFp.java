@@ -554,7 +554,8 @@ public class ECContentFp extends Composite{
 		spnrP = new Spinner(groupCurveAttributes, SWT.BORDER);
 		spnrP.setSelection(23);
 		spnrP.setMinimum(3);
-		spnrP.setMaximum(1000);
+		//spnrP.setMaximum(1001);
+		
 		spnrP.addSelectionListener(new SelectionListener(){
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
@@ -570,15 +571,30 @@ public class ECContentFp extends Composite{
 				setPointP(null);
 				setPointQ(null);
 				setPointR(null);
+				
+				Integer val = Integer.parseInt(spnrP.getText());
+				if (val > 1000) {
+					String str = Integer.toString(val);
+					Integer intVal = Integer.parseInt(str.substring(0, 3));
+					spnrP.setSelection(intVal);
+	                MessageDialog.openInformation(getShell(), Messages.getString("ECView.PLimit"), Messages.getString("ECView.PLimitExplanation"));
+				}
 
-				boolean up = spnrP.getSelection() > lastPrime;
+				boolean up = val > lastPrime;
+				boolean ifUpdated = false;
 				for(int i = 0; i < prime.length; i++) {
-					if(prime[i] > spnrP.getSelection()) {
+					if(prime[i] > val) {
+						ifUpdated = true;
 						spnrP.setSelection(up ? prime[i] : prime[i - 1]);
 						lastPrime = spnrP.getSelection();
 						break;
 					}
 				}
+				if (!ifUpdated) {
+					spnrP.setSelection(prime[prime.length - 1]);
+					lastPrime = spnrP.getSelection();
+				}
+				
 				if(spnrA.getSelection() >= lastPrime)
 					spnrA.setSelection(spnrA.getSelection() % lastPrime);
 				spnrA.setMaximum(lastPrime - 1);
