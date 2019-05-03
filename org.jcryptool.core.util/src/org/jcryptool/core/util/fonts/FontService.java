@@ -9,6 +9,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.core.util.fonts;
 
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
@@ -26,6 +27,7 @@ public class FontService {
     private static Font tinyFont = null;
     private static Font smallFont = null;
     private static Font normalFont = null;
+    private static Font normalMonospacedFont = null;
     private static Font largeFont = null;
     private static Font hugeFont = null;
     private static Font tinyBoldFont = null;
@@ -218,6 +220,25 @@ public class FontService {
 
         return tinyBoldFont;
     }
+    
+    
+    /**
+     * Returns a monospaced font, used e.g. for hex strings or similar texts which require
+     * fonts with equal width. Font name is JFaceResources.TEXT_FONT (org.eclipse.jface.textfont).
+     * Font size is 10, font weight is normal.
+     * 
+     * <b>Do not dispose this font after usage!</b>
+     * 
+     * @return A normal monospaced (fixed-width) font
+     */
+    public static Font getNormalMonospacedFont() {
+        if (normalMonospacedFont == null || normalMonospacedFont.isDisposed()) {
+        	normalMonospacedFont = JFaceResources.getFont(JFaceResources.TEXT_FONT);
+        }
+
+        return normalMonospacedFont;
+    }
+    
 
     /**
      * Disposes all fonts at the end of the plug-ins lifecycle. Plug-ins should never call this method.
@@ -234,6 +255,9 @@ public class FontService {
         }
         if (normalFont != null && !normalFont.isDisposed()) {
             normalFont.dispose();
+        }
+        if (normalMonospacedFont != null && !normalMonospacedFont.isDisposed()) {
+        	normalMonospacedFont.dispose();
         }
         if (largeFont != null && !largeFont.isDisposed()) {
             largeFont.dispose();
