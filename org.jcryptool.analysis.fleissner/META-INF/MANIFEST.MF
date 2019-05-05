@@ -5,7 +5,8 @@ Bundle-SymbolicName: org.jcryptool.analysis.fleissner;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.jcryptool.analysis.fleissner2.Activator
 Require-Bundle: org.eclipse.ui,
-  org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ org.eclipse.help
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.jcryptool.analysis.fleissner2
 Bundle-ActivationPolicy: lazy
