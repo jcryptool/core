@@ -1,4 +1,4 @@
-package org.jcryptool.analysis.fleissner2;
+package org.jcryptool.analysis.fleissner2.logic;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;

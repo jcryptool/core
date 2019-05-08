@@ -1,4 +1,4 @@
-package org.jcryptool.analysis.fleissner2;
+package org.jcryptool.analysis.fleissner2.logic;
 /**
  * 
  */

@@ -1,4 +1,4 @@
-package org.jcryptool.analysis.fleissner2;
+package org.jcryptool.analysis.fleissner2.logic;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;

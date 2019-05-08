@@ -1,4 +1,4 @@
-package org.jcryptool.analysis.fleissner2;
+package org.jcryptool.analysis.fleissner2.logic;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
