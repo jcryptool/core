@@ -37,4 +37,9 @@ public class TranspositionAnalysisPlugin extends AbstractUIPlugin {
         ImageDescriptor imageDescriptorFile = getImageDescriptor("icons/file.png");
         reg.put("fileInputIcon", imageDescriptorFile.createImage());
     }
+
+	public void resetClick() {
+		// TODO Auto-generated method stub
+		
+	}
 }
