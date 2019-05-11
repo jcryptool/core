@@ -86,14 +86,14 @@ public class TranspTextWizardPage extends WizardPage {
 		int[] columnOrder;
 
 		public PageConfiguration(TextInputWithSource text, Integer columnCount, Boolean crop, Integer cropLength,
-			Boolean readInDirection, int[] columnOrder) {
+				Boolean readInDirection, int[] columnOrder) {
 			super();
 			this.text = text;
 			this.columnCount = columnCount;
 			this.crop = crop;
 			this.cropLength = cropLength;
 			this.readInDirection = readInDirection;
-			if(columnOrder != null) {
+			if (columnOrder != null) {
 				this.columnOrder = columnOrder;
 			} else {
 				this.columnOrder = makeStdColumnOrder(columnCount);
@@ -122,16 +122,16 @@ public class TranspTextWizardPage extends WizardPage {
 
 		public boolean equalsNeglectingTextsource(PageConfiguration c) {
 			return getColumnCount().equals(c.getColumnCount()) && getCropLength().equals(c.getCropLength())
-				&& getText().getText().equals(c.getText().getText()) && isCrop().equals(c.isCrop())
-				&& getReadInDirection().equals(c.getReadInDirection());
-			//TODO: add check for column order equality 
+					&& getText().getText().equals(c.getText().getText()) && isCrop().equals(c.isCrop())
+					&& getReadInDirection().equals(c.getReadInDirection());
+			// TODO: add check for column order equality
 		}
 
 		public boolean equals(PageConfiguration c) {
 			return getColumnCount().equals(c.getColumnCount()) && getCropLength().equals(c.getCropLength())
-				&& getText().equals(c.getText()) && isCrop().equals(c.isCrop())
-				&& getReadInDirection().equals(c.getReadInDirection());
-			//TODO: add check for column order equality 
+					&& getText().equals(c.getText()) && isCrop().equals(c.isCrop())
+					&& getReadInDirection().equals(c.getReadInDirection());
+			// TODO: add check for column order equality
 		}
 
 		public void setReadInMode(Boolean content) {
@@ -146,9 +146,10 @@ public class TranspTextWizardPage extends WizardPage {
 			this.columnOrder = columnOrder;
 		}
 	}
+
 	public static int[] makeStdColumnOrder(Integer columnCount) {
 		int[] columnOrder = new int[columnCount];
-		for(int i=0; i<columnCount; i++) {
+		for (int i = 0; i < columnCount; i++) {
 			columnOrder[i] = i;
 		}
 		return columnOrder;
@@ -180,8 +181,8 @@ public class TranspTextWizardPage extends WizardPage {
 	/**
 	 * state 0 ~ pure loaded file <br />
 	 * state 1 ~ file + manual input <br />
-	 * state 2 ~ pure manual input (either click delete all button or delete
-	 * text in one chunk manually) <br />
+	 * state 2 ~ pure manual input (either click delete all button or delete text in
+	 * one chunk manually) <br />
 	 */
 	private int manualInputState = 0;
 	private boolean iniDirection = false;
@@ -222,7 +223,8 @@ public class TranspTextWizardPage extends WizardPage {
 		setCroplength(init_croplength);
 		setCroptext(init_croptext);
 		setBlocklength(init_blocklength);
-		if(init_columnOrder!=null) setColumnOrder(init_columnOrder);
+		if (init_columnOrder != null)
+			setColumnOrder(init_columnOrder);
 		// all others have default values in their corresponding input objects
 		// (text, readInDirection)
 		// -------
@@ -233,315 +235,275 @@ public class TranspTextWizardPage extends WizardPage {
 	 */
 	@Override
 	public final void createControl(final Composite parent) {
-		GridData pageCompositeLayoutData = new GridData();
 		GridLayout pageCompositeLayout = new GridLayout();
-		pageCompositeLayoutData.grabExcessHorizontalSpace = true;
-		pageCompositeLayoutData.grabExcessVerticalSpace = false;
-		pageCompositeLayoutData.horizontalAlignment = SWT.FILL;
-		pageCompositeLayoutData.verticalAlignment = SWT.FILL;
+		pageCompositeLayout.marginHeight = 0;
+		pageCompositeLayout.marginWidth = 0;
 		pageComposite = new Composite(parent, SWT.NULL);
 		pageComposite.setLayout(pageCompositeLayout);
-		pageComposite.setLayoutData(pageCompositeLayoutData);
+		pageComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-		{
-			grpText = new Group(pageComposite, SWT.NONE);
-			grpText.setText(Messages.TranspTextWizardPage_grpText_text);
-			grpText.setLayout(new GridLayout(2, false));
-			grpText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-			{
-				compTextInputMode = new Composite(grpText, SWT.NONE);
-				compTextInputMode.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-				compTextInputMode.setLayout(new GridLayout(1, false));
+		grpText = new Group(pageComposite, SWT.NONE);
+		grpText.setText(Messages.TranspTextWizardPage_grpText_text);
+		grpText.setLayout(new GridLayout(2, false));
+		grpText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-				Label lblLadenDesTextes = new Label(compTextInputMode, SWT.NONE);
-				lblLadenDesTextes.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
-				lblLadenDesTextes.setBounds(0, 0, 55, 15);
-				lblLadenDesTextes.setText(Messages.TranspTextWizardPage_lblLadenDesTextes_text);
-				{
-					composite = new Composite(compTextInputMode, SWT.NONE);
-					composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-					composite.setLayout(new GridLayout(1, false));
-					{
-						btnJcteditor = new Button(composite, SWT.RADIO);
-						btnJcteditor.setText(Messages.TranspTextWizardPage_btnJcteditor_text);
-					}
-					{
-						comboEditorInputSelector = new Combo(composite, SWT.NONE) {
-							@Override
-							protected void checkSubclass() {};
-							@Override
-							public org.eclipse.swt.graphics.Point computeSize(int wHint, int hHint, boolean changed) {
-								Point result = super.computeSize(wHint, hHint, changed);
-								return new Point(getAppropriateXValue(result.x, 160), result.y);
-							};
+		compTextInputMode = new Composite(grpText, SWT.NONE);
+		compTextInputMode.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		compTextInputMode.setLayout(new GridLayout(1, false));
 
-							private int getAppropriateXValue(int superXCalc, int maxSize) {
-								return Math.min(superXCalc, maxSize);
-							}
-						};
-						GridData gd_comboEditorInputSelector = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-						gd_comboEditorInputSelector.horizontalIndent = 15;
-						comboEditorInputSelector.setLayoutData(gd_comboEditorInputSelector);
-					}
-					{
-						btnDatei = new Button(composite, SWT.RADIO);
-						btnDatei.setText(Messages.TranspTextWizardPage_btnDatei_text);
-					}
-					{
-						compFileInputDetails = new Composite(composite, SWT.NONE);
-						GridData gd_compFileInputDetails = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-						gd_compFileInputDetails.horizontalIndent = 15;
-						compFileInputDetails.setLayoutData(gd_compFileInputDetails);
-						GridLayout gl_compFileInputDetails = new GridLayout(2, false);
-						gl_compFileInputDetails.marginWidth = 0;
-						gl_compFileInputDetails.marginHeight = 0;
-						compFileInputDetails.setLayout(gl_compFileInputDetails);
+		Label lblLadenDesTextes = new Label(compTextInputMode, SWT.NONE);
+		lblLadenDesTextes.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
+		lblLadenDesTextes.setText(Messages.TranspTextWizardPage_lblLadenDesTextes_text);
 
-						lblFilenametxt = new Label(compFileInputDetails, SWT.NONE);
-						lblFilenametxt.setBounds(0, 0, 55, 15);
-						lblFilenametxt.setText(Messages.TranspTextWizardPage_lblFilenametxt_text);
+		composite = new Composite(compTextInputMode, SWT.NONE);
+		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		composite.setLayout(new GridLayout(1, false));
 
-						linkChangeFile = new Link(compFileInputDetails, SWT.NONE);
-						linkChangeFile.setText(Messages.TranspTextWizardPage_link_text);
-					}
-					{
-						btnZwischenablageeigeneEingabe = new Button(composite, SWT.RADIO);
-						btnZwischenablageeigeneEingabe
-							.setText(Messages.TranspTextWizardPage_btnZwischenablageeigeneEingabe_text);
-						btnZwischenablageeigeneEingabe.addSelectionListener(new SelectionAdapter() {
+		btnJcteditor = new Button(composite, SWT.RADIO);
+		btnJcteditor.setText(Messages.TranspTextWizardPage_btnJcteditor_text);
 
-							@Override
-							public void widgetSelected(SelectionEvent e) {
-								if(btnZwischenablageeigeneEingabe.getSelection()) {
-									doTxfieldActionPreservingVisibleLines(new Runnable() {
-										@Override
-										public void run() {
-											txtInputText.setSelection(txtInputText.getText().length(), 0);
-											txtInputText.forceFocus();
-										}
-									}, txtInputText);
-								}
-							}
-						});
-					}
-				}
+		comboEditorInputSelector = new Combo(composite, SWT.NONE) {
+			@Override
+			protected void checkSubclass() {
+			};
+
+			@Override
+			public Point computeSize(int wHint, int hHint, boolean changed) {
+				Point result = super.computeSize(wHint, hHint, changed);
+				return new Point(getAppropriateXValue(result.x, 160), result.y);
+			};
+
+			private int getAppropriateXValue(int superXCalc, int maxSize) {
+				return Math.min(superXCalc, maxSize);
 			}
-			{
-				grpTextinputCtrls = new Group(grpText, SWT.NONE);
-				GridLayout group2Layout = new GridLayout();
-				grpTextinputCtrls.setLayout(group2Layout);
-				GridData group2LData = new GridData();
-				group2LData.verticalAlignment = SWT.FILL;
-				group2LData.grabExcessHorizontalSpace = true;
-				group2LData.horizontalAlignment = GridData.FILL;
-				grpTextinputCtrls.setLayoutData(group2LData);
-				grpTextinputCtrls.setText(Messages.TranspTextWizardPage_text);
-				{
-					textfieldComp = new Composite(grpTextinputCtrls, SWT.NONE);
-					GridLayout composite2Layout = new GridLayout();
-					composite2Layout.makeColumnsEqualWidth = true;
-					composite2Layout.marginHeight = 0;
-					composite2Layout.marginWidth = 0;
-					GridData composite2LData = new GridData();
-					composite2LData.grabExcessHorizontalSpace = true;
-					composite2LData.horizontalAlignment = GridData.FILL;
-					composite2LData.grabExcessVerticalSpace = true;
-					composite2LData.verticalAlignment = GridData.FILL;
-					textfieldComp.setLayoutData(composite2LData);
-					textfieldComp.setLayout(composite2Layout);
-					{
-						txtInputText = new Text(textfieldComp, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
-						GridData text1LData = new GridData();
-						text1LData.grabExcessVerticalSpace = true;
-						text1LData.verticalAlignment = SWT.FILL;
-						text1LData.grabExcessHorizontalSpace = true;
-						text1LData.horizontalAlignment = GridData.FILL;
+		};
+		GridData gd_comboEditorInputSelector = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+		gd_comboEditorInputSelector.horizontalIndent = 15;
+		comboEditorInputSelector.setLayoutData(gd_comboEditorInputSelector);
 
-						GC temp = new GC(txtInputText);
-						int lines = 4;
-						int charHeight = temp.getFontMetrics().getAscent() + 2 * temp.getFontMetrics().getLeading();
-						int height = lines * charHeight;
-						temp.dispose();
-						text1LData.widthHint = 200;
-						text1LData.heightHint = height;
+		btnDatei = new Button(composite, SWT.RADIO);
+		btnDatei.setText(Messages.TranspTextWizardPage_btnDatei_text);
 
-						txtInputText.setLayoutData(text1LData);
+		compFileInputDetails = new Composite(composite, SWT.NONE);
+		GridData gd_compFileInputDetails = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gd_compFileInputDetails.horizontalIndent = 15;
+		compFileInputDetails.setLayoutData(gd_compFileInputDetails);
+		GridLayout gl_compFileInputDetails = new GridLayout(2, false);
+		gl_compFileInputDetails.marginWidth = 0;
+		gl_compFileInputDetails.marginHeight = 0;
+		compFileInputDetails.setLayout(gl_compFileInputDetails);
 
-					}
-				}
-			}
-			Label nextPageInfo = new Label(grpText, SWT.WRAP);
-			GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
-			layoutData.widthHint = 300;
-			nextPageInfo.setLayoutData(layoutData);
-			nextPageInfo.setText(Messages.TranspTextWizardPage_zzz);
-		}
-		{
-			parttextGroup = new Group(pageComposite, SWT.NONE);
-			GridLayout composite4Layout = new GridLayout(3, false);
-			composite4Layout.horizontalSpacing = 0;
-			composite4Layout.verticalSpacing = 0;
-			GridData parttextGroupLData = new GridData();
-			parttextGroupLData.grabExcessHorizontalSpace = true;
-			parttextGroupLData.horizontalAlignment = GridData.FILL;
-			parttextGroupLData.verticalIndent = 5;
-			parttextGroup.setLayoutData(parttextGroupLData);
-			parttextGroup.setLayout(composite4Layout);
-			parttextGroup.setText(Messages.TranspTextWizardPage_shortenthetext);
-			{
-				{
-					parttextCheck = new Button(parttextGroup, SWT.CHECK | SWT.LEFT);
-					parttextCheck.setText(Messages.TranspTextWizardPage_takeonlyapartofthetext);
-					parttextCheck.setSelection(init_croptext);
+		lblFilenametxt = new Label(compFileInputDetails, SWT.NONE);
+		lblFilenametxt.setBounds(0, 0, 55, 15);
+		lblFilenametxt.setText(Messages.TranspTextWizardPage_lblFilenametxt_text);
 
-					parttextCheck.addSelectionListener(new SelectionAdapter() {
+		linkChangeFile = new Link(compFileInputDetails, SWT.NONE);
+		linkChangeFile.setText(Messages.TranspTextWizardPage_link_text);
+
+		btnZwischenablageeigeneEingabe = new Button(composite, SWT.RADIO);
+		btnZwischenablageeigeneEingabe.setText(Messages.TranspTextWizardPage_btnZwischenablageeigeneEingabe_text);
+		btnZwischenablageeigeneEingabe.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (btnZwischenablageeigeneEingabe.getSelection()) {
+					doTxfieldActionPreservingVisibleLines(new Runnable() {
 						@Override
-						public void widgetSelected(SelectionEvent evt) {
-							parttextCheckWidgetSelected(evt);
+						public void run() {
+							txtInputText.setSelection(txtInputText.getText().length(), 0);
+							txtInputText.forceFocus();
 						}
-					});
-
-				}
-				{
-					parttextCount = new Spinner(parttextGroup, SWT.NONE);
-					parttextCount.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-					parttextCount.setSelection(init_croplength);
-
-					parttextCount.setEnabled(parttextCheck.getSelection());
-					parttextCount.setMinimum(1);
-					parttextCount.setMaximum(200);
-					parttextCount.addSelectionListener(new SelectionAdapter() {
-						@Override
-						public void widgetSelected(SelectionEvent evt) {
-							parttextCountWidgetSelected(evt);
-						}
-					});
-
-					parttextCount.setSelection(init_croplength);
-				}
-				{
-					lblCharacters = new Label(parttextGroup, SWT.NONE);
-					lblCharacters.setText(Messages.TranspTextWizardPage_lblCharacters_text);
-				}
-				{
-					lblIfTheText = new Label(parttextGroup, SWT.WRAP);
-					lblIfTheText.setText(Messages.TranspTextWizardPage_lblIfTheText_text);
-					GridData lblIfthetextLData = new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1);
-					lblIfthetextLData.horizontalIndent = 20;
-					lblIfthetextLData.verticalIndent = 4;
-					lblIfthetextLData.widthHint = 200;
-					lblIfTheText.setLayoutData(lblIfthetextLData);
-					FontData fontdata = lblIfTheText.getFont().getFontData()[0];
-					fontdata.height = ((float)0.9)*(fontdata.height);
-					lblIfTheText.setFont(new Font(Display.getCurrent(), fontdata));
+					}, txtInputText);
 				}
 			}
-			{
-				// parttextLabel1 = new Label(parttextGroup, SWT.NONE);
-				// parttextLabel1.setText("(This option is activated by default, if you chose not to arrange the text into columns)");
-			}
-		}
-		{
-			group1 = new Group(pageComposite, SWT.NONE);
-			GridLayout group1Layout = new GridLayout(3, false);
-			group1.setLayout(group1Layout);
-			GridData group1LData = new GridData();
-			group1LData.grabExcessHorizontalSpace = true;
-			group1LData.horizontalAlignment = GridData.FILL;
-			group1.setLayoutData(group1LData);
-			group1.setText(Messages.TranspTextWizardPage_columns);
-			{
-				label1 = new Label(group1, SWT.NONE);
-				label1.setText(Messages.TranspTextWizardPage_setnumberofcolumns);
-				GridData label1LData = new GridData();
-				label1LData.horizontalAlignment = GridData.FILL;
-				label1.setLayoutData(label1LData);
-			}
-			{
-				blocklengthSpinner = new Spinner(group1, SWT.NONE);
-				{
-					GridData gd_blocklengthSpinner = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-					gd_blocklengthSpinner.heightHint = 18;
-					blocklengthSpinner.setLayoutData(gd_blocklengthSpinner);
-				}
-				blocklengthSpinner.setMinimum(1);
-				blocklengthSpinner.addSelectionListener(new SelectionAdapter() {
-					@Override
-					public void widgetSelected(SelectionEvent evt) {
-						blocklengthSpinnerWidgetSelected(evt);
-					}
-				});
+		});
 
-				blocklengthSpinner.setSelection(init_blocklength);
-			}
-			{
-				lblyouCanChange = new Label(group1, SWT.WRAP);
-				lblyouCanChange.setText(Messages.TranspTextWizardPage_lblyouCanChange_text);
-				GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
-				layoutData.widthHint = 200;
-				lblyouCanChange.setLayoutData(layoutData);
-			}
-		}
-		{
-			groupReadInDirection = new Group(pageComposite, SWT.NONE);
-			GridLayout groupReadInDirectionLayout = new GridLayout();
-			groupReadInDirectionLayout.numColumns = 2;
-			groupReadInDirection.setLayout(groupReadInDirectionLayout);
-			GridData groupReadInDirectionLData = new GridData();
-			groupReadInDirectionLData.grabExcessHorizontalSpace = true;
-			groupReadInDirectionLData.horizontalAlignment = GridData.FILL;
-			groupReadInDirection.setLayoutData(groupReadInDirectionLData);
-			groupReadInDirection.setText(Messages.TranspTextWizardPage_readinmode);
-			{
-				labelReadIn = new Label(groupReadInDirection, SWT.NONE);
-				labelReadIn.setText(Messages.TranspTextWizardPage_readinmode_description);
-			}
-			{
-				directionChooserIn = new ReadDirectionChooser(groupReadInDirection, false);
-				directionChooserIn.setDirection(iniDirection);
+		grpTextinputCtrls = new Group(grpText, SWT.NONE);
+		GridLayout group2Layout = new GridLayout();
+		grpTextinputCtrls.setLayout(group2Layout);
+		GridData group2LData = new GridData();
+		group2LData.verticalAlignment = SWT.FILL;
+		group2LData.grabExcessHorizontalSpace = true;
+		group2LData.horizontalAlignment = GridData.FILL;
+		grpTextinputCtrls.setLayoutData(group2LData);
+		grpTextinputCtrls.setText(Messages.TranspTextWizardPage_text);
 
-				directionChooserIn.getInput().addObserver(new Observer() {
-					@Override
-					public void update(Observable o, Object arg) {
-						if (arg == null) preview();
-					}
-				});
-			}
-		}
+		textfieldComp = new Composite(grpTextinputCtrls, SWT.NONE);
+		GridLayout composite2Layout = new GridLayout();
+		composite2Layout.makeColumnsEqualWidth = true;
+		composite2Layout.marginHeight = 0;
+		composite2Layout.marginWidth = 0;
+		GridData composite2LData = new GridData();
+		composite2LData.grabExcessHorizontalSpace = true;
+		composite2LData.horizontalAlignment = GridData.FILL;
+		composite2LData.grabExcessVerticalSpace = true;
+		composite2LData.verticalAlignment = GridData.FILL;
+		textfieldComp.setLayoutData(composite2LData);
+		textfieldComp.setLayout(composite2Layout);
 
-		{
-			previewGroup = new Group(pageComposite, SWT.NONE);
-			GridLayout previewGroupLayout = new GridLayout();
-			previewGroupLayout.makeColumnsEqualWidth = true;
-			previewGroup.setLayout(previewGroupLayout);
-			GridData previewGroupLData = new GridData();
-			previewGroupLData.verticalIndent = 10;
-			previewGroupLData.horizontalAlignment = GridData.FILL;
-			previewGroupLData.grabExcessHorizontalSpace = true;
-			previewGroupLData.verticalAlignment = GridData.FILL;
-			previewGroupLData.grabExcessVerticalSpace = true;
-			previewGroup.setLayoutData(previewGroupLData);
-			previewGroup.setText(Messages.TranspTextWizardPage_preview);
-			{
-				GridLayout transpTableLayout = new GridLayout();
-				transpTableLayout.makeColumnsEqualWidth = true;
-				GridData transpositionTable1LData = new GridData();
-				transpositionTable1LData.heightHint = 120;
-				transpositionTable1LData.widthHint = 250;
-				transpositionTable1LData.grabExcessHorizontalSpace = true;
-				transpositionTable1LData.horizontalAlignment = GridData.FILL;
-				transpositionTable1LData.grabExcessVerticalSpace = true;
-				transpositionTable1LData.verticalAlignment = GridData.FILL;
-				transpositionTable1 = new TranspositionTableComposite(previewGroup, SWT.NONE);
-				transpositionTable1.setLayout(transpTableLayout);
-				transpositionTable1.setLayoutData(transpositionTable1LData);
+		txtInputText = new Text(textfieldComp, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
+		GridData text1LData = new GridData(SWT.FILL, SWT.FILL, true, true);
 
+		GC temp = new GC(txtInputText);
+		int lines = 4;
+		int charHeight = temp.getFontMetrics().getAscent() + 2 * temp.getFontMetrics().getLeading();
+		int height = lines * charHeight;
+		temp.dispose();
+		text1LData.widthHint = 200;
+		text1LData.heightHint = height;
+
+		txtInputText.setLayoutData(text1LData);
+
+		Label nextPageInfo = new Label(grpText, SWT.WRAP);
+		GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
+		layoutData.widthHint = 300;
+		nextPageInfo.setLayoutData(layoutData);
+		nextPageInfo.setText(Messages.TranspTextWizardPage_zzz);
+
+		parttextGroup = new Group(pageComposite, SWT.NONE);
+		GridLayout composite4Layout = new GridLayout(3, false);
+		composite4Layout.horizontalSpacing = 0;
+		composite4Layout.verticalSpacing = 0;
+		GridData parttextGroupLData = new GridData();
+		parttextGroupLData.grabExcessHorizontalSpace = true;
+		parttextGroupLData.horizontalAlignment = GridData.FILL;
+		parttextGroupLData.verticalIndent = 5;
+		parttextGroup.setLayoutData(parttextGroupLData);
+		parttextGroup.setLayout(composite4Layout);
+		parttextGroup.setText(Messages.TranspTextWizardPage_shortenthetext);
+
+		parttextCheck = new Button(parttextGroup, SWT.CHECK | SWT.LEFT);
+		parttextCheck.setText(Messages.TranspTextWizardPage_takeonlyapartofthetext);
+		parttextCheck.setSelection(init_croptext);
+
+		parttextCheck.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent evt) {
+				parttextCheckWidgetSelected(evt);
 			}
-		}
+		});
+
+		parttextCount = new Spinner(parttextGroup, SWT.NONE);
+		parttextCount.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+		parttextCount.setSelection(init_croplength);
+
+		parttextCount.setEnabled(parttextCheck.getSelection());
+		parttextCount.setMinimum(1);
+		parttextCount.setMaximum(200);
+		parttextCount.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent evt) {
+				parttextCountWidgetSelected(evt);
+			}
+		});
+
+		parttextCount.setSelection(init_croplength);
+
+		lblCharacters = new Label(parttextGroup, SWT.NONE);
+		lblCharacters.setText(Messages.TranspTextWizardPage_lblCharacters_text);
+
+		lblIfTheText = new Label(parttextGroup, SWT.WRAP);
+		lblIfTheText.setText(Messages.TranspTextWizardPage_lblIfTheText_text);
+		GridData lblIfthetextLData = new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1);
+		lblIfthetextLData.horizontalIndent = 20;
+		lblIfthetextLData.verticalIndent = 4;
+		lblIfthetextLData.widthHint = 200;
+		lblIfTheText.setLayoutData(lblIfthetextLData);
+		FontData fontdata = lblIfTheText.getFont().getFontData()[0];
+		fontdata.height = ((float) 0.9) * (fontdata.height);
+		lblIfTheText.setFont(new Font(Display.getCurrent(), fontdata));
+
+		// parttextLabel1 = new Label(parttextGroup, SWT.NONE);
+		// parttextLabel1.setText("(This option is activated by default, if you chose
+		// not to arrange the text into columns)");
+
+		group1 = new Group(pageComposite, SWT.NONE);
+		GridLayout group1Layout = new GridLayout(3, false);
+		group1.setLayout(group1Layout);
+		GridData group1LData = new GridData();
+		group1LData.grabExcessHorizontalSpace = true;
+		group1LData.horizontalAlignment = GridData.FILL;
+		group1.setLayoutData(group1LData);
+		group1.setText(Messages.TranspTextWizardPage_columns);
+
+		label1 = new Label(group1, SWT.NONE);
+		label1.setText(Messages.TranspTextWizardPage_setnumberofcolumns);
+		GridData label1LData = new GridData();
+		label1LData.horizontalAlignment = GridData.FILL;
+		label1.setLayoutData(label1LData);
+
+		blocklengthSpinner = new Spinner(group1, SWT.NONE);
+
+		GridData gd_blocklengthSpinner = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		blocklengthSpinner.setLayoutData(gd_blocklengthSpinner);
+
+		blocklengthSpinner.setMinimum(1);
+		blocklengthSpinner.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent evt) {
+				blocklengthSpinnerWidgetSelected(evt);
+			}
+		});
+
+		blocklengthSpinner.setSelection(init_blocklength);
+
+		lblyouCanChange = new Label(group1, SWT.WRAP);
+		lblyouCanChange.setText(Messages.TranspTextWizardPage_lblyouCanChange_text);
+		GridData layoutData2 = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		layoutData2.widthHint = 200;
+		lblyouCanChange.setLayoutData(layoutData2);
+
+		groupReadInDirection = new Group(pageComposite, SWT.NONE);
+		groupReadInDirection.setLayout(new GridLayout(2, false));
+		GridData groupReadInDirectionLData = new GridData();
+		groupReadInDirectionLData.grabExcessHorizontalSpace = true;
+		groupReadInDirectionLData.horizontalAlignment = GridData.FILL;
+		groupReadInDirection.setLayoutData(groupReadInDirectionLData);
+		groupReadInDirection.setText(Messages.TranspTextWizardPage_readinmode);
+
+		labelReadIn = new Label(groupReadInDirection, SWT.NONE);
+		labelReadIn.setText(Messages.TranspTextWizardPage_readinmode_description);
+
+		directionChooserIn = new ReadDirectionChooser(groupReadInDirection);
+		directionChooserIn.setDirection(iniDirection);
+
+		directionChooserIn.getInput().addObserver(new Observer() {
+			@Override
+			public void update(Observable o, Object arg) {
+				if (arg == null)
+					preview();
+			}
+		});
+
+		previewGroup = new Group(pageComposite, SWT.NONE);
+		GridLayout previewGroupLayout = new GridLayout();
+		previewGroupLayout.makeColumnsEqualWidth = true;
+		previewGroup.setLayout(previewGroupLayout);
+		GridData previewGroupLData = new GridData();
+		previewGroupLData.verticalIndent = 10;
+		previewGroupLData.horizontalAlignment = GridData.FILL;
+		previewGroupLData.grabExcessHorizontalSpace = true;
+		previewGroupLData.verticalAlignment = GridData.FILL;
+		previewGroupLData.grabExcessVerticalSpace = true;
+		previewGroup.setLayoutData(previewGroupLData);
+		previewGroup.setText(Messages.TranspTextWizardPage_preview);
+
+		GridLayout transpTableLayout = new GridLayout();
+		transpTableLayout.makeColumnsEqualWidth = true;
+		GridData transpositionTable1LData = new GridData();
+		transpositionTable1LData.heightHint = 120;
+		transpositionTable1LData.widthHint = 250;
+		transpositionTable1LData.grabExcessHorizontalSpace = true;
+		transpositionTable1LData.horizontalAlignment = GridData.FILL;
+		transpositionTable1LData.grabExcessVerticalSpace = true;
+		transpositionTable1LData.verticalAlignment = GridData.FILL;
+		transpositionTable1 = new TranspositionTableComposite(previewGroup, SWT.NONE);
+		transpositionTable1.setLayout(transpTableLayout);
+		transpositionTable1.setLayoutData(transpositionTable1LData);
 
 		setControl(pageComposite);
-		PlatformUI.getWorkbench().getHelpSystem()
-			.setHelp(getControl(), TranspositionAnalysisPlugin.PLUGIN_ID + ".wizard"); //$NON-NLS-1$
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(),
+				TranspositionAnalysisPlugin.PLUGIN_ID + ".wizard"); //$NON-NLS-1$
 
 		initializeTextInput();
 
@@ -552,8 +514,9 @@ public class TranspTextWizardPage extends WizardPage {
 	}
 
 	/**
-	 * Runs a runnable, which executes some code. The top visible line number of the text field is
-	 * remembered, and after the runnable has finished, the top visible line is restored is set to the remembered number.
+	 * Runs a runnable, which executes some code. The top visible line number of the
+	 * text field is remembered, and after the runnable has finished, the top
+	 * visible line is restored is set to the remembered number.
 	 *
 	 * @param runnable
 	 */
@@ -675,7 +638,8 @@ public class TranspTextWizardPage extends WizardPage {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (btnDatei.getSelection()) {
-					if (fileTextInput == null) fileTextInput = openFileSelectionDialogue();
+					if (fileTextInput == null)
+						fileTextInput = openFileSelectionDialogue();
 					textInput.synchronizeWithUserSide();
 					setTextInputUIState(textInput.getContent(), true);
 				}
@@ -735,7 +699,8 @@ public class TranspTextWizardPage extends WizardPage {
 		String[] filterExt = { "*.*" }; //$NON-NLS-1$
 		fd.setFilterExtensions(filterExt);
 		String selected = fd.open();
-		if (selected == null) return null;
+		if (selected == null)
+			return null;
 		return new File(selected);
 	}
 
@@ -756,7 +721,7 @@ public class TranspTextWizardPage extends WizardPage {
 
 		showLoadFromEditorComponents(sourceType.equals(TextSourceType.JCTEDITOR));
 		if (sourceType.equals(TextSourceType.JCTEDITOR)) {
-			//TODO:
+			// TODO:
 			comboEditorInputSelector.select(editorRefs.indexOf(text.editorReference));
 		}
 		if (sourceType.equals(TextSourceType.FILE)) {
@@ -846,7 +811,7 @@ public class TranspTextWizardPage extends WizardPage {
 		PageConfiguration pageConfig = getPageConfiguration();
 		transpositionTable1.setReadInOrder(pageConfig.getReadInDirection());
 		transpositionTable1.setText(pageConfig.getText().getText(), pageConfig.getColumnCount(), !pageConfig.isCrop(),
-			pageConfig.getCropLength(), pageConfig.getColumnOrder(), true);
+				pageConfig.getCropLength(), pageConfig.getColumnOrder(), true);
 		lastPreviewedPageConfig = pageConfig;
 	}
 
@@ -859,8 +824,7 @@ public class TranspTextWizardPage extends WizardPage {
 	}
 
 	/**
-	 * @param initBlocklength
-	 *            the init_blocklength to set
+	 * @param initBlocklength the init_blocklength to set
 	 */
 	private void setBlocklength(int length) {
 		if ((blocklengthSpinner != null) && (!blocklengthSpinner.isDisposed())) {
@@ -872,8 +836,7 @@ public class TranspTextWizardPage extends WizardPage {
 	}
 
 	/**
-	 * @param initCroptext
-	 *            the init_croptext to set
+	 * @param initCroptext the init_croptext to set
 	 */
 	private void setCroptext(boolean initCroptext) {
 		if ((parttextCheck != null) && (!parttextCheck.isDisposed())) {
@@ -885,8 +848,7 @@ public class TranspTextWizardPage extends WizardPage {
 	}
 
 	/**
-	 * @param initCroplength
-	 *            the init_croplength to set
+	 * @param initCroplength the init_croplength to set
 	 */
 	private void setCroplength(int initCroplength) {
 		if ((parttextCount != null) && (!parttextCount.isDisposed())) {
@@ -929,12 +891,15 @@ public class TranspTextWizardPage extends WizardPage {
 
 	private void parttextCheckWidgetSelected(SelectionEvent evt) {
 		parttextCount.setEnabled(parttextCheck.getSelection());
-		if (blocklengthSpinner.getSelection() > 0 && parttextCheck.getSelection()) doAutoCheckbox = false;
-		if (evt != null) preview();
+		if (blocklengthSpinner.getSelection() > 0 && parttextCheck.getSelection())
+			doAutoCheckbox = false;
+		if (evt != null)
+			preview();
 	}
 
 	private void blocklengthSpinnerWidgetSelected(SelectionEvent evt) {
-		if (doAutoCheckbox) parttextCheck.setSelection(blocklengthSpinner.getSelection() == 0);
+		if (doAutoCheckbox)
+			parttextCheck.setSelection(blocklengthSpinner.getSelection() == 0);
 		parttextCheckWidgetSelected(null);
 		preview();
 	}
@@ -945,7 +910,8 @@ public class TranspTextWizardPage extends WizardPage {
 
 	public PageConfiguration getPageConfiguration() {
 		return new PageConfiguration(textInput.getContent(), blocklengthSpinner.getSelection(),
-			parttextCheck.getSelection(), parttextCount.getSelection(), directionChooserIn.getInput().getContent(), isPageBuilt?transpositionTable1.getColumnOrder():init_columnOrder);
+				parttextCheck.getSelection(), parttextCount.getSelection(), directionChooserIn.getInput().getContent(),
+				isPageBuilt ? transpositionTable1.getColumnOrder() : init_columnOrder);
 	}
-	
+
 }

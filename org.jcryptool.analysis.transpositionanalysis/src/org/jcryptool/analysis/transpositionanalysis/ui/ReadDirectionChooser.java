@@ -39,14 +39,11 @@ import org.jcryptool.core.util.input.InputVerificationResult;
  * @author Simon L
  */
 public class ReadDirectionChooser extends Composite {
-	private static final int HEIGHT_FLAT = 18;
-	private static final int HEIGHT_NORMAL = 21;
 	private AbstractUIInput<Boolean> input;
 	private Button btnRowwise;
 	private Button btnColumnar;
 	private String inputName;
 	private Listener radioGroup;
-	private boolean flat;
 
 	/**
 	 * Overriding checkSubclass allows this class to extend
@@ -57,12 +54,7 @@ public class ReadDirectionChooser extends Composite {
 	}
 
 	public ReadDirectionChooser(Composite parent) {
-		this(parent, false);
-	}
-
-	public ReadDirectionChooser(Composite parent, boolean flat) {
 		super(parent, SWT.NONE);
-		this.flat = flat;
 		initGUI();
 	}
 
@@ -84,7 +76,6 @@ public class ReadDirectionChooser extends Composite {
 			}
 		};
 
-//		try {
 		GridLayout thisLayout = new GridLayout();
 		thisLayout.marginWidth = 0;
 		thisLayout.marginHeight = 0;
@@ -98,10 +89,6 @@ public class ReadDirectionChooser extends Composite {
 		btnColumnarLData.grabExcessHorizontalSpace = true;
 		btnColumnarLData.horizontalAlignment = GridData.FILL;
 		btnColumnarLData.verticalAlignment = GridData.CENTER;
-		btnColumnarLData.heightHint = HEIGHT_NORMAL;
-//		btnColumnarLData.heightHint = SWT.DEFAULT;
-		if (flat)
-			btnColumnarLData.heightHint = HEIGHT_FLAT;
 		btnColumnar.setLayoutData(btnColumnarLData);
 		btnColumnar.setText(Messages.ReadDirectionChooser_0);
 		btnColumnar.addListener(SWT.Selection, radioGroup);
@@ -111,19 +98,11 @@ public class ReadDirectionChooser extends Composite {
 		btnRowwiseLData.grabExcessHorizontalSpace = true;
 		btnRowwiseLData.horizontalAlignment = GridData.FILL;
 		btnRowwiseLData.verticalAlignment = GridData.CENTER;
-//		btnRowwiseLData.heightHint = HEIGHT_NORMAL;
-//		btnRowwiseLData.heightHint = SWT.DEFAULT;
-//		btnRowwiseLData.heightHint = btnRowwiseLData.heightHint - (btnRowwiseLData.heightHint / 6);
-		if (flat)
-			btnRowwiseLData.heightHint = HEIGHT_FLAT;
 		btnRowwise.setLayoutData(btnRowwiseLData);
 		btnRowwise.setText(Messages.ReadDirectionChooser_1);
 		btnRowwise.addListener(SWT.Selection, radioGroup);
 
 		this.layout();
-//		} catch (Exception e) {
-//			LogUtil.logError(e);
-//		}
 		initInput();
 	}
 
