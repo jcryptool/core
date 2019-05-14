@@ -8,7 +8,7 @@
             name="%view.name"
             inject="true"
             category="org.jcryptool.analysis"
-            class="org.jcryptool.analysis.fleissner2.views.SampleView"
+            class="org.jcryptool.analysis.fleissner.views.SampleView"
             id="org.jcryptool.analysis.fleissner2.views.SampleView">
       </view>
    </extension>

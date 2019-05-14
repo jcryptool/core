@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.analysis.fleissner;singleton:=true
 Bundle-Version: 1.0.0
-Bundle-Activator: org.jcryptool.analysis.fleissner2.Activator
+Bundle-Activator: org.jcryptool.analysis.fleissner.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.help,
