@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Fleissner2
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.analysis.fleissner;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.analysis.fleissner2.Activator
