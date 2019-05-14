@@ -12,8 +12,11 @@ package org.jcryptool.analysis.transpositionanalysis.views;
 
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
@@ -24,8 +27,9 @@ public class TranspAnalysisView extends ViewPart {
 	/**
 	 * The ID of the view as specified by the extension.
 	 */
-	public static final String ID = "org.jcryptool.analysis.transposition.views.TranspAnalysisView";
+	public static final String ID = "org.jcryptool.analysis.transposition.views.TranspAnalysisView"; //$NON-NLS-1$
 	private TranspAnalysisUI myUI;
+	private Composite parent;
 
 	/**
 	 * The constructor.
@@ -39,7 +43,23 @@ public class TranspAnalysisView extends ViewPart {
 	@Override
 	public void setFocus() {
 		myUI.setFocus();
+	}
+	
+	/**
+	 * Resets the Plug-in.
+	 */
+	public void resetClick() {
+		if (MessageDialog.openQuestion(Display.getCurrent().getActiveShell(), Messages.TranspAnalysisView_resetDialogTitle, Messages.TranspAnalysisView_resetDialogQuestion)) {
+			for (Control ctr : parent.getChildren()) {
+				ctr.dispose();
+			}
+			myUI = new TranspAnalysisUI(parent, SWT.NONE);
+			parent.layout();
+		} else {
+			//Do nothing if the user chooses cancel.
+		}
 
+		
 	}
 
 	private void hookActionBar() {
@@ -50,10 +70,11 @@ public class TranspAnalysisView extends ViewPart {
 
 	@Override
 	public void createPartControl(Composite parent) {
+		this.parent = parent;
 		myUI = new TranspAnalysisUI(parent, SWT.NONE);
 
 		PlatformUI.getWorkbench().getHelpSystem()
-			.setHelp(parent, "org.jcryptool.analysis.transpositionanalysis.transpositionanalysis");
+			.setHelp(parent, "org.jcryptool.analysis.transpositionanalysis.transpositionanalysis"); //$NON-NLS-1$
 
 		hookActionBar();
 	}
