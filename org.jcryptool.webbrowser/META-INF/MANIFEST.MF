@@ -9,6 +9,9 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.jcryptool.webbrowser.BrowserPlugin
 Bundle-Vendor: %bundleProvider
-Export-Package: org.jcryptool.webbrowser.remote
+Export-Package: org.jcryptool.webbrowser,
+ org.jcryptool.webbrowser.command,
+ org.jcryptool.webbrowser.remote,
+ org.jcryptool.webbrowser.ui
 Import-Package: org.jcryptool.core.logging.utils
 Automatic-Module-Name: org.jcryptool.webbrowser

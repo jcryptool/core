@@ -21,7 +21,11 @@ Export-Package: org.jcryptool.core.views;
    org.eclipse.ui.plugin,
    org.eclipse.jface.resource,
    org.eclipse.swt.widgets,
-   org.eclipse.core.runtime"
+   org.eclipse.core.runtime",
+ org.jcryptool.core.views.content,
+ org.jcryptool.core.views.content.palette,
+ org.jcryptool.core.views.content.structure,
+ org.jcryptool.core.views.content.tree
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.jcryptool.core,
  org.jcryptool.core.actions,

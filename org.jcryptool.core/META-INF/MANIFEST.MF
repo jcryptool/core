@@ -16,7 +16,8 @@ Bundle-Vendor: %bundleProvider
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.jcryptool.core,
  org.jcryptool.core.actions,
- org.jcryptool.core.commands
+ org.jcryptool.core.commands,
+ org.jcryptool.core.preferences.pages
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations,
  org.jcryptool.core.util.constants,

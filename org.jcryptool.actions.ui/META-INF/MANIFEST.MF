@@ -28,5 +28,10 @@ Import-Package: org.eclipse.core.filesystem,
  org.jcryptool.crypto.keystore.keys,
  org.jcryptool.editor.text.startup
 Export-Package: org.jcryptool.actions.ui,
- org.jcryptool.actions.ui.views
+ org.jcryptool.actions.ui.handler,
+ org.jcryptool.actions.ui.preferences,
+ org.jcryptool.actions.ui.propertytester,
+ org.jcryptool.actions.ui.utils,
+ org.jcryptool.actions.ui.views,
+ org.jcryptool.actions.ui.views.provider
 Automatic-Module-Name: org.jcryptool.actions.ui

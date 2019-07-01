@@ -16,3 +16,7 @@ Import-Package: org.jcryptool.commands.core.evaluator,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.constants
 Automatic-Module-Name: org.jcryptool.commands.ui
+Export-Package: org.jcryptool.commands.ui,
+ org.jcryptool.commands.ui.commands,
+ org.jcryptool.commands.ui.eclipseconsole,
+ org.jcryptool.commands.ui.eclipseconsole.console

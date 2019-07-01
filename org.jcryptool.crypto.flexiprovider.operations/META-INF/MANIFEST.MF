@@ -11,7 +11,27 @@ Require-Bundle: org.eclipse.core.runtime,
  org.jdom;bundle-version="1.1.1",
  de.flexiprovider;bundle-version="1.7.0"
 Bundle-ActivationPolicy: lazy
-Export-Package: org.jcryptool.crypto.flexiprovider.operations.engines
+Export-Package: org.jcryptool.crypto.flexiprovider.operations,
+ org.jcryptool.crypto.flexiprovider.operations.engines,
+ org.jcryptool.crypto.flexiprovider.operations.ui.actions.context,
+ org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.io,
+ org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.ops,
+ org.jcryptool.crypto.flexiprovider.operations.ui.actions.menu,
+ org.jcryptool.crypto.flexiprovider.operations.ui.handlers,
+ org.jcryptool.crypto.flexiprovider.operations.ui.listeners,
+ org.jcryptool.crypto.flexiprovider.operations.ui.views,
+ org.jcryptool.crypto.flexiprovider.operations.ui.views.nodes,
+ org.jcryptool.crypto.flexiprovider.operations.ui.views.nodes.algorithms,
+ org.jcryptool.crypto.flexiprovider.operations.ui.views.nodes.io,
+ org.jcryptool.crypto.flexiprovider.operations.ui.views.nodes.keys,
+ org.jcryptool.crypto.flexiprovider.operations.ui.views.nodes.ops,
+ org.jcryptool.crypto.flexiprovider.operations.ui.views.providers,
+ org.jcryptool.crypto.flexiprovider.operations.xml,
+ org.jcryptool.crypto.flexiprovider.operations.xml.algorithms,
+ org.jcryptool.crypto.flexiprovider.operations.xml.algorithms.paramspecs,
+ org.jcryptool.crypto.flexiprovider.operations.xml.io,
+ org.jcryptool.crypto.flexiprovider.operations.xml.keys,
+ org.jcryptool.crypto.flexiprovider.operations.xml.ops
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.jcryptool.core.logging.dialogs,
  org.jcryptool.core.logging.utils,
