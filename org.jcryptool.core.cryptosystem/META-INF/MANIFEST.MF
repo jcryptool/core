@@ -8,7 +8,9 @@ Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.core.runtime
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: org.jcryptool.core.cryptosystem.core,
+Export-Package: org.jcryptool.core.cryptosystem,
+ org.jcryptool.core.cryptosystem.core,
  org.jcryptool.core.cryptosystem.core.exception,
- org.jcryptool.core.cryptosystem.core.text
+ org.jcryptool.core.cryptosystem.core.text,
+ org.jcryptool.core.cryptosystem.vigenere
 Automatic-Module-Name: org.jcryptool.core.cryptosystem

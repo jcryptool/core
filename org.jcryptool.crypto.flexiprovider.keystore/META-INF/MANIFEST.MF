@@ -24,5 +24,7 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.crypto.keystore.descriptors.interfaces,
  org.jcryptool.crypto.keystore.ui.actions,
  org.jcryptool.crypto.keystore.ui.views.nodes
-Export-Package: org.jcryptool.crypto.flexiprovider.keystore
+Export-Package: org.jcryptool.crypto.flexiprovider.keystore,
+ org.jcryptool.crypto.flexiprovider.keystore.actions,
+ org.jcryptool.crypto.flexiprovider.keystore.wizards
 Automatic-Module-Name: org.jcryptool.crypto.flexiprovider.keystore

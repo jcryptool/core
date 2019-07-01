@@ -27,5 +27,16 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.crypto.keystore.keys,
  org.jcryptool.crypto.keystore,
  org.jcryptool.crypto.keystore.backend
-Export-Package: org.jcryptool.crypto.flexiprovider.integrator
+Export-Package: com.cloudgarden.resource,
+ org.jcryptool.crypto.flexiprovider.integrator,
+ org.jcryptool.crypto.flexiprovider.integrator.asymmetric.elgamal,
+ org.jcryptool.crypto.flexiprovider.integrator.asymmetric.rsa,
+ org.jcryptool.crypto.flexiprovider.integrator.blockcipher.aes,
+ org.jcryptool.crypto.flexiprovider.integrator.blockcipher.idea,
+ org.jcryptool.crypto.flexiprovider.integrator.blockcipher.rc6,
+ org.jcryptool.crypto.flexiprovider.integrator.mac.hmacmd5,
+ org.jcryptool.crypto.flexiprovider.integrator.messagedigest.md5,
+ org.jcryptool.crypto.flexiprovider.integrator.messagedigest.sha,
+ org.jcryptool.crypto.flexiprovider.integrator.prng.sha1,
+ org.jcryptool.crypto.flexiprovider.integrator.signature.dsa
 Automatic-Module-Name: org.jcryptool.crypto.flexiprovider.integrator

@@ -23,7 +23,12 @@ Import-Package: org.eclipse.core.filesystem,
  org.jcryptool.core.views
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.jcryptool.fileexplorer.FileExplorerPlugin
-Export-Package: org.jcryptool.fileexplorer.tester,
+Export-Package: org.jcryptool.fileexplorer,
+ org.jcryptool.fileexplorer.commands,
+ org.jcryptool.fileexplorer.popup.contributions,
+ org.jcryptool.fileexplorer.preferences,
+ org.jcryptool.fileexplorer.properties,
+ org.jcryptool.fileexplorer.tester,
  org.jcryptool.fileexplorer.views,
  org.jcryptool.fileexplorer.views.factories;uses:="org.eclipse.core.filesystem,org.eclipse.jface.resource,org.eclipse.core.runtime"
 Automatic-Module-Name: org.jcryptool.fileexplorer
