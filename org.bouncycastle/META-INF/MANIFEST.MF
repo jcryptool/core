@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.bouncycastle;singleton:=true
-Bundle-Version: 1.60.0
+Bundle-Version: 1.62.0
 Bundle-Activator: org.bouncycastle.BouncyCastlePlugin
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.core.runtime
@@ -10,7 +10,7 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .,
  src/org/bouncycastle/,
- libs/bcprov-jdk15on-160.jar
+ libs/bcprov-jdk15on-162.jar
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.providers
 Automatic-Module-Name: org.bouncycastle
@@ -24,9 +24,11 @@ Export-Package: org.bouncycastle,
  org.bouncycastle.asn1.cms,
  org.bouncycastle.asn1.cms.ecc,
  org.bouncycastle.asn1.crmf,
+ org.bouncycastle.asn1.cryptlib,
  org.bouncycastle.asn1.cryptopro,
  org.bouncycastle.asn1.dvcs,
  org.bouncycastle.asn1.eac,
+ org.bouncycastle.asn1.edec,
  org.bouncycastle.asn1.esf,
  org.bouncycastle.asn1.ess,
  org.bouncycastle.asn1.est,
@@ -91,6 +93,7 @@ Export-Package: org.bouncycastle,
  org.bouncycastle.i18n.filter,
  org.bouncycastle.iana,
  org.bouncycastle.jcajce,
+ org.bouncycastle.jcajce.interfaces,
  org.bouncycastle.jcajce.io,
  org.bouncycastle.jcajce.provider.asymmetric,
  org.bouncycastle.jcajce.provider.asymmetric.dh,
@@ -99,6 +102,7 @@ Export-Package: org.bouncycastle,
  org.bouncycastle.jcajce.provider.asymmetric.ec,
  org.bouncycastle.jcajce.provider.asymmetric.ecgost,
  org.bouncycastle.jcajce.provider.asymmetric.ecgost12,
+ org.bouncycastle.jcajce.provider.asymmetric.edec,
  org.bouncycastle.jcajce.provider.asymmetric.elgamal,
  org.bouncycastle.jcajce.provider.asymmetric.gost,
  org.bouncycastle.jcajce.provider.asymmetric.ies,
@@ -140,15 +144,18 @@ Export-Package: org.bouncycastle,
  org.bouncycastle.pqc.crypto.gmss.util,
  org.bouncycastle.pqc.crypto.mceliece,
  org.bouncycastle.pqc.crypto.newhope,
+ org.bouncycastle.pqc.crypto.qtesla,
  org.bouncycastle.pqc.crypto.rainbow,
  org.bouncycastle.pqc.crypto.rainbow.util,
  org.bouncycastle.pqc.crypto.sphincs,
+ org.bouncycastle.pqc.crypto.util,
  org.bouncycastle.pqc.crypto.xmss,
  org.bouncycastle.pqc.jcajce.interfaces,
  org.bouncycastle.pqc.jcajce.provider,
  org.bouncycastle.pqc.jcajce.provider.gmss,
  org.bouncycastle.pqc.jcajce.provider.mceliece,
  org.bouncycastle.pqc.jcajce.provider.newhope,
+ org.bouncycastle.pqc.jcajce.provider.qtesla,
  org.bouncycastle.pqc.jcajce.provider.rainbow,
  org.bouncycastle.pqc.jcajce.provider.sphincs,
  org.bouncycastle.pqc.jcajce.provider.util,
