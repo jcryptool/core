@@ -12,3 +12,8 @@ Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor
 Import-Package: org.jcryptool.core.logging.utils
 Automatic-Module-Name: org.jcryptool.games.zudoku
+Export-Package: edu.kit.iks.zudoku,
+ images,
+ org.jcryptool.games.zudoku,
+ org.jcryptool.games.zudoku.handler,
+ org.jcryptool.games.zudoku.views

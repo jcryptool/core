@@ -20,3 +20,7 @@ Import-Package: codec,
  org.jcryptool.core.util.fonts,
  org.jcryptool.visual.sig.algorithm
 Automatic-Module-Name: org.jcryptool.visual.ssl
+Export-Package: org.eclipse.wb.swt,
+ org.jcryptool.visual.ssl.handler,
+ org.jcryptool.visual.ssl.protocol,
+ org.jcryptool.visual.ssl.views

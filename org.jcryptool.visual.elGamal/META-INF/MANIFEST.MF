@@ -21,3 +21,8 @@ Import-Package: org.jcryptool.core.logging.dialogs,
  org.jcryptool.crypto.ui.textblockloader.conversion
 Bundle-Vendor: %Bundle-Vendor
 Automatic-Module-Name: org.jcryptool.visual.elGamal
+Export-Package: org.jcryptool.visual.elGamal,
+ org.jcryptool.visual.elGamal.handlers,
+ org.jcryptool.visual.elGamal.ui,
+ org.jcryptool.visual.elGamal.ui.wizards,
+ org.jcryptool.visual.elGamal.ui.wizards.wizardpages

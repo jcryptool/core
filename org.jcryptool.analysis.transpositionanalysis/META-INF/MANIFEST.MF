@@ -19,7 +19,15 @@ Import-Package: org.jcryptool.crypto.ui.textmodify.wizard,
  org.jcryptool.core.util.fonts,
  org.jcryptool.crypto.classic.alphabets.ui
 Bundle-Vendor: %Bundle-Vendor
-Export-Package: org.jcryptool.analysis.transpositionanalysis,
+Export-Package: com.cloudgarden.resource,
+ org.jcryptool.analysis.transpositionanalysis,
+ org.jcryptool.analysis.transpositionanalysis.calc,
+ org.jcryptool.analysis.transpositionanalysis.calc.transpositionanalysis,
+ org.jcryptool.analysis.transpositionanalysis.calc.transpositionanalysis.model,
+ org.jcryptool.analysis.transpositionanalysis.handler,
  org.jcryptool.analysis.transpositionanalysis.ui,
- org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs
+ org.jcryptool.analysis.transpositionanalysis.ui.wizards,
+ org.jcryptool.analysis.transpositionanalysis.ui.wizards.autoanalysiswizard,
+ org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs,
+ org.jcryptool.analysis.transpositionanalysis.views
 Automatic-Module-Name: org.jcryptool.analysis.transpositionanalysis

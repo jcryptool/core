@@ -15,3 +15,8 @@ Import-Package: org.jcryptool.core.logging.utils
 Bundle-Vendor: %Bundle-Vendor.0
 Bundle-ClassPath: .
 Automatic-Module-Name: org.jcryptool.visual.hashing
+Export-Package: org.eclipse.wb.swt,
+ org.jcryptool.visual.hashing,
+ org.jcryptool.visual.hashing.algorithms,
+ org.jcryptool.visual.hashing.handlers,
+ org.jcryptool.visual.hashing.views

@@ -17,3 +17,7 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.directories,
  org.jcryptool.core.util.fonts
 Automatic-Module-Name: org.jcryptool.visual.ecc
+Export-Package: org.jcryptool.visual.ecc,
+ org.jcryptool.visual.ecc.algorithm,
+ org.jcryptool.visual.ecc.handlers,
+ org.jcryptool.visual.ecc.ui

@@ -18,3 +18,9 @@ Bundle-ActivationPolicy: lazy
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.fonts
 Automatic-Module-Name: org.jcryptool.analysis.vigenere
+Export-Package: org.jcryptool.analysis.vigenere,
+ org.jcryptool.analysis.vigenere.exceptions,
+ org.jcryptool.analysis.vigenere.handler,
+ org.jcryptool.analysis.vigenere.interfaces,
+ org.jcryptool.analysis.vigenere.ui,
+ org.jcryptool.analysis.vigenere.views

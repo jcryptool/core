@@ -18,7 +18,9 @@ Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor
 Export-Package: org.jcryptool.crypto.classic.substitution,
  org.jcryptool.crypto.classic.substitution.algorithm,
- org.jcryptool.crypto.classic.substitution.ui
+ org.jcryptool.crypto.classic.substitution.algorithm.substitutioncryptosystem,
+ org.jcryptool.crypto.classic.substitution.ui,
+ org.jcryptool.crypto.classic.substitution.ui.substControls
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.crypto.classic.model.ui.wizard

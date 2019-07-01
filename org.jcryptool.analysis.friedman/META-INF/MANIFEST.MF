@@ -11,9 +11,12 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: %Bundle-Vendor
-Export-Package: org.jcryptool.analysis.friedman,
+Export-Package: com.cloudgarden.resource,
+ org.jcryptool.analysis.friedman,
  org.jcryptool.analysis.friedman.calc,
- org.jcryptool.analysis.friedman.ui
+ org.jcryptool.analysis.friedman.handler,
+ org.jcryptool.analysis.friedman.ui,
+ org.jcryptool.analysis.friedman.views
 Import-Package: org.jcryptool.analysis.graphtools,
  org.jcryptool.analysis.graphtools.derivates,
  org.jcryptool.core.logging.utils,

@@ -16,3 +16,8 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.directories,
  org.jcryptool.core.util.fonts
 Automatic-Module-Name: org.jcryptool.visual.ecdh
+Export-Package: org.jcryptool.visual.ECDH,
+ org.jcryptool.visual.ECDH.algorithm,
+ org.jcryptool.visual.ECDH.data,
+ org.jcryptool.visual.ECDH.ui.view,
+ org.jcryptool.visual.ECDH.ui.wizards
