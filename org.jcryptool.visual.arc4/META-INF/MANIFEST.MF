@@ -13,3 +13,8 @@ Import-Package: org.jcryptool.core.util.colors,
  org.jcryptool.core.util.fonts,
  org.jcryptool.visual.library
 Automatic-Module-Name: org.jcryptool.visual.arc4
+Export-Package: org.jcryptool.visual.arc4,
+ org.jcryptool.visual.arc4.algorithm,
+ org.jcryptool.visual.arc4.handlers,
+ org.jcryptool.visual.arc4.ui,
+ org.jcryptool.visual.arc4.wizard

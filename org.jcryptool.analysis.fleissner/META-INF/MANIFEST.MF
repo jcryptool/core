@@ -15,3 +15,9 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.colors,
  org.jcryptool.core.util.directories,
  org.jcryptool.core.util.fonts
+Export-Package: org.jcryptool.analysis.fleissner2,
+ org.jcryptool.analysis.fleissner2.UI,
+ org.jcryptool.analysis.fleissner2.handlers,
+ org.jcryptool.analysis.fleissner2.key,
+ org.jcryptool.analysis.fleissner2.logic,
+ org.jcryptool.analysis.fleissner2.views

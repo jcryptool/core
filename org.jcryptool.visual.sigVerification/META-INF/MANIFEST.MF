@@ -17,6 +17,9 @@ Import-Package: de.flexiprovider.core.dsa,
  de.flexiprovider.core.rsa,
  org.jcryptool.core.logging.utils
 Export-Package: org.jcryptool.visual.sigVerification,
- org.jcryptool.visual.sigVerification.ui.view
+ org.jcryptool.visual.sigVerification.algorithm,
+ org.jcryptool.visual.sigVerification.cert,
+ org.jcryptool.visual.sigVerification.ui.view,
+ org.jcryptool.visual.sigVerification.ui.wizards
 Bundle-Vendor: %Bundle-Vendor
 Automatic-Module-Name: org.jcryptool.visual.sigVerification

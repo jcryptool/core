@@ -11,3 +11,9 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: org.jcryptool.core.util.fonts
 Automatic-Module-Name: org.jcryptool.visual.sidechannelattack.dpa
+Export-Package: com.swtdesigner,
+ org.eclipse.wb.swt,
+ org.jcryptool.algorithm,
+ org.jcryptool.visual.sidechannelattack,
+ org.jcryptool.visual.sidechannelattack.dpa.views,
+ org.jcryptool.visual.sidechannelattack.handlers

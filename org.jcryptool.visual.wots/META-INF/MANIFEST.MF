@@ -8,7 +8,8 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.visual.wots,
- org.jcryptool.visual.wots.files
+ org.jcryptool.visual.wots.files,
+ wots
 Bundle-Vendor: %Bundle-Vendor.0
 Import-Package: codec,
  de.flexiprovider.api.keys,

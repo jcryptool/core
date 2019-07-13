@@ -11,7 +11,8 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor
-Export-Package: org.jcryptool.visual.euclid
+Export-Package: org.jcryptool.visual.euclid,
+ org.jcryptool.visual.euclid.handler
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.constants,
  org.jcryptool.core.util.directories,

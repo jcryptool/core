@@ -16,8 +16,11 @@ Import-Package: org.jcryptool.analysis.graphtools,
  org.jcryptool.crypto.ui.textmodify.wizard,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.editors
-Export-Package: org.jcryptool.analysis.freqanalysis,
+Export-Package: com.cloudgarden.resource,
+ org.jcryptool.analysis.freqanalysis,
  org.jcryptool.analysis.freqanalysis.calc,
- org.jcryptool.analysis.freqanalysis.ui
+ org.jcryptool.analysis.freqanalysis.handler,
+ org.jcryptool.analysis.freqanalysis.ui,
+ org.jcryptool.analysis.freqanalysis.views
 Bundle-Vendor: %Bundle-Vendor.0
 Automatic-Module-Name: org.jcryptool.analysis.freqanalysis

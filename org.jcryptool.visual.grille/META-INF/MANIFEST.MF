@@ -13,3 +13,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.fonts
 Automatic-Module-Name: org.jcryptool.visual.grille
+Export-Package: org.jcryptool.visual.grille,
+ org.jcryptool.visual.grille.algorithm,
+ org.jcryptool.visual.grille.handlers,
+ org.jcryptool.visual.grille.ui

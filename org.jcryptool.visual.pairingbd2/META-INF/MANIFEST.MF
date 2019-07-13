@@ -17,3 +17,8 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.directories,
  org.jcryptool.core.util.fonts
 Automatic-Module-Name: org.jcryptool.visual.PairingBDII
+Export-Package: org.jcryptool.visual.PairingBDII,
+ org.jcryptool.visual.PairingBDII.algorithm,
+ org.jcryptool.visual.PairingBDII.basics,
+ org.jcryptool.visual.PairingBDII.handlers,
+ org.jcryptool.visual.PairingBDII.ui

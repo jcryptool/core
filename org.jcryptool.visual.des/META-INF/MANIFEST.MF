@@ -15,3 +15,6 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.fonts
 Bundle-Vendor: %Bundle-Vendor.0
 Automatic-Module-Name: org.jcryptool.visual.des
+Export-Package: org.jcryptool.visual.des.algorithm,
+ org.jcryptool.visual.des.handlers,
+ org.jcryptool.visual.des.view

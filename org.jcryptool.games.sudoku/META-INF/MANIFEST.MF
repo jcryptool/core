@@ -15,3 +15,6 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.directories,
  org.jcryptool.core.util.fonts
 Automatic-Module-Name: org.jcryptool.games.sudoku
+Export-Package: org.jcryptool.games.sudoku,
+ org.jcryptool.games.sudoku.handler,
+ org.jcryptool.games.sudoku.views

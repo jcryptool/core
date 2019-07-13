@@ -14,5 +14,6 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.fonts
 Export-Package: org.jcryptool.visual.kleptography,
  org.jcryptool.visual.kleptography.algorithm,
+ org.jcryptool.visual.kleptography.handlers,
  org.jcryptool.visual.kleptography.ui
 Automatic-Module-Name: org.jcryptool.visual.kleptography

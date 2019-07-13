@@ -15,3 +15,8 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: %Bundle-Vendor
 Import-Package: org.jcryptool.core.util.fonts
 Automatic-Module-Name: org.jcryptool.visual.aup
+Export-Package: org.eclipse.wb.swt,
+ org.jcryptool.visual.aup,
+ org.jcryptool.visual.aup.PermBruteForce,
+ org.jcryptool.visual.aup.handlers,
+ org.jcryptool.visual.aup.views
