@@ -15,7 +15,7 @@
  <extension
        point="org.jcryptool.core.operations.visuals">
     <Visual
-          name="%Visual.name"
+          name="%view.name"
           viewId="org.jcryptool.visual.ecbd2"
           contextHelpId="org.jcryptool.visual.pairingbd2.pairingBD2HelpContextId">
     </Visual>
