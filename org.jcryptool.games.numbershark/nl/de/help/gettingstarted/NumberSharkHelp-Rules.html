@@ -3,29 +3,37 @@
 <html>
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	  <title>Regeln</title>
+	  <title>Spiel-Regeln</title>
 </head>
 
 <body>
-<h1>Regeln</h1>
+<h1>Spiel-Regeln</h1>
 
-<h4>Ziel:</h4>
-<p>Du gewinnst, wenn die Summe deiner Zahlen größer ist als die Summe der Zahlen des Zahlenhais.
-<br>Versuche deine Summe so groß wie möglich zu machen.</p>
+<p> </br> </p>
+<h4>Ziel</h4>
+<p>Du gewinnst, wenn die Summe deiner Zahlen (dein Score) größer ist als der Score des Zahlenhais.</p>
+<p>Versuche deinen Score so groß wie möglich zu machen.
+Für jede gegebenen Anzahl von Zahlen (z.B. n=20) gibt es einen maximalen Score, den du erreichen kannst (z.B. 124 für 20 Zahlen).</p>
 
-
-<h4>Regeln:</h4>
-<p>Du hast immer den ersten Zug.
-  
-<p>Wähle dir eine beliebige Zahl aus der Zahlenmenge aus.
+<p> </br> </p>
+<h4>Regeln</h4>
+<p>Du hast immer den ersten Zug, d.h. du startest die erste Runde.</p>
+  <p>Wähle eine beliebige Zahl aus der Zahlenmenge aus.
 Der Zahlenhai frisst jeden echten Teiler deiner ausgewählten Zahl,
-soweit der Teiler nicht schon vorher aufgefressen worden ist
-(z.B. hat 6 die echten Teiler 1,2,3).
-Wähle weiter Zahlen aus, solange es noch Zahlen gibt, die noch nicht vorher ausgewählt oder
-vom Hai in vorhergehenden Runden aufgefressen worden sind.
-Aufgepasst, der Zahlenhai bekommt immer eine Zahl.
+soweit der Teiler nicht schon vorher verbraucht worden ist.
+Wähle weiter Zahlen aus, solange es noch Zahlen gibt, die in vorhergehenden Runden noch nicht von dir ausgewählt oder vom Hai aufgefressen wurden.</p>
+<p>Aufgepasst, der Zahlenhai bekommt immer eine Zahl.
 Wenn du eine Zahl ohne echte, freie Teiler auswählst, dann
-bekommt diese Zahl der Zahlenhai und du bekommst gar nichts.
+bekommt der Zahlenhai diese Zahl und du bekommst gar nichts.
 Das Spiel endet mit der Auswahl der letzten freien Zahl.</p>
+
+<p> </br> </p>
+<h4>Bemerkungen / Definitionen</h4>
+<p>Beispiel: 6 hat die echten Teiler 1, 2, 3.
+<br>Primzahlen wie 19 haben als echte Teiler nur sich selbst und die 1.</p>
+<p>Initial sind alle Nummern <strong>frei</strong>.</p>
+<p>Wenn du eine Zahl ausgewählt hast oder wenn der Zahlenhai sie gefressen hat, gilt sie als <strong>verbraucht</strong>.</p>
+<p>Pro <strong>Runde</strong> wählst du eine Zahl und der Zahlenhai frisst deren Teiler.</p>
+
 </body>
 </html>
