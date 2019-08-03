@@ -18,10 +18,10 @@ public class TextValuator {
 	private int n,m;
 	
 //	Sets Alphabet for parameter language and loads text statistics to given name and size of statistics for text valuation
-	public TextValuator(String statistics, String language, int n) throws FileNotFoundException
+	public TextValuator(double statistics[], String language, int n) throws FileNotFoundException
 	{
-		this.n= n;
-		this.filename = statistics;
+	    this.n= n;
+        TextValuator.ngrams = statistics;
 		
 		switch(language) {
 		case "german":	alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß";
@@ -30,16 +30,6 @@ public class TextValuator {
 		case "english":	alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 						m = 26;
 						break;
-		}
-
-		ngrams = new double[(int) Math.pow(m, n)];
-
-		try {
-			loadBinNgramFrequencies();
-			
-		}catch(FileNotFoundException e) {
-			e.printStackTrace();
-			throw new FileNotFoundException("File not found !");
 		}
 	}
 	
@@ -68,33 +58,5 @@ public class TextValuator {
 			}
 		}
 		return -value;
-	}
-	
-	public double toDouble(byte[] bytes) {
-	    return ByteBuffer.wrap(bytes).getDouble();
-	}
-	
-//	load text statistic
-	public void loadBinNgramFrequencies() throws FileNotFoundException
-	{
-		ByteBuffer myByteBuffer = ByteBuffer.allocate(((int) Math.pow(m, n)) * 8);
-		myByteBuffer.order(ByteOrder.LITTLE_ENDIAN);
-		DoubleBuffer doubleBuffer = myByteBuffer.asDoubleBuffer();
-
-		try { 
-			FileInputStream fileInputStream = new FileInputStream(filename);
-			FileChannel fileChannel = fileInputStream.getChannel();
-		    
-		    fileChannel.read(myByteBuffer);
-		    fileChannel.close();
-		    fileInputStream.close();   
-		    log.info("Statistics succesfully loaded");
-		    	
-		    } catch (IOException e) {
-		    	// TODO Auto-generated catch block
-		    	e.printStackTrace();
-		    	throw new FileNotFoundException("File not found !");
-		    } 	
-		doubleBuffer.get(ngrams);
 	}
 }

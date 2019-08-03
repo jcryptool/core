@@ -38,6 +38,7 @@ public class KeyListener implements MouseListener {
 		int posX = (int) Math.floor((double)e.x/cellWidth);
 		int posY = (int) Math.floor((double)e.y/cellHeight);
 		key.toggle(posY,posX);
+		System.out.println("Schlüssel pos: x: "+posX+", y: "+posY+", mit Wert(Y,X): "+key.get(posY, posX));
 		((Canvas) e.widget).redraw();
 		fw.checkOkButton();
 	}

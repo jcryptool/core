@@ -261,29 +261,29 @@ public class ParameterSettings {
 				log.info("default nGram size: "+nGramSize);
 			}
 //			sets deposited statistic for given nGram size and language
-			if ((nGramSize!=0) && (statistics == null)) {
-				if (language.equals("german")){
-					switch(nGramSize) {
-					case 3:
-						statistics = "files/de-3gram-nocs.bin";
-						break;
-					case 4:
-						statistics = "files/de-4gram-nocs.bin";
-						break;
-					}
-				}
-				else if (language.equals("english")) {
-					switch(nGramSize) {
-					case 3:
-						statistics = "files/en-3gram-nocs.bin";
-						break;
-					case 4:
-						statistics = "files/en-4gram-nocs.bin";
-						break;
-					}
-				}
-				log.info("Default Ngram: "+statistics+"  with N = "+nGramSize+" in language: "+language+" has been choosen.");
-			}
+//			if ((nGramSize!=0) && (statistics == null)) {
+//				if (language.equals("german")){
+//					switch(nGramSize) {
+//					case 3:
+//						statistics = "files/de-3gram-nocs.bin";
+//						break;
+//					case 4:
+//						statistics = "files/de-4gram-nocs.bin";
+//						break;
+//					}
+//				}
+//				else if (language.equals("english")) {
+//					switch(nGramSize) {
+//					case 3:
+//						statistics = "files/en-3gram-nocs.bin";
+//						break;
+//					case 4:
+//						statistics = "files/en-4gram-nocs.bin";
+//						break;
+//					}
+//				}
+//				log.info("Default Ngram: "+statistics+"  with N = "+nGramSize+" in language: "+language+" has been choosen.");
+//			}
 //			sets default plaintext, if there is none given
 			if (textInLine == null) {
 				isPlaintext = true;
@@ -374,7 +374,7 @@ public class ParameterSettings {
 
 			int value = ((templateLength+10)/10)*5;
 			restart = BigInteger.valueOf(value);
-			log.info("default restarts: "+String.valueOf(restart));
+			log.info("restarts equals BigIntegerValue of 0, default restarts: "+String.valueOf(restart));
 		}
 	}
 

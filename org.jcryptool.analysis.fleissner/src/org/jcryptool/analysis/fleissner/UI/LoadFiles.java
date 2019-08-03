@@ -4,12 +4,18 @@
 package org.jcryptool.analysis.fleissner.UI;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.DoubleBuffer;
+import java.nio.channels.FileChannel;
 
 import org.jcryptool.analysis.fleissner.Activator;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -25,61 +31,19 @@ public class LoadFiles {
         
         String textName = "";
         
-//        if (plain) {
             switch (exampleIndex) {
             
             case 0: 
-                textName = "files/dawkinsGerPlaintext.txt";
+                textName = "files/dawkinsGerPlaintextOriginal.txt";
                 break;
             case 1:     
-                textName = "files/wikiFruehchristlicheKunstGerPlaintext.txt";
+                textName = "files/wikiFruehchristlicheKunstGerPlaintextOriginal.txt";
                 break;
             case 2:
-                textName = "files/dawkinsEngPlaintext.txt";
+                textName = "files/dawkinsEngPlaintextOriginal.txt";
                 break;
             case 3:
                 textName = "files/visualArtsEngPlaintext.txt";
-                break;     
-            }
-//        }
-//        else {
-//            switch (exampleIndex) {
-//            
-//            case 0: 
-//                textName = "files/dawkinsGerCiphertext7.txt";
-//                break;
-//            case 1:     
-//                textName = "files/wikiFruehchristlicheKunstGerCiphertext7.txt";
-//                break;
-//            case 2:
-//                textName = "files/dawkinsEngCiphertext7.txt";
-//                break;
-//            case 3:
-//                textName = "files/visualArtsEngCiphertext7.txt";
-//                break;     
-//            }
-//        }
-        
-        return textName;
-    }
-    
-    protected String statisticFiles(int exampleIndex) {
-        
-        String textName = "";
-        
-            switch (exampleIndex) {
-            
-            case 0: 
-                textName = "files/de-4gram-nocs.bin";
-                break;
-            case 1:     
-                textName = "files/de-3gram-nocs.bin";
-                break;
-            case 2:
-                textName = "files/en-4gram-nocs.bin";
-                break;
-            case 3:
-                textName = "files/en-3gram-nocs.bin";
                 break;     
             }
         
@@ -148,5 +112,81 @@ public class LoadFiles {
         output = myStrBuf.toString();
         return output;
     }
+    
+    protected String statisticFiles(int exampleIndex) {
+        
+        String textName = "";
+        
+            switch (exampleIndex) {
+            
+            case 0: 
+                textName = "files/de-4gram-nocs.bin";
+                break;
+            case 1:     
+                textName = "files/de-3gram-nocs.bin";
+                break;
+            case 2:
+                textName = "files/en-4gram-nocs.bin";
+                break;
+            case 3:
+                textName = "files/en-3gram-nocs.bin";
+                break;     
+            }
+        
+        return textName;
+    }
 
+    protected FileInputStream openMyFileStream(final String filename) {
+        try {
+            URL installURL = Activator.getDefault().getBundle().getEntry("/"); //$NON-NLS-1$
+            URL url = new URL(installURL, filename);
+            return (FileInputStream) (url.openStream());
+        } catch (MalformedURLException e) {
+            LogUtil.logError(Activator.PLUGIN_ID, e);
+        } catch (IOException e) {
+            LogUtil.logError(Activator.PLUGIN_ID, e);
+        }
+        return null;
+    }
+    
+    public double toDouble(byte[] bytes) {
+        return ByteBuffer.wrap(bytes).getDouble();
+    }
+    
+//  load text statistic
+    public double[] loadBinNgramFrequencies(FileInputStream file, String language, int nGramSize) throws FileNotFoundException
+    {
+        int m = 0;
+        
+        switch(language) {
+        case "german":  m = 30;
+                        break;
+        case "english": m = 26;
+                        break;
+        }
+
+
+        double ngrams[] = new double[(int) Math.pow(m, nGramSize)];
+        ByteBuffer myByteBuffer = ByteBuffer.allocate(((int) Math.pow(m, nGramSize)) * 8);
+        myByteBuffer.order(ByteOrder.LITTLE_ENDIAN);
+        DoubleBuffer doubleBuffer = myByteBuffer.asDoubleBuffer();
+
+        try { 
+//            FileInputStream fileInputStream = new FileInputStream(filename);
+            FileChannel fileChannel = file.getChannel();
+            
+            fileChannel.read(myByteBuffer);
+            fileChannel.close();
+            file.close();   
+//            log.info("Statistics succesfully loaded");
+                
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                throw new FileNotFoundException("File not found !");
+            }   
+        doubleBuffer.get(ngrams);
+        
+        return ngrams;
+    }
 }
