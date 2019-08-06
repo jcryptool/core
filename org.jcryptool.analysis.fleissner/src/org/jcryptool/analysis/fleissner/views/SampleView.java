@@ -26,7 +26,7 @@ public class SampleView extends ViewPart {
 	/**
 	 * The ID of the view as specified by the extension.
 	 */
-	public static final String ID = "org.jcryptool.analysis.fleissner2.views.SampleView";
+	public static final String ID = "org.jcryptool.analysis.fleissner.views.SampleView";
 
 	@Inject IWorkbench workbench;
 	
@@ -50,7 +50,7 @@ public class SampleView extends ViewPart {
 
 
 		// Create the help context id for the viewer's control
-		workbench.getHelpSystem().setHelp(parent, "org.jcryptool.analysis.fleissner2.viewer");
+		workbench.getHelpSystem().setHelp(parent, "org.jcryptool.analysis.fleissner.viewer");
 
 	}
 
