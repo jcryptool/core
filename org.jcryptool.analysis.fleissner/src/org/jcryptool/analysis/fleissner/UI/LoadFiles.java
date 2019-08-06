@@ -4,6 +4,7 @@
 package org.jcryptool.analysis.fleissner.UI;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,12 +12,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.DoubleBuffer;
 import java.nio.channels.FileChannel;
-
+import org.eclipse.core.runtime.FileLocator;
 import org.jcryptool.analysis.fleissner.Activator;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.constants.IConstants;
@@ -140,12 +142,15 @@ public class LoadFiles {
         try {
             URL installURL = Activator.getDefault().getBundle().getEntry("/"); //$NON-NLS-1$
             URL url = new URL(installURL, filename);
-            return (FileInputStream) (url.openStream());
+            File file = new File(FileLocator.resolve(url).toURI());
+            return new FileInputStream(file);
         } catch (MalformedURLException e) {
             LogUtil.logError(Activator.PLUGIN_ID, e);
         } catch (IOException e) {
             LogUtil.logError(Activator.PLUGIN_ID, e);
-        }
+        } catch (URISyntaxException e) {
+        	LogUtil.logError(Activator.PLUGIN_ID, e);
+		}
         return null;
     }
     
