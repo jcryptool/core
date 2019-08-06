@@ -140,9 +140,13 @@ public class LoadFiles {
 
     protected FileInputStream openMyFileStream(final String filename) {
         try {
-            URL installURL = Activator.getDefault().getBundle().getEntry("/"); //$NON-NLS-1$
-            URL url = new URL(installURL, filename);
-            File file = new File(FileLocator.resolve(url).toURI());
+        	
+        	
+        	
+        	
+            URL installURL = new URL(Activator.getDefault().getBundle().getEntry("/"), filename); //$NON-NLS-1$
+//            URL url = new URL(installURL, filename);
+            File file = new File(FileLocator.resolve(installURL).toURI());
             return new FileInputStream(file);
         } catch (MalformedURLException e) {
             LogUtil.logError(Activator.PLUGIN_ID, e);
