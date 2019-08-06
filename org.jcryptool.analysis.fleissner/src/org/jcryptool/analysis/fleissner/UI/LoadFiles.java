@@ -17,11 +17,14 @@ import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.DoubleBuffer;
+import java.nio.channels.Channel;
+import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import org.eclipse.core.runtime.FileLocator;
 import org.jcryptool.analysis.fleissner.Activator;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.constants.IConstants;
+import org.osgi.framework.Bundle;
 
 /**
  * @author Dinah
@@ -138,23 +141,25 @@ public class LoadFiles {
         return textName;
     }
 
-    protected FileInputStream openMyFileStream(final String filename) {
+    protected InputStream openMyFileStream(final String filename) {
         try {
-        	
-        	
-        	
         	
             URL installURL = new URL(Activator.getDefault().getBundle().getEntry("/"), filename); //$NON-NLS-1$
 //            URL url = new URL(installURL, filename);
-            File file = new File(FileLocator.resolve(installURL).toURI());
-            return new FileInputStream(file);
+//            File file = new File(FileLocator.resolve(installURL).toURI());
+//            this.getClass().getRes
+        	
+        	InputStream is = installURL.openConnection().getInputStream();
+//            Bundle bundle = Activator.getDefault().getBundle();
+//            URL url = bundle.getEntry(filename);
+//            File file = new File(FileLocator.resolve(url).toURI());
+//            return new FileInputStream(file);
+        	return is;
         } catch (MalformedURLException e) {
             LogUtil.logError(Activator.PLUGIN_ID, e);
         } catch (IOException e) {
             LogUtil.logError(Activator.PLUGIN_ID, e);
-        } catch (URISyntaxException e) {
-        	LogUtil.logError(Activator.PLUGIN_ID, e);
-		}
+        }
         return null;
     }
     
@@ -163,7 +168,7 @@ public class LoadFiles {
     }
     
 //  load text statistic
-    public double[] loadBinNgramFrequencies(FileInputStream file, String language, int nGramSize) throws FileNotFoundException
+    public double[] loadBinNgramFrequencies(InputStream file, String language, int nGramSize) throws FileNotFoundException
     {
         int m = 0;
         
@@ -182,10 +187,13 @@ public class LoadFiles {
 
         try { 
 //            FileInputStream fileInputStream = new FileInputStream(filename);
-            FileChannel fileChannel = file.getChannel();
+//            FileChannel fileChannel = file.getChannel();
+
             
-            fileChannel.read(myByteBuffer);
-            fileChannel.close();
+            FileChannel fc = (FileChannel) Channels.newChannel(file);
+//            fileChannel.close();
+            fc.read(myByteBuffer);
+            fc.close();
             file.close();   
 //            log.info("Statistics succesfully loaded");
                 
