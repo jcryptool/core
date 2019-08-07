@@ -7,94 +7,95 @@
 </head>
 
 <body>
-<h1>Tutorial</h1>
+<h1>Tutorial &ndash; Your First Game</h1>
 
 <p>The Number Shark game is a tool to learn more about divisors and
-prime numbers. The tutorial is based on a number set from 1 to 20
-(the number set can be changed by starting a new game). The
-game seems to be easy for a small number set, but is rather challenging
-for a huge number set.
+prime numbers. However, if you just like riddles and want to find out, what are the best moves, the Number Shark is also fun.</p>
 
+<p> This tutorial is based on a number set (playing field) from 1 to 20 (the size of the playing field can be changed by starting a <a href="#Newgame"><b>new game</b></a>).</p>
+
+<p>The game seems to be easy for a small number set, but is rather challenging for a huge number set.</p>
+
+
+<p> </br> </p>
 <h4>1. The idea of the game</h4>
 
-<p>The idea of the game is to win as many numbers as possible from a
-given number set. The sum or score of the numbers should be larger than
-the sum of the Number Shark numbers and as close as possible to the
-maximum sum or optimal score of the number set. After selecting one
-number, the Number Shark eats all free, real divisors of the number
-(e.g. all real divisors of 6 are 1, 2 and 3). The game is over after
-all numbers have been selected or have been eaten by the Number Shark.</p>
+<p>The idea of the game is to win many numbers from a given number set and to maximize the sum of these numbers. If your sum of numbers (your score) is bigger than the sum of the Number Shark's numbers, then you won.
+As a second goal, you can try to come as close as possible to the maximum sum which can be achieved for the given number set. Another term for "maximum sum" is "optimal score".</p>
 
+<p>After selecting one number, the Number Shark eats all free, real divisors of the number (e.g. all real divisors of 6 are 1, 2, and 3; but not the number 6 itself). If the selected number has no free, real divisors any more, the number itself is eaten by the Number Shark. Thus, the Number Shark gets a meal in each round.</p>
+
+<p>The game is over after all numbers have been used, i.e. either have been selected by you or have been eaten by the Number Shark.</p>
+
+
+<p> </br> </p>
 <h4>2. The first move</h4>
 
-<p>In this tutorial, the number set is
-set to 20, to set up the game to a playing field size of 20, click on &quot;New game&quot; and enter 20. The Number Shark eats all free, real divisors
-of your selected number. The number itself is eaten by the Number Shark,
-if the selected number has no free, real divisors any more. So try to
-minimise the numbers eaten by the Number Shark to 1 or 2. To get an optimal
-score, always select the largest available prime number as first number ,
-thus here the 19. The largest prime number has only the 1 as free, real
-divisor. You can select the number 19 in the number set selection area.</p>
+<p>The game starts with the following window. In this tutorial, the playing field size is 20. So you can select any number between 1 and 20 (at the beginning of the first round all numbers are &quot;selectable&quot; or &quot;free&quot;).</p>
+<p>Here a first hint: To achieve an optimal score, always select the largest available prime number as first number. For the number field 1 to 20 this is the 19. This number has only the 1 as free, real divisor. So now start the game by selecting the number 19 in the number set selection area.<br>
+As another hint (but not as fixed rule) you can try that the Number Shark doesn't get more than 2 numbers for each of your moves.</p>
+
 <img src="Tutorial_1.jpg"
 	alt="Number Shark main window with number set and info area"></img>
 
-<p>Thus after selecting the 19, the Number Shark eats the 1. After
-selecting the 19, the 19 and 1 will be coloured in gray. Both numbers are now out of the game and neither
-active nor free any more.</p>
-<p>The info area and info window documents your move course. Beside the number of
-  your step, your selected number, your current score as well as the
-  numbers of the Number Shark and his current score will be recorded. At the
-  bottom you can see at a glance your move course. In addition you have information about the
-  total sum of the number set numbers and the minimum sum, which must be
-  reached to win the game. Furthermore, your and the Number Shark current
-scores are emphasised.</p>
-<p>During the move course it could happen, that numbers stay without
-  free, real divisors and are no divisors for other free numbers.
-  These numbers cannot contribute to your score any more. If such a
-  situation occurs the button "Shark meal" will be activated. By clicking that button, all these numbers will directly be added to the points to the shark(and won't be active anymore).  It is recommended to push the button after it has been
-activated. You gain a better overview for all interesting numbers. The following image shows the game after the button &quot;Shark meal&quot;(</img><img src="Tutorial_Haifutter.JPG"
-	alt="Shark meal button">) was pressed.</p>
+<p>After selecting the 19, the Number Shark eats the 1. Additionally, both numbers are colored gray (instead of blue): They are now out of the game and neither active nor free any more.</p>
+<p>The detailed course-of-the-game area (the lower table in the last picture) documents your moves: It contains the number of your move (round), your selected numbers, and your current score &ndash; as well as the numbers of the Number Shark and his current score. In addition the last column in the table shows how many numbers are still free.</p>
+<p>Above the table is the frame "Score" comprising the overall status: Your score in green and the score of the Number Shark in red, as you currently are in front.
+In addition, the minimum sum necessary to win the game, is shown.</p>
+
+<p>During the move course it often happens, that some single numbers are left which have no free divisors and are no divisors for other free numbers. These numbers cannot contribute to your score any more. If such a situation occurs the button "Shark meal" will be activated. By clicking that button, all these numbers will directly be added to the points of the Number Shark (and won't be active anymore). We recommend to push the button after it became active &ndash; you gain a better overview about the really interesting numbers. The following image shows the game after the button &quot;Shark meal&quot; (</img><img src="Tutorial_Haifutter.JPG" alt="Shark meal button">) was pressed.</p>
 
 <img src="Tutorial_2.jpg"
 	alt="Number Shark control buttons, sliders and input text field"></img>
 
-<p>&nbsp;</p>
+
+<!-- <p>&nbsp;</p> -->
+<p> </br> </p>
 <h4>3. Further moves</h4>
 
-<p>After the first move, the selection for the next moves will be
-more difficult. You should try to leave as less numbers as possible for the Number Shark. Best is only 1 divisor, in some cases also 2 divisors.
-But don't select too small numbers, which may have only one divisor,
-because they are needed as divisors for larger numbers. For the second
-move it is recommended to select either 15=3*5, 14=2*7 or 10=2*5. The
-window below shows the situation after pushing the 15.</p>
+<p>After the first move, the selection for the next moves will be more difficult. You should try to leave as less numbers as possible for the Number Shark &ndash; best is only 1 divisor, in some cases also more. But don't select only small numbers, which have only one divisor, because they may be needed as divisors for larger numbers. For the second move it is recommended to select <br>15, 14, or 10 [15=3*5, 14=2*7, or 10=2*5].<br> The window below shows the situation after pushing the 15.</p>
 
-<p><img src="Tutorial_3.jpg"
-	alt="Number Shark main window with number set and info area"><br>
-  <br>
-  To support you for the next decision, stay on the number 10 for a second and a tooltip will be viewed. There, you can read which active divisors the number 10 still got. For the number 10, in our case, just the number 2 is an active divisor. We will choose this number as our next move.
-</p>
+<img src="Tutorial_3.jpg"
+	alt="Number Shark main window with number set and info area">
+
+<p><strong>Hints: </strong> If you move the mouse over an active number field (e.g. stay over the number 10 for a second), a tooltip (balloon text) will be shown to support your decisions. There, you can read which active divisors the number 10 still got and for which other number the 10 is a divisor: In our case, the 10 has one free divisor (2) left.</p>
+
+<p>We choose the 10 as our next move (and catch up 8 points: 10-2=8). Thus the Number Shark just only leads with 52:44 (+8) instead of 50:34 (+16).</p>
+
 <p><img src="Tutorial_4.jpg"
-	alt="Link to the preference page"><br>
-  <br>
-  You can get more hints by clicking on the button
-"Hint"<img src="Tutorial_Hinweis.JPG"
-	alt="Hint button"> in the toolbar. The hint recommends you to take the number 20. We will follow the recommendation and press &quot;Yes&quot;. This hint will always give a hint, which number is necessary to reach the optimal score, thus in some cases it is not possible to give a hint and the button is deactivated.</p>
+	alt="Link to the preference page">
+
+<p>You can get more hints by clicking on the button "Hint"<img src="Tutorial_Hinweis.JPG" alt="Hint button"> in the toolbar. The hint there recommends to take 20 as the next number. We follow the recommendation and press &quot;Yes&quot;. Hints are given only for numbers, which lead to the optimal score; thus in other cases no hint is available and the button is deactivated.</p>
 
 <img src="Tutorial_5.jpg"
 	alt="Number Shark main window with number set and info area"></img>
 
-<p><br>
-  For the next three moves you can select the free numbers 16, 12 and 14 in an arbitrary order. All numbers have only one divisor left and all
-  free divisors are different. If you would like to revise your decision
-after pushing e.g. the 12, press the button "Undo".</p>
-<p>In the following image the numbers 14, 12 and 16 were chosen.</p>
+<p>For the next moves you can select the free numbers 16, 12 and 14 in an arbitrary order. All three numbers have only one divisor left and all free divisors are different. If you would like to revise your decision, press the button "Undo" in the toolbar.</p>
+
+<p>In the following image the numbers 14, 12, and 16 were chosen.</p>
+
 <img src="Tutorial_6.jpg"
 	alt="Number Shark main window with number set and info area"></img>
-<p>The last remaining numbers are 18 and 9, press 18 and the game is over. Congratulations, you won the game, we even reached an optimal score. The numbers 16, 14 and 12 could be chosen in an arbitrary order, so you see the move sequence is not unique. <br>
-  A dialog appears proposing you to save the course of the game to a 
-  log-file(.csv). The table in the lower part of the view will be exported and can be opened e.g. in Excel.</p>
+
+<p>The last remaining numbers are now 18 and 9. Please press 18, then the 9 is eaten by the Number Shark and the game is over. The following picture shows the according dialog. Congratulations, you won the game, you even reached an optimal score.</p>
+
+<p>Remark: The numbers 16, 14, and 12 could be chosen in an arbitrary order, so you notice that the move sequence is not unique.</p>
+
+<p>The dialog proposes to save the course of the game to a log-file (.csv): If you agree, the table in the lower part of the Number Shark main window will be exported and can later be opened e.g. in Excel or Calc.</p>
+
 <img src="Tutorial_7.jpg"
 	alt="Number Shark main window with number set and info area"></img>
-<p>If you want to start a new game, just press the button &quot;New game&quot;.</p>
+	
+
+<p> </br> </p>
+<h4 id = "Newgame">4. New game</h4>
+
+<p>If you want to start a new game, just press the button &quot;New game&quot; in the middle, or the "newstart" icon in the <a href="PLUGINS_ROOT/org.jcryptool.games.numbershark/$nl$/help/gettingstarted/NumberSharkHelp-Manual.html#Toolbar">toolbar</a>. The toolbar is displayed in the above right corner of the Number Shark main window and in the next picture (the green arrow points to the newstart icon).</p>
+
+<img src="Tutorial_8.png"
+	alt="Newstart icon above"></img>
+
+
+<p> </br> </p>
 </body>
 </html>

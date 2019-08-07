@@ -4,142 +4,232 @@
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	  <title>Anleitung</title>
+
+  <!-- Only here numbered list with a prefix word. How to cancel this if I want a normal numbered list afterwards?  -->
+  <style type="text/css">
+    ol {
+    counter-reset: number;
+    }
+
+    li {
+    list-style: none;
+    counter-increment: number;
+    }
+
+    ol li::before {
+    content: "Schritt " counter(number) ".";
+    position: relative;
+    left:-5px
+    }
+  </style>
+ 
 </head>
 
 <body>
 <h1>Anleitung</h1>
 
-<p>Das folgende Bild zeigt das Hauptfenster des Zahlenhaispiels. Es besteht aus der Toolbar mit den Optionen zum Spiel, dem Spielfeld, einer Übersicht über den Punktestand und einer Tabelle, in der sich detailierte Informationen über den Spielverlauf befinden.</p>
+<p>In dieser Anleitung werden die Elemente des Zahlenhai-Plugins, und heuristische und optimale Gewinn-Strategien erläutert.</p>
+
+<p>Das folgende Bild zeigt das Hauptfenster des Zahlenhai-Spiels. Es besteht aus der Toolbar mit den Optionen zum Spiel, dem Spielfeld, dem Spielstand und einer Tabelle, in der sich detaillierte Informationen über den Spielverlauf befinden.</p>
 
 <img src="Manual_1.jpg"
 	alt="Zahlenhai Hauptfenster mit Zahlenfeld Kontroll- und Auswahlbereich und Informationsbereich und -fenster" ></img>
 
-<h2>1. Die Ansicht</h2>
+
+<p>&nbsp;</p>
+<h2 id = "theView">1. Die Ansicht</h2>
+
 <h3>1.1 Das Spielfeld</h3>
-<p>Das Spielfeld besteht, je nach Spielfeldgröße (hier 190) aus Tabs mit jeweils maximal 40 Buttons, die die auswählbaren Zahlen darstellen.</p>
-<p>Aktive, auswählbare Zahlen sind in blau dargestellt. Zahlen, die bereits gezogen wurden, sind grau  und können nicht mehr ausgewählt werden. <br>
-Verweilt man mit der Maus über einer aktiven Zahl, öffnet sich ein Tooltip, der genauere Informationen über die Zahl liefert. So werden dort die noch aktiven Teiler der Zahl dargestellt und angezeigt, ob die Zahl selbst ein Teiler von einer Zahl des aktiven Spielfeldes ist.</p>
+<p>Das Spielfeld ist ein Rechteck aus Knöpfen (Buttons) mit den Zahlen von 1 bis beispielsweise 20. Diese Zahlen kann man auswählen, indem man die Buttons drückt. Hat das Spiel mehr als 40 Buttons (wie im folgenden Bild mit einer Spielfeldgröße von 190), werden die Buttons auf mehrere Reiter (Tabs) mit jeweils maximal 40 Buttons verteilt.</p>
+
+<p>Auswählbare Zahlen (auch aktive oder freie genannt) sind in blau dargestellt. Zahlen, die bereits gezogen wurden, sind grau und können nicht mehr ausgewählt werden (sie sind also deaktiviert).</p>
+
+<p>Verweilst du mit der Maus über einer aktiven Zahl, öffnet sich ein Tooltip, der genauere Informationen über die Zahl liefert. So werden darin die noch aktiven Teiler der Zahl dargestellt und angezeigt, ob die Zahl selbst ein Teiler ist von einer anderen Zahl des aktiven Spielfelds.</p>
+
 <h3><img src="Manual_2.jpg" width="843" height="320" alt="Spielfeld"></h3>
 
-<h3>1.2 Die Toolbar</h3>
+
+<p>&nbsp;</p>
+<h3 id = "Toolbar">1.2 Die Toolbar</h3>
 
 <img src="Manual_3.jpg"
 	alt="Zahlenhai Knöpfe" ></img>
 
 <ul>
   <li><strong>"Neues Spiel"</strong></li>
-  
-  <p>Durch einen Klick auf den Button &quot;Neues Spiel&quot; öffnet sich ein Dialogfenster und ein neues Spiel mit beliebiger Spielfeldgröße (1 bis 1024) kann erzeugen werden. Das aktive Spiel wird dabei  verworfen.</p>
+  <p>Durch einen Klick auf den Button &quot;Neues Spiel&quot; öffnet sich ein Dialogfenster und ein neues Spiel mit beliebiger Spielfeldgröße (2 bis 1024) kann erzeugen werden. Das bisher laufende Spiel wird dabei  verworfen (abgebrochen).</p>
   <p><img src="Manual_4.jpg" alt="Neues Spiel Dialog"></p>
   
   <li><strong>"Rückgängig"</strong></li>
-  
-  <p>Mit diesem Knopf lässt sich der letzte Zug Rückgängig machen. Es lassen sich schrittweise so auch alle Züge des Spieles rückgängig machen.</p>
+  <p>Mit diesem Knopf lässt sich der letzte Zug rückgängig machen. Es lassen sich schrittweise so alle Züge des Spiels rückgängig machen. Somit kannst du einen Zug zurück nehmen und eine andere Zugfolge wählen (wenn du denkst, du hast einen Fehler gemacht).</p>
+
   <li>"<strong>Wiederherstellen</strong>"</li>
-  
-  <p>Durch Klicken auf &quot;Wiederherstellen&quot; kannst ein Zug, der rückgängig gemacht <b></b>wurde wiederhergestellt werden.</p>
+  <p>Durch Klicken auf &quot;Wiederherstellen&quot; kann ein Zug, der zuvor rückgängig gemacht wurde, wiederhergestellt werden.</p>
+
   <li><strong>"Haifutter"</strong></li>
-  
-  <p>Dieser Button deaktiviert alle Zahlen, die der Zahlenhai aufjedenfall bekommen wird. Dies sind Zahlen, die größer als die Hälfte der aktuellen Spieldfeldgröße sind und keinen aktiven Teiler mehr besitzen. Diese Zahlen bekommt in jedem Fall der Zahlenhai.</p>
+  <p>Dieser Button deaktiviert alle Zahlen, die der Zahlenhai beim gegenwärtigen Spielstand auf jeden Fall bekommen wird. Dies sind Zahlen, die größer als die Hälfte der aktuellen Spielfeldgröße sind und keinen aktiven Teiler mehr besitzen.</p>
+
   <li><strong>"Hinweis&quot;</strong></li>
-  
-  <p>Liefert einen Vorschlag, welche Zahl geschickt ist als nächstes auszuwählen. In manchen Spielsituationen kann kein Hinweis generiert werden.</p>
+  <p>Liefert einen Vorschlag, welche Zahl als nächstes gewählt werden sollte. In manchen Spielsituationen kann kein Hinweis generiert werden.</p>
+
   <li><strong>&quot;Heuristische Strategien&quot;</strong></li>
-  <p>In diesem Wizard können mit diversen heuristischen Algorithmen Zugfolgen generiert werden, die zum Gewinn führen. Mehr dazu unter &quot;2. Heuristische Strategien&quot;.</p>
+  <p>Diese Ikone öffnet einen Wizard, mit dem diverse heuristische Algorithmen solche Zugfolgen generieren, die zum Gewinn führen. Mehr dazu unter Punkt
+  <a href="#heuStrat"><b>2. Heuristische Strategien</b></a>.</p>
+
   <li><strong>&quot;Optimale Strategien&quot;</strong></li>
-  <p>Öffnet einen Wizard, indem Zugfolgen mit maximalem Punktegewinn berechnet und angezeigt werden können. Genaueres dazu ist unter Punkt &quot;3. Optimale Strategien&quot; aufgeführt.</p>
+  <p>Öffnet einen Wizard, in dem Zugfolgen mit maximalem Punktegewinn berechnet und angezeigt werden. Genaueres dazu ist unter Punkt
+  <a href="#optStrat"><b>3. Optimale Strategien</b></a> aufgeführt.</p>
+
   <li><strong>&quot;Hilfe&quot;</strong></li>
-  <p>Öffnet die Hilfe.</p>
+  <p>Öffnet die Onlinehilfe.</p>
 </ul>
-<h3>1.3 Die Punkteübersicht</h3>
+
+
+
+<p>&nbsp;</p>
+<h3>1.3 Die Punkte-Übersicht</h3>
+<p>Die Übersicht über die Punkte befindet sich in den beiden Gruppierungen "Spielstand" und "Spielverlaufstabelle".</p>
+
 <ul>
 <li><strong>"Spielstand"</strong></li>
-
-<p>In der Gruppierung Spielstand werden die aktuellen Punkte des Spielers und des Zahlenhais angezeigt, dabei signifiziert die Farbe der Zahl, wer bei dem aktuellen Stand gewinnt. Ist der Punktestand beim Spieler in grün, liegt der Spieler vorne, ist sie hingegen rot gefärbt, liegt der Zahlenhai vorne. <br>
-  Die Zahl neben &quot;Minimale Punkte zum Sieg&quot; ist die mindestens zu erreichende Zahl an Punkten, um das Spiel zu gewinnen.</p>
+<p>In der Gruppierung Spielstand werden die aktuellen Scores des Spielers und des Zahlenhais angezeigt &ndash; dabei kennzeichnet die Farbe der Zahl, wer beim aktuellen Stand vorne liegt. Ist der Punktestand beim Spieler in grün, liegt der Spieler vorne, ist sie hingegen rot gefärbt, liegt der Zahlenhai vorne.<br>
+Die Zahl neben &quot;Minimale Punkte zum Sieg&quot; ist die mindestens benötigte Gesamtpunktzahl (Score), um das Spiel zu gewinnen.</p>
+  
 <li><strong>"Spielverlaufstabelle"</strong></li>
-<p>In der Spielverlaufstabelle werden Details über den  Ablauf des Spieles angezeigt. Dort wird für jeden Zug dargestellt, welche Zahl der Spieler gezogen hat, wieviele Punkte er hatte, sowie die Zahlen, die er an den Zahlenhai im entsprechenden Zug verloren hat. Außerdem lassen sich die Punkte des Zahlenhais in jedem Zug und die Anzahl der aktiven Zahlen in jedem Zug ablesen.</p>
+<p>In der Spielverlaufstabelle werden Details zu allen Zügen des Spiels angezeigt. Für jeden Zug kann man sehen, welche Zahl der Spieler gezogen hat, wieviele Punkte er hatte, sowie die Zahlen, die er an den Zahlenhai im entsprechenden Zug verloren hat. Außerdem lassen sich für jeden Zug die Punkte des Zahlenhais und die Anzahl der verbliebenen aktiven Zahlen ablesen.</p>
+</ul>
+
+
+
 <p>&nbsp;</p>
-</ul>
-
-
 <h2 id = "heuStrat">2. Die heuristischen Strategien</h2>
-<p>Hat man das Spiel Zahlenhai ein wenig gespielt, hat man ggfs. bereits seine eigene erste Strategie entwickelt, wie man  den Zahlenhai schlagen kann. Genau für diesen Zweck gibt es den Wizard zur Berechnung heuristischer Strategien. Dieser Wizard hat ein paar Strategien, die Gewinnzugfolgen liefern implementiert.</p>
-<h3>2.1 Der Wizard heuristischer Straegien </h3>
-<p>Durch einen Klick auf das halb ausgefüllt Stern-Icon in der Toolbar ( <img src="Manual_heuStrat.jpg">) erscheint der Wizard zur Berechnung heuristischer Strategien. Derzeit sind drei Strategien implementiert, die (verschiedene) Zugfolgen anhand verschiedener Kriterien berechnen. Dazu dienen die drei Radiobuttons. Die  unteren beiden Regler  definieren den Bereich der Spielfeldgrößen, für die die Strategien berechnet werden.</p>
-<ul>
-  <li><strong>"Maximiere die zu gewinnende Punktzahl in jedem Schritt."</strong></li>
-  <p>Diese Strategie sucht in jedem Schritt diejenige Zahl, die den meisten Gewinn bringt. Das ist die Zahl, bei der die Differenz der Summe der aktiven Zahlen (die Zahlen, die der Zahlenhai bekommt) und der Zahl selbst (diese Zahl bekommt der Spieler) maximal wird. Gibt es mehrere mit gleichem Maximalwert wird die größte dieser Zahlen gewählt. </p>
 
-  <li><strong>"Heuristische Strategie nach van Nek"</strong></li>
-  <p>Diese Strategie ist angelehnt an den Algorithmus, der benutzt wird um optimale Zugfolgen zu berechnen (siehe 3. Die optimalen Strategien).<br>
-    Er besteht aus folgenden fünf Schritten:<br>
-    <br>
-    Es sei N im folgenden die Spielfeldgröße.<br>
-    <br>
-   1. Schritt: Nehme die größte Zahl aus dem Intervall N/2 + 1 bis N mit genau einem Teiler.<br>
-  2. Schritt: Solange noch eine Zahl, die den Eigenschaften aus Schritt 1 genügt, existiert, gehe zurück zu Schritt 1.<br>
-  2. Schritt: Erzeuge eine Liste von Zahlen mit den Eigenschaften:<br>
-  - Alle Zahlen, mit der kleinsten Anzahl an aktiven Teiler die größer sind als N/2 + 1 <br>
-  - Die größte Zahl, die genau einen aktiven Teiler hat und kleiner als N/2 +1 ist<br>
-  3.
-   Schritt: Aus dieser erzeugten Liste wähle zufällig eine Zahl als nächsten Spielzug.
-  <br>
-  4.
-  Schritt: Solange noch Zahlen mit aktiven Teilern vorhanden sind, gehe zurück zu Schritt 1. </p></ul>
+<p>Hat man das Spiel Zahlenhai ein wenig gespielt, entwickelt man ggfs. seine eigene erste Strategie, wie man  den Zahlenhai schlagen kann. Der Wizard zur Berechnung heuristischer Strategien zeigt auch ein paar ausgearbeitete Zugfolgen, mit denen man gewinnt.</p>
+
+
+<h3>2.1 Der Wizard für heuristische Strategien </h3>
+
+<p>Durch einen Klick auf die halb ausgefüllt Stern-Ikone in der Toolbar (<img src="Manual_heuStrat.jpg">) erscheint der Wizard zur Berechnung heuristischer Strategien.</p>
+<img src="Manual_WizardheuStrat.png" width="700">
+
+<p>Derzeit sind drei Strategien implementiert, die (verschiedene) Zugfolgen anhand unterschiedlicher Kriterien berechnen. Dazu dienen die drei Radiobuttons. Die unteren beiden Regler definieren den Bereich der Spielfeldgrößen, für die die Strategien berechnet werden.</p>
+<!--- Das geht noch nicht:   So kannst du auch ungewohnte Spielfelder erstellen, die die Zahl 1 nicht enthalten. --->
+
 <ul>
-  <li><strong>"Heuristische Strategie von Schu (Version 1)"<br>
-  </strong><br>
-  Es sei N im folgenden die Spielfeldgröße.</li>
-    <p>1. Schritt: Berechne zufällig eine Schranke aus dem Intervall 1 bis N/2 + 1<br>
-      2. Schritt: Speichere die größte aktive Zahl mit den wenigsten aktiven Teilern aus dem Bereich N bis zur in Schritt 1 erzeugten Schranke.<br>
-    3. Schritt: Berechne zufällig eine  zweite Schranke aus dem Intervall N/2 + 1 bis N<br>
-    4. Schritt: 
-    Finde die größte Pseudoprimzahl (Eine Zahl, die aufgrund der aktuellen Spielsituation nur einen Teiler hat) aus dem Intervall von der in Schritt 3 berechneten Schranke bis N<br>
-    5. Schritt: Als aktuellen Zug wähle eine der in Schritt 2 oder Schritt 4 berechnete Zahl.<br>
-    6. Schritt: Gehe zurück zu Schritt 1, solange noch aktive freie Zahlen vorhanden sind.</p>
+  <li><strong>"Maximiere die zu gewinnende Punktzahl in jedem Schritt" (Max-next-step, Greedy)</strong></li>
+  <p>Diese Strategie sucht in jedem Schritt diejenige Zahl, die den meisten Gewinn bringt. Das ist die Zahl, bei der die Differenz (zwischen der Summe der Teiler, die der Zahlenhai bekommt, und der Zahl selbst, die der Spieler bekommt) maximal wird. Gibt es mehrere mit gleichem Maximalwert wird die größte dieser Zahlen gewählt.</p>
+
+
+  <li><br><strong>"Heuristische Strategie nach van Nek"</strong></li>
+  
+  <p>Diese Strategie ist angelehnt an den Algorithmus von van Nek, der benutzt wird, um optimale Zugfolgen zu berechnen (siehe unten <a href="#optStrat"><b>3. Optimale Strategien</b></a>).</p>
+  
+  <p>Sie besteht aus den folgenden 5 Schritten (N sei im Folgenden die Spielfeldgröße):</p>
+  <ol>
+    <li>Nehme die größte Zahl aus dem Intervall N/2 + 1 bis N mit genau einem freien Teiler.</li>
+    <li>Solange noch eine Zahl existiert, die den Eigenschaften aus Schritt 1 genügt, gehe zurück zu Schritt 1.</li>
+    <li>Erzeuge eine Liste von Zahlen mit den Eigenschaften:<br>
+  - Alle Zahlen mit der kleinsten Anzahl an aktiven Teilern, die größer sind als N/2 + 1 <br>
+  - Die größte Zahl, die genau einen aktiven Teiler hat und kleiner als N/2 +1 ist</li>
+    <li>Aus dieser gerade erzeugten Liste wähle zufällig eine Zahl als nächsten Spielzug.</li>
+    <li>Solange noch Zahlen mit aktiven Teilern vorhanden sind, gehe zurück zu Schritt 1.</li>
+  </ol>
+
+<br>
+  <li><br><strong>"Heuristische Strategie von Schu (Version 1)"</strong></li>
+  
+  <p>Diese Strategie besteht aus den folgenden 6 Schritten (N sei im Folgenden die Spielfeldgröße):</p>
+  <ol>
+    <li>Berechne zufällig eine erste Schranke aus dem Intervall 1 bis N/2 + 1.</li>
+    <li>Speichere die größte aktive Zahl mit den wenigsten aktiven Teilern aus dem Bereich N bis zur in Schritt 1 erzeugten Schranke.</li>
+    <li>Berechne zufällig eine  zweite Schranke aus dem Intervall N/2 + 1 bis N.</li>
+    <li>Finde die größte Pseudoprimzahl (in diesem Spiel eine Zahl, die nur einen aktiven Teiler hat) aus dem Intervall von der in Schritt 3 berechneten Schranke bis N.</li>
+    <li>Als aktuellen Zug wähle zufällig eine der in Schritt 2 und Schritt 4 berechnete Zahl.</li>
+    <li>Gehe zurück zu Schritt 1, solange noch aktive (freie) Zahlen vorhanden sind.</li>
+  </ol>
+	
 </ul>
-<p>Nähere Informationen und eine Diskussion der Strategien findet sich hier (nur in englisch): <br>
-<a href="../reference/NumberSharkHelp-Discussion.html">Discussion of good and optimal strategies for the Number Shark game</a></li>
-<br>
-<br>
-Klickt man auf &quot;Okay&quot; werden die Zugfolgen mit dem ausgewählten Algorithmus und den eingestellten Grenzen berechnet. Dies kann je nach Leistung des Computers und den eingestellten Spielfeldgrößen einen Moment dauern. <br>
-Dann erscheint das Ergebnis-Fenster. Dort sieht man, sortiert nach der Spielfeldgröße, welche Punktzahl erreicht werden kann, wieviele Punkte der Hai bekommt und die zugehörige Zugfolge. Wählt man eine Zeile aus und klickt auf &quot;Auswahl spielen...&quot; wird das ausgewählte Spiel mit den berechneten Zügen im Zahlenhaihauptfenster gespielt.<br>
-Mit &quot;Speichern unter...&quot; lässt sich die Tabelle als .csv-Datei exportieren und z.B. in Excel einlesen.</p>
-<p><img src="Manual_5.jpg" alt="" width="650" height="510" /></p>
+
+
+<p><br>Nähere (mathematische) Informationen und eine Diskussion der Strategien finden sich hier (nur in englisch): <br>
+<a href="../reference/NumberSharkHelp-Discussion.html">Discussion of good and optimal strategies for the Number Shark game</a></p>
+
+<p>Klickt man auf &quot;OK&quot; werden die Zugfolgen mit dem ausgewählten Algorithmus und den eingestellten Grenzen berechnet. Dies kann je nach Leistung des Computers und den eingestellten Spielfeldgrößen einen Moment dauern.</p>
+
+<p>Dann erscheint das Ergebnis-Fenster. Dort sieht man, sortiert nach der Spielfeldgröße, welche Punktzahl erreicht werden kann und wieviele Punkte der Hai bekommt. Dann kommt die zugehörige Zugfolge und die benötigte Rechenzeit. Wählt man eine Zeile aus und klickt auf &quot;Auswahl spielen...&quot; wird das ausgewählte Spiel mit den berechneten Zügen im Zahlenhai-Hauptfenster gespielt.</p>
+
+<p>Mit &quot;Speichern unter...&quot; lässt sich die Tabelle als .csv-Datei exportieren und z.B. in Excel oder Calc einlesen.</p>
+<img src="Manual_5.jpg" alt="" width="650" height="510" />
+
+
+
 <p>&nbsp;</p>
 <h2 id = "optStrat">3. Die optimalen Strategien</h2>
 
-<p>Früher oder später wird dann das Gewinnen nicht mehr das Problem sein und man fragt sich, ob es denn auch eine optimale Strategie - also eine Strategie mit der man bei jeder Spielfeldgröße die höchstmögliche Punktzahl erreicht - gibt und wie diese aussehen könnte.  (Hinweis: Die Strategien sind nicht eindeutig, es gibt durchaus mehrere Reihenfolgen, in denen die Zahlen gezogen werden könnnen, aber dennoch die maximale Punktzahl erreicht wird.)</p>
-<p>Bisher ist es uns noch nicht gelungen, eine solche Strategie konkret zu entwickeln. Bis zu einem gewissen Punkt ist es uns klar, welche Zahlen gezogen werden müssen. (Wie z.B. als ersten Zug muss die größte Primzahl gezogen werden.) Anschließend gibt es aber mehrere Möglichkeiten, die man gehen kann. Mit einem Algorithmus von van Nek ist es uns aber gelungen diese Verzweigungen in geschickter Weise auszuprobieren und unnötige Wege zu verwerfen, sodass wir am Ende eine optimale Zugfolge angeben konnten. Diese Zugfolgen (bis n = 400) lassen sich im Wizard zur Berechnung optimaler Strategien anzeigen und sogar neuberechnen. Ein Blick in den Wizard lohnt sich, vielleicht gelingt es dir ja eine Strategie zu entwickeln, die immer die optimale Punktzahl liefert?</p>
-<h3>3.1 Der Wizard optimaler Strategien </h3>
-<p>Durch einen Klick auf das (komplett ausgefüllte) Stern-Icon <img src="Manual_optStrat.jpg" alt=""/> in der Toolbar erscheint der Wizard zum Finden optimaler Strategien. Dort gibt es folgende Auswahlmöglichkeiten:</p>
+<p>Früher oder später wird dann das Gewinnen nicht mehr das Problem sein und man fragt sich, ob es auch eine optimale Strategie gibt &ndash; also eine Strategie, mit der man bei jeder Spielfeldgröße die höchstmögliche Punktzahl erreicht &ndash; und wie diese aussehen könnte. (Hinweis: Die höchstmögliche Punktzahl ist eindeutig pro Spielfeldgröße, aber die Zugfolgen sind es nicht: Es gibt durchaus unterschiedliche Reihenfolgen, die zum gleichen Score führen.)</p>
+
+<p>Bisher ist es uns noch nicht gelungen, eine solche allgemeine Strategie zu entwickeln. Bis zu einem gewissen Punkt ist es uns klar, welche Zahlen gezogen werden müssen &ndash; z.B. muss im ersten Zug die größte Primzahl gezogen werden. Anschließend gibt es aber mehrere Wege, die man gehen kann. Mit einem Algorithmus von van Nek ist es uns gelungen, diese Verzweigungen in geschickter Weise auszuprobieren und unnötige Wege zu verwerfen, sodass wir am Ende eine optimale Zugfolge angeben konnten. Diese optimalen Zugfolgen (bis n = 404) lassen sich im Wizard anzeigen und sogar neu berechnen.</p>
+
+<p>Ein Blick in den Wizard lohnt sich, vielleicht gelingt es dir ja, eine Strategie zu entwickeln, die immer die optimale Punktzahl liefert?</p>
+
+
+<h3>3.1 Der Wizard für optimale Strategien</h3>
+
+<p>Durch einen Klick auf die (komplett ausgefüllte) Stern-Ikone <img src="Manual_optStrat.jpg" alt=""/> in der Toolbar erscheint der Wizard zum Finden optimaler Strategien.</p>
+<img src="Manual_WizardoptStrat.png" width="700">
+
+<p>Dort gibt es folgende Auswahlmöglichkeiten:</p>
+
 <ul>
   <li><strong>"Vorberechnete optimale Strategien anzeigen (für den Zahlenvorrat 2-250)"</strong></li>
-  <p>Zeigt die optimalen, bereits vorberechneten Strategien an. Für die Spielfeldgrößen von 2 bis 250 sind hier die Werte eingetragen und lassen sich analysieren.</p>
-  <li><strong>"Optimale Strategien mit dem Algorithmus von van Nek berechnen"</strong></li>
+  <p>Zeigt die optimalen, bereits berechneten Strategien an. Für die Spielfeldgrößen von 2 bis 250 sind hier die Werte verfügbar und lassen sich analysieren.</p>
+  
+  <li><br><strong>"Optimale Strategien mit dem Algorithmus von van Nek berechnen"</strong></li>
   <p>Wählt man diese Option, so lassen sich die Zugfolgen mit dem Backtracking-Algorithmus von van Nek neu berechnen. 
-  Man kann zusätzlich noch den Bereich festlegen, für welche Spielfeldgrößen die optimalen Zugfolgen berechnet werden sollen. <br>
-  Hinweis:
-  Die Laufzeit des Algorithmus ist exponentiell, daher kann es - je nach eingestellten Spielfeldgrößen - sehr lange dauern.<br>
-  <br>
-  Hier eine (vereinfachte) Beschreibung des Algorithmus, es sei hierbei N die Spielfeldgröße:<br>
-  <br>
-  1. Schritt: Nehme die größte Zahl aus dem Intervall N/2 + 1 bis N mit genau einem Teiler.<br>
-  2. Schritt: Solange noch eine Zahl, die den Eigenschaften aus Schritt 1 genügt, existiert, gehe zurück zu Schritt 1.<br>
-  3. Schritt: Für jede verbleibende Zahl bilde ein neues Teilproblem, indem diese Zahl ausgewählt wird und als mögliche Zugfolge betrachtet wird<br>
-  4. Schritt: 
-  Sind noch freie Zahlen verfügbar sind, gehe zurück zu Schritt 1, andernfalls speichere das Ergebnis als neue (momentane) optimale Zugfolge, sofern die aktuelle Zugfolgenpunktzahlen größer als der Optimalwert ist.<br>
-  5. Schritt: Betrachte ein anderes noch nicht ausgewertetes Teilproblem.
+  Man kann zusätzlich noch den Bereich festlegen, für welche Spielfeldgrößen die optimalen Zugfolgen berechnet werden sollen.</p>
+  
+  <p>Hinweis: Die Laufzeit des Algorithmus ist exponentiell, daher kann es &ndash; je nach eingestellten Spielfeldgrößen &ndash; sehr lange dauern.</p>
+  
+  <p>Hier eine (vereinfachte) Beschreibung des Algorithmus (N ist wieder die Spielfeldgröße):
+  <ol>
+    <li>Nehme die größte Zahl aus dem Intervall N/2 + 1 bis N mit genau einem Teiler.</li>
+    <li>Solange noch eine Zahl existiert, die den Eigenschaften aus Schritt 1 genügt, gehe zurück zu Schritt 1.</li>
+    <li>Für jede verbleibende Zahl bilde ein neues Teilproblem, indem diese Zahl ausgewählt wird. Führe die folgenden Schritte für jedes Teilproblem durch.</li>
+    <li>Sind noch freie Zahlen verfügbar sind, gehe zurück zu Schritt 1; andernfalls speichere das Ergebnis als neue (momentan) optimale Zugfolge, sofern der Score besser ist als der Score aller bisher berechneten Teilprobleme.</li>
+    <li>Betrachte ein anderes noch nicht ausgewertetes Teilproblem.</li>
+  </ol>
 
-  <br>
-  <br>
-  Diese Beschreibung des Algorithmus liefert nur die grundsätzliche Idee. In der Implementierung von van Nek sind noch einige  Abfragen eingebaut, sodass manche Teilprobleme gar nicht bis zu Ende ausgewertet werden müssen. So wird z. B. überprüft, ob mit dem aktuellen Spielstand, also den verbleibenden Zahlen und der bisher erreichten Punktzahl, der Optimalwert übertroffen werden kann.  </ul>
-  Klickt man auf &quot;Okay&quot; werden die Zugfolgen mit den eingestellten Grenzen berechnet oder eben die vorberechneten Ergebnisse angezeigt. <br>
-Dann erscheint das Ergebnis-Fenster. Dort sieht man, sortiert nach der Spielfeldgröße, welche maximale Punktzahl erreicht werden kann, wieviele Punkte der Hai bekommt und die zugehörige Zugfolge. Wählt man eine Zeile aus und klickt auf &quot;Auswahl spielen...&quot; wird das ausgewählte Spiel mit den berechneten Zügen im Zahlenhaihauptfenster gespielt.<br>
-Mit &quot;Speichern unter...&quot; lässt sich die Tabelle als .csv-Datei exportieren und z.B. in Excel einlesen.  
-  <p><img src="Manual_6.jpg" alt="" width="650" height="510" /></p>
-  <p>
+  <p>Diese Beschreibung des Algorithmus liefert nur die grundsätzliche Idee. In der Implementierung von van Nek sind noch einige Abfragen eingebaut, sodass manche Teilprobleme gar nicht bis zu Ende ausgewertet werden müssen. So wird z. B. überprüft, ob mit dem aktuellen Spielstand, also den verbleibenden Zahlen und der bisher erreichten Punktzahl, der Optimalwert übertroffen werden kann. Weitere Erfolge wurde dadurch erzielt, dass mit den schnelleren heuristischen Verfahren gute Unterschranken für den Score ermittelt wurden.</p>
 
+</ul>
+
+
+<p>Klickt man auf &quot;OK&quot; werden die Zugfolgen für die gewählten Spielfeldgrößen entweder neu berechnet oder die vorberechneten Ergebnisse angezeigt. Die Berechnung kann einige Zeit dauern.</p>
+
+<p>Dann erscheint das Ergebnis-Fenster. Dort sieht man, sortiert nach der Spielfeldgröße, welche maximale Punktzahl erreicht werden kann, wieviele Punkte der Hai bekommt sowie die zugehörige Zugfolge. Wählt man eine Zeile aus und klickt auf &quot;Auswahl spielen...&quot;, wird das ausgewählte Spiel mit den berechneten Zügen im Zahlenhai-Hauptfenster gespielt.</p>
+
+<p>Mit &quot;Speichern unter...&quot; lässt sich die Tabelle als .csv-Datei exportieren und dann z.B. in Excel oder Calc einlesen.</p>
+<img src="Manual_6.jpg" alt="" width="650" height="510" />
+
+
+
+<p>&nbsp;</p>
+<h3>3.2 Feedback und weitere Links</h3>
+
+<p>Wenn du eine optimale Strategie findest, lass es uns bitte wissen (z.B. per Mail an <strong>bernhard.esslinger@uni-siegen.de</strong>).</p>
+
+<p>Im Englischen heißt das Zahlenhai-Spiel "Number Shark" oder "Taxman" game.</p>
+
+<p>Die Seite <a href="https://oeis.org/A019312"> Integer Sequences</a> der OEIS Foundation enthält die bekannten Maximalwerte für n=1,...,404. Dort kann die Folge auch grafisch angezeigt werden. Dank Dan Hoey ist in den "Notes" inzwischen für jedes n auch ein jeweils optimaler Weg angegeben. Eine Formel für den optimalen Wert (Score) ist bisher nicht bekannt.</p>
+
+<p>Weitere Literaturhinweise finden sich <a href="PLUGINS_ROOT/org.jcryptool.games.numbershark/$nl$/help/reference/NumberSharkHelp-Bibliography.html">hier</a>.</p>
+  <!-- Zum lokalen Testen geht auch:
+       Weitere Literaturhinweise finden sich <a href="../reference/NumberSharkHelp-Bibliography.html">hier</a>.
+  -->
+
+
+  <!-- Last edit: BE, 2019-08-07  -->
+
+<p>&nbsp;</p>
 </body>
 </html>
