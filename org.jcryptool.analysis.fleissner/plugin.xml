@@ -5,18 +5,18 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            name="Fleissner"
+            name="%view.name"
             inject="true"
             category="org.jcryptool.analysis"
-            class="org.jcryptool.analysis.fleissner2.views.SampleView"
-            id="org.jcryptool.analysis.fleissner2.views.SampleView">
+            class="org.jcryptool.analysis.fleissner.views.SampleView"
+            id="org.jcryptool.analysis.fleissner.views.SampleView">
       </view>
    </extension>
    <extension
          point="org.jcryptool.core.operations.analysis">
       <analysis
-            name="Fleissner"
-            viewId="org.jcryptool.analysis.fleissner2.views.SampleView">
+            name="%analysis.name"
+            viewId="org.jcryptool.analysis.fleissner.views.SampleView">
       </analysis>
    </extension>
    

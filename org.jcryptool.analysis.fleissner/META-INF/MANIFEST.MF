@@ -1,23 +1,23 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Fleissner2
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.analysis.fleissner;singleton:=true
 Bundle-Version: 1.0.0
-Bundle-Activator: org.jcryptool.analysis.fleissner2.Activator
+Bundle-Activator: org.jcryptool.analysis.fleissner.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.help,
  org.jcryptool.core.util
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Automatic-Module-Name: org.jcryptool.analysis.fleissner2
+Automatic-Module-Name: org.jcryptool.analysis.fleissner
 Bundle-ActivationPolicy: lazy
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.colors,
  org.jcryptool.core.util.directories,
  org.jcryptool.core.util.fonts
-Export-Package: org.jcryptool.analysis.fleissner2,
- org.jcryptool.analysis.fleissner2.UI,
- org.jcryptool.analysis.fleissner2.handlers,
- org.jcryptool.analysis.fleissner2.key,
- org.jcryptool.analysis.fleissner2.logic,
- org.jcryptool.analysis.fleissner2.views
+Export-Package: org.jcryptool.analysis.fleissner,
+ org.jcryptool.analysis.fleissner.UI,
+ org.jcryptool.analysis.fleissner.handlers,
+ org.jcryptool.analysis.fleissner.key,
+ org.jcryptool.analysis.fleissner.logic,
+ org.jcryptool.analysis.fleissner.views
