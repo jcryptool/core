@@ -34,7 +34,7 @@
             %view.description
          </description>
       </view>
-      <view
+<!--      <view
             allowMultiple="false"
             category="org.eclipse.ui"
             class="org.eclipse.ui.ExtensionFactory:logView"
@@ -42,7 +42,7 @@
             id="org.eclipse.pde.runtime.LogView"
             name="%views.errorlog"
             restorable="true">
-      </view>
+      </view>      -->
       <view
             allowMultiple="false"
             category="org.eclipse.ui"
