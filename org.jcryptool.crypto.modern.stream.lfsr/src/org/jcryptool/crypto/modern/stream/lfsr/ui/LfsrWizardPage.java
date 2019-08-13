@@ -98,7 +98,8 @@ public class LfsrWizardPage extends WizardPage implements Listener {
     /**
      * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
      */
-    public void createControl(Composite parent) {
+    @Override
+	public void createControl(Composite parent) {
         Composite pageComposite = new Composite(parent, SWT.NULL);
 
         createLfsrLengthGroup(pageComposite);
@@ -214,7 +215,8 @@ public class LfsrWizardPage extends WizardPage implements Listener {
             tempButton.setLayoutData(tapSettingCheckboxGridData);
 
             tempButton.addSelectionListener(new SelectionAdapter() {
-                public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) {
+                @Override
+				public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) {
                     for (int i = 0; i < tapSettingsCheckBoxes.size(); i++) {
                         if (event.widget == tapSettingsCheckBoxes.get(i)) {
                             tapSettings[i] = tapSettingsCheckBoxes.get(i).getSelection();
@@ -352,7 +354,8 @@ public class LfsrWizardPage extends WizardPage implements Listener {
         keystreamLengthText.setText(""); //$NON-NLS-1$
         keystreamLengthText.addListener(SWT.Modify, this);
         keystreamLengthText.addVerifyListener(new VerifyListener() {
-            public void verifyText(VerifyEvent e) {
+            @Override
+			public void verifyText(VerifyEvent e) {
                 if (CLEARING_FLAG) {
                     return;
                 }
@@ -379,7 +382,8 @@ public class LfsrWizardPage extends WizardPage implements Listener {
     /**
      * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
      */
-    public void handleEvent(Event event) {
+    @Override
+	public void handleEvent(Event event) {
         if (event.widget == lfsrLengthSpinner) {
             setPreviousFinalTapSetting();
             lfsrLength = lfsrLengthSpinner.getSelection();

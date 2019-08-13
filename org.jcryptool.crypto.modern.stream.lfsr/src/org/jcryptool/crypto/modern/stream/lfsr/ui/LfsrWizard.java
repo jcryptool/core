@@ -35,6 +35,7 @@ public class LfsrWizard extends Wizard {
 	/**
 	 * @see org.eclipse.jface.wizard.Wizard#addPages()
 	 */
+	@Override
 	public void addPages() {
 		page = new LfsrWizardPage();
 		addPage(page);
