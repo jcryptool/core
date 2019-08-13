@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.crypto.modern.stream.lfsr.LfsrPlugin;
 
 public class LfsrWizardPage extends WizardPage implements Listener {
@@ -45,15 +46,17 @@ public class LfsrWizardPage extends WizardPage implements Listener {
     private Label lfsrLengthLabel;
     private Spinner lfsrLengthSpinner;
     private Label noteLabel;
-    private Label lfsrLengthNote;
+    private Label lfsrLengthNoteLabel;
 
     private Group tapSettingsGroup;
     private ArrayList<Button> tapSettingsCheckBoxes = new ArrayList<Button>();
     private ArrayList<Label> tapSettingsPlaceHolderLabels = new ArrayList<Label>();
+    private Text tapSettings01StringText;
 
     private Group seedValueGroup;
     private ArrayList<Button> seedValueTapSettingsDisplayCheckBoxes = new ArrayList<Button>();
     private ArrayList<Spinner> seedValueSpinners = new ArrayList<Spinner>();
+    private Text seedValue01StringText;
 
     private Group displayOptionsGroup;
     private Button displayOutputOnlyButton;
@@ -173,9 +176,9 @@ public class LfsrWizardPage extends WizardPage implements Listener {
         lfsrLengthSpinner.setSelection(LfsrWizard.MAX_LFSR_LENGTH);
         lfsrLengthSpinner.addListener(SWT.Modify, this);
         
-        lfsrLengthNote = new Label(lfsrLengthGroup, SWT.NONE);
-        lfsrLengthNote.setLayoutData(lfsrLengthNoteGridData);
-        lfsrLengthNote.setText(Messages.LfsrWizardPage_LFSRLengthNote);
+        lfsrLengthNoteLabel = new Label(lfsrLengthGroup, SWT.NONE);
+        lfsrLengthNoteLabel.setLayoutData(lfsrLengthNoteGridData);
+        lfsrLengthNoteLabel.setText(Messages.LfsrWizardPage_LFSRLengthNote);
     }
 
     /**
@@ -214,6 +217,7 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 
         GridLayout tapSettingsGroupGridLayout = new GridLayout();
         tapSettingsGroupGridLayout.numColumns = LfsrWizard.MAX_LFSR_LENGTH;
+        tapSettingsGroupGridLayout.makeColumnsEqualWidth = true;
 
         GridData tapSettingsGroupGridData = new GridData();
         tapSettingsGroupGridData.horizontalAlignment = SWT.FILL;
@@ -221,6 +225,13 @@ public class LfsrWizardPage extends WizardPage implements Listener {
         tapSettingsGroupGridData.grabExcessVerticalSpace = false;
         tapSettingsGroupGridData.verticalAlignment = SWT.FILL;
         tapSettingsGroupGridData.verticalIndent = 15;
+        
+        GridData tapSettings01StringTextGridData = new GridData();
+        tapSettings01StringTextGridData.horizontalAlignment = SWT.FILL;
+        tapSettings01StringTextGridData.verticalAlignment = SWT.FILL;
+        tapSettings01StringTextGridData.grabExcessHorizontalSpace = true;
+        tapSettings01StringTextGridData.grabExcessVerticalSpace = false;
+        tapSettings01StringTextGridData.horizontalSpan = LfsrWizard.MAX_LFSR_LENGTH;
 
         tapSettingsGroup = new Group(parent, SWT.None);
         tapSettingsGroup.setLayoutData(tapSettingsGroupGridData);
@@ -238,6 +249,7 @@ public class LfsrWizardPage extends WizardPage implements Listener {
                         if (event.widget == tapSettingsCheckBoxes.get(i)) {
                             tapSettings[i] = tapSettingsCheckBoxes.get(i).getSelection();
                             setSeedValueTapSettingDisplayVisibility(i, tapSettings[i]);
+                            updateTapSetting01StringText();
                             break;
                         }
                     }
@@ -254,10 +266,18 @@ public class LfsrWizardPage extends WizardPage implements Listener {
             tempLabel.setAlignment(SWT.CENTER);
             tapSettingsPlaceHolderLabels.add(tempLabel);
         }
+        
+        tapSettings01StringText = new Text(tapSettingsGroup, SWT.NONE);
+        tapSettings01StringText.setLayoutData(tapSettings01StringTextGridData);
+        tapSettings01StringText.setBackground(ColorService.LIGHTGRAY);
+        tapSettings01StringText.setForeground(ColorService.GRAY);
+        tapSettings01StringText.setEditable(false);
+        tapSettings01StringText.setText(Messages.LfsrWizardPage_tapAs01string + "0000000000000000000000001"); //$NON-NLS-1$
+        
 
     }
 
-    /**
+	/**
      * This method initializes seedValueGroup.
      *
      * @param parent
@@ -284,6 +304,13 @@ public class LfsrWizardPage extends WizardPage implements Listener {
         tapSettingsGroupGridData.grabExcessVerticalSpace = false;
         tapSettingsGroupGridData.verticalAlignment = SWT.FILL;
         tapSettingsGroupGridData.verticalIndent = 15;
+        
+        GridData seedValue01StringTextGridData = new GridData();
+        seedValue01StringTextGridData.horizontalAlignment = SWT.FILL;
+        seedValue01StringTextGridData.verticalAlignment = SWT.NONE;
+        seedValue01StringTextGridData.grabExcessHorizontalSpace = true;
+        seedValue01StringTextGridData.grabExcessVerticalSpace = false;
+        seedValue01StringTextGridData.horizontalSpan = LfsrWizard.MAX_LFSR_LENGTH;
 
         seedValueGroup = new Group(parent, SWT.None);
         seedValueGroup.setLayoutData(tapSettingsGroupGridData);
@@ -309,6 +336,14 @@ public class LfsrWizardPage extends WizardPage implements Listener {
             tempSpinner.addListener(SWT.Modify, this);
             seedValueSpinners.add(tempSpinner);
         }
+        
+        seedValue01StringText = new Text(seedValueGroup, SWT.NONE);
+        seedValue01StringText.setLayoutData(seedValue01StringTextGridData);
+        seedValue01StringText.setBackground(ColorService.LIGHTGRAY);
+        seedValue01StringText.setForeground(ColorService.GRAY);
+        seedValue01StringText.setEditable(false);
+        seedValue01StringText.setText(Messages.LfsrWizardPage_seedValueAs01String + "0000000000000000000000000"); //$NON-NLS-1$
+        
     }
 
     private void createDisplayOptionsGroup(Composite parent) {
@@ -407,6 +442,8 @@ public class LfsrWizardPage extends WizardPage implements Listener {
             setSelectableTapSettingVisibilities();
             setEditableSeedValueVisibility();
             setFinalTapSetting();
+            updateTapSetting01StringText();
+            updateSeedValue01StringText();
         } else if (event.widget == displayOutputOnlyButton) {
             displayOption = DisplayOption.OUTPUT_ONLY;
             clearKeystreamLength();
@@ -430,10 +467,10 @@ public class LfsrWizardPage extends WizardPage implements Listener {
                         seed[i] = false;
                     else
                         seed[i] = true;
-
                     break;
                 }
             }
+            updateSeedValue01StringText();
         }
         setPageComplete(mayFinish());
     }
@@ -441,6 +478,40 @@ public class LfsrWizardPage extends WizardPage implements Listener {
     private void setSelectableTapSettingVisibilities() {
         setSelectableTapSettingVisibility();
         setSeedValueTapSettingDisplayVisibilityOfUnselectableTaps();
+    }
+    
+    /**
+     * Updates the String of zeros and on the bottom of the tapSettingsGroup.
+     * Must be called when the LFSR length is changed or a tap setting checkbox is set/unset.
+     */
+    protected void updateTapSetting01StringText() {   	
+    	StringBuilder stringBuilder = new StringBuilder();
+    	stringBuilder.append(Messages.LfsrWizardPage_tapAs01string);
+    	for (int i = 0; i < lfsrLength; i++) {
+    		if (tapSettings[i]) {
+    			stringBuilder.append("1"); //$NON-NLS-1$
+    		} else {
+    			stringBuilder.append("0"); //$NON-NLS-1$
+    		}
+    	}
+    	tapSettings01StringText.setText(stringBuilder.toString());
+	}
+    
+    /**
+     * Updates the seed as 0-1-string.
+     * Method must be called when the LFSR length is changed and when a seed value spinner is changed.
+     */
+    protected void updateSeedValue01StringText() {
+    	StringBuilder stringBuilder = new StringBuilder();
+    	stringBuilder.append(Messages.LfsrWizardPage_seedValueAs01String);
+    	for (int i = 0; i < lfsrLength; i++) {
+    		if (seed[i]) {
+    			stringBuilder.append("1"); //$NON-NLS-1$
+    		} else {
+    			stringBuilder.append("0"); //$NON-NLS-1$
+    		}
+    	}
+    	seedValue01StringText.setText(stringBuilder.toString());
     }
 
     private void clearKeystreamLength() {
