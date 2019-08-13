@@ -16,6 +16,7 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
@@ -100,8 +101,8 @@ public class LfsrWizardPage extends WizardPage implements Listener {
      * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
      */
     @Override
-	public void createControl(Composite parent) {
-        Composite pageComposite = new Composite(parent, SWT.NULL);
+	public void createControl(Composite parent) {  	
+        Composite pageComposite = new Composite(parent, SWT.NONE);
 
         createLfsrLengthGroup(pageComposite);
         createNoteLabel(pageComposite);
@@ -129,25 +130,25 @@ public class LfsrWizardPage extends WizardPage implements Listener {
      */
     private void createLfsrLengthGroup(Composite parent) {
         GridData lfsrLengthLabelGridData = new GridData();
-        lfsrLengthLabelGridData.horizontalAlignment = GridData.FILL;
+        lfsrLengthLabelGridData.horizontalAlignment = SWT.FILL;
         lfsrLengthLabelGridData.grabExcessHorizontalSpace = true;
         lfsrLengthLabelGridData.grabExcessVerticalSpace = false;
-        lfsrLengthLabelGridData.verticalAlignment = GridData.CENTER;
+        lfsrLengthLabelGridData.verticalAlignment = SWT.CENTER;
 
         GridData lfsrLengthSpinnerGridData = new GridData();
-        lfsrLengthSpinnerGridData.horizontalAlignment = GridData.FILL;
+        lfsrLengthSpinnerGridData.horizontalAlignment = SWT.FILL;
         lfsrLengthSpinnerGridData.grabExcessHorizontalSpace = true;
         lfsrLengthSpinnerGridData.grabExcessVerticalSpace = false;
-        lfsrLengthSpinnerGridData.verticalAlignment = GridData.CENTER;
+        lfsrLengthSpinnerGridData.verticalAlignment = SWT.CENTER;
 
         GridLayout lfsrLengthGroupGridLayout = new GridLayout();
         lfsrLengthGroupGridLayout.numColumns = 3;
 
         GridData lfsrLengthGroupGridData = new GridData();
-        lfsrLengthGroupGridData.horizontalAlignment = GridData.BEGINNING;
+        lfsrLengthGroupGridData.horizontalAlignment = SWT.BEGINNING;
         lfsrLengthGroupGridData.grabExcessHorizontalSpace = false;
         lfsrLengthGroupGridData.grabExcessVerticalSpace = false;
-        lfsrLengthGroupGridData.verticalAlignment = GridData.FILL;
+        lfsrLengthGroupGridData.verticalAlignment = SWT.FILL;
         
         GridData lfsrLengthNoteGridData = new GridData();
         lfsrLengthNoteGridData.horizontalAlignment = SWT.FILL;
@@ -177,12 +178,16 @@ public class LfsrWizardPage extends WizardPage implements Listener {
         lfsrLengthNote.setText(Messages.LfsrWizardPage_LFSRLengthNote);
     }
 
+    /**
+     * Label that says changing the length of the lfsr will reset the tap and seed.
+     * @param parent Parent Composite 
+     */
     private void createNoteLabel(Composite parent) {
         GridData noteLabelGridData = new GridData();
-        noteLabelGridData.horizontalAlignment = GridData.BEGINNING;
+        noteLabelGridData.horizontalAlignment = SWT.BEGINNING;
         noteLabelGridData.grabExcessHorizontalSpace = true;
         noteLabelGridData.grabExcessVerticalSpace = false;
-        noteLabelGridData.verticalAlignment = GridData.CENTER;
+        noteLabelGridData.verticalAlignment = SWT.CENTER;
 
         noteLabel = new Label(parent, SWT.None);
         noteLabel.setText(Messages.LfsrWizardPage_4);
@@ -196,25 +201,26 @@ public class LfsrWizardPage extends WizardPage implements Listener {
      */
     private void createTapSettingsGroup(Composite parent) {
         GridData tapSettingCheckboxGridData = new GridData();
-        tapSettingCheckboxGridData.horizontalAlignment = GridData.CENTER;
+        tapSettingCheckboxGridData.horizontalAlignment = SWT.CENTER;
         tapSettingCheckboxGridData.grabExcessHorizontalSpace = true;
         tapSettingCheckboxGridData.grabExcessVerticalSpace = false;
-        tapSettingCheckboxGridData.verticalAlignment = GridData.BEGINNING;
+        tapSettingCheckboxGridData.verticalAlignment = SWT.BEGINNING;
 
         GridData tapSettingPlaceHolderLabelGridData = new GridData();
-        tapSettingPlaceHolderLabelGridData.horizontalAlignment = GridData.CENTER;
+        tapSettingPlaceHolderLabelGridData.horizontalAlignment = SWT.CENTER;
         tapSettingPlaceHolderLabelGridData.grabExcessHorizontalSpace = true;
         tapSettingPlaceHolderLabelGridData.grabExcessVerticalSpace = false;
-        tapSettingPlaceHolderLabelGridData.verticalAlignment = GridData.BEGINNING;
+        tapSettingPlaceHolderLabelGridData.verticalAlignment = SWT.NONE;
 
         GridLayout tapSettingsGroupGridLayout = new GridLayout();
         tapSettingsGroupGridLayout.numColumns = LfsrWizard.MAX_LFSR_LENGTH;
 
         GridData tapSettingsGroupGridData = new GridData();
-        tapSettingsGroupGridData.horizontalAlignment = GridData.FILL;
+        tapSettingsGroupGridData.horizontalAlignment = SWT.FILL;
         tapSettingsGroupGridData.grabExcessHorizontalSpace = true;
         tapSettingsGroupGridData.grabExcessVerticalSpace = false;
-        tapSettingsGroupGridData.verticalAlignment = GridData.FILL;
+        tapSettingsGroupGridData.verticalAlignment = SWT.FILL;
+        tapSettingsGroupGridData.verticalIndent = 15;
 
         tapSettingsGroup = new Group(parent, SWT.None);
         tapSettingsGroup.setLayoutData(tapSettingsGroupGridData);
@@ -227,7 +233,7 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 
             tempButton.addSelectionListener(new SelectionAdapter() {
                 @Override
-				public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) {
+				public void widgetSelected(SelectionEvent event) {
                     for (int i = 0; i < tapSettingsCheckBoxes.size(); i++) {
                         if (event.widget == tapSettingsCheckBoxes.get(i)) {
                             tapSettings[i] = tapSettingsCheckBoxes.get(i).getSelection();
@@ -240,13 +246,15 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 
             tapSettingsCheckBoxes.add(tempButton);
         }
-
+        
         for (int i = 1; i <= tapSettingsGroupGridLayout.numColumns; i++) {
             Label tempLabel = new Label(tapSettingsGroup, SWT.None);
             tempLabel.setText(String.valueOf(i));
             tempLabel.setLayoutData(tapSettingPlaceHolderLabelGridData);
+            tempLabel.setAlignment(SWT.CENTER);
             tapSettingsPlaceHolderLabels.add(tempLabel);
         }
+
     }
 
     /**
@@ -256,25 +264,26 @@ public class LfsrWizardPage extends WizardPage implements Listener {
      */
     private void createSeedValueGroup(Composite parent) {
         GridData tapSettingCheckboxGridData = new GridData();
-        tapSettingCheckboxGridData.horizontalAlignment = GridData.CENTER;
+        tapSettingCheckboxGridData.horizontalAlignment = SWT.CENTER;
         tapSettingCheckboxGridData.grabExcessHorizontalSpace = true;
         tapSettingCheckboxGridData.grabExcessVerticalSpace = false;
-        tapSettingCheckboxGridData.verticalAlignment = GridData.BEGINNING;
+        tapSettingCheckboxGridData.verticalAlignment = SWT.BEGINNING;
 
         GridData seedValueSpinnerGridData = new GridData();
-        seedValueSpinnerGridData.horizontalAlignment = GridData.CENTER;
+        seedValueSpinnerGridData.horizontalAlignment = SWT.CENTER;
         seedValueSpinnerGridData.grabExcessHorizontalSpace = true;
         seedValueSpinnerGridData.grabExcessVerticalSpace = false;
-        tapSettingCheckboxGridData.verticalAlignment = GridData.BEGINNING;
+        tapSettingCheckboxGridData.verticalAlignment = SWT.BEGINNING;
 
         GridLayout tapSettingsGroupGridLayout = new GridLayout();
         tapSettingsGroupGridLayout.numColumns = LfsrWizard.MAX_LFSR_LENGTH;
 
         GridData tapSettingsGroupGridData = new GridData();
-        tapSettingsGroupGridData.horizontalAlignment = GridData.FILL;
+        tapSettingsGroupGridData.horizontalAlignment = SWT.FILL;
         tapSettingsGroupGridData.grabExcessHorizontalSpace = true;
         tapSettingsGroupGridData.grabExcessVerticalSpace = false;
-        tapSettingsGroupGridData.verticalAlignment = GridData.FILL;
+        tapSettingsGroupGridData.verticalAlignment = SWT.FILL;
+        tapSettingsGroupGridData.verticalIndent = 15;
 
         seedValueGroup = new Group(parent, SWT.None);
         seedValueGroup.setLayoutData(tapSettingsGroupGridData);
@@ -304,36 +313,39 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 
     private void createDisplayOptionsGroup(Composite parent) {
         GridData displayOutputOnlyButtonGridData = new GridData();
-        displayOutputOnlyButtonGridData.horizontalAlignment = GridData.FILL;
+        displayOutputOnlyButtonGridData.horizontalAlignment = SWT.FILL;
         displayOutputOnlyButtonGridData.grabExcessHorizontalSpace = false;
         displayOutputOnlyButtonGridData.grabExcessVerticalSpace = true;
-        displayOutputOnlyButtonGridData.verticalAlignment = GridData.CENTER;
+        displayOutputOnlyButtonGridData.verticalAlignment = SWT.CENTER;
+        displayOutputOnlyButtonGridData.horizontalSpan = 2;
 
         GridData displayOutputAndKeystreamButtonGridData = new GridData();
-        displayOutputAndKeystreamButtonGridData.horizontalAlignment = GridData.FILL;
+        displayOutputAndKeystreamButtonGridData.horizontalAlignment = SWT.FILL;
         displayOutputAndKeystreamButtonGridData.grabExcessHorizontalSpace = false;
         displayOutputAndKeystreamButtonGridData.grabExcessVerticalSpace = true;
-        displayOutputAndKeystreamButtonGridData.verticalAlignment = GridData.CENTER;
+        displayOutputAndKeystreamButtonGridData.verticalAlignment = SWT.CENTER;
+        displayOutputAndKeystreamButtonGridData.horizontalSpan = 2;
 
         GridData displayKeystreamOnlyButtonGridData = new GridData();
-        displayKeystreamOnlyButtonGridData.horizontalAlignment = GridData.FILL;
+        displayKeystreamOnlyButtonGridData.horizontalAlignment = SWT.FILL;
         displayKeystreamOnlyButtonGridData.grabExcessHorizontalSpace = false;
         displayKeystreamOnlyButtonGridData.grabExcessVerticalSpace = true;
-        displayKeystreamOnlyButtonGridData.verticalAlignment = GridData.CENTER;
+        displayKeystreamOnlyButtonGridData.verticalAlignment = SWT.CENTER;
 
         GridData keystreamLengthTextGridData = new GridData();
-        keystreamLengthTextGridData.verticalAlignment = GridData.CENTER;
+        keystreamLengthTextGridData.verticalAlignment = SWT.CENTER;
         keystreamLengthTextGridData.grabExcessHorizontalSpace = true;
-        keystreamLengthTextGridData.horizontalAlignment = GridData.FILL;
+        keystreamLengthTextGridData.horizontalAlignment = SWT.FILL;
 
         GridLayout displayOptionsGroupGridLayout = new GridLayout();
-        displayOptionsGroupGridLayout.numColumns = 1;
+        displayOptionsGroupGridLayout.numColumns = 2;
 
         GridData displayOptionsGroupGridData = new GridData();
-        displayOptionsGroupGridData.horizontalAlignment = GridData.FILL;
+        displayOptionsGroupGridData.horizontalAlignment = SWT.FILL;
         displayOptionsGroupGridData.grabExcessHorizontalSpace = true;
         displayOptionsGroupGridData.grabExcessVerticalSpace = true;
-        displayOptionsGroupGridData.verticalAlignment = GridData.FILL;
+        displayOptionsGroupGridData.verticalAlignment = SWT.FILL;
+        displayOptionsGroupGridData.verticalIndent = 15;
 
         displayOptionsGroup = new Group(parent, SWT.NONE);
         displayOptionsGroup.setLayoutData(displayOptionsGroupGridData);
@@ -355,13 +367,7 @@ public class LfsrWizardPage extends WizardPage implements Listener {
         displayKeystreamOnlyButton.setLayoutData(displayKeystreamOnlyButtonGridData);
         displayKeystreamOnlyButton.addListener(SWT.Selection, this);
 
-        keystreamLengthTextGridData = new GridData();
-        keystreamLengthTextGridData.verticalAlignment = GridData.CENTER;
-        keystreamLengthTextGridData.widthHint = 50;
-        keystreamLengthTextGridData.horizontalIndent = 20;
-
         keystreamLengthText = new Text(displayOptionsGroup, SWT.BORDER | SWT.SINGLE);
-        keystreamLengthText.setLayoutData(keystreamLengthTextGridData);
         keystreamLengthText.setText(""); //$NON-NLS-1$
         keystreamLengthText.addListener(SWT.Modify, this);
         keystreamLengthText.addVerifyListener(new VerifyListener() {
