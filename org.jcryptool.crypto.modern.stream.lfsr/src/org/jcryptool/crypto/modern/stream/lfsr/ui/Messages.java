@@ -29,6 +29,7 @@ public class Messages extends NLS {
     public static String LfsrWizardPage_7;
     public static String LfsrWizardPage_8;
     public static String LfsrWizardPage_9;
+	public static String LfsrWizardPage_LFSRLengthNote;
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

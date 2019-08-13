@@ -44,6 +44,7 @@ public class LfsrWizardPage extends WizardPage implements Listener {
     private Label lfsrLengthLabel;
     private Spinner lfsrLengthSpinner;
     private Label noteLabel;
+    private Label lfsrLengthNote;
 
     private Group tapSettingsGroup;
     private ArrayList<Button> tapSettingsCheckBoxes = new ArrayList<Button>();
@@ -140,13 +141,19 @@ public class LfsrWizardPage extends WizardPage implements Listener {
         lfsrLengthSpinnerGridData.verticalAlignment = GridData.CENTER;
 
         GridLayout lfsrLengthGroupGridLayout = new GridLayout();
-        lfsrLengthGroupGridLayout.numColumns = 2;
+        lfsrLengthGroupGridLayout.numColumns = 3;
 
         GridData lfsrLengthGroupGridData = new GridData();
         lfsrLengthGroupGridData.horizontalAlignment = GridData.BEGINNING;
         lfsrLengthGroupGridData.grabExcessHorizontalSpace = false;
         lfsrLengthGroupGridData.grabExcessVerticalSpace = false;
         lfsrLengthGroupGridData.verticalAlignment = GridData.FILL;
+        
+        GridData lfsrLengthNoteGridData = new GridData();
+        lfsrLengthNoteGridData.horizontalAlignment = SWT.FILL;
+        lfsrLengthNoteGridData.verticalAlignment = SWT.CENTER;
+        lfsrLengthNoteGridData.grabExcessHorizontalSpace = false;
+        lfsrLengthNoteGridData.grabExcessVerticalSpace = false;
 
         lfsrLengthGroup = new Group(parent, SWT.None);
         lfsrLengthGroup.setLayoutData(lfsrLengthGroupGridData);
@@ -164,6 +171,10 @@ public class LfsrWizardPage extends WizardPage implements Listener {
         lfsrLengthSpinner.setLayoutData(lfsrLengthSpinnerGridData);
         lfsrLengthSpinner.setSelection(LfsrWizard.MAX_LFSR_LENGTH);
         lfsrLengthSpinner.addListener(SWT.Modify, this);
+        
+        lfsrLengthNote = new Label(lfsrLengthGroup, SWT.NONE);
+        lfsrLengthNote.setLayoutData(lfsrLengthNoteGridData);
+        lfsrLengthNote.setText(Messages.LfsrWizardPage_LFSRLengthNote);
     }
 
     private void createNoteLabel(Composite parent) {
