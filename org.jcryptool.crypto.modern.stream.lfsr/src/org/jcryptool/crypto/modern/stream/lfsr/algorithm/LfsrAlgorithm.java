@@ -106,10 +106,10 @@ public class LfsrAlgorithm extends AbstractModernAlgorithm{
 
 			try {
 				cipherOutputStream.write(cipherOutput);
-				dataObject.setOutputIS(new BufferedInputStream(new ByteArrayInputStream(((ByteArrayOutputStream)cipherOutputStream).toByteArray())));
-				dataObject.setOutput(((ByteArrayOutputStream)cipherOutputStream).toByteArray());
+				dataObject.setOutputIS(new BufferedInputStream(new ByteArrayInputStream(cipherOutputStream.toByteArray())));
+				dataObject.setOutput(cipherOutputStream.toByteArray());
 				keyStreamOutputStream.write(keyStream);
-				dataObject.setInputStream(new BufferedInputStream(new ByteArrayInputStream(((ByteArrayOutputStream)keyStreamOutputStream).toByteArray())));
+				dataObject.setInputStream(new BufferedInputStream(new ByteArrayInputStream(keyStreamOutputStream.toByteArray())));
 			} catch (IOException e1) {}
 			try {
 				readFromStream = fileInputStream.read(cipherInput);
