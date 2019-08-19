@@ -84,4 +84,12 @@ public class LfsrWizard extends Wizard {
 	public String getKeystreamLengthValue() {
 		return page.getKeystreamLengthValue();
 	}
+	
+	/**
+	 * 
+	 * @return The selected LFSR length
+	 */
+	public int getLfsrLength() {
+		return page.getLFSRLength();
+	}
 }
