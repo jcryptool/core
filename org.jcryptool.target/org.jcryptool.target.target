@@ -22,6 +22,8 @@
 		<unit id="javax.xml.bind" version="2.2.0.v201105210648"/>
 		<unit id="javax.xml.soap" version="1.3.0.v201105210645"/>
 		<unit id="javax.xml.stream" version="1.0.1.v201004272200"/>
+		<unit id="com.sun.xml.bind" version="2.2.0.v201505121915"/>
+		<unit id="com.sun.xml.bind.source" version="2.2.0.v201505121915"/>
 	</location>
 </locations>
 <launcherArgs>

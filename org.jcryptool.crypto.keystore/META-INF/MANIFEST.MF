@@ -9,7 +9,9 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.filesystem,
  net.sourceforge.codec;bundle-version="1.7.0",
- de.flexiprovider;bundle-version="1.7.0"
+ de.flexiprovider;bundle-version="1.7.0",
+ javax.xml.bind,
+ com.sun.xml.bind
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.crypto.keystore,
  org.jcryptool.crypto.keystore.backend,
