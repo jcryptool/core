@@ -1,24 +1,15 @@
 package org.jcryptool.visual.errorcorrectingcodes.ui;
 
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Path;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 
-import com.sun.prism.Graphics;
+public class ArrowCanvas extends Canvas {
 
-public class CanvasArrow extends Canvas {
-
-    private GC gc;
     private Device display;
-    private Composite parent;
     private int x1;
     private int y1;
     private int x2;
@@ -27,9 +18,8 @@ public class CanvasArrow extends Canvas {
     private double arrowLength;
     private double arrowAngle;
 
-    public CanvasArrow(Composite parent,  int x1, int y1, int x2, int y2, int size, double arrowLength) {
+    public ArrowCanvas(Composite parent,  int x1, int y1, int x2, int y2, int size, double arrowLength) {
         super(parent, SWT.NO_REDRAW_RESIZE);
-        this.parent = parent;
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
@@ -38,14 +28,6 @@ public class CanvasArrow extends Canvas {
         this.arrowLength = arrowLength;
         this.arrowAngle = Math.toRadians(40);
         this.display = parent.getDisplay();
-        
-        GridData gd_canvasArrow = new GridData(SWT.FILL, SWT.FILL, false, false);
-        gd_canvasArrow.widthHint = x1 + (x2 - x1);
-        gd_canvasArrow.heightHint = y1 + (y2 - y1);
-        this.setLayoutData(gd_canvasArrow);
-        this.setLayout(new GridLayout());
-        
-        this.addPaintListener(paintEvent -> drawArrow(paintEvent.gc));
     }
 
     public void drawArrow(GC gc) {

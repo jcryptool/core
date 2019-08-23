@@ -19,6 +19,10 @@ public class EccData {
     private PropertyChangeSupport pcs;
 
     public EccData() {
+        originalString = "";
+        binaryAsString = "";
+        codeAsString = "";
+        codeWithErrors = "";
         pcs = new PropertyChangeSupport(this);
     }
 
@@ -41,17 +45,17 @@ public class EccData {
     protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
         pcs.firePropertyChange(propertyName, oldValue, newValue);
     }
-    
+
     public String getOriginalString() {
         return originalString;
     }
 
-    public void setOriginalString(String text) {
+    public void setOriginalString(String originalString) {
         String oldText = this.originalString;
-        this.originalString = text;
-        pcs.firePropertyChange("originalString", oldText, text);
+        this.originalString = originalString;
+        pcs.firePropertyChange("originalString", oldText, originalString);
     }
-        
+
     public String getBinaryAsString() {
         return binaryAsString;
     }
@@ -62,25 +66,27 @@ public class EccData {
         pcs.firePropertyChange("binaryAsString", oldText, binaryAsString);
 
     }
+
     public String getCodeAsString() {
         return codeAsString;
     }
-    
+
     public void setCodeAsString(String codeAsString) {
         String oldText = this.codeAsString;
         this.codeAsString = codeAsString;
         pcs.firePropertyChange("codeAsString", oldText, codeAsString);
-        
+
     }
+
     public String getCodeWithErrors() {
         return codeWithErrors;
     }
-    
+
     public void setCodeWithErrors(String codeWithErrors) {
         String oldText = this.codeWithErrors;
         this.codeWithErrors = codeWithErrors;
         pcs.firePropertyChange("codeWithErrors", oldText, codeWithErrors);
-        
+
     }
 
     public List<BitSet> getBinary() {
@@ -98,7 +104,5 @@ public class EccData {
     public void setBinaryCode(List<BitSet> binaryCode) {
         this.binaryCode = binaryCode;
     }
-
-   
 
 }

@@ -1,11 +1,18 @@
 package org.jcryptool.visual.errorcorrectingcodes.ui;
 
+import java.awt.Font;
+import java.util.ArrayList;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StyleRange;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowData;
@@ -13,6 +20,7 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -23,28 +31,38 @@ import org.jcryptool.visual.errorcorrectingcodes.EccData;
 
 public class EccMainView extends ViewPart {
     private EccController ecc;
-    private EccData eccData;
-    
+
     private ScrolledComposite scrolledComposite;
     private Composite parent;
+    private Composite composite;
     private Composite mainComposite;
     private Composite compHead;
     private Composite compFoot;
-    private Composite compEncode;
+    private Composite compInputStep;
+    private Composite compEncodeStep;
+    private Composite compArrowRight1;
+    private Composite compArrowRight2;
     private Composite compDecode;
-    private Group grpEncodeStep;
-    private Text textOriginal;
-    private Text textAsBinary;
-    private Text textInput;
-    private Text textEncoded;
-    private Text textInfo;
-    private Group grpInputStep;
+    private Composite compTransmit;
+
+    private Group grpSender;
+    private Group grpErrorCode;
     private Group grpFootButtons;
     private Group grpTextInfo;
+    private StyledText textAsBinary;
+    private Text textInput;
+    private StyledText textEncoded;
+    private Text textInfo;
     private Button btnReset;
     private Button btnNextStep;
     private Button btnPrev;
-    private CanvasArrow arrowDown;
+    private ArrowCanvas arrowDown;
+    private ArrowCanvas arrowRight1;
+    private ArrowCanvas arrowRight2;
+
+    private DataBindingContext dbc;
+
+    private Composite compArrowDown;
 
     public EccMainView() {
         ecc = new EccController(new EccData());
@@ -54,109 +72,178 @@ public class EccMainView extends ViewPart {
     public void createPartControl(Composite parent) {
         this.parent = parent;
         int widthhint = 1000;
-        
+
         scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
         scrolledComposite.setExpandHorizontal(true);
         scrolledComposite.setExpandVertical(true);
-        
-        mainComposite = new Composite(scrolledComposite, SWT.NONE);
-        mainComposite.setLayout(new GridLayout(1, true));
-        GridData gd_mainComp = new GridData(GridData.FILL_BOTH);
-        gd_mainComp.widthHint = 1200;
-        mainComposite.setLayoutData(gd_mainComp);
 
-        compHead = new Composite(mainComposite, SWT.NONE);
+        composite = new Composite(scrolledComposite, SWT.NONE);
+        composite.setLayout(new GridLayout(1, false));
+        GridData gd_composite = new GridData(GridData.FILL_BOTH);
+        gd_composite.widthHint = widthhint;
+        composite.setLayoutData(gd_composite);
+
+        compHead = new Composite(composite, SWT.NONE);
         compHead.setLayout(new RowLayout());
         Label lblHeader = new Label(compHead, SWT.NONE);
         lblHeader.setFont(FontService.getHeaderFont());
-        lblHeader.setText("Error Correcting Codes");
+        lblHeader.setText(Messages.EccMainView_lblHeader);
 
-        compEncode = new Composite(mainComposite, SWT.NONE);
-        compEncode.setLayout(new GridLayout(1, false));
-        compEncode.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
-        grpInputStep = new Group(compEncode, SWT.NONE);
-        grpInputStep.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-        grpInputStep.setLayout(new GridLayout(2, false));
-        grpInputStep.setText("Sender");
-        Label lblTextOriginal = new Label(grpInputStep, SWT.NONE);
-        //lblTextOriginal.setLayoutData(new GridData());
-        lblTextOriginal.setText("Original:");
-        textInput = new Text(grpInputStep, SWT.BORDER);
-        textInput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        mainComposite = new Composite(composite, SWT.NONE);
+        mainComposite.setLayout(new GridLayout(5, true));
+        mainComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
+        grpSender = new Group(mainComposite, SWT.NONE);
+        grpSender.setLayout(new GridLayout(1, false));
+        grpSender.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
+        grpSender.setText(Messages.EccMainView_grpSenderStep);
+
+        compInputStep = new Composite(grpSender, SWT.NONE);
+        compInputStep.setLayout(new GridLayout(2, false));
+        compInputStep.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
+        Label lblTextOriginal = new Label(compInputStep, SWT.NONE);
+        lblTextOriginal.setText(Messages.EccMainView_lblTextOriginal);
+        textInput = new Text(compInputStep, SWT.BORDER);
+        GridData gd_textInput = new GridData(SWT.FILL, SWT.FILL, true, false);
+        gd_textInput.widthHint = 150;
+        textInput.setLayoutData(gd_textInput);
+        textInput.addListener(SWT.FocusOut, e -> ecc.textAsBinary());
+        textAsBinary = multiLineStyledText(compInputStep);
+        compArrowDown = new Composite(grpSender, SWT.NONE);
+        compArrowDown.setLayout(new GridLayout(2, true));
+        compArrowDown.setLayoutData(new GridData(GridData.FILL_BOTH));
+        arrowDown = createArrowCanvas(compArrowDown, 30, 10, 30, 70, 3, 13.0);
+        Label lblTextEncoded = new Label(compArrowDown, SWT.NONE);
+        lblTextEncoded.setText(Messages.EccMainView_lblTextEncode);
+
+        compEncodeStep = new Composite(grpSender, SWT.NONE);
+        compEncodeStep.setLayout(new GridLayout(1, false));
+
+        textEncoded = multiLineStyledText(compEncodeStep);
+        textEncoded.addListener(SWT.Modify, e -> markCodeElements(e, SWT.COLOR_BLUE));
         
-        textInput.addListener(SWT.Modify, e -> {
-            Text source = (Text) e.widget;
-            ecc.textAsBinary(source.getText());
-        });
+        compArrowRight1 = new Composite(mainComposite, SWT.NONE);
+        compArrowRight1.setLayout(new GridLayout(1, false));
+        compArrowRight1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        arrowRight1 = createArrowCanvas(compArrowRight1, 10, 10, 60, 10, 3, 12.0);
 
-        textAsBinary = new Text(grpInputStep, SWT.READ_ONLY);
-        textAsBinary.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
-        textAsBinary.setText("0000");
+        compTransmit = new Composite(mainComposite, SWT.NONE);
+        compTransmit.setLayout(new GridLayout(1, false));
+        compTransmit.setLayoutData(new GridData(GridData.FILL_BOTH));
+        grpErrorCode = new Group(compTransmit, SWT.NONE);
+        grpErrorCode.setLayout(new GridLayout(2, false));
+        grpErrorCode.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        grpErrorCode.setText(Messages.EccMainView_grpErrorCode);
 
-        arrowDown = new CanvasArrow(compEncode, 30, 10, 30, 60, 3, 12.0);
+        compArrowRight2 = new Composite(mainComposite, SWT.NONE);
+        compArrowRight2.setLayout(new GridLayout(1, false));
+        compArrowRight2.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true));
+        arrowRight2 = createArrowCanvas(compArrowRight2, 10, 10, 60, 10, 3, 12.0);
 
-        grpEncodeStep = new Group(compEncode, SWT.NONE);
-        grpEncodeStep.setLayout(new GridLayout(1, false));
-        Label lblTextEncoded = new Label(grpEncodeStep, SWT.NONE);
-        lblTextEncoded.setLayoutData(gd_textorig);
-        lblTextEncoded.setText("Encoded:");
-        textEncoded = new Text(grpEncodeStep, SWT.READ_ONLY);
-        textEncoded.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
-        textEncoded.setText("00000000");
-        
         compDecode = new Composite(mainComposite, SWT.NONE);
-                
-        compFoot = new Composite(mainComposite, SWT.NONE);
+
+        compFoot = new Composite(composite, SWT.NONE);
         compFoot.setLayout(new GridLayout(1, true));
         grpTextInfo = new Group(compFoot, SWT.NONE);
-        grpTextInfo.setLayout(new GridLayout(1,true));
+        grpTextInfo.setLayout(new GridLayout(1, true));
         grpTextInfo.setLayoutData(new GridData(GridData.FILL_BOTH));
-        grpTextInfo.setText("Information");
+        grpTextInfo.setText(Messages.EccMainView_grpTextInfo);
         textInfo = new Text(grpTextInfo, SWT.READ_ONLY | SWT.V_SCROLL | SWT.MULTI | SWT.WRAP);
-       // gdTextInfo.heightHint = 2 * textInput.getLineHeight();
-       // gdTextInfo.widthHint = 400;
-        textInfo.setLayoutData(new GridData(GridData.FILL_BOTH));
-        textInfo.setText("Code-based cryptographic systems rely on error-correcting codes and the hardness of decoding a general linear code. This visual shows the general process of how such codes are used find or correct errors in data transmissions.\n\nClick on the \"next step\" button to continue.");
+        GridData gd_textInfo = new GridData(GridData.FILL_BOTH);
+        gd_textInfo.heightHint = 8 * textInfo.getLineHeight();
+        // gdTextInfo.widthHint = 400;
+        textInfo.setLayoutData(gd_textInfo);
+        textInfo.setText(Messages.EccMainView_textInfo_step1);
 
         grpFootButtons = new Group(compFoot, SWT.NONE);
-        grpFootButtons.setLayout(new GridLayout(3,true));
+        grpFootButtons.setLayout(new GridLayout(3, true));
 
         btnPrev = new Button(grpFootButtons, SWT.NONE);
-        btnPrev.setText("Previous Step");
+        btnPrev.setText(Messages.EccMainView_btnPrev);
         btnPrev.setEnabled(false);
-        btnPrev.addListener(SWT.Selection, e -> { });
+        btnPrev.addListener(SWT.Selection, e -> {
+        });
         btnNextStep = new Button(grpFootButtons, SWT.NONE);
-        btnNextStep.setText("Next Step");
+        btnNextStep.setText(Messages.EccMainView_btnNextStep);
         btnNextStep.addListener(SWT.Selection, e -> nextStep());
         btnReset = new Button(grpFootButtons, SWT.NONE);
-        btnReset.setText("Reset");
+        btnReset.setText(Messages.EccMainView_btnReset);
         btnReset.addListener(SWT.Selection, e -> resetView());
 
+        scrolledComposite.setContent(composite);
+        scrolledComposite.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
-        scrolledComposite.setContent(mainComposite);
-        scrolledComposite.setMinSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-        
-        bindValues();
         initView();
 
         // composite.pack();
     }
 
+    private void markCodeElements(Event e, int swtColor) {
+        StyledText st = (StyledText) e.widget;
+        ArrayList<StyleRange> ranges = new ArrayList<>();
+        Color color = parent.getDisplay().getSystemColor(swtColor);
+        
+        for (int i = 0; i < st.getText().length()/7; i++) {
+            int j = i * 7;
+            ranges.add(new StyleRange(j+4,3,color,null,Font.ITALIC));
+        }
+        
+
+        st.setStyleRanges(ranges.toArray(new StyleRange[ranges.size()]));
+    }
+
+    private StyledText multiLineStyledText(Composite p) {
+        StyledText text = new StyledText(p, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
+        GridData gd_text = new GridData(SWT.LEFT, SWT.CENTER, true, true);
+        gd_text.widthHint = 150;
+        gd_text.heightHint = 3 * text.getLineHeight();
+        text.setLayoutData(gd_text);
+        text.setFont(FontService.getLargeFont());
+        return text;
+    }
+
     private void nextStep() {
-        if(!grpEncodeStep.getVisible()) {
+        if (!compEncodeStep.getVisible()) {
             ecc.encodeBits();
-            grpEncodeStep.setVisible(true);
-            arrowDown.setVisible(true);
+            compEncodeStep.setVisible(true);
+            compArrowDown.setVisible(true);
+            textInfo.setText(
+                    Messages.EccMainView_textInfoStep2);
         }
     }
-    
 
     private void initView() {
-       textInput.setText("h");
-       grpEncodeStep.setVisible(false);
-       arrowDown.setVisible(false);
+        bindValues();
+        textInput.setText("h"); //$NON-NLS-1$
+        ecc.textAsBinary();
+        compEncodeStep.setVisible(false);
+        compArrowDown.setVisible(false);
     }
 
+    private ArrowCanvas createArrowCanvas(Composite parent, int x1, int y1, int x2, int y2, int length,
+            double arrowSize) {
+        ArrowCanvas canvas = new ArrowCanvas(parent, x1, y1, x2, y2, length, arrowSize);
+        canvas.setLayout(new GridLayout());
+        GridData gd_arrow = new GridData(SWT.FILL, SWT.FILL, false, false);
+        gd_arrow.widthHint = x1 + (x2 - x2);
+        gd_arrow.heightHint = y1 + (y2 - y1);
+        canvas.setLayoutData(gd_arrow);
+        canvas.addPaintListener(paintEvent -> canvas.drawArrow(paintEvent.gc));
+        return canvas;
+    }
+
+    private void bindValues() {
+        dbc = new DataBindingContext();
+
+        dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textInput),
+                BeanProperties.value(EccData.class, "originalString", String.class).observe(ecc.getData())); //$NON-NLS-1$
+
+        dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textAsBinary),
+                BeanProperties.value(EccData.class, "binaryAsString", String.class).observe(ecc.getData())); //$NON-NLS-1$
+
+        dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textEncoded),
+                BeanProperties.value(EccData.class, "codeAsString", String.class).observe(ecc.getData())); //$NON-NLS-1$
+
+    }
 
     @Override
     public void setFocus() {
@@ -170,21 +257,6 @@ public class EccMainView extends ViewPart {
         }
         createPartControl(parent);
         parent.layout();
-    }
-
-    private void bindValues() {
-        // Bind the fields
-        DataBindingContext bindingContext = new DataBindingContext();
-
-        IObservableValue<String> inputObserv = WidgetProperties.text(SWT.Modify).observe(textInput);
-        bindingContext.bindValue(inputObserv, BeanProperties.value(EccData.class, "originalString").observe(eccData));
-        
-        IObservableValue<String> binaryObserv = WidgetProperties.text(SWT.Modify).observe(textAsBinary);
-        bindingContext.bindValue(binaryObserv, BeanProperties.value(EccData.class, "binaryAsString").observe(eccData));
-
-        IObservableValue<String> encodeObserv = WidgetProperties.text(SWT.Modify).observe(textEncoded);
-        bindingContext.bindValue(encodeObserv, BeanProperties.value(EccData.class, "codeAsString").observe(eccData));
-
     }
 
 }
