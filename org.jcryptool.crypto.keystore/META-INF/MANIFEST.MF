@@ -41,7 +41,7 @@ Import-Package: org.jcryptool.core.logging.dialogs,
  org.jcryptool.core.operations.util,
  org.jcryptool.core.util.directories,
  org.jcryptool.core.util.ui
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ClassPath: .,
  swt-grouplayout.jar
 Automatic-Module-Name: org.jcryptool.crypto.keystore

@@ -13,7 +13,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.jcryptool.core.operations;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %bundleProvider
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: org.jcryptool.core,
  org.jcryptool.core.actions,
  org.jcryptool.core.commands,
