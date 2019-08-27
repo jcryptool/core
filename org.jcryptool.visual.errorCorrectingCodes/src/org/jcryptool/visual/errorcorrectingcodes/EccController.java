@@ -39,17 +39,30 @@ public class EccController {
     }
 
     public void encodeBits() {
-        data.setBinaryCode(new ArrayList<BitSet>());
+        data.setEncoded(new ArrayList<BitSet>());
         StringBuilder codeString = new StringBuilder();
 
         data.getBinary().forEach(b -> {
        
             BitSet code = getHamming(b);
-            data.getBinaryCode().add(code);
+            data.getEncoded().add(code);
             codeString.append(bitSetToString(code,7));
         });
 
         data.setCodeAsString(codeString.toString());
+    }
+    
+    public void flipBits() {
+        data.setErrorCode(new ArrayList<BitSet>());
+        StringBuilder codeString = new StringBuilder();
+        
+        
+        data.getEncoded().forEach(b -> {
+            BitSet e = (BitSet) b.clone();
+            e.flip(1);
+            data.getErrorCode().add(e);
+            codeString.append(bitSetToString(e,4));
+        });
     }
 
     private String bitSetToString(BitSet bits, int offset) {

@@ -14,7 +14,7 @@ public class Messages extends NLS {
     public static String EccMainView_lblTextEncode;
     public static String EccMainView_lblTextOriginal;
     public static String EccMainView_textInfo_step1;
-    public static String EccMainView_textInfoStep2;
+    public static String EccMainView_textInfo_step2;
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

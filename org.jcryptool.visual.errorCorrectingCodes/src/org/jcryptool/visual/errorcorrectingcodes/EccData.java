@@ -10,11 +10,11 @@ public class EccData {
     private String originalString;
     private String binaryAsString;
     private String codeAsString;
-    private String codeWithErrors;
+    private String codeStringWithErrors;
 
     private List<BitSet> binary;
-    private List<BitSet> binaryCode;
-    private List<BitSet> flippedCode;
+    private List<BitSet> encoded;
+    private List<BitSet> errorCode;
 
     private PropertyChangeSupport pcs;
 
@@ -22,7 +22,7 @@ public class EccData {
         originalString = "";
         binaryAsString = "";
         codeAsString = "";
-        codeWithErrors = "";
+        codeStringWithErrors = "";
         pcs = new PropertyChangeSupport(this);
     }
 
@@ -78,13 +78,13 @@ public class EccData {
 
     }
 
-    public String getCodeWithErrors() {
-        return codeWithErrors;
+    public String getCodeStringWithErrors() {
+        return codeStringWithErrors;
     }
 
-    public void setCodeWithErrors(String codeWithErrors) {
-        String oldText = this.codeWithErrors;
-        this.codeWithErrors = codeWithErrors;
+    public void setCodeStringWithErrors(String codeWithErrors) {
+        String oldText = this.codeStringWithErrors;
+        this.codeStringWithErrors = codeWithErrors;
         pcs.firePropertyChange("codeWithErrors", oldText, codeWithErrors);
 
     }
@@ -97,12 +97,22 @@ public class EccData {
         this.binary = binary;
     }
 
-    public List<BitSet> getBinaryCode() {
-        return binaryCode;
+    public List<BitSet> getEncoded() {
+        return encoded;
     }
 
-    public void setBinaryCode(List<BitSet> binaryCode) {
-        this.binaryCode = binaryCode;
+    public void setEncoded(List<BitSet> binaryCode) {
+        this.encoded = binaryCode;
     }
 
+    public List<BitSet> getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(List<BitSet> errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    
+    
 }
