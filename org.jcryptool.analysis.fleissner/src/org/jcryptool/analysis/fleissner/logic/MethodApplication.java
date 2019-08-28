@@ -427,6 +427,10 @@ public class MethodApplication{
         return bestDecryptedText;
     }
 
+    public int[] getBestTemplate() {
+        return bestTemplate;
+    }
+
     public String toString() {
 		
 		String output= null;
@@ -440,7 +444,7 @@ public class MethodApplication{
 			for (int i = 0; i<bestTemplate.length;i++) {
 				bestTemplateCoordinates+=bestTemplate[i];
 			}
-			output = "\nBest grille: "+bestTemplateCoordinates+"\nwith length: "+templateLength+" found at try: "+grilleNumber+", in Restart: "+lastImprovement/*+"\n"+fg*/;
+			output = "\nBest grille: "+bestTemplateCoordinates+"\n"+fg+"\nwith length: "+templateLength+" found at try: "+grilleNumber+", in Restart: "+lastImprovement;
 			output += "\nDecrpyted text:\n\n"+bestDecryptedText+"\n\n";
 //			output += "Procedure: "+procedure+"\n";
 //			output += "Accurateness: " + value+" (where alltimelow is "+alltimeLow+ ")\n";
