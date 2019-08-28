@@ -8,6 +8,7 @@ import java.util.List;
 public class EccData {
 
     private String originalString;
+    private String correctedString;
     private String binaryAsString;
     private String codeAsString;
     private String codeStringWithErrors;
@@ -64,7 +65,6 @@ public class EccData {
         String oldText = this.binaryAsString;
         this.binaryAsString = binaryAsString;
         pcs.firePropertyChange("binaryAsString", oldText, binaryAsString);
-
     }
 
     public String getCodeAsString() {
@@ -75,18 +75,16 @@ public class EccData {
         String oldText = this.codeAsString;
         this.codeAsString = codeAsString;
         pcs.firePropertyChange("codeAsString", oldText, codeAsString);
-
     }
 
     public String getCodeStringWithErrors() {
         return codeStringWithErrors;
     }
 
-    public void setCodeStringWithErrors(String codeWithErrors) {
+    public void setCodeStringWithErrors(String codeStringWithErrors) {
         String oldText = this.codeStringWithErrors;
-        this.codeStringWithErrors = codeWithErrors;
-        pcs.firePropertyChange("codeWithErrors", oldText, codeWithErrors);
-
+        this.codeStringWithErrors = codeStringWithErrors;
+        pcs.firePropertyChange("codeStringWithErrors", oldText, codeStringWithErrors);
     }
 
     public List<BitSet> getBinary() {
@@ -113,6 +111,13 @@ public class EccData {
         this.errorCode = errorCode;
     }
 
-    
-    
+    public String getCorrectedString() {
+        return correctedString;
+    }
+
+    public void setCorrectedString(String correctedString) {    
+        String oldText = this.correctedString;
+        this.correctedString = correctedString;
+        pcs.firePropertyChange("correctedString", oldText, correctedString);
+    }    
 }

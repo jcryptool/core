@@ -2,6 +2,9 @@ package org.jcryptool.visual.errorcorrectingcodes.ui;
 
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.GroupLayout;
 
@@ -38,6 +41,8 @@ import org.jcryptool.visual.errorcorrectingcodes.EccData;
 
 public class EccMainView extends ViewPart {
     private EccController ecc;
+    private DataBindingContext dbc;
+
     private ScrolledComposite scrolledComposite;
     private Composite parent;
     private Composite composite;
@@ -48,8 +53,8 @@ public class EccMainView extends ViewPart {
     private Composite compEncodeStep;
     private Composite compArrowRight1;
     private Composite compArrowRight2;
-    private Composite compDecode;
-    private Composite compTransmit;
+    private Composite compArrowDown;
+    private Composite compOutputStep;
 
     private Group grpSender;
     private Group grpErrorCode;
@@ -65,27 +70,22 @@ public class EccMainView extends ViewPart {
     private ArrowCanvas arrowDown;
     private ArrowCanvas arrowRight1;
     private ArrowCanvas arrowRight2;
-
-    private DataBindingContext dbc;
-
-    private Composite compArrowDown;
+    private ArrowCanvas arrowUp;
 
     private Label lblHeader;
-
     private Label lblTextOriginal;
-
     private Label lblTextEncoded;
 
-    private Label lblArrowRight1;
     private Group grpReceiver;
-    private Composite compOutputStep;
     private StyledText textOutput;
     private Composite compArrowUp;
-    private ArrowCanvas arrowUp;
     private Label lblTextDecoded;
     private Composite compDecodeStep;
     private StyledText textCorrected;
     private StyledText textError;
+    private Composite compHeadLabels;
+    private Label lblEncrypt;
+    private Label lblDecrypt;
 
     public EccMainView() {
         ecc = new EccController(new EccData());
@@ -106,10 +106,12 @@ public class EccMainView extends ViewPart {
         GridDataFactory.fillDefaults().grab(true, true).hint(widthhint).applyTo(composite);
 
         compHead = new Composite(composite, SWT.NONE);
-        compHead.setLayout(new RowLayout());
+        GridLayoutFactory.fillDefaults().applyTo(compHead);
+        GridDataFactory.fillDefaults().hint(widthhint).applyTo(compHead);
         lblHeader = new Label(compHead, SWT.NONE);
         lblHeader.setFont(FontService.getHeaderFont());
         lblHeader.setText(Messages.EccMainView_lblHeader);
+
         mainComposite = new Composite(composite, SWT.NONE);
         GridLayoutFactory.fillDefaults().numColumns(5).applyTo(mainComposite);
         GridDataFactory.fillDefaults().applyTo(mainComposite);
@@ -126,7 +128,7 @@ public class EccMainView extends ViewPart {
         textInput = new StyledText(compInputStep, SWT.BORDER);
         GridDataFactory.fillDefaults().grab(true, false).applyTo(textInput);
         textInput.addListener(SWT.FocusOut, e -> ecc.textAsBinary());
-        textAsBinary = multiLineStyledText(grpSender);
+        textAsBinary = multiLineStyledText(grpSender, SWT.FILL, SWT.TOP);
         compArrowDown = new Composite(grpSender, SWT.NONE);
         GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(true).applyTo(compArrowDown);
         GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.TOP).applyTo(compArrowDown);
@@ -136,7 +138,7 @@ public class EccMainView extends ViewPart {
         compEncodeStep = new Composite(grpSender, SWT.NONE);
         GridLayoutFactory.fillDefaults().applyTo(compEncodeStep);
         GridDataFactory.fillDefaults().applyTo(compEncodeStep);
-        textEncoded = multiLineStyledText(compEncodeStep);
+        textEncoded = multiLineStyledText(compEncodeStep, SWT.FILL, SWT.BOTTOM);
 
         compArrowRight1 = new Composite(mainComposite, SWT.NONE);
         GridLayoutFactory.fillDefaults().applyTo(compArrowRight1);
@@ -144,41 +146,36 @@ public class EccMainView extends ViewPart {
         arrowRight1 = createArrowCanvas(compArrowRight1, 10, 10, 150, 10, 2, 10.0);
         arrowRight1.setLineStyle(SWT.LINE_DASH);
 
-      
         grpErrorCode = new Group(mainComposite, SWT.NONE);
-        GridLayoutFactory.fillDefaults().numColumns(2).applyTo(grpErrorCode);
+        GridLayoutFactory.fillDefaults().applyTo(grpErrorCode);
         GridDataFactory.fillDefaults().hint(groupWidthHint).grab(true, true).applyTo(grpErrorCode);
         grpErrorCode.setText(Messages.EccMainView_grpErrorCode);
-        textError =  multiLineStyledText(grpErrorCode);
-        //GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.FILL).applyTo(textError);
+        textError = multiLineStyledText(grpErrorCode, SWT.FILL, SWT.CENTER);
+        // GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.FILL).applyTo(textError);
 
         compArrowRight2 = new Composite(mainComposite, SWT.NONE);
         GridLayoutFactory.fillDefaults().applyTo(compArrowRight2);
         arrowRight2 = createArrowCanvas(compArrowRight2, 10, 10, 150, 10, 2, 10.0);
         arrowRight2.setLineStyle(SWT.LINE_DASH);
 
-        compDecode = new Composite(mainComposite, SWT.NONE);
-        GridLayoutFactory.fillDefaults().numColumns(2).applyTo(compDecode);
-        GridDataFactory.fillDefaults().applyTo(compDecode);
-        grpReceiver = new Group(compDecode, SWT.NONE);
+        grpReceiver = new Group(mainComposite, SWT.NONE);
         GridLayoutFactory.fillDefaults().applyTo(grpReceiver);
         GridDataFactory.fillDefaults().grab(true, true).applyTo(grpReceiver);
-        grpReceiver.setText("Receiver");
+        grpReceiver.setText(Messages.EccMainView_grpReceiver);
         compOutputStep = new Composite(grpReceiver, SWT.NONE);
         GridLayoutFactory.fillDefaults().applyTo(compOutputStep);
         GridDataFactory.fillDefaults().applyTo(compOutputStep);
-        textOutput = multiLineStyledText(compOutputStep);
+        textOutput = multiLineStyledText(compOutputStep, SWT.FILL, SWT.TOP);
         compArrowUp = new Composite(grpReceiver, SWT.NONE);
         GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(true).applyTo(compArrowUp);
         GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER).applyTo(compArrowUp);
-        arrowUp = createArrowCanvas(compArrowUp, 10, 120, 10, 10, 3, 13.0);
+        arrowUp = createArrowCanvas(compArrowUp, 10, 180, 10, 10, 3, 13.0);
         lblTextDecoded = new Label(compArrowUp, SWT.NONE);
-        lblTextDecoded.setText("decode");
+        lblTextDecoded.setText(Messages.EccMainView_lblTextDecoded);
         compDecodeStep = new Composite(grpReceiver, SWT.NONE);
         GridLayoutFactory.fillDefaults().applyTo(compDecodeStep);
         GridDataFactory.fillDefaults().applyTo(compDecodeStep);
-        textCorrected = multiLineStyledText(compDecodeStep);
-        textCorrected.setText("0000000 0000000");
+        textCorrected = multiLineStyledText(compDecodeStep, SWT.FILL, SWT.BOTTOM);
 
         compFoot = new Composite(composite, SWT.NONE);
         GridLayoutFactory.fillDefaults().applyTo(compFoot);
@@ -212,25 +209,12 @@ public class EccMainView extends ViewPart {
         // composite.pack();
     }
 
-    private void markCodeElements(Event e, int swtColor) {
-        StyledText st = (StyledText) e.widget;
-        ArrayList<StyleRange> ranges = new ArrayList<>();
-        Color color = parent.getDisplay().getSystemColor(swtColor);
-
-        for (int i = 0; i < st.getText().length() / 7; i++) {
-            int j = i * 7;
-            ranges.add(new StyleRange(j + 4, 3, color, null, Font.ITALIC));
-        }
-
-        st.setStyleRanges(ranges.toArray(new StyleRange[ranges.size()]));
-    }
-
-    private StyledText multiLineStyledText(Composite p) {
+    private StyledText multiLineStyledText(Composite p, int hAlign, int vAlign) {
         StyledText text = new StyledText(p, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
-        text.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+        text.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
         text.setFont(FontService.getLargeFont());
         Point hint = new Point(150, 3 * text.getLineHeight());
-        GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).grab(true, true).hint(hint).applyTo(text);
+        GridDataFactory.fillDefaults().align(hAlign, vAlign).grab(true, true).hint(hint).applyTo(text);
         return text;
     }
 
@@ -242,8 +226,21 @@ public class EccMainView extends ViewPart {
             textInfo.setText(Messages.EccMainView_textInfo_step2);
         } else if (!compArrowRight1.isVisible()) {
             ecc.flipBits();
+            markCodeErrors(textError, SWT.COLOR_RED);
             compArrowRight1.setVisible(true);
-            compTransmit.setVisible(true);
+            grpErrorCode.setVisible(true);
+            textInfo.setText(Messages.EccMainView_textInfo_step3);
+        } else if (!grpReceiver.isVisible()) {
+            ecc.correctErrors();
+            markCodeErrors(textCorrected, SWT.COLOR_CYAN);
+            grpReceiver.setVisible(true);
+            compArrowRight2.setVisible(true);
+            compDecodeStep.setVisible(true);
+            textInfo.setText(Messages.EccMainView_textInfo_step4);
+        } else if (!compOutputStep.isVisible()) {
+            compArrowUp.setVisible(true);
+            compOutputStep.setVisible(true);
+            textInfo.setText(Messages.EccMainView_textInfo_step5);
         }
     }
 
@@ -252,18 +249,36 @@ public class EccMainView extends ViewPart {
         textInput.setText("h"); //$NON-NLS-1$
         ecc.textAsBinary();
         compEncodeStep.setVisible(false);
-        //compTransmit.setVisible(false);
+        grpErrorCode.setVisible(false);
+        grpReceiver.setVisible(false);
+        compDecodeStep.setVisible(false);
+        compOutputStep.setVisible(false);
         compArrowDown.setVisible(false);
         compArrowRight1.setVisible(false);
-        
-        // compArrowRight2.setVisible(false);
+        compArrowRight2.setVisible(false);
+        compArrowUp.setVisible(false);
+    }
 
+    private void markCodeErrors(StyledText st, int swtColor) {
+        List<BitSet> error = ecc.getBitErrors();
+
+        ArrayList<StyleRange> ranges = new ArrayList<>();
+
+        Color color = parent.getDisplay().getSystemColor(swtColor);
+
+        for (int i = 1; i <= error.size(); i++) {
+            BitSet b = error.get(i-1);
+            for (int j = b.nextSetBit(0); j >= 0; j = b.nextSetBit(j + 1)) {
+                int idx = (i * 7)-j-1;
+                ranges.add(new StyleRange(idx, 1, color, null, Font.ITALIC));
+            }
+        }
+        st.setStyleRanges(ranges.toArray(new StyleRange[ranges.size()]));
     }
 
     private ArrowCanvas createArrowCanvas(Composite parent, int x1, int y1, int x2, int y2, int length,
             double arrowSize) {
         ArrowCanvas canvas = new ArrowCanvas(parent, x1, y1, x2, y2, length, arrowSize);
-        canvas.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_INFO_BACKGROUND));
         GridLayoutFactory.fillDefaults().applyTo(canvas);
         GridDataFactory.fillDefaults().hint(canvas.getSizeHint()).applyTo(canvas);
         return canvas;
@@ -275,15 +290,20 @@ public class EccMainView extends ViewPart {
         dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textInput),
                 BeanProperties.value(EccData.class, "originalString", String.class).observe(ecc.getData())); //$NON-NLS-1$
 
+        dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textOutput),
+                BeanProperties.value(EccData.class, "binaryAsString", String.class).observe(ecc.getData())); //$NON-NLS-1$
+
         dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textAsBinary),
                 BeanProperties.value(EccData.class, "binaryAsString", String.class).observe(ecc.getData())); //$NON-NLS-1$
 
         dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textEncoded),
                 BeanProperties.value(EccData.class, "codeAsString", String.class).observe(ecc.getData())); //$NON-NLS-1$
-        
+
         dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textError),
                 BeanProperties.value(EccData.class, "codeStringWithErrors", String.class).observe(ecc.getData())); //$NON-NLS-1$
 
+        dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textCorrected),
+                BeanProperties.value(EccData.class, "correctedString", String.class).observe(ecc.getData())); //$NON-NLS-1$
     }
 
     @Override

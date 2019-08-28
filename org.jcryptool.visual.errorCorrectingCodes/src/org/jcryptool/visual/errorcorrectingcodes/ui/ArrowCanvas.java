@@ -91,14 +91,10 @@ public class ArrowCanvas extends Canvas {
      * @return size as a Point
      */
     public Point getSizeHint() {
-        int x = x1 + (x2 - x1);
-        int y = y1 + (y2 - y1);
-
-        // correct canvas size on horizontal arrows
-        if (x > y) {
-            y += 10;
-        }
-
+        int offset = 10;
+        int x = (x1 > x2 ? x1 : x2) + offset;
+        int y = (y1 > y2 ? y1 : y2) + offset;
+        
         return new Point(x, y);
     }
 
