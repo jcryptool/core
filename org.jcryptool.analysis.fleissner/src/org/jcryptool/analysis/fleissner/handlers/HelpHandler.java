@@ -27,7 +27,7 @@ public class HelpHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		PlatformUI.getWorkbench().getHelpSystem()
-			.displayHelp(Activator.PLUGIN_ID + ".grille");
+			.displayHelp(Activator.PLUGIN_ID + ".fleisssnerContextHelp");
 		return null;
 	}
 }
