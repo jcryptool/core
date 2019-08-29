@@ -18,12 +18,16 @@
 		<unit id="org.eclipse.platform.feature.group" version="4.12.0.v20190605-1801"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
-		<repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20190602212107/repository"/>
-		<unit id="javax.xml.bind" version="2.2.0.v201105210648"/>
-		<unit id="javax.xml.soap" version="1.3.0.v201105210645"/>
-		<unit id="javax.xml.stream" version="1.0.1.v201004272200"/>
-		<unit id="com.sun.xml.bind" version="2.2.0.v201505121915"/>
-		<unit id="com.sun.xml.bind.source" version="2.2.0.v201505121915"/>
+		<repository location="file:/media/shared/ubuntu18/home/simon/workspaces/jct-2019-J11/org.jcryptool.thirdparty_p2/target/repository/"/>
+		<unit id="com.sun.activation.javax.activation" version="1.2.0"/>
+		<unit id="jaxb-api" version="2.4.0.b1808300359"/>
+		<unit id="org.glassfish.jaxb.runtime" version="2.3.0"/>
+		<unit id="com.sun.istack.commons-runtime" version="3.0.5"/>
+		<unit id="com.sun.xml.fastinfoset.FastInfoset" version="1.2.13"/>
+		<unit id="javax.activation-api" version="1.2.0"/>
+		<unit id="org.glassfish.jaxb.core" version="2.3.0"/>
+		<unit id="org.glassfish.jaxb.txw2" version="2.3.0"/>
+		<unit id="org.jvnet.staxex.stax-ex" version="1.7.8"/>
 	</location>
 </locations>
 <launcherArgs>
