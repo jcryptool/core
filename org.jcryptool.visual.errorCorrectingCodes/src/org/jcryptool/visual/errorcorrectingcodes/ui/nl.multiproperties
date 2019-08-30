@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MultiProperties xmlns="hu.skzs.multiproperties">
+    <Version>1.2</Version>
+    <Name>NL_multi</Name>
+    <Description></Description>
+    <Handler>Java Properties Handler</Handler>
+    <Columns>
+        <Key>
+            <Width>200</Width>
+        </Key>
+        <Column>
+            <Name>messages</Name>
+            <Description></Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/org.jcryptool.visual.errorcorrectingcodes/src/org/jcryptool/visual/errorcorrectingcodes/ui/messages.properties|false|false|false|false|UTF-8</HandlerConfiguration>
+        </Column>
+        <Column>
+            <Name>messages_de</Name>
+            <Description></Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/org.jcryptool.visual.errorcorrectingcodes/src/org/jcryptool/visual/errorcorrectingcodes/ui/messages_de.properties|false|false|false|false|UTF-8</HandlerConfiguration>
+        </Column>
+    </Columns>
+    <Records>
+        <Property>
+            <Name>EccMainView_btnNextStep</Name>
+            <Disabled>false</Disabled>
+            <MultiLine>false</MultiLine>
+            <Value disabled="false">Next Step</Value>
+            <Value disabled="false">Weiter</Value>
+        </Property>
+        <Property>
+            <Name>EccMainView_btnPrev</Name>
+            <Disabled>false</Disabled>
+            <MultiLine>false</MultiLine>
+            <Value disabled="false">Previous Step</Value>
+            <Value disabled="false">Zur\u00fcck</Value>
+        </Property>
+        <Property>
+            <Name>EccMainView_btnReset</Name>
+            <Disabled>false</Disabled>
+            <MultiLine>false</MultiLine>
+            <Value disabled="false">Reset</Value>
+            <Value disabled="false">Reset</Value>
+        </Property>
+        <Property>
+            <Name>EccMainView_grpErrorCode</Name>
+            <Disabled>false</Disabled>
+            <MultiLine>false</MultiLine>
+            <Value disabled="false">Erroneous data transmission</Value>
+            <Value disabled="false">Fehlerhafte Daten\u00fcbertragung</Value>
+        </Property>
+        <Property>
+            <Name>EccMainView_grpReceiver</Name>
+            <Disabled>false</Disabled>
+            <MultiLine>false</MultiLine>
+            <Value disabled="false">Receiver</Value>
+            <Value disabled="false">Empf\u00e4nger</Value>
+        </Property>
+        <Property>
+            <Name>EccMainView_grpSenderStep</Name>
+            <Disabled>false</Disabled>
+            <MultiLine>false</MultiLine>
+            <Value disabled="false">Sender</Value>
+            <Value disabled="false">Absender</Value>
+        </Property>
+        <Property>
+            <Name>EccMainView_grpTextInfo</Name>
+            <Disabled>false</Disabled>
+            <MultiLine>false</MultiLine>
+            <Value disabled="false">Information</Value>
+            <Value disabled="false">Informationen</Value>
+        </Property>
+        <Property>
+            <Name>EccMainView_lblHeader</Name>
+            <Disabled>false</Disabled>
+            <MultiLine>false</MultiLine>
+            <Value disabled="false">Error Correcting Codes</Value>
+            <Value disabled="false">Fehlerkorrekturcode</Value>
+        </Property>
+        <Property>
+            <Name>EccMainView_lblTextDecoded</Name>
+            <Disabled>false</Disabled>
+            <MultiLine>false</MultiLine>
+            <Value disabled="false">decode</Value>
+            <Value disabled="false">dekodieren</Value>
+        </Property>
+        <Property>
+            <Name>EccMainView_lblTextEncode</Name>
+            <Disabled>false</Disabled>
+            <MultiLine>false</MultiLine>
+            <Value disabled="false">encode</Value>
+            <Value disabled="false">kodieren</Value>
+        </Property>
+        <Property>
+            <Name>EccMainView_lblTextOriginal</Name>
+            <Disabled>false</Disabled>
+            <MultiLine>false</MultiLine>
+            <Value disabled="false">Original:</Value>
+            <Value disabled="false">Original:</Value>
+        </Property>
+        <Property>
+            <Name>EccMainView_textInfo_step1</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <MultiLine>false</MultiLine>
+            <Value disabled="false">This visual shows the general process of finding and correcting bit errors in data transmissions over a noisy channel using error-correcting codes. Using random linear codes, they can be used in Code-based cryptographic systems, for example McEliece or Niederreiter scheme, which are candidates for post quantum cryptography.\n\nClick on the "next step" button to continue.</Value>
+            <Value disabled="false">Diese Visualisierung soll zeigen, wie einzelne Bit-Fehler bei der Daten\u00fcbertragung \u00fcber einen verrauschten Kanal mit einem Fehlerkorrekturcode gefunden und korrigiert werden. Randomisierte lineare Codes dieser Art k\u00f6nnen zur Verschl\u00fcsselung eingesetzt werden, beispielsweise mit dem McEliece oder Niederreiter Verfahren, welche Kandidaten f\u00fcr Post Quantum Kryptographie sind.\n\nKlicken Sie auf "Weiter" um fortzufahren.</Value>
+        </Property>
+        <Property>
+            <Name>EccMainView_textInfo_step2</Name>
+            <Disabled>false</Disabled>
+            <MultiLine>false</MultiLine>
+            <Value disabled="false">The sender encodes the data according to the selected coding scheme. In this example Hamming code was used, which adds 3 parity check bits to every 4 bits of data. </Value>
+            <Value disabled="false">Der Absener kodiert die Daten entsprechend des gew\u00e4hlten Schemas. In diesem Beispiel wurde Hamming code benutzt, welcher jeweils 4 Daten Bits mit 3 Bits zur Pr\00fcfung der Parit\u00e4t erg\u00e4nzt.</Value>
+        </Property>
+        <Property>
+            <Name>EccMainView_textInfo_step3</Name>
+            <Disabled>false</Disabled>
+            <MultiLine>false</MultiLine>
+            <Value disabled="false">An error gets introduced in the data transmission. Here a single bit in each codeword is flipped (marked in red).</Value>
+            <Value disabled="false">Bei der Daten\u00fcbertragung kommt es zu einem Fehler. Hier wurde in den Codew\u00f6rtern jeweils ein Bit gekippt (markierung).</Value>
+        </Property>
+        <Property>
+            <Name>EccMainView_textInfo_step4</Name>
+            <Disabled>false</Disabled>
+            <MultiLine>false</MultiLine>
+            <Value disabled="false">The recieving end checks for errors by calculating the error syndrome, which also identifies the position of the bit in error. The erroneous bits are detected and flipped to reproduce the correct codewords.</Value>
+            <Value disabled="false">Der Empf\u00e4nger pr\u00e4fcft auf Fehler indem er das Fehler-Syndrom des jeweiligen Blocks errechnet, die bei einem einzelnen gekippten Bit auch der Position entsprechen. Die fehlerhaften Bits werden erkannt und die richtigen Codeworte wiederhergesetellt.</Value>
+        </Property>
+    </Records>
+</MultiProperties>

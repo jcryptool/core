@@ -191,9 +191,7 @@ public class EccMainView extends ViewPart {
         RowLayoutFactory.fillDefaults().pack(false).spacing(10).applyTo(grpFootButtons);
         btnPrev = new Button(grpFootButtons, SWT.NONE);
         btnPrev.setText(Messages.EccMainView_btnPrev);
-        btnPrev.setEnabled(false);
-        btnPrev.addListener(SWT.Selection, e -> {
-        });
+        btnPrev.addListener(SWT.Selection, e -> prevStep());
         btnNextStep = new Button(grpFootButtons, SWT.NONE);
         btnNextStep.setText(Messages.EccMainView_btnNextStep);
         btnNextStep.addListener(SWT.Selection, e -> nextStep());
@@ -221,33 +219,56 @@ public class EccMainView extends ViewPart {
     private void nextStep() {
         if (!compEncodeStep.isVisible()) {
             ecc.encodeBits();
+            btnPrev.setEnabled(true);
             compEncodeStep.setVisible(true);
             compArrowDown.setVisible(true);
             textInfo.setText(Messages.EccMainView_textInfo_step2);
         } else if (!compArrowRight1.isVisible()) {
             ecc.flipBits();
-            markCodeErrors(textError, SWT.COLOR_RED);
+            markCode(textError, SWT.COLOR_RED);
             compArrowRight1.setVisible(true);
             grpErrorCode.setVisible(true);
             textInfo.setText(Messages.EccMainView_textInfo_step3);
         } else if (!grpReceiver.isVisible()) {
             ecc.correctErrors();
-            markCodeErrors(textCorrected, SWT.COLOR_CYAN);
+            markCode(textCorrected, SWT.COLOR_CYAN);
             grpReceiver.setVisible(true);
             compArrowRight2.setVisible(true);
             compDecodeStep.setVisible(true);
             textInfo.setText(Messages.EccMainView_textInfo_step4);
         } else if (!compOutputStep.isVisible()) {
+            btnNextStep.setEnabled(false);
             compArrowUp.setVisible(true);
             compOutputStep.setVisible(true);
-            textInfo.setText(Messages.EccMainView_textInfo_step5);
         }
+    }
+    private void prevStep() {
+        if (compOutputStep.isVisible()) {
+            btnNextStep.setEnabled(true);
+            compArrowUp.setVisible(false);
+            compOutputStep.setVisible(false);
+        } else if (grpReceiver.isVisible()) {
+            grpReceiver.setVisible(false);
+            compArrowRight2.setVisible(false);
+            compDecodeStep.setVisible(false);
+            textInfo.setText(Messages.EccMainView_textInfo_step3);
+        } else if (compArrowRight1.isVisible()) {
+            compArrowRight1.setVisible(false);
+            grpErrorCode.setVisible(false);
+            textInfo.setText(Messages.EccMainView_textInfo_step2);
+        } else if (compEncodeStep.isVisible()) {
+            btnPrev.setEnabled(false);
+            compEncodeStep.setVisible(false);
+            compArrowDown.setVisible(false);
+            textInfo.setText(Messages.EccMainView_textInfo_step1);
+        } 
     }
 
     private void initView() {
         bindValues();
         textInput.setText("h"); //$NON-NLS-1$
         ecc.textAsBinary();
+        btnPrev.setEnabled(false);
         compEncodeStep.setVisible(false);
         grpErrorCode.setVisible(false);
         grpReceiver.setVisible(false);
@@ -259,15 +280,15 @@ public class EccMainView extends ViewPart {
         compArrowUp.setVisible(false);
     }
 
-    private void markCodeErrors(StyledText st, int swtColor) {
-        List<BitSet> error = ecc.getBitErrors();
+    private void markCode(StyledText st, int swtColor) {
+        List<BitSet> bitsToMark = ecc.getBitErrors();
 
         ArrayList<StyleRange> ranges = new ArrayList<>();
 
         Color color = parent.getDisplay().getSystemColor(swtColor);
 
-        for (int i = 1; i <= error.size(); i++) {
-            BitSet b = error.get(i-1);
+        for (int i = 1; i <= bitsToMark.size(); i++) {
+            BitSet b = bitsToMark.get(i-1);
             for (int j = b.nextSetBit(0); j >= 0; j = b.nextSetBit(j + 1)) {
                 int idx = (i * 7)-j-1;
                 ranges.add(new StyleRange(idx, 1, color, null, Font.ITALIC));

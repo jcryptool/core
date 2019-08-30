@@ -19,7 +19,6 @@ public class Messages extends NLS {
     public static String EccMainView_textInfo_step2;
     public static String EccMainView_textInfo_step3;
     public static String EccMainView_textInfo_step4;
-    public static String EccMainView_textInfo_step5;
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);
