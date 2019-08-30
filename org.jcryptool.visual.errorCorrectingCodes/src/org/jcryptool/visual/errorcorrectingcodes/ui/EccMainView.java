@@ -1,3 +1,6 @@
+/*
+ * @author Daniel Hofmann
+ */
 package org.jcryptool.visual.errorcorrectingcodes.ui;
 
 import java.awt.Font;
@@ -39,11 +42,17 @@ import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.errorcorrectingcodes.EccController;
 import org.jcryptool.visual.errorcorrectingcodes.EccData;
 
+/**
+ * The Class EccMainView.
+ */
 public class EccMainView extends ViewPart {
+    
     private EccController ecc;
     private DataBindingContext dbc;
 
+    /** The scrolled composite to make the page scrollable. */
     private ScrolledComposite scrolledComposite;
+    
     private Composite parent;
     private Composite composite;
     private Composite mainComposite;
@@ -87,15 +96,20 @@ public class EccMainView extends ViewPart {
     private Label lblEncrypt;
     private Label lblDecrypt;
 
+    /**
+     * Instantiates a new ecc main view.
+     */
     public EccMainView() {
         ecc = new EccController(new EccData());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void createPartControl(Composite parent) {
         this.parent = parent;
         Point widthhint = new Point(800, SWT.DEFAULT);
-        Point groupWidthHint = new Point(150, SWT.DEFAULT);
 
         scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
         scrolledComposite.setExpandHorizontal(true);
@@ -118,7 +132,7 @@ public class EccMainView extends ViewPart {
 
         grpSender = new Group(mainComposite, SWT.NONE);
         GridLayoutFactory.fillDefaults().applyTo(grpSender);
-        GridDataFactory.fillDefaults().hint(groupWidthHint).grab(true, true).applyTo(grpSender);
+        GridDataFactory.fillDefaults().grab(true, true).applyTo(grpSender);
         grpSender.setText(Messages.EccMainView_grpSenderStep);
         compInputStep = new Composite(grpSender, SWT.NONE);
         GridLayoutFactory.fillDefaults().applyTo(compInputStep);
@@ -148,7 +162,7 @@ public class EccMainView extends ViewPart {
 
         grpErrorCode = new Group(mainComposite, SWT.NONE);
         GridLayoutFactory.fillDefaults().applyTo(grpErrorCode);
-        GridDataFactory.fillDefaults().hint(groupWidthHint).grab(true, true).applyTo(grpErrorCode);
+        GridDataFactory.fillDefaults().grab(true, true).applyTo(grpErrorCode);
         grpErrorCode.setText(Messages.EccMainView_grpErrorCode);
         textError = multiLineStyledText(grpErrorCode, SWT.FILL, SWT.CENTER);
         // GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.FILL).applyTo(textError);
@@ -207,15 +221,26 @@ public class EccMainView extends ViewPart {
         // composite.pack();
     }
 
+    /**
+     * Method to configure multiline StyledText widgets.
+     *
+     * @param p the parent compoiste
+     * @param hAlign SWT horizontal alignment
+     * @param vAlign SWT vertical alignment
+     * @return the styled text widget
+     */
     private StyledText multiLineStyledText(Composite p, int hAlign, int vAlign) {
-        StyledText text = new StyledText(p, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
+        StyledText text = new StyledText(p, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
         text.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
         text.setFont(FontService.getLargeFont());
-        Point hint = new Point(150, 3 * text.getLineHeight());
+        Point hint = new Point(200, 3 * text.getLineHeight());
         GridDataFactory.fillDefaults().align(hAlign, vAlign).grab(true, true).hint(hint).applyTo(text);
         return text;
     }
 
+    /**
+     * Display Next step by iterating the shown view elements.
+     */
     private void nextStep() {
         if (!compEncodeStep.isVisible()) {
             ecc.encodeBits();
@@ -242,6 +267,10 @@ public class EccMainView extends ViewPart {
             compOutputStep.setVisible(true);
         }
     }
+    
+    /**
+     * Display previous step by iterating the hidden view elements.
+     */
     private void prevStep() {
         if (compOutputStep.isVisible()) {
             btnNextStep.setEnabled(true);
@@ -264,6 +293,9 @@ public class EccMainView extends ViewPart {
         } 
     }
 
+    /**
+     * Initializes the view by hiding later steps.
+     */
     private void initView() {
         bindValues();
         textInput.setText("h"); //$NON-NLS-1$
@@ -280,6 +312,12 @@ public class EccMainView extends ViewPart {
         compArrowUp.setVisible(false);
     }
 
+    /**
+     * Mark a code element according to the produced / corrected errors.
+     *
+     * @param st a styled text widget
+     * @param swtColor a SWT color enum
+     */
     private void markCode(StyledText st, int swtColor) {
         List<BitSet> bitsToMark = ecc.getBitErrors();
 
@@ -297,6 +335,18 @@ public class EccMainView extends ViewPart {
         st.setStyleRanges(ranges.toArray(new StyleRange[ranges.size()]));
     }
 
+    /**
+     * Creates an arrow canvas.
+     *
+     * @param parent the parent composite
+     * @param x1 the x of point 1 
+     * @param y1 the y of point 1
+     * @param x2 the x of point 2
+     * @param y2 the y of point 2
+     * @param length the length of the arrow line
+     * @param arrowSize the arrow head size
+     * @return the canvas widget
+     */
     private ArrowCanvas createArrowCanvas(Composite parent, int x1, int y1, int x2, int y2, int length,
             double arrowSize) {
         ArrowCanvas canvas = new ArrowCanvas(parent, x1, y1, x2, y2, length, arrowSize);
@@ -305,6 +355,10 @@ public class EccMainView extends ViewPart {
         return canvas;
     }
 
+    /**
+     * Bind model values to view elements using the JFace framework.
+     * 
+     */
     private void bindValues() {
         dbc = new DataBindingContext();
 
@@ -327,11 +381,17 @@ public class EccMainView extends ViewPart {
                 BeanProperties.value(EccData.class, "correctedString", String.class).observe(ecc.getData())); //$NON-NLS-1$
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setFocus() {
         mainComposite.setFocus();
     }
 
+    /**
+     * Reset the view to initial state.
+     */
     public void resetView() {
         Control[] children = parent.getChildren();
         for (Control control : children) {

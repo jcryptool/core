@@ -1,5 +1,9 @@
+/*
+ * @author Daniel Hofmann
+ */
 package org.jcryptool.visual.errorcorrectingcodes;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
@@ -7,15 +11,27 @@ import java.util.stream.IntStream;
 
 import org.jcryptool.core.logging.utils.LogUtil;
 
+/**
+ * The Class EccController.
+ */
 public class EccController {
 
     EccData data;
 
+    /**
+     * Instantiates a new ecc controller.
+     *
+     * @param data the data
+     */
     public EccController(EccData data) {
         super();
         this.data = data;
     }
 
+    /**
+     * Convert the original string to a list of 'BitSet's and create a string representation of the bits.
+     */
+    
     public void textAsBinary() {
         String s = data.getOriginalString();
         StringBuilder codeString = new StringBuilder();
@@ -38,6 +54,10 @@ public class EccController {
         data.setBinaryAsString(codeString.toString());
     }
 
+    /**
+     * Encode the original bitsets and store it in the according BitSet list.
+     * Also creates the string representation of the encoded bits.
+     */
     public void encodeBits() {
         data.setEncoded(new ArrayList<BitSet>());
         StringBuilder codeString = new StringBuilder();
@@ -52,19 +72,30 @@ public class EccController {
         data.setCodeAsString(codeString.toString());
     }
 
+    /**
+     * Flip random bits in the encoded BitSets and store it in the according list.
+     */
     public void flipBits() {
+        SecureRandom rand = new SecureRandom();
         data.setErrorCode(new ArrayList<BitSet>());
         StringBuilder codeString = new StringBuilder();
 
         data.getEncoded().forEach(b -> {
+            int error = rand.nextInt(7);
+
             BitSet e = (BitSet) b.clone();
-            e.flip(3);
+            e.flip(error);
             data.getErrorCode().add(e);
             codeString.append(bitSetToString(e, 7));
         });
         data.setCodeStringWithErrors(codeString.toString());
     }
 
+    /**
+     * Gets the difference between the encoded and falsified BitSets.
+     *
+     * @return the errors as a bitset
+     */
     public List<BitSet> getBitErrors() {
         List<BitSet> bits = new ArrayList<>();
         List<BitSet> error = data.getErrorCode();
@@ -75,6 +106,13 @@ public class EccController {
         return bits;
     }
 
+    /**
+     * Convert a BitSet object to string value.
+     *
+     * @param bits the bits
+     * @param offset the offset
+     * @return the string
+     */
     private String bitSetToString(BitSet bits, int offset) {
         StringBuilder bitString = IntStream.range(0, bits.length()).mapToObj(i -> bits.get(i) ? '1' : '0').collect(
                 () -> new StringBuilder(bits.length()), (buf, character) -> buf.append(character),
@@ -89,6 +127,9 @@ public class EccController {
         return bitString.reverse().toString();
     }
 
+    /**
+     * Correct errors by parity check and set the corrected BitSet and string.
+     */
     public void correctErrors() {
         StringBuilder sb = new StringBuilder();
         ArrayList<BitSet> corrected = new ArrayList<>();
@@ -108,6 +149,12 @@ public class EccController {
         data.setCorrectedString(sb.toString());
     }
 
+    /**
+     * Encode a bitset by adding parity bits according to Hamming(7,4) code.
+     *
+     * @param b the input
+     * @return the encoded bitset
+     */
     private BitSet calcHamming(BitSet b) {
         BitSet encoded = new BitSet(7);
         encoded.set(0, b.get(0) ^ b.get(1) ^ b.get(3));
@@ -121,14 +168,30 @@ public class EccController {
         return encoded;
     }
 
+    /**
+     * Gets the data.
+     *
+     * @return the data
+     */
     public EccData getData() {
         return data;
     }
 
+    /**
+     * Sets the data.
+     *
+     * @param data the new data
+     */
     public void setData(EccData data) {
         this.data = data;
     }
 
+    /**
+     * Convert long to BitSet.
+     *
+     * @param value the long value
+     * @return the bitset
+     */
     private static BitSet convert(long value) {
         BitSet bits = new BitSet();
         int index = 0;
@@ -142,6 +205,12 @@ public class EccController {
         return bits;
     }
 
+    /**
+     * Convert bitset to long.
+     *
+     * @param bits the bitset object
+     * @return the long value
+     */
     private static long convert(BitSet bits) {
         long value = 0L;
         for (int i = 0; i < bits.length(); ++i) {
