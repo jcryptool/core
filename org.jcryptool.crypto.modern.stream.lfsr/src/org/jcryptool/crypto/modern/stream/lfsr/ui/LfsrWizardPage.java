@@ -503,7 +503,7 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 		seedValue01StringText.setBackground(ColorService.LIGHTGRAY);
 		seedValue01StringText.setForeground(ColorService.GRAY);
 		seedValue01StringText.setEditable(false);
-		seedValue01StringText.setText(Messages.LfsrWizardPage_seedValueAs01String + "0000000000000000000000000"); //$NON-NLS-1$
+		seedValue01StringText.setText(Messages.LfsrWizardPage_seedValueAs01String + "1000000000000000000000000"); //$NON-NLS-1$
 
 	}
 
