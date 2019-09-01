@@ -196,6 +196,13 @@ public class LoadFiles {
             fc.close();
             file.close();   
 //            log.info("Statistics succesfully loaded");
+            
+//            FileInputStream fileInputStream = new FileInputStream(filename);
+//            FileChannel fileChannel = fileInputStream.getChannel();
+//            fileChannel.read(myByteBuffer);
+//            fileChannel.close();
+//            fileInputStream.close();
+//            doubleBuffer.get(quadgrams);
                 
             } catch (IOException e) {
                 // TODO Auto-generated catch block
