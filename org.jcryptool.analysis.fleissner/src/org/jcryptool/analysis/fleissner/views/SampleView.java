@@ -70,7 +70,7 @@ public class SampleView extends ViewPart {
         createPartControl(viewParent);
         viewParent.layout();
         fw.getModel().setKey(new KeySchablone(Integer.parseInt(fw.getKeySize().getText())));
-        fw.reset();
+        fw.reset("SampleView 'resetView'");
     }
 
 

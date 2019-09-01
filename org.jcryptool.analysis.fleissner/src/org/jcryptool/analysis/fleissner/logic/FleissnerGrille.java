@@ -366,7 +366,8 @@ public class FleissnerGrille {
 //	builds a visualization of the current grille with an "X" at the coordinates of a hole and a "-" else
 	public String toString() {
 		
-		String s="\n\nFilled:\n";
+//		String s="\n\nFilled:\n";
+	    String s="\n";
 		int textLength = this.grilleFilled.length;
 
 		for (int y = 0; y < textLength; y++) {
