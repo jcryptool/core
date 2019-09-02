@@ -490,6 +490,7 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 			// Set the first seed by default to 1.
 			if (i == 0) {
 				tempSpinner.setSelection(1);
+				seed[0] = true;
 			} else {
 				tempSpinner.setSelection(0);	
 			}
