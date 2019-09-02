@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.eclipse.jface.wizard.WizardPage;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -37,6 +36,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
+
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.crypto.modern.stream.lfsr.LfsrPlugin;
@@ -93,7 +93,7 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 
 	/** Contains all decimal digits for convenience */
 	private ArrayList<String> decValues = new ArrayList<String>(10);
-	private static final int KEY_MAX_VALUE = 1024;
+//	private static final int KEY_MAX_VALUE = 1024;
 
 	/**
 	 * Creates a new instance of LfsrWizardPage.
@@ -155,7 +155,7 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 		if (!file.exists()) {
 			return false;
 		}
-		String seedAsString = "", 
+		String 	seedAsString = "", 
 				tapAsString = "", 
 				loadedLfsrLengthAsString = "", 
 				outputOptionAsString = "", 
@@ -254,10 +254,12 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 			displayOutputAndKeystreamButton.setSelection(false);
 			displayKeystreamOnlyButton.setSelection(true);
 			displayKeystreamOnlyButton.notifyListeners(SWT.Selection, new Event());
+			// Set the keystream length to the textfield. The "FLAGS" are necessasry to 
+			// switch of the verfifyListener on keystreamLengthText. Without setting them to 
+			// TRUE before setting a text they will complain, that you should only enter numbers.
+			CLEARING_FLAG = true;
 			keystreamLengthText.setText(keystreamLengthAsString);
-			for (char chr : keystreamLengthAsString.toCharArray()) {
-				keystreamLengthText.append(Character.toString(chr));
-			}
+			CLEARING_FLAG = false;
 		}
 		return true;
 	}
@@ -477,12 +479,20 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 			seedValueTapSettingsDisplayCheckBoxes.add(tempButton);
 		}
 
+		// Set the first seed value by default to 1. With a seed full of zeros the output file
+		// would only contain of zeros.
+
 		for (int i = 0; i < tapSettingsGroupGridLayout.numColumns; i++) {
 			Spinner tempSpinner = new Spinner(seedValueGroup, SWT.BORDER);
 			tempSpinner.setMinimum(0);
 			tempSpinner.setMaximum(1);
 			tempSpinner.setIncrement(1);
-			tempSpinner.setSelection(0);
+			// Set the first seed by default to 1.
+			if (i == 0) {
+				tempSpinner.setSelection(1);
+			} else {
+				tempSpinner.setSelection(0);	
+			}
 			tempSpinner.setLayoutData(seedValueSpinnerGridData);
 			tempSpinner.addListener(SWT.Modify, this);
 			seedValueSpinners.add(tempSpinner);
@@ -493,7 +503,7 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 		seedValue01StringText.setBackground(ColorService.LIGHTGRAY);
 		seedValue01StringText.setForeground(ColorService.GRAY);
 		seedValue01StringText.setEditable(false);
-		seedValue01StringText.setText(Messages.LfsrWizardPage_seedValueAs01String + "0000000000000000000000000"); //$NON-NLS-1$
+		seedValue01StringText.setText(Messages.LfsrWizardPage_seedValueAs01String + "1000000000000000000000000"); //$NON-NLS-1$
 
 	}
 
@@ -551,9 +561,9 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 					} else if (keystreamLengthText.getText().length() == 0 && e.text.equals("0")) { //$NON-NLS-1$
 						setErrorMessage(Messages.LfsrWizardPage_13);
 						e.doit = false;
-					} else if ((Long.parseLong(keystreamLengthText.getText() + e.text)) > KEY_MAX_VALUE) {
-						setErrorMessage(NLS.bind(Messages.LfsrWizardPage_12, KEY_MAX_VALUE));
-						e.doit = false;
+//					} else if ((Long.parseLong(keystreamLengthText.getText() + e.text)) > KEY_MAX_VALUE) {
+//						setErrorMessage(NLS.bind(Messages.LfsrWizardPage_12, KEY_MAX_VALUE));
+//						e.doit = false;
 					}
 				}
 			}
@@ -575,19 +585,21 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 			setFinalTapSetting();
 			updateTapSetting01StringText();
 			updateSeedValue01StringText();
+			setDefaultKeystreamLength();
 		} else if (event.widget == displayOutputOnlyButton) {
 			displayOption = DisplayOption.OUTPUT_ONLY;
-			clearKeystreamLength();
+//			clearKeystreamLength();
 			keystreamLengthText.setEnabled(false);
 			setErrorMessage(null);
 		} else if (event.widget == displayOutputAndKeystreamButton) {
 			displayOption = DisplayOption.OUTPUT_AND_KEYSTREAM;
-			clearKeystreamLength();
+//			clearKeystreamLength();
 			keystreamLengthText.setEnabled(false);
 			setErrorMessage(null);
 		} else if (event.widget == displayKeystreamOnlyButton) {
 			displayOption = DisplayOption.KEYSTREAM_ONLY;
 			keystreamLengthText.setEnabled(true);
+			setDefaultKeystreamLength();
 		} else if (event.widget == keystreamLengthText) {
 			keystreamLengthValue = keystreamLengthText.getText();
 		} else {
@@ -605,6 +617,19 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 			updateSeedValue01StringText();
 		}
 		setPageComplete(mayFinish());
+	}
+	
+	/**
+	 * Calculates the length of one lfsr cycle.
+	 * @return The cycle length depending on the lfsr Length.
+	 */
+	private void setDefaultKeystreamLength() {
+		int result = new Double(Math.pow(2, lfsrLength) - 1).intValue();
+		CLEARING_FLAG = true;
+		keystreamLengthText.setText(Integer.toString(result)); //$NON-NLS-1$
+		CLEARING_FLAG = false;
+		keystreamLengthText.requestLayout();
+		keystreamLengthValue = Integer.toString(result);
 	}
 
 	private void setSelectableTapSettingVisibilities() {
@@ -647,12 +672,12 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 		seedValue01StringText.setText(stringBuilder.toString());
 	}
 
-	private void clearKeystreamLength() {
-		CLEARING_FLAG = true;
-		keystreamLengthText.setText(""); //$NON-NLS-1$
-		CLEARING_FLAG = false;
-		keystreamLengthValue = ""; //$NON-NLS-1$
-	}
+//	private void clearKeystreamLength() {
+//		CLEARING_FLAG = true;
+//		keystreamLengthText.setText(""); //$NON-NLS-1$
+//		CLEARING_FLAG = false;
+//		keystreamLengthValue = ""; //$NON-NLS-1$
+//	}
 
 	public void setPreviousFinalTapSetting() {
 		tapSettingsCheckBoxes.get(lfsrLength - 1).setEnabled(true);

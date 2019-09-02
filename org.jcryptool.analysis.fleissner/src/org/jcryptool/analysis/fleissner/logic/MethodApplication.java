@@ -1,10 +1,13 @@
 package org.jcryptool.analysis.fleissner.logic;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.FileNotFoundException;
 import java.math.BigInteger;
+import java.time.Duration;
+
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.analysis.fleissner.UI.FleissnerWindow;
 
@@ -67,33 +70,33 @@ public class MethodApplication{
 				e.printStackTrace();
 				throw new FileNotFoundException("File not found !");
 			}
-			if ((this.grille == null) && (isPlaintext)) {
-				// Build a random grille
-//			    fw.setAnalysisOutput("Grillvalue: "+String.valueOf(grille)+", \nrandom grille will be created\n");
-			    analysisOutput.append("Grillvalue: "+String.valueOf(grille)+", \nrandom grille will be created\n");
-				log.info("Grillvalue: "+String.valueOf(grille)+", \nrandom grille will be created");
-				this.grille = new int[2*holes];	
-				fg.clearGrille();
-				String key = "";
-				
-				for(int i=0; i<holes; i++)
-				{
-					do
-					{
-						x = ThreadLocalRandom.current().nextInt(0, templateLength);
-						y = ThreadLocalRandom.current().nextInt(0, templateLength);
-					}
-					while (!fg.isPossible(x, y));
-
-				fg.setState(x, y, true);
-				grille[2*i] = x;
-				key += x+",";
-				grille[(2*i)+1] = y;
-				key += y+",";
-				}
-				fwAnalysisOutput.append("random grille: "+key+" created with\nTextInLine:\n"+textInLine+"\nisPlaintext: "+isPlaintext+"\nkeyLength: "+templateLength+"\n");
-				log.info("random grille: "+key+" created with\nTextInLine:\n"+textInLine+"\nisPlaintext: "+isPlaintext+"\nkeyLength: "+templateLength);
-			}
+//			if ((this.grille == null) && (isPlaintext)) {
+//				// Build a random grille
+////			    fw.setAnalysisOutput("Grillvalue: "+String.valueOf(grille)+", \nrandom grille will be created\n");
+//			    analysisOutput.append("Grillvalue: "+String.valueOf(grille)+", \nrandom grille will be created\n");
+//				log.info("Grillvalue: "+String.valueOf(grille)+", \nrandom grille will be created");
+//				this.grille = new int[2*holes];	
+//				fg.clearGrille();
+//				String key = "";
+//				
+//				for(int i=0; i<holes; i++)
+//				{
+//					do
+//					{
+//						x = ThreadLocalRandom.current().nextInt(0, templateLength);
+//						y = ThreadLocalRandom.current().nextInt(0, templateLength);
+//					}
+//					while (!fg.isPossible(x, y));
+//
+//				fg.setState(x, y, true);
+//				grille[2*i] = x;
+//				key += x+",";
+//				grille[(2*i)+1] = y;
+//				key += y+",";
+//				}
+//				fwAnalysisOutput.append("random grille: "+key+" created with\nTextInLine:\n"+textInLine+"\nisPlaintext: "+isPlaintext+"\nkeyLength: "+templateLength+"\n");
+//				log.info("random grille: "+key+" created with\nTextInLine:\n"+textInLine+"\nisPlaintext: "+isPlaintext+"\nkeyLength: "+templateLength);
+//			}
 		}
 	}		
 	
@@ -102,31 +105,31 @@ public class MethodApplication{
 //		Executes one of the methods Brute-Force or Hill-Climbing dependent on templateLength
 
 	    start = System.currentTimeMillis();
-	    fwAnalysisOutput.append("Start analysis \n");
+	    fwAnalysisOutput.append("\nStart analysis");
 	    log.info("Start analysis ");
 	    
 	    if (this.possibleTemplateLengths.isEmpty()) {
 	    	
 			ct.load(textInLine, isPlaintext, templateLength, grille, fg);
-			fwAnalysisOutput.append("INFO:\n"+ct.toString()+"\n");
-			log.info("INFO:\n"+ct.toString());
+			fwAnalysisOutput.append("\nINFO:"+ct.toString());
+			log.info("\nINFO:\n"+ct.toString());
 			if (templateLength<5){
 //				Brute Force for up to 4 x 4 grilles. Creates all possibles grilles and evaluates each text decrypted by them
 				procedure = "Brute-Force";
-				fwAnalysisOutput.append("Start "+procedure+"\n");
+				fwAnalysisOutput.append("\nStart "+procedure);
 				log.info("Start "+procedure);
 				this.bruteForce();
-				fwAnalysisOutput.append("\nFinished "+procedure+"\n");
+				fwAnalysisOutput.append("\nFinished "+procedure);
 				log.info("\nFinished "+procedure);
 			}
 			else {
 //				Hill-Cimbing for templates from 5 x 5. creates random grilles and evaluates those and slightly variations of them before
 //				trying new random grilles.
 				procedure = "Hill-Climbing";
-				fwAnalysisOutput.append("Start "+procedure+"\n");
+				fwAnalysisOutput.append("\nStart "+procedure);
 				log.info("Start "+procedure);
 				this.hillClimbing();
-				fwAnalysisOutput.append("\nFinished "+procedure+"\n");
+				fwAnalysisOutput.append("\nFinished "+procedure);
 				log.info("\nFinished "+procedure);
 			}
 	    }else {
@@ -137,7 +140,7 @@ public class MethodApplication{
 	    	
 	    	for (int length : this.possibleTemplateLengths) {
 	    		this.templateLength = length;
-	    		fwAnalysisOutput.append("Try with length: "+templateLength+"\n");
+	    		fwAnalysisOutput.append("\nTry with length: "+templateLength);
 	    		log.info("Try with length: "+templateLength);
 				if (templateLength%2==0) {
 					this.holes = (int) (Math.pow(templateLength, 2))/4;
@@ -150,22 +153,22 @@ public class MethodApplication{
 				this.grille = null;
 				this.isPlaintext = false;
 				ct.load(textInLine, isPlaintext, templateLength, grille, fg);
-				fwAnalysisOutput.append("INFO:\n"+ct.toString()+"\n");
+				fwAnalysisOutput.append("\nINFO:\n"+ct.toString());
 				log.info("INFO:\n"+ct.toString());
 	    		if (templateLength<5){
 //	    			Brute Force for up to 4 x 4 grilles. Creates all possibles grilles and evaluates each text decrypted by them
 	    			procedure = "Brute-Force";
-//	    			fwAnalysisOutput.append("Start "+procedure);
+	    			fwAnalysisOutput.append("\nStart "+procedure);
 	    			log.info("Start "+procedure);
 	    			this.bruteForce();
-//	    			fwAnalysisOutput.append("\nFinished "+procedure);
+	    			fwAnalysisOutput.append("\nFinished "+procedure);
 	    			log.info("\nFinished "+procedure);
 	    		}
 	    		else {
 //	    			Hill-Cimbing for templates from 5 x 5. creates random grilles and evaluates those and slightly variations of them before
 //	    			trying new random grilles.
 	    			procedure = "Hill-Climbing";
-	    			fwAnalysisOutput.append("Start "+procedure);
+	    			fwAnalysisOutput.append("\nStart "+procedure);
 	    			log.info("Start "+procedure);
 	    			this.hillClimbing();
 	    			fwAnalysisOutput.append("\nFinished "+procedure);
@@ -173,7 +176,7 @@ public class MethodApplication{
 	    		}
 	    		relativeValue = alltimeLow/fg.decryptText(ct.getText()).length();
 	    		if (relativeValue<tempRelativeValue) {
-	    		    fwAnalysisOutput.append("value has been changed. Relative value is: "+relativeValue+" relative to "+alltimeLow+" with length "+length);
+	    		    fwAnalysisOutput.append("\nvalue has been changed. Relative value is: "+relativeValue+" relative to "+alltimeLow+" with length "+length);
 	    			log.info("value has been changed. Relative value is: "+relativeValue+" relative to "+alltimeLow+" with length "+length);
 	    			tempRelativeValue = relativeValue;
 	    			tempvalue = alltimeLow;
@@ -214,11 +217,11 @@ public class MethodApplication{
 		fg.clearGrille();
 		ArrayList<int[]> templateList = fg.bruteForce(templateLength, holes);
 		if (templateList.isEmpty()) {
-		    fwAnalysisOutput.append("templateList is empty");
+		    fwAnalysisOutput.append("\ntemplateList is empty");
 			log.info("templateList is empty");
 			return;
 		}
-		fwAnalysisOutput.append("sift through all templates");
+		fwAnalysisOutput.append("\nsift through all templates");
 		log.info("sift through all templates");
 		// using every possible template / Grille
 		for (int[] template : templateList) {
@@ -235,8 +238,8 @@ public class MethodApplication{
 				grilleNumber = iAll;
 			}	
 			fwAnalysisOutput.append("\n\nGrille: "+iAll+fg);
-            fwAnalysisOutput.append("Accurateness: " + value + " (best: "+alltimeLow+")");
-            fwAnalysisOutput.append("Decrypted text:\n ==> "+decryptedText+"\n");
+            fwAnalysisOutput.append("\nAccurateness: " + value + " (best: "+alltimeLow+")");
+            fwAnalysisOutput.append("\nDecrypted text:\n ==> "+decryptedText+"\n");
 			log.info("\n\nGrille: "+iAll+fg);
 			log.info("Accurateness: " + value + " (best: "+alltimeLow+")");
 			log.info("Decrypted text:\n ==> "+decryptedText+"\n");
@@ -266,12 +269,12 @@ public class MethodApplication{
 
 			fg.setState(x, y, true);
 			}
-			fwAnalysisOutput.append("Restart: "+sub);
-			log.info("Restart: "+sub/*+", fleissnergrille to string (random): "+fg*/);
+			fwAnalysisOutput.append("\n\nRestart: "+sub);
+			log.info("\n\nRestart: "+sub/*+", fleissnergrille to string (random): "+fg*/);
 			decryptedText = fg.decryptText(ct.getText());
 			min = tv.evaluate(decryptedText);
-			fwAnalysisOutput.append("Decrypted Text: "+decryptedText+"\nwith value: "+String.valueOf(min));
-			log.info("Decrypted Text: "+decryptedText+"\nwith value: "+String.valueOf(min));
+			fwAnalysisOutput.append("\nDecrypted Text: \n"+decryptedText+"\n\nwith value: "+String.valueOf(min));
+			log.info("Decrypted Text: "+decryptedText+"with value: "+String.valueOf(min));
 			
 			do{
 				iAll++;
@@ -317,12 +320,12 @@ public class MethodApplication{
 						bestTemplate = fg.saveTemplate(holes);
 						lastImprovement = String.valueOf(sub);
 						changes++;
-						fwAnalysisOutput.append("\nbest grille yet with "+changes+" changes, where value is " +alltimeLow+"\n"+fg+"\n");
+						fwAnalysisOutput.append("\n\nbest grille yet with "+changes+" changes, where value is " +alltimeLow+"\n"+fg+"\n");
 						log.info("best grille yet with "+changes+" changes, where value is " +alltimeLow+"\n"+fg);
-					}
-					fwAnalysisOutput.append("\ntry: " + iAll + ", changes: "+changes + " (last at: " + grilleNumber + "in restart: "+lastImprovement+"), accurateness: " + min + " (best: "+oldValue+", alltime: "+alltimeLow+")\n");
-                    fwAnalysisOutput.append("\n==> "+decryptedText+"\n Grille: \n"+fg+"\n");
-					log.info("try: " + iAll + ", changes: "+changes + " (last at: " + grilleNumber + "in restart: "+lastImprovement+"), accurateness: " + min + " (best: "+oldValue+", alltime: "+alltimeLow+")");
+					} 
+					fwAnalysisOutput.append("\n\ntry: " + iAll + ", changes: "+changes + " (last at: " + grilleNumber + " in restart: "+lastImprovement+"), accurateness: " + min + " (best: "+oldValue+", alltime: "+alltimeLow+")\n");
+                    fwAnalysisOutput.append("\n==> "+decryptedText+"\n\n Grille: "+fg+"\n");
+					log.info("try: " + iAll + ", changes: "+changes + " (last at: " + grilleNumber + " in restart: "+lastImprovement+"), accurateness: " + min + " (best: "+oldValue+", alltime: "+alltimeLow+")");
 					log.info("==> "+decryptedText+"\n Grille: \n"+fg);
 				}
 			} while (Math.abs(iAll-improvement)<1);
@@ -379,7 +382,7 @@ public class MethodApplication{
 		ct.load(textInLine, isPlaintext, templateLength, grille, fg);
 		fg.useTemplate(grille, templateLength);
 		decryptedText = fg.decryptText(ct.getText());
-		fwAnalysisOutput.append("Crypted text succesfully decrypted");
+		fwAnalysisOutput.append("\nCrypted text succesfully decrypted");
 		log.info("Crypted text succesfully decrypted");
 	}
 	
@@ -439,6 +442,7 @@ public class MethodApplication{
 		switch(this.method) {
 		
 		case "analyze":
+		    String time;
 			bestDecryptedText = fg.decryptText(ct.getText());
 			value = tv.evaluate(bestDecryptedText);
 			for (int i = 0; i<bestTemplate.length;i++) {
@@ -448,8 +452,24 @@ public class MethodApplication{
 			output += "\nDecrpyted text:\n\n"+bestDecryptedText+"\n\n";
 //			output += "Procedure: "+procedure+"\n";
 //			output += "Accurateness: " + value+" (where alltimelow is "+alltimeLow+ ")\n";
-			output += "Finished analysis in "+end+" miliseconds";
-				
+			if (end<60000)
+			    time = end+" milliseconds";
+			else {
+			    long timeInDays, timeInHours, timeInMinutes, timeInSeconds;
+			    
+			    timeInSeconds = end/1000;
+			    Duration duration = Duration.ofSeconds(timeInSeconds);
+
+			    timeInDays = duration.toDays();
+			    duration=duration.minusDays(timeInDays);
+			    timeInHours = duration.toHours();
+			    duration=duration.minusHours(timeInHours);
+			    timeInMinutes = duration.toMinutes();
+			    duration=duration.minusMinutes(timeInMinutes);
+			    timeInSeconds = duration.getSeconds();
+	            time = String.format("%02d:%02d:%02d:%02d", timeInDays, timeInHours, timeInMinutes, timeInSeconds)+" (dd:hh:mm:ss)";
+			}
+			output += "Finished analysis in "+time;
 			break;
 		case "encrypt":
 			output = "\nEncrypted text:\n\n"+encryptedText+",\nencrypted with key:"+fg;
