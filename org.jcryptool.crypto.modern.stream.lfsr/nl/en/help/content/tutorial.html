@@ -10,17 +10,19 @@
 	<h1>LFSR Cipher</h1>
 
   <p>This help file describes LFSR ciphers in general. 
-  A description how to use them in JCT can be found in the tutorial to the GUI <a href="UI/tutorialUI.html">LFSR: How to use this visualization</a>.</p>
+  A description how to use them in JCT can be found in the tutorial to the GUI: <a href="UI/tutorialUI.html">LFSR: How to use this visualization</a>.</p>
 
 
+	<br>
 	<h2>What is an LFSR?</h2>
 
-	<p>A linear feedback shift register (LFSR) is a sequential shift register with combinational logic which causes it to pseudo-randomly cycle through a sequence of binary values. The input bit of the shift register is a linear function of its previous state. The most commonly used linear function of single bits is exclusive-or (XOR).<br>
+	<p>A linear feedback shift register (LFSR) is a sequential shift register with combinatorial logic which causes it to pseudo-randomly cycle through a sequence of binary values. The input bit of the shift register is a linear function of its previous state. The most commonly used linear function of single bits is exclusive-or (XOR).<br>
 	For most of the general explanations, the authors used the wording from Wikipedia [1].</p>
 	<p>The initial value of the LFSR is called the seed, and because the operation of the register is deterministic, the sequence of values produced by the register is completely determined by its current (or previous) state. Likewise, because the register has a finite number of possible states, it must eventually enter a repeating cycle.</p>
 	<p> However, an LFSR with a well-chosen feedback function can produce a sequence of bits which appears random and which has a very long cycle. A design modeled after LFSRs often has both speed and area advantages over a functionally equivalent design that does not use LFSRs.</p>
 
 
+	<br>
 	<h2>How do LFSRs work?</h2>
 
 	<p>LFSRs can be implemented in more than one way, but the scope of this document will focus on the most common one &ndash; the Fibonacci implementation.</p>
@@ -69,6 +71,7 @@
 	favor of their maximal-length counterparts.</p>
 
 
+	<br>
 	<h2>Why are LFSRs useful?</h2>
 
 	<p>LFSRs have long been used as pseudo-random number generators for use in stream
@@ -78,6 +81,29 @@
 	both, A5/1 and E0, have serious weaknesses.</p>
 
 
+	<br>
+	<h2>Examples</h2>
+
+	<p><b>a) 4-bit Fibonacci LFSR</b> from Anne Canteaut [6], section 3.1, page 44:<br>
+	<pre>
+c = tap = 0011
+seed    = 1011
+Expected output starts with:         1011 1100 0100 1101 = 0xBC4D
+Expected output (after first stage): 1100 0100 1101
+	</pre>
+	</p>
+	
+	<p><b>b) 16-bit Fibonacci LFSR</b> from Wikipedia [1], see Figure 1 above:
+	<pre>
+c = tap = 0000 0000 0010 1101
+seed    = 1010 1100 1110 0001 = 0xACE1
+Expected output (after first stage):
+          0101 0110 0111 0000 = 0x5670
+	</pre>
+	The tap numbers correspond to a primitive polynomial, so the register cycles through the maximum number of all possible 65535 states (excluding the all-zeroes state). The state 0xACE1 (hexadecimal) will be followed by 0x5670.</p>
+
+
+	<br>
 	<h2>References and where to go to find out more?</h2>
 
 	<ul>
@@ -85,7 +111,8 @@
 		<li><a href="https://www.eetimes.com/document.asp?doc_id=1274550">[2] Tutorial: Linear Feedback Shift Registers (LFSRs)</a></li>
 		<li><a href="http://www.maxim-ic.com/appnotes.cfm?appnote_number=1743&CMP=WP-9">[3] Pseudo-Random Number Generation Routine</a></li>
 		<li><a href="http://www.crypto-textbook.com/">[4] Christof Paar and Jan Pelzl: "Understanding Cryptography – A Textbook for Students and Practioners", 2010, Chapter 2.3</a></li>		
-		<li><a href="https://www.amazon.de/Kryptographie-Entwurf-Einsatz-symmetrischer-Kryptosysteme/dp/3486222139">[5] W. Fumy and H.P. Riess: "Kryptographie", 1994, 2nd edition, Chapters 3.2 and 3.3</a></li>		
+		<li><a href="https://www.amazon.de/Kryptographie-Entwurf-Einsatz-symmetrischer-Kryptosysteme/dp/3486222139">[5] W. Fumy and H.P. Riess: "Kryptographie", 1994, 2nd edition, Chapters 3.2 and 3.3</a></li>
+		<li><a href="https://www.rocq.inria.fr/secret/Anne.Canteaut/MPRI/chapter3.pdf">[6] Anne Canteaut: "LFSR-based Stream Ciphers"</a></li>		
 	</ul>
 <br>	
 </body>
