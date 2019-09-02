@@ -99,7 +99,7 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 	 * Creates a new instance of LfsrWizardPage.
 	 */
 	public LfsrWizardPage() {
-		super(".", "LFSR", null); //$NON-NLS-1$ //$NON-NLS-2$
+		super(".", "LFSR", null); //$NON-NLS-1$ //$NON-NLS-2	
 		setTitle(Messages.LfsrWizardPage_0);
 		setMessage(Messages.LfsrWizardPage_1);
 		setupDecimalValues();
