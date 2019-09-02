@@ -9,54 +9,79 @@
 <body>
 	<h1>LFSR: How to use this visualization</h1>
 
-	<p>This tutorial will guide you through an encryption and a decryption with a modern stream cipher,
-	the Linear Feedback Shift Register (LFSR), which is provided by the
-	org.jcryptool.crypto.modern.stream.lfsr plug-in.<br>
-	<b>Note:</b> As with all algorithms, you can only perform the following steps when you have an opened
-	editor window.</p>
+	<p>This tutorial will guide you, how to encrypt or decrypt a message with a modern basic stream cipher, the Linear Feedback Shift Register (LFSR). How the LFSR works (including references and some examples) is described in the accompanied online help website: <a href="../tutorial.html">LFSR Cipher</a>.</p>
+	
+	<p><b>Note:</b> The keystream can be generated just by using this dialog. To encrypt a message please first load it in the JCT editor (like with all menu items below Algorithms -> Symmetric, the cipher is applied to the content of the active editor window).</p>
+
+	<p>This help file describes four use cases:</p>
+	<p>1) <a href="#Enc-textmessage">Encrypting a text message</a></p>
+	<p>2) <a href="#Dec-lsfr-ciphertext">Decrypting an LFSR ciphertext</a></p>
+	<p>3) <a href="#Output-keystream-used">Additionally outputting the keystream used for encryption or decryption</a></p>
+	<p>4) <a href="#Display-generated-keystream">Display the generated keystream (without applying it for encryption or decryption)</a> </p>
+
+
+	<br>
+	<h2 id="Enc-textmessage">1) Encrypting a text message</h2>
 
 	<img src="figure1.png">
 
 	<p>Select the size of the LFSR (restricted to a value between 1 and 25
-	for presentation purposes). You then have to select which bits are tapped and the value of the seed
-	(the LFSR's initial state). In our example we have an LFSR of length 21. The 5th, 14th, 17th, 18th
-	and 21st bits are tapped (note that the final bit is always considered to be tapped). The LFSR's seed
-	is 100100100010001000110. Clicking on the Finish button will start the encryption/ decryption
-	process.</p>
+	for presentation purposes). You then have to select which bits are tapped and the value of the seed (the LFSR's initial state, sometimes also called stage).</p>
+	<p>In our example we use the message "This is a JCrypTool txt file" and we have an LFSR of length 21. The 5th, 14th, 17th, 18th, and 21st bits are tapped (note that the final (right-most, oldest) bit in the register belongs to the highest degree of the binary polynomial and that it is always to be tapped). The chosen LFSR's seed is 100100100010001000110.
+	<pre>
+  tap  = 0000 1000 0000 0100 1100 1
+  seed = 1001 0010 0010 0010 0011 0
+	</pre>
+	Expected output (after first stage): xxxxxxxxxxxx(TODO).</p>
+	<!-- TODO: Add the according picture from CT2. Check language and correct order of taps and seed.  &nbsp; = 1 Leerzeichen.   &ensp; = 2 Leerzeichen. -->
+	
+	<p>The following screenshot (taken from CrypTool 2) shows the 21-bit register, its 5 taps and its initial state.</p>
+	<img src="figure7.png">
+	
+	<br><br>
+	<p>Clicking on the <b>Finish</b> button will start the encryption/decryption process, close the LFSR dialog, and show the output in a new JCT hex editor window.</p>
 
 	<img src="figure2.png">
 
-	<p>The resulting ciphertext (in output001.bin) can be decrypted, by selecting identical settings and
-	values in the same wizard that was used for encryption. (Note: The output is opened in a hex editor
-	rather than a text editor. This is because modern algorithms are based on bytes, not characters; as
-	such, opening a text editor would be inappropriate.)</p>
+
+
+
+
+	<br><br>
+	<h2 id="Dec-lsfr-ciphertext">2) Decrypting an LFSR ciphertext</h2>
+  
+	<p>The resulting ciphertext (in output001.bin) can be decrypted, by selecting identical settings and values in the same wizard that was used for encryption. (Note: The output is opened in a hex editor rather than a text editor. This is because modern algorithms are based on bytes, not characters; as such, opening a text editor would be inappropriate.)</p>
 
 	<img src="figure3.png">
 
-	<p>Clicking on the Finish button will now start the decryption of the ciphertext and yield the correct
-	plaintext which will be displayed in a new editor (output002.bin in the screenshot below).</p>
+	<br><br>
+	<p>Clicking on the <b>Finish</b> button will now start the decryption of the ciphertext and yield the correct plaintext which will be displayed in a new editor (output002.bin in the screenshot below).</p>
 
 	<img src="figure4.png">
 
-	<h2>Outputting the keystream</h2>
 
-	<p>Selecting the Display output file with keystream in a separate hex editor radio button will open a
-	second file containing the generated keystream from that encryption/ decryption process. A
-	comparison of the keystream from the encryption process to that of the decryption process will
-	show that given identical inputs, an identical keystream is produced.</p>
+
+	<br><br>
+	<h2 id="Output-keystream-used">3) Additionally outputting the keystream used for encryption or decryption</h2>
+
+	<p>Selecting the second radio button in the rectangle <b>output options</b>, offers to display not only the ciphertext, but also the keystream used in that encryption/decryption process in two separate hex editor windows.</p>
+	<p>A comparison of the keystream from the encryption process to that of the decryption process will show that given identical inputs, an identical keystream is produced.</p>
 
 	<img src="figure5.png">
 
-	<p>The keystream is displayed in a new editor (output004.bin above), with the plaintext being
-	displayed as usual (output003.bin).<br>
-	Selecting the Display keystream only (of specified number of bytes): radio button will open a file
-	containing a specified number of bytes of generated keystream. The number of bytes of keystream
-	to generate is specified in a textbox which is enabled when the Display keystream only button is
-	selected.</p>
+	<p>The keystream is displayed in a new editor window (output004.bin above), with the plaintext being displayed as usual (output003.bin).<br>
+
+
+
+	<br>
+	<h2 id="Display-generated-keystream">4) Display the generated keystream (without applying it for encryption or decryption)</h2>
+
+	Selecting the third radio button in the rectangle <b>output options</b>, offers to display only the keystream (of a specified number of bytes). The number of bytes to generate for the keystream is specified in a textbox which is only enabled when the "Display keystream only" button is selected.</p>
 
 	<img src="figure6.png">
 
-	<p>Our example shows the keystream generated, given the same seed and tap settings input as earlier,
-	up to 100 bytes.</p>
+	<p>Our example shows the first 100 bytes of the keystream (output005.bin above),  generated with the same seed and tap settings input as earlier.</p>
+
+<br>	
 </body>
 </html>
