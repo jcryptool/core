@@ -140,7 +140,10 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
      */
     private void setAlgorithmActionStatus(IWorkbenchPart part) {
         try {
-        	if (EditorsManager.getInstance().isEditorOpen()) {	
+        	// First condition: An editor must be open.
+        	// Second condition: The open editor must contain some content.
+        	if (EditorsManager.getInstance().isEditorOpen() &&
+        			EditorsManager.getInstance().getActiveEditorContentInputStream().available() > 0) {	
         		OperationsPlugin.getDefault().getAlgorithmsManager().setCommandsEnabled(true);
             } else {
                 OperationsPlugin.getDefault().getAlgorithmsManager().setCommandsEnabled(false);
