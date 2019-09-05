@@ -23,6 +23,7 @@ import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.OperationsPlugin;
+import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.constants.IConstants;
 
 /**
@@ -81,10 +82,12 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 
                 @Override
 				public void partBroughtToTop(IWorkbenchPart part) {
+                	setAlgorithmActionStatus(part);
                 }
 
                 @Override
 				public void partClosed(IWorkbenchPart part) {
+                	setAlgorithmActionStatus(part);
                 }
 
                 @Override
@@ -94,6 +97,7 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 
                 @Override
 				public void partOpened(IWorkbenchPart part) {
+                	setAlgorithmActionStatus(part);
                 }
             });
 
@@ -136,8 +140,8 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
      */
     private void setAlgorithmActionStatus(IWorkbenchPart part) {
         try {
-            if (getWorkbenchConfigurer().getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor() != null) {
-                OperationsPlugin.getDefault().getAlgorithmsManager().setCommandsEnabled(true);
+        	if (EditorsManager.getInstance().isEditorOpen()) {	
+        		OperationsPlugin.getDefault().getAlgorithmsManager().setCommandsEnabled(true);
             } else {
                 OperationsPlugin.getDefault().getAlgorithmsManager().setCommandsEnabled(false);
             }
