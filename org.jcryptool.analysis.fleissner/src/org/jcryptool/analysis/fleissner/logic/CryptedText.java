@@ -1,11 +1,14 @@
 package org.jcryptool.analysis.fleissner.logic;
 import java.util.ArrayList;
-import java.util.logging.Logger;
+
+import org.jcryptool.analysis.fleissner.Activator;
+//import java.util.logging.Logger;
+import org.jcryptool.core.logging.utils.LogUtil;;
 
 
 public class CryptedText {
 	
-	private static final Logger log = Logger.getLogger( CryptedText.class.getName() );
+//	private static final Logger log = Logger.getLogger( CryptedText.class.getName() );
 	
 	private ArrayList<char[][]> text = new ArrayList<char[][]>();
 	private String line;
@@ -17,12 +20,16 @@ public class CryptedText {
 			line=textInLine;
 			int textLength = line.length();
 			if (isPlaintext) {
-				log.info("Plaintext: "+line);
-				log.info("Length of plaintext: "+line.length());
+//				log.info("Plaintext: "+line);
+				LogUtil.logInfo(Activator.PLUGIN_ID, "Plaintext: "+line);
+//				log.info("Length of plaintext: "+line.length());
+				LogUtil.logInfo(Activator.PLUGIN_ID, "Length of plaintext: "+line.length());
 			}
 			else {
-				log.info("Crypted text: "+line);
-				log.info("Length of crypted text: "+line.length());
+//				log.info("Crypted text: "+line);
+				LogUtil.logInfo(Activator.PLUGIN_ID, "Crypted text: "+line);
+//				log.info("Length of crypted text: "+line.length());
+				LogUtil.logInfo(Activator.PLUGIN_ID, "Length of crypted text: "+line.length());
 			}
 			
 			char[][] textPart;
@@ -46,23 +53,27 @@ public class CryptedText {
 
 				randomLetters = letterFields-(textLength/*-filler*/%letterFields);
 				
-				String X = "X";
+//				String X = "X";
 				if (randomLetters!=letterFields) {
-					log.info(randomLetters+" random letters inserted");
+//					log.info(randomLetters+" random letters inserted");
+					LogUtil.logInfo(Activator.PLUGIN_ID, randomLetters+" random letters inserted");
 					for (int i=textLength;i<textLength+randomLetters;i++) {
 						
 						line += (char) ('A' + 26*Math.random());
 					}
 					
-					log.info("Modified plaintext: "+line);
+//					log.info("Modified plaintext: "+line);
+					LogUtil.logInfo(Activator.PLUGIN_ID, "Modified plaintext: "+line);
 				}
 				else {
 					
-					log.info("no random letters inserted");
+//					log.info("no random letters inserted");
+					LogUtil.logInfo(Activator.PLUGIN_ID, "no random letters inserted");
 				}
 				
 				line = fg.encryptText(line, coordinates);
-				log.info("plaintext successfully encrypted");
+//				log.info("plaintext successfully encrypted");
+				LogUtil.logInfo(Activator.PLUGIN_ID, "plaintext successfully encrypted");
 			}
 			
 			while (k <line.length()) {
@@ -86,7 +97,8 @@ public class CryptedText {
 			}
 				
 		} catch (Exception e) {
-			log.severe("An error occured during file handling: " + e);
+//			log.severe("An error occured during file handling: " + e);
+			LogUtil.logError(Activator.PLUGIN_ID, "Text konnte nicht geladen werden", e, true);
 			e.printStackTrace();
 		}
 	}

@@ -13,6 +13,8 @@ import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Logger;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.analysis.fleissner.Activator;
+import org.jcryptool.core.logging.utils.LogUtil;
 
 /**
  * @author Dinah
@@ -20,7 +22,7 @@ import org.eclipse.swt.widgets.Text;
  */
 public class ParameterSettings {
 
-	private static final Logger log = Logger.getLogger( FleissnerGrilleSolver.class.getName() );
+//	private static final Logger log = Logger.getLogger( FleissnerGrilleSolver.class.getName() );
 	
 	private ArrayList<Integer> possibleTemplateLengths = new ArrayList<>();
 	
@@ -33,13 +35,13 @@ public class ParameterSettings {
 	private int holes = 0;
 	private int[] grille = null;
 	private BigInteger restart = new BigInteger("0");
-	private String statistics = null;
+//	private String statistics = null;
 	private String language = null;
 	private int nGramSize = 0;
 	
 //	Sets all parameters and method to be applied. Checks, if combinations of given parameters are useful to start a method.
 //	Sets default values to non given parameters, if useful and throws Exception else.
-	public ParameterSettings(String[] args, Text analysisOutput) throws InvalidParameterCombinationException, FileNotFoundException{
+	public ParameterSettings(String[] args/*, Text analysisOutput*/) throws InvalidParameterCombinationException, FileNotFoundException{
 		// TODO Auto-generated constructor stub
 		
 //		try {
@@ -52,68 +54,76 @@ public class ParameterSettings {
 				switch (arg) {
 				
 				case "-method":
-					if ((args[i+1].equals("encrypt"))||(args[i+1].equals("analyze"))||(args[i+1].equals("decrypt")) ||(args[i+1].equals("keyGenerator"))) {
+					if ((args[i+1].equals("encrypt"))||(args[i+1].equals("analyze"))||(args[i+1].equals("decrypt"))/* ||(args[i+1].equals("keyGenerator"))*/) {
 						method = args[i+1];
-						log.info("method: "+method);
+//						log.info("method: "+method);
+						LogUtil.logInfo("method: "+method);
 					}
 					else {
 //						there is no other method deposited
-						throw new InvalidParameterCombinationException("method has to be analyze, encrypt, decrypt or keyGenerator");
+						throw new InvalidParameterCombinationException("method has to be analyze, encrypt or decrypt");
 					}
 					break;
 				case "-plaintext":
 //					sets plaintext, if given
 					isPlaintext = true;
 					textInLine = args[i+1];
-					log.info("Text type: plaintext\nText: "+textInLine);
+//					log.info("Text type: plaintext\nText: "+textInLine);
+					LogUtil.logInfo("Text type: plaintext\nText: "+textInLine);
 					break;
-				case "-dataPlaintext":
-//					sets plaintext from file, if given
-					isPlaintext = true;
-					try {
-						String source = args[i+1];
-						Path sourceFile = Paths.get(source);
-						BufferedReader brFile = Files.newBufferedReader(sourceFile, Charset.forName("Cp1252"));
-						textInLine=brFile.readLine();
-								
-						brFile.close();
-						log.info("Text type: plaintext from file\nText: "+textInLine);
-						
-						} catch (Exception e) {
-							log.severe("An error occured during file handling: " + e);
-							e.printStackTrace();
-							throw new FileNotFoundException();
-						}
-					break;
+//				case "-dataPlaintext":
+////					sets plaintext from file, if given
+//					isPlaintext = true;
+//					try {
+//						String source = args[i+1];
+//						Path sourceFile = Paths.get(source);
+//						BufferedReader brFile = Files.newBufferedReader(sourceFile, Charset.forName("Cp1252"));
+//						textInLine=brFile.readLine();
+//								
+//						brFile.close();
+////						log.info("Text type: plaintext from file\nText: "+textInLine);
+//						LogUtil.logInfo("Text type: plaintext\nText: "+textInLine);
+//						
+//						} catch (Exception e) {
+////							log.severe("An error occured during file handling: " + e);
+//							LogUtil.logError(Activator.PLUGIN_ID, "Datei konnte nicht eingelesen werden", e, true);
+//							e.printStackTrace();
+//							throw new FileNotFoundException();
+//						}
+//					break;
 				case "-cryptedText":
 //					sets crypted text, if given
 					isPlaintext = false;
 					textInLine = args[i+1];
-					log.info("Text type: crypted text\nText: "+textInLine);
+//					log.info("Text type: crypted text\nText: "+textInLine);
+					LogUtil.logInfo("Text type: crypted text\nText: "+textInLine);
 					break;
-				case "-dataCryptedText":
-//					sets crypted text from file, if given
-					isPlaintext = false;
-					try {
-						Path sourceFile = Paths.get(args[i+1]);
-						BufferedReader brFile = Files.newBufferedReader(sourceFile, Charset.forName("Cp1252"));
-						textInLine=brFile.readLine();
-								
-						brFile.close();
-						log.info("Text type: crypted text from file\nText: "+textInLine);
-						
-						} catch (Exception e) {
-//							System.out.println("An error occured during file handling: " + e);
-							log.severe("An error occured during file handling: " + e);
-							e.printStackTrace();
-							throw new FileNotFoundException();
-						}	
-					break;
+//				case "-dataCryptedText":
+////					sets crypted text from file, if given
+//					isPlaintext = false;
+//					try {
+//						Path sourceFile = Paths.get(args[i+1]);
+//						BufferedReader brFile = Files.newBufferedReader(sourceFile, Charset.forName("Cp1252"));
+//						textInLine=brFile.readLine();
+//								
+//						brFile.close();
+//						log.info("Text type: crypted text from file\nText: "+textInLine);
+//						LogUtil.logInfo("Text type: crypted text from file\nText: "+textInLine);
+//						
+//						} catch (Exception e) {
+////							System.out.println("An error occured during file handling: " + e);
+////							log.severe("An error occured during file handling: " + e);
+//							LogUtil.logError(Activator.PLUGIN_ID, "Datei konnte nicht eingelesen werden", e, true);
+//							e.printStackTrace();
+//							throw new FileNotFoundException();
+//						}	
+//					break;
 				case "-restarts":
 //					sets restarts, if given
 					if (Integer.parseInt(args[i+1])>0) {
 						restart = BigInteger.valueOf(Integer.parseInt(args[i+1]));
-						log.info("restarts: "+String.valueOf(restart));
+//						log.info("restarts: "+String.valueOf(restart));
+						LogUtil.logInfo("restarts: "+String.valueOf(restart));
 					}
 					else {
 //						there has to be at least one restart
@@ -134,7 +144,8 @@ public class ParameterSettings {
 						else {
 							holes = (int) (Math.pow(templateLength, 2)-1)/4;
 						}
-						log.info("keylength: "+templateLength+"\nholes: "+holes);
+//						log.info("keylength: "+templateLength+"\nholes: "+holes);
+						LogUtil.logInfo("keylength: "+templateLength+"\nholes: "+holes);
 					}
 					break;
 				case "-key":
@@ -166,23 +177,25 @@ public class ParameterSettings {
 						for (int k=0;k<data.length;k++) {
 							grille[k]= Integer.parseInt(data[k]);
 						}
-						log.info("key: "+template+"\nkeylength: "+String.valueOf(templateLength)+"\nholes: "+String.valueOf(holes));
-															
+//						log.info("key: "+template+"\nkeylength: "+String.valueOf(templateLength)+"\nholes: "+String.valueOf(holes));
+						LogUtil.logInfo("key: "+template+"\nkeylength: "+String.valueOf(templateLength)+"\nholes: "+String.valueOf(holes));									
 					} catch (Exception e) {
-						log.severe("An error occured during parameter handling: " + e);
+//						log.severe("An error occured during parameter handling: " + e);
+						LogUtil.logError(Activator.PLUGIN_ID, "Invalid key", e, true);
 						e.printStackTrace();
 						throw new InvalidParameterCombinationException("Invalid key");
 					}	
 					break;
-				case "-statistics": 	
-//					sets statistics, if given
-					statistics = args[i+1];
-					break;
+//				case "-statistics": 	
+////					sets statistics, if given
+//					statistics = args[i+1];
+//					break;
 				case "-language":
 //					sets language, if given
 					if ((args[i+1].equals("german"))||(args[i+1].equals("english"))) {
 						language = args[i+1];
-						log.info("language: "+language);
+//						log.info("language: "+language);
+						LogUtil.logInfo("language: "+language);
 					}
 					else {
 //						currently there is no other alphabet deposited
@@ -197,7 +210,8 @@ public class ParameterSettings {
 					else {
 //						sets ngram, if given
 						nGramSize = Integer.parseInt(args[i+1]);
-						log.info("Ngram size: "+nGramSize);
+//						log.info("Ngram size: "+nGramSize);
+						LogUtil.logInfo("Ngram size: "+nGramSize);
 					}
 					break;
 				default: throw new InvalidParameterCombinationException("Please enter valid parameters");	
@@ -227,7 +241,8 @@ public class ParameterSettings {
 //		sets default method as analyze as this is the main function of the program
 		if (method == null) {
 			method = "analyze";
-			log.info("default method: "+method);
+//			log.info("default method: "+method);
+			LogUtil.logInfo("default method: "+method);
 		}
 //		there has to be a grille for mere encryption
 		if (encrypt && noGrille) {
@@ -247,18 +262,21 @@ public class ParameterSettings {
 		}
 		if (analyze) {
 //			if a text statistic is given as parameter, the parameters language and nGram size are mandatory
-			if ((statistics!=null) && ((language == null) || (nGramSize == 0))) {
-				throw new InvalidParameterCombinationException("Please enter language and Ngram size for your statistic");
-			}
+//		    Anpassung nGramSize? Wenn Statistik nicht richtig eingelsen werden kann
+//			if ((statistics!=null) && ((language == null) || (nGramSize == 0))) {
+//				throw new InvalidParameterCombinationException("Please enter language and Ngram size for your statistic");
+//			}
 //			sets default language as german
 			if (language == null) {
 				language = "german";
-				log.info("default language: german");
+//				log.info("default language: german");
+				LogUtil.logInfo("default language: german");
 			}
 //			sets default nGram size to 4
 			if (nGramSize == 0) {
 				nGramSize = 4;
-				log.info("default nGram size: "+nGramSize);
+//				log.info("default nGram size: "+nGramSize);
+				LogUtil.logInfo("default nGram size: "+nGramSize);
 			}
 //			sets deposited statistic for given nGram size and language
 //			if ((nGramSize!=0) && (statistics == null)) {
@@ -292,10 +310,12 @@ public class ParameterSettings {
 //					Path sourceFile;
 					if (language.equals("german")) {
 						source = "files/dawkinsGerPlaintext.txt";
-						log.info("Default german plaintext has been choosen");
+//						log.info("Default german plaintext has been choosen");
+						LogUtil.logInfo("Default german plaintext has been choosen");
 					}else {
 						source = "files/dawkinsEngPlaintext.txt";
-						log.info("Default english plaintext has been choosen");
+//						log.info("Default english plaintext has been choosen");
+						LogUtil.logInfo("Default english plaintext has been choosen");
 					}
 					InputStreamReader res = new InputStreamReader(getClass().getResourceAsStream(source));
 					BufferedReader brFile = new BufferedReader(res);
@@ -309,13 +329,14 @@ public class ParameterSettings {
 //					textInLine=brFile.readLine();
 						
 					brFile.close();
-					log.info("Default plaintext loaded");
+//					log.info("Default plaintext loaded");
+					LogUtil.logInfo("Default plaintext loaded");
 				
 				} catch (Exception e) {
-					log.severe("An error occured during file handling: " + e);
+//					log.severe("An error occured during file handling: " + e);
+					LogUtil.logError(Activator.PLUGIN_ID, "Example file not Found", e, true);
 					e.printStackTrace();
 					throw new InvalidParameterCombinationException("Example file not Found");
-
 				}
 			}
 			
@@ -349,9 +370,11 @@ public class ParameterSettings {
 				templateLength = possibleTemplateLengths.get(0);
 				if ((restart.equals(BigInteger.valueOf(0))) &&(possibleTemplateLengths.get(possibleTemplateLengths.size()-1)>4)) {
 					restart = BigInteger.valueOf(5);
-					log.info("default restarts: "+String.valueOf(restart));
+//					log.info("default restarts: "+String.valueOf(restart));
+					LogUtil.logInfo("default restarts: "+String.valueOf(restart));
 				}
-				log.info("Trying for possible lengths: "+possible);
+//				log.info("Trying for possible lengths: "+possible);
+				LogUtil.logInfo("Trying for possible lengths: "+possible);
 				System.out.println("Trying for possible lengths: "+possible);
 			}
 		}
@@ -367,14 +390,16 @@ public class ParameterSettings {
 			else {
 				holes = (int) (Math.pow(templateLength, 2)-1)/4;
 			}
-			log.info("random keyLength: "+templateLength+" with "+holes+" holes");
+//			log.info("random keyLength: "+templateLength+" with "+holes+" holes");
+			LogUtil.logInfo("random keyLength: "+templateLength+" with "+holes+" holes");
 		}
 //		sets default restarts to 50, if hill climbing is the analyzing method
 		if ((restart.equals(BigInteger.valueOf(0))) && (templateLength > 4) && (method.equals("analyze"))) {
 
 			int value = ((templateLength+10)/10)*5;
 			restart = BigInteger.valueOf(value);
-			log.info("restarts equals BigIntegerValue of 0, default restarts: "+String.valueOf(restart));
+//			log.info("restarts equals BigIntegerValue of 0, default restarts: "+String.valueOf(restart));
+			LogUtil.logInfo("restarts equals BigIntegerValue of 0, default restarts: "+String.valueOf(restart));
 		}
 	}
 
@@ -526,19 +551,19 @@ public class ParameterSettings {
 		this.restart = restart;
 	}
 
-	/**
-	 * @return the statistics
-	 */
-	public String getStatistics() {
-		return statistics;
-	}
-
-	/**
-	 * @param statistics the statistics to set
-	 */
-	public void setStatistics(String statistics) {
-		this.statistics = statistics;
-	}
+//	/**
+//	 * @return the statistics
+//	 */
+//	public String getStatistics() {
+//		return statistics;
+//	}
+//
+//	/**
+//	 * @param statistics the statistics to set
+//	 */
+//	public void setStatistics(String statistics) {
+//		this.statistics = statistics;
+//	}
 
 	/**
 	 * @return the language
