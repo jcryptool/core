@@ -1,10 +1,13 @@
 package org.jcryptool.analysis.fleissner;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
-public class Test {
+public class Test{
     
     private static boolean[][] grilleFilled;
     private static boolean[][] grilleMove1;
@@ -137,7 +140,7 @@ public static void print() {
 //    // using toDays() method 
 //    System.out.println(duration.toMinutes()); 
         
-    long timeInMs = 280685000,timeInDays=0, timeInHours=0, timeInMinutes=0, timeInSeconds;
+    long timeInMs = 280685,timeInDays=0, timeInHours=0, timeInMinutes=0, timeInSeconds;
 //    Duration duration = Duration.ofMillis(timeInMs); 
     timeInSeconds = timeInMs/1000;
     Duration duration = Duration.ofSeconds(timeInSeconds);
@@ -153,21 +156,29 @@ public static void print() {
 //            }
 //        }
 //    }
-    timeInDays = duration.toDays();
-    duration=duration.minusDays(timeInDays);
-    timeInHours = duration.toHours();
-    duration=duration.minusHours(timeInHours);
-    timeInMinutes = duration.toMinutes();
-    duration=duration.minusMinutes(timeInMinutes);
-    timeInSeconds = duration.getSeconds();
+//    timeInDays = duration.toDays();
+//    duration=duration.minusDays(timeInDays);
+//    timeInHours = duration.toHours();
+//    duration=duration.minusHours(timeInHours);
+//    timeInMinutes = duration.toMinutes();
+//    duration=duration.minusMinutes(timeInMinutes);
+//    timeInSeconds = duration.getSeconds();
 //    DurationFormatUtils.formatDuration(timeInMs, "**H:mm:ss**", true);
 
 
 //    String.format("%02d:%02d:%02d", timeInHours, timeInMinutes, timeInSeconds);
+    
+    SimpleDateFormat format = new SimpleDateFormat("DD:HH:mm:ss");
+    format.setTimeZone(TimeZone.getTimeZone("GMT"));
+    format.getNumberFormat();
+//    return format.format(new Date(duration));
 
 
-    System.out.println("Analysis finished in: "+String.format("%02d:%02d:%02d:%02d", timeInDays, timeInHours, timeInMinutes, timeInSeconds)/*+timeInDays+":"+timeInHours+":"+timeInMinutes+":"+timeInSeconds*/+" (dd:hh:mm:ss)"); 
-        
+
+
+//    System.out.println("Analysis finished in: "+String.format("%02d:%02d:%02d:%02d", timeInDays, timeInHours, timeInMinutes, timeInSeconds)/*+timeInDays+":"+timeInHours+":"+timeInMinutes+":"+timeInSeconds*/+" (dd:hh:mm:ss)"); 
+    
+  System.out.println("Analysis finished in: "+format.format(new Date(timeInMs)));
     }
 
 }

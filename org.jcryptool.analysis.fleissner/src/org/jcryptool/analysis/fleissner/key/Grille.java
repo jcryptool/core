@@ -132,6 +132,10 @@ public class Grille {
 //        return plaintext.toString();
 //    }
     
+    /**
+     * 
+     * @return
+     */
     public /*int[]*/String translateKeyToLogic() {
         
         int holes, i=0;

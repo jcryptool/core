@@ -10,19 +10,25 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
+import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-
+import org.bouncycastle.util.encoders.UTF8;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -64,6 +70,7 @@ public class FleissnerWindow extends Composite{
     private Grille model;
     private Composite headerComposite;
     private Composite mainComposite;
+    private Composite analysisOut;
     private Composite method;
     private Composite text;
     private Composite process;
@@ -131,6 +138,9 @@ public class FleissnerWindow extends Composite{
     private InputStream fis = null;
     private InputStream fisOld = null;
     private LoadFiles lf = new LoadFiles();
+    
+    private static final int MIN_WIDTH_LEFT = 100;
+    private static final int MIN_WIDTH_RIGHT = 50;
 
 
     public FleissnerWindow(Composite parent, int style) {
@@ -139,9 +149,34 @@ public class FleissnerWindow extends Composite{
         model = new Grille();
         model.setKey(new KeySchablone(7));
         
-        mainComposite = new Composite(this,  SWT.NONE/*SWT.DEFAULT*/);
-        mainComposite.setLayout(new GridLayout(3, false));
+        SashForm sashForm = new SashForm(this, SWT.BORDER | SWT.BORDER_DASH | SWT.VERTICAL);
+        sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,1,1));
+
+        GridLayout gridLayoutParent = new GridLayout(3, false);
+        
+        ScrolledComposite scrolledMainComposite = new ScrolledComposite(sashForm,/* SWT.H_SCROLL | */SWT.V_SCROLL);
+        scrolledMainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        mainComposite = new Composite(scrolledMainComposite, SWT.NONE);     
+        mainComposite.setLayout(gridLayoutParent);
+        
+        ScrolledComposite scrolledAnalysisOutComposite = new ScrolledComposite(sashForm,/* SWT.H_SCROLL | */SWT.V_SCROLL);
+        scrolledAnalysisOutComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 8));
+        analysisOut = new Composite(scrolledAnalysisOutComposite, SWT.NONE);
+        analysisOut.setLayout(gridLayoutParent);
+        
+//        fw = new FleissnerWindow(parent, SWT.NONE);
+//        fw.setLayout(new GridLayout(1,true));
+//        fw.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,1,1));
+        
+//        mainComposite = new Composite(sashForm,  SWT.NONE/*SWT.DEFAULT*/);
+//        mainComposite.setLayout(new GridLayout(3, false));
         mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+//        
+//        analysisOut = new Composite(sashForm,  SWT.NONE/*SWT.DEFAULT*/);
+//        analysisOut.setLayout(new GridLayout(3, false));
+//        analysisOut.setLayout(gridLayoutParent);
+        analysisOut.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+//        analysisOut.setMinSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
         createHeader(mainComposite);
         createMethod(mainComposite);
@@ -151,7 +186,59 @@ public class FleissnerWindow extends Composite{
         platzHalter.setLayout(new GridLayout());
         platzHalter.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2,1));
         createText(mainComposite);
-        createAnalysisOutput(mainComposite);
+        createAnalysisOutput(analysisOut);
+        
+        scrolledMainComposite.setContent(mainComposite);
+        scrolledMainComposite.setMinSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        scrolledMainComposite.setExpandHorizontal(true);
+        scrolledMainComposite.setExpandVertical(true);
+        scrolledMainComposite.layout();
+        
+        scrolledAnalysisOutComposite.setContent(analysisOut);
+        scrolledAnalysisOutComposite.setMinSize(analysisOut.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+//        scrolledAnalysisOutComposite.setMinSize(SWT.DEFAULT, 50);
+        scrolledAnalysisOutComposite.setExpandHorizontal(true);
+        scrolledAnalysisOutComposite.setExpandVertical(true);
+        scrolledAnalysisOutComposite.layout();
+        
+        int[] sashWeights = sashForm.getWeights();
+        System.out.println("SashWeights: "+/*sashWeights[0]+","+sashWeights[1]*/Arrays.toString(sashWeights));
+        
+//        sashForm.setSashWidth(10);
+        int[] weights = { 4,1};
+////        int[] weights = { mainComposite.getSize().y,this.getSize().y-mainComposite.getSize().y};
+        sashForm.setWeights(weights);
+        
+//        Das habe ich grad noch bei Stackoverflow gefunden, muss es aber noch anpassen
+//        this.addListener(SWT.Resize, new Listener()
+//        {
+//            @Override
+//            public void handleEvent(Event arg0)
+//            {
+//                int width = parent.getClientArea().width;
+//                int[] weights = sashForm.getWeights();
+//
+//                if(width >= MIN_WIDTH_LEFT + MIN_WIDTH_RIGHT)
+//                {
+//                    weights[0] = 1000000 * MIN_WIDTH_LEFT / width;
+//                    weights[1] = 1000000 - weights[0];
+//                }
+//                else
+//                {
+//                    weights[0] = 1000000 * MIN_WIDTH_LEFT / (MIN_WIDTH_LEFT + MIN_WIDTH_RIGHT);
+//                    weights[1] = 1000000 * MIN_WIDTH_RIGHT / (MIN_WIDTH_LEFT + MIN_WIDTH_RIGHT);
+//                }
+//
+//                System.out.println(width + " " + Arrays.toString(weights));
+//
+//                sashForm.setWeights(weights);
+//            }
+//        });
+//
+//        this.pack();
+        
+        sashWeights = sashForm.getWeights();
+        System.out.println("SashWeights: "+/*sashWeights[0]+","+sashWeights[1]*/Arrays.toString(sashWeights));
         
         startSettings = false;
         reset("Konstruktor");
@@ -775,7 +862,7 @@ public class FleissnerWindow extends Composite{
     
     private void createLoadstatisticsComposite(Group thirdGroup) {
         // TODO Auto-generated method stub    
-        String[] items = { "de-4-gram-nocs.bin", "de-3-gram-nocs.bin", "en-4-gram-nocs.bin", "en-3-gram-nocs.bin"};
+        String[] items = { "de-4-gram-nocs.bin"/*, "de-3-gram-nocs.bin"*/, "en-4-gram-nocs.bin", "en-3-gram-nocs.bin"};
         
         statistics = new Button(thirdGroup, SWT.RADIO);
         statistics.setSelection(true);
@@ -820,13 +907,12 @@ public class FleissnerWindow extends Composite{
              public void widgetSelected(SelectionEvent e) {
                  
                  if (statisticState != selectStatistic.getSelectionIndex()) {
-                     if ((selectStatistic.getSelectionIndex()==0) || (selectStatistic.getSelectionIndex()==2)) {
-                         nGramSize.setSelection(4);
-                     }
-                     else {
+                     if (selectStatistic.getSelectionIndex()==2) {
                          nGramSize.setSelection(3);
                      }
-                     
+                     else {
+                         nGramSize.setSelection(4);
+                     }
                      if (statistics.getSelection()) {
                          resetStatistics();
                          statisticState = selectStatistic.getSelectionIndex();
@@ -892,6 +978,7 @@ public class FleissnerWindow extends Composite{
                 } catch (FileNotFoundException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
+                    LogUtil.logError(Activator.PLUGIN_ID, "Statistik auswählen", e1, true);
                 }
                  checkArgs("loadStatistics SelectionListener");
                  reset("loadStatistics'-Listener Ende");
@@ -931,30 +1018,8 @@ public class FleissnerWindow extends Composite{
         
         analysis = new Group(parent, /* SWT.V_SCROLL*/SWT.NONE/*SWT.DRAG*/);
         analysis.setLayout(new GridLayout());
-        analysis.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+        analysis.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true/*, 3, 1*/));
         analysis.setText("Ausgabe Analyse");
-//        analysis.setBounds(20, 20, 80, 80);
-//        
-//        analysis.addListener(SWT.MouseDown, new Listener() {
-//
-//            public void handleEvent(Event e) {
-//
-//              Tracker tracker = new Tracker(analysis.getParent(), SWT.RESIZE);
-//              tracker.setStippled(true);
-//              Rectangle rect = analysis.getBounds();
-//              tracker.setRectangles(new Rectangle[] { rect });
-//              if (tracker.open()) {
-//                Rectangle after = tracker.getRectangles()[0];
-//                analysis.setBounds(after);
-//              }
-//              tracker.dispose();
-//            }
-//          });
-//          while (!parent.isDisposed()) {
-//            if (!display.readAndDispatch())
-//              display.sleep();
-//          }
-//          display.dispose();
     
         analysisOutput = new Text(analysis, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
         GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
@@ -1000,19 +1065,18 @@ public class FleissnerWindow extends Composite{
 //            InputStream is = new InputStream(fileName);
 //            reader = new BufferedReader(new InputStreamReader(
 //                    new FileInputStream(fileName), Charset.forName("Cp1252")));
-            reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), IConstants.UTF8_ENCODING));
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), IConstants.UTF8_ENCODING));         
             System.out.println("new Buffered Reader von "+fileName+" gesetzt");
             String line = reader.readLine();
             System.out.println("Erste Zeile ausgelesen als 'line': "+line);
             
-
             int count = 1;
             while (line  != null) {
                 text += line;
                 System.out.println(count+". Zeile in 'text' geschrieben (in reader while schleife): "+text);
+                LogUtil.logInfo(count+". Zeile in 'text' geschrieben (in reader while schleife): "+text);
                 count++;
                 line = reader.readLine();
-                
             }
         } catch (NumberFormatException nfe) {
             LogUtil.logError(Activator.PLUGIN_ID, nfe);
@@ -1022,11 +1086,14 @@ public class FleissnerWindow extends Composite{
             brokenFile.open();
            
         } catch (FileNotFoundException e) {
+            
+            LogUtil.logError(Activator.PLUGIN_ID, "text could not be loaded", e, true);
             return "text could not be loaded";
             //Error handling
 
         } catch (IOException e) {
             
+            LogUtil.logError(Activator.PLUGIN_ID, "text could not be loaded", e, true);
             return "text could not be loaded";
         } finally {
             try {
@@ -1277,6 +1344,7 @@ public class FleissnerWindow extends Composite{
             
             case "analyze":
                 userText = true;
+                analysisOutput.setText("Gefundene Schablone/ Fortschritt\n");
                 System.out.println("Analyze selected?: "+String.valueOf(analyze.getSelection()));
 
                 args = new String[12];
@@ -1295,24 +1363,30 @@ public class FleissnerWindow extends Composite{
                 
                 if (fisOld != fis || !oldNgramSize.equals(nGramSize.getText())) {
                     try {
-                        argStatistics = lf.loadBinNgramFrequencies(fis, argLanguage, Integer.parseInt(nGramSize.getText()));
-                        System.out.println("\nStatistik geladen in startMethod(analyze): "+String.valueOf(fis)+"\n");
-                        analysisOutput.append("\nStatistik geladen in startMethod(analyze): "+String.valueOf(fis)+"\n");
+                        argStatistics = lf.loadBinNgramFrequencies(fis, argLanguage, nGramSize.getSelection());
+//                        System.out.println("\nStatistik geladen in startMethod(analyze): "+String.valueOf(fis)+"\n");
+//                        analysisOutput.append("\nStatistik geladen in startMethod(analyze): "+String.valueOf(fis)+"\n");
                         fisOld = fis;
                         oldNgramSize = nGramSize.getText();
                     } catch (NumberFormatException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
+                        LogUtil.logError(Activator.PLUGIN_ID,"Gültige Statistik eingeben", e, true);
                     } catch (FileNotFoundException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
+                        LogUtil.logError(Activator.PLUGIN_ID,"Datei nicht gefunden", e, true);
+                    } catch (InvalidParameterCombinationException e) {
+                        e.printStackTrace();
+                        LogUtil.logError(Activator.PLUGIN_ID, "Invalid Parameter Combination", e, true);
+                        return;
                     }
                 }
                 
-                System.out.println("start widget for analysis");
-                analysisOutput.append("\nstart widget for analysis\n");
+//                System.out.println("start widget for analysis");
+//                analysisOutput.append("\nstart widget for analysis\n");
                 analysisOutput.append("\nLanguage: "+argLanguage+"\nText: "+textName+"\nStatistic: "+statisticName);
-                analysisOutput.append("\nnGramSize: "+nGramSize.getText()+"\nRestarts: "+restarts.getText()+"\nKeyLength: "+keySize.getText());
+                analysisOutput.append("\nnGramSize: "+nGramSize.getText()+"\nRestarts: "+restarts.getText()+"\nKey length: "+keySize.getText());
                 
                 break;
                 
@@ -1377,22 +1451,24 @@ public class FleissnerWindow extends Composite{
         
         try {
 //          Configuration of given parameters and selecting and applying one of the three methods
-            ps = new ParameterSettings(args, this.analysisOutput);
+            ps = new ParameterSettings(args/*, this.analysisOutput*/);
             ma = new MethodApplication(ps, this.analysisOutput, argStatistics);
             
         } catch (InvalidParameterCombinationException ex) {
             // TODO Auto-generated catch block
             ex.printStackTrace();
-            System.out.println("Please enter valid parameters\nFehler in Main Methode!!!!");
+//            System.out.println("Bitte gültige Parameter eingeben");
+            LogUtil.logError(Activator.PLUGIN_ID, "Bitte gültige Parameter eingeben", ex, true);
             return;
         }catch(FileNotFoundException ex) {
             ex.printStackTrace();
-            System.out.println("File not found !");
+//            System.out.println("File not found !");
+            LogUtil.logError(Activator.PLUGIN_ID, "Datei nicht gefunden", ex, true);
             return;
         }
           switch(argMethod) {
           case "analyze": ma.analyze();
-//                          analysisOutput.append(ma.toString());
+                          analysisOutput.append(ma.toString());
                           plaintext.setEnabled(true);
                           plaintext.setForeground(ColorService.GRAY);
                           plaintext.setText("Gefundener Klartext:\n\n"+ma.getBestDecryptedText());
@@ -1412,9 +1488,9 @@ public class FleissnerWindow extends Composite{
                           plaintext.setText(ma.getDecryptedText());
                           break;
           }
-          analysis.setEnabled(true);
-          analysisOutput.setEnabled(true);
-          analysisOutput.append(ma.toString());
+//          analysis.setEnabled(true);
+//          analysisOutput.setEnabled(true);
+//          analysisOutput.append(ma.toString());
           System.out.println("startApplication() ended");
           checkArgs("startApplication() Ende");
     }
@@ -1434,7 +1510,7 @@ public class FleissnerWindow extends Composite{
         resetKey();
         
 //      Settings for method
-        defaultMethod(); 
+        resetMethod(); 
         
 //        Settings for text selection
         resetTextSelection();
@@ -1464,10 +1540,19 @@ public class FleissnerWindow extends Composite{
         } catch (NumberFormatException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            LogUtil.logError(Activator.PLUGIN_ID,"Gültige Statistik eingeben", e, true);
+            return;
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            LogUtil.logError(Activator.PLUGIN_ID,"Datei nicht gefunden", e, true);
+            return;
+        } catch (InvalidParameterCombinationException e) {
+            e.printStackTrace();
+            LogUtil.logError(Activator.PLUGIN_ID,"Invalid Parameter Combination", e, true);
+            return;
         }
+
         System.out.println("start widget for analysis\n");
         analysisOutput.append("start widget for analysis\n");
         
@@ -1558,6 +1643,13 @@ public class FleissnerWindow extends Composite{
         System.out.println("resetStatistics-Method started\n");
             statisticName = lf.statisticFiles(selectStatistic.getSelectionIndex());
             fis = lf.openMyFileStream(statisticName);
+            File statFile = new File(statisticName);
+            try {
+                System.out.println("Statisticsize of "+statisticName+": "+fis.available());
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
     }
     
     public void checkOkButton() {
@@ -1654,8 +1746,6 @@ public class FleissnerWindow extends Composite{
             resetTexts();
         }else if (exampleText.getSelection()) {
             
-//            loadedTextName.setText("");
-            
             if (userText && !tempArgText.equals("")) {
                 argText = tempArgText;
                 resetTexts();
@@ -1676,16 +1766,13 @@ public class FleissnerWindow extends Composite{
         case "text": 
             if (chooseExample.getSelectionIndex() == 0 || chooseExample.getSelectionIndex() == 1) {
                 language.select(0);
-                if (nGramSize.getSelection()==4) 
-                    selectStatistic.select(0);
-                else
-                    selectStatistic.select(1);
+                selectStatistic.select(0);
             }else {
                 language.select(1);
                 if (nGramSize.getSelection()==4)
-                    selectStatistic.select(2);
+                    selectStatistic.select(1);
                 else
-                    selectStatistic.select(3);
+                    selectStatistic.select(2);
             }
             break;
         case "language":
@@ -1694,11 +1781,11 @@ public class FleissnerWindow extends Composite{
                 selectStatistic.select(0);
             }else {
                 chooseExample.select(2);
-                selectStatistic.select(2);
+                selectStatistic.select(1);
             }
             break;
         case "statistic":
-            if (selectStatistic.getSelectionIndex()==0 || selectStatistic.getSelectionIndex()==1) {
+            if (selectStatistic.getSelectionIndex()==0) {
                 if (exampleText.getSelection() && textState!=1)
                     chooseExample.select(0);
                 language.select(0);
@@ -1735,7 +1822,7 @@ public class FleissnerWindow extends Composite{
 //        userText = true;
     }
     
-    public void defaultMethod() {
+    public void resetMethod() {
         
         System.out.println("defaultMethod-Method started\n");
         
@@ -1765,9 +1852,9 @@ public class FleissnerWindow extends Composite{
         
         boolean change;
         
-        if (languageState == 0 && (selectStatistic.getSelectionIndex() == 2 || selectStatistic.getSelectionIndex() == 3)) {
+        if (languageState == 0 && (selectStatistic.getSelectionIndex() == 1 || selectStatistic.getSelectionIndex() == 2)) {
             change = true;
-        }else if (languageState == 1 && (selectStatistic.getSelectionIndex() == 0 || selectStatistic.getSelectionIndex() == 1)) {
+        }else if (languageState == 1 && selectStatistic.getSelectionIndex() == 0) {
             change = true;
         }else {
             change = false;
@@ -1793,7 +1880,7 @@ public class FleissnerWindow extends Composite{
     
     public void checkArgs(String methode) {
         System.out.println("checkArgs started in: "+methode+"\nStartSettings?: "+startSettings);
-        System.out.println("ArgMethod: "+argMethod+"\nArgText: "+/*textName*/argText+"\nArgLanguage: "+argLanguage+"\nArgStatistic: "+statisticName+" \ntextInputState: "+textInputState+"\nstatInoutState: "+statisticInputState+"\nfis: "+fis);
+        System.out.println("ArgMethod: "+argMethod+"\nTextname: "+textName+"\nArgText: "+argText+"\nArgLanguage: "+argLanguage+"\nArgStatistic: "+statisticName+" \ntextInputState: "+textInputState+"\nstatInoutState: "+statisticInputState+"\nfis: "+fis);
         System.out.println("Plain?: "+plain+"\nUserText?: "+userText);
         System.out.println("Plaintext editable: "+plaintext.getEditable()+"\nCiphertext editable: "+ciphertext.getEditable());
     }

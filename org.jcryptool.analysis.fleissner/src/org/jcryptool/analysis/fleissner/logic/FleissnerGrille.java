@@ -278,7 +278,7 @@ public class FleissnerGrille {
 //	Encryption method. Encrypts a plaintext with parameter grille
 	public String encryptText(String plaintext, int[] coordinates)
 	{
-	    String X = "X";
+//	    String X = "X";
 		String encryptedText = "";
 		int templateLength = this.grilleFilled.length;
 		int holes = ((coordinates.length)/2);

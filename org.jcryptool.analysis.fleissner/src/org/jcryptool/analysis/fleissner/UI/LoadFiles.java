@@ -22,6 +22,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import org.eclipse.core.runtime.FileLocator;
 import org.jcryptool.analysis.fleissner.Activator;
+import org.jcryptool.analysis.fleissner.logic.InvalidParameterCombinationException;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.constants.IConstants;
 import org.osgi.framework.Bundle;
@@ -127,13 +128,13 @@ public class LoadFiles {
             case 0: 
                 textName = "files/de-4gram-nocs.bin";
                 break;
-            case 1:     
-                textName = "files/de-3gram-nocs.bin";
-                break;
-            case 2:
+//            case 1:     
+//                textName = "files/de-3gram-nocs.bin";
+//                break;
+            case 1:
                 textName = "files/en-4gram-nocs.bin";
                 break;
-            case 3:
+            case 2:
                 textName = "files/en-3gram-nocs.bin";
                 break;     
             }
@@ -168,7 +169,7 @@ public class LoadFiles {
     }
     
 //  load text statistic
-    public double[] loadBinNgramFrequencies(InputStream file, String language, int nGramSize) throws FileNotFoundException
+    public double[] loadBinNgramFrequencies(InputStream file, String language, int nGramSize) throws FileNotFoundException, InvalidParameterCombinationException
     {
         int m = 0;
         
@@ -180,8 +181,19 @@ public class LoadFiles {
         }
 
 
+        double size=0, fileSize =0;
+        try {
+            size = Math.pow(m, nGramSize)*8;
+            fileSize = file.available();
+        } catch (IOException e2) {
+            // TODO Auto-generated catch block
+            e2.printStackTrace();
+        }
+
+        if (fileSize != size)
+            throw new InvalidParameterCombinationException("Statistic does not fit nGram size and/or language");
         double ngrams[] = new double[(int) Math.pow(m, nGramSize)];
-        ByteBuffer myByteBuffer = ByteBuffer.allocate(((int) Math.pow(m, nGramSize)) * 8);
+        ByteBuffer myByteBuffer = ByteBuffer.allocate(((int) /*Math.pow(m, nGramSize)*/size) * 8);
         myByteBuffer.order(ByteOrder.LITTLE_ENDIAN);
         DoubleBuffer doubleBuffer = myByteBuffer.asDoubleBuffer();
 

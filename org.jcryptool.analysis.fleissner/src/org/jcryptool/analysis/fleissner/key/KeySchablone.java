@@ -75,30 +75,30 @@ public class KeySchablone extends Schablone implements Cloneable {
     /**
      * dreht die Schablone um 90 Grad im Uhrzeigersinn
      */
-    public void rotateClockwise() {
-        char[][] rotated = new char[getSize()][getSize()];
-        for (int r = 0; r < schablone.length; r++) {
-            for (int c = 0; c < schablone[r].length; c++) {
-                rotated[c][schablone.length - 1 - r] = get(r, c);
-            }
-        }
-        schablone = rotated;
+//    public void rotateClockwise() {
+//        char[][] rotated = new char[getSize()][getSize()];
+//        for (int r = 0; r < schablone.length; r++) {
+//            for (int c = 0; c < schablone[r].length; c++) {
+//                rotated[c][schablone.length - 1 - r] = get(r, c);
+//            }
+//        }
+//        schablone = rotated;
+//
+//    }
 
-    }
+//    public void rotateCounterClockwise() {
+//        rotateClockwise();
+//        rotateClockwise();
+//        rotateClockwise();
+//    }
 
-    public void rotateCounterClockwise() {
-        rotateClockwise();
-        rotateClockwise();
-        rotateClockwise();
-    }
-
-    @Override
-    public KeySchablone clone() {
-        KeySchablone clone = new KeySchablone(getSize());
-        for (int i = 0; i < getSize() * getSize(); i++) {
-            if (get(i / getSize(), i % getSize()) == '1')
-                clone.set(i / getSize(), i % getSize());
-        }
-        return clone;
-    }
+//    @Override
+//    public KeySchablone clone() {
+//        KeySchablone clone = new KeySchablone(getSize());
+//        for (int i = 0; i < getSize() * getSize(); i++) {
+//            if (get(i / getSize(), i % getSize()) == '1')
+//                clone.set(i / getSize(), i % getSize());
+//        }
+//        return clone;
+//    }
 }

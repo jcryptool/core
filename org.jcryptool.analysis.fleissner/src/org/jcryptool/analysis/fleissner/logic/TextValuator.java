@@ -10,11 +10,11 @@ import java.util.logging.Logger;
 
 public class TextValuator {
 	
-	private static final Logger log = Logger.getLogger( FleissnerGrilleSolver.class.getName() );
+//	private static final Logger log = Logger.getLogger( FleissnerGrilleSolver.class.getName() );
 	
 	public static double ngrams[];
 	private String alphabet;
-	private String filename;
+//	private String filename;
 	private int n,m;
 	
 //	Sets Alphabet for parameter language and loads text statistics to given name and size of statistics for text valuation
