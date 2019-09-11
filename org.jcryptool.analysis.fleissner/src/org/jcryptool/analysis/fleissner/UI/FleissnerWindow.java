@@ -512,7 +512,6 @@ public class FleissnerWindow extends Composite{
         textName = "files/dawkinsGerCiphertext7.txt";
         argText = lf.InputStreamToString(lf.openMyTestStream(textName));
         resetTexts();
-        setArgText();
 
         ciphertext.addKeyListener(new org.eclipse.swt.events.KeyListener() {
             
