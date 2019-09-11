@@ -32,6 +32,8 @@ import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Rectangle;
@@ -139,8 +141,8 @@ public class FleissnerWindow extends Composite{
     private InputStream fisOld = null;
     private LoadFiles lf = new LoadFiles();
     
-    private static final int MIN_WIDTH_LEFT = 100;
-    private static final int MIN_WIDTH_RIGHT = 50;
+    private static final int MIN_WIDTH_LEFT = 800;
+    private static final int MIN_WIDTH_RIGHT = 200;
 
 
     public FleissnerWindow(Composite parent, int style) {
@@ -153,30 +155,20 @@ public class FleissnerWindow extends Composite{
         sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,1,1));
 
         GridLayout gridLayoutParent = new GridLayout(3, false);
+        GridData gd_txtAlgInformation = new GridData(SWT.FILL, SWT.FILL, true, true);
         
         ScrolledComposite scrolledMainComposite = new ScrolledComposite(sashForm,/* SWT.H_SCROLL | */SWT.V_SCROLL);
         scrolledMainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         mainComposite = new Composite(scrolledMainComposite, SWT.NONE);     
         mainComposite.setLayout(gridLayoutParent);
+        mainComposite.setLayoutData(gd_txtAlgInformation);
+        
         
         ScrolledComposite scrolledAnalysisOutComposite = new ScrolledComposite(sashForm,/* SWT.H_SCROLL | */SWT.V_SCROLL);
-        scrolledAnalysisOutComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 8));
+        scrolledAnalysisOutComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         analysisOut = new Composite(scrolledAnalysisOutComposite, SWT.NONE);
         analysisOut.setLayout(gridLayoutParent);
-        
-//        fw = new FleissnerWindow(parent, SWT.NONE);
-//        fw.setLayout(new GridLayout(1,true));
-//        fw.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,1,1));
-        
-//        mainComposite = new Composite(sashForm,  SWT.NONE/*SWT.DEFAULT*/);
-//        mainComposite.setLayout(new GridLayout(3, false));
-        mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-//        
-//        analysisOut = new Composite(sashForm,  SWT.NONE/*SWT.DEFAULT*/);
-//        analysisOut.setLayout(new GridLayout(3, false));
-//        analysisOut.setLayout(gridLayoutParent);
-        analysisOut.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-//        analysisOut.setMinSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        analysisOut.setLayoutData(gd_txtAlgInformation);
 
         createHeader(mainComposite);
         createMethod(mainComposite);
@@ -196,53 +188,30 @@ public class FleissnerWindow extends Composite{
         
         scrolledAnalysisOutComposite.setContent(analysisOut);
         scrolledAnalysisOutComposite.setMinSize(analysisOut.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-//        scrolledAnalysisOutComposite.setMinSize(SWT.DEFAULT, 50);
         scrolledAnalysisOutComposite.setExpandHorizontal(true);
         scrolledAnalysisOutComposite.setExpandVertical(true);
         scrolledAnalysisOutComposite.layout();
+
         
-        int[] sashWeights = sashForm.getWeights();
-        System.out.println("SashWeights: "+/*sashWeights[0]+","+sashWeights[1]*/Arrays.toString(sashWeights));
-        
-//        sashForm.setSashWidth(10);
         int[] weights = { 4,1};
-////        int[] weights = { mainComposite.getSize().y,this.getSize().y-mainComposite.getSize().y};
         sashForm.setWeights(weights);
-        
-//        Das habe ich grad noch bei Stackoverflow gefunden, muss es aber noch anpassen
-//        this.addListener(SWT.Resize, new Listener()
-//        {
-//            @Override
-//            public void handleEvent(Event arg0)
-//            {
-//                int width = parent.getClientArea().width;
-//                int[] weights = sashForm.getWeights();
-//
-//                if(width >= MIN_WIDTH_LEFT + MIN_WIDTH_RIGHT)
-//                {
-//                    weights[0] = 1000000 * MIN_WIDTH_LEFT / width;
-//                    weights[1] = 1000000 - weights[0];
-//                }
-//                else
-//                {
-//                    weights[0] = 1000000 * MIN_WIDTH_LEFT / (MIN_WIDTH_LEFT + MIN_WIDTH_RIGHT);
-//                    weights[1] = 1000000 * MIN_WIDTH_RIGHT / (MIN_WIDTH_LEFT + MIN_WIDTH_RIGHT);
-//                }
-//
-//                System.out.println(width + " " + Arrays.toString(weights));
-//
-//                sashForm.setWeights(weights);
-//            }
-//        });
-//
-//        this.pack();
-        
-        sashWeights = sashForm.getWeights();
-        System.out.println("SashWeights: "+/*sashWeights[0]+","+sashWeights[1]*/Arrays.toString(sashWeights));
+
+        scrolledAnalysisOutComposite.addListener(SWT.Resize, new Listener(){
+          @Override
+          public void handleEvent(Event arg0)
+          {
+              Rectangle r = scrolledAnalysisOutComposite.getClientArea();
+              if (analysisOut.getBounds().height>r.height) {
+
+                  gd_txtAlgInformation.minimumHeight = r.height;
+                  analysisOut.setLayoutData(gd_txtAlgInformation);
+                  sashForm.setWeights(weights);
+              }
+          }
+      });
         
         startSettings = false;
         reset("Konstruktor");
-       
     }
   
     private void createMethod(Composite parent) {
@@ -391,7 +360,6 @@ public class FleissnerWindow extends Composite{
 
         Label spinner = new Label(key, SWT.NONE);
         spinner.setText("Schlüssellänge"); //$NON-NLS-1$
-//        spinner.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false));
         GridData gd_spinner = new GridData(SWT.FILL, SWT.TOP, false, true);
         gd_spinner.horizontalIndent = 20;
         spinner.setLayoutData(gd_spinner);
@@ -485,14 +453,12 @@ public class FleissnerWindow extends Composite{
     
     private void createPlaintext(Composite parent) {
         
-        plaintextComposite = new Group(parent, /* SWT.V_SCROLL*/SWT.NONE);
+        plaintextComposite = new Group(parent, SWT.NONE);
         plaintextComposite.setLayout(new GridLayout());
-        plaintextComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true/*, 1, 3*/));
+        plaintextComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         plaintextComposite.setText("Klartext" + "(0)");
-        
-        
-     
-        plaintext = new Text(plaintextComposite, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL/* | SWT.H_SCROLL*/);
+
+        plaintext = new Text(plaintextComposite, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
         GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
         gridData.widthHint = plaintextComposite.getSize().y; 
         gridData.heightHint = plaintextComposite.getSize().x; 
@@ -504,7 +470,6 @@ public class FleissnerWindow extends Composite{
             
             @Override
             public void keyPressed(KeyEvent e) {
-//                e.doit = false;
                 e.doit = true;
             }
 
@@ -521,24 +486,22 @@ public class FleissnerWindow extends Composite{
                 
                 if (!startSettings) {
                     if (writeText.getSelection() && encrypt.getSelection()) {
-                        argText =plaintext.getText();
+                        argText = plaintext.getText();
                         reset("'plaintext'-ModifyListener");
                     }   
                 }
-//                reset("'plaintext'-ModifyListener");
             }
         });
     }
     
     private void createCiphertext(Composite parent) {
         
-        ciphertextComposite = new Group(parent,  /*SWT.MULTI | SWT.WRAP | SWT.V_SCROLL*/ SWT.NONE);
+        ciphertextComposite = new Group(parent, SWT.NONE);
         ciphertextComposite.setLayout(new GridLayout());
-        ciphertextComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true/*, 1, 3*/));
+        ciphertextComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         ciphertextComposite.setText("Geheimtext" + " (0)");
         
-        ciphertext = new Text(ciphertextComposite,  SWT.MULTI | SWT.WRAP | SWT.V_SCROLL/* | SWT.H_SCROLL*/);
-        
+        ciphertext = new Text(ciphertextComposite,  SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
         GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
         gridData.widthHint = ciphertextComposite.getSize().y; 
         gridData.heightHint = ciphertextComposite.getSize().x; 
@@ -1743,6 +1706,7 @@ public class FleissnerWindow extends Composite{
         }
         if (startSettings) {
             argText = lf.InputStreamToString(lf.openMyTestStream("files/dawkinsGerCiphertext7.txt"));
+            System.out.println("startSettings true in setArgText");
             resetTexts();
         }else if (exampleText.getSelection()) {
             
