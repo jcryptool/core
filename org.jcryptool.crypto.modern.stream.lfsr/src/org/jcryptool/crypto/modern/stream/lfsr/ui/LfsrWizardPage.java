@@ -8,6 +8,7 @@
 * http://www.eclipse.org/legal/epl-v10.html
 *******************************************************************************/
 //-----END DISCLAIMER-----
+
 package org.jcryptool.crypto.modern.stream.lfsr.ui;
 
 import java.io.BufferedReader;
@@ -15,7 +16,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -49,17 +53,17 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 
 	/** Used to override a listener, since the change is performed on purpose! */
 	private boolean CLEARING_FLAG = false;
-	
+
 	private Composite pageComposite;
 
 	private Composite lfsrLengthGroupHolderComposite;
 	private Group lfsrLengthGroup;
 	private Label lfsrLengthLabel;
 	private Spinner lfsrLengthSpinner;
-	
+
 	private Composite noteLabelComposite;
 	private Label noteLabel;
-	
+
 	private Label lfsrLengthNoteLabel;
 	private Button resetButton;
 
@@ -95,11 +99,48 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 	private ArrayList<String> decValues = new ArrayList<String>(10);
 //	private static final int KEY_MAX_VALUE = 1024;
 
+	private boolean[] List2Array(List<Boolean> lst) {
+		boolean[] result = new boolean[lst.size()];
+		for (int i = 0; i < lst.size(); i++) {
+			boolean b = lst.get(i);
+			result[i] = b;
+		}
+		return result;
+	}
+
+	private List<Boolean> Array2List(boolean[] arr) {
+		List<Boolean> result = new LinkedList<Boolean>();
+		for (Boolean b : arr) {
+			result.add(b);
+		}
+		return result;
+	}
+
+	private boolean[] reverseBoolArray(boolean[] input) {
+		List<Boolean> temp = Array2List(input);
+		Collections.reverse(temp);
+		return List2Array(temp);
+	}
+
+	private void setSeedArray(boolean s[]) {
+		this.seed = reverseBoolArray(s);
+	}
+
+	private boolean[] getSeedArray() {
+		return reverseBoolArray(this.seed);
+	}
+
+	private void setSeedPosition(int idx, boolean val) {
+		boolean[] temp = getSeedArray();
+		temp[idx] = val;
+		this.setSeedArray(temp);
+	}
+
 	/**
 	 * Creates a new instance of LfsrWizardPage.
 	 */
 	public LfsrWizardPage() {
-		super(".", "LFSR", null); //$NON-NLS-1$ //$NON-NLS-2	
+		super(".", "LFSR", null); //$NON-NLS-1$ //$NON-NLS-2
 		setTitle(Messages.LfsrWizardPage_0);
 		setMessage(Messages.LfsrWizardPage_1);
 		setupDecimalValues();
@@ -142,29 +183,26 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 
 		setControl(pageComposite);
 		setPageComplete(mayFinish());
-		
+
 		loadSavedSettings();
 
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), LfsrPlugin.PLUGIN_ID + ".wizard"); //$NON-NLS-1$
 	}
 
 	private boolean loadSavedSettings() {
-		//Check if s savefile exists.
-		//If one exists continue, else return with false.
+		// Check if s savefile exists.
+		// If one exists continue, else return with false.
 		File file = new File(System.getProperty("user.home") + "/Documents/.jcryptool/LFSR/savedSettings.txt"); //$NON-NLS-1$ //$NON-NLS-2$
 		if (!file.exists()) {
 			return false;
 		}
-		String 	seedAsString = "", 
-				tapAsString = "", 
-				loadedLfsrLengthAsString = "", 
-				outputOptionAsString = "", 
+		String seedAsString = "", tapAsString = "", loadedLfsrLengthAsString = "", outputOptionAsString = "",
 				keystreamLengthAsString = "";
-		//Load the tap and seed from the savefile into two different strings.
+		// Load the tap and seed from the savefile into two different strings.
 		try {
 			FileReader fr = new FileReader(file);
 			BufferedReader br = new BufferedReader(fr);
-			//Not a beautiful solution but it works.
+			// Not a beautiful solution but it works.
 			// The goal is to read the third and fifth line.
 			br.readLine();
 			br.readLine();
@@ -183,16 +221,18 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 		} catch (IOException e) {
 			LogUtil.logError(LfsrPlugin.PLUGIN_ID, e);
 		}
-		
+
 		lfsrLength = Integer.parseInt(loadedLfsrLengthAsString);
 		char[] seedAsCharArray = seedAsString.toCharArray();
 		char[] tapAsCharArray = tapAsString.toCharArray();
-		
+
 		for (int i = 0; i < seedAsCharArray.length; i++) {
 			if (seedAsCharArray[i] == '1') {
-				seed[i] = true;
+// 				seed[i] = true;
+				setSeedPosition(i, true);
 			} else {
-				seed[i] = false;
+// 				seed[i] = false;
+				setSeedPosition(i, false);
 			}
 		}
 		for (int i = 0; i < tapAsCharArray.length; i++) {
@@ -202,42 +242,44 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 				tapSettings[i] = false;
 			}
 		}
-		
+
 		int counter = 0;
 		Iterator<Button> tapSettingsCheckBoxesIterator = tapSettingsCheckBoxes.iterator();
 		while (tapSettingsCheckBoxesIterator.hasNext()) {
 			tapSettingsCheckBoxesIterator.next().setSelection(tapSettings[counter]);
 			counter++;
 		}
-		
+
 		counter = 0;
-		Iterator<Button> seedValueTapSettingsDisplayCheckBoxesIterator = seedValueTapSettingsDisplayCheckBoxes.iterator();
+		Iterator<Button> seedValueTapSettingsDisplayCheckBoxesIterator = seedValueTapSettingsDisplayCheckBoxes
+				.iterator();
 		while (seedValueTapSettingsDisplayCheckBoxesIterator.hasNext()) {
 			seedValueTapSettingsDisplayCheckBoxesIterator.next().setVisible(tapSettings[counter]);
 			counter++;
 		}
-		
+
 		counter = 0;
 		Iterator<Spinner> seedValueSpinnersIterator = seedValueSpinners.iterator();
 		while (seedValueSpinnersIterator.hasNext()) {
-			if (seed[counter]) {
+// 			if (seed[counter]) {
+			if (getSeedArray()[counter]) {
 				seedValueSpinnersIterator.next().setSelection(1);
 			} else {
 				seedValueSpinnersIterator.next().setSelection(0);
 			}
 			counter++;
 		}
-		
-		//Set the LFSR length
+
+		// Set the LFSR length
 		lfsrLengthSpinner.setSelection(lfsrLength);
 		setSelectableTapSettingVisibilities();
 		setEditableSeedValueVisibility();
 		setFinalTapSetting();
-		
+
 		updateTapSetting01StringText();
 		updateSeedValue01StringText();
-		
-		//Enable and disable the output options button
+
+		// Enable and disable the output options button
 		// when needed set the keystream length.
 		if (outputOptionAsString.equals(DisplayOption.OUTPUT_ONLY.toString())) {
 			displayOutputOnlyButton.setSelection(true);
@@ -254,9 +296,10 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 			displayOutputAndKeystreamButton.setSelection(false);
 			displayKeystreamOnlyButton.setSelection(true);
 			displayKeystreamOnlyButton.notifyListeners(SWT.Selection, new Event());
-			// Set the keystream length to the textfield. The "FLAGS" are necessasry to 
-			// switch of the verfifyListener on keystreamLengthText. Without setting them to 
-			// TRUE before setting a text they will complain, that you should only enter numbers.
+			// Set the keystream length to the textfield. The "FLAGS" are necessasry to
+			// switch of the verfifyListener on keystreamLengthText. Without setting them to
+			// TRUE before setting a text they will complain, that you should only enter
+			// numbers.
 			CLEARING_FLAG = true;
 			keystreamLengthText.setText(keystreamLengthAsString);
 			CLEARING_FLAG = false;
@@ -271,28 +314,28 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 	 */
 	private void createLfsrLengthGroup(Composite parent) {
 		GridData lfsrLengthGroupHolderCompositeGridData = new GridData(SWT.FILL, SWT.FILL, true, false);
-		
+
 		GridLayout lfsrLengthGroupHolderCompositeGridLayout = new GridLayout(2, false);
 		lfsrLengthGroupHolderCompositeGridLayout.marginHeight = 0;
 		lfsrLengthGroupHolderCompositeGridLayout.marginWidth = 0;
-		
+
 		GridData lfsrLengthLabelGridData = new GridData(SWT.FILL, SWT.CENTER, false, false);
-		
+
 		GridData lfsrLengthSpinnerGridData = new GridData(SWT.FILL, SWT.CENTER, false, false);
-		
+
 		GridLayout lfsrLengthGroupGridLayout = new GridLayout();
 		lfsrLengthGroupGridLayout.numColumns = 3;
-		
+
 		GridData lfsrLengthGroupGridData = new GridData(SWT.FILL, SWT.FILL, false, false);
-		
+
 		GridData lfsrLengthNoteGridData = new GridData(SWT.FILL, SWT.CENTER, false, false);
-		
+
 		GridData resetButtonGridData = new GridData(SWT.RIGHT, SWT.TOP, true, false);
 
 		lfsrLengthGroupHolderComposite = new Composite(parent, SWT.NONE);
 		lfsrLengthGroupHolderComposite.setLayout(lfsrLengthGroupHolderCompositeGridLayout);
 		lfsrLengthGroupHolderComposite.setLayoutData(lfsrLengthGroupHolderCompositeGridData);
-		
+
 		lfsrLengthGroup = new Group(lfsrLengthGroupHolderComposite, SWT.None);
 		lfsrLengthGroup.setLayoutData(lfsrLengthGroupGridData);
 		lfsrLengthGroup.setLayout(lfsrLengthGroupGridLayout);
@@ -313,57 +356,60 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 		lfsrLengthNoteLabel = new Label(lfsrLengthGroup, SWT.NONE);
 		lfsrLengthNoteLabel.setLayoutData(lfsrLengthNoteGridData);
 		lfsrLengthNoteLabel.setText(Messages.LfsrWizardPage_LFSRLengthNote);
-		
+
 		resetButton = new Button(lfsrLengthGroupHolderComposite, SWT.PUSH);
 		resetButton.setLayoutData(resetButtonGridData);
 		resetButton.setText(Messages.LfsrWizardPage_reset);
 		resetButton.setToolTipText(Messages.LfsrWizardPage_resetTooltip);
-		resetButton.setImage(LfsrPlugin.imageDescriptorFromPlugin(LfsrPlugin.PLUGIN_ID, "/icons/reset.gif").createImage()); //$NON-NLS-1$
+		resetButton
+				.setImage(LfsrPlugin.imageDescriptorFromPlugin(LfsrPlugin.PLUGIN_ID, "/icons/reset.gif").createImage()); //$NON-NLS-1$
 		resetButton.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				//Delete the old savefile to enable resetting the plugin via the createControl().
+				// Delete the old savefile to enable resetting the plugin via the
+				// createControl().
 				File file = new File(System.getProperty("user.home") + "/Documents/.jcryptool/LFSR/savedSettings.txt"); //$NON-NLS-1$ //$NON-NLS-2$
 				if (file.exists()) {
 					file.delete();
 				}
-				
-				//Temporarily save the parent composite of the whole wizard page 
+
+				// Temporarily save the parent composite of the whole wizard page
 				Composite pageParent = pageComposite.getParent();
-				
-				//Dispose all elements of the old wizard page
+
+				// Dispose all elements of the old wizard page
 				for (Control ctrl : pageParent.getChildren()) {
 					ctrl.dispose();
 				}
-				
-				//Reset all variables to its inital state
+
+				// Reset all variables to its inital state
 				CLEARING_FLAG = false;
-				
-				//I do not know if the lists must also be reset, but better safe than sorry.
+
+				// I do not know if the lists must also be reset, but better safe than sorry.
 				tapSettingsCheckBoxes = new ArrayList<Button>();
 				tapSettingsPlaceHolderLabels = new ArrayList<Label>();
-				
+
 				seedValueTapSettingsDisplayCheckBoxes = new ArrayList<Button>();
 				seedValueSpinners = new ArrayList<Spinner>();
-							
+
 				lfsrLength = LfsrWizard.MAX_LFSR_LENGTH;
-				
+
 				tapSettings = new boolean[LfsrWizard.MAX_LFSR_LENGTH];
-				seed = new boolean[LfsrWizard.MAX_LFSR_LENGTH];
-				
+// 				seed = new boolean[LfsrWizard.MAX_LFSR_LENGTH];
+				setSeedArray(new boolean[LfsrWizard.MAX_LFSR_LENGTH]);
+
 				displayOption = DisplayOption.OUTPUT_ONLY;
 				keystreamLengthValue = ""; //$NON-NLS-1$
-			
-				//recreate the wizard page via the createControl method.
+
+				// recreate the wizard page via the createControl method.
 				createControl(pageParent);
-				//To show the new page, lay it out.
+				// To show the new page, lay it out.
 				pageParent.layout();
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
+
 			}
 		});
 	}
@@ -375,7 +421,7 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 	 */
 	private void createNoteLabel(Composite parent) {
 		GridLayout noteLabelCompositeGridLayout = new GridLayout();
-		
+
 		noteLabelComposite = new Composite(parent, SWT.NONE);
 		noteLabelComposite.setLayout(noteLabelCompositeGridLayout);
 
@@ -479,7 +525,8 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 			seedValueTapSettingsDisplayCheckBoxes.add(tempButton);
 		}
 
-		// Set the first seed value by default to 1. With a seed full of zeros the output file
+		// Set the first seed value by default to 1. With a seed full of zeros the
+		// output file
 		// would only contain of zeros.
 
 		for (int i = 0; i < tapSettingsGroupGridLayout.numColumns; i++) {
@@ -490,9 +537,10 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 			// Set the first seed by default to 1.
 			if (i == 0) {
 				tempSpinner.setSelection(1);
-				seed[0] = true;
+// 				seed[0] = true;
+				setSeedPosition(0, true);
 			} else {
-				tempSpinner.setSelection(0);	
+				tempSpinner.setSelection(0);
 			}
 			tempSpinner.setLayoutData(seedValueSpinnerGridData);
 			tempSpinner.addListener(SWT.Modify, this);
@@ -547,7 +595,7 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 		keystreamLengthText.setText(""); //$NON-NLS-1$
 		keystreamLengthText.addListener(SWT.Modify, this);
 		keystreamLengthText.addVerifyListener(new VerifyListener() {
-			
+
 			@Override
 			public void verifyText(VerifyEvent e) {
 				if (CLEARING_FLAG) {
@@ -608,9 +656,11 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 				if (event.widget == seedValueSpinners.get(i)) {
 					int tempBitValue = seedValueSpinners.get(i).getSelection();
 					if (tempBitValue == 0) {
-						seed[i] = false;
+// 						seed[i] = false;
+						setSeedPosition(i, false);
 					} else {
-						seed[i] = true;
+// 						seed[i] = true;
+						setSeedPosition(i, true);
 					}
 					break;
 				}
@@ -619,15 +669,16 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 		}
 		setPageComplete(mayFinish());
 	}
-	
+
 	/**
 	 * Calculates the length of one lfsr cycle.
+	 * 
 	 * @return The cycle length depending on the lfsr Length.
 	 */
 	private void setDefaultKeystreamLength() {
 		int result = new Double(Math.pow(2, lfsrLength) - 1).intValue();
 		CLEARING_FLAG = true;
-		keystreamLengthText.setText(Integer.toString(result)); //$NON-NLS-1$
+		keystreamLengthText.setText(Integer.toString(result)); // $NON-NLS-1$
 		CLEARING_FLAG = false;
 		keystreamLengthText.requestLayout();
 		keystreamLengthValue = Integer.toString(result);
@@ -664,7 +715,8 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(Messages.LfsrWizardPage_seedValueAs01String);
 		for (int i = 0; i < lfsrLength; i++) {
-			if (seed[i]) {
+// 			if (seed[i]) {
+			if (getSeedArray()[i]) {
 				stringBuilder.append("1"); //$NON-NLS-1$
 			} else {
 				stringBuilder.append("0"); //$NON-NLS-1$
@@ -762,18 +814,21 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 	}
 
 	private void setSeedValue() {
-		seed = new boolean[lfsrLength];
+// 		seed = new boolean[lfsrLength];
+		setSeedArray(new boolean[lfsrLength]);
 		for (int i = 0; i < lfsrLength; i++) {
 
 			int tempBitValue = seedValueSpinners.get(i).getSelection();
 
 			if (tempBitValue == 0)
-				seed[i] = false;
+// 				seed[i] = false;
+				setSeedPosition(i, false);
 			else
-				seed[i] = true;
+// 				seed[i] = true;
+				setSeedPosition(i, true);
 		}
 	}
-	
+
 	public int getLFSRLength() {
 		return lfsrLength;
 	}
@@ -799,17 +854,16 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 	 *
 	 * @return <code>true</code>, if the page is complete and the wizard may finish
 	 */
-    private boolean mayFinish() {
-        if (lfsrLengthSpinner.getSelection() <= LfsrWizard.MAX_LFSR_LENGTH && lfsrLengthSpinner.getSelection() > 0) {
-            if (displayKeystreamOnlyButton.getSelection())
-                if (keystreamLengthText.getText() != "") //$NON-NLS-1$
-                    return true;
-                else
-                    return false;
+	private boolean mayFinish() {
+		if (lfsrLengthSpinner.getSelection() <= LfsrWizard.MAX_LFSR_LENGTH && lfsrLengthSpinner.getSelection() > 0) {
+			if (displayKeystreamOnlyButton.getSelection())
+				if (keystreamLengthText.getText() != "") //$NON-NLS-1$
+					return true;
+				else
+					return false;
 
-            return true;
-        }
-        return false;
-    }
+			return true;
+		}
+		return false;
+	}
 }
-
