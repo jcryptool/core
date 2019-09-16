@@ -15,11 +15,12 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jcryptool.visual.errorcorrectingcodes.ui.EccMainView;
+import org.jcryptool.visual.errorcorrectingcodes.ui.GeneralEccView;
 
 public class RestartHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		if (HandlerUtil.getActivePart(event) instanceof EccMainView) {
+		if (HandlerUtil.getActivePart(event) instanceof GeneralEccView) {
 			EccMainView view = ((EccMainView) HandlerUtil.getActivePart(event));
 
 			view.resetView();

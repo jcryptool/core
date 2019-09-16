@@ -29,9 +29,10 @@ public class EccController {
     }
 
     /**
-     * Convert the original string to a list of 'BitSet's and create a string representation of the bits.
+     * Convert the original string to a list of 'BitSet's and create a string representation of the
+     * bits.
      */
-    
+
     public void textAsBinary() {
         String s = data.getOriginalString();
         StringBuilder codeString = new StringBuilder();
@@ -55,8 +56,8 @@ public class EccController {
     }
 
     /**
-     * Encode the original bitsets and store it in the according BitSet list.
-     * Also creates the string representation of the encoded bits.
+     * Encode the original bitsets and store it in the according BitSet list. Also creates the
+     * string representation of the encoded bits.
      */
     public void encodeBits() {
         data.setEncoded(new ArrayList<BitSet>());
@@ -136,12 +137,12 @@ public class EccController {
         data.getErrorCode().forEach(e -> {
             BitSet c = (BitSet) e.clone();
             BitSet error = new BitSet(3);
-            error.set(0,c.get(0) ^ c.get(2) ^ c.get(4) ^ c.get(6));
-            error.set(1,c.get(1) ^ c.get(2) ^ c.get(5) ^ c.get(6));
-            error.set(2,c.get(3) ^ c.get(4) ^ c.get(5) ^ c.get(6));
-            
+            error.set(0, c.get(0) ^ c.get(2) ^ c.get(4) ^ c.get(6));
+            error.set(1, c.get(1) ^ c.get(2) ^ c.get(5) ^ c.get(6));
+            error.set(2, c.get(3) ^ c.get(4) ^ c.get(5) ^ c.get(6));
+
             if (!error.isEmpty()) {
-                c.flip((int) convert(error)-1);
+                c.flip((int) convert(error) - 1);
             }
             corrected.add(c);
             sb.append(bitSetToString(c, 7));
@@ -218,4 +219,5 @@ public class EccController {
         }
         return value;
     }
+
 }

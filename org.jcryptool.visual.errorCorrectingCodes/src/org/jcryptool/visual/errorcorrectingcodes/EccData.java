@@ -13,6 +13,10 @@ public class EccData {
     private String codeAsString;
     private String codeStringWithErrors;
 
+    private int[][] matrixG;
+    private int[][] matrixP;
+    private int[][] matrixS;
+    
     private List<BitSet> binary;
     private List<BitSet> encoded;
     private List<BitSet> errorCode;
@@ -119,5 +123,31 @@ public class EccData {
         String oldText = this.correctedString;
         this.correctedString = correctedString;
         pcs.firePropertyChange("correctedString", oldText, correctedString);
+    }
+
+    public int[][] getMatrixG() {
+        return matrixG;
+    }
+
+    public void setMatrixG(int[][] matrixG) {
+        this.matrixG = matrixG;
+    }
+
+    public int[][] getMatrixP() {
+        return matrixP;
+    }
+
+    public void setMatrixP(int[][] matrixP) {
+        this.matrixP = matrixP;
+    }
+
+    public int[][] getMatrixS() {
+        return matrixS;
+    }
+
+    public void setMatrixS(int[][] matrixS) {
+        this.matrixS = matrixS;
     }    
+    
+    
 }
