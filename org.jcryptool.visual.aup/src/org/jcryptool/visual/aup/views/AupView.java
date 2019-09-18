@@ -343,6 +343,7 @@ public class AupView extends ViewPart {
 	 * @param parent
 	 *            a swt Composite, which is the parent..
 	 */
+	@Override
 	public void createPartControl(Composite parent) {
 		this.parent = parent;
 
@@ -462,7 +463,7 @@ public class AupView extends ViewPart {
 		
 		instrTextHeading = new Label(helpBox, SWT.READ_ONLY | SWT.WRAP);
 		instrTextHeading.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		instrTextHeading.setText(Messages.AupView_0); //$NON-NLS-1$
+		instrTextHeading.setText(Messages.AupView_0); 
 
 		descTextHeading = new Label(helpBox, SWT.READ_ONLY | SWT.WRAP);
 		GridData gd_descTextHeading = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -625,6 +626,7 @@ public class AupView extends ViewPart {
 	/**
 	 * Passing the focus request to the viewer's control.
 	 */
+	@Override
 	public void setFocus() {
 		parent.setFocus();
 	}

@@ -24,7 +24,8 @@ import org.jcryptool.visual.aup.AndroidUnlockPatternPlugin;
  * @version 0.9.2
  */
 public class HelpHandler extends AbstractHandler {
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    @Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
         PlatformUI.getWorkbench().getHelpSystem().displayHelp(AndroidUnlockPatternPlugin.PLUGIN_ID + ".ContextHelpView"); //$NON-NLS-1$
         return null;
     }
