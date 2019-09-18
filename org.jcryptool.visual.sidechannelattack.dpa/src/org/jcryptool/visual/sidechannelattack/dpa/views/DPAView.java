@@ -48,10 +48,9 @@ import org.jcryptool.algorithm.ECCDouble;
 import org.jcryptool.algorithm.ECCMultiply;
 import org.jcryptool.algorithm.ECCOrderAndPoints;
 import org.jcryptool.algorithm.RandomFactorCreator;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.sidechannelattack.DPAPlugIn;
-
-import com.swtdesigner.SWTResourceManager;
 
 /**
  * This Class is used to create a View of DPA, which introduces the basic principle of DPA and
@@ -341,7 +340,7 @@ public class DPAView extends ViewPart implements Constants {
         });
 
         // define parameters of countermeasuresselectionCombo
-        countermeasureselectionCombo.setBackground(SWTResourceManager.getColor(255, 255, 255));
+        countermeasureselectionCombo.setBackground(ColorService.WHITE);
         countermeasureselectionCombo.add(DOUBLE_ADD);
         countermeasureselectionCombo.add(INSECURE_ALG_LABEL_TEXT);
         countermeasureselectionCombo.add(COUTNERMEASURES_CCOMBO_RANDOMIZED_SCALAR_MULTIPLIER);
