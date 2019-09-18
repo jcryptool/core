@@ -18,11 +18,12 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.visual.crtverification.Activator;
 import org.jcryptool.visual.crtverification.verification.CertPathVerifier;
 import org.jcryptool.visual.crtverification.verification.KeystoreConnector;
@@ -472,9 +473,9 @@ public class CrtVerViewController {
         composite.textVerificationDateDay.setText("1");
         composite.textSignatureDateDay.setText("1");
         composite.labelValiditySymbol.setVisible(false);
-        composite.btnLoadRootCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
-        composite.btnLoadCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
-        composite.btnLoadUserCert.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+        composite.btnLoadRootCa.setForeground(ColorService.BLACK);
+        composite.btnLoadCa.setForeground(ColorService.BLACK);
+        composite.btnLoadUserCert.setForeground(ColorService.BLACK);
 
         if (((composite.scaleSignatureDate.getSelection() - 360) % 2) == 0) {
             composite.arrowSigDiff = (composite.scaleSignatureDate.getSelection() - 360) / 2;
@@ -520,21 +521,21 @@ public class CrtVerViewController {
             setTN(cert);
             setScales(1);
             flag = true;
-            composite.btnLoadUserCert.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
+            composite.btnLoadUserCert.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN));
             setLogText("\"" + contact_name + "\" " + Messages.crtVerification_status_UserCertLoaded);
             break;
         case 2: // [2] Cert
             setCA(cert);
             setScales(2);
             flag = true;
-            composite.btnLoadCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
+            composite.btnLoadCa.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN));
             setLogText("\"" + contact_name + "\" " + Messages.crtVerification_status_CaLoaded);
             break;
         case 3: // [3] RootCert
             setRootCA(cert);
             setScales(3);
             flag = true;
-            composite.btnLoadRootCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
+            composite.btnLoadRootCa.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN));
             setLogText("\"" + contact_name + "\" " + Messages.crtVerification_status_RootCaLoaded);
             break;
         }

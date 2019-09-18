@@ -36,7 +36,8 @@ public class ChooseCertPage extends WizardPage {
         setDescription(Messages.ChooseCertPage_description);
     }
     
-    public void createControl(Composite parent) {
+    @Override
+	public void createControl(Composite parent) {
         setPageComplete(false);
         compositeFile = new ChooseCertComposite(parent, SWT.NONE, this, controller);
         setControl(compositeFile);

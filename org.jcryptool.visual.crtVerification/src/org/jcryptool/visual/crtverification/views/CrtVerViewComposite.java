@@ -46,8 +46,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
-import org.eclipse.wb.swt.ResourceManager;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
@@ -135,7 +133,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 	 */
 	public CrtVerViewComposite(Composite parent, int style, CrtVerView view) {
 		super(parent, style);
-		setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+		setBackground(ColorService.GRAY);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		this.crtComposite = this;
 		this.controller = new CrtVerViewController(this);
@@ -335,7 +333,8 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		
 		Label lblArrowSig = new Label(leftTop, SWT.NONE);
 		lblArrowSig.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		lblArrowSig.setForeground(SWTResourceManager.getColor(30, 144, 255));
+		Color light_blue = new Color(Display.getCurrent(), 30, 144, 255);
+		lblArrowSig.setForeground(light_blue);
 		lblArrowSig.setText(Messages.CrtVerViewComposite_signatureDate);
 		
 		//left Canvas for the left Arrows
@@ -356,7 +355,8 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		
 		Label lblArrowVer = new Label(leftTop, SWT.NONE);
 		lblArrowVer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		lblArrowVer.setForeground(SWTResourceManager.getColor(72, 61, 139));
+		Color violet = new Color(Display.getCurrent(), 72, 61, 139);
+		lblArrowVer.setForeground(violet);
 		lblArrowVer.setText(Messages.CrtVerViewComposite_verificationDate);
 		
 		Label seperatorHorizontal = new Label(leftTop, SWT.SEPARATOR | SWT.HORIZONTAL);
@@ -517,7 +517,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		lblLog.setText(Messages.CrtVerViewComposite_lblLog_text);
 
 		txtLogWindow = new Text(logComposite, SWT.BORDER | SWT.WRAP | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL);
-		txtLogWindow.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		txtLogWindow.setBackground(ColorService.WHITE);
 		txtLogWindow.setEditable(false);
 		GridData gd_txtLogWindow = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gd_txtLogWindow.heightHint = 200;
@@ -786,9 +786,8 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		btnValidate.setText(Messages.CrtVerViewComposite_validate);
 		
 		labelValiditySymbol = new Label(settingsComposite, SWT.NONE);
-		labelValiditySymbol.setImage(ResourceManager.getPluginImage(
-					"org.jcryptool.visual.crtVerification",
-					"icons/rotesKreuzKlein.png"));
+
+		labelValiditySymbol.setImage(Activator.getImageDescriptor("icons/rotesKreuzKlein.png").createImage());
 		labelValiditySymbol.setVisible(false);
 
 		btnValidate.addSelectionListener(new SelectionAdapter() {
@@ -929,15 +928,11 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 	 */
 	public void setValidtiySymbol(int type) {
 		if (type == 1) {
-			labelValiditySymbol.setImage(ResourceManager.getPluginImage(
-					"org.jcryptool.visual.crtVerification",
-					"icons/gruenerHakenKlein.png"));
+			labelValiditySymbol.setImage(Activator.getImageDescriptor("icons/gruenerHakenKlein.png").createImage());
 			labelValiditySymbol.setToolTipText(Messages.CrtVerViewComposite_validateSuccessful);
 			labelValiditySymbol.setVisible(true);
 		} else {
-			labelValiditySymbol.setImage(ResourceManager.getPluginImage(
-					"org.jcryptool.visual.crtVerification",
-					"icons/rotesKreuzKlein.png"));
+			labelValiditySymbol.setImage(Activator.getImageDescriptor("icons/rotesKreuzKlein.png").createImage());
 			labelValiditySymbol.setToolTipText(Messages.CrtVerViewComposite_validateUnSuccessful);
 			labelValiditySymbol.setVisible(true);
 		}
@@ -1001,9 +996,10 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 	 * btnLoadUserCert to orange. This happens when the scales are modified.
 	 */
 	public void setLoadBtnsOrange() {
-		btnLoadRootCa.setForeground(SWTResourceManager.getColor(255, 140, 0));
-		btnLoadCa.setForeground(SWTResourceManager.getColor(255, 140, 0));
-		btnLoadUserCert.setForeground(SWTResourceManager.getColor(255, 140, 0));
+		Color orange = new Color(Display.getCurrent(), 255, 140, 0);
+		btnLoadRootCa.setForeground(orange);
+		btnLoadCa.setForeground(orange);
+		btnLoadUserCert.setForeground(orange);
 	}
 
 	@Override
