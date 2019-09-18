@@ -44,7 +44,6 @@ public class Messages {
     public static String SigVerComposite_btnAddInput;
     public static String SigVerComposite_lblHeader;
     public static String SigVerComposite_MessageTitleReturn;
-    public static String SigVerComposite_MessageTextReturn;
     public static String SigVerComposite_menu;
     public static String SigVerComposite_btnDecrypt;
     public static String SigVerComposite_lblPubKey;
