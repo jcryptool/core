@@ -17,9 +17,9 @@ Require-Bundle:
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.jcryptool.core.logging.utils,
+ org.jcryptool.core.util.colors,
  org.jcryptool.core.util.fonts
 Export-Package: 
- org.eclipse.wb.swt,
  org.jcryptool.visual.extendedrsa,
  org.jcryptool.visual.extendedrsa.ui.wizards,
  org.jcryptool.visual.extendedrsa.ui.wizards.wizardpages

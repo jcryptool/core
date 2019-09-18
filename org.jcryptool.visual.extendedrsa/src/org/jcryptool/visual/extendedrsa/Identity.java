@@ -51,7 +51,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.progress.UIJob;
-import org.eclipse.wb.swt.SWTResourceManager;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.ui.views.nodes.Contact;
@@ -511,7 +511,7 @@ public class Identity extends TabItem {
 					initActions2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 					infolabel_tab2 = new Label(actionGroup_2, SWT.WRAP);
-					infolabel_tab2.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+					infolabel_tab2.setForeground(ColorService.RED);
 					infolabel_tab2.setText(NOTHING);
 					infolabel_tab2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2));
 
@@ -628,7 +628,7 @@ public class Identity extends TabItem {
 					label.setLayoutData(gd_label4);
 
 					lbl_pwWrong = new Label(actionGroup_2, SWT.WRAP);
-					lbl_pwWrong.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+					lbl_pwWrong.setForeground(ColorService.BLACK);
 					lbl_pwWrong.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 3));
 
 					pwPrivKey = new Text(actionGroup_2, SWT.BORDER | SWT.PASSWORD);
@@ -661,7 +661,7 @@ public class Identity extends TabItem {
 							RSAPrivateCrtKey privkey = iMgr.getPrivateKey(privateAlias, pwPrivKey.getText());
 							if (privkey == null) {
 								// can't catch the 'java.security.UnrecoverableKeyException'
-								lbl_pwWrong.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+								lbl_pwWrong.setForeground(ColorService.RED);
 								lbl_pwWrong.setText(PW_WRONG);
 							} else {
 								lbl_pwWrong.setText(NOTHING);
@@ -817,7 +817,7 @@ public class Identity extends TabItem {
 
 					errorLabel_1 = new Label(tab1, SWT.WRAP);
 					errorLabel_1.setFont(FontService.getNormalBoldFont());
-					errorLabel_1.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+					errorLabel_1.setForeground(ColorService.RED);
 					errorLabel_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 					radio_RSA = new Button(tab1, SWT.RADIO);
@@ -1382,7 +1382,7 @@ public class Identity extends TabItem {
 							if (radio_RSA.getSelection()) {
 								bi_rsaD = bi_rsaE.modInverse(bi_rsaPhi);
 
-								errorLabel_1.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+								errorLabel_1.setForeground(ColorService.BLACK);
 								if (bi_rsaD.toString().length() < 40) {
 									errorLabel_1.setText(Messages.Identity_63 + bi_rsaD + Messages.Identity_64);
 									tab1.layout();
@@ -1401,7 +1401,7 @@ public class Identity extends TabItem {
 								pickRandomE.setEnabled(false);
 							} else {
 								bi_ExtrsaD = bi_ExtrsaE.modInverse(bi_ExtrsaPhi);
-								errorLabel_1.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+								errorLabel_1.setForeground(ColorService.BLACK);
 								if (bi_ExtrsaD.toString().length() < 40) {
 									errorLabel_1.setText(Messages.Identity_169 + bi_ExtrsaD + Messages.Identity_64);
 									tab1.layout();
@@ -1688,7 +1688,7 @@ public class Identity extends TabItem {
 								String comboText = selectedKey_Keydata.getText();
 								if (comboText.contains(":") || comboText.contains(ALICE) || comboText.contains(BOB)) {
 									wrongPW_keydata.setFont(FontService.getNormalFont());
-									wrongPW_keydata.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+									wrongPW_keydata.setForeground(ColorService.BLACK);
 									wrongPW_keydata.setText(Messages.Identity_180);
 
 									actionGroup_3.layout();
@@ -1796,7 +1796,7 @@ public class Identity extends TabItem {
 							}
 							if (values.size() == 0) {
 								wrongPW_keydata.setFont(FontService.getNormalBoldFont());
-								wrongPW_keydata.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+								wrongPW_keydata.setForeground(ColorService.RED);
 								wrongPW_keydata.setText(PW_WRONG);
 							} else {
 								wrongPW_keydata.setText(NOTHING);
@@ -1841,7 +1841,7 @@ public class Identity extends TabItem {
 					wrongPW_keydata = new Label(myKeyData, SWT.WRAP);
 					wrongPW_keydata.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
 					wrongPW_keydata.setFont(FontService.getNormalBoldFont());
-					wrongPW_keydata.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+					wrongPW_keydata.setForeground(ColorService.RED);
 
 					new Label(tab3, SWT.SEPARATOR | SWT.HORIZONTAL)
 							.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -1912,7 +1912,7 @@ public class Identity extends TabItem {
 
 					lbl_noKeyToAttack = new Label(actionGroup_4, SWT.WRAP);
 					lbl_noKeyToAttack.setFont(FontService.getNormalBoldFont());
-					lbl_noKeyToAttack.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+					lbl_noKeyToAttack.setForeground(ColorService.RED);
 					lbl_noKeyToAttack.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 
 					Label l = new Label(actionGroup_4, SWT.NONE);
@@ -1924,7 +1924,7 @@ public class Identity extends TabItem {
 					attackableKeys = iMgr.getAttackablePublicKeys(Identity.this.identityName);
 					if (attackableKeys.size() == 0) {
 						keyToAttack.setEnabled(false);
-						lbl_noKeyToAttack.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+						lbl_noKeyToAttack.setForeground(ColorService.RED);
 						lbl_noKeyToAttack.setText(NO_KEY_TO_ATTACK);
 						actionGroup_4.layout();
 					}
@@ -1994,8 +1994,8 @@ public class Identity extends TabItem {
 						@Override
 						public void widgetSelected(SelectionEvent e) {
 							TableItem[] allTableItems = keyData_attacked.getItems();
-							lbl_noKeyToAttack.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
-
+							lbl_noKeyToAttack.setForeground(ColorService.BLACK);
+							
 							if (allTableItems.length < 5) {
 								// create RSA-key
 								BigInteger rec_p = new BigInteger(allTableItems[0].getText(1));
@@ -2065,7 +2065,7 @@ public class Identity extends TabItem {
 							attackableKeys = iMgr.getAttackablePublicKeys(Identity.this.identityName);
 							if (attackableKeys.size() == 0) {
 								keyToAttack.setEnabled(false);
-								lbl_noKeyToAttack.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+								lbl_noKeyToAttack.setForeground(ColorService.BLACK);
 								lbl_noKeyToAttack.setText(NO_KEY_TO_ATTACK);
 								actionGroup_4.layout();
 							}
@@ -2666,7 +2666,7 @@ public class Identity extends TabItem {
 		eIsValid = false;
 		BigInteger minimum = new BigInteger(Messages.Identity_168);
 
-		errorLabel_1.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+		errorLabel_1.setForeground(ColorService.RED);
 
 		if (radio_RSA.getSelection()) {
 			if (bi_rsaP != null) {
