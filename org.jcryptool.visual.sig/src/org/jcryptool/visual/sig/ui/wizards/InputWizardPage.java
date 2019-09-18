@@ -28,7 +28,8 @@ public class InputWizardPage extends WizardPage {
         setDescription(Messages.InputWizard_header);
     }
 
-    public void createControl(Composite parent) {
+    @Override
+	public void createControl(Composite parent) {
         composite = new InputComposite(parent, NONE);
         setControl(composite);
         setPageComplete(true);
@@ -41,7 +42,8 @@ public class InputWizardPage extends WizardPage {
             return 1;
     }
 
-    public boolean canFlipToNextPage() {
+    @Override
+	public boolean canFlipToNextPage() {
         return enableNext;
     }
 }

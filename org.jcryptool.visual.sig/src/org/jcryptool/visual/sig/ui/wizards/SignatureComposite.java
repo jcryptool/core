@@ -109,7 +109,8 @@ public class SignatureComposite extends Composite implements SelectionListener {
         combo = new Combo(this, SWT.READ_ONLY);
         combo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         combo.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 alias = keystoreitems.get(combo.getText());
                 page.setPageComplete(true);
             }

@@ -42,7 +42,7 @@ public class HashWizard extends Wizard {
     public boolean performFinish() {
         int i = 0; // 0-4
         // get all the radiobuttons from the WizardPage
-        Control[] radiobutton = (Control[]) page.getGrpHashes().getChildren();
+        Control[] radiobutton = page.getGrpHashes().getChildren();
         // Check which radiobutton is selected
         while (i <= 4) {
             // Check if the current button is selected

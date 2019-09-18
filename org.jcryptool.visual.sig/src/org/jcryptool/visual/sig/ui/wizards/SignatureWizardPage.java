@@ -31,7 +31,8 @@ public class SignatureWizardPage extends WizardPage {
         method = m;
     }
 
-    public void createControl(Composite parent) {
+    @Override
+	public void createControl(Composite parent) {
         composite = new SignatureComposite(parent, NONE, method, this);
         setControl(composite);
     }
