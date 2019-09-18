@@ -282,11 +282,11 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 		strText = Messages.ClientChangeCipherSpecInitationText
 				+ Messages.ServerChangeCipherSpecMasterSecret
 				+ masterSecret
-				+ Messages.ClientChangeCipherSpecClientMACsecret
+				+ Messages.ClientChangeCipherSpecServerMACsecret
 				+ clientMACsecret
-				+ Messages.ClientChangeCipherSpecClientKey
+				+ Messages.ClientChangeCipherSpecServerKey
 				+ clientKey
-				+ Messages.ClientChangeCipherSpecClientIV
+				+ Messages.ClientChangeCipherSpecServerIV
 				+ clientIV;
 		refreshInformations();
 	}

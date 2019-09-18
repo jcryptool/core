@@ -16,7 +16,6 @@ public class Messages extends NLS
 {
 	private static final String BUNDLE_NAME = "org.jcryptool.visual.ssl.views.messages"; //$NON-NLS-1$
 
-	public static String SslViewPlugin;
 	public static String SslViewLblClient;
 	public static String SslViewLblServer;
 	public static String SslViewLblInfo;
@@ -38,7 +37,6 @@ public class Messages extends NLS
 	public static String stxInformationCipherSuiteRefused1;
 	public static String stxInformationCipherSuiteRefused2;
 	
-	public static String ClientHelloCompositeLblClientHello;
 	public static String ClientHelloCompositeLblVersion;
 	public static String ClientHelloCompositeLblRandom;
 	public static String ClientHelloCompositeLblCipherSuit;
@@ -53,7 +51,6 @@ public class Messages extends NLS
 	public static String ServerHelloCompositeErrorSessionID;
 	public static String ServerHelloCompositeErrorRandom;
 	public static String ServerHelloCompositeErrorRandomShort;
-	public static String ClientHelloComposite_btnCheckButton_text;
 
 	public static String ServerHelloCompositeBtnInfo;
 	public static String ServerHelloCompositeBtnGenerate;
@@ -80,14 +77,11 @@ public class Messages extends NLS
 	public static String ServerCertificateCompositeInitationText;
 	public static String ServerCertificateCompositeCertificateText;
 	public static String ServerCertificateCompositeKeyExchangeText;
-	public static String ServerCertificateCompositeKeyExchange;
 	public static String ServerCertificateCompositeRequestText;
-	public static String ServerCertificateCompositeInformationText;
 	public static String ServerCertificateInformationText;
 	
 	public static String CertificateShow_btnISee_text;
 	public static String CertificateShow_grpCertificate_text;
-	public static String CertificateShow_text_text;
 	
 	public static String certShowWindowName;
 
@@ -116,11 +110,8 @@ public class Messages extends NLS
 	public static String ServerChangeCipherSpecCompositeBtnNextStep;
 	public static String ServerChangeCipherSpecInitationText;
 	public static String ServerChangeCipherSpecInformationText;
-	public static String ServerChangeCipherSpecClientMACsecret;
 	public static String ServerChangeCipherSpecServerMACsecret;
-	public static String ServerChangeCipherSpecClientKey;
 	public static String ServerChangeCipherSpecServerKey;
-	public static String ServerChangeCipherSpecClientIV;
 	public static String ServerChangeCipherSpecServerIV;
 	public static String ServerChangeCipherSpecNoIV;
 	public static String ServerChangeCipherSpecPreMaster;
@@ -139,11 +130,8 @@ public class Messages extends NLS
 	public static String ClientChangeCipherSpecCompositeBtnNextStep;
 	public static String ClientChangeCipherSpecInitationText;
 	public static String ClientChangeCipherSpecInformationText;
-	public static String ClientChangeCipherSpecClientMACsecret;
 	public static String ClientChangeCipherSpecServerMACsecret;
-	public static String ClientChangeCipherSpecClientKey;
 	public static String ClientChangeCipherSpecServerKey;
-	public static String ClientChangeCipherSpecClientIV;
 	public static String ClientChangeCipherSpecServerIV;
 	public static String ClientChangeCipherSpecNoIV;
 	
