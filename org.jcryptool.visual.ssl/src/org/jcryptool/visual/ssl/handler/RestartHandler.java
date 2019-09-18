@@ -20,6 +20,7 @@ import org.jcryptool.visual.ssl.views.SslView;
  * 
  */
 public class RestartHandler extends AbstractHandler{
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		if (HandlerUtil.getActivePart(event) instanceof SslView) {
 			SslView view = ((SslView) HandlerUtil.getActivePart(event));

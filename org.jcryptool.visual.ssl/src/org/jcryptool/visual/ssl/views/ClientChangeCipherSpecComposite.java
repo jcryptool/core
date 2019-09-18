@@ -410,6 +410,7 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 		return secret;
 	}
 
+	@Override
 	public void refreshInformations() {
 		if (infoText) {
 			sslView.setStxInformationText(Messages.ClientChangeCipherSpecInformationText);
@@ -418,16 +419,19 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 		}
 	}
 
+	@Override
 	public void enableControls() {
 		btnInformationen.setEnabled(true);
 		refreshInformations();
 	}
 
+	@Override
 	public void disableControls() {
 		btnInformationen.setEnabled(false);
 		btnInformationen.setText(Messages.ClientCertificateCompositeBtnInfo);
 	}
 
+	@Override
 	public boolean checkParameters() {
 		doClientChangeCipherSpec();
 		infoText = false;

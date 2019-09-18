@@ -450,6 +450,7 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 		return secret;
 	}
 
+	@Override
 	public void refreshInformations() {
 		if (infoText) {
 			sslView.setStxInformationText(Messages.ServerChangeCipherSpecInformationText);
@@ -458,18 +459,21 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 		}
 	}
 
+	@Override
 	public void enableControls() {
 		btnInformation.setEnabled(true);
 		btnNextStep.setEnabled(true);
 		refreshInformations();
 	}
 
+	@Override
 	public void disableControls() {
 		btnInformation.setEnabled(false);
 		btnNextStep.setEnabled(false);
 		btnInformation.setText(Messages.ClientCertificateCompositeBtnInfo);
 	}
 
+	@Override
 	public boolean checkParameters() {
 		doServerChangeCipherSpec();
 		return true;

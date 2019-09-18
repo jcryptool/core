@@ -167,6 +167,7 @@ public class ServerCertificateComposite extends Composite implements
 		btnShow = new Button(grpServerCertificate, SWT.NONE);
 		btnShow.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false, 2, 1));
 		btnShow.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseUp(MouseEvent e) {
 				try {
 					CertificateShow cShow = new CertificateShow(certServer,
@@ -190,6 +191,7 @@ public class ServerCertificateComposite extends Composite implements
 		rdbYes = new Button(grpServerCertificate, SWT.RADIO);
 		rdbYes.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		rdbYes.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseUp(MouseEvent e) {
 				blnCertificateRequest = true;
 			}
@@ -200,6 +202,7 @@ public class ServerCertificateComposite extends Composite implements
 		rdbNo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		rdbNo.setSelection(true);
 		rdbNo.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseUp(MouseEvent e) {
 				blnCertificateRequest = false;
 			}
@@ -223,6 +226,7 @@ public class ServerCertificateComposite extends Composite implements
 		// "Parameter" if used once.
 		btnInfo = new Button(btnComposite, SWT.NONE);
 		btnInfo.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseUp(MouseEvent e) {
 				infoText = !infoText;
 				if (btnInfo.getText().equals(
@@ -291,6 +295,7 @@ public class ServerCertificateComposite extends Composite implements
 	/**
 	 * Refresh the Information TextArea with the needed text
 	 */
+	@Override
 	public void refreshInformations() {
 		if (infoText) {
 			sslView.setStxInformationText(Messages.ServerCertificateInformationText);
@@ -302,6 +307,7 @@ public class ServerCertificateComposite extends Composite implements
 	/**
 	 * Enables to use the controls of the Server Certificate step
 	 */
+	@Override
 	public void enableControls() {
 		rdbNo.setEnabled(true);
 		rdbYes.setEnabled(true);
@@ -314,6 +320,7 @@ public class ServerCertificateComposite extends Composite implements
 	/**
 	 * Disables the use of the controls from the Server Certificate step
 	 */
+	@Override
 	public void disableControls() {
 		rdbNo.setEnabled(false);
 		rdbYes.setEnabled(false);
@@ -329,6 +336,7 @@ public class ServerCertificateComposite extends Composite implements
 	 * 
 	 * @return
 	 */
+	@Override
 	public boolean checkParameters() {
 
 		// Server Certificate hex message
@@ -507,6 +515,7 @@ public class ServerCertificateComposite extends Composite implements
 	/**
 	 * Sets everything from this step to zero.
 	 */
+	@Override
 	public void resetStep() {
 		exchKey = null;
 		strSignature = null;

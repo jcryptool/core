@@ -271,6 +271,7 @@ public class ClientFinishedComposite extends Composite implements ProtocolStep {
 		return sb.toString();
 	}
 
+	@Override
 	public void refreshInformations() {
 		if (infoText) {
 			sslView.setStxInformationText(Messages.ClientFinishedInformationText);
@@ -279,16 +280,19 @@ public class ClientFinishedComposite extends Composite implements ProtocolStep {
 		}
 	}
 
+	@Override
 	public void enableControls() {
 		btnInformationen.setEnabled(true);
 		refreshInformations();
 	}
 
+	@Override
 	public void disableControls() {
 		btnInformationen.setEnabled(false);
 		btnInformationen.setText(Messages.ClientCertificateCompositeBtnInfo);
 	}
 
+	@Override
 	public boolean checkParameters() {
 		return true;
 	}
