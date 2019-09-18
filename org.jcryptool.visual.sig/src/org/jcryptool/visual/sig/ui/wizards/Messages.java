@@ -83,6 +83,7 @@ public class Messages {
     // Page 3
     public static String InputEditorWizard_title;
     public static String InputEditorWizard_header;
+    public static String InputEditorWizard_Warning;
 
     // Show generated signature
     public static String ShowSig_title;
@@ -113,7 +114,6 @@ public class Messages {
     public static String ShowSig_editorDescripton;
     public static String ShowSig_randomizedMethods;
     
-    public static String EnterText;
     public static String ShowSig_btnSave;
     public static String ShowSig_MessageBoxTitle;
     public static String ShowSig_MessageBoxText;
