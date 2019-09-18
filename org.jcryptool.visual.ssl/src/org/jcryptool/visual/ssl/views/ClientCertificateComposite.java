@@ -29,6 +29,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.ssl.protocol.Crypto;
 import org.jcryptool.visual.ssl.protocol.Message;
 import org.jcryptool.visual.ssl.protocol.ProtocolStep;
@@ -155,9 +156,11 @@ public class ClientCertificateComposite extends Composite implements
 			@Override
 			public void mouseUp(MouseEvent e) {
 				try {
-					CertificateShow cShow = new CertificateShow(certClient,
-							exchangeKey.getPublic());
+//					CertificateShow cShow = new CertificateShow(certClient,
+//							exchangeKey.getPublic());
+					new CertificateShow(certClient, exchangeKey.getPublic());
 				} catch (IllegalStateException e1) {
+					LogUtil.logError(e1);
 				}
 			}
 		});
@@ -301,7 +304,7 @@ public class ClientCertificateComposite extends Composite implements
 						+ Messages.ClientCertificateCompositeRSAEncrypt
 						+ Message.getClientCertificatePremasterEncrypted();
 			} catch (Exception e) {
-				 
+				 LogUtil.logError(e);
 			}
 		} else {
 			// Calculates a DH Key
@@ -320,7 +323,7 @@ public class ClientCertificateComposite extends Composite implements
 				secret = Hex.encode(Message.getClientKeyAgreement()
 						.generateSecret());
 			} catch (Exception e) {
-				 
+				 LogUtil.logError(e);
 			}
 			strText = strText + exchangeKey.getPublic()
 					+ Messages.ClientCertificateCompositeDHSecret + secret;
@@ -351,6 +354,7 @@ public class ClientCertificateComposite extends Composite implements
 					Message.getServerCertificateHash(),
 					Message.getServerCertificateSignature());
 		} catch (Exception e1) {
+			LogUtil.logError(e1);
 		}
 	}
 
@@ -380,8 +384,11 @@ public class ClientCertificateComposite extends Composite implements
 					+ ClientKeyExchange;
 			Message.setMessageClientKeyExchange(ClientKeyExchange);
 		} catch (NoSuchAlgorithmException e) {
+			LogUtil.logError(e);
 		} catch (UnsupportedEncodingException e) {
+			LogUtil.logError(e);
 		} catch (NullPointerException e) {
+			LogUtil.logError(e);
 		}
 		Message.setClientCertificateServerKeyExchange(exchangeKey);
 		return true;
@@ -413,6 +420,7 @@ public class ClientCertificateComposite extends Composite implements
 					+ getNumber(ClientCertificate.length()) + ClientCertificate;
 			Message.setMessageClientCertfificate(ClientCertificate);
 		} catch (CertificateEncodingException e1) {
+			LogUtil.logError(e1);
 		}
 	}
 
