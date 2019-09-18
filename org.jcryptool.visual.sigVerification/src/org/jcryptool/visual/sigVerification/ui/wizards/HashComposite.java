@@ -112,7 +112,8 @@ public class HashComposite extends Composite implements SelectionListener {
         mntmHash.setText(Messages.Wizard_menu);
         // To select all text
         mntmHash.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 txtDescription.selectAll();
             }
         });

@@ -30,7 +30,8 @@ public class InputFileWizardPage extends WizardPage {
         setTitle(Messages.InputFileWizard_title);
     }
 
-    public void createControl(Composite parent) {
+    @Override
+	public void createControl(Composite parent) {
         setPageComplete(false);
         compositeFile = new InputFileComposite(parent, NONE, this, input);
         setControl(compositeFile);

@@ -39,7 +39,8 @@ public class InputKeyWizardPage extends WizardPage {
         setDescription(Messages.InputKeyWizard_header);
     }
 
-    public void createControl(Composite parent) {
+    @Override
+	public void createControl(Composite parent) {
         composite = new InputKeyComposite(parent, NONE, this);
         composite.getRdoFromFile().setBounds(10, 10, 430, 18);
         composite.getRdoFromEditor().setBounds(10, 34, 430, 18);
@@ -59,7 +60,8 @@ public class InputKeyWizardPage extends WizardPage {
         }
     }
 
-    public boolean canFlipToNextPage() {
+    @Override
+	public boolean canFlipToNextPage() {
         if (composite.getRdoFromEditor().getSelection()) {
             enableNext = true;
         } else if (composite.getRdoFromFile().getSelection()) {

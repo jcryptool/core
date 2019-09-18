@@ -74,7 +74,8 @@ public class InputKeyComposite extends Composite implements SelectionListener {
         
     }
 
-    public void widgetSelected(SelectionEvent e) {
+    @Override
+	public void widgetSelected(SelectionEvent e) {
         if (rdoFromKeyStore.getSelection()) {
             inputKeyWizard.enableFinish = true;
             page.enableNext = false;

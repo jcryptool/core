@@ -36,7 +36,8 @@ public class InputKeyFileWizardPage extends WizardPage {
         setDescription(Messages.InputKeyFileWizard_header);
     }
 
-    public void createControl(Composite parent) {
+    @Override
+	public void createControl(Composite parent) {
         setPageComplete(false);
         compositeFile = new InputKeyFileComposite(parent, NONE, this);
         setControl(compositeFile);
@@ -52,7 +53,8 @@ public class InputKeyFileWizardPage extends WizardPage {
     /* (non-Javadoc)
      * @see org.eclipse.jface.wizard.WizardPage#getPreviousPage()
      */
-    public WizardPage getPreviousPage(){
+    @Override
+	public WizardPage getPreviousPage(){
         inputKeyWizard.enableFinish = false;
         sigVerification.reset();
         return inputKeyWizard.page;        

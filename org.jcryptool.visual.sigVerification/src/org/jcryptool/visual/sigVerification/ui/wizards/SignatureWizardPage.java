@@ -33,7 +33,8 @@ public class SignatureWizardPage extends WizardPage {
         setTitle(Messages.SignatureWizard_WindowTitle);
     }
 
-    public void createControl(Composite parent) {
+    @Override
+	public void createControl(Composite parent) {
     	composite = new SignatureComposite(parent, NONE, method, this, input);
         setControl(composite);
         setPageComplete(true);
