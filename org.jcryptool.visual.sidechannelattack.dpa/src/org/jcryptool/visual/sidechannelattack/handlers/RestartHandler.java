@@ -23,6 +23,7 @@ import org.jcryptool.visual.sidechannelattack.dpa.views.DPAView;
  * @version 0.9.5
  */
 public class RestartHandler extends AbstractHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		if (HandlerUtil.getActivePart(event) instanceof DPAView) {
 			DPAView view = ((DPAView) HandlerUtil.getActivePart(event));
