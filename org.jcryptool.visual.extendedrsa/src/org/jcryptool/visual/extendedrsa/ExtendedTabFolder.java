@@ -68,7 +68,7 @@ public class ExtendedTabFolder extends TabFolder {
         Iterator<SecureMessage> it = messageQueue.iterator();
 
         while (it.hasNext()) {
-            secM = (SecureMessage) it.next();
+            secM = it.next();
             if (secM.getMessageID() == messageID) {
                 it.remove();
             }
