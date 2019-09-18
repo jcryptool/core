@@ -45,7 +45,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.wb.swt.SWTResourceManager;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.aup.AndroidUnlockPatternPlugin;
 
@@ -172,7 +172,7 @@ public class AupView extends ViewPart {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				btnSave.setEnabled(false);
-				btnSave.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+				btnSave.setBackground(ColorService.GRAY);
 				btnCancel.setEnabled(false);
 				patternInput = inputFinished = false;
 				if(logic.isFirst()) {
@@ -198,7 +198,7 @@ public class AupView extends ViewPart {
 			public void widgetSelected(SelectionEvent e) {
 				btnCancel.setEnabled(false);
 				btnSave.setEnabled(false);
-				btnSave.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+				btnSave.setBackground(ColorService.GRAY);
 				patternInput = inputFinished = false;
 				logic.btnCancelClick();
 
@@ -407,7 +407,7 @@ public class AupView extends ViewPart {
 		btnSave = new Button(controlBox, SWT.NONE);
 		btnSave.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		btnSave.setText(Messages.AndroidUnlockPattern_ButtonSaveText);
-		btnSave.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+		btnSave.setBackground(ColorService.GRAY);
 	
 		btnCancel = new Button(controlBox, SWT.NONE);
 		btnCancel.setEnabled(false);
@@ -604,7 +604,7 @@ public class AupView extends ViewPart {
 		if (tmp == SWT.YES) {
 			setStatusText("", null); //$NON-NLS-1$
 			patternInput = inputFinished = false;
-			btnSave.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+			btnSave.setBackground(ColorService.GRAY);
 			descText.setText(Messages.AndroidUnlockPattern_helpBox_descText);
 			resizeControl(descText);
 			logic.reset();
@@ -635,24 +635,24 @@ public class AupView extends ViewPart {
 			statusText.getImage().dispose();
 		if(state == null) {
 			statusText.setImage(null);
-			statusText.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+			statusText.setForeground(ColorService.BLACK);
 		} else {
 		switch (state) {
 			case ERROR:
 				statusText.setImage(AndroidUnlockPatternPlugin.getImageDescriptor("platform:/plugin/org.eclipse.ui/icons/full/obj16/error_tsk.png").createImage()); //$NON-NLS-1$
-				statusText.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_RED));
+				statusText.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED));
 				break;
 			case WARNING:
 				statusText.setImage(AndroidUnlockPatternPlugin.getImageDescriptor("platform:/plugin/org.eclipse.ui/icons/full/obj16/warn_tsk.png").createImage()); //$NON-NLS-1$
-				statusText.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_YELLOW));
+				statusText.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_YELLOW));
 				break;
 			case INFO:
 				statusText.setImage(AndroidUnlockPatternPlugin.getImageDescriptor("platform:/plugin/org.eclipse.jface/icons/full/message_info.png").createImage()); //$NON-NLS-1$
-				statusText.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+				statusText.setForeground(ColorService.BLACK);
 				break;
 			case OK:
 				statusText.setImage(AndroidUnlockPatternPlugin.getImageDescriptor("/icons/ok_st_obj.gif").createImage()); //$NON-NLS-1$
-				statusText.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
+				statusText.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN));
 				break;
 			default:
 				statusText.setImage(null);
