@@ -7,56 +7,82 @@
 </head>
 
 <body>
-	<h1>LFSR</h1>
+	<h1>LFSR: Wie man diese Visualisierung benutzt</h1>
 
-	<p>This tutorial will guide you through an encryption and a decryption with a modern stream cipher,
-	the Linear Feedback Shift Register (LFSR), which is provided by the
-	org.jcryptool.crypto.modern.stream.lfsr plug-in.<br>
-	<b>Note:</b> As with all algorithms, you can only perform the following steps when you have an opened
-	editor window.</p>
+	<p>Dieses Tutorial zeigt Ihnen, wie Sie eine Nachricht mit einer einfachen, modernen Strom-Chiffre, dem Linear Feedback Shift Register (LFSR), verschlüsseln oder entschlüsseln können. Die Funktionsweise des LFSR (mit Referenzen und einigen Beispielen) ist in der begleitenden Online-Hilfe beschrieben: <a href="../tutorial.html">LFSR-Verschlüsselung</a>.</p>
+	
+	<p><b>Note:</b> Mit diesem Dialog (Wizard, Assistenten) können Sie entweder einfach den Schlüsselstrom erzeugen/ausgeben, oder Sie generieren den Schlüsselstrom und verschlüsseln/entschlüsseln dann die gegebene Nachricht. Bitte laden Sie zunächst eine Nachricht in den JCT-Editor (wie bei allen Menüpunkten unter Algorithmen -> Symmetrisch wird die Chiffre auf den Inhalt des aktiven Editor-Fensters angewendet).</p>
+
+	<p>Diese Hilfedatei beschreibt vier Anwendungsfälle:</p>
+	<p>1) <a href="#Enc-textmessage">Verschlüsselung einer Textnachricht mit der LFSR-Chiffre</a></p>
+	<p>2) <a href="#Dec-lsfr-ciphertext">Entschlüsselung eines LFSR-Geheimtexts</a></p>
+	<p>3) <a href="#Output-keystream-used">Zusätzliche Ausgabe des für die Ver- oder Entschlüsselung verwendeten Schlüsselstroms</a></p>
+	<p>4) <a href="#Display-generated-keystream">Anzeige des generierten Schlüsselstroms (ohne ihn zur Ver- oder Entschlüsselung zu verwenden)</a> </p>
+
+
+	<br>
+	<h2 id="Enc-textmessage">1) Verschlüsselung einer Textnachricht mit der LFSR-Chiffre</h2>
 
 	<img src="figure1.png">
 
-	<p>Select the size of the LFSR (restricted to a value between 1 and 25
-	for presentation purposes). You then have to select which bits are tapped and the value of the seed
-	(the LFSR's initial state). In our example we have an LFSR of length 21. The 5th, 14th, 17th, 18th
-	and 21st bits are tapped (note that the final bit is always considered to be tapped). The LFSR's seed
-	is 100100100010001000110. Clicking on the Finish button will start the encryption/ decryption
-	process.</p>
+	<p>Wählen Sie die Größe (Registerlänge) des LFSR &ndash; hier ist die Länge für Präsentationszwecke eingeschränkt auf einen Wert zwischen 1 und 25. Anschließend ist festzulegen, welche Register-Bits getappt sind und welchen Wert der Seed hat (Der Seed ist der Startwert oder Anfangszustand des LFSR-Registers. Der Inhalt des Registers wird manchmal auch als Stage bezeichnet. Ist ein Register-Bit getappt, wird sein Inhalt in die Berechnung des neuen Input-Bits mit einbezogen).</p>
+
+	<p>In unserem Beispiel verwenden wir die Meldung "This is a JCrypTool txt file" und wir haben einen LFSR der Länge 21. Die Bits 5, 14, 17, 18 und 21 sind getappt (beachten Sie, dass das letzte (rechteste, älteste) Bit im Register zum höchsten Grad des binären Polynoms gehört und immer getappt sein muss). Der gewählte LFSR-Seed ist 10010010010001000100010001000110.
+	<pre>
+  Tap  = 0000 1000 0000 0100 1100 1
+  Seed = 1001 0010 0010 0010 0011 0
+	</pre>
+	Erwartete Ausgabe (nach der ersten Stage): xxxxxxxxxxxxxxxxxxxx(TODO).</p>
+	<!-- TODO: Add the according picture from CT2. Check language and correct order of taps and seed.  &nbsp; = 1 Leerzeichen.   &ensp; = 2 Leerzeichen. -->
+	
+	<p>Der folgende Screenshot (aus CrypTool 2) zeigt das 21-Bit-Register und die 5 Taps im Ausgangszustand.</p>
+	<img src="figure7.png">
+	
+	<br><br>
+	<p>Wenn Sie auf die Schaltfläche <b>Fertigstellen</b> klicken, startet der Verschlüsselungs-/Entschlüsselungsprozess, der LFSR-Dialog wird geschlossen und die Ausgabe wird in einem neuen JCT-Hexeditor-Fenster angezeigt.</p>
 
 	<img src="figure2.png">
 
-	<p>The resulting ciphertext (in output001.bin) can be decrypted, by selecting identical settings and
-	values in the same wizard that was used for encryption. (Note: The output is opened in a hex editor
-	rather than a text editor. This is because modern algorithms are based on bytes, not characters; as
-	such, opening a text editor would be inappropriate.)</p>
+
+
+
+
+	<br><br>
+	<h2 id="Dec-lsfr-ciphertext">2) Entschlüsselung eines LFSR-Geheimtexts</h2>
+  
+	<p>Der resultierende Geheimtext (in output001.bin) kann entschlüsselt werden, indem identische Einstellungen und Werte in demselben Dialog ausgewählt werden, der auch für die Verschlüsselung verwendet wurde. (Hinweis: Die Ausgabe wird in einem Hex-Editor und nicht in einem Texteditor geöffnet, denn moderne Algorithmen basieren auf Bytes, nicht auf Zeichen.)</p>
 
 	<img src="figure3.png">
 
-	<p>Clicking on the Finish button will now start the decryption of the ciphertext and yield the correct
-	plaintext which will be displayed in a new editor (output002.bin in the screenshot below).</p>
+	<br><br>
+	<p>Wenn Sie auf die Schaltfläche <b>Fertigstellen</b> klicken, startet die Entschlüsselung des Geheimtexts und liefert den korrekten Klartext, der in einem neuen Editorfenster angezeigt wird (output002.bin im Screenshot unten).</p>
 
 	<img src="figure4.png">
 
-	<h2>Outputting the keystream</h2>
 
-	<p>Selecting the Display output file with keystream in a separate hex editor radio button will open a
-	second file containing the generated keystream from that encryption/ decryption process. A
-	comparison of the keystream from the encryption process to that of the decryption process will
-	show that given identical inputs, an identical keystream is produced.</p>
+
+	<br><br>
+	<h2 id="Output-keystream-used">3) Zusätzliche Ausgabe des für die Ver- oder Entschlüsselung verwendeten Schlüsselstroms</h2>
+
+	<p>Wählt man den zweiten Auswahlknopf (Radiobutton) im Rechteck <b>Ausgabeoptionen</b>, wird nicht nur der Geheimtext sondern auch der bei diesem (Ver-/Entschlüsselungs-)Prozess verwendete Schlüsselstrom in einem separaten Hexeditor-Fenstern angezeigt.</p>
+	<p>Ein Vergleich des Schlüsselstroms vom Verschlüsselungsprozess mit dem des Entschlüsselungsprozesses zeigt, dass bei identischen Eingaben ein identischer Schlüsselstrom erzeugt wird.</p>
 
 	<img src="figure5.png">
 
-	<p>The keystream is displayed in a new editor (output004.bin above), with the plaintext being
-	displayed as usual (output003.bin).<br>
-	Selecting the Display keystream only (of specified number of bytes): radio button will open a file
-	containing a specified number of bytes of generated keystream. The number of bytes of keystream
-	to generate is specified in a textbox which is enabled when the Display keystream only button is
-	selected.</p>
+	<p>Der Schlüsselstrom wird in einem neuen Editorfenster (output004.bin oben) angezeigt, wobei der Klartext wie gewohnt angezeigt wird (output003.bin).<br>
+
+
+
+	<br>
+	<h2 id="Display-generated-keystream">4) Anzeige des generierten Schlüsselstroms (ohne ihn zur Ver- oder Entschlüsselung zu verwenden)</h2>
+
+	<p>Wählt man den dritten Auswahlknopf (Radiobutton) im Rechteck <b>Ausgabeoptionen</b>, wird nur der Schlüsselstrom (mit einer bestimmten Anzahl von Bytes) angezeigt. Die Anzahl der zu erzeugenden Bytes für den Schlüsselstrom wird in dem Textfeld dahinter angegeben. Dieses ist nur dann aktiv ist, wenn der Auswahlknopf "Nur Schlüsselstrom ... anzeigen" ausgewählt ist.</p>
 
 	<img src="figure6.png">
 
-	<p>Our example shows the keystream generated, given the same seed and tap settings input as earlier,
-	up to 100 bytes.</p>
+	<p>Unser Beispiel zeigt die ersten 100 Bytes des Schlüsselstroms (output005.bin oben). Diese wurden mit denselben Werten für Seed und Tap erzeugt wie zuvor.</p>
+
+<br>	
 </body>
 </html>
+

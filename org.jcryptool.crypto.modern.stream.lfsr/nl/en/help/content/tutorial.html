@@ -96,10 +96,17 @@ Expected output (after first stage): 1100 0100 1101
 	<p><b>b) 16-bit Fibonacci LFSR</b> from Wikipedia [1], see Figure 1 above:
 	<pre>
 c = tap = 0000 0000 0010 1101
-seed    = 1010 1100 1110 0001 = 0xACE1
-Expected output (after first stage):
+seed    = 1010 1100 1110 0001 = 0xACE1  (= 1st stage in the LFSR register)
+
+Next stage in the LFSR register (after one clock):
           0101 0110 0111 0000 = 0x5670
-	</pre>
+  Illustration (how the new stage is created by adding 1 bit at the beginning of the register):
+           101 0110 0111 0000 1 = 0xACE1
+         0 101 0110 0111 0000   = 0x5670
+
+Expected output starts with: xxxxxxxxxx = 0xyyyy
+
+</pre>
 	The tap numbers correspond to a primitive polynomial, so the register cycles through the maximum number of all possible 65535 states (excluding the all-zeroes state). The state 0xACE1 (hexadecimal) will be followed by 0x5670.</p>
 
 
