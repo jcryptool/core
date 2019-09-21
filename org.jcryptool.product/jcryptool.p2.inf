@@ -59,4 +59,4 @@ requires.11.range=[1.0.0, 2.0.0)
 
 requires.12.namespace=org.eclipse.equinox.p2.iu
 requires.12.name=org.jcryptool.visual.feature.feature.group
-requires.12.range=[1.0.0, 2.0.0
+requires.12.range=[1.0.0, 2.0.0)
