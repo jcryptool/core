@@ -11,3 +11,8 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: org.jcryptool.visual.sidechannelattack.spa
+Export-Package: com.swtdesigner,
+ org.jcryptool.algorithm,
+ org.jcryptool.visual.sidechannelattack,
+ org.jcryptool.visual.sidechannelattack.spa.handlers,
+ org.jcryptool.visual.sidechannelattack.spa.views

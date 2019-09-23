@@ -48,7 +48,7 @@ public class SignatureWizard extends Wizard {
     @Override
     public boolean performFinish() {
         // get all the radiobuttons from the WizardPage
-        Control[] radioButtons = (Control[]) page.getGrpSignatures().getChildren();
+        Control[] radioButtons = page.getGrpSignatures().getChildren();
         
         // Check which radiobutton is selected
         for (int i = 0; i < radioButtons.length; i++) {

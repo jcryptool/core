@@ -15,7 +15,6 @@ public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.jcryptool.visual.sigVerification.ui.view.messages"; //$NON-NLS-1$
     public static final String InputKeyFileWizard_btnBrowse = null;
     
-    public static String SigComposite_1;
     public static String SigVerView_Signature_verification;
     public static String SigVerView_Validity_models;
     static {

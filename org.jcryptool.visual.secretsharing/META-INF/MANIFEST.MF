@@ -11,3 +11,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: org.jcryptool.core.util.fonts
 Automatic-Module-Name: org.jcryptool.visual.secretsharing
+Export-Package: org.jcryptool.visual.secretsharing,
+ org.jcryptool.visual.secretsharing.algorithm,
+ org.jcryptool.visual.secretsharing.handler,
+ org.jcryptool.visual.secretsharing.views

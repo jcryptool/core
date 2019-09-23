@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="fleisssnerContextHelp" title="Fleissner Kontext Hilfe">
+		<description>Hier muss noch die Kontext Hilfe ergänzt werden.</description>
+		<topic href="/PLUGINS_ROOT/org.eclipse.platform.doc.isv/guide/ua_help_context.htm" label="Context-sensitive help">
+			<enablement>
+				<with variable="platform">
+	            	<test property="org.eclipse.core.runtime.isBundleInstalled" args="org.eclipse.platform.doc.isv"/>
+	     		</with>
+			</enablement>
+		</topic>
+	</context>
+</contexts>

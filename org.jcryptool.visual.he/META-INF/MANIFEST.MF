@@ -26,3 +26,10 @@ Bundle-Vendor: %Bundle-Vendor
 Bundle-ClassPath: .,
  swing2swt.jar
 Automatic-Module-Name: org.jcryptool.visual.he
+Export-Package: org.jcryptool.visual.he,
+ org.jcryptool.visual.he.algo,
+ org.jcryptool.visual.he.handlers,
+ org.jcryptool.visual.he.rsa,
+ org.jcryptool.visual.he.ui,
+ org.jcryptool.visual.he.wizards,
+ org.jcryptool.visual.he.wizards.pages

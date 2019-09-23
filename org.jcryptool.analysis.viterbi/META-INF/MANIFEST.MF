@@ -9,7 +9,11 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor.0
 Bundle-Activator: org.jcryptool.analysis.viterbi.ViterbiPlugin
-Export-Package: org.jcryptool.analysis.viterbi.algorithm
+Export-Package: org.eclipse.wb.swt,
+ org.jcryptool.analysis.viterbi,
+ org.jcryptool.analysis.viterbi.algorithm,
+ org.jcryptool.analysis.viterbi.handlers,
+ org.jcryptool.analysis.viterbi.views
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.constants,
  org.jcryptool.core.util.directories,

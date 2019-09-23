@@ -14,6 +14,15 @@ Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.jcryptool.visual.jctca.Activator
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.fonts
-Export-Package: org.jcryptool.visual.jctca.notifiers
+Export-Package: org.jcryptool.visual.jctca,
+ org.jcryptool.visual.jctca.CertificateClasses,
+ org.jcryptool.visual.jctca.CertificateViews,
+ org.jcryptool.visual.jctca.RegistrarViews,
+ org.jcryptool.visual.jctca.SecondUserViews,
+ org.jcryptool.visual.jctca.UserViews,
+ org.jcryptool.visual.jctca.UserViews.dialogs,
+ org.jcryptool.visual.jctca.listeners,
+ org.jcryptool.visual.jctca.notifiers,
+ org.jcryptool.visual.jctca.tabs
 Bundle-Vendor: %Bundle-Vendor
 Automatic-Module-Name: org.jcryptool.visual.jctca

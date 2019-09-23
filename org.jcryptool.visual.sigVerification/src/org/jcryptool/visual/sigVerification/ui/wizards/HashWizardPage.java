@@ -31,7 +31,8 @@ public class HashWizardPage extends WizardPage {
         setTitle(Messages.HashWizard_WindowTitle);
     }
 
-    public void createControl(Composite parent) {
+    @Override
+	public void createControl(Composite parent) {
     	composite = new HashComposite(parent, NONE, input);
         setControl(composite);
         setPageComplete(true);

@@ -48,10 +48,9 @@ import org.jcryptool.algorithm.ECCDouble;
 import org.jcryptool.algorithm.ECCMultiply;
 import org.jcryptool.algorithm.ECCOrderAndPoints;
 import org.jcryptool.algorithm.RandomFactorCreator;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.sidechannelattack.DPAPlugIn;
-
-import com.swtdesigner.SWTResourceManager;
 
 /**
  * This Class is used to create a View of DPA, which introduces the basic principle of DPA and
@@ -216,7 +215,8 @@ public class DPAView extends ViewPart implements Constants {
         eCCurveText.setToolTipText(TOOLTIPTEXT_OF_ECCURVETEXT);
         eCCurveText.setEditable(false);
         eCCurveText.addModifyListener(new ModifyListener() {
-            public void modifyText(final ModifyEvent e) {
+            @Override
+			public void modifyText(final ModifyEvent e) {
                 if (!eCCurveText.getText().isEmpty()) {
                     ecc = new ECCOrderAndPoints(BigInteger.valueOf(paraA), BigInteger.valueOf(paraB), BigInteger
                             .valueOf(primeFieldSelected));
@@ -306,7 +306,8 @@ public class DPAView extends ViewPart implements Constants {
         countermeasureselectionCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
         countermeasureselectionCombo.setEnabled(false);
         countermeasureselectionCombo.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(final SelectionEvent e) {
+            @Override
+			public void widgetSelected(final SelectionEvent e) {
 
                 counterFlag = countermeasureselectionCombo.getSelectionIndex();
 
@@ -341,7 +342,7 @@ public class DPAView extends ViewPart implements Constants {
         });
 
         // define parameters of countermeasuresselectionCombo
-        countermeasureselectionCombo.setBackground(SWTResourceManager.getColor(255, 255, 255));
+        countermeasureselectionCombo.setBackground(ColorService.WHITE);
         countermeasureselectionCombo.add(DOUBLE_ADD);
         countermeasureselectionCombo.add(INSECURE_ALG_LABEL_TEXT);
         countermeasureselectionCombo.add(COUTNERMEASURES_CCOMBO_RANDOMIZED_SCALAR_MULTIPLIER);
@@ -519,7 +520,8 @@ public class DPAView extends ViewPart implements Constants {
         // add a listener on parameterAcombo to determine which number the user has chosen as
         // parameter A
         parameterACombo.addModifyListener(new ModifyListener() {
-            public void modifyText(final ModifyEvent e) {
+            @Override
+			public void modifyText(final ModifyEvent e) {
 
                 executeButton.setEnabled(false);
                 countermeasureselectionCombo.setEnabled(false);
@@ -553,7 +555,8 @@ public class DPAView extends ViewPart implements Constants {
         // add a listener on parameterBcombo to determine which number the user has chosen as
         // parameter B
         parameterBCombo.addModifyListener(new ModifyListener() {
-            public void modifyText(final ModifyEvent e) {
+            @Override
+			public void modifyText(final ModifyEvent e) {
 
                 executeButton.setEnabled(false);
                 countermeasureselectionCombo.setEnabled(false);
@@ -593,7 +596,8 @@ public class DPAView extends ViewPart implements Constants {
         // point of the
         // computation
         eCPointscombo.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(final SelectionEvent e) {
+            @Override
+			public void widgetSelected(final SelectionEvent e) {
 
                 executeButton.setEnabled(false);
                 countermeasureselectionCombo.setEnabled(false);
@@ -632,7 +636,8 @@ public class DPAView extends ViewPart implements Constants {
 
         // add a listener on executeButton, which is used to start the process of selected algorithm
         executeButton.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(final SelectionEvent e) {
+            @Override
+			public void widgetSelected(final SelectionEvent e) {
                 foo();
                 outputFlag = 1;
             }
@@ -1179,7 +1184,8 @@ public class DPAView extends ViewPart implements Constants {
         });
 
         scalarParameterCombo.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(final SelectionEvent e) {
+            @Override
+			public void widgetSelected(final SelectionEvent e) {
                 executeButton.setEnabled(true);
                 countermeasureselectionCombo.setEnabled(true);
                 btnReset.setEnabled(true);
@@ -1220,7 +1226,8 @@ public class DPAView extends ViewPart implements Constants {
 	/**
      * Passing the focus request to the viewer's control.
      */
-    public void setFocus() {
+    @Override
+	public void setFocus() {
     	parent.setFocus();
     }
 

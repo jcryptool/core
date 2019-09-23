@@ -151,7 +151,11 @@ private void saveCert(X509Certificate cert, PrivateKey key) throws Exception {
       keyStore.load(null, null);
       keyStore.setKeyEntry(CERTIFICATE_ALIAS+x, key, "JCT".toCharArray(), new java.security.cert.Certificate[]{cert});
       File file = new File(".", CERTIFICATE_NAME+x);
-      keyStore.store( new FileOutputStream(file), "JCT".toCharArray() );
+      // Important Note: This will only work if the JCT is started as administrator.
+      // If you start the JCT out of eclipse it will throw an exception.
+      // To solve this exception simply start eclipse as administrator. The JCT will then be 
+      // launched also as administrator and it works.
+      keyStore.store(new FileOutputStream(file), "JCT".toCharArray());
   }
 
  /**

@@ -215,6 +215,7 @@ public class ServerHelloComposite extends Composite implements ProtocolStep {
 	/* (non-Javadoc)
 	 * @see org.jcryptool.visual.ssl.protocol.ProtocolStep#refreshInformations()
 	 */
+	@Override
 	public void refreshInformations() {
 		String text0 = "";
 		String text1 = "";
@@ -295,6 +296,7 @@ public class ServerHelloComposite extends Composite implements ProtocolStep {
 	 * 
 	 * @see protocol.ProtocolStep#enableControls()
 	 */
+	@Override
 	public void enableControls() {
 		btnInfo.setEnabled(true);
 		btnGenerate.setEnabled(true);
@@ -310,6 +312,7 @@ public class ServerHelloComposite extends Composite implements ProtocolStep {
 	 * 
 	 * @see protocol.ProtocolStep#disableControls()
 	 */
+	@Override
 	public void disableControls() {
 		btnInfo.setEnabled(false);
 		btnGenerate.setEnabled(false);
@@ -326,6 +329,7 @@ public class ServerHelloComposite extends Composite implements ProtocolStep {
 	 * 
 	 * @see protocol.ProtocolStep#checkParameters()
 	 */
+	@Override
 	public boolean checkParameters() {
 		String length = "00004c";
 		String type ="02";

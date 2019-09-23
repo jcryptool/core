@@ -166,6 +166,6 @@ public class InputFileComposite extends Composite implements SelectionListener {
     }
     
     public int getMaxSizeInMB() {
-    	return (int) (maxSize / 1048576);
+    	return maxSize / 1048576;
     }
 }

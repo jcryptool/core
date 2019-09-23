@@ -15,3 +15,9 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.directories,
  org.jcryptool.core.util.fonts
 Automatic-Module-Name: org.jcryptool.visual.crt
+Export-Package: org.jcryptool.visual.crt,
+ org.jcryptool.visual.crt.algorithm,
+ org.jcryptool.visual.crt.export,
+ org.jcryptool.visual.crt.handlers,
+ org.jcryptool.visual.crt.views,
+ org.jcryptool.visual.crt.xeuclid

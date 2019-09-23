@@ -11,6 +11,7 @@
 package org.jcryptool.crypto.modern.stream.lfsr.ui;
 
 import org.eclipse.jface.wizard.Wizard;
+import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.crypto.modern.stream.lfsr.ui.LfsrWizardPage.DisplayOption;
 
 /**
@@ -29,12 +30,14 @@ public class LfsrWizard extends Wizard {
 	 * Creates a new instance of LfsrWizard.
 	 */
 	public LfsrWizard() {
-		setWindowTitle(Messages.LfsrWizard_0);
+		EditorsManager editor = EditorsManager.getInstance();
+		setWindowTitle(Messages.LfsrWizard_0 + " \"" + editor.getActiveEditorTitle() + "\"");
 	}
 
 	/**
 	 * @see org.eclipse.jface.wizard.Wizard#addPages()
 	 */
+	@Override
 	public void addPages() {
 		page = new LfsrWizardPage();
 		addPage(page);
@@ -82,5 +85,13 @@ public class LfsrWizard extends Wizard {
 	 */
 	public String getKeystreamLengthValue() {
 		return page.getKeystreamLengthValue();
+	}
+	
+	/**
+	 * 
+	 * @return The selected LFSR length
+	 */
+	public int getLfsrLength() {
+		return page.getLFSRLength();
 	}
 }

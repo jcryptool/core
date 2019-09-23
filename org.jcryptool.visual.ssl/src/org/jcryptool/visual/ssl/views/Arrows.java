@@ -45,7 +45,8 @@ public class Arrows extends Canvas
 		super(parent, style);
 		arrows = new ArrayList<int[]>();
 		addPaintListener(new PaintListener() {
-            public void paintControl(PaintEvent e) 
+            @Override
+			public void paintControl(PaintEvent e) 
             {
             	paint(e);
             }

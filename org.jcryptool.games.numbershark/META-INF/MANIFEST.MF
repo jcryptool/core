@@ -15,3 +15,9 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.fonts,
  org.jcryptool.core.util.numbers
 Automatic-Module-Name: org.jcryptool.games.numbershark
+Export-Package: org.jcryptool.games.numbershark,
+ org.jcryptool.games.numbershark.dialogs,
+ org.jcryptool.games.numbershark.handler,
+ org.jcryptool.games.numbershark.strategies,
+ org.jcryptool.games.numbershark.util,
+ org.jcryptool.games.numbershark.views

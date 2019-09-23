@@ -22,7 +22,8 @@ public class SigView extends ViewPart {
     /**
      * This is a callback that will allow us to create the viewer and initialize it.
      */
-    public void createPartControl(Composite parent) {
+    @Override
+	public void createPartControl(Composite parent) {
         this.parent = parent;
         final ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
         sc.setExpandHorizontal(true);

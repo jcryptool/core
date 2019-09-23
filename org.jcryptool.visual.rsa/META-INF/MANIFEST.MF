@@ -23,3 +23,8 @@ Import-Package: org.jcryptool.core.logging.dialogs,
  org.jcryptool.core.util.constants,
  org.jcryptool.core.util.fonts
 Automatic-Module-Name: org.jcryptool.visual.rsa
+Export-Package: org.jcryptool.visual.rsa,
+ org.jcryptool.visual.rsa.handlers,
+ org.jcryptool.visual.rsa.ui,
+ org.jcryptool.visual.rsa.ui.wizards,
+ org.jcryptool.visual.rsa.ui.wizards.wizardpages

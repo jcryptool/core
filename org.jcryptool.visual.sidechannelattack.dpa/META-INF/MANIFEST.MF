@@ -6,8 +6,13 @@ Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.visual.sidechannelattack.DPAPlugIn
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ org.jcryptool.core.util
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: org.jcryptool.core.util.fonts
 Automatic-Module-Name: org.jcryptool.visual.sidechannelattack.dpa
+Export-Package: org.jcryptool.algorithm,
+ org.jcryptool.visual.sidechannelattack,
+ org.jcryptool.visual.sidechannelattack.dpa.views,
+ org.jcryptool.visual.sidechannelattack.handlers

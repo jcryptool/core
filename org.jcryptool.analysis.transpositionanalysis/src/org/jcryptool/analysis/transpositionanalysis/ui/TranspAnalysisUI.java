@@ -79,7 +79,7 @@ public class TranspAnalysisUI extends Composite implements Observer {
 	private Group compTable;
 	private Text labelKeypreview;
 	private Composite composite4;
-	private Label label2;
+	private Label keyfound;
 	private boolean crop = true;
 	private int croplength = 80;
 	private int blocklength = 0;
@@ -94,7 +94,6 @@ public class TranspAnalysisUI extends Composite implements Observer {
 	private PageConfiguration textPageConfiguration;
 	private TransformData textTransformData;
 	private Composite compLoadTextBtn;
-//	private Label lblLoadA;
 	private Button btnOpenTextWizard;
 	private Composite compInstructions;
 	private Label lblTryTo;
@@ -351,23 +350,10 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		compTable = new Group(content, SWT.NONE);
 		GridLayout gl_compTable = new GridLayout();
 		gl_compTable.makeColumnsEqualWidth = true;
-		GridData gd_compTable = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		gd_compTable.grabExcessHorizontalSpace = true;
-		gd_compTable.horizontalAlignment = GridData.FILL;
-		gd_compTable.verticalAlignment = GridData.FILL;
-		gd_compTable.grabExcessVerticalSpace = true;
-		gd_compTable.minimumHeight = 200;
-		gd_compTable.heightHint = 150;
 		compTable.setText(Messages.TranspAnalysisUI_grpEditText);
 		compTable.setFont(FontService.getLargeFont());
-		compTable.setLayoutData(gd_compTable);
+		compTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		compTable.setLayout(gl_compTable);
-
-//				{
-//					label = new Label(compTable, SWT.NONE);
-//					label.setText(Messages.TranspAnalysisUI_grpEditText);
-//					label.setFont(FontService.getLargeBoldFont());
-//				}
 
 		compApplyTransform = new Composite(compTable, SWT.NONE);
 		GridLayout compApplyTransformLayout = new GridLayout();
@@ -431,10 +417,9 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		labelReadDir = new Label(compReadDir, SWT.NONE);
 		labelReadDir.setText(Messages.TranspAnalysisUI_lblReadinmode);
 
-		readinDirChooser = new ReadDirectionChooser(compReadDir, false);
+		readinDirChooser = new ReadDirectionChooser(compReadDir);
 		readinDirChooser.setDirection(TranspositionTable.DIR_ROWWISE);
 		readinDirChooser.setEnabled(false);
-
 		readinDirChooser.getInput().addObserver(new Observer() {
 			@Override
 			public void update(Observable o, Object arg) {
@@ -447,10 +432,9 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		labelReadDir = new Label(compReadDir, SWT.NONE);
 		labelReadDir.setText(Messages.TranspAnalysisUI_read_out_mode_label);
 
-		readoutDirChooser = new ReadDirectionChooser(compReadDir, false);
+		readoutDirChooser = new ReadDirectionChooser(compReadDir);
 		readoutDirChooser.setDirection(TranspositionTable.DIR_ROWWISE);
 		readoutDirChooser.setEnabled(false);
-
 		readoutDirChooser.getInput().addObserver(new Observer() {
 			@Override
 			public void update(Observable o, Object arg) {
@@ -462,7 +446,6 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		});
 
 		lblColumnCount = new Label(compReadDir, SWT.NONE);
-		lblColumnCount.setBounds(0, 0, 55, 15);
 		lblColumnCount.setText(Messages.TranspAnalysisUI_lblColumnCount_text_1);
 
 		spinner = new Spinner(compReadDir, SWT.BORDER);
@@ -497,14 +480,10 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		lblLoadedTextwith = new Label(compTable, SWT.NONE);
 		lblLoadedTextwith.setText(Messages.TranspAnalysisUI_lblLoadedTextwith_text);
 
-		GridData transpTableLData = new GridData();
+		GridData transpTableLData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		transpTableLData.grabExcessHorizontalSpace = true;
-		transpTableLData.horizontalAlignment = GridData.FILL;
-		transpTableLData.verticalAlignment = GridData.FILL;
-		transpTableLData.grabExcessVerticalSpace = true;
-		// transpTableLData.minimumWidth = 200;
-		transpTableLData.minimumHeight = 70;
-		transpTableLData.heightHint = 70;
+		transpTableLData.minimumHeight = 150;
+		transpTableLData.heightHint = 150;
 		transpTable = new TranspositionTableComposite(compTable, SWT.NONE);
 		transpTable.setLayoutData(transpTableLData);
 		transpTable.setColReorderObserver(this);
@@ -514,24 +493,14 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		gl_compResults.marginHeight = 0;
 		gl_compResults.marginWidth = 0;
 		gl_compResults.makeColumnsEqualWidth = true;
-		GridData gd_compResults = new GridData();
-		gd_compResults.grabExcessHorizontalSpace = true;
-		gd_compResults.horizontalAlignment = GridData.FILL;
-		gd_compResults.verticalAlignment = GridData.FILL;
-		gd_compResults.grabExcessVerticalSpace = true;
-		compResults.setLayoutData(gd_compResults);
+		compResults.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		compResults.setLayout(gl_compResults);
 
 		previewGroup = new Group(compResults, SWT.NONE);
 		GridLayout previewGroupLayout = new GridLayout();
 		previewGroupLayout.makeColumnsEqualWidth = true;
 		previewGroup.setLayout(previewGroupLayout);
-		GridData previewGroupLData = new GridData();
-		previewGroupLData.grabExcessHorizontalSpace = true;
-		previewGroupLData.horizontalAlignment = GridData.FILL;
-		previewGroupLData.grabExcessVerticalSpace = true;
-		previewGroupLData.verticalAlignment = GridData.FILL;
-		previewGroup.setLayoutData(previewGroupLData);
+		previewGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		previewGroup.setText(Messages.TranspAnalysisUI_Results);
 		previewGroup.setFont(FontService.getLargeFont());
 
@@ -545,17 +514,12 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		composite4LData.horizontalAlignment = GridData.FILL;
 		composite4.setLayoutData(composite4LData);
 		composite4.setLayout(composite4Layout);
-//						{
-//							label = new Label(composite4, SWT.NONE);
-//							label.setText(Messages.TranspAnalysisUI_Results);
-//							label.setFont(FontService.getLargeBoldFont());
-//						}
 
-		label2 = new Label(composite4, SWT.NONE);
+		keyfound = new Label(composite4, SWT.NONE);
 		GridData label2LData = new GridData();
 		label2LData.grabExcessHorizontalSpace = true;
-		label2.setLayoutData(label2LData);
-		label2.setText(Messages.TranspAnalysisUI_keyfound);
+		keyfound.setLayoutData(label2LData);
+		keyfound.setText(Messages.TranspAnalysisUI_keyfound);
 
 		composite8 = new Composite(composite4, SWT.NONE);
 		GridLayout composite8Layout = new GridLayout();
@@ -643,7 +607,7 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		previewTextLData.horizontalAlignment = GridData.FILL;
 		previewTextLData.grabExcessVerticalSpace = true;
 		previewTextLData.verticalAlignment = GridData.FILL;
-		previewTextLData.minimumHeight = 20;
+		previewTextLData.minimumHeight = 80;
 		previewTextLData.widthHint = 150;
 		previewText.setLayoutData(previewTextLData);
 		previewText.setEditable(false);

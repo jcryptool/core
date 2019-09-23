@@ -18,3 +18,9 @@ Import-Package: org.jcryptool.crypto.ui.textmodify.wizard,
  org.jcryptool.core.util.fonts,
  org.jcryptool.core.util.input
 Automatic-Module-Name: org.jcryptool.visual.aco
+Export-Package: org.jcryptool.visual.aco,
+ org.jcryptool.visual.aco.controller,
+ org.jcryptool.visual.aco.handlers,
+ org.jcryptool.visual.aco.model,
+ org.jcryptool.visual.aco.view,
+ org.jcryptool.visual.aco.wizard

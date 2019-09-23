@@ -11,3 +11,7 @@ Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor.0
 Bundle-ClassPath: .
 Automatic-Module-Name: org.jcryptool.visual.merkleHellman
+Export-Package: org.jcryptool.visual.merkleHellman,
+ org.jcryptool.visual.merkleHellman.algorithm,
+ org.jcryptool.visual.merkleHellman.handlers,
+ org.jcryptool.visual.merkleHellman.views

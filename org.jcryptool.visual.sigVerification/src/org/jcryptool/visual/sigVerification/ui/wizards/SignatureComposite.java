@@ -102,7 +102,8 @@ public class SignatureComposite extends Composite implements SelectionListener {
         comboKey = new Combo(this, SWT.READ_ONLY);
         comboKey.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         comboKey.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 alias = keystoreitems.get(comboKey.getText());
                 page.setPageComplete(true);
             }
@@ -225,9 +226,9 @@ public class SignatureComposite extends Composite implements SelectionListener {
             } else if (signatureMethod == 2) { //ECDSA
                 if (currAlias.getClassName().equals(ECPublicKey.class.getName())) {
                     // Fill in keys
-                    comboKey.add(currAlias.getContactName() + " - "  + currAlias.getClassName());  //$NON-NLS-1$ //$NON-NLS-2$
+                    comboKey.add(currAlias.getContactName() + " - "  + currAlias.getClassName());  //$NON-NLS-1$ 
                     keystoreitems
-                            .put(currAlias.getContactName() + " - "  + currAlias.getClassName(), currAlias);  //$NON-NLS-1$ //$NON-NLS-2$
+                            .put(currAlias.getContactName() + " - "  + currAlias.getClassName(), currAlias);  //$NON-NLS-1$ 
                 }  
             }
         } 
@@ -273,7 +274,8 @@ public class SignatureComposite extends Composite implements SelectionListener {
     }
 
     // Checks if the radio buttons have changed and updates the text and keys from the keystore
-    public void widgetSelected(SelectionEvent e) {
+    @Override
+	public void widgetSelected(SelectionEvent e) {
         if (rdo1.getSelection()) {
             signatureMethod = 0;
             signatureMethodName = Messages.SignatureWizard_DSA;

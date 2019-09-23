@@ -65,7 +65,7 @@ public class InputEditorComposite extends Composite {
                 } else {
                     page.setPageComplete(false);
                     page.getWizard().getContainer().updateButtons();
-                    page.setErrorMessage(Messages.EnterText);
+                    page.setErrorMessage(Messages.InputEditorWizard_Warning);
                 }
             }
         });

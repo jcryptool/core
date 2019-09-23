@@ -19,3 +19,7 @@ Bundle-ActivationPolicy: lazy
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.fonts
 Automatic-Module-Name: org.jcryptool.visual.huffmanCoding
+Export-Package: org.jcryptool.visual.huffmanCoding,
+ org.jcryptool.visual.huffmanCoding.algorithm,
+ org.jcryptool.visual.huffmanCoding.handlers,
+ org.jcryptool.visual.huffmanCoding.views

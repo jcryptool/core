@@ -8,7 +8,8 @@ Bundle-Vendor: %Bundle-Vendor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.jcryptool.core.operations;bundle-version="1.0.0"
+ org.jcryptool.core.operations;bundle-version="1.0.0",
+ org.jcryptool.core.util
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.crypto.modern.stream.lfsr,
  org.jcryptool.crypto.modern.stream.lfsr.algorithm,

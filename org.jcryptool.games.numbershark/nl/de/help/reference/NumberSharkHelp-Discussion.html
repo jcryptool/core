@@ -59,7 +59,7 @@ as score((a(m))(N)) = Sum(i=1 to m)ni.
 and graph-theoretical constraints are useful in reducing the search
 space.  For instance, after several moves are made, the divisibility
 graph on the remaining choices often becomes disconnected, and the
-components can be optimised independently of one another.</cite>
+components can be optimized independently of one another.</cite>
 <br>In other words the sequencing of the components can be arbitrary, which leads to multiple optimal move sequences.</p>
 
 <p>Dan Hoey <a href="NumberSharkHelp-Bibliography.html">[2]</a> already outlined, that the best choice for the first
@@ -133,7 +133,7 @@ one of them, this number will contribute to the score of the Number Shark. But t
 of an other composite number. But even in this case, they will contribute to the Number Sharks score.</p>
 
 <p><b>Proof:</b>
-<br>For the given number set {1,...,N} the sum of all numbers according to C.F.Gauss is N(N+1)/2.
+<br>For the given number set {1,...,N} the sum of all numbers according to C.F. Gauss is N(N+1)/2.
 <br>After the last move, all numbers are either distributed to the player or to the Number Shark,
 <br>thus optimal score(N) + Number Shark score = N(N+1)/2.
 <br>According to Theorem 2 to get the optimal score, the first move must be the highest prime hp.
@@ -228,7 +228,7 @@ be changed to try to give the Number Shark as slowly as possible prime and pseud
 <br> e.g. N=51, floor(51/2)=25, ceil(51/2)=26, -> l >= 25-(15-9)+1 = 20
 <br> e.g. N=79, floor(79/2)=39, ceil(79/2)=40, -> l >= 39-(22-12)+1 = 30
 <br> e.g. N=100, floor(100/2)=ceil(100/2)=50, -> l >= 50-(25-15)+1 = 41
-<br> e.g. N=158, flor(158/2)=ceil(158/2)=79, -> l >= 79-(37-22)+1 = 65
+<br> e.g. N=158, floor(158/2)=ceil(158/2)=79, -> l >= 79-(37-22)+1 = 65
 <br> e.g. N=256, l >= 106
 <br> e.g. N=512, l >= 214
 <br> e.g. N=1024 l >= 438
@@ -339,7 +339,7 @@ N= number set size (differences of the optimal move sequence from N->N+1)
 <br>N=20(3), N=34(3), N=44(3), N=53(5), N=69(3), N=76(4), N=77(3), N=80(5), N=83(4), N=104(3), N=119(5), N=125(4), N=127(7)
 </p>
 
-<p>They current version of the Number Shark program has implemented a function f, which tries to realise the three cases
+<p>The current version of the Number Shark program has implemented a function f, which tries to realize the three cases
 mentioned above. Other functions will be implemented in future versions.</p>
 
 </body>

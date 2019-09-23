@@ -2,6 +2,5 @@
 <?NLS TYPE="org.eclipse.help.toc"?>
 
 <toc label="Multipartite Key Exchange" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
-    <topic href="nl/en/help/index.html" label="Multipartite Key Exchange">
-    </topic> 
+    <topic href="nl/en/help/index.html" label="Multipartite Key Exchange"/>
 </toc>

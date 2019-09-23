@@ -12,3 +12,7 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.eclipse.core.resources
 Automatic-Module-Name: org.jcryptool.analysis.ngram_text_topics
+Export-Package: org.jcryptool.analysis.ngram,
+ org.jcryptool.analysis.ngram.handlers,
+ org.jcryptool.analysis.ngram.tools,
+ org.jcryptool.analysis.ngram.views

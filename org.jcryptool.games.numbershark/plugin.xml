@@ -99,7 +99,7 @@
                style="push"
                tooltip="%help.command.tooltip">
          </command>
-      </menuContribution>
+      </menuContribution>  
       <menuContribution
             locationURI="menu:org.jcryptool.games.numbershark.NumberSharkView">
          <command
@@ -158,7 +158,7 @@
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png"
                style="push">
          </command>
-      </menuContribution>
+      </menuContribution>   
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -209,38 +209,38 @@
             class="org.jcryptool.games.numbershark.handler.UndoHandler"
             commandId="org.jcryptool.games.numbershark.undoCommand">
 
-            <activeWhen>
+            <enabledWhen>
       			<with
       			variable="org.jcryptool.games.numbershark.commands.undoState">
           			<equals
                     	value="UNDO_ENABLED">
                   	</equals>
       			</with>
-      		</activeWhen>
+      		</enabledWhen>
       </handler>
       <handler
             class="org.jcryptool.games.numbershark.handler.HintHandler"
             commandId="org.jcryptool.games.numbershark.hintCommand">
-            <activeWhen>
+            <enabledWhen>
       			<with
       			variable="org.jcryptool.games.numbershark.commands.hintState">
           			<equals
                     	value="HINT_ENABLED">
                   	</equals>
       			</with>
-      		</activeWhen>
+      		</enabledWhen>
       </handler>
       <handler
             class="org.jcryptool.games.numbershark.handler.SharkMealHandler"
             commandId="org.jcryptool.games.numbershark.sharkMealCommand">
-            <activeWhen>
+            <enabledWhen>
       			<with
       			variable="org.jcryptool.games.numbershark.commands.sharkMealState">
           			<equals
                     	value="SHARKMEAL_ENABLED">
                   	</equals>
       			</with>
-      		</activeWhen>
+      		</enabledWhen>
       </handler>
       <handler
             class="org.jcryptool.games.numbershark.handler.NewGameHandler"
@@ -249,14 +249,14 @@
       <handler
             class="org.jcryptool.games.numbershark.handler.RedoHandler"
             commandId="org.jcryptool.games.numbershark.redoCommand">
-      		<activeWhen>
+      		<enabledWhen>
       			<with
       			variable="org.jcryptool.games.numbershark.commands.redoState">
           			<equals
                     	value="REDO_ENABLED">
                   	</equals>
       			</with>
-      		</activeWhen>
+      		</enabledWhen>
       </handler>
       <handler
             class="org.jcryptool.games.numbershark.handler.HeuristicStrategyHandler"

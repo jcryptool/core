@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.ssl.protocol.Crypto;
 import org.jcryptool.visual.ssl.protocol.Message;
 import org.jcryptool.visual.ssl.protocol.ProtocolStep;
@@ -167,12 +168,14 @@ public class ServerCertificateComposite extends Composite implements
 		btnShow = new Button(grpServerCertificate, SWT.NONE);
 		btnShow.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false, 2, 1));
 		btnShow.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseUp(MouseEvent e) {
 				try {
-					CertificateShow cShow = new CertificateShow(certServer,
-							exchKey.getPublic());
+//					CertificateShow cShow = new CertificateShow(certServer,
+//							exchKey.getPublic());
+					new CertificateShow(certServer,	exchKey.getPublic());
 				} catch (IllegalStateException e1) {
-
+					LogUtil.logError(e1);
 				}
 			}
 		});
@@ -190,6 +193,7 @@ public class ServerCertificateComposite extends Composite implements
 		rdbYes = new Button(grpServerCertificate, SWT.RADIO);
 		rdbYes.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		rdbYes.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseUp(MouseEvent e) {
 				blnCertificateRequest = true;
 			}
@@ -200,6 +204,7 @@ public class ServerCertificateComposite extends Composite implements
 		rdbNo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		rdbNo.setSelection(true);
 		rdbNo.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseUp(MouseEvent e) {
 				blnCertificateRequest = false;
 			}
@@ -223,6 +228,7 @@ public class ServerCertificateComposite extends Composite implements
 		// "Parameter" if used once.
 		btnInfo = new Button(btnComposite, SWT.NONE);
 		btnInfo.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseUp(MouseEvent e) {
 				infoText = !infoText;
 				if (btnInfo.getText().equals(
@@ -281,6 +287,7 @@ public class ServerCertificateComposite extends Composite implements
 		try {
 			calculateCertificate(exchKey, Message.getServerHelloHash());
 		} catch (Exception e1) {
+			LogUtil.logError(e1);
 		}
 
 		// Server Certificate Request
@@ -291,6 +298,7 @@ public class ServerCertificateComposite extends Composite implements
 	/**
 	 * Refresh the Information TextArea with the needed text
 	 */
+	@Override
 	public void refreshInformations() {
 		if (infoText) {
 			sslView.setStxInformationText(Messages.ServerCertificateInformationText);
@@ -302,6 +310,7 @@ public class ServerCertificateComposite extends Composite implements
 	/**
 	 * Enables to use the controls of the Server Certificate step
 	 */
+	@Override
 	public void enableControls() {
 		rdbNo.setEnabled(true);
 		rdbYes.setEnabled(true);
@@ -314,6 +323,7 @@ public class ServerCertificateComposite extends Composite implements
 	/**
 	 * Disables the use of the controls from the Server Certificate step
 	 */
+	@Override
 	public void disableControls() {
 		rdbNo.setEnabled(false);
 		rdbYes.setEnabled(false);
@@ -329,6 +339,7 @@ public class ServerCertificateComposite extends Composite implements
 	 * 
 	 * @return
 	 */
+	@Override
 	public boolean checkParameters() {
 
 		// Server Certificate hex message
@@ -343,6 +354,7 @@ public class ServerCertificateComposite extends Composite implements
 					+ getNumber(ServerCertificate.length()) + ServerCertificate;
 			Message.setMessageServerCertificate(ServerCertificate);
 		} catch (CertificateEncodingException e1) {
+			LogUtil.logError(e1);
 		}
 
 		// Sets a certificate request hex message
@@ -388,8 +400,9 @@ public class ServerCertificateComposite extends Composite implements
 					+ ServerKeyExchange;
 			Message.setMessageServerKeyExchange(ServerKeyExchange);
 		} catch (NoSuchAlgorithmException e) {
-
+			LogUtil.logError(e);
 		} catch (UnsupportedEncodingException e) {
+			LogUtil.logError(e);
 		}
 	}
 
@@ -435,6 +448,7 @@ public class ServerCertificateComposite extends Composite implements
 			}
 			strText = strText + exchKey.getPublic();
 		} catch (Exception e) {
+			LogUtil.logError(e);
 		}
 		return exchKey;
 	}
@@ -507,6 +521,7 @@ public class ServerCertificateComposite extends Composite implements
 	/**
 	 * Sets everything from this step to zero.
 	 */
+	@Override
 	public void resetStep() {
 		exchKey = null;
 		strSignature = null;

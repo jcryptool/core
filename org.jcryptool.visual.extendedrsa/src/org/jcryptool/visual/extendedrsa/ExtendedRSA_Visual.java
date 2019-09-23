@@ -27,8 +27,8 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.crypto.keystore.ui.views.nodes.Contact;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
@@ -78,13 +78,13 @@ public class ExtendedRSA_Visual extends ViewPart {
 
 		// Begin - Header
 		headComposite = new Composite(composite, SWT.NONE);
-		headComposite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		headComposite.setBackground(ColorService.WHITE);
 		headComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		headComposite.setLayout(new GridLayout());
 
 		Label label = new Label(headComposite, SWT.NONE);
 		label.setFont(FontService.getHeaderFont());
-		label.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		label.setBackground(ColorService.WHITE);
 		label.setText(Messages.ExtendedRSA_Visual_4);
 
 		head_description = new StyledText(headComposite, SWT.READ_ONLY | SWT.WRAP);

@@ -14,3 +14,7 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.colors,
  org.jcryptool.core.util.fonts
 Automatic-Module-Name: org.jcryptool.visual.verifiablesecretsharing
+Export-Package: org.jcryptool.visual.verifiablesecretsharing,
+ org.jcryptool.visual.verifiablesecretsharing.algorithm,
+ org.jcryptool.visual.verifiablesecretsharing.handler,
+ org.jcryptool.visual.verifiablesecretsharing.views

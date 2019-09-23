@@ -47,7 +47,8 @@ public class InputKeyEditorWizardPage extends WizardPage {
     /* (non-Javadoc)
      * @see org.eclipse.jface.wizard.WizardPage#getPreviousPage()
      */
-    public WizardPage getPreviousPage(){
+    @Override
+	public WizardPage getPreviousPage(){
         inputKeyWizard.enableFinish = false;
         sigVerification.reset();
         return inputKeyWizard.page;        

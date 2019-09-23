@@ -12,3 +12,9 @@ Require-Bundle: org.eclipse.ui,
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.constants
 Automatic-Module-Name: org.jcryptool.crypto.modern.sha3
+Export-Package: org.jcryptool.crypto.modern.sha3,
+ org.jcryptool.crypto.modern.sha3.echo,
+ org.jcryptool.crypto.modern.sha3.jh,
+ org.jcryptool.crypto.modern.sha3.skein.algorithm,
+ org.jcryptool.crypto.modern.sha3.skein.threefish,
+ org.jcryptool.crypto.modern.sha3.ui

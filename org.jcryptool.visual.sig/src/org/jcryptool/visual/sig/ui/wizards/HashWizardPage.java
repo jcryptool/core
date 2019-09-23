@@ -28,7 +28,8 @@ public class HashWizardPage extends WizardPage {
         setTitle(Messages.HashWizard_WindowTitle);
     }
 
-    public void createControl(Composite parent) {
+    @Override
+	public void createControl(Composite parent) {
         composite = new HashComposite(parent, SWT.NONE);
         setControl(composite);
         setPageComplete(true);

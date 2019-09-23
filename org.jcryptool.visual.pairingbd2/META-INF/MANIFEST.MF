@@ -8,7 +8,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.flexiprovider;bundle-version="1.7.0",
  org.jcryptool.webbrowser;bundle-version="1.0.0",
- org.eclipse.swt
+ org.eclipse.swt,
+ org.eclipse.help
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -16,3 +17,8 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.directories,
  org.jcryptool.core.util.fonts
 Automatic-Module-Name: org.jcryptool.visual.PairingBDII
+Export-Package: org.jcryptool.visual.PairingBDII,
+ org.jcryptool.visual.PairingBDII.algorithm,
+ org.jcryptool.visual.PairingBDII.basics,
+ org.jcryptool.visual.PairingBDII.handlers,
+ org.jcryptool.visual.PairingBDII.ui

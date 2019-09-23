@@ -25,7 +25,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.wb.swt.SWTResourceManager;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.ssl.protocol.Message;
 
@@ -190,7 +190,8 @@ public class SslView extends ViewPart {
         gd_stxInfo.widthHint = 300;
         gd_stxInfo.heightHint = 400;
         stxInformation.setLayoutData(gd_stxInfo);
-        stxInformation.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+//        stxInformation.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+        stxInformation.setBackground(ColorService.WHITE);
         stxInformation.setText(Messages.SslViewStxInformation);
         stxInformation.setVisible(true);
     }

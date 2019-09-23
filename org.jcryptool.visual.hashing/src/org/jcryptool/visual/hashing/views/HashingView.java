@@ -47,17 +47,18 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.hashing.HashingPlugin;
 import org.jcryptool.visual.hashing.algorithms.HashFunction;
@@ -341,7 +342,8 @@ public class HashingView extends ViewPart {
 		grpHashInput.setText(Messages.HashingView_10);
 
 		textHashInput = new Text(grpHashInput, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
-		textHashInput.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL)); //$NON-NLS-1$
+		Font specialFont = new Font(Display.getCurrent(), "Courier New", 9, SWT.NORMAL);
+		textHashInput.setFont(specialFont);
 		textHashInput.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -358,7 +360,7 @@ public class HashingView extends ViewPart {
 		grpHashOutput.setText(Messages.HashingView_8);
 
 		textHashOutput = new Text(grpHashOutput, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
-		textHashOutput.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL)); //$NON-NLS-1$
+		textHashOutput.setFont(specialFont);
 		textHashOutput.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {

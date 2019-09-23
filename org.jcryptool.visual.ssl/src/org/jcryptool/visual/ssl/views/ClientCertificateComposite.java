@@ -29,6 +29,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.ssl.protocol.Crypto;
 import org.jcryptool.visual.ssl.protocol.Message;
 import org.jcryptool.visual.ssl.protocol.ProtocolStep;
@@ -155,9 +156,11 @@ public class ClientCertificateComposite extends Composite implements
 			@Override
 			public void mouseUp(MouseEvent e) {
 				try {
-					CertificateShow cShow = new CertificateShow(certClient,
-							exchangeKey.getPublic());
+//					CertificateShow cShow = new CertificateShow(certClient,
+//							exchangeKey.getPublic());
+					new CertificateShow(certClient, exchangeKey.getPublic());
 				} catch (IllegalStateException e1) {
+					LogUtil.logError(e1);
 				}
 			}
 		});
@@ -180,6 +183,7 @@ public class ClientCertificateComposite extends Composite implements
 		// pressed once
 		btnInfo = new Button(btnComposite, SWT.NONE);
 		btnInfo.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseUp(MouseEvent e) {
 				infoText = !infoText;
 				if (btnInfo.getText().equals(
@@ -197,6 +201,7 @@ public class ClientCertificateComposite extends Composite implements
 		// Ends this step and moves on to the next step
 		btnNextStep = new Button(btnComposite, SWT.NONE);
 		btnNextStep.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseUp(MouseEvent e) {
 				sslView.nextStep();
 			}
@@ -242,6 +247,7 @@ public class ClientCertificateComposite extends Composite implements
 	/**
 	 * Refresh the Information text area with the needed text
 	 */
+	@Override
 	public void refreshInformations() {
 		if (infoText) {
 			sslView.setStxInformationText(Messages.ClientCertificateInformationText);
@@ -253,6 +259,7 @@ public class ClientCertificateComposite extends Composite implements
 	/**
 	 * Enables to use the controls of the Server Certificate step
 	 */
+	@Override
 	public void enableControls() {
 		btnInfo.setEnabled(true);
 		btnShow.setEnabled(true);
@@ -263,6 +270,7 @@ public class ClientCertificateComposite extends Composite implements
 	/**
 	 * Disables the use of the controls from the Server Certificate step
 	 */
+	@Override
 	public void disableControls() {
 		btnInfo.setEnabled(false);
 		btnShow.setEnabled(false);
@@ -296,7 +304,7 @@ public class ClientCertificateComposite extends Composite implements
 						+ Messages.ClientCertificateCompositeRSAEncrypt
 						+ Message.getClientCertificatePremasterEncrypted();
 			} catch (Exception e) {
-				 
+				 LogUtil.logError(e);
 			}
 		} else {
 			// Calculates a DH Key
@@ -315,7 +323,7 @@ public class ClientCertificateComposite extends Composite implements
 				secret = Hex.encode(Message.getClientKeyAgreement()
 						.generateSecret());
 			} catch (Exception e) {
-				 
+				 LogUtil.logError(e);
 			}
 			strText = strText + exchangeKey.getPublic()
 					+ Messages.ClientCertificateCompositeDHSecret + secret;
@@ -346,6 +354,7 @@ public class ClientCertificateComposite extends Composite implements
 					Message.getServerCertificateHash(),
 					Message.getServerCertificateSignature());
 		} catch (Exception e1) {
+			LogUtil.logError(e1);
 		}
 	}
 
@@ -354,6 +363,7 @@ public class ClientCertificateComposite extends Composite implements
 	 * 
 	 * @return
 	 */
+	@Override
 	public boolean checkParameters() {
 		// Client Key Exchange
 		try {
@@ -374,8 +384,11 @@ public class ClientCertificateComposite extends Composite implements
 					+ ClientKeyExchange;
 			Message.setMessageClientKeyExchange(ClientKeyExchange);
 		} catch (NoSuchAlgorithmException e) {
+			LogUtil.logError(e);
 		} catch (UnsupportedEncodingException e) {
+			LogUtil.logError(e);
 		} catch (NullPointerException e) {
+			LogUtil.logError(e);
 		}
 		Message.setClientCertificateServerKeyExchange(exchangeKey);
 		return true;
@@ -407,6 +420,7 @@ public class ClientCertificateComposite extends Composite implements
 					+ getNumber(ClientCertificate.length()) + ClientCertificate;
 			Message.setMessageClientCertfificate(ClientCertificate);
 		} catch (CertificateEncodingException e1) {
+			LogUtil.logError(e1);
 		}
 	}
 
@@ -435,6 +449,7 @@ public class ClientCertificateComposite extends Composite implements
 	/**
 	 * Resets the step
 	 */
+	@Override
 	public void resetStep() {
 		lblCertificate.setEnabled(true);
 		lblCertificateVerify.setEnabled(true);
