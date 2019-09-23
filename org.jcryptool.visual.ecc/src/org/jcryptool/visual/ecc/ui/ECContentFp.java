@@ -969,7 +969,18 @@ public class ECContentFp extends Composite{
 		double space, x, y;
 		int gridSize;
 		gridSize = lastPrime - 1;
-
+		int xSpacing = 5;
+		int ySpacing = 5;
+		
+		if (spnrP.getSelection() > 100) {
+			gridSize = gridSize / 2;
+			xSpacing = 10;
+		} else if (spnrP.getSelection() > 200) {
+			gridSize = gridSize / 4;
+			xSpacing = 20;
+			ySpacing = 10;
+		}
+		
 		gc.setForeground(grey);
 		space = size.x - 30;
 		x = 25;
@@ -993,7 +1004,7 @@ public class ECContentFp extends Composite{
 			x = 25 + space / gridSize;
 			space -= space / gridSize;
 			for(int i = 1; i <= gridSize; i++) {
-				if(i % 5 == 0) {
+				if(i % xSpacing == 0) {
 					gc.drawLine((int)x, size.y - 32, (int)x, size.y - 18);
 					gc.drawText(i + "", (int)x - (i < 10 ? 2 : 6), size.y - 17, true); //$NON-NLS-1$
 				} else {
@@ -1008,7 +1019,7 @@ public class ECContentFp extends Composite{
 			y = size.y - 25 - space / gridSize;
 			space -= space / gridSize;
 			for(int i = 1; i <= gridSize; i++) {
-				if(i % 5 == 0) {
+				if(i % ySpacing == 0) {
 					gc.drawLine(18, (int)y, 32, (int)y);
 					gc.drawText(i + "", i < 10 ? 5 : 3, (int)y - 7, true); //$NON-NLS-1$
 				} else {
