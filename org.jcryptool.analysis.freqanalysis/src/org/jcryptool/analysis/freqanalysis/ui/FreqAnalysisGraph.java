@@ -52,8 +52,8 @@ public class FreqAnalysisGraph extends Graph {
         overlayTranspHighest = 200;
         overlayTranspLowest = 10;
 
-        distTop = 16;
-        distBottom = 16;
+        distTop = 25;
+        distBottom = 25;
         distLeft = 0;
         distRight = 0;
         marginTop = 20;
