@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Observable;
 import java.util.Vector;
 
 import org.eclipse.swt.SWT;
@@ -32,11 +33,13 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.swt.widgets.Text;
 import org.jcryptool.analysis.freqanalysis.FreqAnalysisPlugin;
 import org.jcryptool.analysis.freqanalysis.calc.FreqAnalysisCalc;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
+import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.ui.SingleVanishTooltipLauncher;
 
 import com.cloudgarden.resource.SWTResourceManager;
@@ -71,6 +74,12 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 	private Combo combo2;
 	private Label label3;
 	private Label label2;
+	private Label label4;
+	private Label label5;
+	private Label label6;
+	private TabItem tabItem3;
+	private Composite composite5;
+	private Text text1;
 
 	private FreqAnalysisCalc myAnalysis;
 	private FreqAnalysisCalc overlayAnalysis;
@@ -132,6 +141,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 						appropriateAlphabetToBeDetected = true;
 					}
 					recalcGraph();
+					recalcSourceInfo();
 				}
 			}
 		});
@@ -340,7 +350,24 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 				myOverlayAlphabet = String.valueOf(alphas[i].getCharacterSet());
 			}
 		}
-
+		
+		tabItem3 = new TabItem(tabFolder1, SWT.NONE);
+		tabItem3.setText(Messages.FullAnalysisUI_thirdtablabel);
+		composite5 = new Composite(tabFolder1, SWT.NONE);
+		composite5.setLayout(new GridLayout());
+		tabItem3.setControl(composite5);
+		
+		label4 = new Label(composite5, SWT.NONE);
+		label4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		label5 = new Label(composite5, SWT.NONE);
+		label5.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		label6 = new Label(composite5, SWT.NONE);
+		label6.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		text1 = new Text(composite5, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER | SWT.MULTI);
+		text1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		recalcSourceInfo();
+		
 		tabFolder1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		tabFolder1.setSelection(0);
 
@@ -348,6 +375,25 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 
 		tipLauncher = new SingleVanishTooltipLauncher(getShell());
 		enableReferenceTools(false);
+	}
+	
+	protected void recalcSourceInfo() {
+		if (text == null) {
+			label4.setText(Messages.FullAnalysisUI_source + " -");
+			label5.setText(Messages.FullAnalysisUI_textlength + " -");
+			text1.setText("");
+			
+		} else {
+			String source = EditorsManager.getInstance().getActiveEditorTitle();
+			label4.setText(Messages.FullAnalysisUI_source + " " + source);
+			
+			String totalLength = Integer.toString(text.length());
+			label5.setText(Messages.FullAnalysisUI_textlength + " " + totalLength);
+			
+			label6.setText(Messages.FullAnalysisUI_textexcerpt);
+			text1.setText(text.substring(0, (text.length() > 1000) ? 1000 : text.length()) + ((text.length() > 1000) ? "..." : ""));
+			text1.setEditable(false);
+		}
 	}
 
 	protected void enableReferenceTools(boolean b) {
@@ -508,6 +554,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 		int bestindex = 0;
 		double actualrating = 0;
 		for (int i = 0; i < alphas.length; i++) {
+			
 			actualrating = rateAlphabetTextDifference(String.valueOf(alphas[i].getCharacterSet()), text);
 			if (actualrating > bestrating) {
 				bestrating = actualrating;

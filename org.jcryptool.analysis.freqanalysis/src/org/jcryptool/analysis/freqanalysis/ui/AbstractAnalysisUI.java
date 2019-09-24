@@ -108,7 +108,7 @@ public abstract class AbstractAnalysisUI extends Composite {
 			myGraph.redraw();
 		}
 	}
-	
+    
 	protected abstract void analyze();
 	
 	/**

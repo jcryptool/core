@@ -50,6 +50,10 @@ public class Messages extends NLS {
     public static String FullAnalysisUI_polyalphabetic;
     public static String FullAnalysisUI_propertieslabel;
     public static String FullAnalysisUI_secondtablabel;
+    public static String FullAnalysisUI_thirdtablabel;
+    public static String FullAnalysisUI_source;
+    public static String FullAnalysisUI_textlength;
+    public static String FullAnalysisUI_textexcerpt;
     public static String FullAnalysisUI_startanalysis;
     public static String FullAnalysisUI_vigeneresettings;
     public static String SimpleAnalysisUI_filtersettings;
