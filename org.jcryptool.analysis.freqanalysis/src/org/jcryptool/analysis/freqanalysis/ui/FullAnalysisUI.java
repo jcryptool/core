@@ -16,6 +16,7 @@ import java.net.URL;
 import java.util.Observable;
 import java.util.Vector;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -128,20 +129,22 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 
 		button1 = new Button(this, SWT.PUSH | SWT.CENTER);
 		button1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		button1.setText(Messages.FullAnalysisUI_startanalysis);
-		button1.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseDown(final MouseEvent evt) {
+		button1.setText(Messages.FullAnalysisUI_startanalysis);		
+		button1.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent evt) {
 				if (checkEditor()) {
 					text = getEditorText();
-					if (btnReferenceTools.getSelection()) {
-						selectAppropriateAlphabet();
+					if (text.equals("") || text == null) {
+			        	MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0, Messages.AbstractAnalysisUI_2);
 					} else {
-						appropriateAlphabetToBeDetected = true;
+						if (btnReferenceTools.getSelection()) {
+							selectAppropriateAlphabet();
+						} else {
+							appropriateAlphabetToBeDetected = true;
+						}
+						recalcGraph();
+						recalcSourceInfo();
 					}
-					recalcGraph();
-					recalcSourceInfo();
 				}
 			}
 		});

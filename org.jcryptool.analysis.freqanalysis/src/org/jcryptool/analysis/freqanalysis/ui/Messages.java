@@ -25,8 +25,10 @@ public class Messages extends NLS {
 
     public static String AbstractAnalysisUI_0;
 	public static String AbstractAnalysisUI_1;
+	public static String AbstractAnalysisUI_2;
 	public static String FreqAnalysisGraph_shiftgraph0;
     public static String FreqAnalysisGraph_shiftgraph1;
+    public static String FreqAnalysisGraph_shiftgraph2;
     public static String FreqAnalysisUI_descision1label;
     public static String FreqAnalysisUI_descision2label;
     public static String FreqAnalysisUI_frequency_analysis;

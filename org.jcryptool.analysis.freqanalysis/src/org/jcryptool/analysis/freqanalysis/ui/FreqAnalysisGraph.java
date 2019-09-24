@@ -163,7 +163,7 @@ public class FreqAnalysisGraph extends Graph {
             bars.get(i).setBox(barBox);
             bars.get(i).setGC(gc);
             bars.get(i).drawBar();
-        }
+        }                
     }
 
     @Override
