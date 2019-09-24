@@ -355,6 +355,7 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 
 		lfsrLengthNoteLabel = new Label(lfsrLengthGroup, SWT.NONE);
 		lfsrLengthNoteLabel.setLayoutData(lfsrLengthNoteGridData);
+		lfsrLengthNoteLabel.setForeground(ColorService.GRAY);
 		lfsrLengthNoteLabel.setText(Messages.LfsrWizardPage_LFSRLengthNote);
 
 		resetButton = new Button(lfsrLengthGroupHolderComposite, SWT.PUSH);
