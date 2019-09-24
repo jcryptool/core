@@ -554,7 +554,7 @@ public class ECContentFp extends Composite{
 		spnrP = new Spinner(groupCurveAttributes, SWT.BORDER);
 		spnrP.setSelection(23);
 		spnrP.setMinimum(3);
-		//spnrP.setMaximum(1001);
+		spnrP.setMaximum(1001);
 		
 		spnrP.addSelectionListener(new SelectionListener(){
 			@Override
@@ -969,7 +969,27 @@ public class ECContentFp extends Composite{
 		double space, x, y;
 		int gridSize;
 		gridSize = lastPrime - 1;
-
+		int xSpacing = 5;
+		int ySpacing = 5;
+		
+		int p = spnrP.getSelection();
+		
+		if (p >= 100 && p < 200) {
+			xSpacing = 10;
+		} else if (p >= 200 && p < 400) {
+			xSpacing = 20;
+			ySpacing = 10;
+		} else if (p >= 400 && p < 600) {
+			xSpacing = 50;
+			ySpacing = 25;
+		} else if (p >= 600 && p < 800) {
+			xSpacing = 100;
+			ySpacing = 25;
+		} else if (p >= 800) {
+			xSpacing = 100;
+			ySpacing = 50;
+		}
+		
 		gc.setForeground(grey);
 		space = size.x - 30;
 		x = 25;
@@ -993,7 +1013,7 @@ public class ECContentFp extends Composite{
 			x = 25 + space / gridSize;
 			space -= space / gridSize;
 			for(int i = 1; i <= gridSize; i++) {
-				if(i % 5 == 0) {
+				if(i % xSpacing == 0) {
 					gc.drawLine((int)x, size.y - 32, (int)x, size.y - 18);
 					gc.drawText(i + "", (int)x - (i < 10 ? 2 : 6), size.y - 17, true); //$NON-NLS-1$
 				} else {
@@ -1008,7 +1028,7 @@ public class ECContentFp extends Composite{
 			y = size.y - 25 - space / gridSize;
 			space -= space / gridSize;
 			for(int i = 1; i <= gridSize; i++) {
-				if(i % 5 == 0) {
+				if(i % ySpacing == 0) {
 					gc.drawLine(18, (int)y, 32, (int)y);
 					gc.drawText(i + "", i < 10 ? 5 : 3, (int)y - 7, true); //$NON-NLS-1$
 				} else {
