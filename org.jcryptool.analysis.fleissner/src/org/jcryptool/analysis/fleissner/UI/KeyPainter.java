@@ -32,6 +32,7 @@ public class KeyPainter implements PaintListener {
 
     }
 
+    @Override
     public void paintControl(PaintEvent e) {
         KeySchablone key = model.getKey();
         width = Math.min(parent.getSize().x, parent.getSize().y);

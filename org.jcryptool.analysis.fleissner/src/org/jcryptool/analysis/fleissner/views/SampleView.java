@@ -3,7 +3,6 @@ package org.jcryptool.analysis.fleissner.views;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.part.*;
 import org.jcryptool.analysis.fleissner.UI.FleissnerWindow;
@@ -43,7 +42,7 @@ public class SampleView extends ViewPart {
         
         fw = new FleissnerWindow(parent, SWT.NONE);
         fw.setLayout(new GridLayout(1,true));
-        fw.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true/*,1,1*/));
+        fw.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 	    scrolledComposite.setContent(parent);
         scrolledComposite.setMinSize(parent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -53,8 +52,6 @@ public class SampleView extends ViewPart {
 
 		// Create the help context id for the viewer's control
 		workbench.getHelpSystem().setHelp(parent, "org.jcryptool.analysis.fleissner.views");
-//		"org.jcryptool.analysis.fleissner2.viewer"
-
 	}
 
 	@Override
@@ -70,8 +67,6 @@ public class SampleView extends ViewPart {
         createPartControl(viewParent);
         viewParent.layout();
         fw.getModel().setKey(new KeySchablone(Integer.parseInt(fw.getKeySize().getText())));
-        fw.reset("SampleView 'resetView'");
+        fw.reset();
     }
-
-
 }
