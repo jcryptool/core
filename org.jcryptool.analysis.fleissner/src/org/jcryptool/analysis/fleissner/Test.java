@@ -1,11 +1,10 @@
 package org.jcryptool.analysis.fleissner;
 
-import java.sql.Date;
+//import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
+//import java.time.Duration;
 import java.util.ArrayList;
 import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 
 public class Test{
     
@@ -82,7 +81,6 @@ public static void print() {
 }
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
 //        Konstruktor
 //        grilleFilled = new boolean[templateLength][templateLength];
 //        grilleMove1 = new boolean[templateLength][templateLength];
@@ -140,10 +138,10 @@ public static void print() {
 //    // using toDays() method 
 //    System.out.println(duration.toMinutes()); 
         
-    long timeInMs = 280685,timeInDays=0, timeInHours=0, timeInMinutes=0, timeInSeconds;
+//    long timeInMs = 280685,timeInDays=0, timeInHours=0, timeInMinutes=0, timeInSeconds;
 //    Duration duration = Duration.ofMillis(timeInMs); 
-    timeInSeconds = timeInMs/1000;
-    Duration duration = Duration.ofSeconds(timeInSeconds);
+//    timeInSeconds = timeInMs/1000;
+//    Duration duration = Duration.ofSeconds(timeInSeconds);
 //    if (duration.toMinutes()>0) {
 //        timeInMinutes = duration.toMinutes();
 //        timeInSeconds-=timeInMinutes*60;
@@ -178,7 +176,7 @@ public static void print() {
 
 //    System.out.println("Analysis finished in: "+String.format("%02d:%02d:%02d:%02d", timeInDays, timeInHours, timeInMinutes, timeInSeconds)/*+timeInDays+":"+timeInHours+":"+timeInMinutes+":"+timeInSeconds*/+" (dd:hh:mm:ss)"); 
     
-  System.out.println("Analysis finished in: "+format.format(new Date(timeInMs)));
+//  System.out.println("Analysis finished in: "+format.format(new Date(timeInMs)));
     }
 
 }

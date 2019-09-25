@@ -8,76 +8,62 @@ import org.jcryptool.core.logging.utils.LogUtil;;
 
 public class CryptedText {
 	
-//	private static final Logger log = Logger.getLogger( CryptedText.class.getName() );
-	
 	private ArrayList<char[][]> text = new ArrayList<char[][]>();
 	private String line;
 	
+	/**
+	 * loads given text in needed format for encryption and decryption
+	 * 
+	 * @param textInLine
+	 * @param isPlaintext information if text has to be encrypted before saving in two-dimensional array and if random letters
+	 *                    have to be inserted 
+	 * @param templateLength
+	 * @param coordinates
+	 * @param fg the object fleissnerGrille that manages operations in the grille
+	 */
 	public void load(String textInLine, boolean isPlaintext, int templateLength, int[] coordinates, FleissnerGrille fg)
 	{
 		try {
 			
 			line=textInLine;
 			int textLength = line.length();
-			if (isPlaintext) {
-//				log.info("Plaintext: "+line);
-				LogUtil.logInfo(Activator.PLUGIN_ID, "Plaintext: "+line);
-//				log.info("Length of plaintext: "+line.length());
-				LogUtil.logInfo(Activator.PLUGIN_ID, "Length of plaintext: "+line.length());
-			}
-			else {
-//				log.info("Crypted text: "+line);
-				LogUtil.logInfo(Activator.PLUGIN_ID, "Crypted text: "+line);
-//				log.info("Length of crypted text: "+line.length());
-				LogUtil.logInfo(Activator.PLUGIN_ID, "Length of crypted text: "+line.length());
-			}
-			
+
 			char[][] textPart;
 			int k=0;
 			
 			if (isPlaintext) {
 				
 				int letterFields;
-//				int filler = 0;
 				double randomLetters;
 				
+//				  calculate number of random letters to be inserted
 				if (templateLength%2==0) {
 					letterFields = (int) (Math.pow(templateLength, 2));
 				}
 				else {
 					letterFields = (int) (Math.pow(templateLength, 2)-1);
-//					if (!isPlaintext) {
-//						filler = textLength/(letterFields+1);
-//					}
 				}
 
-				randomLetters = letterFields-(textLength/*-filler*/%letterFields);
+				randomLetters = letterFields-(textLength%letterFields);
 				
-//				String X = "X";
 				if (randomLetters!=letterFields) {
-//					log.info(randomLetters+" random letters inserted");
 					LogUtil.logInfo(Activator.PLUGIN_ID, randomLetters+" random letters inserted");
 					for (int i=textLength;i<textLength+randomLetters;i++) {
 						
 						line += (char) ('A' + 26*Math.random());
 					}
-					
-//					log.info("Modified plaintext: "+line);
 					LogUtil.logInfo(Activator.PLUGIN_ID, "Modified plaintext: "+line);
 				}
 				else {
-					
-//					log.info("no random letters inserted");
 					LogUtil.logInfo(Activator.PLUGIN_ID, "no random letters inserted");
 				}
-				
+//				encrypt input text if plaintext (method is 'encrypt')
 				line = fg.encryptText(line, coordinates);
-//				log.info("plaintext successfully encrypted");
 				LogUtil.logInfo(Activator.PLUGIN_ID, "plaintext successfully encrypted");
 			}
 			
 			while (k <line.length()) {
-				
+//				write text into grille
 				textPart = new char[templateLength][templateLength];
 
 				for (int y=0; y< templateLength; y++) {
@@ -92,12 +78,10 @@ public class CryptedText {
 						}
 					}
 				}
-
 				text.add(textPart);
 			}
 				
 		} catch (Exception e) {
-//			log.severe("An error occured during file handling: " + e);
 			LogUtil.logError(Activator.PLUGIN_ID, "Text konnte nicht geladen werden", e, true);
 			e.printStackTrace();
 		}

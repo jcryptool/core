@@ -13,6 +13,11 @@ public class FleissnerGrille {
 	
 //	Constructor builds grille and all of its rotations with parameter length as well as grillePossible 
 //	to check if a coordinate is still free to fill
+	/**
+	 * Constructor creates grilles with given key size
+	 * 
+	 * @param templateLength the key size
+	 */
 	public FleissnerGrille(int templateLength)
 	{
 		grilleFilled = new boolean[templateLength][templateLength];
@@ -35,7 +40,14 @@ public class FleissnerGrille {
 			this.grillePossible[templateLength/2][templateLength/2]=false;
 		}
 	}
-//	sets a hole in coordinate (x,y) or deletes it
+
+	/**
+	 * sets a hole in coordinate (x,y) or deletes it
+	 * 
+	 * @param x
+	 * @param y
+	 * @param state, set hole if true, delete otherwise
+	 */
 	public void setState(int x, int y, boolean state)
 	{
 		int templateLength = this.grilleFilled.length;
@@ -50,17 +62,35 @@ public class FleissnerGrille {
 		this.grillePossible[y][templateLength-1-x]=!state;
 	}
 	
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @return if hole can be set at position (x,y)
+	 */
 	public boolean isPossible(int x, int y)
 	{
 		return this.grillePossible[x][y];
 	}
 	
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @return if position (x,y) is occupied
+	 */
 	public boolean isFilled(int x, int y)
 	{
 		return this.grilleFilled[x][y];
 	}
 	
-//	changes hole (x,y) to one of its rotations
+	/**
+	 * changes hole (x,y) to one of its rotations
+	 * 
+	 * @param x
+	 * @param y
+	 * @param move the number of rotations
+	 */
 	public void change(int x, int y, int move)
 	{
 		int newX=0, newY=0;
@@ -85,7 +115,13 @@ public class FleissnerGrille {
 		this.setState(newX, newY, true);
 	}
 	
-//	sets hole back from change to one of its rotation
+	/**
+	 * sets hole back from previous change to one of its rotation
+	 * 
+	 * @param x
+	 * @param y
+	 * @param move the number of rotations
+	 */
 	public void undoChange(int x, int y, int move)
 	{
 		int newX=0, newY=0;
@@ -110,7 +146,12 @@ public class FleissnerGrille {
 		this.setState(x, y, true);
 	}
 	
-//	created for brute force method, begins at the end (bottom right corner) and deletes latest hole and returns coordinates of that hole
+	/**
+	 * created for brute force method, begins at the end (bottom right corner) and 
+	 * deletes latest hole
+	 * 
+	 * @return coordinates of that hole
+	 */
 	public int[] undoLastStep()
 	{
 		int templateLength = this.grilleFilled.length;
@@ -129,7 +170,13 @@ public class FleissnerGrille {
 		return coordinates;
 	}
 	
-//	builds all possible (and distinct) grilles with parameter length (and additonal parameter holes)
+	/**
+	 * builds all possible (and distinct) grilles with given parameters
+	 * 
+	 * @param templateLength
+	 * @param holes
+	 * @return ArrayList with int arrays each obtaining the coordinates of all holes of one template
+	 */
 	public ArrayList<int[]> bruteForce(int templateLength, int holes) {
 		
 		int pitch=0;
@@ -142,9 +189,11 @@ public class FleissnerGrille {
 			for (int y=0;y<templateLength;y++) {
 				for (int x=0;x<templateLength;x++) {
 					if (this.isPossible(x,y)&&(nextPitch)) {
+//					    fills next possible hole until maximum number is reached
 						this.setState(x, y, true);
 						pitch++;
 						if (pitch==holes) {
+//						    when maximum is reached, template will be saved and last set hole will be deleted
 							template = saveTemplate(holes);
 							this.possibleTemplates.add(template);
 							pitch--;
@@ -153,11 +202,12 @@ public class FleissnerGrille {
 						}
 					}
 					if (x==coordinates[0]&&y==coordinates[1]) {
-						
+//						next holes has to be set behind last position
 						nextPitch = true;
 					}
 				}
 			}
+//			if last hole has reached end, second last hole will be moved
 			pitch--;
 			coordinates = this.undoLastStep();
 			nextPitch = false;
@@ -166,7 +216,12 @@ public class FleissnerGrille {
 		return this.possibleTemplates;
 	}
 	
-//	saves the current grille into an array and returns that array
+	/**
+	 * saves the current grille into an array and returns that array
+	 * 
+	 * @param holes
+	 * @return array with template coordinates
+	 */
 	public int[] saveTemplate(int holes) {
 		
 		int templateLength = this.grilleFilled.length;
@@ -186,7 +241,9 @@ public class FleissnerGrille {
 		return coordinates;
 	}
 	
-//	rotates current grille to the right (one general grille move). Used in Hill-Climbing method
+	/**
+	 * rotates current grille to the right (one general grille move). Used in Hill-Climbing method
+	 */
 	public void rotate() {
 
 		int newX, newY;
@@ -209,7 +266,9 @@ public class FleissnerGrille {
 		}
 	}
 	
-//	sets grille back to default/ deletes all holes
+	/**
+	 * sets grille back to default/ deletes all holes
+	 */
 	public void clearGrille() {
 		
 		int templateLength = this.grilleFilled.length;
@@ -224,11 +283,17 @@ public class FleissnerGrille {
 			}
 		}
 		if (templateLength%2==1) {
+//		    blocks the central hole if grille has an odd size
 			this.grillePossible[templateLength/2][templateLength/2]=false;
 		}
 	}
 	
-//	Decrypting method. Decrypts a ciphertext using the current grille
+	/**
+	 * Decrypting method. Decrypts a ciphertext using the current grille
+	 * 
+	 * @param encryptedText
+	 * @return the decrypted text
+	 */
 	public String decryptText(ArrayList<char[][]> encryptedText)
 	{
 		String decryptedText = "";
@@ -274,11 +339,15 @@ public class FleissnerGrille {
 		return decryptedText;
 	}	
 	
-	
-//	Encryption method. Encrypts a plaintext with parameter grille
+	/**
+	 * Encryption method. Encrypts a plaintext with parameter grille
+	 * 
+	 * @param plaintext
+	 * @param coordinates
+	 * @return the encrypted text
+	 */
 	public String encryptText(String plaintext, int[] coordinates)
 	{
-//	    String X = "X";
 		String encryptedText = "";
 		int templateLength = this.grilleFilled.length;
 		int holes = ((coordinates.length)/2);
@@ -346,7 +415,12 @@ public class FleissnerGrille {
 		return encryptedText;
 	}
 	
-//	Sets current grille to given grille in parameter.
+	/**
+	 * Sets current grille to given grille in parameter.
+	 * 
+	 * @param template
+	 * @param templateLength
+	 */
 	public void useTemplate(int[] template, int templateLength) {
 
 		if(template == null) {
@@ -361,12 +435,12 @@ public class FleissnerGrille {
 		}
 	}
 	
-
-	@Override
-//	builds a visualization of the current grille with an "X" at the coordinates of a hole and a "-" else
+	/**
+	 * builds a visualization of the current grille with an "X" at the coordinates of a hole and a "-" else
+	 */
+	  @Override
 	public String toString() {
 		
-//		String s="\n\nFilled:\n";
 	    String s="\n";
 		int textLength = this.grilleFilled.length;
 

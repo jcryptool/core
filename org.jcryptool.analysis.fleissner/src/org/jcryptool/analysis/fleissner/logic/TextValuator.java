@@ -1,23 +1,21 @@
 package org.jcryptool.analysis.fleissner.logic;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.DoubleBuffer;
-import java.nio.channels.FileChannel;
-import java.util.logging.Logger;
 
 public class TextValuator {
 	
-//	private static final Logger log = Logger.getLogger( FleissnerGrilleSolver.class.getName() );
-	
 	public static double ngrams[];
 	private String alphabet;
-//	private String filename;
 	private int n,m;
 	
-//	Sets Alphabet for parameter language and loads text statistics to given name and size of statistics for text valuation
+//	
+	/**
+	 * Sets Alphabet for parameter language and saves text statistics to give and size of statistics for text valuation
+	 * 
+	 * @param statistics
+	 * @param language
+	 * @param n
+	 * @throws FileNotFoundException
+	 */
 	public TextValuator(double statistics[], String language, int n) throws FileNotFoundException
 	{
 	    this.n= n;
@@ -33,7 +31,13 @@ public class TextValuator {
 		}
 	}
 	
-//	Evaluates parameter text by weighing all nGrams of the text and calculating the overall weight of a text
+//	
+	/**
+	 * Evaluates parameter text by weighing all nGrams of the text and calculating the overall weight of a text
+	 * 
+	 * @param text
+	 * @return value of the text
+	 */
 	public double evaluate(String text)
 	{	
 		double value = 0;

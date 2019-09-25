@@ -14,7 +14,6 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.widgets.Canvas;
 import org.jcryptool.analysis.fleissner.key.*;
-import org.jcryptool.analysis.fleissner.views.SampleView;
 
 public class KeyListener implements MouseListener {
 
@@ -26,11 +25,14 @@ public class KeyListener implements MouseListener {
 		this.fw = fw;
 	}
 
-	public void mouseDoubleClick(MouseEvent e) {}
+	@Override
+    public void mouseDoubleClick(MouseEvent e) {}
 
-	public void mouseDown(MouseEvent e) {}
+	@Override
+    public void mouseDown(MouseEvent e) {}
 
-	public void mouseUp(MouseEvent e) {
+	@Override
+    public void mouseUp(MouseEvent e) {
 		KeySchablone key = model.getKey();
 		int width = ((Canvas) e.widget).getSize().x;
 		int cellWidth = width/key.getSize();
@@ -38,7 +40,6 @@ public class KeyListener implements MouseListener {
 		int posX = (int) Math.floor((double)e.x/cellWidth);
 		int posY = (int) Math.floor((double)e.y/cellHeight);
 		key.toggle(posY,posX);
-		System.out.println("Schlüssel pos: x: "+posX+", y: "+posY+", mit Wert(Y,X): "+key.get(posY, posX));
 		((Canvas) e.widget).redraw();
 		fw.checkOkButton();
 	}
