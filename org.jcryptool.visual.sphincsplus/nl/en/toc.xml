@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="SPHINCS+ Signaturverfahren" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins" topic="nl/de/help/content/index.html">
+    <topic href="$nl$/help/content/index.html" label="SPHINCS+ signature scheme">
+       <topic href="$nl$/help/content/algorithm.html" label="SPHINCS+ algorithm">
+       </topic>
+       <topic href="$nl$/help/content/ablauf.html" label="SPHINCS+ scheme">
+       </topic>
+    </topic> 
+</toc>

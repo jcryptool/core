@@ -90,6 +90,7 @@
 	<module>org.jcryptool.visual.sig</module>
 	<module>org.jcryptool.visual.sigVerification</module>
 	<module>org.jcryptool.visual.sphincs</module>
+	<module>org.jcryptool.visual.sphincsplus</module>
 	<module>org.jcryptool.visual.ssl</module>
 	<module>org.jcryptool.visual.verifiablesecretsharing</module>
 	<module>org.jcryptool.visual.verifiablesecretsharing.lib</module>

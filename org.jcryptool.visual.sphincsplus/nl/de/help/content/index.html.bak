@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Das SPHINCS+ Signaturverfahren</title>
+</head>
+<body onload="create_toc()">
+	<script type="text/javascript">
+		function create_toc() {
+			// var list = document.getElementsByTagName("h2");
+			var list = document.querySelectorAll("h2, h3, h4, h5, h6");
+			var toc = document.getElementById("tableofcontent");
+
+			for (var i = 0; i < list.length; i++) {
+				var li = document.createElement("li");
+				var ahref = document.createElement("a");
+				ahref.setAttribute("href", "#"+list[i].id);
+				ahref.appendChild(document.createTextNode(list[i].innerText));
+				li.appendChild(ahref);				
+				toc.appendChild(li);
+			}
+		}
+	</script>
+
+
+
+	<h1>SPHINCS+ Signaturverfahren</h1>
+	<p>SPHINCS+ ist ein zustandsloses, auf Hash-Verfahren basierendes
+	Signaturverfahren. Die Dokumentation ist auf zwei Teile aufgeteilt: Beschreibung des Plugins und in <a href="algorithm.html">Algorithmus</a>.
+    </p>
+
+	<ol id="tableofcontent">
+	</ol>
+
+
+    <h2></h2>
+
+
+
+</body>
+</html>
