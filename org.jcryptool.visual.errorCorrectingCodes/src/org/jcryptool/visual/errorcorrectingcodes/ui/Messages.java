@@ -21,15 +21,12 @@ public class Messages extends NLS {
     public static String GeneralEccView_textInfo_step2;
     public static String GeneralEccView_textInfo_step3;
     public static String GeneralEccView_textInfo_step4;
-    public static String McElieceView_btnNextStep;
-    public static String McElieceView_btnPrev;
-    public static String McElieceView_btnReset;
-    public static String McElieceView_grpDecodeStep;
+    public static String McElieceView_grpEncryption;
     public static String McElieceView_grpErrorCode;
-    public static String McElieceView_grpSender;
+    public static String McElieceView_grpDecryption;
     public static String McElieceView_grpTextInfo;
     public static String McElieceView_lblCorrected;
-    public static String McElieceView_lblEncode;
+    public static String McElieceView_lblEncrypt;
     public static String McElieceView_lblHeader;
     public static String McElieceView_lblOutput;
     public static String McElieceView_lblTextOriginal;

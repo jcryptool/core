@@ -10,10 +10,13 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.visual.errorcorrectingcodes.data.EccData;
 
 /**
  * The Class EccController.
  */
+
+//TODO replace BitSet with matrix calc
 public class EccController {
 
     EccData data;
@@ -148,6 +151,8 @@ public class EccController {
             sb.append(bitSetToString(c, 7));
         });
         data.setCorrectedString(sb.toString());
+        // TODO actually decode bit string
+        data.setDecodedString(data.getBinaryAsString());
     }
 
     /**

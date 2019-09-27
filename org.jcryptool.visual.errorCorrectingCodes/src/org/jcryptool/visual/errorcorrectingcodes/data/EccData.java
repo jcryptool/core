@@ -1,4 +1,4 @@
-package org.jcryptool.visual.errorcorrectingcodes;
+package org.jcryptool.visual.errorcorrectingcodes.data;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -8,15 +8,19 @@ import java.util.List;
 public class EccData {
 
     private String originalString;
+    private String decodedString;
     private String correctedString;
     private String binaryAsString;
     private String codeAsString;
     private String codeStringWithErrors;
 
-    private int[][] matrixG;
-    private int[][] matrixP;
-    private int[][] matrixS;
-    
+    private Matrix2D matrixG;
+    private Matrix2D matrixP;
+    private Matrix2D matrixS;
+    private Matrix2D matrixSInv;
+    private Matrix2D matrixPInv;
+    private Matrix2D matrixSGP;
+     
     private List<BitSet> binary;
     private List<BitSet> encoded;
     private List<BitSet> errorCode;
@@ -24,10 +28,7 @@ public class EccData {
     private PropertyChangeSupport pcs;
 
     public EccData() {
-        originalString = "";
-        binaryAsString = "";
-        codeAsString = "";
-        codeStringWithErrors = "";
+      
         pcs = new PropertyChangeSupport(this);
     }
 
@@ -59,6 +60,15 @@ public class EccData {
         String oldText = this.originalString;
         this.originalString = originalString;
         pcs.firePropertyChange("originalString", oldText, originalString);
+    }
+    public String getDecodedString() {
+        return decodedString;
+    }
+    
+    public void setDecodedString(String string) {
+        String oldText = this.decodedString;
+        this.decodedString = string;
+        pcs.firePropertyChange("decodedString", oldText, decodedString);
     }
 
     public String getBinaryAsString() {
@@ -125,29 +135,50 @@ public class EccData {
         pcs.firePropertyChange("correctedString", oldText, correctedString);
     }
 
-    public int[][] getMatrixG() {
+    public Matrix2D getMatrixG() {
         return matrixG;
     }
 
-    public void setMatrixG(int[][] matrixG) {
+    public void setMatrixG(Matrix2D matrixG) {
         this.matrixG = matrixG;
     }
 
-    public int[][] getMatrixP() {
+    public Matrix2D getMatrixP() {
         return matrixP;
     }
 
-    public void setMatrixP(int[][] matrixP) {
+    public void setMatrixP(Matrix2D matrixP) {
         this.matrixP = matrixP;
     }
 
-    public int[][] getMatrixS() {
+    public Matrix2D getMatrixS() {
         return matrixS;
     }
 
-    public void setMatrixS(int[][] matrixS) {
+    public void setMatrixS(Matrix2D matrixS) {
         this.matrixS = matrixS;
     }    
+    public Matrix2D getMatrixPInv() {
+        return matrixPInv;
+    }
     
+    public void setMatrixPInv(Matrix2D matrixPInv) {
+        this.matrixPInv = matrixPInv;
+    }
     
+    public Matrix2D getMatrixSInv() {
+        return matrixSInv;
+    }
+    
+    public void setMatrixSInv(Matrix2D matrixSInv) {
+        this.matrixSInv = matrixSInv;
+    }
+
+    public Matrix2D getMatrixSGP() {
+        return matrixSGP;
+    }
+
+    public void setMatrixSGP(Matrix2D matrixSGP) {
+        this.matrixSGP = matrixSGP;
+    }    
 }
