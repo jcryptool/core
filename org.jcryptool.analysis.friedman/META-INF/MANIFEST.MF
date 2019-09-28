@@ -7,7 +7,7 @@ Bundle-Activator: org.jcryptool.analysis.friedman.FriedmanPlugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.help,
- org.jcryptool.core.operations;bundle-version="1.0.0"
+ org.jcryptool.core.operations
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: %Bundle-Vendor

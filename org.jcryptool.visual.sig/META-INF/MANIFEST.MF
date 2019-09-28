@@ -7,9 +7,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.help,
  org.bouncycastle,
- org.jcryptool.crypto.keystore;bundle-version="1.0.0",
- org.jcryptool.core.logging;bundle-version="1.0.0",
- org.jcryptool.core.operations;bundle-version="1.0.0"
+ org.jcryptool.crypto.keystore,
+ org.jcryptool.core.logging,
+ org.jcryptool.core.operations
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Activator: org.jcryptool.visual.sig.SigPlugin
 Bundle-ActivationPolicy: lazy

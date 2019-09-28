@@ -7,11 +7,11 @@ Bundle-Activator: org.jcryptool.analysis.transpositionanalysis.TranspositionAnal
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.help,
- org.jcryptool.core.util;bundle-version="1.0.0",
- org.jcryptool.core.operations;bundle-version="1.0.0",
- org.jcryptool.editor.text;bundle-version="1.0.0",
- org.jcryptool.crypto.classic.transposition;bundle-version="1.0.0",
- org.jcryptool.crypto.ui;bundle-version="1.0.0"
+ org.jcryptool.core.util,
+ org.jcryptool.core.operations,
+ org.jcryptool.editor.text,
+ org.jcryptool.crypto.classic.transposition,
+ org.jcryptool.crypto.ui
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.jcryptool.crypto.ui.textmodify.wizard,

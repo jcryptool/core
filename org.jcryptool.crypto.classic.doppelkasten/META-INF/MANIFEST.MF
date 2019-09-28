@@ -8,11 +8,11 @@ Bundle-Vendor: %bundleVendor
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.apache.commons.cli;bundle-version="1.2.0",
- org.jcryptool.core.operations;bundle-version="1.0.0",
- org.jcryptool.core.util;bundle-version="1.0.0",
- org.jcryptool.crypto.classic.model;bundle-version="1.0.0",
- org.jcryptool.commands.core;bundle-version="1.0.0",
- org.jcryptool.crypto.ui;bundle-version="1.0.0"
+ org.jcryptool.core.operations,
+ org.jcryptool.core.util,
+ org.jcryptool.crypto.classic.model,
+ org.jcryptool.commands.core,
+ org.jcryptool.crypto.ui
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.crypto.classic.doppelkasten,
  org.jcryptool.crypto.classic.doppelkasten.algorithm,

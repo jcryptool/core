@@ -8,11 +8,11 @@ Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.help,
- org.jcryptool.crypto.classic.vigenere;bundle-version="1.0.0",
- org.jcryptool.analysis.freqanalysis;bundle-version="1.0.0",
- org.jcryptool.analysis.friedman;bundle-version="1.0.0",
- org.jcryptool.core.operations;bundle-version="1.0.0",
- org.jcryptool.core.util;bundle-version="1.0.0"
+ org.jcryptool.crypto.classic.vigenere,
+ org.jcryptool.analysis.freqanalysis,
+ org.jcryptool.analysis.friedman,
+ org.jcryptool.core.operations,
+ org.jcryptool.core.util
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: org.jcryptool.core.logging.utils,
