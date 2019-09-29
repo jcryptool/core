@@ -1,17 +1,16 @@
 package org.jcryptool.analysis.fleissner.views;
 
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.part.*;
-import org.jcryptool.analysis.fleissner.UI.FleissnerWindow;
-import org.jcryptool.analysis.fleissner.key.KeySchablone;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.analysis.fleissner.UI.FleissnerWindow;
+import org.jcryptool.analysis.fleissner.key.KeySchablone;
  
 
 public class SampleView extends ViewPart {
