@@ -12,15 +12,10 @@ public class EccData {
     private String correctedString;
     private String binaryAsString;
     private String codeAsString;
+    private String binaryDecoded;
     private String codeStringWithErrors;
 
-    private Matrix2D matrixG;
-    private Matrix2D matrixP;
-    private Matrix2D matrixS;
-    private Matrix2D matrixSInv;
-    private Matrix2D matrixPInv;
-    private Matrix2D matrixSGP;
-     
+    
     private List<BitSet> binary;
     private List<BitSet> encoded;
     private List<BitSet> errorCode;
@@ -135,50 +130,17 @@ public class EccData {
         pcs.firePropertyChange("correctedString", oldText, correctedString);
     }
 
-    public Matrix2D getMatrixG() {
-        return matrixG;
+    public String getBinaryDecoded() {
+        return binaryDecoded;
     }
 
-    public void setMatrixG(Matrix2D matrixG) {
-        this.matrixG = matrixG;
-    }
+    public void setBinaryDecoded(String binaryDecoded) {
+        String oldText = this.binaryDecoded;
+        this.binaryDecoded = binaryDecoded;
+        pcs.firePropertyChange("binaryDecoded", oldText, binaryDecoded);
 
-    public Matrix2D getMatrixP() {
-        return matrixP;
     }
-
-    public void setMatrixP(Matrix2D matrixP) {
-        this.matrixP = matrixP;
-    }
-
-    public Matrix2D getMatrixS() {
-        return matrixS;
-    }
-
-    public void setMatrixS(Matrix2D matrixS) {
-        this.matrixS = matrixS;
-    }    
-    public Matrix2D getMatrixPInv() {
-        return matrixPInv;
-    }
+   
     
-    public void setMatrixPInv(Matrix2D matrixPInv) {
-        this.matrixPInv = matrixPInv;
-    }
     
-    public Matrix2D getMatrixSInv() {
-        return matrixSInv;
-    }
-    
-    public void setMatrixSInv(Matrix2D matrixSInv) {
-        this.matrixSInv = matrixSInv;
-    }
-
-    public Matrix2D getMatrixSGP() {
-        return matrixSGP;
-    }
-
-    public void setMatrixSGP(Matrix2D matrixSGP) {
-        this.matrixSGP = matrixSGP;
-    }    
 }

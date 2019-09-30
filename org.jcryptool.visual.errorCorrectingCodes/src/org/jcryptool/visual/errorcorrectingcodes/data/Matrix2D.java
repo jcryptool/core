@@ -43,6 +43,21 @@ public class Matrix2D {
         }
         return new Matrix2D(result);
     }
+    
+    public void flip(int row, int col) {
+        data[row][col] ^= 1;
+    }
+    
+    public Matrix2D getTranspose() {
+        int[][] transpose = new int[getColCount()][getRowCount()];
+        for (int row = 0; row < data.length; row++) {
+            for (int col = 0; col < data[row].length; col++) {
+                transpose[col][row] = data[row][col];
+            }
+        }
+        
+        return new Matrix2D(transpose);
+    }
 
     public boolean isSquare() {
         if (getColCount() != getRowCount())

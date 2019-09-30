@@ -60,7 +60,7 @@ public class McElieceView extends Composite {
     private StyledText textAsBinary;
     private Text textInput;
     private StyledText textEncrypted;
-    private StyledText textOutput;
+    private Text textOutput;
     private StyledText textCorrected;
     private StyledText textError;
     private StyledText textInfo;
@@ -86,6 +86,7 @@ public class McElieceView extends Composite {
     private Group grpPublicKey;
     private Composite compEncrypted;
     private Composite compOutputStep;
+    private StyledText textDecoded;
 
     public McElieceView(Composite parent, int style) {
         super(parent, style);
@@ -146,13 +147,12 @@ public class McElieceView extends Composite {
         compOutputStep = new Composite(grpDecryption, SWT.NONE);
         glf.numColumns(1).applyTo(compOutputStep);
         GridDataFactory.fillDefaults().applyTo(compOutputStep);
-        lblCorrected = new Label(compOutputStep, SWT.NONE);
-        lblCorrected.setText(Messages.McElieceView_lblCorrected);
-        textCorrected = codeText(compOutputStep, SWT.FILL, SWT.BOTTOM);
         lblOutput = new Label(compOutputStep, SWT.NONE);
         lblOutput.setText(Messages.McElieceView_lblOutput);
-        textOutput = codeText(compOutputStep, SWT.FILL, SWT.TOP);
-        
+        textDecoded = codeText(compOutputStep, SWT.FILL, SWT.TOP);
+        textOutput = new Text(compOutputStep, SWT.NONE);
+        GridDataFactory.fillDefaults().grab(true, false).applyTo(textOutput);
+
         grpEncryption = new Group(mainComposite, SWT.NONE);
         grpEncryption.setText(Messages.McElieceView_grpEncryption);
         glf.applyTo(grpEncryption);
@@ -183,12 +183,12 @@ public class McElieceView extends Composite {
         lblEncrypt.setText(Messages.McElieceView_lblEncrypt);
         textEncrypted = codeText(compEncrypted, SWT.FILL, SWT.BOTTOM);
       
-        grpErrorCode = new Group(grpEncryption, SWT.NONE);
-        glf.applyTo(grpErrorCode);
-        GridDataFactory.fillDefaults().grab(true, true).applyTo(grpErrorCode);
-        grpErrorCode.setText(Messages.McElieceView_grpErrorCode);
-        textError = codeText(grpErrorCode, SWT.FILL, SWT.CENTER);
-        
+//        grpErrorCode = new Group(grpEncryption, SWT.NONE);
+//        glf.applyTo(grpErrorCode);
+//        GridDataFactory.fillDefaults().grab(true, true).applyTo(grpErrorCode);
+//        grpErrorCode.setText(Messages.McElieceView_grpErrorCode);
+//        textError = codeText(grpErrorCode, SWT.FILL, SWT.CENTER);
+//        
         compInfoText = new Composite(this, SWT.NONE);
         glf.applyTo(compInfoText);
         GridDataFactory.fillDefaults().applyTo(compInfoText);
@@ -218,8 +218,8 @@ public class McElieceView extends Composite {
 
     private void generateKey() {
         mce.fillPrivateKey();
-        compMatrixS.setMatrix(eccData.getMatrixS());
-        compMatrixP.setMatrix(eccData.getMatrixP());
+        compMatrixS.setMatrix(mce.getMatrixS());
+        compMatrixP.setMatrix(mce.getMatrixP());
     }
 
     private void updateVector() {
@@ -232,14 +232,14 @@ public class McElieceView extends Composite {
      * Initializes the view by hiding later steps.
      */
     private void initView() {
-        textInput.setText("hello"); //$NON-NLS-1$
+        textInput.setText("k"); //$NON-NLS-1$
         btnPrev.setEnabled(false);
         updateVector();
         grpPrivateKey.setVisible(false);
         grpPublicKey.setVisible(false);
-        grpErrorCode.setVisible(false);
+        compEncrypted.setVisible(false);
         compOutputStep.setVisible(false);
-        textMatrixG.setText(eccData.getMatrixG().toString());
+        textMatrixG.setText(mce.getMatrixG().toString());
     }
 
     /**
@@ -255,15 +255,15 @@ public class McElieceView extends Composite {
             generateKey();
             textMatrixGSP.setText(mce.getSGP().toString());
             grpPublicKey.setVisible(true);
-        } else if (!grpErrorCode.isVisible()) {
+        } else if (!compEncrypted.isVisible()) {
             mce.encrypt();
             //UIHelper.markCode(textError, SWT.COLOR_RED, ecc.getBitErrors());
-            grpErrorCode.setVisible(true);
-            textEncrypted.setText(mce.getEncrypted().toHexString());
+            compEncrypted.setVisible(true);
+            textEncrypted.setText(mce.getEncrypted().toString());
             textInfo.setText(Messages.McElieceView_step3);
         } else if (!compOutputStep.isVisible()) {
-            ecc.correctErrors();
-            UIHelper.markCode(textCorrected, SWT.COLOR_CYAN, ecc.getBitErrors());
+            mce.decrypt();
+            //UIHelper.markCode(textCorrected, SWT.COLOR_CYAN, ecc.getBitErrors());
             compOutputStep.setVisible(true);
             textInfo.setText(Messages.McElieceView_step4);
             btnNextStep.setEnabled(false);
@@ -278,16 +278,15 @@ public class McElieceView extends Composite {
             btnNextStep.setEnabled(true);
             compOutputStep.setVisible(false);
             textInfo.setText(Messages.McElieceView_step3); // $NON-NLS-1$
-        } else if (grpErrorCode.isVisible()) {
-            grpErrorCode.setVisible(false);
+        } else if (compEncrypted.isVisible()) {
+            compEncrypted.setVisible(false);
             textInfo.setText(Messages.McElieceView_step2); // $NON-NLS-1$
-        } else if (grpPrivateKey.isVisible()) {
-            grpPublicKey.setVisible(false);
         } else if (!grpPublicKey.isVisible()) {
             grpPrivateKey.setVisible(false);
             btnPrev.setEnabled(false);
             textInfo.setText(Messages.McElieceView_step1); // $NON-NLS-1$
-        }
+        } else if (grpPrivateKey.isVisible())
+            grpPublicKey.setVisible(false);
     }
 
     /**
@@ -301,16 +300,16 @@ public class McElieceView extends Composite {
                 BeanProperties.value(EccData.class, "originalString", String.class).observe(ecc.getData())); //$NON-NLS-1$
 
         dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textAsBinary),
-                BeanProperties.value(EccData.class, "decodedString", String.class).observe(ecc.getData())); //$NON-NLS-1$
+                BeanProperties.value(EccData.class, "binaryAsString", String.class).observe(ecc.getData())); //$NON-NLS-1$
 
         dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textEncrypted),
                 BeanProperties.value(EccData.class, "codeAsString", String.class).observe(ecc.getData())); //$NON-NLS-1$
 
-        dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textError),
-                BeanProperties.value(EccData.class, "codeStringWithErrors", String.class).observe(ecc.getData())); //$NON-NLS-1$
+        dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textDecoded),
+                BeanProperties.value(EccData.class, "binaryDecoded", String.class).observe(ecc.getData())); //$NON-NLS-1$
 
-        dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textCorrected),
-                BeanProperties.value(EccData.class, "correctedString", String.class).observe(ecc.getData())); //$NON-NLS-1$
+        dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textOutput),
+                BeanProperties.value(EccData.class, "decodedString", String.class).observe(ecc.getData())); //$NON-NLS-1$
 
     }
 

@@ -3,7 +3,7 @@ package org.jcryptool.visual.errorcorrectingcodes.data;
 import java.util.ArrayList;
 
 public class CodeArray extends ArrayList<int[]> {
-
+    
     public CodeArray(int initialCapacity) {
         super(initialCapacity);
     }
@@ -11,9 +11,7 @@ public class CodeArray extends ArrayList<int[]> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         this.forEach(segment -> {
-            //add leading 0's to make strings of equal length
-            for (int pad = 0; pad < segment.length % 4; pad++)
-                sb.append("0");
+           
                 
             for (int i = 0; i < segment.length; i++) {
                 sb.append(segment[i]);
@@ -41,6 +39,8 @@ public class CodeArray extends ArrayList<int[]> {
         if (this.size() % 2 == 1) {
             sb.append("0");
         }
+     
         return sb.toString();
     }
+
 }
