@@ -1,80 +1,77 @@
 <! DOCTYPE HTML PUBLIC "- // W3C // DTD HTML 4.0 Transitional // EN">
 
-<Html>
-<Head>
+<html>
+<head>
 <meta http-equiv="content-type" content="text / html; charset = UTF-8">
-<title>The SPHINCS+ signature scheme</title>
+<title>The SPHINCS+ signature</title>
 </head>
 <body>
-	<h1>The SPHINCS + signature method</h1>
-	<P>
-		SPHINCS + is a stateless, hash based method Signature method that is
-		considered to be quantum computer resistant. As of June In 2019 it is
+	<h1>The SPHINCS+ signature (and how to use the plugin)</h1>
+	<p>
+		SPHINCS+ is a stateless, hash-based signature method that is
+		considered to be quantum computer resistant. As of June 2019, it is
 		called "Digital Signature Algorithm" in the 2nd round of the NIST
 		Competition <a
-			href="https://csrc.nist.gov/Porjects/Post-Quantum-Cryptography/Round-2-Submissions">
-			"Post-Quantum Cryptography "</a> The documentation is divided into three
-		parts:
-	</p>
-	<li><a href="index.html">plugin description </a></li>
+			href="https://csrc.nist.gov/Projects/Post-Quantum-Cryptography/Round-2-Submissions">
+			"Post-Quantum Cryptography"</a>.</p>
+	<p>The JCT online help about SPHINCS+ is divided into three parts:</p>
+	<ul>
+	<li><a href="index.html">Using the plugin</a></li>
 	<li><a href="algorithm.html">Algorithm </a></li>
-	<li><a href="ablauf.html">the process </a></li>
+	<li><a href="ablauf.html">Process/scheme </a></li>
 	</ul>
 
 	<h3>Calling the plugin </h3>
-		<p>The plugin is opened via the main menu "Visualization" and the
-			Start menu item "SPHINCS + signature". Then a tab appears "Signature+
+		<p>The plugin can be opened via the main menu entry "Visualization" and the
+			menu item "SPHINCS+ signature". Then a tab appears "SPHINCS+
 			signature", which has 4 sub-tabs. These are: </p>
 		<ul>
 			<li><a href="#params"> Parameter Description </a></li>
 			<li><a href="#signing"> Signing and Verification </a></li>
-			<li><a href="#hypertree"> SPHINCS + Hypertree </a></li>
-			<li><a href="#forstree"> SPHINCS + FORS </a></li>
+			<li><a href="#hypertree"> SPHINCS+ Hypertree </a></li>
+			<li><a href="#forstree"> SPHINCS+ FORS </a></li>
 		</ul>
 
-		<h3 id="params">Parameters and key generation</h3>
+	<h3 id="params">Parameters and key generation</h3>
+
 		<h4 id="Parameter">Parameters section</h4>
-		<p>In this overview you can see the parameters that the procedure
-			used, modify and view.
+		<p>In the first sub-tab you can modify and view the following parameters of the procedure.</p>
 		<table border=1>
 			<Thead>
 				<Tr>
-					<Td>parameters</td>
-					<Td>Description</td>
+					<td>parameters</td>
+					<td>Description</td>
 				</Tr>
 			<Tbody>
 				<Tr>
-					<Td>General</td>
+					<td>General</td>
 					<td>The parameters are given in base decimal 10 system.</td>
 				<Tr>
-					<Td>Security</td>
+					<td>Security</td>
 					<td>The procedure defines parameter sets for those below
-						following parameters. <br> The naming scheme of parameter
+						following parameters.<br> The naming scheme of parameter
 						sets is: SPHINCS<sup>+</sup> security level {s, f}. The desired
 						Security can take the following values: 128, 192, 256 bit
 						Security. <br> The last part of the naming scheme {s, f}
 						returns whether the method is based on speed (f, fast) or size of
-						Signature (s, size) should be optimized. <br> The parameters
+						Signature (s, size) should be optimized.<br> The parameters
 						of Sets were chosen in the standard so that a reasonable
-						Relationship between speed and signature size is present. <br>
-						In the second combo box you choose which one Hash method is used.
-					</Td>
+						Relationship between speed and signature size is present.<br>
+						In the second combo box you choose which one Hash method is used.</td>
 				</Tr>
 				<Tr>
 					<td>parameter n</td>
 					<td>The safety parameter of the procedure. The signature is be
 						a multiple of n. The parameter defines the output length all
-						cryptographic functions except H <sub> msg </sub>.
-					</Td>
+						cryptographic functions except H<sub>msg</sub>.</td>
 				</Tr>
 				<Tr>
 					<td>parameter h</td>
-					<h> The parameter h indicates the height of the hypertree, and
-					thus the number of FORS instances. <br>
+					<td>The parameter h indicates the height of the hypertree, and
+					thus the number of FORS instances.<br>
 					The bigger the parameter The more unlikely it is that a FORS key
 					pair is used several times. The process is safer, but it is growing
-					thus the height of the hypertree and thus the signature length.
-					</Td>
+					thus the height of the hypertree and thus the signature length.</td>
 				</Tr>
 				<Tr>
 					<td>parameter d</td>
@@ -84,17 +81,15 @@
 						parameter h divide. <br> The larger d is, the smaller are the
 						subtrees and the faster it can be signed. However, d also defines
 						the number of WOTS + signatures in a hypertree, and so too in the
-						resulting signature.
-					</Td>
+						resulting signature.</td>
 				</Tr>
 				<Tr>
-					<td>Parameter log (t) or a</td>
+					<td>parameter log (t) or a</td>
 					<td>The parameter a is calculated from the logarithm dualis
 						from t. The parameter t defines the number of leaves in one FORS
-						tree. He must be a multiple of 2. <br> A little one t leads
+						tree. He must be a multiple of 2.<br> A little one t leads
 						to smaller and faster signatures, but needed a predefined security
-						level thus a larger parameter k.
-					</Td>
+						level thus a larger parameter k.</td>
 				</Tr>
 				<Tr>
 					<td>parameter k</td>
@@ -108,13 +103,12 @@
 						one Value leads to a linearly longer length of the chains, but to
 						a logarithmic-reduced number. A large value w leads to shorter
 						signatures, however, will be at the expense of speed
-						(Exponentially!).
-					</Td>
+						(exponentially!).</td>
 				</Tr>
 				<Tr>
 					<Td>BitSec</td>
-					<td>Bitsec is the precalculated security of the used one
-						Parameters.</Td>
+					<td>Bitsec is the pre-calculated security of the used one
+						Parameters.</td>
 				</Tr>
 				<Tr>
 					<td>sec level</td>
@@ -122,13 +116,14 @@
 				</Tr>
 				<tr>
 					<td>sig bytes</td>
-					<td>Länge der Signatur in Bytes.</td>
+					<td>Length of the signature in bytes.</td>
 				</tr>
 				<Tr>
 					<Td>RANDOMIZE</td>
 					<td>Randomize sets a random value as Seed for the pseudorandom
-						permutation, which in the Creating the SPHINCS + signature is
-						used.
+						permutation, which in the Creating the SPHINCS+ signature is
+						used.</td>
+				</tr>
 				<Tr>
 					<td>Checkbox "Manual Parameter Input"</td>
 					<td>If this checkbox is activated, parameters can be set
@@ -136,35 +131,33 @@
 						"bitsec", "sec level" and "sig bytes" disabled because these
 						values ​​can differ greatly.</td>
 				</Tr>
-				<Tr>
+				<tr>
 					<td>Generate key button</td>
-					<td>With the push of a button, a SPHINCS + key pair becomes
-						genierert. The key pair is in the underlying Section is displayed.
+					<td>With the push of a button, a SPHINCS+ key pair is generated. The key pair is displayed in the underlying Section.</td>
+				</tr>
 					
 			</Tbody>
 		</Table>
 
-		<h4>Secret-Key component section</h4>
+		<h4>Secret-key component section</h4>
 		<p>The display of the keys can be made by the switching button
-			between "Hex" (hexadecimal) and "base64" are changed.</P>
+			between "Hex" (hexadecimal) and "base64" are changed.</p>
 		<p>With the checkbox "Manual seed input" the seed can be handled
-			manually be entered. This allows signatures to be reproduced.</P>
+			manually be entered. This allows signatures to be reproduced.</p>
 		<p>The secret key consists of 4 n-sized parts. In the graphic
-			surface, these parts are displayed individually. The Abbreviation
-			"SK" stands for "Secret Key" (private key) and "PK" for "public key".
-		
+			surface, these parts are displayed individually. The abbreviation
+			"SK" stands for "Secret Key" (private key) and "PK" for "public key".</p>
 		<table border=1>
 			<Thead>
-				<Td>component</td>
-				<Td>Use</td>
+				<td>component</td>
+				<td>Use</td>
 			</Thead>
 			<Tbody>
 				<Tr>
-					<Td>SK.seed</td>
+					<td>SK.seed</td>
 					<td>The initialization vector SK.seed is being created all
-						secret keys used by WOTS <sup> + </sup> and FORS. He is the secret
-						key of the Hypertree.
-					</Td>
+						secret keys used by WOTS<sup>+</sup> and FORS. He is the secret
+						key of the hypertree.</td>
 				</Tr>
 				<Tr>
 					<Td>SK.prf</td>
@@ -172,11 +165,11 @@
 						value for the message hash.</td>
 				</Tr>
 				<Tr>
-					<Td>PK.seed</td>
+					<td>PK.seed</td>
 					<td>PK.seed is a random value.</td>
 				</Tr>
 				<Tr>
-					<Td>PK.root</td>
+					<td>PK.root</td>
 					<td>PK.root is the public key of the Hypertree.</td>
 				</Tr>
 			</Tbody>
@@ -184,9 +177,11 @@
 
 		<h4>Public-key component section</h4>
 		<p>The public key contains 2 fields from the secret key: PK.seed
-			and PK.root.</P>
+			and PK.root.</p>
+
 
 		<h3 id="signing">Signing and verification</h3>
+		
 		<h4>Message section</h4>
 		<p>Here you can see your message, which should be signed enter.</p>
 		<h4>Sign and Verify section</h4>
@@ -197,33 +192,33 @@
 			signature. Should you have no message yet an error message is
 			displayed.</p>
 		<p>The status display shows you the current status.</p>
-		<H4>character representation</h4>
-		<p>With this button you can choose between the hexadecimal and
-			choose the base64 representation</p>
-		<H4>signature values ​​</h4>
-		<p>A SPHINCS + signature consists of 3 parts that are in the
-			graphical interface.</p>
-		<p>These values ​​are the random value "R", the signature part den
-			FORS generated and the signature part generated from the hypertree
-			is.</p>
 
-		<h3 id="hypertree">SPHINCS + Hypertree</h3>
+		<h4>Character representation</h4>
+		<p>With this button you can choose between the hexadecimal and
+			choose the base64 representation.</p>
+
+		<h4>Signature values</h4>
+		<p>A SPHINCS+ signature consists of 3 parts that are in the
+			graphical interface.</p>
+		<p>These values are the random value "R", the signature part
+			generated by FORS, and the signature part generated from the hypertree.</p>
+
+		<h3 id="hypertree">SPHINCS+ hypertree</h3>
 		<p>In the upper section is a description and a dynamic text field.
 			The dynamic text box adapts, depending after which element in the
-			underlying representation was selected.
-		<P>
+			underlying representation was selected.<p>
 		<p>The graphical representation should show a tree in which every
 			node (except the root) represents a tree again. The XMSS trees are
-			displayed as an orange, fold-out box. The Root node (public key) of
-			each XMSS tree is included used as a node of the hypertree. </ p>
+			displayed as an orange, fold-out box. The root node (public key) of
+			each XMSS tree is included used as a node of the hypertree.</p>
 		<p>The leaves of Hypertree are FORS trees. Click on it If you jump
 			one tab on the fourth tab of the plugin.</p>
 
-		<h3 id="forest">SPHINCS + FORS</h3>
+		<h3 id="forest">SPHINCS+ FORS</h3>
 		<p>The public key of the FORS tree is called a leaf in the
-			Hypertree used. The FORS tree again consists of subtrees. These
+			hypertree used. The FORS tree again consists of subtrees. These
 			subtrees are displayed as a drop-down item. there the root and the
-			container element are marked in green - they represent the same
-			element</p>
-</Body>
-</Html>
+			container element are marked in green &ndash; they represent the same
+			element.</p>
+</body>
+</html>

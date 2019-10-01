@@ -6,29 +6,26 @@
 <title>Das SPHINCS+-Signaturverfahren</title>
 </head>
 <body>
-	<h1>SPHINCS+-Signaturverfahren</h1>
-	<p>
-		SPHINCS+ ist ein zustandsloses, auf Hash-Verfahren basierendes
-		Signaturverfahren, dass als Quantencomputer-resistent gilt. Stand Juni
+	<h1>Das SPHINCS+-Signaturverfahren (und wie man das Plugin benutzt)</h1>
+	<p>SPHINCS+ ist ein zustandsloses, auf Hash-Verfahren basierendes
+		Signaturverfahren, das als Quantencomputer-resistent gilt. Stand Juni
 		2019 ist es als "Digital Signature Algorithm" in der 2. Runde der
 		NIST-Competition <a
-			href="https://csrc.nist.gov/Porjects/Post-Quantum-Cryptography/Round-2-Submissions">"Post-Quantum
-			Cryptography"</a>. Die Dokumentation ist auf drei Teile aufgeteilt:
-	</p>
+			href="https://csrc.nist.gov/Projects/Post-Quantum-Cryptography/Round-2-Submissions">"Post-Quantum Cryptography"</a>.</p>
+	<p>Die JCT-Onlinehilfe zu SPHINCS+ ist in drei Teile aufgeteilt:</p>
 	<ul>
-		<li><a href="index.html">Beschreibung des Plugins</a></li>
+		<li><a href="index.html">Benutzung des Plugins</a></li>
 		<li><a href="algorithm.html">Algorithmus</a></li>
-		<li><a href="ablauf.html">den Ablauf</a></li>
+		<li><a href="ablauf.html">Ablauf</a></li>
 	</ul>
 
-	<ol id="tableofcontent">
-	</ol>
+	<ol id="tableofcontent"></ol>
 
 
-	<h3>Aufrufen des Plugins</h3>
-	<p>Das Plugin wird über das Hauptmenü "Visualisierung" und dem
+	<h3>Aufruf des Plugins</h3>
+	<p>Das Plugin wird über das Hauptmenü "Visualisierung" und den
 		Menüeintrag "SPHINCS+-Signatur" gestartet. Danach erscheint ein Reiter
-		"Signatur+-Signatur", welche 4 Unterreiter besitzt. Diese sind:</p>
+		"SPHINCS+-Signatur", der 4 Unterreiter besitzt. Diese sind:</p>
 	<ul>
 		<li><a href="#params">Beschreibung der Parameter</a></li>
 		<li><a href="#signing">Signierung und Verifikation</a></li>
@@ -37,9 +34,9 @@
 	</ul>
 
 	<h3 id="params">Parameter und Schlüsselerzeugung</h3>
+
 	<h4 id="Parameter">Abschnitt Parameter</h4>
-	<p>In dieser Übersicht können Sie die Parameter, die das Verfahren
-		verwendet, verändern und einsehen.
+	<p>Im ersten Unterreiter können Sie die ff. Verfahrensparameter verändern und einsehen.</p>
 	<table border=1>
 		<thead>
 			<tr>
@@ -54,13 +51,13 @@
 				<td>Sicherheit</td>
 				<td>Das Verfahren definiert Parameter-Sets vor für die darunter
 					folgenden Parameter. <br>Das Namensschema der Parametersets
-					ist: SPHINCS<sup>+</sup>-SicherheitsLevel{s,f}. Die gewünschte
+					ist: SPHINCS<sup>+</sup>-Sicherheitslevel{s,f}. Die gewünschte
 					Sicherheit kann folgende Werte annehmen: 128, 192, 256 bit
 					Sicherheit. <br>Der letzte Teil des Namenschemas {s,f} gibt
 					an, ob das Verfahren auf Geschwindigkeit(f, fast) oder Größe der
 					Signatur(s, size) optimiert werden soll. <br>Die Parameter der
 					Sets wurden im Standard so gewählt, dass ein vernünftiges
-					Verhältnis zwischen Geschwindkeit und Signaturgröße vorhanden ist.
+					Verhältnis zwischen Geschwindigkeit und Signaturgröße vorhanden ist.
 					<br>In der zweiten Kombobox wird ausgewählt, welches
 					Hash-Verfahren verwendet wird.
 				</td>
@@ -76,7 +73,7 @@
 				<td>Parameter h</td>
 				<td>Der Parameter h gibt die Höhe des Hypertrees an, und somit
 					die Anzahl der FORS-Instanzen. <br>Je größer der Parameter
-					ist, desto unwahrscheinlicher ist es, dass ein FORS-Schlüssel-Paar
+					ist, desto unwahrscheinlicher ist es, dass ein FORS-Schlüsselpaar
 					mehrmals verwendet wird. Das Verfahren wird sicherer, jedoch wächst
 					somit die Höhe des Hypertrees und somit die Signaturlänge.
 				</td>
@@ -84,7 +81,7 @@
 			<tr>
 				<td>Parameter d</td>
 				<td>Mit dem Parameter d lässt sich die Geschwindigkeit des
-					Verfahrens beeinflussen. Er definiert die Anzahl der Ebenene in den
+					Verfahrens beeinflussen. Er definiert die Anzahl der Ebenen in den
 					XMSS-Bäumen im Hypertree. Dadurch muss Parameter d den Parameter h
 					teilen. <br>Je größer d ist, desto kleiner sind die Unterbäume
 					und desto schneller kann signiert werden. Jedoch definiert d auch
@@ -135,7 +132,8 @@
 				<td>RANDOMIZE</td>
 				<td>Wenn Randomize gesetzt wird, wird ein zufälliger Wert als
 					Seed für die pseudozufällige Permutation, welche bei der Erstellung
-					der SPHINCS+-Signatur verwendet wird, verwendet.
+					der SPHINCS+-Signatur verwendet wird, verwendet.</td>
+			</tr>
 			<tr>
 				<td>Checkbox "Manuelle Parametereingabe"</td>
 				<td>Wenn diese Checkbox aktiviert wird, können Parameter
@@ -146,8 +144,9 @@
 			<tr>
 				<td>Knopf "Schlüssel generieren"</td>
 				<td>Mit einem Knopfdruck wird ein SPHINCS+-Schlüsselpaar
-					genierert. Das Schlüsselpaar wird in dem darunterliegenden
-					Abschnitt angezeigt.
+					generiert. Das Schlüsselpaar wird in dem darunterliegenden
+					Abschnitt angezeigt.</td>
+			</tr>
 		</tbody>
 	</table>
 
@@ -159,7 +158,7 @@
 	<p>Der geheime Schlüssel besteht aus 4 n-großen Teilen. In der
 		grafischen Oberfläche werden diese Teile einzeln dargestellt. Die
 		Abkürzung "SK" steht für "Secret Key" (privater Schlüssel) und "PK"
-		für "Public Key" (öffentlicher Schlüssel).
+		für "Public Key" (öffentlicher Schlüssel).</p>
 	<table border=1>
 		<thead>
 			<td>Komponente</td>
@@ -176,7 +175,7 @@
 			<tr>
 				<td>SK.prf</td>
 				<td>Der Geheimschlüssel SK.prf wird verwendet um einen
-					zufälligen Wert für den Nachrichtenhash zu berechnen.</td>
+					zufälligen Wert für den Nachrichten-Hash zu berechnen.</td>
 			</tr>
 			<tr>
 				<td>PK.seed</td>
@@ -212,29 +211,28 @@
 	<h4>Signaturwerte</h4>
 	<p>Eine SPHINCS+-Signatur besteht aus 3 Teilen, die in der
 		grafischen Oberfläche getrennt dargestellt werden.</p>
-	<p>Diese Werte sind der zufällige Wert "R", der Signaturteil den
-		FORS generiert und der Signaturteil, der aus dem Hypertree generiert
+	<p>Diese Werte sind der zufällige Wert "R", der Signaturteil, den
+		FORS generiert, und der Signaturteil, der aus dem Hypertree generiert
 		wird.</p>
 
 	<h3 id="hypertree">SPHINCS+ Hypertree</h3>
 	<p>In dem oberen Abschnitt befindet sich eine Beschreibung und ein
 		dynamisches Textfeld. Das dynamische Textfeld passt sich an, je
 		nachdem welches Element in der darunterliegenden Darstellung
-		ausgewählt wurde.
-	<p>
+		ausgewählt wurde.</p>
 	<p>Die grafische Darstellung soll einen Baum anzeigen, bei dem
 		jeder Knoten (ausgenommen die Wurzel) wieder einen Baum darstellt. Die
 		XMSS-Bäume werden als orange, ausklappbare Box dargestellt. Der
-		Wurzel-Knoten(öffentlicher Schlüssel) jedes XMSS-Baumes wird dabei als
+		Wurzel-Knoten(öffentlicher Schlüssel) jedes XMSS-Baums wird dabei als
 		Knoten des Hypertrees verwendet.</p>
 	<p>Die Blätter des Hypertree sind FORS-Bäume. Per Mausklick darauf
 		springt man einen Reiter weiter auf den vierten Reiter des Plugins.</p>
 
 	<h3 id="forstree">SPHINCS+ FORS</h3>
-	<p>Der öffentliche Schlüssel des FORS-Baumes wird als Blatt im
+	<p>Der öffentliche Schlüssel des FORS-Baums wird als Blatt im
 		Hypertree verwendet. Der FORS-Baum besteht wiederum aus Unterbäumen.
 		Diese Unterbäume werden als ausklappbares Element dargestellt. Dabei
-		ist die Wurzel und das Container-Element grün markiert -- sie stellen
-		das gleiche Element dar</p>
+		ist die Wurzel und das Container-Element grün markiert  &ndash; sie stellen
+		das gleiche Element dar.</p>
 </body>
 </html>
