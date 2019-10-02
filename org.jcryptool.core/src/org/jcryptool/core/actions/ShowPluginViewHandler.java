@@ -53,9 +53,11 @@ public class ShowPluginViewHandler extends AbstractHandler {
             IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
             page.showView(viewId);
             
-            if (viewId.contains("org.jcryptool.games") || viewId.contains("org.jcryptool.visual")) { //$NON-NLS-1$ //$NON-NLS-2$
-                page.setPartState(page.getActivePartReference(), IWorkbenchPage.STATE_MAXIMIZED);
-            }
+            // This was used to start all visualizations or games in a maximized window.
+            // This causes Problem when using the "Restore" icons in the JCT. They don't work anymore.
+//            if (viewId.contains("org.jcryptool.games") || viewId.contains("org.jcryptool.visual")) { //$NON-NLS-1$ //$NON-NLS-2$
+//                page.setPartState(page.getActivePartReference(), IWorkbenchPage.STATE_MAXIMIZED);
+//            }
         } catch (WorkbenchException ex) {
             LogUtil.logError(CorePlugin.PLUGIN_ID, ex);
         }
