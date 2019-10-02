@@ -33,8 +33,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.PlatformUI;
@@ -56,7 +56,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
  */
 public class GeneralPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
     private Combo listLanguage;
-    private Label lblLocation;
+    private Text txtLocation;
 
     private String[] nl;
     private String[] nlText;
@@ -118,9 +118,10 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
         gLocation.setLayoutData(gd_gLocation);
         gLocation.setLayout(new GridLayout());
         
-        lblLocation = new Label(gLocation, SWT.BORDER | SWT.SINGLE | SWT.READ_ONLY);
-        lblLocation.setText(currentLocation);
-        lblLocation.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        txtLocation = new Text(gLocation, SWT.BORDER | SWT.SINGLE);
+        txtLocation.setText(currentLocation);
+        txtLocation.setEditable(false);
+        txtLocation.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         
         return super.createContents(parent);
     }
