@@ -11,9 +11,7 @@ public class CodeArray extends ArrayList<int[]> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         this.forEach(segment -> {
-           
-                
-            for (int i = 0; i < segment.length; i++) {
+            for (int i = segment.length-1; i>=0; i--) {
                 sb.append(segment[i]);
             }
             sb.append(" ");
