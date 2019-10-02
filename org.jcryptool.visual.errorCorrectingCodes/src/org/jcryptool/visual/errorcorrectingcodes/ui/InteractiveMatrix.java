@@ -47,10 +47,10 @@ public class InteractiveMatrix extends Composite {
         dataGrid = new ArrayList<>();
 
         GridLayoutFactory.fillDefaults().numColumns(cols).applyTo(this);
-        GridDataFactory.fillDefaults().applyTo(this);
+        GridDataFactory.fillDefaults().grab(true, true).applyTo(this);
 
         for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
+            for (int j = 0; j < columns; j++) {
                 Text t = new Text(this, SWT.BORDER);
                 t.setText("0");
                 t.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
@@ -92,6 +92,12 @@ public class InteractiveMatrix extends Composite {
         } catch (Exception ex) {
             if (e.text != "")
                 e.doit = false;
+        }
+    }
+
+    public void reset() {
+        for (int i = 0; i < rows*columns; i++) {
+            dataGrid.get(i).setText("0");
         }
     }
 }

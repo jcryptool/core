@@ -4,6 +4,7 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -14,7 +15,7 @@ import org.eclipse.ui.part.ViewPart;
 
 public class EccMainView extends ViewPart {
     private static final int GENERAL_ECC_TAB = 0;
-
+    private static final Point windowsSize = new Point(1280,800);
     private ScrolledComposite scrolledComposite;
     private Composite parent;
 
@@ -30,10 +31,10 @@ public class EccMainView extends ViewPart {
     @Override
     public void createPartControl(Composite parent) {
         this.parent = parent;
-
+        
         scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
         GridLayoutFactory.fillDefaults().applyTo(scrolledComposite);
-        GridDataFactory.fillDefaults().grab(true, true).applyTo(scrolledComposite);
+        GridDataFactory.fillDefaults().grab(true, true).hint(windowsSize).applyTo(scrolledComposite);
         scrolledComposite.setExpandHorizontal(true);
         scrolledComposite.setExpandVertical(true);
 
@@ -51,7 +52,7 @@ public class EccMainView extends ViewPart {
         
 
         scrolledComposite.setContent(tabFolder);
-        scrolledComposite.setMinSize(tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        scrolledComposite.setMinSize(windowsSize);
         tabFolder.pack();
     }
 

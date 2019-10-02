@@ -47,24 +47,30 @@ public class McElieceView extends Composite {
     private Composite mainComposite;
     private Composite compHead;
     private Composite compInfoText;
-    private Composite compInputStep;
-    private Composite compPrivateKeyText;
+    private Composite compPrivateKeyData;
     private Composite compPrivateKeyButton;
+    private Composite compInverseMatrices;
+
     private Group grpDecryption;
     private Group grpPrivateKey;
-    private Group grpErrorCode;
     private Group grpEncryption;
+    private Group grpInputStep;
+    private Group grpOutput;
+    private Group grpPublicKey;
     private Group grpControlButtons;
     private Group grpTextInfo;
+    private Group grpEncrypted;
+    private Group grpDecryptStep;
+
+    private Text textOutput;
+    private Text textInput;
 
     private StyledText textAsBinary;
-    private Text textInput;
     private StyledText textEncrypted;
-    private Text textOutput;
-    private StyledText textCorrected;
-    private StyledText textError;
     private StyledText textInfo;
     private StyledText textMatrixG;
+    private StyledText textMatrixSInverse;
+    private StyledText textMatrixPInverse;
     private InteractiveMatrix compMatrixP;
     private InteractiveMatrix compMatrixS;
 
@@ -74,19 +80,15 @@ public class McElieceView extends Composite {
     private Button btnGeneratePrivateKey;
 
     private Label lblHeader;
-    private Label lblTextOriginal;
-    private Label lblEncrypt;
-    private Label lblCorrected;
-    private Label lblOutput;
     private Label lblMatrixG;
     private Label lblMatrixS;
     private Label lblMatrixP;
     private Label lblMatrixGSP;
     private StyledText textMatrixGSP;
-    private Group grpPublicKey;
-    private Composite compEncrypted;
-    private Composite compOutputStep;
     private StyledText textDecoded;
+    private Label lblClearText;
+    private Label lblMatrixSInverse;
+    private Label lblMatrixPInverse;
 
     public McElieceView(Composite parent, int style) {
         super(parent, style);
@@ -108,8 +110,8 @@ public class McElieceView extends Composite {
         lblHeader.setText(Messages.McElieceView_lblHeader);
 
         mainComposite = new Composite(this, SWT.NONE);
-        GridLayoutFactory.fillDefaults().margins(5, 5).numColumns(2).spacing(100, SWT.DEFAULT).equalWidth(true).applyTo(mainComposite);
-        GridDataFactory.fillDefaults().applyTo(mainComposite);
+        GridLayoutFactory.fillDefaults().margins(margins).numColumns(2).spacing(80, SWT.DEFAULT).equalWidth(true).applyTo(mainComposite);
+        GridDataFactory.fillDefaults().grab(true, true).applyTo(mainComposite);
 
         grpDecryption = new Group(mainComposite, SWT.NONE);
         glf.applyTo(grpDecryption);
@@ -117,81 +119,85 @@ public class McElieceView extends Composite {
         grpDecryption.setText(Messages.McElieceView_grpDecryption);
         
         grpPrivateKey = new Group(grpDecryption, SWT.NONE);
-        grpPrivateKey.setText("Private Key");
+        grpPrivateKey.setText(Messages.McElieceView_grpPrivateKey);
         glf.applyTo(grpPrivateKey);
         GridDataFactory.fillDefaults().applyTo(grpPrivateKey);
         compPrivateKeyButton = new Composite(grpPrivateKey, SWT.NONE);
         RowLayoutFactory.fillDefaults().applyTo(compPrivateKeyButton);
         btnGeneratePrivateKey = new Button(compPrivateKeyButton, SWT.NONE);
-        btnGeneratePrivateKey.setText("Generate Key");
+        btnGeneratePrivateKey.setText(Messages.McElieceView_btnGeneratePrivateKey);
         btnGeneratePrivateKey.addListener(SWT.Selection, e -> generateKey());
         
-        compPrivateKeyText = new Composite(grpPrivateKey, SWT.NONE);
-        GridLayoutFactory.fillDefaults().numColumns(6).spacing(20, SWT.DEFAULT).margins(margins).applyTo(compPrivateKeyText);
-        GridDataFactory.fillDefaults().applyTo(compPrivateKeyText);
-        lblMatrixG = new Label(compPrivateKeyText, SWT.NONE);
+        compPrivateKeyData = new Composite(grpPrivateKey, SWT.NONE);
+        GridLayoutFactory.fillDefaults().numColumns(6).spacing(20, SWT.DEFAULT).margins(margins).applyTo(compPrivateKeyData);
+        GridDataFactory.fillDefaults().grab(true, true).applyTo(compPrivateKeyData);
+        lblMatrixG = new Label(compPrivateKeyData, SWT.NONE);
         lblMatrixG.setText("G = "); //$NON-NLS-1$
-        GridDataFactory.fillDefaults().align(SWT.RIGHT, SWT.CENTER).applyTo(lblMatrixG);
-        textMatrixG = matrixText(compPrivateKeyText, SWT.LEFT, SWT.CENTER, 7, 4);
-        lblMatrixS = new Label(compPrivateKeyText, SWT.NONE);
+        GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(lblMatrixG);
+        textMatrixG = matrixText(compPrivateKeyData, SWT.LEFT, SWT.CENTER, 7, 4);
+        lblMatrixS = new Label(compPrivateKeyData, SWT.NONE);
         lblMatrixS.setText("S = "); //$NON-NLS-1$
-        GridDataFactory.fillDefaults().align(SWT.RIGHT, SWT.CENTER).applyTo(lblMatrixS);
-        compMatrixS = new InteractiveMatrix(compPrivateKeyText, 4, 4);
+        GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(lblMatrixS);
+        compMatrixS = new InteractiveMatrix(compPrivateKeyData, 4, 4);
         GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(compMatrixS);
-        lblMatrixP = new Label(compPrivateKeyText, SWT.NONE);
+        lblMatrixP = new Label(compPrivateKeyData, SWT.NONE);
         lblMatrixP.setText("P = "); //$NON-NLS-1$
-        GridDataFactory.fillDefaults().align(SWT.RIGHT, SWT.CENTER).applyTo(lblMatrixP);
-        compMatrixP = new InteractiveMatrix(compPrivateKeyText, 7, 7);
+        GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(lblMatrixP);
+        compMatrixP = new InteractiveMatrix(compPrivateKeyData, 7, 7);
         GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(compMatrixP);
               
-        compOutputStep = new Composite(grpDecryption, SWT.NONE);
-        glf.numColumns(1).applyTo(compOutputStep);
-        GridDataFactory.fillDefaults().applyTo(compOutputStep);
-        lblOutput = new Label(compOutputStep, SWT.NONE);
-        lblOutput.setText(Messages.McElieceView_lblOutput);
-        textDecoded = codeText(compOutputStep, SWT.FILL, SWT.TOP);
-        textOutput = new Text(compOutputStep, SWT.NONE);
-        GridDataFactory.fillDefaults().grab(true, false).applyTo(textOutput);
+        compInverseMatrices = new Composite(grpDecryption, SWT.NONE);
+        glf.numColumns(4).applyTo(compInverseMatrices);
+        lblMatrixSInverse = new Label(compInverseMatrices, SWT.NONE);
+        lblMatrixSInverse.setText("S' = "); //$NON-NLS-1$
+        GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(lblMatrixSInverse);
+        textMatrixSInverse = matrixText(compInverseMatrices, SWT.LEFT, SWT.CENTER, 4, 4);
+        lblMatrixPInverse = new Label(compInverseMatrices, SWT.NONE);
+        lblMatrixPInverse.setText("P' = "); //$NON-NLS-1$
+        GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(lblMatrixPInverse);
+        textMatrixPInverse = matrixText(compInverseMatrices, SWT.LEFT, SWT.CENTER, 7, 7);
+        GridDataFactory.fillDefaults().grab(true, true).applyTo(compInverseMatrices);
+
+        grpOutput = new Group(grpDecryption, SWT.NONE);
+        glf.numColumns(1).applyTo(grpOutput);
+        GridDataFactory.fillDefaults().grab(true, true).applyTo(grpOutput);
+        grpOutput.setText(Messages.McElieceView_lblOutput);
+        textDecoded = codeText(grpOutput, SWT.FILL, SWT.TOP);
+        textOutput = new Text(grpOutput, SWT.NONE);
+        GridDataFactory.fillDefaults().grab(true, true).applyTo(textOutput);
 
         grpEncryption = new Group(mainComposite, SWT.NONE);
         grpEncryption.setText(Messages.McElieceView_grpEncryption);
-        glf.applyTo(grpEncryption);
-        GridDataFactory.fillDefaults().applyTo(grpEncryption);
+        glf.numColumns(1).applyTo(grpEncryption);
+        GridDataFactory.fillDefaults().grab(true, true).applyTo(grpEncryption);
 
-        compInputStep = new Composite(grpEncryption, SWT.NONE);
-        glf.applyTo(compInputStep);
-        GridDataFactory.fillDefaults().applyTo(compInputStep);
-        lblTextOriginal = new Label(compInputStep, SWT.NONE);
-        lblTextOriginal.setText(Messages.McElieceView_lblTextOriginal);
-        textInput = new Text(compInputStep, SWT.BORDER);
+        grpInputStep = new Group(grpEncryption, SWT.NONE);
+        glf.applyTo(grpInputStep);
+        GridDataFactory.fillDefaults().grab(true, false).applyTo(grpInputStep);
+        grpInputStep.setText(Messages.McElieceView_lblTextOriginal);
+        textInput = new Text(grpInputStep, SWT.BORDER);
         GridDataFactory.fillDefaults().grab(true, false).applyTo(textInput);
         textInput.addListener(SWT.FocusOut, e -> updateVector());
-        textAsBinary = codeText(compInputStep, SWT.FILL, SWT.TOP);
+        textAsBinary = codeText(grpInputStep, SWT.FILL, SWT.TOP);
         
         grpPublicKey = new Group(grpEncryption, SWT.NONE);
         glf.numColumns(2).applyTo(grpPublicKey);
-        GridDataFactory.fillDefaults().applyTo(grpPublicKey);
+        GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.TOP).applyTo(grpPublicKey);
+        grpPublicKey.setText(Messages.McElieceView_grpPublicKey);
         lblMatrixGSP = new Label(grpPublicKey, SWT.NONE);
         lblMatrixGSP.setText("G' = SGP = "); //$NON-NLS-1$
         GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(lblMatrixGSP);
         textMatrixGSP = matrixText(grpPublicKey, SWT.LEFT, SWT.CENTER, 7, 4);
         
-        compEncrypted = new Composite(grpEncryption, SWT.NONE);
-        glf.numColumns(1).applyTo(compEncrypted);
-        GridDataFactory.fillDefaults().applyTo(compEncrypted);
-        lblEncrypt = new Label(compEncrypted, SWT.NONE);
-        lblEncrypt.setText(Messages.McElieceView_lblEncrypt);
-        textEncrypted = codeText(compEncrypted, SWT.FILL, SWT.BOTTOM);
+        grpEncrypted = new Group(grpEncryption, SWT.NONE);
+        glf.numColumns(1).applyTo(grpEncrypted);
+        GridDataFactory.fillDefaults().applyTo(grpEncrypted);
+        grpEncrypted.setText(Messages.McElieceView_lblEncrypt);
+        textEncrypted = codeText(grpEncrypted, SWT.FILL, SWT.BOTTOM);
       
-//        grpErrorCode = new Group(grpEncryption, SWT.NONE);
-//        glf.applyTo(grpErrorCode);
-//        GridDataFactory.fillDefaults().grab(true, true).applyTo(grpErrorCode);
-//        grpErrorCode.setText(Messages.McElieceView_grpErrorCode);
-//        textError = codeText(grpErrorCode, SWT.FILL, SWT.CENTER);
-//        
         compInfoText = new Composite(this, SWT.NONE);
         glf.applyTo(compInfoText);
-        GridDataFactory.fillDefaults().applyTo(compInfoText);
+        GridDataFactory.fillDefaults().grab(true, true).applyTo(compInfoText);
 
         grpControlButtons = new Group(compInfoText, SWT.NONE);
         RowLayoutFactory.fillDefaults().pack(false).spacing(10).applyTo(grpControlButtons);
@@ -206,11 +212,9 @@ public class McElieceView extends Composite {
         btnReset.addListener(SWT.Selection, e -> initView());
         grpTextInfo = new Group(compInfoText, SWT.NONE);
         glf.applyTo(grpTextInfo);
-        GridDataFactory.fillDefaults().applyTo(grpTextInfo);
+        GridDataFactory.fillDefaults().grab(true, true).applyTo(grpTextInfo);
         grpTextInfo.setText(Messages.McElieceView_grpTextInfo);
-        textInfo = new StyledText(grpTextInfo, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
-        GridDataFactory.fillDefaults().hint(SWT.DEFAULT, textInfo.getLineHeight()*8).applyTo(textInfo);
-        textInfo.setText(Messages.McElieceView_step1);
+        textInfo = UIHelper.mutltiLineText(grpTextInfo, SWT.FILL, SWT.FILL, parent.getBounds().width-100, 8, null);
 
         bindValues();
         initView();
@@ -232,40 +236,44 @@ public class McElieceView extends Composite {
      * Initializes the view by hiding later steps.
      */
     private void initView() {
-        textInput.setText("k"); //$NON-NLS-1$
-        btnPrev.setEnabled(false);
+        compMatrixS.reset();
+        compMatrixP.reset();
+        textInput.setText("password"); //$NON-NLS-1$
+        textInfo.setText(Messages.McElieceView_step1);
+        UIHelper.formatTextOccurrence(textInfo, Messages.McElieceView_demoNote, SWT.BOLD);
         updateVector();
-        grpPrivateKey.setVisible(false);
+        btnPrev.setEnabled(false);
+        btnNextStep.setEnabled(true);
         grpPublicKey.setVisible(false);
-        compEncrypted.setVisible(false);
-        compOutputStep.setVisible(false);
+        grpEncrypted.setVisible(false);
+        compInverseMatrices.setVisible(false);
+        grpOutput.setVisible(false);
         textMatrixG.setText(mce.getMatrixG().toString());
     }
-
+    
     /**
      * Display Next step by iterating the shown view elements.
      */
     private void nextStep() {
-        if (!grpPrivateKey.isVisible()) {
-            btnPrev.setEnabled(true);
-            grpPrivateKey.setVisible(true);
-            textInfo.setText(Messages.McElieceView_step2);
-        } else if (!grpPublicKey.isVisible()) {
-            // TODO remove auto generate when algorithm is ready
+      if (!grpPublicKey.isVisible()) {
+            // TODO remove auto generate when key algorithm is complete
             generateKey();
-            textMatrixGSP.setText(mce.getSGP().toString());
-            grpPublicKey.setVisible(true);
-        } else if (!compEncrypted.isVisible()) {
+            mce.computePublicKey();
+            textMatrixGSP.setText(mce.getMatrixSGP().toString());
             mce.encrypt();
-            //UIHelper.markCode(textError, SWT.COLOR_RED, ecc.getBitErrors());
-            compEncrypted.setVisible(true);
             textEncrypted.setText(mce.getEncrypted().toString());
-            textInfo.setText(Messages.McElieceView_step3);
-        } else if (!compOutputStep.isVisible()) {
+            textInfo.setText(Messages.McElieceView_step2);
+            grpPublicKey.setVisible(true);
+            grpEncrypted.setVisible(true);
+            btnPrev.setEnabled(true);
+        } else if (!grpOutput.isVisible()) {
             mce.decrypt();
             //UIHelper.markCode(textCorrected, SWT.COLOR_CYAN, ecc.getBitErrors());
-            compOutputStep.setVisible(true);
-            textInfo.setText(Messages.McElieceView_step4);
+            textMatrixPInverse.setText(mce.getMatrixPInv().toString());
+            textMatrixSInverse.setText(mce.getMatrixSInv().toString());
+            textInfo.setText(Messages.McElieceView_step3);
+            compInverseMatrices.setVisible(true);
+            grpOutput.setVisible(true);
             btnNextStep.setEnabled(false);
         }
     }
@@ -274,19 +282,18 @@ public class McElieceView extends Composite {
      * Display previous step by iterating the hidden view elements.
      */
     private void prevStep() {
-        if (compOutputStep.isVisible()) {
+        if (grpOutput.isVisible()) {      
+            textInfo.setText(Messages.McElieceView_step2);
+            compInverseMatrices.setVisible(false);
+            grpOutput.setVisible(false);
             btnNextStep.setEnabled(true);
-            compOutputStep.setVisible(false);
-            textInfo.setText(Messages.McElieceView_step3); // $NON-NLS-1$
-        } else if (compEncrypted.isVisible()) {
-            compEncrypted.setVisible(false);
-            textInfo.setText(Messages.McElieceView_step2); // $NON-NLS-1$
-        } else if (!grpPublicKey.isVisible()) {
-            grpPrivateKey.setVisible(false);
-            btnPrev.setEnabled(false);
-            textInfo.setText(Messages.McElieceView_step1); // $NON-NLS-1$
-        } else if (grpPrivateKey.isVisible())
+        } else if (grpPublicKey.isVisible()) {
+            textInfo.setText(Messages.McElieceView_step1);
+            UIHelper.formatTextOccurrence(textInfo, Messages.McElieceView_demoNote, SWT.BOLD);
+            grpEncrypted.setVisible(false);
             grpPublicKey.setVisible(false);
+            btnPrev.setEnabled(false);
+        }
     }
 
     /**

@@ -14,6 +14,7 @@ import org.jcryptool.visual.errorcorrectingcodes.data.Matrix2D;
 
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
+//TODO implement matrix echolon form / inverse computation
 public class McElieceSystem {
     
     EccData data;
@@ -47,16 +48,15 @@ public class McElieceSystem {
         });     
         
         maskH = new ArrayList<Integer>();
-        maskH.add(7);
         maskH.add(6);
-        maskH.add(3);
         maskH.add(5);
-        maskH.add(4);
         maskH.add(2);
+        maskH.add(4);
+        maskH.add(3);
         maskH.add(1);
+        maskH.add(0);
     }
 
-  //TODO implement matrix echolon form computation
     public void fillPrivateKey() {
         matrixS = new Matrix2D(new int[][] {
             { 1, 1, 0, 1 },
@@ -92,10 +92,9 @@ public class McElieceSystem {
         });
     }
 
-    public Matrix2D getSGP() {
+    public void computePublicKey() {
         Matrix2D sg = matrixS.multBinary(matrixG);
         matrixSGP = sg.multBinary(matrixP);
-        return matrixSGP;
     }
     
     public void stringToArray() {
@@ -126,7 +125,7 @@ public class McElieceSystem {
 
         for (int i = 0; i < binary.size(); i++) {
             List<Integer> temp = Arrays.asList(new Integer[] { 0, 0, 0, 0, 1, 0, 0 });
-            //Collections.shuffle(temp);
+            Collections.shuffle(temp);
             int[] tempArray = temp.stream().mapToInt(j->j).toArray();
             error.add(tempArray);
             
@@ -155,7 +154,7 @@ public class McElieceSystem {
              }
                 
              if (error != 0) {
-                 y.flip(0, maskH.get(error));
+                 y.flip(0, maskH.get(error-1));
              }
              
              Matrix2D c = new Matrix2D(new int[][] {Arrays.copyOfRange(y.getRow(0), 0, 4) });

@@ -8,233 +8,157 @@
         <Key>
             <Width>200</Width>
         </Key>
-        <Column>
-            <Name>messages</Name>
-            <Description></Description>
-            <Width>150</Width>
-            <HandlerConfiguration></HandlerConfiguration>
-        </Column>
-        <Column>
-            <Name>messages_de</Name>
-            <Description></Description>
-            <Width>150</Width>
-            <HandlerConfiguration></HandlerConfiguration>
-        </Column>
     </Columns>
     <Records>
         <Property>
             <Name>EccMainView_tabGeneralText</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">Error Correcting Codes</Value>
-            <Value disabled="false">Fehlerkorrektur Codes</Value>
         </Property>
         <Property>
             <Name>EccMainView_tabMcElieceText</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">McEliece Crypto System</Value>
-            <Value disabled="false">McEliece Kryptographie</Value>
         </Property>
         <Property>
             <Name>GeneralEccView_btnNextStep</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">Next Step</Value>
-            <Value disabled="false">Weiter</Value>
         </Property>
         <Property>
             <Name>GeneralEccView_btnPrev</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">Previous Step</Value>
-            <Value disabled="false">Zurück</Value>
         </Property>
         <Property>
             <Name>GeneralEccView_btnReset</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">Reset</Value>
-            <Value disabled="false">Reset</Value>
         </Property>
         <Property>
             <Name>GeneralEccView_grpErrorCode</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">Erroneous data transmission</Value>
-            <Value disabled="false">Fehlerhafte Datenübertragung</Value>
         </Property>
         <Property>
             <Name>GeneralEccView_grpReceiver</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">Receiver</Value>
-            <Value disabled="false">Empfänger</Value>
         </Property>
         <Property>
             <Name>GeneralEccView_grpSenderStep</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">Sender</Value>
-            <Value disabled="false">Absender</Value>
         </Property>
         <Property>
             <Name>GeneralEccView_grpTextInfo</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">Information</Value>
-            <Value disabled="false">Informationen</Value>
         </Property>
         <Property>
             <Name>GeneralEccView_lblHeader</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">Error Correcting Codes</Value>
-            <Value disabled="false">Fehlerkorrekturcode</Value>
         </Property>
         <Property>
             <Name>GeneralEccView_lblTextDecoded</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">decode</Value>
-            <Value disabled="false">dekodieren</Value>
         </Property>
         <Property>
             <Name>GeneralEccView_lblTextEncode</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">encode</Value>
-            <Value disabled="false">kodieren</Value>
         </Property>
         <Property>
             <Name>GeneralEccView_lblTextOriginal</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">Original:</Value>
-            <Value disabled="false">Original:</Value>
         </Property>
         <Property>
             <Name>GeneralEccView_textInfo_step1</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">This visual shows the general process of finding and correcting bit errors in data transmissions over a noisy channel using error-correcting codes. Using random linear codes, they can be used in Code-based cryptographic systems, for example McEliece or Niederreiter scheme, which are candidates for post quantum cryptography.
-
-Click on the "next step" button to continue.</Value>
-            <Value disabled="false">Diese Visualisierung soll zeigen, wie einzelne Bit-Fehler bei der Datenübertragung über einen verrauschten Kanal mit einem Fehlerkorrekturcode gefunden und korrigiert werden. Randomisierte lineare Codes dieser Art können zur Verschlüsselung eingesetzt werden, beispielsweise mit dem McEliece oder Niederreiter Verfahren, welche Kandidaten für Post Quantum Kryptographie sind.
-
-Klicken Sie auf "Weiter" um fortzufahren.</Value>
         </Property>
         <Property>
             <Name>GeneralEccView_textInfo_step2</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">The sender encodes the data according to the selected coding scheme. In this example Hamming code was used, which adds 3 parity check bits to every 4 bits of data. </Value>
-            <Value disabled="false">Der Absener kodiert die Daten entsprechend des gewählten Schemas. In diesem Beispiel wurde Hamming code benutzt, welcher jeweils 4 Daten Bits mit 3 Bits zur Pr00fcfung der Parität ergänzt.</Value>
         </Property>
         <Property>
             <Name>GeneralEccView_textInfo_step3</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">An error gets introduced in the data transmission. Here a single bit in each codeword is flipped (marked in red).</Value>
-            <Value disabled="false">Bei der Datenübertragung kommt es zu einem Fehler. Hier wurde in den Codewörtern jeweils ein Bit gekippt (markierung).</Value>
         </Property>
         <Property>
             <Name>GeneralEccView_textInfo_step4</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">The receiving end checks for errors by calculating the error syndrome, which also identifies the position of the bit in error. The erroneous bits are detected and flipped to reproduce the correct codewords.</Value>
-            <Value disabled="false">Der Empfänger präfcft auf Fehler indem er das Fehler-Syndrom des jeweiligen Blocks errechnet, die bei einem einzelnen gekippten Bit auch der Position entsprechen. Die fehlerhaften Bits werden erkannt und die richtigen Codeworte wiederhergesetellt.</Value>
         </Property>
         <Property>
             <Name>McElieceView_grpEncryption</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">Bob</Value>
-            <Value disabled="false">Bob</Value>
         </Property>
         <Property>
             <Name>McElieceView_grpErrorCode</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">Erroneous data transmission</Value>
-            <Value disabled="true"></Value>
         </Property>
         <Property>
             <Name>McElieceView_grpDecryption</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">Alice</Value>
-            <Value disabled="false">Alice</Value>
         </Property>
         <Property>
             <Name>McElieceView_grpTextInfo</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">Detailed Information</Value>
-            <Value disabled="false">Detaillierte Information</Value>
         </Property>
         <Property>
             <Name>McElieceView_lblCorrected</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">Corrected bits:</Value>
-            <Value disabled="false">Korrigierte Bits:</Value>
         </Property>
         <Property>
             <Name>McElieceView_lblEncode</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">Encoded Bitstring</Value>
-            <Value disabled="false">Kodierter Bitstring</Value>
         </Property>
         <Property>
             <Name>McElieceView_lblHeader</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">McEliece Cryptosystem</Value>
-            <Value disabled="false">McEliece Kryptographie</Value>
         </Property>
         <Property>
             <Name>McElieceView_lblOutput</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">Decoded bitstring:</Value>
-            <Value disabled="false">Dekodierter Bitstring:</Value>
         </Property>
         <Property>
             <Name>McElieceView_lblTextOriginal</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">Original:</Value>
-            <Value disabled="false">Original:</Value>
         </Property>
         <Property>
             <Name>McElieceView_step1</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">The McEliece cryptosystem is an asymmetric encryption algorithm that uses random linear codes. It was developed in 1978 by Robert McEliece and, because of its key size, not considered for mainstream cryptography until it was...</Value>
-            <Value disabled="true"></Value>
         </Property>
         <Property>
             <Name>McElieceView_step2</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">Generator and Scrambler matrix...</Value>
-            <Value disabled="true"></Value>
         </Property>
         <Property>
             <Name>McElieceView_step3</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">Error vector...</Value>
-            <Value disabled="true"></Value>
         </Property>
         <Property>
             <Name>McElieceView_step4</Name>
             <Disabled>false</Disabled>
             <MultiLine>false</MultiLine>
-            <Value disabled="false">Error Correcting and Decoding...</Value>
-            <Value disabled="true"></Value>
         </Property>
     </Records>
 </MultiProperties>

@@ -21,10 +21,17 @@ public class Messages extends NLS {
     public static String GeneralEccView_textInfo_step2;
     public static String GeneralEccView_textInfo_step3;
     public static String GeneralEccView_textInfo_step4;
+    public static String GeneralEccView_textInfo_step5;
+    public static String McElieceView_btnGeneratePrivateKey;
+    public static String McElieceView_demoNote;
     public static String McElieceView_grpEncryption;
     public static String McElieceView_grpErrorCode;
     public static String McElieceView_grpDecryption;
+    public static String McElieceView_grpDecryptStep;
+    public static String McElieceView_grpPrivateKey;
+    public static String McElieceView_grpPublicKey;
     public static String McElieceView_grpTextInfo;
+    public static String McElieceView_lblClearText;
     public static String McElieceView_lblCorrected;
     public static String McElieceView_lblEncrypt;
     public static String McElieceView_lblHeader;
@@ -33,7 +40,6 @@ public class Messages extends NLS {
     public static String McElieceView_step1;
     public static String McElieceView_step2;
     public static String McElieceView_step3;
-    public static String McElieceView_step4;
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);
