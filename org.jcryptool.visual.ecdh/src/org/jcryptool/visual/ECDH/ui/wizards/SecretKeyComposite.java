@@ -18,7 +18,6 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -46,12 +45,16 @@ public class SecretKeyComposite extends Composite {
 	private FlexiBigInt secret;
 	private Text largeSecret;
 	private Label falseValue;
+	
+	public static final int minimumWidth = 600; 
+	public static final int minimumHeight = 285; 
 
-	public SecretKeyComposite(Composite parent, int style, String n, int s, int m) {
+	public SecretKeyComposite(Composite parent, int style, SecretKeyWizardPage page, String n, int s, int m) {
 		super(parent, style);
 		large = false;
 		name = n;
 		max = m;
+		page.getWizard().getContainer().getShell().setMinimumSize(minimumWidth, minimumHeight);
 		initialize();
 		if(s > 0)
 			spnrSecret.setSelection(s);
@@ -60,12 +63,13 @@ public class SecretKeyComposite extends Composite {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public SecretKeyComposite(Composite parent, int style, String n, FlexiBigInt s, FlexiBigInt m) {
+	public SecretKeyComposite(Composite parent, int style, SecretKeyWizardPage page, String n, FlexiBigInt s, FlexiBigInt m) {
 		super(parent, style);
 		large = true;
 		name = n;
 		bigMax = m;
 		secret = s;
+		page.getWizard().getContainer().getShell().setMinimumSize(minimumHeight, minimumHeight);
 		initialize();
 		if(secret == null)
 			secret = new FlexiBigInt(bigMax.bitCount(), new JavaSecureRandomWrapper(new SecureRandom()));
@@ -74,7 +78,6 @@ public class SecretKeyComposite extends Composite {
 
 	private void initialize() {
 		createGroupSecret();
-		setSize(new Point(412, 57));
 		setLayout(new GridLayout());
 	}
 

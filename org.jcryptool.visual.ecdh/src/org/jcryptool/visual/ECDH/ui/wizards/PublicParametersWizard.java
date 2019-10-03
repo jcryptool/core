@@ -23,6 +23,7 @@ public class PublicParametersWizard extends Wizard {
 	private EC curve;
 	private int order;
 	private boolean large;
+	private int type;
 	private EllipticCurve largeCurve;
 	private Point pointG;
 	private FlexiBigInt largeOrder;
@@ -43,18 +44,19 @@ public class PublicParametersWizard extends Wizard {
 	@Override
 	public boolean performFinish() {
 		large = page.isLarge();
-		if(large) {
+		if (large) {
 			largeCurve = page.getLargeCurve();
 			pointG = page.getLargeGenerator();
 			largeOrder = page.getLargeOrder();
+			type = page.getLargeCurveType();
 		} else {
 			generator = page.getGenerator();
 			curve = page.getCurve();
 			order = page.getOrder();
+			type = -1;
 		}
 		return true;
 	}
-
 
 	public ECPoint getGenerator() {
 		return generator;
@@ -82,5 +84,9 @@ public class PublicParametersWizard extends Wizard {
 
 	public FlexiBigInt getLargeOrder() {
 		return largeOrder;
+	}
+
+	public int getLargeCurveType() {
+		return type;
 	}
 }

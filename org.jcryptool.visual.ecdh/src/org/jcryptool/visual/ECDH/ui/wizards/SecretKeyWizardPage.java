@@ -47,9 +47,9 @@ public class SecretKeyWizardPage extends WizardPage {
 
 	public void createControl(Composite parent) {
 		if(large)
-			composite = new SecretKeyComposite(parent, NONE, name, largeSecret, largeMax);
+			composite = new SecretKeyComposite(parent, NONE, this, name, largeSecret, largeMax);
 		else
-			composite = new SecretKeyComposite(parent, NONE, name, secret, max);
+			composite = new SecretKeyComposite(parent, NONE, this, name, secret, max);
 		setControl(composite);
 		setPageComplete(true);
 	}
