@@ -38,7 +38,6 @@ public class PublicParametersWizardPage extends WizardPage {
 		setControl(composite);
 	}
 
-
 	public ECPoint getGenerator() {
 		return composite.getGenerator();
 	}
@@ -65,5 +64,9 @@ public class PublicParametersWizardPage extends WizardPage {
 
 	public FlexiBigInt getLargeOrder() {
 		return composite.getLargeOrder();
+	}
+
+	public int getLargeCurveType() {
+		return composite.getCurveType();
 	}
 }
