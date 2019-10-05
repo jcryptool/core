@@ -13,6 +13,14 @@
       </view>
    </extension>
    <extension
+         point="org.jcryptool.core.operations.visuals">
+      <Visual
+            name="%Visual.name.0"
+            viewId="org.jcryptool.visual.ECDH.view"
+            contextHelpId="org.jcryptool.visual.ecdh.ecdhview">
+      </Visual>
+   </extension>
+   <extension
          point="org.eclipse.help.toc">
       <toc
             file="$nl$/toc.xml"
@@ -24,12 +32,29 @@
       </contexts>
    </extension>
    <extension
-         point="org.jcryptool.core.operations.visuals">
-      <Visual
-            name="%Visual.name.0"
-            viewId="org.jcryptool.visual.ECDH.view"
-            contextHelpId="org.jcryptool.visual.ecdh.ecdhview">
-      </Visual>
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.jcryptool.visual.ECDH.handlers.RestartHandler"
+            commandId="org.jcryptool.visual.ecdh.restartCommand">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.jcryptool.visual.ecdh.restartCommand"
+            name="%restart.command.name">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="toolbar:org.jcryptool.visual.ECDH.view">
+         <command
+               commandId="org.jcryptool.visual.ecdh.restartCommand"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
+               style="push">
+         </command>
+      </menuContribution>
    </extension>
 
 </plugin>
