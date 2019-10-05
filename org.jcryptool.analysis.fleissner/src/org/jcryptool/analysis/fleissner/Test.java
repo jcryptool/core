@@ -166,10 +166,29 @@ public static void print() {
 
 //    String.format("%02d:%02d:%02d", timeInHours, timeInMinutes, timeInSeconds);
     
-    SimpleDateFormat format = new SimpleDateFormat("DD:HH:mm:ss");
-    format.setTimeZone(TimeZone.getTimeZone("GMT"));
-    format.getNumberFormat();
+//    SimpleDateFormat format = new SimpleDateFormat("DD:HH:mm:ss");
+//    format.setTimeZone(TimeZone.getTimeZone("GMT"));
+//    format.getNumberFormat();
 //    return format.format(new Date(duration));
+        
+        ArrayList<Integer> indizes = new ArrayList<>();
+        for (int i =0; i<30; i++) {
+            for(int j=0; j<30; j++) {
+                for (int k=0; k<30; k++) {
+                    for (int l=0; l<30; l++) {
+                        int index = i*((int) Math.pow(30,3))+j*((int) Math.pow(30,2))+k*((int) Math.pow(30,1))+l*((int) Math.pow(30,0));
+                        if (indizes.contains(index)) {
+                            System.out.println("Index bereits vorhanden");
+                            break;
+                        }else {
+                            indizes.add(index);
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println("No Indexcrash");
+        
 
 
 

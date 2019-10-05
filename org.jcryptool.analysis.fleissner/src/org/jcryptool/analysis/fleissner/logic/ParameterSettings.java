@@ -99,11 +99,8 @@ public class ParameterSettings {
 				     */
 					try {
 						String template = args[i+1];
-						System.out.println("template before array: "+template);
 						String[] data;
-	
 						data=template.split(",");
-						System.out.println("data length: "+data.length);
 						
 						grille = new int[data.length];
 						if (grille.length%2!=0) {
