@@ -1,6 +1,5 @@
 *.class
 */bin*
-*/target*
 */.settings*
 .DS_Store
 workspace
