@@ -32,7 +32,7 @@
 <h2>Usage of the plug-in</h2>
 <p>Below you find how to use the plug-in on the basis of an example scenario.</p>
 <h3>Step 1</h3>
-<p>The first step is to load the certificates. If you click on the buttons &quot;Load Root CA&quot;, &quot;Load CA&quot; and &quot;Load User Certificate&quot; a dialog window opens and you can choose the certificate, which you want to load out of the JCT-Keystore. After you have chosen the right certificate you have to click on &quot;finish&quot;. The sliders in the Graphical User Interface are now in the right position and the font colour of the buttons is now green.</p>
+<p>The first step is to load the certificates. If you click on the buttons &quot;Load Root CA&quot;, &quot;Load CA&quot; and &quot;Load User Certificate&quot; a dialog window opens and you can choose the certificate, which you want to load out of the JCT keystore. After you have chosen the right certificate you have to click on &quot;finish&quot;. The sliders in the graphical user interface (GUI) are now in the right position and the font color of the buttons is now green.</p>
 <p><img src="PopUp.png" width="459" height="418" alt="dialog window to load certificates" /></p>
 <h3>&nbsp;</h3>
 <h3>Step 2</h3>
@@ -56,7 +56,7 @@
 <h2>Validity models</h2>
 <p>Validity models describe, which requirements have to be fulfilled at a certain point of time to consider a signature as valid. These models are the shell model, a modified version of the shell model and the chain model.</p>
 <h3>Shell model</h3>
-<p>When using the shell model, a key(-pair) is valid at a certain time, if the corresponding certification path is also valid at this time. The certification path is valid, if all contained certificates are valid at this time. <br />
+<p>When using the shell model, a key(-pair) is valid at a certain time, if the corresponding certification path is also valid at this time. The certification path is valid, if all contained certificates are valid at this time.<br>
 </p>
 <p>A certificate is valid, if</p>
 <ul>
@@ -69,7 +69,7 @@
 <p>The modified shell model is, with the exception of a special condition, equivalent to the shell model, which is described above. The difference is, that when  the check of a certification path is performed, the signing date of a document is used.</p>
 <p><img src="modShellmodel.png" width="524" height="166" alt="modified shell model" /></p>
 <h3>Chain model</h3>
-<p>In the chain model, the only requirement is, that each certificate had to be valid at the moment it was used to create a signature. This means that: at the signing time of a document, the client's certificate had to be valid, at the time when the clients' certificate was issued, the issuing's CA's certificate had to be valid and so on. This model does not consider if a certificate was revoked since the signing time.</p>
+<p>In the chain model, the only requirement is, that each certificate had to be valid at the moment it was used to create a signature. This means that: at the signing time of a document, the client's certificate had to be valid, at the time when the clients' certificate was issued, the issuing CA's certificate had to be valid and so on. This model does not consider if a certificate was revoked since the signing time.</p>
 <p><img src="chainmodel.png" width="527" height="169" /></p>
 <h3>Examples</h3>
 <h4>All models valid:</h4>

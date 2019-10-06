@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
-   <context id="sphincsplusHelp" title="Demonstration von SPHINCS+">
-      <description>Diese Visualisierung demonstriert das SPHINCS+ Signaturverfahren.</description>
+   <context id="sphincsplusHelp" title="Demonstration of SPHINCS+">
+      <description>This visualization demonstrates the post-quantum signature scheme SPHINCS+.</description>
       <topic href="nl/de/help/content/index.html" label="SPHINCS+-Signaturverfahren"/>
    </context>
 </contexts>
