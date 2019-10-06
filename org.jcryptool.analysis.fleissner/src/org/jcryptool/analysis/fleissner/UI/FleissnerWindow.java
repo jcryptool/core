@@ -7,11 +7,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -102,7 +105,7 @@ public class FleissnerWindow extends Composite{
     private boolean startSettings = true;
 //    private Hashtable<Integer, Integer> htRestarts = new Hashtable<Integer, Integer>();
     
-    private int[] weights = {4,1};
+    private int[] weights = {3,1};
     private int textState = 0;
     private int languageState = 0;
     private int statisticState = 0;
@@ -150,13 +153,16 @@ public class FleissnerWindow extends Composite{
 
        sashForm = new SashForm(parent, SWT.BORDER | SWT.BORDER_DASH | SWT.VERTICAL);
        sashForm.setLayout(new GridLayout());
-       sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));    
+       sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));   
+
 
        GridLayout gridLayoutParent = new GridLayout(3, false);
        GridData gdAnalysisOut = new GridData(SWT.FILL, SWT.FILL, true, true);
        
        ScrolledComposite scrolledMainComposite = new ScrolledComposite(sashForm, SWT.V_SCROLL);
-       scrolledMainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+       GridData mainGrid = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
+       mainGrid.heightHint = 630;
+       scrolledMainComposite.setLayoutData(mainGrid);
        mainComposite = new Composite(scrolledMainComposite, SWT.NONE);     
        mainComposite.setLayout(gridLayoutParent);
        mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -189,6 +195,39 @@ public class FleissnerWindow extends Composite{
        scrolledAnalysisOutComposite.layout();
        
        sashForm.setWeights(weights);
+       sashForm.addControlListener(new ControlAdapter() {
+           @Override
+           public void controlResized(ControlEvent e) {
+               
+               if (mainComposite.getBounds().height>630) {
+//                 int sashHeight = sashForm.getSashWidth();
+//                 System.out.println("sashHeight: "+sashHeight);
+                   double weightOne = 630/((double) sashForm.getSize().y);
+                   double weightTwo = 1-weightOne;
+                   
+                   weights[0] = (int) weightOne*10;
+                   weights[1] = (int) weightTwo*10;
+                   sashForm.setWeights(weights);
+                 System.out.println("Height restricted (weights reset): "+weightOne+", "+weightTwo);
+//                 gdAnalysisOut.minimumHeight = sashForm.getBounds().height-630;
+//                 analysisOut.setLayoutData(gdAnalysisOut);
+                 mainGrid.heightHint = 630;
+                 scrolledMainComposite.requestLayout();
+//                 scrolledMainComposite.setLayoutData(mainGrid);
+             }
+//               
+//               
+//
+////                 mainGrid.heightHint = mainComposite.getClientArea().height;
+////                 scrolledMainComposite.setLayoutData(mainGrid);
+//                 
+//                 int height = sashForm.getClientArea().height;
+//                 int[] weights = sashForm.getWeights();
+//                 weights[1] = height-weights[0];
+//                 sashForm.setWeights(weights);
+           }
+       });
+
 
 //       controls resize of analysis output
        scrolledAnalysisOutComposite.addListener(SWT.Resize, new Listener(){
@@ -196,14 +235,95 @@ public class FleissnerWindow extends Composite{
          public void handleEvent(Event arg0)
          {
              Rectangle r = scrolledAnalysisOutComposite.getClientArea();
-             if (analysisOut.getBounds().height>r.height) {
+             Rectangle s = scrolledMainComposite.getClientArea();
+//             Rectangle u = sashForm.
+             if (/*analysisOut.getBounds().height>r.height*/s.height>630) {
 
                  gdAnalysisOut.minimumHeight = r.height;
                  analysisOut.setLayoutData(gdAnalysisOut);
-                 sashForm.setWeights(weights);
+
              }
+//             if (mainComposite.getBounds().height>630) {
+////                 int sashHeight = sashForm.getSashWidth();
+////                 System.out.println("sashHeight: "+sashHeight);
+//                 System.out.println("Height restricted");
+//                 gdAnalysisOut.minimumHeight = sashForm.getBounds().height-630;
+//                 analysisOut.setLayoutData(gdAnalysisOut);
+//             }
+             System.out.println("sashHeight: "+sashForm.getSashWidth());
+             System.out.println("sashForm Bound Heigt: "+sashForm.getBounds().height);
+             System.out.println("sashClient Are Height: "+sashForm.getClientArea().height);
+             System.out.println("sashForm get Size: "+sashForm.getSize().y);
+             System.out.println("sashForm get Weights: "+Arrays.toString(sashForm.getWeights()));
+             System.out.println("MainComposite get Bounds: "+mainComposite.getBounds().height);
+             System.out.println("MainComposite Client Area: "+mainComposite.getClientArea().height);
+             System.out.println("MainComposite get Size: "+mainComposite.getSize().y);
+             System.out.println("ScrolledMainComposite get Bounds: "+scrolledMainComposite.getBounds().height);
+             System.out.println("ScrolledMainComposite get Bound: "+scrolledMainComposite.getClientArea().height);
+             System.out.println("ScrolledMainComposite get Bound: "+scrolledMainComposite.getSize().y);
+             System.out.println("AnalysisOut get Bounds: "+analysisOut.getBounds().height);
+             System.out.println("AnalysisOut Client Area: "+analysisOut.getClientArea().height);
+             System.out.println("AnalysisOut get Size: "+analysisOut.getSize().y);
+             System.out.println("ScrolledAnalysisOutComposite get Bounds: "+scrolledAnalysisOutComposite.getBounds().height);
+             System.out.println("ScrolledAnalysisOutComposite get Bound: "+scrolledAnalysisOutComposite.getClientArea().height);
+             System.out.println("ScrolledAnalysisOutComposite get Bound: "+scrolledAnalysisOutComposite.getSize().y);
+//             if (mainComposite.getBounds().height<s.height) {
+//
+////                 mainGrid.heightHint = mainComposite.getClientArea().height;
+////                 scrolledMainComposite.setLayoutData(mainGrid);
+//                 
+//                 gdAnalysisOut.minimumHeight = r.height;
+//                 analysisOut.setLayoutData(gdAnalysisOut);
+//                 
+//                 int height = sashForm.getClientArea().height;
+//                 int[] weights = sashForm.getWeights();
+//                 weights[1] = height-weights[0];
+//                 sashForm.setWeights(weights);
+//
+//             }
+
          } 
       });
+
+       
+//       scrolledMainComposite.addListener(SWT.Resize, new Listener(){
+//           @Override
+//           public void handleEvent(Event arg0)
+//           {
+////               Rectangle s = scrolledMainComposite.getClientArea();
+//////                   mainGrid.heightHint = mainComposite.getSize().y;
+////                   
+//////                   mainComposite.requestLayout();
+////                   
+//////                   scrolledMainComposite.setLayoutData(mainGrid);
+//////                   sashForm.setWeights(weights);
+////               if (mainComposite.getBounds().height<s.height) {
+////
+////                 mainGrid.heightHint = mainComposite.getClientArea().height;
+////                 scrolledMainComposite.setLayoutData(mainGrid);
+////                 
+////                 gdAnalysisOut.minimumHeight = scrolledAnalysisOutComposite.getClientArea().height;
+////                 analysisOut.setLayoutData(gdAnalysisOut);
+////             }
+//               
+//               if (mainComposite.getBounds().height>630) {
+////                 int sashHeight = sashForm.getSashWidth();
+////                 System.out.println("sashHeight: "+sashHeight);
+//                   double weightOne = 630/((double) sashForm.getSize().y);
+//                   double weightTwo = 1-weightOne;
+//                   
+//                   weights[0] = (int) weightOne*10;
+//                   weights[1] = (int) weightTwo*10;
+//                   sashForm.setWeights(weights);
+//                 System.out.println("Height restricted (weights reset): "+weightOne+", "+weightTwo);
+////                 gdAnalysisOut.minimumHeight = sashForm.getBounds().height-630;
+////                 analysisOut.setLayoutData(gdAnalysisOut);
+//                 mainGrid.heightHint = 630;
+//                 scrolledMainComposite.requestLayout();
+////                 scrolledMainComposite.setLayoutData(mainGrid);
+//             }
+//           } 
+//        });
     }
   
     /**
@@ -838,7 +958,8 @@ public class FleissnerWindow extends Composite{
      * @param thirdGroup
      */
     private void createLoadstatisticsComposite(Group thirdGroup) {
-        String[] items = { "de-4-gram-nocs.bin", "en-4-gram-nocs.bin", "en-3-gram-nocs.bin"};
+//        String[] items = { "de-4-gram-nocs.bin", "en-4-gram-nocs.bin", "en-3-gram-nocs.bin"};
+        String[] items = { "4-gram, deutsch", "4-gram, englisch", "3-gram, englisch"};
         
         statistics = new Button(thirdGroup, SWT.RADIO);
         statistics.setSelection(true);
@@ -949,7 +1070,7 @@ public class FleissnerWindow extends Composite{
          });    
         
          chooseNGramSize = new Label(thirdGroup, SWT.NONE);
-         chooseNGramSize.setText("Größe nGram"); //$NON-NLS-1$
+         chooseNGramSize.setText("n-Gram-Größe"); //$NON-NLS-1$
          chooseNGramSize.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false));
          
 //         nGramSize currently limited to 3-4 because there are no other working nGrams with the same structure
@@ -1101,7 +1222,7 @@ public class FleissnerWindow extends Composite{
                 descriptionText.requestLayout();
             } 
          });
-        descriptionText.setText("Dieses Plug-In dient zur Analyse von Geheimtexten, die durch die Fleißner-Schablone verschlüsselt wurden. Dazu werden Geheimtexte mit einer Schlüssellänge von <5 mit dem 'brute-force'-Verfahren analysiert, bei dem jede mögliche Schablone dieser Größe ausprobiert wird. Bei Geheimtexten mit einem größeren zugehörigen Schlüssel kommt das Verfahren des 'hill-Climbing' zum Einsatz, wobei zufällig ausgewählte Schablonen schrittweise verbessert werden. Texte können auch zuvor selbst verschlüsselt oder entschlüsselt werden.");
+        descriptionText.setText("Dieses Plugin dient zur Analyse von Geheimtexten, die mit der Fleißner-Schablone verschlüsselt wurden. Haben die Geheimtexte eine Schlüssellänge kleiner 5, wird jede mögliche Schablone dieser Größe ausprobiert (Brute-force-Analyse). Bei Geheimtexten mit einem größeren Schlüssel wird das Hill-Climbing-Verfahren zur Analyse verwendet, das zufällig ausgewählte Schablonen schrittweise verbessert. Texte können auch zuvor selbst ver- oder entschlüsselt werden.");
     }
     
     /**
