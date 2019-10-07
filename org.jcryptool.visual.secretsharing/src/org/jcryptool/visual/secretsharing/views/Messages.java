@@ -14,6 +14,8 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.visual.secretsharing.views.messages"; //$NON-NLS-1$
+	public static String lagrange_formular;
+	public static String ShamirsCompositeGraphical_title;
 	public static String SSSConstants_Coefficient;
 	public static String SSSConstants_Compute_Share_Button;
 	public static String SSSConstants_Concerned_Persons;
@@ -40,7 +42,7 @@ public class Messages extends NLS {
 	public static String SSSConstants_Polynom_Info;
 	public static String SSSConstants_Polynom_Not_Equal;
 	public static String SSSConstants_Reconstrct;
-	public static String SSSConstants_Reconstruct_Info;
+	public static String Reconstruct_Info;
 	public static String SSSConstants_reconstruct_Person;
 	public static String SSSConstants_Reconstruction_Group;
 	public static String SSSConstants_Secret_Info;
