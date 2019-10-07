@@ -18,9 +18,7 @@ import org.eclipse.swt.graphics.Color;
  * @version 1.0.0
  */
 public interface Constants {
-	public enum Mode {
-		GRAPHICAL, NUMERICAL
-	}
+	
 	/*
 	 * COLORS
 	 */
@@ -77,71 +75,11 @@ public interface Constants {
 	/*
 	 * MESSAGE CONSTANTS
 	 */
-	String MESSAGE_TITLE = ("Shamir's Secret Sharing"); //$NON-NLS-1$
 
-	String MESSAGE_FORMULAR = ("\u03A3 si \u2022 \u03A0 ( x - xr ) \u2022 ( xi - xr )\u207B\u00B9 mod p"); //$NON-NLS-1$
-	String MESSAGE_FORMULAR_RANGE = ("0  \u2264 i,r \u2264 t, i\u2260r"); //$NON-NLS-1$
-	String MESSAGE_DESCRIPTION = (Messages.SSSConstants_Title_Info);
-	String MESSAGE_INFO = Messages.SSSConstants_Reconstruct_Info;
-	String MESSAGE_RECONSTRUCTION_FALSE = Messages.SSSConstants_Polynom_Not_Equal;
-	String MESSAGE_RECONSTRUCTION_TRUE = Messages.SSSConstants_Polynom_Equal;
-	String MESSAGE_GRAPH = ("Graph"); //$NON-NLS-1$
-	String MESSAGE_RECONSTRUCT = Messages.SSSConstants_Reconstrct;
-	String MESSAGE_SELECT_ALL = Messages.SSSConstants_Select_All_Button;
-	String MESSAGE_DESELECT_ALL = Messages.SSSConstants_Deselect_All_Button;
-	String MESSAGE_ZOOM = Messages.SSSConstants_Zoom;
-	String MESSAGE_SETTINGS = Messages.SSSConstants_Settings;
-	String MESSAGE_MODUS = Messages.SSSConstants_Select_Modus;
-	String MESSAGE_GRAPHICAL = Messages.SSSConstants_Graphical_Mode;
-	String MESSAGE_NUMERICAL = Messages.SSSConstants_Numerical_Mode;
-	String MESSAGE_PARAMETER = Messages.SSSConstants_Select_Parameter;
-	String MESSAGE_CONCERNED_PERSONS = Messages.SSSConstants_Concerned_Persons;
-	String MESSAGE_RECONSTRUCT_PERSONS = Messages.SSSConstants_reconstruct_Person;
-	String MESSAGE_MODUL = Messages.SSSConstants_Modul_info;
-	String MESSAGE_SECRET = Messages.SSSConstants_Secret_Info;
-	String MESSAGE_COEFFICIENT = Messages.SSSConstants_Coefficient;
-	String MESSAGE_SELECT = Messages.SSSConstants_Select;
-	String MESSAGE_POLYNOM = Messages.SSSConstants_Polynom_Info;
-	String MESSAGE_P = ("P(x):"); //$NON-NLS-1$
-	String MESSAGE_COMPUTE_SHARES = Messages.SSSConstants_Compute_Share_Button;
-	String MESSAGE_SHARES = "Shares"; //$NON-NLS-1$
-	String MESSAGE_RECONSTRUT = Messages.SSSConstants_Reconstruction_Group;
-	String MESSAGE_SHARE = "Share "; //$NON-NLS-1$
-	String MESSAGE_LEFT_PARENTHESIS = "("; //$NON-NLS-1$
-	String MESSAGE_RIGHT_PARENTHESIS = ")"; //$NON-NLS-1$
-	String MESSAGE_EQUAL = "="; //$NON-NLS-1$
-	String MESSAGE_SEPERATOR = "|"; //$NON-NLS-1$
-	String MESSAGE_W = "w"; //$NON-NLS-1$
-	String MESSAGE_INFO_GROUP = Messages.SSSConstants_Info_Group;
-	String MESSAGE_P_ = "P'(x)"; //$NON-NLS-1$
-	String MESSAGE_LAGRANGE = Messages.SSSConstants_Title_Info_Formula;
-	String MESSAGE_RESET = Messages.SSSConstants_Reset;
+	String LAGRANGE_FORMULAR = ("\u03A3 s\u1d62 \u2022 \u03A0 ( x - x\u1d63 ) \u2022 ( x\u1d62 - x\u1d63 )\u207B\u00B9 mod p"); //$NON-NLS-1$
+	String LAGRANGE_FORMULAR_RANGE = ("0  \u2264 i,r \u2264 t, i\u2260r"); //$NON-NLS-1$
 
-	/*
-	 * MESSAGE COEFFICIENTS DIALOG
-	 */
-	String MESSAGE_COEFFICIENTS_DIALOG = (Messages.SSSConstants_Dialog_Info);
-	String MESSAGE_COEFFICIENTS_GROUP_NAME = (Messages.SSSConstants_Dialog_Coefficient_Group);
-	String MESSAGE_COEFFICIENTS_TITLE = (Messages.SSSConstants_Dialog_Select_Coefficient_Button);
-	String MESSAGE_COEFFICIENTS_GENERATE = (Messages.SSSConstants_Dialog_Coefficient_Generate_Button);
 
-	/*
-	 * MESSAGE PRIME DIALOG
-	 */
-	String MESSAGE_PRIME_MODUL_LABEL = (Messages.SSSConstants_Dialog_Modul_Info);
-	String MESSAGE_PRIME_DIALOG = (Messages.SSSConstants_Dialog_Message);
-	String MESSAGE_PRIME_HEAD = (Messages.SSSConstants_Dialog_Prime_Title);
-	String MESSAGE_PRIME_TITLE = (Messages.SSSConstants_Dialog_Prime);
-	String MESSAGE_NEXT_PRIME = (Messages.SSSConstants_Dialog_Next_Prime);
-	String MESSAGE_VERIFY_INPUT = (Messages.SSSConstants_Dialog_Verify_Input);
-
-	/*
-	 * MESSAGE SECRET DIALOG
-	 */
-	String MESSAGE_SECRET_LABEL = (Messages.SSSConstants_Dialog_Secret_Info);
-	String MESSAGE_SECRET_DIALOG = (Messages.SSSConstants_Dialog_Secret_Message);
-	String MESSAGE_SECRET_HEADER = (Messages.SSSConstants_Dialog_Secret_Header);
-	String MESSAGE_SECRET_TITLE = (Messages.SSSConstants_Dialog_Secret);
 
 	/*
 	 * MESSAGE RECONSTRUCTION

@@ -13,7 +13,8 @@ package org.jcryptool.visual.secretsharing.views;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbenchActionConstants;
@@ -23,14 +24,12 @@ import org.jcryptool.visual.secretsharing.SecretSharingPlugin;
 
 /**
  * @author Oryal Inel
+ * @author Thorben Groos
  * @version 1.0.0
  */
 public class SecretSharingView extends ViewPart {
 
 	private Composite parent;
-	private StackLayout layout;
-	private ShamirsCompositeGraphical shamirsCompositeGraphical;
-	private ShamirsCompositeNumerical shamirsCompositeNumerical;
 
 	/**
 	 * Create contents of the view part
@@ -40,13 +39,16 @@ public class SecretSharingView extends ViewPart {
 	public void createPartControl(Composite parent) {
 		this.parent = parent;
 
-		layout = new StackLayout();
-		parent.setLayout(layout);
+		ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite.setExpandHorizontal(true);
+        scrolledComposite.setExpandVertical(true);
+        scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		shamirsCompositeGraphical = new ShamirsCompositeGraphical(parent, SWT.NONE, this);
-		shamirsCompositeNumerical = new ShamirsCompositeNumerical(parent, SWT.NONE, this);
-
-		layout.topControl = shamirsCompositeGraphical;
+		ShamirsSecretSharingComposite sscc = new ShamirsSecretSharingComposite(scrolledComposite, SWT.NONE);
+		
+		
+		scrolledComposite.setContent(sscc);;
+		scrolledComposite.setMinSize(sscc.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, SecretSharingPlugin.PLUGIN_ID + ".view");
 
@@ -62,22 +64,6 @@ public class SecretSharingView extends ViewPart {
 	@Override
 	public void setFocus() {
 		parent.setFocus();
-	}
-
-	public void showNumerical() {
-		if (!layout.topControl.equals(shamirsCompositeNumerical)) {
-			shamirsCompositeNumerical.adjustButtons();
-			layout.topControl = shamirsCompositeNumerical;
-			parent.layout();
-		}
-	}
-
-	public void showGraphical() {
-		if (!layout.topControl.equals(shamirsCompositeGraphical)) {
-			shamirsCompositeGraphical.adjustButtons();
-			layout.topControl = shamirsCompositeGraphical;
-			parent.layout();
-		}
 	}
 
 	public void reset() {

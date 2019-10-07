@@ -13,28 +13,22 @@ package org.jcryptool.visual.secretsharing.algorithm;
 import java.math.BigInteger;
 import java.util.Vector;
 
-import org.jcryptool.visual.secretsharing.views.Constants.Mode;
-
 /**
  * @author Oryal Inel
  * @version 1.0
  */
 public class ShamirsSecretSharing {
-    private BigInteger modul;
     private BigInteger[] coefficient;
     private Point[] shares;
     private Vector<BigInteger[]> subPolynomial;
-    private Mode mode;
 
     /**
      * @param numberOfPersons
      * @param numberOfNecessaryPersons
      * @param modul
      */
-    public ShamirsSecretSharing(BigInteger numberOfNecessaryPersons, BigInteger numberOfPersons, BigInteger modul, Mode mode) {
-        this.modul = modul;
+    public ShamirsSecretSharing(BigInteger numberOfNecessaryPersons, BigInteger numberOfPersons, BigInteger modul) {
         this.shares = new Point[numberOfPersons.intValue()];
-        this.mode = mode;
     }
 
     /**
@@ -53,15 +47,9 @@ public class ShamirsSecretSharing {
                 value = value.add(coefficient[j]);
             }
 
-            switch (mode) {
-                case NUMERICAL:
-                    p[i].setY(value.mod(modul));
-                    break;
 
-                case GRAPHICAL:
-                    p[i].setY(value);
-                    break;
-            }
+            p[i].setY(value);
+
         }
         shares = p;
 
@@ -81,17 +69,7 @@ public class ShamirsSecretSharing {
             value = value.add(coefficient[j]);
         }
 
-        switch (mode) {
-            case NUMERICAL:
-                p.setY(value.mod(modul));
-
-                break;
-
-            case GRAPHICAL:
-                p.setY(value);
-
-                break;
-        }
+        p.setY(value);
 
         return p;
     }
@@ -117,35 +95,17 @@ public class ShamirsSecretSharing {
                 if (i != j && pointSet[i] != null && pointSet[j] != null) {
                     tmpZaehler = pointSet[j].getX();
                     tmpNenner = pointSet[j].getX().subtract(pointSet[i].getX());
-                    switch (mode) {
-                        case NUMERICAL:
-                            tmpNenner = tmpNenner.modInverse(modul);
-                            tmpQuotient = tmpZaehler.multiply(tmpNenner);
-                            s[i] = s[i].multiply(tmpQuotient).mod(modul);
 
-                            break;
+                    tmpQuotient = tmpZaehler.multiply(tmpNenner);
+                    s[i] = s[i].multiply(tmpQuotient);
 
-                        case GRAPHICAL:
-                            tmpQuotient = tmpZaehler.multiply(tmpNenner);
-                            s[i] = s[i].multiply(tmpQuotient);
-
-                            break;
-                    }
                 }
             }
         }
 
         for (int i = 0; i < pointSet.length; i++) {
             if (pointSet[i] != null) {
-                switch (mode) {
-                    case NUMERICAL:
-                        tmpValue = tmpValue.add(s[i].multiply(pointSet[i].getY())).mod(modul);
-                        break;
-
-                    case GRAPHICAL:
-                        tmpValue = tmpValue.add(s[i].multiply(pointSet[i].getY()));
-                        break;
-                }
+                tmpValue = tmpValue.add(s[i].multiply(pointSet[i].getY()));
             }
         }
 
@@ -279,17 +239,7 @@ public class ShamirsSecretSharing {
 
         for (int i = 0; i < a.length; i++) {
             for (int j = 0; j < b.length; j++) {
-                switch (mode) {
-                    case NUMERICAL:
-                        result[i + j] = (result[i + j].add(a[i].multiply(b[j]))).mod(modul);
-
-                        break;
-
-                    case GRAPHICAL:
-                        result[i + j] = (result[i + j].add(a[i].multiply(b[j])));
-
-                        break;
-                }
+                result[i + j] = (result[i + j].add(a[i].multiply(b[j])));
             }
         }
         return result;

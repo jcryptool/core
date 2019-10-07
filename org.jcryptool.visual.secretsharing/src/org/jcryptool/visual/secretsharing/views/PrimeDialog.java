@@ -70,7 +70,7 @@ public class PrimeDialog extends TitleAreaDialog implements Constants {
 
 		final Label modulLabel = new Label(container, SWT.NONE);
 		modulLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false));
-		modulLabel.setText(MESSAGE_PRIME_MODUL_LABEL);
+		modulLabel.setText(Messages.SSSConstants_Dialog_Modul_Info);
 
 		primeText = new StyledText(container, SWT.BORDER);
 		primeText.addDisposeListener(new DisposeListener() {
@@ -146,7 +146,7 @@ public class PrimeDialog extends TitleAreaDialog implements Constants {
 				okButton.setEnabled(true);
 			}
 		});
-		generateNextPrimeButton.setText(MESSAGE_NEXT_PRIME);
+		generateNextPrimeButton.setText(Messages.SSSConstants_Dialog_Next_Prime);
 		generateNextPrimeButton.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false));
 
 		verifyInputButton = new Button(container, SWT.NONE);
@@ -180,10 +180,10 @@ public class PrimeDialog extends TitleAreaDialog implements Constants {
 			}
 		});
 		verifyInputButton.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false));
-		verifyInputButton.setText(MESSAGE_VERIFY_INPUT);
+		verifyInputButton.setText(Messages.SSSConstants_Dialog_Verify_Input);
 		
-		setMessage(MESSAGE_PRIME_DIALOG);
-		setTitle(MESSAGE_PRIME_HEAD);
+		setMessage(Messages.SSSConstants_Dialog_Message);
+		setTitle(Messages.SSSConstants_Dialog_Prime_Title);
 		
 		return area;
 	}
@@ -216,7 +216,7 @@ public class PrimeDialog extends TitleAreaDialog implements Constants {
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText(MESSAGE_PRIME_TITLE);
+		newShell.setText(Messages.SSSConstants_Dialog_Prime);
 	}
 
 }
