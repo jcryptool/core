@@ -18,6 +18,7 @@ import org.eclipse.ui.part.ViewPart;
 public class ECDHView extends ViewPart {
 
 	private Composite parent;
+	private ECDHComposite ecdhComposite;
 
 	/**
 	 * The constructor.
@@ -34,9 +35,9 @@ public class ECDHView extends ViewPart {
 		final ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
 		sc.setExpandHorizontal(true);
 		sc.setExpandVertical(true);
-		ECDHComposite c = new ECDHComposite(sc, SWT.NONE, this);
-		sc.setContent(c);
-		sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		ecdhComposite = new ECDHComposite(sc, SWT.NONE, this);
+		sc.setContent(ecdhComposite);
+		sc.setMinSize(ecdhComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), "org.jcryptool.visual.ecdh.ecdhview"); //$NON-NLS-1$
 	}
@@ -47,5 +48,9 @@ public class ECDHView extends ViewPart {
 	@Override
 	public void setFocus() {
 		parent.setFocus();
+	}
+	
+	public void reset() {
+		ecdhComposite.reset(ECDHComposite.RESET_ALL);
 	}
 }

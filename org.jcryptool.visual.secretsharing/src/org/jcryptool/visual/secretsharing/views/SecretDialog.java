@@ -72,7 +72,7 @@ public class SecretDialog extends TitleAreaDialog implements Constants {
 
 		final Label modulLabel = new Label(container, SWT.NONE);
 		modulLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
-		modulLabel.setText(MESSAGE_PRIME_MODUL_LABEL);
+		modulLabel.setText(Messages.SSSConstants_Dialog_Modul_Info);
 
 		modulText = new Text(container, SWT.BORDER);
 		final GridData gd_modulText = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -81,7 +81,7 @@ public class SecretDialog extends TitleAreaDialog implements Constants {
 		modulText.setEnabled(false);
 
 		final Label secretLabel = new Label(container, SWT.NONE);
-		secretLabel.setText(MESSAGE_SECRET_LABEL);
+		secretLabel.setText(Messages.SSSConstants_Dialog_Secret_Info);
 
 		secretText = new StyledText(container, SWT.BORDER);
 		secretText.addVerifyKeyListener(new VerifyKeyListener() {
@@ -170,10 +170,10 @@ public class SecretDialog extends TitleAreaDialog implements Constants {
 		});
 		final GridData gd_checkInputButton = new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1);
 		checkInputButton.setLayoutData(gd_checkInputButton);
-		checkInputButton.setText(MESSAGE_VERIFY_INPUT);
+		checkInputButton.setText(Messages.SSSConstants_Dialog_Verify_Input);
 
-		setMessage(MESSAGE_SECRET_DIALOG);
-		setTitle(MESSAGE_SECRET_HEADER);
+		setMessage(Messages.SSSConstants_Dialog_Secret_Message);
+		setTitle(Messages.SSSConstants_Dialog_Secret_Header);
 		
 		return area;
 	}
@@ -200,7 +200,7 @@ public class SecretDialog extends TitleAreaDialog implements Constants {
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText(MESSAGE_SECRET_TITLE);
+		newShell.setText(Messages.SSSConstants_Dialog_Secret);
 	}
 
 }

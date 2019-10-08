@@ -9,8 +9,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.bouncycastle,
  de.flexiprovider,
- org.jcryptool.crypto.ui;bundle-version="1.0.0",
- org.jcryptool.crypto.keystore;bundle-version="1.0.0"
+ org.jcryptool.crypto.ui,
+ org.jcryptool.crypto.keystore
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: de.flexiprovider.core.dsa,

@@ -7,8 +7,8 @@ Bundle-Activator: org.jcryptool.analysis.freqanalysis.FreqAnalysisPlugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.help,
- org.jcryptool.core.operations;bundle-version="1.0.0",
- org.jcryptool.core.util;bundle-version="1.0.0"
+ org.jcryptool.core.operations,
+ org.jcryptool.core.util
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.jcryptool.analysis.graphtools,

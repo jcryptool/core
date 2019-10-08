@@ -22,7 +22,6 @@ public class Schablone {
 		{
 		    Arrays.fill(schablone[i], '0');
 		}
-
 	}
 	/**
 	 * gibt Wert der Schablone an der jeweiligen Position an

@@ -1,5 +1,3 @@
-package org.jcryptool.visual.secretsharing.handler;
-
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2019 JCrypTool Team and Contributors
@@ -9,6 +7,7 @@ package org.jcryptool.visual.secretsharing.handler;
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
+package org.jcryptool.visual.secretsharing.handler;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;

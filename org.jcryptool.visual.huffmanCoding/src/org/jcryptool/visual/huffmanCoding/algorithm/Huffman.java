@@ -20,8 +20,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
 /**
  * @author Miray Inel
  * @author <i>revised by</i>
@@ -42,7 +40,6 @@ public class Huffman {
 	private BitString[] table;
 	private Node root;
 	private StringBuilder sb = null;
-	@Inject
 	private ArrayList<Node> resultNodeList = null;
 	private OutputStream out;
 	private ArrayList<Integer> bitArray;

@@ -1,16 +1,12 @@
 package org.jcryptool.analysis.fleissner.logic;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.io.FileNotFoundException;
 import java.math.BigInteger;
 import java.time.Duration;
 
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.analysis.fleissner.Activator;
-import org.jcryptool.analysis.fleissner.UI.FleissnerWindow;
 import org.jcryptool.core.logging.utils.LogUtil;
 
 
@@ -19,8 +15,6 @@ import org.jcryptool.core.logging.utils.LogUtil;
  *
  */
 public class MethodApplication{
-
-//	private static final Logger log = Logger.getLogger( FleissnerGrilleSolver.class.getName() );
 	
     private ArrayList<Integer> possibleTemplateLengths = new ArrayList<>();
 
@@ -45,11 +39,18 @@ public class MethodApplication{
 	
     private Text fwAnalysisOutput;
 	
+    /**
+     * applies parameter settings from ParameterSettings and sets and executes method
+     * 
+     * @param ps object parameter settings 
+     * @param analysisOutput the text field in FleissnerWindow where analysis progress is displayed
+     * @param argStatistics
+     * @throws FileNotFoundException
+     */
 	public MethodApplication(ParameterSettings ps, Text analysisOutput, double argStatistics[]) throws FileNotFoundException {
-        // applies parameter settings from ParameterSettings and sets and executes method
+        
         this.fwAnalysisOutput = analysisOutput;
         this.method = ps.getMethod();
-        this.encryptedText = ps.getEncryptedText();
         this.textInLine = ps.getTextInLine();
         this.templateLength = ps.getTemplateLength();
         if (!ps.getPossibleTemplateLengths().isEmpty()) {
@@ -68,7 +69,6 @@ public class MethodApplication{
 			try {
 				this.tv = new TextValuator(statistics, language, nGramSize);
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				LogUtil.logError(Activator.PLUGIN_ID, "Statistikdatei konnte nicht gefunden werden", e, true);
 				throw new FileNotFoundException("File not found !");
@@ -76,30 +76,27 @@ public class MethodApplication{
 		}
 	}		
 	
+	/**
+	 * Executes one of the methods Brute-Force or Hill-Climbing dependent on templateLength
+	 */
 	public void analyze () {
-		
-//		Executes one of the methods Brute-Force or Hill-Climbing dependent on templateLength
 
 	    start = System.currentTimeMillis();
 	    fwAnalysisOutput.append("\nStart analysis");
-//	    log.info("Start analysis ");
 	    LogUtil.logInfo(Activator.PLUGIN_ID, "Start analysis");
 	    
 	    if (this.possibleTemplateLengths.isEmpty()) {
 	    	
 			ct.load(textInLine, isPlaintext, templateLength, grille, fg);
 			fwAnalysisOutput.append("\nInfo:"+ct.toString());
-//			log.info("\nINFO:\n"+ct.toString());
 			LogUtil.logInfo(Activator.PLUGIN_ID, "\nINFO:\n"+ct.toString());
 			if (templateLength<5){
 //				Brute Force for up to 4 x 4 grilles. Creates all possibles grilles and evaluates each text decrypted by them
 				procedure = "Brute-Force";
 				fwAnalysisOutput.append("\nStart "+procedure);
-//				log.info("Start "+procedure);
 				LogUtil.logInfo(Activator.PLUGIN_ID, "Start "+procedure);
 				this.bruteForce();
 				fwAnalysisOutput.append("\nFinished "+procedure);
-//				log.info("\nFinished "+procedure);
 				LogUtil.logInfo(Activator.PLUGIN_ID, "\nFinished "+procedure);
 			}
 			else {
@@ -107,14 +104,13 @@ public class MethodApplication{
 //				trying new random grilles.
 				procedure = "Hill-Climbing";
 				fwAnalysisOutput.append("\nStart "+procedure);
-//				log.info("Start "+procedure);
 				LogUtil.logInfo(Activator.PLUGIN_ID, "Start "+procedure);
 				this.hillClimbing();
 				fwAnalysisOutput.append("\nFinished "+procedure);
-//				log.info("\nFinished "+procedure);
 				LogUtil.logInfo(Activator.PLUGIN_ID, "\nFinished "+procedure);
 			}
 	    }else {
+//          if no key size is given, key size will be narrowed down to the only possible ones and those will be analyzed
 	    	double tempvalue = Double.MAX_VALUE, relativeValue, tempRelativeValue = Double.MAX_VALUE;
 	    	int[] tempTemplate=null;
 	    	int tempLength=0, tempTry=0;
@@ -123,7 +119,6 @@ public class MethodApplication{
 	    	for (int length : this.possibleTemplateLengths) {
 	    		this.templateLength = length;
 	    		fwAnalysisOutput.append("\nTry with length: "+templateLength);
-//	    		log.info("Try with length: "+templateLength);
 	    		LogUtil.logInfo(Activator.PLUGIN_ID, "Try with length: "+templateLength);
 				if (templateLength%2==0) {
 					this.holes = (int) (Math.pow(templateLength, 2))/4;
@@ -137,17 +132,14 @@ public class MethodApplication{
 				this.isPlaintext = false;
 				ct.load(textInLine, isPlaintext, templateLength, grille, fg);
 				fwAnalysisOutput.append("\nINFO:\n"+ct.toString());
-//				log.info("INFO:\n"+ct.toString());
 				LogUtil.logInfo(Activator.PLUGIN_ID, "INFO:\n"+ct.toString());
 	    		if (templateLength<5){
 //	    			Brute Force for up to 4 x 4 grilles. Creates all possibles grilles and evaluates each text decrypted by them
 	    			procedure = "Brute-Force";
 	    			fwAnalysisOutput.append("\nStart "+procedure);
-//	    			log.info("Start "+procedure);
 	    			LogUtil.logInfo(Activator.PLUGIN_ID, "Start "+procedure);
 	    			this.bruteForce();
 	    			fwAnalysisOutput.append("\nFinished "+procedure);
-//	    			log.info("\nFinished "+procedure);
 	    			LogUtil.logInfo(Activator.PLUGIN_ID, "\nFinished "+procedure);
 	    		}
 	    		else {
@@ -155,17 +147,15 @@ public class MethodApplication{
 //	    			trying new random grilles.
 	    			procedure = "Hill-Climbing";
 	    			fwAnalysisOutput.append("\nStart "+procedure);
-//	    			log.info("Start "+procedure);
 	    			LogUtil.logInfo(Activator.PLUGIN_ID, "Start "+procedure);
 	    			this.hillClimbing();
 	    			fwAnalysisOutput.append("\nFinished "+procedure);
-//	    			log.info("\nFinished "+procedure);
 	    			LogUtil.logInfo(Activator.PLUGIN_ID, "\nFinished "+procedure);
 	    		}
+//	    		sets value in relation to size
 	    		relativeValue = alltimeLow/fg.decryptText(ct.getText()).length();
 	    		if (relativeValue<tempRelativeValue) {
 	    		    fwAnalysisOutput.append("\nvalue has been changed. Relative value is: "+relativeValue+" relative to "+alltimeLow+" with length "+length);
-//	    			log.info("value has been changed. Relative value is: "+relativeValue+" relative to "+alltimeLow+" with length "+length);
 	    			LogUtil.logInfo(Activator.PLUGIN_ID, "value has been changed. Relative value is: "+relativeValue+" relative to "+alltimeLow+" with length "+length);
 	    			tempRelativeValue = relativeValue;
 	    			tempvalue = alltimeLow;
@@ -200,6 +190,9 @@ public class MethodApplication{
 		end = System.currentTimeMillis() - start; 
 	}
 	
+	/**
+	 * bruteForce() method tries every possible grille with current key size and chooses the one that generates the best text value
+	 */
 	public void bruteForce() {
 
 //		clears grilles in FleissnerGrille from potential earlier encryptions before building new ones
@@ -207,12 +200,10 @@ public class MethodApplication{
 		ArrayList<int[]> templateList = fg.bruteForce(templateLength, holes);
 		if (templateList.isEmpty()) {
 		    fwAnalysisOutput.append("\ntemplateList is empty");
-//			log.info("templateList is empty");
 			LogUtil.logInfo(Activator.PLUGIN_ID, "templateList is empty");
 			return;
 		}
 		fwAnalysisOutput.append("\nsift through all templates");
-//		log.info("run through all templates");
 		LogUtil.logInfo(Activator.PLUGIN_ID, "run through all templates");
 		// using every possible template / Grille
 		for (int[] template : templateList) {
@@ -231,9 +222,7 @@ public class MethodApplication{
 			fwAnalysisOutput.append("\n\nGrille: "+iAll+fg);
             fwAnalysisOutput.append("\nAccurateness: " + value + " (best: "+alltimeLow+")");
             fwAnalysisOutput.append("\nDecrypted text:\n ==> "+decryptedText+"\n");
-//			log.info("\n\nGrille: "+iAll+fg);
-//			log.info("Accurateness: " + value + " (best: "+alltimeLow+")");
-//			log.info("Decrypted text:\n ==> "+decryptedText+"\n");
+
 			LogUtil.logInfo(Activator.PLUGIN_ID, "\n\nGrille: "+iAll+fg);
 			LogUtil.logInfo(Activator.PLUGIN_ID, "Accurateness: " + value + " (best: "+alltimeLow+")");
 			LogUtil.logInfo(Activator.PLUGIN_ID, "Decrypted text:\n ==> "+decryptedText+"\n");
@@ -241,6 +230,12 @@ public class MethodApplication{
 		fg.useTemplate(bestTemplate, templateLength);	
 	}
 	
+	/**
+	 * hillClimbing method is the analysis method for grilles of size 5 and higher. It creates random grilles in respective size
+	 * and makes step by step changes to improve text value. If local maximum is reached a new random grille will be created.
+	 * This process goes on until the number of 'restarts' is reached and the grille that created the best valued text will be
+	 * chosen as the right one.
+	 */
 	public void hillClimbing() {
 
 		tries = restart;
@@ -249,9 +244,11 @@ public class MethodApplication{
 		do {
 //			clears grilles in FleissnerGrille from potential earlier encryptions before building a random new one
 			fg.clearGrille();
+//			start with highest possible value so process will minimize value from the beginning
 			oldValue = Double.MAX_VALUE;
 			double min;
 			int minX=0, minY=0, minMove=0;
+//			create random grille
 			for(int i=0; i<holes; i++)
 			{
 				do
@@ -264,12 +261,10 @@ public class MethodApplication{
 			fg.setState(x, y, true);
 			}
 			fwAnalysisOutput.append("\n\nRestart: "+sub);
-//			log.info("\n\nRestart: "+sub/*+", fleissnergrille to string (random): "+fg*/);
 			LogUtil.logInfo(Activator.PLUGIN_ID, "\n\nRestart: "+sub);
 			decryptedText = fg.decryptText(ct.getText());
 			min = tv.evaluate(decryptedText);
 			fwAnalysisOutput.append("\nDecrypted Text: \n"+decryptedText+"\n\nwith value: "+String.valueOf(min));
-//			log.info("Decrypted Text: "+decryptedText+"with value: "+String.valueOf(min));
 			LogUtil.logInfo(Activator.PLUGIN_ID, "Decrypted Text: "+decryptedText+"with value: "+String.valueOf(min));
 			
 			do{
@@ -283,6 +278,7 @@ public class MethodApplication{
 						{
 							for (move=1; move<=3; move++)
 							{
+//							    try other 3 positions of every hole in grille
 								fg.change(x, y, move);
 								decryptedText = fg.decryptText(ct.getText());
 								value = tv.evaluate(decryptedText);
@@ -317,13 +313,10 @@ public class MethodApplication{
 						lastImprovement = String.valueOf(sub);
 						changes++;
 						fwAnalysisOutput.append("\n\nbest grille yet with "+changes+" changes, where value is " +alltimeLow+"\n"+fg+"\n");
-//						log.info("best grille yet with "+changes+" changes, where value is " +alltimeLow+"\n"+fg);
 						LogUtil.logInfo(Activator.PLUGIN_ID, "best grille yet with "+changes+" changes, where value is " +alltimeLow+"\n"+fg);
 					} 
 					fwAnalysisOutput.append("\n\ntry: " + iAll + ", changes: "+changes + " (last at: " + grilleNumber + " in restart: "+lastImprovement+"), accurateness: " + min + " (best: "+oldValue+", alltime: "+alltimeLow+")\n");
                     fwAnalysisOutput.append("\n==> "+decryptedText+"\n\n Grille: "+fg+"\n");
-//					log.info("try: " + iAll + ", changes: "+changes + " (last at: " + grilleNumber + " in restart: "+lastImprovement+"), accurateness: " + min + " (best: "+oldValue+", alltime: "+alltimeLow+")");
-//					log.info("==> "+decryptedText+"\n Grille: \n"+fg);
 					LogUtil.logInfo(Activator.PLUGIN_ID, "try: " + iAll + ", changes: "+changes + " (last at: " + grilleNumber + " in restart: "+lastImprovement+"), accurateness: " + min + " (best: "+oldValue+", alltime: "+alltimeLow+")");
 					LogUtil.logInfo(Activator.PLUGIN_ID, "==> "+decryptedText+"\n Grille: \n"+fg);
 				}
@@ -332,6 +325,7 @@ public class MethodApplication{
 			sub = sub.add(BigInteger.valueOf(1));
 			improvement = 0;
 			iAll = 0;
+//			start next restart
 			
 		}while(tries.compareTo(BigInteger.valueOf(0))==1);
 		
@@ -352,8 +346,7 @@ public class MethodApplication{
 			}							
 		}
 		if (improvement != 0) {
-			
-//			log.info("Improvement by "+rotMove+" rotation(s).");		
+					
 			for (int moves = 1 ; moves <= rotMove; moves++) {
 				fg.rotate();
 			}
@@ -361,7 +354,9 @@ public class MethodApplication{
 		}
 	}
 	
-//	encrypts given plaintext with given key directly through load method of class CryptedText
+	/**
+	 * encrypts given plaintext with given key directly through load method of class CryptedText
+	 */
 	public void encrypt(){
 
 		ct.load(textInLine, isPlaintext, templateLength, grille, fg);
@@ -376,17 +371,20 @@ public class MethodApplication{
 		LogUtil.logInfo(Activator.PLUGIN_ID, "Crypted text succesfully encrypted");
 	}
 	
-//	decrypts given crypted text with given key by decryption method of class FleissnerGrille
+	/**
+	 * decrypts given crypted text with given key by decryption method of class FleissnerGrille
+	 */
 	public void decrypt(){
 
 		ct.load(textInLine, isPlaintext, templateLength, grille, fg);
 		fg.useTemplate(grille, templateLength);
 		decryptedText = fg.decryptText(ct.getText());
-//		fwAnalysisOutput.append("\nCrypted text succesfully decrypted");
-//		log.info("Crypted text succesfully decrypted");
 		LogUtil.logInfo(Activator.PLUGIN_ID, "Crypted text succesfully decrypted");
 	}
 	
+	/**
+	 * generates random key and saves it as int array 'grille'
+	 */
 	public void keyGenerator() {
 		this.grille = new int[2*holes];	
 		fg.clearGrille();
@@ -435,6 +433,7 @@ public class MethodApplication{
         return bestTemplate;
     }
 
+    @Override
     public String toString() {
 		
 		String output= null;
@@ -451,8 +450,7 @@ public class MethodApplication{
 			}
 			output = "\nBest grille: "+bestTemplateCoordinates+"\n"+fg+"\nwith length: "+templateLength+" found at try: "+grilleNumber+", in Restart: "+lastImprovement;
 			output += "\nDecrypted text:\n\n"+bestDecryptedText+"\n\n";
-//			output += "Procedure: "+procedure+"\n";
-//			output += "Accurateness: " + value+" (where alltimelow is "+alltimeLow+ ")\n";
+//			adjusts time format depending of spent time for analysis
 			if (end<60000)
 			    time = end+" milliseconds";
 			else {

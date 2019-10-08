@@ -9,5 +9,6 @@
 	     		</with>
 			</enablement>
 		</topic>
+  <topic href="/PLUGINS_ROOT/org.eclipse.platform.doc.isv/guide/ua_help_context.htm" label="Help_Topic"/>
 	</context>
 </contexts>

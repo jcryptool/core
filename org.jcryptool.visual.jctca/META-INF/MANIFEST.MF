@@ -8,8 +8,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.bouncycastle,
  net.sourceforge.codec;bundle-version="2.3.0",
- org.jcryptool.visual.sig;bundle-version="1.0.0",
- org.jcryptool.crypto.keystore;bundle-version="1.0.0"
+ org.jcryptool.visual.sig,
+ org.jcryptool.crypto.keystore
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.jcryptool.visual.jctca.Activator
 Import-Package: org.jcryptool.core.logging.utils,

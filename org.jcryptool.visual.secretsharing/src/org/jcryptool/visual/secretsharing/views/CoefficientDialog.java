@@ -12,7 +12,6 @@ package org.jcryptool.visual.secretsharing.views;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -20,7 +19,6 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -71,11 +69,9 @@ public class CoefficientDialog extends TitleAreaDialog implements Constants {
 		Composite area = (Composite) super.createDialogArea(parent);
 
 		compositeArea = new Group(area, SWT.NONE);
-		compositeArea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
-		compositeArea.setLocation(0, 0);
-		compositeArea.setText(MESSAGE_COEFFICIENTS_GROUP_NAME);
-		final GridLayout gd_Layout = new GridLayout();
-		compositeArea.setLayout(gd_Layout);
+		compositeArea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		compositeArea.setText(Messages.SSSConstants_Dialog_Coefficient_Group);
+		compositeArea.setLayout(new GridLayout());
 
 		scrolledComposite = new ScrolledComposite(compositeArea, SWT.BORDER | SWT.V_SCROLL);
 		scrolledComposite.setExpandVertical(true);
@@ -83,10 +79,8 @@ public class CoefficientDialog extends TitleAreaDialog implements Constants {
 		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		coefficientsGroup = new Composite(scrolledComposite, SWT.NONE);
-		coefficientsGroup.setLocation(0, 0);
-		final GridLayout gridLayout = new GridLayout();
-		gridLayout.numColumns = 3;
-		coefficientsGroup.setLayout(gridLayout);
+		coefficientsGroup.setLayout(new GridLayout(3, false));
+		coefficientsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		scrolledComposite.setContent(coefficientsGroup);
 
 		generateCoefficientsButton = new Button(area, SWT.NONE);
@@ -104,14 +98,12 @@ public class CoefficientDialog extends TitleAreaDialog implements Constants {
 			}
 		});
 		generateCoefficientsButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-		generateCoefficientsButton.setText(MESSAGE_COEFFICIENTS_GENERATE);
+		generateCoefficientsButton.setText(Messages.SSSConstants_Dialog_Coefficient_Generate_Button);
 		
-		setTitle(MESSAGE_COEFFICIENTS_GROUP_NAME);
-		setMessage(MESSAGE_COEFFICIENTS_DIALOG);
+		setTitle(Messages.SSSConstants_Dialog_Coefficient_Group);
+		setMessage(Messages.SSSConstants_Dialog_Info);
 
 		createGroupCoefficient();
-
-//		size = area.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		
 		return area;
 	}
@@ -205,33 +197,10 @@ public class CoefficientDialog extends TitleAreaDialog implements Constants {
 		return result.toString();
 	}
 
-	/**
-	 * Create contents of the button bar
-	 * @param parent
-	 */
-	@Override
-	protected void createButtonsForButtonBar(Composite parent) {
-		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
-		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
-	}
-
-	/**
-	 * Return the initial size of the dialog
-	 */
-	@Override
-	protected Point getInitialSize() {
-		return new Point(380, 395);
-	}
-
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText(MESSAGE_COEFFICIENTS_TITLE);
-	}
-
-	@Override
-	protected boolean isResizable() {
-		return false;
+		newShell.setText(Messages.SSSConstants_Dialog_Select_Coefficient_Button);
 	}
 
 }

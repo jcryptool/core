@@ -7,14 +7,14 @@ Bundle-Activator: org.jcryptool.analysis.substitution.Activator
 Bundle-Vendor: jcryptool.org
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.jcryptool.core.operations;bundle-version="1.0.0",
- org.jcryptool.core.logging;bundle-version="1.0.0",
- org.jcryptool.core.util;bundle-version="1.0.0",
- org.jcryptool.crypto.ui;bundle-version="1.0.0",
- org.jcryptool.crypto.classic.alphabets;bundle-version="1.0.0",
- org.jcryptool.crypto.classic.model;bundle-version="1.0.0",
- org.jcryptool.crypto.classic.substitution;bundle-version="1.0.0",
- org.jcryptool.editor.text;bundle-version="1.0.0"
+ org.jcryptool.core.operations,
+ org.jcryptool.core.logging,
+ org.jcryptool.core.util,
+ org.jcryptool.crypto.ui,
+ org.jcryptool.crypto.classic.alphabets,
+ org.jcryptool.crypto.classic.model,
+ org.jcryptool.crypto.classic.substitution,
+ org.jcryptool.editor.text
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: org.jcryptool.analysis.substitution

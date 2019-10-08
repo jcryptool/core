@@ -1,19 +1,16 @@
 package org.jcryptool.analysis.fleissner.views;
 
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.part.*;
-import org.jcryptool.analysis.fleissner.UI.FleissnerWindow;
-import org.jcryptool.analysis.fleissner.key.KeySchablone;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-
-import javax.inject.Inject;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.analysis.fleissner.UI.FleissnerWindow;
+import org.jcryptool.analysis.fleissner.key.KeySchablone;
  
 
 public class SampleView extends ViewPart {
@@ -29,8 +26,6 @@ public class SampleView extends ViewPart {
 	 * The ID of the view as specified by the extension.
 	 */
 	public static final String ID = "org.jcryptool.analysis.fleissner.views.SampleView";
-
-	@Inject IWorkbench workbench;
 	
 	@Override
 	public void createPartControl(Composite viewParent) {
@@ -43,7 +38,7 @@ public class SampleView extends ViewPart {
         
         fw = new FleissnerWindow(parent, SWT.NONE);
         fw.setLayout(new GridLayout(1,true));
-        fw.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true/*,1,1*/));
+        fw.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 	    scrolledComposite.setContent(parent);
         scrolledComposite.setMinSize(parent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -52,9 +47,7 @@ public class SampleView extends ViewPart {
         scrolledComposite.layout();
 
 		// Create the help context id for the viewer's control
-		workbench.getHelpSystem().setHelp(parent, "org.jcryptool.analysis.fleissner.views");
-//		"org.jcryptool.analysis.fleissner2.viewer"
-
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.analysis.fleissner.views");
 	}
 
 	@Override
@@ -70,8 +63,6 @@ public class SampleView extends ViewPart {
         createPartControl(viewParent);
         viewParent.layout();
         fw.getModel().setKey(new KeySchablone(Integer.parseInt(fw.getKeySize().getText())));
-        fw.reset("SampleView 'resetView'");
+        fw.reset();
     }
-
-
 }

@@ -4,28 +4,22 @@
 package org.jcryptool.analysis.fleissner.UI;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.DoubleBuffer;
-import java.nio.channels.Channel;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
-import org.eclipse.core.runtime.FileLocator;
 import org.jcryptool.analysis.fleissner.Activator;
 import org.jcryptool.analysis.fleissner.logic.InvalidParameterCombinationException;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.constants.IConstants;
-import org.osgi.framework.Bundle;
 
 /**
  * @author Dinah
@@ -33,9 +27,14 @@ import org.osgi.framework.Bundle;
  */
 public class LoadFiles {
     
-    protected String textFiles(/*boolean plain, */int exampleIndex) {
+    /**
+     * returns name of selected item in drop down button
+     * @param exampleIndex
+     * @return fileName of chosen fileIndex
+     */
+    protected String textFiles(int exampleIndex) {
         
-        String textName = "";
+        String textName = null;
         
             switch (exampleIndex) {
             
@@ -76,7 +75,6 @@ public class LoadFiles {
         return null;
     }
     
-    
     /**
      * reads the current value from an input stream
      *
@@ -93,25 +91,13 @@ public class LoadFiles {
         }
 
         StringBuffer myStrBuf = new StringBuffer();
-//        String line = null;
-//        try {
-//            line = reader.readLine();
-//        } catch (IOException e1) {
-//            // TODO Auto-generated catch block
-//            e1.printStackTrace();
-//        }
+
         int charOut = 0;
         String output = ""; //$NON-NLS-1$
         try {
             while ((charOut = reader.read()) != -1) {
                 myStrBuf.append(String.valueOf((char) charOut));
-            }
-//            while (line !=null) {
-//                output += line;
-//                line=reader.readLine();
-//            }
-            
-            
+            } 
         } catch (IOException e) {
             LogUtil.logError(Activator.PLUGIN_ID, e);
         }
@@ -119,18 +105,20 @@ public class LoadFiles {
         return output;
     }
     
+    /**
+     * returns the fileName related to item index chosen in drop down
+     * @param exampleIndex
+     * @return the fileName related to index
+     */
     protected String statisticFiles(int exampleIndex) {
         
-        String textName = "";
+        String textName = null;
         
             switch (exampleIndex) {
             
             case 0: 
                 textName = "files/de-4gram-nocs.bin";
                 break;
-//            case 1:     
-//                textName = "files/de-3gram-nocs.bin";
-//                break;
             case 1:
                 textName = "files/en-4gram-nocs.bin";
                 break;
@@ -142,19 +130,17 @@ public class LoadFiles {
         return textName;
     }
 
+    /**
+     * opens a resource file stream
+     *
+     * @param filename the file path
+     * @return the inputStream containing the file's content
+     */
     protected InputStream openMyFileStream(final String filename) {
         try {
-        	
-            URL installURL = new URL(Activator.getDefault().getBundle().getEntry("/"), filename); //$NON-NLS-1$
-//            URL url = new URL(installURL, filename);
-//            File file = new File(FileLocator.resolve(installURL).toURI());
-//            this.getClass().getRes
-        	
+            URL installURL = new URL(Activator.getDefault().getBundle().getEntry("/"), filename); //$NON-NLS-1$  	
         	InputStream is = installURL.openConnection().getInputStream();
-//            Bundle bundle = Activator.getDefault().getBundle();
-//            URL url = bundle.getEntry(filename);
-//            File file = new File(FileLocator.resolve(url).toURI());
-//            return new FileInputStream(file);
+
         	return is;
         } catch (MalformedURLException e) {
             LogUtil.logError(Activator.PLUGIN_ID, e);
@@ -164,11 +150,24 @@ public class LoadFiles {
         return null;
     }
     
+    /**
+     * 
+     * @param bytes
+     * @return
+     */
     public double toDouble(byte[] bytes) {
         return ByteBuffer.wrap(bytes).getDouble();
     }
     
-//  load text statistic
+    /**
+     * loads language statistic as double array
+     * @param file the fileInputStream
+     * @param language
+     * @param nGramSize
+     * @return double array with statistic values
+     * @throws FileNotFoundException
+     * @throws InvalidParameterCombinationException
+     */
     public double[] loadBinNgramFrequencies(InputStream file, String language, int nGramSize) throws FileNotFoundException, InvalidParameterCombinationException
     {
         int m = 0;
@@ -180,44 +179,27 @@ public class LoadFiles {
                         break;
         }
 
-
         double size=0, fileSize =0;
         try {
             size = Math.pow(m, nGramSize)*8;
             fileSize = file.available();
         } catch (IOException e2) {
-            // TODO Auto-generated catch block
             e2.printStackTrace();
         }
 
         if (fileSize != size)
             throw new InvalidParameterCombinationException("Statistic does not fit nGram size and/or language");
         double ngrams[] = new double[(int) Math.pow(m, nGramSize)];
-        ByteBuffer myByteBuffer = ByteBuffer.allocate(((int) /*Math.pow(m, nGramSize)*/size) * 8);
+        ByteBuffer myByteBuffer = ByteBuffer.allocate(((int) size) * 8);
         myByteBuffer.order(ByteOrder.LITTLE_ENDIAN);
         DoubleBuffer doubleBuffer = myByteBuffer.asDoubleBuffer();
 
-        try { 
-//            FileInputStream fileInputStream = new FileInputStream(filename);
-//            FileChannel fileChannel = file.getChannel();
-
-            
+        try {          
             FileChannel fc = (FileChannel) Channels.newChannel(file);
-//            fileChannel.close();
             fc.read(myByteBuffer);
             fc.close();
             file.close();   
-//            log.info("Statistics succesfully loaded");
-            
-//            FileInputStream fileInputStream = new FileInputStream(filename);
-//            FileChannel fileChannel = fileInputStream.getChannel();
-//            fileChannel.read(myByteBuffer);
-//            fileChannel.close();
-//            fileInputStream.close();
-//            doubleBuffer.get(quadgrams);
-                
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
                 throw new FileNotFoundException("File not found !");
             }   
