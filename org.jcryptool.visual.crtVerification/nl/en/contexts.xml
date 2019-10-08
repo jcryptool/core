@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
- <context id="Certificate Verification" title="Certificate Verification">
-    <description>This plugin helps to demonstrate the validation checks of the shell- and chain model.</description>
-    <topic href="help/content/index.html" label="Signature Demonstration"/>
+ <context id="certverifHelp-en" title="Certificate Verification">
+    <description>This plugin demonstrates the validation check of a signature when different certificate trees and different validity models (shell and chain) are used.</description>
+    <topic href="$nl$/help/content/index.html" label="Certificate Verification"/>
  </context>
 </contexts>
