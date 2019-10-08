@@ -57,6 +57,8 @@ public class Messages extends NLS {
     public static String FullAnalysisUI_textlength;
     public static String FullAnalysisUI_textexcerpt;
     public static String FullAnalysisUI_startanalysis;
+    public static String FullAnalysisUI_loadtext;
+    public static String FullAnalysisUI_loadeditor;
     public static String FullAnalysisUI_vigeneresettings;
     public static String SimpleAnalysisUI_filtersettings;
     public static String SimpleAnalysisUI_graphlabel;

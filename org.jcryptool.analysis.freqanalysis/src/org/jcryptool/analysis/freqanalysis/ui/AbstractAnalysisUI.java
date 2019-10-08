@@ -11,14 +11,24 @@
 package org.jcryptool.analysis.freqanalysis.ui;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 import org.jcryptool.analysis.freqanalysis.FreqAnalysisPlugin;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -31,6 +41,11 @@ import org.jcryptool.core.util.constants.IConstants;
  *
  */
 public abstract class AbstractAnalysisUI extends Composite {
+
+	protected Composite composite0;
+	protected Button button;
+	protected Button button0;
+	protected Button button1;
 
 	protected String text;
 	protected CustomFreqCanvas myGraph;
@@ -58,7 +73,7 @@ public abstract class AbstractAnalysisUI extends Composite {
     /**
      * get the text from an opened editor
      */
-    protected String getEditorText() {
+    protected String getEditorText() {    	
         String text = ""; //$NON-NLS-1$
         InputStream stream = EditorsManager.getInstance().getActiveEditorContentInputStream();
         text = InputStreamToString(stream);
@@ -125,5 +140,4 @@ public abstract class AbstractAnalysisUI extends Composite {
 			myOffset = spinner2.getSelection();
 		}
 	}
-	
 }

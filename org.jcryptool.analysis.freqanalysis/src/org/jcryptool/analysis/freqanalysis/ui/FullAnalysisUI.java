@@ -9,6 +9,10 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.analysis.freqanalysis.ui;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -29,8 +33,11 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
@@ -57,7 +64,10 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 		SWTResourceManager.registerResourceUser(this);
 	}
 
+	private Button button;
+	private Button button0;
 	private Button button1;
+	private Composite composite0;
 	private Composite composite1;
 	private Group group1;
 	private Group group4;
@@ -81,6 +91,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 	private TabItem tabItem3;
 	private Composite composite5;
 	private Text text1;
+	private String editorText;
 
 	private FreqAnalysisCalc myAnalysis;
 	private FreqAnalysisCalc overlayAnalysis;
@@ -126,25 +137,73 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 
 	private void initGUI() {
 		setLayout(new GridLayout());
-
+		
+		composite0 = new Composite(this, SWT.NONE);
+		composite0.setLayout(new GridLayout(2, false));
+		composite0.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		
+		button = new Button(composite0, SWT.NONE);
+		button.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		button.setText(Messages.FullAnalysisUI_loadtext);
+		
+		button0 = new Button(composite0, SWT.NONE);
+		button0.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		button0.setText(Messages.FullAnalysisUI_loadeditor);
+		
 		button1 = new Button(this, SWT.PUSH | SWT.CENTER);
 		button1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		button1.setText(Messages.FullAnalysisUI_startanalysis);		
-		button1.addSelectionListener(new SelectionAdapter() {
+		button1.setText(Messages.FullAnalysisUI_startanalysis);
+		button1.setEnabled(false);
+				
+		button.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent evt) {
+				try {
+					Display display = Display.getDefault();
+					Shell dialogShell = new Shell(display, SWT.APPLICATION_MODAL);
+					FileDialog fd_ChooseFile = new FileDialog(dialogShell, SWT.OPEN);
+					fd_ChooseFile.setFilterPath("\\"); //$NON-NLS-1$
+					fd_ChooseFile.setFilterExtensions(new String[] { "*.txt" }); //$NON-NLS-1$
+					File file_LoadReferenceText = new File(fd_ChooseFile.open());
+					BufferedReader br = new BufferedReader(new FileReader(file_LoadReferenceText)); 
+					editorText = new String();
+					String line;
+					while ((line = br.readLine()) != null) {
+						editorText += line;	
+					}
+					
+					if (editorText == "") {
+						throw new Exception();
+					}
+					button1.setEnabled(true);
+				} catch (Exception ex) {
+		        	MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0, Messages.AbstractAnalysisUI_2);
+				}
+			}
+		});
+		
+		button0.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent evt) {
 				if (checkEditor()) {
-					text = getEditorText();
-					if (text.equals("") || text == null) {
-			        	MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0, Messages.AbstractAnalysisUI_2);
+					editorText = getEditorText();	
+					button1.setEnabled(true);
+				}
+			}
+		});
+			
+		button1.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent evt) {
+				text = editorText;
+				
+				if (text.equals("") || text == null) {
+		        	MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0, Messages.AbstractAnalysisUI_2);
+				} else {
+					if (btnReferenceTools.getSelection()) {
+						selectAppropriateAlphabet();
 					} else {
-						if (btnReferenceTools.getSelection()) {
-							selectAppropriateAlphabet();
-						} else {
-							appropriateAlphabetToBeDetected = true;
-						}
-						recalcGraph();
-						recalcSourceInfo();
+						appropriateAlphabetToBeDetected = true;
 					}
+					recalcGraph();
+					recalcSourceInfo();
 				}
 			}
 		});

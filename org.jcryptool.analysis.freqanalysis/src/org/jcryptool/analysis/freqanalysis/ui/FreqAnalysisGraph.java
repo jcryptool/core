@@ -135,7 +135,7 @@ public class FreqAnalysisGraph extends Graph {
     @Override
     protected final void paintBarArea(final Rectangle thisArea, final MColor thisBGColor) {
         // The bar drawing rectangle without margins
-        Rectangle barDrawingRect = new Rectangle(barAreaRect.x + marginLeft, barAreaRect.y
+        Rectangle barDrawingRect = new Rectangle(barAreaRect.x + 2 * marginLeft, barAreaRect.y
                 + marginTop, barAreaRect.width - marginLeft - marginRight, barAreaRect.height
                 - marginTop - marginBottom);
         // actual bar box
@@ -177,22 +177,36 @@ public class FreqAnalysisGraph extends Graph {
         thisFontColor.setColor(gc);
         if (dragged) {
             gc.drawText(NLS.bind(Messages.FreqAnalysisGraph_shiftgraph1, getCurrentShift()),
-                            3, (int) Math.round(Math.floor((double) (descTopRect.height - gc
+            		3 + marginLeft + marginRight, (int) Math.round(Math.floor((double) (descTopRect.height - gc
                                     .getFontMetrics().getAscent()) / 2)));
         }else {
             gc.drawText(NLS.bind(Messages.FreqAnalysisGraph_shiftgraph0, getCurrentShift()),
-                    3, (int) Math.round(Math.floor((double) (descTopRect.height - gc
+                    3 + marginLeft + marginRight, (int) Math.round(Math.floor((double) (descTopRect.height - gc
                             .getFontMetrics().getAscent()) / 2)));
         }
 
     }
-
+    
+    @Override
+    protected final void paintDescLeftArea(final Rectangle thisArea, final MColor thisBGColor) {
+        thisBGColor.setBGColor(gc);
+        //thisBGColor.setColor(gc);
+        
+    	Rectangle descDrawingRect = new Rectangle(descLeftRect.x, 0,
+                descLeftRect.width + marginLeft + marginRight, descLeftRect.height + 2 * marginTop + marginBottom);
+    	Rectangle textBox = calculateTextContainer(descDrawingRect, 0,
+                0);
+    	
+    	gc.fillRectangle(textBox);
+    	gc.drawText("FREQ", 5, descLeftRect.height / 2);
+    }
+    
     @Override
     protected final void paintDescBottomArea(final Rectangle thisArea, final MColor thisBGColor,
             final MColor thisFontColor) {
         // The bar drawing rectangle without margins
-        Rectangle descDrawingRect = new Rectangle(barAreaRect.x + marginLeft, descBottomRect.y,
-                barAreaRect.width - marginLeft - marginRight, descBottomRect.height);
+        Rectangle descDrawingRect = new Rectangle(barAreaRect.x + 2 * marginLeft, descBottomRect.y,
+                barAreaRect.width - marginLeft - marginRight, descBottomRect.height + marginBottom);
         // actual bar box
         Rectangle textBox;
 
