@@ -270,8 +270,8 @@ public class DataProvider {
      * <li><code>Lower Latin (a-z)</code>
      * <li><code>Playfair/alike alphabet (25chars, w/o "J")</code>
      * <li><code>ADFGVX Alphabet</code>
-     * <li><code>Xor Alphabet with 32 characters</code>
-     * <li><code>Xor Alphabet with 64 characters</code>
+     * <li><code>XOR Alphabet with 32 characters</code>
+     * <li><code>XOR Alphabet with 64 characters</code>
      * </ul>
      * <p>
      * Thereupon initializes and executes the decryption algorithms. Finally converts the streamed plain text back into
