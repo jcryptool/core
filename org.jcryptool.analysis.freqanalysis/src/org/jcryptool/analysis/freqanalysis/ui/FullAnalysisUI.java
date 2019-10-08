@@ -91,7 +91,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 	private TabItem tabItem3;
 	private Composite composite5;
 	private Text text1;
-	private String editorText;
+	private String source;
 
 	private FreqAnalysisCalc myAnalysis;
 	private FreqAnalysisCalc overlayAnalysis;
@@ -164,17 +164,19 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 					fd_ChooseFile.setFilterPath("\\"); //$NON-NLS-1$
 					fd_ChooseFile.setFilterExtensions(new String[] { "*.txt" }); //$NON-NLS-1$
 					File file_LoadReferenceText = new File(fd_ChooseFile.open());
+					source = file_LoadReferenceText.getAbsolutePath();
 					BufferedReader br = new BufferedReader(new FileReader(file_LoadReferenceText)); 
-					editorText = new String();
+					text = new String();
 					String line;
 					while ((line = br.readLine()) != null) {
-						editorText += line;	
+						text += line;	
 					}
 					
-					if (editorText == "") {
+					if (text == "") {
 						throw new Exception();
 					}
 					button1.setEnabled(true);
+					recalcSourceInfo();
 				} catch (Exception ex) {
 		        	MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0, Messages.AbstractAnalysisUI_2);
 				}
@@ -184,15 +186,17 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 		button0.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent evt) {
 				if (checkEditor()) {
-					editorText = getEditorText();	
+					text = getEditorText();
+					source = EditorsManager.getInstance().getActiveEditorTitle();
 					button1.setEnabled(true);
+					recalcSourceInfo();
 				}
 			}
 		});
 			
 		button1.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent evt) {
-				text = editorText;
+				text = text;
 				
 				if (text.equals("") || text == null) {
 		        	MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0, Messages.AbstractAnalysisUI_2);
@@ -425,7 +429,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 		label5.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		label6 = new Label(composite5, SWT.NONE);
 		label6.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		text1 = new Text(composite5, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER | SWT.MULTI);
+		text1 = new Text(composite5, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER | SWT.MULTI);
 		text1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
 		recalcSourceInfo();
@@ -439,6 +443,9 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 		enableReferenceTools(false);
 	}
 	
+	/**
+	 * Method for aggregating information about source text file.
+	 */
 	protected void recalcSourceInfo() {
 		if (text == null) {
 			label4.setText(Messages.FullAnalysisUI_source + " -");
@@ -446,7 +453,6 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 			text1.setText("");
 			
 		} else {
-			String source = EditorsManager.getInstance().getActiveEditorTitle();
 			label4.setText(Messages.FullAnalysisUI_source + " " + source);
 			
 			String totalLength = Integer.toString(text.length());
