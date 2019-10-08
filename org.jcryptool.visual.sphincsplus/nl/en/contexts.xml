@@ -2,6 +2,6 @@
 <contexts>
    <context id="sphincsplusHelp" title="Demonstration of SPHINCS+">
       <description>This visualization demonstrates the post-quantum signature scheme SPHINCS+.</description>
-      <topic href="nl/de/help/content/index.html" label="SPHINCS+-Signaturverfahren"/>
+      <topic href="nl/en/help/content/index.html" label="SPHINCS+ Signaure Scheme"/>
    </context>
 </contexts>
