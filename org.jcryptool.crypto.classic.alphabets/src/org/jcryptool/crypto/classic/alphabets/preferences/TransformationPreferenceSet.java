@@ -168,7 +168,7 @@ public class TransformationPreferenceSet {
     			);
     	result.put(org.jcryptool.crypto.classic.alphabets.tools.Messages.AlphabetStore_alpha_xor64_long,
     			new TransformData(
-    					AlphabetsManager.getInstance().getAlphabetByName("Xor Alphabet with 64 characters"), //$NON-NLS-1$
+    					AlphabetsManager.getInstance().getAlphabetByName("XOR Alphabet with 64 characters"), //$NON-NLS-1$
     					true, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
     					false, // upper/lowercase transformation activate flag
     					false, // delete-blanks-transformation activate flag

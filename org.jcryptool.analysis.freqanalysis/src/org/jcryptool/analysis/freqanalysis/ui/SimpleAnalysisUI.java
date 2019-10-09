@@ -10,6 +10,11 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.analysis.freqanalysis.ui;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
@@ -21,12 +26,19 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.analysis.freqanalysis.calc.FreqAnalysisCalc;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
+import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.crypto.ui.textmodify.wizard.ModifyWizard;
 
 /**
@@ -34,7 +46,10 @@ import org.jcryptool.crypto.ui.textmodify.wizard.ModifyWizard;
  *
  */
 public class SimpleAnalysisUI extends AbstractAnalysisUI {
+	private Button button;
+	private Button button0;
 	private Button button1;
+	private Composite composite0;
 	private Composite composite1;
 	private Group group1;
 	private Label label1;
@@ -44,6 +59,16 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 	private Group group4;
 	private Label label2;
 	private Group group2;
+	private Composite composite3;
+	private TabFolder tabFolder1;
+	private TabItem tabItem1;
+	private TabItem tabItem2;
+	private Composite composite4;
+	private Label label3;
+	private Label label4;
+	private Label label5;
+	private Text text1;
+	private String source;
 
 	private FreqAnalysisCalc myAnalysis;
 	TransformData myModifySettings;
@@ -60,21 +85,69 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 	private void initGUI() {
 		setLayout(new GridLayout());
 
+		composite0 = new Composite(this, SWT.NONE);
+		composite0.setLayout(new GridLayout(2, false));
+		composite0.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		
+		button = new Button(composite0, SWT.NONE);
+		button.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		button.setText(Messages.FullAnalysisUI_loadtext);
+		
+		button0 = new Button(composite0, SWT.NONE);
+		button0.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		button0.setText(Messages.FullAnalysisUI_loadeditor);
+		
 		button1 = new Button(this, SWT.PUSH | SWT.CENTER);
-		button1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		button1.setText(Messages.SimpleAnalysisUI_startanalysis);
-		button1.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseDown(MouseEvent evt) {
-				// ----------------- Begin of Handler
-				// Main Function Button
+		button1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		button1.setText(Messages.FullAnalysisUI_startanalysis);
+		button1.setEnabled(false);
+				
+		button.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent evt) {
+				try {
+					Display display = Display.getDefault();
+					Shell dialogShell = new Shell(display, SWT.APPLICATION_MODAL);
+					FileDialog fd_ChooseFile = new FileDialog(dialogShell, SWT.OPEN);
+					fd_ChooseFile.setFilterPath("\\"); //$NON-NLS-1$
+					fd_ChooseFile.setFilterExtensions(new String[] { "*.txt" }); //$NON-NLS-1$
+					File file_LoadReferenceText = new File(fd_ChooseFile.open());
+					source = file_LoadReferenceText.getAbsolutePath();
+					BufferedReader br = new BufferedReader(new FileReader(file_LoadReferenceText)); 
+					text = new String();
+					String line;
+					while ((line = br.readLine()) != null) {
+						text += line;	
+					}
+					
+					if (text == "") {
+						throw new Exception();
+					}
+					button1.setEnabled(true);
+					recalcSourceInfo();
+				} catch (Exception ex) {
+		        	MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0, Messages.AbstractAnalysisUI_2);
+				}
+			}
+		});
+		
+		button0.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent evt) {
 				if (checkEditor()) {
-					text = getEditorText();
+					text = getEditorText();	
+					source = EditorsManager.getInstance().getActiveEditorTitle();
+					button1.setEnabled(true);
+					recalcSourceInfo();
+				}
+			}
+		});
+			
+		button1.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent evt) {
+				if (text.equals("") || text == null) {
+		        	MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0, Messages.AbstractAnalysisUI_2);
+				} else {
 					recalcGraph();
 				}
-
-				// ----------------- End of Handler
 			}
 		});
 		
@@ -95,10 +168,22 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 		group4.setLayout(new GridLayout());
 		group4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
 		group4.setText(Messages.SimpleAnalysisUI_properties);
+		
+		tabFolder1 = new TabFolder(group4, SWT.NONE);
 
-		composite2 = new Composite(group4, SWT.NONE);
+		tabItem1 = new TabItem(tabFolder1, SWT.NONE);
+		tabItem1.setText(Messages.FullAnalysisUI_firsttablabel);
+		
+		composite3 = new Composite(tabFolder1, SWT.NONE);
+
+		composite3.setLayout(new GridLayout());
+		composite3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+		tabItem1.setControl(composite3);
+		
+		composite2 = new Composite(composite3, SWT.NONE);
 		composite2.setLayout(new GridLayout());
-		composite2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		composite2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		button3 = new Button(composite2, SWT.RADIO);
 		button3.setText(Messages.SimpleAnalysisUI_monoalphabetic);
@@ -119,7 +204,7 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 			}
 		});
 
-		group2 = new Group(group4, SWT.NONE);
+		group2 = new Group(composite2, SWT.NONE);
 		group2.setLayout(new GridLayout(2, false));
 		group2.setText(Messages.SimpleAnalysisUI_vigeneresettings);
 
@@ -161,7 +246,7 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 		label2 = new Label(group2, SWT.NONE);
 		label2.setText(Messages.SimpleAnalysisUI_offset);
 
-		button2 = new Button(group4, SWT.PUSH | SWT.CENTER);
+		button2 = new Button(composite2, SWT.PUSH | SWT.CENTER);
 		button2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		button2.setText(Messages.SimpleAnalysisUI_filtersettings);
 		button2.addMouseListener(new MouseAdapter() {
@@ -171,8 +256,50 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 				recalcGraph();
 			}
 		});
+		
+		tabItem2 = new TabItem(tabFolder1, SWT.NONE);
+		tabItem2.setText(Messages.FullAnalysisUI_thirdtablabel);
+		composite4 = new Composite(tabFolder1, SWT.NONE);
+		composite4.setLayout(new GridLayout());
+		tabItem2.setControl(composite4);
+		
+		label3 = new Label(composite4, SWT.NONE);
+		label3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		label4 = new Label(composite4, SWT.NONE);
+		label4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		label5 = new Label(composite4, SWT.NONE);
+		label5.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		text1 = new Text(composite4, SWT.V_SCROLL | SWT.BORDER | SWT.MULTI | SWT.WRAP);
+		text1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		recalcSourceInfo();
+		
+		
+		tabFolder1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		tabFolder1.setSelection(0);
 
 		layout();
+	}
+	
+	/**
+	 * Method for aggregating information about source text file.
+	 */
+	protected void recalcSourceInfo() {
+		if (text == null) {
+			label3.setText(Messages.FullAnalysisUI_source + " -");
+			label4.setText(Messages.FullAnalysisUI_textlength + " -");
+			text1.setText("");
+			
+		} else {
+			label3.setText(Messages.FullAnalysisUI_source + " " + source);
+			
+			String totalLength = Integer.toString(text.length());
+			label4.setText(Messages.FullAnalysisUI_textlength + " " + totalLength);
+			
+			label5.setText(Messages.FullAnalysisUI_textexcerpt);
+			text1.setText(text.substring(0, (text.length() > 1000) ? 1000 : text.length()) + ((text.length() > 1000) ? "..." : ""));
+			text1.setEditable(false);
+		}
 	}
 
 	/**
