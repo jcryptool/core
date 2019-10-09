@@ -34,7 +34,7 @@
 	<p>In diesem Plugin wird das Quantencomputer-resistente Signaturverfahren SPHINCS (in der zur Standardisierung eingereichten Variante <b>SPHINCS-256</b>) visualisiert.</p>  
 	<p>Das Plugin lässt sich über das Menü <b>Visualisierungen</b> oder über den Krypto-Explorer im Reiter <b>Visualisierungen</b> starten.</p>
 
-    <p>SPHINCS ist sicher, auch wenn Quantencomputer funktionieren: Deshalb zählt es zu den sogenannten Post-Quantencomputer-Verfahren (PQC). Mit SPHINCS-256 können ebenso wie mit <a href="PLUGINS_ROOT/org.jcryptool.visual.merkletree/$nl$/help/content/index.html">Merkle-Signaturen</a> sichere digitale Signaturen erstellt werden. Eine gute und aktuelle Übersicht zu PQC-Verfahren findet sich in der Wikipedia [1,2]. <a href="PLUGINS_ROOT/org.jcryptool.visual.wots/$nl$/help/content/index.html">WOTS</a> in der Variante WOTS+ ist ein Baustein sowohl von XMSS wie von SPHINCS.</p>
+    <p>SPHINCS ist sicher, auch wenn Quantencomputer funktionieren: Deshalb zählt es zu den sogenannten Post-Quantencomputer-Verfahren (PQC). Mit SPHINCS+-256 können ebenso wie mit <a href="PLUGINS_ROOT/org.jcryptool.visual.merkletree/$nl$/help/content/index.html">Merkle-Signaturen</a> sichere digitale Signaturen erstellt werden. Eine gute und aktuelle Übersicht zu PQC-Verfahren findet sich in der Wikipedia [1,2]. <a href="PLUGINS_ROOT/org.jcryptool.visual.wots/$nl$/help/content/index.html">WOTS</a> in der Variante WOTS+ ist ein Baustein sowohl von XMSS wie von SPHINCS.</p>
 
 	<p>SPHINCS [7,8] erreichte beim (im Dezember 2016 gestarteten) <b>NIST-Wettbewerb für PQC-Verfahren</b> (NIST PQC competition) [3,4] inzwischen in die 2. Runde (Stand 30.1.2019, Variante SPHINCS+-256).</p>
     <!-- https://csrc.nist.gov/News/2019/pqc-standardization-process-2nd-round-candidates -->	
@@ -56,9 +56,11 @@ eliminate the state management challenges, but have significantly high signature
 Gute symbolische Grafik: https://alln-extcloud-storage.cisco.com/ciscoblogs/img-1.png
 	-->	
 	
-	<p>Das hervorragende Paper [0] fasst SPHINCS so zusammen: "Signatures are 41 kB, public keys are 1 kB, and private keys are 1 kB. The signature scheme is designed to provide long-term 2^128 security even against attackers equipped with quantum computers."</p>
+	<p>Das hervorragende Paper [0] von 2014 fasst SPHINCS so zusammen: "Signatures are 41 kB, public keys are 1 kB, and private keys are 1 kB. The signature scheme is designed to provide long-term 2^128 security even against attackers equipped with quantum computers."</p>
 	
 	<p>Die Abkürzung SPHINCS bedeutet: <b>S</b>tateless <b>P</b>ractical <b>H</b>ash-based <b>I</b>ncredibly <b>N</b>ice <b>C</b>ollision-resilient <b>S</b>ignatures.</p>  
+
+	<p>Bemerkung: Neben dem hier implementierten älteren Verfahren <b>SPHINCS</b> ist in JCT auch das neuere PQC-Verfahren <a href="PLUGINS_ROOT/org.jcryptool.visual.sphincsplus/$nl$/help/content/index.html">SPHINCS+</a> aus 2017 implementiert.
 
 
 <p> </br> </p>
