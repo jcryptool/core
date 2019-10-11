@@ -259,11 +259,14 @@ public class Graph {
      * parameters to an area's painting procedure.
      */
     public void paintArea() {
-        paintBarArea();
-        paintDescTopArea();
-        paintDescBottomArea();
-        paintDescLeftArea();
-        paintDescRightArea();
+    	if (! this.gc.isDisposed()) {
+			
+			paintBarArea();
+			paintDescTopArea();
+			paintDescBottomArea();
+			paintDescLeftArea();
+			paintDescRightArea();
+		}
     }
 
     // -------------------------- Actual graph painting area -----------------------------------

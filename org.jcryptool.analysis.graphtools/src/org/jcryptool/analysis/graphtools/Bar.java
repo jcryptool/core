@@ -10,8 +10,15 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.analysis.graphtools;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Display;
+import org.jcryptool.analysis.graphtools.derivates.LabelBar;
 
 /**
  * @author SLeischnig
@@ -19,16 +26,19 @@ import org.eclipse.swt.graphics.Rectangle;
  * Designed for extension for customized use.
  */
 	public class Bar {
-	// height, width of the bar (I=[0|1]) as a ratio
-	protected double width, height;
-	// bar drawing area (coord. is top left!)
-	private Rectangle box;
-	// Color
-	protected MColor colorMainBar;
-	// graphical context
-	protected GC gc;
-	// order of painting (lower numbers are drawn underlaying) and x-axis position (index)
-	protected int order, index;
+
+		public List<Object> attachedData = new LinkedList<Object>();
+
+		// height, width of the bar (I=[0|1]) as a ratio
+		protected double width, height;
+		// bar drawing area (coord. is top left!)
+		private Rectangle box;
+		// Color
+		protected MColor colorMainBar;
+		// graphical context
+		protected GC gc;
+		// order of painting (lower numbers are drawn underlaying) and x-axis position (index)
+		protected int order, index;
 
 
 	/**
@@ -143,7 +153,12 @@ import org.eclipse.swt.graphics.Rectangle;
 	 * draws the bar on a graphical context.
 	 * This is a funbction call without parameters whch uses the fields in the Bar class.
 	 */
-	public void drawBar() {drawBar(getBox(), getHeight(), getWidth(), getColorMainBar(), gc);}
+	public void drawBar(String topLabel) {drawBar(getBox(), getHeight(), getWidth(), getColorMainBar(), topLabel, gc);}
+	/**
+	 * draws the bar on a graphical context.
+	 * This is a funbction call without parameters whch uses the fields in the Bar class.
+	 */
+	public void drawBar() {drawBar("");}
 	/**
 	 * draws the bar on a graphical context.
 	 * @param myBox the drawing area (and limitation for a 100% height and width bar)
@@ -162,6 +177,17 @@ import org.eclipse.swt.graphics.Rectangle;
 
 		myColorMainbar.setBGColor(myGC);
 		myGC.fillRectangle(myBar);
+	}
+
+	public final void drawBar(Rectangle myBox, double myHeight, double myWidth, MColor myColorMainbar, String topLabel, GC myGC) {
+		this.drawBar(myBox, myHeight, myWidth, myColorMainbar, myGC);
+
+		Point myTextPos = LabelBar.calcTextXY(topLabel, myBox.x + myBox.width/ 2, myBox.y-10, myGC.getFontMetrics());
+
+		Color prevColor = gc.getForeground();
+		gc.setForeground(new Color(Display.getDefault(), 0,0,0));
+		gc.drawText(topLabel, myTextPos.x, myTextPos.y, true);
+		gc.setForeground(prevColor);
 	}
 
 }

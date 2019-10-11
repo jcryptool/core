@@ -18,6 +18,7 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseTrackAdapter;
+import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.GC;
@@ -33,7 +34,7 @@ import org.jcryptool.analysis.graphtools.derivates.OverlayLabelBar;
  *
  */
 public class CustomFreqCanvas extends Canvas implements PaintListener,
-        MouseMoveListener {
+        MouseMoveListener, MouseTrackListener {
 
     private Composite mycomp;
     private FreqAnalysisCalc myAnalysis, myOverlayAnalysis;
@@ -72,6 +73,7 @@ public class CustomFreqCanvas extends Canvas implements PaintListener,
         addPaintListener(this);
         this.addPaintListener(this);
         this.addMouseMoveListener(this);
+        this.addMouseTrackListener(this);
 
         this.addMouseTrackListener(new MouseTrackAdapter() {
             @Override
@@ -193,15 +195,16 @@ public class CustomFreqCanvas extends Canvas implements PaintListener,
                 }
                 barHeight = (allData[i].relOcc) / (maxValue);
 
+				LabelBar myBar;
                 if (!allData[i].isOverlayBar) {
-                    getFrequencyGraph().addBar(
-                            new LabelBar(barHeight, actualIndex, 10,
-                                    "" + allData[i].absOcc, allData[i].charPrinted)); //$NON-NLS-1$
+					myBar = new LabelBar(barHeight, actualIndex, 10, 
+					        "" + allData[i].absOcc, allData[i].charPrinted);
                 } else {
-                    getFrequencyGraph().addBar(
-                            new OverlayLabelBar(barHeight, actualIndex, 11,
-                                    "" + allData[i].absOcc, allData[i].charPrinted)); //$NON-NLS-1$
+                    myBar = new OverlayLabelBar(barHeight, actualIndex, 11, 
+					        "" + allData[i].absOcc, allData[i].charPrinted);
                 }
+                myBar.attachedData.add(allData[i]);
+				getFrequencyGraph().addBar(myBar);
             }
         }
     }
@@ -235,18 +238,6 @@ public class CustomFreqCanvas extends Canvas implements PaintListener,
         getFrequencyGraph().paintArea();
     }
 
-    @Override
-	public final void mouseMove(final MouseEvent e) {
-
-        if (dragging && draggingEnabled) {
-            int myPixelsDifference = e.x - dragBeginX;
-            if (getFrequencyGraph().setDraggedPixels(myPixelsDifference, true)) {
-                redraw();
-            }
-        }
-
-    }
-
     public final void setDraggingEnabled(final boolean dragEnabled) {
         this.draggingEnabled = dragEnabled;
     }
@@ -262,5 +253,46 @@ public class CustomFreqCanvas extends Canvas implements PaintListener,
     public final FreqAnalysisGraph getFrequencyGraph() {
         return frequencyGraph;
     }
+
+	@Override
+	public final void mouseMove(final MouseEvent e) {
+	
+	    if (dragging && draggingEnabled) {
+	        int myPixelsDifference = e.x - dragBeginX;
+	        if (getFrequencyGraph().setDraggedPixels(myPixelsDifference, true)) {
+	            redraw();
+	        }
+	    }
+	    
+	    if (this.frequencyGraph != null) {
+			frequencyGraph.mouseMove(e);
+		}
+	}
+
+	@Override
+	public void mouseEnter(MouseEvent e) {
+
+	    if (this.frequencyGraph != null) {
+			frequencyGraph.mouseEnter(e);
+			this.redraw();
+		}
+	}
+
+	@Override
+	public void mouseExit(MouseEvent e) {
+	    if (this.frequencyGraph != null) {
+			frequencyGraph.mouseExit(e);
+			this.redraw();
+		}
+	}
+
+	@Override
+	public void mouseHover(MouseEvent e) {
+	    if (this.frequencyGraph != null) {
+			frequencyGraph.mouseHover(e);
+			this.redraw();
+		}
+		
+	}
 
 }

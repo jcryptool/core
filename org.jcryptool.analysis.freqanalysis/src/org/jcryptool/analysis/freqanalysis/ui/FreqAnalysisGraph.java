@@ -13,8 +13,14 @@ package org.jcryptool.analysis.freqanalysis.ui;
 import java.util.Vector;
 
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.MouseMoveListener;
+import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.jcryptool.analysis.freqanalysis.calc.FreqAnalysisData;
 import org.jcryptool.analysis.graphtools.Bar;
 import org.jcryptool.analysis.graphtools.Graph;
 import org.jcryptool.analysis.graphtools.MColor;
@@ -25,7 +31,7 @@ import org.jcryptool.analysis.graphtools.derivates.OverlayLabelBar;
  * @author SLeischnig
  *
  */
-public class FreqAnalysisGraph extends Graph {
+public class FreqAnalysisGraph extends Graph implements MouseMoveListener, MouseTrackListener {
     /**
      * Differences: - Definition of width and color: - Usage of Specific Bars: LabelBars -
      * mouseover-Display of the top labels - Always displaying the lower labels - OverlayBars -
@@ -41,6 +47,9 @@ public class FreqAnalysisGraph extends Graph {
     double overlayBarWidth = 1.0;
     private int currentShift = 0;
     private int savedShift = 0;
+
+    // This field stores where the Mouse was seen last and may be null to signify "there is no mouse to consider"
+    private Point lastMouseCursorSensitivityPos = null;
 
     private boolean dragged = false;
 
@@ -148,21 +157,45 @@ public class FreqAnalysisGraph extends Graph {
         thisBGColor.setBGColor(gc);
         gc.fillRectangle(thisArea);
 
+        boolean hasDrawnLbl = false;
         for (int i = 0; i < bars.size(); i++) {
             // Only shift when the bar is no overlay bar.
-            if ((bars.get(i)) instanceof OverlayBar
-                    || (bars.get(i)) instanceof OverlayLabelBar) {
-                barBox = calculateBarContainer(barDrawingRect, bars.get(i).getIndex(),
+            Bar bar = bars.get(i);
+			if (bar instanceof OverlayBar
+                    || bar instanceof OverlayLabelBar) {
+                barBox = calculateBarContainer(barDrawingRect, bar.getIndex(),
                         biggestBarIndex);
             } else {
-                barBox = calculateBarContainerShifted(barDrawingRect, bars.get(i)
+                barBox = calculateBarContainerShifted(barDrawingRect, bar
                         .getIndex(), biggestBarIndex);
             }
             // barBox = calculateBarContainer(barDrawingRect, ((Bar)bars.get(i)).getIndex(),
             // biggestBarIndex);
-            bars.get(i).setBox(barBox);
-            bars.get(i).setGC(gc);
-            bars.get(i).drawBar();
+            bar.setBox(barBox);
+            bar.setGC(gc);
+
+            if (this.lastMouseCursorSensitivityPos != null) {
+            	
+				boolean mouseIsNear = this.lastMouseCursorSensitivityPos != null && this.lastMouseCursorSensitivityPos.x < barBox.x+barBox.width && this.lastMouseCursorSensitivityPos.x >= barBox.x;
+				FreqAnalysisData stat = null; 
+				for (Object attached : bar.attachedData) {
+					if (attached instanceof FreqAnalysisData) {
+						stat = (FreqAnalysisData) attached;
+					}
+				}
+
+				if (mouseIsNear && stat != null)
+				{
+					String lbl = String.format("%1.2f", stat.relOcc);
+					bar.drawBar(lbl);
+				}
+				else {
+					bar.drawBar();
+				}
+			}
+            else {
+				bar.drawBar();
+            }
         }                
     }
 
@@ -327,5 +360,31 @@ public class FreqAnalysisGraph extends Graph {
     public final int getCurrentShift() {
         return currentShift;
     }
+
+	@Override
+	public void mouseEnter(MouseEvent e) {
+// 		this.lastMouseCursorSensitivityPos = new Point(e.x, e.y);
+// 		this.lastMouseCursorSensitivityPos = null;
+// 		this.paintArea();
+		
+	}
+
+	@Override
+	public void mouseExit(MouseEvent e) {
+		this.lastMouseCursorSensitivityPos = null;
+		this.paintArea();
+	}
+
+	@Override
+	public void mouseHover(MouseEvent e) {
+		System.out.println("Hover");
+		this.lastMouseCursorSensitivityPos = new Point(e.x, e.y);
+	}
+
+	@Override
+	public void mouseMove(MouseEvent e) {
+		this.lastMouseCursorSensitivityPos = new Point(e.x, e.y);
+// 		this.lastMouseCursorSensitivityPos = null;
+	}
 
 }

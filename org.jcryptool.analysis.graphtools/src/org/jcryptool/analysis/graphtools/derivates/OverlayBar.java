@@ -74,7 +74,7 @@ public class OverlayBar extends Bar {
      * @param myColorMainbar main color of the bar
      * @param myGC graphical context
      */
-    public void drawBar(Rectangle myBox, double myHeight, double myWidth, MColor myColorMainbar,
+    public void drawBar(Rectangle myBox, double myHeight, double myWidth, MColor myColorMainbar, 
             GC myGC) {
         int barWidth = (int) Math.round(myWidth * myBox.width);
         int barHeight = (int) Math.round(myHeight * myBox.height);

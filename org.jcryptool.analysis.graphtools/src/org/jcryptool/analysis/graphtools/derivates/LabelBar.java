@@ -29,6 +29,7 @@ public class LabelBar extends Bar {
      * Creates a default bar which is capable of being drawn on any graphical context. <br>
      * You cann add it to a Graph class/subclass. This bar is black and has a fixed 65% width and
      * the drawing when leaving it unchanged.
+     * @param allData 
      *
      * @param pHeight
      * @param pIndex The x-Axis position
@@ -84,7 +85,7 @@ public class LabelBar extends Bar {
         lowerLabel = pLowerLabel;
     }
 
-    protected Point calcTextXY(String myText, int midX, int topMidY, FontMetrics metrics) {
+    public static Point calcTextXY(String myText, int midX, int topMidY, FontMetrics metrics) {
         int leftX = (int) (midX - (myText.length() * metrics.getAverageCharacterWidth()) / 2);
         int leftY = topMidY - metrics.getAscent() / 2 - 1;
         return new Point(leftX, leftY);
