@@ -38,6 +38,7 @@ import org.jcryptool.visual.errorcorrectingcodes.data.Matrix2D;
 public class InteractiveMatrix extends Composite {
 
     private ArrayList<Text> dataGrid;
+    boolean modified;
     private int rows, columns;
 
     InteractiveMatrix(Composite parent, int rows, int cols) {
@@ -55,11 +56,12 @@ public class InteractiveMatrix extends Composite {
                 t.setText("0");
                 t.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
                 t.addListener(SWT.Verify, e -> verifyBinary(e));
+                t.addListener(SWT.Modify, e -> modified = true);
                 GridDataFactory.fillDefaults().applyTo(t);
                 dataGrid.add(t);
             }
         }
-    }
+        }
 
     public void setMatrix(Matrix2D m) {
         for (int row = 0; row < m.getRowCount(); row++) {
@@ -73,7 +75,7 @@ public class InteractiveMatrix extends Composite {
         int[][] data = new int[rows][columns];
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < columns; c++) {
-                data[r][c] = Integer.valueOf(dataGrid.get(c + (r * c)).getText());
+                data[r][c] = Integer.valueOf(dataGrid.get(c + (r * columns)).getText());
             }
         }
         return new Matrix2D(data);
@@ -93,6 +95,14 @@ public class InteractiveMatrix extends Composite {
             if (e.text != "")
                 e.doit = false;
         }
+    }
+
+    public boolean isModified() {
+        return modified;
+    }
+
+    public void setModified(boolean modified) {
+        this.modified = modified;
     }
 
     public void reset() {

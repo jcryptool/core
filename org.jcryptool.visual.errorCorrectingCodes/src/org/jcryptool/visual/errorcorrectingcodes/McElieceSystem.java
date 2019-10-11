@@ -57,13 +57,8 @@ public class McElieceSystem {
         maskH.add(0);
     }
 
-    public void fillPrivateKey() {
-        matrixS = new Matrix2D(new int[][] {
-            { 1, 1, 0, 1 },
-            { 1, 0, 0, 1 },
-            { 0, 1, 1, 1 },
-            { 1, 1, 0, 0 }
-        });        
+    public void fillMatrixP() {
+       
        matrixP = new Matrix2D(new int[][] {
             {0, 1, 0, 0, 0, 0, 0}, 
             {0, 0, 0, 1, 0, 0, 0}, 
@@ -73,23 +68,28 @@ public class McElieceSystem {
             {0, 0, 0, 0, 0, 1, 0}, 
             {0, 0, 0, 0, 1, 0, 0} 
         });
-        
-        matrixSInv = new Matrix2D(new int[][] {
+    }
+    
+    public void fillMatrixS() {
+        matrixS = new Matrix2D(new int[][] {
             { 1, 1, 0, 1 },
-            { 1, 1, 0, 0 },
+            { 1, 0, 0, 1 },
             { 0, 1, 1, 1 },
-            { 1, 0, 0, 1 }
-        });
+            { 1, 1, 0, 0 }
+        });        
+    }
+    
+    public void inverseMatrices(){
+        if(matrixS == null) {
+            fillMatrixS();
+        }
         
-        matrixPInv = new Matrix2D(new int[][] {
-                {0,  0,  0,  1,  0,  0,  0},
-                {1,  0,  0,  0,  0,  0,  0},
-                {0,  0,  0,  0,  1,  0,  0},
-                {0,  1,  0,  0,  0,  0,  0},
-                {0,  0,  0,  0,  0,  0,  1},
-                {0,  0,  0,  0,  0,  1,  0},
-                {0,  0,  1,  0,  0,  0,  0}
-        });
+        if(matrixP == null) {
+            fillMatrixP();
+        }
+            
+        matrixSInv = matrixS.invert();
+        matrixPInv = matrixP.invert();
     }
 
     public void computePublicKey() {
