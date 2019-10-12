@@ -12,6 +12,7 @@ package org.jcryptool.visual.secretsharing.views;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -48,6 +49,7 @@ public class CoefficientDialog extends TitleAreaDialog implements Constants {
 
 	/**
 	 * Create the dialog
+	 * 
 	 * @param parentShell
 	 * @param secret
 	 * @param modul
@@ -62,6 +64,7 @@ public class CoefficientDialog extends TitleAreaDialog implements Constants {
 
 	/**
 	 * Create contents of the dialog
+	 * 
 	 * @param parent
 	 */
 	@Override
@@ -82,29 +85,24 @@ public class CoefficientDialog extends TitleAreaDialog implements Constants {
 		coefficientsGroup.setLayout(new GridLayout(3, false));
 		coefficientsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		scrolledComposite.setContent(coefficientsGroup);
+		
+		createGroupCoefficient();
 
 		generateCoefficientsButton = new Button(area, SWT.NONE);
 		generateCoefficientsButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				/*
-				 * create random numbers for the coefficients
-				 */
-				SecureRandom sr = new SecureRandom();
-				for (int i = 0; i < coefficient.length - 1; i++) {
-					int randomValue = Math.abs(sr.nextInt()) % modul.intValue() + 1;
-					spinnerSet[i].setSelection(randomValue);
-				}
+				calculateRandomNumbersForSpinners();
 			}
 		});
 		generateCoefficientsButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		generateCoefficientsButton.setText(Messages.SSSConstants_Dialog_Coefficient_Generate_Button);
-		
+
 		setTitle(Messages.SSSConstants_Dialog_Coefficient_Group);
 		setMessage(Messages.SSSConstants_Dialog_Info);
-
-		createGroupCoefficient();
 		
+		// Disable the ok button until some values are entered.
+
 		return area;
 	}
 
@@ -151,6 +149,7 @@ public class CoefficientDialog extends TitleAreaDialog implements Constants {
 						}
 					}
 				});
+				
 				spinnerSet[i - 1] = tmpSpinner;
 
 			}
@@ -160,10 +159,24 @@ public class CoefficientDialog extends TitleAreaDialog implements Constants {
 		if (t > 6) {
 			scrolledComposite.setExpandVertical(false);
 		}
+		
+		calculateRandomNumbersForSpinners();
 	}
+	
+	/**
+	 * create random numbers for the coefficients
+	 */
+	private void calculateRandomNumbersForSpinners() {
+		SecureRandom sr = new SecureRandom();
+		for (int i = 0; i < coefficient.length - 1; i++) {
+			int randomValue = Math.abs(sr.nextInt()) % modul.intValue() + 1;
+			spinnerSet[i].setSelection(randomValue);
+		}
+	}	
 
 	/**
 	 * Converts the id value into subscript
+	 * 
 	 * @param id
 	 * @return a string converted to subscript
 	 */
@@ -201,6 +214,16 @@ public class CoefficientDialog extends TitleAreaDialog implements Constants {
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
 		newShell.setText(Messages.SSSConstants_Dialog_Select_Coefficient_Button);
+	}
+	
+	/**
+	 * Create contents of the button bar
+	 * @param parent
+	 */
+	@Override
+	protected void createButtonsForButtonBar(Composite parent) {
+		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
+		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
 	}
 
 }
