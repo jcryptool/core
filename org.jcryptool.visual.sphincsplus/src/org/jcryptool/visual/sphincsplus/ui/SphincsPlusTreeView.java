@@ -235,14 +235,14 @@ public class SphincsPlusTreeView extends Composite {
                 if (e.item == node_1) {
                     styledTextTree.setText(
                             "SPHINCS+ public key = HT public key is the public key (root node) of the single XMSS tree on the top layer");
-                    descText.setText(Messages.SphincsPlusTreeView_descText_root_node_d);
+//                    descText.setText(Messages.SphincsPlusTreeView_descText_root_node_d);
                 } else if ((e.item == container_1) || (e.item == container_2) || (e.item == container_3)
                         || (e.item == container_4) || (e.item == container_5)) {
                     styledTextTree.setText("XMSS public key = root of the tree");
-                    descText.setText(Messages.SphincsPlusTreeView_descText_root_node_XMSS);
+//                    descText.setText(Messages.SphincsPlusTreeView_descText_root_node_XMSS);
                 } else {
                     styledTextTree.setText("");
-                    descText.setText(Messages.SphincsPlusTreeView_descText_general);
+//                    descText.setText(Messages.SphincsPlusTreeView_descText_general);
                 }
             }
         });

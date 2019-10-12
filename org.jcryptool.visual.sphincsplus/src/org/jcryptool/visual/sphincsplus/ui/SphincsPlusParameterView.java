@@ -20,6 +20,7 @@ import org.jcryptool.visual.sphincsplus.algorithm.Hypertree;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -207,9 +208,7 @@ public class SphincsPlusParameterView extends Composite {
         parameterGroup = new Group(parent, SWT.NONE);
         parameterGroup.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
         parameterGroup.setLayout(new GridLayout(3, false));
-        GridData gd_parameterGroup = new GridData(SWT.FILL, SWT.FILL, true, true);
-        gd_parameterGroup.minimumWidth = 60;
-        gd_parameterGroup.widthHint = 60;
+        GridData gd_parameterGroup = new GridData(SWT.FILL, SWT.FILL, false, true);
         parameterGroup.setLayoutData(gd_parameterGroup);
         parameterGroup.setText(Messages.SphincsPlusParameterView_parameterGroup);
 
@@ -297,7 +296,7 @@ public class SphincsPlusParameterView extends Composite {
 
         label_sig_bytes = new Text(parameterGroup, SWT.READ_ONLY | SWT.CURSOR_ARROW);
         label_sig_bytes.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-        label_sig_bytes.setText("sig bytes");
+        label_sig_bytes.setText("sig length");
 
         text_sig_bytes = new Text(parameterGroup, SWT.BORDER | SWT.READ_ONLY);
         text_sig_bytes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
@@ -305,24 +304,26 @@ public class SphincsPlusParameterView extends Composite {
 
         label_randomize = new Text(parameterGroup, SWT.READ_ONLY | SWT.CURSOR_ARROW);
         label_randomize.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-        GridData gd_label_randomize = new GridData(SWT.FILL, SWT.FILL, false, false);
+        GridData gd_label_randomize = new GridData();
         label_randomize.setText("RANDOMIZE");
-        gd_label_randomize.minimumWidth = 150;
         gd_label_randomize.widthHint = 150;
         label_randomize.setLayoutData(gd_label_randomize);
 
         combo_randomize = new Combo(parameterGroup, SWT.BORDER | SWT.READ_ONLY);
-        combo_randomize.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        combo_randomize.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
         combo_randomize.add(Messages.SphincsPlusParameterView_combo_randomize_yes);
         combo_randomize.add(Messages.SphincsPlusParameterView_combo_randomize_no);
+        
+        //Dirty but fast. A spacer that forces the btnCheckButton_parameter to start in the second column.
+        new Label(parameterGroup, SWT.NONE);
 
         btnCheckButton_parameter = new Button(parameterGroup, SWT.CHECK);
-        btnCheckButton_parameter.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, true));
+        btnCheckButton_parameter.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
         btnCheckButton_parameter.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
         btnCheckButton_parameter.setText(Messages.SphincsPlusParameterView_btnCheckButton_parameter);
 
         btn_generateKeys = new Button(parameterGroup, SWT.NONE);
-        btn_generateKeys.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 3, 1));
+        btn_generateKeys.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
         btn_generateKeys.setText(Messages.SphincsPlusParameterView_btn_generateKeys_generate);
 
         // Set Parameters to default

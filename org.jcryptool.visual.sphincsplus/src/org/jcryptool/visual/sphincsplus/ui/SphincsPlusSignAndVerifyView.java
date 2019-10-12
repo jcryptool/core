@@ -32,6 +32,8 @@ public class SphincsPlusSignAndVerifyView extends Composite {
 
     private Composite messageComposite;
     private Composite signatureComposite;
+	private Composite characterEncodingComposite;
+	private Composite valueComposite;
 
     private GridLayout messageCompositeLayout;
     private GridLayout signatureCompositeLayout;
@@ -42,7 +44,6 @@ public class SphincsPlusSignAndVerifyView extends Composite {
     public static Group messageGroup;
     private Group infoGroup;
     private Group signButtonGroup;
-    private Group encodingButtonGroup;
     private Group valueGroup;
     private Group descriptionGroup;
 
@@ -55,6 +56,7 @@ public class SphincsPlusSignAndVerifyView extends Composite {
     private Text label_r;
     private Text label_fors;
     private Text label_ht;
+    private Text text_CharacterEncoding;
     private StyledText text_sig_description;
 
     private Button btn_verify;
@@ -129,6 +131,8 @@ public class SphincsPlusSignAndVerifyView extends Composite {
         text_inputMessageLayout = new GridData(SWT.FILL, SWT.TOP, true, true);
         text_inputMessageLayout.minimumHeight = 120;
         text_inputMessageLayout.heightHint = 120;
+        text_inputMessageLayout.minimumWidth = 125;
+        text_inputMessageLayout.widthHint = 125;
         text_inputMessage.setLayoutData(text_inputMessageLayout);
         text_inputMessage.setText(Messages.SphincsPlusSignAndVerifyView_text_inputMessage);
 
@@ -176,6 +180,8 @@ public class SphincsPlusSignAndVerifyView extends Composite {
         text_info_inputMessageLayout = new GridData(SWT.FILL, SWT.FILL, true, true);
         text_info_inputMessageLayout.minimumHeight = 120;
         text_info_inputMessageLayout.heightHint = 120;
+        text_info_inputMessageLayout.widthHint = 125;
+        text_info_inputMessageLayout.minimumWidth = 125;
         text_info_inputMessage.setLayoutData(text_info_inputMessageLayout);
         text_info_inputMessage.setText(Messages.SphincsPlusSignAndVerifyView_text_info_inputMessage_part_1
                 + SphincsPlusParameterView.min_message_length
@@ -193,7 +199,6 @@ public class SphincsPlusSignAndVerifyView extends Composite {
 
         createSignButtonGroup(signatureComposite);
         createDescriptionGroup(signatureComposite);
-        createEncodingButtonGroup(signatureComposite);
         createValueGroup(signatureComposite);
     }
 
@@ -214,7 +219,7 @@ public class SphincsPlusSignAndVerifyView extends Composite {
 
         lbl_status = new Text(signButtonGroup, SWT.READ_ONLY | SWT.CURSOR_ARROW | SWT.CENTER);
         lbl_status.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-        lbl_status.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        lbl_status.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 
         btn_sign.addSelectionListener(new SelectionAdapter() {
 
@@ -273,9 +278,9 @@ public class SphincsPlusSignAndVerifyView extends Composite {
                     lbl_status.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
                     lbl_status.setText(Messages.SphincsPlusSignAndVerifyView_lbl_status_signed);
 
-                    label_r.setText("R" + " (" + r.length + " Bytes)");
-                    label_fors.setText("SIG FORS" + " (" + sig_fors_bytes.length + " Bytes)");
-                    label_ht.setText("SIG HT" + " (" + sig_ht_bytes.length + " Bytes)");
+                    label_r.setText("R" + " (" + r.length + " bytes)");
+                    label_fors.setText("SIG FORS" + " (" + sig_fors_bytes.length + " bytes)");
+                    label_ht.setText("SIG HT" + " (" + sig_ht_bytes.length + " bytes)");
 
                 } else {
 
@@ -333,7 +338,7 @@ public class SphincsPlusSignAndVerifyView extends Composite {
         descriptionGroup = new Group(parent, SWT.NONE);
         descriptionGroup.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
         descriptionGroup.setLayout(new GridLayout(1, true));
-        GridData gd_descriptionGroup = new GridData(SWT.FILL, SWT.FILL, true, true);
+        GridData gd_descriptionGroup = new GridData(SWT.FILL, SWT.FILL, true, false);
         gd_descriptionGroup.minimumWidth = 250;
         gd_descriptionGroup.widthHint = 250;
         descriptionGroup.setLayoutData(gd_descriptionGroup);
@@ -341,76 +346,40 @@ public class SphincsPlusSignAndVerifyView extends Composite {
 
         text_sig_description = new StyledText(descriptionGroup, SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
         GridData text_data = new GridData(SWT.FILL, SWT.FILL, true, true);
-        text_data.heightHint = 200;
+        text_data.heightHint = 180;
         text_sig_description.setText(Messages.SphincsPlusSignAndVerifyView_text_sig_description);
         text_sig_description.setLayoutData(text_data);
 
     }
+    
+
 
     private void createValueGroup(Composite parent) {
         valueGroup = new Group(parent, SWT.NONE);
         valueGroup.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-        valueGroup.setLayout(new GridLayout(2, false));
+        GridLayout gl_valueGroup = new GridLayout(1, false);
+        gl_valueGroup.marginWidth = 0;
+        gl_valueGroup.marginHeight = 0;
+        valueGroup.setLayout(gl_valueGroup);
         valueGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         valueGroup.setText(Messages.SphincsPlusSignAndVerifyView_valueGroup);
-
-        label_r = new Text(valueGroup, SWT.READ_ONLY | SWT.CURSOR_ARROW);
-        GridData gd_label_r = new GridData(SWT.FILL, SWT.CENTER, false, false);
-        gd_label_r.minimumWidth = 200;
-        gd_label_r.widthHint = 200;
-        label_r.setLayoutData(gd_label_r);
-        label_r.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-        label_r.setText("R (0 Bytes)");
-
-        text_r = new Text(valueGroup, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
-        GridData gd_text_r = new GridData(SWT.FILL, SWT.FILL, true, false);
-        gd_text_r.minimumHeight = 50;
-        gd_text_r.heightHint = 50;
-        text_r.setLayoutData(gd_text_r);
-
-        label_fors = new Text(valueGroup, SWT.READ_ONLY | SWT.CURSOR_ARROW);
-        GridData gd_label_fors = new GridData(SWT.FILL, SWT.CENTER, false, false);
-        gd_label_fors.minimumWidth = 200;
-        gd_label_fors.widthHint = 200;
-        label_fors.setLayoutData(gd_label_fors);
-        label_fors.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-        label_fors.setText("SIG FORS (0 Bytes)");
-
-        text_fors = new Text(valueGroup, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
-        GridData gd_text_fors = new GridData(SWT.FILL, SWT.FILL, true, true);
-        gd_text_fors.minimumHeight = 50;
-        gd_text_fors.heightHint = 50;
-        text_fors.setLayoutData(gd_text_fors);
-
-        label_ht = new Text(valueGroup, SWT.READ_ONLY | SWT.CURSOR_ARROW);
-        GridData gd_label_ht = new GridData(SWT.FILL, SWT.CENTER, false, false);
-        gd_label_ht.minimumWidth = 200;
-        gd_label_ht.widthHint = 200;
-        label_ht.setLayoutData(gd_label_ht);
-        label_ht.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-        label_ht.setText("SIG HT (0 Bytes)");
-
-        text_ht = new Text(valueGroup, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
-        GridData gd_text_ht = new GridData(SWT.FILL, SWT.FILL, true, true);
-        gd_text_ht.minimumHeight = 50;
-        gd_text_ht.heightHint = 50;
-        text_ht.setLayoutData(gd_text_ht);
-
-    }
-
-    private void createEncodingButtonGroup(Composite parent) {
-        encodingButtonGroup = new Group(parent, SWT.NONE);
-        encodingButtonGroup.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-        encodingButtonGroup.setLayout(new GridLayout(2, true));
-        encodingButtonGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        encodingButtonGroup.setText(Messages.SphincsPlusSignAndVerifyView_encodingButtonGroup);
-
-        btn_hex = new Button(encodingButtonGroup, SWT.RADIO);
+        
+        characterEncodingComposite = new Composite(valueGroup, SWT.NONE);
+        characterEncodingComposite.setLayout(new GridLayout(3, false));
+        characterEncodingComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        characterEncodingComposite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+        
+        text_CharacterEncoding = new Text(characterEncodingComposite, SWT.NONE);
+        text_CharacterEncoding.setText(Messages.SphincsPlusSignAndVerifyView_encodingButtonGroup);
+        text_CharacterEncoding.setEditable(false);
+        text_CharacterEncoding.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+        
+        btn_hex = new Button(characterEncodingComposite, SWT.RADIO);
         btn_hex.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
         btn_hex.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
         btn_hex.setText("Hex");
 
-        btn_base64 = new Button(encodingButtonGroup, SWT.RADIO);
+        btn_base64 = new Button(characterEncodingComposite, SWT.RADIO);
         btn_base64.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
         btn_base64.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
         btn_base64.setText("Base64");
@@ -451,5 +420,53 @@ public class SphincsPlusSignAndVerifyView extends Composite {
                 }
             }
         });
+        
+        valueComposite = new Composite(valueGroup, SWT.NONE);
+        valueComposite.setLayout(new GridLayout(2, false));
+        valueComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        valueComposite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+
+        label_r = new Text(valueComposite, SWT.READ_ONLY | SWT.CURSOR_ARROW);
+        GridData gd_label_r = new GridData(SWT.FILL, SWT.CENTER, false, false);
+        gd_label_r.minimumWidth = 200;
+        gd_label_r.widthHint = 200;
+        label_r.setLayoutData(gd_label_r);
+        label_r.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+        label_r.setText("R (0 bytes)");
+
+        text_r = new Text(valueComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
+        GridData gd_text_r = new GridData(SWT.FILL, SWT.FILL, true, false);
+        gd_text_r.minimumHeight = 50;
+        gd_text_r.heightHint = 50;
+        text_r.setLayoutData(gd_text_r);
+
+        label_fors = new Text(valueComposite, SWT.READ_ONLY | SWT.CURSOR_ARROW);
+        GridData gd_label_fors = new GridData(SWT.FILL, SWT.CENTER, false, false);
+        gd_label_fors.minimumWidth = 200;
+        gd_label_fors.widthHint = 200;
+        label_fors.setLayoutData(gd_label_fors);
+        label_fors.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+        label_fors.setText("SIG FORS (0 bytes)");
+
+        text_fors = new Text(valueComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
+        GridData gd_text_fors = new GridData(SWT.FILL, SWT.FILL, true, true);
+        gd_text_fors.minimumHeight = 50;
+        gd_text_fors.heightHint = 50;
+        text_fors.setLayoutData(gd_text_fors);
+
+        label_ht = new Text(valueComposite, SWT.READ_ONLY | SWT.CURSOR_ARROW);
+        GridData gd_label_ht = new GridData(SWT.FILL, SWT.CENTER, false, false);
+        gd_label_ht.minimumWidth = 200;
+        gd_label_ht.widthHint = 200;
+        label_ht.setLayoutData(gd_label_ht);
+        label_ht.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+        label_ht.setText("SIG HT (0 bytes)");
+
+        text_ht = new Text(valueComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
+        GridData gd_text_ht = new GridData(SWT.FILL, SWT.FILL, true, true);
+        gd_text_ht.minimumHeight = 50;
+        gd_text_ht.heightHint = 50;
+        text_ht.setLayoutData(gd_text_ht);
+
     }
 }
