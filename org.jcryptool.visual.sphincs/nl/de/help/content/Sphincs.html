@@ -29,14 +29,14 @@
 </head>
 
 <body>
-	<h1>SPHINCS</h1>
+	<h1>SPHINCS-Signatur</h1>
 	
 	<p>In diesem Plugin wird das Quantencomputer-resistente Signaturverfahren SPHINCS (in der zur Standardisierung eingereichten Variante <b>SPHINCS-256</b>) visualisiert.</p>  
 	<p>Das Plugin lässt sich über das Menü <b>Visualisierungen</b> oder über den Krypto-Explorer im Reiter <b>Visualisierungen</b> starten.</p>
 
     <p>SPHINCS ist sicher, auch wenn Quantencomputer funktionieren: Deshalb zählt es zu den sogenannten Post-Quantencomputer-Verfahren (PQC). Mit SPHINCS-256 können ebenso wie mit <a href="PLUGINS_ROOT/org.jcryptool.visual.merkletree/$nl$/help/content/index.html">Merkle-Signaturen</a> sichere digitale Signaturen erstellt werden. Eine gute und aktuelle Übersicht zu PQC-Verfahren findet sich in der Wikipedia [1,2]. <a href="PLUGINS_ROOT/org.jcryptool.visual.wots/$nl$/help/content/index.html">WOTS</a> in der Variante WOTS+ ist ein Baustein sowohl von XMSS wie von SPHINCS.</p>
 
-	<p>SPHINCS [7,8] erreichte beim (im Dezember 2016 gestarteten) <b>NIST-Wettbewerb für PQC-Verfahren</b> (NIST PQC competition) [3,4] inzwischen in die 2. Runde (Stand 30.1.2019, Variante SPHINCS+-256).</p>
+	<p>SPHINCS [7,8] erreichte beim (im Dezember 2016 gestarteten) <b>NIST-Wettbewerb für PQC-Verfahren</b> (NIST PQC competition) [3,4] inzwischen in die 2. Runde (Stand 30.1.2019, Variante SPHINCS+).</p>
     <!-- https://csrc.nist.gov/News/2019/pqc-standardization-process-2nd-round-candidates -->	
 	
 	<p>Die Sicherheit von SPHINCS beruht wie die bei Merkle-Signaturen nur auf der Sicherheit der verwendeten Hashfunktionen und gehört deshalb zu den Hash-basierten Signaturfunktionen (HBS). Im Gegensatz zu Merkle-Signaturen ist SPHINCS jedoch <b>zustandslos</b>, was für die Sicherheit der meisten Anwendungen ein großer Vorteil ist. Generell ist die Schlüssellänge bei QC-resistenten Signaturverfahren (auch Post-Quantum-Signaturverfahren genannt) deutlich größer als bei konventionellen Signaturverfahren.</p>  
@@ -56,9 +56,11 @@ eliminate the state management challenges, but have significantly high signature
 Gute symbolische Grafik: https://alln-extcloud-storage.cisco.com/ciscoblogs/img-1.png
 	-->	
 	
-	<p>Das hervorragende Paper [0] fasst SPHINCS so zusammen: "Signatures are 41 kB, public keys are 1 kB, and private keys are 1 kB. The signature scheme is designed to provide long-term 2^128 security even against attackers equipped with quantum computers."</p>
+	<p>Das hervorragende Paper [0] von 2014 fasst SPHINCS so zusammen: "Signatures are 41 kB, public keys are 1 kB, and private keys are 1 kB. The signature scheme is designed to provide long-term 2^128 security even against attackers equipped with quantum computers."</p>
 	
 	<p>Die Abkürzung SPHINCS bedeutet: <b>S</b>tateless <b>P</b>ractical <b>H</b>ash-based <b>I</b>ncredibly <b>N</b>ice <b>C</b>ollision-resilient <b>S</b>ignatures.</p>  
+
+	<p>Bemerkung: Neben dem hier implementierten älteren Verfahren <b>SPHINCS</b> ist in JCT auch das neuere PQC-Verfahren <a href="PLUGINS_ROOT/org.jcryptool.visual.sphincsplus/$nl$/help/content/index.html">SPHINCS+</a> aus 2017 implementiert.
 
 
 <p> </br> </p>
@@ -73,13 +75,11 @@ Gute symbolische Grafik: https://alln-extcloud-storage.cisco.com/ciscoblogs/img-
 <b>3)</b> <a href="#Chap3"><b>Weitere Informationen, Referenzen und Quellen</b></a><br>
 </p>
 
-
-
 	
 <p> </br> </p>
 	<h2 id="Chap1">1) Übersicht SPHINCS-Struktur</h2>
 	
-	<p>SPHINCS generiert einen Baum aus mehreren Strukturen, die wiederum wie ein Baum aufgebaut sind. Diese Gesamtstruktur bezeichnet man als <b>Hyper-Tree</b> oder SPHINCS-Struktur.</p>
+	<p>SPHINCS generiert einen Baum aus mehreren Strukturen, die wiederum wie ein Baum aufgebaut sind. Diese Gesamtstruktur bezeichnet man als <b>Hypertree</b> oder SPHINCS-Struktur.</p>
 	
 	<p>In SPHINCS gibt es zwei Arten von Baumstrukturen, einmal WOTS+-Strukturen und einmal HORST-Strukturen. WOTS+ ist ein Einmal-Signaturverfahren, das in SPHINCS zum Signieren darunter liegender Strukturen verwendet wird. HORST ist ein Mehrfach-Signaturverfahren, das auf der untersten Ebene zum Signieren von Nachrichten verwendet wird.</p>
 	
@@ -96,24 +96,24 @@ Gute symbolische Grafik: https://alln-extcloud-storage.cisco.com/ciscoblogs/img-
 	Adressen beschreiben die Position der Schlüssel innerhalb der SPHINCS-Struktur.</p>
 -->	
 
-
-
 <!-- Quelle: https://research.kudelskisecurity.com/2017/09/28/improving-the-sphincs-post-quantum-signature-scheme-part-2/
-     Ihre Seite https://post-quantum.ch/ war am 15.2.19 nicht erreichbar. -->
-	<p><br>Kudelski Security fasst die Baumstruktur folgendermaßen zusammen (Kudelski Security reichte beim NIST-Wettbewerb "Gravity-SPHINCS" ein, eine Variante von SPHINCS, die &ndash; im Gegensatz zu SPHINCS+-256 &ndash; nicht in die 2. Runde kam):</p>
+     Ihre Seite https://post-quantum.ch/ war am 15.2.19 nicht erreichbar.
+-->
 
-<h4>The 4 trees in SPHINCS</h4>
+<h4>Die 4 Baumarten in SPHINCS</h4>
+
+	<p>Kudelski Security fasst die Baumstruktur folgendermaßen zusammen (Kudelski Security reichte beim NIST-Wettbewerb "Gravity-SPHINCS" ein, eine Variante von SPHINCS, die &ndash; im Gegensatz zu SPHINCS-256 &ndash; nicht in die 2. Runde kam):</p>
 
 <p>The SPHINCS signature scheme is not of the simplest kind, and is hard to understand by only reading its <a href="http://sphincs.cr.yp.to/sphincs-20150202.pdf">informal specification</a>. So instead of trying to explain it fully, we&#8217;ll just describe its general structure, which can be seen as the combination of four types of trees:</p>
 
 <ol>
-<li><strong>The main hyper tree</strong>, of height denoted h (60 in SPHINCS-256). The root of this tree is part of the public key. The leaves of this tree are HORST instances. This hyper-tree is divided into d (12 in SPHINCS-256) layers.</li>
+<li><strong>The main hypertree</strong>, of height denoted h (60 in SPHINCS-256). The root of this tree is part of the public key. The leaves of this tree are HORST instances. This hypertree is divided into d (12 in SPHINCS-256) layers.</li>
 
 <li><strong>The subtrees</strong>, which are Merkle trees of height h/d (60/12=5 in SPHINCS-256). The leaves of these trees are roots of trees; said roots are compressed public keys of WOTS instances, that connect to a tree at the next layer.</li>
 
 <li><strong>The WOTS public key compression trees</strong>, which are L-trees (and not necessarily complete binary trees), of height log_2(l) when there are l leaves. The leaves of this tree are components of a WOTS public key (67 values of 256 bit each in SPHINCS-256). The associated WOTS instance signs a tree root at the next layer.</li>
 
-<li> <strong>The HORST public key compression trees</strong>, at the bottom of the hyper-tree, are Merkle trees of height &#964; = log_2(t), where t is the number of public key elements in the HORST instances (2^{16} in SPHINCS-256).</li>
+<li> <strong>The HORST public key compression trees</strong>, at the bottom of the hypertree, are Merkle trees of height &#964; = log_2(t), where t is the number of public key elements in the HORST instances (2^{16} in SPHINCS-256).</li>
 </ol>
 
 
@@ -123,7 +123,7 @@ Gute symbolische Grafik: https://alln-extcloud-storage.cisco.com/ciscoblogs/img-
 <p> </br> </p>
 	<h3 id="visual">1.1) Visualisierung der SPHINCS-Struktur</h3>
 	
-	<p>Die folgende Grafik zeigt den SPHINCS-Hyper-Tree. Dieser Hyper-Tree ist (ausschnittsweise) auch im JCT-Plugin im Reiter "SPHINCS-Übersicht" zu sehen. Die unterste der 12 Ebenen wird als "erste" Ebene bezeichnet.</p>
+	<p>Die folgende Grafik zeigt den SPHINCS-Hypertree. Dieser Hypertree ist (ausschnittsweise) auch im JCT-Plugin im Reiter "SPHINCS-Übersicht" zu sehen. Die unterste der 12 Ebenen wird als "erste" Ebene bezeichnet.</p>
 	<img src=images/explanation.png alt="Legende" id=explanation />
 	<img src=images/structure.png alt="SPHINCS-Struktur" id=struktur />
 <!-- TODO in Grafik (Abbildungen):
@@ -137,7 +137,7 @@ Gute symbolische Grafik: https://alln-extcloud-storage.cisco.com/ciscoblogs/img-
 3) Der jetzige rote Rahmen in Abb. 1 ist m.E. mehr als das, was Abb. 2 zeigt, oder? ==> @Hülsing
 -->	
 	
-	<p>Die folgende Grafik zoomt in einen Teil des obigen Hyper-Trees hinein: Eine WOTS+-Struktur besteht aus mehreren WOTS+-Public-Key-Knoten, die jeweils ein Schlüsselpaar ergeben:</p>
+	<p>Die folgende Grafik zoomt in einen Teil des obigen Hypertrees hinein: Eine WOTS+-Struktur besteht aus mehreren WOTS+-Public-Key-Knoten, die jeweils ein Schlüsselpaar ergeben:</p>
 <!-- TODO: Bitte Text klarer formulieren:
 	((( Wie können Public Keys ein Schlüsselpaar ergeben?
 	Oder ist ein Schlüsselpaar aus 2 öffentlichen Schlüsseln statt ein Paar aus einem geheimen und einem öffentlichen Schlüsselgemeint ? ==> @Hülsing))) 
@@ -151,7 +151,7 @@ Gute symbolische Grafik: https://alln-extcloud-storage.cisco.com/ciscoblogs/img-
 	
 
 <p> </br> </p>
-	<h3 id="keygen">1.2) Schlüssel und Hyper-Tree erzeugen</h3>
+	<h3 id="keygen">1.2) Schlüssel und Hypertree erzeugen</h3>
 	
 	<p>Die Schlüsselerzeugung des SPHINCS-Verfahrens hat zum Ziel, den Public Key PK des Wurzelknotens (Root) der gesamten SPHINCS-Struktur zu berechnen. Dieser PK ist ebenfalls ein Hashwert.</p>
 <!-- TODO: Grafik:
@@ -230,10 +230,9 @@ Gute symbolische Grafik: https://alln-extcloud-storage.cisco.com/ciscoblogs/img-
 <p> </br> </p>
 	<h3 id="verification">1.4) Signatur verifizieren</h3>
 	
-	<p>Zum Verifizieren werden der SPHINCS-Public-Key (also das PK des Wurzelknotens), die Nachricht M und eine ganze
-	SPHINCS-Signatur benötigt.</p> 
+	<p>Zum Verifizieren werden der SPHINCS-Public-Key (also das PK des Wurzelknotens), die Nachricht M und eine ganze SPHINCS-Signatur benötigt.</p> 
 	
-	<p>Zunächst wird ein Hashwert D aus der die Nachricht und aus dem (in der Signatur enthaltenen) Zufallswert R1 gebildet: D = H(M, R1).</p>
+	<p>Zunächst wird ein Hashwert D aus der Nachricht und aus dem (in der Signatur enthaltenen) Zufallswert R1 gebildet: D = H(M, R1).</p>
 	
 	<p>Der Hashwert D und die im Public-Key PK enthaltenen HORST-Bitmasken Q_HORST werden dazu verwendet, um mithilfe der HORST-Verifikationsfunktion (D, &sigma;_HORST, Q_HORST) den HORST-Public Key zu berechnen. Wenn die Verifizierung der HORST-Signatur, die in der SPHINCS-Signatur enthalten ist, fehlschlägt, dann ist auch die SPHINCS-Signatur ungültig.</p>
 	
@@ -266,12 +265,15 @@ Gute symbolische Grafik: https://alln-extcloud-storage.cisco.com/ciscoblogs/img-
 	 
 	<p>Diese Visualisierung erläutert das Signaturverfahren SPHINCS-256 und die dahinter liegende SPHINCS-Struktur. Außerdem können die 3 Operationen Schlüsselgenerierung, Signieren und Verifizieren durchgeführt werden.</p>
 	
-	<p>In der Instanziierung SPHINC-256 sind die Parameter d=12, h=60, w=16, n=256 und m=512 schon festgelegt (siehe Tabelle 1 in [0, Seite 19]).</p>
+	<p>In der Instanziierung SPHINCS-256 sind die Parameter d=12, h=60, w=16, n=256 und m=512 schon festgelegt (siehe Tabelle 1 in [0, Seite 19]).</p>
 	 
 	<h3>Reiter 1: Bitmasken- und Schlüsselerzeugung</h3>
+
+	<p>xxxxxx TODO Screenshot xxxxxxxxx</p>
+	
 	<p>Im 1. Reiter werden die Bestandteile der verwendeten Schlüssel (Seed und Bitmasken) und des erzeugten öffentlichen SPHINCS-Schlüssels PK ausgegeben. Des weiteren werden noch Informationen zur Schlüssellänge angezeigt.</p>
 	
-	<p>Dazu müssen Sie den Button <b>Erzeugen</b> drücken. Bei jedem weiteren Drücken des Buttons wird erneut ein zufälliger Seed generiert und damit ein neuer Public Key PK erzeugt.</p>
+	<p>Dazu müssen Sie den Button <b>Neues Schlüsselpaar erzeugen</b> drücken. Bei jedem weiteren Drücken des Buttons wird erneut ein zufälliger Seed generiert und damit ein neuer Public Key PK erzeugt.</p>
 	 	
 <!-- TODO: Den ff. Absatz habe ich rausgenommen, da ich nicht sehe,
          wo Bitmasken derzeit gefärbt sind. Der ganze Text ist in schwarz.
@@ -290,7 +292,7 @@ Gute symbolische Grafik: https://alln-extcloud-storage.cisco.com/ciscoblogs/img-
     - Ist das ein Base64-Format? )))
 -->
 	 
-	<p>Die folgenden Reiter 2 und 3 funktionieren erst, nachdem in Reiter 1 die Schlüssel erzeugt und der Hyper-Tree aufgebaut wurde.</p>
+	<p>Die folgenden Reiter 2 und 3 funktionieren erst, nachdem in Reiter 1 die Schlüssel erzeugt und der Hypertree aufgebaut wurde.</p>
 
 	
 	 
@@ -304,11 +306,11 @@ Gute symbolische Grafik: https://alln-extcloud-storage.cisco.com/ciscoblogs/img-
 	<p>Mit den folgenden 3 Buttons können verschiedene Teile der Signatur &Sigma; hervorgehoben werden:</p>
 	<ul>
 		<li>Der Button <b>Authentifizierungspfad</b> färbt den verwendeten Weg durch den
-		Baum ein (wird ganz am Anfang in hellblau angezeigt).</br> Ein Authentifizierungspfad gibt an, welche Teilbäume auf dem Weg nach oben für die Signatur verwendet wurden.</li>
+		Baum ein (wird ganz am Anfang in hellgrün angezeigt).</br> Ein Authentifizierungspfad gibt an, welche Teilbäume auf dem Weg nach oben für die Signatur verwendet wurden.</li>
 		
-		<li>Der Button <b>Aktuelles Blatt</b> hebt das in der Signatur enthaltene HORST-Blatt hervor (wird ganz am Ende in lila angezeigt).</li>
+		<li>Der Button <b>HORST-Signatur</b> hebt die HORST-Signatur im Signatur-Feld hervor (wird in der Mitte in lila angezeigt). Die HORST-Signatur ist ein Teil der Signatur.</li>
 		
-		<li>Der Button <b>Signatur</b> hebt die HORST-Signatur im Signatur-Feld hervor (wird in der Mitte in hellgrün angezeigt). Die HORST-Signatur ist ein Teil der Signatur.</li>
+		<li>Der Button <b>Aktuelles Blatt</b> hebt das in der Signatur enthaltene HORST-Blatt hervor (wird ganz am Ende in orange angezeigt).</li>
 	</ul>
 	 
 	<p>Wenn Sie auf den Button <b>Signatur verifizieren</b> drücken, wird die Signatur geprüft und das Ergebnis in der Mitte angezeigt (in grün, wenn Nachricht, öffentlicher Schlüssel und Signatur zueinander passen, die Validierung also positiv ausfällt). Dass die Verifikation fehlschlägt, also negativ ausfällt, können Sie erreichen, indem Sie die Nachricht oben ändern (dann erscheint das Prüfergebnis in rot).</p>
@@ -318,7 +320,7 @@ Gute symbolische Grafik: https://alln-extcloud-storage.cisco.com/ciscoblogs/img-
 <p> </br> </p>
 	<h3>Reiter 3: SPHINCS-Übersicht</h3>
 	
-	<p>Der 3. Reiter zeigt einen Ausschnitt des Hyper-Trees und gibt Informationen über die SPHINCS-Struktur. Steht der Mauszeiger über einem Blatt, werden dessen Daten als Balloontext angzeigt. Klickt man auf das Blatt, werden die Daten zusätzlich in das Ausgabefeld oben unter der Beschreibung ausgegeben.
+	<p>Der 3. Reiter zeigt einen Ausschnitt des Hypertrees und gibt Informationen über die SPHINCS-Struktur. Steht der Mauszeiger über einem Blatt, werden dessen Daten als Balloontext angzeigt. Klickt man auf das Blatt, werden die Daten zusätzlich in das Ausgabefeld oben unter der Beschreibung ausgegeben.
 	<!-- TODO: Fragen beantworten und im Text ergänzen:
 	((( - Ich bekam bei einem Klick die gleiche Info wie im Balloontext. Ist das ok?
         - Klickt man auf ein Blatt, erscheint z.B.
@@ -337,8 +339,9 @@ Gute symbolische Grafik: https://alln-extcloud-storage.cisco.com/ciscoblogs/img-
 	<p> </br> </p>
 	<h2>Anmerkung</h3>
     <p>In JCT wurde nur die SPHINCS-256-Variante implementiert.
-	Welche Varianten gibt es noch? SPHINCS+- & Gravity-SPHINCS als Konzepte plus all deren Instanziierungen.</p>
+	Welche Varianten gibt es noch? SPHINCS+ und Gravity-SPHINCS plus deren Instanziierungen.</p>
 	
+
 
 <p> </br> </p>
     <h2 id="Chap3">3) Weitere Informationen, Referenzen und Quellen</h2>	 
@@ -370,14 +373,18 @@ Gute symbolische Grafik: https://alln-extcloud-storage.cisco.com/ciscoblogs/img-
   
 	<li>[9] Bouncy Castle: Die Signaturen XMSS, GMSS und SPHINCS sind seit Januar 2019 in der<br>
 	<a href="https://github.com/bcgit/bc-java/tree/master/core/src/main/java/org/bouncycastle/pqc/crypto">Krypto-API der Java Bouncy Castle</a> enthalten.</li>
+	
+    <li>[10] <a href="https://sphincs.cr.yp.to/index.html">
+    Webseite: SPHINCS: practical stateless hash-based signatures</a></li>
 </ul>
 	
-	<p> Weitere Plugins in JCrypTool zu Quantencomputer-sicheren Verfahren:
+	<p> Weitere Plugins in JCrypTool zu Quantencomputer-sicheren Verfahren:</p>
 	<ul>	
 		<li><a href="PLUGINS_ROOT/org.jcryptool.visual.merkletree/$nl$/help/content/index.html">Merkle-Signaturen</a></li>
 		<li><a href="PLUGINS_ROOT/org.jcryptool.visual.wots/$nl$/help/content/index.html">WOTS / WOTS+</a></li>
-	</ul></p>
+		<li><a href="PLUGINS_ROOT/org.jcryptool.visual.sphincsplus/$nl$/help/content/index.html">SPHINCS+</a></li>
+	</ul>
+
 
 <p> </br> </p>
-	
 </body>

@@ -18,38 +18,205 @@
 <body>
 	<h1>SPHINCS Signature</h1>
 
-	<p>This plugin shows how the post-quantum signature algorithm SPHINCS works.</p>
+	<p>This plugin visualizes the quantum computer resistant signature procedure SPHINCS (in the variant submitted for standardization <b>SPHINCS-256</b>).</p>  
+	<p>The plugin can be started via the menu <b>Visuals</b> or via the Crypto-Explorer in the tab <b>Visuals</b>.</p>
 
-	<p>At the moment, this English online help is only a stub. In the German version the usage and the algorithm are already described in detail (the English version will be there too in the release version of JCT 1.0. You can see the English online help already in the Weekly Build).</p>
+    <p>SPHINCS is safe, even if quantum computers work: This is why it is one of the so-called post quantum computer procedures (PQC). SPHINCS-256 and <a href="PLUGINS_ROOT/org.jcryptool.visual.merkletree/$nl$/help/content/index.html">Merkle signatures</a> can be used to create secure digital signatures. A good and up-to-date overview of PQC procedures can be found in Wikipedia [1,2]. <a href="PLUGINS_ROOT/org.jcryptool.visual.wots/$nl$/help/content/index.html">WOTS</a> in the variant WOTS+ is a component of both XMSS and SPHINCS.</p>
+
+	<p>In the meantime, SPHINCS [7,8] reached the 2nd round of the <b>NIST competition for PQC procedures</b> (NIST PQC competition) [3,4] (started in December 2016) (as of Jan 30, 2019, variant SPHINCS+).</p>
+    <!-- -- https://csrc.nist.gov/News/2019/pqc-standardization-process-2nd-round-candidates -->	
 	
-	<p><br>Kudelski Security summarized the tree structure this way (Kudelski Security submitted "Gravity-SPHINCS" to the NIST competition, a variant of SPHINCS which &ndash; in the opposite to SPHINCS+-256 &ndash; did not manage to get in round 2):</p>
+	<p>The security of SPHINCS, like that of Merkle signatures, is based only on the security of the hash functions used and therefore belongs to the hash-based signature functions (HBS). In contrast to Merkle signatures, however, SPHINCS is <b> stateless</b>, which is a great advantage for the security of most applications. In general, the key length for QC-resistant signature procedures (also known as post-quantum signature procedures) is significantly longer than for conventional signature procedures.</p>  
+
+	<p>The excellent paper [0] of 2014 summarizes SPHINCS as follows: "Signatures are 41 kB, public keys are 1 kB, and private keys are 1 kB. The signature scheme is designed to provide long-term 2^128 security even against attackers equipped with quantum computers."</p>
+	
+	<p>The abbreviation SPHINCS means: <b>S</b>tateless <b>P</b>ractical <b>H</b>ash-based <b>I</b>ncredibly <b>N</b>ice <b>C</b>ollision-resilient <b>S</b>ignatures.</p>  
+
+	<p>Note: In addition to the older method <b>SPHINCS</b> implemented here, the newer PQC method <a href="PLUGINS_ROOT/org.jcryptool.visual.sphincsplus/$nl$/help/content/index.html">SPHINCS+</a> from 2017 is also implemented in JCT.
+
+
+<p> </br> </p>
+<h2>Overview of contents</h2>
+<p>
+<b>1)</b> <a href="#Chap1"><b>Overview SPHINCS structure</b></a><br>
+<b>1.1)</b> <a href="#visual"><b>Visualization of the SPHINCS structure</b></a><br>
+<b>1.2)</b> <a href="#keygen"><b>Key generation</b></a><br>
+<b>1.3)</b> <a href="#signature"><b>Signature creation</b></a><br>
+<b>1.4)</b> <a href="#verification"><b>Verification (signature check)</b></a><br><br>
+<b>2)</b> <a href="#Chap2"><b>Manual (how to use the plugin) </b></a><br><br>
+<b>3)</b> <a href="#Chap3"><b>Further information, references and sources</b></a><br>
+</p>
+
+	
+<p> </br> </p>
+	<h2 id="Chap1">1) Overview SPHINCS structure</h2>
+	
+	<p>SPHINCS generates a tree built from several structures, which in turn are structured like a tree. This complete structure is called <b>hypertree</b> or SPHINCS structure.</p>
+	
+	<p>In SPHINCS there are two types of tree structures, WOTS+ structures and HORST structures. WOTS+ is a one-time signature procedure used in SPHINCS to sign underlying structures. HORST is a multiple signature procedure that is used at the lowest level to sign messages.</p>
+	
+	<p>A SPHINCS-256 structure has the total height h=60. Each substructure, both WOTS+ and HORST, consists of a tree &ndash; each with the height h/d=5, where d=12 is the number of levels. SPHINCS-256 is an instantiation of SPHINCS+ (and thus defines these parameters; in SPHINCS+ as a concept, these parameters are variable). This is analogous to RSASSA-PKCS1-v1_5-1024-SHA1, for example, an instantiation of the RSA algorithm that specifies exactly how RSA is to be used for signing.</p> 
 
 <h4>The 4 trees in SPHINCS</h4>
+
+	<p>Kudelski Security summarized the tree structure this way (Kudelski Security submitted "Gravity-SPHINCS" to the NIST competition, a variant of SPHINCS which &ndash; unlike SPHINCS+ &ndash; did not make it to the second round):</p>
 
 <p>The SPHINCS signature scheme is not of the simplest kind, and is hard to understand by only reading its <a href="http://sphincs.cr.yp.to/sphincs-20150202.pdf">informal specification</a>. So instead of trying to explain it fully, we&#8217;ll just describe its general structure, which can be seen as the combination of four types of trees:</p>
 
 <ol>
-<li><strong>The main hyper tree</strong>, of height denoted h (60 in SPHINCS-256). The root of this tree is part of the public key. The leaves of this tree are HORST instances. This hyper-tree is divided into d (12 in SPHINCS-256) layers.</li>
+<li><strong>The main hypertree</strong>, of height denoted h (60 in SPHINCS-256). The root of this tree is part of the public key. The leaves of this tree are HORST instances. This hypertree is divided into d (12 in SPHINCS-256) layers.</li>
 
 <li><strong>The subtrees</strong>, which are Merkle trees of height h/d (60/12=5 in SPHINCS-256). The leaves of these trees are roots of trees; said roots are compressed public keys of WOTS instances, that connect to a tree at the next layer.</li>
 
 <li><strong>The WOTS public key compression trees</strong>, which are L-trees (and not necessarily complete binary trees), of height log_2(l) when there are l leaves. The leaves of this tree are components of a WOTS public key (67 values of 256 bit each in SPHINCS-256). The associated WOTS instance signs a tree root at the next layer.</li>
 
-<li> <strong>The HORST public key compression trees</strong>, at the bottom of the hyper-tree, are Merkle trees of height &#964; = log_2(t), where t is the number of public key elements in the HORST instances (2^{16} in SPHINCS-256).</li>
+<li> <strong>The HORST public key compression trees</strong>, at the bottom of the hypertree, are Merkle trees of height &#964; = log_2(t), where t is the number of public key elements in the HORST instances (2^{16} in SPHINCS-256).</li>
 </ol>
 
-	
-	<br><p>Below you find further information about the algorithm from external sources.</p>
 
-	<h2>Further information</h2>
+
+	
+<p> </br> </p>
+	<h3 id="visual">1.1) Visualization of the SPHINCS structure </h3>
+	
+	<p>The following graphic shows the SPHINCS hypertree. This hypertree can also be seen (partially) in the JCT plugin in the "SPHINCS Overview" tab. The lowest of the 12 layers is called the "first" layer.</p>
+	<img src=images/explanation.png alt="Legend" id=explanation />
+	<img src=images/structure.png alt="SPHINCS-Structure" id=structure />
+
+	<p>The following graphic zooms into a part of the above hypertree: A WOTS+ structure consists of several WOTS+ public key nodes, each of which results in a key pair:</p>
+	<img src=images/tree.jpg alt="WOTS+-Tree" id=baum />
+	<p>Each WOTS+ structure is a binary hash tree and each contains 2^(h/d) = 2^5 = 32 nodes.</p> 
+	
+	<p>The following sections explain the 3 main operations in more detail. Then the operation of the plugin is explained by its 3 tabs. </p>
+
+	
+
+<p> </br> </p>
+	<h3 id="keygen">1.2) Generate key and hypertree</h3>
+	
+	<p>The key generation of the SPHINCS procedure aims to calculate the public key PK of the root node of the entire SPHINCS structure. This PK is also a hash value. </p>
+	
+	<p>When the key generation operation is complete, you have the WOTS+ key pair of the overall SPHINCS structure. The public key of this WOTS+ key pair is the root node of the SPHINCS structure.</p>
+	
+	<p>For this purpose, two secret keys SK_1 and SK_2, each 256*256 bits in size, are first created. SK_1 is used for pseudo-random key generation. SK_2 is used to make the index of sign (function undefined introduced in [0, page 10, second paragraph]; meaning the index of an OTS key pair in a tree) unpredictable and to randomize the hash value of the message.
+	</p>
+	
+	<p>In addition, p n-bit long bitmasks Q_i are generated, which are used for each WOTS+ structure and each HORST structure. All Q_i are concatenated into the top public key (PK of the root node). Further details in [0, page 10].</p>
+	
+	<p>The WOTS+ key pairs of the individual levels are then generated. Therefore, a seed is created for each key pair, which contains the address A of the key pair and SK_1.</p>
+		
+	<p>It applies:<br>SPHINCS private/secret key SK = {SK_1, SK_2, Q};<br>SPHINCS public key = {PK1, Q}.</p>
+	<p>Table 1 in [0, page 19] shows the size of the keys in SPHINCS-256:<br> Private/Secret Key = 1088 Byte;<br> Public Key = 1056 Byte.</p>
+	
+	<p>How many seeds are there? In SK one, but almost everything is created pseudo-randomly from short seeds.<br>
+	How many bitmasks are there? 32 256-bit masks.</p>
+
+	
+<p> </br> </p>
+	<h3 id="signature">1.3) Sign message</h3>
+	
+	<p>A message M is signed with the SPHINCS private key SK.</p>
+	
+	<p>For this purpose a randomizer, i.e. a random R = (R_1, R_2) is formed and a randomized message digest D is calculated from M, SK_2 and R_1. This hash D is then signed.</p>
+
+	<p>The HORST key pair at the selected address is used for signing. The HORST signature is calculated from a seed, the hash value D, and HORST bitmasks.</p>
+	
+	<p>The whole SPHINCS signature ("the full SPHINCS signature &Sigma;") contains the HORST signature, an index i, random bits R_1, an XMSS_MT signature, and an authentication path through all levels. The XMSS_MT signature consists of d WOTS+ signatures.</p>
+	
+	<p>The index is selected deterministically, since a structure of this size does not have a reliable chance to determine the indices. The WOTS+ key pair with the address A_0 is used to sign the HORST public key.</p>
+	
+	<p>The SPHINCS signature &Sigma; therefore consists of (i; R_1; &sigma;H; &sigma;W,0; Auth_A_0;...; &sigma;W,d-1; Auth_A_d-1), where (&sigma;H = HORST signature, &sigma;W,i = WOTS+ signature).</p>
+	
+	<p>The following graphics shows the interaction of the parameters. Further details in [0, page 11].</p>
+	<img src=images/signierung_final.jpg alt=Signatur />
+	  
+	  
+	
+<p> </br> </p>
+	<h3 id="verification">1.4) Verify signature</h3>
+	
+	<p>For verification, the SPHINCS public key (i.e. the PK of the root node), the message M and a complete SPHINCS signature are required.</p> 
+	
+	<p>First, a hash value D is formed from the message and the random value R1 (contained in the signature): D = H(M, R1).</p>
+	
+	<p>Hash value D and the HORST bitmasks Q_HORST contained in the public key PK are used to calculate the HORST public key using the HORST verification function (D, &sigma;_HORST, Q_HORST). If the verification of the HORST signature included in the SPHINCS signature fails, then the SPHINCS signature is also invalid.</p>
+	
+	<p>With the WOTS+ signature contained in the SPHINCS signature, the public key of the first WOTS+ structure PK_W,0 is calculated.
+	The sheet of this first level is then calculated.</p>
+	<p>This leaf is used to calculate the root node (Root_0) of the first level. This process is repeated up to the top level of the SPHINCS structure ("repeated for layers 1 to d-1"), but with two differences:</p>
+	<ol>
+		<li>The root node of the previous structure is now used to calculate the WOTS+ public key of the structure above. </li>
+		<li>The leaf of the structure is calculated by adding the last j*(h/d) bits of i
+<!-- Question: What is here i. See also [0, page 12 above] ==> @Hülsing -->
+		and the last (h/d) bits are used by the remainder.</li>
+	</ol>
+	
+	<p>These two special features are only relevant from the second level of the SPHINCS structure. </p>
+	
+	<p>After calculating the authentication path, you get the root node of level d-1 (Root_d-1).
+	This is then compared with the first element PK_1 in the SPHINCS public key PK.</p>
+	
+	<p>If the two keys are identical, the verification succeeds; if the two keys are not identical, the verification fails. Further details in [0, page 11 and 12].</p>
+
+	
+
+<p> </br> </p>
+	<h2 id="Chap2">2) User manual for this visualization</h2>
+	 
+	<p>This visualization explains the signature procedure SPHINCS-256 and the SPHINCS structure behind it. In addition, the 3 operations key generation, signing and verification can be performed. </p>
+	
+	<p>In the instantiation SPHINCS-256 the parameters d=12, h=60, w=16, n=256 and m=512 are already defined (see table 1 in [0, page 19]).</p>
+	 
+	<h3>Sub-tab 1: Bitmask and Key Generation </h3>
+	<p>In the 1st tab, the components of the used keys (seed and bit masks) and the generated public SPHINCS key PK are displayed. In addition, information about the key length is displayed.</p>
+	
+	<p>You have to press the button <b>Generate key pair</b>. Each time you press the button again, a random seed will be generated and a <b>new</b> public key PK will be generated. </p>
+	 
+	<p>The following sub-tabs 2 and 3 only work after the keys have been generated in sub-tab 1 and the hypertree has been built.</p>
+
+	 
+<p> </br> </p>
+	<h3>Sub-tab 2: Sign and Verify</h3>
+	 
+	<p>The 2nd sub-tab offers the possibility to sign and verify a message.</p>
+	 
+	<p>Please enter a message text (or leave the default) and then press the button <b>Sign message</b>.</p>
+	 
+	<p>The following 3 buttons can be used to highlight different parts of the signature &Sigma;:</p>
+	<ul>
+		<li>The button <b>Authentication path</b> colors the used way through the
+		tree (displayed in light green at the very beginning).</br> An authentication path indicates which subtrees were used for the signature on the way up.</li>
+		
+		<li>The button <b>HORST signature</b> highlights the HORST sheet contained in the signature (displayed in purple in the center).</li>
+		
+		<li>The <b>Current leaf</b> button highlights the HORST signature in the signature field (displayed in orange at the very end). The HORST signature is a part of the signature.</li>
+	</ul>
+	 
+	<p>When you press the <b>Verify Signature</b> button, the signature is verified and the result is displayed in the middle (in green if the message, public key and signature match, so the validation is positive). You can achieve that the verification fails, by changing the message above (then the verification result will appear in red).</p>
+
+ 
+<p> </br> </p>
+	<h3>Sub-tab 3: SPHINCS overview </h3>
+	
+	<p>The 3rd sub-tab shows a section of the hypertree and gives information about the SPHINCS structure. If the mouse pointer is over a sheet, its data is displayed as balloon text. If you click on the sheet, the data is also displayed in the output field at the top, below the description.</p>
+
+	<p>The individual layers of the structure are color-coded so that you can see which sheet belongs to which layer. With the mouse wheel you can zoom in and out of the tree.</p>
+
+
+	<p> </br> </p>
+	<h2>Note</h3>
+    <p>Only the SPHINCS-256 variant was implemented in JCT.
+	Which variants are still available? SPHINCS+ and Gravity-SPHINCS plus their instantiations.</p>
+	
+
+<p> </br> </p>
+	<h2>3) Further information, references and sources</h2>
 
 	<p>There is an official website about the <a href="https://sphincs.cr.yp.to/">SPHINCS algorithm</a>, where you can find papers, presentations and software about SPHINCS.</p>
-	
-	<p>The SPHINCS structure is based on Merkle trees, which you can also find in JCrypTool (see links below).</p>
 
-	<p>Additional Information about Post-Quantum Cryptography (PQC) and SPHINCS signatures can be found here:</p>
+	<p>Additional Information about post-quantum cryptography (PQC) and SPHINCS signatures can be found at:</p>
 <ul>		
-	<li>[0] <a href="https://cryptojedi.org/papers/sphincs-20141001.pdf">SPHINCS: practical stateless hash-based signatures</a> by Daniel J. Bernstein, Daira Hopwood, Andreas Hülsing, Tanja Lange, Ruben Niederhagen, Louiza Papachristodoulou, Peter Schwabe, and Zooko Wilcox O'Hearn (2014) is the original paper about the SPHINCS signature scheme. It discusses very intelligently the design criteria of the procedure.<br>
+	<li>[0] <a href="https://cryptojedi.org/papers/sphincs-20141001.pdf">SPHINCS: practical stateless hash-based signatures</a> by Daniel J. Bernstein, Daira Hopwood, Andreas Hülsing, Tanja Lange, Ruben Niederhagen, Louiza Papachristodoulou, Peter Schwabe, and Zooko Wilcox O'Hearn (2014) is the original paper about the SPHINCS signature scheme. It discusses the design criteria of the procedure very intelligently.<br>
 	See also <a href="http://sphincs.cr.yp.to/sphincs-20150202.pdf">http://sphincs.cr.yp.to/sphincs-20150202.pdf.</a></li>
 		
 	<li>[1] Wikipedia: <br>
@@ -69,16 +236,20 @@
     <li>[8] <a href="https://sphincs.org/data/sphincs+-specification.pdf">
     SPHINCS+ submission to the NIST post-quantum project, November 30, 2017</a></li>
   
-	<li>[9] Bouncy Castle: The XMSS, GMSS and SPHINCS schemes are available in the<br>
+	<li>[9] Bouncy Castle: The schemes XMSS, GMSS, and SPHINCS have been available in the<br>
 	<a href="https://github.com/bcgit/bc-java/tree/master/core/src/main/java/org/bouncycastle/pqc/crypto">Java Bouncy Castle cryptographic APIs</a> since January 2019.</li>
+	
+    <li>[10] <a href="https://sphincs.cr.yp.to/index.html">
+    Website: SPHINCS: practical stateless hash-based signatures</a></li>
 </ul>
 	
 	<p>More plugins in JCrypTool, which are related to quantum-computer safe signatures:</p>
 	<ul>
 		<li><a href="PLUGINS_ROOT/org.jcryptool.visual.tree/$nl$/help/content/index.html">Merkle Tree</a></li>
 		<li><a href="PLUGINS_ROOT/org.jcryptool.visual.wots/$nl$/help/content/index.html">WOTS / WOTS+</a></li>
+		<li><a href="PLUGINS_ROOT/org.jcryptool.visual.sphincsplus/$nl$/help/content/index.html">SPHINCS+</a></li>
 	</ul>
 
-<p> </br> </p>
 
+<p> </br> </p>
 </body>

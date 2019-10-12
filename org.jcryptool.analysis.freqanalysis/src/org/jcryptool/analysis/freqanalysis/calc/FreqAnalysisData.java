@@ -16,11 +16,11 @@ package org.jcryptool.analysis.freqanalysis.calc;
  * @author SLeischnig
  */
 public class FreqAnalysisData {
-    public FreqAnalysisData() {
-    };
+	public FreqAnalysisData() {
+	};
 
-    public String charPrinted = ""; //$NON-NLS-1$
-    public int absOcc = 0;
-    public double relOcc = 0.0;
-    public char ch = 'y';
+	public String charPrinted = ""; //$NON-NLS-1$
+	public int absOcc = 0;
+	public double relOcc = 0.0;
+	public char ch = 'y';
 }

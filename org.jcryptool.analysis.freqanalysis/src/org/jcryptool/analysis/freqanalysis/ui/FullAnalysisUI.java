@@ -137,24 +137,24 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 
 	private void initGUI() {
 		setLayout(new GridLayout());
-		
+
 		composite0 = new Composite(this, SWT.NONE);
 		composite0.setLayout(new GridLayout(2, false));
 		composite0.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
-		
+
 		button = new Button(composite0, SWT.NONE);
 		button.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		button.setText(Messages.FullAnalysisUI_loadtext);
-		
+
 		button0 = new Button(composite0, SWT.NONE);
 		button0.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		button0.setText(Messages.FullAnalysisUI_loadeditor);
-		
+
 		button1 = new Button(this, SWT.PUSH | SWT.CENTER);
 		button1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		button1.setText(Messages.FullAnalysisUI_startanalysis);
 		button1.setEnabled(false);
-				
+
 		button.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent evt) {
 				try {
@@ -165,24 +165,25 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 					fd_ChooseFile.setFilterExtensions(new String[] { "*.txt" }); //$NON-NLS-1$
 					File file_LoadReferenceText = new File(fd_ChooseFile.open());
 					source = file_LoadReferenceText.getAbsolutePath();
-					BufferedReader br = new BufferedReader(new FileReader(file_LoadReferenceText)); 
+					BufferedReader br = new BufferedReader(new FileReader(file_LoadReferenceText));
 					text = new String();
 					String line;
 					while ((line = br.readLine()) != null) {
-						text += line;	
+						text += line;
 					}
-					
+
 					if (text == "") {
 						throw new Exception();
 					}
 					button1.setEnabled(true);
 					recalcSourceInfo();
 				} catch (Exception ex) {
-		        	MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0, Messages.AbstractAnalysisUI_2);
+					MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0,
+							Messages.AbstractAnalysisUI_2);
 				}
 			}
 		});
-		
+
 		button0.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent evt) {
 				if (checkEditor()) {
@@ -193,13 +194,14 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 				}
 			}
 		});
-			
+
 		button1.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent evt) {
 				text = text;
-				
+
 				if (text.equals("") || text == null) {
-		        	MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0, Messages.AbstractAnalysisUI_2);
+					MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0,
+							Messages.AbstractAnalysisUI_2);
 				} else {
 					if (btnReferenceTools.getSelection()) {
 						selectAppropriateAlphabet();
@@ -334,12 +336,12 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 			@Override
 			public void mouseDown(MouseEvent evt) {
 
-				//Enable deciphering 
+				// Enable deciphering
 				if (!btnReferenceTools.getSelection()) {
 					if (checkEditor()) {
 						enableReferenceTools(true);
 						if (myLimitedAnalysis == null) {
-						recalcGraph();
+							recalcGraph();
 						}
 						if (myLimitedAnalysis != null) {
 							myGraph.setAnalysis(myLimitedAnalysis);
@@ -350,7 +352,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 						}
 					}
 				} else {
-					//disable deciphering
+					// disable deciphering
 					enableReferenceTools(false);
 					if (myAnalysis == null) {
 						recalcGraph();
@@ -416,13 +418,13 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 				myOverlayAlphabet = String.valueOf(alphas[i].getCharacterSet());
 			}
 		}
-		
+
 		tabItem3 = new TabItem(tabFolder1, SWT.NONE);
 		tabItem3.setText(Messages.FullAnalysisUI_thirdtablabel);
 		composite5 = new Composite(tabFolder1, SWT.NONE);
 		composite5.setLayout(new GridLayout());
 		tabItem3.setControl(composite5);
-		
+
 		label4 = new Label(composite5, SWT.NONE);
 		label4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		label5 = new Label(composite5, SWT.NONE);
@@ -431,9 +433,9 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 		label6.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		text1 = new Text(composite5, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER | SWT.MULTI);
 		text1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
+
 		recalcSourceInfo();
-		
+
 		tabFolder1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		tabFolder1.setSelection(0);
 
@@ -442,7 +444,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 		tipLauncher = new SingleVanishTooltipLauncher(getShell());
 		enableReferenceTools(false);
 	}
-	
+
 	/**
 	 * Method for aggregating information about source text file.
 	 */
@@ -451,15 +453,16 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 			label4.setText(Messages.FullAnalysisUI_source + " -");
 			label5.setText(Messages.FullAnalysisUI_textlength + " -");
 			text1.setText("");
-			
+
 		} else {
 			label4.setText(Messages.FullAnalysisUI_source + " " + source);
-			
+
 			String totalLength = Integer.toString(text.length());
 			label5.setText(Messages.FullAnalysisUI_textlength + " " + totalLength);
-			
+
 			label6.setText(Messages.FullAnalysisUI_textexcerpt);
-			text1.setText(text.substring(0, (text.length() > 1000) ? 1000 : text.length()) + ((text.length() > 1000) ? "..." : ""));
+			text1.setText(text.substring(0, (text.length() > 1000) ? 1000 : text.length())
+					+ ((text.length() > 1000) ? "..." : ""));
 			text1.setEditable(false);
 		}
 	}
@@ -478,8 +481,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 	/**
 	 * opens a resource file stream
 	 *
-	 * @param filename
-	 *            the file path
+	 * @param filename the file path
 	 * @return the inputStream containing the file's content
 	 */
 	private InputStream openMyTestStream(final String filename) {
@@ -543,10 +545,8 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 	/**
 	 * removes a specific character from a string
 	 *
-	 * @param s
-	 *            the string
-	 * @param c
-	 *            the character
+	 * @param s the string
+	 * @param c the character
 	 */
 	private String removeChar(final String s, final char c) {
 		StringBuilder result = new StringBuilder();
@@ -577,10 +577,8 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 	 * a rating function; calculates a value for how much an alphabet is fitting a
 	 * text.
 	 *
-	 * @param alphabet
-	 *            the alphabets (each character only to be contained once!)
-	 * @param text
-	 *            the text
+	 * @param alphabet the alphabets (each character only to be contained once!)
+	 * @param text     the text
 	 * @return the rating. Higher values are better. Rating zero is best.
 	 */
 	private double rateAlphabetTextDifference(final String alphabet, final String text) {
@@ -622,7 +620,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 		int bestindex = 0;
 		double actualrating = 0;
 		for (int i = 0; i < alphas.length; i++) {
-			
+
 			actualrating = rateAlphabetTextDifference(String.valueOf(alphas[i].getCharacterSet()), text);
 			if (actualrating > bestrating) {
 				bestrating = actualrating;
@@ -646,9 +644,8 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 	/**
 	 * analyses the selected overlay text.
 	 *
-	 * @param alphabet
-	 *            limits the overlay analysis to a specific alphabet (each character
-	 *            only to be contained once!)
+	 * @param alphabet limits the overlay analysis to a specific alphabet (each
+	 *                 character only to be contained once!)
 	 */
 	private void analyzeOverlay(final String alphabet) {
 		String overlayText = reftext;

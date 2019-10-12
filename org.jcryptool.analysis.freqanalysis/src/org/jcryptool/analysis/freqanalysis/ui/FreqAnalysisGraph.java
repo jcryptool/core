@@ -13,8 +13,14 @@ package org.jcryptool.analysis.freqanalysis.ui;
 import java.util.Vector;
 
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.MouseMoveListener;
+import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.jcryptool.analysis.freqanalysis.calc.FreqAnalysisData;
 import org.jcryptool.analysis.graphtools.Bar;
 import org.jcryptool.analysis.graphtools.Graph;
 import org.jcryptool.analysis.graphtools.MColor;
@@ -25,307 +31,354 @@ import org.jcryptool.analysis.graphtools.derivates.OverlayLabelBar;
  * @author SLeischnig
  *
  */
-public class FreqAnalysisGraph extends Graph {
-    /**
-     * Differences: - Definition of width and color: - Usage of Specific Bars: LabelBars -
-     * mouseover-Display of the top labels - Always displaying the lower labels - OverlayBars -
-     * shaded Bars Adapts with shifting events from other controlling classes.
-     */
+public class FreqAnalysisGraph extends Graph implements MouseMoveListener, MouseTrackListener {
+	/**
+	 * Differences: - Definition of width and color: - Usage of Specific Bars:
+	 * LabelBars - mouseover-Display of the top labels - Always displaying the lower
+	 * labels - OverlayBars - shaded Bars Adapts with shifting events from other
+	 * controlling classes.
+	 */
 
-    protected Vector<Bar> barsBeforeSort = new Vector<Bar>(0, 1);
+	protected Vector<Bar> barsBeforeSort = new Vector<Bar>(0, 1);
 
-    // global design settings
-    // double barWidth, overlayBarWidth;
-    int overlayTranspHighest, overlayTranspLowest;
-    MColor overlayBarColor;
-    double overlayBarWidth = 1.0;
-    private int currentShift = 0;
-    private int savedShift = 0;
+	// global design settings
+	// double barWidth, overlayBarWidth;
+	int overlayTranspHighest, overlayTranspLowest;
+	MColor overlayBarColor;
+	double overlayBarWidth = 1.0;
+	private int currentShift = 0;
+	private int savedShift = 0;
 
-    private boolean dragged = false;
+	// This field stores where the Mouse was seen last and may be null to signify
+	// "there is no mouse to consider"
+	private Point lastMouseCursorSensitivityPos = null;
 
-    /**
-     * In this method, standard settings from the super class are overridden
-     */
-    private void iniSettings() {
+	private boolean dragged = false;
 
-        overlayTranspHighest = 200;
-        overlayTranspLowest = 10;
+	/**
+	 * In this method, standard settings from the super class are overridden
+	 */
+	private void iniSettings() {
 
-        distTop = 25;
-        distBottom = 25;
-        distLeft = 0;
-        distRight = 0;
-        marginTop = 20;
-        marginBottom = 0;
-        marginLeft = 20;
-        marginRight = 20;
-        calcAreas();
+		overlayTranspHighest = 200;
+		overlayTranspLowest = 10;
 
-        descTopFontColor = new MColor("FFFFFF"/*"0095C9"*/, 255); //$NON-NLS-1$
-        descBottomFontColor = new MColor("FFFFFF", 255); //$NON-NLS-1$
-        descTopBGColor = new MColor("306A90", 255); //$NON-NLS-1$
-        descBottomBGColor = new MColor("B60000", 255); //$NON-NLS-1$
-        descLeftBGColor = new MColor("B60000", 255); //$NON-NLS-1$
-        descRightBGColor = new MColor("B60000", 255); //$NON-NLS-1$
-        barAreaBGColor = new MColor("306A90", 255); //$NON-NLS-1$
-        overlayBarColor = new MColor("FFFFFF", 255); //$NON-NLS-1$
-        //MColor("006AB0", 255);  //$NON-NLS-1$
-    }
+		distTop = 25;
+		distBottom = 25;
+		distLeft = 0;
+		distRight = 0;
+		marginTop = 20;
+		marginBottom = 0;
+		marginLeft = 20;
+		marginRight = 20;
+		calcAreas();
 
-    public FreqAnalysisGraph(final GC gc, final int areaWidth, final int areaHeight) {
-        super(gc, areaWidth, areaHeight);
-        iniSettings();
-    }
+		descTopFontColor = new MColor("FFFFFF"/* "0095C9" */, 255); //$NON-NLS-1$
+		descBottomFontColor = new MColor("FFFFFF", 255); //$NON-NLS-1$
+		descTopBGColor = new MColor("306A90", 255); //$NON-NLS-1$
+		descBottomBGColor = new MColor("B60000", 255); //$NON-NLS-1$
+		descLeftBGColor = new MColor("B60000", 255); //$NON-NLS-1$
+		descRightBGColor = new MColor("B60000", 255); //$NON-NLS-1$
+		barAreaBGColor = new MColor("306A90", 255); //$NON-NLS-1$
+		overlayBarColor = new MColor("FFFFFF", 255); //$NON-NLS-1$
+		// MColor("006AB0", 255); //$NON-NLS-1$
+	}
 
-    /**
-     * a correct modulo function
-     */
-    private int modulo(final int a, final int mod) {
-        int howmany = 0;
-        if (a < 0) {
-            howmany = (int) Math.round(Math.ceil((-1.0) * a / mod));
-            return a + howmany * mod;
-        } else {
-            return a % mod;
-        }
-    }
+	public FreqAnalysisGraph(final GC gc, final int areaWidth, final int areaHeight) {
+		super(gc, areaWidth, areaHeight);
+		iniSettings();
+	}
 
-    /**
-     * calculates the whole space a bar label can fill
-     *
-     * @param textSpace the space that is reserved for bar description labels
-     * @param thisIndex the x-axis value of the bar label you want to calculate
-     * @param maxIndex the highest x-value that occurs in this graph
-     * @return the rectangle in which a text can be drawn
-     */
-    private Rectangle calculateTextContainer(final Rectangle textSpace, final int thisIndex,
-            final int maxIndex) {
-        double rectWidth = (double) textSpace.width / (double) (maxIndex + 1);
-        double dRX = textSpace.x + rectWidth * thisIndex;
-        double dRW = textSpace.x + rectWidth * (thisIndex + 1) - dRX;
-        int RX = (int) Math.round(dRX);
-        int RW = (int) Math.round(dRW);
-        int RY = textSpace.y;
-        int RH = textSpace.height;
-        return new Rectangle(RX, RY, RW, RH);
-    }
+	/**
+	 * a correct modulo function
+	 */
+	private int modulo(final int a, final int mod) {
+		int howmany = 0;
+		if (a < 0) {
+			howmany = (int) Math.round(Math.ceil((-1.0) * a / mod));
+			return a + howmany * mod;
+		} else {
+			return a % mod;
+		}
+	}
 
-    /**
-     * calculates the whole space a bar can fill, integrating the offset value field
-     *
-     * @param barSpace the space that is reserved for bars
-     * @param thisIndex the x-axis value of the bar you want to calculate
-     * @param maxIndex the highest x-value that occurs in this graph
-     * @return the rectangle in which a bar can be drawn
-     */
-    protected final Rectangle calculateBarContainerShifted(final Rectangle barSpace,
-            final int thisIndex, final int maxIndex) {
-        int myIndex = (thisIndex + getCurrentShift()) % (maxIndex + 1);
-        double rectWidth = (double) barSpace.width / (double) (maxIndex + 1);
-        double dRX = barSpace.x + rectWidth * myIndex;
-        double dRW = barSpace.x + rectWidth * (myIndex + 1) - dRX;
-        int RX = (int) Math.round(dRX);
-        int RW = (int) Math.round(dRW);
-        int RY = barSpace.y;
-        int RH = barSpace.height;
-        return new Rectangle(RX, RY, RW, RH);
-    }
+	/**
+	 * calculates the whole space a bar label can fill
+	 *
+	 * @param textSpace the space that is reserved for bar description labels
+	 * @param thisIndex the x-axis value of the bar label you want to calculate
+	 * @param maxIndex  the highest x-value that occurs in this graph
+	 * @return the rectangle in which a text can be drawn
+	 */
+	private Rectangle calculateTextContainer(final Rectangle textSpace, final int thisIndex, final int maxIndex) {
+		double rectWidth = (double) textSpace.width / (double) (maxIndex + 1);
+		double dRX = textSpace.x + rectWidth * thisIndex;
+		double dRW = textSpace.x + rectWidth * (thisIndex + 1) - dRX;
+		int RX = (int) Math.round(dRX);
+		int RW = (int) Math.round(dRW);
+		int RY = textSpace.y;
+		int RH = textSpace.height;
+		return new Rectangle(RX, RY, RW, RH);
+	}
 
-    @Override
-    protected final void paintBarArea(final Rectangle thisArea, final MColor thisBGColor) {
-        // The bar drawing rectangle without margins
-        Rectangle barDrawingRect = new Rectangle(barAreaRect.x + 2 * marginLeft, barAreaRect.y
-                + marginTop, barAreaRect.width - marginLeft - marginRight, barAreaRect.height
-                - marginTop - marginBottom);
-        // actual bar box
-        Rectangle barBox;
+	/**
+	 * calculates the whole space a bar can fill, integrating the offset value field
+	 *
+	 * @param barSpace  the space that is reserved for bars
+	 * @param thisIndex the x-axis value of the bar you want to calculate
+	 * @param maxIndex  the highest x-value that occurs in this graph
+	 * @return the rectangle in which a bar can be drawn
+	 */
+	protected final Rectangle calculateBarContainerShifted(final Rectangle barSpace, final int thisIndex,
+			final int maxIndex) {
+		int myIndex = (thisIndex + getCurrentShift()) % (maxIndex + 1);
+		double rectWidth = (double) barSpace.width / (double) (maxIndex + 1);
+		double dRX = barSpace.x + rectWidth * myIndex;
+		double dRW = barSpace.x + rectWidth * (myIndex + 1) - dRX;
+		int RX = (int) Math.round(dRX);
+		int RW = (int) Math.round(dRW);
+		int RY = barSpace.y;
+		int RH = barSpace.height;
+		return new Rectangle(RX, RY, RW, RH);
+	}
 
-        // calculate the biggest bar Index
-        biggestBarIndex = calcBiggestBarIndex();
-        // Draw the background
-        thisBGColor.setColor(gc);
-        thisBGColor.setBGColor(gc);
-        gc.fillRectangle(thisArea);
+	@Override
+	protected final void paintBarArea(final Rectangle thisArea, final MColor thisBGColor) {
+		// The bar drawing rectangle without margins
+		Rectangle barDrawingRect = new Rectangle(barAreaRect.x + 2 * marginLeft, barAreaRect.y + marginTop,
+				barAreaRect.width - marginLeft - marginRight, barAreaRect.height - marginTop - marginBottom);
+		// actual bar box
+		Rectangle barBox;
 
-        for (int i = 0; i < bars.size(); i++) {
-            // Only shift when the bar is no overlay bar.
-            if ((bars.get(i)) instanceof OverlayBar
-                    || (bars.get(i)) instanceof OverlayLabelBar) {
-                barBox = calculateBarContainer(barDrawingRect, bars.get(i).getIndex(),
-                        biggestBarIndex);
-            } else {
-                barBox = calculateBarContainerShifted(barDrawingRect, bars.get(i)
-                        .getIndex(), biggestBarIndex);
-            }
-            // barBox = calculateBarContainer(barDrawingRect, ((Bar)bars.get(i)).getIndex(),
-            // biggestBarIndex);
-            bars.get(i).setBox(barBox);
-            bars.get(i).setGC(gc);
-            bars.get(i).drawBar();
-        }                
-    }
+		// calculate the biggest bar Index
+		biggestBarIndex = calcBiggestBarIndex();
+		// Draw the background
+		thisBGColor.setColor(gc);
+		thisBGColor.setBGColor(gc);
+		gc.fillRectangle(thisArea);
 
-    @Override
-    protected final void paintDescTopArea(final Rectangle thisArea, final MColor thisBGColor,
-            final MColor thisFontColor) {
+		boolean hasDrawnLbl = false;
+		for (int i = 0; i < bars.size(); i++) {
+			// Only shift when the bar is no overlay bar.
+			Bar bar = bars.get(i);
+			if (bar instanceof OverlayBar || bar instanceof OverlayLabelBar) {
+				barBox = calculateBarContainer(barDrawingRect, bar.getIndex(), biggestBarIndex);
+			} else {
+				barBox = calculateBarContainerShifted(barDrawingRect, bar.getIndex(), biggestBarIndex);
+			}
+			// barBox = calculateBarContainer(barDrawingRect, ((Bar)bars.get(i)).getIndex(),
+			// biggestBarIndex);
+			bar.setBox(barBox);
+			bar.setGC(gc);
 
-        thisBGColor.setColor(gc);
-        thisBGColor.setBGColor(gc);
-        gc.fillRectangle(thisArea);
+			if (this.lastMouseCursorSensitivityPos != null) {
 
-        thisFontColor.setColor(gc);
-        if (dragged) {
-            gc.drawText(NLS.bind(Messages.FreqAnalysisGraph_shiftgraph1, getCurrentShift()),
-            		3 + marginLeft + marginRight, (int) Math.round(Math.floor((double) (descTopRect.height - gc
-                                    .getFontMetrics().getAscent()) / 2)));
-        }else {
-            gc.drawText(NLS.bind(Messages.FreqAnalysisGraph_shiftgraph0, getCurrentShift()),
-                    3 + marginLeft + marginRight, (int) Math.round(Math.floor((double) (descTopRect.height - gc
-                            .getFontMetrics().getAscent()) / 2)));
-        }
+				boolean mouseIsNear = this.lastMouseCursorSensitivityPos != null
+						&& this.lastMouseCursorSensitivityPos.x < barBox.x + barBox.width
+						&& this.lastMouseCursorSensitivityPos.x >= barBox.x;
+				FreqAnalysisData stat = null;
+				for (Object attached : bar.attachedData) {
+					if (attached instanceof FreqAnalysisData) {
+						stat = (FreqAnalysisData) attached;
+					}
+				}
 
-    }
-    
-    @Override
-    protected final void paintDescLeftArea(final Rectangle thisArea, final MColor thisBGColor) {
-        thisBGColor.setBGColor(gc);
-        //thisBGColor.setColor(gc);
-        
-    	Rectangle descDrawingRect = new Rectangle(descLeftRect.x, 0,
-                descLeftRect.width + marginLeft + marginRight, descLeftRect.height + 2 * marginTop + marginBottom);
-    	Rectangle textBox = calculateTextContainer(descDrawingRect, 0,
-                0);
-    	
-    	gc.fillRectangle(textBox);
-    	gc.drawText("FREQ", 5, descLeftRect.height / 2);
-    }
-    
-    @Override
-    protected final void paintDescBottomArea(final Rectangle thisArea, final MColor thisBGColor,
-            final MColor thisFontColor) {
-        // The bar drawing rectangle without margins
-        Rectangle descDrawingRect = new Rectangle(barAreaRect.x + 2 * marginLeft, descBottomRect.y,
-                barAreaRect.width - marginLeft - marginRight, descBottomRect.height + marginBottom);
-        // actual bar box
-        Rectangle textBox;
+				if (mouseIsNear && stat != null) {
+					String lbl = String.format("%1.2f", stat.relOcc);
+					bar.drawBar(lbl);
+				} else {
+					bar.drawBar();
+				}
+			} else {
+				bar.drawBar();
+			}
+		}
+	}
 
-        thisBGColor.setColor(gc);
-        thisBGColor.setBGColor(gc);
-        gc.fillRectangle(thisArea);
+	@Override
+	protected final void paintDescTopArea(final Rectangle thisArea, final MColor thisBGColor,
+			final MColor thisFontColor) {
 
-        thisFontColor.setColor(gc);
-        for (int i = 0; i < bars.size(); i++) {
-            textBox = calculateTextContainer(descDrawingRect, bars.get(i).getIndex(),
-                    biggestBarIndex);
-            bars.get(i).drawLowerLabel(textBox, gc);
-        }
-    }
+		thisBGColor.setColor(gc);
+		thisBGColor.setBGColor(gc);
+		gc.fillRectangle(thisArea);
 
-    @Override
-    protected final Bar setBarStandardSettings(final Bar rawBar) {
-        // set OVERLAY BAR Standards - they override standard bar settings (because theyre
-        // specialised bars)
-        if (rawBar instanceof OverlayBar || rawBar instanceof OverlayLabelBar) {
-            if ((rawBar).getWidth() == -1.0) {
-                (rawBar).setWidth(overlayBarWidth);
-            }
-            if ((rawBar).getColorMainBar() == null) {
-                (rawBar).setColorMainBar(overlayBarColor);
-            }
-        }
+		thisFontColor.setColor(gc);
+		if (dragged) {
+			gc.drawText(NLS.bind(Messages.FreqAnalysisGraph_shiftgraph1, getCurrentShift()),
+					3 + marginLeft + marginRight,
+					(int) Math.round(Math.floor((double) (descTopRect.height - gc.getFontMetrics().getAscent()) / 2)));
+		} else {
+			gc.drawText(NLS.bind(Messages.FreqAnalysisGraph_shiftgraph0, getCurrentShift()),
+					3 + marginLeft + marginRight,
+					(int) Math.round(Math.floor((double) (descTopRect.height - gc.getFontMetrics().getAscent()) / 2)));
+		}
 
-        rawBar.setGC(gc);
-        if (rawBar.getColorMainBar() == null) {
-            rawBar.setColorMainBar(barColor);
-        }
-        if (rawBar.getWidth() == -1) {
-            rawBar.setWidth(barWidth);
-        }
+	}
 
-        // Set Transparency
-        if (rawBar instanceof OverlayBar) {
-            if (((OverlayBar) rawBar).getTransparencyHighest() == -1) {
-                ((OverlayBar) rawBar).setTransparencyHighest(overlayTranspHighest);
-            }
-            if (((OverlayBar) rawBar).getTransparencyLowest() == -1) {
-                ((OverlayBar) rawBar).setTransparencyLowest(overlayTranspLowest);
-            }
-        }
-        if (rawBar instanceof OverlayLabelBar) {
+	@Override
+	protected final void paintDescLeftArea(final Rectangle thisArea, final MColor thisBGColor) {
+		thisBGColor.setBGColor(gc);
+		// thisBGColor.setColor(gc);
 
-            if (((OverlayLabelBar) rawBar).getTransparencyHighest() == -1) {
-                ((OverlayLabelBar) rawBar).setTransparencyHighest(overlayTranspHighest);
-            }
-            if (((OverlayLabelBar) rawBar).getTransparencyLowest() == -1) {
-                ((OverlayLabelBar) rawBar).setTransparencyLowest(overlayTranspLowest);
-            }
-        }
+		Rectangle descDrawingRect = new Rectangle(descLeftRect.x, 0, descLeftRect.width + marginLeft + marginRight,
+				descLeftRect.height + 2 * marginTop + marginBottom);
+		Rectangle textBox = calculateTextContainer(descDrawingRect, 0, 0);
 
-        return rawBar;
-    }
+		gc.fillRectangle(textBox);
+		gc.drawText("FREQ", 5, descLeftRect.height / 2);
+	}
 
-    /**
-     * @return the max. horizontal space available for a bar in pixel.
-     */
-    protected final double calculateBarHorizSpace() {
-        return (double) (areaWidth - descLeftRect.width - descRightRect.width)
-                / (double) (calcBiggestBarIndex());
-    }
+	@Override
+	protected final void paintDescBottomArea(final Rectangle thisArea, final MColor thisBGColor,
+			final MColor thisFontColor) {
+		// The bar drawing rectangle without margins
+		Rectangle descDrawingRect = new Rectangle(barAreaRect.x + 2 * marginLeft, descBottomRect.y,
+				barAreaRect.width - marginLeft - marginRight, descBottomRect.height + marginBottom);
+		// actual bar box
+		Rectangle textBox;
 
-    /**
-     * if the Frequency Graph is dragged, this method determines whether a shifting of bars will
-     * happen, and if, of which offset. <br />
-     * Current Policy is, to not shift the Graph by the exact pixel value; the bars will rather snap
-     * to the raster positions
-     *
-     * @param myPixelsDifference is the difference in horizontal pixels in the dragging procedure.
-     * @param isMouseButtonHold if the mouseButton is held pressed.
-     * @return if a shifting occurred (for redraw)
-     */
-    public final boolean setDraggedPixels(final int myPixelsDifference,
-            final boolean isMouseButtonHold) {
-        if (calcBiggestBarIndex() > 0) {
-            int myShift = (int) Math.round(myPixelsDifference / calculateBarHorizSpace());
-            boolean changed = savedShift + myShift != getCurrentShift();
-            setCurrentShift(savedShift + myShift);
-            setCurrentShift(modulo(getCurrentShift(), calcBiggestBarIndex() + 1));
-            if (!isMouseButtonHold) {
-                savedShift = getCurrentShift();
-            }
-            if (changed) {
-                dragged = true;
-                return true;
-            }
-            return false;
-        } else {
-            setCurrentShift(0);
-            savedShift = 0;
-            return true;
-        }
-    }
+		thisBGColor.setColor(gc);
+		thisBGColor.setBGColor(gc);
+		gc.fillRectangle(thisArea);
 
-    /**
-     * resets the mouse drag, setting the shift to zero.
-     */
-    public final void resetDrag() {
-        setCurrentShift(0);
-        savedShift = 0;
-        dragged = false;
-    }
+		thisFontColor.setColor(gc);
+		for (int i = 0; i < bars.size(); i++) {
+			textBox = calculateTextContainer(descDrawingRect, bars.get(i).getIndex(), biggestBarIndex);
+			bars.get(i).drawLowerLabel(textBox, gc);
+		}
+	}
 
-    /**
-     * @param currentShift the shift of the graph
-     */
-    public final void setCurrentShift(final int currentShift) {
-        this.currentShift = currentShift;
-    }
+	@Override
+	protected final Bar setBarStandardSettings(final Bar rawBar) {
+		// set OVERLAY BAR Standards - they override standard bar settings (because
+		// theyre
+		// specialised bars)
+		if (rawBar instanceof OverlayBar || rawBar instanceof OverlayLabelBar) {
+			if ((rawBar).getWidth() == -1.0) {
+				(rawBar).setWidth(overlayBarWidth);
+			}
+			if ((rawBar).getColorMainBar() == null) {
+				(rawBar).setColorMainBar(overlayBarColor);
+			}
+		}
 
-    /**
-     * @return the shift of the graph
-     */
-    public final int getCurrentShift() {
-        return currentShift;
-    }
+		rawBar.setGC(gc);
+		if (rawBar.getColorMainBar() == null) {
+			rawBar.setColorMainBar(barColor);
+		}
+		if (rawBar.getWidth() == -1) {
+			rawBar.setWidth(barWidth);
+		}
+
+		// Set Transparency
+		if (rawBar instanceof OverlayBar) {
+			if (((OverlayBar) rawBar).getTransparencyHighest() == -1) {
+				((OverlayBar) rawBar).setTransparencyHighest(overlayTranspHighest);
+			}
+			if (((OverlayBar) rawBar).getTransparencyLowest() == -1) {
+				((OverlayBar) rawBar).setTransparencyLowest(overlayTranspLowest);
+			}
+		}
+		if (rawBar instanceof OverlayLabelBar) {
+
+			if (((OverlayLabelBar) rawBar).getTransparencyHighest() == -1) {
+				((OverlayLabelBar) rawBar).setTransparencyHighest(overlayTranspHighest);
+			}
+			if (((OverlayLabelBar) rawBar).getTransparencyLowest() == -1) {
+				((OverlayLabelBar) rawBar).setTransparencyLowest(overlayTranspLowest);
+			}
+		}
+
+		return rawBar;
+	}
+
+	/**
+	 * @return the max. horizontal space available for a bar in pixel.
+	 */
+	protected final double calculateBarHorizSpace() {
+		return (double) (areaWidth - descLeftRect.width - descRightRect.width) / (double) (calcBiggestBarIndex());
+	}
+
+	/**
+	 * if the Frequency Graph is dragged, this method determines whether a shifting
+	 * of bars will happen, and if, of which offset. <br />
+	 * Current Policy is, to not shift the Graph by the exact pixel value; the bars
+	 * will rather snap to the raster positions
+	 *
+	 * @param myPixelsDifference is the difference in horizontal pixels in the
+	 *                           dragging procedure.
+	 * @param isMouseButtonHold  if the mouseButton is held pressed.
+	 * @return if a shifting occurred (for redraw)
+	 */
+	public final boolean setDraggedPixels(final int myPixelsDifference, final boolean isMouseButtonHold) {
+		if (calcBiggestBarIndex() > 0) {
+			int myShift = (int) Math.round(myPixelsDifference / calculateBarHorizSpace());
+			boolean changed = savedShift + myShift != getCurrentShift();
+			setCurrentShift(savedShift + myShift);
+			setCurrentShift(modulo(getCurrentShift(), calcBiggestBarIndex() + 1));
+			if (!isMouseButtonHold) {
+				savedShift = getCurrentShift();
+			}
+			if (changed) {
+				dragged = true;
+				return true;
+			}
+			return false;
+		} else {
+			setCurrentShift(0);
+			savedShift = 0;
+			return true;
+		}
+	}
+
+	/**
+	 * resets the mouse drag, setting the shift to zero.
+	 */
+	public final void resetDrag() {
+		setCurrentShift(0);
+		savedShift = 0;
+		dragged = false;
+	}
+
+	/**
+	 * @param currentShift the shift of the graph
+	 */
+	public final void setCurrentShift(final int currentShift) {
+		this.currentShift = currentShift;
+	}
+
+	/**
+	 * @return the shift of the graph
+	 */
+	public final int getCurrentShift() {
+		return currentShift;
+	}
+
+	@Override
+	public void mouseEnter(MouseEvent e) {
+// 		this.lastMouseCursorSensitivityPos = new Point(e.x, e.y);
+// 		this.lastMouseCursorSensitivityPos = null;
+// 		this.paintArea();
+
+	}
+
+	@Override
+	public void mouseExit(MouseEvent e) {
+		this.lastMouseCursorSensitivityPos = null;
+		this.paintArea();
+	}
+
+	@Override
+	public void mouseHover(MouseEvent e) {
+		System.out.println("Hover");
+		this.lastMouseCursorSensitivityPos = new Point(e.x, e.y);
+	}
+
+	@Override
+	public void mouseMove(MouseEvent e) {
+		this.lastMouseCursorSensitivityPos = new Point(e.x, e.y);
+// 		this.lastMouseCursorSensitivityPos = null;
+	}
 
 }

@@ -26,46 +26,44 @@ import org.jcryptool.analysis.freqanalysis.ui.FreqAnalysisUI;
  *
  */
 public class FreqAnalysisView extends ViewPart implements IFreqAnalysisAccess {
-    /**
-     * The constructor.
-     */
-    public FreqAnalysisView() {
-    }
+	/**
+	 * The constructor.
+	 */
+	public FreqAnalysisView() {
+	}
 
-    FreqAnalysisUI myUI;
+	FreqAnalysisUI myUI;
 
-    /**
-     * This is a callback that will allow us to create the viewer and initialize it.
-     */
-    @Override
+	/**
+	 * This is a callback that will allow us to create the viewer and initialize it.
+	 */
+	@Override
 	public final void createPartControl(final Composite parent) {
-        myUI = new FreqAnalysisUI(parent, SWT.NONE);
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
-                FreqAnalysisPlugin.PLUGIN_ID + ".freqanalysis"); //$NON-NLS-1$
-        
-        hookActionBar();
-    }
-    
-    private void hookActionBar() {
-        IToolBarManager mgr = getViewSite().getActionBars().getToolBarManager();
-        mgr.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-        getViewSite().getActionBars().updateActionBars();
-    }
+		myUI = new FreqAnalysisUI(parent, SWT.NONE);
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, FreqAnalysisPlugin.PLUGIN_ID + ".freqanalysis"); //$NON-NLS-1$
 
-    /**
-     * Passing the focus request to the viewer's control.
-     */
-    @Override
+		hookActionBar();
+	}
+
+	private void hookActionBar() {
+		IToolBarManager mgr = getViewSite().getActionBars().getToolBarManager();
+		mgr.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+		getViewSite().getActionBars().updateActionBars();
+	}
+
+	/**
+	 * Passing the focus request to the viewer's control.
+	 */
+	@Override
 	public void setFocus() {
-        myUI.setFocus();
-    }
+		myUI.setFocus();
+	}
 
-    @Override
-	public final void execute(final boolean simpleView, final int keyLength, final int keyPos,
-            final int overlayIndex, final boolean resetShift, final boolean executeCalc,
-            final boolean whichTab, final boolean activateOverlay) {
-        myUI.execute(simpleView, keyLength, keyPos, overlayIndex, resetShift, executeCalc,
-                whichTab, activateOverlay);
+	@Override
+	public final void execute(final boolean simpleView, final int keyLength, final int keyPos, final int overlayIndex,
+			final boolean resetShift, final boolean executeCalc, final boolean whichTab,
+			final boolean activateOverlay) {
+		myUI.execute(simpleView, keyLength, keyPos, overlayIndex, resetShift, executeCalc, whichTab, activateOverlay);
 
-    }
+	}
 }

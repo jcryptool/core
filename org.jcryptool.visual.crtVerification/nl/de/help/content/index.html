@@ -7,15 +7,22 @@
 
 <body>
 <h1>Zertifikat-Verifikation</h1>
-<p>Willkommen in der Online-Hilfe des Plugins, das zeigt, wie Zertifikate mit drei verschiedenen Gültigkeitsmodellen validiert werden:</p>
+<p>Willkommen in der Online-Hilfe des Plugins, das zeigt, wie Signaturen und Zertifikate mit drei verschiedenen Gültigkeitsmodellen validiert werden:</p>
 <ul>
   <li>Schalenmodell,</li>
   <li>modifiziertes Schalenmodell</li>
   <li>und Kettenmodell.</li>
 </ul>
-<p>Im Folgenden finden Sie einen Überblick zum Plugin sowie eine detaillierte Erklärung zu seiner Verwendung. Zum Schluss werden die Unterschiede der Gültikeitsmodelle kurz erklärt.</p>
-<p>Für die Aussage, ob eine Signatur als gültig erkannt wird, spielen mehrere Dinge eine Rolle &ndash; manche haben gar nichts damit zu tun, ob die Nachricht selbst verändert wurde oder nicht: der Zertifikatspfad (bestehend aus den Zertifikaten von Root-CA, CA und Teilnehmer), die Gültigkeitsdauer von jedem dieser Zertifikate, sowie der Verifizierungs- und der Signier-Zeitpunkt.
-  Alle 8 Zeitpunkte können mit Hilfe von Schiebereglern manipuliert werden, und danach erneut eine Überprüfung durchgeführt werden.</p>
+<p>Im Folgenden finden Sie einen Überblick zum Plugin sowie eine detaillierte Erklärung zu seiner Verwendung. Zum Schluss werden die Unterschiede der Gültigkeitsmodelle kurz erklärt.</p>
+
+<p>Für die Aussage, ob eine Signatur als gültig erkannt wird, spielen mehrere Dinge eine Rolle &ndash; manche haben gar nichts damit zu tun, ob die Nachricht selbst verändert wurde oder nicht:</p>
+<ul>
+  <li>das benutzte Gültigkeitsmodell,</li>
+  <li>der Zertifikatspfad (bestehend aus den Zertifikaten von Root-CA, CA und Teilnehmer),</li>
+  <li>die Gültigkeitsdauer von jedem dieser Zertifikate,</li>
+  <li>sowie der Verifizierungs- und der Signier-Zeitpunkt.</li>
+</ul>
+<p>Alle 8 Zeitpunkte können mit Hilfe von Schiebereglern manipuliert werden, und danach erneut eine Überprüfung durchgeführt werden.</p>
 <p><img src="GUI-Start.png" width="749" height="466" alt="Grafische Oberfläche: Zertifikat-Verifikation" /></p>
 
 <p>&nbsp;</p>
@@ -32,6 +39,7 @@
 <p>&nbsp;</p>
 <h2>Nutzung des Plug-ins</h2>
 <p>Im Folgenden werden wir die Funktionen des Plug-ins anhand eines möglichen Durchlaufs beschreiben.</p>
+
 <h3>Schritt 1</h3>
 <p>Das Plugin hat bei Starten gleich sinnvolle Werte für alle 8 Zeitpunkte eingestellt:</p>
 <pre>
@@ -41,8 +49,9 @@
     Signier-Zeitpunkt:    01.11.2018<br/>
     Verifizier-Zeitpunkt: 01.07.2020
 </pre>
-<p>Alternativ können Sie die Zeitpunkte auch aus in JCT gespeicherten Zertifikaten laden. Beim Klicken auf die Buttons &quot;Root CA Zertifikat laden&quot;, &quot;CA Zertifikat laden&quot; und &quot;Teilnehmerzertifikat laden&quot; öffnet sich jeweils ein Dialogfenster (siehe Abbildung) zum Auswählen des zu ladenden Zertifikats. In diesem Fenster wählen Sie das gewünschte Zertifikat in der Liste aus und klicken auf &quot;Fertigstellen&quot;. Die Regler in der Oberfläche haben sich nun entsprechend der geladenen Zertifikate angepasst und die Schrift des Buttons zum Laden in der Hauptoberfläche ist jetzt grün. Zu beachten ist, dass die Veränderung der Schieberegler rein zur Anschauung dient. Das heißt, es werden weder die Zertifikate verändert noch werden neue erstellt.</p>
+<p>Alternativ können Sie die Zeitpunkte auch aus in JCT gespeicherten Zertifikaten laden. Beim Klicken auf die Buttons &quot;Root CA Zertifikat laden&quot;, &quot;CA Zertifikat laden&quot; und &quot;Teilnehmerzertifikat laden&quot; öffnet sich jeweils ein Dialogfenster (siehe Abbildung) zum Auswählen des zu ladenden Zertifikats. In diesem Fenster wählen Sie das gewünschte Zertifikat in der Liste aus und klicken auf &quot;Fertigstellen&quot;. Die Regler in der Oberfläche haben sich nun entsprechend der geladenen Zertifikate angepasst und die Schrift des Buttons zum Laden in der Hauptoberfläche ist jetzt grün. Bitte beachten Sie, dass die Veränderung der Schieberegler rein zur Anschauung dient. Das heißt, es werden weder die Zertifikate verändert noch werden neue erstellt.</p>
 <p><img src="PopUp.png" width="417" height="380" alt="Fenster zum Laden der Zertifikate" /></p>
+
 
 <h3>&nbsp;</h3>
 <h3>Schritt 2</h3>
@@ -58,16 +67,20 @@
 <p>Log:</p>
 <p><img src="Log.png" width="349" height="284" alt="Log" /></p>
 
+
 <h3>&nbsp;</h3>
 <h3>Schritt 3</h3>
-<p>Zu Anschauungszwecken können Sie nun mit den Schiebereglern die  Gültigkeitsdauer von jedem der Zertifikate sowie den Verifizierungs- [TODO: Bitte ändern, dass überall manipulierbar -- (nur beim Schalenmodell)] und den Signierzeitpunkt manipulieren und danach erneut eine Überprüfung mit dem Überprüfen-Button durchführen. Mit Hilfe der Schieberegler werden nur die Monate angepasst. Damit Sie ein Tages-genaues Datum angeben können, gibt es in der Gruppierung "Details zu den Zertifikaten" entsprechende Textfelder. Nach einer Manipulation mit den Schiebereglern wird die Schrift der Buttons &quot;Root CA Zertifikat laden&quot;, &quot;CA Zertifikat laden&quot; und &quot;Teilnehmerzertifikat laden&quot; orange.</p>
+<p>Zu Anschauungszwecken können Sie nun mit den Schiebereglern die Gültigkeitsdauer von jedem der Zertifikate sowie den Verifizierungs- [[[TODO: Bitte ändern, dass überall manipulierbar -- (nicht nur beim Schalenmodell)]]] und den Signierzeitpunkt manipulieren. Danach können Sie erneut eine Validierung mit dem Überprüfen-Button durchführen.</p>
+<p>Mit Hilfe der Schieberegler werden nur die Monate angepasst. Damit Sie ein Tages-genaues Datum angeben können, gibt es in der Gruppierung "Details zu den Zeitpunkten" entsprechende Textfelder. Nach einer Manipulation mit den Schiebereglern wird die Schrift der Buttons &quot;Root CA Zertifikat laden&quot;, &quot;CA Zertifikat laden&quot; und &quot;Teilnehmerzertifikat laden&quot; orange.</p>
 
-<p>Der hellblaue Pfeil unterhalb der Schieberegler für die Gültigkeitdauer der 3 Zertifikate zeigt das Signaturdatum und der violette Pfeil das Verifikationsdatum. [[[TODO: Auch wenn das Verifizierungsdatum nur im Schalenmodell für die Bewertung des Verifizierungsergebnisses berücksichtigt wird, kann man den Slider in allen 3 Fällen verändern.]]]</p>
+<p>Die hellblauen Pfeile unterhalb der Schieberegler für die Gültigkeitsdauer der 3 Zertifikate zeigen das Signaturdatum und die violetten Pfeil zeigen das Verifikationsdatum. [[[TODO: Auch wenn das Verifizierungsdatum nur im Schalenmodell für die Bewertung des Verifizierungsergebnisses berücksichtigt wird, kann man den Slider in allen 3 Fällen verändern.]]]</p>
 
 <p>Schieberegler:</p>
 <p><img src="Schieberegler.png" width="745" height="279" alt="Schieberegler" /></p>
-<p>Details zu den Zertifikaten:</p>
+
+<p>Details zu den Zeitpunkten:</p>
 <p><img src="Details.png" width="744" height="125" alt="Details" /></p>
+
 
 
 <p>&nbsp;</p>
@@ -86,7 +99,7 @@
 
 <h3>&nbsp;</h3>
 <h3>Modifiziertes Schalenmodell</h3>
-<p>Das modifizierte Schalenmodell entspricht dem eben beschriebenen Schalenmodell  mit der besonderen Randbedingung, dass für die Überprüfung eines Zertifikatspfades der Zeitpunkt der Dokumentsignaturbildung herangezogen wird und nicht wie im Schalenmodell der aktuelle Zeitpunkt der Prüfung.</p>
+<p>Das modifizierte Schalenmodell entspricht dem eben beschriebenen Schalenmodell  mit der besonderen Randbedingung, dass für die Überprüfung eines Zertifikatspfades der Zeitpunkt der Dokumentsignaturbildung herangezogen wird und nicht wie im Schalenmodell der aktuelle Zeitpunkt der Prüfung. Dies wird normalerweise in Europa verwendet.</p>
 <p><img src="modSchalenmodell.png" width="525" height="166" alt="Modifiziertes Schalenmodell" /></p>
 
 <h3>&nbsp;</h3>
@@ -113,9 +126,10 @@
 <p><img src="nurKetten.png" width="524" height="202" alt="Nur Kettenmodell gültig" /></p>
 
 <h3>&nbsp;</h3>
-<p>Man sieht also Folgendes: Abhängig vom Gültigkeitsmodell kann eine Signatur schon deshalb als ungültig gewertet werden, wenn der Signier- oder Verifizier-Zeitpunkt ein anderer ist. Verblüffend ist, dass auch wenn sich die zu prüfende Nachricht überhaupt nicht änderte, Sie heute eine gültige Signatur bescheinigt bekommen können und morgen eine ungültige. Das einfache Schalenmodell hat sich u.a. auch deshalb nicht durchgesetzt, da dies für den Nutzer unverständlich ist.</p>
+<p>Man sieht also Folgendes: Abhängig vom Gültigkeitsmodell kann eine Signatur schon deshalb als ungültig gewertet werden, wenn der Verifizier-Zeitpunkt ein anderer ist. Verblüffend ist, dass auch wenn sich die zu prüfende Nachricht und die Signatur überhaupt nicht änderte, Sie heute eine gültige Signatur bescheinigt bekommen können und morgen eine ungültige. Das einfache Schalenmodell hat sich u.a. auch deshalb nicht durchgesetzt, da dies für den Nutzer unverständlich ist.</p>
 
 
+<h3>&nbsp;</h3>
 	<h2>Referenzen zum Weiterlesen</h2>
 	<ul>
 		<li><a href="https://en.wikipedia.org/wiki/Certification_path_validation_algorithm">[1] Wikipedia: Certification path validation algorithm</a></li>

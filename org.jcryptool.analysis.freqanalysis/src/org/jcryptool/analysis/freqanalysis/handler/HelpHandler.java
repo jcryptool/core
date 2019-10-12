@@ -17,15 +17,16 @@ import org.eclipse.ui.PlatformUI;
 import org.jcryptool.analysis.freqanalysis.FreqAnalysisPlugin;
 
 /**
- * This handler displays the dynamic help identified by the given context help id.
+ * This handler displays the dynamic help identified by the given context help
+ * id.
  *
  * @author Dominik Schadow
  * @version 0.9.2
  */
 public class HelpHandler extends AbstractHandler {
-    @Override
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-        PlatformUI.getWorkbench().getHelpSystem().displayHelp(FreqAnalysisPlugin.PLUGIN_ID + ".freqanalysis"); //$NON-NLS-1$
-        return null;
-    }
+		PlatformUI.getWorkbench().getHelpSystem().displayHelp(FreqAnalysisPlugin.PLUGIN_ID + ".freqanalysis"); //$NON-NLS-1$
+		return null;
+	}
 }

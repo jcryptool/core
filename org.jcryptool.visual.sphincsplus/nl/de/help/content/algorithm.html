@@ -17,6 +17,7 @@
 		werden hier zuerst erklärt und danach folgt der Ablauf und der
 		Zusammenhang zwischen den Elementen.</p>
 
+	<p>&nbsp;</p>
 	<h2>FORS</h2>
 	<p>FORS ist die Abkürzung für "Forest of random Subsets". FORS ist
 		ein "few-times signature scheme". Es ist eine Verbesserung von HORST,
@@ -146,7 +147,8 @@
 	</ol>
 
 
-	<h3>WOTS<sup>+</sup>-Einmal-Signaturen</h3>
+	<p>&nbsp;</p>
+	<h2>WOTS<sup>+</sup>-Einmal-Signaturen</h2>
 	<p>WOTS+ beschreibt ein Verfahren um eine beliebige Nachricht zu
 		signieren. Der private Schlüssel darf nur ein Mal zum Signieren
 		verwendet werden. Wird ein Schlüssel zwei Mal verwendet, wird das
@@ -244,7 +246,8 @@
 		Schlüssels von WOTS+ und der Ausgabe der Kettenfunktion generiert.</p>
 
 
-	<h3>XMSS</h3>
+	<p>&nbsp;</p>
+	<h2>XMSS</h2>
 	<p>XMSS steht für "eXtended Merkle Signature Scheme", welches die
 		Verbindung von WOTS+ mit einem binären Hashbaum ist. Es werden 2<sup>h'</sup>
 		WOTS<sup>+</sup> öffentliche Schlüssel authentifiziert mittels dem
@@ -383,7 +386,8 @@
 	</ol>
 
 
-	<h3>Der SPHINCS<sup>+</sup>-Hypertree</h3>
+	<p>&nbsp;</p>
+	<h2>Der SPHINCS<sup>+</sup>-Hypertree</h2>
 	<p>Der SPHINCS+-Hypertree ist eine Variante von XMSS<sup>MT</sup>. Es ist
 		ein Zertifizierungsbaum von XMSS-Instanzen. In diesem Baum wird immer
 		der darüberliegende Knoten verwendet, um den darunterliegenden Knoten
@@ -465,7 +469,8 @@
 	</ol>
 
 
-	<h3>SPHINCS+</h3>
+	<p>&nbsp;</p>
+	<h2>SPHINCS+</h2>
 	<h4>SPHINCS+-Parameter</h4>
 	<p>Die Auswirkungen der Parameter wurde bereits in der <a
 		href="index.html#Parameter">Parameter-Übersicht</a> erklärt.</p>
@@ -618,23 +623,35 @@
 				<td>5</td>
 				<td>49216</td>
 			</tr>
-
 		</tbody>
 	</table>
 
 
 	<p>&nbsp;</p>
-	<h2>Empfohlene Nachschlagewerke</h2>
+	<h2>Literatur / Empfohlene Links</h2>
 	<ul>
-		<li>Einreichung bei der NIST: Daniel J. Bernstein,
+		<li>Webseite zu SPHINCS+ &ndash; Stateless hash-based signatures: <a
+			href="https://sphincs.org/">https://sphincs.org/</a>
+		</li>
+		<li>Einreichung bei der NIST, 2017: Daniel J. Bernstein u.a.,
 			SPHINCS+: <a
 			href="https://sphincs.org/data/sphincs+-specification.pdf">https://sphincs.org/data/sphincs+-specification.pdf</a>
 		</li>
+		<li>Blog: <a
+			href="https://huelsing.net/wordpress/?p=558">SPHINCS+ – The smaller SPHINCS</a>
+		</li>
+		<li>Video: <a
+			href="https://www.youtube.com/watch?v=qkqtsnXTMQM">Andreas Hülsing – Hash-Based Signatures</a>
+		</li>
+		<li>Slides, exercises, video von der Summer School on Post-Quantum Cryptography 2017: <a
+			href="https://2017.pqcrypto.org/school/schedule.html">Andreas Hülsing – Hash-based signatures</a>
+		</li>
 		<li>Weiterführende Informationen zum Merkle-Tree: Daniel J.
-			Bernstein, Post-Quantum-Cryptography: <a
+			Bernstein u.a., Post-Quantum-Cryptography, 2009: <a
 			href="https://www.springer.com/de/book/9783540887010">https://www.springer.com/de/book/9783540887010</a>
 		</li>
 	</ul>
+<br>
 
 </body>
 </html>
