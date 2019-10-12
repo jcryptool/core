@@ -16,11 +16,12 @@ import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle
+ * 
  * @author SLeischnig
  *
  */
 public class FreqAnalysisPlugin extends AbstractUIPlugin {
-    /** The plug-in ID. */
+	/** The plug-in ID. */
 	public static final String PLUGIN_ID = "org.jcryptool.analysis.freqanalysis"; //$NON-NLS-1$
 
 	// The shared instance
@@ -34,7 +35,9 @@ public class FreqAnalysisPlugin extends AbstractUIPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+	 * 
+	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.
+	 * BundleContext)
 	 */
 	@Override
 	public final void start(final BundleContext context) throws Exception {
@@ -44,7 +47,9 @@ public class FreqAnalysisPlugin extends AbstractUIPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
 	@Override
 	public final void stop(final BundleContext context) throws Exception {
@@ -62,8 +67,8 @@ public class FreqAnalysisPlugin extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Returns an image descriptor for the image file at the given
-	 * plug-in relative path
+	 * Returns an image descriptor for the image file at the given plug-in relative
+	 * path
 	 *
 	 * @param path the path
 	 * @return the image descriptor

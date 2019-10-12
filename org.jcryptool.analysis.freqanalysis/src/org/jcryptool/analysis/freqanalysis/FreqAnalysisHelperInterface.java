@@ -11,14 +11,15 @@
 package org.jcryptool.analysis.freqanalysis;
 
 /**
- * @author SLeischnig
- * Interface for accessing the Vigenère helper.
+ * @author SLeischnig Interface for accessing the Vigenère helper.
  */
 public interface FreqAnalysisHelperInterface {
 
-	/** exports a result from an analysis plugin to the Vigenère helper.
+	/**
+	 * exports a result from an analysis plugin to the Vigenère helper.
+	 * 
 	 * @param pluginID the exporting plugin's ID
-	 * @param result the result to be exported
+	 * @param result   the result to be exported
 	 */
 	public void setExtResult(String pluginID, String result);
 

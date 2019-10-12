@@ -35,7 +35,6 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.constants.IConstants;
 
-
 /**
  * @author Anatoli Barski
  *
@@ -53,90 +52,87 @@ public abstract class AbstractAnalysisUI extends Composite {
 	protected Button button3;
 	protected Spinner spinner2;
 	protected Spinner spinner1;
-	
+
 	AbstractAnalysisUI(final Composite parent, final int style) {
 		super(parent, style);
 	}
-	
-    /**
-     * checks, whether an editor is opened or not.
-     */
-    protected boolean checkEditor() {
-        InputStream stream = EditorsManager.getInstance().getActiveEditorContentInputStream();
-        if (stream == null) {
-        	MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0, Messages.AbstractAnalysisUI_1);
-            return false;
-        }
-        return true;
-    }
 
-    /**
-     * get the text from an opened editor
-     */
-    protected String getEditorText() {    	
-        String text = ""; //$NON-NLS-1$
-        InputStream stream = EditorsManager.getInstance().getActiveEditorContentInputStream();
-        text = InputStreamToString(stream);
-        return text;
-    }
-    
-    /**
-     * reads the current value from an input stream
-     *
-     * @param in the input stream
-     */
-    protected String InputStreamToString(InputStream in) {
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new InputStreamReader(in, IConstants.UTF8_ENCODING));
-        } catch (UnsupportedEncodingException e1) {
-            LogUtil.logError(FreqAnalysisPlugin.PLUGIN_ID, e1);
-        }
+	/**
+	 * checks, whether an editor is opened or not.
+	 */
+	protected boolean checkEditor() {
+		InputStream stream = EditorsManager.getInstance().getActiveEditorContentInputStream();
+		if (stream == null) {
+			MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0, Messages.AbstractAnalysisUI_1);
+			return false;
+		}
+		return true;
+	}
 
-        StringBuffer myStrBuf = new StringBuffer();
-        int charOut = 0;
-        String output = ""; //$NON-NLS-1$
-        try {
-            while ((charOut = reader.read()) != -1) {
-                myStrBuf.append(String.valueOf((char) charOut));
-            }
-        } catch (IOException e) {
-            LogUtil.logError(FreqAnalysisPlugin.PLUGIN_ID, e);
-        }
-        output = myStrBuf.toString();
-        return output;
-    }
-    
-    protected void recalcGraph()
-	{
-		if(text == null) {
-			if(checkEditor()) {
+	/**
+	 * get the text from an opened editor
+	 */
+	protected String getEditorText() {
+		String text = ""; //$NON-NLS-1$
+		InputStream stream = EditorsManager.getInstance().getActiveEditorContentInputStream();
+		text = InputStreamToString(stream);
+		return text;
+	}
+
+	/**
+	 * reads the current value from an input stream
+	 *
+	 * @param in the input stream
+	 */
+	protected String InputStreamToString(InputStream in) {
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new InputStreamReader(in, IConstants.UTF8_ENCODING));
+		} catch (UnsupportedEncodingException e1) {
+			LogUtil.logError(FreqAnalysisPlugin.PLUGIN_ID, e1);
+		}
+
+		StringBuffer myStrBuf = new StringBuffer();
+		int charOut = 0;
+		String output = ""; //$NON-NLS-1$
+		try {
+			while ((charOut = reader.read()) != -1) {
+				myStrBuf.append(String.valueOf((char) charOut));
+			}
+		} catch (IOException e) {
+			LogUtil.logError(FreqAnalysisPlugin.PLUGIN_ID, e);
+		}
+		output = myStrBuf.toString();
+		return output;
+	}
+
+	protected void recalcGraph() {
+		if (text == null) {
+			if (checkEditor()) {
 				text = getEditorText();
 			} else {
 				return;
 			}
 		}
-		if(text != null)
-		{
+		if (text != null) {
 			setFinalVigParameters();
 			analyze();
 			myGraph.redraw();
 		}
 	}
-    
+
 	protected abstract void analyze();
-	
+
 	/**
 	 * takes the input control's values and sets the final analysis parameters
 	 */
-	private void setFinalVigParameters()
-	{
-		myLength = 1; 
-		if(! button3.getSelection()) {
+	private void setFinalVigParameters() {
+		myLength = 1;
+		if (!button3.getSelection()) {
 			myLength = spinner1.getSelection();
 		}
-		myOffset = 0; 
-		if(! button3.getSelection()) {
+		myOffset = 0;
+		if (!button3.getSelection()) {
 			myOffset = spinner2.getSelection();
 		}
 	}
