@@ -562,9 +562,10 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		lblValidFrom.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		lblValidFrom.setText(Messages.CrtVerViewComposite_validFrom);
 		
-		textRootCaFromDay = new Text(grpDetails, SWT.BORDER);
+		textRootCaFromDay = new Text(grpDetails, SWT.BORDER | SWT.CENTER);
 		GridData gd_textRootCaFromDay = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		gd_textRootCaFromDay.horizontalIndent = 30;
+		gd_textRootCaFromDay.widthHint = 20;
 		textRootCaFromDay.setLayoutData(gd_textRootCaFromDay);
 		textRootCaFromDay.addFocusListener(new FocusAdapter() {
 			@Override
@@ -579,8 +580,10 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		fromRootCa = new Label(grpDetails, SWT.NONE);
 		fromRootCa.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		
-		textCaFromDay = new Text(grpDetails, SWT.BORDER);
-		textCaFromDay.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		textCaFromDay = new Text(grpDetails, SWT.BORDER | SWT.CENTER);
+		GridData gd_textCaFromDay = new GridData(SWT.FILL, SWT.CENTER, false, false); 
+		gd_textCaFromDay.widthHint = 20;
+		textCaFromDay.setLayoutData(gd_textCaFromDay);
 		textCaFromDay.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -594,8 +597,10 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		fromCa = new Label(grpDetails, SWT.NONE);
 		fromCa.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		
-		textCertFromDay = new Text(grpDetails, SWT.BORDER);
-		textCertFromDay.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		textCertFromDay = new Text(grpDetails, SWT.BORDER | SWT.CENTER);
+		GridData gd_textCertFromDay = new GridData(SWT.FILL, SWT.CENTER, false, false);
+		gd_textCertFromDay.widthHint = 20;
+		textCertFromDay.setLayoutData(gd_textCertFromDay);
 		textCertFromDay.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -609,8 +614,10 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		fromCert = new Label(grpDetails, SWT.NONE);
 		fromCert.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		
-		textSignatureDateDay = new Text(grpDetails, SWT.BORDER);
-		textSignatureDateDay.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		textSignatureDateDay = new Text(grpDetails, SWT.BORDER | SWT.CENTER);
+		GridData gd_textSignatureDateDay = new GridData(SWT.FILL, SWT.CENTER, false, false);
+		gd_textSignatureDateDay.widthHint = 20;
+		textSignatureDateDay.setLayoutData(gd_textSignatureDateDay);
 		textSignatureDateDay.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -625,8 +632,10 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		signatureDate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		
 
-		textVerificationDateDay = new Text(grpDetails, SWT.BORDER);
-		textVerificationDateDay.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		textVerificationDateDay = new Text(grpDetails, SWT.BORDER | SWT.CENTER);
+		GridData gd_textVerificationDateDay = new GridData(SWT.FILL, SWT.CENTER, false, false);
+		gd_textVerificationDateDay.widthHint = 20;
+		textVerificationDateDay.setLayoutData(gd_textVerificationDateDay);
 		textVerificationDateDay.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -644,9 +653,10 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		lblValidThru.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		lblValidThru.setText(Messages.CrtVerViewComposite_validThru);
 
-		textRootCaThruDay = new Text(grpDetails, SWT.BORDER);
+		textRootCaThruDay = new Text(grpDetails, SWT.BORDER | SWT.CENTER);
 		GridData gd_textRootCaThruDay = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		gd_textRootCaThruDay.horizontalIndent = 30;
+		gd_textRootCaThruDay.widthHint = 20;
 		textRootCaThruDay.setLayoutData(gd_textRootCaThruDay);
 		textRootCaThruDay.addFocusListener(new FocusAdapter() {
 			@Override
@@ -662,8 +672,10 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		thruRootCa = new Label(grpDetails, SWT.NONE);
 		thruRootCa.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 
-		textCaThruDay = new Text(grpDetails, SWT.BORDER);
-		textCaThruDay.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		textCaThruDay = new Text(grpDetails, SWT.BORDER | SWT.CENTER);
+		GridData gd_textCaThruDay = new GridData(SWT.FILL, SWT.CENTER, false, false);
+		gd_textCaThruDay.widthHint = 20;
+		textCaThruDay.setLayoutData(gd_textCaThruDay);
 		textCaThruDay.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -677,8 +689,10 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		thruCa = new Label(grpDetails, SWT.NONE);
 		thruCa.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 
-		textCertThruDay = new Text(grpDetails, SWT.BORDER);
-		textCertThruDay.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		textCertThruDay = new Text(grpDetails, SWT.BORDER | SWT.CENTER);
+		GridData gd_textCertThruDay = new GridData(SWT.FILL, SWT.CENTER, false, false);
+		gd_textCertThruDay.widthHint = 20;
+		textCertThruDay.setLayoutData(gd_textCertThruDay);
 		textCertThruDay.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
