@@ -99,6 +99,10 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 	int arrowVerDiff = 0;
 
 	Text txtLogWindow;
+	
+	private Color light_blue = new Color(Display.getCurrent(), 30, 144, 255);
+	private Color violet = new Color(Display.getCurrent(), 72, 61, 139);
+	private Color orange = new Color(Display.getCurrent(), 255, 140, 0);
 
 	/**
 	 * counter for number of performed validations
@@ -333,7 +337,6 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		
 		Label lblArrowSig = new Label(leftTop, SWT.NONE);
 		lblArrowSig.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		Color light_blue = new Color(Display.getCurrent(), 30, 144, 255);
 		lblArrowSig.setForeground(light_blue);
 		lblArrowSig.setText(Messages.CrtVerViewComposite_signatureDate);
 		
@@ -355,7 +358,6 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		
 		Label lblArrowVer = new Label(leftTop, SWT.NONE);
 		lblArrowVer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		Color violet = new Color(Display.getCurrent(), 72, 61, 139);
 		lblArrowVer.setForeground(violet);
 		lblArrowVer.setText(Messages.CrtVerViewComposite_verificationDate);
 		
@@ -384,8 +386,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				controller.parseDatesFromComposite();
-				controller
-						.setLogText(Messages.CrtVerViewComposite_signatureDate
+				controller.setLogText(Messages.CrtVerViewComposite_signatureDate
 								+ " " + Messages.CrtVerViewComposite_dateSet
 								+ " " + controller.getSigDate());
 			}
@@ -946,8 +947,6 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 	@Override
 	public void paintControl(PaintEvent e) {
 		// Set the used color
-		Color lightblue = new Color(Display.getCurrent(), 30, 144, 255);
-		Color darkblue = new Color(Display.getCurrent(), 72, 61, 139);
 		Rectangle clientArea;
 		int width;
 		int height;
@@ -974,14 +973,14 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		height = clientArea.height;
 
 		// Draw Arrow Signature Date
-		gc.setBackground(lightblue);
+		gc.setBackground(light_blue);
 		gc.fillRectangle(width / 2 + arrowSigDiff - 4, 9, 8, height);
 		gc.fillPolygon(new int[] { (width / 2 - 8 + arrowSigDiff), 9,
 				(width / 2 + arrowSigDiff), 0, (width / 2 + 8 + arrowSigDiff),
 				9 });
 
 		// Draw Arrow Verification Date
-		gc.setBackground(darkblue);
+		gc.setBackground(violet);
 		gc.fillRectangle(width / 2 + arrowVerDiff - 4, 9, 8, height - 4);
 		gc.fillPolygon(new int[] { (width / 2 - 8 + arrowVerDiff), 11,
 				(width / 2 + arrowVerDiff), 2, (width / 2 + 8 + arrowVerDiff),
@@ -996,7 +995,6 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 	 * btnLoadUserCert to orange. This happens when the scales are modified.
 	 */
 	public void setLoadBtnsOrange() {
-		Color orange = new Color(Display.getCurrent(), 255, 140, 0);
 		btnLoadRootCa.setForeground(orange);
 		btnLoadCa.setForeground(orange);
 		btnLoadUserCert.setForeground(orange);
