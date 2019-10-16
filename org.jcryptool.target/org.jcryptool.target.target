@@ -19,9 +19,19 @@
 		<unit id="org.eclipse.rcp.sdk.id" version="4.13.0.I20190916-1045"/>
 		<unit id="org.eclipse.zest.sdk.feature.group" version="1.7.0.201606061308"/>
 	</location>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+<!--	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 		<repository location="https://simlei.github.io/org.jcryptool.thirdparty.java11migration.p2/site"/>
 		<unit id="org.jcryptool.thirdparty.java11migration.jaxb" version="0.0.1.20190910205836"/>
+	</location>-->
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+		<repository location="https://simlei.github.io/org.jcryptool.thirdparty/site/m2bundle"/>
+		<unit id="org.jcryptool.thirdparty.m2bundle.jaxb" version="0.0.1.20191016062250"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+		<repository location="https://simlei.github.io/org.jcryptool.thirdparty/site/jre"/>
+		<unit id="org.jcryptool.thirdparty.jre.linux64.feature.feature.group" version="11.0.4.201910160422"/>
+		<unit id="org.jcryptool.thirdparty.jre.macosx.feature.feature.group" version="11.0.4.201910160422"/>
+		<unit id="org.jcryptool.thirdparty.jre.win64.feature.feature.group" version="11.0.4.201910160422"/>
 	</location>
 </locations>
 <launcherArgs>

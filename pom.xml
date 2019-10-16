@@ -55,9 +55,9 @@
     <module>org.jcryptool.editors.feature</module>
     <module>org.jcryptool.fileexplorer</module>
 	<module>org.jcryptool.jre.master.feature</module>
-	<module>org.jcryptool.jre.macosx.feature</module>
-	<module>org.jcryptool.jre.win64.feature</module>
-	<module>org.jcryptool.jre.linux64.feature</module>
+	<!-- <module>org.jcryptool.jre.macosx.feature</module> -->
+	<!-- <module>org.jcryptool.jre.win64.feature</module> -->
+	<!-- <module>org.jcryptool.jre.linux64.feature</module> -->
     <module>org.jcryptool.product</module>
     <module>org.jcryptool.providers.feature</module>
     <module>org.jcryptool.target</module>
