@@ -89,7 +89,7 @@ public class Matrix2D {
             
 
             if (pivot == -1 ) 
-                throw new MatrixException("Matrix is singular, no inverse could be found!");
+                return null;
 
             if (pivot != i) {
                 //pivoting P

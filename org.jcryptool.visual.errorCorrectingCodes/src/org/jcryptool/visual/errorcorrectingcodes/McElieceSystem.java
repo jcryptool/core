@@ -1,5 +1,6 @@
 package org.jcryptool.visual.errorcorrectingcodes;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
@@ -11,10 +12,10 @@ import java.util.stream.Stream;
 import org.jcryptool.visual.errorcorrectingcodes.data.CodeArray;
 import org.jcryptool.visual.errorcorrectingcodes.data.EccData;
 import org.jcryptool.visual.errorcorrectingcodes.data.Matrix2D;
+import org.jcryptool.visual.errorcorrectingcodes.data.MatrixException;
 
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
-//TODO implement matrix echolon form / inverse computation
 public class McElieceSystem {
     
     EccData data;
@@ -56,41 +57,33 @@ public class McElieceSystem {
         maskH.add(1);
         maskH.add(0);
     }
-
-    public void fillMatrixP() {
+    
+    public Matrix2D randomMatrix(int rows, int columns) {
+        SecureRandom rand = new SecureRandom();
+        int[][] data = new int[rows][columns];
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < columns; j++) {
+                    data[i][j] = rand.nextInt(2);
+                }
+            }        
+        return new Matrix2D(data);
+    }
+    
+    public Matrix2D randomPermutationMatrix(int size) {
        
-       matrixP = new Matrix2D(new int[][] {
-            {0, 1, 0, 0, 0, 0, 0}, 
-            {0, 0, 0, 1, 0, 0, 0}, 
-            {0, 0, 0, 0, 0, 0, 1}, 
-            {1, 0, 0, 0, 0, 0, 0}, 
-            {0, 0, 1, 0, 0, 0, 0}, 
-            {0, 0, 0, 0, 0, 1, 0}, 
-            {0, 0, 0, 0, 1, 0, 0} 
-        });
-    }
-    
-    public void fillMatrixS() {
-        matrixS = new Matrix2D(new int[][] {
-            { 1, 1, 0, 1 },
-            { 1, 0, 0, 1 },
-            { 0, 1, 1, 1 },
-            { 1, 1, 0, 0 }
-        });        
-    }
-    
-    public void inverseMatrices(){
-        if(matrixS == null) {
-            fillMatrixS();
+        ArrayList<int[]> data = new ArrayList<int[]>();
+        
+        for (int i = 0; i < size; i++) {
+            int[] arr = new int[size];
+            arr[i] = 1;
+            data.add(arr);
         }
         
-        if(matrixP == null) {
-            fillMatrixP();
-        }
-            
-        matrixSInv = matrixS.invert();
-        matrixPInv = matrixP.invert();
+        Collections.shuffle(data);
+        int[][] temp = data.toArray(new int[size][size]);
+        return new Matrix2D(temp);
     }
+
 
     public void computePublicKey() {
         Matrix2D sg = matrixS.multBinary(matrixG);
@@ -124,7 +117,7 @@ public class McElieceSystem {
         encrypted = new CodeArray(binary.size());
 
         for (int i = 0; i < binary.size(); i++) {
-            List<Integer> temp = Arrays.asList(new Integer[] { 0, 0, 0, 0, 1, 0, 0 });
+            List<Integer> temp = Arrays.asList(new Integer[] { 0, 0, 0, 0, 0, 0, 1 });
             Collections.shuffle(temp);
             int[] tempArray = temp.stream().mapToInt(j->j).toArray();
             error.add(tempArray);
@@ -257,56 +250,59 @@ public class McElieceSystem {
     
     public Matrix2D getMatrixG() {
       return matrixG;
-  }
+    }
 
-  public void setMatrixG(Matrix2D matrixG) {
-      this.matrixG = matrixG;
-  }
-  
-  public Matrix2D getMatrixH() {
-      return matrixH;
-  }
+    public void setMatrixG(Matrix2D matrixG) {
+        this.matrixG = matrixG;
+    }
 
-  public void setMatrixH(Matrix2D matrixH) {
-      this.matrixH = matrixH;
-  }
+    public Matrix2D getMatrixH() {
+        return matrixH;
+    }
 
-  public Matrix2D getMatrixP() {
-      return matrixP;
-  }
+    public void setMatrixH(Matrix2D matrixH) {
+        this.matrixH = matrixH;
+    }
 
-  public void setMatrixP(Matrix2D matrixP) {
-      this.matrixP = matrixP;
-  }
+    public Matrix2D getMatrixP() {
+        return matrixP;
+    }
 
-  public Matrix2D getMatrixS() {
-      return matrixS;
-  }
+    public void setMatrixP(Matrix2D matrixP) {
+        this.matrixP = matrixP;
+    }
 
-  public void setMatrixS(Matrix2D matrixS) {
-      this.matrixS = matrixS;
-  }    
-  public Matrix2D getMatrixPInv() {
-      return matrixPInv;
-  }
-  
-  public void setMatrixPInv(Matrix2D matrixPInv) {
-      this.matrixPInv = matrixPInv;
-  }
-  
-  public Matrix2D getMatrixSInv() {
-      return matrixSInv;
-  }
-  
-  public void setMatrixSInv(Matrix2D matrixSInv) {
-      this.matrixSInv = matrixSInv;
-  }
+    public Matrix2D getMatrixS() {
+        return matrixS;
+    }
 
-  public Matrix2D getMatrixSGP() {
-      return matrixSGP;
-  }
+    public void setMatrixS(Matrix2D matrixS) {
+        this.matrixS = matrixS;
+    }
 
-  public void setMatrixSGP(Matrix2D matrixSGP) {
-      this.matrixSGP = matrixSGP;
-  }    
+    public Matrix2D getMatrixPInv() {
+        return matrixPInv;
+    }
+
+    public void setMatrixPInv(Matrix2D matrixPInv) {
+        this.matrixPInv = matrixPInv;
+    }
+
+    public Matrix2D getMatrixSInv() {
+        return matrixSInv;
+    }
+
+    public void setMatrixSInv(Matrix2D matrixSInv) {
+        this.matrixSInv = matrixSInv;
+    }
+
+    public Matrix2D getMatrixSGP() {
+        return matrixSGP;
+    }
+
+    public void setMatrixSGP(Matrix2D matrixSGP) {
+        this.matrixSGP = matrixSGP;
+    }
+
+    
 }
