@@ -25,6 +25,7 @@ import org.eclipse.jface.viewers.ViewerRow;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.TableColumn;
@@ -37,14 +38,16 @@ import org.jcryptool.visual.errorcorrectingcodes.data.Matrix2D;
 
 public class InteractiveMatrix extends Composite {
 
-    private ArrayList<Text> dataGrid;
+    private ArrayList<Button> dataGrid;
     boolean modified;
+    boolean permutation;
     private int rows, columns;
 
     InteractiveMatrix(Composite parent, int rows, int cols) {
         super(parent, SWT.NONE);
         this.rows = rows;
         this.columns = cols;
+        this.permutation = false;
         dataGrid = new ArrayList<>();
 
         GridLayoutFactory.fillDefaults().numColumns(cols).applyTo(this);
@@ -52,16 +55,39 @@ public class InteractiveMatrix extends Composite {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                Text t = new Text(this, SWT.BORDER);
-                t.setText("0");
-                t.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
-                t.addListener(SWT.Verify, e -> verifyBinary(e));
-                t.addListener(SWT.Modify, e -> modified = true);
-                GridDataFactory.fillDefaults().applyTo(t);
-                dataGrid.add(t);
+                Button btn = new Button(this, SWT.NONE);
+                btn.setText("0");
+                btn.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+                btn.setData(new Point(i, j));
+                // t.addListener(SWT.Verify, e -> verifyBinary(e));
+
+                btn.addListener(SWT.Selection, e -> {
+                    if (btn.getText().equals("0")) {
+                        btn.setText("1");
+
+                        if (isPermutation()) {
+                            Point p = (Point) btn.getData();
+                            for (int row = 0; row < rows; row++) {
+                                if (row != p.x)
+                                dataGrid.get(p.y + (row * rows)).setText("0");
+                            }
+                            
+                            for (int col = 0; col < columns; col++) {
+                                if (col != p.y)
+                                dataGrid.get((p.x*rows) + col).setText("0");
+                            }
+                        }
+                    } else
+                        btn.setText("0");
+
+                    modified = true;
+                });
+
+                GridDataFactory.fillDefaults().applyTo(btn);
+                dataGrid.add(btn);
             }
         }
-        }
+    }
 
     public void setMatrix(Matrix2D m) {
         for (int row = 0; row < m.getRowCount(); row++) {
@@ -69,6 +95,7 @@ public class InteractiveMatrix extends Composite {
                 dataGrid.get(col + (row * m.getRowCount())).setText(String.valueOf(m.get(row, col)));
             }
         }
+        modified = true;
     }
 
     public Matrix2D getMatrix() {
@@ -86,10 +113,10 @@ public class InteractiveMatrix extends Composite {
         try {
             int number = Integer.valueOf(e.text);
             String oldNumber = in;
-           
+
             if ((number != 0 && number != 1)) {
                 e.doit = false;
-            } else  if (oldNumber.length() > 0)
+            } else if (oldNumber.length() > 0)
                 ((Text) e.widget).setText("");
         } catch (Exception ex) {
             if (e.text != "")
@@ -105,8 +132,16 @@ public class InteractiveMatrix extends Composite {
         this.modified = modified;
     }
 
+    public boolean isPermutation() {
+        return permutation;
+    }
+
+    public void setPermutation(boolean permutation) {
+        this.permutation = permutation;
+    }
+
     public void reset() {
-        for (int i = 0; i < rows*columns; i++) {
+        for (int i = 0; i < rows * columns; i++) {
             dataGrid.get(i).setText("0");
         }
     }

@@ -191,6 +191,23 @@ public class Matrix2D {
     public int getColCount() {
         return data[0].length;
     }
+    
+    @Override
+    public boolean equals(Object other) {
+        if(! (other instanceof Matrix2D))
+            return false;
+        
+        int[][] otherData = ((Matrix2D) other).getData();
+        
+        for (int i = 0; i < otherData.length; i++) {
+            for (int j = 0; j < otherData[i].length; j++) {
+                if (data[i][j] != otherData[i][j])
+                    return false;
+            }
+        }
+        
+        return true;
+    }
 
     public String toString() {
         StringBuilder sb = new StringBuilder();

@@ -131,10 +131,7 @@ public class McElieceView extends Composite {
         RowLayoutFactory.fillDefaults().applyTo(compPrivateKeyButton);
         btnGeneratePrivateKey = new Button(compPrivateKeyButton, SWT.NONE);
         btnGeneratePrivateKey.setText(Messages.McElieceView_btnGeneratePrivateKey);
-        btnGeneratePrivateKey.addListener(SWT.Selection, e -> {
-            resetKeys();
-            generateKey();  
-        });
+        btnGeneratePrivateKey.addListener(SWT.Selection, e -> generateKey(true));
 
         compPrivateKeyData = new Composite(grpPrivateKey, SWT.NONE);
         GridLayoutFactory.fillDefaults().numColumns(6).spacing(20, SWT.DEFAULT).margins(margins)
@@ -153,6 +150,7 @@ public class McElieceView extends Composite {
         lblMatrixP.setText("P = "); //$NON-NLS-1$
         GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(lblMatrixP);
         compMatrixP = new InteractiveMatrix(compPrivateKeyData, 7, 7);
+        compMatrixP.setPermutation(true);
         GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(compMatrixP);
 
         compInverseMatrices = new Composite(grpDecryption, SWT.NONE);
@@ -229,49 +227,13 @@ public class McElieceView extends Composite {
         initView();
     }
 
-    private void generateKey() {
-        Matrix2D p, s, invS, invP;
-        if (!compMatrixP.isModified()) {
-            p = mce.randomPermutationMatrix(7);
-            invP = p.invert();
-            compMatrixP.setMatrix(p);
-        } else {
-            p = compMatrixP.getMatrix();
-            invP = p.invert();
-            if (invP == null)
-                throw new MatrixException("Matrix P is singular, no inverse could be found!");
-        }
-
-        if (!compMatrixS.isModified()) {
-            do {
-                s = mce.randomMatrix(4, 4);
-                invS = s.invert();
-            } while (invS == null);
-            compMatrixS.setMatrix(s);
-        } else {
-            s = compMatrixS.getMatrix();
-            invS = s.invert();
-            if (invS == null)
-                throw new MatrixException("Matrix S is singular, no inverse could be found!");
-        }
-        
-        Matrix2D check = s.multBinary(invS);
-        assert (check != null);
-
-        mce.setMatrixP(p);
-        mce.setMatrixPInv(invP);
-        mce.setMatrixS(s);
-        mce.setMatrixSInv(invS);
-
-    }
-
     private void updateVector() {
         mce.stringToArray();
         textAsBinary.setText(mce.getBinary().toString());
     }
 
     /**
-     * Initializes the view by hiding later steps.
+     * Initializes the view, resetting elements.
      */
     private void initView() {
         resetKeys();
@@ -289,13 +251,6 @@ public class McElieceView extends Composite {
         textMatrixG.setText(mce.getMatrixG().toString());
     }
 
-    private void resetKeys() {
-        compMatrixS.reset();
-        compMatrixP.reset();
-        compMatrixS.setModified(false);
-        compMatrixP.setModified(false);        
-    }
-
     /**
      * Display Next step by iterating the shown view elements.
      */
@@ -311,16 +266,15 @@ public class McElieceView extends Composite {
                 grpPublicKey.setVisible(true);
                 grpEncrypted.setVisible(true);
                 btnPrev.setEnabled(true);
-                btnGeneratePrivateKey.setEnabled(false);              
-            } catch(MatrixException e) {
+                btnGeneratePrivateKey.setEnabled(false);
+            } catch (MatrixException e) {
                 MessageBox dialog = new MessageBox(parent.getShell(), SWT.ICON_ERROR | SWT.OK);
                 dialog.setText("Input Error");
                 dialog.setMessage(e.getMessage());
                 // open dialog and await user selection
-                dialog.open();            
+                dialog.open();
             }
-            
-           
+
         } else if (!grpOutput.isVisible()) {
             mce.decrypt();
             // UIHelper.markCode(textCorrected, SWT.COLOR_CYAN, ecc.getBitErrors());
@@ -351,6 +305,63 @@ public class McElieceView extends Composite {
             btnGeneratePrivateKey.setEnabled(true);
 
         }
+    }
+
+    private void generateKey() {
+        generateKey(false);
+    }
+    
+    private void resetKeys() {
+        compMatrixS.reset();
+        compMatrixP.reset();
+        compMatrixS.setModified(false);
+        compMatrixP.setModified(false);
+    }
+
+    private void generateKey(boolean reset) {
+        if (reset) {
+           resetKeys();
+        }
+
+        Matrix2D p, s, invS, invP;
+        if (!compMatrixP.isModified()) {
+            do {
+            p = mce.randomPermutationMatrix(7);
+            invP = p.invert();
+            } while (p.equals(invP));
+            compMatrixP.setMatrix(p);
+        } else {
+            p = compMatrixP.getMatrix();
+            invP = p.invert();
+            if (invP == null)
+                throw new MatrixException("Matrix P is singular, no inverse could be found!");
+            if (p.equals(invP))
+                throw new MatrixException("The inverse of Matrix P is equal, please choose other parameters.");
+        }
+
+        if (!compMatrixS.isModified()) {
+            do {
+                s = mce.randomMatrix(4, 4);
+                invS = s.invert();
+            } while (invS == null || s.equals(invS));
+            compMatrixS.setMatrix(s);
+        } else {
+            s = compMatrixS.getMatrix();
+            invS = s.invert();
+            if (invS == null)
+                throw new MatrixException("Matrix S is singular, no inverse could be found!");
+            if (s.equals(invS))
+                throw new MatrixException("The inverse of Matrix S is equal, please choose other parameters.");
+        }
+
+        Matrix2D check = s.multBinary(invS);
+        assert (check != null);
+
+        mce.setMatrixP(p);
+        mce.setMatrixPInv(invP);
+        mce.setMatrixS(s);
+        mce.setMatrixSInv(invS);
+
     }
 
     /**
