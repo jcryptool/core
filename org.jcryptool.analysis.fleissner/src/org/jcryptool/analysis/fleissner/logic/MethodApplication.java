@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.math.BigInteger;
 import java.time.Duration;
 
-import org.eclipse.swt.widgets.Text;
 import org.jcryptool.analysis.fleissner.Activator;
 import org.jcryptool.core.logging.utils.LogUtil;
 
@@ -37,7 +36,7 @@ public class MethodApplication{
     private int[] bestTemplate=null;
     private String lastImprovement = null, bestDecryptedText = "", procedure = "";
 	
-    private Text fwAnalysisOutput;
+    private String fwAnalysisOutput;
 	
     /**
      * applies parameter settings from ParameterSettings and sets and executes method
@@ -47,9 +46,9 @@ public class MethodApplication{
      * @param argStatistics
      * @throws FileNotFoundException
      */
-	public MethodApplication(ParameterSettings ps, Text analysisOutput, double argStatistics[]) throws FileNotFoundException {
+	public MethodApplication(ParameterSettings ps, double argStatistics[]) throws FileNotFoundException {
         
-        this.fwAnalysisOutput = analysisOutput;
+	    this.fwAnalysisOutput = new String("");
         this.method = ps.getMethod();
         this.textInLine = ps.getTextInLine();
         this.templateLength = ps.getTemplateLength();
@@ -82,31 +81,31 @@ public class MethodApplication{
 	public void analyze () {
 
 	    start = System.currentTimeMillis();
-	    fwAnalysisOutput.append("\nStart analysis");
+	    fwAnalysisOutput += "\nStart analysis";
 	    LogUtil.logInfo(Activator.PLUGIN_ID, "Start analysis");
 	    
 	    if (this.possibleTemplateLengths.isEmpty()) {
 	    	
 			ct.load(textInLine, isPlaintext, templateLength, grille, fg);
-			fwAnalysisOutput.append("\nInfo:"+ct.toString());
+			fwAnalysisOutput += "\nInfo:"+ct.toString();
 			LogUtil.logInfo(Activator.PLUGIN_ID, "\nINFO:\n"+ct.toString());
 			if (templateLength<5){
 //				Brute Force for up to 4 x 4 grilles. Creates all possibles grilles and evaluates each text decrypted by them
 				procedure = "Brute-Force";
-				fwAnalysisOutput.append("\nStart "+procedure);
+				fwAnalysisOutput += "\nStart "+procedure;
 				LogUtil.logInfo(Activator.PLUGIN_ID, "Start "+procedure);
 				this.bruteForce();
-				fwAnalysisOutput.append("\nFinished "+procedure);
+				fwAnalysisOutput += "\nFinished "+procedure;
 				LogUtil.logInfo(Activator.PLUGIN_ID, "\nFinished "+procedure);
 			}
 			else {
 //				Hill-Cimbing for templates from 5 x 5. creates random grilles and evaluates those and slightly variations of them before
 //				trying new random grilles.
 				procedure = "Hill-Climbing";
-				fwAnalysisOutput.append("\nStart "+procedure);
+				fwAnalysisOutput += "\nStart "+procedure;
 				LogUtil.logInfo(Activator.PLUGIN_ID, "Start "+procedure);
 				this.hillClimbing();
-				fwAnalysisOutput.append("\nFinished "+procedure);
+				fwAnalysisOutput += "\nFinished "+procedure;
 				LogUtil.logInfo(Activator.PLUGIN_ID, "\nFinished "+procedure);
 			}
 	    }else {
@@ -118,7 +117,7 @@ public class MethodApplication{
 	    	
 	    	for (int length : this.possibleTemplateLengths) {
 	    		this.templateLength = length;
-	    		fwAnalysisOutput.append("\nTry with length: "+templateLength);
+	    		fwAnalysisOutput += "\nTry with length: "+templateLength;
 	    		LogUtil.logInfo(Activator.PLUGIN_ID, "Try with length: "+templateLength);
 				if (templateLength%2==0) {
 					this.holes = (int) (Math.pow(templateLength, 2))/4;
@@ -131,31 +130,31 @@ public class MethodApplication{
 				this.grille = null;
 				this.isPlaintext = false;
 				ct.load(textInLine, isPlaintext, templateLength, grille, fg);
-				fwAnalysisOutput.append("\nINFO:\n"+ct.toString());
+				fwAnalysisOutput += "\nINFO:\n"+ct.toString();
 				LogUtil.logInfo(Activator.PLUGIN_ID, "INFO:\n"+ct.toString());
 	    		if (templateLength<5){
 //	    			Brute Force for up to 4 x 4 grilles. Creates all possibles grilles and evaluates each text decrypted by them
 	    			procedure = "Brute-Force";
-	    			fwAnalysisOutput.append("\nStart "+procedure);
+	    			fwAnalysisOutput += "\nStart "+procedure;
 	    			LogUtil.logInfo(Activator.PLUGIN_ID, "Start "+procedure);
 	    			this.bruteForce();
-	    			fwAnalysisOutput.append("\nFinished "+procedure);
+	    			fwAnalysisOutput += "\nFinished "+procedure;
 	    			LogUtil.logInfo(Activator.PLUGIN_ID, "\nFinished "+procedure);
 	    		}
 	    		else {
 //	    			Hill-Cimbing for templates from 5 x 5. creates random grilles and evaluates those and slightly variations of them before
 //	    			trying new random grilles.
 	    			procedure = "Hill-Climbing";
-	    			fwAnalysisOutput.append("\nStart "+procedure);
+	    			fwAnalysisOutput += "\nStart "+procedure;
 	    			LogUtil.logInfo(Activator.PLUGIN_ID, "Start "+procedure);
 	    			this.hillClimbing();
-	    			fwAnalysisOutput.append("\nFinished "+procedure);
+	    			fwAnalysisOutput += "\nFinished "+procedure;
 	    			LogUtil.logInfo(Activator.PLUGIN_ID, "\nFinished "+procedure);
 	    		}
 //	    		sets value in relation to size
 	    		relativeValue = alltimeLow/fg.decryptText(ct.getText()).length();
 	    		if (relativeValue<tempRelativeValue) {
-	    		    fwAnalysisOutput.append("\nvalue has been changed. Relative value is: "+relativeValue+" relative to "+alltimeLow+" with length "+length);
+	    		    fwAnalysisOutput += "\nvalue has been changed. Relative value is: "+relativeValue+" relative to "+alltimeLow+" with length "+length;
 	    			LogUtil.logInfo(Activator.PLUGIN_ID, "value has been changed. Relative value is: "+relativeValue+" relative to "+alltimeLow+" with length "+length);
 	    			tempRelativeValue = relativeValue;
 	    			tempvalue = alltimeLow;
@@ -199,11 +198,11 @@ public class MethodApplication{
 		fg.clearGrille();
 		ArrayList<int[]> templateList = fg.bruteForce(templateLength, holes);
 		if (templateList.isEmpty()) {
-		    fwAnalysisOutput.append("\ntemplateList is empty");
+		    fwAnalysisOutput += "\ntemplateList is empty";
 			LogUtil.logInfo(Activator.PLUGIN_ID, "templateList is empty");
 			return;
 		}
-		fwAnalysisOutput.append("\nsift through all templates");
+		fwAnalysisOutput += "\nsift through all templates";
 		LogUtil.logInfo(Activator.PLUGIN_ID, "run through all templates");
 		// using every possible template / Grille
 		for (int[] template : templateList) {
@@ -219,9 +218,10 @@ public class MethodApplication{
 				bestTemplate = template;
 				grilleNumber = iAll;
 			}	
-			fwAnalysisOutput.append("\n\nGrille: "+iAll+fg);
-            fwAnalysisOutput.append("\nAccurateness: " + value + " (best: "+alltimeLow+")");
-            fwAnalysisOutput.append("\nDecrypted text:\n ==> "+decryptedText+"\n");
+            
+            fwAnalysisOutput += "\n\nGrille: "+iAll+fg;
+            fwAnalysisOutput += "\nAccurateness: " + value + " (best: "+alltimeLow+")";
+            fwAnalysisOutput += "\nDecrypted text:\n ==> "+decryptedText+"\n";
 
 			LogUtil.logInfo(Activator.PLUGIN_ID, "\n\nGrille: "+iAll+fg);
 			LogUtil.logInfo(Activator.PLUGIN_ID, "Accurateness: " + value + " (best: "+alltimeLow+")");
@@ -260,11 +260,13 @@ public class MethodApplication{
 
 			fg.setState(x, y, true);
 			}
-			fwAnalysisOutput.append("\n\nRestart: "+sub);
+//			fwAnalysisOutput.append("\n\nRestart: "+sub);
+			fwAnalysisOutput += "\n\nRestart: "+sub;
 			LogUtil.logInfo(Activator.PLUGIN_ID, "\n\nRestart: "+sub);
 			decryptedText = fg.decryptText(ct.getText());
 			min = tv.evaluate(decryptedText);
-			fwAnalysisOutput.append("\nDecrypted Text: \n"+decryptedText+"\n\nwith value: "+String.valueOf(min));
+//			fwAnalysisOutput.append("\nDecrypted Text: \n"+decryptedText+"\n\nwith value: "+String.valueOf(min));
+			fwAnalysisOutput += "\nDecrypted Text: \n"+decryptedText+"\n\nwith value: "+String.valueOf(min);
 			LogUtil.logInfo(Activator.PLUGIN_ID, "Decrypted Text: "+decryptedText+"with value: "+String.valueOf(min));
 			
 			do{
@@ -312,11 +314,11 @@ public class MethodApplication{
 						bestTemplate = fg.saveTemplate(holes);
 						lastImprovement = String.valueOf(sub);
 						changes++;
-						fwAnalysisOutput.append("\n\nbest grille yet with "+changes+" changes, where value is " +alltimeLow+"\n"+fg+"\n");
+						fwAnalysisOutput += "\n\nbest grille yet with "+changes+" changes, where value is " +alltimeLow+"\n"+fg+"\n";
 						LogUtil.logInfo(Activator.PLUGIN_ID, "best grille yet with "+changes+" changes, where value is " +alltimeLow+"\n"+fg);
 					} 
-					fwAnalysisOutput.append("\n\ntry: " + iAll + ", changes: "+changes + " (last at: " + grilleNumber + " in restart: "+lastImprovement+"), accurateness: " + min + " (best: "+oldValue+", alltime: "+alltimeLow+")\n");
-                    fwAnalysisOutput.append("\n==> "+decryptedText+"\n\n Grille: "+fg+"\n");
+                    fwAnalysisOutput += "\n\ntry: " + iAll + ", changes: "+changes + " (last at: " + grilleNumber + " in restart: "+lastImprovement+"), accurateness: " + min + " (best: "+oldValue+", alltime: "+alltimeLow+")\n";
+                    fwAnalysisOutput += "\n==> "+decryptedText+"\n\n Grille: "+fg+"\n";
 					LogUtil.logInfo(Activator.PLUGIN_ID, "try: " + iAll + ", changes: "+changes + " (last at: " + grilleNumber + " in restart: "+lastImprovement+"), accurateness: " + min + " (best: "+oldValue+", alltime: "+alltimeLow+")");
 					LogUtil.logInfo(Activator.PLUGIN_ID, "==> "+decryptedText+"\n Grille: \n"+fg);
 				}
@@ -431,6 +433,20 @@ public class MethodApplication{
 
     public int[] getBestTemplate() {
         return bestTemplate;
+    }
+
+    /**
+     * @return the fwAnalysisOutput
+     */
+    public String getFwAnalysisOutput() {
+        return fwAnalysisOutput;
+    }
+
+    /**
+     * @param fwAnalysisOutput the fwAnalysisOutput to set
+     */
+    public void setFwAnalysisOutput(String fwAnalysisOutput) {
+        this.fwAnalysisOutput = fwAnalysisOutput;
     }
 
     @Override
