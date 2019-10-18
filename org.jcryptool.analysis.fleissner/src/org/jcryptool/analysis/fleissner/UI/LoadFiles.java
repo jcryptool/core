@@ -16,10 +16,14 @@ import java.nio.ByteOrder;
 import java.nio.DoubleBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
+
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Shell;
 import org.jcryptool.analysis.fleissner.Activator;
 import org.jcryptool.analysis.fleissner.logic.InvalidParameterCombinationException;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.constants.IConstants;
+import org.jcryptool.core.util.directories.DirectoryService;
 
 /**
  * @author Dinah
@@ -151,6 +155,38 @@ public class LoadFiles {
     }
     
     /**
+     * opening file for input text
+     * @param type
+     * @return the choosen .txt file path
+     */
+    public String openFileDialog(int type) {
+
+        Shell shell = new Shell();
+        FileDialog dialog = new FileDialog(shell, type);
+        dialog.setFilterPath(DirectoryService.getUserHomeDir());
+        dialog.setFilterExtensions(new String[] { "*.txt" }); //limits the eligible files to *.txt files
+        dialog.setFilterNames(new String[] { "Text Files (*.txt)" }); //$NON-NLS-1$
+        dialog.setOverwrite(true);
+        return dialog.open();
+    }
+    
+    /**
+     * opening file for input statistics
+     * @param type
+     * @return the choosen statistics .bin file path
+     */
+    public String openStatFileDialog(int type) {
+        
+        Shell shell = new Shell();
+        FileDialog dialog = new FileDialog(shell, type);
+        dialog.setFilterPath(DirectoryService.getUserHomeDir());
+        dialog.setFilterExtensions(new String[] { "*.bin" }); //limits the eligible files to *.bin files
+        dialog.setFilterNames(new String[] { "Binary Files (*.bin)" }); //$NON-NLS-1$
+        dialog.setOverwrite(true);
+        return dialog.open();
+    }
+    
+    /**
      * 
      * @param bytes
      * @return
@@ -198,7 +234,7 @@ public class LoadFiles {
             FileChannel fc = (FileChannel) Channels.newChannel(file);
             fc.read(myByteBuffer);
             fc.close();
-            file.close();   
+//            file.close();   
             } catch (IOException e) {
                 e.printStackTrace();
                 throw new FileNotFoundException("File not found !");

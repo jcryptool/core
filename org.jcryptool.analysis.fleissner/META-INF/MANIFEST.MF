@@ -16,7 +16,8 @@ Import-Package: org.bouncycastle.util.encoders,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.colors,
  org.jcryptool.core.util.directories,
- org.jcryptool.core.util.fonts
+ org.jcryptool.core.util.fonts,
+ org.jcryptool.crypto.ui.textsource
 Export-Package: org.jcryptool.analysis.fleissner,
  org.jcryptool.analysis.fleissner.UI,
  org.jcryptool.analysis.fleissner.handlers,
