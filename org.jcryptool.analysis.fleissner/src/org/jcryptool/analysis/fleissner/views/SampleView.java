@@ -45,6 +45,13 @@ public class SampleView extends ViewPart {
         scrolledComposite.setExpandHorizontal(true);
         scrolledComposite.setExpandVertical(true);
         scrolledComposite.layout();
+        scrolledComposite.addListener( SWT.Resize, event -> {
+            int lines = fw.getDescriptionText().getLineCount();
+            if (lines>2) {
+                int height = parent.computeSize(SWT.DEFAULT, SWT.DEFAULT).y+((lines-2)*20);
+                scrolledComposite.setMinSize( parent.computeSize( SWT.DEFAULT, height ));
+            }
+          } );
 
 		// Create the help context id for the viewer's control
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.analysis.fleissner.views");

@@ -171,25 +171,65 @@ public static void print() {
 //    format.getNumberFormat();
 //    return format.format(new Date(duration));
         
-        ArrayList<Integer> indizes = new ArrayList<>();
-        for (int i =0; i<30; i++) {
-            for(int j=0; j<30; j++) {
-                for (int k=0; k<30; k++) {
-                    for (int l=0; l<30; l++) {
-                        int index = i*((int) Math.pow(30,3))+j*((int) Math.pow(30,2))+k*((int) Math.pow(30,1))+l*((int) Math.pow(30,0));
-                        if (indizes.contains(index)) {
-                            System.out.println("Index bereits vorhanden");
-                            break;
-                        }else {
-                            indizes.add(index);
-                        }
-                    }
-                }
-            }
-        }
-        System.out.println("No Indexcrash");
+//        ArrayList<Integer> indizes = new ArrayList<>();
+//        for (int i =0; i<30; i++) {
+//            for(int j=0; j<30; j++) {
+//                for (int k=0; k<30; k++) {
+//                    for (int l=0; l<30; l++) {
+//                        int index = i*((int) Math.pow(30,3))+j*((int) Math.pow(30,2))+k*((int) Math.pow(30,1))+l*((int) Math.pow(30,0));
+//                        if (indizes.contains(index)) {
+//                            System.out.println("Index bereits vorhanden");
+//                            break;
+//                        }else {
+//                            indizes.add(index);
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        System.out.println("No Indexcrash");
         
-
+        char[] key = {'K','E','Y'};
+        int i= 0;
+        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String plaintext = "DURCHDIETEILUNGDESROEMISCHENREICHESINWESTROMUNDOSTROMWOKONSTANTINDASALTEBYZANTIONZURNEUENHAUPTSTADTKONSTANTINOPELAUSBAUTEENTWICKELNSICHZWEIUNTERSCHIEDLICHEKONFESSIONENDIEIHREDIFFERENZENZUEINEMNICHTGERINGENTEILIMJEWEILIGENUMGANGMITDENBILDERNDESHEILIGENSEHENWAEHRENDDASALTEROMNACHDENSTUERMENDERVOELKERWANDERUNGSZEITZUMZENTRUMDERROEMISCHKATHOLISCHENKIRCHEAUFSTEIGTENTFALTETSICHINKONSTANTINOPELDASORTHODOXECHRISTENTUMZUDENLEISTUNGENDERBYZANTINISCHENKUNSTGEHOERTDIEENTWICKLUNGEINESMOBILENKULTBILDESDERIKONEDIEZUEINEMZENTRALENBESTANDTEILDERORTHODOXENLITURGIEWIRDSOLITAERODERALSBILDERWANDIKONOSTASESTEHTSIEIMZENTRUMDERBILDERVEREHRUNGUNDBILDETVIELENEUEDARSTELLUNGSFORMENAUSIHRERFOLGRUFTALSGEGENBEWEGUNGDENBILDERSTREITHERVORINDEMSICHDIEBEIDENGRUNDSAETZLICHENHALTUNGENZUBILDERNFUERDIEGESAMTEGESCHICHTEDERKUNSTEXEMPLARISCHGEGENUEBERSTEHENIKONOKLASTENUNDIKONODULENUNTERKAISERJUSTINIANENTSTEHENNEUEKULTURELLEZENTRENAUCHIMWESTENBESONDERSRAVENNAWIRDMITBAUWERKENUNDBILDERSCHMUCKAUFGEWERTET";
+        String ciphertext = "";
+        int[] plainNumbers = new int[plaintext.length()];
+        
+//        for (int l= 0; l<plaintext.length(); l++) {
+//            for (int g=0; g<alphabet.length();g++) {
+//                if (plaintext.charAt(l)==alphabet.charAt(g))
+//                    plainNumbers[l] = g;
+//            }
+//        }
+//        
+//        for (int j=0; j<plaintext.length(); j++) {
+//            for (int k=0; k<alphabet.length(); k++) {
+//                if (key[i]==alphabet.charAt(k)) {
+//                    int index = (k+plainNumbers[j])%26;
+//                    ciphertext += alphabet.charAt(index);
+//                }
+//            }
+//            i++;
+//            if (i==3)
+//                i=0;
+//        }
+//        System.out.println(ciphertext);
+        int[] counter = new int[alphabet.length()];
+        
+        String newCipher = "NYPMLBSIROMJERENIQBSCWMQMLCXVCSGFOWGXACCXPYQSXHMCXPYQUYOMXWRKRRSRBKWYVXCLCXKRRSSLJYPXISORFKYNDWRKHRUSLCXYXXGXSNOPYEWZKYROILDAGMOCVRQSGFJACSYLDIPCGFSIBVMARIIYRDOWQSSLORBSIGRVCNMDPIPORXORXEIGXIKXMARXEOVGXKCXXCSPGWNCGIGVMEORSWKYXKKSXBORZSPBOVLNIQRIGVMEORQOLCXAYOLPORBNEQKPROVMWRYMLBORQDYCBQCXHCBZMOPIOVUKRBOVSXKQJIGDDSWDCXXPEQBOVPYIKSWAROYDLMVMQMLCXOGBGFOESPWROMEDILDJYVXCDWGMLGXOMXWRKRRSRMZIJNEQYVRRSBYBCMLPSWRORREQXEHCXPCSWREREORBOVZIDYXXGXMQMLCXOSXWRQIFYIPDHGOILDAGMOJEREOMLOWKYFGVILUYJDFGVHCCHCBMIYRCNMCJYCSRCWDCXXPKPCXFCCXYXHROMJNIPYVRRSBYBCXPGDYPQMCGMPNWMVMRKIPYHCBEJCFGVHCBAYXHGUSLYWRKWCCXCRXQSIGWDCXXPEQBOVZSPBOVTOVCRVSXKSXHZSPBOXTSIJORCEIBKVQDIJVYLQWDYVKORYEWGRVCBJMVKPEJRKPQQIEORZOACQYLQHCXFGVHCBWRBIGDLCBZMBMLNIKCMARHGOFCSHCXKPERBCECDDJSGFORFKPREREORXEFGVHCBRDEIPNMCQIQKQROKCCGFSGFDIBOVIERQDIVOQNVEPSWARKCQILEIZOVQDIFORGUSLYOJKWRORSXHGUSLYHSVILERROVIKMQOVHEWRSRGKRCXXQDIFORLOYCUYJDYPOPJODCXXPORYEGFSQUOWRORZOWMXHCBWPKZCXRYGMPNQGDFYEACBOCXYLNFGVHCBWARQSMOYEJEOACBXCD";
+        for (int n=4; n<newCipher.length();n+=5) {
+            for (int m=0; m<alphabet.length(); m++){
+                if (newCipher.charAt(n)==alphabet.charAt(m)) {
+                    counter[m]++;
+                }
+            }   
+        }
+        String ausgabe = "";
+        for (int f=0; f<alphabet.length();f++) {
+            ausgabe +=alphabet.charAt(f)+": "+counter[f]+", ";
+        }
+        System.out.print(ausgabe);
 
 
 
