@@ -625,13 +625,13 @@ public class RSAKeyView extends Composite {
         lDescTitle.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 
         // The text here depends on the current step - hence initialize it to be blank.
-        stSpecificDescription = new StyledText(cDescription, SWT.READ_ONLY | SWT.WRAP);
+        stSpecificDescription = new StyledText(cDescription, SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
         stSpecificDescription.setText(""); //$NON-NLS-1$
         gd = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         gd.minimumHeight = 300;
         gd.heightHint = 300;
         gd.minimumWidth = 10;
-        gd.widthHint = 10;
+        gd.widthHint = 150;
         stSpecificDescription.setLayoutData(gd);
     }
 
@@ -652,10 +652,7 @@ public class RSAKeyView extends Composite {
 
         // Define the subgroups (plaintext/message, ciphertext, deciphered text)
         gMessage = new Group(gTexts, SWT.NONE);
-        gMessage.setLayout(new GridLayout(1, true));
-        // GridData gd2 = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        // gd2.minimumHeight = 100;
-        // gd2.heightHint = 150;
+        gMessage.setLayout(new GridLayout(1, false));
         gd = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         gd.minimumHeight = 10;
         gd.heightHint = 10;
@@ -1599,7 +1596,6 @@ public class RSAKeyView extends Composite {
         // Set up each of the style ranges for the step numerators
         // and add them all to an array.
         // Each must be bold and have a length of seven for English or ten for German.
-        // FIXME "Schritt 2:" and "Schritt 4:" and "Schritt 6:" are not bold.
         // In de and en.
         StyleRange[] styles = new StyleRange[styleCount];
         for (int i = 0; i < styles.length - 1; i++) {
@@ -1645,7 +1641,7 @@ public class RSAKeyView extends Composite {
                 if (kleptoView.currentStep >= 3) {
                 	// The normal pattern is as follows. First move the next bold style
                 	// into position. Adding two accounts for the line breaks.
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     // Define the start of the highlighted styleRange; it will be the current
                     // length plus the offset to skip over the line breaks and step numerator.
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
@@ -1656,25 +1652,19 @@ public class RSAKeyView extends Composite {
                     sbDescription.append("\n\n" + Messages.RSAKeyView_Honest_Step2); //$NON-NLS-1$
                 }
                 if (kleptoView.currentStep >= 4) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_Honest_Step3.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_Honest_Step3); //$NON-NLS-1$
                 }
-//                if (kleptoView.currentStep >= 5) {
-//                    styles[++srCount].start = strDescription.length() + 2;
-//                    styles[styles.length - 1].start = strDescription.length() + 10;
-//                    styles[styles.length - 1].length = Messages.RSAKeyView_Honest_Step4.length() - 8;
-//                    strDescription += "\n\n" + Messages.RSAKeyView_Honest_Step4; //$NON-NLS-1$
-//                }
                 if (kleptoView.currentStep >= 6) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_Honest_Step4.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_Honest_Step4); //$NON-NLS-1$
                 }
                 if (kleptoView.currentStep >= 8) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_Honest_Step5.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_Honest_Step5); //$NON-NLS-1$
@@ -1688,49 +1678,43 @@ public class RSAKeyView extends Composite {
                     sbDescription.append(Messages.RSAKeyView_Fixed_Step1);
                 }
                 if (kleptoView.currentStep >= 3) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_Fixed_Step2.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_Fixed_Step2); //$NON-NLS-1$
                 }
                 if (kleptoView.currentStep >= 4) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_Fixed_Step3.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_Fixed_Step3); //$NON-NLS-1$
                 }
-//                if (kleptoView.currentStep >= 5) {
-//                    styles[++srCount].start = strDescription.length() + 2;
-//                    styles[styles.length - 1].start = strDescription.length() + 10;
-//                    styles[styles.length - 1].length = Messages.RSAKeyView_Fixed_Step4.length() - 8;
-//                    strDescription += "\n\n" + Messages.RSAKeyView_Fixed_Step4; //$NON-NLS-1$
-//                }
                 if (kleptoView.currentStep >= 6) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_Fixed_Step4.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_Fixed_Step4); //$NON-NLS-1$
                 }
                 if (kleptoView.currentStep >= 8) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_Fixed_Step5.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_Fixed_Step5); //$NON-NLS-1$
                 }
                 if (kleptoView.currentStep >= 9) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_Fixed_Step6.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_Fixed_Step6); //$NON-NLS-1$
                 }
                 if (kleptoView.currentStep >= 13) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() +1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_Fixed_Step7.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_Fixed_Step7); //$NON-NLS-1$
                 }
                 if (kleptoView.currentStep >= 15) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_Fixed_Step8.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_Fixed_Step8); //$NON-NLS-1$
@@ -1744,37 +1728,31 @@ public class RSAKeyView extends Composite {
                     sbDescription.append(Messages.RSAKeyView_PRF_Step1);
                 }
                 if (kleptoView.currentStep >= 2) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_PRF_Step2.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_PRF_Step2); //$NON-NLS-1$
                 }
                 if (kleptoView.currentStep >= 3) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_PRF_Step3.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_PRF_Step3); //$NON-NLS-1$
                 }
                 if (kleptoView.currentStep >= 4) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_PRF_Step4.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_PRF_Step4); //$NON-NLS-1$
                 }
-//                if (kleptoView.currentStep >= 5) {
-//                    styles[++srCount].start = strDescription.length() + 2;
-//                    styles[styles.length - 1].start = strDescription.length() + 10;
-//                    styles[styles.length - 1].length = Messages.RSAKeyView_PRF_Step5.length() - 8;
-//                    strDescription += "\n\n" + Messages.RSAKeyView_PRF_Step5; //$NON-NLS-1$
-//                }
                 if (kleptoView.currentStep >= 6) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_PRF_Step5.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_PRF_Step5); //$NON-NLS-1$
                 }
                 if (kleptoView.currentStep >= 8) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_PRF_Step6.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_PRF_Step6); //$NON-NLS-1$
@@ -1788,37 +1766,31 @@ public class RSAKeyView extends Composite {
                     sbDescription.append(Messages.RSAKeyView_PRG_Step1);
                 }
                 if (kleptoView.currentStep >= 2) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_PRG_Step2.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_PRG_Step2); //$NON-NLS-1$
                 }
                 if (kleptoView.currentStep >= 3) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_PRG_Step3.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_PRG_Step3); //$NON-NLS-1$
                 }
                 if (kleptoView.currentStep >= 4) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_PRG_Step4.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_PRG_Step4); //$NON-NLS-1$
                 }
-//                if (kleptoView.currentStep >= 5) {
-//                    styles[++srCount].start = strDescription.length() + 2;
-//                    styles[styles.length - 1].start = strDescription.length() + 10;
-//                    styles[styles.length - 1].length = Messages.RSAKeyView_PRG_Step5.length() - 8;
-//                    strDescription += "\n\n" + Messages.RSAKeyView_PRG_Step5; //$NON-NLS-1$
-//                }
                 if (kleptoView.currentStep >= 6) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_PRG_Step5.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_PRG_Step5); //$NON-NLS-1$
                 }
                 if (kleptoView.currentStep >= 8) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_PRG_Step6.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_PRG_Step6); //$NON-NLS-1$
@@ -1832,37 +1804,31 @@ public class RSAKeyView extends Composite {
                     sbDescription.append(Messages.RSAKeyView_SETUP_Step1);
                 }
                 if (kleptoView.currentStep >= 2) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_SETUP_Step2.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_SETUP_Step2); //$NON-NLS-1$
                 }
                 if (kleptoView.currentStep >= 3) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_SETUP_Step3.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_SETUP_Step3); //$NON-NLS-1$
                 }
                 if (kleptoView.currentStep >= 4) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_SETUP_Step4.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_SETUP_Step4); //$NON-NLS-1$
                 }
-//                if (kleptoView.currentStep >= 5) {
-//                    styles[++srCount].start = strDescription.length() + 2;
-//                    styles[styles.length - 1].start = strDescription.length() + 10;
-//                    styles[styles.length - 1].length = Messages.RSAKeyView_SETUP_Step5.length() - 8;
-//                    strDescription += "\n\n" + Messages.RSAKeyView_SETUP_Step5; //$NON-NLS-1$
-//                }
                 if (kleptoView.currentStep >= 6) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_SETUP_Step5.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_SETUP_Step5); //$NON-NLS-1$
                 }
                 if (kleptoView.currentStep >= 8) {
-                    styles[++srCount].start = sbDescription.length() + 2;
+                    styles[++srCount].start = sbDescription.length() + 1;
                     styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
                     styles[styles.length - 1].length = Messages.RSAKeyView_SETUP_Step6.length() - boldlength;
                     sbDescription.append("\n\n" + Messages.RSAKeyView_SETUP_Step6); //$NON-NLS-1$
