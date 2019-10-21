@@ -14,7 +14,8 @@ Require-Bundle: org.eclipse.ui,
  org.jcryptool.crypto.classic.alphabets,
  org.jcryptool.crypto.classic.model,
  org.jcryptool.crypto.classic.substitution,
- org.jcryptool.editor.text
+ org.jcryptool.editor.text,
+ org.eclipse.help
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: org.jcryptool.analysis.substitution
