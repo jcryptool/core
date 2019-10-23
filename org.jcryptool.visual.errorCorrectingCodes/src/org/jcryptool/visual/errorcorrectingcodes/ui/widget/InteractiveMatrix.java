@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.errorcorrectingcodes.data.Matrix2D;
 
 /**
@@ -102,7 +103,8 @@ public class InteractiveMatrix extends Composite {
     public void setMatrix(Matrix2D m) {
         for (int row = 0; row < m.getRowCount(); row++) {
             for (int col = 0; col < m.getColCount(); col++) {
-                buttonGrid.get(col + (row * m.getRowCount())).setText(String.valueOf(m.get(row, col)));
+                buttonGrid.get(col + (row * (m.getColCount()))).setText(String.valueOf(m.get(row, col)));
+              
             }
         }
         this.matrix = m;

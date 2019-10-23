@@ -32,6 +32,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.errorcorrectingcodes.algorithm.EccController;
 import org.jcryptool.visual.errorcorrectingcodes.algorithm.McElieceSystem;
@@ -365,7 +366,7 @@ public class McElieceView extends Composite {
         try {
             textMatrixPInverse.setText(data.getMatrixPInv().toString());
         } catch (NullPointerException e) {
-            LogprintStackTrace();
+            LogUtil.logError(e);
         }
     }
 

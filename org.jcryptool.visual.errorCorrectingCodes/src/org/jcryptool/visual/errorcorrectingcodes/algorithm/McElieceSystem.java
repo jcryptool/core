@@ -97,10 +97,10 @@ public class McElieceSystem {
      */
     public void randomPermutationMatrix(int size) {
        
-        ArrayList<int[]> bitArray = new ArrayList<int[]>();
         Matrix2D p, pInverse;
-        
         do {
+            ArrayList<int[]> bitArray = new ArrayList<int[]>(size);
+
             for (int i = 0; i < size; i++) {
                 int[] arr = new int[size];
                 arr[i] = 1;
