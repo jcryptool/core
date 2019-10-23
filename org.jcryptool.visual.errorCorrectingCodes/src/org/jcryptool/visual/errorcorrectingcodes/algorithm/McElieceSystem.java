@@ -1,7 +1,7 @@
 /*
  * @author Daniel Hofmann
  */
-package org.jcryptool.visual.errorcorrectingcodes;
+package org.jcryptool.visual.errorcorrectingcodes.algorithm;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -65,7 +65,7 @@ public class McElieceSystem {
     }
     
     /**
-     * Store a random binary matrix to {@link McElieceData#matrixS matrixS}.
+     * Store a random binary matrix to {@link McElieceData#matrixS S}.
      *
      * @param rows the rows
      * @param columns the columns
@@ -91,7 +91,7 @@ public class McElieceSystem {
     }
     
     /**
-     * Store a Random permutation matrix {@link McElieceData#matrixP matrixP}, i.e. every row and column contains only a single 1.
+     * Store a Random permutation matrix {@link McElieceData#matrixP P}, i.e. every row and column contains only a single 1.
      *
      * @param size the size of the square matrix
      */
@@ -119,7 +119,7 @@ public class McElieceSystem {
 
 
     /**
-     * Compute the public key and store it in {@link McElieceData#matrixSGP matrixSGP}.
+     * Compute the public key and store it in matrix {@link McElieceData#matrixSGP SGP}.
      */
     public void computePublicKey() {
         Matrix2D sg = data.getMatrixS().multBinary(data.getMatrixG());

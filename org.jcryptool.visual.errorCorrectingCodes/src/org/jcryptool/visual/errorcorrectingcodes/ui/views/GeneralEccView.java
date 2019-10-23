@@ -1,7 +1,7 @@
 /*
  * @author Daniel Hofmann
  */
-package org.jcryptool.visual.errorcorrectingcodes.ui;
+package org.jcryptool.visual.errorcorrectingcodes.ui.views;
 
 import static org.jcryptool.visual.errorcorrectingcodes.ui.UIHelper.createArrowCanvas;
 import static org.jcryptool.visual.errorcorrectingcodes.ui.UIHelper.markCode;
@@ -43,8 +43,10 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.fonts.FontService;
-import org.jcryptool.visual.errorcorrectingcodes.EccController;
+import org.jcryptool.visual.errorcorrectingcodes.algorithm.EccController;
 import org.jcryptool.visual.errorcorrectingcodes.data.EccData;
+import org.jcryptool.visual.errorcorrectingcodes.ui.Messages;
+import org.jcryptool.visual.errorcorrectingcodes.ui.UIHelper;
 import org.jcryptool.visual.errorcorrectingcodes.ui.widget.ArrowCanvas;
 
 /**

@@ -1,4 +1,4 @@
-package org.jcryptool.visual.errorcorrectingcodes.ui;
+package org.jcryptool.visual.errorcorrectingcodes.ui.views;
 
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.visual.errorcorrectingcodes.ui.Messages;
 
 public class EccMainView extends ViewPart {
     private static final int GENERAL_ECC_TAB = 0;

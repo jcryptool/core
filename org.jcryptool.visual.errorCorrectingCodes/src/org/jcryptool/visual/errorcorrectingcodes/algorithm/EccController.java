@@ -1,7 +1,7 @@
 /*
  * @author Daniel Hofmann
  */
-package org.jcryptool.visual.errorcorrectingcodes;
+package org.jcryptool.visual.errorcorrectingcodes.algorithm;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;

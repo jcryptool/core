@@ -14,8 +14,8 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.jcryptool.visual.errorcorrectingcodes.ui.EccMainView;
-import org.jcryptool.visual.errorcorrectingcodes.ui.GeneralEccView;
+import org.jcryptool.visual.errorcorrectingcodes.ui.views.EccMainView;
+import org.jcryptool.visual.errorcorrectingcodes.ui.views.GeneralEccView;
 
 public class RestartHandler extends AbstractHandler {
 	@Override

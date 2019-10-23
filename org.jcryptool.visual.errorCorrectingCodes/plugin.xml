@@ -5,7 +5,7 @@
          point="org.eclipse.ui.views">
       <view
       		category="org.jcryptool.visual"
-            class="org.jcryptool.visual.errorcorrectingcodes.ui.EccMainView"
+            class="org.jcryptool.visual.errorcorrectingcodes.ui.views.EccMainView"
             id="org.jcryptool.visual.errorcorrectingcodes.ui"
             icon="icons/view.gif"
             name="%view.name"

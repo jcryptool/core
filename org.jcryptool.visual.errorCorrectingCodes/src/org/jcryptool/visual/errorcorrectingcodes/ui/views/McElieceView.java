@@ -1,4 +1,4 @@
-package org.jcryptool.visual.errorcorrectingcodes.ui;
+package org.jcryptool.visual.errorcorrectingcodes.ui.views;
 
 import static org.jcryptool.visual.errorcorrectingcodes.ui.UIHelper.*;
 
@@ -33,12 +33,14 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.util.fonts.FontService;
-import org.jcryptool.visual.errorcorrectingcodes.EccController;
-import org.jcryptool.visual.errorcorrectingcodes.McElieceSystem;
+import org.jcryptool.visual.errorcorrectingcodes.algorithm.EccController;
+import org.jcryptool.visual.errorcorrectingcodes.algorithm.McElieceSystem;
 import org.jcryptool.visual.errorcorrectingcodes.data.EccData;
 import org.jcryptool.visual.errorcorrectingcodes.data.Matrix2D;
 import org.jcryptool.visual.errorcorrectingcodes.data.MatrixException;
 import org.jcryptool.visual.errorcorrectingcodes.data.McElieceData;
+import org.jcryptool.visual.errorcorrectingcodes.ui.Messages;
+import org.jcryptool.visual.errorcorrectingcodes.ui.UIHelper;
 import org.jcryptool.visual.errorcorrectingcodes.ui.binding.InteractiveMatrixProperty;
 import org.jcryptool.visual.errorcorrectingcodes.ui.widget.InteractiveMatrix;
 
@@ -360,7 +362,11 @@ public class McElieceView extends Composite {
         }
 
         textMatrixSInverse.setText(data.getMatrixSInv().toString());
-        textMatrixPInverse.setText(data.getMatrixPInv().toString());
+        try {
+            textMatrixPInverse.setText(data.getMatrixPInv().toString());
+        } catch (NullPointerException e) {
+            LogprintStackTrace();
+        }
     }
 
     /**
