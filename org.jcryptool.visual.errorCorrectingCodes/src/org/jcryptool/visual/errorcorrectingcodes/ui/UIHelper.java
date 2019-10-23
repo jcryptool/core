@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.visual.errorcorrectingcodes.ui.widget.ArrowCanvas;
 
 public class UIHelper {
 

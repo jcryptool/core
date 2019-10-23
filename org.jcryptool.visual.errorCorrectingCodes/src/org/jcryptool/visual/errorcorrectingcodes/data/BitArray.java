@@ -2,9 +2,9 @@ package org.jcryptool.visual.errorcorrectingcodes.data;
 
 import java.util.ArrayList;
 
-public class CodeArray extends ArrayList<int[]> {
+public class BitArray extends ArrayList<int[]> {
     
-    public CodeArray(int initialCapacity) {
+    public BitArray(int initialCapacity) {
         super(initialCapacity);
     }
 
@@ -16,6 +16,31 @@ public class CodeArray extends ArrayList<int[]> {
             }
             sb.append(" ");
         });
+        return sb.toString();
+    }
+    
+    /**
+     * Convert the array to an ASCII string.
+     *
+     * @return the decoded data string
+     */
+    public String toAscii() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < this.size(); i+=2) {
+          
+            int[] high = get(i);
+            int[] low = get(i+1);
+            int ascii = 0;
+            
+            for (int j = 7; j >= 0; j--) {
+                if (j > 3)
+                    ascii += high[j-4] * (1 << j);
+                else
+                    ascii += low[j] * (1 << j);
+            }
+            sb.append((char) ascii);
+        }
+        
         return sb.toString();
     }
 

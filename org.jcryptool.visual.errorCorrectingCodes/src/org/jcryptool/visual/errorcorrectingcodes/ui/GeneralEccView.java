@@ -45,6 +45,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.errorcorrectingcodes.EccController;
 import org.jcryptool.visual.errorcorrectingcodes.data.EccData;
+import org.jcryptool.visual.errorcorrectingcodes.ui.widget.ArrowCanvas;
 
 /**
  * The Class GeneralEccView represents the common process of detecting and correcting errors when

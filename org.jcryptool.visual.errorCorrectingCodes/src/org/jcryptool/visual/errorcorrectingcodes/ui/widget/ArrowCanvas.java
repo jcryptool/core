@@ -1,4 +1,4 @@
-package org.jcryptool.visual.errorcorrectingcodes.ui;
+package org.jcryptool.visual.errorcorrectingcodes.ui.widget;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;

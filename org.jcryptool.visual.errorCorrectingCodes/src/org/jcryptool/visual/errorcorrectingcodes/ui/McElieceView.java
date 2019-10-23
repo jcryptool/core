@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.beans.typed.PojoProperties;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.core.databinding.conversion.IConverter;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
@@ -37,13 +38,22 @@ import org.jcryptool.visual.errorcorrectingcodes.McElieceSystem;
 import org.jcryptool.visual.errorcorrectingcodes.data.EccData;
 import org.jcryptool.visual.errorcorrectingcodes.data.Matrix2D;
 import org.jcryptool.visual.errorcorrectingcodes.data.MatrixException;
+import org.jcryptool.visual.errorcorrectingcodes.data.McElieceData;
+import org.jcryptool.visual.errorcorrectingcodes.ui.binding.InteractiveMatrixProperty;
+import org.jcryptool.visual.errorcorrectingcodes.ui.widget.InteractiveMatrix;
 
 import com.sun.org.glassfish.external.statistics.annotations.Reset;
 
+/**
+ * McElieceView represents the McEliece cryptographic system with Hamming code and small matrices S and P.
+ * Usually, the encryption requires larger linear code, such as Goppa, and accordingly big permutation and scrambling matrices. Because the resulting large key and data sizes are not easily represented, we decided to simplify the original proposal. Therefore this is not a secure implementation of the system.
+ * 
+ * @author dhofmann
+ *
+ */
 public class McElieceView extends Composite {
 
-    private EccController ecc;
-    private EccData eccData;
+    private McElieceData data;
     private McElieceSystem mce;
     private DataBindingContext dbc;
 
@@ -54,7 +64,6 @@ public class McElieceView extends Composite {
     private Composite compPrivateKeyData;
     private Composite compPrivateKeyButton;
     private Composite compInverseMatrices;
-
     private Group grpDecryption;
     private Group grpPrivateKey;
     private Group grpEncryption;
@@ -64,17 +73,17 @@ public class McElieceView extends Composite {
     private Group grpControlButtons;
     private Group grpTextInfo;
     private Group grpEncrypted;
-    private Group grpDecryptStep;
 
     private Text textOutput;
     private Text textInput;
-
     private StyledText textAsBinary;
     private StyledText textEncrypted;
     private StyledText textInfo;
     private StyledText textMatrixG;
     private StyledText textMatrixSInverse;
     private StyledText textMatrixPInverse;
+    private StyledText textMatrixGSP;
+    private StyledText textDecoded;
     private InteractiveMatrix compMatrixP;
     private InteractiveMatrix compMatrixS;
 
@@ -82,23 +91,18 @@ public class McElieceView extends Composite {
     private Button btnNextStep;
     private Button btnPrev;
     private Button btnGeneratePrivateKey;
-
     private Label lblHeader;
     private Label lblMatrixG;
     private Label lblMatrixS;
     private Label lblMatrixP;
     private Label lblMatrixGSP;
-    private StyledText textMatrixGSP;
-    private StyledText textDecoded;
-    private Label lblClearText;
     private Label lblMatrixSInverse;
     private Label lblMatrixPInverse;
 
     public McElieceView(Composite parent, int style) {
         super(parent, style);
-        eccData = new EccData();
-        ecc = new EccController(eccData);
-        mce = new McElieceSystem(eccData);
+        data = new McElieceData();
+        mce = new McElieceSystem(data);
         this.parent = parent;
         Point margins = new Point(5, 5);
         GridLayoutFactory glf = GridLayoutFactory.fillDefaults().margins(margins);
@@ -229,7 +233,7 @@ public class McElieceView extends Composite {
 
     private void updateVector() {
         mce.stringToArray();
-        textAsBinary.setText(mce.getBinary().toString());
+        textAsBinary.setText(data.getBinary().toString());
     }
 
     /**
@@ -248,7 +252,7 @@ public class McElieceView extends Composite {
         grpEncrypted.setVisible(false);
         compInverseMatrices.setVisible(false);
         grpOutput.setVisible(false);
-        textMatrixG.setText(mce.getMatrixG().toString());
+        textMatrixG.setText(data.getMatrixG().toString());
     }
 
     /**
@@ -257,11 +261,11 @@ public class McElieceView extends Composite {
     private void nextStep() {
         if (!grpPublicKey.isVisible()) {
             try {
-                generateKey();
+                generateKey(false);
                 mce.computePublicKey();
                 mce.encrypt();
-                textMatrixGSP.setText(mce.getMatrixSGP().toString());
-                textEncrypted.setText(mce.getEncrypted().toString());
+                textMatrixGSP.setText(data.getMatrixSGP().toString());
+                textEncrypted.setText(data.getEncrypted().toString());
                 textInfo.setText(Messages.McElieceView_step2);
                 grpPublicKey.setVisible(true);
                 grpEncrypted.setVisible(true);
@@ -278,8 +282,8 @@ public class McElieceView extends Composite {
         } else if (!grpOutput.isVisible()) {
             mce.decrypt();
             // UIHelper.markCode(textCorrected, SWT.COLOR_CYAN, ecc.getBitErrors());
-            textMatrixPInverse.setText(mce.getMatrixPInv().toString());
-            textMatrixSInverse.setText(mce.getMatrixSInv().toString());
+            textMatrixPInverse.setText(data.getMatrixPInv().toString());
+            textMatrixSInverse.setText(data.getMatrixSInv().toString());
             textInfo.setText(Messages.McElieceView_step3);
             compInverseMatrices.setVisible(true);
             grpOutput.setVisible(true);
@@ -307,16 +311,19 @@ public class McElieceView extends Composite {
         }
     }
 
-    private void generateKey() {
-        generateKey(false);
-    }
-    
     private void resetKeys() {
         compMatrixS.reset();
         compMatrixP.reset();
         compMatrixS.setModified(false);
         compMatrixP.setModified(false);
+        data.setMatrixSInv(null);
+        data.setMatrixPInv(null);
     }
+    
+    /**
+     * Generate the private and public key matrices as well as their inverses.
+     * @param reset if true, discard any user input by resetting S and P to all 0
+     */
 
     private void generateKey(boolean reset) {
         if (reset) {
@@ -324,44 +331,36 @@ public class McElieceView extends Composite {
         }
 
         Matrix2D p, s, invS, invP;
+        
+        //when matrices have not been set yet generate them automatically
         if (!compMatrixP.isModified()) {
-            do {
-            p = mce.randomPermutationMatrix(7);
-            invP = p.invert();
-            } while (p.equals(invP));
-            compMatrixP.setMatrix(p);
+            mce.randomPermutationMatrix(7);
+            //compMatrixP.setMatrix(data.getMatrixP());
         } else {
-            p = compMatrixP.getMatrix();
-            invP = p.invert();
+            invP = compMatrixP.getMatrix().invert();
             if (invP == null)
                 throw new MatrixException("Matrix P is singular, no inverse could be found!");
-            if (p.equals(invP))
+            if (compMatrixP.getMatrix().equals(invP))
                 throw new MatrixException("The inverse of Matrix P is equal, please choose other parameters.");
+            //data.setMatrixP(compMatrixP.getMatrix());
+            data.setMatrixPInv(invP);
         }
 
         if (!compMatrixS.isModified()) {
-            do {
-                s = mce.randomMatrix(4, 4);
-                invS = s.invert();
-            } while (invS == null || s.equals(invS));
-            compMatrixS.setMatrix(s);
+            mce.randomMatrix(4, 4);
+            //compMatrixS.setMatrix(s);
         } else {
-            s = compMatrixS.getMatrix();
-            invS = s.invert();
+            invS = compMatrixS.getMatrix().invert();
             if (invS == null)
                 throw new MatrixException("Matrix S is singular, no inverse could be found!");
-            if (s.equals(invS))
+            if (compMatrixS.getMatrix().equals(invS))
                 throw new MatrixException("The inverse of Matrix S is equal, please choose other parameters.");
+            //data.setMatrixS(s);
+            data.setMatrixSInv(invS);
         }
 
-        Matrix2D check = s.multBinary(invS);
-        assert (check != null);
-
-        mce.setMatrixP(p);
-        mce.setMatrixPInv(invP);
-        mce.setMatrixS(s);
-        mce.setMatrixSInv(invS);
-
+        textMatrixSInverse.setText(data.getMatrixSInv().toString());
+        textMatrixPInverse.setText(data.getMatrixPInv().toString());
     }
 
     /**
@@ -372,20 +371,27 @@ public class McElieceView extends Composite {
         dbc = new DataBindingContext();
 
         dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textInput),
-                BeanProperties.value(EccData.class, "originalString", String.class).observe(ecc.getData())); //$NON-NLS-1$
+                BeanProperties.value(McElieceData.class, "originalString", String.class).observe(mce.getData())); //$NON-NLS-1$
 
         dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textAsBinary),
-                BeanProperties.value(EccData.class, "binaryAsString", String.class).observe(ecc.getData())); //$NON-NLS-1$
+                BeanProperties.value(McElieceData.class, "binaryAsString", String.class).observe(mce.getData())); //$NON-NLS-1$
 
         dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textEncrypted),
-                BeanProperties.value(EccData.class, "codeAsString", String.class).observe(ecc.getData())); //$NON-NLS-1$
+                BeanProperties.value(McElieceData.class, "codeAsString", String.class).observe(mce.getData())); //$NON-NLS-1$
 
         dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textDecoded),
-                BeanProperties.value(EccData.class, "binaryDecoded", String.class).observe(ecc.getData())); //$NON-NLS-1$
+                BeanProperties.value(McElieceData.class, "binaryDecoded", String.class).observe(mce.getData())); //$NON-NLS-1$
 
         dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textOutput),
-                BeanProperties.value(EccData.class, "decodedString", String.class).observe(ecc.getData())); //$NON-NLS-1$
+                BeanProperties.value(McElieceData.class, "decodedString", String.class).observe(mce.getData())); //$NON-NLS-1$
+               
+        dbc.bindValue(new InteractiveMatrixProperty().observe(compMatrixP),
+                BeanProperties.value(McElieceData.class, "matrixP", Matrix2D.class).observe(mce.getData())); //$NON-NLS-1$
 
+        dbc.bindValue(new InteractiveMatrixProperty().observe(compMatrixS),
+                BeanProperties.value(McElieceData.class, "matrixS", Matrix2D.class).observe(mce.getData())); //$NON-NLS-1$
+        
+        
     }
 
 }

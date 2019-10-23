@@ -1,13 +1,13 @@
 package org.jcryptool.visual.errorcorrectingcodes.data;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Arrays;
 
-import javax.security.auth.login.AccountExpiredException;
-
-import com.sun.xml.internal.ws.spi.db.DatabindingException;
-
+/**
+ * Matrix2D holds a 2-Dimensional array of integer values and provides methods for computations in the binary field.   
+ * 
+ * @author dhofmann
+ *
+ */
 public class Matrix2D {
     int[][] data;
 
@@ -21,14 +21,20 @@ public class Matrix2D {
     public Matrix2D(int[][] data) {
         this.setData(data);
     }
-
+    
+    /**
+     * Multiply two binary matrices.
+     * 
+     * @param other the matrix multiplicand
+     * @return the product
+     * @throws IllegalArgumentException if the number of rows and columns of the two multiplicands do not match 
+     * @throws IllegalArgumentException when one or both matrices contain non-binary values 
+     */
     public Matrix2D multBinary(Matrix2D other) {
 
-        if (this.getColCount() != other.getRowCount()) {
-            throw new IllegalArgumentException(
-                    "Number of columns of first matrix must be equal to number of rows of second matrix.");
-        }
-
+        if (this.getColCount() != other.getRowCount())
+            throw new IllegalArgumentException("Number of columns of first matrix must be equal to number of rows of second matrix.");
+        
         if (!this.isBinary() || !other.isBinary())
             throw new IllegalArgumentException("Matrices must contain only binary values.");
 
@@ -43,7 +49,13 @@ public class Matrix2D {
         }
         return new Matrix2D(result);
     }
-
+    
+    /**
+     * XOR the matrix value at (row, col) with 1, i.e. flip a binary value.
+     * 
+     * @param row
+     * @param col
+     */
     public void flip(int row, int col) {
         data[row][col] ^= 1;
     }
@@ -58,24 +70,30 @@ public class Matrix2D {
 
         return new Matrix2D(transpose);
     }
-
+    
+    /**
+     * Compute inverse of this matrix via lower–upper (LU) decomposition algorithm. 
+     * 
+     * @return inverted Matrix2D object; null if matrix not invertible
+     */
     public Matrix2D invert() {
         if (!isSquare())
-            throw new RuntimeException("Only square matrices can be inverted!");
+            return null;
 
         int n = data.length;
-        int i, j, k, pivot;
-        
+        int i, j, k, pivot; 
         int[] swap;
+        
+        //the permutation reference as an 1D array
         int[] P = new int[n];
+
+        //copy the rows to a new array to keep the original data
         int[][] LU = Arrays.stream(data)
                 .map((int[] row) -> row.clone())
                 .toArray((int length) -> new int[length][]);
-        
-        int[][] IA = new int[n][n];
-              
+                
         for (i = 0; i < n; i++)
-            P[i] = i; //Unit permutation "matrix"
+            P[i] = i;
 
         //pivoting and LU Decomposition
         for (i = 0; i < n; i++) {
@@ -87,10 +105,9 @@ public class Matrix2D {
                     break;
                 }
             
-
             if (pivot == -1 ) 
                 return null;
-
+            
             if (pivot != i) {
                 //pivoting P
                 j = P[i];
@@ -103,45 +120,56 @@ public class Matrix2D {
                 LU[pivot] = swap;
             }
 
+            //calculate lower and upper part
             for (j = i + 1; j < n; j++) {
                 LU[j][i] &= LU[i][i];
 
                 for (k = i + 1; k < n; k++)
                     LU[j][k] ^= (LU[j][i] & LU[i][k]);
             }
-        }
-        
-        
+        }  
+
         //compute the inverse by solving LUX = IA
-        for (j = 0; j < n; j++) {
-            for (i = 0; i < n; i++) {
-                if (P[i] == j) 
-                    IA[i][j] = 1;
+        int[][] IA = new int[n][n];
+        for (i = 0; i < n; i++) {
+            for (j = 0; j < n; j++) {
+                //check if the row was pivoted
+                if (P[j] == i) 
+                    IA[j][i] = 1;
                 else
-                    IA[i][j] = 0;
+                    IA[j][i] = 0;
 
-                for (k = 0; k < i; k++)
-                    IA[i][j] ^= (LU[i][k] & IA[k][j]);
+                for (k = 0; k < j; k++)
+                    IA[j][i] ^= (LU[j][k] & IA[k][i]);
             }
 
-            for (i = n - 1; i >= 0; i--) {
-                for (k = i + 1; k < n; k++)
-                    IA[i][j] ^= (LU[i][k] & IA[k][j]);
+            for (j = n - 1; j >= 0; j--) {
+                for (k = j + 1; k < n; k++)
+                    IA[j][i] ^= (LU[j][k] & IA[k][i]);
 
-                IA[i][j] = IA[i][j] & LU[i][i];
+                IA[j][i] = IA[j][i] & LU[j][j];
             }
-        }
-               
+        }       
         return new Matrix2D(IA);
     }
 
+    /**
+     * Check for squareness of this matrix.
+     * 
+     * @return true if the number of rows and columns are equal 
+     */
     public boolean isSquare() {
         if (getColCount() == getRowCount())
             return true;
         else
             return false;
     }
-
+    
+    /**
+     * Check if all matrix values are binary.
+     * 
+     * @return false if any value is not 1 or 0, true otherwise
+     */
     public boolean isBinary() {
         for (int row = 0; row < data.length; row++) {
             for (int col = 0; col < data[row].length; col++) {
@@ -175,6 +203,12 @@ public class Matrix2D {
         return data[idxRow];
     }
 
+    /**
+     * Get a column of the row oriented data array.
+     * 
+     * @param idxColumn the column id
+     * @return a new array containing the column values
+     */
     public int[] getColumn(int idxColumn) {
         int[] column = new int[getRowCount()];
         for (int i = 0; i < data.length; i++) {
@@ -208,7 +242,11 @@ public class Matrix2D {
         
         return true;
     }
-
+    
+    /**
+     * Return a string representation of the Matrix.
+     * 
+     */
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (int row = 0; row < data.length; row++) {
