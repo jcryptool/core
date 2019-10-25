@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
+/**
+ * McElieceData is a model class to store various information needed for the McEliece view and algorithm.
+ * 
+ * @author dhofmann
+ *
+ */
 public class McElieceData {
     private String originalString;
     private String decodedString;

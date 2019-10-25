@@ -96,7 +96,6 @@ public class McElieceSystem {
      * @param size the size of the square matrix
      */
     public void randomPermutationMatrix(int size) {
-       
         Matrix2D p, pInverse;
         do {
             ArrayList<int[]> bitArray = new ArrayList<int[]>(size);
@@ -217,20 +216,20 @@ public class McElieceSystem {
     /**
      * Binary addition (without carry) of 2 arrays containing integers of 1 and 0.
      *
-     * @param value1 the value 1
-     * @param value2 the value 2
+     * @param first the value 1
+     * @param second the value 2
      * @return the int[]
      */
-    private int[] binaryAdd(int[] value1, int[] value2) {
+    private int[] binaryAdd(int[] first, int[] second) {
         
-        if (value1.length < value2.length) {
+        if (first.length < second.length) {
             throw new IllegalArgumentException("First array needs to be of equal or greater size.");
         }
 
-        int[] result = new int[value1.length];
+        int[] result = new int[first.length];
 
-        for (int i = 0; i < value1.length; i++) {
-            result[i] = value1[i] ^ value2[i];
+        for (int i = 0; i < first.length; i++) {
+            result[i] = first[i] ^ second[i];
         }
         return result;
     }
