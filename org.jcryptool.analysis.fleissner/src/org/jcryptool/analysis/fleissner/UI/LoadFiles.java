@@ -15,7 +15,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.DoubleBuffer;
 import java.nio.channels.Channels;
-import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
 
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -231,12 +231,12 @@ public class LoadFiles {
         DoubleBuffer doubleBuffer = myByteBuffer.asDoubleBuffer();
 
         try {          
-            FileChannel fc = (FileChannel) Channels.newChannel(file);
-            fc.read(myByteBuffer);
-            fc.close();
-//            file.close();   
+        	ReadableByteChannel rbc = Channels.newChannel(file);
+            rbc.read(myByteBuffer);
+            rbc.close();
             } catch (IOException e) {
                 e.printStackTrace();
+                LogUtil.logError(Activator.PLUGIN_ID, e);
                 throw new FileNotFoundException("File not found !");
             }   
         doubleBuffer.get(ngrams);

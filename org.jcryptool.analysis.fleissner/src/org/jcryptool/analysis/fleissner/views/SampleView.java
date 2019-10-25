@@ -7,6 +7,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Layout;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.analysis.fleissner.UI.FleissnerWindow;
@@ -37,7 +38,10 @@ public class SampleView extends ViewPart {
 	    parent.setLayout(gridLayoutParent);
         
         fw = new FleissnerWindow(parent, SWT.NONE);
-        fw.setLayout(new GridLayout(1,true));
+        GridLayout layout = new GridLayout(1,true);
+        layout.marginWidth = 0;
+        layout.marginHeight = 0;
+        fw.setLayout(layout);
         fw.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 	    scrolledComposite.setContent(parent);

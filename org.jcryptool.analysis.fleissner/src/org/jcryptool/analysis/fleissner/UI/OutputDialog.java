@@ -47,6 +47,7 @@ public class OutputDialog extends TitleAreaDialog {
         container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         GridLayout layout = new GridLayout();
         container.setLayout(layout);
+        setHelpAvailable(false);
 
         createOutput(container);
         return area;
