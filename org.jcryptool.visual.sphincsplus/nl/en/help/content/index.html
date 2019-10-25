@@ -40,8 +40,11 @@
 
 
 	<p>&nbsp;</p>
-	<h2 id="params">Sub-tab "Parameters and Key Generation"</h2>
-	<p>xxxxxx TODO Screenshot xxxxxxxxx</p>
+	<h2 id="params">1st sub-tab "Parameters and Key Generation"</h2>
+	<p>In the 1st sub-tab you can see and adjust the used parameters and then generate the keys which will then be used for signing and verifying in the second sub-tab.</p>
+	<p> The following screenshot shows the default settings and the keys generated randomly by pressing the button "Generate keys". You can also input your own keys to test examples from the literature.</p>
+	<img src="images/SPHINCSplus_Sub-tab1_After-Pressing-KeyGen.png" alt="Sub-tab 1" id="subtab1" width = "90%" />
+	
 		<h4 id="Parameter">Grouping "Parameter"</h4>
 		<p>In the first sub-tab you can modify and view the following parameters of the procedure. The parameters are displayed in the decimal system (base 10).</p>
 		<table border=1>
@@ -186,8 +189,11 @@
 
 
 	<p>&nbsp;</p>
-	<h2 id="signing">Sub-tab "Signing and Verification"</h2>
-
+	<h2 id="signing">2nd sub-tab "Signing and Verification"</h2>
+	<p>In the 2nd sub-tab, you can enter a message (or keep the default) and then sign it with SPHINCS+ (prerequisite is, that keys have been created in advance in the 1st sub-tab). Afterwards you can verify the signature.</p>
+	<p>As long as you don't change anything, the verification will always succeed (ok). But if you change the message and click again the button "Verify signature", the verification will fail.<br> Currently the signature values cannot be changed in this sub-tab. If you generate again new keys in the first sub-tab, they will be used here not until you sign the message again.</p>
+	<img src="images/SPHINCSplus_Sub-tab2_After-Pressing-Verify.png" alt="Sub-tab 2" id="subtab2" width = "90%" />
+	
 		<h4>Grouping "Message"</h4>
 		<p>Here you can enter the message, which should be signed.</p>
 
@@ -217,8 +223,11 @@
 
 
 	<p>&nbsp;</p>
-	<h2 id="hypertree">Sub-tab "SPHINCS+ Hypertree"</h2>
-		<p>In this sub-tab the hypertree generated from your parameters is dynamically and graphically displayed.</p>
+	<h2 id="hypertree">3rd sub-tab "SPHINCS+ Hypertree"</h2>
+	<p>In this sub-tab a typical hypertree and its elements are graphically displayed.</p>
+	<p>The sub-tabs 3 and 4 can be opened independently of the key generation in the 1st sub-tab. So the hypertree has a fixed size and isn't (yet) generated dynamically from the parameters in the 1st sub-tab.</p>
+	<img src="images/SPHINCSplus_Sub-tab3_Hypertree.png" alt="Sub-tab 3" id="subtab3" width = "90%" />
+
 		<p>In the upper section is a description and a dynamic text field.
 			The dynamic text field shows information for the element in the
 			graphical representation which you click at via mouse.<p>
@@ -231,14 +240,15 @@
 
 
 	<p>&nbsp;</p>
-	<h2 id="forest">Sub-tab "SPHINCS+ FORS"</h2>
+	<h2 id="forest">4th sub-tab "SPHINCS+ FORS"</h2>
 		<p>The public key of the FORS tree is used as a leaf in the
 			hypertree. The FORS tree again consists of subtrees. These
 			subtrees are displayed as a drop-down item. There, the root and the
 			container element are marked in green &ndash; they represent the same
 			element.</p>
+	<img src="images/SPHINCSplus_Sub-tab4_FORS.png" alt="Sub-tab 4" id="subtab4" width = "90%" />
 
-<br>			
+<p>&nbsp;</p>		
 </body>
 </html>
 

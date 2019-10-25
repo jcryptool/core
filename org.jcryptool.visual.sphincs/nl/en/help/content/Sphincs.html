@@ -80,11 +80,11 @@
 	<h3 id="visual">1.1) Visualization of the SPHINCS structure </h3>
 	
 	<p>The following graphic shows the SPHINCS hypertree. This hypertree can also be seen (partially) in the JCT plugin in the "SPHINCS Overview" tab. The lowest of the 12 layers is called the "first" layer.</p>
-	<img src=images/explanation.png alt="Legend" id=explanation />
-	<img src=images/structure.png alt="SPHINCS-Structure" id=structure />
+	<img src=images/explanation.png alt="Legend" id=explanation width = "90%" />
+	<img src=images/structure.png alt="SPHINCS Structure" id=structure width = "90%" />
 
 	<p>The following graphic zooms into a part of the above hypertree: A WOTS+ structure consists of several WOTS+ public key nodes, each of which results in a key pair:</p>
-	<img src=images/tree.jpg alt="WOTS+-Tree" id=baum />
+	<img src=images/tree.jpg alt="WOTS+-Tree" id=baum width = "90%" />
 	<p>Each WOTS+ structure is a binary hash tree and each contains 2^(h/d) = 2^5 = 32 nodes.</p> 
 	
 	<p>The following sections explain the 3 main operations in more detail. Then the operation of the plugin is explained by its 3 tabs. </p>
@@ -128,7 +128,7 @@
 	<p>The SPHINCS signature &Sigma; therefore consists of (i; R_1; &sigma;H; &sigma;W,0; Auth_A_0;...; &sigma;W,d-1; Auth_A_d-1), where (&sigma;H = HORST signature, &sigma;W,i = WOTS+ signature).</p>
 	
 	<p>The following graphics shows the interaction of the parameters. Further details in [0, page 11].</p>
-	<img src=images/signierung_final.jpg alt=Signatur />
+	<img src=images/signierung_final.jpg alt=Signatur width = "90%" />
 	  
 	  
 	
@@ -168,17 +168,20 @@
 	<p>In the instantiation SPHINCS-256 the parameters d=12, h=60, w=16, n=256 and m=512 are already defined (see table 1 in [0, page 19]).</p>
 	 
 	<h3>Sub-tab 1: Bitmask and Key Generation </h3>
-	<p>In the 1st tab, the components of the used keys (seed and bit masks) and the generated public SPHINCS key PK are displayed. In addition, information about the key length is displayed.</p>
+	<p>In the 1st tab, the components of the used keys (seed, bit masks) and the generated public SPHINCS key PK are displayed. In addition, information about the key length is displayed at the bottom. The keys created will then be used for signing and verifying in the second sub-tab.</p>
+	<img src="images/SPHINCS_Sub-tab1_After-Pressing-KeyGen.png" alt="Sub-tab 1" id="subtab1" width = "90%" />
 	
-	<p>You have to press the button <b>Generate key pair</b>. Each time you press the button again, a random seed will be generated and a <b>new</b> public key PK will be generated. </p>
+	<p>Each time you press the button <b>Generate key pair</b> again, a random seed (bitmasks) and a <b>new</b> public key PK will be generated. </p>
 	 
-	<p>The following sub-tabs 2 and 3 only work after the keys have been generated in sub-tab 1 and the hypertree has been built.</p>
+	<p>The following sub-tabs 2 and 3 only work after in sub-tab 1 the keys have been generated and the hypertree has been built.</p>
 
 	 
 <p> </br> </p>
 	<h3>Sub-tab 2: Sign and Verify</h3>
 	 
-	<p>The 2nd sub-tab offers the possibility to sign and verify a message.</p>
+	<p>In the 2nd sub-tab, you can enter a message (or keep the default) and then sign it with SPHINCS (prerequisite is, that keys have been created in advance in the 1st sub-tab). Afterwards you can verify the signature.</p>
+	<img src="images/SPHINCS_Sub-tab2_After-Pressing-Sign.png" alt="Sub-tab 2" id="subtab2" width = "90%" />
+
 	 
 	<p>Please enter a message text (or leave the default) and then press the button <b>Sign message</b>.</p>
 	 
@@ -189,24 +192,29 @@
 		
 		<li>The button <b>HORST signature</b> highlights the HORST sheet contained in the signature (displayed in purple in the center).</li>
 		
-		<li>The <b>Current leaf</b> button highlights the HORST signature in the signature field (displayed in orange at the very end). The HORST signature is a part of the signature.</li>
+		<li>The button <b>Current leaf</b> highlights the HORST signature in the signature field (displayed in orange at the very end). The HORST signature is a part of the signature.</li>
 	</ul>
 	 
-	<p>When you press the <b>Verify Signature</b> button, the signature is verified and the result is displayed in the middle (in green if the message, public key and signature match, so the validation is positive). You can achieve that the verification fails, by changing the message above (then the verification result will appear in red).</p>
+	<p>When you press the button <b>Verify Signature</b>, the signature is verified and the result is displayed in the middle (in green if the message, public key and signature match, so the validation is positive).</p>
+
+	<p>As long as you don't change anything, the verification will always succeed (ok). But if you change the message and click again the button <b>Verify Signature</b>, the verification will fail (then the verification result will appear in red).<br> Currently the signature values cannot be changed in this sub-tab. If you generate again new keys in the first sub-tab, they will be used here not until you sign the message again.</p>
+
+
 
  
 <p> </br> </p>
 	<h3>Sub-tab 3: SPHINCS overview </h3>
 	
-	<p>The 3rd sub-tab shows a section of the hypertree and gives information about the SPHINCS structure. If the mouse pointer is over a sheet, its data is displayed as balloon text. If you click on the sheet, the data is also displayed in the output field at the top, below the description.</p>
+	<p>The 3rd sub-tab graphically displays a section of the hypertree and gives information about the SPHINCS structure. If the mouse pointer is over an element, its data is displayed as balloon text (tooltip). If you click on the element, the data is also displayed in the output field at the top (below the description).</p>
+	
+	<img src="images/SPHINCS_Sub-tab3_Hypertree.png" alt="Sub-tab 3" id="subtab3" width = "90%" />
 
-	<p>The individual layers of the structure are color-coded so that you can see which sheet belongs to which layer. With the mouse wheel you can zoom in and out of the tree.</p>
+	<p>The individual layers of the structure are color-coded so that you can see which element belongs to which layer. With the mouse wheel you can zoom in and out of the tree.</p>
 
 
 	<p> </br> </p>
 	<h2>Note</h3>
-    <p>Only the SPHINCS-256 variant was implemented in JCT.
-	Which variants are still available? SPHINCS+ and Gravity-SPHINCS plus their instantiations.</p>
+    <p>This plugin only implemented the SPHINCS-256 variant. Other variants are SPHINCS+ and Gravity-SPHINCS plus their instantiations.</p>
 	
 
 <p> </br> </p>

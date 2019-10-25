@@ -123,11 +123,13 @@ Gute symbolische Grafik: https://alln-extcloud-storage.cisco.com/ciscoblogs/img-
 <p> </br> </p>
 	<h3 id="visual">1.1) Visualisierung der SPHINCS-Struktur</h3>
 	
-	<p>Die folgende Grafik zeigt den SPHINCS-Hypertree. Dieser Hypertree ist (ausschnittsweise) auch im JCT-Plugin im Reiter "SPHINCS-Übersicht" zu sehen. Die unterste der 12 Ebenen wird als "erste" Ebene bezeichnet.</p>
-	<img src=images/explanation.png alt="Legende" id=explanation />
-	<img src=images/structure.png alt="SPHINCS-Struktur" id=struktur />
+	<p>Die folgende Grafik zeigt den SPHINCS-Hypertree. Dieser Hypertree ist (ausschnittsweise) auch im JCT-Plugin im Unterreiter "SPHINCS-Übersicht" zu sehen. Die unterste der 12 Ebenen wird als "erste" Ebene bezeichnet.</p>
+	<img src=images/explanation.png alt="Legende" id=explanation width = "90%" />
+	<img src=images/structure.png alt="SPHINCS-Struktur" id=struktur width = "90%" />
 <!-- TODO in Grafik (Abbildungen):
 0) Haben wir die Sourcen der Texte, um schnelle Umformulierungen/Übersetzungen machen zu können?
+   Außerdem sind die Screenshot zu unscharf.
+   Und sie sind nur auf Deutsch. Genauso bei SPHINCS+ derzeit.
 1) In den Grafiken noch ein paar Texte korrigieren:
    - Legende: linker/rechter Wurzelknoten der darunterliegenden Struktur
      (ohne Komma)
@@ -143,10 +145,10 @@ Gute symbolische Grafik: https://alln-extcloud-storage.cisco.com/ciscoblogs/img-
 	Oder ist ein Schlüsselpaar aus 2 öffentlichen Schlüsseln statt ein Paar aus einem geheimen und einem öffentlichen Schlüsselgemeint ? ==> @Hülsing))) 
 -->	
 
-	<img src=images/tree.jpg alt="WOTS+-Baum" id=baum />
+	<img src=images/tree.jpg alt="WOTS+-Baum" id=baum width = "90%" />
 	<p>Jede WOTS+-Struktur ist ein binärer Hash-Baum (binary hash tree) und jede enthält 2^(h/d) = 2^5 = 32 Knoten.</p> 
 	
-	<p>Die folgenden Abschnitte erläutern die 3 Haupt-Operationen genauer. Danach wird die Bedienung des Plugin anhand seiner 3 Reiter erläutert.</p>
+	<p>Die folgenden Abschnitte erläutern die 3 Haupt-Operationen genauer. Danach wird die Bedienung des Plugin anhand seiner 3 Unterreiter erläutert.</p>
 
 	
 
@@ -170,7 +172,7 @@ Gute symbolische Grafik: https://alln-extcloud-storage.cisco.com/ciscoblogs/img-
 	
 	<p>Zusätzlich werden p n-Bit lange Bitmasken Q_i erzeugt, die für jede WOTS+-Struktur und jede HORST-Struktur benutzt werden. Alle Q_i gehen per Konkatenation in den obersten Public-Key (PK des Wurzelknoten) ein. Weitere Details in [0, Seite 10].</p>
 <!-- TODO: Fragen klären und in Text hinzufügen:
-	(((Was ist die "Bitmaske", die im ersten Reiter in JCT in der Mitte dargestellt wird? Ist das ein Q_i? ==> Altenhuber )))
+	(((Was ist die "Bitmaske", die im ersten Unterreiter in JCT in der Mitte dargestellt wird? Ist das ein Q_i? ==> Altenhuber )))
 -->	
 	
 	<p>Anschließend werden die WOTS+-Schlüsselpaare der einzelnen Ebenen erzeugt. Dazu wird für jedes Schlüsselpaar ein Seed erzeugt, in den die Adresse A des Schlüsselpaars und SK_1 einfließen.</p>
@@ -222,7 +224,7 @@ Gute symbolische Grafik: https://alln-extcloud-storage.cisco.com/ciscoblogs/img-
 		  Gleiche Schreibweise in Grafik wie im Text der Onlinehilfe: W0 ==> W_0, AuthA0 ==> Auth_A_0, ...
 	)))
 -->	
-	<img src=images/signierung_final.jpg alt=Signatur />
+	<img src=images/signierung_final.jpg alt=Signatur width = "90%" />
 	  
 	  
 	  
@@ -260,20 +262,23 @@ Gute symbolische Grafik: https://alln-extcloud-storage.cisco.com/ciscoblogs/img-
 <p> </br> </p>
 	<h2 id="Chap2">2) Bedienungsanleitung zu dieser Visualisierung</h2>
 
-	<!-- TODO für @be: Hier noch Screenshots rein, wenn die GUI komplett ist und sich dort auch die Bezeichnungen aus dieser Onlinehilfe wiederfinden.
+	<!-- TODO für @be: Check, ob die Bezeichnungen aus dieser Onlinehilfe sich in der GUI wiederfinden.
 -->
-	 
 	<p>Diese Visualisierung erläutert das Signaturverfahren SPHINCS-256 und die dahinter liegende SPHINCS-Struktur. Außerdem können die 3 Operationen Schlüsselgenerierung, Signieren und Verifizieren durchgeführt werden.</p>
 	
 	<p>In der Instanziierung SPHINCS-256 sind die Parameter d=12, h=60, w=16, n=256 und m=512 schon festgelegt (siehe Tabelle 1 in [0, Seite 19]).</p>
-	 
-	<h3>Reiter 1: Bitmasken- und Schlüsselerzeugung</h3>
 
-	<p>xxxxxx TODO Screenshot xxxxxxxxx</p>
+	 
+	<h3>Unterreiter 1: Bitmasken- und Schlüsselerzeugung</h3>
+
+	<p>Im 1. Unterreiter werden die Bestandteile der verwendeten Schlüssel (Seed, Bitmasken) und des erzeugten öffentlichen SPHINCS-Schlüssels PK angezeigt. Des weiteren sind unten Informationen zur Schlüssellänge zu sehen. Die erzeugten Schlüssel werden dann im 2. Unterreiter zum Signieren und Verifizieren benutzt.</p>
+	<img src="images/SPHINCS_Sub-tab1_After-Pressing-KeyGen.png" alt="Sub-tab 1" id="subtab1" width = "90%" />
 	
-	<p>Im 1. Reiter werden die Bestandteile der verwendeten Schlüssel (Seed und Bitmasken) und des erzeugten öffentlichen SPHINCS-Schlüssels PK ausgegeben. Des weiteren werden noch Informationen zur Schlüssellänge angezeigt.</p>
-	
-	<p>Dazu müssen Sie den Button <b>Neues Schlüsselpaar erzeugen</b> drücken. Bei jedem weiteren Drücken des Buttons wird erneut ein zufälliger Seed generiert und damit ein neuer Public Key PK erzeugt.</p>
+	<p>Bei jedem Drücken des Buttons <b>Neues Schlüsselpaar erzeugen</b> wird erneut ein zufälliger Seed (Bitmasken) generiert und damit ein neuer öffentlicher Schlüssel erzeugt.</p>
+
+	<!-- Nachträglich neu generierte Schlüssel werden im 2. Unterreiter nicht berücksichtigt. So ist es auch in SPHINCS+.
+    ==> Aber hier kann man im 1. Unterreiter die Bitmasken und den PK ändern. WAS wird dann im 2. Reiter verwendet? Ist das dann konsistent?
+-->
 	 	
 <!-- TODO: Den ff. Absatz habe ich rausgenommen, da ich nicht sehe,
          wo Bitmasken derzeit gefärbt sind. Der ganze Text ist in schwarz.
@@ -292,14 +297,15 @@ Gute symbolische Grafik: https://alln-extcloud-storage.cisco.com/ciscoblogs/img-
     - Ist das ein Base64-Format? )))
 -->
 	 
-	<p>Die folgenden Reiter 2 und 3 funktionieren erst, nachdem in Reiter 1 die Schlüssel erzeugt und der Hypertree aufgebaut wurde.</p>
+	<p>Die folgenden Unterreiter 2 und 3 funktionieren erst, nachdem in Unterreiter 1 die Schlüssel erzeugt und der Hypertree aufgebaut wurde.</p>
 
 	
 	 
 <p> </br> </p>
-	<h3>Reiter 2: Signierung und Verifikation</h3>
+	<h3>Unterreiter 2: Signierung und Verifikation</h3>
 	 
-	<p>Der 2. Reiter bietet die Möglichkeit, eine Nachricht zu signieren und zu verifizieren.</p>
+	<p>Im zweiten Unterreiter können Sie eine Nachricht eingeben und dann mit SPHINCS signieren (Voraussetzung ist, dass die Schlüssel im ersten Unterreiter erzeugt wurden). Anschließend können Sie die Signatur verifizieren.</p>
+	<img src="images/SPHINCS_Sub-tab2_After-Pressing-Sign.png" alt="Sub-tab 2" id="subtab2" width = "90%" />
 	 
 	<p>Bitte geben Sie einen Nachrichtentext ein (oder lassen Sie den Standardvorschlag) und drücken dann den Button <b>Nachricht signieren</b>.</p>
 	 
@@ -312,15 +318,22 @@ Gute symbolische Grafik: https://alln-extcloud-storage.cisco.com/ciscoblogs/img-
 		
 		<li>Der Button <b>Aktuelles Blatt</b> hebt das in der Signatur enthaltene HORST-Blatt hervor (wird ganz am Ende in orange angezeigt).</li>
 	</ul>
+	<p>Im obigen Screenshot ist das aktuelle Blatt farblich hervorgehoben, das am Ende der Signatur codiert ist.</p>
 	 
-	<p>Wenn Sie auf den Button <b>Signatur verifizieren</b> drücken, wird die Signatur geprüft und das Ergebnis in der Mitte angezeigt (in grün, wenn Nachricht, öffentlicher Schlüssel und Signatur zueinander passen, die Validierung also positiv ausfällt). Dass die Verifikation fehlschlägt, also negativ ausfällt, können Sie erreichen, indem Sie die Nachricht oben ändern (dann erscheint das Prüfergebnis in rot).</p>
+	<p>Wenn Sie auf den Button <b>Signatur verifizieren</b> drücken, wird die Signatur geprüft und das Ergebnis in der Mitte angezeigt (in grün, wenn Nachricht, öffentlicher Schlüssel und Signatur zueinander passen, die Validierung also positiv ausfällt).</p>
+	<p> Solange Sie nichts ändern, wird die Verifikation immer erfolgreich sein (ok). Wenn Sie die Nachricht ändern und nochmal den Button <b>Signatur verifizieren</b> drücken, wird die Verifikation nicht erfolgreich sein (dann erscheint das Prüfergebnis in rot).
+	<br> Die Signaturwerte kann man momentan in diesem Unterreiter nicht ändern. Wenn Sie im ersten Unterreiter nochmal neue Schlüssel generieren, werden diese hier erst genutzt, wenn Sie die Nachricht nochmal signieren.</p>
+
+<!-- Im 2. Unterreiter könnte in der GUI noch die Signatur-Gesamtlänge und die Längen ihrer Teile ausgegeben werden. 
+-->
 
 	 
-	 
 <p> </br> </p>
-	<h3>Reiter 3: SPHINCS-Übersicht</h3>
+	<h3>Unterreiter 3: SPHINCS-Übersicht</h3>
 	
-	<p>Der 3. Reiter zeigt einen Ausschnitt des Hypertrees und gibt Informationen über die SPHINCS-Struktur. Steht der Mauszeiger über einem Blatt, werden dessen Daten als Balloontext angzeigt. Klickt man auf das Blatt, werden die Daten zusätzlich in das Ausgabefeld oben unter der Beschreibung ausgegeben.
+	<p>Der 3. Unterreiter zeigt grafisch einen Ausschnitt des Hypertrees und gibt Informationen über die SPHINCS-Struktur. Steht der Mauszeiger über einem Element, werden dessen Daten als Balloontext (Tooltip) angzeigt. Klickt man auf das Element, werden die Daten zusätzlich in das Ausgabefeld oben unter der Beschreibung ausgegeben.</p>
+	<img src="images/SPHINCS_Sub-tab3_Hypertree.png" alt="Sub-tab 3" id="subtab3" width = "90%" />
+	
 	<!-- TODO: Fragen beantworten und im Text ergänzen:
 	((( - Ich bekam bei einem Klick die gleiche Info wie im Balloontext. Ist das ok?
         - Klickt man auf ein Blatt, erscheint z.B.
@@ -330,16 +343,14 @@ Gute symbolische Grafik: https://alln-extcloud-storage.cisco.com/ciscoblogs/img-
 		- Wichtig wäre mir noch: Wie ist der Zusammenhang zwischen diesem
           Hyper-Tree im Plugin und dem in der ersten Grafik unter 1.1 ? )))
 -->
-	</p>
 
-	<p>Die einzelnen Ebenen der Struktur sind farblich gekennzeichnet so, dass man sieht, welches Blatt welcher Ebene angehört.
+	<p>Die einzelnen Ebenen der Struktur sind farblich gekennzeichnet so, dass man sieht, welches Element welcher Ebene angehört.
 	Mit dem Maus-Rad können Sie in den Baum hinein und heraus zoomen.</p>
 
 
 	<p> </br> </p>
 	<h2>Anmerkung</h3>
-    <p>In JCT wurde nur die SPHINCS-256-Variante implementiert.
-	Welche Varianten gibt es noch? SPHINCS+ und Gravity-SPHINCS plus deren Instanziierungen.</p>
+    <p>Dieses Plugin implementierte nur die SPHINCS-256-Variante. Weitere Varianten sind SPHINCS+ und Gravity-SPHINCS plus deren Instanziierungen.</p>
 	
 
 
@@ -378,7 +389,7 @@ Gute symbolische Grafik: https://alln-extcloud-storage.cisco.com/ciscoblogs/img-
     Webseite: SPHINCS: practical stateless hash-based signatures</a></li>
 </ul>
 	
-	<p> Weitere Plugins in JCrypTool zu Quantencomputer-sicheren Verfahren:</p>
+	<p> Weitere Plugins in JCrypTool zu Quantencomputer-sicheren Signatur-Verfahren:</p>
 	<ul>	
 		<li><a href="PLUGINS_ROOT/org.jcryptool.visual.merkletree/$nl$/help/content/index.html">Merkle-Signaturen</a></li>
 		<li><a href="PLUGINS_ROOT/org.jcryptool.visual.wots/$nl$/help/content/index.html">WOTS / WOTS+</a></li>
