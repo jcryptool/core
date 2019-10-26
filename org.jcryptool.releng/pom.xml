@@ -70,7 +70,23 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 							<artifactId>org.jcryptool.target</artifactId>
 							<version>${product.version}</version>
 						</artifact>
+						<artifact>
+							<groupId>org.jcryptool</groupId>
+							<artifactId>org.jcryptool.platformpatches.target</artifactId>
+							<version>${product.version}</version>
+						</artifact>
 					</target>
+                    <!-- This is for patching in very specific versions of bundle via -->
+                    <!-- - dropin folder (temporary solution) -->
+                    <!-- - second target artifact (for patched versions of eclipse platform mostly) -->
+                    <!-- versions that get patched are excluded here via filters. This does not apply to the PDE build -->
+                    <filters>
+                        <!-- <filter> -->
+                        <!--    <type>eclipse-plugin</type> -->
+                        <!--    <id>org.eclipse.help.ui</id> -->
+                        <!--    <removeAll /> -->
+                        <!-- </filter> -->
+                    </filters>
 					<environments>
 						<environment>
 							<os>linux</os>

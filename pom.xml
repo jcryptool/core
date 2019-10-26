@@ -61,6 +61,7 @@
     <module>org.jcryptool.product</module>
     <module>org.jcryptool.providers.feature</module>
     <module>org.jcryptool.target</module>
+    <module>org.jcryptool.platformpatches.target</module>
     <module>org.jcryptool.views.feature</module>
     <module>org.jcryptool.webbrowser</module>
   </modules>
