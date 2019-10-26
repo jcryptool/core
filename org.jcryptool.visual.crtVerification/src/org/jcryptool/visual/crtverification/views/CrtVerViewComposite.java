@@ -708,7 +708,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		thruCert.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		
 		Composite settingsComposite = new Composite(composite, SWT.NONE);
-		settingsComposite.setLayout(new GridLayout(8, false));
+		settingsComposite.setLayout(new GridLayout(5, false));
 		GridData gd_settingsComposite = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
 		gd_settingsComposite.verticalIndent = 30;
 		settingsComposite.setLayoutData(gd_settingsComposite);
@@ -724,7 +724,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 //				controller.reset();
 //			}
 //		});
-		new Label(settingsComposite, SWT.NONE).setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+//		new Label(settingsComposite, SWT.NONE).setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
 
 		//Commented out because they only open another Plugin. This is also possible by selecting the wished Plugin
 		//from the menu.
@@ -742,7 +742,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 //			}
 //		});
 //		btnBack.setText(Messages.CrtVerViewComposite_pki_plugin);
-		new Label(settingsComposite, SWT.NONE).setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+//		new Label(settingsComposite, SWT.NONE).setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
 
 		//Commented out because they only open another Plugin. This is also possible by selecting the wished Plugin
 		//from the menu.
@@ -760,7 +760,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 //			}
 //		});
 //		btnForward.setText(Messages.CrtVerViewComposite_signatureVerification);
-		new Label(settingsComposite, SWT.NONE).setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false));
+//		new Label(settingsComposite, SWT.NONE).setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false));
 
 		btnShellModel = new Button(settingsComposite, SWT.RADIO);
 		btnShellModel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false));
@@ -768,7 +768,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				labelValiditySymbol.setVisible(false);
-				scaleVerificationDate.setEnabled(true);
+//				scaleVerificationDate.setEnabled(true);
 			}
 		});
 		btnShellModel.setSelection(true);
@@ -780,7 +780,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				labelValiditySymbol.setVisible(false);
-				scaleVerificationDate.setEnabled(false);
+//				scaleVerificationDate.setEnabled(false);
 			}
 		});
 		btnShellModelModified.setText(Messages.CrtVerViewComposite_modifiedshellModel);
@@ -791,13 +791,13 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				labelValiditySymbol.setVisible(false);
-				scaleVerificationDate.setEnabled(false);
+//				scaleVerificationDate.setEnabled(false);
 			}
 		});
 		btnChainModel.setText(Messages.CrtVerViewComposite_chainModel);
 
 		btnValidate = new Button(settingsComposite, SWT.PUSH);
-		btnValidate.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false));
+		btnValidate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		btnValidate.setText(Messages.CrtVerViewComposite_validate);
 		
 		labelValiditySymbol = new Label(settingsComposite, SWT.NONE);
