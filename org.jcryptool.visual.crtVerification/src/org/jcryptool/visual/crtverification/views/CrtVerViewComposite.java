@@ -100,7 +100,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 
 	Text txtLogWindow;
 	
-	private Color light_blue = new Color(Display.getCurrent(), 30, 144, 255);
+//	private Color light_blue = new Color(Display.getCurrent(), 30, 144, 255);
 	private Color violet = new Color(Display.getCurrent(), 72, 61, 139);
 	private Color orange = new Color(Display.getCurrent(), 255, 140, 0);
 
