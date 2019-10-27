@@ -362,16 +362,22 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		lblArrowVer.setText(Messages.CrtVerViewComposite_verificationDate);
 		
 		Label seperatorHorizontal = new Label(leftTop, SWT.SEPARATOR | SWT.HORIZONTAL);
-		seperatorHorizontal.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 5, 1));
+		GridData gd_seperatorHorizontal = new GridData(SWT.FILL, SWT.FILL, false, false, 5, 1);
+		gd_seperatorHorizontal.verticalIndent = 15;
+		seperatorHorizontal.setLayoutData(gd_seperatorHorizontal);
 		
 		new Label(leftTop, SWT.NONE);
 		
 		Label date5 = new Label(leftTop, SWT.LEFT);
-		date5.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		GridData gd_date5 = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
+		gd_date5.verticalIndent = 15;
+		date5.setLayoutData(gd_date5);
 		date5.setText(controller.scaleUpdate(0, 360, controller.getDateformat3()));
 		
 		Label date6 = new Label(leftTop, SWT.RIGHT);
-		date6.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		GridData gd_date6 = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
+		gd_date6.verticalIndent = 15;
+		date6.setLayoutData(gd_date6);
 		date6.setText(controller.scaleUpdate(720, 360, controller.getDateformat3()));
 		
 		Label lblSignatureDate = new Label(leftTop, SWT.NONE);
