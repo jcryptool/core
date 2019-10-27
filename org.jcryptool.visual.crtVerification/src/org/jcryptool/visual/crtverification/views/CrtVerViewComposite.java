@@ -337,7 +337,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		
 		Label lblArrowSig = new Label(leftTop, SWT.NONE);
 		lblArrowSig.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		lblArrowSig.setForeground(light_blue);
+		lblArrowSig.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN));
 		lblArrowSig.setText(Messages.CrtVerViewComposite_signatureDate);
 		
 		//left Canvas for the left Arrows
@@ -987,7 +987,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		height = clientArea.height;
 
 		// Draw Arrow Signature Date
-		gc.setBackground(light_blue);
+		gc.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN));
 		gc.fillRectangle(width / 2 + arrowSigDiff - 4, 9, 8, height);
 		gc.fillPolygon(new int[] { (width / 2 - 8 + arrowSigDiff), 9,
 				(width / 2 + arrowSigDiff), 0, (width / 2 + 8 + arrowSigDiff),
