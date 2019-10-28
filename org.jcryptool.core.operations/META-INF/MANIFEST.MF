@@ -7,7 +7,7 @@ Bundle-Activator: org.jcryptool.core.operations.OperationsPlugin
 Bundle-Vendor: %bundleProvider
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.jcryptool.core.cryptosystem;bundle-version="1.0.0"
+ org.jcryptool.core.cryptosystem
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.core.operations,
  org.jcryptool.core.operations.algorithm,
@@ -31,7 +31,7 @@ Export-Package: org.jcryptool.core.operations,
  org.jcryptool.core.operations.providers,
  org.jcryptool.core.operations.providers.preferences,
  org.jcryptool.core.operations.util
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: org.jcryptool.actions.core.registry,
  org.jcryptool.actions.core.types,
  org.jcryptool.core.logging.utils,
