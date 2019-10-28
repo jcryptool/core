@@ -42,6 +42,7 @@
    <intro introId="org.jcryptool.intro"/>
 
    <vm>
+      <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11</windows>
    </vm>
 
    <license>
@@ -104,19 +105,20 @@ Agreement more than one year after the cause of action arose. Each party waives 
    </plugins>
 
    <features>
-      <feature id="org.jcryptool.core.dependencies.feature"/>
-      <feature id="org.jcryptool.core.dependencies.nl_de.feature"/>
-      <feature id="org.jcryptool.core.feature"/>
-      <feature id="org.jcryptool.views.feature"/>
-      <feature id="org.jcryptool.crypto.feature"/>
-      <feature id="org.jcryptool.providers.feature"/>
-      <feature id="org.jcryptool.editors.feature"/>
-      <feature id="org.jcryptool.analysis.feature"/>
-      <feature id="org.jcryptool.crypto.classic.feature"/>
-      <feature id="org.jcryptool.crypto.flexiprovider.feature"/>
-      <feature id="org.jcryptool.crypto.modern.feature"/>
-      <feature id="org.jcryptool.games.feature"/>
-      <feature id="org.jcryptool.visual.feature"/>
+      <feature id="org.jcryptool.core.dependencies.feature" version="1.0.0"/>
+      <feature id="org.jcryptool.core.dependencies.nl_de.feature" version="1.0.0"/>
+      <feature id="org.jcryptool.core.feature" version="1.0.0"/>
+      <feature id="org.jcryptool.views.feature" version="1.0.0"/>
+      <feature id="org.jcryptool.crypto.feature" version="1.0.0"/>
+      <feature id="org.jcryptool.providers.feature" version="1.0.0"/>
+      <feature id="org.jcryptool.editors.feature" version="1.0.0"/>
+      <feature id="org.jcryptool.analysis.feature" version="1.0.0"/>
+      <feature id="org.jcryptool.crypto.classic.feature" version="1.0.0"/>
+      <feature id="org.jcryptool.crypto.flexiprovider.feature" version="1.0.0"/>
+      <feature id="org.jcryptool.crypto.modern.feature" version="1.0.0"/>
+      <feature id="org.jcryptool.games.feature" version="1.0.0"/>
+      <feature id="org.jcryptool.visual.feature" version="1.0.0"/>
+      <feature id="org.jcryptool.jre.master.feature"/>
    </features>
 
    <configurations>
