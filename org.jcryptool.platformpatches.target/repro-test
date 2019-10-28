@@ -1,20 +1,27 @@
 #!/usr/bin/env bash
-shopt -s globstar
-shopt -s nullglob
-shopt -s extglob
+
+shopt -s globstar && \
+shopt -s nullglob && \
+shopt -s extglob || { echo "I need globstar support in this bash..." >&2; exit 2; }
+
+justtest=0
+if [[ "$1" == "--just-test" ]]; then
+    justtest=1
+fi
 
 coredir="$(realpath "$0")"; 
 coredir="${coredir%/*/*}"
 releng="$coredir/org.jcryptool.releng"
 product="$coredir/org.jcryptool.product"
 
+if [[ "$justtest" == 0 ]]; then
+    rm -rf ~/.m2
+    mkdir ~/.m2
 
-rm -rf ~/.m2
-mkdir ~/.m2
+    cd "$releng"
 
-cd "$releng"
-
-mvn clean package 2>&1 1>/tmp/mavenbuild$RANDOM.log || { echo "build problem"; exit 2; }
+    mvn clean package 2>&1 1>/tmp/mavenbuild$RANDOM.log || { echo "build problem"; exit 2; }
+fi
 
 target="$product/target/products/jcryptool-1.0.0-linux.gtk.x86_64.tar.gz"
 linuxarchive="$(echo "$product/target/products"/*/linux/**/plugins/org.eclipse.help.ui_*.jar)"
