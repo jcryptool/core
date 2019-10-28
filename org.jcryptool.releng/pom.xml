@@ -67,12 +67,12 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 					<target>
 						<artifact>
 							<groupId>org.jcryptool</groupId>
-							<artifactId>org.jcryptool.target</artifactId>
+							<artifactId>org.jcryptool.platformpatches.target</artifactId>
 							<version>${product.version}</version>
 						</artifact>
 						<artifact>
 							<groupId>org.jcryptool</groupId>
-							<artifactId>org.jcryptool.platformpatches.target</artifactId>
+							<artifactId>org.jcryptool.target</artifactId>
 							<version>${product.version}</version>
 						</artifact>
 					</target>
