@@ -35,11 +35,11 @@ import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.errorcorrectingcodes.algorithm.EccController;
-import org.jcryptool.visual.errorcorrectingcodes.algorithm.McElieceSystem;
+import org.jcryptool.visual.errorcorrectingcodes.algorithm.HammingCrypto;
 import org.jcryptool.visual.errorcorrectingcodes.data.EccData;
 import org.jcryptool.visual.errorcorrectingcodes.data.Matrix2D;
 import org.jcryptool.visual.errorcorrectingcodes.data.MatrixException;
-import org.jcryptool.visual.errorcorrectingcodes.data.McElieceData;
+import org.jcryptool.visual.errorcorrectingcodes.data.HammingData;
 import org.jcryptool.visual.errorcorrectingcodes.ui.Messages;
 import org.jcryptool.visual.errorcorrectingcodes.ui.UIHelper;
 import org.jcryptool.visual.errorcorrectingcodes.ui.binding.InteractiveMatrixProperty;
@@ -54,10 +54,10 @@ import com.sun.org.glassfish.external.statistics.annotations.Reset;
  * @author dhofmann
  *
  */
-public class McElieceView extends Composite {
+public class CryptoView extends Composite {
 
-    private McElieceData data;
-    private McElieceSystem mce;
+    private HammingData data;
+    private HammingCrypto mce;
     private DataBindingContext dbc;
 
     private Composite parent;
@@ -102,10 +102,10 @@ public class McElieceView extends Composite {
     private Label lblMatrixSInverse;
     private Label lblMatrixPInverse;
 
-    public McElieceView(Composite parent, int style) {
+    public CryptoView(Composite parent, int style) {
         super(parent, style);
-        data = new McElieceData();
-        mce = new McElieceSystem(data);
+        data = new HammingData();
+        mce = new HammingCrypto(data);
         this.parent = parent;
         Point margins = new Point(5, 5);
         GridLayoutFactory glf = GridLayoutFactory.fillDefaults().margins(margins);
@@ -378,25 +378,25 @@ public class McElieceView extends Composite {
         dbc = new DataBindingContext();
 
         dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textInput),
-                BeanProperties.value(McElieceData.class, "originalString", String.class).observe(mce.getData())); //$NON-NLS-1$
+                BeanProperties.value(HammingData.class, "originalString", String.class).observe(mce.getData())); //$NON-NLS-1$
 
         dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textAsBinary),
-                BeanProperties.value(McElieceData.class, "binaryAsString", String.class).observe(mce.getData())); //$NON-NLS-1$
+                BeanProperties.value(HammingData.class, "binaryAsString", String.class).observe(mce.getData())); //$NON-NLS-1$
 
         dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textEncrypted),
-                BeanProperties.value(McElieceData.class, "codeAsString", String.class).observe(mce.getData())); //$NON-NLS-1$
+                BeanProperties.value(HammingData.class, "codeAsString", String.class).observe(mce.getData())); //$NON-NLS-1$
 
         dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textDecoded),
-                BeanProperties.value(McElieceData.class, "binaryDecoded", String.class).observe(mce.getData())); //$NON-NLS-1$
+                BeanProperties.value(HammingData.class, "binaryDecoded", String.class).observe(mce.getData())); //$NON-NLS-1$
 
         dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(textOutput),
-                BeanProperties.value(McElieceData.class, "decodedString", String.class).observe(mce.getData())); //$NON-NLS-1$
+                BeanProperties.value(HammingData.class, "decodedString", String.class).observe(mce.getData())); //$NON-NLS-1$
                
         dbc.bindValue(new InteractiveMatrixProperty().observe(compMatrixP),
-                BeanProperties.value(McElieceData.class, "matrixP", Matrix2D.class).observe(mce.getData())); //$NON-NLS-1$
+                BeanProperties.value(HammingData.class, "matrixP", Matrix2D.class).observe(mce.getData())); //$NON-NLS-1$
 
         dbc.bindValue(new InteractiveMatrixProperty().observe(compMatrixS),
-                BeanProperties.value(McElieceData.class, "matrixS", Matrix2D.class).observe(mce.getData())); //$NON-NLS-1$
+                BeanProperties.value(HammingData.class, "matrixS", Matrix2D.class).observe(mce.getData())); //$NON-NLS-1$
         
         
     }

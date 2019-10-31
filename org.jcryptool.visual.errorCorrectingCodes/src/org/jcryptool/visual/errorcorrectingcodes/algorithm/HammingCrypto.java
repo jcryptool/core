@@ -16,29 +16,29 @@ import org.jcryptool.visual.errorcorrectingcodes.data.BitArray;
 import org.jcryptool.visual.errorcorrectingcodes.data.EccData;
 import org.jcryptool.visual.errorcorrectingcodes.data.Matrix2D;
 import org.jcryptool.visual.errorcorrectingcodes.data.MatrixException;
-import org.jcryptool.visual.errorcorrectingcodes.data.McElieceData;
+import org.jcryptool.visual.errorcorrectingcodes.data.HammingData;
 
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 // TODO: Auto-generated Javadoc
 /**
- * Implementation of the McEliece Cryptosystem with Hamming(7,4) instead of Goppa code.
+ * Implementation of a simplified "McEliece Cryptosystem" with Hamming(7,4) instead of Goppa code.
  * 
  * @author dhofmann
  *
  */
-public class McElieceSystem {
+public class HammingCrypto {
     
     /** The data model. */
-    McElieceData data;
+    HammingData data;
 
   
     /**
-     * Instantiates a new mc eliece system object.
+     * Instantiates a new HammingCrypto object.
      *
-     * @param data the EccData containing additional view
+     * @param data containing algorithm specific and additional view data
      */
-    public McElieceSystem(McElieceData data) {
+    public HammingCrypto(HammingData data) {
         this.data = data;
         this.data.setMatrixG(new Matrix2D(new int[][] {
                 { 1, 0, 0, 0, 1, 1, 1 },
@@ -65,7 +65,7 @@ public class McElieceSystem {
     }
     
     /**
-     * Store a random binary matrix to {@link McElieceData#matrixS S}.
+     * Store a random binary matrix to {@link HammingData#matrixS S}.
      *
      * @param rows the rows
      * @param columns the columns
@@ -91,7 +91,7 @@ public class McElieceSystem {
     }
     
     /**
-     * Store a Random permutation matrix {@link McElieceData#matrixP P}, i.e. every row and column contains only a single 1.
+     * Store a Random permutation matrix {@link HammingData#matrixP P}, i.e. every row and column contains only a single 1.
      *
      * @param size the size of the square matrix
      */
@@ -118,7 +118,7 @@ public class McElieceSystem {
 
 
     /**
-     * Compute the public key and store it in matrix {@link McElieceData#matrixSGP SGP}.
+     * Compute the public key and store it in matrix {@link HammingData#matrixSGP SGP}.
      */
     public void computePublicKey() {
         Matrix2D sg = data.getMatrixS().multBinary(data.getMatrixG());
@@ -181,7 +181,7 @@ public class McElieceSystem {
     
     /**
      * Decryption of the data in the field {@link data.encrypted} by correcting the error in the bit stream and multiplying it with the inverse of the matrices of the private key.
-     * The result is stored in the according fields in {@link McElieceData}.
+     * The result is stored in the according fields in {@link HammingData}.
      */
     public void decrypt () {
         BitArray decrypted = new BitArray(data.getEncrypted().size());
@@ -222,6 +222,8 @@ public class McElieceSystem {
      */
     private int[] binaryAdd(int[] first, int[] second) {
         
+        
+        
         if (first.length < second.length) {
             throw new IllegalArgumentException("First array needs to be of equal or greater size.");
         }
@@ -239,7 +241,7 @@ public class McElieceSystem {
      *
      * @return the data
      */
-    public McElieceData getData() {
+    public HammingData getData() {
         return data;
     }
 
@@ -249,7 +251,7 @@ public class McElieceSystem {
      *
      * @param data the new data
      */
-    public void setData(McElieceData data) {
+    public void setData(HammingData data) {
         this.data = data;
     }
 }

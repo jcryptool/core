@@ -24,7 +24,7 @@ public class EccMainView extends ViewPart {
     private TabItem tabGeneral;
     private TabItem tabMcEliece;
     private GeneralEccView generalEcc;
-    private McElieceView mcelieceView;
+    private CryptoView mcelieceView;
 
     /**
      * {@inheritDoc}
@@ -45,7 +45,7 @@ public class EccMainView extends ViewPart {
         tabGeneral = new TabItem(tabFolder, SWT.NONE);
         tabGeneral.setText(Messages.EccMainView_tabGeneralText);
         tabGeneral.setControl(generalEcc);
-        mcelieceView = new McElieceView(tabFolder, SWT.NONE);
+        mcelieceView = new CryptoView(tabFolder, SWT.NONE);
         tabMcEliece = new TabItem(tabFolder, SWT.NONE);
         tabMcEliece.setText(Messages.EccMainView_tabMcElieceText);
         tabMcEliece.setControl(mcelieceView);

@@ -12,7 +12,7 @@ import java.util.List;
  * @author dhofmann
  *
  */
-public class McElieceData {
+public class HammingData {
     private String originalString;
     private String decodedString;
     private String correctedString;
@@ -35,7 +35,7 @@ public class McElieceData {
     private BitArray decrypted;
     private PropertyChangeSupport pcs;
 
-    public McElieceData() {
+    public HammingData() {
         super();
         pcs = new PropertyChangeSupport(this);
     }
