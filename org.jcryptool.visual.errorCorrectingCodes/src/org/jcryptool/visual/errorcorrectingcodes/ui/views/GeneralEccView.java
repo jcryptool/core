@@ -195,7 +195,7 @@ public class GeneralEccView extends Composite {
         glf.applyTo(grpTextInfo);
         GridDataFactory.fillDefaults().grab(true,true).applyTo(grpTextInfo);
         grpTextInfo.setText(Messages.GeneralEccView_grpTextInfo);
-        textInfo = UIHelper.mutltiLineText(grpTextInfo, SWT.FILL, SWT.FILL, parent.getBounds().width-100, 8, null);
+        textInfo = UIHelper.mutltiLineText(grpTextInfo, SWT.FILL, SWT.FILL, parent.getBounds().width-100, 8, null, true);
         textInfo.setText(Messages.GeneralEccView_textInfo_step1);
 
         grpFootButtons = new Group(compFoot, SWT.NONE);

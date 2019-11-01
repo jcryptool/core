@@ -34,8 +34,28 @@ public class UIHelper {
      * @return the styled text widget
      *
      */
-    public static StyledText mutltiLineText(Composite p, int hAlign, int vAlign, int width, int lines, Font font) {
-        StyledText text = new StyledText(p, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
+    public static StyledText mutltiLineText(Composite p, int hAlign, int vAlign, int width, int lines) {
+        return mutltiLineText(p, hAlign, vAlign, width, lines, null, false);
+    }
+    
+ 
+    /**
+     * Method to create multiline StyledText widgets with custom font.
+     *
+     * @param p the parent composite
+     * @param hAlign SWT horizontal alignment
+     * @param vAlign SWT vertical alignment
+     * @param width the width of the text field
+     * @param lines number of lines displayed without scrollbar
+     * @param font the SWT font
+     * @param readonly
+     * @return the styled text widget
+     *
+     */
+    public static StyledText mutltiLineText(Composite p, int hAlign, int vAlign, int width, int lines, Font font, boolean readonly) {
+        int read_only = readonly ? SWT.READ_ONLY : 0; 
+        
+        StyledText text = new StyledText(p, read_only | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
         text.setBackground(p.getDisplay().getSystemColor(SWT.COLOR_WHITE));
         text.setAlwaysShowScrollBars(false);
         text.setMargins(2, 2, 4, 2);
@@ -65,14 +85,14 @@ public class UIHelper {
     }
 
     public static StyledText codeText(Composite p, int hAlign, int vAlign) {
-        StyledText st = mutltiLineText(p, hAlign, vAlign, SWT.DEFAULT, 4, FontService.getLargeFont());
+        StyledText st = mutltiLineText(p, hAlign, vAlign, SWT.DEFAULT, 4, FontService.getLargeFont(),true);
         return st;
     }
 
     public static StyledText matrixText(Composite p, int hAlign, int vAlign, int cols, int rows) {
         Font f = FontService.getNormalFont();
         int actualWidth = getFontWidth(p, f);
-        StyledText st = mutltiLineText(p, hAlign, vAlign, (int) (actualWidth * cols * 1.5), rows, f);
+        StyledText st = mutltiLineText(p, hAlign, vAlign, (int) (actualWidth * cols * 1.5), rows, f, true);
         return st;
     }
 

@@ -36,6 +36,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.errorcorrectingcodes.algorithm.EccController;
 import org.jcryptool.visual.errorcorrectingcodes.algorithm.HammingCrypto;
+import org.jcryptool.visual.errorcorrectingcodes.algorithm.McElieceCrypto;
 import org.jcryptool.visual.errorcorrectingcodes.data.EccData;
 import org.jcryptool.visual.errorcorrectingcodes.data.Matrix2D;
 import org.jcryptool.visual.errorcorrectingcodes.data.MatrixException;
@@ -48,13 +49,13 @@ import org.jcryptool.visual.errorcorrectingcodes.ui.widget.InteractiveMatrix;
 import com.sun.org.glassfish.external.statistics.annotations.Reset;
 
 /**
- * McElieceView represents the McEliece cryptographic system with Hamming code and small matrices S and P.
+ * CryptoView represents the McEliece cryptographic system with Hamming code and small matrices S and P.
  * Usually, the encryption requires larger linear code, such as Goppa, and accordingly big permutation and scrambling matrices. Because the resulting large key and data sizes are not easily represented, we decided to simplify the original proposal. Therefore this is not a secure implementation of the system.
  * 
  * @author dhofmann
  *
  */
-public class CryptoView extends Composite {
+public class HammingCryptoView extends Composite {
 
     private HammingData data;
     private HammingCrypto mce;
@@ -102,7 +103,7 @@ public class CryptoView extends Composite {
     private Label lblMatrixSInverse;
     private Label lblMatrixPInverse;
 
-    public CryptoView(Composite parent, int style) {
+    public HammingCryptoView(Composite parent, int style) {
         super(parent, style);
         data = new HammingData();
         mce = new HammingCrypto(data);
@@ -228,10 +229,11 @@ public class CryptoView extends Composite {
         glf.applyTo(grpTextInfo);
         GridDataFactory.fillDefaults().grab(true, true).applyTo(grpTextInfo);
         grpTextInfo.setText(Messages.McElieceView_grpTextInfo);
-        textInfo = UIHelper.mutltiLineText(grpTextInfo, SWT.FILL, SWT.FILL, parent.getBounds().width - 100, 8, null);
+        textInfo = UIHelper.mutltiLineText(grpTextInfo, SWT.FILL, SWT.FILL, parent.getBounds().width - 100, 8, null, true);
 
         bindValues();
         initView();
+                
     }
 
     private void updateVector() {

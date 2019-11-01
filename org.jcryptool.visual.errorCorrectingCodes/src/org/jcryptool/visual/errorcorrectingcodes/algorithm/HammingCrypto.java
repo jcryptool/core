@@ -72,6 +72,7 @@ public class HammingCrypto {
      */
     public void randomMatrix(int rows, int columns) {
         SecureRandom rand = new SecureRandom();
+        rand.nextBytes(new byte[20]);
         
         Matrix2D s, sInvert;
         do {

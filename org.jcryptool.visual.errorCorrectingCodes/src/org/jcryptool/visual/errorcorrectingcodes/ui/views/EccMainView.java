@@ -15,7 +15,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.errorcorrectingcodes.ui.Messages;
 
 public class EccMainView extends ViewPart {
-    private static final int GENERAL_ECC_TAB = 0;
+    private static final int DEFAULT_TAB = 0;
     private static final Point windowsSize = new Point(1280,800);
     private ScrolledComposite scrolledComposite;
     private Composite parent;
@@ -24,7 +24,8 @@ public class EccMainView extends ViewPart {
     private TabItem tabGeneral;
     private TabItem tabMcEliece;
     private GeneralEccView generalEcc;
-    private CryptoView mcelieceView;
+    private HammingCryptoView mcelieceView;
+    private McElieceView mcEliece;
 
     /**
      * {@inheritDoc}
@@ -41,17 +42,21 @@ public class EccMainView extends ViewPart {
 
         tabFolder = new TabFolder(scrolledComposite, SWT.NONE);
         
+        mcEliece = new McElieceView(tabFolder, SWT.NONE);
+        tabMcEliece = new TabItem(tabFolder, SWT.NONE);
+        tabMcEliece.setText(Messages.EccMainView_tabMcEliece);
+        tabMcEliece.setControl(mcEliece);
+        
         generalEcc = new GeneralEccView(tabFolder, SWT.NONE);
         tabGeneral = new TabItem(tabFolder, SWT.NONE);
         tabGeneral.setText(Messages.EccMainView_tabGeneralText);
         tabGeneral.setControl(generalEcc);
-        mcelieceView = new CryptoView(tabFolder, SWT.NONE);
+        mcelieceView = new HammingCryptoView(tabFolder, SWT.NONE);
         tabMcEliece = new TabItem(tabFolder, SWT.NONE);
         tabMcEliece.setText(Messages.EccMainView_tabMcElieceText);
         tabMcEliece.setControl(mcelieceView);
-        tabFolder.setSelection(GENERAL_ECC_TAB);
+        tabFolder.setSelection(DEFAULT_TAB);
         
-
         scrolledComposite.setContent(tabFolder);
         scrolledComposite.setMinSize(windowsSize);
         tabFolder.pack();

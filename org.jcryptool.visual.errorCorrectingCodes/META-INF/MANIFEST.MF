@@ -12,7 +12,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.databinding,
  org.eclipse.core.databinding.beans,
  org.eclipse.core.databinding.property,
- org.eclipse.jface.databinding
+ org.eclipse.jface.databinding,
+ org.bouncycastle;bundle-version="1.62.0";visibility:=reexport
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: org.jcryptool.core.logging.utils,
@@ -21,3 +22,4 @@ Automatic-Module-Name: org.jcryptool.visual.errorcorrectingcodes
 Export-Package: org.jcryptool.visual.errorcorrectingcodes,
  org.jcryptool.visual.errorcorrectingcodes.handlers,
  org.jcryptool.visual.errorcorrectingcodes.ui
+
