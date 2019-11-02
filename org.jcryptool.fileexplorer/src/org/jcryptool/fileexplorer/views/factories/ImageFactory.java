@@ -18,6 +18,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.program.Program;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.fileexplorer.FileExplorerPlugin;
 
 /**
@@ -43,15 +44,15 @@ public class ImageFactory {
                 // CD or DVD
                 if (!file.toLocalFile(EFS.NONE, null).canWrite()) {
                     if (file.toLocalFile(EFS.NONE, null).canRead()) {
-                        return FileExplorerPlugin.getImageDescriptor(ImageFactory.ICON_DEVICE_CD_DVD);
+                    	return ImageService.getImageDescriptor(FileExplorerPlugin.PLUGIN_ID, ImageFactory.ICON_DEVICE_CD_DVD);
                     }
-                    return FileExplorerPlugin.getImageDescriptor(ImageFactory.ICON_DEVICE_CD_DVD_NOACCESS);
+                    return ImageService.getImageDescriptor(FileExplorerPlugin.PLUGIN_ID, ImageFactory.ICON_DEVICE_CD_DVD_NOACCESS);
                 }
                 // HDD
                 if (!file.toLocalFile(EFS.NONE, null).canRead()) {
-                    return FileExplorerPlugin.getImageDescriptor(ImageFactory.ICON_DEVICE_NOACCESS);
+                	return ImageService.getImageDescriptor(FileExplorerPlugin.PLUGIN_ID, ImageFactory.ICON_DEVICE_NOACCESS);
                 }
-                return FileExplorerPlugin.getImageDescriptor(ImageFactory.ICON_DEVICE);
+                return ImageService.getImageDescriptor(FileExplorerPlugin.PLUGIN_ID, ImageFactory.ICON_DEVICE);
             }
         } catch (CoreException ex) {
             LogUtil.logError(FileExplorerPlugin.PLUGIN_ID, ex);
@@ -59,13 +60,13 @@ public class ImageFactory {
 
         // handle directories
         if (file.fetchInfo().isDirectory()) {
-            return FileExplorerPlugin.getImageDescriptor(ImageFactory.ICON_FOLDER);
+        	return ImageService.getImageDescriptor(FileExplorerPlugin.PLUGIN_ID, ImageFactory.ICON_FOLDER);
         }
 
         // handled directories here are unaccessible
         try {
             if (file.toLocalFile(EFS.NONE, null).isDirectory()) {
-                return FileExplorerPlugin.getImageDescriptor(ImageFactory.ICON_FOLDER_NOACCESS);
+                return ImageService.getImageDescriptor(FileExplorerPlugin.PLUGIN_ID, ImageFactory.ICON_FOLDER_NOACCESS);
             }
         } catch (CoreException ex) {
             LogUtil.logError(FileExplorerPlugin.PLUGIN_ID, ex);
@@ -83,11 +84,11 @@ public class ImageFactory {
             }
             // handle the bin extension for the hex editor
             if (extension.equalsIgnoreCase(".bin")) { //$NON-NLS-1$
-                return FileExplorerPlugin.getImageDescriptor(ImageFactory.ICON_FILE_BINARY);
+            	return ImageService.getImageDescriptor(FileExplorerPlugin.PLUGIN_ID, ImageFactory.ICON_FILE_BINARY);
             }
         }
 
         // assign a default icon
-        return FileExplorerPlugin.getImageDescriptor(ImageFactory.ICON_FILE);
+        return ImageService.getImageDescriptor(FileExplorerPlugin.PLUGIN_ID, ImageFactory.ICON_FILE);
     }
 }

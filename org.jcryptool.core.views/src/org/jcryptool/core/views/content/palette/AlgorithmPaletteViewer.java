@@ -43,6 +43,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.CommandInfo;
 import org.jcryptool.core.operations.OperationsPlugin;
 import org.jcryptool.core.operations.algorithm.ShadowAlgorithmHandler;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.core.views.AlgorithmView;
 import org.jcryptool.core.views.ISearchable;
 import org.jcryptool.core.views.ViewsPlugin;
@@ -177,10 +178,8 @@ public class AlgorithmPaletteViewer extends PaletteViewer implements ISearchable
 					type = ApplicationActionBarAdvisor.getTypeTranslation(type);
 
 					PaletteDrawer paletteDrawer = new PaletteDrawer(type);
-					paletteDrawer.setSmallIcon(ViewsPlugin
-							.getImageDescriptor(TreeView.ICON_FOLDER));
-					paletteDrawer.setLargeIcon(ViewsPlugin
-							.getImageDescriptor(TreeView.ICON_FOLDER));
+					paletteDrawer.setSmallIcon(ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, TreeView.ICON_FOLDER));
+					paletteDrawer.setLargeIcon(ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, TreeView.ICON_FOLDER));
 					types.put(type, paletteDrawer);
 				}
 
@@ -188,15 +187,11 @@ public class AlgorithmPaletteViewer extends PaletteViewer implements ISearchable
 				SelectionToolEntry paletteEntry = new SelectionToolEntry(
 						text, toolTipText);
 				if (isFlexiProviderAlgorithm) { // FlexiProvider item
-					paletteEntry.setSmallIcon(ViewsPlugin
-							.getImageDescriptor(TreeView.ICON_ITEM_FLEXI));
-					paletteEntry.setLargeIcon(ViewsPlugin
-							.getImageDescriptor(TreeView.ICON_ITEM_FLEXI));
+					paletteEntry.setSmallIcon(ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, TreeView.ICON_ITEM_FLEXI));
+					paletteEntry.setLargeIcon(ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, TreeView.ICON_ITEM_FLEXI));
 				} else { // JCrypTool item
-					paletteEntry.setSmallIcon(ViewsPlugin
-							.getImageDescriptor(TreeView.ICON_ITEM_JCT));
-					paletteEntry.setLargeIcon(ViewsPlugin
-							.getImageDescriptor(TreeView.ICON_ITEM_JCT));
+					paletteEntry.setSmallIcon(ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, TreeView.ICON_ITEM_JCT));
+					paletteEntry.setLargeIcon(ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, TreeView.ICON_ITEM_JCT));
 				}
 				paletteEntry
 						.setUserModificationPermission(PaletteEntry.PERMISSION_NO_MODIFICATION);

@@ -16,6 +16,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.PlatformUI;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.flexiprovider.operations.FlexiProviderOperationsPlugin;
 import org.jcryptool.crypto.flexiprovider.operations.OperationsManager;
 import org.jcryptool.crypto.flexiprovider.operations.ui.listeners.IOperationChangedListener;
@@ -55,6 +56,6 @@ public class SecretKeyNode extends KeyNode {
     }
 
     public ImageDescriptor getImageDescriptor() {
-        return FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/kgpg_key1.png"); //$NON-NLS-1$
+        return ImageService.getImageDescriptor(FlexiProviderOperationsPlugin.PLUGIN_ID, "icons/16x16/kgpg_key1.png");
     }
 }

@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 
 /**
@@ -188,6 +189,6 @@ public class TreeNode implements ITreeNode {
     }
 
     public ImageDescriptor getImageDescriptor() {
-        return KeyStorePlugin.getImageDescriptor("icons/sample.gif"); //$NON-NLS-1$
+        return ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, "icons/sample.gif");
     }
 }

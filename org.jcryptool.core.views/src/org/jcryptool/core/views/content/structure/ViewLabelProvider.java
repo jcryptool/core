@@ -12,7 +12,7 @@ package org.jcryptool.core.views.content.structure;
 
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.core.views.ViewsPlugin;
 import org.jcryptool.core.views.content.TreeView;
 
@@ -36,17 +36,14 @@ public class ViewLabelProvider extends LabelProvider {
     public Image getImage(Object obj) {
         // inner node
         if (obj instanceof TreeParent) {
-            return AbstractUIPlugin.imageDescriptorFromPlugin(ViewsPlugin.PLUGIN_ID,
-                    TreeView.ICON_FOLDER).createImage();
+            return ImageService.getImage(ViewsPlugin.PLUGIN_ID, TreeView.ICON_FOLDER);
         }
 
         // leaf from JCrypTool
         if (((TreeObject) obj).isFlexiProviderAlgorithm()) {
-            return AbstractUIPlugin.imageDescriptorFromPlugin(ViewsPlugin.PLUGIN_ID,
-                    TreeView.ICON_ITEM_FLEXI).createImage();
+            return ImageService.getImage(ViewsPlugin.PLUGIN_ID, TreeView.ICON_ITEM_FLEXI);
         }
         // leaf from FlexiProvider
-        return AbstractUIPlugin.imageDescriptorFromPlugin(ViewsPlugin.PLUGIN_ID,
-                TreeView.ICON_ITEM_JCT).createImage();
+        return ImageService.getImage(ViewsPlugin.PLUGIN_ID, TreeView.ICON_ITEM_JCT);
     }
 }

@@ -50,6 +50,7 @@ import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.core.util.ui.HexTextbox;
 import org.jcryptool.crypto.flexiprovider.descriptors.meta.interfaces.IMetaMode;
 import org.jcryptool.crypto.flexiprovider.descriptors.meta.interfaces.IMetaPaddingScheme;
@@ -466,9 +467,9 @@ public class IntegratorWizardPage extends WizardPage {
         createNewKeyComposite.setLayout(createNewCompositeLayout);
         createNewKeyComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-        Image btnImg = isAlgorithmTypeAsymmetric() ? KeyStorePlugin
-                .getImageDescriptor("/icons/16x16/kgpg_key2.png").createImage() : //$NON-NLS-1$
-                KeyStorePlugin.getImageDescriptor("/icons/16x16/kgpg_key1.png").createImage(); //$NON-NLS-1$
+        Image btnImg = isAlgorithmTypeAsymmetric() ? 
+        		ImageService.getImage(KeyStorePlugin.PLUGIN_ID, "/icons/16x16/kgpg_key2.png") : //$NON-NLS-1$
+        		ImageService.getImage(KeyStorePlugin.PLUGIN_ID, "/icons/16x16/kgpg_key1.png"); //$NON-NLS-1$
         String newKeyBtnLabel = isAlgorithmTypeAsymmetric() ? Messages
                 .getString("IntegratorWizardPage.createNewKeypairButton") : //$NON-NLS-1$
                 Messages.getString("IntegratorWizardPage.newSymmetricKeyButtonlabel"); //$NON-NLS-1$

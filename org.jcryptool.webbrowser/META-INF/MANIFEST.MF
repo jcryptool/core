@@ -4,7 +4,8 @@ Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jcryptool.webbrowser;singleton:=true
 Bundle-Version: 1.0.0
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.ui
+ org.eclipse.ui,
+ org.jcryptool.core.util
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.jcryptool.webbrowser.BrowserPlugin

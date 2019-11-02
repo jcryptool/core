@@ -49,6 +49,7 @@ import org.jcryptool.core.operations.CommandInfo;
 import org.jcryptool.core.operations.IOperationsConstants;
 import org.jcryptool.core.operations.OperationsPlugin;
 import org.jcryptool.core.operations.algorithm.ShadowAlgorithmHandler;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.core.views.content.PaletteView;
 import org.jcryptool.core.views.content.TreeView;
 
@@ -195,9 +196,11 @@ public class AlgorithmView extends ViewPart implements IOperationsConstants {
         defineCommand(showTreeCommandId, Messages.AlgorithmView_showTree, showTreeHandler);
         
         showPaletteContributionItem = createContributionItem(showPaletteCommandId,
-        		ViewsPlugin.getImageDescriptor("icons/switch.gif"), Messages.AlgorithmView_showPalette);
-        showTreeContributionItem = createContributionItem(showTreeCommandId,
-        		ViewsPlugin.getImageDescriptor("icons/switch.gif"), Messages.AlgorithmView_showTree);
+        		ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, "icons/switch.gif"), Messages.AlgorithmView_showPalette);
+             
+        showPaletteContributionItem = createContributionItem(showTreeCommandId,
+        		ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, "icons/switch.gif"), Messages.AlgorithmView_showTree);
+        
         
         // set the correct view to be shown and assign the corresponding action
         IMenuManager manager = getViewSite().getActionBars().getMenuManager();
@@ -232,7 +235,7 @@ public class AlgorithmView extends ViewPart implements IOperationsConstants {
             canvas.setLayoutData(gridData);
             canvas.addPaintListener(new PaintListener(){
                 public void paintControl(PaintEvent e) {
-                    e.gc.drawImage(ViewsPlugin.getImageDescriptor("icons/clear.gif").createImage(), 1, 1); //$NON-NLS-1$
+                    e.gc.drawImage(ImageService.getImage(ViewsPlugin.PLUGIN_ID, "icons/clear.gif"), 1, 1);
                 }
             });
 

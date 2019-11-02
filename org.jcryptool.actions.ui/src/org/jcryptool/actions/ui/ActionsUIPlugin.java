@@ -60,7 +60,4 @@ public class ActionsUIPlugin extends AbstractUIPlugin {
 		return plugin;
 	}
 	
-	public static ImageDescriptor getImageDescriptor(String path) {
-		return imageDescriptorFromPlugin(PLUGIN_ID, path);
-	}
 }

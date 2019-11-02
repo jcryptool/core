@@ -10,6 +10,7 @@
 package org.jcryptool.crypto.keystore.ui.views.nodes.keys;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 
@@ -30,7 +31,7 @@ public class CertificateNode extends AbstractKeyNode {
      * @see org.jcryptool.crypto.keystore.ui.views.nodes.TreeNode#getImageDescriptor()
      */
     public ImageDescriptor getImageDescriptor() {
-        return KeyStorePlugin.getImageDescriptor("icons/16x16/kgpg_identity.png"); //$NON-NLS-1$
+        return ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, "icons/16x16/kgpg_identity.png");
     }
 
 }

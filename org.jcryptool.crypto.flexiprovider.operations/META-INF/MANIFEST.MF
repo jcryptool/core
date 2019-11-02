@@ -9,7 +9,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.core.filesystem,
  org.jdom;bundle-version="1.1.1",
- de.flexiprovider;bundle-version="1.7.0"
+ de.flexiprovider;bundle-version="1.7.0",
+ org.jcryptool.core.util
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.crypto.flexiprovider.operations,
  org.jcryptool.crypto.flexiprovider.operations.engines,

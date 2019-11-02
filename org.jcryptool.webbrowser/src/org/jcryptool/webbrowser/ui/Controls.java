@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.webbrowser.BrowserPlugin;
 
 public class Controls extends Composite{
@@ -55,7 +56,7 @@ public class Controls extends Composite{
 
 		button_back = new Button(this, SWT.PUSH);
 		button_back.setToolTipText(Messages.getString("Controls.back")); //$NON-NLS-1$
-		button_back.setImage(BrowserPlugin.getImageDescriptor("icons/back.gif").createImage()); //$NON-NLS-1$
+		button_back.setImage(ImageService.getImage(BrowserPlugin.PLUGIN_ID, "icons/back.gif"));
 		button_back.addSelectionListener(new SelectionListener(){
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
 			public void widgetSelected(SelectionEvent e) {
@@ -65,7 +66,7 @@ public class Controls extends Composite{
 		});
 		button_forward = new Button(this, SWT.PUSH);
 		button_forward.setToolTipText(Messages.getString("Controls.forward")); //$NON-NLS-1$
-		button_forward.setImage(BrowserPlugin.getImageDescriptor("icons/forward.gif").createImage()); //$NON-NLS-1$
+		button_forward.setImage(ImageService.getImage(BrowserPlugin.PLUGIN_ID, "icons/forward.gif"));
 		button_forward.addSelectionListener(new SelectionListener(){
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
 			public void widgetSelected(SelectionEvent e) {
@@ -76,7 +77,7 @@ public class Controls extends Composite{
 
 		Button button_home = new Button(this, SWT.PUSH);
 		button_home.setToolTipText(Messages.getString("Controls.home")); //$NON-NLS-1$
-		button_home.setImage(BrowserPlugin.getImageDescriptor("icons/home.gif").createImage()); //$NON-NLS-1$
+		button_home.setImage(ImageService.getImage(BrowserPlugin.PLUGIN_ID, "icons/home.gif"));
 		button_home.addSelectionListener(new SelectionListener(){
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
 			public void widgetSelected(SelectionEvent e) {
@@ -87,7 +88,7 @@ public class Controls extends Composite{
 
 		button_stop = new Button(this, SWT.PUSH);
 		button_stop.setToolTipText(Messages.getString("Controls.stop")); //$NON-NLS-1$
-		button_stop.setImage(BrowserPlugin.getImageDescriptor("icons/stop.gif").createImage()); //$NON-NLS-1$
+		button_stop.setImage(ImageService.getImage(BrowserPlugin.PLUGIN_ID, "icons/stop.gif"));
 		button_stop.addSelectionListener(new SelectionListener(){
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
 			public void widgetSelected(SelectionEvent e) {
@@ -114,7 +115,7 @@ public class Controls extends Composite{
 				if(animateReloadButton && image!= null)
 					e.gc.drawImage(image, 5, 5);
 				else
-					e.gc.drawImage(BrowserPlugin.getImageDescriptor("icons/reload.gif").createImage(), 5, 5); //$NON-NLS-1$
+					e.gc.drawImage(ImageService.getImage(BrowserPlugin.PLUGIN_ID, "icons/reload.gif"), 5, 5);
 			}
 		});
 
@@ -139,7 +140,7 @@ public class Controls extends Composite{
 
 		Button button_go = new Button(this, SWT.PUSH);
 		button_go.setToolTipText(Messages.getString("Controls.open")); //$NON-NLS-1$
-		button_go.setImage(BrowserPlugin.getImageDescriptor("icons/go.gif").createImage()); //$NON-NLS-1$
+		button_go.setImage(ImageService.getImage(BrowserPlugin.PLUGIN_ID, "icons/go.gif"));
 		button_go.addSelectionListener(new SelectionListener(){
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
 			public void widgetSelected(SelectionEvent e) {
@@ -173,7 +174,7 @@ public class Controls extends Composite{
 
 		Button button_search = new Button(this, SWT.PUSH);
 		button_search.setToolTipText(Messages.getString("Controls.search")); //$NON-NLS-1$
-		button_search.setImage(BrowserPlugin.getImageDescriptor("icons/search.gif").createImage()); //$NON-NLS-1$
+		button_search.setImage(ImageService.getImage(BrowserPlugin.PLUGIN_ID, "icons/search.gif"));
 		button_search.addSelectionListener(new SelectionListener(){
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
 			public void widgetSelected(SelectionEvent e) {

@@ -12,6 +12,7 @@ package org.jcryptool.crypto.flexiprovider.operations.ui.views.nodes.ops;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.util.NLS;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.flexiprovider.operations.FlexiProviderOperationsPlugin;
 import org.jcryptool.crypto.flexiprovider.types.OperationType;
 import org.jcryptool.crypto.flexiprovider.ui.nodes.TreeNode;
@@ -38,7 +39,7 @@ public class OperationsNode extends TreeNode {
 	}
 
 	public ImageDescriptor getImageDescriptor() {
-		return FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/start.gif"); //$NON-NLS-1$
+		return ImageService.getImageDescriptor(FlexiProviderOperationsPlugin.PLUGIN_ID, "icons/16x16/start.gif");
 	}
 
 }

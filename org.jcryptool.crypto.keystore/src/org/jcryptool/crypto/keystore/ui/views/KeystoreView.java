@@ -36,6 +36,7 @@ import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.services.IServiceLocator;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreActionManager;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
@@ -231,43 +232,43 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
         
     private void fillCertificateContextMenu(IMenuManager manager) {
     	addContributionItem(manager, exportCertificateCommandId,
-    		KeyStorePlugin.getImageDescriptor("icons/16x16/kgpg_export.png"), null);
+    			ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, "icons/16x16/kgpg_export.png"), null);
         manager.add(new Separator());
         addContributionItem(manager, deleteCertificateCommandId,
-        		KeyStorePlugin.getImageDescriptor("icons/16x16/cancel.png"), null);	
+        		ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, "icons/16x16/cancel.png"), null);	
     }
 
     private void fillKeyPairPublicContextMenu(IMenuManager manager) {
     	addContributionItem(manager, exportCertificateCommandId,
-    			KeyStorePlugin.getImageDescriptor("icons/16x16/kgpg_export.png"), null);
+    			ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, "icons/16x16/kgpg_export.png"), null);
     }
 
     private void fillKeyPairContextMenu(IMenuManager manager) {
     	addContributionItem(manager, exportKeyPairCommandId,
-    		KeyStorePlugin.getImageDescriptor("icons/16x16/kgpg_export.png"), null);
+    			ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, "icons/16x16/kgpg_export.png"), null);
         manager.add(new Separator());
         addContributionItem(manager, deleteKeyPairCommandId,
-        	KeyStorePlugin.getImageDescriptor("icons/16x16/cancel.png"), null);	
+        		ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, "icons/16x16/cancel.png"), null);	
     }
 
     private void fillAddContactMenu(IMenuManager manager) {
     	addContributionItem(manager, newContactCommandId,
-    		KeyStorePlugin.getImageDescriptor("icons/16x16/user-add.png"), null);
+    			ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, "icons/16x16/user-add.png"), null);
     }
 
     private void fillContactContextMenu(IMenuManager manager) {
     	addContributionItem(manager, newContactCommandId,
-       		KeyStorePlugin.getImageDescriptor("icons/16x16/user-add.png"), null);
+    			ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, "icons/16x16/user-add.png"), null);
     	addContributionItem(manager, deleteContactCommandId,
-       		KeyStorePlugin.getImageDescriptor("icons/16x16/user-delete-3.png"), null);
+    			ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, "icons/16x16/user-delete-3.png"), null);
     }
 
     private void fillSecretKeyContextMenu(IMenuManager manager) {
     	addContributionItem(manager, exportSecretKeyCommandId,
-    		KeyStorePlugin.getImageDescriptor("icons/16x16/kgpg_export.png"), null);
+    			ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, "icons/16x16/kgpg_export.png"), null);
     	manager.add(new Separator());
     	addContributionItem(manager, deleteSecretKeyCommandId,
-    		KeyStorePlugin.getImageDescriptor("icons/16x16/cancel.png"), null);
+    			ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, "icons/16x16/cancel.png"), null);
     }
 
     private void fillLocalToolBar(IToolBarManager manager) {
@@ -283,7 +284,7 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
             if (tmp.getExtensionUID().equals("org.jcryptool.crypto.flexiprovider.keystore")) { //$NON-NLS-1$
                 LogUtil.logInfo("should add a secret key command"); //$NON-NLS-1$
                 addContributionItem(manager, tmp.getID(),
-                	KeyStorePlugin.getImageDescriptor(tmp.getIcon()), tmp.getToolTipText());
+                		ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, tmp.getIcon()), tmp.getToolTipText());
                 break;
             }
         }
@@ -294,7 +295,7 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
             if (tmp2.getExtensionUID().equals("org.jcryptool.crypto.flexiprovider.keystore")) { //$NON-NLS-1$
                 LogUtil.logInfo("should add a key pair command"); //$NON-NLS-1$
                 addContributionItem(manager, tmp2.getID(),
-                	KeyStorePlugin.getImageDescriptor(tmp2.getIcon()), tmp2.getToolTipText());
+                		ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, tmp2.getIcon()), tmp2.getToolTipText());
                 break;
             }
         }
@@ -305,7 +306,7 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
             if (tmp3.getExtensionUID().equals("org.jcryptool.crypto.flexiprovider.keystore")) { //$NON-NLS-1$
                 LogUtil.logInfo("should add an import command"); //$NON-NLS-1$
                 addContributionItem(manager, tmp3.getID(),
-                	KeyStorePlugin.getImageDescriptor(tmp3.getIcon()), tmp3.getToolTipText());
+                		ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, tmp3.getIcon()), tmp3.getToolTipText());
                 break;
             }
         }
@@ -335,7 +336,7 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
         	String commandId = descriptor.getID();
         	defineCommand(commandId, descriptor.getText(), new ShadowKeyStoreHandler(descriptor));
         	addContributionItem(manager, commandId, 
-        		KeyStorePlugin.getImageDescriptor(descriptor.getIcon()), null);
+        			ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, descriptor.getIcon()), null);
             newSymmetricKeyCommandContributed = true;
         }
         if (newSymmetricKeyCommandContributed) {
@@ -348,7 +349,7 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
         	String commandId = descriptor.getID();
         	defineCommand(commandId, descriptor.getText(), new ShadowKeyStoreHandler(descriptor));
         	addContributionItem(manager, commandId,
-        		KeyStorePlugin.getImageDescriptor(descriptor.getIcon()), null);
+        			ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, descriptor.getIcon()), null);
         }
         manager.add(new Separator());
         Iterator<IKeyStoreActionDescriptor> importActionIterator = KeyStoreActionManager.getInstance()
@@ -358,7 +359,7 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
         	String commandId = descriptor.getID();
         	defineCommand(commandId, descriptor.getText(), new ShadowKeyStoreHandler(descriptor));
         	addContributionItem(manager, commandId,
-        		KeyStorePlugin.getImageDescriptor(descriptor.getIcon()), null);
+        			ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, descriptor.getIcon()), null);
         }
         manager.add(new Separator());
         defineCommand(commandIdBackup, Messages.getString("Menu.BackupRestoreKeystore"), new KeyStoreBackupHandler(this));

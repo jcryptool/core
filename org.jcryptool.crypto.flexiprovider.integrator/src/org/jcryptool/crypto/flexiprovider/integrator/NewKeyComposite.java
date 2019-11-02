@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
@@ -143,7 +144,7 @@ public class NewKeyComposite extends org.eclipse.swt.widgets.Composite {
 				buttonDeleteLData.verticalAlignment = SWT.FILL;
 				buttonDelete = new Button(this, SWT.PUSH | SWT.CENTER);
 				buttonDelete.setLayoutData(buttonDeleteLData);
-				buttonDelete.setImage(KeyStorePlugin.getImageDescriptor("icons/16x16/cancel.png").createImage()); //$NON-NLS-1$
+				buttonDelete.setImage(ImageService.getImage(KeyStorePlugin.PLUGIN_ID, "icons/16x16/cancel.png"));
 				buttonDelete.setToolTipText(Messages.getString("NewKeyComposite.removeKeypairBtn")); //$NON-NLS-1$
 				buttonDelete.addSelectionListener(new SelectionAdapter() {
 					@Override
@@ -159,7 +160,7 @@ public class NewKeyComposite extends org.eclipse.swt.widgets.Composite {
 	}
 
 	protected ImageDescriptor getKeyImageDescriptor() {
-		return KeyStorePlugin.getImageDescriptor("icons/48x48/kgpg_key1.png");
+		return ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, "icons/48x48/kgpg_key1.png");
 	}
 
 	protected void removeKeyFromKeystore() {
