@@ -48,6 +48,7 @@ import org.jcryptool.core.operations.util.PathEditorInput;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.visual.ECDH.ECDHPlugin;
 import org.jcryptool.visual.ECDH.ECDHUtil;
 import org.jcryptool.visual.ECDH.Messages;
@@ -725,7 +726,7 @@ public class ECDHComposite extends Composite {
 	 * Create the canvas containing the Key image
 	 */
 	private void createCanvasKey() {
-		id = ECDHPlugin.getImageDescriptor("icons/key.png").createImage(); 
+		id = ImageService.getImage(ECDHPlugin.PLUGIN_ID, "icons/key.png");
 		canvasKey = new Canvas(groupMain, SWT.NO_REDRAW_RESIZE);
 		GridData gd_canvasKey = new GridData(SWT.FILL, SWT.FILL, false, true, 3, 1);
 		gd_canvasKey.verticalIndent = 10;

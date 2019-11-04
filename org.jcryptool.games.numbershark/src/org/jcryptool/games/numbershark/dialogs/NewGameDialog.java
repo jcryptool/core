@@ -11,8 +11,6 @@
 package org.jcryptool.games.numbershark.dialogs;
 
 import org.eclipse.jface.dialogs.TitleAreaDialog;
-import org.eclipse.jface.resource.JFaceResources;
-import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -28,6 +26,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.ui.PlatformUI;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.games.numbershark.NumberSharkPlugin;
 
 public class NewGameDialog extends TitleAreaDialog {
@@ -43,9 +42,8 @@ public class NewGameDialog extends TitleAreaDialog {
     protected Control createDialogArea(Composite parent) {
         setTitle(Messages.NewGameDialog_0);
         setMessage(Messages.NewGameDialog_1);
-        LocalResourceManager resources = new LocalResourceManager(JFaceResources.getResources(), getShell());
-        setTitleImage(resources.createImage(NumberSharkPlugin.getImageDescriptor("/icons/new_game.png"))); //$NON-NLS-1$
-
+        setTitleImage(ImageService.getImage(NumberSharkPlugin.PLUGIN_ID, "/icons/new_game.png"));
+        
         Composite area = (Composite) super.createDialogArea(parent);
         
         Composite composite = new Composite(area, SWT.NONE);

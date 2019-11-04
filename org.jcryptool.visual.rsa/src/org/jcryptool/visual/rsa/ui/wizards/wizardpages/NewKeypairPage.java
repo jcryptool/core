@@ -38,11 +38,11 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.visual.library.Constants;
 import org.jcryptool.visual.library.Lib;
 import org.jcryptool.visual.rsa.Messages;
 import org.jcryptool.visual.rsa.RSAData;
-import org.jcryptool.visual.rsa.RSAPlugin;
 
 /**
  * Wizardpage for creating a new RSA public-private-keypair.
@@ -245,9 +245,7 @@ public class NewKeypairPage extends WizardPage {
 		CLabel caution = new CLabel(composite, SWT.WRAP);
 		caution.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		caution.setText(Messages.NewKeypairPage_hard_calculations_text);
-		caution.setImage(RSAPlugin
-				.getImageDescriptor("platform:/plugin/org.eclipse.jface/icons/full/message_warning.png").createImage());
-
+		caution.setImage(ImageService.WarningIcon);
 		Label separator1 = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
 		separator1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 

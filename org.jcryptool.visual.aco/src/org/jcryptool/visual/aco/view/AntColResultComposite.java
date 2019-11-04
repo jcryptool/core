@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolTip;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.visual.aco.ACOPlugin;
 import org.jcryptool.visual.aco.model.CommonModel;
 
@@ -84,8 +85,7 @@ public class AntColResultComposite extends Composite {
 		currentText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		currentText.setEditable(false);
 		CLabel help = new CLabel(currGroup, SWT.NONE);
-		help.setImage(ACOPlugin.getImageDescriptor("platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png").createImage());
-		
+		help.setImage(ImageService.getImage(ACOPlugin.PLUGIN_ID, "platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png"));
 		final ToolTip tip = new ToolTip(currGroup.getShell(), SWT.BALLOON);
 		tip.setMessage(Messages.Result_description);
 		help.addListener(SWT.MouseDown, new Listener(){
@@ -116,7 +116,7 @@ public class AntColResultComposite extends Composite {
 		bestText.setEditable(false);
 		
 		help = new CLabel(bestGroup, SWT.NONE);
-		help.setImage(ACOPlugin.getImageDescriptor("platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png").createImage());
+		help.setImage(ImageService.getImage(ACOPlugin.PLUGIN_ID, "platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png"));
 		help.addListener(SWT.MouseDown, new Listener(){
 			@Override
 			public void handleEvent(Event event) {

@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.directories.DirectoryService;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.visual.aup.AndroidUnlockPatternPlugin;
 import org.jcryptool.visual.aup.views.AupView.ApuState;
 
@@ -481,7 +482,7 @@ public class Backend {
 						if (visual.getCntrBtn()[order[i] - 1].getImage() != null)
 							visual.getCntrBtn()[order[i] - 1].getImage().dispose(); // dispose old
 																					// image
-						Image img = AndroidUnlockPatternPlugin.getImageDescriptor("icons/yellow.png") //$NON-NLS-1$
+						Image img = ImageService.getImageDescriptor(AndroidUnlockPatternPlugin.PLUGIN_ID, "icons/yellow.png")
 								.createImage(visual.getCntrBtn()[i].getDisplay());
 						visual.getCntrBtn()[order[i] - 1].setImage(img);
 						visual.getCntrBtn()[order[i] - 1].setData("icon", "icons/yellow.png"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -489,7 +490,7 @@ public class Backend {
 						if (visual.getCntrBtn()[order[i] - 1].getImage() != null)
 							visual.getCntrBtn()[order[i] - 1].getImage().dispose(); // dispose old
 																					// image
-						Image img = AndroidUnlockPatternPlugin.getImageDescriptor("icons/red.png") //$NON-NLS-1$
+						Image img = ImageService.getImageDescriptor(AndroidUnlockPatternPlugin.PLUGIN_ID, "icons/red.png")
 								.createImage(visual.getCntrBtn()[i].getDisplay());
 						visual.getCntrBtn()[order[i] - 1].setImage(img);
 						visual.getCntrBtn()[order[i] - 1].setData("icon", "icons/red.png"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -498,7 +499,7 @@ public class Backend {
 						if (visual.getCntrBtn()[order[i] - 1].getImage() != null)
 							visual.getCntrBtn()[order[i] - 1].getImage().dispose(); // dispose old
 																					// image
-						Image img = AndroidUnlockPatternPlugin.getImageDescriptor("icons/green.png") //$NON-NLS-1$
+						Image img = ImageService.getImageDescriptor(AndroidUnlockPatternPlugin.PLUGIN_ID, "icons/green.png")
 								.createImage(visual.getCntrBtn()[i].getDisplay());
 						visual.getCntrBtn()[order[i] - 1].setImage(img);
 						visual.getCntrBtn()[order[i] - 1].setData("icon", "icons/green.png"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -513,7 +514,7 @@ public class Backend {
 			for (Label btn : visual.getCntrBtn()) {
 				if (btn.getImage() != null)
 					btn.getImage().dispose();
-				Image img = AndroidUnlockPatternPlugin.getImageDescriptor("icons/black.png") //$NON-NLS-1$
+				Image img = ImageService.getImageDescriptor(AndroidUnlockPatternPlugin.PLUGIN_ID, "icons/black.png")
 						.createImage(btn.getDisplay());
 				btn.setImage(img);
 				btn.setData("icon", "icons/black.png"); //$NON-NLS-1$ //$NON-NLS-2$

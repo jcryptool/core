@@ -9,7 +9,6 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.kleptography;
 
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
@@ -22,13 +21,4 @@ public class KleptographyPlugin extends AbstractUIPlugin {
     /** The plug-in ID. */
     public static final String PLUGIN_ID = "org.jcryptool.visual.kleptography"; //$NON-NLS-1$
 
-    /**
-     * Returns an image descriptor for the image file at the given plug-in relative path
-     * 
-     * @param path The path
-     * @return The image descriptor
-     */
-    public static ImageDescriptor getImageDescriptor(String path) {
-        return imageDescriptorFromPlugin(PLUGIN_ID, path);
-    }
 }

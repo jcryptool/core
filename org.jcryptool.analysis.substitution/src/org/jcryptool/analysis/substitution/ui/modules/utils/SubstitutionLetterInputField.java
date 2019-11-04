@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.analysis.substitution.Activator;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.TextfieldInput;
 
@@ -209,9 +210,9 @@ public class SubstitutionLetterInputField extends Composite {
             menuBtnLabel.setAlignment(SWT.CENTER);
             Image btnImage;
             if (mode == Mode.HORIZONTAL_POPUP) {
-                btnImage = Activator.getImageDescriptor("icons/tiny_arrow_right.png").createImage();
+                btnImage = ImageService.getImage(Activator.PLUGIN_ID, "icons/tiny_arrow_right.png");
             } else {
-                btnImage = Activator.getImageDescriptor("icons/tiny_arrow_down.png").createImage();
+                btnImage = ImageService.getImage(Activator.PLUGIN_ID, "icons/tiny_arrow_down.png");
             }
             menuBtnLabel.setImage(btnImage);
             menuBtnLabel.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_HAND));

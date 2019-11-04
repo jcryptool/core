@@ -39,10 +39,10 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.core.util.input.AbstractUIInput;
 import org.jcryptool.core.util.input.ButtonInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
-import org.jcryptool.crypto.ui.CryptoUIPlugin;
 import org.jcryptool.crypto.ui.alphabets.Messages;
 import org.jcryptool.crypto.ui.alphabets.alphabetblocks.BlockAlphabet;
 import org.jcryptool.crypto.ui.alphabets.alphabetblocks.ExcludeCharBlock;
@@ -210,7 +210,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 			GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 			btnVorhandeneAlphabeteAls.setLayoutData(layoutData);
 			btnVorhandeneAlphabeteAls.setText(Messages.getString("ComposeAlphabetComposite.2")); //$NON-NLS-1$
-			Image showExistingImg = CryptoUIPlugin.getImageDescriptor("img/search.gif").createImage(); //$NON-NLS-1$
+			Image showExistingImg = ImageService.SearchIcon; //$NON-NLS-1$
 			btnVorhandeneAlphabeteAls.setImage(showExistingImg);
 			btnVorhandeneAlphabeteAls.setVisible(false);
 			layoutData.exclude = true;
@@ -490,7 +490,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 			MenuItem showContentItem = new MenuItem(contextMenu, SWT.PUSH);
 			showContentItem.setText(Messages.getString("ComposeAlphabetComposite.26")); //$NON-NLS-1$
 //			Image showImg = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ADD);
-			Image showImg = CryptoUIPlugin.getImageDescriptor("img/search.gif").createImage(); //$NON-NLS-1$
+			Image showImg = ImageService.SearchIcon;
 			showContentItem.setImage(showImg);
 
 			showContentItem.addSelectionListener(new SelectionAdapter() {
@@ -850,7 +850,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 			MenuItem showContentItem = new MenuItem(contextMenu, SWT.PUSH);
 			showContentItem.setText(Messages.getString("ComposeAlphabetComposite.40")); //$NON-NLS-1$
 //			Image showImg = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ADD);
-			Image showImg = CryptoUIPlugin.getImageDescriptor("img/search.gif").createImage(); //$NON-NLS-1$
+			Image showImg = ImageService.SearchIcon;
 			showContentItem.setImage(showImg);
 
 			showContentItem.addSelectionListener(new SelectionAdapter() {

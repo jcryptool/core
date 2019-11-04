@@ -7,7 +7,8 @@
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.sphincsplus.ui.SphincsPlusView"
             id="org.jcryptool.visual.sphincsplus.SphincsPlusView"
-            name="%view.name">
+            name="%view.name"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
       </view>
    </extension>
    <extension

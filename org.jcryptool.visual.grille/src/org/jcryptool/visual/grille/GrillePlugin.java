@@ -10,7 +10,6 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.visual.grille;
 
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -64,7 +63,4 @@ public class GrillePlugin extends AbstractUIPlugin {
 		return plugin;
 	}
 
-	public static ImageDescriptor getImageDescriptor(String path) {
-		return imageDescriptorFromPlugin(PLUGIN_ID, path);
-	}
 }

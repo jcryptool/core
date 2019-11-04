@@ -8,7 +8,7 @@
             class="org.jcryptool.visual.euclid.View"
             id="org.jcryptool.visual.euclid.view"
             name="%view.name"
-            restorable="true">
+       		icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
       </view>
    </extension>
    <extension
@@ -103,7 +103,7 @@
             locationURI="toolbar:org.jcryptool.visual.euclid.view">
          <command
                commandId="org.jcryptool.visual.euclid.restartCommand"
-               icon="/icons/view.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
                style="push">
          </command>            
       </menuContribution>

@@ -6,7 +6,7 @@
       <view
             category="org.jcryptool.games"
             class="org.jcryptool.games.numbershark.views.NumberSharkView"
-            icon="icons/view.gif"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/obj16/elements_obj.png"
             id="org.jcryptool.games.numbershark.NumberSharkView"
             name="%view.name.0">
       </view>

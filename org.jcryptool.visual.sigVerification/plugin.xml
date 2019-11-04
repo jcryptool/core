@@ -6,7 +6,7 @@
       <view
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.sigVerification.ui.view.SigVerView"
-            icon="icons/view.gif"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png"
             id="org.jcryptool.visual.sigVerification.view"
             name="%view.name">
       </view>

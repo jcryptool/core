@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.visual.elGamal.ElGamalData;
 import org.jcryptool.visual.elGamal.ElGamalPlugin;
 import org.jcryptool.visual.elGamal.Messages;
@@ -139,8 +140,7 @@ public class NewPublicKeyPage extends WizardPage {
 		dTooLongLable.setText(Messages.NewPublicKeyPage_pProbablyNotPrime);
 		dTooLongLable.setVisible(false);
 		dTooLongLable.setToolTipText(Messages.NewPublicKeyPage_toolTippTooLong);
-		dTooLongLable.setImage(ElGamalPlugin.getImageDescriptor("platform:/plugin/org.eclipse.jface/org/eclipse/jface/dialogs/images/message_info.png").createImage()); //$NON-NLS-1$
-
+		dTooLongLable.setImage(ImageService.InfoIcon);
 		Label separator1 = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
 		GridData gd_separator1 = new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1);
 		gd_separator1.verticalIndent = 10;
@@ -188,8 +188,7 @@ public class NewPublicKeyPage extends WizardPage {
 		gTooLongLable.setText(Messages.NewPublicKeyPage_gProbablyNoGenerator);
 		gTooLongLable.setVisible(false);
 		gTooLongLable.setToolTipText(Messages.NewPublicKeyPage_ToolTipgTooLong);
-		gTooLongLable.setImage(ElGamalPlugin.getImageDescriptor("platform:/plugin/org.eclipse.jface/org/eclipse/jface/dialogs/images/message_info.png").createImage()); //$NON-NLS-1$
-
+		gTooLongLable.setImage(ImageService.InfoIcon);
 		Label separator2 = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
 		GridData gd_separator2 = new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1);
 		gd_separator2.verticalIndent = 20;

@@ -15,7 +15,7 @@ import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
+import org.jcryptool.core.util.images.ImageService;
 
 public class SigVerView extends ViewPart {
     private boolean showModelTab = false;
@@ -40,8 +40,7 @@ public class SigVerView extends ViewPart {
                 .setHelp(parent.getShell(), "org.jcryptool.visual.sigVerification.SigVerView"); //$NON-NLS-1$
         toolBarMenu = getViewSite().getActionBars().getToolBarManager();
         resetCommandId = "org.jcryptool.visual.sigVerification.commands.reset"; //$NON-NLS-1$
-        addContributionItem(toolBarMenu, resetCommandId,
-          		 SigVerificationPlugin.getImageDescriptor("/icons/reset.gif"), "Reset", SWT.PUSH);
+        addContributionItem(toolBarMenu, resetCommandId, ImageService.ResetIconImageDescriptor, "Reset", SWT.PUSH);
     	
         tf = new TabFolder(parent, SWT.TOP);
         tf.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));

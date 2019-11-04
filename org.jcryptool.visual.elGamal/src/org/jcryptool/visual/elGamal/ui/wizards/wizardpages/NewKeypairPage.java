@@ -29,6 +29,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.visual.elGamal.ElGamalData;
 import org.jcryptool.visual.elGamal.ElGamalPlugin;
 import org.jcryptool.visual.elGamal.Messages;
@@ -210,8 +211,7 @@ public class NewKeypairPage extends WizardPage {
         pchanged = new CLabel(composite, SWT.NONE);
         pchanged.setVisible(false);
         pchanged.setText(Messages.NewKeypairPage_pChanged);
-        pchanged.setImage(ElGamalPlugin.getImageDescriptor("platform:/plugin/org.eclipse.jface/org/eclipse/jface/dialogs/images/message_info.png").createImage());
-        
+        pchanged.setImage(ImageService.InfoIcon);
         // Separator
         new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
         

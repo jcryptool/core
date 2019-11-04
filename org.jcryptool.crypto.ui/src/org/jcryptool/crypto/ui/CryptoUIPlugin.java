@@ -1,9 +1,9 @@
 package org.jcryptool.crypto.ui;
 
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.jcryptool.core.util.images.ImageService;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -56,24 +56,11 @@ public class CryptoUIPlugin extends AbstractUIPlugin {
 	public static CryptoUIPlugin getDefault() {
 		return plugin;
 	}
-
-	/**
-	 * Returns an image descriptor for the image file at the given
-	 * plug-in relative path
-	 *
-	 * @param path the path
-	 * @return the image descriptor
-	 */
-	public static ImageDescriptor getImageDescriptor(String path) {
-		return imageDescriptorFromPlugin(PLUGIN_ID, path);
-	}
 	
 	@Override
 	protected void initializeImageRegistry(ImageRegistry reg) {
-		ImageDescriptor imageDescriptorKeys = getImageDescriptor("icons/keys.png");
-		reg.put(KEYBOARD_INPUT_ICON, imageDescriptorKeys.createImage());
-		ImageDescriptor imageDescriptorFile = getImageDescriptor("icons/file.png");
-		reg.put(FILE_INPUT_ICON, imageDescriptorFile.createImage());
+		reg.put(KEYBOARD_INPUT_ICON, ImageService.getImage(PLUGIN_ID, "icons/keys.png"));
+		reg.put(FILE_INPUT_ICON, ImageService.getImage(PLUGIN_ID, "icons/file.png"));
 	}
 	
 }

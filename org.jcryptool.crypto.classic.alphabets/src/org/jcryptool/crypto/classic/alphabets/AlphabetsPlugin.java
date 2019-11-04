@@ -18,7 +18,6 @@ import java.util.Vector;
 
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.crypto.classic.alphabets.tools.AlphabetPersistence;
@@ -119,17 +118,6 @@ public class AlphabetsPlugin extends AbstractUIPlugin {
 
 	public static String getFolderPath(){
 		return getDefault().getBundle().getLocation();
-	}
-
-	/**
-	 * Returns an image descriptor for the image file at the given
-	 * plug-in relative path
-	 *
-	 * @param path the path
-	 * @return the image descriptor
-	 */
-	public static ImageDescriptor getImageDescriptor(String path) {
-		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
 
 }

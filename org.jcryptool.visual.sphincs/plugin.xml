@@ -7,7 +7,7 @@
 			class="org.jcryptool.visual.sphincs.SphincsView"
 			id="org.jcryptool.visual.sphincs.view"
 			name="%visual.name"
-			restorable="true">
+			icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
 		</view>
 	</extension>
 	<extension point="org.jcryptool.core.operations.visuals">

@@ -6,7 +6,7 @@
          point="org.eclipse.ui.views">
       <view
             name="%view.name.0"
-            icon="icons/view.gif"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png"
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.babystepgiantstep.views.BabystepGiantstepView"
             id="org.jcryptool.visual.babystepgiantstep.views.BabystepGiantstepView">
