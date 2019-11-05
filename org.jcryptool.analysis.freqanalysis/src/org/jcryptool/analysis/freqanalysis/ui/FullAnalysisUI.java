@@ -11,13 +11,11 @@ package org.jcryptool.analysis.freqanalysis.ui;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Observable;
 import java.util.Vector;
 
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -156,6 +154,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 		button1.setEnabled(false);
 
 		button.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent evt) {
 				try {
 					Display display = Display.getDefault();
@@ -185,6 +184,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 		});
 
 		button0.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent evt) {
 				if (checkEditor()) {
 					text = getEditorText();
@@ -196,6 +196,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 		});
 
 		button1.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent evt) {
 				text = text;
 

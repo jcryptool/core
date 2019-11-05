@@ -103,6 +103,7 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 		button1.setEnabled(false);
 
 		button.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent evt) {
 				try {
 					Display display = Display.getDefault();
@@ -132,6 +133,7 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 		});
 
 		button0.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent evt) {
 				if (checkEditor()) {
 					text = getEditorText();
@@ -143,6 +145,7 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 		});
 
 		button1.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent evt) {
 				if (text.equals("") || text == null) {
 					MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0,

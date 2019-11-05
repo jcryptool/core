@@ -14,7 +14,6 @@ import java.util.Vector;
 
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.graphics.GC;
