@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
    <context id="substitutionsanalysis" title="Substitutions-Analyse">
-      <description>Unter Konstruktion</description>
+      <description>Das Substitutionsanalyse Plug-In erlaubt es einen Geheimtext zu entschl&uuml;sseln in dem die Substitution der Zeichenketten er&ouml;rtert wird durch die Parallelen in der H&auml;ufigkeit von Zeichen im Geheimtext und eines Referenztextes.</description>
       <topic href="$nl$/content/index.html" label="Substitutions-Analyse" />
    </context>
 
