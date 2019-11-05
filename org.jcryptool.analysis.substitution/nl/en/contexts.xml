@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
-   <context id="substitutionsanalysis" title="Substitutions-Analyse">
-      <description>This entry is currently under maintenance.</description>
+   <context id="substitutionsanalysis" title="Substitution Analysis">
+      <description>The Substitution Analysis plugin allows to decipher a ciphertext by modelling character substitution assignments of the frequency of character sequences in the ciphertext and a reference text.</description>
       <topic href="$nl$/content/index.html" label="Substitution Analysis" />
    </context>
 
