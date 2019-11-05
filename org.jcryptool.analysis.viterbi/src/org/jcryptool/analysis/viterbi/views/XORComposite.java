@@ -206,7 +206,7 @@ public class XORComposite extends Composite {
 		gd_loadPlain1c.horizontalAlignment = SWT.FILL;
 		gd_loadPlain1c.verticalAlignment = SWT.FILL;
 		loadPlain1c.setLayoutData(gd_loadPlain1c);
-		loadPlain1c.add(Messages.XORComposite_combo_default); //$NON-NLS-1$
+		loadPlain1c.add(Messages.XORComposite_combo_default); 
 		predefinedTexts.forEach(s -> loadPlain1c.add(limitS(30, s)));
 
 		loadPlain1c.addSelectionListener(new SelectionAdapter() {
@@ -262,7 +262,7 @@ public class XORComposite extends Composite {
 		gd_loadPlain2c.horizontalAlignment = SWT.FILL;
 		gd_loadPlain2c.verticalAlignment = SWT.FILL;
 		loadPlain2c.setLayoutData(gd_loadPlain2c);
-		loadPlain2c.add(Messages.XORComposite_combo_default); //$NON-NLS-1$
+		loadPlain2c.add(Messages.XORComposite_combo_default); 
 		predefinedTexts.forEach(s -> loadPlain2c.add(limitS(30, s)));
 
 		loadPlain2c.addSelectionListener(new SelectionAdapter() {
@@ -371,10 +371,12 @@ public class XORComposite extends Composite {
 		text.setText(Messages.XORComposite_EncodingMode_RadioUNI);
 
 		hex.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
 			}
 
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				hex.setSelection(true);
 				text.setSelection(false);
@@ -386,10 +388,12 @@ public class XORComposite extends Composite {
 		});
 
 		text.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
 			}
 
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				text.setSelection(true);
 				hex.setSelection(false);

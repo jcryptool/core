@@ -89,6 +89,7 @@ public class Path implements Comparable<Path> {
 	 *         of this Path is numerically GREATER than the probability of
 	 *         anotherPath; and a value greater than 0 in the other case.
 	 */
+	@Override
 	public int compareTo(Path anotherPath) {
 
 		return Double.compare(anotherPath.getProbability(),
