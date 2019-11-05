@@ -172,10 +172,12 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 					}
 
 					if (text == "") {
+						br.close();
 						throw new Exception();
 					}
 					button1.setEnabled(true);
 					recalcSourceInfo();
+					br.close();
 				} catch (Exception ex) {
 					MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0,
 							Messages.AbstractAnalysisUI_2);
@@ -198,7 +200,6 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 		button1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent evt) {
-				text = text;
 
 				if (text.equals("") || text == null) {
 					MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0,

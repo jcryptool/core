@@ -121,10 +121,12 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 					}
 
 					if (text == "") {
+						br.close();
 						throw new Exception();
 					}
 					button1.setEnabled(true);
 					recalcSourceInfo();
+					br.close();
 				} catch (Exception ex) {
 					MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0,
 							Messages.AbstractAnalysisUI_2);
