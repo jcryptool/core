@@ -3,6 +3,8 @@ package org.jcryptool.visual.errorcorrectingcodes.ui.views;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
@@ -20,9 +22,9 @@ public class EccMainView extends ViewPart {
     private ScrolledComposite scrolledComposite;
     private Composite parent;
 
-    private TabFolder tabFolder;
-    private TabItem tabGeneral;
-    private TabItem tabMcEliece;
+    private CTabFolder tabFolder;
+    private CTabItem tabGeneral;
+    private CTabItem tabMcEliece;
     private GeneralEccView generalEcc;
     private HammingCryptoView mcelieceView;
     private McElieceView mcEliece;
@@ -40,19 +42,19 @@ public class EccMainView extends ViewPart {
         scrolledComposite.setExpandHorizontal(true);
         scrolledComposite.setExpandVertical(true);
 
-        tabFolder = new TabFolder(scrolledComposite, SWT.NONE);
-        
+        tabFolder = new CTabFolder(scrolledComposite, SWT.NONE);
+        //tabFolder.setSelectionBackground(parent.getDisplay().getSystemColor(SWT.COLOR_GRAY));
         mcEliece = new McElieceView(tabFolder, SWT.NONE);
-        tabMcEliece = new TabItem(tabFolder, SWT.NONE);
+        tabMcEliece = new CTabItem(tabFolder, SWT.NONE);
         tabMcEliece.setText(Messages.EccMainView_tabMcEliece);
         tabMcEliece.setControl(mcEliece);
         
         generalEcc = new GeneralEccView(tabFolder, SWT.NONE);
-        tabGeneral = new TabItem(tabFolder, SWT.NONE);
+        tabGeneral = new CTabItem(tabFolder, SWT.NONE);
         tabGeneral.setText(Messages.EccMainView_tabGeneralText);
         tabGeneral.setControl(generalEcc);
         mcelieceView = new HammingCryptoView(tabFolder, SWT.NONE);
-        tabMcEliece = new TabItem(tabFolder, SWT.NONE);
+        tabMcEliece = new CTabItem(tabFolder, SWT.NONE);
         tabMcEliece.setText(Messages.EccMainView_tabMcElieceText);
         tabMcEliece.setControl(mcelieceView);
         tabFolder.setSelection(DEFAULT_TAB);

@@ -23,6 +23,7 @@ import org.jcryptool.visual.errorcorrectingcodes.ui.widget.ArrowCanvas;
 
 public class UIHelper {
 
+    
     /**
      * Method to create multiline StyledText widgets.
      *
@@ -54,14 +55,15 @@ public class UIHelper {
      */
     public static StyledText mutltiLineText(Composite p, int hAlign, int vAlign, int width, int lines, Font font, boolean readonly) {
         int read_only = readonly ? SWT.READ_ONLY : 0; 
-        
-        StyledText text = new StyledText(p, read_only | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
-        text.setBackground(p.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+        int border = readonly ? 0 : SWT.BORDER;
+        StyledText text = new StyledText(p, read_only | border | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
         text.setAlwaysShowScrollBars(false);
         text.setMargins(2, 2, 4, 2);
         if (font != null)
             text.setFont(font);
-        
+        if (readonly)
+            text.setBackground(p.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+
         Point hint = new Point(width, lines * (text.getLineHeight())+4);
         GridDataFactory.fillDefaults().align(hAlign, vAlign).grab(true, true).hint(hint).applyTo(text);
         return text;

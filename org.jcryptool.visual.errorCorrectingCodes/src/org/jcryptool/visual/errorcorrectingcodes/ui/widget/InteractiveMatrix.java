@@ -16,23 +16,24 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.errorcorrectingcodes.data.Matrix2D;
 
 /**
- * The Class InteractiveMatrix is a custom composite to represent a binary matrix that can be modified by user input.
- * It consists of a rows * columns grid of buttons that switch their value from 1 to 0 on mouse click.
+ * The Class InteractiveMatrix is a custom composite to represent a binary matrix that can be
+ * modified by user input. It consists of a rows * columns grid of buttons that switch their value
+ * from 1 to 0 on mouse click.
  * 
  */
 public class InteractiveMatrix extends Composite {
 
     Matrix2D matrix;
-    
+
     /** The button grid represented as a one-dimensional ArrayList. */
     private ArrayList<Button> buttonGrid;
-    
+
     /** The modified flag, false by default */
     boolean modified;
-    
+
     /** The permutation matrix flag, false by default */
     boolean permutation;
-    
+
     private int rows, columns;
 
     /**
@@ -61,37 +62,41 @@ public class InteractiveMatrix extends Composite {
                 btn.setData(new Point(i, j));
 
                 btn.addListener(SWT.Selection, e -> {
-                    Button b = (Button) e.widget;
-                    if (b.getText().equals("0")) {
-                        b.setText("1");
-                        
-                        //if declared as a permutation matrix, a 1 sets every other value in its row and line to 0
-                        if (isPermutation()) {
-                            Point p = (Point) btn.getData();
-                            for (int row = 0; row < rows; row++) {
-                                if (row != p.x)
-                                buttonGrid.get(p.y + (row * rows)).setText("0");
-                            }
-                            
-                            for (int col = 0; col < columns; col++) {
-                                if (col != p.y)
-                                buttonGrid.get((p.x*rows) + col).setText("0");
-                            }
-                        }
-                    } else
-                        b.setText("0");
-
-                    //set element in Matrix2D Object
-                    Point pos = ((Point)b.getData());
-                    int val = Integer.valueOf(b.getText());
-                    matrix.set(pos.x, pos.y, val);
-                    
+                    setMatrixValues(e, (Point) btn.getData());
                     modified = true;
                 });
-             
+
                 GridDataFactory.fillDefaults().applyTo(btn);
                 buttonGrid.add(btn);
             }
+        }
+    }
+
+    private void setMatrixValues(Event e, Point p) {
+        Button b = (Button) e.widget;
+        if (b.getText().equals("0")) {
+            b.setText("1");
+            matrix.set(p.x, p.y, 1);
+            
+            if (isPermutation()) {
+                // value 1 sets every other value in its row and column to 0
+                for (int row = 0; row < rows; row++) {
+                    if (row != p.x) {
+                        buttonGrid.get(p.y + (row * rows)).setText("0");
+                        matrix.set(row, p.y, 0);
+                    }
+                }
+
+                for (int col = 0; col < columns; col++) {
+                    if (col != p.y) {
+                        buttonGrid.get((p.x * rows) + col).setText("0");
+                        matrix.set(p.x, col, 0);
+                    }
+                }
+            }
+        } else {
+            b.setText("0");
+            matrix.set(p.x, p.y, 0);
         }
     }
 
@@ -104,7 +109,7 @@ public class InteractiveMatrix extends Composite {
         for (int row = 0; row < m.getRowCount(); row++) {
             for (int col = 0; col < m.getColCount(); col++) {
                 buttonGrid.get(col + (row * (m.getColCount()))).setText(String.valueOf(m.get(row, col)));
-              
+
             }
         }
         this.matrix = m;

@@ -13,7 +13,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.databinding.beans,
  org.eclipse.core.databinding.property,
  org.eclipse.jface.databinding,
- org.bouncycastle;bundle-version="1.62.0";visibility:=reexport
+ org.bouncycastle
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: org.jcryptool.core.logging.utils,
