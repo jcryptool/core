@@ -40,6 +40,7 @@ public class BlockCipherWizardDialog extends WizardDialog {
 		algorithm = wizard.getAlgorithm();
 	}
 
+	@Override
 	public void nextPressed() {
 		LogUtil.logInfo("next pressed"); //$NON-NLS-1$
 		if (wizard.hasAlgorithmParameterSpecPage() && getCurrentPage().getName().equals("AlgorithmParameterWizardPage")) { //$NON-NLS-1$

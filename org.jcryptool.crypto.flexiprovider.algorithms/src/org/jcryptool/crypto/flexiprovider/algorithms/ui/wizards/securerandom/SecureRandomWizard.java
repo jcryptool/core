@@ -28,6 +28,7 @@ public class SecureRandomWizard extends AlgorithmWizard {
 		this.algorithm = algorithm;
 	}
 
+	@Override
 	public void setCanFinish(boolean value) {
 		canFinish = value;
 		if (getContainer() != null) {
@@ -35,21 +36,25 @@ public class SecureRandomWizard extends AlgorithmWizard {
 		}
 	}
 	
+	@Override
 	public boolean canFinish() {
 		return canFinish;
 	}
 	
+	@Override
 	public void addPages() {
 		page = new SecureRandomWizardPage(algorithm, this);
 		addPage(page);
 	}
 
+	@Override
 	public AlgorithmDescriptor getDescriptor() {
 		return new SecureRandomDescriptor(algorithm.getName(), length);
 	}
 	
 	private int length;
 	
+	@Override
 	public boolean performFinish() {
 		length = page.getLength();
 		return true;

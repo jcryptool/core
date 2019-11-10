@@ -37,7 +37,8 @@ public class SignatureWizardPage extends WizardPage {
         this.wizard = wizard;
     }
 
-    public void setPageComplete(boolean value) {
+    @Override
+	public void setPageComplete(boolean value) {
         super.setPageComplete(value);
         wizard.setCanFinish(true);
     }
@@ -46,7 +47,8 @@ public class SignatureWizardPage extends WizardPage {
         return flexibleComp.getValues();
     }
 
-    public void createControl(Composite parent) {
+    @Override
+	public void createControl(Composite parent) {
         LogUtil.logInfo("creating the dynamic layout"); //$NON-NLS-1$
         // GridData gridData = new GridData();
         // gridData.grabExcessVerticalSpace = true;

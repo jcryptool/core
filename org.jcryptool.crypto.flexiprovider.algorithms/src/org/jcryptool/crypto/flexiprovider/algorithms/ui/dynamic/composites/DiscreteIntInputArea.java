@@ -72,6 +72,7 @@ public class DiscreteIntInputArea implements IAlgorithmParameterInputArea, Liste
 		separator.setLayoutData(separatorGridData);
 	}
 
+	@Override
 	public Object getValue() {
 		if (valueCombo != null) {
 			return Integer.valueOf(valueCombo.getText());
@@ -80,16 +81,19 @@ public class DiscreteIntInputArea implements IAlgorithmParameterInputArea, Liste
 		}
 	}
 
+	@Override
 	public void setValue(Object value) {
 		// unused
 	}
 
 	private WizardPage page;
 
+	@Override
 	public void setWizardPage(WizardPage page) {
 		this.page = page;
 	}
 
+	@Override
 	public void handleEvent(Event event) {
 		if (event.widget.equals(valueCombo)) {
 			if (page != null) {

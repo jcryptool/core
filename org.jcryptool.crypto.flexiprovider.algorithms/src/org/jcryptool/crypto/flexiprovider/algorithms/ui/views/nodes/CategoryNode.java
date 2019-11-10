@@ -21,6 +21,7 @@ public class CategoryNode extends TreeNode {
 		super(name);
 	}
 	
+	@Override
 	public ImageDescriptor getImageDescriptor() {
 		return ImageService.getImageDescriptor(FlexiProviderAlgorithmsPlugin.PLUGIN_ID, "icons/16x16/folder.png");
 	}

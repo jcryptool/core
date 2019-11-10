@@ -109,7 +109,8 @@ public class BlockCipherWizard extends AlgorithmWizard implements IBlockCipherWi
         return null;
     }
 
-    public void addPages() {
+    @Override
+	public void addPages() {
         initPage = new BlockCipherIntroductionPage(algorithm, this);
         initPage.addBlockCipherWizardListener(this);
         setMode(initPage.getMode());
@@ -125,41 +126,49 @@ public class BlockCipherWizard extends AlgorithmWizard implements IBlockCipherWi
         addPage(modePage);
     }
 
-    public void setMode(IMetaMode mode) {
+    @Override
+	public void setMode(IMetaMode mode) {
         this.mode = mode;
         // if (modePage != null) {
         // modePage.setMode(this.mode);
         // }
     }
 
-    public void setPadding(String padding) {
+    @Override
+	public void setPadding(String padding) {
         this.paddingID = padding;
     }
 
-    public void setAlgorithmParameterSpec(AlgorithmParameterSpec algorithmParameters) {
+    @Override
+	public void setAlgorithmParameterSpec(AlgorithmParameterSpec algorithmParameters) {
         this.algorithmParameters = algorithmParameters;
     }
 
-    public void setModeParameterSpec(ModeParameterSpec modeParameters) {
+    @Override
+	public void setModeParameterSpec(ModeParameterSpec modeParameters) {
         this.modeParameters = modeParameters;
     }
 
-    protected void setCanFinish(boolean value) {
+    @Override
+	protected void setCanFinish(boolean value) {
         canFinish = value;
         if (getContainer() != null) {
             getContainer().updateButtons();
         }
     }
 
-    protected Object[] getAlgorithmParameterValues() {
+    @Override
+	protected Object[] getAlgorithmParameterValues() {
         return algoPage.getValues();
     }
 
-    public boolean canFinish() {
+    @Override
+	public boolean canFinish() {
         return canFinish;
     }
 
-    public boolean performFinish() {
+    @Override
+	public boolean performFinish() {
         algorithmName = algorithm.getName();
         LogUtil.logInfo("Algorithm: " + algorithm.getName()); //$NON-NLS-1$
         modeID = mode.getID();
@@ -203,7 +212,8 @@ public class BlockCipherWizard extends AlgorithmWizard implements IBlockCipherWi
         }
     }
 
-    public AlgorithmDescriptor getDescriptor() {
+    @Override
+	public AlgorithmDescriptor getDescriptor() {
         return new BlockCipherDescriptor(algorithmName, modeID, paddingID, modeParameters, algorithmParameters);
     }
 

@@ -21,6 +21,7 @@ public class FlexiProviderAlgorithmsViewLabelProvider extends LabelProvider {
 	/**
 	 * @see org.eclipse.jface.viewers.LabelProvider#getText(java.lang.Object)
 	 */
+	@Override
 	public String getText(Object obj) {
 		return obj.toString();
 	}
@@ -28,6 +29,7 @@ public class FlexiProviderAlgorithmsViewLabelProvider extends LabelProvider {
 	/**
 	 * @see org.eclipse.jface.viewers.LabelProvider#getImage(java.lang.Object)
 	 */
+	@Override
 	public Image getImage(Object obj) {
 		if (obj instanceof TreeNode) {
 			return ((TreeNode)obj).getImageDescriptor().createImage();

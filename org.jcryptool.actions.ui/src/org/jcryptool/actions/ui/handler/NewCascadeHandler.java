@@ -31,7 +31,8 @@ import org.jcryptool.actions.ui.preferences.PreferenceConstants;
  * @version 0.5.0
  */
 public class NewCascadeHandler extends AbstractHandler {
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    @Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
         ActionCascadeService service = ActionCascadeService.getInstance();
     	
     	if (service.getCurrentActionCascade() != null && service.getCurrentActionCascade().getSize()>0){
@@ -46,7 +47,7 @@ public class NewCascadeHandler extends AbstractHandler {
             }
         }
 
-        ICommandService commandService = (ICommandService) PlatformUI.getWorkbench().getService(
+        ICommandService commandService = PlatformUI.getWorkbench().getService(
                 ICommandService.class);
         Command command = commandService.getCommand("org.jcryptool.actions.recordCommand"); //$NON-NLS-1$
         State state = command.getState("org.jcryptool.actions.recordCommand.toggleState"); //$NON-NLS-1$

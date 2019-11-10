@@ -57,6 +57,7 @@ public class RangeIntInputArea implements IAlgorithmParameterInputArea {
 		valueText.setLayoutData(gridData1);
 		valueText.addVerifyListener(new VerifyListener() {
 
+			@Override
 			public void verifyText(VerifyEvent e) {
 				if (e.character != SWT.BS && e.character != SWT.DEL) {
 					String origInput = valueText.getText();
@@ -94,6 +95,7 @@ public class RangeIntInputArea implements IAlgorithmParameterInputArea {
 		separator.setLayoutData(separatorGridData);
 	}
 
+	@Override
 	public Object getValue() {
 		if (valueText != null) {
 			return Integer.valueOf(valueText.getText()).intValue();
@@ -102,12 +104,14 @@ public class RangeIntInputArea implements IAlgorithmParameterInputArea {
 		}
 	}
 
+	@Override
 	public void setValue(Object value) {
 		// unused
 	}
 
 	private WizardPage page;
 
+	@Override
 	public void setWizardPage(WizardPage page) {
 		this.page = page;
 	}

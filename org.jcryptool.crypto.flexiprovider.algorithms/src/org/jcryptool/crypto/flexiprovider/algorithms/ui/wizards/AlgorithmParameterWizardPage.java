@@ -33,7 +33,8 @@ public class AlgorithmParameterWizardPage extends WizardPage {
         this.wizard = wizard;
     }
 
-    public void setPageComplete(boolean value) {
+    @Override
+	public void setPageComplete(boolean value) {
         super.setPageComplete(value);
         wizard.setCanFinish(true);
     }
@@ -42,7 +43,8 @@ public class AlgorithmParameterWizardPage extends WizardPage {
         return flexibleComp.getValues();
     }
 
-    public void createControl(Composite parent) {
+    @Override
+	public void createControl(Composite parent) {
         LogUtil.logInfo("creating the dynamic layout"); //$NON-NLS-1$
         flexibleComp = InputFactory.getInstance().createParameterComposite(parent, spec);
         setControl(flexibleComp);

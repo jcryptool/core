@@ -59,7 +59,8 @@ public class StartHandler extends AbstractHandler {
 
     final Display display = Display.getCurrent();
 
-    public Object execute(final ExecutionEvent event) throws ExecutionException {
+    @Override
+	public Object execute(final ExecutionEvent event) throws ExecutionException {
         final ActionView view = (ActionView) HandlerUtil.getActivePart(event);
         if (!view.hasContent()) {
             MessageDialog.openInformation(HandlerUtil.getActiveShell(event), Messages.StartHandler_0,
@@ -68,7 +69,8 @@ public class StartHandler extends AbstractHandler {
             final ActionItem a = (ActionItem) ((IStructuredSelection) (view.getViewer().getSelection()))
                     .getFirstElement();
             Job job = new Job(Messages.StartHandler_5) {
-                public IStatus run(final IProgressMonitor monitor) {
+                @Override
+				public IStatus run(final IProgressMonitor monitor) {
                     return execute(view, a, HandlerUtil.getActiveShell(event), monitor);
                 }
             };
@@ -107,7 +109,8 @@ public class StartHandler extends AbstractHandler {
 
                     // Set focus on moved row. Just look and feel ...
                     display.asyncExec(new Runnable() {
-                        public void run() {
+                        @Override
+						public void run() {
                             viewer.setSelection(new StructuredSelection(a), true);
                         }
                     });
@@ -170,7 +173,8 @@ public class StartHandler extends AbstractHandler {
                                 }
 
                                 display.asyncExec(new Runnable() {
-                                    public void run() {
+                                    @Override
+									public void run() {
                                         PerformOperationManager.getInstance().firePerformOperation(operation);
                                     }
                                 });
@@ -189,16 +193,18 @@ public class StartHandler extends AbstractHandler {
                         if (!ActionsUIPlugin.getDefault().getPreferenceStore()
                                 .getBoolean(PreferenceConstants.P_DONT_SHOW_MESSAGES)) {
                             display.syncExec(new Runnable() {
-                                public void run() {
+                                @Override
+								public void run() {
                                     MessageDialog.openWarning(shell, Messages.StartHandler_3, e.getMessage());
                                 }
                             });
                         }
                     } else {
                         display.asyncExec(new Runnable() {
-                            public void run() {
+                            @Override
+							public void run() {
                                 MessageDialog.openError(shell, Messages.StartHandler_3, e.getMessage()
-                                        + Messages.StartHandler_4); //$NON-NLS-1$
+                                        + Messages.StartHandler_4); 
                             }
                         });
                         return Status.CANCEL_STATUS;

@@ -127,12 +127,14 @@ public class ActionView extends ViewPart implements IListChangeListener<Object> 
         viewer.setLabelProvider(new ActionLabelProvider());
 
         viewer.addDoubleClickListener(new IDoubleClickListener() {
-            public void doubleClick(DoubleClickEvent e) {
+            @Override
+			public void doubleClick(DoubleClickEvent e) {
             }
         });
 
         viewer.addSelectionChangedListener(new ISelectionChangedListener() {
-            public void selectionChanged(SelectionChangedEvent e) {
+            @Override
+			public void selectionChanged(SelectionChangedEvent e) {
                 ActionItem action =
                         (ActionItem) ((IStructuredSelection) viewer.getSelection()).getFirstElement();
                 if (action != null) {

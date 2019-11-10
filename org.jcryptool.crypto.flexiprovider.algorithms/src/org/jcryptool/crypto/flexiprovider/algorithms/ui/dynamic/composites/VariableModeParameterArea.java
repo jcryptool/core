@@ -95,6 +95,7 @@ public class VariableModeParameterArea implements IInputArea, Listener {
 		ivText.addListener(SWT.Modify, this);
 		ivText.addVerifyListener(new VerifyListener() {
 
+			@Override
 			public void verifyText(VerifyEvent e) {
 				if (page != null) {
 					page.setComplete(false);
@@ -150,6 +151,7 @@ public class VariableModeParameterArea implements IInputArea, Listener {
 		}
 	}
 
+	@Override
 	public void handleEvent(Event event) {
 		if (event.widget.equals(rndButton)) {
 			random = true;
@@ -164,6 +166,7 @@ public class VariableModeParameterArea implements IInputArea, Listener {
 		}
 	}
 
+	@Override
 	public Object getValue() {
 		if (ivText == null || ivText.getText().equals("")) { //$NON-NLS-1$
 			return new byte[0];
@@ -172,6 +175,7 @@ public class VariableModeParameterArea implements IInputArea, Listener {
 		}
 	}
 
+	@Override
 	public void setValue(Object value) {
 		if (value instanceof IMetaAlgorithm) {
 			LogUtil.logInfo("setting the algorithm"); //$NON-NLS-1$

@@ -25,7 +25,8 @@ import org.jcryptool.core.util.images.ImageService;
  * @version 0.9.7
  */
 public class ActionLabelProvider extends LabelProvider implements ITableLabelProvider {
-    public String getColumnText(Object obj, int index) {
+    @Override
+	public String getColumnText(Object obj, int index) {
         ActionItem item = (ActionItem) obj;
 
         switch (index) {
@@ -38,7 +39,8 @@ public class ActionLabelProvider extends LabelProvider implements ITableLabelPro
         }
     }
 
-    public Image getColumnImage(Object obj, int index) {
+    @Override
+	public Image getColumnImage(Object obj, int index) {
     	ActionItem item = (ActionItem) obj;
 
         switch (index) {

@@ -41,9 +41,10 @@ import org.jcryptool.actions.ui.views.ActionView;
 public class RecordHandler extends AbstractHandler implements IElementUpdater {
     private boolean doRecord = false;
 
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    @Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
         ICommandService service =
-                (ICommandService) PlatformUI.getWorkbench().getService(ICommandService.class);
+                PlatformUI.getWorkbench().getService(ICommandService.class);
         Command command = service.getCommand("org.jcryptool.actions.recordCommand"); //$NON-NLS-1$
         State state = command.getState("org.jcryptool.actions.recordCommand.toggleState"); //$NON-NLS-1$
         doRecord = !(Boolean) state.getValue();
@@ -64,7 +65,7 @@ public class RecordHandler extends AbstractHandler implements IElementUpdater {
 
         final IWorkbenchWindow ww = HandlerUtil.getActiveWorkbenchWindowChecked(event);
         final IEvaluationService evalService =
-                (IEvaluationService) ww.getService(IEvaluationService.class);
+                ww.getService(IEvaluationService.class);
         if (evalService != null) {
             evalService.requestEvaluation("org.jcryptool.actions.isDoRecord"); //$NON-NLS-1$
         }
@@ -93,7 +94,8 @@ public class RecordHandler extends AbstractHandler implements IElementUpdater {
         }
     }
 
-    @SuppressWarnings("rawtypes")
+    @Override
+	@SuppressWarnings("rawtypes")
 	public void updateElement(UIElement element, Map parameters) {
         element.setChecked(doRecord);
     }

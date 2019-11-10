@@ -35,11 +35,13 @@ public class SecureRandomWizardPage extends WizardPage {
 		this.wizard = wizard;
 	}
 
+	@Override
 	public void setPageComplete(boolean value) {
 		super.setPageComplete(value);
 		wizard.setCanFinish(value);	
 	}
 
+	@Override
 	public void createControl(Composite parent) {
 		GridData gridData = new GridData();
 		gridData.horizontalAlignment = GridData.FILL;
@@ -51,6 +53,7 @@ public class SecureRandomWizardPage extends WizardPage {
 		text = new Text(parent, SWT.BORDER);
 		text.addVerifyListener(new VerifyListener() {
 
+			@Override
 			public void verifyText(VerifyEvent e) {
 				if (e.character != SWT.BS && e.character != SWT.DEL) {					
 					try {	

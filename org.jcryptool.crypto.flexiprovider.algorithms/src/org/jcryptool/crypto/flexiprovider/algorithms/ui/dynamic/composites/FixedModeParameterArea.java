@@ -91,7 +91,8 @@ public class FixedModeParameterArea implements IInputArea, Listener {
         ivText.addListener(SWT.Modify, this);
         ivText.addVerifyListener(new VerifyListener() {
 
-            public void verifyText(VerifyEvent e) {
+            @Override
+			public void verifyText(VerifyEvent e) {
                 if (page != null) {
                     page.setComplete(false);
                 }
@@ -129,7 +130,8 @@ public class FixedModeParameterArea implements IInputArea, Listener {
 
     private boolean codeManipulation = false;
 
-    public void handleEvent(Event event) {
+    @Override
+	public void handleEvent(Event event) {
         if (event.widget.equals(rndButton)) {
             codeManipulation = true;
             if (size > 0) {
@@ -143,7 +145,8 @@ public class FixedModeParameterArea implements IInputArea, Listener {
         }
     }
 
-    public Object getValue() {
+    @Override
+	public Object getValue() {
         if (ivText == null || ivText.getText().equals("")) { //$NON-NLS-1$
             return new byte[0];
         } else {
@@ -151,7 +154,8 @@ public class FixedModeParameterArea implements IInputArea, Listener {
         }
     }
 
-    public void setValue(Object value) {
+    @Override
+	public void setValue(Object value) {
         if (value instanceof Integer) {
             codeManipulation = true;
             size = (Integer) value;

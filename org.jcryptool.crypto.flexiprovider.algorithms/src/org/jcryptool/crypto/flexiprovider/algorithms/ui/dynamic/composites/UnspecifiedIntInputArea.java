@@ -44,6 +44,7 @@ public class UnspecifiedIntInputArea implements IAlgorithmParameterInputArea {
 		valueText.setLayoutData(gridData1);
 		valueText.addVerifyListener(new VerifyListener() {
 
+			@Override
 			public void verifyText(VerifyEvent e) {
 
 				if (e.character != SWT.BS && e.character != SWT.DEL) {
@@ -69,6 +70,7 @@ public class UnspecifiedIntInputArea implements IAlgorithmParameterInputArea {
 		separator.setLayoutData(separatorGridData);
 	}
 
+	@Override
 	public Object getValue() {
 		if (valueText != null) {
 			return Integer.valueOf(valueText.getText()).intValue();
@@ -77,12 +79,14 @@ public class UnspecifiedIntInputArea implements IAlgorithmParameterInputArea {
 		}
 	}
 
+	@Override
 	public void setValue(Object value) {
 		// unused
 	}
 
 	private WizardPage page;
 
+	@Override
 	public void setWizardPage(WizardPage page) {
 		this.page = page;
 	}

@@ -60,6 +60,7 @@ public class QuadraticIdealComposite implements IAlgorithmParameterInputArea{
 
 		value1.addVerifyListener(new VerifyListener() {
 
+			@Override
 			public void verifyText(VerifyEvent e) {			
 				if (e.character != SWT.BS && e.character != SWT.DEL) {
 					e.text = e.text.toUpperCase();
@@ -91,6 +92,7 @@ public class QuadraticIdealComposite implements IAlgorithmParameterInputArea{
 
 		value2.addVerifyListener(new VerifyListener() {
 
+			@Override
 			public void verifyText(VerifyEvent e) {			
 				if (e.character != SWT.BS && e.character != SWT.DEL) {
 					e.text = e.text.toUpperCase();
@@ -114,10 +116,12 @@ public class QuadraticIdealComposite implements IAlgorithmParameterInputArea{
 		separator.setLayoutData(separatorGridData);
 	}
 
+	@Override
 	public void setWizardPage(WizardPage page) {
 		this.page = page;
 	}
 
+	@Override
 	public Object getValue() {
 		if (value1 != null && value2 != null) {
 			return new QuadraticIdeal(
@@ -129,6 +133,7 @@ public class QuadraticIdealComposite implements IAlgorithmParameterInputArea{
 		}
 	}
 
+	@Override
 	public void setValue(Object value) {
 		// unused
 	}

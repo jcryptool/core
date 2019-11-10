@@ -47,7 +47,8 @@ public class AlgorithmIntroductionPage extends WizardPage implements Listener {
         return useDefaultValues;
     }
 
-    public void handleEvent(Event event) {
+    @Override
+	public void handleEvent(Event event) {
         if (event.widget.equals(defaultRadioButton)) {
             LogUtil.logInfo("default"); //$NON-NLS-1$
             setPageComplete(false);
@@ -69,7 +70,8 @@ public class AlgorithmIntroductionPage extends WizardPage implements Listener {
         // }
     }
 
-    public void createControl(Composite parent) {
+    @Override
+	public void createControl(Composite parent) {
         LogUtil.logInfo("creating control"); //$NON-NLS-1$
         Composite pageComposite = new Composite(parent, SWT.NULL);
         GridLayout gridLayout = new GridLayout();

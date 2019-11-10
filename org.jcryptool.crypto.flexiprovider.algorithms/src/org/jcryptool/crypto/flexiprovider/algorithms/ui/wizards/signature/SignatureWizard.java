@@ -60,36 +60,43 @@ public class SignatureWizard extends AlgorithmWizard {
         }
     }
 
-    protected void setCanFinish(boolean value) {
+    @Override
+	protected void setCanFinish(boolean value) {
         canFinish = value;
         if (getContainer() != null) {
             getContainer().updateButtons();
         }
     }
 
-    public boolean canFinish() {
+    @Override
+	public boolean canFinish() {
         return canFinish;
     }
 
-    public void addPages() {
+    @Override
+	public void addPages() {
         introPage = new AlgorithmIntroductionPage(algorithm, this, (algorithm.getParameterGeneratorClassName() != null));
         addPage(introPage);
         addPage(page);
     }
 
-    public AlgorithmDescriptor getDescriptor() {
+    @Override
+	public AlgorithmDescriptor getDescriptor() {
         return new AlgorithmDescriptor(algorithm.getName(), RegistryType.SIGNATURE, algorithmParameters);
     }
 
-    protected Object[] getAlgorithmParameterValues() {
+    @Override
+	protected Object[] getAlgorithmParameterValues() {
         return page.getValues();
     }
 
-    public void setAlgorithmParameterSpec(AlgorithmParameterSpec spec) {
+    @Override
+	public void setAlgorithmParameterSpec(AlgorithmParameterSpec spec) {
         algorithmParameters = spec;
     }
 
-    public boolean performFinish() {
+    @Override
+	public boolean performFinish() {
         algorithmName = algorithm.getName();
         if (introPage.useDefaultValues()) {
             LogUtil.logInfo("default values"); //$NON-NLS-1$

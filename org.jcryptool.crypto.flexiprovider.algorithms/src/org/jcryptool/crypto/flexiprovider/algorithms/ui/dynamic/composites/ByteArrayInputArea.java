@@ -57,6 +57,7 @@ public class ByteArrayInputArea implements IAlgorithmParameterInputArea {
 		valueText.setLayoutData(gridData1);
 		valueText.addVerifyListener(new VerifyListener() {
 
+			@Override
 			public void verifyText(VerifyEvent e) {
 				if (e.character != SWT.BS && e.character != SWT.DEL) {
 					e.text = e.text.toUpperCase();
@@ -79,6 +80,7 @@ public class ByteArrayInputArea implements IAlgorithmParameterInputArea {
 		separator.setLayoutData(separatorGridData);
 	}
 
+	@Override
 	public Object getValue() {
 		if (valueText != null) {
 			return ByteUtils.fromHexString(valueText.getText());
@@ -87,12 +89,14 @@ public class ByteArrayInputArea implements IAlgorithmParameterInputArea {
 		}
 	}
 
+	@Override
 	public void setValue(Object value) {
 		// unused
 	}
 
 	private WizardPage page;
 
+	@Override
 	public void setWizardPage(WizardPage page) {
 		this.page = page;
 	}

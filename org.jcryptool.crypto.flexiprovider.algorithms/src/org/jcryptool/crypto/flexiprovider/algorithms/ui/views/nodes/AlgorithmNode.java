@@ -34,6 +34,7 @@ public class AlgorithmNode extends TreeNode {
 		return algorithm;
 	}
 
+	@Override
 	public ImageDescriptor getImageDescriptor() {
 		return ImageDescriptor.createFromImage(
 				PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT)

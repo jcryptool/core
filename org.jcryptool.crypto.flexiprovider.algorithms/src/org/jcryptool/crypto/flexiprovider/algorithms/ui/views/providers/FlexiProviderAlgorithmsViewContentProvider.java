@@ -117,6 +117,7 @@ IStructuredContentProvider, ITreeContentProvider {
 		}
 	}
 
+	@Override
 	public Object[] getElements(Object object) {
 		if (object.equals(_viewPart.getViewSite())) {
 			if (_invisibleRoot==null) {
@@ -128,12 +129,15 @@ IStructuredContentProvider, ITreeContentProvider {
 		return getChildren(object);
 	}
 
+	@Override
 	public void dispose() {
 	}
 
+	@Override
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 	}
 
+	@Override
 	public Object[] getChildren(Object object) {
 		if (object instanceof TreeNode) {
 			return ((TreeNode)object).getChildrenArray();
@@ -141,6 +145,7 @@ IStructuredContentProvider, ITreeContentProvider {
 		return new Object[0];
 	}
 
+	@Override
 	public Object getParent(Object object) {
 		if (object instanceof TreeNode) {
 			return ((TreeNode)object).getParent();
@@ -148,6 +153,7 @@ IStructuredContentProvider, ITreeContentProvider {
 		return null;
 	}
 
+	@Override
 	public boolean hasChildren(Object object) {
 		if (object instanceof TreeNode) {
 			return ((TreeNode)object).hasChildren();
