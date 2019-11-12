@@ -1,6 +1,7 @@
 package org.jcryptool.visual.errorcorrectingcodes.ui.views;
 
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -46,16 +47,18 @@ public class McElieceView extends Composite {
     private Label lblInput;
     private Button btnEncrypt;
     private Button btnDecrypt;
-    private Text txtPolynom;
-    private Text txtValueM;
+    private Combo comboValueM;
     private Text txtValueT;
     private StyledText txtInput;
     private StyledText txtOutput;
 
+    private Text txtPublicKey;
+
+    private Button btnFillKey;
+
     public McElieceView(Composite parent, int style) {
         super(parent, style);
         this.parent = parent;
-
         mceCrypto = new McElieceCrypto();
 
         // common grid layout for all elements
@@ -85,23 +88,23 @@ public class McElieceView extends Composite {
         gdf.applyTo(grpKeyParams);
         Label lblValueM = new Label(grpKeyParams, SWT.NONE);
         lblValueM.setText("m");
-        txtValueM = new Text(grpKeyParams, SWT.NONE);
-        txtValueM.setText(String.valueOf(mceCrypto.getM()));
-        txtValueM.addListener(SWT.Modify, e -> updateParams());
-
+        comboValueM = new Combo(grpKeyParams, SWT.READ_ONLY);
+        comboValueM.setItems(mceCrypto.getValidMValues());
+       
         Label lblValueT = new Label(grpKeyParams, SWT.NONE);
         lblValueT.setText("t");
-        txtValueT = new Text(grpKeyParams, SWT.NONE);
-        txtValueT.setText(String.valueOf(mceCrypto.getT()));
-        txtValueT.addListener(SWT.Modify, e -> updateParams());
-
-        Label lblPoly = new Label(grpKeyParams, SWT.NONE);
-        lblPoly.setText("Max:");
-        txtPolynom = new Text(grpKeyParams, SWT.READ_ONLY);
-        txtPolynom.setText(String.valueOf(mceCrypto.getMaxMessageSize()));
+        txtValueT = new Text(grpKeyParams, SWT.BORDER);
+        
+        Label lblPublicKey = new Label(grpKeyParams, SWT.NONE);
+        lblPublicKey.setText("Public Key Size (byte):");
+        txtPublicKey = new Text(grpKeyParams, SWT.READ_ONLY);
 
         compButtons = new Composite(grpAlgorithmInfo, SWT.NONE);
         RowLayoutFactory.fillDefaults().applyTo(compButtons);
+        btnFillKey = new Button(compButtons, SWT.NONE);
+        btnFillKey.setText("Generate Keys");
+        btnFillKey.addListener(SWT.Selection, e -> generateKeys());
+        
         btnEncrypt = new Button(compButtons, SWT.NONE);
         btnEncrypt.setText("Encrypt");
         btnEncrypt.addListener(SWT.Selection, e -> performEncryption());
@@ -124,9 +127,18 @@ public class McElieceView extends Composite {
         txtOutput = UIHelper.mutltiLineText(grpOutput, SWT.FILL, SWT.FILL, SWT.DEFAULT, 5);
 
     }
+    
+    private void generateKeys() {
+        if (updateParams() == 0) {
+            mceCrypto.setKeyParams(10,9);
+            comboValueM.setText(String.valueOf(mceCrypto.getM()));
+            txtValueT.setText(String.valueOf(mceCrypto.getT()));
+            txtPublicKey.setText(String.valueOf(mceCrypto.getPublicKeySize  ()));
+        }
+    }
 
-    private void updateParams() {
-        int m = txtValueM.getText().equals("") ? 0 : Integer.valueOf(txtValueM.getText());
+    private int updateParams() {
+        int m = comboValueM.getText().equals("") ? 0 : Integer.valueOf(comboValueM.getText());
         int t = txtValueT.getText().equals("") ? 0 : Integer.valueOf(txtValueT.getText());
 
         if (m != 0 && t != 0) {
@@ -136,15 +148,24 @@ public class McElieceView extends Composite {
                 LogUtil.logError(ex);
                 MessageBox keyErrorDialog = new MessageBox(parent.getShell(), SWT.ERROR);
                 keyErrorDialog.setText("Errorneous key parameters!");
-                keyErrorDialog.setMessage(ex.getLocalizedMessage());
+                keyErrorDialog.setMessage("Could not init system with given parameters. Try selecting a smaller t or greater m.");
                 keyErrorDialog.open();
             }
 
-            txtPolynom.setText(String.valueOf(mceCrypto.getPoly()));
+            txtPublicKey.setText(String.valueOf(mceCrypto.getPublicKeySize()));
+
         }
+        
+        return m;
     }
 
     private void performDecryption() {
+        
+        if(Integer.valueOf(comboValueM.getText()) != mceCrypto.getM() || 
+                Integer.valueOf(txtValueT.getText()) != mceCrypto.getT()) {
+            updateParams();
+        }
+                
         try {
             mceCrypto.decrypt();
             txtInput.setText(mceCrypto.getClearText());
@@ -157,6 +178,11 @@ public class McElieceView extends Composite {
     }
 
     private void performEncryption() {
+        if(Integer.valueOf(comboValueM.getText()) != mceCrypto.getM() || 
+                Integer.valueOf(txtValueT.getText()) != mceCrypto.getT()) {
+            updateParams();
+        }
+           
         mceCrypto.encrypt(txtInput.getText().getBytes());
         txtOutput.setText(mceCrypto.getEncryptedHex());
 
