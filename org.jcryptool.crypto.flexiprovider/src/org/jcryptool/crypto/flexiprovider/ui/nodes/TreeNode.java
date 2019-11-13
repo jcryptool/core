@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.flexiprovider.FlexiProviderPlugin;
 
 public class TreeNode implements ITreeNode {
@@ -97,7 +98,7 @@ public class TreeNode implements ITreeNode {
 	}
 
 	public ImageDescriptor getImageDescriptor() {
-		return FlexiProviderPlugin.getImageDescriptor("icons/sample.gif"); //$NON-NLS-1$
+		return ImageService.getImageDescriptor(FlexiProviderPlugin.PLUGIN_ID, "icons/sample.gif");
 	}
 
 	/**

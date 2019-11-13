@@ -15,6 +15,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.PlatformUI;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.flexiprovider.operations.FlexiProviderOperationsPlugin;
 import org.jcryptool.crypto.flexiprovider.operations.OperationsManager;
 import org.jcryptool.crypto.flexiprovider.operations.ui.listeners.IOperationChangedListener;
@@ -61,12 +62,11 @@ public class KeyPairNode extends KeyNode {
 
     public ImageDescriptor getImageDescriptor() {
         if (alias == null) {
-            return FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/kgpg_key2.png"); //$NON-NLS-1$
+            return ImageService.getImageDescriptor(FlexiProviderOperationsPlugin.PLUGIN_ID, "icons/16x16/kgpg_key2.png");
         } else if (alias.getKeyStoreEntryType().equals(KeyType.KEYPAIR_PRIVATE_KEY)) {
-            return FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/kgpg_key1.png"); //$NON-NLS-1$
+            return ImageService.getImageDescriptor(FlexiProviderOperationsPlugin.PLUGIN_ID, "icons/16x16/kgpg_key1.png");
         } else if (alias.getKeyStoreEntryType().equals(KeyType.KEYPAIR_PUBLIC_KEY)) {
-            return FlexiProviderOperationsPlugin
-                    .getImageDescriptor("icons/16x16/kgpg_identity.png"); //$NON-NLS-1$
+        	return ImageService.getImageDescriptor(FlexiProviderOperationsPlugin.PLUGIN_ID, "icons/16x16/kgpg_identity.png");
         }
         return super.getImageDescriptor();
     }

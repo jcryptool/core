@@ -12,6 +12,7 @@ package org.jcryptool.crypto.keystore.ui.dialogs;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.ui.views.nodes.keys.CertificateNode;
 
@@ -36,7 +37,7 @@ public class ShowCertificateDialog extends CommonPropertyDialog {
     @Override
     protected Control createDialogArea(Composite parent) {
         setTitle(Messages.getString("certificate.dialog.title") + "\n" + certificateNode.getAlias()); //$NON-NLS-1$
-        setTitleImage(KeyStorePlugin.getImageDescriptor("icons/48x48/kgpg_identity.png").createImage());
+        setTitleImage(ImageService.getImage(KeyStorePlugin.PLUGIN_ID, "icons/48x48/kgpg_identity.png"));
         Composite container = (Composite) super.createDialogArea(parent);
 
         return container;

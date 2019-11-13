@@ -51,6 +51,7 @@ import org.eclipse.ui.part.EditorInputTransfer;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.services.IServiceLocator;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.flexiprovider.operations.FlexiProviderOperationsPlugin;
 import org.jcryptool.crypto.flexiprovider.operations.OperationsManager;
 import org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.RemoveHandler;
@@ -399,8 +400,7 @@ public class FlexiProviderOperationsView extends ViewPart implements Listener, I
     
     private void fillEntryNodeContextMenu(IMenuManager manager) {
         addContributionItem(manager, renameCommandId, null, null);
-        addContributionItem(manager, removeCommandId,
-        	FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/cancel.png"), null);	//$NON-NLS-1$
+        addContributionItem(manager, removeCommandId, ImageService.getImageDescriptor(FlexiProviderOperationsPlugin.PLUGIN_ID, "icons/16x16/cancel.png"), null);
     }
 
     private void fillEncryptDecryptNodeContextMenu(IMenuManager manager) {
@@ -409,8 +409,7 @@ public class FlexiProviderOperationsView extends ViewPart implements Listener, I
     }
 
     private void fillKeyNodeContextMenu(IMenuManager manager) {
-    	addContributionItem(manager, removeKeyCommandId,
-    		FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/cancel.png"), null);	//$NON-NLS-1$
+    	addContributionItem(manager, removeKeyCommandId, ImageService.getImageDescriptor(FlexiProviderOperationsPlugin.PLUGIN_ID, "icons/16x16/cancel.png"), null);
     }
 
     private void fillInputContextMenu(IMenuManager manager) {
@@ -433,17 +432,14 @@ public class FlexiProviderOperationsView extends ViewPart implements Listener, I
     }
 
     private void fillLocalToolBar(IToolBarManager manager) {
-        addContributionItem(manager, executeCommandId,
-        	FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/start.gif"),	//$NON-NLS-1$
+        addContributionItem(manager, executeCommandId, ImageService.getImageDescriptor(FlexiProviderOperationsPlugin.PLUGIN_ID, "icons/16x16/start.gif"),
         	org.jcryptool.crypto.flexiprovider.operations.ui.actions.menu.Messages.ExecuteOperationAction_1);
 
         manager.add(new Separator());
 
-        addContributionItem(manager, importCommandId,
-        	FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/import.gif"),	//$NON-NLS-1$
+        addContributionItem(manager, importCommandId, ImageService.getImageDescriptor(FlexiProviderOperationsPlugin.PLUGIN_ID, "icons/16x16/import.gif"),
         	org.jcryptool.crypto.flexiprovider.operations.ui.actions.menu.Messages.ImportOperationAction_1);
-        addContributionItem(manager, exportCommandId,
-        	FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/export.gif"),	//$NON-NLS-1$
+        addContributionItem(manager, exportCommandId, ImageService.getImageDescriptor(FlexiProviderOperationsPlugin.PLUGIN_ID, "icons/16x16/export.gif"),
         	org.jcryptool.crypto.flexiprovider.operations.ui.actions.menu.Messages.ExportOperationAction_1);
     }
 

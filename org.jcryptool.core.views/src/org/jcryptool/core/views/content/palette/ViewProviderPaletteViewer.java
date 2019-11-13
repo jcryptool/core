@@ -35,6 +35,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.core.views.AlgorithmView;
 import org.jcryptool.core.views.ISearchable;
 import org.jcryptool.core.views.ViewsPlugin;
@@ -153,8 +154,8 @@ public class ViewProviderPaletteViewer extends PaletteViewer implements ISearcha
         }
 
         PaletteDrawer category = new PaletteDrawer(label);
-        category.setSmallIcon(ViewsPlugin.getImageDescriptor(TreeView.ICON_FOLDER));
-        category.setLargeIcon(ViewsPlugin.getImageDescriptor(TreeView.ICON_FOLDER));
+        category.setSmallIcon(ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, TreeView.ICON_FOLDER));
+        category.setLargeIcon(ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, TreeView.ICON_FOLDER));
 
         invisibleRoot.add(category);
 
@@ -171,8 +172,8 @@ public class ViewProviderPaletteViewer extends PaletteViewer implements ISearcha
             if (show) {
                 SelectionToolEntry paletteEntry = new SelectionToolEntry(element
                         .getAttribute("name"), ""); //$NON-NLS-1$ //$NON-NLS-2$
-                paletteEntry.setSmallIcon(ViewsPlugin.getImageDescriptor(TreeView.ICON_ITEM_JCT));
-                paletteEntry.setLargeIcon(ViewsPlugin.getImageDescriptor(TreeView.ICON_ITEM_JCT));
+                paletteEntry.setSmallIcon(ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, TreeView.ICON_ITEM_JCT));
+                paletteEntry.setLargeIcon(ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, TreeView.ICON_ITEM_JCT));
                 paletteEntry.setUserModificationPermission(PaletteEntry.PERMISSION_NO_MODIFICATION);
                 paletteEntry.setType(""); //$NON-NLS-1$
 

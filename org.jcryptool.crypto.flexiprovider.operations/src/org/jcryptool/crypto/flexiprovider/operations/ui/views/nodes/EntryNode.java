@@ -15,6 +15,7 @@ import java.util.Iterator;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.util.NLS;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.flexiprovider.descriptors.IFlexiProviderOperation;
 import org.jcryptool.crypto.flexiprovider.descriptors.algorithms.AlgorithmDescriptor;
 import org.jcryptool.crypto.flexiprovider.operations.FlexiProviderOperationsPlugin;
@@ -183,7 +184,7 @@ public class EntryNode extends TreeNode implements IFlexiProviderOperation {
     }
 
     public ImageDescriptor getImageDescriptor() {
-        return FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/klipper_dock.png"); //$NON-NLS-1$
+        return ImageService.getImageDescriptor(FlexiProviderOperationsPlugin.PLUGIN_ID, "icons/16x16/klipper_dock.png");
     }
 
     public String getSignature() {

@@ -143,6 +143,7 @@ public class DynamicComposite extends Composite implements IInputArea, IDynamicC
 		this.spec = spec;
 	}
 
+	@Override
 	public Object[] getValues() {
 		Object[] values = new Object[inputAreas.size()];
 		for (int i=0; i < values.length; i++) {
@@ -151,6 +152,7 @@ public class DynamicComposite extends Composite implements IInputArea, IDynamicC
 		return values;
 	}
 
+	@Override
 	public Object getValue() {
 		LogUtil.logInfo("returning value for DynamicComposite"); //$NON-NLS-1$
 		if (spec != null) {
@@ -176,6 +178,7 @@ public class DynamicComposite extends Composite implements IInputArea, IDynamicC
 		return null;
 	}
 
+	@Override
 	public void setValue(Object value) {
 		// unused
 	}

@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.flexiprovider.descriptors.meta.interfaces.IMetaKeyGenerator;
 import org.jcryptool.crypto.flexiprovider.xml.AlgorithmsXMLManager;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
@@ -70,7 +71,8 @@ public class NewKeyPairWizardPage extends WizardPage implements Listener {
     }
 
     public NewKeyPairWizardPage(String keyType) {
-    	super("1", Messages.NewKeyPairWizardPage_0, KeyStorePlugin.getImageDescriptor("icons/48x48/kgpg_key2.png")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    	super("1", Messages.NewKeyPairWizardPage_0, 
+    			ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, "icons/48x48/kgpg_key2.png"));
     	this.keyType = keyType;
         setDescription(Messages.NewKeyPairWizardPage_1);
         setPageComplete(false);

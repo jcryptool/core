@@ -44,6 +44,7 @@ public class StringInputArea implements IAlgorithmParameterInputArea {
 		valueText.setLayoutData(gridData1);
 		valueText.addVerifyListener(new VerifyListener() {
 
+			@Override
 			public void verifyText(VerifyEvent e) {
 				if (e.character != SWT.BS && e.character != SWT.DEL) {
 					if (page != null) {
@@ -63,6 +64,7 @@ public class StringInputArea implements IAlgorithmParameterInputArea {
 		separator.setLayoutData(separatorGridData);
 	}
 
+	@Override
 	public Object getValue() {
 		if (valueText != null) {
 			return valueText.getText();
@@ -71,12 +73,14 @@ public class StringInputArea implements IAlgorithmParameterInputArea {
 		}
 	}
 
+	@Override
 	public void setValue(Object value) {
 		// unused
 	}
 
 	private WizardPage page;
 
+	@Override
 	public void setWizardPage(WizardPage page) {
 		this.page = page;
 	}

@@ -24,11 +24,12 @@ import org.eclipse.ui.services.IServiceLocator;
  */
 public class RecordPropertyTester extends PropertyTester {
 
+	@Override
 	public boolean test(Object receiver, String property, Object[] args,
 			Object expectedValue) {
 
 		final IServiceLocator locator = (IServiceLocator) receiver;
-		final ICommandService commandService = (ICommandService)locator.getService(ICommandService.class);
+		final ICommandService commandService = locator.getService(ICommandService.class);
 		final Command command = commandService.getCommand("org.jcryptool.actions.recordCommand"); //$NON-NLS-1$
 		return (Boolean)command.getState("org.jcryptool.actions.recordCommand.toggleState").getValue(); //$NON-NLS-1$
 	}

@@ -9,7 +9,6 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore;
 
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 
@@ -32,23 +31,4 @@ public class KeyStorePlugin extends AbstractUIPlugin {
         KeyStoreManager.getInstance();
     }
 
-    /**
-     * Returns an image descriptor for the image file at the given plug-in relative path.
-     * 
-     * @param path the path
-     * @return the image descriptor
-     */
-    public static ImageDescriptor getImageDescriptor(String path) {
-        return imageDescriptorFromPlugin(PLUGIN_ID, path);
-    }
-
-    /**
-     * Returns an image descriptor for the image file at the provided plug-in relative path.
-     * 
-     * @param path the path
-     * @return the image descriptor
-     */
-    public static ImageDescriptor getImageDescriptor(String pluginID, String path) {
-        return imageDescriptorFromPlugin(pluginID, path);
-    }
 }

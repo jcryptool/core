@@ -11,6 +11,7 @@ package org.jcryptool.crypto.keystore.ui.views.nodes;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.IContactDescriptor;
 import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
@@ -42,7 +43,7 @@ public class ContactDescriptorNode extends TreeNode implements IContactDescripto
      * @see org.jcryptool.crypto.keystore.ui.views.nodes.TreeNode#getImageDescriptor()
      */
     public ImageDescriptor getImageDescriptor() {
-        return KeyStorePlugin.getImageDescriptor("icons/16x16/personal.png"); //$NON-NLS-1$
+        return ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, "icons/16x16/personal.png");
     }
 
     public void addCertificate(IKeyStoreAlias alias) {

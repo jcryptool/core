@@ -9,9 +9,9 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.editor.text;
 
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.jcryptool.core.util.images.ImageService;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -65,21 +65,9 @@ public class JCTTextEditorPlugin extends AbstractUIPlugin {
         return plugin;
     }
     
-    /**
-	 * Returns an image descriptor for the image file at the given
-	 * plug-in relative path
-	 *
-	 * @param path the path
-	 * @return the image descriptor
-	 */
-	public static ImageDescriptor getImageDescriptor(String path) {
-		return imageDescriptorFromPlugin(PLUGIN_ID, path);
-	}
-    
     @Override
     protected void initializeImageRegistry(ImageRegistry reg) {
-    	ImageDescriptor imageDescriptor = getImageDescriptor("icons/text.gif");
-    	reg.put(JCT_TEXT_EDITOR_ICON, imageDescriptor.createImage());
+    	reg.put(JCT_TEXT_EDITOR_ICON, ImageService.getImage(PLUGIN_ID, "icons/text.gif"));
     }
     
     @Override

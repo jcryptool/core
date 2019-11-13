@@ -8,7 +8,8 @@ Bundle-Vendor: %bundleProvider
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.gef,
- org.eclipse.help
+ org.eclipse.help,
+ org.jcryptool.core.util
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.core.views;
   uses:="org.eclipse.jface.viewers,

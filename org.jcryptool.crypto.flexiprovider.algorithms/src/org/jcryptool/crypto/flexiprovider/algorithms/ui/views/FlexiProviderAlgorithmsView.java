@@ -50,7 +50,8 @@ public class FlexiProviderAlgorithmsView extends ViewPart {
     private AbstractHandler doubleClickHandler;
     private TreeViewer viewer;
 
-    public void createPartControl(Composite parent) {
+    @Override
+	public void createPartControl(Composite parent) {
         GridData gridData = new GridData();
         gridData.horizontalAlignment = GridData.FILL;
         gridData.verticalAlignment = GridData.FILL;
@@ -77,7 +78,8 @@ public class FlexiProviderAlgorithmsView extends ViewPart {
     private void fillLocalToolBar(IToolBarManager manager) {
     }
 
-    public void setFocus() {
+    @Override
+	public void setFocus() {
         viewer.getControl().setFocus();
     }
 
@@ -88,7 +90,8 @@ public class FlexiProviderAlgorithmsView extends ViewPart {
     @SuppressWarnings("unchecked")
     private void hookActions(String xmlfile) {
         doubleClickHandler = new AbstractHandler() {
-            public Object execute(ExecutionEvent event) {
+            @Override
+			public Object execute(ExecutionEvent event) {
                 ISelection selection = viewer.getSelection();
                 Object obj = ((IStructuredSelection) selection).getFirstElement();
 
@@ -145,7 +148,7 @@ public class FlexiProviderAlgorithmsView extends ViewPart {
                 @Override
                 public void mouseDown(final MouseEvent event) {
                     IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
-                    Object obj = ((IStructuredSelection) selection).getFirstElement();
+                    Object obj = selection.getFirstElement();
 
                     if (obj instanceof ITreeNode) {
                         ITreeNode node = (ITreeNode) obj;

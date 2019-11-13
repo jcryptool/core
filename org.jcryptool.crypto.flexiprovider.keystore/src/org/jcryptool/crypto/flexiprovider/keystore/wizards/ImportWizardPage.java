@@ -32,6 +32,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.directories.DirectoryService;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.descriptors.ImportDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.IImportDescriptor;
@@ -63,7 +64,8 @@ public class ImportWizardPage extends WizardPage implements Listener {
     private Label fileNameLabel;
 
     protected ImportWizardPage() {
-        super("1", Messages.ImportWizardPage_0, KeyStorePlugin.getImageDescriptor("icons/48x48/kgpg_import.png")); //$NON-NLS-1$ //$NON-NLS-2$
+        super("1", Messages.ImportWizardPage_0,
+        		ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, "icons/48x48/kgpg_import.png"));
         setDescription(Messages.ImportWizardPage_1);
         setPageComplete(false);
     }

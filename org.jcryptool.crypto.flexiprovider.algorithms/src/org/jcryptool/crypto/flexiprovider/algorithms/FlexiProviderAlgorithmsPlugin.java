@@ -10,7 +10,6 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.crypto.flexiprovider.algorithms;
 
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -38,6 +37,7 @@ public class FlexiProviderAlgorithmsPlugin extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * @see org.eclipse.core.runtime.Plugins#start(org.osgi.framework.BundleContext)
 	 */
+	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
@@ -47,6 +47,7 @@ public class FlexiProviderAlgorithmsPlugin extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * @see org.eclipse.core.runtime.Plugin#stop(org.osgi.framework.BundleContext)
 	 */
+	@Override
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
@@ -70,17 +71,6 @@ public class FlexiProviderAlgorithmsPlugin extends AbstractUIPlugin {
 		} catch (NoSuchAlgorithmException e) {
 			return null;
 		}
-	}
-	
-	/**
-	 * Returns an image descriptor for the image file at the given
-	 * plug-in relative path
-	 *
-	 * @param path the path
-	 * @return the image descriptor
-	 */
-	public static ImageDescriptor getImageDescriptor(String path) {
-		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
 
 }

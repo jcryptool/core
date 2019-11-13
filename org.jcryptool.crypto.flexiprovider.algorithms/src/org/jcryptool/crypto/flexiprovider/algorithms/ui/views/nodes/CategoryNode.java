@@ -11,6 +11,7 @@
 package org.jcryptool.crypto.flexiprovider.algorithms.ui.views.nodes;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.flexiprovider.algorithms.FlexiProviderAlgorithmsPlugin;
 import org.jcryptool.crypto.flexiprovider.ui.nodes.TreeNode;
 
@@ -20,8 +21,9 @@ public class CategoryNode extends TreeNode {
 		super(name);
 	}
 	
+	@Override
 	public ImageDescriptor getImageDescriptor() {
-		return FlexiProviderAlgorithmsPlugin.getImageDescriptor("icons/16x16/folder.png"); //$NON-NLS-1$
+		return ImageService.getImageDescriptor(FlexiProviderAlgorithmsPlugin.PLUGIN_ID, "icons/16x16/folder.png");
 	}
 	
 }

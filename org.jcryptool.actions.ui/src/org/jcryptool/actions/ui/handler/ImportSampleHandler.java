@@ -39,7 +39,8 @@ public class ImportSampleHandler extends AbstractHandler {
     /* (non-Javadoc)
      * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
      */
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    @Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
 
         String filename = getCascadeFilename(event);
 
@@ -80,7 +81,7 @@ public class ImportSampleHandler extends AbstractHandler {
                     FileLocator.toFileURL((ActionsUIPlugin.getDefault().getBundle().getEntry("/"))); //$NON-NLS-1$
             cascadeFile = new File(bundleUrl.getFile()
                     + "templates" + File.separatorChar //$NON-NLS-1$
-                    + cascadeFilename); //$NON-NLS-1$
+                    + cascadeFilename); 
 
         } catch (Exception ex) {
             LogUtil.logError("Error loading sample file " + cascadeFilename + " from plugin.", ex); //$NON-NLS-1$ //$NON-NLS-2$

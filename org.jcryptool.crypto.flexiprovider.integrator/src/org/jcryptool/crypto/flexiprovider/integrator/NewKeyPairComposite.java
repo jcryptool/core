@@ -9,6 +9,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.flexiprovider.integrator;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
@@ -80,7 +81,7 @@ public class NewKeyPairComposite extends NewKeyComposite {
 
 	@Override
 	protected ImageDescriptor getKeyImageDescriptor() {
-		return KeyStorePlugin.getImageDescriptor("icons/48x48/kgpg_key2.png");
+		return ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, "icons/48x48/kgpg_key2.png");
 	}
 
 }

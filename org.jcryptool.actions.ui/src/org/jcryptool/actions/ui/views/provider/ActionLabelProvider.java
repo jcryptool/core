@@ -16,6 +16,7 @@ import org.eclipse.swt.graphics.Image;
 import org.jcryptool.actions.core.types.ActionItem;
 import org.jcryptool.actions.core.utils.Constants;
 import org.jcryptool.actions.ui.ActionsUIPlugin;
+import org.jcryptool.core.util.images.ImageService;
 
 /**
  * Label provider for the <b>Actions view</b>.
@@ -24,7 +25,8 @@ import org.jcryptool.actions.ui.ActionsUIPlugin;
  * @version 0.9.7
  */
 public class ActionLabelProvider extends LabelProvider implements ITableLabelProvider {
-    public String getColumnText(Object obj, int index) {
+    @Override
+	public String getColumnText(Object obj, int index) {
         ActionItem item = (ActionItem) obj;
 
         switch (index) {
@@ -37,19 +39,20 @@ public class ActionLabelProvider extends LabelProvider implements ITableLabelPro
         }
     }
 
-    public Image getColumnImage(Object obj, int index) {
+    @Override
+	public Image getColumnImage(Object obj, int index) {
     	ActionItem item = (ActionItem) obj;
 
         switch (index) {
             case 0:
             	if (item.getActionType() != null && item.getActionType().equals(Constants.ACTIONS_DECRYPT)){
-            		return ActionsUIPlugin.getImageDescriptor("icons/decrypt.gif").createImage(); //$NON-NLS-1$;
+            		return ImageService.getImage(ActionsUIPlugin.PLUGIN_ID, "icons/decrypt.gif");
             	} else if (item.getActionType() != null &&  item.getActionType().equals(Constants.ACTIONS_ENCRYPT)){
-            		return ActionsUIPlugin.getImageDescriptor("icons/encrypt.gif").createImage(); //$NON-NLS-1$;;
+            		return ImageService.getImage(ActionsUIPlugin.PLUGIN_ID, "icons/encrypt.gif");
             	} else if (item.getActionType() != null &&  item.getActionType().equals(Constants.ACTIONS_SIGN)){
-            		return ActionsUIPlugin.getImageDescriptor("icons/sign.gif").createImage(); //$NON-NLS-1$;;
+            		return ImageService.getImage(ActionsUIPlugin.PLUGIN_ID, "icons/sign.gif");
             	} else if (item.getActionType() != null &&  item.getActionType().equals(Constants.ACTIONS_VERIFY)){
-            		return ActionsUIPlugin.getImageDescriptor("icons/verify.gif").createImage(); //$NON-NLS-1$;;
+            		return ImageService.getImage(ActionsUIPlugin.PLUGIN_ID, "icons/verify.gif");
             	}
             default:
                 return null;

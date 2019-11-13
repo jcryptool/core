@@ -46,7 +46,8 @@ public class AlgorithmWizard extends Wizard {
         // }
     }
 
-    public void addPages() {
+    @Override
+	public void addPages() {
         introPage = new AlgorithmIntroductionPage(algorithm, this, (algorithm.getParameterGeneratorClassName() != null));
         addPage(introPage);
         algorithmParameterPage = new AlgorithmParameterWizardPage(algorithm, spec, this);
@@ -64,7 +65,8 @@ public class AlgorithmWizard extends Wizard {
         }
     }
 
-    public boolean canFinish() {
+    @Override
+	public boolean canFinish() {
         return canFinish;
     }
 
@@ -72,7 +74,8 @@ public class AlgorithmWizard extends Wizard {
         this.algorithmParameters = algorithmParameters;
     }
 
-    public boolean performFinish() {
+    @Override
+	public boolean performFinish() {
         algorithmName = algorithm.getName();
         if (introPage.useDefaultValues()) {
             LogUtil.logInfo("HAS PARAM GEN: " + (algorithm.getParameterGeneratorClassName() != null)); //$NON-NLS-1$

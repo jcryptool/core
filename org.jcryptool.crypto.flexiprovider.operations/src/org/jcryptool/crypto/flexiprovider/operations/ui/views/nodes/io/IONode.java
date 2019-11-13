@@ -11,6 +11,7 @@
 package org.jcryptool.crypto.flexiprovider.operations.ui.views.nodes.io;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.flexiprovider.operations.FlexiProviderOperationsPlugin;
 import org.jcryptool.crypto.flexiprovider.ui.nodes.TreeNode;
 
@@ -21,7 +22,7 @@ public abstract class IONode extends TreeNode {
 	}
 	
 	public ImageDescriptor getImageDescriptor() {
-		return FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/find.png"); //$NON-NLS-1$
+		return ImageService.getImageDescriptor(FlexiProviderOperationsPlugin.PLUGIN_ID, "icons/16x16/find.png");
 	}
 
 }

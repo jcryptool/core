@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.keystore.ui.views.interfaces.IKeyStoreListener;
@@ -33,7 +34,7 @@ public class SecretKeyContainerNode extends AbstractContainerNode {
      * @see org.jcryptool.crypto.keystore.ui.views.nodes.TreeNode#getImageDescriptor()
      */
     public ImageDescriptor getImageDescriptor() {
-        return KeyStorePlugin.getImageDescriptor("icons/16x16/kgpg_key1.png"); //$NON-NLS-1$
+    	return ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, "icons/16x16/kgpg_key1.png");
     }
 
     public void add(IKeyStoreAlias alias) {

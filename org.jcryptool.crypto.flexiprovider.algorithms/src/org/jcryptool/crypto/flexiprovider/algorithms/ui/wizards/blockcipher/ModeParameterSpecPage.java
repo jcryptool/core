@@ -40,7 +40,8 @@ public class ModeParameterSpecPage extends WizardPage {
         setDescription(Messages.ModeParameterSpecPage_0);
     }
 
-    public void createControl(Composite parent) {
+    @Override
+	public void createControl(Composite parent) {
         if (withAlgParams) {
             LogUtil.logInfo("fixed mode parameter composite"); //$NON-NLS-1$
             flexibleComp = InputFactory.getInstance().createFixedModeParameterComposite(parent);

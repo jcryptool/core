@@ -27,7 +27,8 @@ import org.jcryptool.actions.core.types.ActionItem;
  * @version 0.5.0
  */
 public class RemoveSelectedHandler extends AbstractHandler {
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    @Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
         ISelection selection = HandlerUtil.getCurrentSelection(event);
         if (selection instanceof IStructuredSelection) {
             ActionItem item = (ActionItem) ((IStructuredSelection) selection).getFirstElement();
