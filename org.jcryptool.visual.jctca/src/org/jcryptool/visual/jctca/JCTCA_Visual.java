@@ -29,6 +29,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.visual.jctca.listeners.PluginBtnListener;
 import org.jcryptool.visual.jctca.listeners.ResizeListener;
 import org.jcryptool.visual.jctca.listeners.TabItemListener;
@@ -123,7 +124,7 @@ public class JCTCA_Visual extends ViewPart {
         } else {
             path_to_create_img = "icons/en/minica_create.png"; //$NON-NLS-1$
         }
-        Image help = Activator.getImageDescriptor(path_to_create_img).createImage();
+        Image help = ImageService.getImage(Activator.PLUGIN_ID, path_to_create_img);
         Label lbl_img = new Label(comp_image, SWT.WRAP | SWT.RESIZE);
         lbl_img.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         lbl_img.setImage(help);

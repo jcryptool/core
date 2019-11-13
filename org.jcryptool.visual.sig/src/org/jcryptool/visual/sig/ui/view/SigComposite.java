@@ -62,6 +62,7 @@ import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.services.IServiceLocator;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.visual.sig.Messages;
 import org.jcryptool.visual.sig.SigPlugin;
@@ -263,7 +264,7 @@ public class SigComposite extends Composite {
 		        gc.fillRectangle(area.width / 2 - 10, 20, 20, area.height);	
 
 		        //Draw the image
-		        ImageDescriptor id = SigPlugin.getImageDescriptor("icons/doc.png"); //$NON-NLS-1$
+		        ImageDescriptor id = ImageService.getImageDescriptor(SigPlugin.PLUGIN_ID, "icons/doc.png");
 		        ImageData imD = id.getImageData(100);
 		        Image img = new Image(Display.getCurrent(), imD);
 		        gc.drawImage(img, (area.width - imD.width) / 2, 10);
@@ -459,7 +460,7 @@ public class SigComposite extends Composite {
 		        Rectangle area = c3.getClientArea(); // Get the size of the canvas
 		        
 		        // Insert the image of the key
-		        ImageDescriptor id = SigPlugin.getImageDescriptor("icons/key.png"); //$NON-NLS-1$
+		        ImageDescriptor id = ImageService.getImageDescriptor(SigPlugin.PLUGIN_ID, "icons/key.png");
 		        ImageData imD = id.getImageData(100);
 		        Image img = new Image(Display.getCurrent(), imD);
 		        gc.drawImage(img, area.width / 2 - img.getBounds().width / 2, 30); //Draw image of the key
@@ -511,7 +512,7 @@ public class SigComposite extends Composite {
 		        Rectangle area = c4.getClientArea(); // Get the size of the canvas
 		        
 		        // Insert the image
-		        ImageDescriptor id = SigPlugin.getImageDescriptor("icons/doc.png"); //$NON-NLS-1$
+		        ImageDescriptor id = ImageService.getImageDescriptor(SigPlugin.PLUGIN_ID, "icons/doc.png");
 		        ImageData imD = id.getImageData(100);
 		        Image img = new Image(Display.getCurrent(), imD);
 		        gc.drawImage(img, (area.width - imD.width) / 2, 20);
@@ -583,7 +584,8 @@ public class SigComposite extends Composite {
         		return(null);
         	}
         });
-        addContributionItem(toolBarMenu, commandId, SigPlugin.getImageDescriptor("icons/reset.gif"), "Reset");	//$NON-NLS-1$
+        
+        addContributionItem(toolBarMenu, commandId, ImageService.IMAGEDESCRIPTOR_RESET, "Reset");	//$NON-NLS-1$
 
         // Check if called by JCT-CA
         if (Input.privateKeyJCTCA != null) {

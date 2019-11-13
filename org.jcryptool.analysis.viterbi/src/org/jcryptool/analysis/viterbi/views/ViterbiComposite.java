@@ -89,7 +89,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
     private static final char DEFAULT_CHARACTER_SET_BEGIN = '\u0000';
     private static final char DEFAULT_CHARACTER_SET_END = '\u00ff';
 
-    private static final int MAX_NGRAM_SIZE = 5; //$NON-NLS-1$
+    private static final int MAX_NGRAM_SIZE = 5; 
     private URL ngramsUrl = null;
 	private Button showBtn;
 	private ViterbiView view;
@@ -164,7 +164,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
     public void createInput() {
         final Group g = new Group(this, SWT.NONE);
         g.setText(Messages.ViterbiComposite_input_header);
-        final GridLayout gl = new GridLayout(2, false); //$NON-NLS-1$
+        final GridLayout gl = new GridLayout(2, false); 
         gl.marginWidth = MARGIN_WIDTH;
         gl.horizontalSpacing = HORIZONTAL_SPACING;
         g.setLayout(gl);
@@ -233,11 +233,13 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         text.setText(Messages.XORComposite_EncodingMode_RadioUNI);
 
         hex.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 hex.setSelection(true);
                 text.setSelection(false);
 
@@ -247,11 +249,13 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         });
 
         text.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 text.setSelection(true);
                 hex.setSelection(false);
 
@@ -413,13 +417,15 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
             ViterbiComposite.this.isRunning = false;
 
             display.syncExec(new Runnable() {
-                public void run() {
+                @Override
+				public void run() {
                     ViterbiComposite.this.startButton.setText(Messages.ViterbiComposite_startButton);
                 }
             });
         } else {
             display.syncExec(new Runnable() {
-                public void run() {
+                @Override
+				public void run() {
                     ViterbiComposite.this.startButton.setText(Messages.ViterbiComposite_cancelButton);
                 }
             });
@@ -650,12 +656,14 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
      *
      * @param path the new best path
      */
-    public void update(Path path) {
+    @Override
+	public void update(Path path) {
         currentPath = path;
 
         Display display = Display.getDefault();
         display.asyncExec(new Runnable() {
-            public void run() {
+            @Override
+			public void run() {
                 solution1.setText(ViterbiComposite.this.currentPath.getPlain1());
                 solution2.setText(ViterbiComposite.this.currentPath.getPlain2());
             }
@@ -666,12 +674,14 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
      * informs the user that the viterbi thread has finished and updates the startbutton. The viterbi method will call
      * this method if he is finished.
      */
-    public void viterbiFinished() {
+    @Override
+	public void viterbiFinished() {
         Display display = Display.getDefault();
         this.isRunning = false;
         currentPath = viterbi.getSolution();
         display.asyncExec(new Runnable() {
-            public void run() {
+            @Override
+			public void run() {
             	solution1.setText(ViterbiComposite.this.currentPath.getPlain1());
                 solution2.setText(ViterbiComposite.this.currentPath.getPlain2());
                 ViterbiComposite.this.startButton.setText(Messages.ViterbiComposite_startButton);

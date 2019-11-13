@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ToolTip;
-import org.jcryptool.visual.aco.ACOPlugin;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.visual.aco.controller.AntColEventController;
 import org.jcryptool.visual.aco.model.CommonModel;
 
@@ -75,7 +75,7 @@ public class AntColVisualComposite extends Composite {
 		matrixComp.setLayout(new GridLayout(1, false));
 
 		CLabel help = new CLabel(visualGroup, SWT.NONE);
-		help.setImage(ACOPlugin.getImageDescriptor("platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png").createImage());
+		help.setImage(ImageService.ICON_HELP);
 		final ToolTip tip = new ToolTip(visualGroup.getShell(), SWT.BALLOON);
 		tip.setMessage(Messages.Result_description);
 		help.addListener(SWT.MouseDown, new Listener() {

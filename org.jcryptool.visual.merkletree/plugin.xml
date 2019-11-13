@@ -7,7 +7,7 @@
 			class="org.jcryptool.visual.merkletree.MerkleTreeView"
 			id="org.jcryptool.visual.merkletree.view"
 			name="%visual.name"
-			restorable="true">
+			icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
 		</view>
 	</extension>
 	<extension point="org.jcryptool.core.operations.visuals">

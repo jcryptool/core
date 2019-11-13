@@ -36,6 +36,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.visual.wots.files.Converter;
 import org.jcryptool.visual.wots.files.ResizeListener;
 
@@ -43,7 +44,7 @@ import wots.WOTSPlugin;
 
 public class WotsView extends ViewPart {
 
-	public static final String ID = "org.jcryptool.visual.wots.WOTSView2"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.jcryptool.visual.wots.WOTSView2"; //$NON-NLS-1$
 	private Button btn_Genkey;
 	private Button btn_Sign;
 	private Button btn_VerifySig;
@@ -577,7 +578,7 @@ public class WotsView extends ViewPart {
 		gd_img_right.widthHint = 50;
 		gd_img_right.heightHint = 50;
 		img_right.setLayoutData(gd_img_right);
-		img_right.setImage(WOTSPlugin.getImageDescriptor(Messages.WotsView_Overview2).createImage()); //$NON-NLS-1$ //$NON-NLS-2$
+		img_right.setImage(ImageService.getImage(WOTSPlugin.PLUGIN_ID, Messages.WotsView_Overview2));
 		img_right.addControlListener(new ResizeListener(img_right, composite));
 
 		txt_SigKeySize = new Label(container, SWT.NONE);
@@ -871,9 +872,9 @@ public class WotsView extends ViewPart {
 	 */
 	private void setRightImage(String path) {
 		currentImg = path;
-		Image tmp = new Image(img_right.getDisplay(), WOTSPlugin.getImageDescriptor(path)
-				.createImage().getImageData()
-				.scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
+		Image tmp = new Image(img_right.getDisplay(), ImageService.getImage(WOTSPlugin.PLUGIN_ID, path)
+				.getImageData().scaledTo(img_right.getImage().getBounds().width, 
+						img_right.getImage().getBounds().height));
 		img_right.setImage(tmp);
 	}
 

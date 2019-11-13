@@ -41,6 +41,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.algorithm.SquareandMultiply;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.visual.sidechannelattack.SPAPlugIn;
 
 public class SPAView extends ViewPart implements Constants {
@@ -493,7 +494,7 @@ public class SPAView extends ViewPart implements Constants {
 
 		final Label achseY_squareLabel = new Label(powerTraceComposite, SWT.NONE);
 		achseY_squareLabel.setBounds(achse_x, 10, 85, 110);
-		achseY_squareLabel.setImage(SPAPlugIn.getImageDescriptor(IMGADRESSE_Y_ACHSE_ENG).createImage());
+		achseY_squareLabel.setImage(ImageService.getImage(SPAPlugIn.PLUGIN_ID, IMGADRESSE_Y_ACHSE_ENG));
 
 		achse_x = achse_x + 85;
 
@@ -520,7 +521,7 @@ public class SPAView extends ViewPart implements Constants {
 
 				final Label powertrace_sqMulLabel = new Label(powerTraceComposite, SWT.NONE);
 				powertrace_sqMulLabel.setBounds(achse_x, 10, 85, 110);
-				powertrace_sqMulLabel.setImage(SPAPlugIn.getImageDescriptor(IMGADDRESSE_SQMUL_ENG).createImage());
+				powertrace_sqMulLabel.setImage(ImageService.getImage(SPAPlugIn.PLUGIN_ID, IMGADDRESSE_SQMUL_ENG));
 				achse_x = achse_x + 85;
 			} else {
 				if (!isSaMmode) {
@@ -536,7 +537,7 @@ public class SPAView extends ViewPart implements Constants {
 				text = isSaMmode ? IMGADDRESSE_SQ_ENG : IMGADDRESSE_SQMUL_0_ENG;
 
 				powertrace_squareLabel.setBounds(achse_x, 10, (isSaMmode ? 42 : 85), 110);
-				powertrace_squareLabel.setImage(SPAPlugIn.getImageDescriptor(text).createImage());
+				powertrace_squareLabel.setImage(ImageService.getImage(SPAPlugIn.PLUGIN_ID, text));
 				achse_x = achse_x + (isSaMmode ? 42 : 85);
 			}
 			count++;
@@ -546,7 +547,7 @@ public class SPAView extends ViewPart implements Constants {
 
 		final Label achseX_squareLabel = new Label(powerTraceComposite, SWT.NONE);
 		achseX_squareLabel.setBounds(achse_x, 10, 85, 110);
-		achseX_squareLabel.setImage(SPAPlugIn.getImageDescriptor(IMGADDRESSE_X_ACHSE_ENG).createImage());
+		achseX_squareLabel.setImage(ImageService.getImage(SPAPlugIn.PLUGIN_ID, IMGADDRESSE_X_ACHSE_ENG));
 
 		final TableItem outPutTableItems = new TableItem(recordTable, SWT.BORDER);
 		outPutTableItems.setText(0, OUTPUT_TABLE_ITEM_TEXT);

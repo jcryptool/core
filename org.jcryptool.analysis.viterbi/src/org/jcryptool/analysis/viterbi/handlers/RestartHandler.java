@@ -22,7 +22,8 @@ import org.jcryptool.analysis.viterbi.views.ViterbiView;
  * @version 0.9.5
  */
 public class RestartHandler extends AbstractHandler {
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    @Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
         if (HandlerUtil.getActivePart(event) instanceof ViterbiView) {
         	ViterbiView view = ((ViterbiView) HandlerUtil.getActivePart(event));
                 

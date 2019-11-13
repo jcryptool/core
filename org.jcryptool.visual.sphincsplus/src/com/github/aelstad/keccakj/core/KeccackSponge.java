@@ -10,8 +10,6 @@ package com.github.aelstad.keccakj.core;
 
 import java.io.FilterOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
-
 import com.github.aelstad.keccakj.core.KeccackStateUtils.StateOp;
 import com.github.aelstad.keccakj.io.BitInputStream;
 import com.github.aelstad.keccakj.io.BitOutputStream;

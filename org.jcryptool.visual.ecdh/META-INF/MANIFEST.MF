@@ -6,6 +6,7 @@ Bundle-Version: 1.0.0
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
+ org.jcryptool.core.util,
  org.jcryptool.core.operations,
  de.flexiprovider;bundle-version="1.7.0"
 Bundle-Activator: org.jcryptool.visual.ECDH.ECDHPlugin
@@ -19,5 +20,6 @@ Automatic-Module-Name: org.jcryptool.visual.ecdh
 Export-Package: org.jcryptool.visual.ECDH,
  org.jcryptool.visual.ECDH.algorithm,
  org.jcryptool.visual.ECDH.data,
+ org.jcryptool.visual.ECDH.handlers,
  org.jcryptool.visual.ECDH.ui.view,
  org.jcryptool.visual.ECDH.ui.wizards

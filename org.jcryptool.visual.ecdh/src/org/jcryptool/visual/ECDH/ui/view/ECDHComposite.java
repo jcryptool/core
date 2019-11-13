@@ -45,9 +45,11 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.util.PathEditorInput;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.visual.ECDH.ECDHPlugin;
 import org.jcryptool.visual.ECDH.ECDHUtil;
 import org.jcryptool.visual.ECDH.Messages;
@@ -160,15 +162,14 @@ public class ECDHComposite extends Composite {
 		compositeIntro.setLayout(new GridLayout(6, true));
 
 		Label title = new Label(compositeIntro, SWT.NONE);
-		title.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 4, 1));
+		title.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 4, 1));
 		title.setFont(FontService.getHeaderFont());
 		title.setText(Messages.getString("ECDHView.title")); 
+		title.setBackground(ColorService.WHITE);
 
 		StyledText stDescription = new StyledText(compositeIntro, SWT.READ_ONLY | SWT.WRAP);
 		stDescription.setText(Messages.getString("ECDHView.description")); 
-		GridData gd_stDescription = new GridData(SWT.FILL, SWT.FILL, false, false, 4 ,2);
-		gd_stDescription.widthHint = 900;
-		stDescription.setLayoutData(gd_stDescription);
+		stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 4 ,2));
 		
 		btnShowAnimation = new Button(compositeIntro, SWT.CHECK);
 		btnShowAnimation.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true, 1, 2));
@@ -228,7 +229,7 @@ public class ECDHComposite extends Composite {
 	private void createGroupMain() {
 		groupMain = new Group(this, SWT.NONE);
 		groupMain.setLayout(new GridLayout(5, false));
-		groupMain.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true));
+		groupMain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		groupMain.setText(Messages.getString("ECDHView.groupMain")); 
 
 		createCanvasBtn();
@@ -398,17 +399,20 @@ public class ECDHComposite extends Composite {
 	 */
 	private void createGroupParameters() {
 		groupParameters = new Group(groupMain, SWT.NONE);
-		groupParameters.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 4, 1));
+		groupParameters.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 4, 1));
 		groupParameters.setText(Messages.getString("ECDHView.groupParameters")); 
-		GridLayout gridLayout = new GridLayout(2, false);
-		groupParameters.setLayout(gridLayout);
+		groupParameters.setLayout(new GridLayout(2, false));
+		
 		Label label = new Label(groupParameters, SWT.NONE);
 		label.setText(Messages.getString("ECDHView.labelCurve")); 
+		
 		textCurve = new Text(groupParameters, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
 		textCurve.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		textCurve.setFont(FontService.getNormalMonospacedFont());
+		
 		label = new Label(groupParameters, SWT.NONE);
 		label.setText(Messages.getString("ECDHView.labelGenerator")); 
+		
 		textGenerator = new Text(groupParameters, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
 		textGenerator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		textGenerator.setFont(FontService.getNormalMonospacedFont());
@@ -711,12 +715,12 @@ public class ECDHComposite extends Composite {
 	private void createGroupInfo() {
 		Group groupInfo = new Group(groupMain, SWT.NONE);
 		groupInfo.setLayout(new GridLayout());
-		groupInfo.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 2));
-		groupInfo.setText("Aktueller Schritt");
+		groupInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
+		groupInfo.setText(Messages.getString("ECDHView.currentStep"));
 
 		infoText = new Text(groupInfo, SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
 		infoText.setText(Messages.getString("ECDHView.Step1"));
-		GridData infoTextLayout = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
+		GridData infoTextLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		infoTextLayout.widthHint = 370;
 		infoText.setLayoutData(infoTextLayout);
 	}
@@ -725,7 +729,7 @@ public class ECDHComposite extends Composite {
 	 * Create the canvas containing the Key image
 	 */
 	private void createCanvasKey() {
-		id = ECDHPlugin.getImageDescriptor("icons/key.png").createImage(); 
+		id = ImageService.getImage(ECDHPlugin.PLUGIN_ID, "icons/key.png");
 		canvasKey = new Canvas(groupMain, SWT.NO_REDRAW_RESIZE);
 		GridData gd_canvasKey = new GridData(SWT.FILL, SWT.FILL, false, true, 3, 1);
 		gd_canvasKey.verticalIndent = 10;

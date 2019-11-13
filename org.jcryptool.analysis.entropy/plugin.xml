@@ -7,7 +7,7 @@
       <view
             category="org.jcryptool.analysis"
             class="org.jcryptool.analysis.entropy.views.EntropyAnalysisView"
-            icon="icons/view.gif"
+            icon="platform:/plugin/org.jcryptool.core.util/icons/analysis_icon.gif"
             id="org.jcryptool.analysis.entropy.views.EntropyAnalysisView"
             name="%view.name">
       </view>

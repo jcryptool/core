@@ -49,6 +49,7 @@ import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.visual.crtverification.Activator;
 
 public class CrtVerViewComposite extends Composite implements PaintListener {
@@ -159,7 +160,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		};
 		defineCommand("org.jcryptool.visual.crtVerification.reset", "Reset", handler);
 		addContributionItem(toolBarMenu, "org.jcryptool.visual.crtVerification.reset",
-			Activator.getImageDescriptor("icons/reset.gif"), null);
+			ImageService.IMAGEDESCRIPTOR_RESET, null);
 
 		Composite composite = new Composite(this, SWT.NONE);
 		GridLayout gl_composite = new GridLayout(2, false);
@@ -808,7 +809,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		
 		labelValiditySymbol = new Label(settingsComposite, SWT.NONE);
 
-		labelValiditySymbol.setImage(Activator.getImageDescriptor("icons/rotesKreuzKlein.png").createImage());
+		labelValiditySymbol.setImage(ImageService.getImage(Activator.PLUGIN_ID, "icons/rotesKreuzKlein.png"));
 		labelValiditySymbol.setVisible(false);
 
 		btnValidate.addSelectionListener(new SelectionAdapter() {
@@ -949,11 +950,11 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 	 */
 	public void setValidtiySymbol(int type) {
 		if (type == 1) {
-			labelValiditySymbol.setImage(Activator.getImageDescriptor("icons/gruenerHakenKlein.png").createImage());
+			labelValiditySymbol.setImage(ImageService.getImage(Activator.PLUGIN_ID, "icons/gruenerHakenKlein.png"));
 			labelValiditySymbol.setToolTipText(Messages.CrtVerViewComposite_validateSuccessful);
 			labelValiditySymbol.setVisible(true);
 		} else {
-			labelValiditySymbol.setImage(Activator.getImageDescriptor("icons/rotesKreuzKlein.png").createImage());
+			labelValiditySymbol.setImage(ImageService.getImage(Activator.PLUGIN_ID, "icons/rotesKreuzKlein.png"));
 			labelValiditySymbol.setToolTipText(Messages.CrtVerViewComposite_validateUnSuccessful);
 			labelValiditySymbol.setVisible(true);
 		}

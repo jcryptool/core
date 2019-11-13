@@ -46,6 +46,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.visual.sigVerification.Messages;
 import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
 import org.jcryptool.visual.sigVerification.algorithm.Hash;
@@ -247,7 +248,7 @@ public class SigVerComposite extends Composite {
                 Rectangle clientArea = canvasDocLeft.getClientArea();
                 
                 // Insert the image of the left document
-                ImageDescriptor id = SigVerificationPlugin.getImageDescriptor("icons/image3013.png"); //$NON-NLS-1$
+                ImageDescriptor id = ImageService.getImageDescriptor(SigVerificationPlugin.PLUGIN_ID, "icons/image3013.png");
                 ImageData imD = id.getImageData(100);
                 Image img = new Image(Display.getCurrent(), imD);
                 gc.drawImage(img, (clientArea.width - imD.width) /2 , (clientArea.height - imD.height) / 2);
@@ -370,7 +371,7 @@ public class SigVerComposite extends Composite {
                 int height = clientArea.height;
 
                 // Insert the image of the key
-                ImageDescriptor id = SigVerificationPlugin.getImageDescriptor("icons/key.png"); //$NON-NLS-1$
+                ImageDescriptor id = ImageService.getImageDescriptor(SigVerificationPlugin.PLUGIN_ID, "icons/key.png");
                 ImageData imD = id.getImageData(100);
                 Image img = new Image(Display.getCurrent(), imD);
                 gc.drawImage(img, width*3/4 - imD.width/2, height - imD.height);
@@ -406,7 +407,7 @@ public class SigVerComposite extends Composite {
                 GC gc = e.gc;
                 Rectangle clientArea = canvasDocRight.getClientArea();
                 
-                ImageDescriptor idRightDoc = SigVerificationPlugin.getImageDescriptor("icons/image3013.png"); //$NON-NLS-1$
+                ImageDescriptor idRightDoc = ImageService.getImageDescriptor(SigVerificationPlugin.PLUGIN_ID, "icons/image3013.png");
                 ImageData imdRightDoc = idRightDoc.getImageData(100);
                 Image imgRightDoc = new Image(Display.getCurrent(), imdRightDoc);
 
@@ -415,13 +416,13 @@ public class SigVerComposite extends Composite {
                 gc.drawImage(imgRightDoc,  docX, docY);
                 
                 if (resultOk) {
-                	ImageDescriptor idIconGreen = SigVerificationPlugin.getImageDescriptor("icons/gruenerHacken.png"); //$NON-NLS-1$
+                	ImageDescriptor idIconGreen = ImageService.getImageDescriptor(SigVerificationPlugin.PLUGIN_ID, "icons/gruenerHacken.png");
                     ImageData imdIconGreen = idIconGreen.getImageData(100);
                     Image imgIconGreen = new Image(Display.getCurrent(), imdIconGreen);
                 	gc.drawImage(imgIconGreen, docX-70, docY-90+imdRightDoc.height);
                 }
                 if (resultErr) {
-                    ImageDescriptor idIconRed = SigVerificationPlugin.getImageDescriptor("icons/rotesKreuz.png"); //$NON-NLS-1$
+                    ImageDescriptor idIconRed = ImageService.getImageDescriptor(SigVerificationPlugin.PLUGIN_ID, "icons/rotesKreuz.png");
                     ImageData imdIconRed = idIconRed.getImageData(100);
                     Image imgIconRed = new Image(Display.getCurrent(), imdIconRed);
                 	gc.drawImage(imgIconRed, docX-70, docY-90+imdRightDoc.height);

@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.visual.jctca.Activator;
 import org.jcryptool.visual.jctca.CertificateClasses.CSR;
 import org.jcryptool.visual.jctca.CertificateClasses.RegistrarCSR;
@@ -71,7 +72,7 @@ public class VerifyIdentity extends Dialog implements SelectionListener {
             proof = "icons/ausweis.jpeg";//$NON-NLS-1$
         }
         if (proof.contains("icons\\") || proof.contains("icons/")) {//$NON-NLS-1$ //$NON-NLS-2$
-            i = Activator.getImageDescriptor(proof).createImage();
+            i = ImageService.getImage(Activator.PLUGIN_ID, proof);
         } else {
             i = new Image(Display.getCurrent(), c.getProof());
         }

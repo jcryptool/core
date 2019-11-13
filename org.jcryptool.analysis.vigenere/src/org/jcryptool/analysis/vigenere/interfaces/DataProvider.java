@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorReference;
@@ -43,6 +42,7 @@ import org.jcryptool.core.operations.editors.AbstractEditorService;
 import org.jcryptool.core.operations.editors.EditorNotFoundException;
 import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.constants.IConstants;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.classic.vigenere.algorithm.VigenereAlgorithm;
 
 /**
@@ -472,8 +472,7 @@ public class DataProvider {
         }
 
         if (null != path) {
-            ImageDescriptor id = VigenereBreakerPlugin.getImageDescriptor(path);
-            return id.createImage();
+            return ImageService.getImage(VigenereBreakerPlugin.PLUGIN_ID, path);
         }
 
         return null;

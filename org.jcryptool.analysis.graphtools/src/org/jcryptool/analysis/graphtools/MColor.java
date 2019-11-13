@@ -90,9 +90,9 @@ public class MColor {
 		alpha = 255;
 
 		String hexStr = hex.toLowerCase();
-		r = (int) Integer.parseInt("" + hexStr.charAt(0) + hexStr.charAt(1), 16); //$NON-NLS-1$
-		g = (int) Integer.parseInt("" + hexStr.charAt(2) + hexStr.charAt(3), 16); //$NON-NLS-1$
-		b = (int) Integer.parseInt("" + hexStr.charAt(4) + hexStr.charAt(5), 16); //$NON-NLS-1$
+		r = Integer.parseInt("" + hexStr.charAt(0) + hexStr.charAt(1), 16); //$NON-NLS-1$
+		g = Integer.parseInt("" + hexStr.charAt(2) + hexStr.charAt(3), 16); //$NON-NLS-1$
+		b = Integer.parseInt("" + hexStr.charAt(4) + hexStr.charAt(5), 16); //$NON-NLS-1$
 
 	}
 
@@ -103,9 +103,9 @@ public class MColor {
 		alpha = Alpha;
 
 		String hexStr = hex.toLowerCase();
-		r = (int) Integer.parseInt("" + hexStr.charAt(0) + hexStr.charAt(1), 16); //$NON-NLS-1$
-		g = (int) Integer.parseInt("" + hexStr.charAt(2) + hexStr.charAt(3), 16); //$NON-NLS-1$
-		b = (int) Integer.parseInt("" + hexStr.charAt(4) + hexStr.charAt(5), 16); //$NON-NLS-1$
+		r = Integer.parseInt("" + hexStr.charAt(0) + hexStr.charAt(1), 16); //$NON-NLS-1$
+		g = Integer.parseInt("" + hexStr.charAt(2) + hexStr.charAt(3), 16); //$NON-NLS-1$
+		b = Integer.parseInt("" + hexStr.charAt(4) + hexStr.charAt(5), 16); //$NON-NLS-1$
 
 	}
 
@@ -116,9 +116,9 @@ public class MColor {
 		alpha = Alpha;
 
 		String hexStr = hex.toLowerCase();
-		r = (int) Integer.parseInt("" + hexStr.charAt(0) + hexStr.charAt(1), 16); //$NON-NLS-1$
-		g = (int) Integer.parseInt("" + hexStr.charAt(2) + hexStr.charAt(3), 16); //$NON-NLS-1$
-		b = (int) Integer.parseInt("" + hexStr.charAt(4) + hexStr.charAt(5), 16); //$NON-NLS-1$
+		r = Integer.parseInt("" + hexStr.charAt(0) + hexStr.charAt(1), 16); //$NON-NLS-1$
+		g = Integer.parseInt("" + hexStr.charAt(2) + hexStr.charAt(3), 16); //$NON-NLS-1$
+		b = Integer.parseInt("" + hexStr.charAt(4) + hexStr.charAt(5), 16); //$NON-NLS-1$
 
 		setColor(gc);
 	}
@@ -129,9 +129,9 @@ public class MColor {
 		alpha = Alpha;
 
 		String hexStr = intToHexStr(asInt);
-		r = (int) Integer.parseInt("" + hexStr.charAt(0) + hexStr.charAt(1), 16); //$NON-NLS-1$
-		g = (int) Integer.parseInt("" + hexStr.charAt(2) + hexStr.charAt(3), 16); //$NON-NLS-1$
-		b = (int) Integer.parseInt("" + hexStr.charAt(4) + hexStr.charAt(5), 16); //$NON-NLS-1$
+		r = Integer.parseInt("" + hexStr.charAt(0) + hexStr.charAt(1), 16); //$NON-NLS-1$
+		g = Integer.parseInt("" + hexStr.charAt(2) + hexStr.charAt(3), 16); //$NON-NLS-1$
+		b = Integer.parseInt("" + hexStr.charAt(4) + hexStr.charAt(5), 16); //$NON-NLS-1$
 
 	}
 
@@ -142,9 +142,9 @@ public class MColor {
 		alpha = Alpha;
 
 		String hexStr = intToHexStr(asInt);
-		r = (int) Integer.parseInt("" + hexStr.charAt(0) + hexStr.charAt(1), 16); //$NON-NLS-1$
-		g = (int) Integer.parseInt("" + hexStr.charAt(2) + hexStr.charAt(3), 16); //$NON-NLS-1$
-		b = (int) Integer.parseInt("" + hexStr.charAt(4) + hexStr.charAt(5), 16); //$NON-NLS-1$
+		r = Integer.parseInt("" + hexStr.charAt(0) + hexStr.charAt(1), 16); //$NON-NLS-1$
+		g = Integer.parseInt("" + hexStr.charAt(2) + hexStr.charAt(3), 16); //$NON-NLS-1$
+		b = Integer.parseInt("" + hexStr.charAt(4) + hexStr.charAt(5), 16); //$NON-NLS-1$
 
 		setColor(gc);
 	}

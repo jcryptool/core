@@ -37,6 +37,7 @@ import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.visual.verifiablesecretsharing.VerifiableSecretSharingPlugin;
 import org.jcryptool.visual.verifiablesecretsharing.algorithm.Polynomial;
 import org.jcryptool.visual.verifiablesecretsharing.algorithm.VerifiableSecretSharing;
@@ -1219,13 +1220,13 @@ public class VerifiableSecretSharingComposite extends Composite {
             descriptionRight.setText(Messages.VerifiableSecretSharingComposite_description_shares_right);
             spaceLabel = new Label(descriptionGroup, SWT.NONE);
             image = new Label(descriptionGroup, SWT.NONE);
-            image.setImage(VerifiableSecretSharingPlugin.getImageDescriptor("icons/check.png").createImage());
+            image.setImage(ImageService.getImage(VerifiableSecretSharingPlugin.PLUGIN_ID, "icons/check.png"));
             break;
         case 5:
             descriptionLeft.setText(Messages.VerifiableSecretSharingComposite_description_reconstruction_left);
             descriptionRight.setText(Messages.VerifiableSecretSharingComposite_description_reconstruction_right);
             image = new Label(descriptionGroup, SWT.NONE);
-            image.setImage(VerifiableSecretSharingPlugin.getImageDescriptor("icons/reconstruction.png").createImage());
+            image.setImage(ImageService.getImage(VerifiableSecretSharingPlugin.PLUGIN_ID, "icons/reconstruction.png"));
             descPart2 = new Label(descriptionGroup, SWT.NONE);
             descPart2.setBackground(WHITE);
             descPart2.setText(Messages.VerifiableSecretSharingComposite_description_reconstruction_right_part2);

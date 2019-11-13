@@ -18,8 +18,6 @@ import java.util.Arrays;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
-import org.eclipse.jface.resource.JFaceResources;
-import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
@@ -48,6 +46,7 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.directories.DirectoryService;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.games.numbershark.NumberSharkPlugin;
 import org.jcryptool.games.numbershark.util.CSVConverter;
 
@@ -199,8 +198,7 @@ public abstract class AbstractResultDialog extends TitleAreaDialog {
                     MenuItem play = new MenuItem(popupmenu, SWT.PUSH);
                     play.setText(Messages.OptStratDialog_9);
                     play.addSelectionListener(playSelection);
-                    LocalResourceManager resources = new LocalResourceManager(JFaceResources.getResources(), getShell());
-                    Image image = resources.createImage(NumberSharkPlugin.getImageDescriptor("icons/play_icon.png")); //$NON-NLS-1$
+                    Image image = ImageService.getImage(NumberSharkPlugin.PLUGIN_ID, "icons/play_icon.png");
                     play.setImage(image);
                     MenuItem copy = new MenuItem(popupmenu, SWT.PUSH);
                     copy.setText(Messages.OptStratDialog_10);

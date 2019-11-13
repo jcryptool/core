@@ -4,13 +4,11 @@
 	 <extension
          point="org.eclipse.ui.views">
       <view
-            allowMultiple="true"
-            category="org.jcryptool.visual"
+      		category="org.jcryptool.visual"
             class="org.jcryptool.visual.sig.ui.view.SigView"
-            icon="icons/view.gif"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png"
             id="org.jcryptool.visual.sig.view"
-            name="%view.name"
-            restorable="true">
+            name="%view.name">
       </view>
    </extension>
    <extension point="org.eclipse.help.contexts">
