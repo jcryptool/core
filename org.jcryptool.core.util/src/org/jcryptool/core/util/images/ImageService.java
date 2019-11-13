@@ -27,29 +27,136 @@ import org.osgi.framework.Bundle;
  */
 public class ImageService {
 	
-	public static final Image InfoIcon, WarningIcon, ErrorIcon, HelpIcon, ResetIcon, VisualizationsIcon, CheckboxIcon, SearchIcon, RunIcon, FileIcon;
+	/**
+	 * Icon showing a blue "i" in a circle on a white background.</br>
+	 * The icon can be found in: platform:/plugin/org.eclipse.jface/icons/full/message_info.png
+	 */
+	public static final Image ICON_INFO;
+	/**
+	 * ImageDescriptor of {@link org.jcryptool.core.util.images.ImageService#ICON_INFO ICON_INFO}.
+	 */
+	public static final ImageDescriptor IMAGEDESCRIPTOR_INFO;
 	
-	public static final ImageDescriptor InfoIconImageDescriptor, HelpIconImageDescriptor, ResetIconImageDescriptor;
+	/**
+	 * Icon showing a black "!" in triangular on yellow background.</br>
+	 * The icon can be found in: platform:/plugin/org.eclipse.ui/icons/full/obj16/warn_tsk.png
+	 */
+	public static final Image ICON_WARNING;
+	/**
+	 * ImageDescriptor of {@link org.jcryptool.core.util.images.ImageService#ICON_WARNING ICON_WARNING}.
+	 */
+	public static final ImageDescriptor IMAGEDESCRIPTOR_WARNING;
+		
+	/**
+	 * Icon showing a white cross on a red circle.</br>
+	 * The icon can be found in: platform:/plugin/org.eclipse.ui/icons/full/obj16/error_tsk.png
+	 */
+	public static final Image ICON_ERROR;
+	/**
+	 * ImageDescriptor of {@link org.jcryptool.core.util.images.ImageService#ICON_ERROR ICON_ERROR}.
+	 */
+	public static final ImageDescriptor IMAGEDESCRIPTOR_ERROR;
 	
+	/**
+	 * Icon showing a blue question mark on a white circle with a blue border.</br>
+	 * The icon can be found in: platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png
+	 */
+	public static final Image ICON_HELP;
+	/**
+	 * ImageDescriptor of {@link org.jcryptool.core.util.images.ImageService#ICON_HELP ICON_HELP}.
+	 */
+	public static final ImageDescriptor IMAGEDESCRIPTOR_HELP;
+	
+	/**
+	 * This is the default icon for the button that resets a plugin.</br>
+	 * The icon can be found in: platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png
+	 */
+	public static final Image ICON_RESET;
+	/**
+	 * ImageDescriptor of {@link org.jcryptool.core.util.images.ImageService#ICON_RESET ICON_RESET}.
+	 */
+	public static final ImageDescriptor IMAGEDESCRIPTOR_RESET;
+	
+	/**
+	 * The standard icon symbolizing a visualization plugin</br>
+	 * The icon can be found in: platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png
+	 */
+	public static final Image ICON_VISUALIZATIONS;
+	/**
+	 * ImageDescriptor of {@link org.jcryptool.core.util.images.ImageService#ICON_VISUALIZATIONS ICON_VISUALIZATIONS}.
+	 */
+	public static final ImageDescriptor IMAGEDESCRIPTOR_VISUALIZATIONS;
+	
+	/**
+	 * A checked Checkbox</br>
+	 * The icon can be found in: platform:/plugin/org.jcryptool.core.util/icons/check.png
+	 */
+	public static final Image ICON_CHECKBOX;
+	/**
+	 * ImageDescriptor of {@link org.jcryptool.core.util.images.ImageService#ICON_CHECKBOX ICON_CHECKBOX}.
+	 */
+	public static final ImageDescriptor IMAGEDESCRIPTOR_CHECKBOX;
+	
+	/**
+	 * A small lens symboling a search possibility.</br>
+	 * The icon can be found in: platform:/plugin/org.eclipse.ui/icons/full/etool16/search.png
+	 */
+	public static final Image ICON_SEARCH;
+	/**
+	 * ImageDescriptor of {@link org.jcryptool.core.util.images.ImageService#ICON_SEARCH ICON_SEARCH}.
+	 */
+	public static final ImageDescriptor IMAGEDESCRIPTOR_SEARCH;
+	
+	/**
+	 * The run icon you may know from the eclipse IDE. A white triangular on a green circle.</br>
+	 * The icon can be found in: platform:/plugin/org.jcryptool.core.util/icons/run_exc.png
+	 */
+	public static final Image ICON_RUN;
+	/**
+	 * ImageDescriptor of {@link org.jcryptool.core.util.images.ImageService#ICON_RUN ICON_RUN}.
+	 */
+	public static final ImageDescriptor IMAGEDESCRIPTOR_RUN;
+	
+	/**
+	 * An icon of a white sheet.</br>
+	 * The icon can be found in: platform:/plugin/org.jcryptool.core.util/icons/fileType_filter.png
+	 */
+	public static final Image ICON_FILE;
+	/**
+	 * ImageDescriptor of {@link org.jcryptool.core.util.images.ImageService#ICON_FILE ICON_FILE}.
+	 */
+	public static final ImageDescriptor IMAGEDESCRIPTOR_FILE;
+		
 	static {
-		WarningIcon = ImageService.getImage("org.eclipse.ui", "icons/full/obj16/warn_tsk.png");
-		ErrorIcon = ImageService.getImage("org.eclipse.ui", "icons/full/obj16/error_tsk.png");
+		ICON_INFO = ImageService.getImage("org.eclipse.jface", "icons/full/message_info.png");
+		IMAGEDESCRIPTOR_INFO = ImageService.getImageDescriptor("org.eclipse.jface", "icons/full/message_info.png");
 		
-		HelpIcon = ImageService.getImage("org.eclipse.ui", "icons/full/etool16/help_contents.png");
-		HelpIconImageDescriptor = ImageService.getImageDescriptor("org.eclipse.ui", "icons/full/etool16/help_contents.png");
+		ICON_WARNING = ImageService.getImage("org.eclipse.ui", "icons/full/obj16/warn_tsk.png");
+		IMAGEDESCRIPTOR_WARNING = ImageService.getImageDescriptor("org.eclipse.ui", "icons/full/obj16/warn_tsk.png");
 		
-		ResetIcon = ImageService.getImage("org.eclipse.ui", "icons/full/etool16/new_wiz.png");
-		ResetIconImageDescriptor = ImageService.getImageDescriptor("org.eclipse.ui", "icons/full/etool16/new_wiz.png");
+		ICON_ERROR = ImageService.getImage("org.eclipse.ui", "icons/full/obj16/error_tsk.png");
+		IMAGEDESCRIPTOR_ERROR = ImageService.getImageDescriptor("org.eclipse.ui", "icons/full/obj16/error_tsk.png");
 		
-		InfoIcon = ImageService.getImage("org.eclipse.jface", "icons/full/message_info.png");
-		InfoIconImageDescriptor = ImageService.getImageDescriptor("org.eclipse.jface", "icons/full/message_info.png");
+		ICON_HELP = ImageService.getImage("org.eclipse.ui", "icons/full/etool16/help_contents.png");
+		IMAGEDESCRIPTOR_HELP = ImageService.getImageDescriptor("org.eclipse.ui", "icons/full/etool16/help_contents.png");
+		
+		ICON_RESET = ImageService.getImage("org.eclipse.ui", "icons/full/etool16/new_wiz.png");
+		IMAGEDESCRIPTOR_RESET = ImageService.getImageDescriptor("org.eclipse.ui", "icons/full/etool16/new_wiz.png");
 
-		VisualizationsIcon = ImageService.getImage("org.eclipse.jface", "icons/full/message_info.png");
-		CheckboxIcon = ImageService.getImage("org.jcryptool.core.util", "/icons/check.png");
-		SearchIcon = ImageService.getImage("org.eclipse.ui", "icons/full/etool16/search.png");
-		RunIcon = ImageService.getImage("org.jcryptool.core.util", "icons/run_exc.png");
-		FileIcon = ImageService.getImage("org.jcryptool.core.util", "icons/fileType_filter.png");
+		ICON_VISUALIZATIONS = ImageService.getImage("org.eclipse.ui", "icons/full/eview16/defaultview_misc.png");
+		IMAGEDESCRIPTOR_VISUALIZATIONS = ImageService.getImageDescriptor("org.eclipse.ui", "icons/full/eview16/defaultview_misc.png");
 		
+		ICON_CHECKBOX = ImageService.getImage("org.jcryptool.core.util", "icons/check.png");
+		IMAGEDESCRIPTOR_CHECKBOX = ImageService.getImageDescriptor("org.jcryptool.core.util", "icons/check.png");
+		
+		ICON_SEARCH = ImageService.getImage("org.eclipse.ui", "icons/full/etool16/search.png");
+		IMAGEDESCRIPTOR_SEARCH = ImageService.getImageDescriptor("org.eclipse.ui", "icons/full/etool16/search.png");
+		
+		ICON_RUN = ImageService.getImage("org.jcryptool.core.util", "icons/run_exc.png");
+		IMAGEDESCRIPTOR_RUN = ImageService.getImageDescriptor("org.jcryptool.core.util", "icons/run_exc.png");
+		
+		ICON_FILE = ImageService.getImage("org.jcryptool.core.util", "icons/fileType_filter.png");	
+		IMAGEDESCRIPTOR_FILE = ImageService.getImageDescriptor("org.jcryptool.core.util", "icons/fileType_filter.png");
 	}
 	
 
@@ -137,13 +244,13 @@ public class ImageService {
 	 * of org.eclipse.ui/icons/full/etool16/new_wiz.png
 	 * @return a help icon.
 	 */
-	public static ImageDescriptor getResetIconImageDescriptor() {
-		Bundle bundle = Platform.getBundle("org.eclipse.ui");
-		Path path = new Path("icons/full/etool16/new_wiz.png");
-		final URL fullPathString = FileLocator.find(bundle, path, null);
-		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
-		return imageDesc;
-	}
+//	public static ImageDescriptor getResetIconImageDescriptor() {
+//		Bundle bundle = Platform.getBundle("org.eclipse.ui");
+//		Path path = new Path("icons/full/etool16/new_wiz.png");
+//		final URL fullPathString = FileLocator.find(bundle, path, null);
+//		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
+//		return imageDesc;
+//	}
 	
 	/**
 	 * Info icon</br></br>
@@ -165,13 +272,13 @@ public class ImageService {
 	 * of org.eclipse.jface/icons/full/message_info.png
 	 * @return The ImageDescriptor of the info icon
 	 */
-	public static ImageDescriptor getInfoIconImageDescriptor() {
-		Bundle bundle = Platform.getBundle("org.eclipse.jface");
-		Path path = new Path("icons/full/message_info.png");
-		final URL fullPathString = FileLocator.find(bundle, path, null);
-		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
-		return imageDesc;
-	}
+//	public static ImageDescriptor getInfoIconImageDescriptor() {
+//		Bundle bundle = Platform.getBundle("org.eclipse.jface");
+//		Path path = new Path("icons/full/message_info.png");
+//		final URL fullPathString = FileLocator.find(bundle, path, null);
+//		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
+//		return imageDesc;
+//	}
 
 	/**
 	 * Visualizations icon.</br></br>
@@ -193,13 +300,13 @@ public class ImageService {
 	 * of org.eclipse.jface/icons/full/message_info.png
 	 * @return The ImageDescriptor for the icon for visualizations.
 	 */
-	public static ImageDescriptor getVisualizationsIconImageDescriptor() {
-		Bundle bundle = Platform.getBundle("org.eclipse.ui");
-		Path path = new Path("icons/full/eview16/defaultview_misc.png");
-		final URL fullPathString = FileLocator.find(bundle, path, null);
-		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
-		return imageDesc;
-	}
+//	public static ImageDescriptor getVisualizationsIconImageDescriptor() {
+//		Bundle bundle = Platform.getBundle("org.eclipse.ui");
+//		Path path = new Path("icons/full/eview16/defaultview_misc.png");
+//		final URL fullPathString = FileLocator.find(bundle, path, null);
+//		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
+//		return imageDesc;
+//	}
 		
 	/**
 	 * Error icon.</br></br>
@@ -221,13 +328,13 @@ public class ImageService {
 	 * of org.eclipse.ui/icons/full/obj16/error_tsk.png
 	 * @return The ImageDescriptor for the icon for errors.
 	 */
-	public static ImageDescriptor getErrorIconImageDescriptor() {
-		Bundle bundle = Platform.getBundle("org.eclipse.ui");
-		Path path = new Path("icons/full/obj16/error_tsk.png");
-		final URL fullPathString = FileLocator.find(bundle, path, null);
-		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
-		return imageDesc;
-	}
+//	public static ImageDescriptor getErrorIconImageDescriptor() {
+//		Bundle bundle = Platform.getBundle("org.eclipse.ui");
+//		Path path = new Path("icons/full/obj16/error_tsk.png");
+//		final URL fullPathString = FileLocator.find(bundle, path, null);
+//		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
+//		return imageDesc;
+//	}
 	
 	/**
 	 * Warning icon.</br></br>
@@ -249,13 +356,13 @@ public class ImageService {
 	 * of org.eclipse.ui/icons/full/obj16/warn_tsk.png
 	 * @return The ImageDescriptor for the icon for warnings.
 	 */
-	public static ImageDescriptor getWarningIconImageDescriptor() {
-		Bundle bundle = Platform.getBundle("org.eclipse.ui");
-		Path path = new Path("icons/full/obj16/warn_tsk.png");
-		final URL fullPathString = FileLocator.find(bundle, path, null);
-		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
-		return imageDesc;
-	}
+//	public static ImageDescriptor getWarningIconImageDescriptor() {
+//		Bundle bundle = Platform.getBundle("org.eclipse.ui");
+//		Path path = new Path("icons/full/obj16/warn_tsk.png");
+//		final URL fullPathString = FileLocator.find(bundle, path, null);
+//		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
+//		return imageDesc;
+//	}
 	
 	/**
 	 * Checkbox icon.</br></br>
@@ -272,9 +379,9 @@ public class ImageService {
 	 * of org.jcryptool.core.util/icons/check.png
 	 * @return ImageDescriptor for the checkbox icon.
 	 */
-	public static ImageDescriptor getCheckIconImageDescriptor() {
-		return getImageDescriptor("org.jcryptool.core.util", "/icons/check.png");
-	}
+//	public static ImageDescriptor getCheckIconImageDescriptor() {
+//		return getImageDescriptor("org.jcryptool.core.util", "/icons/check.png");
+//	}
 	
 
 }
