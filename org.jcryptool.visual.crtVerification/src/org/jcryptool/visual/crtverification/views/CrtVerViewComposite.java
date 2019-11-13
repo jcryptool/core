@@ -160,7 +160,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		};
 		defineCommand("org.jcryptool.visual.crtVerification.reset", "Reset", handler);
 		addContributionItem(toolBarMenu, "org.jcryptool.visual.crtVerification.reset",
-			ImageService.getResetIconImageDescriptor(), null);
+			ImageService.IMAGEDESCRIPTOR_RESET, null);
 
 		Composite composite = new Composite(this, SWT.NONE);
 		GridLayout gl_composite = new GridLayout(2, false);

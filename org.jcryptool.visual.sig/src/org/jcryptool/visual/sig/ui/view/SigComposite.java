@@ -585,7 +585,7 @@ public class SigComposite extends Composite {
         	}
         });
         
-        addContributionItem(toolBarMenu, commandId, ImageService.ResetIconImageDescriptor, "Reset");	//$NON-NLS-1$
+        addContributionItem(toolBarMenu, commandId, ImageService.IMAGEDESCRIPTOR_RESET, "Reset");	//$NON-NLS-1$
 
         // Check if called by JCT-CA
         if (Input.privateKeyJCTCA != null) {

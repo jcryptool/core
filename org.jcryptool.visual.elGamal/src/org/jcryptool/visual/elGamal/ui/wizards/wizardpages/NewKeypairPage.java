@@ -211,7 +211,7 @@ public class NewKeypairPage extends WizardPage {
         pchanged = new CLabel(composite, SWT.NONE);
         pchanged.setVisible(false);
         pchanged.setText(Messages.NewKeypairPage_pChanged);
-        pchanged.setImage(ImageService.InfoIcon);
+        pchanged.setImage(ImageService.ICON_INFO);
         // Separator
         new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
         

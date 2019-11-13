@@ -23,6 +23,6 @@ public class TranspositionAnalysisPlugin extends AbstractUIPlugin {
     @Override
     protected void initializeImageRegistry(ImageRegistry reg) {
         reg.put("keyboardInputIcon", ImageService.getImage(PLUGIN_ID, "icons/keys.png"));
-        reg.put("fileInputIcon", ImageService.FileIcon);
+        reg.put("fileInputIcon", ImageService.ICON_FILE);
     }
 }

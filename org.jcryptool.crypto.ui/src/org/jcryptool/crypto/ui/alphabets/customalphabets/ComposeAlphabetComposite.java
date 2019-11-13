@@ -210,7 +210,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 			GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 			btnVorhandeneAlphabeteAls.setLayoutData(layoutData);
 			btnVorhandeneAlphabeteAls.setText(Messages.getString("ComposeAlphabetComposite.2")); //$NON-NLS-1$
-			Image showExistingImg = ImageService.SearchIcon; //$NON-NLS-1$
+			Image showExistingImg = ImageService.ICON_SEARCH; //$NON-NLS-1$
 			btnVorhandeneAlphabeteAls.setImage(showExistingImg);
 			btnVorhandeneAlphabeteAls.setVisible(false);
 			layoutData.exclude = true;
@@ -490,7 +490,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 			MenuItem showContentItem = new MenuItem(contextMenu, SWT.PUSH);
 			showContentItem.setText(Messages.getString("ComposeAlphabetComposite.26")); //$NON-NLS-1$
 //			Image showImg = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ADD);
-			Image showImg = ImageService.SearchIcon;
+			Image showImg = ImageService.ICON_SEARCH;
 			showContentItem.setImage(showImg);
 
 			showContentItem.addSelectionListener(new SelectionAdapter() {
@@ -850,7 +850,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 			MenuItem showContentItem = new MenuItem(contextMenu, SWT.PUSH);
 			showContentItem.setText(Messages.getString("ComposeAlphabetComposite.40")); //$NON-NLS-1$
 //			Image showImg = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ADD);
-			Image showImg = ImageService.SearchIcon;
+			Image showImg = ImageService.ICON_SEARCH;
 			showContentItem.setImage(showImg);
 
 			showContentItem.addSelectionListener(new SelectionAdapter() {

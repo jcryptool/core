@@ -363,7 +363,7 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 		resetButton.setLayoutData(resetButtonGridData);
 		resetButton.setText(Messages.LfsrWizardPage_reset);
 		resetButton.setToolTipText(Messages.LfsrWizardPage_resetTooltip);
-		resetButton.setImage(ImageService.ResetIcon);
+		resetButton.setImage(ImageService.ICON_RESET);
 		resetButton.addSelectionListener(new SelectionListener() {
 
 			@Override

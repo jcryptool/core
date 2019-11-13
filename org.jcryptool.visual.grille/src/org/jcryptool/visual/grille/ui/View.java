@@ -232,7 +232,7 @@ public class View extends ViewPart {
         });
 
 		button_okay = new Button(typeSelection, SWT.NONE);
-		button_okay.setImage(ImageService.RunIcon);
+		button_okay.setImage(ImageService.ICON_RUN);
 		button_okay.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 2));
 		button_okay.setText(Messages.getString("View.start")); //$NON-NLS-1$
 		button_okay.setEnabled(false);
@@ -477,7 +477,7 @@ public class View extends ViewPart {
 		
 		Label help = new Label(illustration, SWT.NONE);
 		help.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false));
-		help.setImage(ImageService.HelpIcon);
+		help.setImage(ImageService.ICON_HELP);
 		help.addListener(SWT.MouseDown, new Listener() {
 			
 			@Override

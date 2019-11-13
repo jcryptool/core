@@ -40,7 +40,7 @@ public class SigVerView extends ViewPart {
                 .setHelp(parent.getShell(), "org.jcryptool.visual.sigVerification.SigVerView"); //$NON-NLS-1$
         toolBarMenu = getViewSite().getActionBars().getToolBarManager();
         resetCommandId = "org.jcryptool.visual.sigVerification.commands.reset"; //$NON-NLS-1$
-        addContributionItem(toolBarMenu, resetCommandId, ImageService.ResetIconImageDescriptor, "Reset", SWT.PUSH);
+        addContributionItem(toolBarMenu, resetCommandId, ImageService.IMAGEDESCRIPTOR_RESET, "Reset", SWT.PUSH);
     	
         tf = new TabFolder(parent, SWT.TOP);
         tf.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));

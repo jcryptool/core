@@ -140,7 +140,7 @@ public class NewPublicKeyPage extends WizardPage {
 		dTooLongLable.setText(Messages.NewPublicKeyPage_pProbablyNotPrime);
 		dTooLongLable.setVisible(false);
 		dTooLongLable.setToolTipText(Messages.NewPublicKeyPage_toolTippTooLong);
-		dTooLongLable.setImage(ImageService.InfoIcon);
+		dTooLongLable.setImage(ImageService.ICON_INFO);
 		Label separator1 = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
 		GridData gd_separator1 = new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1);
 		gd_separator1.verticalIndent = 10;
@@ -188,7 +188,7 @@ public class NewPublicKeyPage extends WizardPage {
 		gTooLongLable.setText(Messages.NewPublicKeyPage_gProbablyNoGenerator);
 		gTooLongLable.setVisible(false);
 		gTooLongLable.setToolTipText(Messages.NewPublicKeyPage_ToolTipgTooLong);
-		gTooLongLable.setImage(ImageService.InfoIcon);
+		gTooLongLable.setImage(ImageService.ICON_INFO);
 		Label separator2 = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
 		GridData gd_separator2 = new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1);
 		gd_separator2.verticalIndent = 20;

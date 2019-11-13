@@ -245,7 +245,7 @@ public class NewKeypairPage extends WizardPage {
 		CLabel caution = new CLabel(composite, SWT.WRAP);
 		caution.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		caution.setText(Messages.NewKeypairPage_hard_calculations_text);
-		caution.setImage(ImageService.WarningIcon);
+		caution.setImage(ImageService.ICON_WARNING);
 		Label separator1 = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
 		separator1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 

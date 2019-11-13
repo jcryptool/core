@@ -75,7 +75,7 @@ public class AntColVisualComposite extends Composite {
 		matrixComp.setLayout(new GridLayout(1, false));
 
 		CLabel help = new CLabel(visualGroup, SWT.NONE);
-		help.setImage(ImageService.HelpIcon);
+		help.setImage(ImageService.ICON_HELP);
 		final ToolTip tip = new ToolTip(visualGroup.getShell(), SWT.BALLOON);
 		tip.setMessage(Messages.Result_description);
 		help.addListener(SWT.MouseDown, new Listener() {

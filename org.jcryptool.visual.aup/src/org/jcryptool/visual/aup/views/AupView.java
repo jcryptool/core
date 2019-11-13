@@ -452,7 +452,7 @@ public class AupView extends ViewPart {
 		infoText = new CLabel(centerGroup, SWT.LEFT);
 		infoText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		infoText.setText(Messages.AupView_9);
-		infoText.setImage(ImageService.InfoIcon);
+		infoText.setImage(ImageService.ICON_INFO);
 		helpBox = new Group(child, SWT.NONE);
 		helpBox.setToolTipText(Messages.AndroidUnlockPattern_helpBox_toolTipText);
 		helpBox.setText(Messages.AndroidUnlockPattern_GroupHeadingHelp);
@@ -516,7 +516,7 @@ public class AupView extends ViewPart {
 		});
 
 		//test if advanced graphic processing is available
-		Image img = ImageService.getVisualizationsIconImageDescriptor().createImage(child.getDisplay());
+		Image img = ImageService.IMAGEDESCRIPTOR_VISUALIZATIONS.createImage(child.getDisplay());
 		GC gc = new GC(img);
 		gc.setAdvanced(true);	// will do nothing if advanced graphic processing is not available
 		if (gc.getAdvanced()){
@@ -641,19 +641,19 @@ public class AupView extends ViewPart {
 		} else {
 		switch (state) {
 			case ERROR:
-				statusText.setImage(ImageService.ErrorIcon);
+				statusText.setImage(ImageService.ICON_ERROR);
 				statusText.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED));
 				break;
 			case WARNING:
-				statusText.setImage(ImageService.WarningIcon);
+				statusText.setImage(ImageService.ICON_WARNING);
 				statusText.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_YELLOW));
 				break;
 			case INFO:
-				statusText.setImage(ImageService.InfoIcon);
+				statusText.setImage(ImageService.ICON_INFO);
 				statusText.setForeground(ColorService.BLACK);
 				break;
 			case OK:
-				statusText.setImage(ImageService.CheckboxIcon);
+				statusText.setImage(ImageService.ICON_CHECKBOX);
 				statusText.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN));
 				break;
 			default:
