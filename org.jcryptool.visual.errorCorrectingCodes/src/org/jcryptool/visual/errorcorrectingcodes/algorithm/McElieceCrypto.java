@@ -176,27 +176,17 @@ public class McElieceCrypto {
     }
 
     /**
-     * Gets the public key size.
-     *
-     * @return the public key size
-     */
-    public int getPublicKeySize() {
-        if (keyPair == null)
-            return 0;
-        
-        McEliecePublicKeyParameters pubKey = (McEliecePublicKeyParameters) keyPair.getPublic();
-        return encryptionCipher.getKeySize(pubKey);
-    }
-
-    /**
      * Gets the private key size.
      *
      * @return the private key size
      */
-    public int getPrivateKeySize() {
+    public double getPrivateKeySize() {
         if (keyPair == null)
             return 0;
-        return encryptionCipher.getKeySize((McEliecePrivateKeyParameters) keyPair.getPrivate());
+        
+        McEliecePrivateKeyParameters key = (McEliecePrivateKeyParameters) keyPair.getPrivate();
+        double size = (key.getN() - key.getK()) * key.getK() /(8 * Math.pow(2, 10));
+        return size;
     }
 
     /**

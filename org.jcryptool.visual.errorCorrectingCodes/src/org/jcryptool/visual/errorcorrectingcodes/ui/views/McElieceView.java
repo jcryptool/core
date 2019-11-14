@@ -18,6 +18,7 @@ import com.sun.xml.internal.ws.util.StringUtils;
 
 import java.awt.datatransfer.StringSelection;
 import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
 
 import org.bouncycastle.crypto.InvalidCipherTextException;
 import org.eclipse.core.databinding.DataBindingContext;
@@ -52,7 +53,7 @@ public class McElieceView extends Composite {
     private StyledText txtInput;
     private StyledText txtOutput;
 
-    private Text txtPublicKey;
+    private Text txtPrivateKey;
 
     private Button btnFillKey;
 
@@ -96,8 +97,8 @@ public class McElieceView extends Composite {
         txtValueT = new Text(grpKeyParams, SWT.BORDER);
         
         Label lblPublicKey = new Label(grpKeyParams, SWT.NONE);
-        lblPublicKey.setText("Public Key Size (byte):");
-        txtPublicKey = new Text(grpKeyParams, SWT.READ_ONLY);
+        lblPublicKey.setText("Public Key Size (kb):");
+        txtPrivateKey = new Text(grpKeyParams, SWT.READ_ONLY);
 
         compButtons = new Composite(grpAlgorithmInfo, SWT.NONE);
         RowLayoutFactory.fillDefaults().applyTo(compButtons);
@@ -130,10 +131,10 @@ public class McElieceView extends Composite {
     
     private void generateKeys() {
         if (updateParams() == 0) {
-            mceCrypto.setKeyParams(10,9);
+            mceCrypto.setKeyParams(12,50);
             comboValueM.setText(String.valueOf(mceCrypto.getM()));
             txtValueT.setText(String.valueOf(mceCrypto.getT()));
-            txtPublicKey.setText(String.valueOf(mceCrypto.getPublicKeySize  ()));
+            txtPrivateKey.setText(String.valueOf(UIHelper.round(mceCrypto.getPrivateKeySize(),2)));
         }
     }
 
@@ -151,8 +152,8 @@ public class McElieceView extends Composite {
                 keyErrorDialog.setMessage("Could not init system with given parameters. Try selecting a smaller t or greater m.");
                 keyErrorDialog.open();
             }
-
-            txtPublicKey.setText(String.valueOf(mceCrypto.getPublicKeySize()));
+            
+            txtPrivateKey.setText(String.valueOf(UIHelper.round(mceCrypto.getPrivateKeySize(),2)));
 
         }
         

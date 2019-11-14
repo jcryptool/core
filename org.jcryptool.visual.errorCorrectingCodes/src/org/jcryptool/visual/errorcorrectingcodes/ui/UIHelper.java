@@ -1,5 +1,7 @@
 package org.jcryptool.visual.errorcorrectingcodes.ui;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
@@ -152,6 +154,14 @@ public class UIHelper {
         GridLayoutFactory.fillDefaults().applyTo(canvas);
         GridDataFactory.fillDefaults().hint(canvas.getSizeHint()).applyTo(canvas);
         return canvas;
+    }
+    
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
 }
