@@ -126,6 +126,17 @@ public class ImageService {
 	 * ImageDescriptor of {@link org.jcryptool.core.util.images.ImageService#ICON_FILE ICON_FILE}.
 	 */
 	public static final ImageDescriptor IMAGEDESCRIPTOR_FILE;
+	
+	/**
+	 * An icon of a white sheet.</br>
+	 * The icon can be found in: platform:/plugin/org.jcryptool.core.util/icons/analysis_icon.png
+	 */
+	public static final Image ICON_ANALYSIS;
+	/**
+	 * ImageDescriptor of {@link org.jcryptool.core.util.images.ImageService#ICON_ANALYSIS ICON_ANALYSIS}.
+	 */
+	public static final ImageDescriptor IMAGEDESCRIPTOR_ANALYSIS;
+	
 		
 	static {
 		ICON_INFO = ImageService.getImage("org.eclipse.jface", "icons/full/message_info.png");
@@ -145,6 +156,9 @@ public class ImageService {
 
 		ICON_VISUALIZATIONS = ImageService.getImage("org.eclipse.ui", "icons/full/eview16/defaultview_misc.png");
 		IMAGEDESCRIPTOR_VISUALIZATIONS = ImageService.getImageDescriptor("org.eclipse.ui", "icons/full/eview16/defaultview_misc.png");
+		
+		ICON_ANALYSIS = ImageService.getImage("org.jcryptool.core.util", "icons/analysis_icon.gif");
+		IMAGEDESCRIPTOR_ANALYSIS = ImageService.getImageDescriptor("org.jcryptool.core.util", "icons/analysis_icon.gif");
 		
 		ICON_CHECKBOX = ImageService.getImage("org.jcryptool.core.util", "icons/check.png");
 		IMAGEDESCRIPTOR_CHECKBOX = ImageService.getImageDescriptor("org.jcryptool.core.util", "icons/check.png");
@@ -197,191 +211,5 @@ public class ImageService {
 		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
 		return imageDesc;
 	}
-	
-	/**
-	 * Help icon</br></br>
-	 * The method will return the help icon of org.eclipse.ui/icons/full/etool16/help_contents.png
-	 * @return a help icon.
-	 */
-//	public static Image getHelpIconImage() {
-//		Bundle bundle = Platform.getBundle("org.eclipse.ui");
-//		Path path = new Path("icons/full/etool16/help_contents.png");
-//		final URL fullPathString = FileLocator.find(bundle, path, null);
-//		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
-//		Image image = imageDesc.createImage();
-//		return image;
-//	}
-	
-	/**
-	 * The method will return the ImageDescriptor of the help icon of 
-	 * org.eclipse.ui/icons/full/etool16/help_contents.png
-	 * @return a help icon.
-	 */
-//	public static ImageDescriptor getHelpIconImageDescriptor() {
-//		Bundle bundle = Platform.getBundle("org.eclipse.ui");
-//		Path path = new Path("icons/full/etool16/help_contents.png");
-//		final URL fullPathString = FileLocator.find(bundle, path, null);
-//		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
-//		return imageDesc;
-//	}
-	
-	/**
-	 * The method will return the reset icon of 
-	 * org.eclipse.ui/icons/full/etool16/new_wiz.png
-	 * @return a help icon.
-	 */
-//	public static Image getResetIconImage() {
-//		Bundle bundle = Platform.getBundle("org.eclipse.ui");
-//		Path path = new Path("icons/full/etool16/new_wiz.png");
-//		final URL fullPathString = FileLocator.find(bundle, path, null);
-//		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
-//		Image image = imageDesc.createImage();
-//		return image;
-//	}
-	
-	/**
-	 * The method will return the ImageDescriptor of the reset icon 
-	 * of org.eclipse.ui/icons/full/etool16/new_wiz.png
-	 * @return a help icon.
-	 */
-//	public static ImageDescriptor getResetIconImageDescriptor() {
-//		Bundle bundle = Platform.getBundle("org.eclipse.ui");
-//		Path path = new Path("icons/full/etool16/new_wiz.png");
-//		final URL fullPathString = FileLocator.find(bundle, path, null);
-//		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
-//		return imageDesc;
-//	}
-	
-	/**
-	 * Info icon</br></br>
-	 * The method will return the info icon of 
-	 * org.eclipse.jface/icons/full/message_info.png
-	 * @return a help icon
-	 */
-//	public static Image getInfoIconImage() {
-//		Bundle bundle = Platform.getBundle("org.eclipse.jface");
-//		Path path = new Path("icons/full/message_info.png");
-//		final URL fullPathString = FileLocator.find(bundle, path, null);
-//		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
-//		Image image = imageDesc.createImage();
-//		return image;
-//	}
-	
-	/**
-	 * The method will return the ImageDescriptor of the info icon 
-	 * of org.eclipse.jface/icons/full/message_info.png
-	 * @return The ImageDescriptor of the info icon
-	 */
-//	public static ImageDescriptor getInfoIconImageDescriptor() {
-//		Bundle bundle = Platform.getBundle("org.eclipse.jface");
-//		Path path = new Path("icons/full/message_info.png");
-//		final URL fullPathString = FileLocator.find(bundle, path, null);
-//		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
-//		return imageDesc;
-//	}
-
-	/**
-	 * Visualizations icon.</br></br>
-	 * The method will return the visualization icon of 
-	 * org.eclipse.jface/icons/full/message_info.png
-	 * @return The icon for visualizations.
-	 */
-//	public static Image getVisualizationsIconImage() {
-//		Bundle bundle = Platform.getBundle("org.eclipse.ui");
-//		Path path = new Path("icons/full/eview16/defaultview_misc.png");
-//		final URL fullPathString = FileLocator.find(bundle, path, null);
-//		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
-//		Image image = imageDesc.createImage();
-//		return image;
-//	}
-	
-	/**
-	 * The method will return the ImageDescriptor of the visualization icon 
-	 * of org.eclipse.jface/icons/full/message_info.png
-	 * @return The ImageDescriptor for the icon for visualizations.
-	 */
-//	public static ImageDescriptor getVisualizationsIconImageDescriptor() {
-//		Bundle bundle = Platform.getBundle("org.eclipse.ui");
-//		Path path = new Path("icons/full/eview16/defaultview_misc.png");
-//		final URL fullPathString = FileLocator.find(bundle, path, null);
-//		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
-//		return imageDesc;
-//	}
-		
-	/**
-	 * Error icon.</br></br>
-	 * The method will return the error icon of 
-	 * org.eclipse.ui/icons/full/obj16/error_tsk.png
-	 * @return The icon for errors.
-	 */
-//	public static Image getErrorIconImage() {
-//		Bundle bundle = Platform.getBundle("org.eclipse.ui");
-//		Path path = new Path("icons/full/obj16/error_tsk.png");
-//		final URL fullPathString = FileLocator.find(bundle, path, null);
-//		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
-//		Image image = imageDesc.createImage();
-//		return image;
-//	}
-	
-	/**
-	 * The method will return the ImageDescriptor of the error icon 
-	 * of org.eclipse.ui/icons/full/obj16/error_tsk.png
-	 * @return The ImageDescriptor for the icon for errors.
-	 */
-//	public static ImageDescriptor getErrorIconImageDescriptor() {
-//		Bundle bundle = Platform.getBundle("org.eclipse.ui");
-//		Path path = new Path("icons/full/obj16/error_tsk.png");
-//		final URL fullPathString = FileLocator.find(bundle, path, null);
-//		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
-//		return imageDesc;
-//	}
-	
-	/**
-	 * Warning icon.</br></br>
-	 * The method will return the warning icon of 
-	 * org.eclipse.ui/icons/full/obj16/warn_tsk.png
-	 * @return The icon for errors.
-	 */
-//	public static Image getWarningIconImage() {
-//		Bundle bundle = Platform.getBundle("org.eclipse.ui");
-//		Path path = new Path("icons/full/obj16/warn_tsk.png");
-//		final URL fullPathString = FileLocator.find(bundle, path, null);
-//		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
-//		Image image = imageDesc.createImage();
-//		return image;
-//	}
-	
-	/**
-	 * The method will return the ImageDescriptor of the warning icon 
-	 * of org.eclipse.ui/icons/full/obj16/warn_tsk.png
-	 * @return The ImageDescriptor for the icon for warnings.
-	 */
-//	public static ImageDescriptor getWarningIconImageDescriptor() {
-//		Bundle bundle = Platform.getBundle("org.eclipse.ui");
-//		Path path = new Path("icons/full/obj16/warn_tsk.png");
-//		final URL fullPathString = FileLocator.find(bundle, path, null);
-//		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
-//		return imageDesc;
-//	}
-	
-	/**
-	 * Checkbox icon.</br></br>
-	 * The method will return the checkbox icon of 
-	 * org.jcryptool.core.util/icons/check.png
-	 * @return An checkbox icon.
-	 */
-//	public static Image getCheckIconImage() {
-//		return getImage("org.jcryptool.core.util", "/icons/check.png");
-//	}
-	
-	/**
-	 * The method will return the ImageDescriptor of the checkbox icon 
-	 * of org.jcryptool.core.util/icons/check.png
-	 * @return ImageDescriptor for the checkbox icon.
-	 */
-//	public static ImageDescriptor getCheckIconImageDescriptor() {
-//		return getImageDescriptor("org.jcryptool.core.util", "/icons/check.png");
-//	}
-	
 
 }
