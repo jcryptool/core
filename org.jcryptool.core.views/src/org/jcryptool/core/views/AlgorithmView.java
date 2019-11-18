@@ -196,11 +196,11 @@ public class AlgorithmView extends ViewPart implements IOperationsConstants {
         defineCommand(showTreeCommandId, Messages.AlgorithmView_showTree, showTreeHandler);
         
         showPaletteContributionItem = createContributionItem(showPaletteCommandId,
-        		ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, "icons/switch.gif"), Messages.AlgorithmView_showPalette);
-             
-        showPaletteContributionItem = createContributionItem(showTreeCommandId,
-        		ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, "icons/switch.gif"), Messages.AlgorithmView_showTree);
-        
+        		ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, "icons/switch.gif"),
+        		Messages.AlgorithmView_showPalette);
+        showTreeContributionItem = createContributionItem(showTreeCommandId,
+        		ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, "icons/switch.gif"),
+        		Messages.AlgorithmView_showTree);
         
         // set the correct view to be shown and assign the corresponding action
         IMenuManager manager = getViewSite().getActionBars().getMenuManager();
@@ -235,7 +235,7 @@ public class AlgorithmView extends ViewPart implements IOperationsConstants {
             canvas.setLayoutData(gridData);
             canvas.addPaintListener(new PaintListener(){
                 public void paintControl(PaintEvent e) {
-                    e.gc.drawImage(ImageService.getImage(ViewsPlugin.PLUGIN_ID, "icons/clear.gif"), 1, 1);
+                    e.gc.drawImage(ImageService.getImage(ViewsPlugin.PLUGIN_ID, "icons/clear.gif"), 1, 1); //$NON-NLS-1$
                 }
             });
 
