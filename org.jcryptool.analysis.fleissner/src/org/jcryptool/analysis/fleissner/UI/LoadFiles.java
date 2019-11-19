@@ -15,7 +15,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.DoubleBuffer;
 import java.nio.channels.Channels;
-import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
 
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -43,16 +43,16 @@ public class LoadFiles {
             switch (exampleIndex) {
             
             case 0: 
-                textName = "files/dawkinsGerPlaintextOriginal.txt";
+                textName = "files/dawkinsGerPlaintextOriginal.txt"; //$NON-NLS-1$
                 break;
             case 1:     
-                textName = "files/wikiFruehchristlicheKunstGerPlaintextOriginal.txt";
+                textName = "files/wikiFruehchristlicheKunstGerPlaintextOriginal.txt"; //$NON-NLS-1$
                 break;
             case 2:
-                textName = "files/dawkinsEngPlaintextOriginal.txt";
+                textName = "files/dawkinsEngPlaintextOriginal.txt"; //$NON-NLS-1$
                 break;
             case 3:
-                textName = "files/visualArtsEngPlaintext.txt";
+                textName = "files/visualArtsEngPlaintext.txt"; //$NON-NLS-1$
                 break;     
             }
         
@@ -121,13 +121,13 @@ public class LoadFiles {
             switch (exampleIndex) {
             
             case 0: 
-                textName = "files/de-4gram-nocs.bin";
+                textName = "files/de-4gram-nocs.bin"; //$NON-NLS-1$
                 break;
             case 1:
-                textName = "files/en-4gram-nocs.bin";
+                textName = "files/en-4gram-nocs.bin"; //$NON-NLS-1$
                 break;
             case 2:
-                textName = "files/en-3gram-nocs.bin";
+                textName = "files/en-3gram-nocs.bin"; //$NON-NLS-1$
                 break;     
             }
         
@@ -164,7 +164,7 @@ public class LoadFiles {
         Shell shell = new Shell();
         FileDialog dialog = new FileDialog(shell, type);
         dialog.setFilterPath(DirectoryService.getUserHomeDir());
-        dialog.setFilterExtensions(new String[] { "*.txt" }); //limits the eligible files to *.txt files
+        dialog.setFilterExtensions(new String[] { "*.txt" }); //limits the eligible files to *.txt files //$NON-NLS-1$
         dialog.setFilterNames(new String[] { "Text Files (*.txt)" }); //$NON-NLS-1$
         dialog.setOverwrite(true);
         return dialog.open();
@@ -180,7 +180,7 @@ public class LoadFiles {
         Shell shell = new Shell();
         FileDialog dialog = new FileDialog(shell, type);
         dialog.setFilterPath(DirectoryService.getUserHomeDir());
-        dialog.setFilterExtensions(new String[] { "*.bin" }); //limits the eligible files to *.bin files
+        dialog.setFilterExtensions(new String[] { "*.bin" }); //limits the eligible files to *.bin files //$NON-NLS-1$
         dialog.setFilterNames(new String[] { "Binary Files (*.bin)" }); //$NON-NLS-1$
         dialog.setOverwrite(true);
         return dialog.open();
@@ -209,9 +209,9 @@ public class LoadFiles {
         int m = 0;
         
         switch(language) {
-        case "german":  m = 30;
+        case "german":  m = 30; //$NON-NLS-1$
                         break;
-        case "english": m = 26;
+        case "english": m = 26; //$NON-NLS-1$
                         break;
         }
 
@@ -220,24 +220,23 @@ public class LoadFiles {
             size = Math.pow(m, nGramSize)*8;
             fileSize = file.available();
         } catch (IOException e2) {
-            e2.printStackTrace();
+            LogUtil.logError(Activator.PLUGIN_ID, e2);
         }
 
         if (fileSize != size)
-            throw new InvalidParameterCombinationException("Statistic does not fit nGram size and/or language");
+            throw new InvalidParameterCombinationException(Messages.LoadFiles_Error_StatisticMismatch);
         double ngrams[] = new double[(int) Math.pow(m, nGramSize)];
         ByteBuffer myByteBuffer = ByteBuffer.allocate(((int) size) * 8);
         myByteBuffer.order(ByteOrder.LITTLE_ENDIAN);
         DoubleBuffer doubleBuffer = myByteBuffer.asDoubleBuffer();
 
-        try {          
-            FileChannel fc = (FileChannel) Channels.newChannel(file);
-            fc.read(myByteBuffer);
-            fc.close();
-//            file.close();   
+        try {            
+            ReadableByteChannel rbc = Channels.newChannel(file);
+            rbc.read(myByteBuffer);
+            rbc.close();
             } catch (IOException e) {
-                e.printStackTrace();
-                throw new FileNotFoundException("File not found !");
+                LogUtil.logError(Activator.PLUGIN_ID, e);
+                throw new FileNotFoundException(Messages.LoadFiles_Error_FileNotFound);
             }   
         doubleBuffer.get(ngrams);
         

@@ -68,9 +68,8 @@ public class MethodApplication{
 			try {
 				this.tv = new TextValuator(statistics, language, nGramSize);
 			} catch (FileNotFoundException e) {
-				e.printStackTrace();
 				LogUtil.logError(Activator.PLUGIN_ID, "Statistikdatei konnte nicht gefunden werden", e, true);
-				throw new FileNotFoundException("File not found !");
+				throw new FileNotFoundException("Datei nicht gefunden!");
 			}
 		}
 	}		
@@ -260,12 +259,10 @@ public class MethodApplication{
 
 			fg.setState(x, y, true);
 			}
-//			fwAnalysisOutput.append("\n\nRestart: "+sub);
 			fwAnalysisOutput += "\n\nRestart: "+sub;
 			LogUtil.logInfo(Activator.PLUGIN_ID, "\n\nRestart: "+sub);
 			decryptedText = fg.decryptText(ct.getText());
 			min = tv.evaluate(decryptedText);
-//			fwAnalysisOutput.append("\nDecrypted Text: \n"+decryptedText+"\n\nwith value: "+String.valueOf(min));
 			fwAnalysisOutput += "\nDecrypted Text: \n"+decryptedText+"\n\nwith value: "+String.valueOf(min);
 			LogUtil.logInfo(Activator.PLUGIN_ID, "Decrypted Text: "+decryptedText+"with value: "+String.valueOf(min));
 			
