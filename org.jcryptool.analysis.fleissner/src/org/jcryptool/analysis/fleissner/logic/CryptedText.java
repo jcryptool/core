@@ -83,7 +83,6 @@ public class CryptedText {
 				
 		} catch (Exception e) {
 			LogUtil.logError(Activator.PLUGIN_ID, "Text konnte nicht geladen werden", e, true);
-			e.printStackTrace();
 		}
 	}
 	
