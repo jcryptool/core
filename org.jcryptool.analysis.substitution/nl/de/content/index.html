@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	  <title>Substitutions-Analyse</title>
+</head>
+
+<body>
+	<h1>Substitutionsanalyse</h1>
+
+	<p>
+	Substitution ist eine Verschl&uuml;sselungsmethode, bei welcher der Klartext verschl&uumlsselt wird in dem Zeichen ersetzt werden. 
+	Das Resultat ist der Geheimtext. Hier k&ouml;nnen einzelne Zeichen, Zeichenpaare, l&auml;ngere N-Gramme oder eine Mischung verwendet werden. 
+	Um den Text zu entschl&uuml;sseln wird die Substitution der Zeichen in umgekehrter Reihenfolge durchgef&uuml;hrt.
+	</p>
+	
+	<p>
+	Die Substitutionsanalyse versucht herauszufinden welche Zeichenkette zu ersetzten ist, um den Klartext zu produzieren. 
+	Daf&uuml;r werden Statistiken eines Referenztextes und des Geheimtextes verwendet, da ersetzte Zeichenketten oft mit der gleichen 
+	Frequenz auftauchen. Statistiken &uuml;ber den Referenztext werden hier mit dem des Geheimtextes verglichen. 
+	Der Referenztext sollte daf&uuml;r ein Text in der gleichen Sprache mit dem gleichen Alphabet sein, um die korrekte Frequenz von
+	 Zeichenketten zu ermitteln.
+	</p>
+	
+	<p>
+	Mit dem Substitutionsanalyse Plug-In kann ein Geheimtext geladen werden und die Frequenzen von Zeichenketten im Referenz- und Geheimtext 
+	analysiert werden. Verschiedene Substitutionen k&ouml;nnen ausprobiert werden für welche der resultierende Klartext ausgegeben wird.
+	</p>
+	
+	
+	
+	</br>
+	
+	<h3>„Parameter für die Substitutionsanalyse“</h3>
+	
+	<p>
+	Als erstes Muss ein Geheimtext zur Analyse geladen werden. Das Alphabet wird dann automatisch ermittelt, kann aber verfeinert werden 
+	um Feinstellungen vorzunehmen. Dies ist wichtig da die Referenzstatistik auf Basis des Alphabets ermittelt wird. Danach kann ein beliebiger 
+	Referenztext geladen werden oder eine vorgefertigte Statistik verwendet werden. Jetzt kann die Analyse starten.
+	</p>
+	
+	<p align=center>
+	<img src="firstWindow.png" alt="View of the "Parameter f&uuml;r die Substitution-Analyse" Tab." width="95%">
+	</p>
+	
+	<br>
+	
+	<h3>„Substitutionsanalyse“</h3>
+	
+	<p>
+	Ein neues Fenster erscheint. Das Feld auf der rechten Seite zeigt die Zeichenh&auml;ufigkeits-Statistik. 
+	&Uuml;ber die Dropdown-Liste kann die L&auml;nge der Zeichenkette variiert werden. Mit Hilfe des Buttons im unteren Bereich des Panels kann ein 
+	neuer Referenztext geladen werden. Die Substitution kann festgelegt werden, in dem man auf die Buchstaben in der Geheimtextspalte dr&uuml;ckt. 
+	Dies kann auch durch die Tabelle im Feld „Substitutionen“ festgelegt werden.
+	</p>
+	
+	<p>
+	Im Feld „Substitutionen“ k&ouml;nnen verschiedene Option ausgew&auml;hlt werden um die Substitution zu vervollständigen. 
+	Zum Beispiel kann &uuml;ber den Button „F&uuml;hle fehlende Zeichen auf“ und die dazugeh&ouml;rigen Radiobuttons die Substitution
+	 automatisch ausgef&uuml;llt werden. Mithilfe der jeweiligen Buttons kann die Substitution auch exportiert oder zur&uuml;ckgesetzt werden.
+	</p>
+	
+	<p>
+	Die Substitution kann gleichzeitig im Feld „Vorschau des entschl&uuml;sselten Textes“ nachverfolgt werden. 
+	Hier werden der Geheimtext und der resultierende Klartext f&uuml;r die momentane Substitution ausgegeben. 
+	Optional kann der Klartext mithilfe des unteren Buttons in einen Editor exportiert werden.
+	</p>
+	
+	<p align=center>
+	<img src="secondWindow.png" alt="View of the "Parameter f&uuml;r die Substitution-Analyse" Tab." width="95%">
+	</p>
+</body>
+</html>

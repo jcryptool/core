@@ -11,7 +11,6 @@
 package org.jcryptool.analysis.graphtools.derivates;
 
 import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.jcryptool.analysis.graphtools.MColor;
 
@@ -107,7 +106,7 @@ public class OverlayLabelBar extends LabelBar {
 	public void drawBar(Rectangle myBox, double myHeight, double myWidth, MColor myColorMainbar, GC myGC) {
 		int barWidth = (int) Math.round(myWidth * myBox.width);
 		int barHeight = (int) Math.round(myHeight * myBox.height);
-		int topleftX = (int) Math.round((double) (myBox.width - myWidth * myBox.width) / 2 + myBox.x);
+		int topleftX = (int) Math.round((myBox.width - myWidth * myBox.width) / 2 + myBox.x);
 		int topleftY = myBox.y + myBox.height - barHeight;
 		int transparencyShades = 20;
 		int transparencySteps = Math.max(1, (barHeight / transparencyShades));

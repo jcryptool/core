@@ -6,7 +6,7 @@
          point="org.eclipse.ui.views">
       <view
             name="%view.name.0"
-            icon="icons/view.gif"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png"
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.zeroknowledge.views.MagicDoorView"
             id="org.jcryptool.visual.zeroknowledge.views.MagicDoorView">
@@ -14,21 +14,21 @@
       <view
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.zeroknowledge.views.FiatShamirView"
-            icon="icons/view.gif"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png"
             id="org.jcryptool.visual.zeroknowledge.views.FiatShamirView"
             name="%view.name.1">
       </view>
       <view
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.zeroknowledge.views.FeigeFiatShamirView"
-            icon="icons/view.gif"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png"
             id="org.jcryptool.visual.zeroknowledge.views.FeigeFiatShamirView"
             name="%view.name.2">
       </view>
       <view
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.zeroknowledge.views.GraphenisomorphieView"
-            icon="icons/view.gif"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png"
             id="org.jcryptool.visual.zeroknowledge.views.GraphenisomorphieView"
             name="%view.name.3">
       </view>

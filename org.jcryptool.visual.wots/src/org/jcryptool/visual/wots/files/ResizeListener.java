@@ -15,9 +15,8 @@ import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.visual.wots.WotsView;
-
-import wots.WOTSPlugin;
 
 /**
  * Listener for resizing images in the plugin
@@ -89,8 +88,8 @@ public class ResizeListener implements ControlListener {
             
 //        Image img_scaled = new Image(img.getDisplay(), org.eclipse.ui.plugin.AbstractUIPlugin.imageDescriptorFromPlugin("org.jcryptool.visual.wots", org.jcryptool.visual.wots.WotsView.currentImg).createImage().getImageData().scaledTo(width_scaled, height_scaled));
         Image img_scaled = new Image(img.getDisplay(), 
-        		WOTSPlugin.getImageDescriptor(WotsView.currentImg)
-        		.createImage().getImageData().scaledTo(width_scaled, height_scaled));
+        		ImageService.getImage(WotsView.PLUGIN_ID, WotsView.currentImg)
+        		.getImageData().scaledTo(width_scaled, height_scaled));
 //            System.err.println("-----------------------------------");
 //            System.out.println(e.toString());
 //            System.err.println("-----------------------------------");

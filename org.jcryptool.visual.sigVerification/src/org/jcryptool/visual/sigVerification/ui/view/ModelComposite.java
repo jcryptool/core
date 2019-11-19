@@ -40,6 +40,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.visual.sigVerification.Messages;
 import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
 import org.jcryptool.visual.sigVerification.cert.CertGeneration;
@@ -321,10 +322,10 @@ public class ModelComposite extends Composite {
 			public void paintControl(PaintEvent e) {
 	    		ImageDescriptor idIcon = null;
 				if (status == 1) {
-                	idIcon = SigVerificationPlugin.getImageDescriptor("icons/gruenerHacken.png"); //$NON-NLS-1$
+                	idIcon = ImageService.getImageDescriptor(SigVerificationPlugin.PLUGIN_ID, "icons/gruenerHacken.png");
                 }
 				else if (status == 2) {
-                    idIcon = SigVerificationPlugin.getImageDescriptor("icons/rotesKreuz.png"); //$NON-NLS-1$
+                    idIcon = ImageService.getImageDescriptor(SigVerificationPlugin.PLUGIN_ID, "icons/rotesKreuz.png");
                 }
 				if (idIcon != null) {
 		    		GC gc = e.gc;

@@ -7,7 +7,7 @@
       <view
             category="org.jcryptool.analysis"
             class="org.jcryptool.analysis.substitution.views.SubstitutionAnalysisView"
-            icon="icons/view.gif"
+            icon="platform:/plugin/org.jcryptool.core.util/icons/analysis_icon.gif"
             id="org.jcryptool.analysis.substitution.views.SubstitutionAnalysisView"
             name="%view.name">
       </view>
@@ -18,6 +18,20 @@
             name="%analysis.name2"
             viewId="org.jcryptool.analysis.substitution.views.SubstitutionAnalysisView">
       </analysis>
+   </extension>
+   
+      <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="$nl$/contexts.xml">
+      </contexts>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="$nl$/toc.xml"
+            primary="false">
+      </toc>
    </extension>
 
 </plugin>

@@ -39,7 +39,7 @@ import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.fonts.FontService;
-import org.jcryptool.visual.grille.GrillePlugin;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.visual.grille.algorithm.Grille;
 import org.jcryptool.visual.grille.algorithm.KeySchablone;
 
@@ -232,7 +232,7 @@ public class View extends ViewPart {
         });
 
 		button_okay = new Button(typeSelection, SWT.NONE);
-		button_okay.setImage(GrillePlugin.getImageDescriptor("icons/run_exc.gif").createImage()); //$NON-NLS-1$
+		button_okay.setImage(ImageService.ICON_RUN);
 		button_okay.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 2));
 		button_okay.setText(Messages.getString("View.start")); //$NON-NLS-1$
 		button_okay.setEnabled(false);
@@ -477,7 +477,7 @@ public class View extends ViewPart {
 		
 		Label help = new Label(illustration, SWT.NONE);
 		help.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false));
-		help.setImage(GrillePlugin.getImageDescriptor("platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png").createImage()); //$NON-NLS-1$
+		help.setImage(ImageService.ICON_HELP);
 		help.addListener(SWT.MouseDown, new Listener() {
 			
 			@Override

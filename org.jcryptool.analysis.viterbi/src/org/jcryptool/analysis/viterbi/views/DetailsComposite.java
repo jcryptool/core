@@ -21,13 +21,11 @@ import java.util.stream.IntStream;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -47,17 +45,17 @@ import org.jcryptool.analysis.viterbi.algorithm.Viterbi.IterationRecord;
 public class DetailsComposite extends Composite {
     private static final int LIMIT_CONST = 50;
 	/* set default values */
-    private static final int HORIZONTAL_SPACING = 15;
-    private static final int MARGIN_WIDTH = 5;
+//    private static final int HORIZONTAL_SPACING = 15;
+//    private static final int MARGIN_WIDTH = 5;
 
-    private static final int LOADBUTTONHEIGHT = 30;
-    private static final int LOADBUTTONWIDTH = 120;
+//    private static final int LOADBUTTONHEIGHT = 30;
+//    private static final int LOADBUTTONWIDTH = 120;
 
-    private static final int CONTINUEBUTTONHEIGHT = 30;
-    private static final int CONTINUEBUTTONWIDTH = 150;
+//    private static final int CONTINUEBUTTONHEIGHT = 30;
+//    private static final int CONTINUEBUTTONWIDTH = 150;
 
     /* colors for backgrounds. */
-    private static final Color WHITE = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
+//    private static final Color WHITE = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
 
 	private ViterbiView viterbiView;
 	private Table table;
@@ -493,7 +491,6 @@ public class DetailsComposite extends Composite {
 		derivedHighlights2.forEach(h -> {
 			Path p = h.resolvePath();
 			String displ = limitTo(pathToString(p), LIMIT_CONST);
-			Double prob = p.getProbability();
 			
 			TableItem ti = new TableItem(table_1, SWT.NONE);
 			ti.setBackground(SWTResourceManager.getColor(SWT.COLOR_GRAY));

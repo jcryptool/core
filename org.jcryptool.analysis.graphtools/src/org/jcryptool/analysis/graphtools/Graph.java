@@ -187,8 +187,8 @@ public class Graph {
 	protected int calcBiggestBarIndex() {
 		int biggest = -9999999;
 		for (int i = 0; i < bars.size(); i++)
-			if (((Bar) bars.get(i)).index > biggest)
-				biggest = ((Bar) bars.get(i)).index;
+			if (bars.get(i).index > biggest)
+				biggest = bars.get(i).index;
 		return biggest;
 	}
 
@@ -240,7 +240,7 @@ public class Graph {
 
 		int beforeWhich = -1;
 		for (int i = 0; i < bars.size(); i++) {
-			if (compareBarOrder(myBar, (Bar) bars.get(i)) && beforeWhich == -1)
+			if (compareBarOrder(myBar, bars.get(i)) && beforeWhich == -1)
 				beforeWhich = i;
 		}
 
@@ -305,10 +305,10 @@ public class Graph {
 		gc.fillRectangle(thisArea);
 
 		for (int i = 0; i < bars.size(); i++) {
-			barBox = calculateBarContainer(barDrawingRect, ((Bar) bars.get(i)).getIndex(), biggestBarIndex);
-			((Bar) bars.get(i)).setBox(barBox);
-			((Bar) bars.get(i)).setGC(gc);
-			((Bar) bars.get(i)).drawBar();
+			barBox = calculateBarContainer(barDrawingRect, bars.get(i).getIndex(), biggestBarIndex);
+			bars.get(i).setBox(barBox);
+			bars.get(i).setGC(gc);
+			bars.get(i).drawBar();
 		}
 	}
 

@@ -6,10 +6,9 @@
       <view
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.kleptography.ui.KleptoView"
-            icon="icons/view.gif"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png"
             id="org.jcryptool.visual.kleptography.view"
-            name="%view.name"
-            restorable="true">
+            name="%view.name">
       </view>
    </extension>
    <extension

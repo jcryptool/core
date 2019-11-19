@@ -7,7 +7,8 @@ Bundle-Activator: org.jcryptool.visual.aco.ACOPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.jcryptool.analysis.transpositionanalysis;visibility:=reexport,
- org.jcryptool.crypto.ui
+ org.jcryptool.crypto.ui,
+ org.jcryptool.core.util
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

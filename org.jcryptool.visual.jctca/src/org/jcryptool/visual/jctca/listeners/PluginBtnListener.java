@@ -18,6 +18,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.visual.jctca.Activator;
 import org.jcryptool.visual.jctca.JCTCA_Visual;
 import org.jcryptool.visual.jctca.ResizeHelper;
@@ -61,22 +62,19 @@ public class PluginBtnListener implements SelectionListener {
         // take action according to button pressed
         switch (pressed) {
             case 0: // data is set to 0 if create needs to be shown - see JCTCA_Visual.java
-                help = Activator.getImageDescriptor("icons/" + lang + "/minica_create.png")//$NON-NLS-1$
-                        .createImage();
+                help = ImageService.getImage(Activator.PLUGIN_ID, "icons/" + lang + "/minica_create.png");
                 exp.setText(Messages.PluginBtnListener_archpic_create_explain);
                 util.resize_image(lbl_img, comp_image, help);
                 util.set_image_name("Architekturskizze Zertifikatserzeugung");//$NON-NLS-1$
                 break;
             case 1: // data is set to 1 if revoke needs to be shown - see JCTCA_Visual.java
-                help = Activator.getImageDescriptor("icons/" + lang + "/minica_revoke.png")//$NON-NLS-1$
-                        .createImage();
+                help = ImageService.getImage(Activator.PLUGIN_ID, "icons/" + lang + "/minica_revoke.png");
                 exp.setText(Messages.PluginBtnListener_archpic_revoke_explain);
                 util.resize_image(lbl_img, comp_image, help);
                 util.set_image_name("Architekturskizze Zertifikatswiderruf");//$NON-NLS-1$
                 break;
             case 2: // data is set to 2 if check needs to be shown - see JCTCA_Visual.java
-                help = Activator.getImageDescriptor("icons/" + lang + "/minica_check.png")//$NON-NLS-1$
-                        .createImage();
+                help = ImageService.getImage(Activator.PLUGIN_ID, "icons/" + lang + "/minica_check.png");
                 exp.setText(Messages.PluginBtnListener_archpic_check_explain);
                 util.resize_image(lbl_img, comp_image, help);
                 util.set_image_name("Architekturskizze Signaturpr\u00FCfung");//$NON-NLS-1$

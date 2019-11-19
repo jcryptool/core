@@ -1176,13 +1176,13 @@ public class RSAAttackView extends Composite {
 				// Add one here to account for the second digit of the step count.
 				boldlength++;
 
-				styles[++srCount].start = sbDescription.length() + 2;
+				styles[++srCount].start = sbDescription.length() + 1;
 				styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
 				styles[styles.length - 1].length = Messages.RSAAttackView_Fixed_Step10.length() - boldlength;
 				sbDescription.append("\n\n" + Messages.RSAAttackView_Fixed_Step10); //$NON-NLS-1$
 			}
 			if(kleptoView.currentStep >= 18) {
-				styles[++srCount].start = sbDescription.length() + 2;
+				styles[++srCount].start = sbDescription.length() + 1;
 				styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
 				styles[styles.length - 1].length = Messages.RSAAttackView_Fixed_Step11.length() - boldlength;
 				sbDescription.append("\n\n" + Messages.RSAAttackView_Fixed_Step11); //$NON-NLS-1$
@@ -1243,13 +1243,13 @@ public class RSAAttackView extends Composite {
 				sbDescription.append(Messages.RSAAttackView_SETUP_Step7);
 			}
 			if(kleptoView.currentStep >= 10) {
-				styles[++srCount].start = sbDescription.length() + 2;
+				styles[++srCount].start = sbDescription.length() + 1;
 				styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
 				styles[styles.length - 1].length = Messages.RSAAttackView_SETUP_Step8.length() - boldlength;
 				sbDescription.append("\n\n" + Messages.RSAAttackView_SETUP_Step8); //$NON-NLS-1$
 			}
 			if(kleptoView.currentStep >= 11) {
-				styles[++srCount].start = sbDescription.length() + 2;
+				styles[++srCount].start = sbDescription.length() + 1;
 				styles[styles.length - 1].start = sbDescription.length() + highlightoffset;
 				styles[styles.length - 1].length = Messages.RSAAttackView_SETUP_Step9.length() - boldlength;
 				sbDescription.append("\n\n" + Messages.RSAAttackView_SETUP_Step9); //$NON-NLS-1$

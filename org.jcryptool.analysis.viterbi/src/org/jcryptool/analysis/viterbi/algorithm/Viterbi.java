@@ -155,6 +155,7 @@ public class Viterbi implements Runnable {
 	 * memorize the most likely. For every of these likely combinations, we add
 	 * a character to generate another combinations.
 	 */
+	@Override
 	public void run() {
 		
 		this.records = new LinkedHashMap<>();

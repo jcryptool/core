@@ -47,6 +47,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.visual.aup.AndroidUnlockPatternPlugin;
 
 /**
@@ -276,18 +277,18 @@ public class AupView extends ViewPart {
 			if (cntrBtn[i].getData("icon") != null) { //$NON-NLS-1$
 				cntrBtn[i].getImage().dispose(); // dispose the old image
 				String tmpStr = cntrBtn[i].getData("icon").toString(); //$NON-NLS-1$
-				ImageData tmp = AndroidUnlockPatternPlugin.getImageDescriptor(tmpStr).getImageData().scaledTo(size,
-						size);
+				ImageData tmp = ImageService.getImage(AndroidUnlockPatternPlugin.PLUGIN_ID, tmpStr)
+						.getImageData().scaledTo(size, size);
 				Image img = new Image(cntrBtn[i].getDisplay(), tmp);
 				GC gc = new GC(img);
 
 				if (cntrBtn[i].getData("arc") != null && advancedGraphic) { //$NON-NLS-1$
 					Image arrow = null;
 					if (tmpStr.regionMatches(false, 6, "g", 0, 1)) //$NON-NLS-1$
-						arrow = AndroidUnlockPatternPlugin.getImageDescriptor("icons/ArrowGreen.png") //$NON-NLS-1$
+						arrow = ImageService.getImageDescriptor(AndroidUnlockPatternPlugin.PLUGIN_ID, "icons/ArrowGreen.png")
 								.createImage(cntrBtn[i].getDisplay());
 					else if (tmpStr.regionMatches(false, 6, "y", 0, 1)) //$NON-NLS-1$
-						arrow = AndroidUnlockPatternPlugin.getImageDescriptor("icons/ArrowYellow.png") //$NON-NLS-1$
+						arrow = ImageService.getImageDescriptor(AndroidUnlockPatternPlugin.PLUGIN_ID, "icons/ArrowYellow.png")
 								.createImage(cntrBtn[i].getDisplay());
 
 					if (arrow != null) {
@@ -451,8 +452,7 @@ public class AupView extends ViewPart {
 		infoText = new CLabel(centerGroup, SWT.LEFT);
 		infoText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		infoText.setText(Messages.AupView_9);
-		infoText.setImage(AndroidUnlockPatternPlugin.getImageDescriptor("platform:/plugin/org.eclipse.jface/icons/full/message_info.png").createImage()); //$NON-NLS-1$
-		
+		infoText.setImage(ImageService.ICON_INFO);
 		helpBox = new Group(child, SWT.NONE);
 		helpBox.setToolTipText(Messages.AndroidUnlockPattern_helpBox_toolTipText);
 		helpBox.setText(Messages.AndroidUnlockPattern_GroupHeadingHelp);
@@ -516,7 +516,7 @@ public class AupView extends ViewPart {
 		});
 
 		//test if advanced graphic processing is available
-		Image img = AndroidUnlockPatternPlugin.getImageDescriptor("icons/view.gif").createImage(child.getDisplay()); //$NON-NLS-1$
+		Image img = ImageService.IMAGEDESCRIPTOR_VISUALIZATIONS.createImage(child.getDisplay());
 		GC gc = new GC(img);
 		gc.setAdvanced(true);	// will do nothing if advanced graphic processing is not available
 		if (gc.getAdvanced()){
@@ -641,19 +641,19 @@ public class AupView extends ViewPart {
 		} else {
 		switch (state) {
 			case ERROR:
-				statusText.setImage(AndroidUnlockPatternPlugin.getImageDescriptor("platform:/plugin/org.eclipse.ui/icons/full/obj16/error_tsk.png").createImage()); //$NON-NLS-1$
+				statusText.setImage(ImageService.ICON_ERROR);
 				statusText.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED));
 				break;
 			case WARNING:
-				statusText.setImage(AndroidUnlockPatternPlugin.getImageDescriptor("platform:/plugin/org.eclipse.ui/icons/full/obj16/warn_tsk.png").createImage()); //$NON-NLS-1$
+				statusText.setImage(ImageService.ICON_WARNING);
 				statusText.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_YELLOW));
 				break;
 			case INFO:
-				statusText.setImage(AndroidUnlockPatternPlugin.getImageDescriptor("platform:/plugin/org.eclipse.jface/icons/full/message_info.png").createImage()); //$NON-NLS-1$
+				statusText.setImage(ImageService.ICON_INFO);
 				statusText.setForeground(ColorService.BLACK);
 				break;
 			case OK:
-				statusText.setImage(AndroidUnlockPatternPlugin.getImageDescriptor("/icons/ok_st_obj.gif").createImage()); //$NON-NLS-1$
+				statusText.setImage(ImageService.ICON_CHECKBOX);
 				statusText.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN));
 				break;
 			default:

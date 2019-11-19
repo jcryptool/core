@@ -7,9 +7,8 @@
       		category="org.jcryptool.visual"
             class="org.jcryptool.visual.jctca.JCTCA_Visual"
             id="org.jcryptool.visual.jctca.JCTCA_Visual"
-            icon="icons/view.gif"
-            name="%view.name"
-            restorable="true">
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png"
+            name="%view.name">
       </view>
    </extension>
    <extension

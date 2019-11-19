@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.TextfieldInput;
 import org.jcryptool.crypto.classic.substitution.SubstitutionPlugin;
@@ -195,9 +196,9 @@ public class SubstitutionLetterInputField extends Composite {
 
             Image btnImage;
             if (mode == Mode.HORIZONTAL_POPUP) {
-                btnImage = SubstitutionPlugin.getImageDescriptor("icons/tiny_arrow_right.png").createImage();
+                btnImage = ImageService.getImage(SubstitutionPlugin.PLUGIN_ID, "icons/tiny_arrow_right.png");
             } else {
-                btnImage = SubstitutionPlugin.getImageDescriptor("icons/tiny_arrow_down.png").createImage();
+                btnImage = ImageService.getImage(SubstitutionPlugin.PLUGIN_ID, "icons/tiny_arrow_down.png");
             }
             menuBtnLabel.setImage(btnImage);
             menuBtnLabel.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_HAND));

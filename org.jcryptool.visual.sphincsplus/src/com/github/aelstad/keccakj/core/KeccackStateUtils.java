@@ -142,9 +142,9 @@ final class KeccackStateUtils {
                 do {
                     long tmp = 0;
                     if (isIn) {
-                        tmp = ((long) in[inpos]) & mask;
+                        tmp = (in[inpos]) & mask;
                         ++inpos;
-                        tmp |= (((long) in[inpos]) & mask) << 32;
+                        tmp |= ((in[inpos]) & mask) << 32;
                         ++inpos;
                     }
                     tmp = longOp(stateOp, state, pos >> 1, tmp);
@@ -196,13 +196,13 @@ final class KeccackStateUtils {
                 do {
                     long tmp = 0;
                     if (isIn) {
-                        tmp = ((long) in[inpos]) & mask;
+                        tmp = (in[inpos]) & mask;
                         ++inpos;
-                        tmp |= (((long) in[inpos]) & mask) << 16;
+                        tmp |= ((in[inpos]) & mask) << 16;
                         ++inpos;
-                        tmp |= (((long) in[inpos]) & mask) << 32;
+                        tmp |= ((in[inpos]) & mask) << 32;
                         ++inpos;
-                        tmp |= (((long) in[inpos]) & mask) << 48;
+                        tmp |= ((in[inpos]) & mask) << 48;
                         ++inpos;
 
                     }
@@ -260,21 +260,21 @@ final class KeccackStateUtils {
             do {
                 long tmp = 0;
                 if (isIn) {
-                    tmp = ((long) in[inpos]) & mask;
+                    tmp = (in[inpos]) & mask;
                     ++inpos;
-                    tmp |= (((long) in[inpos]) & mask) << 8;
+                    tmp |= ((in[inpos]) & mask) << 8;
                     ++inpos;
-                    tmp |= (((long) in[inpos]) & mask) << 16;
+                    tmp |= ((in[inpos]) & mask) << 16;
                     ++inpos;
-                    tmp |= (((long) in[inpos]) & mask) << 24;
+                    tmp |= ((in[inpos]) & mask) << 24;
                     ++inpos;
-                    tmp |= (((long) in[inpos]) & mask) << 32;
+                    tmp |= ((in[inpos]) & mask) << 32;
                     ++inpos;
-                    tmp |= (((long) in[inpos]) & mask) << 40;
+                    tmp |= ((in[inpos]) & mask) << 40;
                     ++inpos;
-                    tmp |= (((long) in[inpos]) & mask) << 48;
+                    tmp |= ((in[inpos]) & mask) << 48;
                     ++inpos;
-                    tmp |= (((long) in[inpos]) & mask) << 56;
+                    tmp |= ((in[inpos]) & mask) << 56;
                     ++inpos;
                 }
                 tmp = longOp(stateOp, state, pos >> 3, tmp);
@@ -333,7 +333,7 @@ final class KeccackStateUtils {
 
         long tmp = 0;
         if (isIn) {
-            tmp = ((long) in) & mask1;
+            tmp = (in) & mask1;
             tmp <<= loff;
         }
         tmp = longOp(stateOp, state, lpos, tmp, loff, len1);
@@ -347,7 +347,7 @@ final class KeccackStateUtils {
             loff = 0;
 
             if (isIn) {
-                tmp = ((long) (in >>> len1)) & mask2;
+                tmp = (in >>> len1) & mask2;
             }
             tmp = longOp(stateOp, state, lpos, tmp, loff, len2);
             if (isOut) {
@@ -403,7 +403,7 @@ final class KeccackStateUtils {
             if (bitoff == 0 && len >= 8) {
                 do {
                     // aligned byte
-                    long val = ((long) (src[srcByteOff])) & 0xffl;
+                    long val = ((src[srcByteOff])) & 0xffl;
 
                     l |= val << shift;
                     shift += 8;
@@ -415,7 +415,7 @@ final class KeccackStateUtils {
                 int bitlen = Math.min(8 - bitoff, len);
 
                 byte valmask = (byte) ((0xff << bitoff) & (0xff >>> (8 - bitlen - bitoff)));
-                long lval = ((long) (src[srcByteOff] & valmask)) & 0xffl;
+                long lval = (src[srcByteOff] & valmask) & 0xffl;
                 lval >>>= bitoff;
 
                 l |= lval << shift;

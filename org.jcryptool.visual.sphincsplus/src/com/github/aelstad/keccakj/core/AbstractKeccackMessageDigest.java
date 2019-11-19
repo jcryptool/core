@@ -60,7 +60,7 @@ public abstract class AbstractKeccackMessageDigest extends MessageDigest {
 
     @Override
     protected void engineUpdate(byte input) {
-        absorbStream.write(((int) input));
+        absorbStream.write((input));
     }
 
     @Override

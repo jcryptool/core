@@ -11,13 +11,11 @@ package org.jcryptool.analysis.freqanalysis.ui;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Observable;
 import java.util.Vector;
 
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -156,6 +154,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 		button1.setEnabled(false);
 
 		button.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent evt) {
 				try {
 					Display display = Display.getDefault();
@@ -173,10 +172,12 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 					}
 
 					if (text == "") {
+						br.close();
 						throw new Exception();
 					}
 					button1.setEnabled(true);
 					recalcSourceInfo();
+					br.close();
 				} catch (Exception ex) {
 					MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0,
 							Messages.AbstractAnalysisUI_2);
@@ -185,6 +186,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 		});
 
 		button0.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent evt) {
 				if (checkEditor()) {
 					text = getEditorText();
@@ -196,8 +198,8 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 		});
 
 		button1.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent evt) {
-				text = text;
 
 				if (text.equals("") || text == null) {
 					MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0,

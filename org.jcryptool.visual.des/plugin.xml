@@ -8,7 +8,7 @@
             class="org.jcryptool.visual.des.view.DesView"
           	id="org.jcryptool.visual.des.view.DesView"
             name="%view.name.0"
-            icon="icons/view.gif">
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
       </view>
    </extension>
    <extension

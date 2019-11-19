@@ -37,7 +37,10 @@ public class SampleView extends ViewPart {
 	    parent.setLayout(gridLayoutParent);
         
         fw = new FleissnerWindow(parent, SWT.NONE);
-        fw.setLayout(new GridLayout(1,true));
+        GridLayout layout = new GridLayout(1,true);
+        layout.marginWidth = 0;
+        layout.marginHeight = 0;
+        fw.setLayout(layout);
         fw.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 	    scrolledComposite.setContent(parent);

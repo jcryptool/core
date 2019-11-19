@@ -56,7 +56,7 @@ public abstract class BitInputStream extends InputStream {
         byte[] buf = new byte[1];
         readBits(buf, 0, 8);
 
-        return ((int) buf[0]) & 0xff;
+        return (buf[0]) & 0xff;
     }
 
     public abstract long readBits(byte[] arg, long bitOff, long bitLen);

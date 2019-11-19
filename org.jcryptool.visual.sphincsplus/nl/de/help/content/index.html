@@ -40,8 +40,11 @@
 
 
 	<p>&nbsp;</p>
-	<h2 id="params">Unterreiter "Parameter und Schlüsselerzeugung"</h2>
-	<p>xxxxxx TODO Screenshot xxxxxxxxx</p>
+	<h2 id="params">1. Unterreiter "Parameter und Schlüsselerzeugung"</h2>
+	<p>Im ersten Unterreiter können Sie die benutzten Parameter sehen und ändern, und die Schlüssel generieren, die dann im 2. Unterreiter zum Signieren und Verifizieren benutzt werden.</p>
+	<p> Der folgende Screenshot zeigt die Standardeinstellungen, und Schlüssel, die durch Drücken des Buttons "Schlüssel generieren" zufällig erzeugt wurden. Sie können Schlüssel auch von Hand eingeben, um Beispiele aus der Literatur zu testen.</p>
+	<img src="images/SPHINCSplus_Sub-tab1_After-Pressing-KeyGen.png" alt="Sub-tab 1" id="subtab1" width = "90%" />
+	
 	<h4 id="Parameter">Gruppierung "Parameter"</h4>
 	<p>Im ersten Unterreiter können Sie die ff. Verfahrensparameter verändern und einsehen. Die Parameter sind im Dezimalsystem (Basis 10) angegeben.</p>
 	<table border=1>
@@ -199,8 +202,11 @@
 
 
 	<p>&nbsp;</p>
-	<h2 id="signing">Unterreiter "Signierung und Verifikation"</h2>
-
+	<h2 id="signing">2. Unterreiter "Signierung und Verifikation"</h2>
+	<p>Im zweiten Unterreiter können Sie eine Nachricht eingeben und dann mit SPHINCS+ signieren (Voraussetzung ist, dass die Schlüssel im ersten Unterreiter erzeugt wurden). Anschließend können Sie die Signatur verifizieren.</p>
+	<p> Solange Sie nichts ändern, wird die Verifikation immer erfolgreich sein (ok). Wenn Sie die Nachricht ändern und nochmal den Button "Signatur verifizieren" drücken, wird die Verifikation nicht erfolgreich sein.<br> Die Signaturwerte kann man momentan in diesem Unterreiter nicht ändern. Wenn Sie im ersten Unterreiter nochmal neue Schlüssel generieren, werden diese hier erst genutzt, wenn Sie die Nachricht nochmal signieren.</p>
+	<img src="images/SPHINCSplus_Sub-tab2_After-Pressing-Verify.png" alt="Sub-tab 2" id="subtab2" width = "90%" />
+	
 	<h4>Gruppierung "Nachricht"</h4>
 	<p>Hier können Sie die Nachricht eingeben, die signiert werden soll.</p>
 
@@ -230,8 +236,11 @@
 		wird.</p>
 
 	<p>&nbsp;</p>
-	<h2 id="hypertree">Unterreiter "SPHINCS+-Hypertree"</h2>
-	<p>In diesem Unterreiter wird der aus Ihren Parametern erzeugte Hypertree jeweils dynamisch grafisch dargestellt.</p>
+	<h2 id="hypertree">3. Unterreiter "SPHINCS+-Hypertree"</h2>
+	<p>In dritten Unterreiter wird ein typischer Hypertree mit seinen Elementen grafisch angezeigt.</p>
+	<p>Die Unterreiter 3 und 4 können unabhängig von der Schlüsselerzeugung im ersten Unterreiter aufgerufen werden. Deshalb hat der Hypertree eine feste Größe und wird (noch) nicht aus den im ersten Unterreiter erstellten Parametern dynamisch aufgebaut.</p>
+	<img src="images/SPHINCSplus_Sub-tab3_Hypertree.png" alt="Sub-tab 3" id="subtab3" width = "90%" />
+	
 	<p>Im oberen Abschnitt befinden sich eine Beschreibung und ein
 		dynamisches Textfeld. Das dynamische Textfeld zeigt Informationen zu dem
 		Element in der darunterliegenden Darstellung, das Sie anklicken.</p>
@@ -245,13 +254,14 @@
 
 
 	<p>&nbsp;</p>
-	<h2 id="forstree">Unterreiter "SPHINCS+-FORS"</h2>
+	<h2 id="forstree">4. Unterreiter "SPHINCS+-FORS"</h2>
 	<p>Der öffentliche Schlüssel des FORS-Baums wird als Blatt im
 		Hypertree verwendet. Der FORS-Baum besteht wiederum aus Unterbäumen.
 		Diese Unterbäume werden als ausklappbares Element dargestellt. Dabei
 		sind die Wurzel und das Container-Element grün markiert &ndash; sie stellen
 		das gleiche Element dar.</p>
+	<img src="images/SPHINCSplus_Sub-tab4_FORS.png" alt="Sub-tab 4" id="subtab4" width = "90%" />
 
-<br>		
+<p>&nbsp;</p>
 </body>
 </html>

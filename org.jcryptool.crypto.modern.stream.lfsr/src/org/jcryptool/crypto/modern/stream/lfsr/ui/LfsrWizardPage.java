@@ -43,6 +43,7 @@ import org.eclipse.ui.PlatformUI;
 
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.modern.stream.lfsr.LfsrPlugin;
 
 public class LfsrWizardPage extends WizardPage implements Listener {
@@ -362,8 +363,7 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 		resetButton.setLayoutData(resetButtonGridData);
 		resetButton.setText(Messages.LfsrWizardPage_reset);
 		resetButton.setToolTipText(Messages.LfsrWizardPage_resetTooltip);
-		resetButton
-				.setImage(LfsrPlugin.imageDescriptorFromPlugin(LfsrPlugin.PLUGIN_ID, "/icons/reset.gif").createImage()); //$NON-NLS-1$
+		resetButton.setImage(ImageService.ICON_RESET);
 		resetButton.addSelectionListener(new SelectionListener() {
 
 			@Override
