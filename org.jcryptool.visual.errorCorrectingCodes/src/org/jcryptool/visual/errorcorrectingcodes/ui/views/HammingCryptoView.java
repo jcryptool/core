@@ -102,6 +102,7 @@ public class HammingCryptoView extends Composite {
     private Label lblMatrixGSP;
     private Label lblMatrixSInverse;
     private Label lblMatrixPInverse;
+    private StyledText textInfoHead;
 
     public HammingCryptoView(Composite parent, int style) {
         super(parent, style);
@@ -110,41 +111,45 @@ public class HammingCryptoView extends Composite {
         this.parent = parent;
         Point margins = new Point(5, 5);
         GridLayoutFactory glf = GridLayoutFactory.fillDefaults().margins(margins);
-
+        GridDataFactory gdf = GridDataFactory.fillDefaults().grab(true, false);
+        
         glf.applyTo(this);
-        GridDataFactory.fillDefaults().grab(true, true).applyTo(this);
+        gdf.applyTo(this);
 
         compHead = new Composite(this, SWT.NONE);
         glf.applyTo(compHead);
-        GridDataFactory.fillDefaults().applyTo(compHead);
+        gdf.applyTo(compHead);
         lblHeader = new Label(compHead, SWT.NONE);
         lblHeader.setFont(FontService.getHeaderFont());
-        lblHeader.setText(Messages.McElieceView_lblHeader);
-
+        lblHeader.setText(Messages.HammingCryptoView_lblHeader);
+        textInfoHead = new StyledText(compHead,SWT.READ_ONLY | SWT.WRAP);
+        textInfoHead.setText(Messages.HammingCryptoView_textHeader);
+        GridDataFactory.fillDefaults().grab(true, false).hint(600, SWT.DEFAULT).applyTo(textInfoHead);
+        
         mainComposite = new Composite(this, SWT.NONE);
         GridLayoutFactory.fillDefaults().margins(margins).numColumns(2).spacing(80, SWT.DEFAULT).equalWidth(true)
                 .applyTo(mainComposite);
-        GridDataFactory.fillDefaults().grab(true, true).applyTo(mainComposite);
+        gdf.applyTo(mainComposite);
 
         grpDecryption = new Group(mainComposite, SWT.NONE);
         glf.applyTo(grpDecryption);
-        GridDataFactory.fillDefaults().grab(true, true).applyTo(grpDecryption);
-        grpDecryption.setText(Messages.McElieceView_grpDecryption);
+        gdf.applyTo(grpDecryption);
+        grpDecryption.setText(Messages.HammingCryptoView_grpDecryption);
 
         grpPrivateKey = new Group(grpDecryption, SWT.NONE);
-        grpPrivateKey.setText(Messages.McElieceView_grpPrivateKey);
+        grpPrivateKey.setText(Messages.HammingCryptoView_grpPrivateKey);
         glf.applyTo(grpPrivateKey);
         GridDataFactory.fillDefaults().applyTo(grpPrivateKey);
         compPrivateKeyButton = new Composite(grpPrivateKey, SWT.NONE);
         RowLayoutFactory.fillDefaults().applyTo(compPrivateKeyButton);
         btnGeneratePrivateKey = new Button(compPrivateKeyButton, SWT.NONE);
-        btnGeneratePrivateKey.setText(Messages.McElieceView_btnGeneratePrivateKey);
+        btnGeneratePrivateKey.setText(Messages.HammingCryptoView_btnGeneratePrivateKey);
         btnGeneratePrivateKey.addListener(SWT.Selection, e -> generateKey(true));
 
         compPrivateKeyData = new Composite(grpPrivateKey, SWT.NONE);
         GridLayoutFactory.fillDefaults().numColumns(6).spacing(20, SWT.DEFAULT).margins(margins)
                 .applyTo(compPrivateKeyData);
-        GridDataFactory.fillDefaults().grab(true, true).applyTo(compPrivateKeyData);
+        gdf.applyTo(compPrivateKeyData);
         lblMatrixG = new Label(compPrivateKeyData, SWT.NONE);
         lblMatrixG.setText("G = "); //$NON-NLS-1$
         GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(lblMatrixG);
@@ -171,25 +176,25 @@ public class HammingCryptoView extends Composite {
         lblMatrixPInverse.setText("P' = "); //$NON-NLS-1$
         GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(lblMatrixPInverse);
         textMatrixPInverse = matrixText(compInverseMatrices, SWT.LEFT, SWT.CENTER, 7, 7);
-        GridDataFactory.fillDefaults().grab(true, true).applyTo(compInverseMatrices);
+        gdf.applyTo(compInverseMatrices);
 
         grpOutput = new Group(grpDecryption, SWT.NONE);
         glf.numColumns(1).applyTo(grpOutput);
-        GridDataFactory.fillDefaults().grab(true, true).applyTo(grpOutput);
-        grpOutput.setText(Messages.McElieceView_lblOutput);
+        gdf.applyTo(grpOutput);
+        grpOutput.setText(Messages.HammingCryptoView_lblOutput);
         textDecoded = codeText(grpOutput, SWT.FILL, SWT.TOP);
         textOutput = new Text(grpOutput, SWT.NONE);
-        GridDataFactory.fillDefaults().grab(true, true).applyTo(textOutput);
+        gdf.applyTo(textOutput);
 
         grpEncryption = new Group(mainComposite, SWT.NONE);
-        grpEncryption.setText(Messages.McElieceView_grpEncryption);
+        grpEncryption.setText(Messages.HammingCryptoView_grpEncryption);
         glf.numColumns(1).applyTo(grpEncryption);
-        GridDataFactory.fillDefaults().grab(true, true).applyTo(grpEncryption);
+        gdf.applyTo(grpEncryption);
 
         grpInputStep = new Group(grpEncryption, SWT.NONE);
         glf.applyTo(grpInputStep);
         GridDataFactory.fillDefaults().grab(true, false).applyTo(grpInputStep);
-        grpInputStep.setText(Messages.McElieceView_lblTextOriginal);
+        grpInputStep.setText(Messages.HammingCryptoView_lblTextOriginal);
         textInput = new Text(grpInputStep, SWT.BORDER);
         GridDataFactory.fillDefaults().grab(true, false).applyTo(textInput);
         textInput.addListener(SWT.FocusOut, e -> updateVector());
@@ -198,7 +203,7 @@ public class HammingCryptoView extends Composite {
         grpPublicKey = new Group(grpEncryption, SWT.NONE);
         glf.numColumns(2).applyTo(grpPublicKey);
         GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.TOP).applyTo(grpPublicKey);
-        grpPublicKey.setText(Messages.McElieceView_grpPublicKey);
+        grpPublicKey.setText(Messages.HammingCryptoView_grpPublicKey);
         lblMatrixGSP = new Label(grpPublicKey, SWT.NONE);
         lblMatrixGSP.setText("G' = SGP = "); //$NON-NLS-1$
         GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(lblMatrixGSP);
@@ -207,12 +212,12 @@ public class HammingCryptoView extends Composite {
         grpEncrypted = new Group(grpEncryption, SWT.NONE);
         glf.numColumns(1).applyTo(grpEncrypted);
         GridDataFactory.fillDefaults().applyTo(grpEncrypted);
-        grpEncrypted.setText(Messages.McElieceView_lblEncrypt);
+        grpEncrypted.setText(Messages.HammingCryptoView_lblEncrypt);
         textEncrypted = codeText(grpEncrypted, SWT.FILL, SWT.BOTTOM);
 
         compInfoText = new Composite(this, SWT.NONE);
         glf.applyTo(compInfoText);
-        GridDataFactory.fillDefaults().grab(true, true).applyTo(compInfoText);
+        gdf.applyTo(compInfoText);
 
         grpControlButtons = new Group(compInfoText, SWT.NONE);
         RowLayoutFactory.fillDefaults().pack(false).spacing(10).applyTo(grpControlButtons);
@@ -227,9 +232,9 @@ public class HammingCryptoView extends Composite {
         btnReset.addListener(SWT.Selection, e -> initView());
         grpTextInfo = new Group(compInfoText, SWT.NONE);
         glf.applyTo(grpTextInfo);
-        GridDataFactory.fillDefaults().grab(true, true).applyTo(grpTextInfo);
-        grpTextInfo.setText(Messages.McElieceView_grpTextInfo);
-        textInfo = UIHelper.mutltiLineText(grpTextInfo, SWT.FILL, SWT.FILL, parent.getBounds().width - 100, 8, null, true);
+        gdf.applyTo(grpTextInfo);
+        grpTextInfo.setText(Messages.HammingCryptoView_grpTextInfo);
+        textInfo = UIHelper.mutltiLineText(grpTextInfo, SWT.FILL, SWT.FILL, parent.getBounds().width - 100, 6, null, true);
 
         bindValues();
         initView();
@@ -247,8 +252,7 @@ public class HammingCryptoView extends Composite {
     private void initView() {
         resetKeys();
         textInput.setText("password"); //$NON-NLS-1$
-        textInfo.setText(Messages.McElieceView_step1);
-        UIHelper.formatTextOccurrence(textInfo, Messages.McElieceView_demoNote, SWT.BOLD);
+        textInfo.setText(Messages.HammingCryptoView_step1);
         updateVector();
         btnPrev.setEnabled(false);
         btnGeneratePrivateKey.setEnabled(true);
@@ -271,7 +275,7 @@ public class HammingCryptoView extends Composite {
                 mce.encrypt();
                 textMatrixGSP.setText(data.getMatrixSGP().toString());
                 textEncrypted.setText(data.getEncrypted().toString());
-                textInfo.setText(Messages.McElieceView_step2);
+                textInfo.setText(Messages.HammingCryptoView_step2);
                 grpPublicKey.setVisible(true);
                 grpEncrypted.setVisible(true);
                 btnPrev.setEnabled(true);
@@ -289,7 +293,7 @@ public class HammingCryptoView extends Composite {
             // UIHelper.markCode(textCorrected, SWT.COLOR_CYAN, ecc.getBitErrors());
             textMatrixPInverse.setText(data.getMatrixPInv().toString());
             textMatrixSInverse.setText(data.getMatrixSInv().toString());
-            textInfo.setText(Messages.McElieceView_step3);
+            textInfo.setText(Messages.HammingCryptoView_step3);
             compInverseMatrices.setVisible(true);
             grpOutput.setVisible(true);
             btnNextStep.setEnabled(false);
@@ -301,13 +305,12 @@ public class HammingCryptoView extends Composite {
      */
     private void prevStep() {
         if (grpOutput.isVisible()) {
-            textInfo.setText(Messages.McElieceView_step2);
+            textInfo.setText(Messages.HammingCryptoView_step2);
             compInverseMatrices.setVisible(false);
             grpOutput.setVisible(false);
             btnNextStep.setEnabled(true);
         } else if (grpPublicKey.isVisible()) {
-            textInfo.setText(Messages.McElieceView_step1);
-            UIHelper.formatTextOccurrence(textInfo, Messages.McElieceView_demoNote, SWT.BOLD);
+            textInfo.setText(Messages.HammingCryptoView_step1);
             grpEncrypted.setVisible(false);
             grpPublicKey.setVisible(false);
             btnPrev.setEnabled(false);

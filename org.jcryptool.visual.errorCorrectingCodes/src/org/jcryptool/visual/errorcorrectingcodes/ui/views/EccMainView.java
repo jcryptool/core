@@ -18,15 +18,14 @@ import org.jcryptool.visual.errorcorrectingcodes.ui.Messages;
 
 public class EccMainView extends ViewPart {
     private static final int DEFAULT_TAB = 0;
-    private static final Point windowsSize = new Point(1280,800);
-    private ScrolledComposite scrolledComposite;
     private Composite parent;
 
     private CTabFolder tabFolder;
     private CTabItem tabGeneral;
+    private CTabItem tabHamming;
     private CTabItem tabMcEliece;
     private GeneralEccView generalEcc;
-    private HammingCryptoView mcelieceView;
+    private HammingCryptoView hammingView;
     private McElieceView mcEliece;
 
     /**
@@ -36,32 +35,45 @@ public class EccMainView extends ViewPart {
     public void createPartControl(Composite parent) {
         this.parent = parent;
         
-        scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
-        GridLayoutFactory.fillDefaults().applyTo(scrolledComposite);
-        GridDataFactory.fillDefaults().grab(true, true).hint(windowsSize).applyTo(scrolledComposite);
-        scrolledComposite.setExpandHorizontal(true);
-        scrolledComposite.setExpandVertical(true);
-
-        tabFolder = new CTabFolder(scrolledComposite, SWT.NONE);
-        //tabFolder.setSelectionBackground(parent.getDisplay().getSystemColor(SWT.COLOR_GRAY));
-        mcEliece = new McElieceView(tabFolder, SWT.NONE);
-        tabMcEliece = new CTabItem(tabFolder, SWT.NONE);
-        tabMcEliece.setText(Messages.EccMainView_tabMcEliece);
-        tabMcEliece.setControl(mcEliece);
+        tabFolder = new CTabFolder(parent, SWT.NONE);
+        tabFolder.setSelectionBackground(parent.getDisplay().getSystemColor(SWT.COLOR_GRAY));
         
-        generalEcc = new GeneralEccView(tabFolder, SWT.NONE);
-        tabGeneral = new CTabItem(tabFolder, SWT.NONE);
-        tabGeneral.setText(Messages.EccMainView_tabGeneralText);
-        tabGeneral.setControl(generalEcc);
-        mcelieceView = new HammingCryptoView(tabFolder, SWT.NONE);
+        //McEliece Algorithm view
+        ScrolledComposite sc = new ScrolledComposite(tabFolder, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+       // GridLayoutFactory.fillDefaults().applyTo(sc);
+       // GridDataFactory.fillDefaults().grab(true, true).applyTo(sc);
+        sc.setExpandHorizontal(true);
+        sc.setExpandVertical(true);
+        
+        mcEliece = new McElieceView(sc, SWT.NONE);
         tabMcEliece = new CTabItem(tabFolder, SWT.NONE);
         tabMcEliece.setText(Messages.EccMainView_tabMcElieceText);
-        tabMcEliece.setControl(mcelieceView);
-        tabFolder.setSelection(DEFAULT_TAB);
+        sc.setContent(mcEliece);
+        sc.setMinSize(mcEliece.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        tabMcEliece.setControl(sc);
         
-        scrolledComposite.setContent(tabFolder);
-        scrolledComposite.setMinSize(windowsSize);
-        tabFolder.pack();
+        // Hamming McEliece view
+        sc = new ScrolledComposite(tabFolder, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+        sc.setExpandHorizontal(true);
+        sc.setExpandVertical(true);
+        hammingView = new HammingCryptoView(sc, SWT.NONE);
+        tabHamming = new CTabItem(tabFolder, SWT.NONE);
+        tabHamming.setText(Messages.EccMainView_tabHammingText);
+        sc.setContent(hammingView);
+        sc.setMinSize(hammingView.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        tabHamming.setControl(sc);
+        
+        //Error correcting coe view
+        sc = new ScrolledComposite(tabFolder, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+        sc.setExpandHorizontal(true);
+        sc.setExpandVertical(true);
+        generalEcc = new GeneralEccView(sc, SWT.NONE);
+        tabGeneral = new CTabItem(tabFolder, SWT.NONE);
+        tabGeneral.setText(Messages.EccMainView_tabGeneralText);
+        sc.setContent(generalEcc);
+        sc.setMinSize(generalEcc.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        tabGeneral.setControl(sc);
+        tabFolder.setSelection(DEFAULT_TAB);
     }
 
     @Override

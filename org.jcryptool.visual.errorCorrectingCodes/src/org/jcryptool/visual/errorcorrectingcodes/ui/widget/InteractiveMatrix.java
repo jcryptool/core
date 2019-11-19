@@ -49,6 +49,7 @@ public class InteractiveMatrix extends Composite {
         this.rows = rows;
         this.columns = columns;
         this.permutation = false;
+        this.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_INFO_BACKGROUND));
         buttonGrid = new ArrayList<>();
 
         GridLayoutFactory.fillDefaults().numColumns(columns).applyTo(this);

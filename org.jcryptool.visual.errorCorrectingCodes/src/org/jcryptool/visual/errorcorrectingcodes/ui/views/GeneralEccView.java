@@ -67,16 +67,23 @@ public class GeneralEccView extends Composite {
     private Composite compArrowRight1;
     private Composite compArrowRight2;
     private Composite compArrowDown;
-    private Composite compOutputStep;
-
+    private Composite compArrowUp;
+    private Composite compOutputStep;   
+    private Composite compDecodeStep;
     private Group grpSender;
     private Group grpErrorCode;
     private Group grpFootButtons;
     private Group grpTextInfo;
+    private Group grpReceiver;
+
+    private StyledText textInfoHead;
     private StyledText textAsBinary;
     private StyledText textInput;
     private StyledText textEncoded;
     private StyledText textInfo;
+    private StyledText textOutput;
+    private StyledText textCorrected;
+    private StyledText textError;
     private Button btnReset;
     private Button btnNextStep;
     private Button btnPrev;
@@ -88,17 +95,8 @@ public class GeneralEccView extends Composite {
     private Label lblHeader;
     private Label lblTextOriginal;
     private Label lblTextEncoded;
-
-    private Group grpReceiver;
-    private StyledText textOutput;
-    private Composite compArrowUp;
     private Label lblTextDecoded;
-    private Composite compDecodeStep;
-    private StyledText textCorrected;
-    private StyledText textError;
-    private Composite compHeadLabels;
-    private Label lblEncrypt;
-    private Label lblDecrypt;
+
 
     /**
      * Instantiates a new general ecc view.
@@ -111,24 +109,29 @@ public class GeneralEccView extends Composite {
 
         // common grid layout for all elements
         GridLayoutFactory glf = GridLayoutFactory.fillDefaults().margins(5, 5).equalWidth(true);
-
+        GridDataFactory gdf = GridDataFactory.fillDefaults().grab(true, false);
+        
         glf.applyTo(this);
-        GridDataFactory.fillDefaults().grab(true, true).applyTo(this);
+        gdf.applyTo(this);
 
         compHead = new Composite(this, SWT.NONE);
         glf.applyTo(compHead);
-        GridDataFactory.fillDefaults().grab(true, true).applyTo(compHead);
+        gdf.applyTo(compHead);
         lblHeader = new Label(compHead, SWT.NONE);
         lblHeader.setFont(FontService.getHeaderFont());
         lblHeader.setText(Messages.GeneralEccView_lblHeader);
+        textInfoHead = new StyledText(compHead, SWT.MULTI | SWT.READ_ONLY | SWT.WRAP);
+        textInfoHead.setText(Messages.GeneralEccView_textHeader);
+        GridDataFactory.fillDefaults().grab(true, false).hint(1000, SWT.DEFAULT).applyTo(textInfoHead);
 
+        
         mainComposite = new Composite(this, SWT.NONE);
         glf.equalWidth(false).numColumns(5).applyTo(mainComposite);
-        GridDataFactory.fillDefaults().grab(true, true).applyTo(mainComposite);
+        gdf.applyTo(mainComposite);
 
         grpSender = new Group(mainComposite, SWT.NONE);
         glf.numColumns(1).applyTo(grpSender);
-        GridDataFactory.fillDefaults().grab(true, true).applyTo(grpSender);
+        gdf.applyTo(grpSender);
         grpSender.setText(Messages.GeneralEccView_grpSenderStep);
         compInputStep = new Composite(grpSender, SWT.NONE);
         glf.applyTo(compInputStep);
@@ -138,7 +141,7 @@ public class GeneralEccView extends Composite {
         textInput = new StyledText(compInputStep, SWT.BORDER);
         GridDataFactory.fillDefaults().grab(true, false).applyTo(textInput);
         textInput.addListener(SWT.FocusOut, e -> ecc.textAsBinary());
-        textAsBinary = codeText(grpSender, SWT.FILL, SWT.TOP);
+        textAsBinary = codeText(compInputStep, SWT.FILL, SWT.TOP);
         compArrowDown = new Composite(grpSender, SWT.NONE);
         glf.numColumns(2).applyTo(compArrowDown);
         GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.TOP).applyTo(compArrowDown);
@@ -158,7 +161,7 @@ public class GeneralEccView extends Composite {
 
         grpErrorCode = new Group(mainComposite, SWT.NONE);
         glf.applyTo(grpErrorCode);
-        GridDataFactory.fillDefaults().minSize(SWT.DEFAULT, 600).grab(true, true).applyTo(grpErrorCode);
+        GridDataFactory.fillDefaults().grab(true, false).applyTo(grpErrorCode);
         grpErrorCode.setText(Messages.GeneralEccView_grpErrorCode);
         textError = codeText(grpErrorCode, SWT.FILL, SWT.CENTER);
         // GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.FILL).applyTo(textError);
@@ -171,7 +174,7 @@ public class GeneralEccView extends Composite {
 
         grpReceiver = new Group(mainComposite, SWT.NONE);
         glf.applyTo(grpReceiver);
-        GridDataFactory.fillDefaults().grab(true, true).applyTo(grpReceiver);
+        gdf.applyTo(grpReceiver);
         grpReceiver.setText(Messages.GeneralEccView_grpReceiver);
         compOutputStep = new Composite(grpReceiver, SWT.NONE);
         glf.applyTo(compOutputStep);
@@ -190,13 +193,7 @@ public class GeneralEccView extends Composite {
 
         compFoot = new Composite(this, SWT.NONE);
         glf.applyTo(compFoot);
-        GridDataFactory.fillDefaults().grab(true, true).applyTo(compFoot);
-        grpTextInfo = new Group(compFoot, SWT.NONE);
-        glf.applyTo(grpTextInfo);
-        GridDataFactory.fillDefaults().grab(true,true).applyTo(grpTextInfo);
-        grpTextInfo.setText(Messages.GeneralEccView_grpTextInfo);
-        textInfo = UIHelper.mutltiLineText(grpTextInfo, SWT.FILL, SWT.FILL, parent.getBounds().width-100, 8, null, true);
-        textInfo.setText(Messages.GeneralEccView_textInfo_step1);
+        gdf.applyTo(compFoot);
 
         grpFootButtons = new Group(compFoot, SWT.NONE);
         RowLayoutFactory.fillDefaults().margins(5, 5).pack(false).spacing(10).applyTo(grpFootButtons);
@@ -209,6 +206,14 @@ public class GeneralEccView extends Composite {
         btnReset = new Button(grpFootButtons, SWT.NONE);
         btnReset.setText(Messages.GeneralEccView_btnReset);
         btnReset.addListener(SWT.Selection, e -> initView());
+        
+        grpTextInfo = new Group(compFoot, SWT.NONE);
+        glf.applyTo(grpTextInfo);
+        GridDataFactory.fillDefaults().grab(true,true).applyTo(grpTextInfo);
+        grpTextInfo.setText(Messages.GeneralEccView_grpTextInfo);
+        textInfo = UIHelper.mutltiLineText(grpTextInfo, SWT.FILL, SWT.FILL, parent.getBounds().width-100, 6, null, true);
+        textInfo.setText(Messages.GeneralEccView_textInfo_step1);
+
         bindValues();
         initView();
     }
@@ -253,6 +258,7 @@ public class GeneralEccView extends Composite {
             btnNextStep.setEnabled(true);
             compArrowUp.setVisible(false);
             compOutputStep.setVisible(false);
+            textInfo.setText(Messages.GeneralEccView_textInfo_step4);
         } else if (grpReceiver.isVisible()) {
             grpReceiver.setVisible(false);
             compArrowRight2.setVisible(false);

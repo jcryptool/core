@@ -28,13 +28,18 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.layout.RowLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.layout.GridData;
 
 public class McElieceView extends Composite {
 
+    private static int WIDTH_HINT = 400;
+    
     private McElieceCrypto mceCrypto;
 
     private Composite parent;
+    private Composite composite;
     private Composite compHead;
     private Composite mainComposite;
     private Composite compButtons;
@@ -45,36 +50,42 @@ public class McElieceView extends Composite {
     private Group grpKeyParams;
 
     private Label lblHeader;
-    private Label lblInput;
-    private Button btnEncrypt;
-    private Button btnDecrypt;
-    private Combo comboValueM;
-    private Text txtValueT;
+    private Text textInfoHead;
     private StyledText txtInput;
     private StyledText txtOutput;
-
+    private Text txtValueT;
     private Text txtPrivateKey;
-
+    private Button btnEncrypt;
+    private Button btnDecrypt;
     private Button btnFillKey;
+    private Combo comboValueM;
 
     public McElieceView(Composite parent, int style) {
         super(parent, style);
         this.parent = parent;
         mceCrypto = new McElieceCrypto();
-
+        
         // common grid layout for all elements
         GridLayoutFactory glf = GridLayoutFactory.fillDefaults().margins(5, 5).equalWidth(true);
-        GridDataFactory gdf = GridDataFactory.fillDefaults().grab(true, true);
+        GridDataFactory gdf = GridDataFactory.fillDefaults().grab(true, false);
 
         glf.applyTo(this);
-        GridDataFactory.fillDefaults().grab(true, true).applyTo(this);
+        gdf.applyTo(this);
+        //GridDataFactory.fillDefaults().grab(true, false).hint(1050, 1680).applyTo(this);
 
+     
         compHead = new Composite(this, SWT.NONE);
         glf.applyTo(compHead);
+        gdf.applyTo(compHead);
         lblHeader = new Label(compHead, SWT.NONE);
         lblHeader.setFont(FontService.getHeaderFont());
         lblHeader.setText("McEliece Cryptography System");
-
+        textInfoHead = new Text(compHead, SWT.MULTI | SWT.READ_ONLY | SWT.WRAP);
+        textInfoHead.setText(Messages.McElieceView_textHeader);
+        textInfoHead.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+        //textInfoHead.setMargins(5, 5, 5, 5);
+        GridDataFactory.fillDefaults().grab(true, false).hint(1000, SWT.DEFAULT).applyTo(textInfoHead);
+        
         mainComposite = new Composite(this, SWT.NONE);
         glf.applyTo(mainComposite);
         gdf.applyTo(mainComposite);
@@ -117,16 +128,13 @@ public class McElieceView extends Composite {
         grpInput.setText("Cleartext");
         glf.numColumns(1).applyTo(grpInput);
         gdf.applyTo(grpInput);
-        lblInput = new Label(grpInput, SWT.NONE);
-        lblInput.setText("Enter the input text here: ");
-        txtInput = UIHelper.mutltiLineText(grpInput, SWT.FILL, SWT.FILL, SWT.DEFAULT, 5);
+        txtInput = UIHelper.mutltiLineText(grpInput, SWT.FILL, SWT.CENTER, SWT.DEFAULT, 5);
 
         grpOutput = new Group(mainComposite, SWT.NONE);
         grpOutput.setText("Ciphertext");
-        GridLayoutFactory.fillDefaults().extendedMargins(5, 5, 50, 5).applyTo(grpOutput);
+        glf.applyTo(grpOutput);
         gdf.applyTo(grpOutput);
-        txtOutput = UIHelper.mutltiLineText(grpOutput, SWT.FILL, SWT.FILL, SWT.DEFAULT, 5);
-
+        txtOutput = UIHelper.mutltiLineText(grpOutput, SWT.FILL, SWT.CENTER, SWT.DEFAULT, 5);
     }
     
     private void generateKeys() {
