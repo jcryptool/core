@@ -3,7 +3,8 @@ package org.jcryptool.visual.errorcorrectingcodes.data;
 import java.util.Arrays;
 
 /**
- * Matrix2D holds a 2-Dimensional array of integer values and provides methods for computations in the binary field.   
+ * Matrix2D holds a 2-Dimensional array of integer values and provides methods for computations in
+ * the binary field.
  * 
  * @author dhofmann
  *
@@ -22,19 +23,56 @@ public class Matrix2D {
         this.setData(data);
     }
     
+    public static Matrix2D parseBinaryMatrix2D(String matString) {
+        if (matString == null)
+            throw new MatrixFormatException("null");
+        
+        String[] result = matString.split("\\n");       
+        int columns = 0;
+        
+        if (result.length == 0)
+            throw new MatrixFormatException("String must have at least 2 separate lines.");
+        
+        int[][] data = new int[result.length][]; 
+
+        for (int i = 0; i < result.length; i++) {
+            String[] row = result[i].split("\\s");
+            if (row.length == 0)
+                throw new MatrixFormatException("No empty rows allowed.");
+            
+            data[i] = new int[row.length];
+            if (i == 0)
+                columns = row.length;
+            else if (row.length != columns)
+                throw new MatrixFormatException("Rows must be of equal length.");
+
+            for (int j = 0; j < data[i].length; j++) {
+                int val = Integer.parseInt(row[j]);
+                if (val != 0 && val != 1)
+                    throw new MatrixFormatException("Only binary values (0,1) are allowed."); 
+                    
+                data[i][j] = val;
+            }    
+        }
+        
+        return new Matrix2D(data);
+    }
+
     /**
      * Multiply two binary matrices.
      * 
      * @param other the matrix multiplicand
      * @return the product
-     * @throws IllegalArgumentException if the number of rows and columns of the two multiplicands do not match 
-     * @throws IllegalArgumentException when one or both matrices contain non-binary values 
+     * @throws IllegalArgumentException if the number of rows and columns of the two multiplicands
+     *             do not match
+     * @throws IllegalArgumentException when one or both matrices contain non-binary values
      */
     public Matrix2D multBinary(Matrix2D other) {
 
         if (this.getColCount() != other.getRowCount())
-            throw new IllegalArgumentException("Number of columns of first matrix must be equal to number of rows of second matrix.");
-        
+            throw new IllegalArgumentException(
+                    "Number of columns of first matrix must be equal to number of rows of second matrix.");
+
         if (!this.isBinary() || !other.isBinary())
             throw new IllegalArgumentException("Matrices must contain only binary values.");
 
@@ -49,7 +87,7 @@ public class Matrix2D {
         }
         return new Matrix2D(result);
     }
-    
+
     /**
      * XOR the matrix value at (row, col) with 1, i.e. flip a binary value.
      * 
@@ -70,9 +108,9 @@ public class Matrix2D {
 
         return new Matrix2D(transpose);
     }
-    
+
     /**
-     * Compute inverse of this matrix via lower–upper (LU) decomposition algorithm. 
+     * Compute inverse of this matrix via lower–upper (LU) decomposition algorithm.
      * 
      * @return inverted Matrix2D object; null if matrix not invertible
      */
@@ -81,60 +119,58 @@ public class Matrix2D {
             return null;
 
         int n = data.length;
-        int i, j, k, pivot; 
+        int i, j, k, pivot;
         int[] swap;
-        
-        //the permutation reference as an 1D array
+
+        // the permutation reference as an 1D array
         int[] P = new int[n];
 
-        //copy the rows to a new array to keep the original data
-        int[][] LU = Arrays.stream(data)
-                .map((int[] row) -> row.clone())
-                .toArray((int length) -> new int[length][]);
-                
+        // copy the rows to a new array to keep the original data
+        int[][] LU = Arrays.stream(data).map((int[] row) -> row.clone()).toArray((int length) -> new int[length][]);
+
         for (i = 0; i < n; i++)
             P[i] = i;
 
-        //pivoting and LU Decomposition
+        // pivoting and LU Decomposition
         for (i = 0; i < n; i++) {
             pivot = -1;
 
             for (k = i; k < n; k++)
-                if (LU[k][i] == 1) { 
+                if (LU[k][i] == 1) {
                     pivot = k;
                     break;
                 }
-            
-            if (pivot == -1 ) 
+
+            if (pivot == -1)
                 return null;
-            
+
             if (pivot != i) {
-                //pivoting P
+                // pivoting P
                 j = P[i];
                 P[i] = P[pivot];
                 P[pivot] = j;
 
-                //pivoting rows of A
+                // pivoting rows of A
                 swap = LU[i];
                 LU[i] = LU[pivot];
                 LU[pivot] = swap;
             }
 
-            //calculate lower and upper part
+            // calculate lower and upper part
             for (j = i + 1; j < n; j++) {
                 LU[j][i] &= LU[i][i];
 
                 for (k = i + 1; k < n; k++)
                     LU[j][k] ^= (LU[j][i] & LU[i][k]);
             }
-        }  
+        }
 
-        //compute the inverse by solving LUX = IA
+        // compute the inverse by solving LUX = IA
         int[][] IA = new int[n][n];
         for (i = 0; i < n; i++) {
             for (j = 0; j < n; j++) {
-                //check if the row was pivoted
-                if (P[j] == i) 
+                // check if the row was pivoted
+                if (P[j] == i)
                     IA[j][i] = 1;
                 else
                     IA[j][i] = 0;
@@ -149,14 +185,14 @@ public class Matrix2D {
 
                 IA[j][i] = IA[j][i] & LU[j][j];
             }
-        }       
+        }
         return new Matrix2D(IA);
     }
 
     /**
      * Check for squareness of this matrix.
      * 
-     * @return true if the number of rows and columns are equal 
+     * @return true if the number of rows and columns are equal
      */
     public boolean isSquare() {
         if (getColCount() == getRowCount())
@@ -164,7 +200,7 @@ public class Matrix2D {
         else
             return false;
     }
-    
+
     /**
      * Check if all matrix values are binary.
      * 
@@ -225,24 +261,24 @@ public class Matrix2D {
     public int getColCount() {
         return data[0].length;
     }
-    
+
     @Override
     public boolean equals(Object other) {
-        if(! (other instanceof Matrix2D))
+        if (!(other instanceof Matrix2D))
             return false;
-        
+
         int[][] otherData = ((Matrix2D) other).getData();
-        
+
         for (int i = 0; i < otherData.length; i++) {
             for (int j = 0; j < otherData[i].length; j++) {
                 if (data[i][j] != otherData[i][j])
                     return false;
             }
         }
-        
+
         return true;
     }
-    
+
     /**
      * Return a string representation of the Matrix.
      * 
@@ -251,10 +287,13 @@ public class Matrix2D {
         StringBuilder sb = new StringBuilder();
         for (int row = 0; row < data.length; row++) {
             for (int col = 0; col < data[row].length; col++) {
-                sb.append(data[row][col]).append(" ");
+                sb.append(data[row][col]);
+                if (col < data[row].length - 1)
+                    sb.append(" ");
             }
             if (row < data.length - 1)
                 sb.append("\n");
+
         }
         return sb.toString();
     }

@@ -85,6 +85,7 @@ public class HammingCryptoView extends Composite {
     private Label lblMatrixSInverse;
     private Label lblMatrixPInverse;
     private StyledText textInfoHead;
+    private Button btnMatrixSEdit;
 
     public HammingCryptoView(Composite parent, int style) {
         super(parent, style);
@@ -140,12 +141,14 @@ public class HammingCryptoView extends Composite {
         lblMatrixS.setText("S = "); //$NON-NLS-1$
         GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(lblMatrixS);
         compMatrixS = new InteractiveMatrix(compPrivateKeyData, 4, 4);
+        glf.applyTo(compMatrixS);
         GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(compMatrixS);
         lblMatrixP = new Label(compPrivateKeyData, SWT.NONE);
         lblMatrixP.setText("P = "); //$NON-NLS-1$
         GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(lblMatrixP);
         compMatrixP = new InteractiveMatrix(compPrivateKeyData, 7, 7);
         compMatrixP.setPermutation(true);
+        glf.applyTo(compMatrixP);
         GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(compMatrixP);
 
         compInverseMatrices = new Composite(grpDecryption, SWT.NONE);

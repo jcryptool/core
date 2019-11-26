@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
@@ -26,7 +27,10 @@ public class InteractiveMatrix extends Composite {
 
     /** The button grid represented as a one-dimensional ArrayList. */
     private ArrayList<Button> buttonGrid;
-
+    
+    /** Button to view and edit the matrix via text.*/
+    private Button btnEdit;
+    
     /** The modified flag, false by default */
     boolean modified;
 
@@ -34,6 +38,12 @@ public class InteractiveMatrix extends Composite {
     boolean permutation;
 
     private int rows, columns;
+
+    private Composite compMatrixElements;
+
+    private Composite compControlButtons;
+
+    private MatrixEditDialog matrixEditDialog;
 
     /**
      * Instantiates a new interactive matrix.
@@ -49,13 +59,14 @@ public class InteractiveMatrix extends Composite {
         this.columns = columns;
         this.permutation = false;
         buttonGrid = new ArrayList<>();
-
-        GridLayoutFactory.fillDefaults().numColumns(columns).applyTo(this);
-        GridDataFactory.fillDefaults().grab(true, true).applyTo(this);
+       
+        compMatrixElements = new Composite(this, SWT.NONE);
+        GridLayoutFactory.fillDefaults().numColumns(columns).applyTo(compMatrixElements);
+        GridDataFactory.fillDefaults().grab(true, true).applyTo(compMatrixElements);
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                Button btn = new Button(this, SWT.NONE);
+                Button btn = new Button(compMatrixElements, SWT.NONE);
                 btn.setText("0");
                 btn.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
                 btn.setData(new Point(i, j));
@@ -69,6 +80,23 @@ public class InteractiveMatrix extends Composite {
                 buttonGrid.add(btn);
             }
         }
+        
+        compControlButtons = new Composite(this, SWT.NONE); 
+        GridLayoutFactory.fillDefaults().applyTo(compControlButtons);
+        GridDataFactory.fillDefaults().grab(true, true).applyTo(compControlButtons);
+
+        btnEdit = new Button(compControlButtons,SWT.NONE);
+        btnEdit.setText("Edit");
+        btnEdit.addListener(SWT.Selection, e -> {
+            matrixEditDialog = new MatrixEditDialog(this.getShell());
+            matrixEditDialog.setMatrix(matrix);
+            
+            if (matrixEditDialog.open() == Window.OK) {
+                this.setMatrix(matrixEditDialog.getMatrix());
+            }
+        });
+        
+      
     }
 
     private void setMatrixValues(Event e, Point p) {
