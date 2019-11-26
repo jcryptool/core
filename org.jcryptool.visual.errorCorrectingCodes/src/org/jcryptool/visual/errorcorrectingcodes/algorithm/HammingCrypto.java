@@ -6,19 +6,12 @@ package org.jcryptool.visual.errorcorrectingcodes.algorithm;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.BitSet;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.jcryptool.visual.errorcorrectingcodes.data.BitArray;
-import org.jcryptool.visual.errorcorrectingcodes.data.EccData;
-import org.jcryptool.visual.errorcorrectingcodes.data.Matrix2D;
-import org.jcryptool.visual.errorcorrectingcodes.data.MatrixException;
 import org.jcryptool.visual.errorcorrectingcodes.data.HammingData;
-
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
+import org.jcryptool.visual.errorcorrectingcodes.data.Matrix2D;
 
 // TODO: Auto-generated Javadoc
 /**

@@ -39,7 +39,18 @@ public class Messages extends NLS {
     public static String HammingCryptoView_step2;
     public static String HammingCryptoView_step3;
     
+    public static String McElieceView_errorParamsTitle;
+    public static String McElieceView_errorParams;
+    public static String McElieceView_errorCipher;
+    public static String McElieceView_btnDecrypt;
+    public static String McElieceView_btnEncrypt;
+    public static String McElieceView_btnFillKey;
+    public static String McElieceView_grpAlgorithmInfo;
+    public static String McElieceView_grpInput;
+    public static String McElieceView_grpKeyParams;
+    public static String McElieceView_grpOutput;
     public static String McElieceView_lblHeader;
+    public static String McElieceView_lblPublicKey;
     public static String McElieceView_textHeader;
 
     static {

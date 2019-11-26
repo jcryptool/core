@@ -12,10 +12,11 @@
             restorable="true">
       </view>
    </extension>
-   <extension
+  
+     <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
-            contextHelpId="org.jcryptool.visual.errorcorrectingcodes.eccExtView"
+      		contextHelpId="org.jcryptool.visual.errorcorrectingcodes.mcElieceHelp"
             name="%Visual.name"
             viewId="org.jcryptool.visual.errorcorrectingcodes.ui">
       </Visual>
@@ -26,6 +27,17 @@
             class="org.jcryptool.visual.errorcorrectingcodes.handlers.RestartHandler"
             commandId="org.jcryptool.visual.errorcorrectingcodes.restartCommand">
       </handler>
+   </extension>
+    <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.jcryptool.visual.errorcorrectingcodes.restartCommand"
+            name="%restart.command.name">
+      </command>
+      <command
+            id="org.jcryptool.visual.errorcorrectingcodes.helpCommand"
+            name="%help.command.name">
+      </command>
    </extension>
    <extension
          point="org.eclipse.help.toc">

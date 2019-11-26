@@ -3,8 +3,6 @@ package org.jcryptool.visual.errorcorrectingcodes.data;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.List;
 
 /**
  * McElieceData is a model class to store various information needed for the McEliece view and algorithm.

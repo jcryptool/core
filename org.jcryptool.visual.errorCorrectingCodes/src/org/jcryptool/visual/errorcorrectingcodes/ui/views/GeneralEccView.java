@@ -3,45 +3,22 @@
  */
 package org.jcryptool.visual.errorcorrectingcodes.ui.views;
 
+import static org.jcryptool.visual.errorcorrectingcodes.ui.UIHelper.codeText;
 import static org.jcryptool.visual.errorcorrectingcodes.ui.UIHelper.createArrowCanvas;
 import static org.jcryptool.visual.errorcorrectingcodes.ui.UIHelper.markCode;
-import static org.jcryptool.visual.errorcorrectingcodes.ui.UIHelper.codeText;
-
-import java.awt.Font;
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.swing.GroupLayout;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.layout.RowDataFactory;
 import org.eclipse.jface.layout.RowLayoutFactory;
-import org.eclipse.jface.widgets.LabelFactory;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.errorcorrectingcodes.algorithm.EccController;
 import org.jcryptool.visual.errorcorrectingcodes.data.EccData;
@@ -55,6 +32,7 @@ import org.jcryptool.visual.errorcorrectingcodes.ui.widget.ArrowCanvas;
  */
 public class GeneralEccView extends Composite {
 
+    private static final int _WHINT = 400;
     private EccController ecc;
     private DataBindingContext dbc;
 
@@ -96,6 +74,7 @@ public class GeneralEccView extends Composite {
     private Label lblTextOriginal;
     private Label lblTextEncoded;
     private Label lblTextDecoded;
+    private Composite compErrorCode;
 
 
     /**
@@ -122,7 +101,7 @@ public class GeneralEccView extends Composite {
         lblHeader.setText(Messages.GeneralEccView_lblHeader);
         textInfoHead = new StyledText(compHead, SWT.MULTI | SWT.READ_ONLY | SWT.WRAP);
         textInfoHead.setText(Messages.GeneralEccView_textHeader);
-        GridDataFactory.fillDefaults().grab(true, false).hint(1000, SWT.DEFAULT).applyTo(textInfoHead);
+        GridDataFactory.fillDefaults().grab(true, false).hint(_WHINT, SWT.DEFAULT).applyTo(textInfoHead);
 
         
         mainComposite = new Composite(this, SWT.NONE);
@@ -154,17 +133,16 @@ public class GeneralEccView extends Composite {
         textEncoded = codeText(compEncodeStep, SWT.FILL, SWT.BOTTOM);
 
         compArrowRight1 = new Composite(mainComposite, SWT.NONE);
-        GridLayoutFactory.fillDefaults().applyTo(compArrowRight1);
+        glf.applyTo(compArrowRight1);
         GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER).applyTo(compArrowRight1);
         arrowRight1 = createArrowCanvas(compArrowRight1, 10, 10, 130, 10, 2, 10.0);
         arrowRight1.setLineStyle(SWT.LINE_DASH);
 
         grpErrorCode = new Group(mainComposite, SWT.NONE);
         glf.applyTo(grpErrorCode);
-        GridDataFactory.fillDefaults().grab(true, false).applyTo(grpErrorCode);
+        GridDataFactory.fillDefaults().grab(true, true).applyTo(grpErrorCode);
         grpErrorCode.setText(Messages.GeneralEccView_grpErrorCode);
         textError = codeText(grpErrorCode, SWT.FILL, SWT.CENTER);
-        // GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.FILL).applyTo(textError);
 
         compArrowRight2 = new Composite(mainComposite, SWT.NONE);
         GridLayoutFactory.fillDefaults().applyTo(compArrowRight2);
@@ -211,7 +189,7 @@ public class GeneralEccView extends Composite {
         glf.applyTo(grpTextInfo);
         GridDataFactory.fillDefaults().grab(true,true).applyTo(grpTextInfo);
         grpTextInfo.setText(Messages.GeneralEccView_grpTextInfo);
-        textInfo = UIHelper.mutltiLineText(grpTextInfo, SWT.FILL, SWT.FILL, parent.getBounds().width-100, 6, null, true);
+        textInfo = UIHelper.mutltiLineText(grpTextInfo, SWT.FILL, SWT.FILL, _WHINT, 6, null, true);
         textInfo.setText(Messages.GeneralEccView_textInfo_step1);
 
         bindValues();
@@ -283,6 +261,7 @@ public class GeneralEccView extends Composite {
         textInput.setText("hello"); //$NON-NLS-1$
         ecc.textAsBinary();
         btnPrev.setEnabled(false);
+        btnNextStep.setEnabled(true);
         compEncodeStep.setVisible(false);
         grpErrorCode.setVisible(false);
         grpReceiver.setVisible(false);

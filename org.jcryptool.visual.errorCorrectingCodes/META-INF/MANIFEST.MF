@@ -9,17 +9,24 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.help,
  org.jcryptool.crypto.ui;bundle-version="1.0.0",
+  org.jcryptool.visual.library;bundle-version="1.0.0",
  org.eclipse.core.databinding,
  org.eclipse.core.databinding.beans,
  org.eclipse.core.databinding.property,
  org.eclipse.jface.databinding,
- org.bouncycastle
+ org.bouncycastle;bundle-version="1.62.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: org.jcryptool.core.logging.utils,
- org.jcryptool.core.util.fonts
+ org.jcryptool.core.util.fonts,
+ org.jcryptool.core.util.colors
 Automatic-Module-Name: org.jcryptool.visual.errorcorrectingcodes
 Export-Package: org.jcryptool.visual.errorcorrectingcodes,
+ org.jcryptool.visual.errorcorrectingcodes.algorithm,
+ org.jcryptool.visual.errorcorrectingcodes.data,
  org.jcryptool.visual.errorcorrectingcodes.handlers,
- org.jcryptool.visual.errorcorrectingcodes.ui
+ org.jcryptool.visual.errorcorrectingcodes.ui,
+ org.jcryptool.visual.errorcorrectingcodes.ui.binding,
+ org.jcryptool.visual.errorcorrectingcodes.ui.views,
+ org.jcryptool.visual.errorcorrectingcodes.ui.widget
 

@@ -9,11 +9,14 @@ import java.util.ArrayList;
 
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.bouncycastle.crypto.InvalidCipherTextException;
-import org.bouncycastle.crypto.KeyGenerationParameters;
 import org.bouncycastle.crypto.RuntimeCryptoException;
-import org.bouncycastle.pqc.crypto.mceliece.*;
+import org.bouncycastle.pqc.crypto.mceliece.McElieceCCA2Parameters;
+import org.bouncycastle.pqc.crypto.mceliece.McElieceCipher;
+import org.bouncycastle.pqc.crypto.mceliece.McElieceKeyGenerationParameters;
+import org.bouncycastle.pqc.crypto.mceliece.McElieceKeyPairGenerator;
+import org.bouncycastle.pqc.crypto.mceliece.McElieceParameters;
+import org.bouncycastle.pqc.crypto.mceliece.McEliecePrivateKeyParameters;
 import org.bouncycastle.util.Arrays;
-import org.jcryptool.core.logging.utils.LogUtil;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -119,19 +122,28 @@ public class McElieceCrypto {
      *
      * @throws InvalidCipherTextException the invalid cipher text exception
      */
-    public void decrypt() throws InvalidCipherTextException {
-        if (this.encrypted == null)
-            return;
-        
+    public void decrypt(String message) throws InvalidCipherTextException {
+        byte[] cipher = javax.xml.bind.DatatypeConverter.parseHexBinary(message); 
         decrypted = new ArrayList<>();
 
-        for (byte[] cipher : encrypted) {
-            byte[] clear = decryptionCipher.messageDecrypt(cipher);
-            decrypted.add(clear);
+        if (cipher.length <= decryptionCipher.cipherTextSize)
+            this.decrypted.add(decryptionCipher.messageDecrypt(cipher));
+        else {
+            int segments = cipher.length / decryptionCipher.cipherTextSize;
+            int remainder = (cipher.length % decryptionCipher.cipherTextSize);
+            int lower = 0, upper = 0;
+
+            for (int i = 0; i < segments; i++) {
+                upper += decryptionCipher.maxPlainTextSize;
+                decrypted.add(decryptionCipher.messageDecrypt(Arrays.copyOfRange(cipher, lower, upper)));
+                lower = upper;
+            }
+
+            if (remainder != 0) {
+                decrypted.add(decryptionCipher.messageDecrypt(Arrays.copyOfRange(cipher, lower, lower + remainder)));
+            }
+
         }
-    }
-    
-    public void sign(byte[] message) {
     }
 
     /**
@@ -251,5 +263,14 @@ public class McElieceCrypto {
         }
         return mValues;
     }
-    
+
+    public int getK() {
+        if (keyPair != null ) {
+            McEliecePrivateKeyParameters key = (McEliecePrivateKeyParameters) keyPair.getPrivate();
+            return key.getK();
+        }
+        
+        return 0;
+    }
+
 }

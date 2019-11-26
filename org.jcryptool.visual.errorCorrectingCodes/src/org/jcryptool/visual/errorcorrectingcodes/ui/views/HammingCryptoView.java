@@ -1,52 +1,33 @@
 package org.jcryptool.visual.errorcorrectingcodes.ui.views;
 
-import static org.jcryptool.visual.errorcorrectingcodes.ui.UIHelper.*;
-
-import java.awt.Font;
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.List;
+import static org.jcryptool.visual.errorcorrectingcodes.ui.UIHelper.codeText;
+import static org.jcryptool.visual.errorcorrectingcodes.ui.UIHelper.matrixText;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.beans.typed.PojoProperties;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
-import org.eclipse.core.databinding.conversion.IConverter;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.layout.RowDataFactory;
 import org.eclipse.jface.layout.RowLayoutFactory;
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
-import org.jcryptool.visual.errorcorrectingcodes.algorithm.EccController;
 import org.jcryptool.visual.errorcorrectingcodes.algorithm.HammingCrypto;
-import org.jcryptool.visual.errorcorrectingcodes.algorithm.McElieceCrypto;
-import org.jcryptool.visual.errorcorrectingcodes.data.EccData;
+import org.jcryptool.visual.errorcorrectingcodes.data.HammingData;
 import org.jcryptool.visual.errorcorrectingcodes.data.Matrix2D;
 import org.jcryptool.visual.errorcorrectingcodes.data.MatrixException;
-import org.jcryptool.visual.errorcorrectingcodes.data.HammingData;
 import org.jcryptool.visual.errorcorrectingcodes.ui.Messages;
 import org.jcryptool.visual.errorcorrectingcodes.ui.UIHelper;
 import org.jcryptool.visual.errorcorrectingcodes.ui.binding.InteractiveMatrixProperty;
 import org.jcryptool.visual.errorcorrectingcodes.ui.widget.InteractiveMatrix;
-
-import com.sun.org.glassfish.external.statistics.annotations.Reset;
 
 /**
  * CryptoView represents the McEliece cryptographic system with Hamming code and small matrices S and P.
@@ -57,6 +38,7 @@ import com.sun.org.glassfish.external.statistics.annotations.Reset;
  */
 public class HammingCryptoView extends Composite {
 
+    private static final int _WHINT = 400;
     private HammingData data;
     private HammingCrypto mce;
     private DataBindingContext dbc;
@@ -76,7 +58,7 @@ public class HammingCryptoView extends Composite {
     private Group grpPublicKey;
     private Group grpControlButtons;
     private Group grpTextInfo;
-    private Group grpEncrypted;
+    private Group grpCiphertext;
 
     private Text textOutput;
     private Text textInput;
@@ -124,10 +106,10 @@ public class HammingCryptoView extends Composite {
         lblHeader.setText(Messages.HammingCryptoView_lblHeader);
         textInfoHead = new StyledText(compHead,SWT.READ_ONLY | SWT.WRAP);
         textInfoHead.setText(Messages.HammingCryptoView_textHeader);
-        GridDataFactory.fillDefaults().grab(true, false).hint(600, SWT.DEFAULT).applyTo(textInfoHead);
+        GridDataFactory.fillDefaults().grab(true, false).hint(_WHINT, SWT.DEFAULT).applyTo(textInfoHead);
         
         mainComposite = new Composite(this, SWT.NONE);
-        GridLayoutFactory.fillDefaults().margins(margins).numColumns(2).spacing(80, SWT.DEFAULT).equalWidth(true)
+        GridLayoutFactory.fillDefaults().margins(margins).numColumns(2).spacing(40, SWT.DEFAULT).equalWidth(true)
                 .applyTo(mainComposite);
         gdf.applyTo(mainComposite);
 
@@ -193,12 +175,13 @@ public class HammingCryptoView extends Composite {
 
         grpInputStep = new Group(grpEncryption, SWT.NONE);
         glf.applyTo(grpInputStep);
-        GridDataFactory.fillDefaults().grab(true, false).applyTo(grpInputStep);
+        gdf.applyTo(grpInputStep);
         grpInputStep.setText(Messages.HammingCryptoView_lblTextOriginal);
         textInput = new Text(grpInputStep, SWT.BORDER);
         GridDataFactory.fillDefaults().grab(true, false).applyTo(textInput);
         textInput.addListener(SWT.FocusOut, e -> updateVector());
         textAsBinary = codeText(grpInputStep, SWT.FILL, SWT.TOP);
+        gdf.applyTo(textAsBinary);
 
         grpPublicKey = new Group(grpEncryption, SWT.NONE);
         glf.numColumns(2).applyTo(grpPublicKey);
@@ -209,15 +192,15 @@ public class HammingCryptoView extends Composite {
         GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(lblMatrixGSP);
         textMatrixGSP = matrixText(grpPublicKey, SWT.LEFT, SWT.CENTER, 7, 4);
 
-        grpEncrypted = new Group(grpEncryption, SWT.NONE);
-        glf.numColumns(1).applyTo(grpEncrypted);
-        GridDataFactory.fillDefaults().applyTo(grpEncrypted);
-        grpEncrypted.setText(Messages.HammingCryptoView_lblEncrypt);
-        textEncrypted = codeText(grpEncrypted, SWT.FILL, SWT.BOTTOM);
+        grpCiphertext = new Group(grpEncryption, SWT.NONE);
+        glf.numColumns(1).applyTo(grpCiphertext);
+        gdf.applyTo(grpCiphertext);
+        grpCiphertext.setText(Messages.HammingCryptoView_lblEncrypt);
+        textEncrypted = codeText(grpCiphertext, SWT.FILL, SWT.BOTTOM);
 
-        compInfoText = new Composite(this, SWT.NONE);
+        compInfoText = new Composite(grpEncryption, SWT.NONE);
         glf.applyTo(compInfoText);
-        gdf.applyTo(compInfoText);
+        GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BOTTOM).grab(true, true).hint(_WHINT, SWT.DEFAULT).applyTo(compInfoText);
 
         grpControlButtons = new Group(compInfoText, SWT.NONE);
         RowLayoutFactory.fillDefaults().pack(false).spacing(10).applyTo(grpControlButtons);
@@ -234,7 +217,7 @@ public class HammingCryptoView extends Composite {
         glf.applyTo(grpTextInfo);
         gdf.applyTo(grpTextInfo);
         grpTextInfo.setText(Messages.HammingCryptoView_grpTextInfo);
-        textInfo = UIHelper.mutltiLineText(grpTextInfo, SWT.FILL, SWT.FILL, parent.getBounds().width - 100, 6, null, true);
+        textInfo = UIHelper.mutltiLineText(grpTextInfo, SWT.FILL, SWT.FILL, SWT.DEFAULT, 6, null, true);
 
         bindValues();
         initView();
@@ -258,7 +241,7 @@ public class HammingCryptoView extends Composite {
         btnGeneratePrivateKey.setEnabled(true);
         btnNextStep.setEnabled(true);
         grpPublicKey.setVisible(false);
-        grpEncrypted.setVisible(false);
+        grpCiphertext.setVisible(false);
         compInverseMatrices.setVisible(false);
         grpOutput.setVisible(false);
         textMatrixG.setText(data.getMatrixG().toString());
@@ -277,7 +260,7 @@ public class HammingCryptoView extends Composite {
                 textEncrypted.setText(data.getEncrypted().toString());
                 textInfo.setText(Messages.HammingCryptoView_step2);
                 grpPublicKey.setVisible(true);
-                grpEncrypted.setVisible(true);
+                grpCiphertext.setVisible(true);
                 btnPrev.setEnabled(true);
                 btnGeneratePrivateKey.setEnabled(false);
             } catch (MatrixException e) {
@@ -311,7 +294,7 @@ public class HammingCryptoView extends Composite {
             btnNextStep.setEnabled(true);
         } else if (grpPublicKey.isVisible()) {
             textInfo.setText(Messages.HammingCryptoView_step1);
-            grpEncrypted.setVisible(false);
+            grpCiphertext.setVisible(false);
             grpPublicKey.setVisible(false);
             btnPrev.setEnabled(false);
             btnGeneratePrivateKey.setEnabled(true);

@@ -1,18 +1,11 @@
 package org.jcryptool.visual.errorcorrectingcodes.ui.views;
 
-import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.errorcorrectingcodes.ui.Messages;
 
@@ -78,7 +71,7 @@ public class EccMainView extends ViewPart {
 
     @Override
     public void setFocus() {
-        tabFolder.setFocus();        
+        tabFolder.getSelection().getControl().setFocus();        
     }
 
     /**

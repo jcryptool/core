@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
-   <context id="eccExtView" title="Error Correcting Codes">
-      <description>This is a high level demonstration of error correcting codes as used in  Cryptography Systems like McEliece and Niederreiter.</description>
-      <topic href="nl/en/help/content/eccHelp.html" label="Error Correcting Codes"/>
+   <context id="mcElieceHelp" title="McEliece Cryptosystem">
+      <description>This visualization demonstrates the asymmetric encryption scheme McEliece and some mathematical background of the algorithm.</description>
+      <topic href="nl/en/help/content/index.html" label="McEliece Cryptographic System"/>
    </context>
 </contexts>

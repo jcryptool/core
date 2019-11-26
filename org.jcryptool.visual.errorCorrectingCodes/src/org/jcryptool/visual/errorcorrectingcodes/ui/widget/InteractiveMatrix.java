@@ -4,6 +4,7 @@
 package org.jcryptool.visual.errorcorrectingcodes.ui.widget;
 
 import java.util.ArrayList;
+
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -11,8 +12,6 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Text;
-import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.errorcorrectingcodes.data.Matrix2D;
 
 /**
@@ -49,7 +48,6 @@ public class InteractiveMatrix extends Composite {
         this.rows = rows;
         this.columns = columns;
         this.permutation = false;
-        this.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_INFO_BACKGROUND));
         buttonGrid = new ArrayList<>();
 
         GridLayoutFactory.fillDefaults().numColumns(columns).applyTo(this);

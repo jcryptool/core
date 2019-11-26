@@ -3,7 +3,6 @@ package org.jcryptool.visual.errorcorrectingcodes.ui;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
 
@@ -19,7 +18,6 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.errorcorrectingcodes.ui.widget.ArrowCanvas;
 
@@ -89,7 +87,7 @@ public class UIHelper {
     }
 
     public static StyledText codeText(Composite p, int hAlign, int vAlign) {
-        StyledText st = mutltiLineText(p, hAlign, vAlign, SWT.DEFAULT, 4, FontService.getLargeFont(),true);
+        StyledText st = mutltiLineText(p, hAlign, vAlign, SWT.DEFAULT, 5, FontService.getLargeFont(),true);
         return st;
     }
 
