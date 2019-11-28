@@ -11,6 +11,7 @@ package org.jcryptool.webbrowser;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+
 /**
  * The activator class controls the plug-in life cycle
  */
