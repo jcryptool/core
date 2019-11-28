@@ -63,7 +63,7 @@ public class DemonstrationPainter implements PaintListener {
 				e.gc.drawText((NLS.bind(Messages.getString("DemonstrationPainter.description_1"), 
 						schablonenGrosse*schablonenGrosse, demonstration.padding.length())), 0, 0); 
 			}
-			if (!(demonstration.padding.length() == 0)) { //$NON-NLS-1$
+			if (!(demonstration.padding.length() == 0)) { 
 				e.gc.drawText((NLS.bind(Messages.getString("DemonstrationPainter.padding"),  //$NON-NLS-1$
 						demonstration.padding.length())), 0, 175);
 				Color savedColor = e.gc.getForeground();

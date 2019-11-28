@@ -144,7 +144,6 @@ public class View extends ViewPart {
     private void createInputtext(Composite parent) {
         group_input = new Group(parent, SWT.NONE);
         group_input.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-//        group_input.setLayout(new FillLayout());
         group_input.setLayout(new GridLayout());
         group_input.setText(Messages.getString("View.plaintext") + " (0)"); //$NON-NLS-1$ //$NON-NLS-2$
         
@@ -195,6 +194,12 @@ public class View extends ViewPart {
 
     }
 
+
+	// Used to reset the output text when the user changes the key.
+	public void setText_outputText(String string) {
+		text_output.setText(string);
+	}
+
 	/**
 	 * Creates the buttons for each step.
 	 * @param parent The parent composite.
@@ -222,11 +227,13 @@ public class View extends ViewPart {
         button_direct.setText(Messages.getString("View.direct")); //$NON-NLS-1$
         button_direct.setSelection(true);
         button_direct.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 reset();
             }
         });
@@ -237,15 +244,18 @@ public class View extends ViewPart {
 		button_okay.setText(Messages.getString("View.start")); //$NON-NLS-1$
 		button_okay.setEnabled(false);
 		button_okay.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
 			}
 
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				reset();
 				if (button_direct.getSelection()) {
 					if (setEncrypt == true) {
 						String checkedText = model.check(text_input.getText());
+						// Hier wird der eingegebene Text mit einem padding versehen.
 						text_input.setText(checkedText);
 						text_output.setText(model.encrypt(checkedText));
 					} else {
@@ -279,11 +289,13 @@ public class View extends ViewPart {
         button_stepwise.setText(Messages.getString("View.stepwise")); //$NON-NLS-1$
         
         button_stepwise.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 reset();
             }
         });
@@ -310,11 +322,13 @@ public class View extends ViewPart {
         button_step1.setText(Messages.getString("View.proceed")); //$NON-NLS-1$
         button_step1.setEnabled(false);
         button_step1.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 canvas_demonstration.redraw();
                 canvas_schluessel.redraw();
                 text_input.setText(text_input.getText() + demonstration.padding);
@@ -337,11 +351,13 @@ public class View extends ViewPart {
         button_step2.setText(Messages.getString("View.proceed")); //$NON-NLS-1$
         button_step2.setEnabled(false);
         button_step2.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 demonstration.showStep3();
                 canvas_demonstration.redraw();
                 canvas_schluessel.redraw();
@@ -364,11 +380,13 @@ public class View extends ViewPart {
         label_step3.setLayoutData(new GridData(SWT.FILL | SWT.LEFT, SWT.FILL, true, false));
         button_step3.setEnabled(false);
         button_step3.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 demonstration.showStep4();
                 canvas_demonstration.redraw();
                 canvas_schluessel.redraw();
@@ -391,11 +409,13 @@ public class View extends ViewPart {
         button_step4.setText(Messages.getString("View.proceed")); //$NON-NLS-1$
         button_step4.setEnabled(false);
         button_step4.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 demonstration.showStep5();
                 canvas_demonstration.redraw();
                 canvas_schluessel.redraw();
@@ -418,17 +438,18 @@ public class View extends ViewPart {
         button_step5.setText(Messages.getString("View.proceed")); //$NON-NLS-1$
         button_step5.setEnabled(false);
         button_step5.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 demonstration.showStep6();
                 canvas_demonstration.redraw();
                 canvas_schluessel.redraw();
                 button_step5.setEnabled(false);
                 label_step5.setEnabled(false);
-//                button_step6.setEnabled(true);
                 label_step6.setEnabled(true);
                 text_output.setText(demonstration.getOutput());
             }
@@ -443,21 +464,6 @@ public class View extends ViewPart {
         label_step6 = new Label(step6, SWT.NONE);
         label_step6.setText(Messages.getString("View.linewise")); //$NON-NLS-1$
         label_step6.setLayoutData(new GridData(SWT.FILL | SWT.LEFT, SWT.FILL, true, false, 2, 1));
-        
-//        button_step6 = new Button(step6, SWT.NONE);
-//        button_step6.setText(Messages.getString("View.proceed")); //$NON-NLS-1$
-//        button_step6.setEnabled(false);
-//        button_step6.addSelectionListener(new SelectionListener() {
-//            public void widgetDefaultSelected(SelectionEvent e) {
-//                widgetSelected(e);
-//            }
-//
-//            public void widgetSelected(SelectionEvent e) {
-//                text_output.setText(demonstration.getOutput());
-//                button_step6.setEnabled(false);
-//                label_step6.setEnabled(false);
-//            }
-//        });
         label_step6.setEnabled(false);
     }
 
@@ -543,12 +549,13 @@ public class View extends ViewPart {
         spinner_keySize.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true));
     	
         spinner_keySize.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
-            
             }
 
-            public void widgetSelected(SelectionEvent e) {	
+            @Override
+			public void widgetSelected(SelectionEvent e) {	
             	if (Integer.parseInt(spinner_keySize.getText()) % 2 == 1 || Integer.parseInt(spinner_keySize.getText()) >= 11 || Integer.parseInt(spinner_keySize.getText()) <=3)
             		spinner_keySize.setSelection(6);
             	model.setKey(new KeySchablone(Integer.parseInt(spinner_keySize.getText())));
@@ -641,11 +648,13 @@ public class View extends ViewPart {
         button_encrypt.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         button_encrypt.setText(Messages.getString("View.encryption")); //$NON-NLS-1$
         button_encrypt.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 reset();
                 setEncrypt = true;
                 group_input.setText(Messages.getString("View.plaintext")); //$NON-NLS-1$
@@ -659,11 +668,13 @@ public class View extends ViewPart {
         button_decrypt.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         button_decrypt.setText(Messages.getString("View.decryption")); //$NON-NLS-1$
         button_decrypt.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 reset();
                 setEncrypt = false;
                 group_output.setText(Messages.getString("View.plaintext")); //$NON-NLS-1$
@@ -705,6 +716,7 @@ public class View extends ViewPart {
         }
         
         checkOkButton();
+        text_output.setText("");
         button_step1.setEnabled(false);
         button_step2.setEnabled(false);
         button_step3.setEnabled(false);
