@@ -79,6 +79,7 @@ public class View extends ViewPart {
 	private Composite inOutText;
 	private Composite composite_illustration;
 	private Composite composite_canvas_demonstration;
+	private Text keyText;
 
     public View() {
         model = new Grille();
@@ -523,7 +524,7 @@ public class View extends ViewPart {
     private void createSchablone(Composite parent) {
         Group schablone = new Group(parent, SWT.NONE);
         schablone.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
-        schablone.setLayout(new GridLayout(2, false));
+        schablone.setLayout(new GridLayout(3, false));
         schablone.setText(Messages.getString("View.keygrille")); //$NON-NLS-1$
 
         canvas_schluessel = new Canvas(schablone, SWT.DOUBLE_BUFFERED);
@@ -531,14 +532,14 @@ public class View extends ViewPart {
         canvas_schluessel.addPaintListener(new KeyPainter(canvas_schluessel, model));
         schluessel_listener = new org.jcryptool.visual.grille.ui.KeyListener(model, this);
         canvas_schluessel.addMouseListener(schluessel_listener);
-        GridData gridData = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 4);
+        GridData gridData = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 3);
         gridData.widthHint = 151;
         gridData.heightHint = 151;
         canvas_schluessel.setLayoutData(gridData);
 
         Label spinner = new Label(schablone, SWT.NONE);
         spinner.setText(Messages.getString("View.size")); //$NON-NLS-1$
-        spinner.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false));
+        spinner.setLayoutData(new GridData(SWT.BOTTOM, SWT.FILL, false, false));
 
         spinner_keySize = new Spinner(schablone, SWT.NONE);
         spinner_keySize.setMinimum(4);
@@ -546,8 +547,7 @@ public class View extends ViewPart {
         spinner_keySize.setIncrement(2);
         spinner_keySize.setSelection(6);
         spinner_keySize.setEnabled(true);
-        spinner_keySize.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true));
-    	
+        spinner_keySize.setLayoutData(new GridData(SWT.NONE, SWT.FILL, false, false));
         spinner_keySize.addSelectionListener(new SelectionListener() {
             @Override
 			public void widgetDefaultSelected(SelectionEvent e) {
@@ -566,8 +566,8 @@ public class View extends ViewPart {
         });
         
         setHoles = new Button(schablone, SWT.PUSH);
-        GridData gd_setHoles = new GridData(SWT.FILL, SWT.BOTTOM, false, true);
-        gd_setHoles.horizontalIndent = 70;
+        GridData gd_setHoles = new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1);
+        gd_setHoles.verticalIndent = 20;
         setHoles.setLayoutData(gd_setHoles);
         setHoles.setText(Messages.getString("View.1")); //$NON-NLS-1$
         setHoles.addSelectionListener(new SelectionListener() {
@@ -609,11 +609,10 @@ public class View extends ViewPart {
 				
 			}
 		});
+
         
         deleteHoles = new Button(schablone, SWT.PUSH);
-        GridData gd_deleteHoles = new GridData(SWT.FILL, SWT.BOTTOM, false, false);
-        gd_deleteHoles.horizontalIndent = 70;
-        deleteHoles.setLayoutData(gd_deleteHoles);
+        deleteHoles.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
         deleteHoles.setText(Messages.getString("View.0")); //$NON-NLS-1$
         deleteHoles.addSelectionListener(new SelectionListener() {
 			
@@ -630,6 +629,11 @@ public class View extends ViewPart {
 				widgetSelected(e);
 			}
 		});
+        
+        keyText = new Text(schablone, SWT.NONE);
+        keyText.setText("Test");
+        keyText.setEditable(false);
+        keyText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
         
         
     }
