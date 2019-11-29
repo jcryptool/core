@@ -39,12 +39,15 @@ public class KeyListener implements MouseListener {
 		int cellHeight = cellWidth;
 		int posX = (int) Math.floor((double)e.x/cellWidth);
 		int posY = (int) Math.floor((double)e.y/cellHeight);
-		// setzt oder löscht ein loch aus der Schablone
+		// key.toogle(...) setzt oder löscht ein loch aus der Schablone. 
+		// Wird true, wenn ein Loch geändert wurde.
 		if (key.toggle(posY,posX)) {
 			//reset the outputText to "" if the key Schablone has changed.
 			view.setText_outputText("");
 			((Canvas) e.widget).redraw();
 			view.checkOkButton();
+			view.updateKeyText();
+//			System.out.println(model.getKey().toString());
 		}
 	}
 }

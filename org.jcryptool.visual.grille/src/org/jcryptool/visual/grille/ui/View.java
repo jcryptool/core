@@ -562,13 +562,15 @@ public class View extends ViewPart {
                 reset();
                 canvas_schluessel.removeMouseListener(schluessel_listener);
                 canvas_schluessel.addMouseListener(schluessel_listener);
+                updateKeyText();
             }
         });
         
+        //Spacer label
+        new Label(schablone, SWT.NONE);
+        
         setHoles = new Button(schablone, SWT.PUSH);
-        GridData gd_setHoles = new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1);
-        gd_setHoles.verticalIndent = 20;
-        setHoles.setLayoutData(gd_setHoles);
+        setHoles.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, true));
         setHoles.setText(Messages.getString("View.1")); //$NON-NLS-1$
         setHoles.addSelectionListener(new SelectionListener() {
 			
@@ -601,6 +603,7 @@ public class View extends ViewPart {
                 canvas_schluessel.removeMouseListener(schluessel_listener);
                 canvas_schluessel.addMouseListener(schluessel_listener);
                 checkOkButton();
+                updateKeyText();
 			}
 			
 			@Override
@@ -609,10 +612,12 @@ public class View extends ViewPart {
 				
 			}
 		});
-
+        
+        // Spacer label
+        new Label(schablone, SWT.NONE);
         
         deleteHoles = new Button(schablone, SWT.PUSH);
-        deleteHoles.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
+        deleteHoles.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, false));
         deleteHoles.setText(Messages.getString("View.0")); //$NON-NLS-1$
         deleteHoles.addSelectionListener(new SelectionListener() {
 			
@@ -622,6 +627,7 @@ public class View extends ViewPart {
 				reset();
                 canvas_schluessel.removeMouseListener(schluessel_listener);
                 canvas_schluessel.addMouseListener(schluessel_listener);
+                updateKeyText();
 			}
 			
 			@Override
@@ -630,8 +636,8 @@ public class View extends ViewPart {
 			}
 		});
         
-        keyText = new Text(schablone, SWT.NONE);
-        keyText.setText("Test");
+        keyText = new Text(schablone, SWT.H_SCROLL);
+        keyText.setText(Messages.getString("View.key"));
         keyText.setEditable(false);
         keyText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
         
@@ -639,6 +645,26 @@ public class View extends ViewPart {
     }
 
     /**
+     * Updates the textfield under the key grille. 
+     * Displays the key as numbers.
+     */
+	public void updateKeyText() {
+		int counter = 1;
+		StringBuilder sb = new StringBuilder();
+		for (int j = 0; j < model.getKey().getSize(); j++) {
+			for (int k = 0; k < model.getKey().getSize(); k++) {
+				if (model.getKey().get(j, k) == '1') {
+					sb.append(counter);
+					sb.append(" ");
+				}
+				counter++;
+			}
+		}
+		keyText.setText(Messages.getString("View.key") + sb.toString().trim());
+	}
+
+
+	/**
      * Creates the options group. Group with two radio buttons, encryption and decryption.
      * @param parent The parent composite the control should be displayed in.
      */
@@ -664,6 +690,7 @@ public class View extends ViewPart {
                 group_input.setText(Messages.getString("View.plaintext")); //$NON-NLS-1$
                 group_output.setText(Messages.getString("View.ciphertext")); //$NON-NLS-1$
                 button_stepwise.setEnabled(true);
+                updateKeyText();
             }
         });
         button_encrypt.setSelection(true);
@@ -688,6 +715,7 @@ public class View extends ViewPart {
                 button_direct.setSelection(true);
                 text_input.setText(text_output.getText());
                 text_output.setText(""); //$NON-NLS-1$
+                updateKeyText();
             }
         });
     }
