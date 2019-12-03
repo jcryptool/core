@@ -56,7 +56,7 @@ public class Controls extends Composite{
 
 		button_back = new Button(this, SWT.PUSH);
 		button_back.setToolTipText(Messages.getString("Controls.back")); //$NON-NLS-1$
-		button_back.setImage(ImageService.getImage(BrowserPlugin.PLUGIN_ID, "icons/back.gif"));
+		button_back.setImage(ImageService.getImage(BrowserPlugin.PLUGIN_ID, "icons/nav_backward.png"));
 		button_back.addSelectionListener(new SelectionListener(){
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
 			public void widgetSelected(SelectionEvent e) {
@@ -66,7 +66,7 @@ public class Controls extends Composite{
 		});
 		button_forward = new Button(this, SWT.PUSH);
 		button_forward.setToolTipText(Messages.getString("Controls.forward")); //$NON-NLS-1$
-		button_forward.setImage(ImageService.getImage(BrowserPlugin.PLUGIN_ID, "icons/forward.gif"));
+		button_forward.setImage(ImageService.getImage(BrowserPlugin.PLUGIN_ID, "icons/forward_nav.png"));
 		button_forward.addSelectionListener(new SelectionListener(){
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
 			public void widgetSelected(SelectionEvent e) {
@@ -77,7 +77,7 @@ public class Controls extends Composite{
 
 		Button button_home = new Button(this, SWT.PUSH);
 		button_home.setToolTipText(Messages.getString("Controls.home")); //$NON-NLS-1$
-		button_home.setImage(ImageService.getImage(BrowserPlugin.PLUGIN_ID, "icons/home.gif"));
+		button_home.setImage(ImageService.getImage(BrowserPlugin.PLUGIN_ID, "icons/nav_home.png"));
 		button_home.addSelectionListener(new SelectionListener(){
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
 			public void widgetSelected(SelectionEvent e) {
@@ -88,7 +88,7 @@ public class Controls extends Composite{
 
 		button_stop = new Button(this, SWT.PUSH);
 		button_stop.setToolTipText(Messages.getString("Controls.stop")); //$NON-NLS-1$
-		button_stop.setImage(ImageService.getImage(BrowserPlugin.PLUGIN_ID, "icons/stop.gif"));
+		button_stop.setImage(ImageService.getImage(BrowserPlugin.PLUGIN_ID, "icons/nav_stop.png"));
 		button_stop.addSelectionListener(new SelectionListener(){
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
 			public void widgetSelected(SelectionEvent e) {
@@ -115,7 +115,7 @@ public class Controls extends Composite{
 				if(animateReloadButton && image!= null)
 					e.gc.drawImage(image, 5, 5);
 				else
-					e.gc.drawImage(ImageService.getImage(BrowserPlugin.PLUGIN_ID, "icons/reload.gif"), 5, 5);
+					e.gc.drawImage(ImageService.getImage(BrowserPlugin.PLUGIN_ID, "icons/nav_refresh.png"), 5, 5);
 			}
 		});
 
@@ -140,7 +140,7 @@ public class Controls extends Composite{
 
 		Button button_go = new Button(this, SWT.PUSH);
 		button_go.setToolTipText(Messages.getString("Controls.open")); //$NON-NLS-1$
-		button_go.setImage(ImageService.getImage(BrowserPlugin.PLUGIN_ID, "icons/go.gif"));
+		button_go.setImage(ImageService.ICON_RUN);
 		button_go.addSelectionListener(new SelectionListener(){
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
 			public void widgetSelected(SelectionEvent e) {
@@ -174,7 +174,7 @@ public class Controls extends Composite{
 
 		Button button_search = new Button(this, SWT.PUSH);
 		button_search.setToolTipText(Messages.getString("Controls.search")); //$NON-NLS-1$
-		button_search.setImage(ImageService.getImage(BrowserPlugin.PLUGIN_ID, "icons/search.gif"));
+		button_search.setImage(ImageService.getImage(BrowserPlugin.PLUGIN_ID, "icons/helpsearch_co.png"));
 		button_search.addSelectionListener(new SelectionListener(){
 			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
 			public void widgetSelected(SelectionEvent e) {

@@ -6,7 +6,7 @@
       <view
             allowMultiple="true"
             class="org.jcryptool.webbrowser.ui.BrowserView"
-            icon="icons/browser.gif"
+            icon="icons/internal_browser.png"
             id="org.jcryptool.webbrowser.browser"
             category="org.eclipse.ui"
             name="%view.name"
@@ -62,7 +62,7 @@
             locationURI="toolbar:org.jcryptool.core.toolbar?after=additions">
          <command
                commandId="org.jcryptool.webbrowser.open"
-               icon="icons/browser.gif"
+               icon="icons/internal_browser.png"
                style="push">
          </command>
       </menuContribution>
