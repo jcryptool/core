@@ -56,7 +56,21 @@ public class Grille {
         for (int i = 0; i < plaintext.length(); i += encKey.getSize() * encKey.getSize() - encKey.getSize() % 2) {
             cipher.append(encryptSingleBlock(plaintext, i));
         }
-        encKey.rotateClockwise();
+//        System.out.println(plaintext.length());
+//        System.out.println(encKey.getSize());
+        int timesToRotateKey = plaintext.length() / (encKey.getSize() * encKey.getSize());
+//        System.out.println("timeToRotate" + timesToRotateKey);
+        
+        // The key needs to be rotated clockwise after the calculation because the calculation 
+        // rotates the key one time counterclockwise for each block that has been encrypted. 
+        // If you have a 72 chars as input an a 6*6 key you have to blocks that have to be encrypted.
+        // The encryption rotates the key 2 times counterclockwise. After the calculation the key must 
+        // be rotated two times clockwise to get the same key as the user has entered.
+        for (int i = 0; i < timesToRotateKey; i++) {
+            encKey.rotateClockwise();
+//            System.out.println(i + " mal clockwiese rotiert");
+        }
+
 
         return cipher.toString();
     }

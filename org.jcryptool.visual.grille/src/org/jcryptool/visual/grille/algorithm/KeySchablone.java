@@ -49,12 +49,21 @@ public class KeySchablone extends Schablone implements Cloneable {
         }
     }
 
-    public void toggle(int row, int column) {
+    /**
+     * 
+     * @param row
+     * @param column
+     * @return True, if a hole is set or unset. False, if no hole has changed.
+     */
+    public boolean toggle(int row, int column) {
         if (get(row, column) == '0') {
             set(row, column);
+            return true;
         } else if (get(row, column) == '1') {
             unSet(row, column);
+            return true;
         }
+        return false;
     }
 
     /**
@@ -83,7 +92,6 @@ public class KeySchablone extends Schablone implements Cloneable {
             }
         }
         schablone = rotated;
-
     }
 
     public void rotateCounterClockwise() {

@@ -25,10 +25,13 @@ public class KeyListener implements MouseListener {
 		this.view = view;
 	}
 
+	@Override
 	public void mouseDoubleClick(MouseEvent e) {}
 
+	@Override
 	public void mouseDown(MouseEvent e) {}
 
+	@Override
 	public void mouseUp(MouseEvent e) {
 		KeySchablone key = model.getKey();
 		int width = ((Canvas) e.widget).getSize().x;
@@ -36,8 +39,15 @@ public class KeyListener implements MouseListener {
 		int cellHeight = cellWidth;
 		int posX = (int) Math.floor((double)e.x/cellWidth);
 		int posY = (int) Math.floor((double)e.y/cellHeight);
-		key.toggle(posY,posX);
-		((Canvas) e.widget).redraw();
-		view.checkOkButton();
+		// key.toogle(...) setzt oder löscht ein loch aus der Schablone. 
+		// Wird true, wenn ein Loch geändert wurde.
+		if (key.toggle(posY,posX)) {
+			//reset the outputText to "" if the key Schablone has changed.
+			view.setText_outputText("");
+			((Canvas) e.widget).redraw();
+			view.checkOkButton();
+			view.updateKeyText();
+//			System.out.println(model.getKey().toString());
+		}
 	}
 }

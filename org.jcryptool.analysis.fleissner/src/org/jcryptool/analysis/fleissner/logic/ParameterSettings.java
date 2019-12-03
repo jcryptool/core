@@ -48,7 +48,7 @@ public class ParameterSettings {
 					}
 					else {
 //						there is no other method deposited
-						throw new InvalidParameterCombinationException("method has to be analyze, encrypt or decrypt");
+						throw new InvalidParameterCombinationException("Methode muss 'Analyse', 'Verschlüsselung' oder 'Entschlüsselung' sein");
 					}
 					break;
 				case "-plaintext":
@@ -71,14 +71,14 @@ public class ParameterSettings {
 					}
 					else {
 //						there has to be at least one restart
-						throw new InvalidParameterCombinationException("Restarts has to be an integer greater or equal to 1");
+						throw new InvalidParameterCombinationException("Anzahl der Restarts muss eine ganze Zahl größer oder gleich 1 sein");
 					}
 					break;
 				case "-keyLength":
 //					sets key length, if given
 					if (Integer.parseInt(args[i+1])<2) {
 //						there is no valid key with length smaller than 2
-						throw new InvalidParameterCombinationException("Length of grille has to be an integer greater or equal to 2");
+						throw new InvalidParameterCombinationException("Schlüssellänge muss eine ganze Zahl größer oder gleich 2 sein");
 					}
 					else {
 						templateLength = Integer.parseInt(args[i+1]);
@@ -104,7 +104,7 @@ public class ParameterSettings {
 						
 						grille = new int[data.length];
 						if (grille.length%2!=0) {
-							throw new InvalidParameterCombinationException("Invalid key length");
+							throw new InvalidParameterCombinationException("Ungültige Schlüssellänge");
 						}
 						holes = ((grille.length)/2);
 						boolean isSquare= this.isSquare(holes);
@@ -121,9 +121,8 @@ public class ParameterSettings {
 						}
 						LogUtil.logInfo("key: "+template+"\nkeylength: "+String.valueOf(templateLength)+"\nholes: "+String.valueOf(holes));									
 					} catch (Exception e) {
-						LogUtil.logError(Activator.PLUGIN_ID, "Invalid key", e, true);
-						e.printStackTrace();
-						throw new InvalidParameterCombinationException("Invalid key");
+						LogUtil.logError(Activator.PLUGIN_ID, "Ungültiger Schlüssel", e, true);
+						throw new InvalidParameterCombinationException("Ungültiger Schlüssel");
 					}	
 					break;
 				case "-language":
@@ -134,13 +133,13 @@ public class ParameterSettings {
 					}
 					else {
 //						currently there is no other alphabet deposited
-						throw new InvalidParameterCombinationException("language has to be english or german");
+						throw new InvalidParameterCombinationException("Sprache muss 'deutsch' oder 'englisch' sein");
 					}
 					break;
 				case "-nGramSize":
 //					there are just functioning tri- and quadgrams deposited
 					if ((Integer.parseInt(args[i+1])<3) || (Integer.parseInt(args[i+1])>4)) {
-						throw new InvalidParameterCombinationException("Please enter a tri- or quadgram");
+						throw new InvalidParameterCombinationException("Tri- oder Quadgram eingeben");
 					}
 					else {
 //						sets ngram, if given
@@ -148,7 +147,7 @@ public class ParameterSettings {
 						LogUtil.logInfo("Ngram size: "+nGramSize);
 					}
 					break;
-				default: throw new InvalidParameterCombinationException("Please enter valid parameters");	
+				default: throw new InvalidParameterCombinationException("Bitte gültige Parameter eingeben");	
 				}
 			}
 		}

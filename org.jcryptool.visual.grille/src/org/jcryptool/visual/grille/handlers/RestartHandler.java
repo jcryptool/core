@@ -22,7 +22,8 @@ import org.jcryptool.visual.grille.ui.View;
  * @version 0.9.5
  */
 public class RestartHandler extends AbstractHandler {
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    @Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
         if (HandlerUtil.getActivePart(event) instanceof View) {
                 View view = ((View) HandlerUtil.getActivePart(event));
                 
