@@ -1111,17 +1111,48 @@ public class ShamirsSecretSharingComposite extends Composite {
         closeLabel.setVisible(visible);
     }
     
+    
+    private int getMaxXCoord() {
+    	int tmp = 0;
+    	for (Point p : shares) {
+    		if (p.getY().intValue() > tmp) {
+    			tmp = p.getY().intValue();
+    		}
+    	}
+    	
+    	return tmp;
+    }
+    
     /**
      * @param e the PaintEvent that represents the graphic context
      */
     private void drawPolynomial(PaintEvent e) {
         GC gc = e.gc;
+        //canvasCurve.setSize(getMaxXCoord(), getMaxYCoord());
+        
         org.eclipse.swt.graphics.Point size = canvasCurve.getSize();
-        gridSizeY = 6;
+        
+        int maxX = getMaxXCoord();
+        
+        gridSizeY = 1;
         gridSizeX = 60;
+        
+        if (maxX <= 50) {
+        	gridSizeY = 7;
+            gridSizeX = 60;
+        } else if (maxX <= 100) {
+        	gridSizeY = 6;
+            gridSizeX = 60;
+        } else if (maxX <= 150) {
+        	gridSizeY = 4;
+        	gridSizeX = 60;
+        } else if (maxX <= 220) {
+        	gridSizeY = 2;
+        	gridSizeX = 60;
+        }
 
         gc.setForeground(Constants.LIGHTGREY);
-
+        
         /*
          * draw the grid in x direction
          */
@@ -1131,8 +1162,9 @@ public class ShamirsSecretSharingComposite extends Composite {
                 xAxisGap += gridSizeX;
             }
             xAxisGap = gridSizeX;
-
-            gc.drawLine(i, 0, i, size.y);
+            
+            //x axis lines
+            gc.drawLine(i, 0, i, size.y); 
         }
 
         /*
@@ -1143,11 +1175,25 @@ public class ShamirsSecretSharingComposite extends Composite {
             if (yAxisGap + gridSizeY <= size.y / 2) {
                 yAxisGap += gridSizeY;
             }
-            yAxisGap = gridSizeY * ((size.y / gridSizeY) - 6);
+            yAxisGap = gridSizeY * ((size.y / gridSizeY)) - 20;
+            
+            if (maxX <= 150) {
+                gc.drawLine(0, i, size.x, i);
 
-            gc.drawLine(0, i, size.x, i);
+            } else if (i % (gridSizeY * 5) == 0) {
+                gc.drawLine(0, i, size.x, i);
+            }
+            
         }
-
+        
+        int labeljumps = 1;
+        int gapSmall = 3;
+        int gapBig = 7;
+        int textOffset = gapBig + 8;
+        int fontWidth = 6;
+        int fontHeight = 10;
+        int numberLength = 0;
+        
         /*
          * draw the axis
          */
@@ -1155,14 +1201,6 @@ public class ShamirsSecretSharingComposite extends Composite {
 
         gc.drawLine(xAxisGap, 0, xAxisGap, size.y);
         gc.drawLine(0, yAxisGap, size.x, yAxisGap);
-
-        int labeljumps = 5;
-        int gapSmall = 3;
-        int gapBig = 7;
-        int textOffset = gapBig + 8;
-        int fontWidth = 6;
-        int fontHeight = 10;
-        int numberLength = 0;
 
         /*
          * draw the x marker
@@ -1190,6 +1228,15 @@ public class ShamirsSecretSharingComposite extends Composite {
                 }
             }
         }
+        
+        //determine label jump
+        if (maxX <= 150){
+        	labeljumps = 5;
+        } else if (maxX <= 250) {
+        	labeljumps = 10;
+        } else {
+        	labeljumps = 20;
+        }
 
         /*
          * draw the y markers
@@ -1201,8 +1248,11 @@ public class ShamirsSecretSharingComposite extends Composite {
             /*
              * thin lines
              */
-            gc.drawLine(xAxisGap - gapSmall, y, xAxisGap + gapSmall, y);
-            gc.drawLine(xAxisGap - gapSmall, yAxisGap + i * gridSizeY, xAxisGap + gapSmall, yAxisGap + i * gridSizeY);
+            if (maxX <= 150) {
+            	gc.drawLine(xAxisGap - gapSmall, y, xAxisGap + gapSmall, y);
+                gc.drawLine(xAxisGap - gapSmall, yAxisGap + i * gridSizeY, xAxisGap + gapSmall, yAxisGap + i * gridSizeY);
+            }
+           
             /*
              * thick lines
              */
@@ -1314,6 +1364,5 @@ public class ShamirsSecretSharingComposite extends Composite {
         }
         return value;
     }
-
 
 }
