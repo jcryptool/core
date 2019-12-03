@@ -127,7 +127,7 @@
 &lt;extension point=&quot;org.jcryptool.core.operations.editorServices&quot;&gt;
   &lt;service
     id=&quot;org.jcryptool.editor.text&quot;
-    icon=&quot;icons/text.gif&quot;
+    icon=&quot;icons/text_edit.png&quot;
     label=&quot;Texteditor&quot;
     pushAction=&quot;org.jcryptool.editor.text.action.NewFileJCTTextEditorAction&quot;
     category=&quot;5&quot;

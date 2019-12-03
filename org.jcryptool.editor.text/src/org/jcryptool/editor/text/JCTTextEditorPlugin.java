@@ -67,7 +67,7 @@ public class JCTTextEditorPlugin extends AbstractUIPlugin {
     
     @Override
     protected void initializeImageRegistry(ImageRegistry reg) {
-    	reg.put(JCT_TEXT_EDITOR_ICON, ImageService.getImage(PLUGIN_ID, "icons/text.gif"));
+    	reg.put(JCT_TEXT_EDITOR_ICON, ImageService.getImage(PLUGIN_ID, "icons/text_edit.png"));
     }
     
     @Override

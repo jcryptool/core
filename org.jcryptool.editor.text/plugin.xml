@@ -8,7 +8,7 @@
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
             default="true"
             extensions="txt,log,xml,bat,sh,ini"
-            icon="icons/text.gif"
+            icon="icons/text_edit.png"
             id="org.jcryptool.editor.text.editor.JCTTextEditor"
             name="%editor.name"/>
    </extension>
@@ -50,13 +50,13 @@
             locationURI="menu:org.jcryptool.core.editors.toolbar.command">
          <command
                commandId="org.jcryptool.editor.text.newEmptyFile"
-               icon="icons/text.gif"
+               icon="icons/text_edit.png"
                style="push"
                tooltip="%emptyeditor.label">
          </command>
          <command
                commandId="org.jcryptool.editor.text.newSampleFile"
-               icon="icons/text.gif"
+               icon="icons/text_edit.png"
                style="push"
                tooltip="%sampleeditor.label">
          </command>
@@ -66,13 +66,13 @@
             locationURI="menu:newfile?before=hexsample">
          <command
                commandId="org.jcryptool.editor.text.newSampleFile"
-               icon="icons/text.gif"
+               icon="icons/text_edit.png"
                id="txtsample"
                style="push">
          </command>
          <command
                commandId="org.jcryptool.editor.text.newEmptyFile"
-               icon="icons/text.gif"
+               icon="icons/text_edit.png"
                id="txtempty"
                style="push">
          </command>
@@ -110,7 +110,7 @@
       <service
             category="5"
             class="org.jcryptool.editor.text.service.JCTEditorService"
-            icon="icons/text.gif"
+            icon="icons/text_edit.png"
             id="org.jcryptool.editor.text"
             label="%sampleeditor.label"
             pushAction="org.jcryptool.editor.text.commands.NewSampleTextFile">
@@ -118,7 +118,7 @@
       <service
             category="4"
             class="org.jcryptool.editor.text.service.JCTEditorService"
-            icon="icons/text.gif"
+            icon="icons/text_edit.png"
             id="org.jcryptool.editor.text"
             label="%emptyeditor.label"
             pushAction="org.jcryptool.editor.text.commands.NewEmptyTextFile">
@@ -180,7 +180,7 @@
          <command
                commandId="org.jcryptool.editor.text.openFile"
                helpContextId="org.jcryptool.editor.text.textEditor"
-               icon="icons/text.gif"
+               icon="icons/text_edit.png"
                label="%open.command.label"
                style="push"
                tooltip="%open.command.tooltip">
