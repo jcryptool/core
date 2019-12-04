@@ -29,7 +29,7 @@ Export-Package: org.jcryptool.core.views;
  org.jcryptool.core.views.content.tree
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.jcryptool.core,
- org.jcryptool.core.actions,
+ org.jcryptool.core.commands,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations,
  org.jcryptool.core.operations.algorithm,

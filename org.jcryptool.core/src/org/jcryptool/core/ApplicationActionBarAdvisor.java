@@ -47,7 +47,7 @@ import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.services.IServiceLocator;
-import org.jcryptool.core.actions.ShowPluginViewHandler;
+import org.jcryptool.core.commands.ShowPluginViewHandler;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.CommandInfo;
 import org.jcryptool.core.operations.OperationsPlugin;
