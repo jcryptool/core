@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<contexts>
+   <context id="rainbowHelp" title="Multivariate Kryptographie">
+      <description>Diese Visualisierung zeigt Multivariate Kryptographie anhand des Signatur Verfahrens Rainbow.</description>
+      <topic href="nl/en/help/content/index.html" label="Multivariate Kryptographie"/>
+   </context>
+</contexts>

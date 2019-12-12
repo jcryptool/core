@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
-Bundle-SymbolicName: org.jcryptool.visual.errorcorrectingcodes;singleton:=true
+Bundle-SymbolicName: org.jcryptool.visual.rainbow;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.visual.rainbow.RainbowPlugin
 Bundle-Vendor: %Bundle-Vendor
@@ -18,3 +18,6 @@ Bundle-ActivationPolicy: lazy
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.fonts
 Automatic-Module-Name: org.jcryptool.visual.rainbow
+Export-Package: org.jcryptool.visual.rainbow,
+ org.jcryptool.visual.rainbow.algorithm,
+ org.jcryptool.visual.rainbow.ui
