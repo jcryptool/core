@@ -1016,7 +1016,7 @@ public class FleissnerWindow extends Composite{
         Text headerText = new Text(headerComposite, SWT.READ_ONLY);
         headerText.setText(Messages.FleissnerWindow_title);
         headerText.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false));
-        headerText.setFont(FontService.getHugeBoldFont());
+        headerText.setFont(FontService.getHeaderFont());
         headerText.setEditable(false);
         headerText.setBackground(ColorService.WHITE);
         
