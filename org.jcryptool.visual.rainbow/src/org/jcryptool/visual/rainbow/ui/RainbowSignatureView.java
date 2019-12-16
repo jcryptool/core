@@ -24,7 +24,8 @@ import org.jcryptool.visual.rainbow.algorithm.RainbowSignature;
 public class RainbowSignatureView extends ViewPart {
     private RainbowSignature rainbow;
     private byte[] signature;
-    private static final String[] NUM_LAYERS = new String[] { "2", "3", "4", "5", "6" };
+
+    private ViParameterWidget viParams;
 
     private ScrolledComposite sc;
     private Composite parent;
@@ -32,7 +33,7 @@ public class RainbowSignatureView extends ViewPart {
     private Composite compHead;
     private Composite compMain;
     private Composite compVerification;
-    private Composite compVi;
+    private Composite compWrapVi;
 
     private Group grpInput;
     private Group grpOutput;
@@ -48,9 +49,7 @@ public class RainbowSignatureView extends ViewPart {
     private Label lblHeader;
     private Label lblXMark;
     private Label lblDetails;
-    private Label lblNumLayers;
-    private Combo comboNumLayers;
-    private Label lblLayers;
+    private Group grpViParams;
 
     @Override
     public void createPartControl(Composite parent) {
@@ -84,24 +83,16 @@ public class RainbowSignatureView extends ViewPart {
         compMain = new Composite(content, SWT.NONE);
         glf.applyTo(compMain);
         gdf.applyTo(compMain);
-        grpKeyParameters = new Group(compMain, SWT.NONE);
-        grpKeyParameters.setText("Key parameters");
-        glf.numColumns(2).applyTo(grpKeyParameters);
-        gdf.applyTo(grpKeyParameters);
-        lblNumLayers = new Label(grpKeyParameters, SWT.NONE);
-        lblNumLayers.setText("Number of Layers: ");
-        comboNumLayers = new Combo(grpKeyParameters, SWT.READ_ONLY);
-        comboNumLayers.setItems(NUM_LAYERS);
-        comboNumLayers.setText(String.valueOf(rainbow.getNumLayers()));
-        comboNumLayers.addListener(SWT.Modify, e-> {
-           compVi.dispose();
-           compVi = createViComposite(grpKeyParameters, null);
-           compVi.getParent().update();
+
+        grpViParams = new Group(compMain, SWT.NONE);
+        grpViParams.setText("Key parameters");
+        glf.numColumns(2).applyTo(grpViParams);
+        gdf.applyTo(grpViParams);
+
+        viParams = new ViParameterWidget(grpViParams, rainbow.getVi());
+        viParams.getBtnApply().addListener(SWT.Selection, e -> {
+            rainbow = new RainbowSignature(viParams.getViList().stream().mapToInt(i -> i).toArray());
         });
-        
-        lblLayers = new Label(grpKeyParameters, SWT.NONE);
-        lblLayers.setText("Variables per Layer: ");
-        compVi = createViComposite(grpKeyParameters, rainbow.getVi());
 
         grpInput = new Group(compMain, SWT.NONE);
         grpInput.setText("Message");
@@ -154,29 +145,6 @@ public class RainbowSignatureView extends ViewPart {
         sc.setContent(content);
         sc.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
-    }
-
-    private Composite createViComposite(Composite p, int[] vi) {
-        int numOfLayers = Integer.valueOf(comboNumLayers.getText());
-        if (vi == null)
-            vi = new int[numOfLayers];     
-
-        Composite comp = new Composite(p, SWT.NONE);
-        comp.setData(vi);
-        RowLayoutFactory.fillDefaults().justify(true).spacing(10).applyTo(comp);
-
-        for (int i = 0; i < numOfLayers; i++) {
-            StyledText v = new StyledText(comp, SWT.BORDER);
-            v.setText(String.valueOf(vi[i]));
-            v.setLayoutData(new RowData(20, SWT.DEFAULT));
-            
-            if (i < numOfLayers-1) {
-                Label lblLesser = new Label(comp, SWT.NONE);
-                lblLesser.setText("<");
-            }
-        }        
-        
-        return comp;
     }
 
     private StyledText multiLineText(Composite p, int hAlign, int vAlign, int lines, boolean readonly) {
