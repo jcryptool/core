@@ -89,7 +89,6 @@ public class TranspAnalysisUI extends Composite implements Observer {
 	private ReadDirectionChooser readoutDirChooser;
 	private boolean readInMode = false;
 	private PageConfiguration textPageConfiguration;
-	private TransformData textTransformData;
 	private Composite compLoadTextBtn;
 	private Button btnOpenTextWizard;
 	private Composite compInstructions;
@@ -667,30 +666,19 @@ public class TranspAnalysisUI extends Composite implements Observer {
 												// have loaded a text)
 			textWizard.setTextPageConfig(textPageConfiguration);
 		}
-		if (textTransformData != null) { // same as above.. just separated to
-											// make sure no mistake happens
-			textWizard.setTransformData(textTransformData);
-		}
 		int result = dialog.open();
 
 		if (result == Window.OK) {
 			textPageConfiguration = textWizard.getTextPageConfig();
-			textTransformData = textWizard.getTransformData();
 			setText(textPageConfiguration.getText(), false);
 			setReadInMode(textPageConfiguration.getReadInDirection(), false);
 			readinDirChooser.setDirection(textPageConfiguration.getReadInDirection());
 			setCrop(textPageConfiguration.isCrop(), false);
 			setCroplength(textPageConfiguration.getCropLength(), false);
 			setBlocklength(textPageConfiguration.getColumnCount(), false);
-			if (textTransformData != null && !textTransformData.isUnmodified()) {
-				displayTextTransformBtn(true, true, textTransformData);
-				applyTransformationInput.writeContent(true);
-				applyTransformationInput.synchronizeWithUserSide();
-			} else {
-				displayTextTransformBtn(false, true, new TransformData());
-				applyTransformationInput.writeContent(false);
-				applyTransformationInput.synchronizeWithUserSide();
-			}
+			displayTextTransformBtn(false, true, new TransformData());
+			applyTransformationInput.writeContent(false);
+			applyTransformationInput.synchronizeWithUserSide();
 
 			doAutoCrop = (blocklength > 0 && !crop || blocklength == 0 && crop);
 
@@ -762,7 +750,8 @@ public class TranspAnalysisUI extends Composite implements Observer {
 
 	private String calcText() {
 		return Transform.transformText(text.getText(),
-				applyTransformationInput.getContent() ? textTransformData : new TransformData());
+				//applyTransformationInput.getContent() ? textTransformData : 
+					new TransformData());
 	}
 
 	private void refreshTable() {
