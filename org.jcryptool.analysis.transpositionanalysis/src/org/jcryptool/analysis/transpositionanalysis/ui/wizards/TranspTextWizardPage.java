@@ -354,12 +354,6 @@ public class TranspTextWizardPage extends WizardPage {
 
 		txtInputText.setLayoutData(text1LData);
 
-		Label nextPageInfo = new Label(grpText, SWT.WRAP);
-		GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
-		layoutData.widthHint = 300;
-		nextPageInfo.setLayoutData(layoutData);
-		nextPageInfo.setText(Messages.TranspTextWizardPage_zzz);
-
 		parttextGroup = new Group(pageComposite, SWT.NONE);
 		GridLayout composite4Layout = new GridLayout(3, false);
 		composite4Layout.horizontalSpacing = 0;
