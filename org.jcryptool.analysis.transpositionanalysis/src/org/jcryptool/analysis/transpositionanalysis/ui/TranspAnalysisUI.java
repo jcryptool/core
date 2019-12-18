@@ -17,8 +17,6 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -41,7 +39,6 @@ import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.input.ButtonInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
-import org.jcryptool.crypto.classic.alphabets.ui.AddAlphabetWizard;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionKey;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionTable;
 import org.jcryptool.crypto.classic.transposition.ui.TranspositionKeyInputWizard;
@@ -112,7 +109,6 @@ public class TranspAnalysisUI extends Composite implements Observer {
 	private Label label_1;
 
 	private String ownKeyInputString;
-	private Link lblNewLabel;
 	private Label lblLoadedTextwith;
 
 	private String lastPreviewedText;
@@ -253,27 +249,13 @@ public class TranspAnalysisUI extends Composite implements Observer {
 
 		description = new Text(headerComposite, SWT.READ_ONLY);
 		description.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		description.setText(Messages.TranspAnalysisUI_description);
+		description.setText(Messages.TranspAnalysisUI_view_description);
 		description.setBackground(ColorService.WHITE);
 
 		instrGroup = new Group(content, SWT.NONE);
 		instrGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		instrGroup.setLayout(new GridLayout(1, false));		
-
-		// Link for loading a custom alphabet.
-		lblNewLabel = new Link(instrGroup, SWT.WRAP | SWT.PUSH);
-		lblNewLabel.setText(Messages.TranspAnalysisUI_view_description);
-		GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
-		lblNewLabel.setLayoutData(layoutData);
-		lblNewLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseDown(MouseEvent e) {
-				AddAlphabetWizard wizard = new AddAlphabetWizard();
-				WizardDialog dialog = new WizardDialog(getShell(), wizard);
-				dialog.open();
-			}
-		});
-
+		
 		compLoadTextBtn = new Composite(instrGroup, SWT.NONE);
 		compLoadTextBtn.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
 		GridLayout compLoadTextBtnLayout = new GridLayout(2, false);
@@ -369,6 +351,7 @@ public class TranspAnalysisUI extends Composite implements Observer {
 
 		btnCheckButton = new Button(compApplyTransform, SWT.CHECK | SWT.WRAP);
 		btnCheckButton.setText(String.format(Messages.TranspAnalysisUI_btnCheckButton_text, "")); //$NON-NLS-1$
+		GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
 		layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		layoutData.widthHint = 100;
 		btnCheckButton.setLayoutData(layoutData);

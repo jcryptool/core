@@ -26,7 +26,6 @@ public class Messages extends NLS {
 	public static String TranspAnalysisUI_view_title;
 	
 	public static String TranspAnalysisUI_decipher;
-	public static String TranspAnalysisUI_description;
 	public static String TranspAnalysisUI_Export;
 	public static String TranspAnalysisUI_keyfound;
 	public static String TranspAnalysisUI_keypreview_zerocolumns;
