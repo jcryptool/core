@@ -78,9 +78,9 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 	/**
 	 * The width of a column (inhabited by 1 character) in pixel
 	 */
-	private int columnWidth = 30;
+	private int columnWidth = 36;
 	/**
-	 * Columns are saved for disposal at redraw
+	 * Column width
 	 */
 	private TableColumn[] disposableColumns;
 
@@ -103,7 +103,6 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 		transpTableLData.horizontalAlignment = GridData.FILL;
 		transpTableLData.verticalAlignment = GridData.FILL;
 		transpTableLData.grabExcessVerticalSpace = true;
-		transpTableLData.widthHint = 10 * columnWidth + 4;
 		transpTableLData.minimumWidth = 5 * columnWidth + 4;
 		transpTable.setLayoutData(transpTableLData);
 		transpTable.setHeaderVisible(true);
@@ -202,11 +201,13 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 			for (int i = 0; i < columns.length; i++) {
 				disposableColumns[i] = new TableColumn(transpTable, SWT.NONE);
 				disposableColumns[i].setText("" + (i + 1)); //$NON-NLS-1$
+				// calculate the width of a column.
 				int colPxWidth = columnWidth + (("" + (i + 1)).length() - 1) * (columnWidth / 4); //$NON-NLS-1$
 				disposableColumns[i].setWidth(colPxWidth);
 				disposableColumns[i].setMoveable(true);
 				disposableColumns[i].setAlignment(SWT.CENTER);
 				disposableColumns[i].addControlListener(this);
+				
 			}
 			for (int i = 0; i < rows.length; i++) {
 				TableItem myItem = new TableItem(transpTable, SWT.NONE);
@@ -217,6 +218,7 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 				myItem.setText(myRow);
 				myItem.setFont(FontService.getNormalBoldFont());
 			}
+			
 			transpTable.layout();
 		}
 	}
