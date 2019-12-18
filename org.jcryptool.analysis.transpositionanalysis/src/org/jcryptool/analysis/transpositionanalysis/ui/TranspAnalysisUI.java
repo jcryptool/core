@@ -260,6 +260,7 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		instrGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		instrGroup.setLayout(new GridLayout(1, false));		
 
+		// Link for loading a custom alphabet.
 		lblNewLabel = new Link(instrGroup, SWT.WRAP | SWT.PUSH);
 		lblNewLabel.setText(Messages.TranspAnalysisUI_view_description);
 		GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
@@ -342,7 +343,7 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		lblHoweverTheColumn = new Label(compInstructions, SWT.WRAP);
 
 		GridData gd_lblHoweverTheColumn = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		gd_lblHoweverTheColumn.widthHint = 200;
+		gd_lblHoweverTheColumn.widthHint = 600;
 		lblHoweverTheColumn.setLayoutData(gd_lblHoweverTheColumn);
 
 		lblHoweverTheColumn.setText(Messages.TranspAnalysisUI_lblHoweverTheColumn_text);
