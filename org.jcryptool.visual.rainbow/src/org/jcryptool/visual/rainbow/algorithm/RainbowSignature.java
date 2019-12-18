@@ -138,4 +138,8 @@ public class RainbowSignature {
     public int[] getVi() {
         return privateKey.getVi();
     }
+    
+    public RainbowPrivateKeyParameters getPrivateKeyParams() {
+        return privateKey;
+    }
 }

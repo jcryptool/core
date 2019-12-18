@@ -6,12 +6,14 @@ import org.eclipse.jface.layout.RowDataFactory;
 import org.eclipse.jface.layout.RowLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.RowData;
+import org.eclipse.swt.graphics.TextStyle;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -24,20 +26,19 @@ import org.jcryptool.visual.rainbow.algorithm.RainbowSignature;
 public class RainbowSignatureView extends ViewPart {
     private RainbowSignature rainbow;
     private byte[] signature;
-
     private ViParameterWidget viParams;
 
     private ScrolledComposite sc;
     private Composite parent;
     private Composite content;
     private Composite compHead;
-    private Composite compMain;
+    private Composite compInputOutput;
     private Composite compVerification;
-    private Composite compWrapVi;
-
+    private Composite compAlgorithm;
+    private Composite compDetails; 
     private Group grpInput;
     private Group grpOutput;
-    private Group grpKeyParameters;
+    private Group grpViParams;
 
     private StyledText textInfoHead;
     private StyledText textMessage;
@@ -49,7 +50,9 @@ public class RainbowSignatureView extends ViewPart {
     private Label lblHeader;
     private Label lblXMark;
     private Label lblDetails;
-    private Group grpViParams;
+    private Composite compRainbowLES;
+    private RainbowLESWidget rainbowLESWidget;
+
 
     @Override
     public void createPartControl(Composite parent) {
@@ -80,21 +83,25 @@ public class RainbowSignatureView extends ViewPart {
                 "This visualization represents multivariate cryptography on the example of the Rainbow signature scheme.");
         GridDataFactory.fillDefaults().grab(true, false).applyTo(textInfoHead);
 
-        compMain = new Composite(content, SWT.NONE);
-        glf.applyTo(compMain);
-        gdf.applyTo(compMain);
+        compAlgorithm = new Composite(content, SWT.NONE); 
+        glf.numColumns(2).applyTo(compAlgorithm);
+        gdf.applyTo(compAlgorithm);
 
-        grpViParams = new Group(compMain, SWT.NONE);
+        compInputOutput = new Composite(compAlgorithm, SWT.NONE);
+        glf.numColumns(1).applyTo(compInputOutput);
+        gdf.applyTo(compInputOutput);
+
+        grpViParams = new Group(compInputOutput, SWT.NONE);
         grpViParams.setText("Key parameters");
-        glf.numColumns(2).applyTo(grpViParams);
-        gdf.applyTo(grpViParams);
+        glf.numColumns(1).applyTo(grpViParams);
+        GridDataFactory.fillDefaults().grab(true, false).applyTo(grpViParams);
 
         viParams = new ViParameterWidget(grpViParams, rainbow.getVi());
         viParams.getBtnApply().addListener(SWT.Selection, e -> {
             rainbow = new RainbowSignature(viParams.getViList().stream().mapToInt(i -> i).toArray());
         });
 
-        grpInput = new Group(compMain, SWT.NONE);
+        grpInput = new Group(compInputOutput, SWT.NONE);
         grpInput.setText("Message");
         glf.numColumns(1).applyTo(grpInput);
         gdf.applyTo(grpInput);
@@ -106,10 +113,16 @@ public class RainbowSignatureView extends ViewPart {
             signature = rainbow.sign(textMessage.getText().getBytes());
             textSignature.setText(javax.xml.bind.DatatypeConverter.printHexBinary(signature));
             textDetails.setText(rainbow.getVars());
-
+            if (rainbowLESWidget != null)
+                rainbowLESWidget.dispose();
+            rainbowLESWidget = new RainbowLESWidget(compRainbowLES, rainbow.getPrivateKeyParams());
+            glf.applyTo(rainbowLESWidget);
+            gdf.applyTo(rainbowLESWidget);
+           
+            compRainbowLES.layout();
         });
 
-        grpOutput = new Group(compMain, SWT.NONE);
+        grpOutput = new Group(compInputOutput, SWT.NONE);
         grpOutput.setText("Signature");
         glf.applyTo(grpOutput);
         gdf.applyTo(grpOutput);
@@ -138,10 +151,18 @@ public class RainbowSignatureView extends ViewPart {
         lblXMark = iconAsLabel(compVerification, "/../icons/x-mark.png", buttonSize.y);
         lblXMark.setVisible(false);
 
-        lblDetails = new Label(grpOutput, SWT.NONE);
+        compDetails = new Composite(compAlgorithm, SWT.NONE);
+        glf.applyTo(compDetails);
+        gdf.applyTo(compDetails);
+        
+        lblDetails = new Label(compDetails, SWT.NONE);
         lblDetails.setText("Algorithm Details:");
-        textDetails = multiLineText(grpOutput, SWT.FILL, SWT.FILL, 20, true);
-
+        textDetails = multiLineText(compDetails, SWT.FILL, SWT.FILL, 20, true);
+        
+        compRainbowLES = new Composite(content, SWT.NONE);
+        glf.applyTo(compRainbowLES);
+        gdf.applyTo(compRainbowLES);
+        
         sc.setContent(content);
         sc.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
@@ -176,6 +197,8 @@ public class RainbowSignatureView extends ViewPart {
         icon.setImage(scaled);
         return icon;
     }
+
+
 
     @Override
     public void setFocus() {

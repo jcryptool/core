@@ -15,13 +15,14 @@ import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.core.logging.utils.LogUtil;
 
 public class ViParameterWidget extends Composite {
 
-    private static final String[] NUM_LAYERS = new String[] { "2", "3", "4", "5", "6" };
+    private static final String[] NUM_LAYERS = new String[] { "2", "3", "4", "5", "6", "7"};
     private List<Integer> viList;
 
     private Combo comboNumLayers;
@@ -34,7 +35,7 @@ public class ViParameterWidget extends Composite {
     private Button btnApply;
 
     public ViParameterWidget(Composite parent) {
-        this(parent, new int[6]);
+        this(parent, new int[5]);
     }
 
     public ViParameterWidget(Composite parent, int[] vi) {
@@ -49,7 +50,6 @@ public class ViParameterWidget extends Composite {
         lblNumLayers = new Label(this, SWT.NONE);
         lblNumLayers.setText("Number of Layers: ");
         comboNumLayers = new Combo(this, SWT.READ_ONLY);
-
         comboNumLayers.setItems(NUM_LAYERS);
         comboNumLayers.setText(String.valueOf(vi.length));
         comboNumLayers.addListener(SWT.Modify, e -> {
@@ -64,6 +64,8 @@ public class ViParameterWidget extends Composite {
 
         lblLayers = new Label(this, SWT.NONE);
         lblLayers.setText("Variables per Layer: ");
+        gdf.applyTo(lblLayers);
+
         compWrapVi = new Composite(this, SWT.NONE);
         glf.numColumns(1).applyTo(compWrapVi);
         gdf.applyTo(compWrapVi);
@@ -83,17 +85,7 @@ public class ViParameterWidget extends Composite {
             StyledText v = new StyledText(comp, SWT.BORDER);
             v.setText(String.valueOf(viList.get(i)));
             v.setData(i);
-            v.addListener(SWT.Verify, e-> {
-                String string = e.text;
-                char[] chars = new char[string.length()];
-                string.getChars(0, chars.length, chars, 0);
-                for (int j = 0; j < chars.length; j++) {
-                   if (!('0' <= chars[j] && chars[j] <= '9')) {
-                      e.doit = false;
-                      return;
-                   }
-                }
-            });
+            v.addListener(SWT.Verify, this::verifyNumeric);
             v.setLayoutData(new RowData(20, SWT.DEFAULT));
 
             if (i < numOfLayers - 1) {
@@ -115,6 +107,18 @@ public class ViParameterWidget extends Composite {
         }
 
         return comp;
+    }
+
+    private void verifyNumeric(Event e) {
+        String string = e.text;
+        char[] chars = new char[string.length()];
+        string.getChars(0, chars.length, chars, 0);
+        for (int j = 0; j < chars.length; j++) {
+           if (!('0' <= chars[j] && chars[j] <= '9')) {
+              e.doit = false;
+              return;
+           }
+        }
     }
 
     public List<Integer> getViList() {
