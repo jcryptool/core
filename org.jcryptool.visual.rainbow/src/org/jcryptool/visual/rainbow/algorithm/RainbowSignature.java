@@ -78,61 +78,7 @@ public class RainbowSignature {
         verifier.update(message, 0, message.length);
         return verifier.verifySignature(signature);
     }
-
-    public String getVars() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("----Private Key----\n")
-            .append("Doc length: ").append(privateKey.getDocLength()).append("\n")
-            .append("Number of Layers: ").append(privateKey.getVi().length).append("\n")
-            .append("Vi per Layer: ").append(arrayToString(privateKey.getVi())).append("\n")
-            .append("B1: ").append(arrayToString(privateKey.getB1())).append("\n")
-            .append("B2: ").append(arrayToString(privateKey.getB2())).append("\n")
-            .append("InvA1: ").append(arrayToString(privateKey.getInvA1())).append("\n")
-            .append("InvA2: ").append(arrayToString(privateKey.getInvA2())).append("\n");
-
-        sb.append("\n----Public Key----\n")
-            .append("Doc length: ").append(publicKey.getDocLength()).append("\n")
-            .append("Coeff Quadratic: ").append(arrayToString(publicKey.getCoeffQuadratic())).append("\n")
-            .append("Coeff Scalar: ").append(arrayToString(publicKey.getCoeffScalar())).append("\n")
-            .append("Coeff Singlar: ").append(arrayToString(publicKey.getCoeffSingular()));
-
-        return sb.toString();
-    }
-
-    public String arrayToString(short[][] arr) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Dimension: [").append(arr.length).append("][").append(arr[0].length).append("]\n");
-        int count = 0;
-        for (int r = 0; r < arr.length; r++) {
-            for (int c = 0; c < arr[r].length; c++) {
-                sb.append(arr[r][c]).append(" ");
-                count++;
-                if (count > 10)
-                  break;
-            }
-            
-        }
-        sb.append("...");
-        return sb.toString();
-    }
-
-    public String arrayToString(short[] arr) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Dimension: [").append(arr.length).append("]\n");
-        for (int r = 0; r < arr.length; r++) {
-            sb.append(arr[r]).append(" ");
-        }
-        return sb.toString();
-    }
-
-    public String arrayToString(int[] arr) {
-        StringBuilder sb = new StringBuilder();
-        for (int r = 0; r < arr.length; r++) {
-            sb.append(arr[r]).append(" ");
-        }
-        return sb.toString();
-    }
-
+  
     public int getNumLayers() {
         return privateKey.getVi().length;
     }
@@ -144,4 +90,10 @@ public class RainbowSignature {
     public RainbowPrivateKeyParameters getPrivateKeyParams() {
         return privateKey;
     }
+
+    public RainbowPublicKeyParameters getPublicKey() {
+        return publicKey;
+    }
+    
+    
 }

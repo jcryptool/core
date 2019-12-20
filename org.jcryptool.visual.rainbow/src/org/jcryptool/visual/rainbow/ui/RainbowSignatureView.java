@@ -77,10 +77,10 @@ public class RainbowSignatureView extends ViewPart {
         GridDataFactory.fillDefaults().grab(true, false).applyTo(compHead);
         lblHeader = new Label(compHead, SWT.NONE);
         lblHeader.setFont(FontService.getHeaderFont());
-        lblHeader.setText("Multivariate cryptography - The Rainbow signature scheme");
+        lblHeader.setText(Messages.RainbowSignatureView_lblHeader);
         textInfoHead = new StyledText(compHead, SWT.MULTI | SWT.READ_ONLY | SWT.WRAP);
         textInfoHead.setText(
-                "This visualization represents multivariate cryptography on the example of the Rainbow signature scheme.");
+                Messages.RainbowSignatureView_textInfoHead);
         GridDataFactory.fillDefaults().grab(true, false).applyTo(textInfoHead);
 
         compAlgorithm = new Composite(content, SWT.NONE); 
@@ -92,7 +92,7 @@ public class RainbowSignatureView extends ViewPart {
         gdf.applyTo(compInputOutput);
 
         grpViParams = new Group(compInputOutput, SWT.NONE);
-        grpViParams.setText("Key parameters");
+        grpViParams.setText(Messages.RainbowSignatureView_grpViParams);
         glf.numColumns(1).applyTo(grpViParams);
         GridDataFactory.fillDefaults().grab(true, false).applyTo(grpViParams);
 
@@ -102,17 +102,17 @@ public class RainbowSignatureView extends ViewPart {
         });
 
         grpInput = new Group(compInputOutput, SWT.NONE);
-        grpInput.setText("Message");
+        grpInput.setText(Messages.RainbowSignatureView_grpInput);
         glf.numColumns(1).applyTo(grpInput);
         gdf.applyTo(grpInput);
         textMessage = multiLineText(grpInput, SWT.FILL, SWT.FILL, 6, false);
-        textMessage.setText("Example Message");
+        textMessage.setText(Messages.RainbowSignatureView_textMessage);
         btnSign = new Button(grpInput, SWT.NONE);
-        btnSign.setText("Sign");
+        btnSign.setText(Messages.RainbowSignatureView_btnSign);
         btnSign.addListener(SWT.Selection, e -> {
             signature = rainbow.sign(textMessage.getText().getBytes());
             textSignature.setText(javax.xml.bind.DatatypeConverter.printHexBinary(signature));
-            textInfo.setText(rainbow.getVars());
+            textInfo.setText(getVarString());
             if (rainbowLESWidget != null)
                 rainbowLESWidget.dispose();
             rainbowLESWidget = new RainbowLESWidget(grpRainbowLES, rainbow.getPrivateKeyParams());
@@ -123,7 +123,7 @@ public class RainbowSignatureView extends ViewPart {
         });
 
         grpOutput = new Group(compInputOutput, SWT.NONE);
-        grpOutput.setText("Signature");
+        grpOutput.setText(Messages.RainbowSignatureView_grpOutput);
         glf.applyTo(grpOutput);
         gdf.applyTo(grpOutput);
         textSignature = multiLineText(grpOutput, SWT.FILL, SWT.FILL, 2, false);
@@ -131,7 +131,7 @@ public class RainbowSignatureView extends ViewPart {
         RowLayoutFactory.fillDefaults().applyTo(compVerification);
 
         btnVerify = new Button(compVerification, SWT.NONE);
-        btnVerify.setText("Verify");
+        btnVerify.setText(Messages.RainbowSignatureView_btnVerify);
         RowDataFactory.swtDefaults().applyTo(btnVerify);
         btnVerify.addListener(SWT.Selection, e -> {
             signature = javax.xml.bind.DatatypeConverter.parseHexBinary(textSignature.getText());
@@ -145,10 +145,10 @@ public class RainbowSignatureView extends ViewPart {
             }
         });
         Point buttonSize = btnVerify.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-        lblCheck = iconAsLabel(compVerification, "/../icons/checkmark.png", buttonSize.y);
+        lblCheck = iconAsLabel(compVerification, "/../icons/checkmark.png", buttonSize.y); //$NON-NLS-1$
         lblCheck.setVisible(false);
 
-        lblXMark = iconAsLabel(compVerification, "/../icons/x-mark.png", buttonSize.y);
+        lblXMark = iconAsLabel(compVerification, "/../icons/x-mark.png", buttonSize.y); //$NON-NLS-1$
         lblXMark.setVisible(false);
 
         compDetails = new Composite(compAlgorithm, SWT.NONE);
@@ -156,12 +156,12 @@ public class RainbowSignatureView extends ViewPart {
         gdf.applyTo(compDetails);
         
         grpRainbowLES = new Group(compDetails, SWT.NONE);
-        grpRainbowLES.setText("Coefficient ditribution");
+        grpRainbowLES.setText(Messages.RainbowSignatureView_grpRainbowLES);
         glf.applyTo(grpRainbowLES);
         gdf.hint(500, SWT.DEFAULT).applyTo(grpRainbowLES);
         
         grpInfoBox = new Group(compDetails, SWT.NONE);
-        grpInfoBox.setText("Algorithm Details");
+        grpInfoBox.setText(Messages.RainbowSignatureView_grpInfoBox);
         glf.applyTo(grpInfoBox);
         gdf.applyTo(grpInfoBox);
         textInfo = multiLineText(grpInfoBox, SWT.FILL, SWT.FILL, 20, true);
@@ -201,7 +201,59 @@ public class RainbowSignatureView extends ViewPart {
         return icon;
     }
 
+    public String getVarString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("----" + Messages.RainbowSignatureView_varPrivKey + "----\n") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            .append(Messages.RainbowSignatureView_varDocLength).append(rainbow.getPrivateKeyParams().getDocLength()).append("\n") //$NON-NLS-2$ //$NON-NLS-1$
+            .append(Messages.RainbowSignatureView_varLayers).append(rainbow.getPrivateKeyParams().getVi().length).append("\n") //$NON-NLS-2$ //$NON-NLS-1$
+            .append(Messages.RainbowSignatureView_varVi).append(arrayToString(rainbow.getPrivateKeyParams().getVi())).append("\n") //$NON-NLS-2$ //$NON-NLS-1$
+            .append("B1: ").append(arrayToString(rainbow.getPrivateKeyParams().getB1())).append("\n") //$NON-NLS-1$ //$NON-NLS-2$
+            .append("B2: ").append(arrayToString(rainbow.getPrivateKeyParams().getB2())).append("\n") //$NON-NLS-1$ //$NON-NLS-2$
+            .append("InvA1: ").append(arrayToString(rainbow.getPrivateKeyParams().getInvA1())).append("\n") //$NON-NLS-1$ //$NON-NLS-2$
+            .append("InvA2: ").append(arrayToString(rainbow.getPrivateKeyParams().getInvA2())).append("\n"); //$NON-NLS-1$ //$NON-NLS-2$
 
+        sb.append("\n----" + Messages.RainbowSignatureView_varPubkey + "----\n") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            .append(Messages.RainbowSignatureView_varDocLength).append(rainbow.getPublicKey().getDocLength()).append("\n") //$NON-NLS-2$ //$NON-NLS-1$
+            .append(Messages.RainbowSignatureView_varCoeffQ).append(arrayToString(rainbow.getPublicKey().getCoeffQuadratic())).append("\n") //$NON-NLS-2$ //$NON-NLS-1$
+            .append(Messages.RainbowSignatureView_varCoeffScalar).append(arrayToString(rainbow.getPublicKey().getCoeffScalar())).append("\n") //$NON-NLS-2$ //$NON-NLS-1$
+            .append(Messages.RainbowSignatureView_varCoeffSinglar).append(arrayToString(rainbow.getPublicKey().getCoeffSingular()));
+
+        return sb.toString();
+    }
+    
+    public String arrayToString(short[][] arr) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(Messages.RainbowSignatureView_varDim + ": [").append(arr.length).append("][").append(arr[0].length).append("]\n"); //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        int count = 0;
+        for (int r = 0; r < arr.length; r++) {
+            for (int c = 0; c < arr[r].length; c++) {
+                sb.append(arr[r][c]).append(" "); //$NON-NLS-1$
+                count++;
+                if (count > 10)
+                  break;
+            }
+            
+        }
+        sb.append("..."); //$NON-NLS-1$
+        return sb.toString();
+    }
+
+    public String arrayToString(short[] arr) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(Messages.RainbowSignatureView_varDim + ": [").append(arr.length).append("]\n"); //$NON-NLS-2$ //$NON-NLS-3$
+        for (int r = 0; r < arr.length; r++) {
+            sb.append(arr[r]).append(" "); //$NON-NLS-1$
+        }
+        return sb.toString();
+    }
+
+    public String arrayToString(int[] arr) {
+        StringBuilder sb = new StringBuilder();
+        for (int r = 0; r < arr.length; r++) {
+            sb.append(arr[r]).append(" "); //$NON-NLS-1$
+        }
+        return sb.toString();
+    }
 
     @Override
     public void setFocus() {
