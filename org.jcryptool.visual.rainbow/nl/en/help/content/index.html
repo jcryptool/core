@@ -1,12 +1,32 @@
-InProceedings{10.1007/11496137_12,
-author="Ding, Jintai
-and Schmidt, Dieter",
-editor="Ioannidis, John
-and Keromytis, Angelos
-and Yung, Moti",
-title="Rainbow, a New Multivariable Polynomial Signature Scheme",
-booktitle="Applied Cryptography and Network Security",
-year="2005",
-publisher="Springer Berlin Heidelberg",
-address="Berlin, Heidelberg",
-pages="164--175"}
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+  
+<head>	  
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title>Multivariate Cryptography</title>
+</head>
+
+<body>
+
+<h1>Multivariate Cryptography</h1>
+
+<p>Solving systems of multivariate polynomial equations is proven to be NP-hard even for quadratic equations (degree two) and therefore sparked the interest of researchers. Multivariate Cryptography is a generic term for asymmetric primitives, which are based on this mathematical problem. The general idea is to introduce a special trapdoor to the equation system to make it solvable with few computing resources. In post-quantum cryptography, this is mainly used for digital signatures. In fact, there are four such schemes in Rounds 2 of NIST’s Post-Quantum Cryptography standardization process – GeMSS, LUOV, MQDSS and Rainbow.</p>
+<p>Tsutomu Matsumoto and Hideki Imai first presented the C* signature scheme in 1988 (1) at the Eurocrypt conference. Although it has been broken by Jacques Patarin, the principle inspired more improved proposals. After some iterations of rather impractical and insecure schemes, Patarin published “Unbalanced Oil and Vinegar” in corporation with Aviad Kipnis and Louis Goubin (2). The name stems from the fact that the variables of the equation system are never fully mixed, like oil and vinegar. Furthermore, the number of oil and vinegar variables is not equal to eliminate a cryptanalysis attack presented by Kipnis and Shamir (3). The Rainbow scheme by Jintai Ding and Dieter Schmidt (4), used for the visualization constructs several layers of equation systems to improve its efficiency in terms of signature length and computation. According to the authors it is a generalization of Unbalanced Oil and Vinegar because latter can be interpreted as a single layer Rainbow scheme.</p>
+
+<h2>Signature scheme</h2>
+<p>The signature creation itself is relatively easy to compute and requires only basic addition and multiplication operations with “small” numbers. The equation system has randomly chosen oil and vinegar variables, which compute a solution to the system. In case of Rainbow, the variables of one layer are plugged into the equation system of the next layer and so on.  A documents signature consists of the complete solution.</p>
+<p>The private or signing key consists of two affine transformations, S and T, and a polynomial vector P, which represent the trapdoor needed to solve the equation system. The public key contains a modified version of the whole equation system, or more specifically the star product of the private key components, which is used to verify the signature. For an attacker it is not feasible to compute the solution without knowledge of the trapdoor and he can gain no knowledge about it from the verification key.</p> 
+
+<h2>Visualization</h2>
+<p>The Multivariate cryptography visualization is a black box view of the Rainbow signature scheme. You may select the number of layers and Vinegar variables per layer, but the systems keeps the actual equation system hidden from the user. On the right hand side, you can see an abbreviated listing of the coefficients and their “rainbow”-like distribution.</p>
+
+<h2>References</h2>
+<ol>
+<li>Public Quadratic Polynomial-Tuples for Efficient Signature-Verification and Message-Encryption. Matsumoto, Tsutomu and Imai, Hideki. [ed.] D. Barstow, et al. Berlin : Springer Berlin Heidelberg, 1988. Advances in Cryptology --- EUROCRYPT '88. pp. 419-453. ISBN: 978-3-540-45961-3.</li>
+<li>Unbalanced Oil and Vinegar Signature Schemes. Kipnis, Aviad, Patarin, Jacques and Goubin, Louis. [ed.] Jacques Stern. Berlin : Springer Berlin Heidelberg, 1999. Advances in Cryptology --- EUROCRYPT '99. pp. 206-222. ISBN: 978-3-540-48910-8.</li>
+<li>Cryptanalysis of the oil and vinegar signature scheme. Kipnis, Aviad and Shamir, Adi. [ed.] Hugo Krawczyk. Berlin : Springer Berlin Heidelberg, 1998. Advances in Cryptology --- CRYPTO '98. pp. 257-266. ISBN: 978-3-540-68462-6.</li>
+<li>Rainbow, a New Multivariable Polynomial Signature Scheme. Ding, Jintai and Schmidt, Dieter. [ed.] John Ioannidis, Angelos Keromytis and Moti Yung. Berlin : Springer Berlin Heidelberg, 2005. Applied Cryptography and Network Security. pp. 164-175. ISBN: 978-3-540-31542-1.</li>
+<li>Buchanan, Prof Bill. In a Post Quantum Computing World: For Robust Cooking — You Need a Bit of Oil and Vinegar. 8 2018.</li>
+</ol>
+</body>
+

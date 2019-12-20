@@ -27,6 +27,7 @@ public class RainbowSignatureView extends ViewPart {
     private RainbowSignature rainbow;
     private byte[] signature;
     private ViParameterWidget viParams;
+    private RainbowLESWidget rainbowLESWidget;
 
     private ScrolledComposite sc;
     private Composite parent;
@@ -39,19 +40,18 @@ public class RainbowSignatureView extends ViewPart {
     private Group grpInput;
     private Group grpOutput;
     private Group grpViParams;
+    private Group grpRainbowLES;
 
     private StyledText textInfoHead;
     private StyledText textMessage;
     private StyledText textSignature;
-    private StyledText textDetails;
+    private StyledText textInfo;
     private Button btnSign;
     private Button btnVerify;
     private Label lblCheck;
     private Label lblHeader;
     private Label lblXMark;
-    private Label lblDetails;
-    private Composite compRainbowLES;
-    private RainbowLESWidget rainbowLESWidget;
+    private Group grpInfoBox;
 
 
     @Override
@@ -112,14 +112,14 @@ public class RainbowSignatureView extends ViewPart {
         btnSign.addListener(SWT.Selection, e -> {
             signature = rainbow.sign(textMessage.getText().getBytes());
             textSignature.setText(javax.xml.bind.DatatypeConverter.printHexBinary(signature));
-            textDetails.setText(rainbow.getVars());
+            textInfo.setText(rainbow.getVars());
             if (rainbowLESWidget != null)
                 rainbowLESWidget.dispose();
-            rainbowLESWidget = new RainbowLESWidget(compRainbowLES, rainbow.getPrivateKeyParams());
+            rainbowLESWidget = new RainbowLESWidget(grpRainbowLES, rainbow.getPrivateKeyParams());
             glf.applyTo(rainbowLESWidget);
             gdf.applyTo(rainbowLESWidget);
            
-            compRainbowLES.layout();
+            grpRainbowLES.layout();
         });
 
         grpOutput = new Group(compInputOutput, SWT.NONE);
@@ -155,13 +155,16 @@ public class RainbowSignatureView extends ViewPart {
         glf.applyTo(compDetails);
         gdf.applyTo(compDetails);
         
-        lblDetails = new Label(compDetails, SWT.NONE);
-        lblDetails.setText("Algorithm Details:");
-        textDetails = multiLineText(compDetails, SWT.FILL, SWT.FILL, 20, true);
+        grpRainbowLES = new Group(compDetails, SWT.NONE);
+        grpRainbowLES.setText("Coefficient ditribution");
+        glf.applyTo(grpRainbowLES);
+        gdf.hint(500, SWT.DEFAULT).applyTo(grpRainbowLES);
         
-        compRainbowLES = new Composite(content, SWT.NONE);
-        glf.applyTo(compRainbowLES);
-        gdf.applyTo(compRainbowLES);
+        grpInfoBox = new Group(compDetails, SWT.NONE);
+        grpInfoBox.setText("Algorithm Details");
+        glf.applyTo(grpInfoBox);
+        gdf.applyTo(grpInfoBox);
+        textInfo = multiLineText(grpInfoBox, SWT.FILL, SWT.FILL, 20, true);
         
         sc.setContent(content);
         sc.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));

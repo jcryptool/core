@@ -50,7 +50,7 @@ public class RainbowSignature {
         signer.init(true, keyPair.getPrivate());
 
         verifier = new DigestingMessageSigner(new RainbowSigner(), new SHA224Digest());
-        verifier.init(false, keyPair.getPublic());        
+        verifier.init(false, keyPair.getPublic());
     }
     
     
@@ -82,51 +82,53 @@ public class RainbowSignature {
     public String getVars() {
         StringBuilder sb = new StringBuilder();
         sb.append("----Private Key----\n")
-        .append("Doc length: ").append(privateKey.getDocLength()).append("\n")
-                .append("Vi: ").append(privateKey.getVi().length).append("\n")
-                .append("B1: ").append(gridToString(privateKey.getB1())).append("\n")
-                .append("B2: ").append(gridToString(privateKey.getB2())).append("\n")
-                .append("InvA1: ").append(gridToString(privateKey.getInvA1())).append("\n")
-                .append("InvA2: ").append(gridToString(privateKey.getInvA2())).append("\n")
-                .append("Vi: ").append(gridToString(privateKey.getVi()));
+            .append("Doc length: ").append(privateKey.getDocLength()).append("\n")
+            .append("Number of Layers: ").append(privateKey.getVi().length).append("\n")
+            .append("Vi per Layer: ").append(arrayToString(privateKey.getVi())).append("\n")
+            .append("B1: ").append(arrayToString(privateKey.getB1())).append("\n")
+            .append("B2: ").append(arrayToString(privateKey.getB2())).append("\n")
+            .append("InvA1: ").append(arrayToString(privateKey.getInvA1())).append("\n")
+            .append("InvA2: ").append(arrayToString(privateKey.getInvA2())).append("\n");
 
         sb.append("\n----Public Key----\n")
-        .append("Doc length: ").append(publicKey.getDocLength()).append("\n")
-        .append("Coeff Quadratic: ").append(gridToString(publicKey.getCoeffQuadratic())).append("\n")
-        .append("Coeff Scalar: ").append(gridToString(publicKey.getCoeffScalar())).append("\n")
-        .append("Coeff Singlar: ").append(gridToString(publicKey.getCoeffSingular()));
+            .append("Doc length: ").append(publicKey.getDocLength()).append("\n")
+            .append("Coeff Quadratic: ").append(arrayToString(publicKey.getCoeffQuadratic())).append("\n")
+            .append("Coeff Scalar: ").append(arrayToString(publicKey.getCoeffScalar())).append("\n")
+            .append("Coeff Singlar: ").append(arrayToString(publicKey.getCoeffSingular()));
 
         return sb.toString();
     }
 
-    public String gridToString(short[][] grid) {
+    public String arrayToString(short[][] arr) {
         StringBuilder sb = new StringBuilder();
-        sb.append("Dimension: [" + grid.length + "][" + grid[0].length + "]\n");
+        sb.append("Dimension: [").append(arr.length).append("][").append(arr[0].length).append("]\n");
         int count = 0;
-        for (int r = 0; r < grid.length; r++) {
-            for (int c = 0; c < grid[r].length; c++) {
-                sb.append(grid[r][c] + " ");
+        for (int r = 0; r < arr.length; r++) {
+            for (int c = 0; c < arr[r].length; c++) {
+                sb.append(arr[r][c]).append(" ");
                 count++;
-                if (count > 15)
-                    break;
+                if (count > 10)
+                  break;
             }
+            
+        }
+        sb.append("...");
+        return sb.toString();
+    }
+
+    public String arrayToString(short[] arr) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Dimension: [").append(arr.length).append("]\n");
+        for (int r = 0; r < arr.length; r++) {
+            sb.append(arr[r]).append(" ");
         }
         return sb.toString();
     }
 
-    public String gridToString(short[] grid) {
+    public String arrayToString(int[] arr) {
         StringBuilder sb = new StringBuilder();
-        for (int r = 0; r < grid.length; r++) {
-            sb.append(grid[r] + " ");
-        }
-        return sb.toString();
-    }
-
-    public String gridToString(int[] grid) {
-        StringBuilder sb = new StringBuilder();
-
-        for (int r = 0; r < grid.length; r++) {
-            sb.append(grid[r] + " ");
+        for (int r = 0; r < arr.length; r++) {
+            sb.append(arr[r]).append(" ");
         }
         return sb.toString();
     }
