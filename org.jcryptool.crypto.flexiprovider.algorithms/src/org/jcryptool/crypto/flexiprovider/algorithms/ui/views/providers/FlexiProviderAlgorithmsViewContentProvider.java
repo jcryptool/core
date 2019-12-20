@@ -37,7 +37,7 @@ IStructuredContentProvider, ITreeContentProvider {
 		_viewPart = viewPart;
 	}
 
-	private void initialize() {
+	public void initialize() {
 		_invisibleRoot = new TreeNode("INVISIBLE_ROOT"); //$NON-NLS-1$
 		_invisibleRoot.addChild(init(Messages.FlexiProviderAlgorithmsViewContentProvider_0, AlgorithmsXMLManager.getInstance().getAsymmetricBlockCiphers()));
 		_invisibleRoot.addChild(init(Messages.FlexiProviderAlgorithmsViewContentProvider_1, AlgorithmsXMLManager.getInstance().getAsymmetricHybridCiphers()));
@@ -53,7 +53,7 @@ IStructuredContentProvider, ITreeContentProvider {
 		CategoryNode category = new CategoryNode(label);
 
 		// should be sorted already. just to be on the save side.
-		Collections.sort(algorithms);
+// 		Collections.sort(algorithms);
 		
 		// top level entries
 		for (IMetaAlgorithm meta : algorithms) {
