@@ -22,6 +22,7 @@ public class Activator extends AbstractUIPlugin {
 	 * The constructor
 	 */
 	public Activator() {
+		System.err.println("Function List Plugin is being loaded...");
 	}
 
 	@Override

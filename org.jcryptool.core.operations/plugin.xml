@@ -44,5 +44,17 @@
             file="$nl$/contexts.xml">
       </contexts>
    </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="org.jcryptool.core.operations.CmdLineParser">
+      </startup>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="org.jcryptool.core.operations.Startup1">
+      </startup>
+   </extension>
 
 </plugin>

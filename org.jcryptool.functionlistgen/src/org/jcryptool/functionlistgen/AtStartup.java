@@ -1,13 +1,10 @@
 package org.jcryptool.functionlistgen;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -80,6 +77,8 @@ public class AtStartup implements IStartup {
 		boolean showInStdout = false;
 		List<File> outputs = new LinkedList<File>();
 		String[] cmdlineargs = Platform.getCommandLineArgs();
+
+		System.err.println("Function List Plugin is processing command line parameters of length " + cmdlineargs.length + "...");
 		for (int i = 0; i < cmdlineargs.length; i++) {
 			String currentArg = cmdlineargs[i];
 			if(currentArg.equals("-GenerateFunctionList")) {
