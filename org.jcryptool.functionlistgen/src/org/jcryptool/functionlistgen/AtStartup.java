@@ -42,6 +42,11 @@ public class AtStartup implements IStartup {
 	private static final String PASSWORD_BASED_CIPHERS = "Password-Based Ciphers";
 	private static final String ASYMMETRIC_BLOCK_CIPHERS = "Asymmetric Block Ciphers";
 
+	/**
+	 * translates the "Algorithm perspective" Algorithms from all languages to English.
+	 * This is necessary to use them as secondary sorting IDs so that all entries are written to 
+	 * the output in the same order across all languages 
+	 */
 	private static Map<String, String> flexiproviderTranslations = new HashMap<String, String>(){{ 
 		put(MESSAGE_DIGESTS                  , MESSAGE_DIGESTS);
 		put(SIGNATURES                       , SIGNATURES);
@@ -61,59 +66,67 @@ public class AtStartup implements IStartup {
 		put("Passwortbasierte Chiffren"      , PASSWORD_BASED_CIPHERS);
 		put("Asymmetrische Blockchiffren"    , ASYMMETRIC_BLOCK_CIPHERS);
 	}};
+
+	/**
+	 * This method is called at JCT startup. It checks the command line arguments for -GenerateFunctionList
+	 * and parses them like this:
+	 * - no further argument: create files in ~/Documents/.jcryptool
+	 * - further arguments: split by ",," and write to all these files
+	 * 
+	 * further information about the purpose of this is available at https://github.com/simlei/org.cryptool.functionlist
+	 */
 	@Override
 	public void earlyStartup() {
 		boolean showInStdout = false;
-		File output = null;
+		List<File> outputs = new LinkedList<File>();
 		String[] cmdlineargs = Platform.getCommandLineArgs();
 		for (int i = 0; i < cmdlineargs.length; i++) {
 			String currentArg = cmdlineargs[i];
 			if(currentArg.equals("-GenerateFunctionList")) {
 				if (cmdlineargs.length -1 == i) {
 					System.err.println("-GenerateFunctionList takes a target file argument. It was not provided, so the default location will be used.");
-					output = new File(DirectoryService.getWorkspaceDir(), "functionlist_jct_" + Locale.getDefault().toString() + ".csv");
+					outputs.add(new File(DirectoryService.getWorkspaceDir(), "functionlist_jct_" + Locale.getDefault().toString() + ".csv"));
 				} else {
 					String nextArg = cmdlineargs[i+1];
-					if( ! Paths.get(nextArg).isAbsolute() ) {
-						System.err.println("-GenerateFunctionList file argument is not an absolute path; it is interpreted as relative to " + DirectoryService.getWorkspaceDir().toString());
-						File wsDir = new File(DirectoryService.getWorkspaceDir());
-						output = Paths.get(wsDir.getAbsolutePath(), nextArg).toFile();
-					} else {
-						output = Paths.get(nextArg).toFile();
+					String[] split = nextArg.split(",,");
+					for (String sp : split) {
+						if( ! Paths.get(sp).isAbsolute() ) {
+							System.err.println("-GenerateFunctionList file argument is not an absolute path; it is interpreted as relative to " + DirectoryService.getWorkspaceDir().toString());
+							File wsDir = new File(DirectoryService.getWorkspaceDir());
+							outputs.add(Paths.get(wsDir.getAbsolutePath(), sp).toFile());
+						} else {
+							outputs.add(Paths.get(sp).toFile());
+						}
 					}
 				}
 			}
 			if(currentArg.contentEquals("--alsoToStdout")) showInStdout = true;
 		}
-		if(output != null) {
-			List<FunctionalityRecord> records = generateFunctionalities();
-			BufferedWriter writer;
-			try {
+		List<FunctionalityRecord> records = generateFunctionalities();
+		BufferedWriter writer;
+		File currentOutput = null;
+		try {
+			for (File output : outputs) {
+				currentOutput = output;
 				writeFunctionalitiesToFile(output, records);
-			} catch (FileNotFoundException e) {
-				System.err.println("cannot write to file " + output.toString());
-				System.exit(1);
-			} catch (IOException e) {
-				System.err.println("cannot write to file -- " + output.toString() + " " + e.getMessage());
-				System.exit(1);
 			}
-			System.err.println("Functionality list written successfully to " + output.toString());
-			if(showInStdout) {
-				InputStream is;
-				try {
-					is = new FileInputStream(output);
-					int in;
-					while ((in = is.read()) != -1) {
-						System.out.write(in);
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			System.exit(0);
+		} catch (FileNotFoundException e) {
+			System.err.println("cannot write to file " + currentOutput.toString());
+			System.exit(1);
+		} catch (IOException e) {
+			System.err.println("cannot write to file -- " + currentOutput.toString() + " " + e.getMessage());
+			System.exit(1);
 		}
+		System.err.println("Functionality list written successfully to " + outputs.toString());
+		System.exit(0);
 	}
 
+	/**
+	 * @param output the output file
+	 * @param records the functionality records
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
 	private void writeFunctionalitiesToFile(File output, List<FunctionalityRecord> records) throws FileNotFoundException, IOException {
 		BufferedWriter writer;
 		writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output)));
@@ -130,19 +143,16 @@ public class AtStartup implements IStartup {
 		writer.close();
 	}
 	
+	/**
+	 * crawls JCT extension points and algorithm managers for all algorithms that are interesting to the "functionality list"
+	 * @return a list of functionality records
+	 */
 	private static List<FunctionalityRecord> generateFunctionalities() {
 		List<List<String>> flexiPaths = flexiproviderPaths();
 		List<List<String>> algoviewPaths = algoviewPaths();
-
-//		for (List<String> path: flexiPaths) {
-//			System.out.println(path.toString());
-//		}
-//		for (List<String> path: algoviewPaths) {
-//			System.out.println(path.toString());
-//		}
-		
 		List<FunctionalityRecord> allRecords = new LinkedList<FunctionalityRecord>();
 
+		// reads all flexiprovider functionality paths and attaches some more information like '[A]'
 		for (List<String> flexiPath : flexiPaths) {
 			Character howImplementedChar = 'A';
 			
@@ -166,6 +176,7 @@ public class AtStartup implements IStartup {
 			allRecords.add(entry);
 		}
 		
+		// reads the paths from the algorithm view
 		int algoviewCounter = 0;
 		for (List<String> algoviewPath : algoviewPaths) {
 			Character howImplementedChar = 'D';
@@ -188,6 +199,11 @@ public class AtStartup implements IStartup {
 			algoviewCounter++;
 		} 
 		
+		// sort the algorithm list according to the method outlines in FunctionalityRecord.
+		// we have made sure to provide a first- and second-order sorting indicator string
+		// and that the order of entries is, where those indicators are equal, the initial order
+		// of FunctionalityRecord is the same across all languages, so that .sort() as a stable sorting
+		// algorithm will preserve the same order everywhere.
 		allRecords.sort(new Comparator<FunctionalityRecord>() {
 			@Override
 			public int compare(FunctionalityRecord o1, FunctionalityRecord o2) {

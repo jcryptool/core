@@ -6,7 +6,9 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
- * The activator class controls the plug-in life cycle
+ * This plug-in is part of https://github.com/simlei/org.cryptool.functionlist
+ * The only functionality provided by this plug-in is a command-line parameter "-GenerateFunctionList"
+ * see {@link AtStartup} for all in-code documentation
  */
 public class Activator extends AbstractUIPlugin {
 
@@ -16,13 +18,10 @@ public class Activator extends AbstractUIPlugin {
 	// The shared instance
 	private static Activator plugin;
 
-	private HashMap funcreg;
-	
 	/**
 	 * The constructor
 	 */
 	public Activator() {
-		this.funcreg = new HashMap(); 
 	}
 
 	@Override
