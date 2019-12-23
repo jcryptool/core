@@ -1,6 +1,12 @@
-/**
- * 
- */
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2019 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.analysis.fleissner.UI;
 
 import java.io.BufferedWriter;
@@ -16,7 +22,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.analysis.fleissner.Activator;
 import org.jcryptool.analysis.fleissner.UI.LoadFiles;
+import org.jcryptool.core.logging.utils.LogUtil;
 
 /**
  * @author Dinah
@@ -79,14 +87,18 @@ public class OutputDialog extends TitleAreaDialog {
         outputString = output.getText();
         String save = lf.openFileDialog(SWT.SAVE);
   
-        try{
-            BufferedWriter bw = new BufferedWriter(new FileWriter(save/*+"./FleissnerOutput.txt"*/)); 
-            bw.write(outputString);
-            bw.newLine();
-            bw.close();
-         } catch (IOException e) {
-            e.printStackTrace();
-         }
+        // Check if the user selected a file in the dialog. If not save will be null.
+        // This check avoids exceptions.
+        if (save != null) {
+            try{
+                BufferedWriter bw = new BufferedWriter(new FileWriter(save/*+"./FleissnerOutput.txt"*/)); 
+                bw.write(outputString);
+                bw.newLine();
+                bw.close();
+             } catch (IOException e) {
+                LogUtil.logError(Activator.PLUGIN_ID, e);
+             }
+        }
     }
 
     @Override

@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2019 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.analysis.fleissner.UI;
 
 import org.eclipse.osgi.util.NLS;
@@ -60,11 +69,13 @@ public class Messages extends NLS {
     public static String FleissnerWindow_label_deleteKey;
     public static String FleissnerWindow_label_dialogOutput;
     public static String FleissnerWindow_label_encrypt;
-    public static String FleissnerWindow_label_exampleText;
+    public static String FleissnerWindow_label_exampleCiphertext;
+    public static String FleissnerWindow_label_examplePlaintext;
     public static String FleissnerWindow_label_key;
     public static String FleissnerWindow_label_keyLength;
     public static String FleissnerWindow_label_languageChoice;
-    public static String FleissnerWindow_label_loadOwnText;
+    public static String FleissnerWindow_label_loadOwnCiphertext;
+    public static String FleissnerWindow_label_loadOwnPlaintext;
     public static String FleissnerWindow_label_loadStatistics;
     public static String FleissnerWindow_label_loadText;
     public static String FleissnerWindow_label_NgramSize;
@@ -79,8 +90,8 @@ public class Messages extends NLS {
     public static String FleissnerWindow_label_textChoice;
     public static String FleissnerWindow_label_uploadedStatistics;
     public static String FleissnerWindow_label_uploadedText;
-    public static String FleissnerWindow_label_writeText;
-    public static String FleissnerWindow_label_writeTextManual;
+    public static String FleissnerWindow_label_writeCiphertext;
+	public static String FleissnerWindow_label_writePlaintext;
     public static String FleissnerWindow_language_english;
     public static String FleissnerWindow_language_german;
     public static String FleissnerWindow_languageSelect_english;
@@ -90,6 +101,14 @@ public class Messages extends NLS {
     public static String LoadFiles_Error_FileNotFound;
     public static String LoadFiles_Error_StatisticMismatch;
     public static String OutputDialog_0;
+    public static String ParameterSettings_InvalidAmountOfRestarts;
+	public static String ParameterSettings_InvalidGram;
+	public static String ParameterSettings_InvalidKey;
+	public static String ParameterSettings_InvalidKeyLength1;
+	public static String ParameterSettings_InvalidKeyLength2;
+	public static String ParameterSettings_InvalidLanguage;
+	public static String ParameterSettings_InvalidMethodMessage;
+	public static String ParameterSettings_PleaseEnterValidParameters;
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);
