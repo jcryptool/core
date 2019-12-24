@@ -1,26 +1,30 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	  <title>Grille</title>
+	  <title>Grille Cipher</title>
 </head>
 <html>
 <body>
 
-<h1>Grille</h1>
+<h1>Grille Cipher</h1>
 
-<p>The Turning Grille is a historical cryptographic cipher, invented by Eduard Fleißner von Wostrowitz in 1881. It was used in 1916 by the Germans in WW1.</p>
+<p>The turning grille is a historical cryptographic cipher, invented by Eduard Fleißner von Wostrowitz in 1881. It was used in 1916 by the Germans in WW1.</p>
 <p>This plugin intends to help people understand the technique of this special form of transposition cipher by visualizing the grille and offering an easy tool to encrypt and decrypt own messages.</p>
 <p>The cipher is presented as an <b>educational</b> example of historical cryptography. Do <b>not</b> use the tool to encrypt your correspondence as it is <b>not</b> a strong cipher.</p>
 
+<p>Remark: This plugin <b>visualizes</b> the encryption and decryption using the grille square (and only for square sizes of 4, 6, 8, and 10, what is good enough for the pedagogic visualization of the process). In addition, JCT contains a newer plugin <a href="PLUGINS_ROOT/org.jcryptool.analysis.fleissner/$nl$/index.html">Grill-Cipher Analysis</a>, which offers not only encryption and decryption, but also breaking grille ciphertexts automatically (and this for even and odd square sizes).</p>
+
+
+
 <h3>Technique – How it works</h3>
 
-<p>The Turning Grille is a square piece of paper with n² fields, nn&#8712;&#8469;, n > 0. Each fourth field is cut out. The text to be encrypted is written – through the holes in this mask – line by line to a sheet below. When all the holes are filled, the template is rotated 90° clockwise and the inscription of the text is continued, this is repeated 2 times. At the end, each square of the underlying paper should be filled with exactly one character. For this to work, the holes must be distributed on the grille in a certain way.</p>
+<p>The turning grille is a square piece of paper with n² fields, n&#8712;&#8469;, n > 0. Each fourth field is cut out. The text to be encrypted is written – through the holes in this mask – line by line to a sheet below. When all the holes are filled, the template is rotated 90° clockwise and the inscription of the text is continued; this is repeated 2 times. At the end, each square of the underlying paper should be filled with exactly one character. For this to work, the holes must be distributed on the grille in a certain way.</p>
 <p>The resulting ciphertext is read line by line. For decryption, an identical grille is simply placed on top of the message, which was previously written in a square grid of the predefined page length.</p>
 <p>If the grille size (edge length) is an even number there are (n²) / 4 holes. If the grille size is an odd number, there is a distinct field in the middle that is uncovered on any rotation. This results in (n²-1)/4 holes.</p>
 
 <h3>History</h3>
 
-<p>The turning grille was invented by Eduard Fleißner of Wostrowitz, an Austrian colonel. He wrote the book "Handbuch der Kryptographie", which was published in Vienna in 1881 [BAU95,80]. The cipher was used briefly by Germany in the end of 1916 during the First World War. The grilles had names like ANNA for the 25 capital letters, BERTA for a grille with 36 fields and so on. When the French recognized the procedure in 1917 and deciphering proved to be very simple, the system was discarded after four months of use [KAN97,309].</p>
+<p>The turning grille was invented by Eduard Fleißner of Wostrowitz, an Austrian colonel. He wrote the book "Handbuch der Kryptographie", which was published in Vienna in 1881 [BAU95, 80]. The cipher was used briefly by Germany in the end of 1916 during the First World War. The grilles had names like ANNA for the 25 capital letters, BERTA for a grille with 36 fields and so on. When the French recognized the procedure in 1917 and deciphering proved to be very simple, the system was discarded after four months of use [KAN97, 309].</p>
 <p>Variants containing fewer than the maximum possible holes in the grille were also used.</p>
 
 <h3>Creating the grille (the mask with the holes)</h3>
@@ -28,46 +32,59 @@
 <p>Unlike many other methods, the key is not arbitrarily selectable, but is subject to certain rules. If you divide the grille into 4 quadrants, a number can only be cut out in one of the quadrants.</p>
 <p>For the standard case with an even side length there are S = 4 ^ (n² / 4) possible keys. The possible transpositions do not depend on the text length but only on the key size. With a side length of n=6, these are 262,144 possible keys.</p>
 
+<p>&nbsp;</p>
 <h3>Handling of the plugin</h3>
 
 <h4>1) Quickly to the encryption result</h4>
 <p>If you leave the standard settings for size and distribution of the holes in the grille to the initial values, you can enter the plaintext directly. If you now click on the "Start" button, you will see the padded text behind the actual plaintext in the plaintext field, and the encrypted result in the ciphertext field.</p>
+<!--  TODO: Explain how padding is done.</h2>-->
 
-<p align="center"><img src="direct.png" width="90%" alt="Layout der Benutzeroberfläche bei driekter Analyse"></p>
+<p align="center"><img src="direct.png" width="90%" alt="Layout der Benutzeroberfläche bei direkter Analyse"></p>
 
+<p>&nbsp;</p>
 <h4>2) Step-by-step procedure</h4>
-<p>In the following example the button "Set holes randomly" was pressed. The plaintext "This is an example." was selected. Before pressing the "Start" button, the type (procedure) was set to "Stepwise".</p>
+<p>In the following example, the button "Set holes randomly" was pressed. The plaintext "This is an example." was selected. Before pressing the "Start" button, the type (procedure) was set to "Stepwise".</p>
 <p>(1) After clicking on "Start", the padding and its length (17) are displayed on the left in the grouping "Visualization". Together with the plaintext of length 19, this results in 36 bytes.</p>
 
 <p align="center"><img src="type.png" width="90%" alt="Layout of the GUI"></p>
 
-<p>(2) After clicking on "Next" in step 1, the first 9 characters are distributed on the left in the grouping "Visualization" – directly you can only recognize 7 red letters, because the 2 distributed blanks are not visible.</p>
+<p>(2) After clicking on "Proceed" in step 1, the first 9 characters are distributed on the left in the grouping "Visualization" – directly you can only recognize 7 red letters, because the 2 distributed blanks are not visible.</p>
 
 <p align="center"><img src="step2.png" width="90%" alt="Layout of the GUI at step 2"></p>
 
 <p>The blue line shows the hole in the grille and the corresponding letter on the underlying paper.</p>
-<p>(3) After clicking on "Next" in step 2, the next 9 characters are distributed on the left in the grouping "Visualization" (again in red).</p>
+
+<p>(3) After clicking on "Proceed" in step 2, the next 9 characters are distributed on the left in the grouping "Visualization" (again in red).</p>
 
 <p align="center"><img src="step3.png" width="90%" alt="Layout of the GUI at step 3"></p>
 
-<p>The key grille at the top is shown rotated.</p>
+<p>The key grille at the top is shown rotated adequately.</p>
+
 <p>(4) At the end you can see the finished ciphertext, which is read out line by line from the paper under the template.</p>
 
 <p align="center"><img src="finish.png" width="90%" alt="Layout of the GUI at step 5"></p>
 
-<h3>Remark</h3>
+
+<p>&nbsp;</p>
+<h3>Remarks</h3>
+
 <p>If you click on "Start" again, it will start all over again.</p>
-<p>You can then try changing the hole markings by clicking on a hole. Then the possible positions are displayed in all quadrants. Now you can place this hole in another square.</p>
+
+<p>You can also change the hole markings by yourself by clicking on a hole. Then the possible positions are displayed in all quadrants. Now you can place this hole in another square.</p>
+
 <p><img src="key1.png" alt="orginal key grille"></p>
 <p><img src="key2.png" alt="key grille before changing a hole"></p>
 <p><img src="key3.png" alt="key grille after changing the key grille"></p>
 
+
+<p>&nbsp;</p>
 <h3>Literature</h3>
-<p><b>[BAU95]</b></br>Bauer, Friedrich L., Entzifferte Geheimnisse, Methoden und Maximen der Kryptologie, 2nd edition, Springer, Berlin 1995</p>
+<p><b>[BAU95]</b></br>Bauer, Friedrich L., Entzifferte Geheimnisse, Methoden und Maximen der Kryptologie, 2nd edition, Springer, Berlin 1995</br>
+Bauer, Friedrich L., Decrypted Secrets: Methods and Maxims of Cryptology, 2nd edition, Springer, 2007</p>
 <p><b>[KAN97]</b></br>Kahn, David, The Codebreakers, The Story Of Secret Writing, Scribner, New York 1997</p>
 <p><b>[SCHN03]</b></br>Schneider, Matthias, Die Fleißner-Schablone, Seminar paper in the field of IT security & cryptology, Siegen 2003</p>
-<p><b>Wikipedia</b>, Grille (cryptography), <a href="https://en.wikipedia.org/wiki/Grille_(cryptography)">https://en.wikipedia.org/wiki/Grille_(cryptography)</a></p>
-<p></p>
+<p><b>[Wikipedia]</b></br> Grille (cryptography), <a href="https://en.wikipedia.org/wiki/Grille_(cryptography)">https://en.wikipedia.org/wiki/Grille_(cryptography)</a></p>
 
+<p>&nbsp;</p>
 </body/>
 </html>
