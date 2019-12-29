@@ -53,7 +53,7 @@ IStructuredContentProvider, ITreeContentProvider {
 		CategoryNode category = new CategoryNode(label);
 
 		// should be sorted already. just to be on the save side.
-// 		Collections.sort(algorithms);
+		Collections.sort(algorithms);
 		
 		// top level entries
 		for (IMetaAlgorithm meta : algorithms) {

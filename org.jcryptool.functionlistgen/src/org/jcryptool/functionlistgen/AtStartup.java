@@ -74,14 +74,15 @@ public class AtStartup implements IStartup {
 	 */
 	@Override
 	public void earlyStartup() {
-		boolean showInStdout = false;
 		List<File> outputs = new LinkedList<File>();
 		String[] cmdlineargs = Platform.getCommandLineArgs();
 
-		System.err.println("Function List Plugin is processing command line parameters of length " + cmdlineargs.length + "...");
+		System.err.println("[JCT-debug] Function List Plugin is processing command line parameters of length " + cmdlineargs.length + "...");
+		boolean pluginActivated = false;
 		for (int i = 0; i < cmdlineargs.length; i++) {
 			String currentArg = cmdlineargs[i];
 			if(currentArg.equals("-GenerateFunctionList")) {
+				pluginActivated=true;
 				if (cmdlineargs.length -1 == i) {
 					System.err.println("-GenerateFunctionList takes a target file argument. It was not provided, so the default location will be used.");
 					outputs.add(new File(DirectoryService.getWorkspaceDir(), "functionlist_jct_" + Locale.getDefault().toString() + ".csv"));
@@ -99,8 +100,9 @@ public class AtStartup implements IStartup {
 					}
 				}
 			}
-			if(currentArg.contentEquals("--alsoToStdout")) showInStdout = true;
 		}
+		if (! pluginActivated) return;
+
 		List<FunctionalityRecord> records = generateFunctionalities();
 		BufferedWriter writer;
 		File currentOutput = null;
