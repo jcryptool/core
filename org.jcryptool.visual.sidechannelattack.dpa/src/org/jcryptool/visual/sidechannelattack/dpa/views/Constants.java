@@ -1,3 +1,15 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2009, 2020 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
+
+package org.jcryptool.visual.sidechannelattack.dpa.views;
+
 /**
  * This interface is used to define all Constants in Class DPAView.java.
  * 
@@ -7,9 +19,6 @@
  * 
  * @since JDK1.5.7
  */
-
-package org.jcryptool.visual.sidechannelattack.dpa.views;
-
 public interface Constants {
     String ECC_ALG_GROUP_TITLE = Messages.Constants_6;
     String ECC_ALG_TEXT = Messages.Constants_7;

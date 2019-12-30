@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2020, 2020 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.sphincsplus.algorithm;
 
 import java.util.Stack;
@@ -27,7 +36,7 @@ public class XMSS implements IXMSS {
         int[] heights = new int[z + 1];
         byte[] node = null;
 
-        if (s % (1 << z) != 0) { // ?algo nimmt immer diesen weg, außer wenn s = 0?
+        if (s % (1 << z) != 0) { // ?algo nimmt immer diesen weg, auï¿½er wenn s = 0?
             return new byte[0];
         }
         for (int i = 0; i < numberOfLeaves; i++) {
