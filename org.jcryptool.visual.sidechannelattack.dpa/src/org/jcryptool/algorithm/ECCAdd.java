@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2019 JCrypTool Team and Contributors
+ * Copyright (c) 2009, 2020 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -8,6 +8,10 @@
  *******************************************************************************/
 // -----END DISCLAIMER-----
 package org.jcryptool.algorithm;
+
+import java.math.BigInteger;
+import java.security.spec.ECFieldFp;
+import java.security.spec.ECPoint;
 
 /**
  * This classe is used to carry out ECAdd computations.
@@ -19,12 +23,6 @@ package org.jcryptool.algorithm;
  * @since   JDK1.5.7
 
  */
-
-import java.math.BigInteger;
-import java.security.spec.ECFieldFp;
-import java.security.spec.ECPoint;
-
-
 public class ECCAdd {
 
 //  this class is used to carry out ECAddtion operation with the given parameter Point a, b and Prime field ecf

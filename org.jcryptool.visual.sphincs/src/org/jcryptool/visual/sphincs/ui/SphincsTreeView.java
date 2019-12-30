@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2019 JCrypTool Team and Contributors
+* Copyright (c) 2018, 2020 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -63,7 +63,7 @@ import org.jcryptool.visual.sphincs.algorithm.aSPHINCS256;
  * @author Philipp Guggenberger
  * 
  *         TODO This class has some conceptional and visual problems. According
- *         to Hülsing the tree shown is the top XMSS tree of SPINCS. This is not
+ *         to Hï¿½lsing the tree shown is the top XMSS tree of SPINCS. This is not
  *         represented in the descriptions. Also this does not really show how
  *         this works...
  */

@@ -1,14 +1,12 @@
-/**
- * This Class is used to create a View of DPA, which introduces the basic principle, process and
- * countermeasures of DPA attack.
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2009, 2020 JCrypTool Team and Contributors
  *
- *
- * @author Biqiang Jiang
- *
- * @version 1.0, 01/09/09
- *
- * @since JDK1.5.7
- */
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 
 package org.jcryptool.visual.sidechannelattack.dpa.views;
 
