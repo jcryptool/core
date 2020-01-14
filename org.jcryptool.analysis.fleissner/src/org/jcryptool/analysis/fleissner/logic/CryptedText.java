@@ -56,19 +56,19 @@ public class CryptedText {
 				randomLetters = letterFields-(textLength%letterFields);
 				
 				if (randomLetters!=letterFields) {
-					LogUtil.logInfo(Activator.PLUGIN_ID, randomLetters+" random letters inserted");
+                    LogUtil.logInfo(Activator.PLUGIN_ID, randomLetters+Messages.CryptedText_info_randomLetters);
 					for (int i=textLength;i<textLength+randomLetters;i++) {
 						
 						line += (char) ('A' + 26*Math.random());
 					}
-					LogUtil.logInfo(Activator.PLUGIN_ID, "Modified plaintext: "+line);
+                    LogUtil.logInfo(Activator.PLUGIN_ID, Messages.CryptedText_info_modifiedPlaintext+line);
 				}
 				else {
-					LogUtil.logInfo(Activator.PLUGIN_ID, "no random letters inserted");
+                    LogUtil.logInfo(Activator.PLUGIN_ID, Messages.CryptedText_info_noRandomLetters);
 				}
 //				encrypt input text if plaintext (method is 'encrypt')
 				line = fg.encryptText(line, coordinates);
-				LogUtil.logInfo(Activator.PLUGIN_ID, "plaintext successfully encrypted");
+                LogUtil.logInfo(Activator.PLUGIN_ID, Messages.CryptedText_info_succesfullEncryption);
 			}
 			
 			while (k <line.length()) {
@@ -91,7 +91,7 @@ public class CryptedText {
 			}
 				
 		} catch (Exception e) {
-			LogUtil.logError(Activator.PLUGIN_ID, "Text konnte nicht geladen werden", e, true);
+            LogUtil.logError(Activator.PLUGIN_ID, Messages.CryptedText_error_fileCouldNotBeLoaded, e, true);
 		}
 	}
 	
@@ -103,13 +103,13 @@ public class CryptedText {
 	@Override
 	public String toString() {
 		int size = this.getText().get(0).length;
-		String s="\n\nCrypted Text:\n";
+        String s=Messages.CryptedText_output_ciphertext;
 		for(char[][]textPart:text) {
 			for (int y = 0; y < size; y++) {
 				for (int x = 0; x < size; x++) {
 					s+=textPart[x][y];
 				}
-				s+="\n";
+                s+=Messages.CryptedText_break;
 			}
 		}	
 		return s;

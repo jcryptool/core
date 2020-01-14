@@ -14,6 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.io.FileNotFoundException;
 import java.math.BigInteger;
 import java.time.Duration;
+import java.text.DecimalFormat;
 
 import org.jcryptool.analysis.fleissner.Activator;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -24,7 +25,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
  *
  */
 public class MethodApplication{
-	
+    
     private ArrayList<Integer> possibleTemplateLengths = new ArrayList<>();
 
 //  parameters given by user or default
@@ -38,16 +39,16 @@ public class MethodApplication{
     private TextValuator tv;
     private long start, end;
     private double statistics[];
-	
-//	parameters for analysis
+    
+//  parameters for analysis
     private double value, oldValue, alltimeLow=Double.MAX_VALUE;
     private int changes=0, iAll=0, grilleNumber=0, improvement = 0; 
     private int x,y,move;
     private int[] bestTemplate=null;
-    private String lastImprovement = null, bestDecryptedText = "", procedure = "";
-	
+    private String lastImprovement = null, bestDecryptedText = Messages.MethodApplication_empty, procedure = Messages.MethodApplication_empty, change =Messages.MethodApplication_empty;
+    
     private String fwAnalysisOutput;
-	
+    
     /**
      * applies parameter settings from ParameterSettings and sets and executes method
      * 
@@ -56,9 +57,9 @@ public class MethodApplication{
      * @param argStatistics
      * @throws FileNotFoundException
      */
-	public MethodApplication(ParameterSettings ps, double argStatistics[]) throws FileNotFoundException {
+    public MethodApplication(ParameterSettings ps, double argStatistics[]) throws FileNotFoundException {
         
-	    this.fwAnalysisOutput = new String("");
+        this.fwAnalysisOutput = new String(Messages.MethodApplication_empty);
         this.method = ps.getMethod();
         this.textInLine = ps.getTextInLine();
         this.templateLength = ps.getTemplateLength();
@@ -74,360 +75,376 @@ public class MethodApplication{
         this.nGramSize = ps.getnGramSize();
         this.ct = new CryptedText();
         this.fg = new FleissnerGrille(templateLength);
-		if (method.equals("analyze")) {
-			try {
-				this.tv = new TextValuator(statistics, language, nGramSize);
-			} catch (FileNotFoundException e) {
-				LogUtil.logError(Activator.PLUGIN_ID, "Statistikdatei konnte nicht gefunden werden", e, true);
-				throw new FileNotFoundException("Datei nicht gefunden!");
-			}
-		}
-	}		
-	
-	/**
-	 * Executes one of the methods Brute-Force or Hill-Climbing dependent on templateLength
-	 */
-	public void analyze () {
+        if (method.equals(Messages.MethodApplication_method_analyze)) {
+            try {
+                this.tv = new TextValuator(statistics, language, nGramSize);
+            } catch (FileNotFoundException e) {
+                LogUtil.logError(Activator.PLUGIN_ID, Messages.MethodApplication_error_statFileNotFound, e, true);
+                throw new FileNotFoundException(Messages.MethodApplication_error_fileNotFound);
+            }
+        }
+    }       
+    
+    /**
+     * Executes one of the methods Brute-Force or Hill-Climbing dependent on templateLength
+     */
+    public void analyze () {
 
-	    start = System.currentTimeMillis();
-	    fwAnalysisOutput += "\nStart analysis";
-	    LogUtil.logInfo(Activator.PLUGIN_ID, "Start analysis");
-	    
-	    if (this.possibleTemplateLengths.isEmpty()) {
-	    	
-			ct.load(textInLine, isPlaintext, templateLength, grille, fg);
-			fwAnalysisOutput += "\nInfo:"+ct.toString();
-			LogUtil.logInfo(Activator.PLUGIN_ID, "\nINFO:\n"+ct.toString());
-			if (templateLength<5){
-//				Brute Force for up to 4 x 4 grilles. Creates all possibles grilles and evaluates each text decrypted by them
-				procedure = "Brute-Force";
-				fwAnalysisOutput += "\nStart "+procedure;
-				LogUtil.logInfo(Activator.PLUGIN_ID, "Start "+procedure);
-				this.bruteForce();
-				fwAnalysisOutput += "\nFinished "+procedure;
-				LogUtil.logInfo(Activator.PLUGIN_ID, "\nFinished "+procedure);
-			}
-			else {
-//				Hill-Cimbing for templates from 5 x 5. creates random grilles and evaluates those and slightly variations of them before
-//				trying new random grilles.
-				procedure = "Hill-Climbing";
-				fwAnalysisOutput += "\nStart "+procedure;
-				LogUtil.logInfo(Activator.PLUGIN_ID, "Start "+procedure);
-				this.hillClimbing();
-				fwAnalysisOutput += "\nFinished "+procedure;
-				LogUtil.logInfo(Activator.PLUGIN_ID, "\nFinished "+procedure);
-			}
-	    }else {
-//          if no key size is given, key size will be narrowed down to the only possible ones and those will be analyzed
-	    	double tempvalue = Double.MAX_VALUE, relativeValue, tempRelativeValue = Double.MAX_VALUE;
-	    	int[] tempTemplate=null;
-	    	int tempLength=0, tempTry=0;
-	    	String tempProcedure=null, tempLastImprovement=null;
-	    	
-	    	for (int length : this.possibleTemplateLengths) {
-	    		this.templateLength = length;
-	    		fwAnalysisOutput += "\nTry with length: "+templateLength;
-	    		LogUtil.logInfo(Activator.PLUGIN_ID, "Try with length: "+templateLength);
-				if (templateLength%2==0) {
-					this.holes = (int) (Math.pow(templateLength, 2))/4;
-				}
-				else {
-					this.holes = (int) (Math.pow(templateLength, 2)-1)/4;
-				}
-				this.fg = new FleissnerGrille(templateLength);
-				this.ct = new CryptedText();
-				this.grille = null;
-				this.isPlaintext = false;
-				ct.load(textInLine, isPlaintext, templateLength, grille, fg);
-				fwAnalysisOutput += "\nINFO:\n"+ct.toString();
-				LogUtil.logInfo(Activator.PLUGIN_ID, "INFO:\n"+ct.toString());
-	    		if (templateLength<5){
-//	    			Brute Force for up to 4 x 4 grilles. Creates all possibles grilles and evaluates each text decrypted by them
-	    			procedure = "Brute-Force";
-	    			fwAnalysisOutput += "\nStart "+procedure;
-	    			LogUtil.logInfo(Activator.PLUGIN_ID, "Start "+procedure);
-	    			this.bruteForce();
-	    			fwAnalysisOutput += "\nFinished "+procedure;
-	    			LogUtil.logInfo(Activator.PLUGIN_ID, "\nFinished "+procedure);
-	    		}
-	    		else {
-//	    			Hill-Cimbing for templates from 5 x 5. creates random grilles and evaluates those and slightly variations of them before
-//	    			trying new random grilles.
-	    			procedure = "Hill-Climbing";
-	    			fwAnalysisOutput += "\nStart "+procedure;
-	    			LogUtil.logInfo(Activator.PLUGIN_ID, "Start "+procedure);
-	    			this.hillClimbing();
-	    			fwAnalysisOutput += "\nFinished "+procedure;
-	    			LogUtil.logInfo(Activator.PLUGIN_ID, "\nFinished "+procedure);
-	    		}
-//	    		sets value in relation to size
-	    		relativeValue = alltimeLow/fg.decryptText(ct.getText()).length();
-	    		if (relativeValue<tempRelativeValue) {
-	    		    fwAnalysisOutput += "\nvalue has been changed. Relative value is: "+relativeValue+" relative to "+alltimeLow+" with length "+length;
-	    			LogUtil.logInfo(Activator.PLUGIN_ID, "value has been changed. Relative value is: "+relativeValue+" relative to "+alltimeLow+" with length "+length);
-	    			tempRelativeValue = relativeValue;
-	    			tempvalue = alltimeLow;
-	    			tempTemplate = bestTemplate;
-	    			tempLength = templateLength;
-	    			tempLastImprovement = lastImprovement;
-	    			tempProcedure = procedure;
-	    			tempTry = grilleNumber;
-	    		}
-	    		alltimeLow=Double.MAX_VALUE;
-	    		changes=0;
-	    		iAll=0;
-	    		grilleNumber=0;
-	    		improvement = 0;
-	    		bestTemplate=null;
-	    		lastImprovement = null;
-	    		bestDecryptedText = "";
-	    		procedure = "";
-	    	}
-			alltimeLow = tempvalue;
-			bestTemplate = tempTemplate;
-			this.templateLength = tempLength;
-			lastImprovement = tempLastImprovement;
-			procedure = tempProcedure;
-			grilleNumber = tempTry;
-			
-			this.fg = new FleissnerGrille(templateLength);
-			this.ct = new CryptedText();
-			ct.load(textInLine, isPlaintext, tempLength, grille, fg);
-			fg.useTemplate(bestTemplate, templateLength);
-	    }
-		end = System.currentTimeMillis() - start; 
-	}
-	
-	/**
-	 * bruteForce() method tries every possible grille with current key size and chooses the one that generates the best text value
-	 */
-	public void bruteForce() {
-
-//		clears grilles in FleissnerGrille from potential earlier encryptions before building new ones
-		fg.clearGrille();
-		ArrayList<int[]> templateList = fg.bruteForce(templateLength, holes);
-		if (templateList.isEmpty()) {
-		    fwAnalysisOutput += "\ntemplateList is empty";
-			LogUtil.logInfo(Activator.PLUGIN_ID, "templateList is empty");
-			return;
-		}
-		fwAnalysisOutput += "\nsift through all templates";
-		LogUtil.logInfo(Activator.PLUGIN_ID, "run through all templates");
-		// using every possible template / Grille
-		for (int[] template : templateList) {
-				
-			iAll++;
-			fg.useTemplate(template, templateLength);
-			decryptedText = fg.decryptText(ct.getText());
-			value = tv.evaluate(decryptedText);
-			if (value < alltimeLow)
-			{
-//				better grille found, saves new template
-				alltimeLow = value;
-				bestTemplate = template;
-				grilleNumber = iAll;
-			}	
+        start = System.currentTimeMillis();
+        fwAnalysisOutput += Messages.MethodApplication_output_StartAnalysis;
+        LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_info_StartAnalysis);
+        
+        if (this.possibleTemplateLengths.isEmpty()) {
             
-            fwAnalysisOutput += "\n\nGrille: "+iAll+fg;
-            fwAnalysisOutput += "\nAccurateness: " + value + " (best: "+alltimeLow+")";
-            fwAnalysisOutput += "\nDecrypted text:\n ==> "+decryptedText+"\n";
+            ct.load(textInLine, isPlaintext, templateLength, grille, fg);
+            fwAnalysisOutput += Messages.MethodApplication_output_info+ct.toString();
+            LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_info_info+ct.toString());
+            if (templateLength<5){
+//              Brute Force for up to 4 x 4 grilles. Creates all possibles grilles and evaluates each text decrypted by them
+                procedure = Messages.MethodApplication_procedure_bruteForce;
+                fwAnalysisOutput += Messages.MethodApplication_output_startProcedure+procedure;
+                LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_info_startProcedure+procedure);
+                this.bruteForce();
+                fwAnalysisOutput += Messages.MethodApplication_output_finishedProcedure+procedure;
+                LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_output_finishedProcedure+procedure);
+            }
+            else {
+//              Hill-Cimbing for templates from 5 x 5. creates random grilles and evaluates those and slightly variations of them before
+//              trying new random grilles.
+                procedure = Messages.MethodApplication_procedure_hillClimbing;
+                fwAnalysisOutput += Messages.MethodApplication_output_startProcedure+procedure;
+                LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_info_startProcedure+procedure);
+                this.hillClimbing();
+                fwAnalysisOutput += Messages.MethodApplication_output_finishedProcedure+procedure;
+                LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_output_finishedProcedure+procedure);
+            }
+        }else {
+//          if no key size is given, key size will be narrowed down to the only possible ones and those will be analyzed
+            double tempvalue = Double.MAX_VALUE, relativeValue, tempRelativeValue = Double.MAX_VALUE;
+            int[] tempTemplate=null;
+            int tempLength=0, tempTry=0;
+            String tempProcedure=null, tempLastImprovement=null;
+            
+            for (int length : this.possibleTemplateLengths) {
+                this.templateLength = length;
+                fwAnalysisOutput += Messages.MethodApplication_output_tryNewLength+templateLength;
+                LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_info_tryNewLength+templateLength);
+                if (templateLength%2==0) {
+                    this.holes = (int) (Math.pow(templateLength, 2))/4;
+                }
+                else {
+                    this.holes = (int) (Math.pow(templateLength, 2)-1)/4;
+                }
+                this.fg = new FleissnerGrille(templateLength);
+                this.ct = new CryptedText();
+                this.grille = null;
+                this.isPlaintext = false;
+                ct.load(textInLine, isPlaintext, templateLength, grille, fg);
+                fwAnalysisOutput += Messages.MethodApplication_output_info+ct.toString();
+                LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_info_info+ct.toString());
+                if (templateLength<5){
+//                  Brute Force for up to 4 x 4 grilles. Creates all possibles grilles and evaluates each text decrypted by them
+                    procedure = Messages.MethodApplication_procedure_bruteForce;
+                    fwAnalysisOutput += Messages.MethodApplication_output_startProcedure+procedure;
+                    LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_info_startProcedure+procedure);
+                    this.bruteForce();
+                    fwAnalysisOutput += Messages.MethodApplication_output_finishedProcedure+procedure;
+                    LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_output_finishedProcedure+procedure);
+                }
+                else {
+//                  Hill-Cimbing for templates from 5 x 5. creates random grilles and evaluates those and slightly variations of them before
+//                  trying new random grilles.
+                    procedure = Messages.MethodApplication_procedure_hillClimbing;
+                    fwAnalysisOutput += Messages.MethodApplication_output_startProcedure+procedure;
+                    LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_info_startProcedure+procedure);
+                    this.hillClimbing();
+                    fwAnalysisOutput += Messages.MethodApplication_output_finishedProcedure+procedure;
+                    LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_output_finishedProcedure+procedure);
+                }
+//              sets value in relation to size
+                relativeValue = alltimeLow/fg.decryptText(ct.getText()).length();
+                if (relativeValue<tempRelativeValue) {
+                    fwAnalysisOutput += Messages.MethodApplication_output_relativeValue+myRound(relativeValue/*, 2*/)+Messages.MethodApplication_output_relativeTo+myRound(alltimeLow/*, 2*/)+Messages.MethodApplication_output_length+length;
+                    LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_output_relativeValue+myRound(relativeValue/*, 2*/)+Messages.MethodApplication_output_relativeTo+myRound(alltimeLow/*, 2*/)+Messages.MethodApplication_output_length+length);
+                    tempRelativeValue = relativeValue;
+                    tempvalue = alltimeLow;
+                    tempTemplate = bestTemplate;
+                    tempLength = templateLength;
+                    tempLastImprovement = lastImprovement;
+                    tempProcedure = procedure;
+                    tempTry = grilleNumber;
+                }
+                alltimeLow=Double.MAX_VALUE;
+                changes=0;
+                iAll=0;
+                grilleNumber=0;
+                improvement = 0;
+                bestTemplate=null;
+                lastImprovement = null;
+                bestDecryptedText = Messages.MethodApplication_empty;
+                procedure = Messages.MethodApplication_empty;
+            }
+            alltimeLow = tempvalue;
+            bestTemplate = tempTemplate;
+            this.templateLength = tempLength;
+            lastImprovement = tempLastImprovement;
+            procedure = tempProcedure;
+            grilleNumber = tempTry;
+            
+            this.fg = new FleissnerGrille(templateLength);
+            this.ct = new CryptedText();
+            ct.load(textInLine, isPlaintext, tempLength, grille, fg);
+            fg.useTemplate(bestTemplate, templateLength);
+        }
+        end = System.currentTimeMillis() - start; 
+    }
+    
+    /**
+     * bruteForce() method tries every possible grille with current key size and chooses the one that generates the best text value
+     */
+    public void bruteForce() {
 
-			LogUtil.logInfo(Activator.PLUGIN_ID, "\n\nGrille: "+iAll+fg);
-			LogUtil.logInfo(Activator.PLUGIN_ID, "Accurateness: " + value + " (best: "+alltimeLow+")");
-			LogUtil.logInfo(Activator.PLUGIN_ID, "Decrypted text:\n ==> "+decryptedText+"\n");
-		}
-		fg.useTemplate(bestTemplate, templateLength);	
-	}
-	
-	/**
-	 * hillClimbing method is the analysis method for grilles of size 5 and higher. It creates random grilles in respective size
-	 * and makes step by step changes to improve text value. If local maximum is reached a new random grille will be created.
-	 * This process goes on until the number of 'restarts' is reached and the grille that created the best valued text will be
-	 * chosen as the right one.
-	 */
-	public void hillClimbing() {
+//      clears grilles in FleissnerGrille from potential earlier encryptions before building new ones
+        fg.clearGrille();
+        ArrayList<int[]> templateList = fg.bruteForce(templateLength, holes);
+        if (templateList.isEmpty()) {
+            fwAnalysisOutput += Messages.MethodApplication_output_emptyList;
+            LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_info_emptyList);
+            return;
+        }
+        fwAnalysisOutput += Messages.MethodApplication_output_siftThroughTemplates;
+        LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_info_siftThroughTemplates);
+        // using every possible template / Grille
+        for (int[] template : templateList) {
+                
+            iAll++;
+            fg.useTemplate(template, templateLength);
+            decryptedText = fg.decryptText(ct.getText());
+            value = tv.evaluate(decryptedText);
+            if (value < alltimeLow)
+            {
+//              better grille found, saves new template
+                alltimeLow = value;
+                bestTemplate = template;
+                grilleNumber = iAll;
+            }   
+            
+            fwAnalysisOutput += Messages.MethodApplication_output_grille+iAll+fg;
+            fwAnalysisOutput += Messages.MethodApplication_output_acurateness + myRound(value) + Messages.MethodApplication_output_best+myRound(alltimeLow)+")"; //$NON-NLS-3$
+            fwAnalysisOutput += Messages.MethodApplication_output_decrypted+decryptedText+Messages.MethodApplication_break;
 
-		tries = restart;
-		sub = BigInteger.valueOf(1);
-		
-		do {
-//			clears grilles in FleissnerGrille from potential earlier encryptions before building a random new one
-			fg.clearGrille();
-//			start with highest possible value so process will minimize value from the beginning
-			oldValue = Double.MAX_VALUE;
-			double min;
-			int minX=0, minY=0, minMove=0;
-//			create random grille
-			for(int i=0; i<holes; i++)
-			{
-				do
-				{
-					x = ThreadLocalRandom.current().nextInt(0, templateLength);
-					y = ThreadLocalRandom.current().nextInt(0, templateLength);
-				}
-				while (!fg.isPossible(x, y));
+            LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_output_grille+iAll+fg);
+            LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_info_acurateness + myRound(value) + Messages.MethodApplication_output_best+myRound(alltimeLow)+")"); //$NON-NLS-3$
+            LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_info_decrypted+decryptedText+Messages.MethodApplication_break);
+        }
+        fg.useTemplate(bestTemplate, templateLength);   
+    }
+    
+    /**
+     * hillClimbing method is the analysis method for grilles of size 5 and higher. It creates random grilles in respective size
+     * and makes step by step changes to improve text value. If local maximum is reached a new random grille will be created.
+     * This process goes on until the number of 'restarts' is reached and the grille that created the best valued text will be
+     * chosen as the right one.
+     */
+    public void hillClimbing() {
 
-			fg.setState(x, y, true);
-			}
-			fwAnalysisOutput += "\n\nRestart: "+sub;
-			LogUtil.logInfo(Activator.PLUGIN_ID, "\n\nRestart: "+sub);
-			decryptedText = fg.decryptText(ct.getText());
-			min = tv.evaluate(decryptedText);
-			fwAnalysisOutput += "\nDecrypted Text: \n"+decryptedText+"\n\nwith value: "+String.valueOf(min);
-			LogUtil.logInfo(Activator.PLUGIN_ID, "Decrypted Text: "+decryptedText+"with value: "+String.valueOf(min));
-			
-			do{
-				iAll++;
-				// calculate the best possible solution if only changing one of the cells
-				for (x=0; x<templateLength; x++)
-				{
-					for (y=0; y<templateLength; y++)
-					{
-						if (fg.isFilled(x, y))
-						{
-							for (move=1; move<=3; move++)
-							{
-//							    try other 3 positions of every hole in grille
-								fg.change(x, y, move);
-								decryptedText = fg.decryptText(ct.getText());
-								value = tv.evaluate(decryptedText);
-								fg.undoChange(x, y, move);
-								
-								if (value < min)
-								{
-									min = value;
-									minX = x;
-									minY = y;
-									minMove = move;
-								}	
-							}
-						}
-					}
-				}
-				
-				if (min < oldValue)
-				{
-					// we found a better solution by changing one of the cells
-					// go on with this new solution
-					fg.change(minX, minY, minMove);
-					oldValue = min;
-					decryptedText = fg.decryptText(ct.getText());
-					improvement++;
-					if (oldValue<alltimeLow) 
-					{
-						alltimeLow=oldValue;
-						grilleNumber=iAll;
-						bestDecryptedText = fg.decryptText(ct.getText());
-						bestTemplate = fg.saveTemplate(holes);
-						lastImprovement = String.valueOf(sub);
-						changes++;
-						fwAnalysisOutput += "\n\nbest grille yet with "+changes+" changes, where value is " +alltimeLow+"\n"+fg+"\n";
-						LogUtil.logInfo(Activator.PLUGIN_ID, "best grille yet with "+changes+" changes, where value is " +alltimeLow+"\n"+fg);
-					} 
-                    fwAnalysisOutput += "\n\ntry: " + iAll + ", changes: "+changes + " (last at: " + grilleNumber + " in restart: "+lastImprovement+"), accurateness: " + min + " (best: "+oldValue+", alltime: "+alltimeLow+")\n";
-                    fwAnalysisOutput += "\n==> "+decryptedText+"\n\n Grille: "+fg+"\n";
-					LogUtil.logInfo(Activator.PLUGIN_ID, "try: " + iAll + ", changes: "+changes + " (last at: " + grilleNumber + " in restart: "+lastImprovement+"), accurateness: " + min + " (best: "+oldValue+", alltime: "+alltimeLow+")");
-					LogUtil.logInfo(Activator.PLUGIN_ID, "==> "+decryptedText+"\n Grille: \n"+fg);
-				}
-			} while (Math.abs(iAll-improvement)<1);
-			tries = restart.subtract(sub);
-			sub = sub.add(BigInteger.valueOf(1));
-			improvement = 0;
-			iAll = 0;
-//			start next restart
-			
-		}while(tries.compareTo(BigInteger.valueOf(0))==1);
-		
-		fg.useTemplate(bestTemplate, templateLength);
-		int rotMove = 0;
-//		checks all 4 rotation positions of the found grille
-		for (move=1; move<=4; move++)
-		{
-			fg.rotate();
-			decryptedText = fg.decryptText(ct.getText());
-			value = tv.evaluate(decryptedText);
-						
-			if (value < alltimeLow)
-			{
-				alltimeLow = value;
-				rotMove = move;
-				improvement++;
-			}							
-		}
-		if (improvement != 0) {
-					
-			for (int moves = 1 ; moves <= rotMove; moves++) {
-				fg.rotate();
-			}
-			bestTemplate = fg.saveTemplate(holes);
-		}
-	}
-	
-	/**
-	 * encrypts given plaintext with given key directly through load method of class CryptedText
-	 */
-	public void encrypt(){
+        tries = restart;
+        sub = BigInteger.valueOf(1);
+        
+        do {
+//          clears grilles in FleissnerGrille from potential earlier encryptions before building a random new one
+            fg.clearGrille();
+//          start with highest possible value so process will minimize value from the beginning
+            oldValue = Double.MAX_VALUE;
+            double min;
+            int minX=0, minY=0, minMove=0;
+//          create random grille
+            for(int i=0; i<holes; i++)
+            {
+                do
+                {
+                    x = ThreadLocalRandom.current().nextInt(0, templateLength);
+                    y = ThreadLocalRandom.current().nextInt(0, templateLength);
+                }
+                while (!fg.isPossible(x, y));
 
-		ct.load(textInLine, isPlaintext, templateLength, grille, fg);
-		encryptedText = "";
-		for(char[][]textPart:ct.getText()) {
-			for (int y = 0; y < templateLength; y++) {
-				for (int x = 0; x < templateLength; x++) {
-					encryptedText += textPart[x][y];
-				}
-			}
-		}
-		LogUtil.logInfo(Activator.PLUGIN_ID, "Crypted text succesfully encrypted");
-	}
-	
-	/**
-	 * decrypts given crypted text with given key by decryption method of class FleissnerGrille
-	 */
-	public void decrypt(){
+            fg.setState(x, y, true);
+            }
+            fwAnalysisOutput += Messages.MethodApplication_output_restart+sub;
+            LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_output_restart+sub);
+            decryptedText = fg.decryptText(ct.getText());
+            min = tv.evaluate(decryptedText);
+            fwAnalysisOutput += Messages.MethodApplication_output_decrypted2+decryptedText+Messages.MethodApplication_output_value+myRound(min/*, 2*/);
+            LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_info_decrypted2+decryptedText+Messages.MethodApplication_info_value+myRound(min/*, 2*/));
+            
+            do{
+                iAll++;
+                // calculate the best possible solution if only changing one of the cells
+                for (x=0; x<templateLength; x++)
+                {
+                    for (y=0; y<templateLength; y++)
+                    {
+                        if (fg.isFilled(x, y))
+                        {
+                            for (move=1; move<=3; move++)
+                            {
+//                              try other 3 positions of every hole in grille
+                                fg.change(x, y, move);
+                                decryptedText = fg.decryptText(ct.getText());
+                                value = tv.evaluate(decryptedText);
+                                fg.undoChange(x, y, move);
+                                
+                                if (value < min)
+                                {
+                                    min = value;
+                                    minX = x;
+                                    minY = y;
+                                    minMove = move;
+                                }   
+                            }
+                        }
+                    }
+                }
+                
+                if (min < oldValue)
+                {
+                    // we found a better solution by changing one of the cells
+                    // go on with this new solution
+                    fg.change(minX, minY, minMove);
+                    oldValue = min;
+                    decryptedText = fg.decryptText(ct.getText());
+                    improvement++;
+                    if (oldValue<alltimeLow) 
+                    {
+                        alltimeLow=oldValue;
+                        grilleNumber=iAll;
+                        bestDecryptedText = fg.decryptText(ct.getText());
+                        bestTemplate = fg.saveTemplate(holes);
+                        lastImprovement = String.valueOf(sub);
+                        changes++;
+                        fwAnalysisOutput += Messages.MethodApplication_output_bestGrilleYet+changes+" "+countChanges()+Messages.MethodApplication_output_costFunctionValue +myRound(alltimeLow/*, 2*/)+Messages.MethodApplication_break+fg+Messages.MethodApplication_break; //$NON-NLS-2$ //$NON-NLS-4$ //$NON-NLS-5$
+                        LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_info_bestGrilleYet+changes+" "+countChanges()+Messages.MethodApplication_output_costFunctionValue +myRound(alltimeLow/*, 2*/)+Messages.MethodApplication_break+fg); //$NON-NLS-2$ //$NON-NLS-4$
+                    } 
+                    fwAnalysisOutput += Messages.MethodApplication_output_try + iAll + Messages.MethodApplication_output_changes+changes + " ("+Messages.MethodApplication_output_lastChange + grilleNumber + Messages.MethodApplication_output_inRestart+lastImprovement+")"+Messages.MethodApplication_output_acurateness2 + myRound(min/*, 2*/) + " ("+Messages.MethodApplication_output_best+myRound(oldValue/*, 2*/)+Messages.MethodApplication_output_alltime+myRound(alltimeLow/*, 2*/)+")"+Messages.MethodApplication_break; //$NON-NLS-8$
+                    fwAnalysisOutput += "\n==> "+decryptedText+Messages.MethodApplication_output_grille+fg+Messages.MethodApplication_break; //$NON-NLS-1$ //$NON-NLS-3$
+                    LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_output_try2 + iAll + Messages.MethodApplication_output_changes+changes +" ("+Messages.MethodApplication_output_lastChange + grilleNumber + Messages.MethodApplication_output_inRestart+lastImprovement+Messages.MethodApplication_output_acurateness2 + myRound(min/*, 2*/) +" ("+Messages.MethodApplication_output_best+myRound(oldValue/*, 2*/)+Messages.MethodApplication_output_alltime+myRound(alltimeLow/*, 2*/)+")"); //$NON-NLS-8$
+                    LogUtil.logInfo(Activator.PLUGIN_ID, "==> "+decryptedText+Messages.MethodApplication_info_grille+fg); //$NON-NLS-1$
+                }
+            } while (Math.abs(iAll-improvement)<1);
+            tries = restart.subtract(sub);
+            sub = sub.add(BigInteger.valueOf(1));
+            improvement = 0;
+            iAll = 0;
+//          start next restart
+            
+        }while(tries.compareTo(BigInteger.valueOf(0))==1);
+        
+        fg.useTemplate(bestTemplate, templateLength);
+        int rotMove = 0;
+//      checks all 4 rotation positions of the found grille
+        for (move=1; move<=4; move++)
+        {
+            fg.rotate();
+            decryptedText = fg.decryptText(ct.getText());
+            value = tv.evaluate(decryptedText);
+                        
+            if (value < alltimeLow)
+            {
+                alltimeLow = value;
+                rotMove = move;
+                improvement++;
+            }                           
+        }
+        if (improvement != 0) {
+                    
+            for (int moves = 1 ; moves <= rotMove; moves++) {
+                fg.rotate();
+            }
+            bestTemplate = fg.saveTemplate(holes);
+        }
+    }
+    
+    /**
+     * encrypts given plaintext with given key directly through load method of class CryptedText
+     */
+    public void encrypt(){
 
-		ct.load(textInLine, isPlaintext, templateLength, grille, fg);
-		fg.useTemplate(grille, templateLength);
-		decryptedText = fg.decryptText(ct.getText());
-		LogUtil.logInfo(Activator.PLUGIN_ID, "Crypted text succesfully decrypted");
-	}
-	
-	/**
-	 * generates random key and saves it as int array 'grille'
-	 */
-	public void keyGenerator() {
-		this.grille = new int[2*holes];	
-		fg.clearGrille();
-		
-		for(int i=0; i<holes; i++)
-		{
-			do
-			{
-				x = ThreadLocalRandom.current().nextInt(0, templateLength);
-				y = ThreadLocalRandom.current().nextInt(0, templateLength);
-			}
-			while (!fg.isPossible(x, y));
+        ct.load(textInLine, isPlaintext, templateLength, grille, fg);
+        encryptedText = Messages.MethodApplication_empty;
+        for(char[][]textPart:ct.getText()) {
+            for (int y = 0; y < templateLength; y++) {
+                for (int x = 0; x < templateLength; x++) {
+                    encryptedText += textPart[x][y];
+                }
+            }
+        }
+        LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_info_encryptionSuccesfull);
+    }
+    
+    /**
+     * decrypts given crypted text with given key by decryption method of class FleissnerGrille
+     */
+    public void decrypt(){
 
-			fg.setState(x, y, true);
-			grille[2*i] = x;
-			grille[(2*i)+1] = y;
-		}
-	}
-	
-	/**
-	 * @return the fg
-	 */
-	public FleissnerGrille getFg() {
-		return fg;
-	}
+        ct.load(textInLine, isPlaintext, templateLength, grille, fg);
+        fg.useTemplate(grille, templateLength);
+        decryptedText = fg.decryptText(ct.getText());
+        LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_info_decryptionSuccesfull);
+    }
+    
+    /**
+     * generates random key and saves it as int array 'grille'
+     */
+    public void keyGenerator() {
+        this.grille = new int[2*holes]; 
+        fg.clearGrille();
+        
+        for(int i=0; i<holes; i++)
+        {
+            do
+            {
+                x = ThreadLocalRandom.current().nextInt(0, templateLength);
+                y = ThreadLocalRandom.current().nextInt(0, templateLength);
+            }
+            while (!fg.isPossible(x, y));
 
-	/**
-	 * @param fg the fg to set
-	 */
-	public void setFg(FleissnerGrille fg) {
-		this.fg = fg;
-	}
+            fg.setState(x, y, true);
+            grille[2*i] = x;
+            grille[(2*i)+1] = y;
+        }
+    }
+    
+    public String countChanges() {
+        if (this.changes!=1)
+            change = Messages.MethodApplication_output_countChanges_pl;
+        else
+            change = Messages.MethodApplication_output_countChanges_sg;
+        return change;
+    }
+  
+    public String myRound(double wert) {
+        double tempWert = wert;
+        if (language.equals("english"))  //$NON-NLS-1$
+            tempWert/=0.1E16;
+        DecimalFormat formatter = new DecimalFormat("#.##");
+        return  formatter.format(tempWert);
+    }
+    
+    /**
+     * @return the fg
+     */
+    public FleissnerGrille getFg() {
+        return fg;
+    }
 
-	public String getEncryptedText() {
+    /**
+     * @param fg the fg to set
+     */
+    public void setFg(FleissnerGrille fg) {
+        this.fg = fg;
+    }
+
+    public String getEncryptedText() {
         return encryptedText;
     }
 
@@ -458,65 +475,65 @@ public class MethodApplication{
 
     @Override
     public String toString() {
-		
-		String output= null;
-		String bestTemplateCoordinates = "";
-		
-		switch(this.method) {
-		
-		case "analyze":
-		    String time;
-			bestDecryptedText = fg.decryptText(ct.getText());
-			value = tv.evaluate(bestDecryptedText);
-			for (int i = 0; i<bestTemplate.length;i++) {
-				bestTemplateCoordinates+=bestTemplate[i];
-			}
-			output = "\nBest grille: "+bestTemplateCoordinates+"\n"+fg+"\nwith length: "+templateLength+" found at try: "+grilleNumber+", in Restart: "+lastImprovement;
-			output += "\nDecrypted text:\n\n"+bestDecryptedText+"\n\n";
-//			adjusts time format depending of spent time for analysis
-			if (end<60000)
-			    time = end+" milliseconds";
-			else {
-			    long timeInDays, timeInHours, timeInMinutes, timeInSeconds;
-			    
-			    timeInSeconds = end/1000;
-			    Duration duration = Duration.ofSeconds(timeInSeconds);
+        
+        String output= null;
+        String bestTemplateCoordinates = Messages.MethodApplication_empty;
+        
+        switch(this.method) {
+        
+        case "analyze": //$NON-NLS-1$
+            String time;
+            bestDecryptedText = fg.decryptText(ct.getText());
+            value = tv.evaluate(bestDecryptedText);
+            for (int i = 0; i<bestTemplate.length;i++) {
+                bestTemplateCoordinates+=bestTemplate[i];
+            }
+            output = Messages.MethodApplication_output_bestGrille+bestTemplateCoordinates+Messages.MethodApplication_break+fg+Messages.MethodApplication_output_length_final+templateLength+Messages.MethodApplication_output_try_final+grilleNumber+Messages.MethodApplication_output_restart_final+lastImprovement; //$NON-NLS-2$
+            output += Messages.MethodApplication_output_decrypted_final+bestDecryptedText+Messages.MethodApplication_doubleBreak; //$NON-NLS-2$
+//          adjusts time format depending of spent time for analysis
+            if (end<60000)
+                time = end+Messages.MethodApplication_outputTime;
+            else {
+                long timeInDays, timeInHours, timeInMinutes, timeInSeconds;
+                
+                timeInSeconds = end/1000;
+                Duration duration = Duration.ofSeconds(timeInSeconds);
 
-			    timeInDays = duration.toDays();
-			    duration=duration.minusDays(timeInDays);
-			    timeInHours = duration.toHours();
-			    duration=duration.minusHours(timeInHours);
-			    timeInMinutes = duration.toMinutes();
-			    duration=duration.minusMinutes(timeInMinutes);
-			    timeInSeconds = duration.getSeconds();
-	            time = String.format("%02d:%02d:%02d:%02d", timeInDays, timeInHours, timeInMinutes, timeInSeconds)+" (dd:hh:mm:ss)";
-			}
-			output += "Finished analysis in "+time;
-			break;
-		case "encrypt":
-			output = "\nEncrypted text:\n\n"+encryptedText+",\nencrypted with key:"+fg;
-			for (int i = 0; i<grille.length;i++) {
-				bestTemplateCoordinates+=grille[i];
-			}
-			output += "\nKey coordinates: "+bestTemplateCoordinates;
-			output += "\nwith length: "+templateLength;
-			break;
-		case "decrypt":
-			output = "\nDecrypted text:\n\n"+decryptedText+", decryption with key:"+fg;
-			for (int i = 0; i<grille.length;i++) {
-				bestTemplateCoordinates+=grille[i];
-			}
-			output += "\nKey coordinates: "+bestTemplateCoordinates;
-			output += "\nwith length: "+templateLength;
-			break;
-		case "keyGenerator":
-			output = "Key: "+fg;
-			for (int h=0;h<grille.length;h++) {
-				output += grille[h]+",";
-			}
-			output += "\nwith length: "+templateLength;
-			fg.clearGrille();
-		}
-		return output;
-	}
+                timeInDays = duration.toDays();
+                duration=duration.minusDays(timeInDays);
+                timeInHours = duration.toHours();
+                duration=duration.minusHours(timeInHours);
+                timeInMinutes = duration.toMinutes();
+                duration=duration.minusMinutes(timeInMinutes);
+                timeInSeconds = duration.getSeconds();
+                time = String.format(Messages.MethodApplication_output_timeFormat_in, timeInDays, timeInHours, timeInMinutes, timeInSeconds)+Messages.MethodApplication_output_timeFormat_out;
+            }
+            output += Messages.MethodApplication_output_finished_final+time;
+            break;
+        case "encrypt": //$NON-NLS-1$
+            output = Messages.MethodApplication_output_encrypted+encryptedText+Messages.MethodApplication_output_encryptionKey+fg;
+            for (int i = 0; i<grille.length;i++) {
+                bestTemplateCoordinates+=grille[i];
+            }
+            output += Messages.MethodApplication_output_keyCoordinates+bestTemplateCoordinates;
+            output += Messages.MethodApplication_output_length_final+templateLength;
+            break;
+        case "decrypt": //$NON-NLS-1$
+            output = Messages.MethodApplication_output_decrypted_final+decryptedText+Messages.MethodApplication_output_decryptionKey+fg;
+            for (int i = 0; i<grille.length;i++) {
+                bestTemplateCoordinates+=grille[i];
+            }
+            output += Messages.MethodApplication_output_keyCoordinates+bestTemplateCoordinates;
+            output += Messages.MethodApplication_output_length_final+templateLength;
+            break;
+        case "keyGenerator":
+            output = Messages.MethodApplication_output_key+fg;
+            for (int h=0;h<grille.length;h++) {
+                output += grille[h]+","; //$NON-NLS-1$
+            }
+            output += Messages.MethodApplication_output_length_final+templateLength;
+            fg.clearGrille();
+        }
+        return output;
+    }
 }
