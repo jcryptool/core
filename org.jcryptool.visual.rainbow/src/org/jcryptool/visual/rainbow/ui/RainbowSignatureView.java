@@ -19,7 +19,9 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.rainbow.algorithm.RainbowSignature;
 
@@ -81,7 +83,8 @@ public class RainbowSignatureView extends ViewPart {
         textInfoHead = new StyledText(compHead, SWT.MULTI | SWT.READ_ONLY | SWT.WRAP);
         textInfoHead.setText(
                 Messages.RainbowSignatureView_textInfoHead);
-        GridDataFactory.fillDefaults().grab(true, false).applyTo(textInfoHead);
+        glf.applyTo(textInfoHead);
+        GridDataFactory.fillDefaults().grab(true, false).hint(600, SWT.DEFAULT).applyTo(textInfoHead);
 
         compAlgorithm = new Composite(content, SWT.NONE); 
         glf.numColumns(2).applyTo(compAlgorithm);
@@ -98,7 +101,20 @@ public class RainbowSignatureView extends ViewPart {
 
         viParams = new ViParameterWidget(grpViParams, rainbow.getVi());
         viParams.getBtnApply().addListener(SWT.Selection, e -> {
-            rainbow = new RainbowSignature(viParams.getViList().stream().mapToInt(i -> i).toArray());
+            try {
+                rainbow = new RainbowSignature(viParams.getViList().stream().mapToInt(i -> i).toArray());
+            } catch (Exception ex) {
+                LogUtil.logError(ex);
+                MessageBox keyErrorDialog = new MessageBox(parent.getShell(), SWT.ERROR);
+                keyErrorDialog.setText("Key Generation Error");
+                keyErrorDialog.setMessage("Please check your input or check the manual for further infromation.");
+                keyErrorDialog.open();
+
+            }
+        });
+        
+        viParams.getBtnGenerate().addListener(SWT.Selection, e -> {
+            viParams.randomVi();
         });
 
         grpInput = new Group(compInputOutput, SWT.NONE);
@@ -115,10 +131,8 @@ public class RainbowSignatureView extends ViewPart {
             textInfo.setText(getVarString());
             if (rainbowLESWidget != null)
                 rainbowLESWidget.dispose();
-            rainbowLESWidget = new RainbowLESWidget(grpRainbowLES, rainbow.getPrivateKeyParams());
-            glf.applyTo(rainbowLESWidget);
-            gdf.applyTo(rainbowLESWidget);
-           
+            rainbowLESWidget = new RainbowLESWidget(grpRainbowLES, FontService.getHugeFont(), rainbow.getPrivateKeyParams());
+                   
             grpRainbowLES.layout();
         });
 
@@ -158,7 +172,7 @@ public class RainbowSignatureView extends ViewPart {
         grpRainbowLES = new Group(compDetails, SWT.NONE);
         grpRainbowLES.setText(Messages.RainbowSignatureView_grpRainbowLES);
         glf.applyTo(grpRainbowLES);
-        gdf.hint(500, SWT.DEFAULT).applyTo(grpRainbowLES);
+        gdf.hint(500, 250).applyTo(grpRainbowLES);
         
         grpInfoBox = new Group(compDetails, SWT.NONE);
         grpInfoBox.setText(Messages.RainbowSignatureView_grpInfoBox);

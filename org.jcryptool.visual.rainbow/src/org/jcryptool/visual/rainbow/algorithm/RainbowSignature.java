@@ -4,7 +4,10 @@
 package org.jcryptool.visual.rainbow.algorithm;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.bouncycastle.crypto.digests.SHA224Digest;
@@ -19,17 +22,17 @@ public class RainbowSignature {
     private RainbowPrivateKeyParameters privateKey;
     private RainbowPublicKeyParameters publicKey;
 
-    
     /**
      * Instantiates a new rainbow signature with default parameters.
      */
     public RainbowSignature() {
         init(new RainbowParameters());
     }
-    
+
     /**
-     * Instantiates a new rainbow signature with a given number of Vinegar variables.
-     * The length of the array is the number of layers while the integer values define the number of coefficients per layer, e.g. vi = int[]{6, 12, 17, 22, 33}
+     * Instantiates a new rainbow signature with a given number of Vinegar variables. The length of
+     * the array is the number of layers while the integer values define the number of coefficients
+     * per layer, e.g. vi = int[]{6, 12, 17, 22, 33}
      */
     public RainbowSignature(int[] vi) {
         init(new RainbowParameters(vi));
@@ -39,7 +42,7 @@ public class RainbowSignature {
         SecureRandom random = new SecureRandom();
         random.nextBytes(new byte[20]);
         RainbowKeyGenerationParameters keyGenParam = new RainbowKeyGenerationParameters(random, params);
-        
+
         RainbowKeyPairGenerator keygen = new RainbowKeyPairGenerator();
         keygen.init(keyGenParam);
 
@@ -52,8 +55,7 @@ public class RainbowSignature {
         verifier = new DigestingMessageSigner(new RainbowSigner(), new SHA224Digest());
         verifier.init(false, keyPair.getPublic());
     }
-    
-    
+
     /**
      * Compute and return the signature for a message.
      *
@@ -73,12 +75,14 @@ public class RainbowSignature {
      * @return true, if successful; false if either array is null
      */
     public boolean verify(byte[] message, byte[] signature) {
-        if (message == null || signature == null) return false;
-        
+        if (message == null || signature == null || message.length == 0 || signature.length == 0)
+            return false;
+
         verifier.update(message, 0, message.length);
         return verifier.verifySignature(signature);
     }
-  
+   
+
     public int getNumLayers() {
         return privateKey.getVi().length;
     }
@@ -86,7 +90,7 @@ public class RainbowSignature {
     public int[] getVi() {
         return privateKey.getVi();
     }
-    
+
     public RainbowPrivateKeyParameters getPrivateKeyParams() {
         return privateKey;
     }
@@ -94,6 +98,5 @@ public class RainbowSignature {
     public RainbowPublicKeyParameters getPublicKey() {
         return publicKey;
     }
-    
-    
+
 }
