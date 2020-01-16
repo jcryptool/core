@@ -19,6 +19,8 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.preference.PreferenceStore;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -66,8 +68,10 @@ public class JCTTextEditor extends AbstractTextEditor implements IPropertyListen
 		setKeyBindingScopes(new String[] { "org.eclipse.ui.textEditorScope" }); //$NON-NLS-1$
 		setDocumentProvider(new SimpleDocumentProvider(this));
 		addPropertyListener(this);
+		IPreferenceStore store = new PreferenceStore();
+		setPreferenceStore(store);
 	}
-
+	
 	/**
 	 * override to grab the parent object for drag&drop
 	 */
