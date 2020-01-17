@@ -307,7 +307,7 @@ public class FleissnerGrille {
 	 */
 	public String decryptText(ArrayList<char[][]> encryptedText)
 	{
-		String decryptedText = "";
+        String decryptedText = Messages.FleissnerGrille_empty;
 		int textLength = encryptedText.get(0).length;
 
 		for (char[][] text:encryptedText) 
@@ -359,7 +359,7 @@ public class FleissnerGrille {
 	 */
 	public String encryptText(String plaintext, int[] coordinates)
 	{
-		String encryptedText = "";
+        String encryptedText = Messages.FleissnerGrille_empty;
 		int templateLength = this.grilleFilled.length;
 		int holes = ((coordinates.length)/2);
 		int textChar = 0;
@@ -452,14 +452,14 @@ public class FleissnerGrille {
 	  @Override
 	public String toString() {
 		
-	    String s="\n";
+	    String s = Messages.FleissnerGrille_break;
 		int textLength = this.grilleFilled.length;
 
 		for (int y = 0; y < textLength; y++) {
 			for (int x = 0; x < textLength; x++) {
 				s+= (this.grilleFilled[x][y] ? "X" : "-");
 			}
-			s+="\n";
+            s+=Messages.FleissnerGrille_break;
 		}
 		return s;
 	}

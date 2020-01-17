@@ -9,7 +9,6 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.analysis.fleissner.UI;
 
-
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.widgets.Canvas;
@@ -42,5 +41,6 @@ public class KeyListener implements MouseListener {
 		key.toggle(posY,posX);
 		((Canvas) e.widget).redraw();
 		fw.checkOkButton();
+		fw.updateKeyText();
 	}
 }

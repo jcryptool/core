@@ -13,7 +13,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Locale;
 import org.jcryptool.analysis.fleissner.Activator;
-import org.jcryptool.analysis.fleissner.UI.Messages;
 import org.jcryptool.core.logging.utils.LogUtil;
 
 /**
@@ -54,7 +53,7 @@ public class ParameterSettings {
 				case "-method": //$NON-NLS-1$
 					if ((args[i+1].equals("encrypt"))||(args[i+1].equals("analyze"))||(args[i+1].equals("decrypt"))) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						method = args[i+1];
-						LogUtil.logInfo("method: "+method); //$NON-NLS-1$
+						LogUtil.logInfo(Messages.ParameterSettings_info_method+method); //$NON-NLS-1$
 					}
 					else {
 						// there is no other method deposited
@@ -65,19 +64,19 @@ public class ParameterSettings {
 //					sets plaintext, if given
 					isPlaintext = true;
 					textInLine = args[i+1];
-					LogUtil.logInfo("Text type: plaintext\nText: "+textInLine); //$NON-NLS-1$
+					LogUtil.logInfo(Messages.ParameterSettings_info_textTypePlain+textInLine); //$NON-NLS-1$
 					break;
 				case "-cryptedText": //$NON-NLS-1$
 //					sets crypted text, if given
 					isPlaintext = false;
 					textInLine = args[i+1];
-					LogUtil.logInfo("Text type: crypted text\nText: "+textInLine); //$NON-NLS-1$
+					LogUtil.logInfo(Messages.ParameterSettings_info_textTypeCipher+textInLine); //$NON-NLS-1$
 					break;
 				case "-restarts": //$NON-NLS-1$
 //					sets restarts, if given
 					if (Integer.parseInt(args[i+1])>0) {
 						restart = BigInteger.valueOf(Integer.parseInt(args[i+1]));
-						LogUtil.logInfo("restarts: "+String.valueOf(restart)); //$NON-NLS-1$
+						LogUtil.logInfo(Messages.ParameterSettings_info_restarts+String.valueOf(restart)); //$NON-NLS-1$
 					}
 					else {
 //						there has to be at least one restart
@@ -98,7 +97,7 @@ public class ParameterSettings {
 						else {
 							holes = (int) (Math.pow(templateLength, 2)-1)/4;
 						}
-						LogUtil.logInfo("keylength: "+templateLength+"\nholes: "+holes); //$NON-NLS-1$ //$NON-NLS-2$
+                        LogUtil.logInfo(Messages.ParameterSettings_info_keyLength+templateLength+Messages.ParameterSettings_info_holes+holes);
 					}
 					break;
 				case "-key": //$NON-NLS-1$
@@ -129,7 +128,7 @@ public class ParameterSettings {
 						for (int k=0;k<data.length;k++) {
 							grille[k]= Integer.parseInt(data[k]);
 						}
-						LogUtil.logInfo("key: "+template+"\nkeylength: "+String.valueOf(templateLength)+"\nholes: "+String.valueOf(holes));									 //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        LogUtil.logInfo(Messages.ParameterSettings_info_key+template+Messages.ParameterSettings_info_keyLength2+String.valueOf(templateLength)+Messages.ParameterSettings_info_holes+String.valueOf(holes));                                    
 					} catch (Exception e) {
 						LogUtil.logError(Activator.PLUGIN_ID, Messages.ParameterSettings_InvalidKey, e, true);
 						throw new IllegalArgumentException(Messages.ParameterSettings_InvalidKey); //$NON-NLS-1$
@@ -137,9 +136,9 @@ public class ParameterSettings {
 					break;
 				case "-language": //$NON-NLS-1$
 //					sets language, if given
-					if ((args[i+1].equals("german"))||(args[i+1].equals("english"))) { //$NON-NLS-1$ //$NON-NLS-2$
+                    if ((args[i+1].equals(Messages.ParameterSettings_language_german))||(args[i+1].equals(Messages.ParameterSettings_language_english))) {
 						language = args[i+1];
-						LogUtil.logInfo("language: "+language); //$NON-NLS-1$
+                        LogUtil.logInfo(Messages.ParameterSettings_info_language+language);
 					}
 					else {
 //						currently there is no other alphabet deposited
@@ -154,7 +153,7 @@ public class ParameterSettings {
 					else {
 //						sets ngram, if given
 						nGramSize = Integer.parseInt(args[i+1]);
-						LogUtil.logInfo("Ngram size: "+nGramSize); //$NON-NLS-1$
+                        LogUtil.logInfo(Messages.ParameterSettings_info_nGramSize+nGramSize);
 					}
 					break;
 				default: 

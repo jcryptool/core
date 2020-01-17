@@ -72,6 +72,7 @@ public class FleissnerWindow extends Composite{
     private Text descriptionText;
     private Label statisticNameIdentifier;
     private Text loadedStatisticName;
+    private Text keyText;
     private Label textNameIdentifier;
     private Text loadedTextName;
     private Spinner keySize;
@@ -135,7 +136,6 @@ public class FleissnerWindow extends Composite{
         model = new Grille();
         model.setKey(new KeySchablone(7));
        
-        createHeader(this);
         createMain(this);
         
         startSettings = false;
@@ -152,6 +152,7 @@ public class FleissnerWindow extends Composite{
        mainComposite.setLayout(new GridLayout(3, false));
        mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
+       createHeader(mainComposite);
        createMethod(mainComposite);
        createKey(mainComposite);
        createInOutText(mainComposite);
@@ -333,8 +334,14 @@ public class FleissnerWindow extends Composite{
                     keySize.setSelection(7);
                 model.setKey(new KeySchablone(Integer.parseInt(keySize.getText())));
                 canvasKey.redraw();
+                updateKeyText();
                 canvasKey.removeMouseListener(keyListener);
                 canvasKey.addMouseListener(keyListener);
+                if (keySize.getSelection()<5)
+                    restarts.setEnabled(false);
+                else
+                    restarts.setEnabled(true);
+                
                 if (exampleText.getSelection() && !plain)
                     refreshExampleText();
                 reset();
@@ -384,6 +391,13 @@ public class FleissnerWindow extends Composite{
                 widgetSelected(e);
             }
         });
+
+        keyText = new Text(key, SWT.H_SCROLL);
+        GridData grid = new GridData(SWT.FILL, SWT.FILL, true, true, 3,1);
+//        limits text field width and height so text will wrap at the end of composite
+        grid.widthHint = key.getSize().y; 
+        keyText.setLayoutData(grid);
+        keyText.setEditable(false);
     }
    
     /**
@@ -440,7 +454,7 @@ public class FleissnerWindow extends Composite{
 //            parameter 'argText' is set every time plaintext input is modified
             public void modifyText(ModifyEvent e) {
                 plaintextComposite.setText(Messages.FleissnerWindow_label_plaintext+" (" + plaintext.getText().length() + ")");   //$NON-NLS-1$//$NON-NLS-2$ 
-                
+                updateCiphertext();
                 if (!startSettings) {
                     if (writeText.getSelection() && encrypt.getSelection()) {
                         argText = plaintext.getText();
@@ -472,7 +486,7 @@ public class FleissnerWindow extends Composite{
         ciphertext.setEditable(false);
         ciphertext.setBackground(ColorService.WHITE);
 //        default text
-        textName = "files/dawkinsGerCiphertext7.txt"; //$NON-NLS-1$
+        textName = Messages.FleissnerWindow_file_ciphertext; //$NON-NLS-1$
         argText = lf.InputStreamToString(lf.openMyTestStream(textName));
         refreshInOutTexts();
 
@@ -515,7 +529,7 @@ public class FleissnerWindow extends Composite{
         textSelectionGroup = new Group(parent, SWT.NONE);
         textSelectionGroup.setLayout(new GridLayout(4, false));
         textSelectionGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
-        textSelectionGroup.setText(Messages.FleissnerWindow_label_textChoice);
+        textSelectionGroup.setText(Messages.FleissnerWindow_label_textChoiceCipher);
         
         Composite platzHalter = new Composite(parent, SWT.NONE);
         platzHalter.setLayout(new GridLayout());
@@ -528,8 +542,6 @@ public class FleissnerWindow extends Composite{
         analysisSettingsGroup.setEnabled(true);
       
         createLoadtextComposite(textSelectionGroup);
-        
-        String[] items = {Messages.FleissnerWindow_languageSelect_german, Messages.FleissnerWindow_languageSelect_english};
       
         Composite languageAndRestarts = new Composite(analysisSettingsGroup, SWT.NONE);
         languageAndRestarts.setLayout(new GridLayout(4, false));
@@ -539,15 +551,39 @@ public class FleissnerWindow extends Composite{
         statisticGroup.setLayout(new GridLayout(4,false));
         statisticGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 4, 1));
         statisticGroup.setText(Messages.FleissnerWindow_label_statisticChoice);
+      
+        numberOfRestarts = new Label(languageAndRestarts, SWT.NONE);
+        numberOfRestarts.setText(Messages.FleissnerWindow_label_restarts); 
+        numberOfRestarts.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false));
         
-        chooseLanguage = new Text(languageAndRestarts, SWT.WRAP | SWT.MULTI);
+        restarts = new Spinner(languageAndRestarts, SWT.NONE);
+        restarts.setMinimum(1);
+        restarts.setMaximum(1400);
+        restarts.setIncrement(1);
+        restarts.setSelection(5);
+        restarts.setEnabled(true);
+        restarts.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true,2,1));
+        restarts.setToolTipText(Messages.FleissnerWindow_toolTipText_restarts);
+      
+        createLoadstatisticsComposite(statisticGroup);
+  }
+   
+    /**
+     * creates buttons and controls in text selection composite
+     * @param thirdGroup
+     */
+    private void createLoadtextComposite(Composite thirdGroup) {
+        String[] items = {Messages.FleissnerWindow_textSelect_dawkinsGer, Messages.FleissnerWindow_textSelect_wikiGer, Messages.FleissnerWindow_textSelect_dawkinsEng, Messages.FleissnerWindow_textSelect_wikiEng};
+        String[] langItems = {Messages.FleissnerWindow_languageSelect_german, Messages.FleissnerWindow_languageSelect_english};
+        
+        chooseLanguage = new Text(thirdGroup, SWT.WRAP | SWT.MULTI);
         chooseLanguage.setText(Messages.FleissnerWindow_label_languageChoice);
         chooseLanguage.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false));
         chooseLanguage.setBackground(ColorService.LIGHTGRAY);
 
-        language = new Combo(languageAndRestarts, SWT.DROP_DOWN | SWT.READ_ONLY);
-        language.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        language.setItems(items);
+        language = new Combo(thirdGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
+        language.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,3,1));
+        language.setItems(langItems);
         language.select(0);
 //        default language
         argLanguage = Messages.FleissnerWindow_language_german;
@@ -578,33 +614,10 @@ public class FleissnerWindow extends Composite{
                 }
             }
         });
-      
-        numberOfRestarts = new Label(languageAndRestarts, SWT.NONE);
-        numberOfRestarts.setText(Messages.FleissnerWindow_label_restarts); 
-        numberOfRestarts.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false));
-        
-        restarts = new Spinner(languageAndRestarts, SWT.NONE);
-        restarts.setMinimum(1);
-        restarts.setMaximum(1400);
-        restarts.setIncrement(1);
-        restarts.setSelection(5);
-        restarts.setEnabled(true);
-        restarts.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true));
-        restarts.setToolTipText(Messages.FleissnerWindow_toolTipText_restarts);
-      
-        createLoadstatisticsComposite(statisticGroup);
-  }
-   
-    /**
-     * creates buttons and controls in text selection composite
-     * @param thirdGroup
-     */
-    private void createLoadtextComposite(Composite thirdGroup) {
-        String[] items = {Messages.FleissnerWindow_textSelect_dawkinsGer, Messages.FleissnerWindow_textSelect_wikiGer, Messages.FleissnerWindow_textSelect_dawkinsEng, Messages.FleissnerWindow_textSelect_wikiEng};
         
         exampleText = new Button(thirdGroup, SWT.RADIO);
         exampleText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
-        exampleText.setText(Messages.FleissnerWindow_label_exampleCiphertext);
+        exampleText.setText(Messages.FleissnerWindow_label_exampleTextCipher);
         exampleText.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetDefaultSelected(SelectionEvent e) {
@@ -666,7 +679,7 @@ public class FleissnerWindow extends Composite{
         
         writeText = new Button(thirdGroup, SWT.RADIO);
         writeText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 4, 1));
-        writeText.setText(Messages.FleissnerWindow_label_writeCiphertext);
+        writeText.setText(Messages.FleissnerWindow_label_writeTextCipher);
         writeText.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetDefaultSelected(SelectionEvent e) {
@@ -694,7 +707,7 @@ public class FleissnerWindow extends Composite{
                     if (textInputState != 2) {
                         
                         deleteHoles();
-                        argText = Messages.FleissnerWindow_empty; 
+                        argText = Messages.FleissnerWindow_empty; //$NON-NLS-1$
                         refreshInOutTexts();
                     }
                     textSelection(false, false, editPlaintext, editCiphertext);
@@ -706,7 +719,7 @@ public class FleissnerWindow extends Composite{
 
         loadOwntext = new Button(thirdGroup, SWT.RADIO);
         loadOwntext.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
-        loadOwntext.setText(Messages.FleissnerWindow_label_loadOwnCiphertext);
+        loadOwntext.setText(Messages.FleissnerWindow_label_loadOwnTextCipher);
         loadOwntext.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetDefaultSelected(SelectionEvent e) {
@@ -753,16 +766,17 @@ public class FleissnerWindow extends Composite{
                     userText = true; 
                     // display fileName to user
                     loadedTextName.setText(a[a.length-1]);
-                    
-                    if (argMethod.equals(Messages.FleissnerWindow_method_analyze)) {
-                        analysisOutput.setText(Messages.FleissnerWindow_output_progress);
-                        dialogOutput = analysisOutput.getText();
-                    }
-                    
-                    refreshInOutTexts();
-                    reset();
+                
+                if (argMethod.equals(Messages.FleissnerWindow_method_analyze)) {
+                    analysisOutput.setText(Messages.FleissnerWindow_output_progress);
+                    dialogOutput = analysisOutput.getText();
+                }
+                
+                refreshInOutTexts();
+                reset();
                 }
             }
+            
             
             @Override
             public void widgetDefaultSelected(SelectionEvent e) {
@@ -926,11 +940,10 @@ public class FleissnerWindow extends Composite{
         analysis = new Group(parent, SWT.NONE);
         analysis.setLayout(new GridLayout(2, false));
         GridData grid = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
+        analysis.setLayoutData(grid);
         analysis.setText(Messages.FleissnerWindow_label_output);
         
         Shell shell = new Shell();
-        dialog = new OutputDialog(shell);
-        
         
         logOutput = new Button(analysis, SWT.PUSH);
         GridData gridPush = new GridData(SWT.FILL, SWT.UP, false, false);
@@ -938,16 +951,15 @@ public class FleissnerWindow extends Composite{
         logOutput.setLayoutData(gridPush);
         logOutput.setText(Messages.FleissnerWindow_label_outputDetails);
         logOutput.setEnabled(false);
-        grid.minimumHeight = logOutput.getSize().y;
-        analysis.setLayoutData(grid);
         logOutput.addSelectionListener(new SelectionListener() {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
                 
-                dialog.create(Messages.FleissnerWindow_label_dialogOutput);
+                dialog = new OutputDialog(shell);
+                dialog.create(Messages.FleissnerWindow_label_dialogOutput, Messages.FleissnerWindow_label_dialogDescription);
                 dialog.getOutput().setText(dialogOutput);
-                dialog.open();          
+                dialog.open();    
             }
 
             @Override
@@ -963,6 +975,7 @@ public class FleissnerWindow extends Composite{
         analysisOutput.setText(Messages.FleissnerWindow_output_progress);
         analysisOutput.setEditable(false);
         analysisOutput.setBackground(ColorService.WHITE);
+        analysisOutput.setFont(FontService.getNormalMonospacedFont());
        
         dialogOutput = new String(analysisOutput.getText());
     }
@@ -1022,7 +1035,7 @@ public class FleissnerWindow extends Composite{
         headerComposite = new Composite(parent, SWT.NONE);
         headerComposite.setBackground(ColorService.WHITE);
         headerComposite.setLayout(new GridLayout());
-        headerComposite.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+        headerComposite.setLayoutData(new GridData(SWT.FILL, SWT.UP, true, false,3,1));
    
         Text headerText = new Text(headerComposite, SWT.READ_ONLY);
         headerText.setText(Messages.FleissnerWindow_title);
@@ -1031,14 +1044,13 @@ public class FleissnerWindow extends Composite{
         headerText.setEditable(false);
         headerText.setBackground(ColorService.WHITE);
         
-        descriptionText = new Text(headerComposite, SWT.READ_ONLY |SWT.WRAP | SWT.MULTI);
+        descriptionText = new Text(headerComposite, SWT.READ_ONLY |SWT.WRAP);
         descriptionText.setBackground(ColorService.WHITE);
         
 //        field 'descriptionText' has to be limited so it won't allocate unnecessary space
-        final GridData gridData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
+        final GridData gridData = new GridData(SWT.FILL, SWT.UP, true, false);
         gridData.widthHint = headerComposite.getClientArea().width;
         gridData.heightHint = (descriptionText.getLineCount())*(descriptionText.getLineHeight());
-
         descriptionText.setLayoutData(gridData);
         descriptionText.setEditable(false);       
         descriptionText.addListener(SWT.Resize | SWT.MouseDoubleClick, new Listener(){
@@ -1279,14 +1291,14 @@ public class FleissnerWindow extends Composite{
 
         } catch (IllegalArgumentException ex) {
             MessageDialog.openError(Display.getCurrent().getActiveShell(),
-            		Messages.FleissnerWindow_error_enterValidParameters,
-            		ex.getMessage());
+                    Messages.FleissnerWindow_error_enterValidParameters,
+                    ex.getMessage());
             LogUtil.logError(Activator.PLUGIN_ID, ex);
             return;
         } catch (FileNotFoundException ex) {
             MessageDialog.openError(Display.getCurrent().getActiveShell(),
-            		Messages.FleissnerWindow_error_fileNotFound,
-            		ex.getMessage());
+                    Messages.FleissnerWindow_error_fileNotFound,
+                    ex.getMessage());
             LogUtil.logError(Activator.PLUGIN_ID, ex);
             
             return;
@@ -1342,6 +1354,7 @@ public class FleissnerWindow extends Composite{
         } while (!model.getKey().isValid());
         
         canvasKey.redraw();
+        updateKeyText();
     }
     
     /**
@@ -1372,6 +1385,7 @@ public class FleissnerWindow extends Composite{
         
         model.setKey(new KeySchablone(Integer.parseInt(keySize.getText())));
         canvasKey.redraw();
+        updateKeyText();
         canvasKey.removeMouseListener(keyListener);
         canvasKey.addMouseListener(keyListener);  
     }
@@ -1497,19 +1511,21 @@ public class FleissnerWindow extends Composite{
         boolean edit;
         if (plain) {
             tempArgText = plaintext.getText();
-            exampleText.setText(Messages.FleissnerWindow_label_examplePlaintext);
-            writeText.setText(Messages.FleissnerWindow_label_writePlaintext);
-            loadOwntext.setText(Messages.FleissnerWindow_label_loadOwnPlaintext);
+            textSelectionGroup.setText(Messages.FleissnerWindow_label_textChoicePlain);
+            exampleText.setText(Messages.FleissnerWindow_label_exampleTextPlain);
+            writeText.setText(Messages.FleissnerWindow_label_writeTextPlain);
+            loadOwntext.setText(Messages.FleissnerWindow_label_loadOwnTextPlain);
             edit = true;
 
-        } else {
+        }else {
             tempArgText = ciphertext.getText();
-            exampleText.setText(Messages.FleissnerWindow_label_exampleCiphertext);
-            writeText.setText(Messages.FleissnerWindow_label_writeCiphertext);
-            loadOwntext.setText(Messages.FleissnerWindow_label_loadOwnCiphertext);
+            textSelectionGroup.setText(Messages.FleissnerWindow_label_textChoiceCipher);
+            exampleText.setText(Messages.FleissnerWindow_label_exampleTextCipher);
+            writeText.setText(Messages.FleissnerWindow_label_writeTextCipher);
+            loadOwntext.setText(Messages.FleissnerWindow_label_loadOwnTextCipher);
             edit = false;
         }
-
+  
         
         if (textInputState!=1 || tempArgText.equals(Messages.FleissnerWindow_empty)) 
             loadedTextName.setText(Messages.FleissnerWindow_empty); 
@@ -1519,7 +1535,7 @@ public class FleissnerWindow extends Composite{
             ciphertext.setEditable(!edit);
         }
         if (startSettings) {
-            argText = lf.InputStreamToString(lf.openMyTestStream("files/dawkinsGerCiphertext7.txt")); //$NON-NLS-1$
+            argText = lf.InputStreamToString(lf.openMyTestStream(Messages.FleissnerWindow_file_ciphertext));
             refreshInOutTexts();
         }else if (exampleText.getSelection()) {
             
@@ -1588,6 +1604,7 @@ public class FleissnerWindow extends Composite{
         for (int i =0; i<keyToLogic.length/2; i++) {
             model.getKey().set(keyToLogic[2*i+1], keyToLogic[2*i]);
         }
+        updateKeyText();
     }
     
     /**
@@ -1673,27 +1690,77 @@ public class FleissnerWindow extends Composite{
         
         return args;
     }
+    
+    /**
+     * writes key in textform underneath the key template
+     */
+    public void updateKeyText() {
+        int counter = 1;
+        StringBuilder sb = new StringBuilder();
+        for (int j = 0; j < model.getKey().getSize(); j++) {
+            for (int k = 0; k < model.getKey().getSize(); k++) {
+                if (model.getKey().get(j, k) == '1') {
+                    sb.append(counter);
+                    sb.append(" ");
+                }
+                counter++;
+            }
+        }
 
+        keyText.setText(Messages.FleissnerWindow_label_key+": " + sb.toString().trim());
+        updateCiphertext();
+    }
+    
+    public void updateCiphertext() {
+
+        if (encrypt.getSelection())
+            ciphertext.setText(Messages.FleissnerWindow_empty);
+    }
+
+    /**
+     * 
+     * @return
+     */
     public Canvas getCanvasKey() {
         return canvasKey;
     }
 
+    /**
+     * 
+     * @param canvasKey
+     */
     public void setCanvasKey(Canvas canvasKey) {
         this.canvasKey = canvasKey;
     }
 
+    /**
+     * 
+     * @return
+     */
     public Grille getModel() {
         return model;
     }
 
+    /**
+     * 
+     * @param model
+     */
     public void setModel(Grille model) {
         this.model = model;
     } 
     
+    /**
+     * 
+     * @return
+     */
     public Spinner getKeySize() {
         return keySize;
     }
 
+    /**
+     * 
+     * @param keySize
+     */
     public void setKeySize(Spinner keySize) {
         this.keySize = keySize;
     }

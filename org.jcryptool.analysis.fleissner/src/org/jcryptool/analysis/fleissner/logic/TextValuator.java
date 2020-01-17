@@ -31,10 +31,10 @@ public class TextValuator {
         TextValuator.ngrams = statistics;
 		
 		switch(language) {
-		case "german":	alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß";
+        case "german":  alphabet = Messages.TextValuator_germanAlphabet; //$NON-NLS-1$
 						m = 30;
 						break;
-		case "english":	alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        case "english": alphabet = Messages.TextValuator_englishAlphabet; //$NON-NLS-1$
 						m = 26;
 						break;
 		}

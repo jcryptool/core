@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Text;
 import org.jcryptool.analysis.fleissner.Activator;
 import org.jcryptool.analysis.fleissner.UI.LoadFiles;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.fonts.FontService;
 
 /**
  * @author Dinah
@@ -43,9 +44,10 @@ public class OutputDialog extends TitleAreaDialog {
         super(parentShell);
     }
     
-    public void create(String string) {
+    public void create(String title, String message) {
         super.create();
-        setTitle(string);
+        setTitle(title);
+        setMessage(message);
     }
 
     @Override
@@ -62,9 +64,15 @@ public class OutputDialog extends TitleAreaDialog {
     }
     
     @Override
+    protected void configureShell(Shell newShell) {
+        super.configureShell(newShell);
+        newShell.setText(Messages.OutputDialog_detailOutput);
+    }
+    
+    @Override
     protected void createButtonsForButtonBar(Composite parent) {
      super.createButtonsForButtonBar(parent);
-     getButton(IDialogConstants.OK_ID).setText("Speichern");
+     getButton(IDialogConstants.OK_ID).setText(Messages.OutputDialog_save);
     }
 
     private void createOutput(Composite container) {
@@ -73,6 +81,7 @@ public class OutputDialog extends TitleAreaDialog {
 
         output = new Text(container, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
         output.setLayoutData(gridData);
+        output.setFont(FontService.getNormalMonospacedFont());
     }
 
     @Override
@@ -91,7 +100,7 @@ public class OutputDialog extends TitleAreaDialog {
         // This check avoids exceptions.
         if (save != null) {
             try{
-                BufferedWriter bw = new BufferedWriter(new FileWriter(save/*+"./FleissnerOutput.txt"*/)); 
+                BufferedWriter bw = new BufferedWriter(new FileWriter(save)); 
                 bw.write(outputString);
                 bw.newLine();
                 bw.close();

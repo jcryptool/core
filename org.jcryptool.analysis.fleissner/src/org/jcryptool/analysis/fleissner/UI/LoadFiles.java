@@ -48,16 +48,16 @@ public class LoadFiles {
             switch (exampleIndex) {
             
             case 0: 
-                textName = "files/dawkinsGerPlaintextOriginal.txt"; //$NON-NLS-1$
+                textName = Messages.LoadFiles_file_plaintext_ger_1; 
                 break;
             case 1:     
-                textName = "files/wikiFruehchristlicheKunstGerPlaintextOriginal.txt"; //$NON-NLS-1$
+                textName = Messages.LoadFiles_file_plaintext_ger_2; 
                 break;
             case 2:
-                textName = "files/dawkinsEngPlaintextOriginal.txt"; //$NON-NLS-1$
+                textName = Messages.LoadFiles_file_plaintext_eng_1; 
                 break;
             case 3:
-                textName = "files/visualArtsEngPlaintext.txt"; //$NON-NLS-1$
+                textName = Messages.LoadFiles_file_plaintext_eng_2; 
                 break;     
             }
         
@@ -102,7 +102,7 @@ public class LoadFiles {
         StringBuffer myStrBuf = new StringBuffer();
 
         int charOut = 0;
-        String output = ""; //$NON-NLS-1$
+        String output = Messages.LoadFiles_empty; 
         try {
             while ((charOut = reader.read()) != -1) {
                 myStrBuf.append(String.valueOf((char) charOut));
@@ -126,13 +126,13 @@ public class LoadFiles {
             switch (exampleIndex) {
             
             case 0: 
-                textName = "files/de-4gram-nocs.bin"; //$NON-NLS-1$
+                textName = Messages.LoadFiles_file_stat_4gram_de; 
                 break;
             case 1:
-                textName = "files/en-4gram-nocs.bin"; //$NON-NLS-1$
+                textName = Messages.LoadFiles_file_stat_4gram_en; 
                 break;
             case 2:
-                textName = "files/en-3gram-nocs.bin"; //$NON-NLS-1$
+                textName = Messages.LoadFiles_file_stat_3gram_en; 
                 break;     
             }
         
