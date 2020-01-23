@@ -11,6 +11,8 @@ public class Messages extends NLS {
     public static String RainbowSignatureView_grpOutput;
     public static String RainbowSignatureView_grpRainbowLES;
     public static String RainbowSignatureView_grpViParams;
+    public static String RainbowSignatureView_keyErrorDialog;
+    public static String RainbowSignatureView_keyErrorMessage;
     public static String RainbowSignatureView_lblHeader;
     public static String RainbowSignatureView_textInfoHead;
     public static String RainbowSignatureView_textMessage;

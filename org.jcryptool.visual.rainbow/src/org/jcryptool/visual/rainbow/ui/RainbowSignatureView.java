@@ -106,8 +106,8 @@ public class RainbowSignatureView extends ViewPart {
             } catch (Exception ex) {
                 LogUtil.logError(ex);
                 MessageBox keyErrorDialog = new MessageBox(parent.getShell(), SWT.ERROR);
-                keyErrorDialog.setText("Key Generation Error");
-                keyErrorDialog.setMessage("Please check your input or check the manual for further infromation.");
+                keyErrorDialog.setText(Messages.RainbowSignatureView_keyErrorDialog);
+                keyErrorDialog.setMessage(Messages.RainbowSignatureView_keyErrorMessage);
                 keyErrorDialog.open();
 
             }
@@ -218,18 +218,18 @@ public class RainbowSignatureView extends ViewPart {
     public String getVarString() {
         StringBuilder sb = new StringBuilder();
         sb.append("----" + Messages.RainbowSignatureView_varPrivKey + "----\n") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            .append(Messages.RainbowSignatureView_varDocLength).append(rainbow.getPrivateKeyParams().getDocLength()).append("\n") //$NON-NLS-2$ //$NON-NLS-1$
-            .append(Messages.RainbowSignatureView_varLayers).append(rainbow.getPrivateKeyParams().getVi().length).append("\n") //$NON-NLS-2$ //$NON-NLS-1$
-            .append(Messages.RainbowSignatureView_varVi).append(arrayToString(rainbow.getPrivateKeyParams().getVi())).append("\n") //$NON-NLS-2$ //$NON-NLS-1$
+            .append(Messages.RainbowSignatureView_varDocLength).append(rainbow.getPrivateKeyParams().getDocLength()).append("\n") //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$
+            .append(Messages.RainbowSignatureView_varLayers).append(rainbow.getPrivateKeyParams().getVi().length).append("\n") //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$
+            .append(Messages.RainbowSignatureView_varVi).append(arrayToString(rainbow.getPrivateKeyParams().getVi())).append("\n") //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$
             .append("B1: ").append(arrayToString(rainbow.getPrivateKeyParams().getB1())).append("\n") //$NON-NLS-1$ //$NON-NLS-2$
             .append("B2: ").append(arrayToString(rainbow.getPrivateKeyParams().getB2())).append("\n") //$NON-NLS-1$ //$NON-NLS-2$
             .append("InvA1: ").append(arrayToString(rainbow.getPrivateKeyParams().getInvA1())).append("\n") //$NON-NLS-1$ //$NON-NLS-2$
             .append("InvA2: ").append(arrayToString(rainbow.getPrivateKeyParams().getInvA2())).append("\n"); //$NON-NLS-1$ //$NON-NLS-2$
 
         sb.append("\n----" + Messages.RainbowSignatureView_varPubkey + "----\n") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            .append(Messages.RainbowSignatureView_varDocLength).append(rainbow.getPublicKey().getDocLength()).append("\n") //$NON-NLS-2$ //$NON-NLS-1$
-            .append(Messages.RainbowSignatureView_varCoeffQ).append(arrayToString(rainbow.getPublicKey().getCoeffQuadratic())).append("\n") //$NON-NLS-2$ //$NON-NLS-1$
-            .append(Messages.RainbowSignatureView_varCoeffScalar).append(arrayToString(rainbow.getPublicKey().getCoeffScalar())).append("\n") //$NON-NLS-2$ //$NON-NLS-1$
+            .append(Messages.RainbowSignatureView_varDocLength).append(rainbow.getPublicKey().getDocLength()).append("\n") //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$
+            .append(Messages.RainbowSignatureView_varCoeffQ).append(arrayToString(rainbow.getPublicKey().getCoeffQuadratic())).append("\n") //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$
+            .append(Messages.RainbowSignatureView_varCoeffScalar).append(arrayToString(rainbow.getPublicKey().getCoeffScalar())).append("\n") //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$
             .append(Messages.RainbowSignatureView_varCoeffSinglar).append(arrayToString(rainbow.getPublicKey().getCoeffSingular()));
 
         return sb.toString();
@@ -237,7 +237,7 @@ public class RainbowSignatureView extends ViewPart {
     
     public String arrayToString(short[][] arr) {
         StringBuilder sb = new StringBuilder();
-        sb.append(Messages.RainbowSignatureView_varDim + ": [").append(arr.length).append("][").append(arr[0].length).append("]\n"); //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        sb.append(Messages.RainbowSignatureView_varDim + ": [").append(arr.length).append("][").append(arr[0].length).append("]\n");  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         int count = 0;
         for (int r = 0; r < arr.length; r++) {
             for (int c = 0; c < arr[r].length; c++) {
@@ -254,7 +254,7 @@ public class RainbowSignatureView extends ViewPart {
 
     public String arrayToString(short[] arr) {
         StringBuilder sb = new StringBuilder();
-        sb.append(Messages.RainbowSignatureView_varDim + ": [").append(arr.length).append("]\n"); //$NON-NLS-2$ //$NON-NLS-3$
+        sb.append(Messages.RainbowSignatureView_varDim + ": [").append(arr.length).append("]\n");  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
         for (int r = 0; r < arr.length; r++) {
             sb.append(arr[r]).append(" "); //$NON-NLS-1$
         }
