@@ -13,7 +13,12 @@ import java.security.InvalidKeyException;
 import com.github.aelstad.keccakj.provider.Constants;
 
 public final class LakeKeyakKey extends RawKey {
-    public LakeKeyakKey() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public LakeKeyakKey() {
         super();
     }
 

@@ -286,6 +286,11 @@ public class XORComposite extends Composite {
 	}
 
 	protected List<String> predefinedTexts = new LinkedList<String>() {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		{
 			add("the kitten is in the basket fuzzy ball go"); //$NON-NLS-1$
 			add("this is a codebook message that is unique"); //$NON-NLS-1$

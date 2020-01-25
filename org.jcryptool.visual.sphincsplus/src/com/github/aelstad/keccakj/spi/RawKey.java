@@ -14,7 +14,11 @@ import javax.crypto.SecretKey;
 
 public abstract class RawKey implements SecretKey {
 
-    private byte[] rawKey;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private byte[] rawKey;
 
     public RawKey() {
 

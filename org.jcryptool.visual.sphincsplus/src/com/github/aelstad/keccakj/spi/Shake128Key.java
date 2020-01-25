@@ -12,7 +12,12 @@ import com.github.aelstad.keccakj.provider.Constants;
 
 public class Shake128Key extends RawKey {
 
-    @Override
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Override
     public String getAlgorithm() {
         return Constants.SHAKE128_STREAM_CIPHER;
     }

@@ -1426,6 +1426,11 @@ public class NgramCode {
 	// Functionality to access single elements of a Map
 	class MyLinkedMap<K, V> extends LinkedHashMap<K, V> {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		public V getValue(int i) {
 
 			Map.Entry<K, V> entry = this.getEntry(i);

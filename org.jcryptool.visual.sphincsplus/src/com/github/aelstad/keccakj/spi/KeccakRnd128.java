@@ -22,7 +22,12 @@ import com.github.aelstad.keccakj.core.DuplexRandom;
  * 
  */
 public final class KeccakRnd128 extends SecureRandomSpi {
-    private final DuplexRandom dr = new DuplexRandom(253);
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private final DuplexRandom dr = new DuplexRandom(253);
 
     private final static int FORGET_INTERVAL = 2 * 1024 * 1024;
 

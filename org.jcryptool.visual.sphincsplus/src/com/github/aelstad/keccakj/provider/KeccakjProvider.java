@@ -12,7 +12,12 @@ import java.security.Provider;
 
 public final class KeccakjProvider extends Provider {
 
-    public KeccakjProvider() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public KeccakjProvider() {
         super("com.github.aelstad.keccakj", 1.0,
                 "Implementation of digests, ciphers and random generated based on the Keccack permutation. Includes SHA3 digests");
 

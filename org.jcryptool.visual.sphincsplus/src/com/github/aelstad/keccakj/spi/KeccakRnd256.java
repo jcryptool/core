@@ -19,7 +19,11 @@ import com.github.aelstad.keccakj.core.DuplexRandom;
  * Forgets the previous state after every call to nextBytes.
  */
 public final class KeccakRnd256 extends SecureRandomSpi {
-    private final DuplexRandom dr = new DuplexRandom(509);
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private final DuplexRandom dr = new DuplexRandom(509);
 
     @Override
     protected byte[] engineGenerateSeed(int len) {
