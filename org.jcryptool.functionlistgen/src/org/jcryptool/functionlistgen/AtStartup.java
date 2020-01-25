@@ -44,7 +44,12 @@ public class AtStartup implements IStartup {
 	 * This is necessary to use them as secondary sorting IDs so that all entries are written to 
 	 * the output in the same order across all languages 
 	 */
-	private static Map<String, String> flexiproviderTranslations = new HashMap<String, String>(){{ 
+	private static Map<String, String> flexiproviderTranslations = new HashMap<String, String>(){/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+	{ 
 		put(MESSAGE_DIGESTS                  , MESSAGE_DIGESTS);
 		put(SIGNATURES                       , SIGNATURES);
 		put(PSEUDO_RANDOM_NUMBER_GENERATORS  , PSEUDO_RANDOM_NUMBER_GENERATORS);
