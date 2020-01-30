@@ -159,10 +159,16 @@ public class RainbowSignatureView extends ViewPart {
             }
         });
         Point buttonSize = btnVerify.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-        lblCheck = iconAsLabel(compVerification, "/../icons/checkmark.png", buttonSize.y); //$NON-NLS-1$
+        
+        //TODO image resource is NULL when plugin exported
+        //lblCheck = iconAsLabel(compVerification, "../icons/checkmark.png", buttonSize.y); //$NON-NLS-1$
+        lblCheck = new Label(compVerification, SWT.NONE);
+        lblCheck.setText("OK");
         lblCheck.setVisible(false);
 
-        lblXMark = iconAsLabel(compVerification, "/../icons/x-mark.png", buttonSize.y); //$NON-NLS-1$
+        //lblXMark = iconAsLabel(compVerification, "../icons/x-mark.png", buttonSize.y); //$NON-NLS-1$
+        lblXMark = new Label(compVerification, SWT.NONE);
+        lblXMark.setText("X");      
         lblXMark.setVisible(false);
 
         compDetails = new Composite(compAlgorithm, SWT.NONE);
