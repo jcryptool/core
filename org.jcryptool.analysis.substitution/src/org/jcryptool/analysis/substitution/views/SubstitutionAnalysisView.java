@@ -24,6 +24,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -32,12 +33,14 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.services.IServiceLocator;
+import org.jcryptool.analysis.substitution.Activator;
 import org.jcryptool.analysis.substitution.calc.TextStatistic;
 import org.jcryptool.analysis.substitution.ui.modules.SubstitutionAnalysisConfigPanel;
 import org.jcryptool.analysis.substitution.ui.modules.SubstitutionAnalysisPanel;
@@ -120,6 +123,13 @@ public class SubstitutionAnalysisView extends ViewPart {
 		return mainComposite;
 	}
 
+	private void hookActionBar() {
+		IToolBarManager mgr = getViewSite().getActionBars().getToolBarManager();
+		mgr.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+		getViewSite().getActionBars().updateActionBars();
+	}
+
+
 	@Override
 	public void createPartControl(Composite parent) {
 		mainComposite = new Composite(parent, SWT.NONE);
@@ -130,6 +140,11 @@ public class SubstitutionAnalysisView extends ViewPart {
 		defineAllCommands();
 		serviceLocator = PlatformUI.getWorkbench();
 		contributeToActionBars();
+
+		PlatformUI.getWorkbench().getHelpSystem()
+			.setHelp(parent, Activator.PLUGIN_ID + ".substitutionsanalysis"); //$NON-NLS-1$
+
+		hookActionBar();
 
 //		PlatformUI.getWorkbench().getHelpSystem().setHelp(getMainComposite(), "org.jcryptool.analysis.substitution.viewer"); //$NON-NLS-1$
 	}

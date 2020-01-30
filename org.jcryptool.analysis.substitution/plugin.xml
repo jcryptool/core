@@ -15,6 +15,7 @@
    <extension
          point="org.jcryptool.core.operations.analysis">
       <analysis
+            contextHelpId="org.jcryptool.analysis.substitution.substitution"
             name="%analysis.name2"
             viewId="org.jcryptool.analysis.substitution.views.SubstitutionAnalysisView">
       </analysis>
@@ -32,6 +33,32 @@
             file="$nl$/toc.xml"
             primary="false">
       </toc>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="toolbar:org.jcryptool.analysis.substitution.views.SubstitutionAnalysisView">
+         <command
+               commandId="org.jcryptool.analysis.substitution.helpCommand"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png"
+               style="push"
+               tooltip="%help.command.tooltip">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.jcryptool.analysis.substitution.helpCommand"
+            name="%help.command.name">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.jcryptool.analysis.substitution.handler.HelpHandler"
+            commandId="org.jcryptool.analysis.substitution.helpCommand">
+      </handler>
    </extension>
 
 </plugin>
