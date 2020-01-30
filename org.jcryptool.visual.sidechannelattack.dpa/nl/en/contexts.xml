@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<contexts>
-   <context id="dpaview" title="DPA demonstration">
-      <description>This visualization demonstrates the Differential Power Analysis against elliptic curves</description>
-      <topic href="help/content/index.html" label="DPA demonstration"/>
-   </context>
-</contexts>

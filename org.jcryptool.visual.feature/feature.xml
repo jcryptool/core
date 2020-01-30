@@ -357,13 +357,6 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="org.jcryptool.visual.sidechannelattack.dpa"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.jcryptool.visual.aup"
          download-size="0"
          install-size="0"
