@@ -9,31 +9,28 @@
 <body>
 	<h1>H&auml;ufigkeitsanalyse</h1>
 
-	<p>Die H&auml;ufigkeitsanalyse z&auml;hlt die Anzahl des Auftretens aller Buchstaben im analysierten Text. Das Plugin visualisiert die Frequenz einzelner Zeichen als Graph. Ausserdem k&ouml;nnen Parameter zur analyse von Vigen&eacute;re Chiffren ausgew&auml;hlt werden.</p>
+	<p>Die H&auml;ufigkeitsanalyse z&auml;hlt die Anzahl des Auftretens aller Buchstaben im analysierten Text. Das Plugin visualisiert die Häufigkeit einzelner Zeichen als Graph. Außerdem k&ouml;nnen Parameter für weitere Analysen ausgew&auml;hlt werden (z.B. Vigen&eacute;re-Parameter oder Referenztext-Overlays).</p>
 	
 	<p>Sie k&ouml;nnen dieses Plug-in in zweierlei Weise nutzen:</p>
 
-	<p><b>einfache Ansicht</b> ("zeige einfaches Diagramm an"): Die H&auml;ufigkeitsanalyse wird als Graph dargestellt, der mit der Maus verschoben und
-	durch die Filter-Einstellungen von ungew&uuml;nschten Buchstaben befreit und verschiedenen anderen Transformationen unterzogen werden kann.</p>
+	<p><b>1) Einfache Ansicht</b> ("Zeige einfaches Diagramm an"): Hier wird die H&auml;ufigkeitsanalyse wird als Graph mit prozentualen Häufigkeiten dargestellt. Sie können den Text vor der Analyse noch ändern mit Hilfe von Filter-Einstellungen (ungewünschte Buchstaben entfernen, alle Buchstaben in Kleinbuchstaben verwandeln, ...).</p>
 
-	<p>Unter <b>Einstellungen</b> kann zwischen monoalphabetischer und polyalphabetischer Analyse gew&auml;lt werden. Eine monoalphabetische Chiffre ersetzt jeden Buchstaben des Klartextes mit einem des Geheimtextes.
-	In polyalphabetischen Chiffren ersetzen mehrere Geheimalphabete den Klartext. F&uuml;r polyalphabetische Ersetzungschiffren k&ouml;nnen <b>Vigen&eacute;re-Einstellungen</b> eingestellt werden. Die <b>Schl&uuml;ssell&auml;nge</b> 
-	ist die Distanz zwischen sich wiederholended Geheimalphabeten. Die <b>Position</b> ist die Verschiebung der Alphabete.</p>  
+	<p>Unter <b>Einstellungen</b> kann man zwischen monoalphabetischer und polyalphabetischer Analyse w&auml;hlen. Eine monoalphabetische Chiffre ersetzt jeden Buchstaben des Klartextes mit einem des Geheimtextes.
+	In polyalphabetischen Chiffren ersetzen mehrere Geheimalphabete den Klartext. Sind polyalphabetische Substitutions-Chiffren ausgewählt, hat man die Option, <b>Vigen&eacute;re-Einstellungen</b> zu konfigurieren. Die <b>Schl&uuml;ssell&auml;nge</b> 
+	ist die Distanz zwischen sich wiederholenden Geheimtextalphabeten. Die <b>Position</b> ist die Verschiebung der Alphabete.</p>  
 
 	<p><img src="freqanalysis1.png" width="700" height="400" alt="Bild: Erweiterte Ansicht"/></p>
 
-	<p>Die <b>erweiterte Ansicht</b> stellt mehr Analyseoptionen zur Verf&uuml;gung, die im zweiten Tab der Einstellungen zu finden sind:</p>
+	<p>2) Die <b>erweiterte Ansicht</b>  ("Mehr Optionen und Analysemöglichkeiten") stellt mehr Analyseoptionen zur Verf&uuml;gung, die im zweiten Tab der Einstellungen zu finden sind:</p>
 
-	<p>Die erste M&ouml;glichkeit, den Text besser zu analysieren, ist die M&ouml;glichkeit, ein <b>Overlay</b> &uuml;ber den Graphen legen zu lassen,
-	welches eine Referenzverteilung anzeigt. Die Quelle dieser Referenzverteilung kann im darunter angezeigten Dropdown-Feld ausgew&auml;hlt werden.</p>
+	<p>Der <b>Overlay</b>-Reiter ermöglicht, ein Overlay mit einer Referenzverteilung über den Graphen zu legen. Die Referenzverteilung wird halbtransparent anzeigt. Die Quelle dieser Referenzverteilung kann im darunter angezeigten Dropdown-Feld ausgew&auml;hlt werden.</p>
 
-	<p>Im zweiten Dropdown-Feld haben Sie die M&ouml;glichkeit festzulegen, <b>in welchem Bereich</b> das Overlay angezeigt werden soll. Dieses Feld wird
-	bei jeder Analyse automatisch auf ein passendes Alphabet eingestellt, aber Sie k&ouml;nnen auch ein anderes Alphabet festlegen. <b> Wichtig:</b> Das
-	Verwenden eines Alphabets, welches m&auml;chtiger als das Alphabet (unterschiedlichen Buchstaben) des untersuchten Textes, wird die Entzifferung
-	(Feld darunter) h&ouml;chst wahrscheinlich fehlschlagen lassen.</p>
+	<p>Im zweiten Dropdown-Feld haben Sie die M&ouml;glichkeit festzulegen, <b>in welchem Buchstaben-Bereich</b> das Overlay angezeigt werden soll. Dieses Feld wird bei jeder Analyse automatisch auf ein passendes Alphabet eingestellt, aber Sie k&ouml;nnen auch ein anderes Alphabet festlegen.<br/>
+	
+	<b> Wichtig:</b> Das Verwenden eines Alphabets, das m&auml;chtiger  (mehr unterschiedliche Buchstaben) als das Alphabet des untersuchten Textes ist, wird die Entzifferung (Feld darunter) h&ouml;chst wahrscheinlich fehlschlagen lassen.</p>
 
 	<p><img src="freqanalysis2.png" width="700" height="400" alt="Bild: Entzifferung"/></p>
 	
-	<p>Unter <b>Eigenschaften der Quelle</b> lassen sich Informationen zum Text finden, so wie die Quelle, die Anzahl von Zeichen und ein kurzer Ausschnitt.</p>
+	<p>Im dritten Reiter <b>Geladener Text</b> lassen sich Informationen zum Text finden: der Name der Quelle, die Anzahl von Zeichen und ein kurzer Ausschnitt.</p>
 </body>
 </html>
