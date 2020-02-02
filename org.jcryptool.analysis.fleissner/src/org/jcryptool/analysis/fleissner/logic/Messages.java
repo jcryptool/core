@@ -40,9 +40,14 @@ public class Messages extends NLS {
     public static String MethodApplication_output_bestGrille;
     public static String MethodApplication_output_bestGrilleYet;
     public static String MethodApplication_output_changes;
+    public static String MethodApplication_output_coordinates;
     public static String MethodApplication_output_costFunctionValue;
     public static String MethodApplication_output_countChanges_sg;
     public static String MethodApplication_output_countChanges_pl;
+    public static String MethodApplication_output_countRotations_sg;
+    public static String MethodApplication_output_countRotations_pl;
+    public static String MethodApplication_output_countImprovements_sg;
+    public static String MethodApplication_output_countImprovements_pl;
     public static String MethodApplication_output_decrypted;
     public static String MethodApplication_output_decrypted_final;
     public static String MethodApplication_output_decrypted2;
