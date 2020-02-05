@@ -125,8 +125,8 @@ public class FleissnerWindow extends Composite{
     private InputStream fisOld = null;
     private LoadFiles lf = new LoadFiles();
     private OutputDialog dialog;
-    private String dialogOutput;
-    private ArrayList<String> outputFutter;
+//    private String dialogOutput;
+    private ArrayList<String> outputInput;
 
     /**
      * Constructor creates header and main, sets new default grille
@@ -206,7 +206,7 @@ public class FleissnerWindow extends Composite{
                     }  
                     else {
                         analysisOutput.setText(Messages.FleissnerWindow_output_progress);
-                        dialogOutput = analysisOutput.getText();
+//                        dialogOutput = analysisOutput.getText();
                     }
                 }
             }
@@ -682,7 +682,7 @@ public class FleissnerWindow extends Composite{
                     }  
                     if (argMethod.equals(Messages.FleissnerWindow_method_analyze)) {
                         analysisOutput.setText(Messages.FleissnerWindow_output_progress);
-                        dialogOutput = analysisOutput.getText();
+//                        dialogOutput = analysisOutput.getText();
                     }
  
                     textState = chooseExample.getSelectionIndex(); 
@@ -784,7 +784,7 @@ public class FleissnerWindow extends Composite{
                 
                 if (argMethod.equals(Messages.FleissnerWindow_method_analyze)) {
                     analysisOutput.setText(Messages.FleissnerWindow_output_progress);
-                    dialogOutput = analysisOutput.getText();
+//                    dialogOutput = analysisOutput.getText();
                 }
                 
                 refreshInOutTexts();
@@ -974,19 +974,10 @@ public class FleissnerWindow extends Composite{
         logOutput.addSelectionListener(new SelectionListener() {
 
             @Override
-            public void widgetSelected(SelectionEvent e) {
-                int i=0;
-                for (String futter : outputFutter) {
-                    System.out.println("Futter Nr. "+i+": "+futter);
-                    i++;
-                }
-                    
+            public void widgetSelected(SelectionEvent e) {              
                 
-                dialog = new OutputDialog(shell, outputFutter);
-                dialog.create(Messages.FleissnerWindow_label_dialogOutput, Messages.FleissnerWindow_label_dialogDescription/*, outputFutter*/);
-//                dialog.getOutput().setText(dialogOutput);
-//                dialog.setTexts(analysisOutput);
-//                dialog.setTexts();
+                dialog = new OutputDialog(shell, outputInput);
+                dialog.create(Messages.FleissnerWindow_label_dialogOutput, Messages.FleissnerWindow_label_dialogDescription);
                 dialog.open();    
             }
 
@@ -1005,7 +996,7 @@ public class FleissnerWindow extends Composite{
         analysisOutput.setBackground(ColorService.WHITE);
         analysisOutput.setFont(FontService.getNormalMonospacedFont());
        
-        dialogOutput = new String(analysisOutput.getText());
+//        dialogOutput = new String(analysisOutput.getText());
     }
     
     /**
@@ -1337,12 +1328,12 @@ public class FleissnerWindow extends Composite{
 //                          dialogOutput = new String(Messages.FleissnerWindow_parameter_enlistment_dialog+checkArgs());
                           ma.analyze();
                           logOutput.setEnabled(true);
-                          outputFutter = ma.getAnalysisOut();
-                          outputFutter.add(0, new String(Messages.FleissnerWindow_parameter_enlistment_dialog+checkArgs()));
+                          outputInput = ma.getAnalysisOut();
+                          outputInput.add(0, new String(Messages.FleissnerWindow_parameter_enlistment_dialog+checkArgs()));
 //                          dialogOutput += new String(ma.getFwAnalysisOutput());
                           analysisOutput.append(ma.toString());
 //                          dialogOutput += new String(ma.toString());
-                          outputFutter.add(new String(ma.toString()));
+                          outputInput.add(new String(ma.toString()));
                           plaintext.setEnabled(true);
                           plaintext.setForeground(ColorService.GRAY);
                           plaintext.setText(Messages.FleissnerWindow_output_foundPlaintext+ma.getBestDecryptedText());
@@ -1497,7 +1488,7 @@ public class FleissnerWindow extends Composite{
       
         if (argMethod.equals(Messages.FleissnerWindow_method_analyze)) {
             analysisOutput.setText(Messages.FleissnerWindow_output_progress);
-            dialogOutput = analysisOutput.getText();
+//            dialogOutput = analysisOutput.getText();
         }
             
         
