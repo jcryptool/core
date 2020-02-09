@@ -242,8 +242,16 @@ public class MethodApplication{
             LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_info_acurateness + myRound(value) +" ("+ Messages.MethodApplication_output_best+myRound(alltimeLow)+")");
             LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_info_decrypted+decryptedText+Messages.MethodApplication_break);
             
+            String lastLine = fwAnalysisOutput.substring(fwAnalysisOutput.lastIndexOf("\n"));
+            
             analysisOut.add(fwAnalysisOutput);
             this.fwAnalysisOutput = new String(Messages.MethodApplication_empty);
+            
+            String visualDivide = Messages.MethodApplication_break;
+            for (int i=0;i<lastLine.length()*2;i++)
+                visualDivide+="-";
+            LogUtil.logInfo(Activator.PLUGIN_ID, visualDivide+Messages.MethodApplication_break); //$NON-NLS-1$
+
         }
         fg.useTemplate(bestTemplate, templateLength);   
     }
@@ -344,8 +352,14 @@ public class MethodApplication{
             improvement = 0;
             iAll = 0;
             
+            String lastLine = fwAnalysisOutput.substring(fwAnalysisOutput.lastIndexOf("\n"));
             analysisOut.add(fwAnalysisOutput);
             this.fwAnalysisOutput = new String(Messages.MethodApplication_empty);
+            String visualDivide = Messages.MethodApplication_break;
+            for (int i=0;i<lastLine.length()*2;i++)
+                visualDivide+="-";
+            LogUtil.logInfo(Activator.PLUGIN_ID, visualDivide+Messages.MethodApplication_break); //$NON-NLS-1$
+
             
 //          start next restart
             
@@ -354,14 +368,14 @@ public class MethodApplication{
         fg.useTemplate(bestTemplate, templateLength);
 //        int rotMove = 0;
 //      checks all 4 rotation positions of the found grille for improvement
-        this.fwAnalysisOutput+="\n\nAll Rotations of best found grille:\n";
+        this.fwAnalysisOutput+=Messages.MethodApplication_output_rotations;
         for (move=1; move<=4; move++)
         {
             String rotation;
             if (move!=4)
-                rotation = "Rotation position "+move;
+                rotation = Messages.MethodApplication_output_rotationPos+move;
             else
-                rotation = "Original position";
+                rotation = Messages.MethodApplication_output_originalPos;
             fg.rotate();
             decryptedText = fg.decryptText(ct.getText());
             value = tv.evaluate(decryptedText);

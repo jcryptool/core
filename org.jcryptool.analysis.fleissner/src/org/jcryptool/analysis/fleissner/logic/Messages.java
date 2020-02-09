@@ -69,6 +69,9 @@ public class Messages extends NLS {
     public static String MethodApplication_output_relativeValue;
     public static String MethodApplication_output_restart;
     public static String MethodApplication_output_restart_final;
+    public static String MethodApplication_output_rotations;
+    public static String MethodApplication_output_rotationPos;
+    public static String MethodApplication_output_originalPos;
     public static String MethodApplication_output_siftThroughTemplates;
     public static String MethodApplication_output_StartAnalysis;
     public static String MethodApplication_output_startProcedure;

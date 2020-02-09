@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
-	<context id="fleisssnerContextHelp" title="Fleissner Kontext Hilfe">
+	<context id="fleisssnerContextHelp" title="Context help Grille Analysis">
 		<description>This plugin allows to encrypt and decrypt text with the grille square, but above all you can also break grill ciphertexts automatically (both for even and odd square sizes). The maximum square size is 20 x 20.
 
-For further information please use the Grille-Cipher Analysis chapter within the user guide by clicking the question mark button above here.</description>
+For further information please use the Grille Analysis chapter within the user guide of the online help -- by clicking the question mark button above.</description>
 		<topic href="/PLUGINS_ROOT/org.eclipse.platform.doc.isv/guide/ua_help_context.htm" label="Context-sensitive help">
 			<enablement>
 				<with variable="platform">

@@ -139,8 +139,14 @@ public class OutputDialog extends TitleAreaDialog {
         
         lf = new LoadFiles();
         outputString = new String("");
+
         for (String output : analysisOutput) {
             outputString += output;
+            String lastLine = output.substring(output.lastIndexOf("\n"));
+            String visualDivide = "\n";
+            for (int i=0;i<lastLine.length()*2;i++)
+                visualDivide+="-";
+            outputString+=visualDivide+"\n";
         }
 //        outputString = output.getText();
         String save = lf.openFileDialog(SWT.SAVE);

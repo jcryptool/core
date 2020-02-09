@@ -1,0 +1,2171 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.1)  9 FEB 2020 19:10
+entering extended mode
+**./OnlineHelpUsage-en.tex
+(OnlineHelpUsage-en.tex
+LaTeX2e <2017-04-15>
+Babel <3.10> and hyphenation patterns for 75 language(s) loaded.
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\koma-script\scrartcl.cls
+Document Class: scrartcl 2017/09/07 v3.24 KOMA-Script document class (article)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\koma-script\scrkbase.sty
+Package: scrkbase 2017/09/07 v3.24 KOMA-Script package (KOMA-Script-dependent b
+asics and keyval usage)
+
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\koma-script\scrbase.sty
+Package: scrbase 2017/09/07 v3.24 KOMA-Script package (KOMA-Script-independent 
+basics and keyval usage)
+
+("C:\Program Files (x86)\Miktex\tex\latex\graphics\keyval.sty"
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\koma-script\scrlfile.sty
+Package: scrlfile 2017/09/07 v3.24 KOMA-Script package (loading files)
+))) (C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\koma-script\tocbasic.s
+ty
+Package: tocbasic 2017/09/07 v3.24 KOMA-Script package (handling toc-files)
+\scr@dte@tocline@numberwidth=\skip41
+\scr@dte@tocline@numbox=\box26
+)
+Package tocbasic Info: omitting babel extension for `toc'
+(tocbasic)             because of feature `nobabel' available
+(tocbasic)             for `toc' on input line 133.
+Package tocbasic Info: omitting babel extension for `lof'
+(tocbasic)             because of feature `nobabel' available
+(tocbasic)             for `lof' on input line 135.
+Package tocbasic Info: omitting babel extension for `lot'
+(tocbasic)             because of feature `nobabel' available
+(tocbasic)             for `lot' on input line 136.
+Class scrartcl Info: File `scrsize12pt.clo' used to setup font sizes on input l
+ine 2080.
+
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\koma-script\scrsize12pt.cl
+o
+File: scrsize12pt.clo 2017/09/07 v3.24 KOMA-Script font size class option (12pt
+)
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\koma-script\typearea.sty
+Package: typearea 2017/09/07 v3.24 KOMA-Script package (type area)
+\ta@bcor=\skip42
+\ta@div=\count79
+\ta@hblk=\skip43
+\ta@vblk=\skip44
+\ta@temp=\skip45
+\footheight=\skip46
+Package typearea Info: These are the values describing the layout:
+(typearea)             DIV  = 15
+(typearea)             BCOR = 0.0pt
+(typearea)             \paperwidth      = 597.50793pt
+(typearea)              \textwidth      = 478.00635pt
+(typearea)              DIV departure   = -13%
+(typearea)              \evensidemargin = -12.5192pt
+(typearea)              \oddsidemargin  = -12.5192pt
+(typearea)             \paperheight     = 845.04694pt
+(typearea)              \textheight     = 679.0pt
+(typearea)              \topmargin      = -55.80853pt
+(typearea)              \headheight     = 18.125pt
+(typearea)              \headsep        = 21.75pt
+(typearea)              \topskip        = 12.0pt
+(typearea)              \footskip       = 50.75pt
+(typearea)              \baselineskip   = 14.5pt
+(typearea)              on input line 1686.
+)
+\c@part=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\scr@dte@part@maxnumwidth=\skip47
+\scr@dte@section@maxnumwidth=\skip48
+\scr@dte@subsection@maxnumwidth=\skip49
+\scr@dte@subsubsection@maxnumwidth=\skip50
+\scr@dte@paragraph@maxnumwidth=\skip51
+\scr@dte@subparagraph@maxnumwidth=\skip52
+LaTeX Info: Redefining \textsubscript on input line 4161.
+\abovecaptionskip=\skip53
+\belowcaptionskip=\skip54
+\c@pti@nb@sid@b@x=\box27
+\c@figure=\count86
+\c@table=\count87
+Class scrartcl Info: Redefining `\numberline' on input line 5319.
+\bibindent=\dimen102
+) ("C:\Program Files (x86)\Miktex\tex\latex\base\inputenc.sty"
+Package: inputenc 2015/03/17 v1.2c Input encoding file
+\inpenc@prehook=\toks15
+\inpenc@posthook=\toks16
+
+("C:\Program Files (x86)\Miktex\tex\latex\base\utf8.def"
+File: utf8.def 2017/01/28 v1.1t UTF-8 support for inputenc
+Now handling font encoding OML ...
+... no UTF-8 mapping file for font encoding OML
+Now handling font encoding T1 ...
+... processing UTF-8 mapping file for font encoding T1
+
+("C:\Program Files (x86)\Miktex\tex\latex\base\t1enc.dfu"
+File: t1enc.dfu 2017/01/28 v1.1t UTF-8 support for inputenc
+   defining Unicode char U+00A0 (decimal 160)
+   defining Unicode char U+00A1 (decimal 161)
+   defining Unicode char U+00A3 (decimal 163)
+   defining Unicode char U+00AB (decimal 171)
+   defining Unicode char U+00AD (decimal 173)
+   defining Unicode char U+00BB (decimal 187)
+   defining Unicode char U+00BF (decimal 191)
+   defining Unicode char U+00C0 (decimal 192)
+   defining Unicode char U+00C1 (decimal 193)
+   defining Unicode char U+00C2 (decimal 194)
+   defining Unicode char U+00C3 (decimal 195)
+   defining Unicode char U+00C4 (decimal 196)
+   defining Unicode char U+00C5 (decimal 197)
+   defining Unicode char U+00C6 (decimal 198)
+   defining Unicode char U+00C7 (decimal 199)
+   defining Unicode char U+00C8 (decimal 200)
+   defining Unicode char U+00C9 (decimal 201)
+   defining Unicode char U+00CA (decimal 202)
+   defining Unicode char U+00CB (decimal 203)
+   defining Unicode char U+00CC (decimal 204)
+   defining Unicode char U+00CD (decimal 205)
+   defining Unicode char U+00CE (decimal 206)
+   defining Unicode char U+00CF (decimal 207)
+   defining Unicode char U+00D0 (decimal 208)
+   defining Unicode char U+00D1 (decimal 209)
+   defining Unicode char U+00D2 (decimal 210)
+   defining Unicode char U+00D3 (decimal 211)
+   defining Unicode char U+00D4 (decimal 212)
+   defining Unicode char U+00D5 (decimal 213)
+   defining Unicode char U+00D6 (decimal 214)
+   defining Unicode char U+00D8 (decimal 216)
+   defining Unicode char U+00D9 (decimal 217)
+   defining Unicode char U+00DA (decimal 218)
+   defining Unicode char U+00DB (decimal 219)
+   defining Unicode char U+00DC (decimal 220)
+   defining Unicode char U+00DD (decimal 221)
+   defining Unicode char U+00DE (decimal 222)
+   defining Unicode char U+00DF (decimal 223)
+   defining Unicode char U+00E0 (decimal 224)
+   defining Unicode char U+00E1 (decimal 225)
+   defining Unicode char U+00E2 (decimal 226)
+   defining Unicode char U+00E3 (decimal 227)
+   defining Unicode char U+00E4 (decimal 228)
+   defining Unicode char U+00E5 (decimal 229)
+   defining Unicode char U+00E6 (decimal 230)
+   defining Unicode char U+00E7 (decimal 231)
+   defining Unicode char U+00E8 (decimal 232)
+   defining Unicode char U+00E9 (decimal 233)
+   defining Unicode char U+00EA (decimal 234)
+   defining Unicode char U+00EB (decimal 235)
+   defining Unicode char U+00EC (decimal 236)
+   defining Unicode char U+00ED (decimal 237)
+   defining Unicode char U+00EE (decimal 238)
+   defining Unicode char U+00EF (decimal 239)
+   defining Unicode char U+00F0 (decimal 240)
+   defining Unicode char U+00F1 (decimal 241)
+   defining Unicode char U+00F2 (decimal 242)
+   defining Unicode char U+00F3 (decimal 243)
+   defining Unicode char U+00F4 (decimal 244)
+   defining Unicode char U+00F5 (decimal 245)
+   defining Unicode char U+00F6 (decimal 246)
+   defining Unicode char U+00F8 (decimal 248)
+   defining Unicode char U+00F9 (decimal 249)
+   defining Unicode char U+00FA (decimal 250)
+   defining Unicode char U+00FB (decimal 251)
+   defining Unicode char U+00FC (decimal 252)
+   defining Unicode char U+00FD (decimal 253)
+   defining Unicode char U+00FE (decimal 254)
+   defining Unicode char U+00FF (decimal 255)
+   defining Unicode char U+0100 (decimal 256)
+   defining Unicode char U+0101 (decimal 257)
+   defining Unicode char U+0102 (decimal 258)
+   defining Unicode char U+0103 (decimal 259)
+   defining Unicode char U+0104 (decimal 260)
+   defining Unicode char U+0105 (decimal 261)
+   defining Unicode char U+0106 (decimal 262)
+   defining Unicode char U+0107 (decimal 263)
+   defining Unicode char U+0108 (decimal 264)
+   defining Unicode char U+0109 (decimal 265)
+   defining Unicode char U+010A (decimal 266)
+   defining Unicode char U+010B (decimal 267)
+   defining Unicode char U+010C (decimal 268)
+   defining Unicode char U+010D (decimal 269)
+   defining Unicode char U+010E (decimal 270)
+   defining Unicode char U+010F (decimal 271)
+   defining Unicode char U+0110 (decimal 272)
+   defining Unicode char U+0111 (decimal 273)
+   defining Unicode char U+0112 (decimal 274)
+   defining Unicode char U+0113 (decimal 275)
+   defining Unicode char U+0114 (decimal 276)
+   defining Unicode char U+0115 (decimal 277)
+   defining Unicode char U+0116 (decimal 278)
+   defining Unicode char U+0117 (decimal 279)
+   defining Unicode char U+0118 (decimal 280)
+   defining Unicode char U+0119 (decimal 281)
+   defining Unicode char U+011A (decimal 282)
+   defining Unicode char U+011B (decimal 283)
+   defining Unicode char U+011C (decimal 284)
+   defining Unicode char U+011D (decimal 285)
+   defining Unicode char U+011E (decimal 286)
+   defining Unicode char U+011F (decimal 287)
+   defining Unicode char U+0120 (decimal 288)
+   defining Unicode char U+0121 (decimal 289)
+   defining Unicode char U+0122 (decimal 290)
+   defining Unicode char U+0123 (decimal 291)
+   defining Unicode char U+0124 (decimal 292)
+   defining Unicode char U+0125 (decimal 293)
+   defining Unicode char U+0128 (decimal 296)
+   defining Unicode char U+0129 (decimal 297)
+   defining Unicode char U+012A (decimal 298)
+   defining Unicode char U+012B (decimal 299)
+   defining Unicode char U+012C (decimal 300)
+   defining Unicode char U+012D (decimal 301)
+   defining Unicode char U+012E (decimal 302)
+   defining Unicode char U+012F (decimal 303)
+   defining Unicode char U+0130 (decimal 304)
+   defining Unicode char U+0131 (decimal 305)
+   defining Unicode char U+0132 (decimal 306)
+   defining Unicode char U+0133 (decimal 307)
+   defining Unicode char U+0134 (decimal 308)
+   defining Unicode char U+0135 (decimal 309)
+   defining Unicode char U+0136 (decimal 310)
+   defining Unicode char U+0137 (decimal 311)
+   defining Unicode char U+0139 (decimal 313)
+   defining Unicode char U+013A (decimal 314)
+   defining Unicode char U+013B (decimal 315)
+   defining Unicode char U+013C (decimal 316)
+   defining Unicode char U+013D (decimal 317)
+   defining Unicode char U+013E (decimal 318)
+   defining Unicode char U+0141 (decimal 321)
+   defining Unicode char U+0142 (decimal 322)
+   defining Unicode char U+0143 (decimal 323)
+   defining Unicode char U+0144 (decimal 324)
+   defining Unicode char U+0145 (decimal 325)
+   defining Unicode char U+0146 (decimal 326)
+   defining Unicode char U+0147 (decimal 327)
+   defining Unicode char U+0148 (decimal 328)
+   defining Unicode char U+014A (decimal 330)
+   defining Unicode char U+014B (decimal 331)
+   defining Unicode char U+014C (decimal 332)
+   defining Unicode char U+014D (decimal 333)
+   defining Unicode char U+014E (decimal 334)
+   defining Unicode char U+014F (decimal 335)
+   defining Unicode char U+0150 (decimal 336)
+   defining Unicode char U+0151 (decimal 337)
+   defining Unicode char U+0152 (decimal 338)
+   defining Unicode char U+0153 (decimal 339)
+   defining Unicode char U+0154 (decimal 340)
+   defining Unicode char U+0155 (decimal 341)
+   defining Unicode char U+0156 (decimal 342)
+   defining Unicode char U+0157 (decimal 343)
+   defining Unicode char U+0158 (decimal 344)
+   defining Unicode char U+0159 (decimal 345)
+   defining Unicode char U+015A (decimal 346)
+   defining Unicode char U+015B (decimal 347)
+   defining Unicode char U+015C (decimal 348)
+   defining Unicode char U+015D (decimal 349)
+   defining Unicode char U+015E (decimal 350)
+   defining Unicode char U+015F (decimal 351)
+   defining Unicode char U+0160 (decimal 352)
+   defining Unicode char U+0161 (decimal 353)
+   defining Unicode char U+0162 (decimal 354)
+   defining Unicode char U+0163 (decimal 355)
+   defining Unicode char U+0164 (decimal 356)
+   defining Unicode char U+0165 (decimal 357)
+   defining Unicode char U+0168 (decimal 360)
+   defining Unicode char U+0169 (decimal 361)
+   defining Unicode char U+016A (decimal 362)
+   defining Unicode char U+016B (decimal 363)
+   defining Unicode char U+016C (decimal 364)
+   defining Unicode char U+016D (decimal 365)
+   defining Unicode char U+016E (decimal 366)
+   defining Unicode char U+016F (decimal 367)
+   defining Unicode char U+0170 (decimal 368)
+   defining Unicode char U+0171 (decimal 369)
+   defining Unicode char U+0172 (decimal 370)
+   defining Unicode char U+0173 (decimal 371)
+   defining Unicode char U+0174 (decimal 372)
+   defining Unicode char U+0175 (decimal 373)
+   defining Unicode char U+0176 (decimal 374)
+   defining Unicode char U+0177 (decimal 375)
+   defining Unicode char U+0178 (decimal 376)
+   defining Unicode char U+0179 (decimal 377)
+   defining Unicode char U+017A (decimal 378)
+   defining Unicode char U+017B (decimal 379)
+   defining Unicode char U+017C (decimal 380)
+   defining Unicode char U+017D (decimal 381)
+   defining Unicode char U+017E (decimal 382)
+   defining Unicode char U+01CD (decimal 461)
+   defining Unicode char U+01CE (decimal 462)
+   defining Unicode char U+01CF (decimal 463)
+   defining Unicode char U+01D0 (decimal 464)
+   defining Unicode char U+01D1 (decimal 465)
+   defining Unicode char U+01D2 (decimal 466)
+   defining Unicode char U+01D3 (decimal 467)
+   defining Unicode char U+01D4 (decimal 468)
+   defining Unicode char U+01E2 (decimal 482)
+   defining Unicode char U+01E3 (decimal 483)
+   defining Unicode char U+01E6 (decimal 486)
+   defining Unicode char U+01E7 (decimal 487)
+   defining Unicode char U+01E8 (decimal 488)
+   defining Unicode char U+01E9 (decimal 489)
+   defining Unicode char U+01EA (decimal 490)
+   defining Unicode char U+01EB (decimal 491)
+   defining Unicode char U+01F0 (decimal 496)
+   defining Unicode char U+01F4 (decimal 500)
+   defining Unicode char U+01F5 (decimal 501)
+   defining Unicode char U+0218 (decimal 536)
+   defining Unicode char U+0219 (decimal 537)
+   defining Unicode char U+021A (decimal 538)
+   defining Unicode char U+021B (decimal 539)
+   defining Unicode char U+0232 (decimal 562)
+   defining Unicode char U+0233 (decimal 563)
+   defining Unicode char U+1E02 (decimal 7682)
+   defining Unicode char U+1E03 (decimal 7683)
+   defining Unicode char U+200C (decimal 8204)
+   defining Unicode char U+2010 (decimal 8208)
+   defining Unicode char U+2011 (decimal 8209)
+   defining Unicode char U+2012 (decimal 8210)
+   defining Unicode char U+2013 (decimal 8211)
+   defining Unicode char U+2014 (decimal 8212)
+   defining Unicode char U+2015 (decimal 8213)
+   defining Unicode char U+2018 (decimal 8216)
+   defining Unicode char U+2019 (decimal 8217)
+   defining Unicode char U+201A (decimal 8218)
+   defining Unicode char U+201C (decimal 8220)
+   defining Unicode char U+201D (decimal 8221)
+   defining Unicode char U+201E (decimal 8222)
+   defining Unicode char U+2030 (decimal 8240)
+   defining Unicode char U+2031 (decimal 8241)
+   defining Unicode char U+2039 (decimal 8249)
+   defining Unicode char U+203A (decimal 8250)
+   defining Unicode char U+2423 (decimal 9251)
+   defining Unicode char U+1E20 (decimal 7712)
+   defining Unicode char U+1E21 (decimal 7713)
+)
+Now handling font encoding OT1 ...
+... processing UTF-8 mapping file for font encoding OT1
+
+("C:\Program Files (x86)\Miktex\tex\latex\base\ot1enc.dfu"
+File: ot1enc.dfu 2017/01/28 v1.1t UTF-8 support for inputenc
+   defining Unicode char U+00A0 (decimal 160)
+   defining Unicode char U+00A1 (decimal 161)
+   defining Unicode char U+00A3 (decimal 163)
+   defining Unicode char U+00AD (decimal 173)
+   defining Unicode char U+00B8 (decimal 184)
+   defining Unicode char U+00BF (decimal 191)
+   defining Unicode char U+00C5 (decimal 197)
+   defining Unicode char U+00C6 (decimal 198)
+   defining Unicode char U+00D8 (decimal 216)
+   defining Unicode char U+00DF (decimal 223)
+   defining Unicode char U+00E6 (decimal 230)
+   defining Unicode char U+00EC (decimal 236)
+   defining Unicode char U+00ED (decimal 237)
+   defining Unicode char U+00EE (decimal 238)
+   defining Unicode char U+00EF (decimal 239)
+   defining Unicode char U+00F8 (decimal 248)
+   defining Unicode char U+0131 (decimal 305)
+   defining Unicode char U+0141 (decimal 321)
+   defining Unicode char U+0142 (decimal 322)
+   defining Unicode char U+0152 (decimal 338)
+   defining Unicode char U+0153 (decimal 339)
+   defining Unicode char U+0174 (decimal 372)
+   defining Unicode char U+0175 (decimal 373)
+   defining Unicode char U+0176 (decimal 374)
+   defining Unicode char U+0177 (decimal 375)
+   defining Unicode char U+0218 (decimal 536)
+   defining Unicode char U+0219 (decimal 537)
+   defining Unicode char U+021A (decimal 538)
+   defining Unicode char U+021B (decimal 539)
+   defining Unicode char U+2013 (decimal 8211)
+   defining Unicode char U+2014 (decimal 8212)
+   defining Unicode char U+2018 (decimal 8216)
+   defining Unicode char U+2019 (decimal 8217)
+   defining Unicode char U+201C (decimal 8220)
+   defining Unicode char U+201D (decimal 8221)
+)
+Now handling font encoding OMS ...
+... processing UTF-8 mapping file for font encoding OMS
+
+("C:\Program Files (x86)\Miktex\tex\latex\base\omsenc.dfu"
+File: omsenc.dfu 2017/01/28 v1.1t UTF-8 support for inputenc
+   defining Unicode char U+00A7 (decimal 167)
+   defining Unicode char U+00B6 (decimal 182)
+   defining Unicode char U+00B7 (decimal 183)
+   defining Unicode char U+2020 (decimal 8224)
+   defining Unicode char U+2021 (decimal 8225)
+   defining Unicode char U+2022 (decimal 8226)
+)
+Now handling font encoding OMX ...
+... no UTF-8 mapping file for font encoding OMX
+Now handling font encoding U ...
+... no UTF-8 mapping file for font encoding U
+   defining Unicode char U+00A9 (decimal 169)
+   defining Unicode char U+00AA (decimal 170)
+   defining Unicode char U+00AE (decimal 174)
+   defining Unicode char U+00BA (decimal 186)
+   defining Unicode char U+02C6 (decimal 710)
+   defining Unicode char U+02DC (decimal 732)
+   defining Unicode char U+200C (decimal 8204)
+   defining Unicode char U+2026 (decimal 8230)
+   defining Unicode char U+2122 (decimal 8482)
+   defining Unicode char U+2423 (decimal 9251)
+))
+("C:\Program Files (x86)\Miktex\tex\generic\babel\babel.sty"
+Package: babel 2017/05/19 3.10 The Babel package
+
+*************************************
+* Local config file bblopts.cfg used
+*
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\arabi\bblopts.cfg
+File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
+ babel
+)
+("C:\Program Files (x86)\Miktex\tex\latex\babel-english\english.ldf"
+Language: english 2017/01/24 v3.3q English support from the babel system
+
+("C:\Program Files (x86)\Miktex\tex\generic\babel\babel.def"
+File: babel.def 2017/05/19 3.10 Babel common definitions
+\babel@savecnt=\count88
+\U@D=\dimen103
+)
+\l@canadian = a dialect from \language\l@american 
+\l@australian = a dialect from \language\l@british 
+\l@newzealand = a dialect from \language\l@british 
+)
+("C:\Program Files (x86)\Miktex\tex\latex\babel-german\german.ldf"
+Language: german 2016/11/02 v2.9 German support for babel (traditional orthogra
+phy)
+
+("C:\Program Files (x86)\Miktex\tex\latex\babel-german\germanb.ldf"
+Language: germanb 2016/11/02 v2.9 German support for babel (traditional orthogr
+aphy)
+Package babel Info: Making " an active character on input line 139.
+)))
+("C:\Program Files (x86)\Miktex\tex\latex\base\fontenc.sty"
+Package: fontenc 2017/04/05 v2.0i Standard LaTeX package
+
+("C:\Program Files (x86)\Miktex\tex\latex\base\t1enc.def"
+File: t1enc.def 2017/04/05 v2.0i Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
+))
+("C:\Program Files (x86)\Miktex\tex\latex\lm\lmodern.sty"
+Package: lmodern 2009/10/30 v1.6 Latin Modern Fonts
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/lmm/m/it on input line 23.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/lmsy/m/n on input line 24.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 25.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 26.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/lmm/b/it on input line 27.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/lmsy/b/n on input line 28.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 29.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 31.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 32.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/lmr/m/it on input line 33.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/cmss/bx/n --> OT1/lmss/bx/n on input line 36.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/lmr/bx/it on input line 37.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
+)
+("C:\Program Files (x86)\Miktex\tex\latex\libertine\libertine.sty"
+Package: libertine 2017/03/22 (Bob Tennent) Supports Libertine and Biolinum fon
+ts for all LaTeX engines.
+
+("C:\Program Files (x86)\Miktex\tex\generic\ifxetex\ifxetex.sty"
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+("C:\Program Files (x86)\Miktex\tex\generic\oberdiek\ifluatex.sty"
+Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+("C:\Program Files (x86)\Miktex\tex\latex\xkeyval\xkeyval.sty"
+Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
+
+("C:\Program Files (x86)\Miktex\tex\generic\xkeyval\xkeyval.tex"
+("C:\Program Files (x86)\Miktex\tex\generic\xkeyval\xkvutils.tex"
+\XKV@toks=\toks17
+\XKV@tempa@toks=\toks18
+)
+\XKV@depth=\count89
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+("C:\Program Files (x86)\Miktex\tex\latex\base\textcomp.sty"
+Package: textcomp 2017/04/05 v2.0i Standard LaTeX package
+Package textcomp Info: Sub-encoding information:
+(textcomp)               5 = only ISO-Adobe without \textcurrency
+(textcomp)               4 = 5 + \texteuro
+(textcomp)               3 = 4 + \textohm
+(textcomp)               2 = 3 + \textestimated + \textcurrency
+(textcomp)               1 = TS1 - \textcircled - \t
+(textcomp)               0 = TS1 (full)
+(textcomp)             Font families with sub-encoding setting implement
+(textcomp)             only a restricted character set as indicated.
+(textcomp)             Family '?' is the default used for unknown fonts.
+(textcomp)             See the documentation for details.
+Package textcomp Info: Setting ? sub-encoding to TS1/1 on input line 79.
+
+("C:\Program Files (x86)\Miktex\tex\latex\base\ts1enc.def"
+File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
+Now handling font encoding TS1 ...
+... processing UTF-8 mapping file for font encoding TS1
+
+("C:\Program Files (x86)\Miktex\tex\latex\base\ts1enc.dfu"
+File: ts1enc.dfu 2017/01/28 v1.1t UTF-8 support for inputenc
+   defining Unicode char U+00A2 (decimal 162)
+   defining Unicode char U+00A3 (decimal 163)
+   defining Unicode char U+00A4 (decimal 164)
+   defining Unicode char U+00A5 (decimal 165)
+   defining Unicode char U+00A6 (decimal 166)
+   defining Unicode char U+00A7 (decimal 167)
+   defining Unicode char U+00A8 (decimal 168)
+   defining Unicode char U+00A9 (decimal 169)
+   defining Unicode char U+00AA (decimal 170)
+   defining Unicode char U+00AC (decimal 172)
+   defining Unicode char U+00AE (decimal 174)
+   defining Unicode char U+00AF (decimal 175)
+   defining Unicode char U+00B0 (decimal 176)
+   defining Unicode char U+00B1 (decimal 177)
+   defining Unicode char U+00B2 (decimal 178)
+   defining Unicode char U+00B3 (decimal 179)
+   defining Unicode char U+00B4 (decimal 180)
+   defining Unicode char U+00B5 (decimal 181)
+   defining Unicode char U+00B6 (decimal 182)
+   defining Unicode char U+00B7 (decimal 183)
+   defining Unicode char U+00B9 (decimal 185)
+   defining Unicode char U+00BA (decimal 186)
+   defining Unicode char U+00BC (decimal 188)
+   defining Unicode char U+00BD (decimal 189)
+   defining Unicode char U+00BE (decimal 190)
+   defining Unicode char U+00D7 (decimal 215)
+   defining Unicode char U+00F7 (decimal 247)
+   defining Unicode char U+0192 (decimal 402)
+   defining Unicode char U+02C7 (decimal 711)
+   defining Unicode char U+02D8 (decimal 728)
+   defining Unicode char U+02DD (decimal 733)
+   defining Unicode char U+0E3F (decimal 3647)
+   defining Unicode char U+2016 (decimal 8214)
+   defining Unicode char U+2020 (decimal 8224)
+   defining Unicode char U+2021 (decimal 8225)
+   defining Unicode char U+2022 (decimal 8226)
+   defining Unicode char U+2030 (decimal 8240)
+   defining Unicode char U+2031 (decimal 8241)
+   defining Unicode char U+203B (decimal 8251)
+   defining Unicode char U+203D (decimal 8253)
+   defining Unicode char U+2044 (decimal 8260)
+   defining Unicode char U+204E (decimal 8270)
+   defining Unicode char U+2052 (decimal 8274)
+   defining Unicode char U+20A1 (decimal 8353)
+   defining Unicode char U+20A4 (decimal 8356)
+   defining Unicode char U+20A6 (decimal 8358)
+   defining Unicode char U+20A9 (decimal 8361)
+   defining Unicode char U+20AB (decimal 8363)
+   defining Unicode char U+20AC (decimal 8364)
+   defining Unicode char U+20B1 (decimal 8369)
+   defining Unicode char U+2103 (decimal 8451)
+   defining Unicode char U+2116 (decimal 8470)
+   defining Unicode char U+2117 (decimal 8471)
+   defining Unicode char U+211E (decimal 8478)
+   defining Unicode char U+2120 (decimal 8480)
+   defining Unicode char U+2122 (decimal 8482)
+   defining Unicode char U+2126 (decimal 8486)
+   defining Unicode char U+2127 (decimal 8487)
+   defining Unicode char U+212E (decimal 8494)
+   defining Unicode char U+2190 (decimal 8592)
+   defining Unicode char U+2191 (decimal 8593)
+   defining Unicode char U+2192 (decimal 8594)
+   defining Unicode char U+2193 (decimal 8595)
+   defining Unicode char U+2329 (decimal 9001)
+   defining Unicode char U+232A (decimal 9002)
+   defining Unicode char U+2422 (decimal 9250)
+   defining Unicode char U+25E6 (decimal 9702)
+   defining Unicode char U+25EF (decimal 9711)
+   defining Unicode char U+266A (decimal 9834)
+))
+LaTeX Info: Redefining \oldstylenums on input line 334.
+Package textcomp Info: Setting cmr sub-encoding to TS1/0 on input line 349.
+Package textcomp Info: Setting cmss sub-encoding to TS1/0 on input line 350.
+Package textcomp Info: Setting cmtt sub-encoding to TS1/0 on input line 351.
+Package textcomp Info: Setting cmvtt sub-encoding to TS1/0 on input line 352.
+Package textcomp Info: Setting cmbr sub-encoding to TS1/0 on input line 353.
+Package textcomp Info: Setting cmtl sub-encoding to TS1/0 on input line 354.
+Package textcomp Info: Setting ccr sub-encoding to TS1/0 on input line 355.
+Package textcomp Info: Setting ptm sub-encoding to TS1/4 on input line 356.
+Package textcomp Info: Setting pcr sub-encoding to TS1/4 on input line 357.
+Package textcomp Info: Setting phv sub-encoding to TS1/4 on input line 358.
+Package textcomp Info: Setting ppl sub-encoding to TS1/3 on input line 359.
+Package textcomp Info: Setting pag sub-encoding to TS1/4 on input line 360.
+Package textcomp Info: Setting pbk sub-encoding to TS1/4 on input line 361.
+Package textcomp Info: Setting pnc sub-encoding to TS1/4 on input line 362.
+Package textcomp Info: Setting pzc sub-encoding to TS1/4 on input line 363.
+Package textcomp Info: Setting bch sub-encoding to TS1/4 on input line 364.
+Package textcomp Info: Setting put sub-encoding to TS1/5 on input line 365.
+Package textcomp Info: Setting uag sub-encoding to TS1/5 on input line 366.
+Package textcomp Info: Setting ugq sub-encoding to TS1/5 on input line 367.
+Package textcomp Info: Setting ul8 sub-encoding to TS1/4 on input line 368.
+Package textcomp Info: Setting ul9 sub-encoding to TS1/4 on input line 369.
+Package textcomp Info: Setting augie sub-encoding to TS1/5 on input line 370.
+Package textcomp Info: Setting dayrom sub-encoding to TS1/3 on input line 371.
+Package textcomp Info: Setting dayroms sub-encoding to TS1/3 on input line 372.
+
+Package textcomp Info: Setting pxr sub-encoding to TS1/0 on input line 373.
+Package textcomp Info: Setting pxss sub-encoding to TS1/0 on input line 374.
+Package textcomp Info: Setting pxtt sub-encoding to TS1/0 on input line 375.
+Package textcomp Info: Setting txr sub-encoding to TS1/0 on input line 376.
+Package textcomp Info: Setting txss sub-encoding to TS1/0 on input line 377.
+Package textcomp Info: Setting txtt sub-encoding to TS1/0 on input line 378.
+Package textcomp Info: Setting lmr sub-encoding to TS1/0 on input line 379.
+Package textcomp Info: Setting lmdh sub-encoding to TS1/0 on input line 380.
+Package textcomp Info: Setting lmss sub-encoding to TS1/0 on input line 381.
+Package textcomp Info: Setting lmssq sub-encoding to TS1/0 on input line 382.
+Package textcomp Info: Setting lmvtt sub-encoding to TS1/0 on input line 383.
+Package textcomp Info: Setting lmtt sub-encoding to TS1/0 on input line 384.
+Package textcomp Info: Setting qhv sub-encoding to TS1/0 on input line 385.
+Package textcomp Info: Setting qag sub-encoding to TS1/0 on input line 386.
+Package textcomp Info: Setting qbk sub-encoding to TS1/0 on input line 387.
+Package textcomp Info: Setting qcr sub-encoding to TS1/0 on input line 388.
+Package textcomp Info: Setting qcs sub-encoding to TS1/0 on input line 389.
+Package textcomp Info: Setting qpl sub-encoding to TS1/0 on input line 390.
+Package textcomp Info: Setting qtm sub-encoding to TS1/0 on input line 391.
+Package textcomp Info: Setting qzc sub-encoding to TS1/0 on input line 392.
+Package textcomp Info: Setting qhvc sub-encoding to TS1/0 on input line 393.
+Package textcomp Info: Setting futs sub-encoding to TS1/4 on input line 394.
+Package textcomp Info: Setting futx sub-encoding to TS1/4 on input line 395.
+Package textcomp Info: Setting futj sub-encoding to TS1/4 on input line 396.
+Package textcomp Info: Setting hlh sub-encoding to TS1/3 on input line 397.
+Package textcomp Info: Setting hls sub-encoding to TS1/3 on input line 398.
+Package textcomp Info: Setting hlst sub-encoding to TS1/3 on input line 399.
+Package textcomp Info: Setting hlct sub-encoding to TS1/5 on input line 400.
+Package textcomp Info: Setting hlx sub-encoding to TS1/5 on input line 401.
+Package textcomp Info: Setting hlce sub-encoding to TS1/5 on input line 402.
+Package textcomp Info: Setting hlcn sub-encoding to TS1/5 on input line 403.
+Package textcomp Info: Setting hlcw sub-encoding to TS1/5 on input line 404.
+Package textcomp Info: Setting hlcf sub-encoding to TS1/5 on input line 405.
+Package textcomp Info: Setting pplx sub-encoding to TS1/3 on input line 406.
+Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 407.
+Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 408.
+Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 409.
+)
+
+Package libertine Warning: ****************************************
+(libertine)                Figure defaults are now: lining, tabular; 
+(libertine)                for options, see the documentation. 
+(libertine)                ****************************************.
+
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\mweights\mweights.sty
+Package: mweights 2017/03/30 (Bob Tennent) Support package for multiple-weight 
+font packages. 
+LaTeX Info: Redefining \bfseries on input line 22.
+LaTeX Info: Redefining \mdseries on input line 30.
+LaTeX Info: Redefining \rmfamily on input line 38.
+LaTeX Info: Redefining \sffamily on input line 66.
+LaTeX Info: Redefining \ttfamily on input line 94.
+)
+("C:\Program Files (x86)\Miktex\tex\latex\base\fontenc.sty"
+Package: fontenc 2017/04/05 v2.0i Standard LaTeX package
+)
+("C:\Program Files (x86)\Miktex\tex\latex\fontaxes\fontaxes.sty"
+Package: fontaxes 2014/03/23 v1.0d Font selection axes
+LaTeX Info: Redefining \upshape on input line 29.
+LaTeX Info: Redefining \itshape on input line 31.
+LaTeX Info: Redefining \slshape on input line 33.
+LaTeX Info: Redefining \scshape on input line 37.
+)
+LaTeX Info: Redefining \oldstylenums on input line 481.
+
+("C:\Program Files (x86)\Miktex\tex\latex\libertine\LinLibertine_I.tex"))
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\pgf\utilities\pgfpages.sty
+Package: pgfpages 2011/01/05 ver 0.02
+
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\pgf\basiclayer\pgfcore.sty
+("C:\Program Files (x86)\Miktex\tex\latex\graphics\graphicx.sty"
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files (x86)\Miktex\tex\latex\graphics\graphics.sty"
+Package: graphics 2017/04/14 v1.1b Standard LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files (x86)\Miktex\tex\latex\graphics\trig.sty"
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+("C:\Program Files (x86)\Miktex\tex\latex\graphics-cfg\graphics.cfg"
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 99.
+
+("C:\Program Files (x86)\Miktex\tex\latex\graphics-def\pdftex.def"
+File: pdftex.def 2017/01/12 v0.06k Graphics/color for pdfTeX
+
+("C:\Program Files (x86)\Miktex\tex\generic\oberdiek\infwarerr.sty"
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+)
+("C:\Program Files (x86)\Miktex\tex\generic\oberdiek\ltxcmds.sty"
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count90
+))
+\Gin@req@height=\dimen104
+\Gin@req@width=\dimen105
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\pgf\systemlayer\pgfsys.sty
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\pgf\utilities\pgfrcs.sty
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\utilities\pgfutil-co
+mmon.tex
+\pgfutil@everybye=\toks19
+\pgfutil@tempdima=\dimen106
+\pgfutil@tempdimb=\dimen107
+
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\utilities\pgfutil-co
+mmon-lists.tex))
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\utilities\pgfutil-la
+tex.def
+\pgfutil@abb=\box28
+ (C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\ms\everyshi.sty
+Package: everyshi 2001/05/15 v3.00 EveryShipout Package (MS)
+))
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\utilities\pgfrcs.cod
+e.tex
+Package: pgfrcs 2015/08/07 v3.0.1a (rcs-revision 1.31)
+))
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\systemlayer\pgfsys.c
+ode.tex
+Package: pgfsys 2014/07/09 v3.0.1a (rcs-revision 1.48)
+
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\utilities\pgfkeys.co
+de.tex
+\pgfkeys@pathtoks=\toks20
+\pgfkeys@temptoks=\toks21
+
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\utilities\pgfkeysfil
+tered.code.tex
+\pgfkeys@tmptoks=\toks22
+))
+\pgf@x=\dimen108
+\pgf@y=\dimen109
+\pgf@xa=\dimen110
+\pgf@ya=\dimen111
+\pgf@xb=\dimen112
+\pgf@yb=\dimen113
+\pgf@xc=\dimen114
+\pgf@yc=\dimen115
+\w@pgf@writea=\write3
+\r@pgf@reada=\read1
+\c@pgf@counta=\count91
+\c@pgf@countb=\count92
+\c@pgf@countc=\count93
+\c@pgf@countd=\count94
+\t@pgf@toka=\toks23
+\t@pgf@tokb=\toks24
+\t@pgf@tokc=\toks25
+
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\systemlayer\pgf.cfg
+File: pgf.cfg 2008/05/14  (rcs-revision 1.7)
+)
+Driver file for pgf: pgfsys-pdftex.def
+
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\systemlayer\pgfsys-p
+dftex.def
+File: pgfsys-pdftex.def 2014/10/11  (rcs-revision 1.35)
+
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\systemlayer\pgfsys-c
+ommon-pdf.def
+File: pgfsys-common-pdf.def 2013/10/10  (rcs-revision 1.13)
+)))
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\systemlayer\pgfsysso
+ftpath.code.tex
+File: pgfsyssoftpath.code.tex 2013/09/09  (rcs-revision 1.9)
+\pgfsyssoftpath@smallbuffer@items=\count95
+\pgfsyssoftpath@bigbuffer@items=\count96
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\systemlayer\pgfsyspr
+otocol.code.tex
+File: pgfsysprotocol.code.tex 2006/10/16  (rcs-revision 1.4)
+))
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\xcolor\xcolor.sty
+Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
+
+("C:\Program Files (x86)\Miktex\tex\latex\graphics-cfg\color.cfg"
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
+Package xcolor Info: Model `RGB' extended on input line 1364.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcore.c
+ode.tex
+Package: pgfcore 2010/04/11 v3.0.1a (rcs-revision 1.7)
+
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\math\pgfmath.code.te
+x
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\math\pgfmathcalc.cod
+e.tex
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\math\pgfmathutil.cod
+e.tex)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\math\pgfmathparser.c
+ode.tex
+\pgfmath@dimen=\dimen116
+\pgfmath@count=\count97
+\pgfmath@box=\box29
+\pgfmath@toks=\toks26
+\pgfmath@stack@operand=\toks27
+\pgfmath@stack@operation=\toks28
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\math\pgfmathfunction
+s.code.tex
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\math\pgfmathfunction
+s.basic.code.tex)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\math\pgfmathfunction
+s.trigonometric.code.tex)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\math\pgfmathfunction
+s.random.code.tex)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\math\pgfmathfunction
+s.comparison.code.tex)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\math\pgfmathfunction
+s.base.code.tex)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\math\pgfmathfunction
+s.round.code.tex)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\math\pgfmathfunction
+s.misc.code.tex)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\math\pgfmathfunction
+s.integerarithmetics.code.tex)))
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\math\pgfmathfloat.co
+de.tex
+\c@pgfmathroundto@lastzeros=\count98
+))
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcorepo
+ints.code.tex
+File: pgfcorepoints.code.tex 2013/10/07  (rcs-revision 1.27)
+\pgf@picminx=\dimen117
+\pgf@picmaxx=\dimen118
+\pgf@picminy=\dimen119
+\pgf@picmaxy=\dimen120
+\pgf@pathminx=\dimen121
+\pgf@pathmaxx=\dimen122
+\pgf@pathminy=\dimen123
+\pgf@pathmaxy=\dimen124
+\pgf@xx=\dimen125
+\pgf@xy=\dimen126
+\pgf@yx=\dimen127
+\pgf@yy=\dimen128
+\pgf@zx=\dimen129
+\pgf@zy=\dimen130
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcorepa
+thconstruct.code.tex
+File: pgfcorepathconstruct.code.tex 2013/10/07  (rcs-revision 1.29)
+\pgf@path@lastx=\dimen131
+\pgf@path@lasty=\dimen132
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcorepa
+thusage.code.tex
+File: pgfcorepathusage.code.tex 2014/11/02  (rcs-revision 1.24)
+\pgf@shorten@end@additional=\dimen133
+\pgf@shorten@start@additional=\dimen134
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcoresc
+opes.code.tex
+File: pgfcorescopes.code.tex 2015/05/08  (rcs-revision 1.46)
+\pgfpic=\box30
+\pgf@hbox=\box31
+\pgf@layerbox@main=\box32
+\pgf@picture@serial@count=\count99
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcoregr
+aphicstate.code.tex
+File: pgfcoregraphicstate.code.tex 2014/11/02  (rcs-revision 1.12)
+\pgflinewidth=\dimen135
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcoretr
+ansformations.code.tex
+File: pgfcoretransformations.code.tex 2015/08/07  (rcs-revision 1.20)
+\pgf@pt@x=\dimen136
+\pgf@pt@y=\dimen137
+\pgf@pt@temp=\dimen138
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcorequ
+ick.code.tex
+File: pgfcorequick.code.tex 2008/10/09  (rcs-revision 1.3)
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcoreob
+jects.code.tex
+File: pgfcoreobjects.code.tex 2006/10/11  (rcs-revision 1.2)
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcorepa
+thprocessing.code.tex
+File: pgfcorepathprocessing.code.tex 2013/09/09  (rcs-revision 1.9)
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcorear
+rows.code.tex
+File: pgfcorearrows.code.tex 2015/05/14  (rcs-revision 1.43)
+\pgfarrowsep=\dimen139
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcoresh
+ade.code.tex
+File: pgfcoreshade.code.tex 2013/07/15  (rcs-revision 1.15)
+\pgf@max=\dimen140
+\pgf@sys@shading@range@num=\count100
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcoreim
+age.code.tex
+File: pgfcoreimage.code.tex 2013/07/15  (rcs-revision 1.18)
+
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcoreex
+ternal.code.tex
+File: pgfcoreexternal.code.tex 2014/07/09  (rcs-revision 1.21)
+\pgfexternal@startupbox=\box33
+))
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcorela
+yers.code.tex
+File: pgfcorelayers.code.tex 2013/07/18  (rcs-revision 1.7)
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcoretr
+ansparency.code.tex
+File: pgfcoretransparency.code.tex 2013/09/30  (rcs-revision 1.5)
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\basiclayer\pgfcorepa
+tterns.code.tex
+File: pgfcorepatterns.code.tex 2013/11/07  (rcs-revision 1.5)
+))) ("C:\Program Files (x86)\Miktex\tex\latex\tools\calc.sty"
+Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count101
+\calc@Bcount=\count102
+\calc@Adimen=\dimen141
+\calc@Bdimen=\dimen142
+\calc@Askip=\skip55
+\calc@Bskip=\skip56
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count103
+\calc@Cskip=\skip57
+)
+\pgf@logicalpages=\count104
+\pgf@firstshipout=\count105
+\pgf@lastshipout=\count106
+\pgf@currentshipout=\count107
+\pgf@cpn=\count108
+\pgf@shipoutnextto=\count109
+\pgfphysicalheight=\dimen143
+\pgfphysicalwidth=\dimen144
+\pgfpages@shipoutbox=\box34
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\pgf\frontendlayer\tikz.sty
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\pgf\basiclayer\pgf.sty
+Package: pgf 2015/08/07 v3.0.1a (rcs-revision 1.15)
+
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\modules\pgfmodulesha
+pes.code.tex
+File: pgfmoduleshapes.code.tex 2014/03/21  (rcs-revision 1.35)
+\pgfnodeparttextbox=\box35
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\modules\pgfmoduleplo
+t.code.tex
+File: pgfmoduleplot.code.tex 2015/08/03  (rcs-revision 1.13)
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\pgf\compatibility\pgfcomp-
+version-0-65.sty
+Package: pgfcomp-version-0-65 2007/07/03 v3.0.1a (rcs-revision 1.7)
+\pgf@nodesepstart=\dimen145
+\pgf@nodesepend=\dimen146
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\pgf\compatibility\pgfcomp-
+version-1-18.sty
+Package: pgfcomp-version-1-18 2007/07/23 v3.0.1a (rcs-revision 1.1)
+))
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\pgf\utilities\pgffor.sty
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\pgf\utilities\pgfkeys.sty
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\utilities\pgfkeys.co
+de.tex))
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\pgf\math\pgfmath.sty
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\math\pgfmath.code.te
+x))
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\utilities\pgffor.cod
+e.tex
+Package: pgffor 2013/12/13 v3.0.1a (rcs-revision 1.25)
+
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\math\pgfmath.code.te
+x)
+\pgffor@iter=\dimen147
+\pgffor@skip=\dimen148
+\pgffor@stack=\toks29
+\pgffor@toks=\toks30
+))
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\frontendlayer\tikz\t
+ikz.code.tex
+Package: tikz 2015/08/07 v3.0.1a (rcs-revision 1.151)
+
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\libraries\pgflibrary
+plothandlers.code.tex
+File: pgflibraryplothandlers.code.tex 2013/08/31 v3.0.1a (rcs-revision 1.20)
+\pgf@plot@mark@count=\count110
+\pgfplotmarksize=\dimen149
+)
+\tikz@lastx=\dimen150
+\tikz@lasty=\dimen151
+\tikz@lastxsaved=\dimen152
+\tikz@lastysaved=\dimen153
+\tikzleveldistance=\dimen154
+\tikzsiblingdistance=\dimen155
+\tikz@figbox=\box36
+\tikz@figbox@bg=\box37
+\tikz@tempbox=\box38
+\tikz@tempbox@bg=\box39
+\tikztreelevel=\count111
+\tikznumberofchildren=\count112
+\tikznumberofcurrentchild=\count113
+\tikz@fig@count=\count114
+
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\modules\pgfmodulemat
+rix.code.tex
+File: pgfmodulematrix.code.tex 2013/09/17  (rcs-revision 1.8)
+\pgfmatrixcurrentrow=\count115
+\pgfmatrixcurrentcolumn=\count116
+\pgf@matrix@numberofcolumns=\count117
+)
+\tikz@expandcount=\count118
+
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\frontendlayer\tikz\l
+ibraries\tikzlibrarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2008/06/17 v3.0.1a (rcs-revision 1.2)
+)))
+("C:\Program Files (x86)\Miktex\tex\latex\microtype\microtype.sty"
+Package: microtype 2017/07/07 v2.7 Micro-typographical refinements (RS)
+\MT@toks=\toks31
+\MT@count=\count119
+LaTeX Info: Redefining \textls on input line 789.
+\MT@outer@kern=\dimen156
+LaTeX Info: Redefining \textmicrotypecontext on input line 1334.
+\MT@listname@count=\count120
+
+("C:\Program Files (x86)\Miktex\tex\latex\microtype\microtype-pdftex.def"
+File: microtype-pdftex.def 2017/07/07 v2.7 Definitions specific to pdftex (RS)
+LaTeX Info: Redefining \lsstyle on input line 912.
+LaTeX Info: Redefining \lslig on input line 912.
+\MT@outer@space=\skip58
+)
+Package microtype Info: Loading configuration file microtype.cfg.
+
+("C:\Program Files (x86)\Miktex\tex\latex\microtype\microtype.cfg"
+File: microtype.cfg 2017/07/07 v2.7 microtype main configuration file (RS)
+))
+("C:\Program Files (x86)\Miktex\tex\latex\tools\array.sty"
+Package: array 2016/10/06 v2.4d Tabular extension package (FMi)
+\col@sep=\dimen157
+\extrarowheight=\dimen158
+\NC@list=\toks32
+\extratabsurround=\skip59
+\backup@length=\skip60
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\enumitem\enumitem.sty
+Package: enumitem 2011/09/28 v3.5.2 Customized lists
+\labelindent=\skip61
+\enit@outerparindent=\dimen159
+\enit@toks=\toks33
+\enit@inbox=\box40
+\enitdp@description=\count121
+)
+("C:\Program Files (x86)\Miktex\tex\latex\amsmath\amsmath.sty"
+Package: amsmath 2016/11/05 v2.16a AMS math features
+\@mathmargin=\skip62
+
+For additional information on amsmath, use the `?' option.
+("C:\Program Files (x86)\Miktex\tex\latex\amsmath\amstext.sty"
+Package: amstext 2000/06/29 v2.01 AMS text
+
+("C:\Program Files (x86)\Miktex\tex\latex\amsmath\amsgen.sty"
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks34
+\ex@=\dimen160
+))
+("C:\Program Files (x86)\Miktex\tex\latex\amsmath\amsbsy.sty"
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen161
+)
+("C:\Program Files (x86)\Miktex\tex\latex\amsmath\amsopn.sty"
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count122
+LaTeX Info: Redefining \frac on input line 213.
+\uproot@=\count123
+\leftroot@=\count124
+LaTeX Info: Redefining \overline on input line 375.
+\classnum@=\count125
+\DOTSCASE@=\count126
+LaTeX Info: Redefining \ldots on input line 472.
+LaTeX Info: Redefining \dots on input line 475.
+LaTeX Info: Redefining \cdots on input line 596.
+\Mathstrutbox@=\box41
+\strutbox@=\box42
+\big@size=\dimen162
+LaTeX Font Info:    Redeclaring font encoding OML on input line 712.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 713.
+\macc@depth=\count127
+\c@MaxMatrixCols=\count128
+\dotsspace@=\muskip10
+\c@parentequation=\count129
+\dspbrk@lvl=\count130
+\tag@help=\toks35
+\row@=\count131
+\column@=\count132
+\maxfields@=\count133
+\andhelp@=\toks36
+\eqnshift@=\dimen163
+\alignsep@=\dimen164
+\tagshift@=\dimen165
+\tagwidth@=\dimen166
+\totwidth@=\dimen167
+\lineht@=\dimen168
+\@envbody=\toks37
+\multlinegap=\skip63
+\multlinetaggap=\skip64
+\mathdisplay@stack=\toks38
+LaTeX Info: Redefining \[ on input line 2817.
+LaTeX Info: Redefining \] on input line 2818.
+)
+("C:\Program Files (x86)\Miktex\tex\latex\amsfonts\amssymb.sty"
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+("C:\Program Files (x86)\Miktex\tex\latex\amsfonts\amsfonts.sty"
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+("C:\Program Files (x86)\Miktex\tex\latex\ntheorem\ntheorem.sty"
+Style `ntheorem', Version 1.33 <2011/08/15>
+Package: ntheorem 2011/08/15 1.33
+("C:\Program Files (x86)\Miktex\tex\latex\base\ifthen.sty"
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\theorem@style=\toks39
+\theorem@@style=\toks40
+\theorembodyfont=\toks41
+\theoremnumbering=\toks42
+\theorempreskipamount=\skip65
+\theorempostskipamount=\skip66
+\theoremframepreskipamount=\skip67
+\theoremframepostskipamount=\skip68
+\theoreminframepreskipamount=\skip69
+\theoreminframepostskipamount=\skip70
+\theorem@preskip=\toks43
+\theorem@postskip=\toks44
+\theorem@framepreskip=\toks45
+\theorem@framepostskip=\toks46
+\theorem@inframepreskip=\toks47
+\theorem@inframepostskip=\toks48
+\theoremindent=\dimen169
+\theorem@indent=\dimen170
+\theoremrightindent=\dimen171
+\theorem@rightindent=\dimen172
+\theoremheaderfont=\toks49
+\theoremseparator=\toks50
+\theoremprework=\toks51
+\theorempostwork=\toks52
+\theoremsymbol=\toks53
+\qedsymbol=\toks54
+\theoremkeyword=\toks55
+\qedsymbol=\toks56
+\thm@topsep=\skip71
+\thm@topsepadd=\skip72
+Package ntheorem Info: Option `thmmarks' loaded on input line 1175.
+\c@endNonectr=\count134
+\c@currNonectr=\count135
+\mysavskip=\skip73
+Package ntheorem Info: option `amsmath' handling for `thmmarks' loaded on input
+ line 1175.
+\thm@amstmpdepth=\dimen173
+\tagwidth=\dimen174
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\mathastext\mathastext.sty
+Package: mathastext 2016/11/06 v1.3r Use the text font in math mode (JFB)
+\mst@exists@muskip=\muskip11
+\mst@forall@muskip=\muskip12
+\mst@prime@muskip=\muskip13
+\mst@do@nonletters=\toks57
+\mst@do@easynonletters=\toks58
+\mst@do@az=\toks59
+\mst@do@AZ=\toks60
+\symmtoperatorfont=\mathgroup6
+\symmtletterfont=\mathgroup7
+LaTeX Font Info:    Overwriting math alphabet `\mathnormalbold' in version `nor
+mal'
+(Font)                  T1/LinuxLibertineT-TLF/bx/it --> T1/LinuxLibertineT-TLF
+/bx/it on input line 1102.
+LaTeX Font Info:    Overwriting math alphabet `\mathnormalbold' in version `bol
+d'
+(Font)                  T1/LinuxLibertineT-TLF/bx/it --> T1/LinuxLibertineT-TLF
+/bx/it on input line 1102.
+LaTeX Font Info:    Overwriting symbol font `mtletterfont' in version `normal'
+(Font)                  T1/LinuxLibertineT-TLF/m/it --> T1/LinuxLibertineT-TLF/
+m/it on input line 1102.
+LaTeX Font Info:    Overwriting symbol font `mtletterfont' in version `bold'
+(Font)                  T1/LinuxLibertineT-TLF/m/it --> T1/LinuxLibertineT-TLF/
+bx/it on input line 1102.
+LaTeX Font Info:    Overwriting symbol font `mtoperatorfont' in version `normal
+'
+(Font)                  T1/LinuxLibertineT-TLF/m/n --> T1/LinuxLibertineT-TLF/m
+/n on input line 1102.
+LaTeX Font Info:    Overwriting symbol font `mtoperatorfont' in version `bold'
+(Font)                  T1/LinuxLibertineT-TLF/m/n --> T1/LinuxLibertineT-TLF/b
+x/n on input line 1102.
+LaTeX Font Info:    Overwriting math alphabet `\Mathbf' in version `normal'
+(Font)                  T1/LinuxLibertineT-TLF/bx/n --> T1/LinuxLibertineT-TLF/
+bx/n on input line 1102.
+LaTeX Font Info:    Overwriting math alphabet `\Mathbf' in version `bold'
+(Font)                  T1/LinuxLibertineT-TLF/bx/n --> T1/LinuxLibertineT-TLF/
+bx/n on input line 1102.
+LaTeX Font Info:    Overwriting math alphabet `\Mathit' in version `normal'
+(Font)                  T1/LinuxLibertineT-TLF/m/it --> T1/LinuxLibertineT-TLF/
+m/it on input line 1102.
+LaTeX Font Info:    Overwriting math alphabet `\Mathit' in version `bold'
+(Font)                  T1/LinuxLibertineT-TLF/m/it --> T1/LinuxLibertineT-TLF/
+bx/it on input line 1102.
+LaTeX Font Info:    Overwriting math alphabet `\Mathsf' in version `normal'
+(Font)                  T1/LinuxBiolinumT-TLF/m/n --> T1/LinuxBiolinumT-TLF/m/n
+ on input line 1102.
+LaTeX Font Info:    Overwriting math alphabet `\Mathsf' in version `bold'
+(Font)                  T1/LinuxBiolinumT-TLF/m/n --> T1/LinuxBiolinumT-TLF/bx/
+n on input line 1102.
+LaTeX Font Info:    Overwriting math alphabet `\Mathtt' in version `normal'
+(Font)                  T1/LinuxLibertineMonoT-TLF/m/n --> T1/LinuxLibertineMon
+oT-TLF/m/n on input line 1102.
+LaTeX Font Info:    Overwriting math alphabet `\Mathtt' in version `bold'
+(Font)                  T1/LinuxLibertineMonoT-TLF/m/n --> T1/LinuxLibertineMon
+oT-TLF/bx/n on input line 1102.
+
+** Latin letters in the normal (resp. bold) math versions are now
+** set up to use the fonts T1/LinuxLibertineT-TLF/m(bx)/it
+** Other characters (digits, ...) and \log-like names will be
+** typeset with the n shape.
+** \hbar
+** \i and \j 
+LaTeX Info: Redefining \i on input line 1988.
+LaTeX Info: Redefining \j on input line 1989.
+) ("C:\Program Files (x86)\Miktex\tex\latex\mathtools\mathtools.sty"
+Package: mathtools 2017/05/24 v1.19 mathematical typesetting tools
+
+("C:\Program Files (x86)\Miktex\tex\latex\mathtools\mhsetup.sty"
+Package: mhsetup 2017/03/31 v1.3 programming setup (MH)
+)
+LaTeX Info: Thecontrolsequence`\('isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\)'isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\['isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
+\g_MT_multlinerow_int=\count136
+\l_MT_multwidth_dim=\dimen175
+\origjot=\skip74
+\l_MT_shortvdotswithinadjustabove_dim=\dimen176
+\l_MT_shortvdotswithinadjustbelow_dim=\dimen177
+\l_MT_above_intertext_sep=\dimen178
+\l_MT_below_intertext_sep=\dimen179
+\l_MT_above_shortintertext_sep=\dimen180
+\l_MT_below_shortintertext_sep=\dimen181
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\stmaryrd\stmaryrd.sty
+Package: stmaryrd 1994/03/03 St Mary's Road symbol package
+\symstmry=\mathgroup8
+LaTeX Font Info:    Overwriting symbol font `stmry' in version `bold'
+(Font)                  U/stmry/m/n --> U/stmry/b/n on input line 89.
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\booktabs\booktabs.sty
+Package: booktabs 2005/04/14 v1.61803 publication quality tables
+\heavyrulewidth=\dimen182
+\lightrulewidth=\dimen183
+\cmidrulewidth=\dimen184
+\belowrulesep=\dimen185
+\belowbottomsep=\dimen186
+\aboverulesep=\dimen187
+\abovetopsep=\dimen188
+\cmidrulesep=\dimen189
+\cmidrulekern=\dimen190
+\defaultaddspace=\dimen191
+\@cmidla=\count137
+\@cmidlb=\count138
+\@aboverulesep=\dimen192
+\@belowrulesep=\dimen193
+\@thisruleclass=\count139
+\@lastruleclass=\count140
+\@thisrulewidth=\dimen194
+)
+("C:\Program Files (x86)\Miktex\tex\latex\units\nicefrac.sty"
+Package: nicefrac 1998/08/04 v0.9b Nice fractions
+\L@UnitsRaiseDisplaystyle=\skip75
+\L@UnitsRaiseTextstyle=\skip76
+\L@UnitsRaiseScriptstyle=\skip77
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\bigfoot\suffix.sty
+Package: suffix 2006/07/15 1.5a Variant command support
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\cancel\cancel.sty
+Package: cancel 2013/04/12 v2.2 Cancel math terms
+)
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\setspace\setspace.sty
+Package: setspace 2011/12/19 v6.7a set line spacing
+)
+("C:\Program Files (x86)\Miktex\tex\latex\hyperref\hyperref.sty"
+Package: hyperref 2017/03/14 v6.85a Hypertext links for LaTeX
+
+("C:\Program Files (x86)\Miktex\tex\generic\oberdiek\hobsub-hyperref.sty"
+Package: hobsub-hyperref 2016/05/16 v1.14 Bundle oberdiek, subset hyperref (HO)
+
+
+("C:\Program Files (x86)\Miktex\tex\generic\oberdiek\hobsub-generic.sty"
+Package: hobsub-generic 2016/05/16 v1.14 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2016/05/16 v1.14 Construct package bundles (HO)
+Package hobsub Info: Skipping package `infwarerr' (already loaded).
+Package hobsub Info: Skipping package `ltxcmds' (already loaded).
+Package hobsub Info: Skipping package `ifluatex' (already loaded).
+Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+Package: intcalc 2016/05/16 v1.2 Expandable calculations with integers (HO)
+Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+Package: pdftexcmds 2017/03/19 v0.25 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+Package: pdfescape 2016/05/16 v1.14 Implements pdfTeX's escape features (HO)
+Package: bigintcalc 2016/05/16 v1.4 Expandable calculations on big integers (HO
+)
+Package: bitset 2016/05/16 v1.2 Handle bit-vector datatype (HO)
+Package: uniquecounter 2016/05/16 v1.3 Provide unlimited unique counter (HO)
+)
+Package hobsub Info: Skipping package `hobsub' (already loaded).
+Package: letltxmacro 2016/05/16 v1.5 Let assignment for LaTeX macros (HO)
+Package: hopatch 2016/05/16 v1.3 Wrapper for package hooks (HO)
+Package: xcolor-patch 2016/05/16 xcolor patch
+Package: atveryend 2016/05/16 v1.9 Hooks at the very end of document (HO)
+Package atveryend Info: \enddocument detected (standard20110627).
+Package: atbegshi 2016/06/09 v1.18 At begin shipout hook (HO)
+Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
+Package: hycolor 2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
+)
+("C:\Program Files (x86)\Miktex\tex\latex\oberdiek\auxhook.sty"
+Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
+)
+("C:\Program Files (x86)\Miktex\tex\latex\oberdiek\kvoptions.sty"
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+)
+\@linkdim=\dimen195
+\Hy@linkcounter=\count141
+\Hy@pagecounter=\count142
+
+("C:\Program Files (x86)\Miktex\tex\latex\hyperref\pd1enc.def"
+File: pd1enc.def 2017/03/14 v6.85a Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+)
+\Hy@SavedSpaceFactor=\count143
+
+("C:\Program Files (x86)\Miktex\tex\latex\00miktex\hyperref.cfg"
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Hyper figures OFF on input line 4498.
+Package hyperref Info: Link nesting OFF on input line 4503.
+Package hyperref Info: Hyper index ON on input line 4506.
+Package hyperref Info: Plain pages OFF on input line 4513.
+Package hyperref Info: Backreferencing OFF on input line 4518.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4751.
+\c@Hy@tempcnt=\count144
+
+("C:\Program Files (x86)\Miktex\tex\latex\url\url.sty"
+\Urlmuskip=\muskip14
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 5104.
+\XeTeXLinkMargin=\dimen196
+\Fld@menulength=\count145
+\Field@Width=\dimen197
+\Fld@charsize=\dimen198
+Package hyperref Info: Hyper figures OFF on input line 6358.
+Package hyperref Info: Link nesting OFF on input line 6363.
+Package hyperref Info: Hyper index ON on input line 6366.
+Package hyperref Info: backreferencing OFF on input line 6373.
+Package hyperref Info: Link coloring OFF on input line 6378.
+Package hyperref Info: Link coloring with OCG OFF on input line 6383.
+Package hyperref Info: PDF/A mode OFF on input line 6388.
+LaTeX Info: Redefining \ref on input line 6428.
+LaTeX Info: Redefining \pageref on input line 6432.
+\Hy@abspage=\count146
+\c@Item=\count147
+\c@Hfootnote=\count148
+)
+
+Package hyperref Message: Driver (autodetected): hpdftex.
+
+("C:\Program Files (x86)\Miktex\tex\latex\hyperref\hpdftex.def"
+File: hpdftex.def 2017/03/14 v6.85a Hyperref driver for pdfTeX
+\Fld@listcount=\count149
+\c@bookmark@seq@number=\count150
+
+("C:\Program Files (x86)\Miktex\tex\latex\oberdiek\rerunfilecheck.sty"
+Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+82.
+)
+\Hy@SectionHShift=\skip78
+)
+("C:\Program Files (x86)\Miktex\tex\latex\hyperref\nameref.sty"
+Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
+
+("C:\Program Files (x86)\Miktex\tex\generic\oberdiek\gettitlestring.sty"
+Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
+)
+\c@section@level=\count151
+)
+\c@curraufgabectr=\count152
+\c@endaufgabectr=\count153
+\c@aufgabe=\count154
+\c@currloesungctr=\count155
+\c@endloesungctr=\count156
+\c@loesung=\count157
+\c@currergaufgabectr=\count158
+\c@endergaufgabectr=\count159
+\c@currergloesungctr=\count160
+\c@endergloesungctr=\count161
+\c@paeckchenteil=\count162
+\c@paeckcheninzeile=\count163
+
+(OnlineHelpUsage-en.aux)
+\openout1 = `OnlineHelpUsage-en.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 151.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 151.
+
+
+("C:\Program Files (x86)\Miktex\tex\latex\base\ts1cmr.fd"
+File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Try loading font information for T1+LinuxLibertineT-TLF on 
+input line 151.
+
+("C:\Program Files (x86)\Miktex\tex\latex\libertine\t1linuxlibertinet-tlf.fd"
+File: T1LinuxLibertineT-TLF.fd 2017/03/20 (autoinst) Font definitions for T1/Li
+nuxLibertineT-TLF.
+)
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 12.0pt on input line 151.
+\c@mv@tabular=\count164
+\c@mv@boldtabular=\count165
+
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count166
+\scratchdimen=\dimen199
+\scratchbox=\box43
+\nofMPsegments=\count167
+\nofMParguments=\count168
+\everyMPshowfont=\toks61
+\MPscratchCnt=\count169
+\MPscratchDim=\dimen256
+\MPnumerator=\count170
+\makeMPintoPDFobject=\count171
+\everyMPtoPDFconversion=\toks62
+) ("C:\Program Files (x86)\Miktex\tex\latex\oberdiek\epstopdf-base.sty"
+Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
+
+("C:\Program Files (x86)\Miktex\tex\latex\oberdiek\grfext.sty"
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+)
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+38.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 456.
+)
+ABD: EveryShipout initializing macros
+LaTeX Info: Redefining \microtypecontext on input line 151.
+Package microtype Info: Generating PDF output.
+Package microtype Info: Character protrusion enabled (level 2).
+Package microtype Info: Using default protrusion set `alltext'.
+Package microtype Info: Automatic font expansion enabled (level 2),
+(microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
+Package microtype Info: Using default expansion set `basictext'.
+Package microtype Info: No adjustment of tracking.
+Package microtype Info: No adjustment of interword spacing.
+Package microtype Info: No adjustment of character kerning.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `LinuxLibertineT-TLF' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+\AtBeginShipoutBox=\box44
+Package hyperref Info: Link coloring OFF on input line 151.
+LaTeX Info: Redefining \ref on input line 151.
+LaTeX Info: Redefining \pageref on input line 151.
+LaTeX Info: Redefining \nameref on input line 151.
+ (OnlineHelpUsage-en.out)
+(OnlineHelpUsage-en.out)
+\@outlinefile=\write4
+\openout4 = `OnlineHelpUsage-en.out'.
+
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 17.28pt on input line 153.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
+(Font)              scaled to size 17.28pt on input line 153.
+LaTeX Font Info:    Try loading font information for T1+LinuxBiolinumT-TLF on i
+nput line 153.
+
+("C:\Program Files (x86)\Miktex\tex\latex\libertine\t1linuxbiolinumt-tlf.fd"
+File: T1LinuxBiolinumT-TLF.fd 2017/03/20 (autoinst) Font definitions for T1/Lin
+uxBiolinumT-TLF.
+)
+LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/b/n' will be
+(Font)              scaled to size 17.28pt on input line 153.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `LinuxBiolinumT-TLF' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+LaTeX Font Info:    Try loading font information for T1+LinuxLibertineMonoT-TLF
+ on input line 153.
+
+("C:\Program Files (x86)\Miktex\tex\latex\libertine\t1linuxlibertinemonot-tlf.f
+d"
+File: T1LinuxLibertineMonoT-TLF.fd 2017/03/20 (autoinst) Font definitions for T
+1/LinuxLibertineMonoT-TLF.
+)
+LaTeX Font Info:    Font shape `T1/LinuxLibertineMonoT-TLF/bx/n' in size <17.28
+> not available
+(Font)              Font shape `T1/LinuxLibertineMonoT-TLF/b/n' tried instead o
+n input line 153.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineMonoT-TLF/b/n' will be
+(Font)              scaled to size 17.28pt on input line 153.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `LinuxLibertineMonoT-TLF' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 153.
+
+ ("C:\Program Files (x86)\Miktex\tex\latex\lm\ot1lmr.fd"
+File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+("C:\Program Files (x86)\Miktex\tex\latex\microtype\mt-cmr.cfg"
+File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
+(RS)
+)
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 153.
+
+
+("C:\Program Files (x86)\Miktex\tex\latex\lm\omllmm.fd"
+File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 153
+.
+
+("C:\Program Files (x86)\Miktex\tex\latex\lm\omslmsy.fd"
+File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 153
+.
+
+("C:\Program Files (x86)\Miktex\tex\latex\lm\omxlmex.fd"
+File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <17.28> on input line 153.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <12> on input line 153.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 153.
+LaTeX Font Info:    Try loading font information for U+msa on input line 153.
+
+("C:\Program Files (x86)\Miktex\tex\latex\amsfonts\umsa.fd"
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+("C:\Program Files (x86)\Miktex\tex\latex\microtype\mt-msa.cfg"
+File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 153.
+
+("C:\Program Files (x86)\Miktex\tex\latex\amsfonts\umsb.fd"
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+("C:\Program Files (x86)\Miktex\tex\latex\microtype\mt-msb.cfg"
+File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
+)
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 10.0pt on input line 153.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
+(Font)              scaled to size 17.28pt on input line 153.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
+(Font)              scaled to size 12.0pt on input line 153.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
+(Font)              scaled to size 10.0pt on input line 153.
+LaTeX Font Info:    Try loading font information for U+stmry on input line 153.
+
+
+(C:\Users\Dinah\AppData\Roaming\MiKTeX\2.9\tex\latex\stmaryrd\ustmry.fd)
+LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/b/n' will be
+(Font)              scaled to size 12.0pt on input line 156.
+LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
+(Font)              scaled to size 12.0pt on input line 161.
+Package tocbasic Info: character protrusion at toc deactivated on input line 16
+1.
+
+(OnlineHelpUsage-en.toc
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <8> on input line 5.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <6> on input line 5.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 8.0pt on input line 5.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 6.0pt on input line 5.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
+(Font)              scaled to size 8.0pt on input line 5.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
+(Font)              scaled to size 6.0pt on input line 5.
+)
+\tf@toc=\write5
+\openout5 = `OnlineHelpUsage-en.toc'.
+
+ [1
+
+{C:/Users/Dinah/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 170.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 170.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 170.
+ <enFleissnerMethods.png, id=73, 1128.01425pt x 581.17125pt>
+File: enFleissnerMethods.png Graphic file (type png)
+
+<use enFleissnerMethods.png>
+Package pdftex.def Info: enFleissnerMethods.png used on input line 173.
+(pdftex.def)             Requested size: 507.60173pt x 261.52464pt.
+
+Overfull \hbox (29.59538pt too wide) in paragraph at lines 173--175
+[][] 
+ []
+
+<enFleissnerStart.png, id=74, 1128.01425pt x 581.17125pt>
+File: enFleissnerStart.png Graphic file (type png)
+
+<use enFleissnerStart.png>
+Package pdftex.def Info: enFleissnerStart.png used on input line 178.
+(pdftex.def)             Requested size: 507.60173pt x 261.52464pt.
+
+Overfull \hbox (29.59538pt too wide) in paragraph at lines 178--180
+[][] 
+ []
+
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 181.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 181.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 181.
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 181.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 181.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 181.
+[2 <./enFleissnerMethods.png>]
+LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/b/n' will be
+(Font)              scaled to size 14.4pt on input line 181.
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 181.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 181.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 181.
+
+<enFleissnerKeySize.png, id=82, 1128.01425pt x 581.17125pt>
+File: enFleissnerKeySize.png Graphic file (type png)
+
+<use enFleissnerKeySize.png>
+Package pdftex.def Info: enFleissnerKeySize.png used on input line 185.
+(pdftex.def)             Requested size: 507.60173pt x 261.52464pt.
+
+Overfull \hbox (29.59538pt too wide) in paragraph at lines 185--187
+[][]
+ []
+
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 187.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 187.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 187.
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 187.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 187.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 187.
+[3 <./enFleissnerStart.png> <./enFleissnerKeySize.png>]
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 188.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 188.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 188.
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 189.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 189.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 189.
+
+<enFleissnerLanguage.png, id=92, 1125.60526pt x 578.76225pt>
+File: enFleissnerLanguage.png Graphic file (type png)
+
+<use enFleissnerLanguage.png>
+Package pdftex.def Info: enFleissnerLanguage.png used on input line 195.
+(pdftex.def)             Requested size: 506.51768pt x 260.4406pt.
+
+Overfull \hbox (28.51134pt too wide) in paragraph at lines 195--196
+[][] 
+ []
+
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 196.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 196.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 196.
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 196.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 196.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 196.
+[4 <./enFleissnerLanguage.png>]
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 199.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 199.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 199.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
+(Font)              scaled to size 12.0pt on input line 203.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 205.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 205.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 7.0pt on input line 205.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 5.0pt on input line 205.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
+(Font)              scaled to size 7.0pt on input line 205.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
+(Font)              scaled to size 5.0pt on input line 205.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
+(Font)              scaled to size 10.0pt on input line 205.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineMonoT-TLF/m/n' will be
+(Font)              scaled to size 10.0pt on input line 205.
+
+Underfull \hbox (badness 10000) in paragraph at lines 205--205
+ []$\T1/LinuxLibertineMonoT-TLF/m/n/10 https : / / de . wikipedia . org / wiki 
+/ Bildende _ Kunst # Fr % C3 % BChchristliche _ und _
+ []
+
+<enFleissnerTxtAuswahl.png, id=101, 1125.60526pt x 582.37575pt>
+File: enFleissnerTxtAuswahl.png Graphic file (type png)
+
+<use enFleissnerTxtAuswahl.png>
+Package pdftex.def Info: enFleissnerTxtAuswahl.png used on input line 209.
+(pdftex.def)             Requested size: 450.23413pt x 232.94617pt.
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 210.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 210.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 210.
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 210.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 210.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 210.
+ [5 <./enFleissnerTxtAuswahl.png>]
+<enFleissnerManGhtxt.png, id=111, 1128.01425pt x 581.17125pt>
+File: enFleissnerManGhtxt.png Graphic file (type png)
+
+<use enFleissnerManGhtxt.png>
+Package pdftex.def Info: enFleissnerManGhtxt.png used on input line 216.
+(pdftex.def)             Requested size: 451.19771pt x 232.46437pt.
+
+<enFleissnerCipherLoadOwn.png, id=112, 1128.01425pt x 579.96675pt>
+File: enFleissnerCipherLoadOwn.png Graphic file (type png)
+
+<use enFleissnerCipherLoadOwn.png>
+Package pdftex.def Info: enFleissnerCipherLoadOwn.png used on input line 222.
+(pdftex.def)             Requested size: 451.19771pt x 231.98259pt.
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 226.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 226.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 226.
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 229.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 229.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 229.
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 229.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 229.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 229.
+ [6 <./enFleissnerManGhtxt.png> <./enFleissnerCipherLoadOwn.png>]
+<enFleissnerAnalysisSettings.png, id=120, 1128.01425pt x 581.17125pt>
+File: enFleissnerAnalysisSettings.png Graphic file (type png)
+
+<use enFleissnerAnalysisSettings.png>
+Package pdftex.def Info: enFleissnerAnalysisSettings.png used on input line 229
+.
+(pdftex.def)             Requested size: 507.60173pt x 261.52464pt.
+
+Overfull \hbox (29.59538pt too wide) in paragraph at lines 229--230
+[][] 
+ []
+
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 232.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 232.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 232.
+<enFleissnerRestarts.png, id=121, 1128.01425pt x 581.17125pt>
+File: enFleissnerRestarts.png Graphic file (type png)
+
+<use enFleissnerRestarts.png>
+Package pdftex.def Info: enFleissnerRestarts.png used on input line 236.
+(pdftex.def)             Requested size: 507.60173pt x 261.52464pt.
+
+Overfull \hbox (29.59538pt too wide) in paragraph at lines 236--237
+[][] 
+ []
+
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 238.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 238.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 238.
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 238.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 238.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 238.
+[7 <./enFleissnerAnalysisSettings.png>]
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 240.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 240.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 240.
+
+<enFleissnerStatistics.png, id=129, 1128.01425pt x 581.17125pt>
+File: enFleissnerStatistics.png Graphic file (type png)
+
+<use enFleissnerStatistics.png>
+Package pdftex.def Info: enFleissnerStatistics.png used on input line 243.
+(pdftex.def)             Requested size: 507.60173pt x 261.52464pt.
+
+Overfull \hbox (29.59538pt too wide) in paragraph at lines 243--244
+[][] 
+ []
+
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 246.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 246.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 246.
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 246.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 246.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 246.
+[8 <./enFleissnerRestarts.png>]
+<enFleissnerStatisticsExample.png, id=137, 1129.21875pt x 581.17125pt>
+File: enFleissnerStatisticsExample.png Graphic file (type png)
+
+<use enFleissnerStatisticsExample.png>
+Package pdftex.def Info: enFleissnerStatisticsExample.png used on input line 25
+0.
+(pdftex.def)             Requested size: 451.6795pt x 232.46437pt.
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 256.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 256.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 256.
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 256.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 256.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 256.
+ [9 <./enFleissnerStatistics.png> <./enFleissnerStatisticsExample.png>]
+<enFleissnerOwnStatistics.png, id=145, 1128.01425pt x 581.17125pt>
+File: enFleissnerOwnStatistics.png Graphic file (type png)
+
+<use enFleissnerOwnStatistics.png>
+Package pdftex.def Info: enFleissnerOwnStatistics.png used on input line 258.
+(pdftex.def)             Requested size: 451.19771pt x 232.46437pt.
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 273.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 273.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 273.
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 273.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 273.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 273.
+ [10 <./enFleissnerOwnStatistics.png>]
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 275.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 275.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 275.
+
+<enFleissnerAusgabeAnalyse.png, id=153, 1126.80975pt x 582.37575pt>
+File: enFleissnerAusgabeAnalyse.png Graphic file (type png)
+
+<use enFleissnerAusgabeAnalyse.png>
+Package pdftex.def Info: enFleissnerAusgabeAnalyse.png used on input line 279.
+(pdftex.def)             Requested size: 507.05971pt x 262.06665pt.
+
+Overfull \hbox (29.05336pt too wide) in paragraph at lines 279--280
+[][] 
+ []
+
+
+<enFleissnerAusgabeAnalyseDetailButton.png, id=154, 1126.80975pt x 582.37575pt>
+File: enFleissnerAusgabeAnalyseDetailButton.png Graphic file (type png)
+<use enFleissnerAusgabeAnalyseDetailButton.png>
+Package pdftex.def Info: enFleissnerAusgabeAnalyseDetailButton.png used on inpu
+t line 283.
+(pdftex.def)             Requested size: 507.05971pt x 262.06665pt.
+
+Overfull \hbox (29.05336pt too wide) in paragraph at lines 283--284
+[][] 
+ []
+
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 287.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 287.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 287.
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 287.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 287.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 287.
+[11 <./enFleissnerAusgabeAnalyse.png> <./enFleissnerAusgabeAnalyseDetailButton.
+png>] <enFleissnerAusgabeAnalyseGross.png, id=160, 1125.60526pt x 582.37575pt>
+File: enFleissnerAusgabeAnalyseGross.png Graphic file (type png)
+
+<use enFleissnerAusgabeAnalyseGross.png>
+Package pdftex.def Info: enFleissnerAusgabeAnalyseGross.png used on input line 
+287.
+(pdftex.def)             Requested size: 506.51768pt x 262.06665pt.
+
+Overfull \hbox (28.51134pt too wide) in paragraph at lines 287--288
+[][] 
+ []
+
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 290.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 290.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 290.
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 290.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 290.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 290.
+[12 <./enFleissnerAusgabeAnalyseGross.png>]
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 292.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 292.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 292.
+
+<enFleissnerEncryptSelection.png, id=165, 1126.80975pt x 582.37575pt>
+File: enFleissnerEncryptSelection.png Graphic file (type png)
+
+<use enFleissnerEncryptSelection.png>
+Package pdftex.def Info: enFleissnerEncryptSelection.png used on input line 296
+.
+(pdftex.def)             Requested size: 507.05971pt x 262.06665pt.
+
+Overfull \hbox (29.05336pt too wide) in paragraph at lines 296--297
+[][] 
+ []
+
+<enFleissnerEncryptRandomKey.png, id=166, 1129.21875pt x 583.58025pt>
+File: enFleissnerEncryptRandomKey.png Graphic file (type png)
+
+<use enFleissnerEncryptRandomKey.png>
+Package pdftex.def Info: enFleissnerEncryptRandomKey.png used on input line 304
+.
+(pdftex.def)             Requested size: 451.6795pt x 233.42795pt.
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 305.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 305.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 305.
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 305.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 305.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 305.
+ [13 <./enFleissnerEncryptSelection.png> <./enFleissnerEncryptRandomKey.png>]
+<enFleissnerEncryptKeySelection.png, id=173, 1126.80975pt x 583.58025pt>
+File: enFleissnerEncryptKeySelection.png Graphic file (type png)
+
+<use enFleissnerEncryptKeySelection.png>
+Package pdftex.def Info: enFleissnerEncryptKeySelection.png used on input line 
+311.
+(pdftex.def)             Requested size: 450.71591pt x 233.42795pt.
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 325.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 325.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 325.
+
+<enFleissnerDecrypt.png, id=174, 1129.21875pt x 581.17125pt>
+File: enFleissnerDecrypt.png Graphic file (type png)
+
+<use enFleissnerDecrypt.png>
+Package pdftex.def Info: enFleissnerDecrypt.png used on input line 330.
+(pdftex.def)             Requested size: 508.14375pt x 261.52464pt.
+
+Overfull \hbox (30.1374pt too wide) in paragraph at lines 330--331
+[][] 
+ []
+
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 332.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 332.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 332.
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 332.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 332.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 332.
+[14 <./enFleissnerEncryptKeySelection.png>]
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 333.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 333.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 333.
+Package babel Info: Redefining german shorthand "f
+(babel)             in language  on input line 333.
+Package babel Info: Redefining german shorthand "|
+(babel)             in language  on input line 333.
+Package babel Info: Redefining german shorthand "~
+(babel)             in language  on input line 333.
+ [15 <./enFleissnerDecrypt.png>]
+\tf@thm=\write6
+\openout6 = `OnlineHelpUsage-en.thm'.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 333.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 333.
+
+(OnlineHelpUsage-en.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 333.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 333.
+Package rerunfilecheck Info: File `OnlineHelpUsage-en.out' has not changed.
+(rerunfilecheck)             Checksum: AD28D7B771D958537007FD5BFCD6DE43;676.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 333.
+ ) 
+Here is how much of TeX's memory you used:
+ 25026 strings out of 493323
+ 464186 string characters out of 3138204
+ 623998 words of memory out of 3000000
+ 27900 multiletter control sequences out of 15000+200000
+ 151225 words of font info for 155 fonts, out of 3000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 58i,8n,58p,8831b,631s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files (x86)/Miktex/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Program F
+iles (x86)/Miktex/fonts/enc/dvips/lm/lm-rm.enc}{C:/Program Files (x86)/Miktex/f
+onts/enc/dvips/lm/lm-mathsy.enc}{C:/Program Files (x86)/Miktex/fonts/enc/dvips/
+libertine/lbtn_7grukw.enc}{C:/Program Files (x86)/Miktex/fonts/enc/dvips/libert
+ine/lbtn_d6jdyt.enc}{C:/Program Files (x86)/Miktex/fonts/enc/dvips/libertine/lb
+tn_nh77jq.enc}{C:/Program Files (x86)/Miktex/fonts/enc/dvips/libertine/lbtn_76g
+pa5.enc}{C:/Program Files (x86)/Miktex/fonts/enc/dvips/libertine/lbtn_25tcsq.en
+c}<C:/Program Files (x86)/Miktex/fonts/type1/public/libertine/LinBiolinumTB.pfb
+><C:/Program Files (x86)/Miktex/fonts/type1/public/libertine/LinLibertineMT.pfb
+><C:/Program Files (x86)/Miktex/fonts/type1/public/libertine/LinLibertineMTB.pf
+b><C:/Program Files (x86)/Miktex/fonts/type1/public/libertine/LinLibertineT.pfb
+><C:/Program Files (x86)/Miktex/fonts/type1/public/libertine/LinLibertineTB.pfb
+><C:/Program Files (x86)/Miktex/fonts/type1/public/libertine/LinLibertineTI.pfb
+><C:/Program Files (x86)/Miktex/fonts/type1/public/lm/lmmi12.pfb><C:/Program Fi
+les (x86)/Miktex/fonts/type1/public/lm/lmr12.pfb><C:/Program Files (x86)/Miktex
+/fonts/type1/public/lm/lmsy10.pfb>
+Output written on OnlineHelpUsage-en.pdf (15 pages, 2032993 bytes).
+PDF statistics:
+ 233 PDF objects out of 1000 (max. 8388607)
+ 41 named destinations out of 1000 (max. 500000)
+ 29380 words of extra memory for PDF output out of 29859 (max. 10000000)
+

@@ -1,0 +1,14 @@
+\select@language {german}
+\select@language {english}
+\select@language {german}
+\contentsline {section}{\numberline {1}Analysis}{2}{section.1}
+\contentsline {subsection}{\numberline {1.1}Key length}{3}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Choose text}{4}{subsection.1.2}
+\contentsline {subsubsection}{\numberline {1.2.1}Language}{4}{subsubsection.1.2.1}
+\contentsline {subsubsection}{\numberline {1.2.2}Text input}{5}{subsubsection.1.2.2}
+\contentsline {subsection}{\numberline {1.3}Analysis settings}{7}{subsection.1.3}
+\contentsline {subsubsection}{\numberline {1.3.1}Restarts}{7}{subsubsection.1.3.1}
+\contentsline {subsubsection}{\numberline {1.3.2}Language statistics}{8}{subsubsection.1.3.2}
+\contentsline {subsection}{\numberline {1.4}Analysis output}{11}{subsection.1.4}
+\contentsline {section}{\numberline {2}Encryption}{13}{section.2}
+\contentsline {section}{\numberline {3}Decryption}{14}{section.3}
