@@ -19,6 +19,7 @@ import java.net.URL;
 import java.util.Vector;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -192,7 +193,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 					text = getEditorText();
 					source = EditorsManager.getInstance().getActiveEditorTitle();
 					button1.setEnabled(true);
-					recalcSourceInfo();
+					recalcSourceInfo();					
 				}
 			}
 		});
@@ -421,7 +422,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 			}
 		}
 
-		tabItem3 = new TabItem(tabFolder1, SWT.NONE);
+		tabItem3 = new TabItem(tabFolder1, SWT.V_SCROLL);
 		tabItem3.setText(Messages.FullAnalysisUI_thirdtablabel);
 		composite5 = new Composite(tabFolder1, SWT.NONE);
 		composite5.setLayout(new GridLayout());

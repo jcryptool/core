@@ -202,7 +202,7 @@ public class FreqAnalysisGraph extends Graph implements MouseMoveListener, Mouse
 		thisBGColor.setBGColor(gc);
 		gc.fillRectangle(thisArea);
 
-		thisFontColor.setColor(gc);
+		thisFontColor.setColor(gc);		
 		if (dragged) {
 			gc.drawText(NLS.bind(Messages.FreqAnalysisGraph_shiftgraph1, getCurrentShift()),
 					3 + marginLeft + marginRight,
@@ -225,6 +225,7 @@ public class FreqAnalysisGraph extends Graph implements MouseMoveListener, Mouse
 		Rectangle textBox = calculateTextContainer(descDrawingRect, 0, 0);
 
 		gc.fillRectangle(textBox);
+		
 		gc.drawText("FREQ", 5, descLeftRect.height / 2);
 	}
 

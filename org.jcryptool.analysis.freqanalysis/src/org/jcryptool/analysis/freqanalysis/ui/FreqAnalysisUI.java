@@ -71,7 +71,7 @@ public class FreqAnalysisUI extends Composite {
 					switchComposites(evt);
 				}
 			});
-			button1.setSelection(false);
+			button1.setSelection(true);
 
 			button2 = new Button(group1, SWT.RADIO | SWT.LEFT);
 			button2.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
@@ -97,7 +97,9 @@ public class FreqAnalysisUI extends Composite {
 			C2.setLayoutData(C2LData);
 			C2.setLayout(new GridLayout());
 			C2.setVisible(false);
+			
 			layout();
+			hideObject(C1, false);
 		} catch (Exception e) {
 			LogUtil.logError(FreqAnalysisPlugin.PLUGIN_ID, e);
 		}
