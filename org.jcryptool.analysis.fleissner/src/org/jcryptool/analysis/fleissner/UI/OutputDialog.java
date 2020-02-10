@@ -10,14 +10,23 @@
 package org.jcryptool.analysis.fleissner.UI;
 
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Scanner;
+import java.util.function.BinaryOperator;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -29,6 +38,7 @@ import org.jcryptool.analysis.fleissner.Activator;
 import org.jcryptool.analysis.fleissner.UI.LoadFiles;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
+import org.eclipse.swt.layout.FillLayout;
 
 /**
  * @author Dinah
@@ -36,7 +46,7 @@ import org.jcryptool.core.util.fonts.FontService;
  */
 public class OutputDialog extends TitleAreaDialog {
     
-    private ArrayList<String> analysisOutput = new ArrayList<String>();
+    private ArrayList<TextPresentation> analysisOutput = new ArrayList<TextPresentation>();
     
     private Text output;
     private String outputString;
@@ -45,12 +55,29 @@ public class OutputDialog extends TitleAreaDialog {
     private Text[] textnames;
 //    private Label[] labels;
 
+	private Composite area;
+
+	private Composite container;
+
     /**
      * @param parentShell
+     * @wbp.parser.constructor
      */
-    public OutputDialog(Shell parentShell, ArrayList<String> futter) {
+    public OutputDialog(Shell parentShell) {
         super(parentShell);
-        this.analysisOutput = futter;
+    }
+
+    public OutputDialog(Shell shell, ArrayList<String> outputInput) {
+		this(shell);
+		for (String input : outputInput) {
+			this.addText(new TextPresentation() {{
+				text=input;
+			}});
+		}
+	}
+    
+	public void addText(TextPresentation presentation) {
+    	this.analysisOutput.add(presentation);
     }
     
     public void create(String title, String message) {
@@ -61,13 +88,36 @@ public class OutputDialog extends TitleAreaDialog {
 
     @Override
     protected Control createDialogArea(Composite parent) {
-        Composite area = (Composite) super.createDialogArea(parent);
-        Composite container = new Composite(area, SWT.NONE);
-        container.setLayout(new GridLayout(1,true));
-        container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        setHelpAvailable(false);      
-
-        createOutput(container);
+        area = (Composite) super.createDialogArea(parent);
+        container = new Composite(area, SWT.NONE);
+        container.setLayout(new GridLayout());
+        container.setLayoutData(new GridData(GridData.FILL_BOTH));
+        
+        ScrolledComposite scrolledComposite = new ScrolledComposite(container, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+        scrolledComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
+        
+        scrolledComposite.setExpandHorizontal(true);
+        scrolledComposite.setExpandVertical(true);
+        
+        TextFoldViewer textFoldViewer = new TextFoldViewer(scrolledComposite, SWT.NONE, this.analysisOutput);
+        GridData foldviewLayoutData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		textFoldViewer.setLayoutData(foldviewLayoutData);
+        textFoldViewer.redrawListeners.add(new Runnable() {
+			@Override
+			public void run() {
+				parent.layout(true, true);
+				parent.requestLayout();
+				Point computeSize = textFoldViewer.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+				scrolledComposite.setMinSize(computeSize);
+			}
+		});
+        
+        scrolledComposite.setContent(textFoldViewer);
+        Point computeSize = textFoldViewer.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+        computeSize.y = computeSize.y + 40;
+		scrolledComposite.setMinSize(computeSize);
+		scrolledComposite.setMinWidth(SWT.DEFAULT);
+		scrolledComposite.getHorizontalBar().setEnabled(false);
         container.layout();
 
         return area;
@@ -84,50 +134,8 @@ public class OutputDialog extends TitleAreaDialog {
      super.createButtonsForButtonBar(parent);
      getButton(IDialogConstants.OK_ID).setText(Messages.OutputDialog_save);
     }
-
-    private void createOutput(Composite container) {
-        
-        ScrolledComposite scrolledComposite = new ScrolledComposite(container, SWT.V_SCROLL);
-        Composite parent = new Composite(scrolledComposite, SWT.NONE);
-
-        GridLayout gridLayoutParent = new GridLayout(1, false);
-        parent.setLayout(gridLayoutParent);
-        
-        GridData data = new GridData(SWT.FILL, SWT.FILL, true, true);
-        texts = new Composite(parent, SWT.NONE);
-        texts.setLayout(new GridLayout(1, false));
-        data.heightHint = parent.getClientArea().height;
-        texts.setLayoutData(data);
-
-        textnames = new Text[analysisOutput.size()];
-//        labels = new Label[analysisOutput.size()];
-
-        int size =0, i=0;
-        for (String output : analysisOutput) {
-            
-//            labels[i] = new Label(texts, SWT.NONE);
-//            labels[i].setText(output);
-//            labels[i].requestLayout();
-
-            textnames[i] = new Text(texts, SWT.WRAP | SWT.MULTI);
-            textnames[i].setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
-            textnames[i].setFont(FontService.getNormalMonospacedFont());
-            textnames[i].setText(output);
-            int height = textnames[i].getLineCount()*textnames[i].getLineHeight();
-            size+= height;
-            textnames[i].requestLayout();
-            texts.requestLayout();
-
-            i++;
-        }
-        texts.layout();
-
-        scrolledComposite.setContent(parent);
-        scrolledComposite.setMinSize(parent.computeSize(SWT.DEFAULT, size));
-        scrolledComposite.setExpandHorizontal(true);
-        scrolledComposite.setExpandVertical(true);
-        scrolledComposite.layout(true);
-    }
+    
+    
 
     @Override
     protected boolean isResizable() {
@@ -139,10 +147,9 @@ public class OutputDialog extends TitleAreaDialog {
         
         lf = new LoadFiles();
         outputString = new String("");
-
-        for (String output : analysisOutput) {
-            outputString += output;
-            String lastLine = output.substring(output.lastIndexOf("\n"));
+        for (TextPresentation output : analysisOutput) {
+            outputString += output.text;
+            String lastLine = output.text.substring(output.text.lastIndexOf("\n"));
             String visualDivide = "\n";
             for (int i=0;i<lastLine.length()*2;i++)
                 visualDivide+="-";
@@ -206,13 +213,14 @@ public class OutputDialog extends TitleAreaDialog {
 //        output.setFont(FontService.getNormalMonospacedFont());
         int i=0;
 //        Text[] textnames = new Text[analysisOutput.size()];
-      for (String output : analysisOutput) {
+      for (TextPresentation output : analysisOutput) {
+
 //    String group+String.valueOf(i);
 //    textnames[i] = new Text(texts, SWT.BORDER | SWT.MULTI | SWT.WRAP);
 //    textnames[i].setLayoutData(gridData);
 //    textnames[i].setFont(FontService.getNormalMonospacedFont());
 //          if (i<10) {
-              textnames[i].setText(output);
+              textnames[i].setText(output.text.trim());
               i++;
 //          }
 }
