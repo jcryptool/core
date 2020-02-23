@@ -10,7 +10,6 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.analysis.graphtools.derivates;
 
-import org.eclipse.swt.graphics.FontMetrics;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -100,9 +99,10 @@ public class LabelBar extends Bar {
 		lowerLabel = pLowerLabel;
 	}
 
-	public static Point calcTextXY(String myText, int midX, int topMidY, FontMetrics metrics) {
-		int leftX = (int) (midX - (myText.length() * metrics.getAverageCharacterWidth()) / 2);
-		int leftY = topMidY - metrics.getAscent() / 2 - 1;
+	public static Point calcTextXY(String myText, int midX, int topMidY, GC gc) {
+		int leftX = (int) (midX - gc.textExtent(myText).x / 2);
+// 		int leftX = (int) (midX - (myText.length() * gc.getAverageCharacterWidth()) / 2);
+		int leftY = topMidY - gc.getFontMetrics().getAscent() / 2 - 1;
 		return new Point(leftX, leftY);
 	}
 
@@ -117,7 +117,7 @@ public class LabelBar extends Bar {
 	 */
 	public void drawLowerLabel(Rectangle textSpace, GC myGC) {
 		Point myTextPos = calcTextXY(lowerLabel, textSpace.x + textSpace.width / 2, textSpace.y + textSpace.height / 2,
-				myGC.getFontMetrics());
+				myGC);
 		gc.drawText(lowerLabel, myTextPos.x, myTextPos.y, true);
 	}
 
@@ -132,7 +132,7 @@ public class LabelBar extends Bar {
 	@Override
 	public void drawUpperLabel(Rectangle textSpace, GC myGC) {
 		Point myTextPos = calcTextXY(upperLabel, textSpace.x + textSpace.width / 2, textSpace.y + textSpace.height / 2,
-				myGC.getFontMetrics());
+				myGC);
 		gc.drawText(upperLabel, myTextPos.x, myTextPos.y, true);
 	}
 
