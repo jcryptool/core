@@ -237,7 +237,7 @@ public class Bar {
 			GC myGC) {
 		this.drawBar(myBox, myHeight, myWidth, myColorMainbar, myGC);
 
-		Point myTextPos = LabelBar.calcTextXY(topLabel, myBox.x + myBox.width / 2, myBox.y - 10, myGC);
+		Point myTextPos = LabelBar.calcTextXY(topLabel, (double) myBox.x + ((double) myBox.width) / 2, myBox.y - 10, myGC);
 
 		Color prevColor = gc.getForeground();
 		gc.setForeground(new Color(Display.getDefault(), 0, 0, 0));
