@@ -9,6 +9,13 @@
 <body>
 	<h1>Tips and Tricks</h1>
 
+<p> </br> </p>
+	<h2>Maximizing the window of a plugin</h2>
+
+	<p>You might have opened the default view with editors, the context help, and some visualizations. If you then want one of them to be maximized just <strong>double-click</strong> on the tab (e.g. on the "Frequency Analysis" tab within the visualizations).</p>
+
+
+<p> </br> </p>
 	<h2>Using JCrypTool in a network environment or on a USB stick</h2>
 
 	<p>In principle it is possible to use JCrypTool in a network environment or on an external storage medium like a USB stick or a USB hard disk. To enable this you have to do a minor change in one of the configuration files: It is necessary to change the path to the default workspace folder. This folder is used by all plug-ins to store your specific preferences.</p>
@@ -17,7 +24,7 @@
 	Open the file <strong>JCrypTool.ini</strong> in your installation folder and search for the line
 	<strong>-data @user.home/documents/.jcryptool</strong>. Replace <strong>@user.home/documents/.jcryptool</strong> with the absolute path to a folder available in your environment.</p>
 
-	<p><strong>Mac OS X:</strong><br>
+	<p><strong>macOS:</strong><br>
 	The required changes are identical with the ones described above for Windows/Linux. However, the file
 	<strong>JCrypTool.ini</strong> is located at <strong>JCrypTool.app\Contents\MacOS</strong> in your installation folder.</p>
 
@@ -37,7 +44,7 @@
 
 	<p>It is possible that even after a successful installation the updates/changes are not visible. This may occur for newly installed plug-ins as well as updates for existing ones. The reason for that is the JCrypTool workspace folder, which caches and stores all plug-in information. Sometimes this information is not updated and the data stored there does not reflect the current installation any more.</p>
 
-	<p>To solve this, you can either delete the <strong>.jcryptool</strong> folder in your document directory (inside your user home directory) manually or you can tell JCrypTool to do that job. For the first case (when trying to delete this folder), please remember that this folder is hidden on Mac OS X and Linux. For the second case (to let JCrypTool delete this folder at each new start) simply add the parameter <strong>-clean</strong> at the end when launching JCrypTool (e.g. add it to the shortcut on Windows). This automatically deletes the workspace folder. This folder is automatically recreated and initialized when starting JCrypTool the next time. Remember to remove the parameter afterwards.</p>
+	<p>To solve this, you can either delete the <strong>.jcryptool</strong> folder in your document directory (inside your user home directory) manually or you can tell JCrypTool to do that job. For the first case (when trying to delete this folder), please remember that this folder is hidden on macOS and Linux. For the second case (to let JCrypTool delete this folder at each new start) simply add the parameter <strong>-clean</strong> at the end when launching JCrypTool (e.g. add it to the shortcut on Windows). This automatically deletes the workspace folder. This folder is automatically recreated and initialized when starting JCrypTool the next time. Remember to remove the parameter afterwards.</p>
 
 	<p>Here are two examples under Windows how the target command line call could lool like:</br>
 	F:\Downloads\jcryptool\JCrypTool.exe -clean</br>
