@@ -12,7 +12,6 @@ package org.jcryptool.crypto.ui.textsource;
 
 import java.io.File;
 
-import org.eclipse.equinox.internal.transforms.TransformedBundleEntry;
 import org.eclipse.ui.IEditorReference;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
