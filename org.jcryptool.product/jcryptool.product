@@ -17,7 +17,7 @@
       <programArgs>-data @user.home/Documents/.jcryptool
       </programArgs>
       <vmArgs>-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.SimpleLog
---add-modules=ALL-SYSTEM
+--add-modules=ALL-SYSTEM -Djceks.key.serialFilter=*
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>
@@ -42,6 +42,7 @@
    <intro introId="org.jcryptool.intro"/>
 
    <vm>
+      <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11</windows>
    </vm>
 
    <license>
@@ -117,6 +118,7 @@ Agreement more than one year after the cause of action arose. Each party waives 
       <feature id="org.jcryptool.crypto.modern.feature"/>
       <feature id="org.jcryptool.games.feature"/>
       <feature id="org.jcryptool.visual.feature"/>
+      <feature id="org.jcryptool.jre.master.feature"/>
    </features>
 
    <configurations>
