@@ -106,6 +106,8 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 			@Override
 			public void widgetSelected(SelectionEvent evt) {
 				try {
+					myGraph.getFrequencyGraph().setInstruction(Messages.FreqAnalysisGraph_graph1);
+					myGraph.redraw();
 					Display display = Display.getDefault();
 					Shell dialogShell = new Shell(display, SWT.APPLICATION_MODAL);
 					FileDialog fd_ChooseFile = new FileDialog(dialogShell, SWT.OPEN);
@@ -138,6 +140,8 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 			@Override
 			public void widgetSelected(SelectionEvent evt) {
 				if (checkEditor()) {
+					myGraph.getFrequencyGraph().setInstruction(Messages.FreqAnalysisGraph_graph1);
+					myGraph.redraw();
 					text = getEditorText();
 					source = EditorsManager.getInstance().getActiveEditorTitle();
 					button1.setEnabled(true);
@@ -149,12 +153,14 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 		button1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent evt) {
+				myGraph.getFrequencyGraph().setInstruction(Messages.FreqAnalysisGraph_shiftgraph0);
+
 				if (text.equals("") || text == null) {
 					MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0,
 							Messages.AbstractAnalysisUI_2);
 				} else {
 					recalcGraph();
-				}
+				}				
 			}
 		});
 

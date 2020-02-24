@@ -43,6 +43,10 @@ public class CustomFreqCanvas extends Canvas implements PaintListener, MouseMove
 	// Class for drawing calculations
 	private FreqAnalysisGraph frequencyGraph = new FreqAnalysisGraph(null, this.getSize().x, this.getSize().y);
 
+	public Composite getMycomp() {
+		return mycomp;
+	}
+	
 	// graph dragging variables
 	private boolean draggingEnabled = true;
 	private boolean dragging = false;
