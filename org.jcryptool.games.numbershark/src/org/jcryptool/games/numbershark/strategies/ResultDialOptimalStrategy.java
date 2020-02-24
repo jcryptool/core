@@ -43,6 +43,8 @@ public class ResultDialOptimalStrategy extends AbstractResultDialog {
         PlatformUI.getWorkbench().getHelpSystem()
                 .setHelp(parent, NumberSharkPlugin.PLUGIN_ID + ".optStratResultDialog"); //$NON-NLS-1$
 
+        parent.layout(true);
+        parent.getShell().pack();
         return area;
     }
 

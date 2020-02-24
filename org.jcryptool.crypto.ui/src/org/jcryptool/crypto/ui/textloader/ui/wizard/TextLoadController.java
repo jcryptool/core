@@ -164,7 +164,7 @@ public class TextLoadController extends Composite {
 
 
 	protected void loadTextWithLinkClick() {
-		TextInputWithSource textToLoad = null;
+		TextInputWithSource textToLoad = text;
 		TransformData dataToLoad = new TransformData();
 		
 		loadTextByWizard(textToLoad, dataToLoad);

@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -55,8 +56,11 @@ import org.jcryptool.analysis.transpositionanalysis.ui.TranspositionTableComposi
 import org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs.TextWithSourceInput;
 import org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs.TextonlyInput;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.input.AbstractUIInput;
+import org.jcryptool.crypto.ui.textloader.ui.wizard.loadtext.UIInputTextWithSource;
+import org.jcryptool.crypto.ui.textmodify.wizard.ModifyWizard;
 import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
 import org.jcryptool.crypto.ui.textsource.TextSourceType;
 
@@ -199,7 +203,7 @@ public class TranspTextWizardPage extends WizardPage {
 	 * "select text from file" radiobutton
 	 */
 	protected File fileTextInput;
-	private TextWithSourceInput textInput;
+	private UIInputTextWithSource textInput;
 	private TextInputWithSource initTextObject;
 	private Composite compFileInputDetails;
 	private Label lblFilenametxt;
@@ -209,6 +213,10 @@ public class TranspTextWizardPage extends WizardPage {
 	private Label lblIfTheText;
 	private Label lblCharacters;
 	private Label lblyouCanChange;
+	private Button buttonTransformText;
+
+	private TransformData lastTransform = null; 
+	private TransformData transformation = null; 
 
 	/**
 	 * Creates a new instance of TranspTextWizardPage.
@@ -343,6 +351,45 @@ public class TranspTextWizardPage extends WizardPage {
 
 		txtInputText = new Text(textfieldComp, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
 		GridData text1LData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		
+		buttonTransformText = new Button(grpText, SWT.CHECK);
+		buttonTransformText.setText("Filter text...");
+		buttonTransformText.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ModifyWizard transformSelectionWizard = new ModifyWizard();
+				TransformData preTfData = new TransformData();
+				
+				TransformData newTransform = null;
+				if (buttonTransformText.getSelection()) {
+					if (lastTransform != null ) {
+						preTfData = lastTransform;
+					}
+					transformSelectionWizard.setPredefinedData(preTfData);
+					WizardDialog dialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), transformSelectionWizard);
+					int result = dialog.open();
+
+					if (result == 0) {
+
+						newTransform = transformSelectionWizard.getWizardData();
+						lastTransform = newTransform;
+						transformation = newTransform;
+						textInput.synchronizeWithUserSide();
+						
+						
+					} else {
+						transformation = null;
+						buttonTransformText.setSelection(false);
+						textInput.synchronizeWithUserSide();
+					}
+				} else {
+					newTransform = null;
+					transformation = newTransform;
+					textInput.synchronizeWithUserSide();
+				}
+			}
+		});
 
 		GC temp = new GC(txtInputText);
 		int lines = 4;
@@ -570,7 +617,7 @@ public class TranspTextWizardPage extends WizardPage {
 			}
 		};
 
-		textInput = new TextWithSourceInput(editorRefs) {
+		textInput = new UIInputTextWithSource(editorRefs) {
 			@Override
 			protected Button getFileRadioButton() {
 				return btnDatei;
@@ -624,6 +671,16 @@ public class TranspTextWizardPage extends WizardPage {
 			@Override
 			protected AbstractUIInput<String> getTextOnlyInput() {
 				return textOnlyInput;
+			}
+
+			@Override
+			protected TransformData getTransformData() {
+				return transformation;
+			}
+
+			@Override
+			protected Button getBtnTransformation() {
+				return buttonTransformText;
 			}
 		};
 

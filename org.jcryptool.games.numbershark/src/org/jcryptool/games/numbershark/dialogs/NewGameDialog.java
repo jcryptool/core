@@ -34,7 +34,7 @@ public class NewGameDialog extends TitleAreaDialog {
 
     public NewGameDialog(Shell shell) {
         super(shell);
-        setShellStyle(SWT.TITLE | SWT.APPLICATION_MODAL);
+        setShellStyle(SWT.TITLE | SWT.APPLICATION_MODAL | SWT.CLOSE);
     }
     
 

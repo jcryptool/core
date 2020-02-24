@@ -21,11 +21,13 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Layout;
 import org.jcryptool.analysis.friedman.FriedmanPlugin;
 import org.jcryptool.analysis.friedman.IFriedmanAccess;
 import org.jcryptool.analysis.friedman.calc.FriedmanCalc;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.ui.textloader.ui.wizard.TextLoadController;
+import org.jcryptool.core.util.fonts.FontService;
 
 import com.cloudgarden.resource.SWTResourceManager;
 
@@ -59,6 +61,18 @@ public class FriedmanGraphUI extends org.eclipse.swt.widgets.Composite implement
 			GridLayout thisLayout = new GridLayout();
 			thisLayout.makeColumnsEqualWidth = true;
 			this.setLayout(thisLayout);
+
+			Composite compositeHeader = new Composite(this, SWT.NONE);
+			Label lblHeader = new Label(compositeHeader, SWT.NONE);
+			Label lblDescription = new Label(compositeHeader, SWT.NONE);
+			lblHeader.setFont(FontService.getHeaderFont());
+			lblHeader.setText(Messages.FriedmanGraphUI_0);
+			lblDescription.setText(Messages.FriedmanGraphUI_1);
+			GridLayout headerL = new GridLayout();
+			headerL.marginWidth = 0;
+			headerL.marginHeight = 0;
+			compositeHeader.setLayout(headerL);
+			
 			Composite composite1 = new Composite(this, SWT.NONE);
 			GridLayout composite1Layout = new GridLayout();
 			composite1Layout.numColumns = 4;
@@ -166,7 +180,7 @@ public class FriedmanGraphUI extends org.eclipse.swt.widgets.Composite implement
 			{
 				btnResetGraph = new Button(composite2, SWT.PUSH | SWT.CENTER);
 				btnResetGraph.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-				btnResetGraph.setText("Reset graph");
+				btnResetGraph.setText(Messages.FriedmanGraphUI_2);
 				btnResetGraph.setEnabled(false);
 				btnResetGraph.addSelectionListener(new SelectionAdapter() {
 					@Override

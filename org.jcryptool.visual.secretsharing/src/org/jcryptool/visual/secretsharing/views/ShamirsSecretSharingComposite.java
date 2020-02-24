@@ -423,7 +423,7 @@ public class ShamirsSecretSharingComposite extends Composite {
                     secret = new BigInteger(tmpSecret);
                     isPrime = modul.isProbablePrime(2000000);
 
-                    if (modul.compareTo(new BigInteger(spnrN.getText())) > 0) {
+                    if (modul.compareTo(new BigInteger(spnrT.getText())) >= 0) {
                         /*
                          * check if the modul is prime
                          */

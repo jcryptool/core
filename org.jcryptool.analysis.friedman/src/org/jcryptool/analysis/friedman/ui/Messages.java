@@ -14,6 +14,9 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.analysis.friedman.ui.messages"; //$NON-NLS-1$
+	public static String FriedmanGraphUI_0;
+	public static String FriedmanGraphUI_1;
+	public static String FriedmanGraphUI_2;
 	public static String FriedmanGraphUI_coincidence;
 	public static String FriedmanGraphUI_graph;
 	public static String FriedmanGraphUI_openandselect;

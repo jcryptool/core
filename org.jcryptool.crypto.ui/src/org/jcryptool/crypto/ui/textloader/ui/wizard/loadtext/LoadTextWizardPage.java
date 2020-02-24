@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.annotation.PreDestroy;
+
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -34,10 +37,13 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.input.AbstractUIInput;
 import org.jcryptool.crypto.ui.textloader.ui.ControlHatcher;
+import org.jcryptool.crypto.ui.textmodify.wizard.ModifyWizard;
 import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
 import org.jcryptool.crypto.ui.textsource.TextSourceType;
 
@@ -58,6 +64,10 @@ public class LoadTextWizardPage extends WizardPage {
 	private Composite textfieldComp;
 	private Text txtInputText;
 	private List<IEditorReference> editorRefs;
+	private Button transformButton;
+	private TransformData currentTransform;
+	private TransformData lastTransform;
+	
 	private org.jcryptool.crypto.ui.textloader.ui.wizard.loadtext.TextonlyInput textOnlyInput;
 	/**
 	 * The file that was last using the file selection wizard on press of the
@@ -236,6 +246,49 @@ public class LoadTextWizardPage extends WizardPage {
 					}
 				}
 			}
+			{
+				Composite textTransformComp = new Composite(grpText, SWT.NONE);
+				textTransformComp.setLayoutData(new GridData(GridData.FILL_BOTH));
+				textTransformComp.setLayout(new GridLayout());
+				transformButton = new Button(textTransformComp, SWT.CHECK);
+				transformButton.setText("Text filtern...");
+				transformButton.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						ModifyWizard transformSelectionWizard = new ModifyWizard();
+						TransformData preTfData = new TransformData();
+						
+						TransformData newTransform = null;
+						if (transformButton.getSelection()) {
+							if (lastTransform != null ) {
+								preTfData = lastTransform;
+							}
+							transformSelectionWizard.setPredefinedData(preTfData);
+							WizardDialog dialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), transformSelectionWizard);
+							int result = dialog.open();
+
+							if (result == 0) {
+
+								newTransform = transformSelectionWizard.getWizardData();
+								lastTransform = newTransform;
+								currentTransform = newTransform;
+								textInput.synchronizeWithUserSide();
+								
+								
+							} else {
+								currentTransform = null;
+								transformButton.setSelection(false);
+								textInput.synchronizeWithUserSide();
+							}
+						} else {
+							newTransform = null;
+							currentTransform = newTransform;
+							textInput.synchronizeWithUserSide();
+						}
+
+					}
+				});
+			}
 		}
 		
 		if(afterWizardTextParasiteLabel != null) {
@@ -327,6 +380,7 @@ public class LoadTextWizardPage extends WizardPage {
 		};
 
 		textInput = new UIInputTextWithSource(editorRefs) {
+			
 			@Override
 			protected Button getFileRadioButton() {
 				return btnDatei;
@@ -340,6 +394,17 @@ public class LoadTextWizardPage extends WizardPage {
 			@Override
 			protected Button getBtnOwninput() {
 				return btnZwischenablageeigeneEingabe;
+			}
+
+			@Override
+			protected Button getBtnTransformation() {
+				return transformButton;
+			}
+			
+			
+			@Override
+			protected TransformData getTransformData() {
+				return currentTransform;
 			}
 
 			@Override

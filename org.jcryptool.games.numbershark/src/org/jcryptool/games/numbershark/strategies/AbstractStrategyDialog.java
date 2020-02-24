@@ -38,7 +38,7 @@ public class AbstractStrategyDialog extends TitleAreaDialog {
 
     public AbstractStrategyDialog(Shell shell) {
         super(shell);
-        setShellStyle(SWT.TITLE | SWT.APPLICATION_MODAL);
+        setShellStyle(SWT.TITLE | SWT.APPLICATION_MODAL | SWT.CLOSE);
     }
 
     protected Group createSliders(Composite parent, final boolean showWarning, int max, int defaultSelection) {   	

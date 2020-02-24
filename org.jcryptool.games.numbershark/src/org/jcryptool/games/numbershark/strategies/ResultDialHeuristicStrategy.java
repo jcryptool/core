@@ -10,6 +10,8 @@
 package org.jcryptool.games.numbershark.strategies;
 
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -51,6 +53,7 @@ public class ResultDialHeuristicStrategy extends AbstractResultDialog {
         setMessage(msg);
         
         Composite area = (Composite) super.createDialogArea(parent);
+        area.setLayoutData(new GridData(GridData.FILL_BOTH));
 
         columns[0].setText(Messages.ShowOptStrategy_3);
         columns[1].setText(Messages.ShowHeuStrategy_4);
@@ -61,6 +64,8 @@ public class ResultDialHeuristicStrategy extends AbstractResultDialog {
         PlatformUI.getWorkbench().getHelpSystem()
                 .setHelp(parent, NumberSharkPlugin.PLUGIN_ID + ".heuStratResultDialog"); //$NON-NLS-1$
 
+        parent.layout(true);
+        parent.getShell().pack();
         return area;
     }
 
