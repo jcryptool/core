@@ -216,7 +216,7 @@ public class CustomFreqCanvas extends Canvas implements PaintListener, MouseMove
 	 */
 	private static double max(final FreqAnalysisData[] t) {
 		double maximum = -9999; // start with the first value
-		for (int i = 1; i < t.length; i++) {
+		for (int i = 0; i < t.length; i++) {
 			if (t[i].relOcc > maximum) {
 				maximum = t[i].relOcc; // new maximum
 			}
