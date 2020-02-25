@@ -69,7 +69,6 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 	private Button button1;
 	private Composite composite0;
 	private Composite composite1;
-	private ScrolledComposite scrolledComposite;
 	private Group group1;
 	private Group group4;
 	private Composite composite2;
@@ -236,18 +235,8 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 		myGraph = new CustomFreqCanvas(group1, SWT.NONE);
 		myGraph.setLayout(new GridLayout());
 		myGraph.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-		scrolledComposite = new ScrolledComposite(composite1, SWT.NONE);
-		scrolledComposite.setLayout(new GridLayout(1, false));
-		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-//		not working
-//		scrolledComposite.setExpandHorizontal(true);
-//		scrolledComposite.setExpandVertical(true);
-//		scrolledComposite.setMinSize(scrolledComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-//		scrolledComposite.setSize(scrolledComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-
-		group4 = new Group(scrolledComposite, SWT.NONE);
+		group4 = new Group(composite1, SWT.NONE);
 		group4.setLayout(new GridLayout());
 		group4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
 		group4.setText(Messages.FullAnalysisUI_propertieslabel);
