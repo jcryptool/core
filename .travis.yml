@@ -1,5 +1,6 @@
 sudo: false
 language: java
+#small test
 jdk:
 - openjdk11
 branches:
