@@ -1,3 +1,4 @@
+#test
 language: java
 jdk:
 - openjdk11
