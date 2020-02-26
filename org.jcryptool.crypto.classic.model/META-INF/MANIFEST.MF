@@ -13,7 +13,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.jcryptool.analysis.textmodify,
  org.jcryptool.crypto.ui,
  org.jcryptool.core.logging
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: org.eclipse.wb.swt,
  org.jcryptool.crypto.classic.model,
  org.jcryptool.crypto.classic.model.algorithm,

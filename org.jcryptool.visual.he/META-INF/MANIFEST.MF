@@ -16,7 +16,7 @@ Require-Bundle: org.eclipse.ui,
  org.jcryptool.visual.library,
  org.jcryptool.crypto.keystore
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: org.jcryptool.core.logging.dialogs,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.colors,

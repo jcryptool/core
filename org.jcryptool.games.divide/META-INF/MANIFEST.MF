@@ -5,7 +5,7 @@ Bundle-SymbolicName: org.jcryptool.games.divide;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.games.divide.DividePlugin
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,

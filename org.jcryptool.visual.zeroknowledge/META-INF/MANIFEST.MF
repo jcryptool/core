@@ -21,6 +21,6 @@ Export-Package: org.jcryptool.visual.zeroknowledge,
  org.jcryptool.visual.zeroknowledge.ui.graphenisomorphie,
  org.jcryptool.visual.zeroknowledge.ui.magischetuer,
  org.jcryptool.visual.zeroknowledge.views
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: org.jcryptool.core.util.fonts
 Automatic-Module-Name: org.jcryptool.visual.zeroknowledge

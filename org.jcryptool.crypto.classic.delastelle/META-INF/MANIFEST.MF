@@ -16,7 +16,7 @@ Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.crypto.classic.delastelle,
  org.jcryptool.crypto.classic.delastelle.algorithm,
  org.jcryptool.crypto.classic.delastelle.ui
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.crypto.classic.model.ui.wizard
 Automatic-Module-Name: org.jcryptool.crypto.classic.delastelle

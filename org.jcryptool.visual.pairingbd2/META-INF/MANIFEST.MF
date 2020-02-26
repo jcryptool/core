@@ -12,7 +12,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.help
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.directories,
  org.jcryptool.core.util.fonts

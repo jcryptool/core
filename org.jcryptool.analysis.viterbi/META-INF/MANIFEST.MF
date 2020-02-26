@@ -5,7 +5,7 @@ Bundle-SymbolicName: org.jcryptool.analysis.viterbi;singleton:=true
 Bundle-Version: 1.0.0
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor.0
 Bundle-Activator: org.jcryptool.analysis.viterbi.ViterbiPlugin

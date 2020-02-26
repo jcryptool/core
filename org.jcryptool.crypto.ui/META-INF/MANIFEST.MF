@@ -12,7 +12,7 @@ Require-Bundle: org.eclipse.ui,
  org.jcryptool.editor.text,
  org.jcryptool.thirdparty.m2bundle.jaxb
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: org.eclipse.wb.swt,
  org.jcryptool.crypto.ui,
  org.jcryptool.crypto.ui.alphabets,

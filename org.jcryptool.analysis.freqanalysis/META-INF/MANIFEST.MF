@@ -10,7 +10,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.jcryptool.core.operations,
  org.jcryptool.core.util
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: org.jcryptool.analysis.graphtools,
  org.jcryptool.analysis.graphtools.derivates,
  org.jcryptool.crypto.ui.textmodify.wizard,

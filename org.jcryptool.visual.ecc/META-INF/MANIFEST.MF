@@ -7,7 +7,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.jcryptool.core.operations,
  de.flexiprovider;bundle-version="1.7.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-Activator: org.jcryptool.visual.ecc.ECCPlugin
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor

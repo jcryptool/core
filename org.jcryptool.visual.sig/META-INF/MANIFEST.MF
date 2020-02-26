@@ -11,7 +11,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.jcryptool.core.logging,
  org.jcryptool.core.operations,
  org.jcryptool.core.util
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-Activator: org.jcryptool.visual.sig.SigPlugin
 Bundle-ActivationPolicy: lazy
 Import-Package: de.flexiprovider.core.dsa,

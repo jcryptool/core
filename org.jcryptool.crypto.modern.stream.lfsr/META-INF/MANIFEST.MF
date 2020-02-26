@@ -5,7 +5,7 @@ Bundle-SymbolicName: org.jcryptool.crypto.modern.stream.lfsr;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.crypto.modern.stream.lfsr.LfsrPlugin
 Bundle-Vendor: %Bundle-Vendor
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.jcryptool.core.operations,
