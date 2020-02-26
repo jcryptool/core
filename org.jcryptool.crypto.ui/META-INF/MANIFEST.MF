@@ -9,7 +9,8 @@ Require-Bundle: org.eclipse.ui,
  org.jcryptool.core.logging,
  org.jcryptool.core.operations,
  org.jcryptool.core.util,
- org.jcryptool.editor.text
+ org.jcryptool.editor.text,
+ org.jcryptool.thirdparty.m2bundle.jaxb
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.wb.swt,
