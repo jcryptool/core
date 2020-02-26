@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.annotation.PreDestroy;
+//import javax.annotation.PreDestroy;
 
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
