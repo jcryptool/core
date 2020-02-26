@@ -19,7 +19,9 @@ import java.net.URL;
 import java.util.Vector;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -157,6 +159,8 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 			@Override
 			public void widgetSelected(SelectionEvent evt) {
 				try {
+					myGraph.getFrequencyGraph().setInstruction(Messages.FreqAnalysisGraph_graph1);
+					myGraph.redraw();
 					Display display = Display.getDefault();
 					Shell dialogShell = new Shell(display, SWT.APPLICATION_MODAL);
 					FileDialog fd_ChooseFile = new FileDialog(dialogShell, SWT.OPEN);
@@ -189,10 +193,12 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 			@Override
 			public void widgetSelected(SelectionEvent evt) {
 				if (checkEditor()) {
+					myGraph.getFrequencyGraph().setInstruction(Messages.FreqAnalysisGraph_graph1);
+					myGraph.redraw();
 					text = getEditorText();
 					source = EditorsManager.getInstance().getActiveEditorTitle();
 					button1.setEnabled(true);
-					recalcSourceInfo();
+					recalcSourceInfo();	
 				}
 			}
 		});
@@ -200,11 +206,12 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 		button1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent evt) {
-
 				if (text.equals("") || text == null) {
 					MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0,
 							Messages.AbstractAnalysisUI_2);
 				} else {
+					myGraph.getFrequencyGraph().setInstruction(Messages.FreqAnalysisGraph_shiftgraph0);
+					
 					if (btnReferenceTools.getSelection()) {
 						selectAppropriateAlphabet();
 					} else {
@@ -212,14 +219,14 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 					}
 					recalcGraph();
 					recalcSourceInfo();
-				}
+				}				
 			}
 		});
 
 		composite1 = new Composite(this, SWT.NONE);
 		composite1.setLayout(new GridLayout(2, false));
 		composite1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
+		
 		group1 = new Group(composite1, SWT.NONE);
 		group1.setLayout(new GridLayout());
 		group1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -233,7 +240,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 		group4.setLayout(new GridLayout());
 		group4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
 		group4.setText(Messages.FullAnalysisUI_propertieslabel);
-
+		
 		tabFolder1 = new TabFolder(group4, SWT.NONE);
 
 		tabItem1 = new TabItem(tabFolder1, SWT.NONE);
@@ -421,7 +428,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 			}
 		}
 
-		tabItem3 = new TabItem(tabFolder1, SWT.NONE);
+		tabItem3 = new TabItem(tabFolder1, SWT.V_SCROLL);
 		tabItem3.setText(Messages.FullAnalysisUI_thirdtablabel);
 		composite5 = new Composite(tabFolder1, SWT.NONE);
 		composite5.setLayout(new GridLayout());
