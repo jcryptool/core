@@ -15,19 +15,19 @@
 <img src="curveType.PNG">
 <p>Es gibt drei Arten von elliptischen Kurven:<br>
 <b>1. Kurven in der Ebene der reellen Zahlen</b><br>
-<b>2. Kurven &uuml;ber dem K&ouml;rper F(p)</b><br>
-<b>3. Kurven &uuml;ber dem K&ouml;rper F(2^m)</b><br></p>
+<b>2. Kurven über dem Körper F(p)</b><br>
+<b>3. Kurven über dem Körper F(2^m)</b><br></p>
 
 <h3>1. Kurven in der Ebene der reellen Zahlen</h3>
-<h4>&Uuml;berblick</h4>
+<h4>überblick</h4>
   <p>Elliptische Kurven in der Ebene von reellen Zahlen entsprechen der Gleichung <i>y^2 = x^3 + a*x + b</i>, wobei die Variablen 
   <i>a</i>, <i>b</i>, <i>x</i> and <i>y</i> reelle Zahlen sind. <br>
   Auf der reellen Zahlenebene gibt es unendlich viele Punkte auf der Kurve. Für jeden Punkt 
   auf der Kurve gibt es einen negativen Wert, so das y = -y mit der Ausnahme y = 0. <br><br>
-  Zwei Punkte auf der Kurve k&ouml;nnen einfach addiert werden:
+  Zwei Punkte auf der Kurve können einfach addiert werden:
   <table>
-  <tr><td>1)</td><td>W&auml;hle einen Punkt <i>P</i> und einen Punkt <i>Q</i>.</td></tr>
-  <tr><td valign="TOP">2)</td><td>Male eine Linie durch <i>P</i> und <i>Q</i>. F&uuml;hre diese Linie fort, bis die Kurve ein drittes Mal
+  <tr><td>1)</td><td>Wähle einen Punkt <i>P</i> und einen Punkt <i>Q</i>.</td></tr>
+  <tr><td valign="TOP">2)</td><td>Male eine Linie durch <i>P</i> und <i>Q</i>. Führe diese Linie fort, bis die Kurve ein drittes Mal
   durchschnitten wird (P und Q sind die ersten zwei Male). Dieser Punkt ist <i>-R</i>.</td></tr>
   <tr><td>3)</td><td>Punkt <i>R</i> ist der Punkt <i>-R</i> mit invertierten y-Wert.</td></tr>
   </table></p>
@@ -40,7 +40,7 @@
 <h4>Berechnungen</h4>
   <h5>Punktaddition</h5>
   	Punkt <i>R</i> ist Punkt <i>O</i>, das Fernelement, wenn die Gleichung <i>P</i> = <i>-Q</i> erfüllt wird.
-  	In diesem Fall, durchschneidet die Linie die durch  <i>P</i> und <i>Q</i> f&uuml;hrt die Kurve nie ein drittes Mal.
+  	In diesem Fall, durchschneidet die Linie die durch  <i>P</i> und <i>Q</i> führt die Kurve nie ein drittes Mal.
   	<br><br>
     Wenn <i>P</i> != <i>Q</i>:<br>
     <i>s</i> = (<i>Yp</i> - <i>Yq</i>) / (<i>Xp</i> - <i>Xq</i>)<br>
@@ -54,11 +54,11 @@
     <i>Xr</i> = <i>s</i>^2 - 2<i>Xp</i><br>
     <i>Yr</i> = -<i>Yp</i> + <i>s</i>(<i>Xp</i> - <i>Xr</i>)<br><br>
 
-<h3>2. Kurven &uuml;ber dem K&ouml;rper F(p)</h3>
-<h4>&Uuml;berblick</h4>
-  <p>Eine Kurve &uuml;ber dem K&ouml;rper <i>F(p)</i> kann durch die Gleichung <i>(y^2) mod(p) = (x^3 + a*x + b) mod (p)</i> beschrieben werden.<br>
+<h3>2. Kurven über dem Körper F(p)</h3>
+<h4>überblick</h4>
+  <p>Eine Kurve über dem Körper <i>F(p)</i> kann durch die Gleichung <i>(y^2) mod(p) = (x^3 + a*x + b) mod (p)</i> beschrieben werden.<br>
    Die Variablen <i>a</i>, <i>b</i>, <i>x</i> und <i>y</i> sind Elemente von <i>F(p)</i> und <i>p</i> ist eine Primzahl.
-   Die Anzahl von Punkten im K&ouml;rper <i>F(p)</i> ist begrenzt auf p*p Punkte (endlicher K&ouml;rper).<br><br>
+   Die Anzahl von Punkten im Körper <i>F(p)</i> ist begrenzt auf p*p Punkte (endlicher Körper).<br><br>
 <table cellpadding=0 cellspacing=0>
 	<tr><td><img src="ECFp.PNG"></td></tr>
 	<tr><td align="CENTER" bgcolor="#E0DFE3"><i>y²</i> mod <i>29 = (x³ + 14x + 15)</i> mod <i>29</i></td></tr>
@@ -79,12 +79,12 @@
     <i>Yr</i> = (-<i>Yp</i> + <i>s</i>(<i>Xp</i> - <i>Xr</i>)) mod <i>p</i><br><br>
 
 
-<h3>3. Kurven &uuml;ber dem K&ouml;rper F(2^m)</a></h3>
-<h4>&Uuml;berblick</h4>
-  <p>Elemente &uuml;ber dem K&ouml;rper <i>F(2^m)</i> sind <i>m</i>-Bit Strings. Kalkulationen befolgen die Regeln der Polynomarithmetik. <br>
-  Die Berechnungen k&ouml;nnen von Computern effizient berechnet werden, da <i>F(2^m)</i> Operationen auf Bitfolgen ausf&uuml;rt.<br>
-  Die bin&auml;re Repr&auml;sentation einer elliptischen Kurve kann durch die Gleichung <i>y^2 + xy = x^3 + ax^2 + b</i> beschrieben werden, wobei <i>a</i>, <i>b</i>, <i>x</i> and <i>y</i> Elemente des K&ouml;rpers <i>F(2^m)</i> sind.<br>
-  Der K&ouml;rper <i>F(2^m)</i> wird mithilfe des Generators G definiert. G ist ein irreduzibles prim&auml;res Polynom mit der Bitl&auml;nge <i>m</i> + 1.<br> 
+<h3>3. Kurven über dem Körper F(2^m)</a></h3>
+<h4>überblick</h4>
+  <p>Elemente über dem Körper <i>F(2^m)</i> sind <i>m</i>-Bit Strings. Kalkulationen befolgen die Regeln der Polynomarithmetik. <br>
+  Die Berechnungen können von Computern effizient berechnet werden, da <i>F(2^m)</i> Operationen auf Bitfolgen ausfürt.<br>
+  Die binäre Repräsentation einer elliptischen Kurve kann durch die Gleichung <i>y^2 + xy = x^3 + ax^2 + b</i> beschrieben werden, wobei <i>a</i>, <i>b</i>, <i>x</i> and <i>y</i> Elemente des Körpers <i>F(2^m)</i> sind.<br>
+  Der Körper <i>F(2^m)</i> wird mithilfe des Generators G definiert. G ist ein irreduzibles primäres Polynom mit der Bitlänge <i>m</i> + 1.<br> 
   Das Negativ von Punkt <i>P</i> = (<i>Xp</i>, <i>Yp</i>) ist <i>-P</i> = (<i>Xp</i>, <i>Xp</i> + <i>Yp</i>).<br>
 <br>
 
@@ -95,7 +95,7 @@
 
 <h4>Berechnungen</h4>
   <h5>Polynomberechnungen</h5>
-  	Es ist wichtig Kalkulationen mit Polynomen zu verstehen, um Berechnungen &uuml;ber <i>F(2^m)</i> zu verstehen.<br>
+  	Es ist wichtig Kalkulationen mit Polynomen zu verstehen, um Berechnungen über <i>F(2^m)</i> zu verstehen.<br>
   	In den folgenden Beispielen werden alle Polynom als Bitfolgen dargestellt (e.g. for m=5 : x^4 + x^2 + x + 1 = 10111)<br><br>
     <b>Addition (mithilfe XORs)</b><br>
     1011 + 0101 = 1110<br><br>
@@ -114,14 +114,14 @@
     <i>Yr</i> = <i>s</i>(<i>Xp</i> + <i>Xr</i>) + <i>Xr</i> + <i>Yp</i><br></p>
 
   <h5>Punktmultiplikation</h5>
-    <p>Wenn <i>Xp</i> = 0 h&auml;lt, dann ist <i>R</i> = <i>O</i>.<br><br>
+    <p>Wenn <i>Xp</i> = 0 hält, dann ist <i>R</i> = <i>O</i>.<br><br>
     2<i>P</i> = <i>P</i> + <i>P</i> = <i>R</i><br>
     <i>s</i> = <i>Xp</i> + <i>Yp</i> / <i>Xp</i><br>
     <i>Xr</i> = <i>s</i>^2 + <i>s</i> + <i>a</i><br>
     <i>Yr</i> = <i>Xp</i>^2 + (<i>s</i> + 1) *<i>Xr</i><br></p>
 
 <br><br><br>
-F&uuml;r mehr Information &uuml;ber elliptische Kurven besuchen Sie <a href="https://de.wikipedia.org/wiki/Elliptische_Kurve">https://de.wikipedia.org/wiki/Elliptische_Kurve</a>.
+Für mehr Information über elliptische Kurven besuchen Sie <a href="https://de.wikipedia.org/wiki/Elliptische_Kurve">https://de.wikipedia.org/wiki/Elliptische_Kurve</a>.
 </body>
 </html>
 
