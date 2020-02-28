@@ -203,7 +203,7 @@ public class FreqAnalysisGraph extends Graph implements MouseMoveListener, Mouse
 					}
 				}
 
-				if (mouseIsNear && stat != null) {
+				if (mouseIsNear && stat != null && ! (bar instanceof OverlayBar || bar instanceof OverlayLabelBar) ) {
 					String lbl = String.format("%1.2f", stat.relOcc);
 					bar.drawBar(lbl);
 				} else {
@@ -401,7 +401,6 @@ public class FreqAnalysisGraph extends Graph implements MouseMoveListener, Mouse
 
 	@Override
 	public void mouseHover(MouseEvent e) {
-		System.out.println("Hover");
 		this.lastMouseCursorSensitivityPos = new Point(e.x, e.y);
 	}
 

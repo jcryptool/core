@@ -166,4 +166,15 @@ public class FreqAnalysisUI extends Composite {
 
 	}
 
+	public void resetClick() {
+		group1.dispose();
+		headerComposite.dispose();
+		C1.dispose();
+		C2.dispose();
+		initGUI();
+		this.layout(true);
+//		C1.resetClick();
+//		C2.resetClick();
+	}
+
 }

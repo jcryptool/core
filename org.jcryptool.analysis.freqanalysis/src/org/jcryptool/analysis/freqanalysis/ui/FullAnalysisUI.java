@@ -10,12 +10,18 @@
 package org.jcryptool.analysis.freqanalysis.ui;
 
 import java.io.BufferedReader;
+
+import org.jcryptool.crypto.ui.textloader.ui.wizard.TextLoadController;
+import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Vector;
 
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -91,7 +97,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 	private TabItem tabItem3;
 	private Composite composite5;
 	private Text text1;
-	private String source;
+	private TextInputWithSource source;
 
 	private FreqAnalysisCalc myAnalysis;
 	private FreqAnalysisCalc overlayAnalysis;
@@ -101,6 +107,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 	private FreqAnalysisCalc myLimitedAnalysis;
 	private SingleVanishTooltipLauncher tipLauncher;
 	private boolean appropriateAlphabetToBeDetected = false;
+	private TextLoadController textloader;
 
 	/**
 	 * Contains reference texts for overlays
@@ -141,87 +148,120 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 		composite0 = new Composite(this, SWT.NONE);
 		composite0.setLayout(new GridLayout(2, false));
 		composite0.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
-
-		button = new Button(composite0, SWT.NONE);
-		button.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		button.setText(Messages.FullAnalysisUI_loadtext);
-
-		button0 = new Button(composite0, SWT.NONE);
-		button0.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		button0.setText(Messages.FullAnalysisUI_loadeditor);
-
-		button1 = new Button(this, SWT.PUSH | SWT.CENTER);
-		button1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		button1.setText(Messages.FullAnalysisUI_startanalysis);
-		button1.setEnabled(false);
-
-		button.addSelectionListener(new SelectionAdapter() {
+		
+		textloader = new TextLoadController(composite0, this, SWT.NONE, true, true);
+		textloader.addObserver(new Observer() {
 			@Override
-			public void widgetSelected(SelectionEvent evt) {
-				try {
+			public void update(Observable o, Object arg) {
+				if (textloader.getText() != null) {
 					myGraph.getFrequencyGraph().setInstruction(Messages.FreqAnalysisGraph_graph1);
 					myGraph.redraw();
-					Display display = Display.getDefault();
-					Shell dialogShell = new Shell(display, SWT.APPLICATION_MODAL);
-					FileDialog fd_ChooseFile = new FileDialog(dialogShell, SWT.OPEN);
-					fd_ChooseFile.setFilterPath("\\"); //$NON-NLS-1$
-					fd_ChooseFile.setFilterExtensions(new String[] { "*.txt" }); //$NON-NLS-1$
-					File file_LoadReferenceText = new File(fd_ChooseFile.open());
-					source = file_LoadReferenceText.getAbsolutePath();
-					BufferedReader br = new BufferedReader(new FileReader(file_LoadReferenceText));
-					text = new String();
-					String line;
-					while ((line = br.readLine()) != null) {
-						text += line;
-					}
-
-					if (text == "") {
-						br.close();
-						throw new Exception();
-					}
-					button1.setEnabled(true);
-					recalcSourceInfo();
-					br.close();
-				} catch (Exception ex) {
-					MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0,
-							Messages.AbstractAnalysisUI_2);
-				}
-			}
-		});
-
-		button0.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent evt) {
-				if (checkEditor()) {
-					myGraph.getFrequencyGraph().setInstruction(Messages.FreqAnalysisGraph_graph1);
-					myGraph.redraw();
-					text = getEditorText();
-					source = EditorsManager.getInstance().getActiveEditorTitle();
-					button1.setEnabled(true);
+					text = textloader.getText().getText();
+					source = textloader.getText();
 					recalcSourceInfo();	
+					
+					myGraph.getFrequencyGraph().setInstruction(Messages.FreqAnalysisGraph_shiftgraph0);
+
+					if (text.equals("") || text == null) { //$NON-NLS-1$
+						MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0,
+								Messages.AbstractAnalysisUI_2);
+					} else {
+						myGraph.getFrequencyGraph().setInstruction(Messages.FreqAnalysisGraph_shiftgraph0);
+						
+						if (btnReferenceTools.getSelection()) {
+							selectAppropriateAlphabet();
+						} else {
+							appropriateAlphabetToBeDetected = true;
+						}
+						recalcGraph();
+						recalcSourceInfo();
+					}				
+					
 				}
 			}
 		});
 
-		button1.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent evt) {
-				if (text.equals("") || text == null) {
-					MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0,
-							Messages.AbstractAnalysisUI_2);
-				} else {
-					myGraph.getFrequencyGraph().setInstruction(Messages.FreqAnalysisGraph_shiftgraph0);
-					
-					if (btnReferenceTools.getSelection()) {
-						selectAppropriateAlphabet();
-					} else {
-						appropriateAlphabetToBeDetected = true;
-					}
-					recalcGraph();
-					recalcSourceInfo();
-				}				
-			}
-		});
+
+//		button = new Button(composite0, SWT.NONE);
+//		button.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+//		button.setText(Messages.FullAnalysisUI_loadtext);
+//
+//		button0 = new Button(composite0, SWT.NONE);
+//		button0.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+//		button0.setText(Messages.FullAnalysisUI_loadeditor);
+//
+//		button1 = new Button(this, SWT.PUSH | SWT.CENTER);
+//		button1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+//		button1.setText(Messages.FullAnalysisUI_startanalysis);
+//		button1.setEnabled(false);
+
+//		button.addSelectionListener(new SelectionAdapter() {
+//			@Override
+//			public void widgetSelected(SelectionEvent evt) {
+//				try {
+//					myGraph.getFrequencyGraph().setInstruction(Messages.FreqAnalysisGraph_graph1);
+//					myGraph.redraw();
+//					Display display = Display.getDefault();
+//					Shell dialogShell = new Shell(display, SWT.APPLICATION_MODAL);
+//					FileDialog fd_ChooseFile = new FileDialog(dialogShell, SWT.OPEN);
+//					fd_ChooseFile.setFilterPath("\\"); //$NON-NLS-1$
+//					fd_ChooseFile.setFilterExtensions(new String[] { "*.txt" }); //$NON-NLS-1$
+//					File file_LoadReferenceText = new File(fd_ChooseFile.open());
+//					source = file_LoadReferenceText.getAbsolutePath();
+//					BufferedReader br = new BufferedReader(new FileReader(file_LoadReferenceText));
+//					text = new String();
+//					String line;
+//					while ((line = br.readLine()) != null) {
+//						text += line;
+//					}
+//
+//					if (text == "") {
+//						br.close();
+//						throw new Exception();
+//					}
+//					button1.setEnabled(true);
+//					recalcSourceInfo();
+//					br.close();
+//				} catch (Exception ex) {
+//					MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0,
+//							Messages.AbstractAnalysisUI_2);
+//				}
+//			}
+//		});
+
+//		button0.addSelectionListener(new SelectionAdapter() {
+//			@Override
+//			public void widgetSelected(SelectionEvent evt) {
+//				if (checkEditor()) {
+//					myGraph.getFrequencyGraph().setInstruction(Messages.FreqAnalysisGraph_graph1);
+//					myGraph.redraw();
+//					text = getEditorText();
+//					source = EditorsManager.getInstance().getActiveEditorTitle();
+//					button1.setEnabled(true);
+//					recalcSourceInfo();	
+//				}
+//			}
+//		});
+//
+//		button1.addSelectionListener(new SelectionAdapter() {
+//			@Override
+//			public void widgetSelected(SelectionEvent evt) {
+//				if (text.equals("") || text == null) {
+//					MessageDialog.openInformation(getShell(), Messages.AbstractAnalysisUI_0,
+//							Messages.AbstractAnalysisUI_2);
+//				} else {
+//					myGraph.getFrequencyGraph().setInstruction(Messages.FreqAnalysisGraph_shiftgraph0);
+//					
+//					if (btnReferenceTools.getSelection()) {
+//						selectAppropriateAlphabet();
+//					} else {
+//						appropriateAlphabetToBeDetected = true;
+//					}
+//					recalcGraph();
+//					recalcSourceInfo();
+//				}				
+//			}
+//		});
 
 		composite1 = new Composite(this, SWT.NONE);
 		composite1.setLayout(new GridLayout(2, false));
@@ -255,7 +295,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 
 		composite2 = new Composite(composite3, SWT.NONE);
 		composite2.setLayout(new GridLayout());
-		composite2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		composite2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
 		button3 = new Button(composite2, SWT.RADIO);
 		button3.setText(Messages.FullAnalysisUI_monoalphabetic);
@@ -277,6 +317,13 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 				polyOnOffSelected(evt);
 			}
 		});
+		
+		
+		Label lblPolyalphabetic = new Label(composite2, SWT.WRAP);
+		lblPolyalphabetic.setText(Messages.FullAnalysisUI_6);
+		GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		layoutData.widthHint = 100;
+		lblPolyalphabetic.setLayoutData(layoutData);
 
 		group2 = new Group(composite3, SWT.NONE);
 		group2.setLayout(new GridLayout(2, false));
@@ -434,9 +481,9 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 		composite5.setLayout(new GridLayout());
 		tabItem3.setControl(composite5);
 
-		label4 = new Label(composite5, SWT.NONE);
+		label4 = new Label(composite5, SWT.WRAP);
 		label4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		label5 = new Label(composite5, SWT.NONE);
+		label5 = new Label(composite5, SWT.WRAP);
 		label5.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		label6 = new Label(composite5, SWT.NONE);
 		label6.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -459,19 +506,20 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 	 */
 	protected void recalcSourceInfo() {
 		if (text == null) {
-			label4.setText(Messages.FullAnalysisUI_source + " -");
-			label5.setText(Messages.FullAnalysisUI_textlength + " -");
-			text1.setText("");
+			label4.setText(Messages.FullAnalysisUI_source + " -"); //$NON-NLS-1$
+			label5.setText(Messages.FullAnalysisUI_textlength + " -"); //$NON-NLS-1$
+			text1.setText(""); //$NON-NLS-1$
+			composite5.layout(new Control[] { label4, label5 });
 
 		} else {
-			label4.setText(Messages.FullAnalysisUI_source + " " + source);
+			label4.setText(Messages.FullAnalysisUI_source + " " + source); //$NON-NLS-1$
 
 			String totalLength = Integer.toString(text.length());
-			label5.setText(Messages.FullAnalysisUI_textlength + " " + totalLength);
+			label5.setText(Messages.FullAnalysisUI_textlength + " " + totalLength); //$NON-NLS-1$
 
 			label6.setText(Messages.FullAnalysisUI_textexcerpt);
 			text1.setText(text.substring(0, (text.length() > 1000) ? 1000 : text.length())
-					+ ((text.length() > 1000) ? "..." : ""));
+					+ ((text.length() > 1000) ? "..." : "")); //$NON-NLS-1$ //$NON-NLS-2$
 			text1.setEditable(false);
 		}
 	}
@@ -747,6 +795,11 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 		myGraph.setOverlayActivated(btnReferenceTools.getSelection());
 		myGraph.redraw();
 
+	}
+
+	public void resetClick() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

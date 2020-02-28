@@ -40,6 +40,7 @@ public class Messages extends NLS {
 	public static String FullAnalysisUI_2;
 	public static String FullAnalysisUI_3;
 	public static String FullAnalysisUI_5;
+	public static String FullAnalysisUI_6;
 	public static String FullAnalysisUI_alphabetused;
 	public static String FullAnalysisUI_enabledecrOverlay;
 	public static String FullAnalysisUI_englishreftextname1;

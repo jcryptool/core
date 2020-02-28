@@ -66,4 +66,8 @@ public class FreqAnalysisView extends ViewPart implements IFreqAnalysisAccess {
 		myUI.execute(simpleView, keyLength, keyPos, overlayIndex, resetShift, executeCalc, whichTab, activateOverlay);
 
 	}
+
+	public void resetClick() {
+		myUI.resetClick();
+	}
 }
