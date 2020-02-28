@@ -56,6 +56,7 @@ import org.jcryptool.visual.ECDH.Messages;
 import org.jcryptool.visual.ECDH.algorithm.EC;
 import org.jcryptool.visual.ECDH.algorithm.ECFm;
 import org.jcryptool.visual.ECDH.algorithm.ECPoint;
+import org.jcryptool.visual.ECDH.handlers.ShowAnimationHandler;
 import org.jcryptool.visual.ECDH.ui.wizards.PublicParametersWizard;
 import org.jcryptool.visual.ECDH.ui.wizards.SecretKeyComposite;
 import org.jcryptool.visual.ECDH.ui.wizards.SecretKeyWizard;
@@ -122,9 +123,10 @@ public class ECDHComposite extends Composite {
 	private EllipticCurve largeCurve;
 	private Point pointG;
 	private FlexiBigInt largeOrder;
-	private boolean showAnimation = true;
 	private boolean chooseSecretButtonResets;
 	private Image id;
+	
+//	public boolean showAnimation = true;
 
 	public static final int RESET_ALL = 0;
 	public static final int RESET_PUBLIC_PARAMETERS = 1;
@@ -160,6 +162,7 @@ public class ECDHComposite extends Composite {
 		Composite compositeIntro = new Composite(this, SWT.NONE);
 		compositeIntro.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		compositeIntro.setLayout(new GridLayout(6, true));
+		compositeIntro.setBackground(ColorService.WHITE);
 
 		Label title = new Label(compositeIntro, SWT.NONE);
 		title.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 4, 1));
@@ -171,22 +174,23 @@ public class ECDHComposite extends Composite {
 		stDescription.setText(Messages.getString("ECDHView.description")); 
 		stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 4 ,2));
 		
-		btnShowAnimation = new Button(compositeIntro, SWT.CHECK);
-		btnShowAnimation.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true, 1, 2));
-		btnShowAnimation.setSelection(showAnimation);
-		btnShowAnimation.setText(Messages.getString("ECDHComposite.6")); 
-		btnShowAnimation.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				showAnimation = showAnimation ? false : true;
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				widgetSelected(e);
-			}
-		});
+//		btnShowAnimation = new Button(compositeIntro, SWT.CHECK);
+//		btnShowAnimation.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true, 1, 2));
+//		btnShowAnimation.setSelection(showAnimation);
+//		btnShowAnimation.setText(Messages.getString("ECDHComposite.6")); 
+////		ShowAnimationHandler.animationState
+//		btnShowAnimation.addSelectionListener(new SelectionListener() {
+//
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				showAnimation = showAnimation ? false : true;
+//			}
+//
+//			@Override
+//			public void widgetDefaultSelected(SelectionEvent e) {
+//				widgetSelected(e);
+//			}
+//		});
 		
 		
 		btnSaveToEditor= new Button(compositeIntro, SWT.PUSH);
@@ -345,7 +349,7 @@ public class ECDHComposite extends Composite {
 		btnExchangeKeys.setText(Messages.getString("ECDHView.exchangeSharedKeys")); 
 		btnExchangeKeys.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				if (showAnimation) {
+				if (ShowAnimationHandler.showAnimation) {
 					String[] animationMessages = buildAnimationMessages();
 					String messageA = animationMessages[0];
 					String messageB = animationMessages[1];
