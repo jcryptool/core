@@ -80,10 +80,10 @@ public class ECDHComposite extends Composite {
 	private Button btnCalculateKeyB ;
 	private Button btnSaveToFile;
 	private Button btnSaveToEditor;
-	private Button btnShowAnimation;
 	private Canvas canvasBtn ;
 	private Canvas canvasExchange ;
 	private Canvas canvasKey ;
+	private Composite areaForSaveButtons;
 	private Color cRed = new Color(Display.getCurrent(), 214, 100, 100);
 	private Color cGreen = new Color(Display.getCurrent(), 140, 220, 132);
 	private Color grey = new Color(Display.getCurrent(), 140, 138, 140);
@@ -125,8 +125,6 @@ public class ECDHComposite extends Composite {
 	private FlexiBigInt largeOrder;
 	private boolean chooseSecretButtonResets;
 	private Image id;
-	
-//	public boolean showAnimation = true;
 
 	public static final int RESET_ALL = 0;
 	public static final int RESET_PUBLIC_PARAMETERS = 1;
@@ -161,70 +159,19 @@ public class ECDHComposite extends Composite {
 	private void createCompositeHeader() {
 		Composite compositeIntro = new Composite(this, SWT.NONE);
 		compositeIntro.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		compositeIntro.setLayout(new GridLayout(6, true));
+		compositeIntro.setLayout(new GridLayout());
 		compositeIntro.setBackground(ColorService.WHITE);
 
 		Label title = new Label(compositeIntro, SWT.NONE);
-		title.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 4, 1));
+		title.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		title.setFont(FontService.getHeaderFont());
 		title.setText(Messages.getString("ECDHView.title")); 
 		title.setBackground(ColorService.WHITE);
 
 		StyledText stDescription = new StyledText(compositeIntro, SWT.READ_ONLY | SWT.WRAP);
 		stDescription.setText(Messages.getString("ECDHView.description")); 
-		stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 4 ,2));
+		stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		
-//		btnShowAnimation = new Button(compositeIntro, SWT.CHECK);
-//		btnShowAnimation.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true, 1, 2));
-//		btnShowAnimation.setSelection(showAnimation);
-//		btnShowAnimation.setText(Messages.getString("ECDHComposite.6")); 
-////		ShowAnimationHandler.animationState
-//		btnShowAnimation.addSelectionListener(new SelectionListener() {
-//
-//			@Override
-//			public void widgetSelected(SelectionEvent e) {
-//				showAnimation = showAnimation ? false : true;
-//			}
-//
-//			@Override
-//			public void widgetDefaultSelected(SelectionEvent e) {
-//				widgetSelected(e);
-//			}
-//		});
-		
-		
-		btnSaveToEditor= new Button(compositeIntro, SWT.PUSH);
-		btnSaveToEditor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, true, 1, 1));
-		btnSaveToEditor.setText(Messages.getString("ECDHComposite.2")); 
-		btnSaveToFile = new Button(compositeIntro, SWT.PUSH);
-		btnSaveToFile.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, true, 1, 1));
-		btnSaveToFile.setText(Messages.getString("ECDHComposite.3")); 
-		
-		btnSaveToFile.setVisible(false);
-		btnSaveToEditor.setVisible(false);	
-		
-		btnSaveToFile.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				saveToFile();
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-			}
-		});
-		btnSaveToEditor.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				saveToEditor();
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-			}
-		});
 	}
 
 	/**
@@ -243,6 +190,7 @@ public class ECDHComposite extends Composite {
 		createGroupBob();
 		createGroupInfo();
 		createCanvasKey();
+		createSaveButtonArea();
 	}
 	
 	/**
@@ -512,6 +460,7 @@ public class ECDHComposite extends Composite {
 
 		textSharedA = new Text(groupAlice, SWT.BORDER | SWT.READ_ONLY);
 		textSharedA.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		textSharedA.setFont(FontService.getNormalMonospacedFont());
 
 		btnCalculateKeyA = new Button(groupAlice, SWT.NONE);
 		btnCalculateKeyA.setText(Messages.getString("ECDHView.calculate")); 
@@ -559,6 +508,7 @@ public class ECDHComposite extends Composite {
 
 		textCommonKeyA = new Text(groupAlice, SWT.BORDER | SWT.READ_ONLY);
 		textCommonKeyA.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false));
+		textCommonKeyA.setFont(FontService.getNormalMonospacedFont());
 	}
 
 	/**
@@ -675,6 +625,7 @@ public class ECDHComposite extends Composite {
 
 		textSharedB = new Text(groupBob, SWT.BORDER | SWT.READ_ONLY);
 		textSharedB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		textSharedB.setFont(FontService.getNormalMonospacedFont());
 
 		btnCalculateKeyB = new Button(groupBob, SWT.NONE);
 		btnCalculateKeyB.setText(Messages.getString("ECDHView.calculate")); 
@@ -710,6 +661,7 @@ public class ECDHComposite extends Composite {
 
 		textCommonKeyB = new Text(groupBob, SWT.BORDER | SWT.READ_ONLY);
 		textCommonKeyB.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false));
+		textCommonKeyB.setFont(FontService.getNormalMonospacedFont());
 	}
 
 	
@@ -719,7 +671,7 @@ public class ECDHComposite extends Composite {
 	private void createGroupInfo() {
 		Group groupInfo = new Group(groupMain, SWT.NONE);
 		groupInfo.setLayout(new GridLayout());
-		groupInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
+		groupInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3));
 		groupInfo.setText(Messages.getString("ECDHView.currentStep"));
 
 		infoText = new Text(groupInfo, SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
@@ -735,7 +687,7 @@ public class ECDHComposite extends Composite {
 	private void createCanvasKey() {
 		id = ImageService.getImage(ECDHPlugin.PLUGIN_ID, "icons/key.png");
 		canvasKey = new Canvas(groupMain, SWT.NO_REDRAW_RESIZE);
-		GridData gd_canvasKey = new GridData(SWT.FILL, SWT.FILL, false, true, 3, 1);
+		GridData gd_canvasKey = new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1);
 		gd_canvasKey.verticalIndent = 10;
 		gd_canvasKey.widthHint = 850;
 		gd_canvasKey.heightHint = 69;
@@ -748,6 +700,52 @@ public class ECDHComposite extends Composite {
 					e.gc.drawImage(id, 305, 0);
 			}
 		});
+	}
+	
+	private void createSaveButtonArea() {
+		areaForSaveButtons = new Composite(groupMain, SWT.NONE);
+		areaForSaveButtons.setLayout(new GridLayout(4, true));
+		areaForSaveButtons.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 4, 1));
+		
+		// Spacer Label.
+		new Label(areaForSaveButtons, SWT.NONE);
+		
+		btnSaveToEditor= new Button(areaForSaveButtons, SWT.PUSH);
+		btnSaveToEditor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
+		btnSaveToEditor.setText(Messages.getString("ECDHComposite.2")); 
+		btnSaveToEditor.setVisible(false);
+		btnSaveToEditor.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				saveToEditor();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				saveToEditor();
+			}
+		});
+		
+		btnSaveToFile = new Button(areaForSaveButtons, SWT.PUSH);
+		btnSaveToFile.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
+		btnSaveToFile.setText(Messages.getString("ECDHComposite.3")); 
+		btnSaveToFile.setVisible(false);
+		btnSaveToFile.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				saveToFile();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				saveToFile();
+			}
+		});	
+		
+		//Spacer Label
+		new Label(areaForSaveButtons, SWT.NONE);
 	}
 
 
