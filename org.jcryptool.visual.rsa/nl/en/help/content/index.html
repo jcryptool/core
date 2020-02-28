@@ -36,7 +36,7 @@
   
   <p>First of all, the RSA parameters p, q, N and the Euler number phi(N) are calculated by choosing two different prime numbers p and q at random, and then by calculating the so-called RSA modulus N = p*q. The Euler number phi(N) = (p-1)*(q-1) is calculated from the prime factors p and q.</p>
   
-  <p>In a second step, the public RSA exponent e is determined and from this, together with phi(N), the secret RSA exponent d is calculated. The number e is chosen as follows 1 &lt; e &lt; phi(N), with the property that e is relatively prime to phi(N). An especially popular value for e is 2^16+1 = 65537, as in most cases this is co-prime to phi(N) and is especially well-suited for square and multiply exponentiation resulting in a very fast public key operation.</p>
+  <p>In a second step, the public RSA exponent e is determined and from this, together with phi(N), the secret RSA exponent d is calculated. The number e is chosen as follows 1 < e < phi(N), with the property that e is relatively prime to phi(N). An especially popular value for e is 2^16+1 = 65537, as in most cases this is co-prime to phi(N) and is especially well-suited for square and multiply exponentiation resulting in a very fast public key operation.</p>
   
   <p>The secret exponent d = e^(-1) mod phi(N) is calculated as the multiplicative inverse of the public exponent e modulo phi(N).</p>
   
