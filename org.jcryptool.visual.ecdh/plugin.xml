@@ -37,12 +37,20 @@
             class="org.jcryptool.visual.ECDH.handlers.RestartHandler"
             commandId="org.jcryptool.visual.ecdh.restartCommand">
       </handler>
+      <handler
+      		class="org.jcryptool.visual.ECDH.handlers.ShowAnimationHandler"
+      		commandId="org.jcryptool.visual.ecdh.showAnimationCommand">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
       <command
             id="org.jcryptool.visual.ecdh.restartCommand"
             name="%restart.command.name">
+      </command>
+      <command
+      		id="org.jcryptool.visual.ecdh.showAnimationCommand"
+      		name="ThisNameIsOverwrittenAtStartupByShowAnimationHandler#updateElement">
       </command>
    </extension>
    <extension
@@ -53,6 +61,11 @@
                commandId="org.jcryptool.visual.ecdh.restartCommand"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
                style="push">
+         </command>
+         <command
+         		commandId="org.jcryptool.visual.ecdh.showAnimationCommand"
+         		style="push">
+
          </command>
       </menuContribution>
    </extension>

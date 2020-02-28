@@ -13,12 +13,20 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.visual.ECDH.handlers.ShowAnimationHandler;
 
 public class ECDHView extends ViewPart {
 
 	private Composite parent;
 	private ECDHComposite ecdhComposite;
+	
+	/**
+	 * Show the animation (moving keys from A to S and B to S) or not.</br>
+	 * Default is true
+	 */
+	public boolean showAnimation = true;
 
 	/**
 	 * The constructor.
@@ -52,5 +60,10 @@ public class ECDHView extends ViewPart {
 	
 	public void reset() {
 		ecdhComposite.reset(ECDHComposite.RESET_ALL);
+		
+		// Reset the showAnimation Icon in the top right corner of the plugin.
+		ShowAnimationHandler.showAnimation = true;
+		ICommandService commands = (ICommandService) PlatformUI.getWorkbench().getService(ICommandService.class);
+		commands.refreshElements("org.jcryptool.visual.ecdh.showAnimationCommand", null); //$NON-NLS-1$
 	}
 }
