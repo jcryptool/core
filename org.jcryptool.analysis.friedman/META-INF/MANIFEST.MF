@@ -12,8 +12,7 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-Vendor: %Bundle-Vendor
-Export-Package: com.cloudgarden.resource,
- org.jcryptool.analysis.friedman,
+Export-Package: org.jcryptool.analysis.friedman,
  org.jcryptool.analysis.friedman.calc,
  org.jcryptool.analysis.friedman.handler,
  org.jcryptool.analysis.friedman.ui,
