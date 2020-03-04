@@ -42,6 +42,7 @@ import org.jcryptool.analysis.viterbi.algorithm.Path;
 import org.jcryptool.analysis.viterbi.algorithm.Viterbi;
 import org.jcryptool.analysis.viterbi.algorithm.ViterbiObserver;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.core.util.fonts.FontService;
@@ -110,7 +111,11 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
             LogUtil.logError(ViterbiPlugin.PLUGIN_ID, ex);
         }
 
-        setLayout(new GridLayout());
+        GridLayout gl = new GridLayout();
+        gl.marginHeight = 0;
+        gl.marginWidth = 0;
+        setLayout(gl);
+        
         createHead();
         createInput();
         createCalculation();
@@ -149,12 +154,13 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         head.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         head.setLayout(new GridLayout());
 
-        final Label label = new Label(head, SWT.NONE);
-        label.setFont(FontService.getHeaderFont());
-        label.setBackground(WHITE);
-        label.setText(Messages.ViterbiComposite_tab_title);
+        final Text text_Title = new Text(head, SWT.READ_ONLY | SWT.WRAP);
+        text_Title.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        text_Title.setFont(FontService.getHeaderFont());
+        text_Title.setText(Messages.ViterbiComposite_tab_title);
+        text_Title.setBackground(ColorService.WHITE);
 
-        stDescription = new StyledText(head, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
+        stDescription = new StyledText(head, SWT.READ_ONLY | SWT.WRAP);
         stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
     }
 

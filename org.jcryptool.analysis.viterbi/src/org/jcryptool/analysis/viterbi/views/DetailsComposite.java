@@ -31,10 +31,11 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.analysis.viterbi.algorithm.Path;
 import org.jcryptool.analysis.viterbi.algorithm.Viterbi;
 import org.jcryptool.analysis.viterbi.algorithm.Viterbi.IterationRecord;
+import org.jcryptool.core.util.colors.ColorService;
+import org.jcryptool.core.util.fonts.FontService;
 
 /**
  * This class generates the content of the "Viterbi" tab. With this tab the user can break the running key cipher
@@ -54,10 +55,7 @@ public class DetailsComposite extends Composite {
 //    private static final int CONTINUEBUTTONHEIGHT = 30;
 //    private static final int CONTINUEBUTTONWIDTH = 150;
 
-    /* colors for backgrounds. */
-//    private static final Color WHITE = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
 
-	private ViterbiView viterbiView;
 	private Table table;
 	
 	
@@ -148,24 +146,20 @@ public class DetailsComposite extends Composite {
      * Creates the tab
      *
      */
-    public DetailsComposite(final Composite parent, final int style, ViterbiView viterbiView) {
+    public DetailsComposite(final Composite parent, final int style) {
         super(parent, style);
-		this.viterbiView = viterbiView;
 		GridLayout gridLayout = new GridLayout(2, false);
 		gridLayout.horizontalSpacing = 15;
 		setLayout(gridLayout);
 		
-		Label lblViterbiAnalysisDetails = new Label(this, SWT.NONE);
-		lblViterbiAnalysisDetails.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		lblViterbiAnalysisDetails.setText(Messages.DetailsComposite_lblViterbiAnalysisDetails_text);
-		lblViterbiAnalysisDetails.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD));
-		lblViterbiAnalysisDetails.setBackground(SWTResourceManager.getColor(255, 255, 255));
+		Text textViterbiAnalysisDetails = new Text(this, SWT.READ_ONLY | SWT.WRAP);
+		textViterbiAnalysisDetails.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		textViterbiAnalysisDetails.setText(Messages.DetailsComposite_lblViterbiAnalysisDetails_text);
+		textViterbiAnalysisDetails.setFont(FontService.getHeaderFont());
 		
-		Text lblInThisComposite = new Text(this, SWT.WRAP);
-		GridData lbl1LData = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
-		lbl1LData.widthHint = 400;
-		lblInThisComposite.setLayoutData(lbl1LData);
-		lblInThisComposite.setText(Messages.DetailsComposite_0);
+		Text text_InThisComposite = new Text(this, SWT.READ_ONLY | SWT.WRAP);
+		text_InThisComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		text_InThisComposite.setText(Messages.DetailsComposite_0);
 		
 		Composite composite_2 = new Composite(this, SWT.NONE);
 		GridLayout gl_composite_2 = new GridLayout(3, false);
@@ -475,7 +469,7 @@ public class DetailsComposite extends Composite {
 			
 			TableItem ti = new TableItem(table, SWT.NONE);
 			if(derivedHighlights.isPresent() && derivedHighlights.get().stream().map(a->a.resolvePath()).anyMatch(q -> q.equals(p))) {
-				ti.setBackground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+				ti.setBackground(ColorService.getColor(SWT.COLOR_GRAY));
 			}
 			ti.setText(new String[]{""+(i+1), ""+prob, displ}); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -493,7 +487,7 @@ public class DetailsComposite extends Composite {
 			String displ = limitTo(pathToString(p), LIMIT_CONST);
 			
 			TableItem ti = new TableItem(table_1, SWT.NONE);
-			ti.setBackground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+			ti.setBackground(ColorService.getColor(SWT.COLOR_GRAY));
 			ti.setText(new String[]{""+(h.step), ""+(h.rank+1), displ}); //$NON-NLS-1$ //$NON-NLS-2$
 		});
 	}

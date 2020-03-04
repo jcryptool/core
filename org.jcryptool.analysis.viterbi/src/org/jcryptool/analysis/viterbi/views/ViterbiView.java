@@ -72,7 +72,7 @@ public class ViterbiView extends ViewPart {
 		sc = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
 		sc.setExpandHorizontal(true);
 		sc.setExpandVertical(true);
-		detailsComposite = new DetailsComposite(sc, SWT.NONE, this);
+		detailsComposite = new DetailsComposite(sc, SWT.NONE);
 		sc.setContent(detailsComposite);
 		ti.setControl(sc);
 

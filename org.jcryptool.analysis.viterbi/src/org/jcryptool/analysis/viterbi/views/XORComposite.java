@@ -25,6 +25,7 @@ import org.jcryptool.analysis.viterbi.algorithm.BitwiseXOR;
 import org.jcryptool.analysis.viterbi.algorithm.Combination;
 import org.jcryptool.analysis.viterbi.algorithm.IO;
 import org.jcryptool.analysis.viterbi.algorithm.ModularAddition;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.core.util.fonts.FontService;
@@ -38,8 +39,6 @@ import org.jcryptool.core.util.fonts.FontService;
  */
 public class XORComposite extends Composite {
 	/* set default values */
-	private static final int HORIZONTAL_SPACING = 5;
-	private static final int MARGIN_WIDTH = 5;
 
 	private static final int LOADBUTTONHEIGHT = 30;
 	private static final int LOADBUTTONWIDTH = 120;
@@ -70,7 +69,12 @@ public class XORComposite extends Composite {
 		super(parent, style);
 
 		this.viterbiView = viterbiView;
-		setLayout(new GridLayout());
+		
+		GridLayout gl = new GridLayout();
+		gl.marginHeight = 0;
+		gl.marginWidth = 0;
+		setLayout(gl);
+		
 		createHead();
 		createMainArea();
 
@@ -116,12 +120,12 @@ public class XORComposite extends Composite {
 		head.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		head.setLayout(new GridLayout());
 
-		final Label label = new Label(head, SWT.NONE);
-		label.setFont(FontService.getHeaderFont());
-		label.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
-		label.setText(Messages.XORComposite_tab_title);
+		final Text text_Title = new Text(head, SWT.READ_ONLY | SWT.WRAP);
+		text_Title.setFont(FontService.getHeaderFont());
+		text_Title.setText(Messages.XORComposite_tab_title);
+		text_Title.setBackground(ColorService.WHITE);
 
-		stDescription = new StyledText(head, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
+		stDescription = new StyledText(head, SWT.READ_ONLY | SWT.WRAP);
 		stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 	}
 
