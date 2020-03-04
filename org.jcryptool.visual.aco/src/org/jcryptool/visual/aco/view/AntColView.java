@@ -80,7 +80,7 @@ public class AntColView extends ViewPart {
 		parent.layout();
 
 		PlatformUI.getWorkbench().getHelpSystem()
-				.setHelp(parent, ACOPlugin.PLUGIN_ID + ".view"); //$NON-NLS-1$
+				.setHelp(parent, ACOPlugin.PLUGIN_ID + ".ContextHelpID"); //$NON-NLS-1$
 	}
 
 	/**
