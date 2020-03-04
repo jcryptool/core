@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
 	<context id="helpView" title="Divider Game">
-    <description>Divider Game is a game for two people invented by Christiane Licht. In 2010 she has won the regional contest in NRW at &quot;Jugend forscht&quot; with it.
+    <description>Divider Game is a game for two people invented by Christiane Licht. In 2010 she has won the regional contest in NRW at "Jugend forscht" with it.
 The procedure is as follows. First an arbitrary number is chosen. The playing field is then made up of all of the dividers of that number.
 
 A player chooses a random divider. This number and all of its multiples will be removed. This step will be repeated alternately. The player who chooses or is forced to choose the number 1 looses.
