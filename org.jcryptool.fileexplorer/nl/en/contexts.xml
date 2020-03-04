@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
    <context id="fileExplorerView" title="File Explorer View">
-      <description>The &lt;b&gt;File Explorer&lt;/b&gt; view offers access to your file system. You can open a file by double clicking on the name which then opens the hexeditor. The context menu offers access to many more operations.</description>
+      <description>The <b>File Explorer</b> view offers access to your file system. You can open a file by double clicking on the name which then opens the hexeditor. The context menu offers access to many more operations.</description>
       <topic href="nl/en/help/view.html" label="File Explorer View" />
    </context>
    <context id="fileExplorerPreferences" title="File Explorer Preferences">

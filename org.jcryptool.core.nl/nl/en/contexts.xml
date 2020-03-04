@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
    <context id="algorithmsPreferences" title="Algorithms">
-      <description>This is the start page for crypto plug-ins belonging to the category &lt;b&gt;Algorithms&lt;/b&gt;. The subpages here do contain the settings for plug-ins available in this category. Not every crypto plug-in does provide its own preferences.</description>
+      <description>This is the start page for crypto plug-ins belonging to the category <b>Algorithms</b>. The subpages here do contain the settings for plug-ins available in this category. Not every crypto plug-in does provide its own preferences.</description>
       <topic href="../org.jcryptool.core.help/nl/en/help/users/algorithms/toc.html" label="Algorithms"/>
    </context>
    <context id="analysisPreferences" title="Analysis">
-      <description>This is the start page for crypto plug-ins belonging to the category &lt;b&gt;Analysis&lt;/b&gt;. The subpages here do contain the settings for plug-ins available in this category. Not every crypto plug-in does provide its own preferences.</description>
+      <description>This is the start page for crypto plug-ins belonging to the category <b>Analysis</b>. The subpages here do contain the settings for plug-ins available in this category. Not every crypto plug-in does provide its own preferences.</description>
       <topic href="../org.jcryptool.core.help/nl/en/help/users/analysis/toc.html" label="Analysis"/>
    </context>
    <context id="cryptoPreferences" title="Cryptography">
@@ -17,11 +17,11 @@
       <topic href="../org.jcryptool.core.help/nl/en/help/users/general/editors.html" label="Editors"/>
    </context>
    <context id="gamesPreferences" title="Games">
-      <description>This is the start page for crypto plug-ins belonging to the category &lt;b&gt;Games&lt;/b&gt;. The subpages here do contain the settings for plug-ins available in this category. Not every crypto plug-in does provide its own preferences.</description>
+      <description>This is the start page for crypto plug-ins belonging to the category <b>Games</b>. The subpages here do contain the settings for plug-ins available in this category. Not every crypto plug-in does provide its own preferences.</description>
       <topic href="../org.jcryptool.core.help/nl/en/help/users/games/toc.html" label="Games"/>
    </context>
    <context id="visualsPreferences" title="Visualizations">
-      <description>This is the start page for crypto plug-ins belonging to the &lt;b&gt;Visualizations&lt;/b&gt;. The subpages here do contain the settings for plug-ins available in this category. Not every crypto plug-in does provide its own preferences.</description>
+      <description>This is the start page for crypto plug-ins belonging to the <b>Visualizations</b>. The subpages here do contain the settings for plug-ins available in this category. Not every crypto plug-in does provide its own preferences.</description>
       <topic href="../org.jcryptool.core.help/nl/en/help/users/visualizations/toc.html" label="Visualizations"/>
    </context>
    <context id="generalPreferences" title="General">

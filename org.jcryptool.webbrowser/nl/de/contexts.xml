@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
    <context id="webBrowserView" title="Web Browser Sicht">
-      <description>Mit der &lt;b&gt;Web Browser&lt;/b&gt; Sicht können Sie Webseiten innerhalb JCrypTools wie im normalen Internetbrowser anzuschauen.</description>
+      <description>Mit der <b>Web Browser</b> Sicht können Sie Webseiten innerhalb JCrypTools wie im normalen Internetbrowser anzuschauen.</description>
       <topic href="../org.jcryptool.core.help/nl/de/help/users/general/view_webbrowser.html" label="Web Browser Sicht" />
    </context>
 

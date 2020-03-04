@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
    <context id="fileExplorerView" title="Datei-Explorer Sicht">
-      <description>Die &lt;b&gt;Datei-Explorer&lt;/b&gt; Sicht bietet Zugriff auf das Dateisystem. Sie können Dateien öffnen in dem Sie auf den Dateinamen doppelklicken. Die gewählte Datei wird anschließend im Hexeditor geöffnet. Über das Kontextmenü haben Sie Zugriff auf viele weitere Operationen.</description>
+      <description>Die <b>Datei-Explorer</b> Sicht bietet Zugriff auf das Dateisystem. Sie können Dateien öffnen in dem Sie auf den Dateinamen doppelklicken. Die gewählte Datei wird anschließend im Hexeditor geöffnet. Über das Kontextmenü haben Sie Zugriff auf viele weitere Operationen.</description>
       <topic href="nl/de/help/view.html" label="Datei-Explorer Sicht" />
    </context>
    <context id="fileExplorerPreferences" title="Datei-Explorer Einstellungen">
