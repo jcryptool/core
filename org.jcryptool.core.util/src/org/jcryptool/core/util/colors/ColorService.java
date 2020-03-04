@@ -22,8 +22,47 @@ import org.eclipse.swt.widgets.Display;
  * @version 1.0.0
  */
 public class ColorService {
-    /** Colors for backgrounds. */
-    public static final Color WHITE, GREEN, RED, LIGHTGRAY, GRAY, BLACK, YELLOW;
+	/**
+	 * White <br>
+	 * Same as <code>SWT.COLOR_WHITE</code>
+	 */
+    public static final Color WHITE;
+    
+	/**
+	 * Green <br>
+	 * Same as <code>SWT.COLOR_GREEN</code>
+	 */
+    public static final Color GREEN;
+    
+	/**
+	 * Red <br>
+	 * Same as <code>SWT.COLOR_RED</code>
+	 */
+    public static final Color RED;
+    
+	/**
+	 * Lightgray (normal background gray> <br>
+	 * Same as <code>SWT.COLOR_WIDGET_BACKGROUND</code>
+	 */
+    public static final Color LIGHTGRAY;
+    
+	/**
+	 * Dark Gray <br>
+	 * Same as <code>SWT.COLOR_DARK_GRAY</code>
+	 */
+    public static final Color GRAY;
+    
+	/**
+	 * Black <br>
+	 * Same as <code>SWT.COLOR_BLACK</code>
+	 */
+    public static final Color BLACK;
+    
+	/**
+	 * Yellow <br>
+	 * Same as <code>SWT.COLOR_YELLOW</code>
+	 */
+    public static final Color YELLOW;
 
     static {
         WHITE = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
@@ -33,5 +72,14 @@ public class ColorService {
         LIGHTGRAY = Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND);
         BLACK = Display.getDefault().getSystemColor(SWT.COLOR_BLACK);
         YELLOW = Display.getDefault().getSystemColor(SWT.COLOR_YELLOW);
+    }
+    
+    /**
+     * Gets you a color.<br>Example: getColor(SWT.COLOR_BLUE)
+     * @param colorID An SWT.COLOR_...
+     * @return a color
+     */
+    public static Color getColor(int colorID) {
+    	return Display.getDefault().getSystemColor(colorID);
     }
 }
