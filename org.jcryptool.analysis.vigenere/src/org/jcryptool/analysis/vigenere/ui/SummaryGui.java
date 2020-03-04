@@ -30,6 +30,7 @@ import org.jcryptool.analysis.vigenere.interfaces.DataProvider;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.editors.EditorNotFoundException;
 import org.jcryptool.core.operations.editors.EditorsManager;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 
 /**
@@ -43,6 +44,11 @@ import org.jcryptool.core.util.fonts.FontService;
  * ANY CORPORATE OR COMMERCIAL PURPOSE.
  */
 public class SummaryGui extends Content {
+	
+	private Composite titleAndDescription;
+	private Text title;
+	private Text decription;
+	
 	private Group gsteps;
 	private Text tinto;
 
@@ -75,7 +81,25 @@ public class SummaryGui extends Content {
 		try {
 			this.setLayout(new GridLayout());
 			this.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
+			
+			// Composite for the Title and the description of the plugin
+			// White area on the first page.
+			titleAndDescription = new Composite(this, SWT.NONE);	
+			titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+			titleAndDescription.setLayout(new GridLayout());
+			titleAndDescription.setBackground(ColorService.WHITE);
+			
+			title = new Text(titleAndDescription, SWT.READ_ONLY | SWT.WRAP);
+			title.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+			title.setText(Messages.SummaryGui_text_title);
+			title.setBackground(ColorService.WHITE);
+			title.setFont(FontService.getHeaderFont());
+			
+			decription = new Text(titleAndDescription, SWT.READ_ONLY | SWT.WRAP);
+			decription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+			decription.setText(Messages.SummaryGui_text_description);
+			decription.setBackground(ColorService.WHITE);
+			
 			gsteps = new Group(this, SWT.NONE);
 			gsteps.setLayout(new GridLayout());
 			gsteps.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));

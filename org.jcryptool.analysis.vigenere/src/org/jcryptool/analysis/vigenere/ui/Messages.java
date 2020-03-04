@@ -79,8 +79,10 @@ public class Messages extends NLS {
     public static String SummaryGui_button_start;
     public static String SummaryGui_combo_warning;
     public static String SummaryGui_group_steps;
+    public static String SummaryGui_text_description;
     public static String SummaryGui_text_help;
     public static String SummaryGui_text_intro;
+    public static String SummaryGui_text_title;
     public static String SummaryGui_ttip_analyze;
     public static String SummaryGui_ttip_start;
     public static String VigenereBreakerGui_mbox_empty;
