@@ -48,16 +48,7 @@ import org.jcryptool.crypto.ui.textsource.TextInputWithSourceDisplayer;
 import org.jcryptool.crypto.ui.textsource.TextInputWithSourceDisplayer.Style;
 import org.jcryptool.editor.text.JCTTextEditorPlugin;
 
-/**
- * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
- * Builder, which is free for non-commercial use. If Jigloo is being used
- * commercially (ie, by a corporation, company or business for any purpose
- * whatever) then you should purchase a license for each developer using Jigloo.
- * Please visit www.cloudgarden.com for details. Use of Jigloo implies
- * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
- * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
- * ANY CORPORATE OR COMMERCIAL PURPOSE.
- */
+
 public class TranspAnalysisUI extends Composite implements Observer {
 
 	private TranspositionTableComposite transpTable;
@@ -98,7 +89,7 @@ public class TranspAnalysisUI extends Composite implements Observer {
 	private Label lblColumnCount;
 	private Spinner spinner;
 	private Composite compTextSource;
-	private Label title;
+	private Text title;
 	private Label label;
 	private Label lblYouHaveSelected;
 	private TextInputWithSourceDisplayer sourceDisplayer;
@@ -232,21 +223,21 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		scrolledComposite.setExpandVertical(true);
 
 		content = new Composite(scrolledComposite, SWT.NONE);
-		GridLayout thisLayout = new GridLayout(1, true);
 		content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		content.setLayout(thisLayout);
+		content.setLayout(new GridLayout(1, true));
 
 		headerComposite = new Composite(content, SWT.NONE);
 		headerComposite.setLayout(new GridLayout());
 		headerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		headerComposite.setBackground(ColorService.WHITE);
 
-		title = new Label(headerComposite, SWT.NONE);
+		title = new Text(headerComposite, SWT.READ_ONLY | SWT.WRAP);
+		title.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		title.setText(Messages.TranspAnalysisUI_view_title);
 		title.setFont(FontService.getHeaderFont());
 		title.setBackground(ColorService.WHITE);
 
-		description = new Text(headerComposite, SWT.READ_ONLY);
+		description = new Text(headerComposite, SWT.READ_ONLY | SWT.WRAP);
 		description.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		description.setText(Messages.TranspAnalysisUI_view_description);
 		description.setBackground(ColorService.WHITE);
