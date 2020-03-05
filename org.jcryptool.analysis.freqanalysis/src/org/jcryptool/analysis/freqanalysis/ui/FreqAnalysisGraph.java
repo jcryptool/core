@@ -10,9 +10,8 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.analysis.freqanalysis.ui;
 
-import java.awt.List;
 import java.text.DecimalFormat;
-import java.util.LinkedList;
+//import java.util.LinkedList;
 import java.util.Vector;
 
 import org.eclipse.osgi.util.NLS;
@@ -170,7 +169,7 @@ public class FreqAnalysisGraph extends Graph implements MouseMoveListener, Mouse
 		thisBGColor.setBGColor(gc);
 		gc.fillRectangle(thisArea);
 
-		boolean hasDrawnLbl = false;
+//		boolean hasDrawnLbl = false;
 				
 		for (int i = 0; i < bars.size(); i++) {
 			// Only shift when the bar is no overlay bar.

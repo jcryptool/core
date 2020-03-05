@@ -10,16 +10,16 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.analysis.freqanalysis.ui;
 
-import java.io.BufferedReader;
+//import java.io.BufferedReader;
 import org.jcryptool.crypto.ui.textloader.ui.wizard.TextLoadController;
 
-import java.io.File;
-import java.io.FileReader;
+//import java.io.File;
+//import java.io.FileReader;
 import java.util.Observable;
 import java.util.Observer;
 
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.wizard.WizardDialog;
+//import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -30,20 +30,20 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.FileDialog;
+//import org.eclipse.swt.widgets.Display;
+//import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
+//import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.PlatformUI;
+//import org.eclipse.ui.PlatformUI;
 import org.jcryptool.analysis.freqanalysis.calc.FreqAnalysisCalc;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
-import org.jcryptool.core.operations.editors.EditorsManager;
-import org.jcryptool.crypto.ui.textmodify.wizard.ModifyWizard;
+//import org.jcryptool.core.operations.editors.EditorsManager;
+//import org.jcryptool.crypto.ui.textmodify.wizard.ModifyWizard;
 import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
 
 /**
@@ -51,14 +51,14 @@ import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
  *
  */
 public class SimpleAnalysisUI extends AbstractAnalysisUI {
-	private Button button;
-	private Button button0;
-	private Button button1;
+//	private Button button;
+//	private Button button0;
+//	private Button button1;
 	private Composite composite0;
 	private Composite composite1;
 	private Group group1;
 	private Label label1;
-	private Button button2;
+//	private Button button2;
 	private Button button4;
 	private Composite composite2;
 	private Group group4;
@@ -364,21 +364,21 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 	 * @param the Settings that have to be displayed at the beginning.
 	 * @return the selected settings.
 	 */
-	private TransformData getTransformWizardSettings(final TransformData predefined) {
-
-		ModifyWizard wizard = new ModifyWizard();
-		wizard.setPredefinedData(predefined);
-		WizardDialog dialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), wizard);
-		dialog.setHelpAvailable(false);
-		int result = dialog.open();
-
-		if (result == 0) {
-			return wizard.getWizardData();
-		} else {
-			return predefined;
-		}
-
-	}
+//	private TransformData getTransformWizardSettings(final TransformData predefined) {
+//
+//		ModifyWizard wizard = new ModifyWizard();
+//		wizard.setPredefinedData(predefined);
+//		WizardDialog dialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), wizard);
+//		dialog.setHelpAvailable(false);
+//		int result = dialog.open();
+//
+//		if (result == 0) {
+//			return wizard.getWizardData();
+//		} else {
+//			return predefined;
+//		}
+//
+//	}
 
 	/**
 	 * frequency analysis main procedure

@@ -9,13 +9,13 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.analysis.freqanalysis.ui;
 
-import java.io.BufferedReader;
+//import java.io.BufferedReader;
 
 import org.jcryptool.crypto.ui.textloader.ui.wizard.TextLoadController;
 import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
 
-import java.io.File;
-import java.io.FileReader;
+//import java.io.File;
+//import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -25,9 +25,9 @@ import java.util.Observer;
 import java.util.Vector;
 
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.osgi.util.NLS;
+//import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
+//import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -39,11 +39,11 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.FileDialog;
+//import org.eclipse.swt.widgets.Display;
+//import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
+//import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
@@ -53,10 +53,8 @@ import org.jcryptool.analysis.freqanalysis.calc.FreqAnalysisCalc;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
-import org.jcryptool.core.operations.editors.EditorsManager;
+//import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.ui.SingleVanishTooltipLauncher;
-
-import com.cloudgarden.resource.SWTResourceManager;
 
 /**
  * @author SLeischnig
@@ -64,15 +62,9 @@ import com.cloudgarden.resource.SWTResourceManager;
  */
 public class FullAnalysisUI extends AbstractAnalysisUI {
 
-	{
-		// Register as a resource user - SWTResourceManager will
-		// handle the obtaining and disposing of resources
-		SWTResourceManager.registerResourceUser(this);
-	}
-
-	private Button button;
-	private Button button0;
-	private Button button1;
+//	private Button button;
+//	private Button button0;
+//	private Button button1;
 	private Composite composite0;
 	private Composite composite1;
 	private Group group1;
@@ -797,9 +789,8 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 
 	}
 
-	public void resetClick() {
-		// TODO Auto-generated method stub
-		
-	}
+//	public void resetClick() {
+//		
+//	}
 
 }
