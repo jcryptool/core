@@ -78,8 +78,8 @@ public class CRTGroup extends Composite implements Constants {
 	private ScrolledComposite scrolledComposite_1;
 	private ScrolledComposite scrolledComposite_2;
 	private Composite compositeTitleArea;
-	private Label lblHeader;
-	private Text lblHeaderInfoText;
+	private Text txtHeader;
+	private Text txtHeaderInfoText;
 
 	/**
 	 * Create the composite
@@ -110,16 +110,16 @@ public class CRTGroup extends Composite implements Constants {
 		compositeTitleArea.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
 		compositeTitleArea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 
-		lblHeader = new Label(compositeTitleArea, SWT.NONE);
-		lblHeader.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		lblHeader.setFont(FontService.getHeaderFont());
-		lblHeader.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-		lblHeader.setText(Messages.CRTGroup_Header);
+		txtHeader = new Text(compositeTitleArea, SWT.READ_ONLY);
+		txtHeader.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		txtHeader.setFont(FontService.getHeaderFont());
+		txtHeader.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+		txtHeader.setText(Messages.CRTGroup_Header);
 
-		lblHeaderInfoText = new Text(compositeTitleArea, SWT.WRAP | SWT.MULTI | SWT.READ_ONLY);
-		lblHeaderInfoText.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false));
-		lblHeaderInfoText.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-		lblHeaderInfoText.setText(Messages.CRTGroup_HeaderInfoText);
+		txtHeaderInfoText = new Text(compositeTitleArea, SWT.WRAP | SWT.MULTI | SWT.READ_ONLY);
+		txtHeaderInfoText.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false));
+		txtHeaderInfoText.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+		txtHeaderInfoText.setText(Messages.CRTGroup_HeaderInfoText);
 
 		step1Group = new Group(content, SWT.NONE);
 		step1Group.setLayout(new GridLayout(2, false));
