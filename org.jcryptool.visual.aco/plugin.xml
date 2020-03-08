@@ -50,15 +50,6 @@
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
-            locationURI="menu:org.jcryptool.visual.aco.view.ViewID">
-         <command
-               commandId="org.jcryptool.visual.aco.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
-               style="push">
-         </command>
-      </menuContribution>
-      <menuContribution
-            allPopups="false"
             locationURI="toolbar:org.jcryptool.visual.aco.view.ViewID">
          <command
                commandId="org.jcryptool.visual.aco.restartCommand"

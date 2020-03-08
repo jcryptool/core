@@ -44,22 +44,22 @@ public class AntColView extends ViewPart {
 
 		ScrolledComposite scrollContainer = new ScrolledComposite(parent,
 				SWT.H_SCROLL | SWT.V_SCROLL);
-		scrollContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-				true));
+		scrollContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		scrollContainer.setExpandHorizontal(true);
 		scrollContainer.setExpandVertical(true);
 		Composite container = new Composite(scrollContainer, SWT.NONE);
-		container.setLayout(new GridLayout(4, false));
+		GridLayout gridLayout = new GridLayout(4, false);
+		gridLayout.marginHeight = 0;
+		gridLayout.marginWidth = 0;
+		container.setLayout(gridLayout);
 
 		AntColHeaderComposite headerComp = new AntColHeaderComposite(container);
-		headerComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false,
-				4, 1));
+		headerComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 4, 1));
 
 		configComp = new AntColConfigComposite(model, container);
 		configComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		analysisComp = new AntColAnalysisComposite(model, container);
-		analysisComp
-				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		analysisComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 
 		visualComp = new AntColVisualComposite(model, container);
 		visualComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
