@@ -24,6 +24,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Text;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.arc4.ARC4Con;
 import org.jcryptool.visual.arc4.Messages;
@@ -170,22 +172,21 @@ public class ARC4Composite extends Composite {
     	//of the size. Would be nice, if this could be solved.
     	gd_descr.widthHint = 1000;
         descr.setLayoutData(gd_descr);
-        descr.setLayout(new GridLayout(1, true));
-        descr.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+        descr.setLayout(new GridLayout());
+        descr.setBackground(ColorService.WHITE);
 
         // the heading of the description; is not selectable by mouse
-        Label descLabel = new Label(descr, SWT.NONE);
-        descLabel.setText(Messages.PluginDescriptionCaption);
-        descLabel.setFont(FontService.getHeaderFont());
-        descLabel.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+        Text text_title = new Text(descr, SWT.READ_ONLY);
+        text_title.setText(Messages.PluginDescriptionCaption);
+        text_title.setFont(FontService.getHeaderFont());
+        text_title.setBackground(ColorService.WHITE);
 
         // this divide has been made to allow selection of text in this section but not of the
         // heading
         // while not allowing modification of either section
-        StyledText descText = new StyledText(descr, SWT.WRAP);
+        StyledText descText = new StyledText(descr, SWT.READ_ONLY | SWT.WRAP);
         descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         descText.setText(Messages.PluginDescription);
-        descText.setEditable(false);
     }
     
     private void initAlgoSec() {
