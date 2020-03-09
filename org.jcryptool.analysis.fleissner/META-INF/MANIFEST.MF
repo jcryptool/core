@@ -24,3 +24,4 @@ Export-Package: org.jcryptool.analysis.fleissner,
  org.jcryptool.analysis.fleissner.key,
  org.jcryptool.analysis.fleissner.logic,
  org.jcryptool.analysis.fleissner.views
+Bundle-Vendor: %Bundle-Vendor
