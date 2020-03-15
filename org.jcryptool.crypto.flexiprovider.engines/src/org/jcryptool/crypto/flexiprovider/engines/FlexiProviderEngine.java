@@ -90,7 +90,7 @@ public abstract class FlexiProviderEngine {
 
     protected InputStream initInput(String input) {
         InputStream is = null;
-        if (input.equals(Messages.InputType)) {
+        if (input.equals("<Active Editor>")) {
             if (EditorsManager.getInstance().isEditorOpen()) {
                 is = EditorsManager.getInstance().getActiveEditorContentInputStream();
             } else {
