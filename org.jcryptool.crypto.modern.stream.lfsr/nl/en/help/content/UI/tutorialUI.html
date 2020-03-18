@@ -23,7 +23,7 @@
 	<br>
 	<h2 id="Enc-textmessage">1) Encrypting a text message with the LFSR cipher</h2>
 
-	<img src="figure1.png">
+	<p align=center><img src="figure1.png" width="95%"></p>
 
 	<p>Select the size (length of the register) of the LFSR (here the length is restricted to a value between 1 and 25 for presentation purposes). You then have to select which bits of the register are tapped, and the value of the seed (The seed is the starting value or initial state of the LFSR register. Sometimes, the content of the register is also called stage. If a register bit is tapped, its content is used for calculating the next input bit of the register).</p>
 
@@ -36,28 +36,25 @@
 	<!-- TODO: Add the according picture from CT2. Check language and correct order of taps and seed.  &nbsp; = 1 Leerzeichen.   &ensp; = 2 Leerzeichen. -->
 	
 	<p>The following screenshot (taken from CrypTool 2) shows the 21-bit register and the 5 taps in the initial state.</p>
-	<img src="figure7.png">
+
+	<p align=center><img src="figure7.png" width="95%"></p>
 	
 	<br><br>
 	<p>Clicking on the <b>Finish</b> button will start the encryption/decryption process, close the LFSR dialog, and show the output in a new JCT hex editor window.</p>
 
-	<img src="figure2.png">
-
-
-
-
+	<p align=center><img src="figure2.png" width="95%"></p>
+	
 
 	<br><br>
 	<h2 id="Dec-lsfr-ciphertext">2) Decrypting an LFSR ciphertext</h2>
   
 	<p>The resulting ciphertext (in output001.bin) can be decrypted, by selecting identical settings and values in the same wizard that was used for encryption. (Note: The output is opened in a hex editor rather than a text editor. This is because modern algorithms are based on bytes, not characters.)</p>
 
-	<img src="figure3.png">
-
+	<p align=center><img src="figure3.png" width="95%"></p>
 	<br><br>
 	<p>Clicking on the <b>Finish</b> button will now start the decryption of the ciphertext and yield the correct plaintext which will be displayed in a new editor (output002.bin in the screenshot below).</p>
 
-	<img src="figure4.png">
+	<p align=center><img src="figure4.png" width="95%"></p>
 
 
 
@@ -67,7 +64,7 @@
 	<p>Selecting the second radio button in the rectangle <b>output options</b>, offers to display not only the ciphertext, but also the keystream used in that encryption/decryption process in two separate hex editor windows.</p>
 	<p>A comparison of the keystream from the encryption process to that of the decryption process will show that given identical inputs, an identical keystream is produced.</p>
 
-	<img src="figure5.png">
+	<p align=center><img src="figure5.png" width="95%"></p>
 
 	<p>The keystream is displayed in a new editor window (output004.bin above), with the plaintext being displayed as usual (output003.bin).</p>
 
@@ -78,7 +75,7 @@
 
 	<p>Selecting the third radio button in the rectangle <b>output options</b>, offers to display only the keystream (of a specified number of bytes). The number of bytes to generate for the keystream is specified in the textbox behind. This textbos is only enabled when the radio button "Display keystream only" is selected.</p>
 
-	<img src="figure6.png">
+	<p align=center><img src="figure6.png" width="95%"></p>
 
 	<p>Our example shows the first 100 bytes of the keystream (output005.bin above),  generated with the same seed and tap settings input as earlier.</p>
 

@@ -23,7 +23,7 @@
 	<br>
 	<h2 id="Enc-textmessage">1) Verschlüsselung einer Textnachricht mit der LFSR-Chiffre</h2>
 
-	<img src="figure1.png">
+	<p align=center><img src="figure1.png" width="95%"></p>
 
 	<p>Wählen Sie die Größe (Registerlänge) des LFSR &ndash; hier ist die Länge für Präsentationszwecke eingeschränkt auf einen Wert zwischen 1 und 25. Anschließend ist festzulegen, welche Register-Bits getappt sind und welchen Wert der Seed hat (Der Seed ist der Startwert oder Anfangszustand des LFSR-Registers. Der Inhalt des Registers wird manchmal auch als Stage bezeichnet. Ist ein Register-Bit getappt, wird sein Inhalt in die Berechnung des neuen Input-Bits mit einbezogen).</p>
 
@@ -36,29 +36,24 @@
 	<!-- TODO: Add the according picture from CT2. Check language and correct order of taps and seed.  &nbsp; = 1 Leerzeichen.   &ensp; = 2 Leerzeichen. -->
 	
 	<p>Der folgende Screenshot (aus CrypTool 2) zeigt das 21-Bit-Register und die 5 Taps im Ausgangszustand.</p>
-	<img src="figure7.png">
+	<p align=center><img src="figure7.png" width="95%"></p>
 	
 	<br><br>
 	<p>Wenn Sie auf die Schaltfläche <b>Fertigstellen</b> klicken, startet der Verschlüsselungs-/Entschlüsselungsprozess, der LFSR-Dialog wird geschlossen und die Ausgabe wird in einem neuen JCT-Hexeditor-Fenster angezeigt.</p>
 
-	<img src="figure2.png">
-
-
-
-
+	<p align=center><img src="figure2.png" width="95%"></p>
 
 	<br><br>
 	<h2 id="Dec-lsfr-ciphertext">2) Entschlüsselung eines LFSR-Geheimtexts</h2>
   
 	<p>Der resultierende Geheimtext (in output001.bin) kann entschlüsselt werden, indem identische Einstellungen und Werte in demselben Dialog ausgewählt werden, der auch für die Verschlüsselung verwendet wurde. (Hinweis: Die Ausgabe wird in einem Hex-Editor und nicht in einem Texteditor geöffnet, denn moderne Algorithmen basieren auf Bytes, nicht auf Zeichen.)</p>
 
-	<img src="figure3.png">
+	<p align=center><img src="figure3.png" width="95%"></p>
 
 	<br><br>
 	<p>Wenn Sie auf die Schaltfläche <b>Fertigstellen</b> klicken, startet die Entschlüsselung des Geheimtexts und liefert den korrekten Klartext, der in einem neuen Editorfenster angezeigt wird (output002.bin im Screenshot unten).</p>
 
-	<img src="figure4.png">
-
+	<p align=center><img src="figure4.png" width="95%"></p>
 
 
 	<br><br>
@@ -67,7 +62,7 @@
 	<p>Wählt man den zweiten Auswahlknopf (Radiobutton) im Rechteck <b>Ausgabeoptionen</b>, wird nicht nur der Geheimtext sondern auch der bei diesem (Ver-/Entschlüsselungs-)Prozess verwendete Schlüsselstrom in einem separaten Hexeditor-Fenstern angezeigt.</p>
 	<p>Ein Vergleich des Schlüsselstroms vom Verschlüsselungsprozess mit dem des Entschlüsselungsprozesses zeigt, dass bei identischen Eingaben ein identischer Schlüsselstrom erzeugt wird.</p>
 
-	<img src="figure5.png">
+	<p align=center><img src="figure5.png" width="95%"></p>
 
 	<p>Der Schlüsselstrom wird in einem neuen Editorfenster (output004.bin oben) angezeigt, wobei der Klartext wie gewohnt angezeigt wird (output003.bin).<br>
 
@@ -78,7 +73,7 @@
 
 	<p>Wählt man den dritten Auswahlknopf (Radiobutton) im Rechteck <b>Ausgabeoptionen</b>, wird nur der Schlüsselstrom (mit einer bestimmten Anzahl von Bytes) angezeigt. Die Anzahl der zu erzeugenden Bytes für den Schlüsselstrom wird in dem Textfeld dahinter angegeben. Dieses ist nur dann aktiv ist, wenn der Auswahlknopf "Nur Schlüsselstrom ... anzeigen" ausgewählt ist.</p>
 
-	<img src="figure6.png">
+	<p align=center><img src="figure6.png" width="95%"></p>
 
 	<p>Unser Beispiel zeigt die ersten 100 Bytes des Schlüsselstroms (output005.bin oben). Diese wurden mit denselben Werten für Seed und Tap erzeugt wie zuvor.</p>
 
