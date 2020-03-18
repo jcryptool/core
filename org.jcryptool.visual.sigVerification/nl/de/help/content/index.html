@@ -15,7 +15,7 @@
 		Eine digitale Signatur kann zur Authentifizierung der Identität des Senders oder des Unterzeichners des Dokuments genutzt werden. 
 		Sie sichert außerdem die Integrität des Dokumentes selbst.
 		</p>
-		<img src="GUI1.png"> 
+		<p align=center><img src="GUI1.png" width="90%"></p> 
 		<h2>Allgemeine Informationen</h2>
         <h3>Schritt zurück-Funktion</h3>
 		<p>Schrittweises zurückgehen. Alle vorgenommenen änderungen oder Einstellungen bleiben gespeichert, bis zu dem Schritt zu dem man zurück geht.</p>
@@ -27,7 +27,9 @@
 		<h2>Schritt 2 – Hashfunktion auswählen</h2>
         <p>Der zweite Schritt des Signaturverifizierungsprozesses ist die Berechnung des Hashwertes der signierten Datei. Eine Hashfunktion bildet Daten variabler Länge auf einen Wert fester Länge ab. Statt der eigentlichen Nachricht wird nur deren Hashwert signiert (bzw. verifiziert). Dies erhöht die Effizienz in der Regel deutlich, da der Hashwert oft deutlich kleiner ist als die eigentliche Nachricht. Mit der Neuberechnung des Hashwertes der Datei kann diese auf Veränderung geprüft werden. 
         Es muss der gleiche Hashalgorithmus verwendet werden wie bei der Signaturerstellung. Normalerweise enthält die Signatur eine Angabe dazu, welcher Algorithmus bei der Signierung verwendet wurde. Das ist hier nicht der Fall, sodass der Nutzer diese manuell angeben muss.</p>
+        
         <img src="HashWahlen.png">
+        
         <h3>Beschreibung der unterstützten Hashfunktionen</h3>
         <h4>MD5</h4>
         <p>Der MD5-Algoritmus (veröffentlicht im Jahr 1992 und spezifiziert in RFC 1321) generiert aus einer gegebenen Nachricht einen 128-Bit langen "Fingerabdruck" oder "Hashwert". Der MD5-Algoritmus ist für digitale Signaturapplikationen vorgesehen, in der sehr große Dateien sicher "komprimiert" werden müssen, bevor sie, wie beispielsweise in einem Public-Key-Kryptosystem wie RSA, mit einem privaten Schlüssel verschlüsselt werden. </p>
