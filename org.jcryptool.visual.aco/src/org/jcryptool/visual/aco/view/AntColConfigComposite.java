@@ -55,40 +55,43 @@ public class AntColConfigComposite extends Composite {
 	}
 
 	private void initConfigurationComp() {
+		
 		firstStepGroup = new Group(this, SWT.NONE);
-
-		firstStepGroup.setText(Messages.Func_analyseConfiguration); //$NON-NLS-1$
-		GridLayout layout = new GridLayout(1, false);
-		firstStepGroup.setLayout(layout);
-
-		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
-
-		firstStepGroup.setLayoutData(gridData);
+		firstStepGroup.setText(Messages.Func_analyseConfiguration); 
+		firstStepGroup.setLayout(new GridLayout(1, false));
+		firstStepGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
 		generateTextButton = new Button(firstStepGroup, SWT.PUSH);
-		generateTextButton.setText(Messages.Control_generateText); //$NON-NLS-1$
-		generateTextButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
-				true, false));
+		generateTextButton.setText(Messages.Control_generateText); 
+		generateTextButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		generateTextButton.addSelectionListener(new SelectionAdapter() {
+			
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				controller.onGenerateText();
 			}
 		});
 
 		Label label = new Label(firstStepGroup, SWT.NONE);
-		label.setText(Messages.Control_or); //$NON-NLS-1$
+		label.setText(Messages.Control_or); 
 		label.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
 
 		label = new Label(firstStepGroup, SWT.NONE);
 		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		label.setText(Messages.Func_ciphertext); //$NON-NLS-1$
+		label.setText(Messages.Func_ciphertext); 
+		
 		txtCipher = new StyledText(firstStepGroup, SWT.SINGLE | SWT.BORDER);
-		txtCipher.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		GridData styledTextGridData = new GridData(SWT.FILL, SWT.FILL, true, false);
+		// This avoids that the horizontal size of txtCipher increases with 
+		// longer texts.
+		styledTextGridData.widthHint = firstStepGroup.getClientArea().x;
+		txtCipher.setLayoutData(styledTextGridData);
 
 		textLengthLabel = new Label(firstStepGroup, SWT.FILL);
 		textLengthLabel.setText(Messages.Control_textLength + " 0"); //$NON-NLS-1$
 
 		labelSlider = new Label(firstStepGroup, SWT.NONE);
-		labelSlider.setText(Messages.Func_keyLength); //$NON-NLS-1$ //$NON-NLS-2$
+		labelSlider.setText(Messages.Func_keyLength); 
 		GridData gd_labelSlider = new GridData(SWT.FILL, SWT.FILL, true, false);
 		gd_labelSlider.verticalIndent = 30;
 		labelSlider.setLayoutData(gd_labelSlider);
@@ -98,19 +101,18 @@ public class AntColConfigComposite extends Composite {
 		keyLengthSlider.setMinimum(3);
 		keyLengthSlider.setMaximum(9);
 		keyLengthSlider.setSelection(4);
-		keyLengthSlider.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-				false));
+		keyLengthSlider.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		keyLengthSlider.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 
-				controller.onKeyLengthChange(keyLengthSlider.getSelection(),
-						currKeyLength);
+				controller.onKeyLengthChange(keyLengthSlider.getSelection(), currKeyLength);
 				currKeyLength = keyLengthSlider.getSelection();
 			}
 		});
 
 		label = new Label(firstStepGroup, SWT.FILL);
-		label.setText(Messages.Func_textLanguage); //$NON-NLS-1$
+		label.setText(Messages.Func_textLanguage); 
 		GridData gd_label = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gd_label.verticalIndent = 30;
 		label.setLayoutData(gd_label);
@@ -124,6 +126,7 @@ public class AntColConfigComposite extends Composite {
 
 		languageCombo.select(0);
 		languageCombo.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				controller.onChangeLanguage();
 			}
@@ -132,17 +135,19 @@ public class AntColConfigComposite extends Composite {
 		// Weiter-Button
 
 		startAnalysisButton = new Button(firstStepGroup, SWT.PUSH);
-		startAnalysisButton.setText(Messages.Func_proceedToAnalysis); //$NON-NLS-1$
+		startAnalysisButton.setText(Messages.Func_proceedToAnalysis); 
 		startAnalysisButton.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM,
 				true, true));
 		startAnalysisButton.setEnabled(false);
 		startAnalysisListener = new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				controller.onStartAnalyseButtonClick();
 				toggleAnalyseButton();
 			}
 		};
 		stopAnalysisListener = new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				controller.onStopAnalyseButtonClick();
 				toggleAnalyseButton();

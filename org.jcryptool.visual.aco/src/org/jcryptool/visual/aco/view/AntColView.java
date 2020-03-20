@@ -17,6 +17,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.aco.ACOPlugin;
 import org.jcryptool.visual.aco.controller.AntColEventController;
 import org.jcryptool.visual.aco.model.ACO;
@@ -42,22 +43,26 @@ public class AntColView extends ViewPart {
 		CommonModel model = new CommonModel();
 		parent.setLayout(new GridLayout(1, false));
 
-		ScrolledComposite scrollContainer = new ScrolledComposite(parent,
+		ScrolledComposite scrollComposite = new ScrolledComposite(parent,
 				SWT.H_SCROLL | SWT.V_SCROLL);
-		scrollContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		scrollContainer.setExpandHorizontal(true);
-		scrollContainer.setExpandVertical(true);
-		Composite container = new Composite(scrollContainer, SWT.NONE);
+		scrollComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		scrollComposite.setExpandHorizontal(true);
+		scrollComposite.setExpandVertical(true);
+		
+		Composite container = new Composite(scrollComposite, SWT.NONE);
 		GridLayout gridLayout = new GridLayout(4, false);
 		gridLayout.marginHeight = 0;
 		gridLayout.marginWidth = 0;
 		container.setLayout(gridLayout);
-
-		AntColHeaderComposite headerComp = new AntColHeaderComposite(container);
-		headerComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 4, 1));
+		
+		TitleAndDescriptionComposite td = new TitleAndDescriptionComposite(container);
+		td.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 4, 1));
+		td.setTitle(Messages.Header_title);
+		td.setDescription(Messages.Header_text);
 
 		configComp = new AntColConfigComposite(model, container);
 		configComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		
 		analysisComp = new AntColAnalysisComposite(model, container);
 		analysisComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 
@@ -68,16 +73,13 @@ public class AntColView extends ViewPart {
 		resultComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
 		descriptionComp = new AntColDescriptionComposite(container);
-		descriptionComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-				true, 4, 1));
+		descriptionComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
 
 		new AntColEventController(model, this);
 
-		scrollContainer.setContent(container);
-		scrollContainer.setMinSize(container.computeSize(SWT.DEFAULT,
-				SWT.DEFAULT));
-
-		parent.layout();
+		scrollComposite.setContent(container);
+		scrollComposite.setMinSize(container.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
 
 		PlatformUI.getWorkbench().getHelpSystem()
 				.setHelp(parent, ACOPlugin.PLUGIN_ID + ".ContextHelpID"); //$NON-NLS-1$
@@ -95,6 +97,7 @@ public class AntColView extends ViewPart {
 			control.dispose();
 		}
 		createPartControl(parent);
+		parent.layout();
 	}
 
 	@Override
