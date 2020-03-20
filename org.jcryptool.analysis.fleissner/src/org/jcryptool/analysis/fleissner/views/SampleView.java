@@ -22,11 +22,12 @@ import org.jcryptool.analysis.fleissner.key.KeySchablone;
  
 
 public class SampleView extends ViewPart {
+	
     public SampleView() {
 
     }
     
-    private Composite parent;
+    private ScrolledComposite scrolledComposite;
     private Composite viewParent;
     private FleissnerWindow fw;
 
@@ -38,37 +39,27 @@ public class SampleView extends ViewPart {
 	@Override
 	public void createPartControl(Composite viewParent) {
 	    this.viewParent = viewParent;
-        ScrolledComposite scrolledComposite = new ScrolledComposite(viewParent, SWT.H_SCROLL | SWT.V_SCROLL);
-        parent = new Composite(scrolledComposite, SWT.NONE);
-
-        GridLayout gridLayoutParent = new GridLayout(1, false);
-	    parent.setLayout(gridLayoutParent);
+        scrolledComposite = new ScrolledComposite(viewParent, SWT.H_SCROLL | SWT.V_SCROLL);
         
-        fw = new FleissnerWindow(parent, SWT.NONE);
+        fw = new FleissnerWindow(scrolledComposite, SWT.NONE);
         GridLayout layout = new GridLayout(1,true);
         layout.marginWidth = 0;
         layout.marginHeight = 0;
         fw.setLayout(layout);
         fw.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-	    scrolledComposite.setContent(parent);
-        scrolledComposite.setMinSize(parent.computeSize( SWT.DEFAULT, SWT.DEFAULT+fw.getDescriptionText().getSize().y));
+	    scrolledComposite.setContent(fw);
+        scrolledComposite.setMinSize(fw.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         scrolledComposite.setExpandHorizontal(true);
         scrolledComposite.setExpandVertical(true);
-        scrolledComposite.layout();
-        scrolledComposite.addListener( SWT.Resize, event -> {
-            
-            int height = parent.computeSize(SWT.DEFAULT, SWT.DEFAULT).y+fw.getDescriptionText().getSize().y;
-            scrolledComposite.setMinSize( parent.computeSize( SWT.DEFAULT, height));
-        } );
 
 		// Create the help context id for the viewer's control
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.analysis.fleissner.views");
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(fw, "org.jcryptool.analysis.fleissner.views");
 	}
 
 	@Override
 	public void setFocus() {
-		parent.setFocus();
+		scrolledComposite.setFocus();
 	}
 	
     public void resetView(){
