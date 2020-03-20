@@ -48,8 +48,8 @@ public class AntColResultComposite extends Composite {
 		
 		Label emptyText1 = new Label(emptyTextComp, SWT.NONE);
 		emptyText1.setText(Messages.Result_emptyText1);
-		emptyText1.setLayoutData(new GridData(SWT.CENTER, SWT.BOTTOM, true,
-				true));
+		emptyText1.setLayoutData(new GridData(SWT.CENTER, SWT.BOTTOM, true,  true));
+		
 		Label emptyText2 = new Label(emptyTextComp, SWT.NONE);
 		emptyText2.setText(Messages.Result_emptyText2);
 		emptyText2.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, true));
@@ -85,7 +85,7 @@ public class AntColResultComposite extends Composite {
 		currentText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		currentText.setEditable(false);
 		CLabel help = new CLabel(currGroup, SWT.NONE);
-		help.setImage(ImageService.getImage(ACOPlugin.PLUGIN_ID, "platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png"));
+		help.setImage(ImageService.ICON_HELP);
 		final ToolTip tip = new ToolTip(currGroup.getShell(), SWT.BALLOON);
 		tip.setMessage(Messages.Result_description);
 		help.addListener(SWT.MouseDown, new Listener(){
