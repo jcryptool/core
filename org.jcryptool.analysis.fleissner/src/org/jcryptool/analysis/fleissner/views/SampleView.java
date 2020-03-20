@@ -54,7 +54,7 @@ public class SampleView extends ViewPart {
         scrolledComposite.setExpandVertical(true);
 
 		// Create the help context id for the viewer's control
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(fw, "org.jcryptool.analysis.fleissner.views");
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(fw, "org.jcryptool.analysis.fleissner.helpContextId");
 	}
 
 	@Override
