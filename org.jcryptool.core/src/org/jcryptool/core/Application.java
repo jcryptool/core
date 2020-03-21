@@ -16,6 +16,7 @@ import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
+import org.jcryptool.core.logging.utils.LogUtil;
 
 /**
  * This class controls all aspects of the application's execution.
@@ -32,12 +33,16 @@ public class Application implements IApplication {
     @Override
 	public Object start(IApplicationContext context) throws Exception {
         try {
-            if (!Locale.GERMAN.equals(Locale.getDefault()) && !Locale.ENGLISH.equals(Locale.getDefault())) {
-                System.setProperty("osgi.nl", "en"); // fixes Platform.getNL()
-                Locale.setDefault(Locale.ENGLISH);
-            }
+        	// Set English as default language if the operating system language is neither 
+        	// German, English or French.
+        	if (!Locale.getDefault().getLanguage().equals("de") &&
+        			!Locale.getDefault().getLanguage().equals("en") &&
+        			!Locale.getDefault().getLanguage().equals("fr")) {
+              System.setProperty("osgi.nl", "en"); // fixes Platform.getNL()
+              Locale.setDefault(Locale.ENGLISH);
+        	}
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtil.logError(CorePlugin.PLUGIN_ID, e);
         }
         
         Display display = PlatformUI.createDisplay();
