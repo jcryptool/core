@@ -10,7 +10,7 @@ public class HelpHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		PlatformUI.getWorkbench().getHelpSystem()
-			.displayHelp(Activator.PLUGIN_ID + ".substitution");
+			.displayHelp(Activator.PLUGIN_ID + ".substitutionHelpID");
 		return null;
 	}
 }
