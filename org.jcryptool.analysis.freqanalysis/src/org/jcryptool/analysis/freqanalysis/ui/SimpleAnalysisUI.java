@@ -99,7 +99,6 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 		textloader.addObserver(new Observer() {
 			@Override
 			public void update(Observable o, Object arg) {
-				// TODO Auto-generated method stub
 				
 				if (textloader.getText() != null) {
 					myGraph.getFrequencyGraph().setInstruction(Messages.FreqAnalysisGraph_graph1);
