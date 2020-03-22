@@ -39,6 +39,7 @@ import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.input.ButtonInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionKey;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionTable;
 import org.jcryptool.crypto.classic.transposition.ui.TranspositionKeyInputWizard;
@@ -225,22 +226,27 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		content = new Composite(scrolledComposite, SWT.NONE);
 		content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		content.setLayout(new GridLayout(1, true));
+		
+		TitleAndDescriptionComposite td = new TitleAndDescriptionComposite(content);
+		td.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		td.setTitle(Messages.TranspAnalysisUI_view_title);
+		td.setDescription(Messages.TranspAnalysisUI_view_description);
 
-		headerComposite = new Composite(content, SWT.NONE);
-		headerComposite.setLayout(new GridLayout());
-		headerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		headerComposite.setBackground(ColorService.WHITE);
-
-		title = new Text(headerComposite, SWT.READ_ONLY | SWT.WRAP);
-		title.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		title.setText(Messages.TranspAnalysisUI_view_title);
-		title.setFont(FontService.getHeaderFont());
-		title.setBackground(ColorService.WHITE);
-
-		description = new Text(headerComposite, SWT.READ_ONLY | SWT.WRAP);
-		description.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		description.setText(Messages.TranspAnalysisUI_view_description);
-		description.setBackground(ColorService.WHITE);
+//		headerComposite = new Composite(content, SWT.NONE);
+//		headerComposite.setLayout(new GridLayout());
+//		headerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+//		headerComposite.setBackground(ColorService.WHITE);
+//
+//		title = new Text(headerComposite, SWT.READ_ONLY | SWT.WRAP);
+//		title.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+//		title.setText(Messages.TranspAnalysisUI_view_title);
+//		title.setFont(FontService.getHeaderFont());
+//		title.setBackground(ColorService.WHITE);
+//
+//		description = new Text(headerComposite, SWT.READ_ONLY | SWT.WRAP);
+//		description.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+//		description.setText(Messages.TranspAnalysisUI_view_description);
+//		description.setBackground(ColorService.WHITE);
 
 		instrGroup = new Group(content, SWT.NONE);
 		instrGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
