@@ -76,7 +76,7 @@ public class TextViewer extends org.eclipse.swt.widgets.Dialog {
             dialogShell.setText(title);
             dialogShell.layout();
             dialogShell.pack();
-            dialogShell.setSize(99, 255);
+            dialogShell.setSize(250, 350);
             text1 = new Text(dialogShell, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
             FormData text1LData = new FormData();
             text1LData.width = 116;
