@@ -73,7 +73,10 @@ public class SubstitutionAnalysisPanel extends Composite {
 	}
 
 	private void initGUI() {
-		setLayout(new GridLayout(2, false));
+		GridLayout gridLayout = new GridLayout(2, false);
+		gridLayout.marginHeight = 0;
+		gridLayout.marginWidth = 0;
+		setLayout(gridLayout);
 	
 		TitleAndDescriptionComposite td = new TitleAndDescriptionComposite(this);
 		GridData gdTitle = new GridData(SWT.FILL, SWT.FILL, true, false);
@@ -148,7 +151,7 @@ public class SubstitutionAnalysisPanel extends Composite {
 		keyPreview.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		Button lblKeyPreview = new Button(keyPreview, SWT.PUSH);
-		GridData lblKeyPreviewLayoutData = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		GridData lblKeyPreviewLayoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		lblKeyPreview.setLayoutData(lblKeyPreviewLayoutData);
 		lblKeyPreview.setText(Messages.SubstitutionAnalysisPanel_7);
 		lblKeyPreview.addSelectionListener(new SelectionAdapter() {
