@@ -37,6 +37,7 @@ import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite;
 import org.jcryptool.crypto.ui.textloader.ui.ControlHatcher;
 import org.jcryptool.crypto.ui.textloader.ui.wizard.TextLoadController;
@@ -276,7 +277,7 @@ public class SubstitutionAnalysisConfigPanel extends Composite {
 		
 	}
 	
-	private static final int WIDTH_HINT_GENERAL = 300;
+	private static final int WIDTH_HINT_GENERAL = 400;
 	private Group grpCiphertext;
 	private Group grpAlphabet;
 	private Group grpStatisticalData;
@@ -300,21 +301,18 @@ public class SubstitutionAnalysisConfigPanel extends Composite {
 	public SubstitutionAnalysisConfigPanel(Composite parent, int style) {
 		super(parent, style);
 		this.observers = new LinkedList<Observer>();
-//		GridLayout thisLayout = new GridLayout(1, false);
-//		thisLayout.verticalSpacing = 13;
-//		setLayout(thisLayout);
-		setLayout(new GridLayout());
+		GridLayout gl = new GridLayout();
+		gl.marginHeight = 0;
+		gl.marginWidth = 0;
+		setLayout(gl);
 		
-		Label lblSubstitutionAnalysis = new Label(this, SWT.NONE);
-		lblSubstitutionAnalysis.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-//		lblSubstitutionAnalysis.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD)); //$NON-NLS-1$
-		lblSubstitutionAnalysis.setFont(FontService.getHeaderFont());
-		lblSubstitutionAnalysis.setText(Messages.SubstitutionAnalysisConfigPanel_8);
+		TitleAndDescriptionComposite td = new TitleAndDescriptionComposite(this);
+		td.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		td.setTitle(Messages.SubstitutionAnalysisPanel_0);
+		td.setDescription(Messages.SubstitutionAnalysisPanel_4);
 		
 		Label lblBlablabla = new Label(this, SWT.NONE);
-//		GridData lblBlablablaLData = new GridData(SWT.FILL, SWT.CENTER, true, false);
-//		lblBlablablaLData.verticalIndent = 5;
-//		lblBlablabla.setLayoutData(lblBlablablaLData);
+		lblBlablabla.setFont(FontService.getNormalBoldFont());
 		lblBlablabla.setText(Messages.SubstitutionAnalysisConfigPanel_9);
 		
 		grpCiphertext = new Group(this, SWT.NONE);
