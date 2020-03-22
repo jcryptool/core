@@ -21,14 +21,12 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 import org.jcryptool.analysis.friedman.FriedmanPlugin;
 import org.jcryptool.analysis.friedman.IFriedmanAccess;
 import org.jcryptool.analysis.friedman.calc.FriedmanCalc;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.ui.textloader.ui.wizard.TextLoadController;
-import org.jcryptool.core.util.colors.ColorService;
-import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 
 /**
  * @author SLeischnig
@@ -49,21 +47,12 @@ public class FriedmanGraphUI extends Composite implements IFriedmanAccess {
 	private void initGUI() {
 		try {
 			this.setLayout(new GridLayout());
-
-			Composite compositeHeader = new Composite(this, SWT.NONE);
-			compositeHeader.setBackground(ColorService.WHITE);
-			compositeHeader.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-			compositeHeader.setLayout(new GridLayout());
-
-			Text txtHeader = new Text(compositeHeader, SWT.READ_ONLY);
-			txtHeader.setFont(FontService.getHeaderFont());
-			txtHeader.setText(Messages.FriedmanGraphUI_0);
-			txtHeader.setBackground(ColorService.WHITE);
-
-			Text txtDescription = new Text(compositeHeader, SWT.WRAP | SWT.READ_ONLY);
-			txtDescription.setText(Messages.FriedmanGraphUI_1);
-			txtDescription.setBackground(ColorService.WHITE);
-			txtDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+			
+			TitleAndDescriptionComposite td = new TitleAndDescriptionComposite(this);
+			td.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+			td.setTitle(Messages.FriedmanGraphUI_0);
+			td.setDescription(Messages.FriedmanGraphUI_1);
+			
 
 			Composite composite1 = new Composite(this, SWT.NONE);
 			GridLayout composite1Layout = new GridLayout();
