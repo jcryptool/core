@@ -497,10 +497,13 @@ public class TranspositionKey {
 		if(key != null) {
 			int[] thiskey = key.toArray();
 			int[] reversekey = new int[thiskey.length];
-			for(int i=0; i<reversekey.length; i++) reversekey[i] = -1;
-			for(int i=0; i<thiskey.length; i++) {
-				int val = thiskey[i];
-				reversekey[val] = i;
+			
+//			for(int i=0; i<reversekey.length; i++) reversekey[i] = -1;
+//			
+			for(int i=0; i < thiskey.length; i++) {
+//				int val = thiskey[i];
+//				reversekey[val] = i;
+				reversekey[i] = thiskey[thiskey.length - 1 - i];
 			}
 
 			return new TranspositionKey(reversekey);
