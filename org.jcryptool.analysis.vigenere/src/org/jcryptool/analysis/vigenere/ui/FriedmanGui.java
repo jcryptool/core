@@ -16,6 +16,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
@@ -57,6 +58,8 @@ public class FriedmanGui extends Content {
 
     private Button bback;
     private Button bnext;
+    
+    private ToolTip tip;
 
     /**
      * Constructor for FriedmanGui
@@ -160,11 +163,11 @@ public class FriedmanGui extends Content {
                     }
                 }
             });
+            
             autodetect();
             
-            final ToolTip tip = new ToolTip(tlength.getShell(), SWT.BALLOON);
+            tip = new ToolTip(Display.getCurrent().getActiveShell(), SWT.BALLOON);
             tip.setMessage(Messages.FriedmanGui_2);
-//            tip.setLocation(new Point(tlength.getBounds().x, tlength.getBounds().y));
             tip.addSelectionListener(new SelectionListener() {
 				
 				@Override

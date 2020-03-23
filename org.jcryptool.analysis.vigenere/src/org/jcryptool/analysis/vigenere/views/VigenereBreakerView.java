@@ -13,6 +13,7 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IViewReference;
@@ -27,8 +28,7 @@ public class VigenereBreakerView extends ViewPart {
     /**
      * The ID of the view as specified by the extension.
      */
-    public static final String ID = "org.jcryptool.analysis.vigenere"
-            + ".views.VigenereBreakerView";
+    public static final String ID = VigenereBreakerPlugin.PLUGIN_ID + ".views.VigenereBreakerView";
 
     public static final String GTK = "GTKLookAndFeel";
 
@@ -45,7 +45,7 @@ public class VigenereBreakerView extends ViewPart {
 
     private ScrolledComposite scroll;
 
-	private Composite pageComposite;
+//	private Composite pageComposite;
 
     /**
      * Constructs a new view of the Vigenère plug-in.
@@ -58,14 +58,12 @@ public class VigenereBreakerView extends ViewPart {
         scroll = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
         scroll.setExpandHorizontal(true);
         scroll.setExpandVertical(true);
+        scroll.setLayout(new GridLayout());
+                
+        gui = new VigenereBreakerGui(scroll, SWT.NONE);
         
-        pageComposite = new Composite(scroll, SWT.NONE);
-        pageComposite.setLayout(new GridLayout());
-        
-        gui = new VigenereBreakerGui(pageComposite, SWT.NONE);
-        
-        scroll.setContent(pageComposite);
-        scroll.setMinSize(pageComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        scroll.setContent(gui);
+        scroll.setMinSize(gui.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
             VigenereBreakerPlugin.PLUGIN_ID + ".vigenerebreaker"); //$NON-NLS-1$
