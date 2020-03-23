@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
    <context id="transpositionanalysis" title="Transposition Analysis">
-      <description>The transposition analysis helps at analyzing a transposition cipher, by taking care of the arrangement of the ciphertext into a table with reorderable columns. The columns can be reordered, and the column count can adapted freely, making the analysis relatively painless.&lt;br&gt;
+      <description>The <b>transposition analysis</b> helps at analyzing a transposition cipher, by taking care of the arrangement of the ciphertext into a table with reorderable columns. The columns can be reordered, and the column count can adapted freely, making the analysis relatively painless.&lt;br&gt;
 Try to find parts of words into the cipher, and move the columns to arrange the text in the right order. While doing this, try to find the right column count/block length, until the text in the table/in the preview text field (bottom right) seems to make sense. If so, you can click on the button above the preview text field, to decrypt the cipher into a new editor.</description>
       <topic href="$nl$/content/index.html" label="Transposition Analysis" />
    </context>
