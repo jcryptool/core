@@ -9,6 +9,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.analysis.fleissner.views;
 
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
@@ -17,6 +18,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.analysis.fleissner.Activator;
 import org.jcryptool.analysis.fleissner.UI.FleissnerWindow;
 import org.jcryptool.analysis.fleissner.key.KeySchablone;
  
@@ -34,7 +36,7 @@ public class SampleView extends ViewPart {
 	/**
 	 * The ID of the view as specified by the extension.
 	 */
-	public static final String ID = "org.jcryptool.analysis.fleissner.views.SampleView";
+	public static final String ID = Activator.PLUGIN_ID + ".SampleView";
 	
 	@Override
 	public void createPartControl(Composite viewParent) {
@@ -54,7 +56,7 @@ public class SampleView extends ViewPart {
         scrolledComposite.setExpandVertical(true);
 
 		// Create the help context id for the viewer's control
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(fw, "org.jcryptool.analysis.fleissner.helpContextId");
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(fw, Activator.PLUGIN_ID + ".helpContextId");
 	}
 
 	@Override
