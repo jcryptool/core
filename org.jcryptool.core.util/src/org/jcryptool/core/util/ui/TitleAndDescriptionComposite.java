@@ -32,43 +32,30 @@ public class TitleAndDescriptionComposite extends Composite {
 		styledText = new StyledText(this, SWT.READ_ONLY | SWT.WRAP);
 
 		styledTextGridData = new GridData(SWT.FILL, SWT.FILL, true, false);
-		styledTextGridData.widthHint = this.getClientArea().width;
+		styledTextGridData.widthHint = this.getClientArea().width - 10;
 		
 		styledText.setLayoutData(styledTextGridData);	
 		styledText.addListener(SWT.Resize, event -> {
-			System.err.println("styledText resize triggered");
+			System.err.println("styledText Resize Event triggered.");
 
-			if (styledTextGridData.heightHint != styledText.computeSize(this.getClientArea().width, SWT.DEFAULT).y) {
-				System.out.print("Height Hint: " + styledTextGridData.heightHint);
-				System.out.println(" ComputedSize: " + styledText.computeSize(this.getClientArea().width, SWT.DEFAULT).y);
-				styledTextGridData.heightHint = styledText.computeSize(this.getClientArea().width, SWT.DEFAULT).y;
+			if (styledTextGridData.heightHint != styledText.computeSize(this.getClientArea().width - 10, SWT.DEFAULT).y) {
+				styledTextGridData.heightHint = styledText.computeSize(this.getClientArea().width - 10, SWT.DEFAULT).y;
 				styledText.requestLayout();
 				
 				
 				if (sc != null) {
 					ScrolledComposite scrolledComp = (ScrolledComposite) sc;
-					System.err.println("Trigger scrolledComp Resize Listener");
 					scrolledComp.notifyListeners(SWT.Resize, new Event());
 					
 				}
 				
 			}
-//			styledTextGridData.heightHint = styledText.computeSize(this.getClientArea().width, SWT.DEFAULT).y;
-//			System.out.println("StyledText height hint: " + styledTextGridData.heightHint);
-//			
-//			System.out.println("StyledText preffered size: " + styledText.computeSize(this.getClientArea().width, SWT.DEFAULT));
-			
-//			styledText.requestLayout();
-//			styledText.layout(true);
 			
 		} );
 			
 		
 		
 		getScrolledCompositeParent(this);
-		System.out.println("---------------------");
-		System.out.println(sc.getClass());
-		System.out.println(firstChildOfsc.getClass());
 		
 		
 		// If there is a ScrolledComposite somewhere in the parent composites
@@ -77,15 +64,8 @@ public class TitleAndDescriptionComposite extends Composite {
 			ScrolledComposite scrolledComp = (ScrolledComposite) sc;
 			scrolledComp.addListener(SWT.Resize, event -> {
 				
-//	            int height = firstChildOfsc.computeSize(SWT.DEFAULT, SWT.DEFAULT).y + styledText.getSize().y;
-//				int height = firstChildOfsc.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
-//	            System.out.println("Fensterhöhe: " + height);
 	            firstChildOfsc.layout();
-	            firstChildOfsc.setBackground(ColorService.WHITE);
 	            scrolledComp.setMinSize(firstChildOfsc.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-//	            firstChildOfsc.layout();
-//	            System.out.println("StyledText actual height: " + styledText.getSize());
-	            System.err.println("scrolledComposite Resize / MouseDoubleClick called");
 	        } );
 			
 
@@ -95,7 +75,6 @@ public class TitleAndDescriptionComposite extends Composite {
 	
 	private void getScrolledCompositeParent(Composite current) {
 		sc = current;
-		System.out.println(sc.getClass());
 		if (current.getParent() != null) {
 			if (!sc.getClass().equals(ScrolledComposite.class)) {
 				firstChildOfsc = sc;
@@ -125,19 +104,6 @@ public class TitleAndDescriptionComposite extends Composite {
 	}
 	
 	private void styleText() {
-		// User does not set title and description
-//		if (title.isEmpty() && description.isEmpty()) {
-//			title = "Please set a title for this plugin via: TitleAndDescriptionComposite#setTitle(String title).";
-//			description = "Please set a description for this plugin via TitleAndDescriptionComposite#setDescription(String description).";
-//		} else 
-//			// User only set title, no description
-//			if (!title.isEmpty() && description.isEmpty()) {
-//			description = "Please set a description for this plugin via TitleAndDescriptionComposite#setDescription(String description).";
-//		} else 
-//			// User only set description, no title
-//			if (title.isEmpty() && !description.isEmpty()) {
-//			title = "Please set a title for this pluginvia: TitleAndDescriptionComposite#setTitle(String title).";
-//		}
 		
 		if (title.isEmpty() && description.isEmpty()) {
 			
@@ -167,7 +133,6 @@ public class TitleAndDescriptionComposite extends Composite {
 			styledText.setStyleRange(sr1);
 		}
 		
-//		styledTextGridData.heightHint = styledText.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
 
 	}
 
