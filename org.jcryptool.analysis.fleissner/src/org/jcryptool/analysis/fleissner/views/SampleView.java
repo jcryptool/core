@@ -36,7 +36,7 @@ public class SampleView extends ViewPart {
 	/**
 	 * The ID of the view as specified by the extension.
 	 */
-	public static final String ID = Activator.PLUGIN_ID + ".SampleView";
+	public static final String ID = Activator.PLUGIN_ID + ".FleissnerView";
 	
 	@Override
 	public void createPartControl(Composite viewParent) {
