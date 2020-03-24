@@ -30,6 +30,8 @@ import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.core.util.ui.auto.LayoutAdvisor;
 import org.jcryptool.crypto.keystore.ui.views.nodes.Contact;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 import org.jcryptool.visual.extendedrsa.ui.wizards.DeleteIdentityWizard;
@@ -82,17 +84,12 @@ public class ExtendedRSA_Visual extends ViewPart {
 		headComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		headComposite.setLayout(new GridLayout());
 
-		Label label = new Label(headComposite, SWT.NONE);
-		label.setFont(FontService.getHeaderFont());
-		label.setBackground(ColorService.WHITE);
-		label.setText(Messages.ExtendedRSA_Visual_4);
+//		label.setText(Messages.ExtendedRSA_Visual_4);
+//		head_description.setText(Messages.ExtendedRSA_Visual_5);
 
-		head_description = new StyledText(headComposite, SWT.READ_ONLY | SWT.WRAP);
-		GridData gd_head_description = new GridData(SWT.FILL, SWT.FILL, true, true);
-		gd_head_description.widthHint = 600;
-		head_description.setLayoutData(gd_head_description);
-		head_description.setText(Messages.ExtendedRSA_Visual_5);
-		// End - Header
+		TitleAndDescriptionComposite headerTextfield = new TitleAndDescriptionComposite(headComposite);
+		headerTextfield.setTitleAndDescription(Messages.ExtendedRSA_Visual_4, Messages.ExtendedRSA_Visual_5);
+		headerTextfield.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		grp_id_mgmt = new Group(composite, SWT.NONE);
 		grp_id_mgmt.setText(Messages.ExtendedRSA_Visual_6);
@@ -178,6 +175,7 @@ public class ExtendedRSA_Visual extends ViewPart {
 
 		sc.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
+		LayoutAdvisor.addPreLayoutRootComposite(sc);
 	}
 
 	private void initKeystore() {

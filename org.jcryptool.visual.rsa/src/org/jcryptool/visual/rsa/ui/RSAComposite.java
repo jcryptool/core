@@ -52,6 +52,8 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.core.util.ui.auto.LayoutAdvisor;
 import org.jcryptool.crypto.ui.textblockloader.NumberblocksAndTextViewer;
 import org.jcryptool.crypto.ui.textblockloader.Repr;
 import org.jcryptool.crypto.ui.textblockloader.conversion.ConversionStringToBlocks;
@@ -261,6 +263,7 @@ public class RSAComposite extends Composite {
 		createHead();
 		createMainArea();
 		createOptionsArea();
+		LayoutAdvisor.addPreLayoutRootComposite(this);
 	}
 
 	/**
@@ -277,29 +280,31 @@ public class RSAComposite extends Composite {
 		label.setFont(FontService.getHeaderFont());
 		label.setBackground(ColorService.WHITE);
 		label.setText(Messages.RSAComposite_title);
+		
+		final TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(head);
+		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));	
 
-		StyledText stDescription = new StyledText(head, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
-
+		String description = "";
 		switch (data.getAction()) {
 		case EncryptAction: {
-			stDescription.setText(Messages.RSAComposite_description_enc);
+			description = Messages.RSAComposite_description_enc;
 			break;
 		}
 		case DecryptAction: {
-			stDescription.setText(Messages.RSAComposite_description_dec);
+			description = Messages.RSAComposite_description_dec;
 			break;
 		}
 		case SignAction: {
-			stDescription.setText(Messages.RSAComposite_description_sig);
+			description = Messages.RSAComposite_description_sig;
 			break;
 		}
 		case VerifyAction: {
-			stDescription.setText(Messages.RSAComposite_description_ver);
+			description = Messages.RSAComposite_description_ver;
 			break;
 		}
 		}
 
-		stDescription.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		titleAndDescription.setTitleAndDescription(Messages.RSAComposite_title, description);
 	}
 
 	/**
