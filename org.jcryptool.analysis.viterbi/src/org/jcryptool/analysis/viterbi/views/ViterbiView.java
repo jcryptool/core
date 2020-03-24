@@ -53,7 +53,6 @@ public class ViterbiView extends ViewPart {
 		xorComposite = new XORComposite(sc, SWT.NONE, this);
 		sc.setContent(xorComposite);
 		ti.setControl(sc);
-		xorComposite.displayDefaultTexts();
 
 		// Viterbi Tab
 		ti = new TabItem(tf, SWT.NONE);
@@ -64,7 +63,6 @@ public class ViterbiView extends ViewPart {
 		viterbiComposite = new ViterbiComposite(sc, SWT.NONE, this);
 		sc.setContent(viterbiComposite);
 		ti.setControl(sc);
-		viterbiComposite.displayDefaultTexts();
 
 		// Viterbi Details Tab
 		ti = new TabItem(tf, SWT.NONE);
