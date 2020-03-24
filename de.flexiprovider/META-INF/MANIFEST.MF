@@ -10,7 +10,6 @@ Require-Bundle: org.eclipse.core.runtime,
  net.sourceforge.codec;bundle-version="1.7.0"
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
- src/de/flexiprovider/,
  libs/FlexiProvider-1.7p7.signed.jar
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: org.jcryptool.core.logging.utils,
