@@ -10,12 +10,11 @@
 package org.jcryptool.visual.aco.view;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
 /**
  * Feld fuer die Informationstexte im Tutorial zur Kryptanalyse von
@@ -27,10 +26,12 @@ import org.eclipse.swt.widgets.Label;
  */
 public class AntColDescriptionComposite extends Composite {
 
-	private Label descriptionLeft;
-	private Label descriptionRight;
-	private Composite innerComp;
-	private ScrolledComposite sc;
+	private Group descriptionGroup;
+	private Text descriptionLeft;
+	private GridData gd_descriptionLeftData;
+	private Text descriptionRight;
+	private GridData gd_descriptionRight;
+	private AntColView acv;
 
 	/**
 	 * Konstruktor. Erhaelt Model, setzt grundlegende Einstellungen.
@@ -40,46 +41,39 @@ public class AntColDescriptionComposite extends Composite {
 	 * @param c
 	 *            Parent
 	 */
-	public AntColDescriptionComposite(Composite c) {
+	public AntColDescriptionComposite(AntColView acv, Composite c) {
 		super(c, SWT.NONE);
+		this.acv = acv;
 
-		this.setLayout(new GridLayout(1, false));
+		this.setLayout(new GridLayout());
 
-		Group descriptionGroup = new Group(this, SWT.NONE);
-		descriptionGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-				true));
+		descriptionGroup = new Group(this, SWT.NONE);
+		descriptionGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		descriptionGroup.setText(Messages.Description_title);
 		descriptionGroup.setToolTipText(Messages.Description_tooltip);
-		descriptionGroup.setLayout(new GridLayout(1, false));
+		descriptionGroup.setLayout(new GridLayout(2, true));
 		
-		sc = new ScrolledComposite(descriptionGroup,
-				SWT.H_SCROLL | SWT.V_SCROLL);
-		GridData gd_sc = new GridData(SWT.FILL, SWT.FILL, true, true);
-		gd_sc.widthHint = 600;
-		gd_sc.heightHint = 200;
-		sc.setLayoutData(gd_sc);
+		descriptionLeft = new Text(descriptionGroup, SWT.READ_ONLY | SWT.MULTI);
+		gd_descriptionLeftData = new GridData(SWT.FILL, SWT.FILL, true, false);
+		descriptionLeft.setLayoutData(gd_descriptionLeftData);
 		
-		innerComp = new Composite(sc, SWT.NONE);
-		innerComp.setLayout(new GridLayout(2, true));
-		sc.setContent(innerComp);
-		
-		descriptionLeft = new Label(innerComp, SWT.WRAP);
-		descriptionLeft.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-		descriptionRight = new Label(innerComp, SWT.WRAP);
-		descriptionRight.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		descriptionRight = new Text(descriptionGroup, SWT.READ_ONLY | SWT.MULTI);
+		gd_descriptionRight = new GridData(SWT.FILL, SWT.FILL, true, false);
+		descriptionRight.setLayoutData(gd_descriptionRight);
 		
 		setDescriptionText(0);
-		sc.setMinSize(innerComp.computeSize(SWT.DEFAULT,SWT.DEFAULT));
-		sc.setExpandHorizontal(true);
-		sc.setExpandVertical(true);
-		layout();
 	}
 
 	private void setDescriptionText(String left, String right) {
 		descriptionLeft.setText(left);
 		descriptionRight.setText(right);
-		sc.layout(true);
+		
+		// Recalculate the size of the whole plugin.
+		// If a longer text as the start text is displayed
+		// this is necessary to avoid the text from being cut of at
+		// the bottom.
+		acv.recalculateSize();
+		
 	}
 
 	/**
@@ -106,9 +100,7 @@ public class AntColDescriptionComposite extends Composite {
 					Messages.Desc_analysisAlgoSett_right);
 			break;
 		}
-
-		sc.setMinSize(innerComp.computeSize(SWT.DEFAULT,SWT.DEFAULT));
+		
 	}
-
 
 }

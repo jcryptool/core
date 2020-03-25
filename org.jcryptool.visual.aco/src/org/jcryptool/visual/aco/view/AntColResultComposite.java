@@ -87,7 +87,7 @@ public class AntColResultComposite extends Composite {
 		GridData currentTextGridData = new GridData(SWT.FILL, SWT.FILL, true, false);
 		// This avoids that the horizontal size of currentText increases with 
 		// long texts.
-		currentTextGridData.widthHint = currGroup.getClientArea().x;
+		currentTextGridData.widthHint = currentText.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
 		currentText.setLayoutData(currentTextGridData);
 		currentText.setEditable(false);
 		
