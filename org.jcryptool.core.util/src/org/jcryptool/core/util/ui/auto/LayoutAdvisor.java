@@ -68,9 +68,6 @@ public class LayoutAdvisor {
 				traverseMarkWidthHint_FirstStrategy(child);
 			}
 		} else {
-			boolean hasWrap = (c.getStyle() & SWT.WRAP) != 0;
-// 			System.err.println(String.format("%s has wrap: %s", c, hasWrap));
-			if (hasWrap) {
 				Object layoutData = c.getLayoutData();
 				if (layoutData instanceof GridData) {
 					GridData gridData = (GridData) layoutData;
@@ -82,7 +79,6 @@ public class LayoutAdvisor {
 							// here, the layout is changed globally
 							// conditions:
 							// * is below a ScrolledComposite
-							// * has the SWT.WRAP style
 							// * has a GridLayout object 
 							int computedSize = c.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
 							gridData.widthHint = computedSize;
@@ -91,8 +87,6 @@ public class LayoutAdvisor {
 					}
 				}
 			}
-			
-		}
 		
 	}
 	
