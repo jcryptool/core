@@ -8,120 +8,190 @@
 
 <h1>Demonstration der Punktaddition auf elliptischen Kurven</h1>
 
-<p>Die Demonstration veranschaulicht die Anwendung fundamentaler Operationen auf elliptischen Kurven in der Kryptographie.
- Elliptische Kurven können ausgewählt werden und diese dann manipuliert werden.</p>
+<p>Diese Demonstration veranschaulicht die grundlegenden Operationen auf elliptischen Kurven in der Kryptographie. Nach der Auswahl des Kurventyps können mit den Punkten der Kurve Berechnungen durchgeführt werden.</p>
+
 
 <h2>Arten von Kurven</h2>
+<p>Die erste Auswahl ist die Kurvengröße: klein oder groß.</p>
+
+<p>a) Für eine pädagogische Visualisierung wählen Sie am besten <b>klein</b>. Hier wird ein Koordinatensystem angezeigt, in dem man die Punkte der Kurve mit der Maus auswählen kann. Dabei können Sie zwischen drei Arten von elliptischen Kurven wählen:</p>
+<ol>
+  <li>Kurven in der Ebene der reellen Zahlen</li>
+  <li>Kurven über dem Körper F(p)</li>
+  <li>Kurven über dem Körper F(2^m).</li>
+</ol>
 <img src="curveType.PNG">
-<p>Es gibt drei Arten von elliptischen Kurven:<br>
-<b>1. Kurven in der Ebene der reellen Zahlen</b><br>
-<b>2. Kurven über dem Körper F(p)</b><br>
-<b>3. Kurven über dem Körper F(2^m)</b><br></p>
+</p>
+
+<p>b) Die Kurvengröße <b>groß</b> bietet Standard-Kurven (jede in verschiedenen Varianten) zur Auswahl an: ANSI X9.62, SEC 2, ECC Brainpool und CDC Group für den diskreten Kurventyp F(p); und ANSI X9.62 für den diskreten Kurventyp F(2^m).</br>
+Solche großen elliptischen Kurven kommen in professionellen kryptographischen Anwendungen zum Einsatz. Wie im Fall der kleinen Größen können Sie Punkte addieren und Punkte mit einem Skalar multiplizieren.</p>
+
+<p align="center"><img src="EC-large-Fp-de.png" width="90%" alt="EC-Berechnungen für große Kurvengrößen"></p>
+
+<p>Die Ergebnisse der Berechnungen (egal ob für große oder kleine Größe) können gespeichert werden und entweder im JCT-Editor angesehen oder in eine Datei abgelegt werden.</p>
+
+
+
+<p> </br> </p>
+<h2>Demonstration von Details bei kleinen Kurvengrößen</h2>
+<p>Die folgenden Absätze zeigen konkrete Beispiele für die drei Typen elliptischer Kurven.<br><br></p>
 
 <h3>1. Kurven in der Ebene der reellen Zahlen</h3>
-<h4>überblick</h4>
-  <p>Elliptische Kurven in der Ebene von reellen Zahlen entsprechen der Gleichung <i>y^2 = x^3 + a*x + b</i>, wobei die Variablen 
-  <i>a</i>, <i>b</i>, <i>x</i> and <i>y</i> reelle Zahlen sind. <br>
-  Auf der reellen Zahlenebene gibt es unendlich viele Punkte auf der Kurve. Für jeden Punkt 
-  auf der Kurve gibt es einen negativen Wert, so das y = -y mit der Ausnahme y = 0. <br><br>
-  Zwei Punkte auf der Kurve können einfach addiert werden:
-  <table>
-  <tr><td>1)</td><td>Wähle einen Punkt <i>P</i> und einen Punkt <i>Q</i>.</td></tr>
-  <tr><td valign="TOP">2)</td><td>Male eine Linie durch <i>P</i> und <i>Q</i>. Führe diese Linie fort, bis die Kurve ein drittes Mal
-  durchschnitten wird (P und Q sind die ersten zwei Male). Dieser Punkt ist <i>-R</i>.</td></tr>
-  <tr><td>3)</td><td>Punkt <i>R</i> ist der Punkt <i>-R</i> mit invertierten y-Wert.</td></tr>
-  </table></p>
+
+<h4>Überblick</h4>
+
+  <p>Elliptische Kurven in der Ebene von reellen Zahlen entsprechen der Gleichung <i>y^2 = x^3 + a*x + b</i>, wobei die Variablen <i>a</i>, <i>b</i>, <i>x</i> und <i>y</i> reelle Zahlen sind.</p>
+  <p>Auf der reellen Zahlenebene gibt es unendlich viele Punkte (<i>x</i>,<i>y</i>) auf der Kurve. Für jeden Punkt auf der Kurve gibt es einen negativen Wert, so das y = -y mit der Ausnahme y = 0.</p>
+  <p>Zwei Punkte auf der Kurve können einfach addiert werden. <i>R</i> ist das Ergebnis dieser Addition:</p>
+  <ol>
+  <li>Wähle einen Punkt <i>P</i> und einen Punkt <i>Q</i>.</li>
+  <li>Zeichne eine Linie durch <i>P</i> und <i>Q</i>. Führe diese Linie fort, bis die Kurve ein drittes Mal geschnitten wird (P und Q sind die ersten zwei Male). Dieser Punkt ist <i>-R</i>.</li>
+  <li>Punkt <i>R</i> ist der Punkt <i>-R</i> mit invertierten y-Wert.</li>
+</ol>
 
 <table cellpadding=0 cellspacing=0>
 	<tr><td><img src="EC.PNG"></td></tr>
 	<tr><td align="CENTER" bgcolor="#E0DFE3"><i>y² = x³ - 10x + 15</i></td></tr>
 </table>
 
-<h4>Berechnungen</h4>
-  <h5>Punktaddition</h5>
-  	Punkt <i>R</i> ist Punkt <i>O</i>, das Fernelement, wenn die Gleichung <i>P</i> = <i>-Q</i> erfüllt wird.
-  	In diesem Fall, durchschneidet die Linie die durch  <i>P</i> und <i>Q</i> führt die Kurve nie ein drittes Mal.
-  	<br><br>
-    Wenn <i>P</i> != <i>Q</i>:<br>
+  <p><br><b>Zahlenbeispiel mit der Kurve aus dem obigen Screenshot:</b><br>
+  Gewählte Kurve: y^2 = x^3 - 10,0x + 15,0<br>
+  mit P = (-3,55 / 2,43) und Q = (0,59 / 3,05)<br>
+  Addition:       R = P+Q = (2,98 / -3,41)<br>
+  Multiplikation: R =  2P = (39,70 / -249,36)<br><br></p>
+
+
+
+<h4>Berechnungen allgemein</h4>
+
+  <h5>1. Punktaddition (P + Q)</h5>
+  	<p>a) Wenn <i>P</i> = <i>-Q</i>, ist <i>R</i> = <i>O</i>, das Fernelement (Punkt in der Unendlichkeit).
+  	In diesem Fall durchschneidet die Linie, die durch <i>P</i> und <i>Q</i> führt, die Kurve nie ein drittes Mal.<br></p>
+	
+    <p>b) Sonst (mit <i>P</i> != <i>Q</i>) ergibt sich <i>R</i> so:<br>
     <i>s</i> = (<i>Yp</i> - <i>Yq</i>) / (<i>Xp</i> - <i>Xq</i>)<br>
     <i>Xr</i> = <i>s</i>^2 - <i>Xp</i> - <i>Xq</i><br>
-    <i>Yr</i> = -<i>Yp</i> + <i>s</i>(<i>Xp</i> - <i>Xr</i>)
+    <i>Yr</i> = -<i>Yp</i> + <i>s</i>(<i>Xp</i> - <i>Xr</i>)<br><br></p>
 
-  <h5>Punktmultiplikation</h5>
-    Wenn <i>Yp</i> = 0, dann ist <i>R</i> = <i>O</i>.<br><br>
+  <h5>2. Punktmultiplikation (k * P)</h5>
+    <p>a) Wenn <i>Yp</i> = 0, dann ist <i>R</i> = <i>O</i>.<br></p>
+	
+	<p>b) Sonst (bspw. mit <i>k</i>=2) ergibt sich <i>R</i> so:<br>
     2<i>P</i> = <i>P</i> + <i>P</i> = <i>R</i><br>
     <i>s</i> = (3<i>Xp</i>^2 + <i>a</i>) / (2<i>Yp</i>)<br>
     <i>Xr</i> = <i>s</i>^2 - 2<i>Xp</i><br>
-    <i>Yr</i> = -<i>Yp</i> + <i>s</i>(<i>Xp</i> - <i>Xr</i>)<br><br>
+    <i>Yr</i> = -<i>Yp</i> + <i>s</i>(<i>Xp</i> - <i>Xr</i>)<br></p>
 
+
+<p> </br> </p>
 <h3>2. Kurven über dem Körper F(p)</h3>
-<h4>überblick</h4>
-  <p>Eine Kurve über dem Körper <i>F(p)</i> kann durch die Gleichung <i>(y^2) mod(p) = (x^3 + a*x + b) mod (p)</i> beschrieben werden.<br>
-   Die Variablen <i>a</i>, <i>b</i>, <i>x</i> und <i>y</i> sind Elemente von <i>F(p)</i> und <i>p</i> ist eine Primzahl.
-   Die Anzahl von Punkten im Körper <i>F(p)</i> ist begrenzt auf p*p Punkte (endlicher Körper).<br><br>
-<table cellpadding=0 cellspacing=0>
+
+<h4>Überblick</h4>
+
+   <p>Eine Kurve über dem diskreten Körper <i>F(p)</i> kann durch die Gleichung <i>(y^2) mod(p) = (x^3 + a*x + b) mod (p)</i> beschrieben werden (<i>a</i> und <i>b</i> sind Parameter).</p>
+   
+   <p>Die Punkte (<i>x</i>, <i>y</i>) sind Elemente von <i>F(p)</i> und <i>p</i> ist eine Primzahl. Die Anzahl von Punkten im Körper <i>F(p)</i> ist begrenzt auf p*p Punkte (endlicher Körper).</p>
+   
+   <table cellpadding=0 cellspacing=0>
 	<tr><td><img src="ECFp.PNG"></td></tr>
 	<tr><td align="CENTER" bgcolor="#E0DFE3"><i>y²</i> mod <i>29 = (x³ + 14x + 15)</i> mod <i>29</i></td></tr>
-</table>
-<h4>Berechnungen</h4>
-  <h5>Punktaddition</h5>
-    <p>Punkt <i>R</i> ist Punkt <i>O</i> wenn <i>P</i> = <i>-Q</i> erfüllt wird.<br><br>
-    Wenn <i>P</i> != <i>Q</i>:<br>
-    <i>s</i> = ((<i>Yp</i> - <i>Yq</i>) / (<i>Xp</i> - <i>Xq</i>)) mod <i>p</i><br>
-    <i>Xr</i> = (<i>s</i>^2 - <i>Xp</i> - <i>Xq</i>) mod <i>p</i><br>
-    <i>Yr</i> = (-<i>Yp</i> + <i>s</i>(<i>Xp</i> - <i>Xr</i>)) mod <i>p</i><br></p>
+   </table>
+   
+  <p><br><b>Zahlenbeispiel für die diskrete Gruppe F(p) aus dem obigen Screenshot:</b><br>
+  Gewählte Kurve: y^2 = x^3 + 14x + 15<br>
+  mit p = 29, P = (18/3) und Q = (10/13)<br>
+  Addition:       R = P+Q = (8/28)<br>
+  Multiplikation: R =  2P = (22/26)</p>
 
-  <h5>Punktmultiplikation</h5>
-    Wenn <i>Yp</i> = 0, dann ist <i>R</i> = <i>O</i>.<br><br>
+  <p>Hier gibt es 36 Punkte: O, (1|1), (1|28), (2|14), (2|15), (5|6), (5|23), (6|5), (6|24), (8|1), (8|28), (9|0), (10|13), (10|16), (13|4), (13|25), (15|2), (15|27), (17|2), (17|27), (18|3), (18|26), (19|8), (19|21), (20|1), (20|28), (21|0), (22|3), (22|26), (23|11), (23|18), (24|9), (24|20), (26|2), (26|27), (28|0)<br><br></p>
+
+
+
+<h4>Berechnungen allgemein</h4>
+
+  <h5>1. Punktaddition</h5>
+ 	<p>a) Wenn <i>P</i> = <i>-Q</i>, ist <i>R</i> = <i>O</i>, das Fernelement (Punkt in der Unendlichkeit).</p>
+
+    <p>b) Sonst (mit <i>P</i> != <i>Q</i>) ergibt sich <i>R</i> so:<br>
+     <i>s</i> = ((<i>Yp</i> - <i>Yq</i>) / (<i>Xp</i> - <i>Xq</i>)) mod <i>p</i><br>
+    <i>Xr</i> = (<i>s</i>^2 - <i>Xp</i> - <i>Xq</i>) mod <i>p</i><br>
+    <i>Yr</i> = (-<i>Yp</i> + <i>s</i>(<i>Xp</i> - <i>Xr</i>)) mod <i>p</i><br><br></p>
+
+  <h5>2. Punktmultiplikation</h5>
+    <p>a) Wenn <i>Yp</i> = 0, dann ist <i>R</i> = <i>O</i>.<br></p>
+	
+	<p>b) Sonst (bspw. mit k=2) ergibt sich <i>R</i> so:<br>
     2<i>P</i> = <i>P</i> + <i>P</i> = <i>R</i><br>
     <i>s</i> = ((3<i>Xp</i>^2 + <i>a</i>) / (2<i>Yp</i>)) mod <i>p</i><br>
     <i>Xr</i> = (<i>s</i>^2 - 2<i>Xp</i>) mod <i>p</i><br>
-    <i>Yr</i> = (-<i>Yp</i> + <i>s</i>(<i>Xp</i> - <i>Xr</i>)) mod <i>p</i><br><br>
+    <i>Yr</i> = (-<i>Yp</i> + <i>s</i>(<i>Xp</i> - <i>Xr</i>)) mod <i>p</i><br></p>
 
 
-<h3>3. Kurven über dem Körper F(2^m)</a></h3>
-<h4>überblick</h4>
-  <p>Elemente über dem Körper <i>F(2^m)</i> sind <i>m</i>-Bit Strings. Kalkulationen befolgen die Regeln der Polynomarithmetik. <br>
-  Die Berechnungen können von Computern effizient berechnet werden, da <i>F(2^m)</i> Operationen auf Bitfolgen ausfürt.<br>
-  Die binäre Repräsentation einer elliptischen Kurve kann durch die Gleichung <i>y^2 + xy = x^3 + ax^2 + b</i> beschrieben werden, wobei <i>a</i>, <i>b</i>, <i>x</i> and <i>y</i> Elemente des Körpers <i>F(2^m)</i> sind.<br>
-  Der Körper <i>F(2^m)</i> wird mithilfe des Generators G definiert. G ist ein irreduzibles primäres Polynom mit der Bitlänge <i>m</i> + 1.<br> 
-  Das Negativ von Punkt <i>P</i> = (<i>Xp</i>, <i>Yp</i>) ist <i>-P</i> = (<i>Xp</i>, <i>Xp</i> + <i>Yp</i>).<br>
-<br>
+<p> </br> </p>
+<h3>3. Kurven über dem Körper F(2^m)</h3>
+
+<h4>Überblick</h4>
+  <p>Elemente über dem Körper <i>F(2^m)</i> sind <i>m</i>-Bit Strings. Berechnungen erfolgen nach den Regeln der Polynom-Arithmetik.</p>
+  <p>Da <i>F(2^m)</i> Operationen auf Bitfolgen ausführt, können die Berechnungen von Computern effizient berechnet werden.</p>
+  <p>Die binäre Repräsentation einer elliptischen Kurve kann durch die Gleichung <i>y^2 + xy = x^3 + ax^2 + b</i> beschrieben werden.</p>
+  <p>Der Körper <i>F(2^m)</i> wird mithilfe des Generators G definiert. G ist ein irreduzibles primäres Polynom mit der Bitlänge <i>m</i> + 1.</p>
+  <p>Das Negative von Punkt <i>P</i> = (<i>Xp</i>, <i>Yp</i>) ist <i>-P</i> = (<i>Xp</i>, <i>Xp</i> + <i>Yp</i>).</p>
 
 <table cellpadding=0 cellspacing=0>
 	<tr><td><img src="ECFm.PNG"></td><td><img src="ECFmElements.PNG"></td></tr>
 	<tr><td align="CENTER" bgcolor="#E0DFE3"><i>y² + xy = x³ + g9*x² + g3</i> ; generator G = 110111 ; m = 5</td></tr>
-</table>
+</table><br><br>
 
-<h4>Berechnungen</h4>
-  <h5>Polynomberechnungen</h5>
-  	Es ist wichtig Kalkulationen mit Polynomen zu verstehen, um Berechnungen über <i>F(2^m)</i> zu verstehen.<br>
-  	In den folgenden Beispielen werden alle Polynom als Bitfolgen dargestellt (e.g. for m=5 : x^4 + x^2 + x + 1 = 10111)<br><br>
-    <b>Addition (mithilfe XORs)</b><br>
+
+<h4>Berechnungen allgemein</h4>
+
+  <h5>1. Polynomberechnungen</h5>
+  
+  	<p>Um Berechnungen über <i>F(2^m)</i> zu verstehen, muss man Berechnungen mit Polynomen verstehen.</p>
+    <p>In den folgenden Beispielen werden alle Polynome als Bitfolgen dargestellt (z.B. für m=5: x^4 + x^2 + x + 1 = 10111).</p>
+    <p><b>Addition (mithilfe XOR)</b><br>
     1011 + 0101 = 1110<br><br>
+	
     <b>Multiplikation</b><br>
     1011 * 1 = 1011<br>
     1011 * 10 = 10110<br>
     1011 * 11 = 10110 + 1011 = 11101<br><br>
+	
     <b>Division</b><br>
-    <img src="polyDivide.PNG"><br>
+    <img src="polyDivide.PNG"></p>
 
-  <h5>Punktaddition</h5>
-    <p>Punkt <i>R</i> ist Punkt <i>O</i> wenn <i>P</i> = <i>-Q</i>.<br><br>
-    Wenn <i>P</i> != <i>Q</i>:<br>
+  <h5>2. Punktaddition</h5>
+ 	<p>a) Wenn <i>P</i> = <i>-Q</i>, ist <i>R</i> = <i>O</i>, das Fernelement (Punkt in der Unendlichkeit).</p>  
+
+    <p>b) Sonst (mit <i>P</i> != <i>Q</i>) ergibt sich <i>R</i> so:<br>
     <i>s</i> = (<i>Yp</i> - <i>Yq</i>) / (<i>Xp</i> + <i>Xq</i>)<br>
     <i>Xr</i> = <i>s</i>^2 + <i>s</i> + <i>Xp</i> + <i>Xq</i> + <i>a</i><br>
     <i>Yr</i> = <i>s</i>(<i>Xp</i> + <i>Xr</i>) + <i>Xr</i> + <i>Yp</i><br></p>
 
-  <h5>Punktmultiplikation</h5>
-    <p>Wenn <i>Xp</i> = 0 hält, dann ist <i>R</i> = <i>O</i>.<br><br>
+  <h5>3. Punktmultiplikation</h5>
+
+    <p>a) Wenn <i>Xp</i> = 0, dann ist <i>R</i> = <i>O</i>.<br></p>
+	
+	<p>b) Sonst (bspw. mit k=2) ergibt sich <i>R</i> so:<br>
     2<i>P</i> = <i>P</i> + <i>P</i> = <i>R</i><br>
     <i>s</i> = <i>Xp</i> + <i>Yp</i> / <i>Xp</i><br>
     <i>Xr</i> = <i>s</i>^2 + <i>s</i> + <i>a</i><br>
-    <i>Yr</i> = <i>Xp</i>^2 + (<i>s</i> + 1) *<i>Xr</i><br></p>
+    <i>Yr</i> = <i>Xp</i>^2 + (<i>s</i> + 1) *<i>Xr</i></p>
 
-<br><br><br>
-Für mehr Information über elliptische Kurven besuchen Sie <a href="https://de.wikipedia.org/wiki/Elliptische_Kurve">https://de.wikipedia.org/wiki/Elliptische_Kurve</a>.
+
+
+<p>&nbsp;</p>
+<h2>Referenzen</h2>
+<p>Weitere Informationen über elliptische Kurven:</p>
+
+<p><b>[HMV04]</b></br>Hankerson, Darrel, Menezes, Alfred J., und Vanstone, Scott: Guide to Elliptic Curve Cryptography, Springer, 2004</p>
+
+<p><b>[Wikipedia_EC]</b></br>Elliptische_Kurve, <a href="https://de.wikipedia.org/wiki/Elliptische_Kurve">https://de.wikipedia.org/wiki/Elliptische_Kurve</a></p>
+
+<p><b>[Wikipedia_ECC]</b></br>Elliptic Curve Cryptography, <a href="https://de.wikipedia.org/wiki/Elliptic_Curve_Cryptography">https://de.wikipedia.org/wiki/Elliptic_Curve_Cryptography</a></p>
+
+
+<p>&nbsp;</p>
 </body>
 </html>
 
