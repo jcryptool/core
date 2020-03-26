@@ -1,65 +1,16 @@
-package org.jcryptool.core.util.ui.auto;
+package org.jcryptool.core.util.ui.autoswt;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Predicate;
 
-import org.eclipse.jface.viewers.CellEditor.LayoutData;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-public class LayoutAdvisor {
-	
-	
-	private static LayoutAdvisor defaultInstance;
+public class Handlers {
 
-	public List<Control> managed = new LinkedList<>();
-	
-	public static LayoutAdvisor getInstance() {
-		if( LayoutAdvisor.defaultInstance == null ) {
-			LayoutAdvisor.defaultInstance = new LayoutAdvisor();
-			return getInstance();
-		}
-		return LayoutAdvisor.defaultInstance;
-	}
-	
-	public void addManaged(Control control) {
-		this.managed.add(control);
-	}
-	
-	/**
-	 * Interface method to add a composite to be managed by this instance. Without optional args (tbd.), 
-	 * this method will apply JCT-wide, "conservative default" strategies that should work out-of-the-box 
-	 * with any layout (tweaking only values that are deemed to be "omitted by negligence").
-	 * 
-	 * This method should be called before any .layout() calls are made, but all the children of the root 
-	 * composite should have already been added to it.
-	 * 
-	 * @param c the composite
-	 */
-	public static void addPreLayoutRootComposite(Composite c) {
-		LayoutAdvisor inst = getInstance();
-		inst.addManaged(c);
-		traverseMarkWidthHint_FirstStrategy(c);
-	}
-	
-	private static List<Composite> getParents(Control c) {
-		Composite parent = c.getParent();
-
-		List<Composite> result;
-		if (parent != null) {
-			result = getParents(parent);
-			result.add(parent);
-		} else {
-			result = new LinkedList<>();
-		}
-		
-		return result;
-	}
-	
 	private static void traverseMarkWidthHint_FirstStrategy(Control c) {
 		if (c instanceof Composite) {
 			Composite composite = (Composite) c;
@@ -95,6 +46,32 @@ public class LayoutAdvisor {
 		}
 		
 	}
-	
 
+	private static List<Composite> getParents(Control c) {
+		Composite parent = c.getParent();
+
+		List<Composite> result;
+		if (parent != null) {
+			result = getParents(parent);
+			result.add(parent);
+		} else {
+			result = new LinkedList<>();
+		}
+		
+		return result;
+	}
+
+	/**
+	 * The default handler for adding widthHints below scrolled composites for labels that have SWT.WRAP
+	 */
+	public static IControlEventHandler createScrolledWrapWidthHintHandler() {
+		return new IControlEventHandler() {
+			@Override
+			public void onIninitializationFinished(LayoutAdvisor advisor, Control c) {
+				IControlEventHandler.super.onIninitializationFinished(advisor, c);
+				traverseMarkWidthHint_FirstStrategy(c);
+			}
+		};
+	}
+	
 }
