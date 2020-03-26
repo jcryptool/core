@@ -72,12 +72,12 @@ public class LayoutAdvisor {
 		} else {
 			boolean hasWrap = (c.getStyle() & SWT.WRAP) != 0;
 // 			System.err.println(String.format("%s has wrap: %s", c, hasWrap));
-			if (hasWrap) {
+			if (hasWrap || c instanceof Text || c instanceof StyledText) {
 				Object layoutData = c.getLayoutData();
 				if (layoutData instanceof GridData) {
 					GridData gridData = (GridData) layoutData;
 // 					System.err.println(String.format("%s has GridData: %s and widthHint: %s, at a SWT.DEFAULT of %s", c, gridData, gridData.widthHint, SWT.DEFAULT));
-					if(gridData.widthHint == SWT.DEFAULT || c instanceof Text || c instanceof StyledText) {
+					if(gridData.widthHint == SWT.DEFAULT) {
 						List<Composite> parents = getParents(c);
 // 						System.err.println(String.format("%s has GridData: %s and parents: %s", c, gridData, parents));
 						if (parents.stream().anyMatch(parent -> parent.getClass().equals(ScrolledComposite.class))) {
