@@ -13,7 +13,6 @@ import java.security.cert.X509Certificate;
 
 import org.eclipse.jface.dialogs.TrayDialog;
 import org.eclipse.jface.wizard.Wizard;
-import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 
 public class ChooseCert extends Wizard {
     private String name = "Java Keystore";
@@ -37,10 +36,8 @@ public class ChooseCert extends Wizard {
 
     @Override
     public boolean performFinish() {
-        String contactName = page.contact_name;
-        IKeyStoreAlias alias = composite.controller.getKsc().getAliasByContactName(contactName);
-        X509Certificate cert = (X509Certificate) composite.controller.getKsc().getCertificate(alias);
-        composite.controller.loadCertificate(page, cert, contactName);
+        X509Certificate cert = (X509Certificate) composite.controller.getKsc().getCertificate(page.contact);
+        composite.controller.loadCertificate(page, cert, page.contact);
         composite.btnValidate.setFocus();
         return true;
     }

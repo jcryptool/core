@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
- <context id="certverifHelp-de" title="Zertifikat-Verifikation">
+ <context id="CRTVERcontextHelpID" title="Zertifikat-Verifikation">
     <description>Mit diesem Plugin können Sie sehen, wie es zu einer Bewertung der Gültigkeit einer Signatur kommt, wenn man unterschiedliche Zertifikatsbäume und unterschiedliche Gültigkeitsmodelle benutzt.</description>
     <topic href="$nl$/help/content/index.html" label="Zertifikat-Verifikation"/>
  </context>
