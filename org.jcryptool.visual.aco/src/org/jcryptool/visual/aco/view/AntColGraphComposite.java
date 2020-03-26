@@ -1,17 +1,18 @@
 package org.jcryptool.visual.aco.view;
 
-import java.awt.Point;
 import java.util.Vector;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.visual.aco.controller.AntColEventController;
 import org.jcryptool.visual.aco.model.CommonModel;
 
@@ -28,8 +29,7 @@ public class AntColGraphComposite extends Composite {
 	private int x2; // Ziel Ameise
 	private int y2;
 	private boolean isAnimationRunning = false;
-	private final Color highlightColor = new Color(this.getDisplay(), 100, 190,
-			0);
+	private final Color highlightColor = new Color(this.getDisplay(), 100, 190, 0);
 	private Color normalColor = new Color(this.getDisplay(), 50, 120, 50);
 	private Color antColor = new Color(this.getDisplay(), 139, 90, 40);
 	private Color eyeColor = new Color(this.getDisplay(), 255, 255, 255);
@@ -117,7 +117,7 @@ public class AntColGraphComposite extends Composite {
 	}
 
 	private void drawKnots(PaintEvent e) {
-		e.gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_BLACK));
+		e.gc.setForeground(ColorService.BLACK);
 		String[] knots = m.getKnots();
 
 		Vector<Integer> trail = m.getTrail();
@@ -144,24 +144,36 @@ public class AntColGraphComposite extends Composite {
 
 	public void drawAllPropabilities(PaintEvent e) {
 		String[] knots = m.getKnots();
-		double[] probs = m.getProbabilities(); // W'keiten holen
+		double[] probs = m.getProbabilities(); // Wahrscheinlichkeiten holen
 		for(int i = 0; i < knots.length; i++){
 			int[] a = getKnotCoord(i);
 			drawPropability(e, a[0], a[1], probs[i]);
 		}
 	}
 
+	/**
+	 * Draw the probability of the node.
+	 * @param e
+	 * @param x The center of the node.
+	 * @param y The center of the node.
+	 * @param prob The probability.
+	 */
 	private void drawPropability(PaintEvent e, int x, int y, double prob) {
 		if (prob > 0) { // W'keit
 			String str = prob * 100 + ""; //$NON-NLS-1$
 			str = str.substring(0, str.indexOf('.') + 2) + " %"; //$NON-NLS-1$
-			if(y < 180){
-				y -= 43;
-			} else {
-				y += 32;
-			}
-			e.gc.setBackground(highlightColor);
-			e.gc.drawString(str, x-18, y);
+
+			
+			// The radius of the circle is 32.
+			// To get the text a bit below the circle I used 37
+			// Thus there are 5 px space between circle and upper bound
+			// of the text.
+			y = y + 37;
+			e.gc.setBackground(ColorService.LIGHTGRAY);
+			// This is the size of the string in pixels.
+			// To get it centered textSize.x / 2.
+			Point textSize = e.gc.textExtent(str);
+			e.gc.drawString(str, x - (textSize.x / 2), y);
 		}
 	}
 
@@ -204,20 +216,47 @@ public class AntColGraphComposite extends Composite {
 	 * @param nr
 	 *            Knotennummer
 	 */
-	private void drawKnot(PaintEvent e, String s, int x, int y, boolean set,
-			int nr) {
-		if (set) // wenn bereits passiert in gruen
+	private void drawKnot(PaintEvent e, String s, int x, int y, boolean set, int nr) {
+		if (set) // wenn bereits passiert in grün
 			e.gc.setBackground(highlightColor);
 		else
 			e.gc.setBackground(normalColor);
+		
 		// Kreis und Nummer zeichnen
 		e.gc.fillOval(x - 32, y - 32, 65, 65);
-		e.gc.drawString(nr + "", x -22, y -12); //$NON-NLS-1$
-		if (s.length() > 5)
+		Point nrSize = e.gc.textExtent(Integer.toString(nr));
+		e.gc.drawString(nr + "", x  - nrSize.x / 2, y - nrSize.y / 2); //$NON-NLS-1$
+		if (s.length() > 5) {
 			s = s.substring(0, 5);
+		}
+		e.gc.setBackground(ColorService.LIGHTGRAY);
+		
+		// Calculate the y Position of the first character.
+		int fontHeight = e.gc.getFontMetrics().getHeight();
+		x = x + 37;
+		switch (s.length()) {
+		case 1:
+			y = y - fontHeight / 2;
+			break;
+		case 2:
+			y = y - fontHeight;
+			break;
+		case 3:
+			y = y - fontHeight / 2 - fontHeight;
+			break;
+		case 4:
+			y = y - 2 * fontHeight;
+			break;
+		case 5:
+			y = y - fontHeight / 2 - 2 * fontHeight;
+			break;
+		default:
+			break;
+		}
+
 		for (int i = 0; i < s.length(); i++) { // Text
 			e.gc.drawString(
-					Character.toUpperCase(s.charAt(i)) + "", x, y + 12 * (i + 1) - 40); //$NON-NLS-1$
+					Character.toUpperCase(s.charAt(i)) + "", x, y + fontHeight * i); //$NON-NLS-1$
 		}
 	}
 
