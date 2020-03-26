@@ -50,6 +50,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.images.ImageService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.crtverification.Activator;
 
 public class CrtVerViewComposite extends Composite implements PaintListener {
@@ -166,24 +167,12 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		GridLayout gl_composite = new GridLayout(2, false);
 		composite.setLayout(gl_composite);
 		
-		//Titel mit kurzer Beschreibung des Plugins
-		Composite header = new Composite(composite, SWT.NONE);
-		header.setLayout(new GridLayout());
-		header.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		header.setBackground(ColorService.WHITE);
+		// Titel und Beschreinung des Plugins.
+		TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(composite);
+		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		titleAndDescription.setTitle(Messages.CrtVerViewComposite_title);
+		titleAndDescription.setDescription(Messages.CrtVerViewComposite_description);
 		
-		Text title = new Text(header, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
-		title.setBackground(ColorService.WHITE);
-		title.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		title.setFont(FontService.getLargeBoldFont());
-		title.setText(Messages.CrtVerViewComposite_title);
-
-		Text txtDescription = new Text(header, SWT.READ_ONLY | SWT.WRAP | SWT.MULTI);
-		txtDescription.setBackground(ColorService.WHITE);
-		GridData gd_txtDescription = new GridData(SWT.FILL, SWT.FILL, true, false);
-		gd_txtDescription.widthHint = 1000;
-		txtDescription.setLayoutData(gd_txtDescription);
-		txtDescription.setText(Messages.CrtVerViewComposite_description);
 		
 		//Beginn des Bereichs links oben in dem die 8 Schieberregler sind 
 		Composite leftTop = new Composite(composite, SWT.NONE);
