@@ -15,7 +15,7 @@ import org.eclipse.jface.dialogs.TrayDialog;
 import org.eclipse.jface.wizard.Wizard;
 
 public class ChooseCert extends Wizard {
-    private String name = "Java Keystore";
+    private String name = Messages.ChooseCert_JCTKeystore;
     private ChooseCertPage page;
     private int certType; // [1] UserCert; [2] Cert; [3] RootCert
     private CrtVerViewComposite composite;

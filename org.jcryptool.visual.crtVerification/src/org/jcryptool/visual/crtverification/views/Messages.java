@@ -68,7 +68,9 @@ public class Messages extends NLS {
     public static String CrtVerViewComposite_signatureVerification;
     public static String CrtVerViewComposite_validateSuccessful;
     public static String CrtVerViewComposite_validateUnSuccessful;
-    public static String ChooseCertPage_description;
+    public static String ChooseCert_JCTKeystore;
+
+	public static String ChooseCertPage_description;
     public static String CrtVerViewComposite_lblLog_text;
     public static String CrtVerViewComposite_dateSet;
 
