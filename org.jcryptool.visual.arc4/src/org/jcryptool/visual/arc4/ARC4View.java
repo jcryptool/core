@@ -16,9 +16,9 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.ui.auto.LayoutAdvisor;
 import org.jcryptool.visual.arc4.ui.ARC4Composite;
 
 /**
@@ -53,6 +53,11 @@ public class ARC4View extends ViewPart {
         scroll.setContent(arc4);
         scroll.setMinSize(arc4.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
+        // This is used in combination with TitleAndDescriptionComposite in ARC4Composite.
+        // It avoids all widgets to strecht horizontal after the window is resized 
+        // by adding a widthHint.
+        LayoutAdvisor.addPreLayoutRootComposite(scroll);
+        
         // makes the connection to the help of the plug-in
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), "org.jcryptool.visual.arc4.arc4view");
     }
