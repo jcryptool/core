@@ -11,6 +11,7 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 public class LayoutAdvisor {
@@ -72,7 +73,7 @@ public class LayoutAdvisor {
 		} else {
 			boolean hasWrap = (c.getStyle() & SWT.WRAP) != 0;
 // 			System.err.println(String.format("%s has wrap: %s", c, hasWrap));
-			if (hasWrap || c instanceof Text || c instanceof StyledText) {
+			if ( c instanceof Text || c instanceof StyledText || c instanceof Label ) {
 				Object layoutData = c.getLayoutData();
 				if (layoutData instanceof GridData) {
 					GridData gridData = (GridData) layoutData;
