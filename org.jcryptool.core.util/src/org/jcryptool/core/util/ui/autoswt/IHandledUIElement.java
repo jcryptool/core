@@ -17,5 +17,7 @@ public interface IHandledUIElement<CT extends Control> {
 	 * @return
 	 */
 	public CT getRootControl();
+	
+	public String getId();
 
 }
