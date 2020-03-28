@@ -29,6 +29,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.crt.algorithm.ChineseRemainderTheorem;
 import org.jcryptool.visual.crt.xeuclid.XEuclid;
 
@@ -77,9 +78,6 @@ public class CRTGroup extends Composite implements Constants {
 	private Vector<Control> verifyEquationSet;
 	private ScrolledComposite scrolledComposite_1;
 	private ScrolledComposite scrolledComposite_2;
-	private Composite compositeTitleArea;
-	private Text txtHeader;
-	private Text txtHeaderInfoText;
 
 	/**
 	 * Create the composite
@@ -104,22 +102,12 @@ public class CRTGroup extends Composite implements Constants {
 
 		content = new Composite(scrolledGroup, SWT.NONE);
 		content.setLayout(new GridLayout(2, false));
-
-		compositeTitleArea = new Composite(content, SWT.NONE);
-		compositeTitleArea.setLayout(new GridLayout(1, false));
-		compositeTitleArea.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-		compositeTitleArea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-
-		txtHeader = new Text(compositeTitleArea, SWT.READ_ONLY);
-		txtHeader.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		txtHeader.setFont(FontService.getHeaderFont());
-		txtHeader.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-		txtHeader.setText(Messages.CRTGroup_Header);
-
-		txtHeaderInfoText = new Text(compositeTitleArea, SWT.WRAP | SWT.MULTI | SWT.READ_ONLY);
-		txtHeaderInfoText.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false));
-		txtHeaderInfoText.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-		txtHeaderInfoText.setText(Messages.CRTGroup_HeaderInfoText);
+		
+		// This creates the header and the description
+		TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(content);
+		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		titleAndDescription.setTitle(Messages.CRTGroup_Header);
+		titleAndDescription.setDescription(Messages.CRTGroup_HeaderInfoText);
 
 		step1Group = new Group(content, SWT.NONE);
 		step1Group.setLayout(new GridLayout(2, false));
@@ -217,6 +205,7 @@ public class CRTGroup extends Composite implements Constants {
 				if (showDialog) {
 					CheckingEquationDialog ced = new CheckingEquationDialog(getShell(), equations.getEquationSet(),
 							marking);
+					ced.setHelpAvailable(false);
 					dialogStatus = ced.open();
 				}
 

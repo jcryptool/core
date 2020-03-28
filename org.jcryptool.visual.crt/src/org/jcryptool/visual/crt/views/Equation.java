@@ -60,7 +60,9 @@ public class Equation implements Constants {
 		congruenceLabel.setText(uCongruence);
 
 		textfieldA = new Text(equationGroup, SWT.BORDER);
-		textfieldA.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		GridData gridData_textfieldA = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		gridData_textfieldA.widthHint = textfieldA.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
+		textfieldA.setLayoutData(gridData_textfieldA);
 		aTextfieldVerifyListener = new VerifyListener() {
 			@Override
 			public void verifyText(VerifyEvent e) {
@@ -82,7 +84,9 @@ public class Equation implements Constants {
 		modLabel.setText("mod"); //$NON-NLS-1$
 
 		textfieldM = new Text(equationGroup, SWT.BORDER);
-		textfieldM.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		GridData gridData_textfieldM = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		gridData_textfieldM.widthHint = textfieldM.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
+		textfieldM.setLayoutData(gridData_textfieldM);
 		mTextfieldVerifyListener = new VerifyListener() {
 			@Override
 			public void verifyText(VerifyEvent e) {
