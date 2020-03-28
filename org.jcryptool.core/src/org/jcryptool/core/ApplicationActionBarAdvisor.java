@@ -121,10 +121,10 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
         coolBar.add(new ToolBarContributionItem(fileToolBar, CorePlugin.PLUGIN_ID + ".toolbar")); //$NON-NLS-1$
 
-        // ToolBar Help
-        IToolBarManager helpToolBar = new ToolBarManager(coolBar.getStyle());
+        // Search Toolbar
+        IToolBarManager searchToolBar = new ToolBarManager(coolBar.getStyle());
 
-        coolBar.add(new ToolBarContributionItem(helpToolBar, CorePlugin.PLUGIN_ID + ".helpToolBar")); //$NON-NLS-1$
+        coolBar.add(new ToolBarContributionItem(searchToolBar, CorePlugin.PLUGIN_ID + ".searchToolbar")); //$NON-NLS-1$
 
         // CoolBar Context Menu
         MenuManager coolBarContextMenuManager = new MenuManager(null, CorePlugin.PLUGIN_ID + ".contextMenu"); //$NON-NLS-1$

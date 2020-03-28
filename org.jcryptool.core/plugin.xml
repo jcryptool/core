@@ -183,6 +183,24 @@
                style="push">
          </command>
       </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.ui.main.tool">
+         <command
+               commandId="org.eclipse.ui.window.quickAccess"
+               icon="icons/icon_16.gif"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.jcryptool.core.searchToolbar">
+         <command
+               commandId="org.eclipse.ui.window.quickAccess"
+               icon="icons/searchIcon.png"
+               style="push">
+         </command>
+      </menuContribution>
    </extension>
 
 	<!-- The prefrence pages -->
