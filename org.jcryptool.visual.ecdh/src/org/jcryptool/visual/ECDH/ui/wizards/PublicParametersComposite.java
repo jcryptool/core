@@ -135,7 +135,7 @@ public class PublicParametersComposite extends Composite {
 	public PublicParametersComposite(Composite parent, int style, PublicParametersWizardPage p, EC c, ECPoint g) {
 		super(parent, style);
 		page = p;
-		page.getWizard().getContainer().getShell().setMinimumSize(600, 680);
+		page.getWizard().getContainer().getShell().setMinimumSize(600, 700);
 		curve = c;
 		ppComposite = this;
 		monoFont = FontService.getNormalMonospacedFont();
@@ -145,9 +145,9 @@ public class PublicParametersComposite extends Composite {
 	private void initialize() {
 		curve = new ECFp();
 		((ECFp) curve).updateCurve(1, 1, 23);
+		setLayout(new GridLayout());
 		createGroupCurve();
 		createGroupGenerator(SMALLCURVE);
-		setLayout(new GridLayout());
 	}
 
 	/**
@@ -231,7 +231,7 @@ public class PublicParametersComposite extends Composite {
 		groupCurve = new Group(this, SWT.NONE);
 		groupCurve.setText(Messages.getString("ECDHWizPP.ellipticCurve")); //$NON-NLS-1$
 		groupCurve.setLayout(new GridLayout(2, false));
-		groupCurve.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		groupCurve.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
 		createGroupCurveType();
 		createGroupCurveSize();
@@ -254,14 +254,16 @@ public class PublicParametersComposite extends Composite {
 
 			groupGenerator = new Group(this, SWT.NONE);
 			groupGenerator.setText(Messages.getString("ECDHWizPP.groupGenerator")); //$NON-NLS-1$
-			groupGenerator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+			groupGenerator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 			groupGenerator.setLayout(groupGeneratorLayout);
 		}
 
-		if (sizeType == SMALLCURVE && contentGeneratorSmall == null)
+		if (sizeType == SMALLCURVE && contentGeneratorSmall == null) {
 			createGroupGeneratorSmall();
-		else
+		}
+		else {
 			createGroupGeneratorLarge();
+		}
 		setTopGeneratorComposite(sizeType);
 	}
 
@@ -758,6 +760,7 @@ public class PublicParametersComposite extends Composite {
 				}
 				cCurve.select(r.nextInt(cCurve.getItemCount()));
 				setCurve();
+				ppComposite.layout();
 			}
 		});
 

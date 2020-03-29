@@ -32,7 +32,6 @@ public class PublicParametersWizard extends Wizard {
 		super();
 		curve = c;
 		generator = g;
-		setNeedsProgressMonitor(true);
 	}
 
 	@Override
