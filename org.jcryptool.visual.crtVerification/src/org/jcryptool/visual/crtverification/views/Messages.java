@@ -43,7 +43,9 @@ public class Messages extends NLS {
     public static String CrtVerViewComposite_loadUserCert;
     public static String CrtVerViewComposite_UserCertificate;
     public static String CrtVerViewComposite_Ca;
-    public static String CrtVerViewComposite_RootCa;
+    public static String CrtVerViewComposite_ResetCommand;
+
+	public static String CrtVerViewComposite_RootCa;
     public static String CrtVerViewComposite_signatureDate;
     public static String CrtVerViewComposite_verificationDate;
     public static String CrtVerViewComposite_details;
@@ -66,7 +68,9 @@ public class Messages extends NLS {
     public static String CrtVerViewComposite_signatureVerification;
     public static String CrtVerViewComposite_validateSuccessful;
     public static String CrtVerViewComposite_validateUnSuccessful;
-    public static String ChooseCertPage_description;
+    public static String ChooseCert_JCTKeystore;
+
+	public static String ChooseCertPage_description;
     public static String CrtVerViewComposite_lblLog_text;
     public static String CrtVerViewComposite_dateSet;
 

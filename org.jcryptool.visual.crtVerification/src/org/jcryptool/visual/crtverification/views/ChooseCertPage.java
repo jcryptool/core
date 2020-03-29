@@ -12,11 +12,12 @@ package org.jcryptool.visual.crtverification.views;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 
 public class ChooseCertPage extends WizardPage {
    	private ChooseCertComposite compositeFile;
    	private CrtVerViewController controller;
-   	String contact_name;
+   	IKeyStoreAlias contact;
     int certType; // [1] UserCert; [2] Cert; [3] RootCert
     
     public int getCertType() {

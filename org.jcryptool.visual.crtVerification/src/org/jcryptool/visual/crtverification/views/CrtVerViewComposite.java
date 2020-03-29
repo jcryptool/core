@@ -50,6 +50,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.images.ImageService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.crtverification.Activator;
 
 public class CrtVerViewComposite extends Composite implements PaintListener {
@@ -117,7 +118,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
            		= new CommandContributionItemParameter(PlatformUI.getWorkbench(), null, commandId, SWT.PUSH);
            	if(icon != null)
            		param.icon = icon;
-           	if(tooltip != null && !tooltip.equals(""))
+           	if(tooltip != null && !tooltip.equals("")) //$NON-NLS-1$
            		param.tooltip = tooltip;
            	CommandContributionItem item = new CommandContributionItem(param);
            	manager.add(item);
@@ -158,37 +159,25 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			}
 		
 		};
-		defineCommand("org.jcryptool.visual.crtVerification.reset", "Reset", handler);
-		addContributionItem(toolBarMenu, "org.jcryptool.visual.crtVerification.reset",
+		defineCommand("org.jcryptool.visual.crtVerification.reset", Messages.CrtVerViewComposite_ResetCommand, handler); //$NON-NLS-1$
+		addContributionItem(toolBarMenu, "org.jcryptool.visual.crtVerification.reset", //$NON-NLS-1$
 			ImageService.IMAGEDESCRIPTOR_RESET, null);
 
 		Composite composite = new Composite(this, SWT.NONE);
 		GridLayout gl_composite = new GridLayout(2, false);
 		composite.setLayout(gl_composite);
 		
-		//Titel mit kurzer Beschreibung des Plugins
-		Composite header = new Composite(composite, SWT.NONE);
-		header.setLayout(new GridLayout());
-		header.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		header.setBackground(ColorService.WHITE);
+		// Titel und Beschreinung des Plugins.
+		TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(composite);
+		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		titleAndDescription.setTitle(Messages.CrtVerViewComposite_title);
+		titleAndDescription.setDescription(Messages.CrtVerViewComposite_description);
 		
-		Text title = new Text(header, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
-		title.setBackground(ColorService.WHITE);
-		title.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		title.setFont(FontService.getLargeBoldFont());
-		title.setText(Messages.CrtVerViewComposite_title);
-
-		Text txtDescription = new Text(header, SWT.READ_ONLY | SWT.WRAP | SWT.MULTI);
-		txtDescription.setBackground(ColorService.WHITE);
-		GridData gd_txtDescription = new GridData(SWT.FILL, SWT.FILL, true, false);
-		gd_txtDescription.widthHint = 1000;
-		txtDescription.setLayoutData(gd_txtDescription);
-		txtDescription.setText(Messages.CrtVerViewComposite_description);
 		
 		//Beginn des Bereichs links oben in dem die 8 Schieberregler sind 
 		Composite leftTop = new Composite(composite, SWT.NONE);
 		leftTop.setLayout(new GridLayout(5, false));
-		leftTop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2));
+		leftTop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 2));
 		
 		new Label(leftTop, SWT.NONE);		
 		
@@ -232,13 +221,13 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				controller.parseDatesFromComposite();
-				controller.setLogText(Messages.CrtVerViewComposite_RootCa + " \""
-						+ Messages.CrtVerViewComposite_notValidBefore + "\" "
-						+ Messages.CrtVerViewComposite_dateSet + " "
+				controller.setLogText(Messages.CrtVerViewComposite_RootCa + " \"" //$NON-NLS-1$
+						+ Messages.CrtVerViewComposite_notValidBefore + "\" " //$NON-NLS-1$
+						+ Messages.CrtVerViewComposite_dateSet + " " //$NON-NLS-1$
 						+ controller.getFromRootCa());
 			}
 		});
-		scaleRootCaBegin.setToolTipText("");
+		scaleRootCaBegin.setToolTipText(""); //$NON-NLS-1$
 		scaleRootCaBegin.setMaximum(360);
 		scaleRootCaBegin.setSelection(180);
 		
@@ -251,9 +240,9 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				controller.parseDatesFromComposite();
-				controller.setLogText(Messages.CrtVerViewComposite_RootCa + " \""
-						+ Messages.CrtVerViewComposite_notValidAfter + "\" "
-						+ Messages.CrtVerViewComposite_dateSet + " "
+				controller.setLogText(Messages.CrtVerViewComposite_RootCa + " \"" //$NON-NLS-1$
+						+ Messages.CrtVerViewComposite_notValidAfter + "\" " //$NON-NLS-1$
+						+ Messages.CrtVerViewComposite_dateSet + " " //$NON-NLS-1$
 						+ controller.getThruRootCa());
 			}
 		});
@@ -272,9 +261,9 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				controller.parseDatesFromComposite();
-				controller.setLogText(Messages.CrtVerViewComposite_Ca + " \""
-						+ Messages.CrtVerViewComposite_notValidBefore + "\" "
-						+ Messages.CrtVerViewComposite_dateSet + " "
+				controller.setLogText(Messages.CrtVerViewComposite_Ca + " \"" //$NON-NLS-1$
+						+ Messages.CrtVerViewComposite_notValidBefore + "\" " //$NON-NLS-1$
+						+ Messages.CrtVerViewComposite_dateSet + " " //$NON-NLS-1$
 						+ controller.getFromCA());
 			}
 		});
@@ -288,9 +277,9 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				controller.parseDatesFromComposite();
-				controller.setLogText(Messages.CrtVerViewComposite_Ca + " \""
-						+ Messages.CrtVerViewComposite_notValidAfter + "\" "
-						+ Messages.CrtVerViewComposite_dateSet + " "
+				controller.setLogText(Messages.CrtVerViewComposite_Ca + " \"" //$NON-NLS-1$
+						+ Messages.CrtVerViewComposite_notValidAfter + "\" " //$NON-NLS-1$
+						+ Messages.CrtVerViewComposite_dateSet + " " //$NON-NLS-1$
 						+ controller.getThruCA());
 			}
 		});
@@ -309,9 +298,9 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				controller.parseDatesFromComposite();
-				controller.setLogText(Messages.CrtVerViewComposite_UserCertificate + " \"" + 
-								Messages.CrtVerViewComposite_notValidBefore + "\" "	+ 
-								Messages.CrtVerViewComposite_dateSet + " " + 
+				controller.setLogText(Messages.CrtVerViewComposite_UserCertificate + " \"" +  //$NON-NLS-1$
+								Messages.CrtVerViewComposite_notValidBefore + "\" "	+  //$NON-NLS-1$
+								Messages.CrtVerViewComposite_dateSet + " " +  //$NON-NLS-1$
 								controller.getFromClient());
 			}
 		});
@@ -327,9 +316,9 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			public void mouseUp(MouseEvent e) {
 				controller.parseDatesFromComposite();
 				controller
-						.setLogText(Messages.CrtVerViewComposite_UserCertificate + " \"" + 
-								Messages.CrtVerViewComposite_notValidAfter + "\" " + 
-								Messages.CrtVerViewComposite_dateSet + " " + 
+						.setLogText(Messages.CrtVerViewComposite_UserCertificate + " \"" +  //$NON-NLS-1$
+								Messages.CrtVerViewComposite_notValidAfter + "\" " +  //$NON-NLS-1$
+								Messages.CrtVerViewComposite_dateSet + " " +  //$NON-NLS-1$
 								controller.getThruClient());
 			}
 		});
@@ -394,8 +383,8 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			public void mouseUp(MouseEvent e) {
 				controller.parseDatesFromComposite();
 				controller.setLogText(Messages.CrtVerViewComposite_signatureDate
-								+ " " + Messages.CrtVerViewComposite_dateSet
-								+ " " + controller.getSigDate());
+								+ " " + Messages.CrtVerViewComposite_dateSet //$NON-NLS-1$
+								+ " " + controller.getSigDate()); //$NON-NLS-1$
 			}
 		});
 		scaleSignatureDate.setMaximum(720);
@@ -415,9 +404,9 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 				controller.parseDatesFromComposite();
 				controller
 						.setLogText(Messages.CrtVerViewComposite_verificationDate
-								+ " "
+								+ " " //$NON-NLS-1$
 								+ Messages.CrtVerViewComposite_dateSet
-								+ " " + controller.getVerDate());
+								+ " " + controller.getVerDate()); //$NON-NLS-1$
 			}
 		});
 		scaleVerificationDate.setMaximum(720);
@@ -581,7 +570,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			}
 		});
 		textRootCaFromDay.setToolTipText(Messages.CrtVerViewComposite_rootCaFromDay);
-		textRootCaFromDay.setText("1");
+		textRootCaFromDay.setText("1"); //$NON-NLS-1$
 		textRootCaFromDay.setTextLimit(2);
 		
 		fromRootCa = new Label(grpDetails, SWT.NONE);
@@ -598,7 +587,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			}
 		});
 		textCaFromDay.setToolTipText(Messages.CrtVerViewComposite_caFromDay);
-		textCaFromDay.setText("1");
+		textCaFromDay.setText("1"); //$NON-NLS-1$
 		textCaFromDay.setTextLimit(2);
 		
 		fromCa = new Label(grpDetails, SWT.NONE);
@@ -615,7 +604,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			}
 		});
 		textCertFromDay.setToolTipText(Messages.CrtVerViewComposite_userCertificateFromDay);
-		textCertFromDay.setText("1");
+		textCertFromDay.setText("1"); //$NON-NLS-1$
 		textCertFromDay.setTextLimit(2);
 
 		fromCert = new Label(grpDetails, SWT.NONE);
@@ -632,7 +621,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			}
 		});
 		textSignatureDateDay.setToolTipText(Messages.CrtVerViewComposite_signatureDateDay);
-		textSignatureDateDay.setText("1");
+		textSignatureDateDay.setText("1"); //$NON-NLS-1$
 		textSignatureDateDay.setTextLimit(2);
 
 		signatureDate = new Label(grpDetails, SWT.NONE);
@@ -650,7 +639,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			}
 		});
 		textVerificationDateDay.setToolTipText(Messages.CrtVerViewComposite_verificationDateDay);
-		textVerificationDateDay.setText("1");
+		textVerificationDateDay.setText("1"); //$NON-NLS-1$
 		textVerificationDateDay.setTextLimit(2);
 		
 		verificationDate = new Label(grpDetails, SWT.NONE);
@@ -673,7 +662,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		});
 		
 		textRootCaThruDay.setToolTipText(Messages.CrtVerViewComposite_rootCaThruDay);
-		textRootCaThruDay.setText("1");
+		textRootCaThruDay.setText("1"); //$NON-NLS-1$
 		textRootCaThruDay.setTextLimit(2);
 		
 		thruRootCa = new Label(grpDetails, SWT.NONE);
@@ -690,7 +679,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			}
 		});
 		textCaThruDay.setToolTipText(Messages.CrtVerViewComposite_caThruDay);
-		textCaThruDay.setText("1");
+		textCaThruDay.setText("1"); //$NON-NLS-1$
 		textCaThruDay.setTextLimit(2);
 		
 		thruCa = new Label(grpDetails, SWT.NONE);
@@ -707,7 +696,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			}
 		});
 		textCertThruDay.setToolTipText(Messages.CrtVerViewComposite_userCertificateThruDay);
-		textCertThruDay.setText("1");
+		textCertThruDay.setText("1"); //$NON-NLS-1$
 		textCertThruDay.setTextLimit(2);
 
 		// Initialize Label "Thru User Cert" with actual date
@@ -809,13 +798,13 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		
 		labelValiditySymbol = new Label(settingsComposite, SWT.NONE);
 
-		labelValiditySymbol.setImage(ImageService.getImage(Activator.PLUGIN_ID, "icons/rotesKreuzKlein.png"));
+		labelValiditySymbol.setImage(ImageService.getImage(Activator.PLUGIN_ID, "icons/rotesKreuzKlein.png")); //$NON-NLS-1$
 		labelValiditySymbol.setVisible(false);
 
 		btnValidate.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				controller.setLogText("### " + String.format("%03d", validationCounter) + " ###");
+				controller.setLogText("### " + String.format("%03d", validationCounter) + " ###"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				validationCounter++;
 
 				controller.logValidityDates();
@@ -827,7 +816,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 				} else if (btnChainModel.getSelection()) {
 					controller.validate(2);
 				}
-				controller.setLogText("---------------------------------");
+				controller.setLogText("---------------------------------"); //$NON-NLS-1$
 			}
 		});
 
@@ -950,11 +939,11 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 	 */
 	public void setValidtiySymbol(int type) {
 		if (type == 1) {
-			labelValiditySymbol.setImage(ImageService.getImage(Activator.PLUGIN_ID, "icons/gruenerHakenKlein.png"));
+			labelValiditySymbol.setImage(ImageService.getImage(Activator.PLUGIN_ID, "icons/gruenerHakenKlein.png")); //$NON-NLS-1$
 			labelValiditySymbol.setToolTipText(Messages.CrtVerViewComposite_validateSuccessful);
 			labelValiditySymbol.setVisible(true);
 		} else {
-			labelValiditySymbol.setImage(ImageService.getImage(Activator.PLUGIN_ID, "icons/rotesKreuzKlein.png"));
+			labelValiditySymbol.setImage(ImageService.getImage(Activator.PLUGIN_ID, "icons/rotesKreuzKlein.png")); //$NON-NLS-1$
 			labelValiditySymbol.setToolTipText(Messages.CrtVerViewComposite_validateUnSuccessful);
 			labelValiditySymbol.setVisible(true);
 		}

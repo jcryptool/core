@@ -9,7 +9,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.crtverification.views;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Enumeration;
 
 import org.eclipse.jface.viewers.ListViewer;
@@ -30,6 +30,7 @@ public class ChooseCertComposite extends Composite {
     private ChooseCertPage page;
     CrtVerViewController controller;
     Button btnLoad;
+    private ArrayList<IKeyStoreAlias> publicKeys = new ArrayList<IKeyStoreAlias>();
 
     /**
      * Create the composite.
@@ -52,13 +53,13 @@ public class ChooseCertComposite extends Composite {
         list.setLayoutData(fd_list);
 
 
-        // Wenn ein Listen-Element ausgewaehlt wird, wird der Load-Button aktiv
+        // Wenn ein Listen-Element ausgewählt wird, wird der Load-Button aktiv
         list.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                String contactName = Arrays.toString(list.getSelection()).replaceAll("\\[", "").replaceAll("\\]", "");
-                page.contact_name = contactName;
-                page.setPageComplete(true);
+            	page.contact = publicKeys.get(list.getSelectionIndex());
+            	page.setPageComplete(true);
+            	
             }
         });
 
@@ -68,7 +69,8 @@ public class ChooseCertComposite extends Composite {
             IKeyStoreAlias alias = new KeyStoreAlias(aliases.nextElement());
             KeyType type = alias.getKeyStoreEntryType();
             if (type == KeyType.KEYPAIR_PUBLIC_KEY || type == KeyType.PUBLICKEY) {
-                list.add(alias.getContactName());
+                list.add(alias.getContactName() + " - " + alias.getOperation());
+                publicKeys.add(alias);
             }
         }
     }

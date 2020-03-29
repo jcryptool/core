@@ -12,7 +12,6 @@ package org.jcryptool.visual.arc4.ui;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
@@ -20,13 +19,10 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Text;
-import org.jcryptool.core.util.colors.ColorService;
-import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.arc4.ARC4Con;
 import org.jcryptool.visual.arc4.Messages;
 import org.jcryptool.visual.arc4.algorithm.ARC4Algorithm;
@@ -54,7 +50,7 @@ public class ARC4Composite extends Composite {
     private InstructionVisual inst;
 
     // descr holds the description of the plugin as a whole; xor displays a picture, arrow displays another picture
-    private Composite descr, xor, arrow;
+    private Composite xor, arrow;
 
     // Part of the UI that shows the internal variables of the algorithm
     private VariablesVisual var;
@@ -164,29 +160,10 @@ public class ARC4Composite extends Composite {
      * Create the part of the plug-in that displays its description
      */
     private void initDsc() {
-        // to make the text wrap lines automatically
-    	descr = new Composite(this, SWT.NONE);
-    	GridData gd_descr = new GridData(SWT.FILL, SWT.FILL, true, false, ARC4Con.H_SPAN_MAIN, ARC4Con.DESC_HEIGHT);
-    	//need to be set to cause the description text to wrap. Without it the text would be in one line.
-    	//FIXME the width hint is the reason why there is empty space at the bottom 
-    	//of the size. Would be nice, if this could be solved.
-    	gd_descr.widthHint = 1000;
-        descr.setLayoutData(gd_descr);
-        descr.setLayout(new GridLayout());
-        descr.setBackground(ColorService.WHITE);
-
-        // the heading of the description; is not selectable by mouse
-        Text text_title = new Text(descr, SWT.READ_ONLY);
-        text_title.setText(Messages.PluginDescriptionCaption);
-        text_title.setFont(FontService.getHeaderFont());
-        text_title.setBackground(ColorService.WHITE);
-
-        // this divide has been made to allow selection of text in this section but not of the
-        // heading
-        // while not allowing modification of either section
-        StyledText descText = new StyledText(descr, SWT.READ_ONLY | SWT.WRAP);
-        descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        descText.setText(Messages.PluginDescription);
+    	TitleAndDescriptionComposite td = new TitleAndDescriptionComposite(this);
+    	td.setLayoutData(new GridData(SWT.FILL, SWT.UP, true, false, ARC4Con.H_SPAN_MAIN, ARC4Con.DESC_HEIGHT));
+    	td.setTitle(Messages.PluginDescriptionCaption);
+    	td.setDescription(Messages.PluginDescription);
     }
     
     private void initAlgoSec() {
