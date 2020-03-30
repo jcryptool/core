@@ -99,7 +99,7 @@ public abstract class AbstractResultDialog extends TitleAreaDialog {
 
          Composite area = (Composite) super.createDialogArea(parent);
         parent.setLayout(new GridLayout());
-        parent.setLayoutData(new GridData(GridData.FILL_BOTH));
+        //parent.setLayoutData(new GridData(GridData.FILL_BOTH));
 
         
         Composite composite = new Composite(area, SWT.NONE);
