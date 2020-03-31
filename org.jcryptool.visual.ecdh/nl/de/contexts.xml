@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
  <context id="ecdhview" title="Diffie-Hellman Schlüsselaustausch (EC)">
-    <description>Diese Visualisierung demonstriert den Diffie-Hellman Schlüsselaustausch (EC) basierend auf elliptischen Kurven.</description>
+    <description>Diese Visualisierung demonstriert den <b>Diffie-Hellman Schlüsselaustausch (EC)</b> basierend auf elliptischen Kurven.</description>
     <topic href="help/content/index.html" label="ECDH demonstration"/>
  </context>
 </contexts>

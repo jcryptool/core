@@ -49,6 +49,7 @@ public class Animation extends Thread {
 	/**
 	 * Play and show the animation. Messages should be set beforehand
 	 */
+	@Override
 	public void run() {
 		GC gc = new GC(canvasExchange);
 		Image original = new Image(canvasExchange.getDisplay(), canvasExchange.getBounds().width,
@@ -107,7 +108,7 @@ public class Animation extends Thread {
 			gc.drawImage(im, 0, (canvasExchange.getBounds().height / 2));
 
 			try {
-				sleep(50);
+				sleep(45);
 			} catch (InterruptedException ex) {
 				LogUtil.logError(ECDHPlugin.PLUGIN_ID, ex);
 			}
