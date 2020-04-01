@@ -35,7 +35,6 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -90,7 +89,6 @@ public class ECContentFp extends Composite{
 	private Button rbtnFM = null;
 	private Button rbtnReal = null;
 	private Button rbtnLarge = null;
-	private Slider sliderZoom = null;
 	private Spinner spnrA = null;
 	private Spinner spnrB = null;
 	private Spinner spnrK = null;
@@ -180,24 +178,7 @@ public class ECContentFp extends Composite{
 				updateCurve(false);
 			}
 		});
-		Label label = new Label(groupCurve, SWT.NONE);
-		label.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false));
-		label.setText(Messages.ECView_ZoomGraph); //$NON-NLS-1$
-		sliderZoom = new Slider(groupCurve, SWT.NONE);
-		sliderZoom.setSelection(10);
-		sliderZoom.setMaximum(57);
-		sliderZoom.setMinimum(0);
-		sliderZoom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		sliderZoom.addSelectionListener(new SelectionListener(){
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				curve.updateCurve(spnrA.getSelection(), spnrB.getSelection(), 50 - sliderZoom.getSelection(), canvasCurve.getSize());
-				points = curve.getPoints();
-				updateCurve(false);
-			}
-		});
+
 	}
 
 	/**
@@ -304,8 +285,11 @@ public class ECContentFp extends Composite{
 		canvasCurve.setSize(500,500);
 		canvasCurve.addPaintListener(new PaintListener(){
 			@Override
-			public void paintControl(PaintEvent e) {drawDiscrete(e);}
+			public void paintControl(PaintEvent e) {
+				drawDiscrete(e);
+			}
 		});
+		
 		canvasCurve.addMouseMoveListener(new MouseMoveListener(){
 			@Override
 			public void mouseMove(MouseEvent e) {
@@ -336,7 +320,10 @@ public class ECContentFp extends Composite{
 		});
 		canvasCurve.addMouseTrackListener(new MouseTrackListener(){
 			@Override
-			public void mouseEnter(MouseEvent e) {}
+			public void mouseEnter(MouseEvent e) {
+				
+			}
+			
 			@Override
 			public void mouseExit(MouseEvent e) {
 				pointSelect = null;
@@ -347,8 +334,11 @@ public class ECContentFp extends Composite{
 				if(pointQ == null)
 					lblQ.setText(""); //$NON-NLS-1$
 			}
+			
 			@Override
-			public void mouseHover(MouseEvent e) {}
+			public void mouseHover(MouseEvent e) {
+				
+			}
 		});
 	}
 
@@ -363,8 +353,7 @@ public class ECContentFp extends Composite{
         groupSave.setText(Messages.ECView_SaveResults); //$NON-NLS-1$
 
         cSaveResults = new Combo(groupSave, SWT.READ_ONLY);
-        cSaveResults
-                .setItems(new String[] {
+        cSaveResults.setItems(new String[] {
                         Messages.ECView_No, Messages.ECView_ToTextEditor, Messages.ECView_ToTextFile}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         cSaveResults.select(view.saveTo);
         cSaveResults.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 2, 1));
@@ -499,9 +488,9 @@ public class ECContentFp extends Composite{
 
 	private void createGroupAttributesFp() {
 		Control[] c = groupCurveAttributes.getChildren();
-		for(int i = 0; i < c.length; i++)
+		for(int i = 0; i < c.length; i++) {
 			c[i].dispose();
-		sliderZoom.setEnabled(false);
+		}
 
 		Label label = new Label(groupCurveAttributes, SWT.NONE);
 		label.setText("a ="); //$NON-NLS-1$

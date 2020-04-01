@@ -35,7 +35,6 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -95,7 +94,7 @@ public class ECContentFm extends Composite{
 	private Button rbtnFM = null;
 	private Button rbtnReal = null;
 	private Button rbtnLarge = null;
-	private Slider sliderZoom = null;
+//	private Slider sliderZoom = null;
 	private Spinner spnrK = null;
 	private Spinner spnrM = null;
 	private Table tableElements = null;
@@ -152,10 +151,13 @@ public class ECContentFm extends Composite{
 		groupCurve.setLayout(new GridLayout(3, false));
 		groupCurve.setText(Messages.ECContentFm_0); //$NON-NLS-1$
 		groupCurve.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		
 		createCanvasCurve();
+		
 		lblCurve = new Label(groupCurve, SWT.NONE);
 		lblCurve.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		lblCurve.setText(""); //$NON-NLS-1$
+		
 		btnDeletePoints = new Button(groupCurve, SWT.NONE);
 		btnDeletePoints.setToolTipText(Messages.ECContentFm_3); //$NON-NLS-1$
 		btnDeletePoints.setText(Messages.ECView_RemoveSelection); //$NON-NLS-1$
@@ -163,7 +165,10 @@ public class ECContentFm extends Composite{
 		btnDeletePoints.setEnabled(false);
 		btnDeletePoints.addSelectionListener(new SelectionListener(){
 			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				btnPQ.setSelection(true);
@@ -179,30 +184,7 @@ public class ECContentFm extends Composite{
 				updateCurve(false);
 			}
 		});
-		Label label = new Label(groupCurve, SWT.NONE);
-		label.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false));
-		label.setText(Messages.ECView_ZoomGraph); //$NON-NLS-1$
-		sliderZoom = new Slider(groupCurve, SWT.NONE);
-		sliderZoom.setSelection(10);
-		sliderZoom.setMaximum(57);
-		sliderZoom.setMinimum(0);
-		sliderZoom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		sliderZoom.addSelectionListener(new SelectionListener(){
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				points = null;
-				fillTablePoints();
-				curve.updateCurve(0, 0, 50 - sliderZoom.getSelection(), canvasCurve.getSize());
-				points = curve.getPoints();
-				if(points == null)
-					groupPoints.setText(Messages.ECView_Points); //$NON-NLS-1$
-				else
-					groupPoints.setText(Messages.ECView_Points + " (" + points.length + " " + Messages.ECView_Calculated + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-				canvasCurve.redraw();
-			}
-		});
+		
 	}
 
 	/**
@@ -214,16 +196,21 @@ public class ECContentFm extends Composite{
 		groupSize.setText(Messages.ECView_SelectCurveSize); //$NON-NLS-1$
 		groupSize.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		groupSize.setLayout(new GridLayout(2, true));
+		
 		rbtnSmall = new Button(groupSize, SWT.RADIO);
 		rbtnSmall.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false));
 		rbtnSmall.setText(Messages.ECView_Small); //$NON-NLS-1$
 		rbtnSmall.setSelection(true);
+		
 		rbtnLarge = new Button(groupSize, SWT.RADIO);
 		rbtnLarge.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false));
 		rbtnLarge.setText(Messages.ECView_Large); //$NON-NLS-1$
 		rbtnLarge.addSelectionListener(new SelectionListener() {
 			@Override
-			public void widgetDefaultSelected(SelectionEvent e) { }
+			public void widgetDefaultSelected(SelectionEvent e) {
+				
+			}
+			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				view.showLarge();
@@ -508,19 +495,21 @@ public class ECContentFm extends Composite{
 
 	private void createGroupAttributesFm() {
 		Control[] c = groupCurveAttributes.getChildren();
-		for(int i = 0; i < c.length; i++)
+		for(int i = 0; i < c.length; i++) {
 			c[i].dispose();
-		sliderZoom.setEnabled(false);
-		if(groupElements != null)
+		}
+		
+		if(groupElements != null) {
 			groupElements.setVisible(true);
-		if(curve == null)
+		}
+		
+		if(curve == null) {
 			curve = new ECFm();
+		}
 
-//		GridData gridData1 = new GridData();
-//		gridData1.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-//		gridData1.widthHint = 100;
 		Label label2 = new Label(groupCurveAttributes, SWT.NONE);
 		label2.setText("m ="); //$NON-NLS-1$
+		
 		spnrM = new Spinner(groupCurveAttributes, SWT.BORDER);
 		spnrM.setMaximum(6);
 		spnrM.setSelection(4);
