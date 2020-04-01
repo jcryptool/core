@@ -36,7 +36,6 @@ public class TitleAndDescriptionComposite extends Composite {
 		
 		styledText.setLayoutData(styledTextGridData);	
 		styledText.addListener(SWT.Resize, event -> {
-			System.err.println("styledText Resize Event triggered.");
 
 			if (styledTextGridData.heightHint != styledText.computeSize(this.getClientArea().width - 10, SWT.DEFAULT).y) {
 				styledTextGridData.heightHint = styledText.computeSize(this.getClientArea().width - 10, SWT.DEFAULT).y;
