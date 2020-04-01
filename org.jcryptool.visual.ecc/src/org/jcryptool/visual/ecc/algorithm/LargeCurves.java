@@ -16,7 +16,7 @@ import de.flexiprovider.common.math.FlexiBigInt;
  *
  */
 public class LargeCurves {
-	public static final String[] standardFp = {"ANSI X9.62", "SEC 2", "ECC brainpool", "CDC Group"}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+	public static final String[] standardFp = {"ANSI X9.62", "SEC 2", "ECC Brainpool", "CDC Group"}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
 	public static final String[] standardFm = {"ANSI X9.62"}; //$NON-NLS-1$
 
