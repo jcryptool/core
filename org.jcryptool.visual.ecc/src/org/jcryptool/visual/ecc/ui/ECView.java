@@ -82,7 +82,7 @@ public class ECView extends ViewPart {
 
         Calendar c = new GregorianCalendar();
         c.setTimeInMillis(System.currentTimeMillis());
-        log(Messages.ECView_LogHeader1 + c.get(Calendar.DATE) + "-" + c.get(Calendar.MONTH) + "-" 
+        log(Messages.ECView_LogHeader1 + c.get(Calendar.DATE) + "-" + (c.get(Calendar.MONTH) + 1) + "-" 
         		+ c.get(Calendar.YEAR) + " " + Messages.ECView_LogHeader2 
         		+ c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE) + "\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
     }
