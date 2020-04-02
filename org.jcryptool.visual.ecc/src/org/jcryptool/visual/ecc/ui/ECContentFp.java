@@ -956,6 +956,8 @@ public class ECContentFp extends Composite{
 		gridSize = lastPrime - 1;
 		int xSpacing = 5;
 		int ySpacing = 5;
+		int fontHeight = gc.getFontMetrics().getHeight();
+		int requiredWidth;
 		
 		int p = spnrP.getSelection();
 		
@@ -991,39 +993,54 @@ public class ECContentFp extends Composite{
 			space -= space / (gridSize - i);
 		}
 
+		// x-Achsen Beschriftung
 		gc.setForeground(black);
 		gc.drawLine(25, 5, 25, size.y - 25);
 		gc.drawLine(25, size.y - 25, size.x - 5, size.y - 25);
 		space = size.x - 30;
-			x = 25 + space / gridSize;
-			space -= space / gridSize;
-			for(int i = 1; i <= gridSize; i++) {
-				if(i % xSpacing == 0) {
-					gc.drawLine((int)x, size.y - 32, (int)x, size.y - 18);
-					gc.drawText(i + "", (int)x - (i < 10 ? 2 : 6), size.y - 17, true); //$NON-NLS-1$
-				} else {
-					gc.drawLine((int)x, size.y - 27, (int)x, size.y - 23);
-					if(gridSize < 15)
-						gc.drawText(i + "", (int)x - (i < 10 ? 2 : 6), size.y - 17, true); //$NON-NLS-1$
+		x = 25 + space / gridSize;
+		space -= space / gridSize;
+		for (int i = 1; i <= gridSize; i++) {
+			if (i % xSpacing == 0) {
+				gc.drawLine((int) x, size.y - 32, (int) x, size.y - 18);
+				requiredWidth = gc.textExtent(i + "").x;
+				gc.drawText(i + "", (int) x - requiredWidth / 2, size.y - fontHeight, true); //$NON-NLS-1$
+			} else {
+				gc.drawLine((int) x, size.y - 27, (int) x, size.y - 23);
+				if (gridSize < 15) {
+					requiredWidth = gc.textExtent(i + "").x;
+					gc.drawText(i + "", (int) x - requiredWidth / 2, size.y - fontHeight, true); //$NON-NLS-1$
 				}
-				x += space / (gridSize - i);
-				space -= space / (gridSize - i);
 			}
-			space = size.x - 30;
-			y = size.y - 25 - space / gridSize;
-			space -= space / gridSize;
-			for(int i = 1; i <= gridSize; i++) {
-				if(i % ySpacing == 0) {
-					gc.drawLine(18, (int)y, 32, (int)y);
-					gc.drawText(i + "", i < 10 ? 5 : 3, (int)y - 7, true); //$NON-NLS-1$
-				} else {
-					gc.drawLine(23, (int)y, 27, (int)y);
-					if(gridSize < 15)
-						gc.drawText(i + "", i < 10 ? 5 : 3, (int)y - 7, true); //$NON-NLS-1$
-				}
-				y -= space / (gridSize - i);
-				space -= space / (gridSize - i);
+			x += space / (gridSize - i);
+			space -= space / (gridSize - i);
+		}
+		
+		// y-Achsen Beschriftung
+		// Die auskommentierten Zeilen richten die Beschriftung besser am Graphen aus
+		// als die eweils darunter liegenden Zeilen. Da aber bei großer Schrift
+		// der Platz nicht ausreicht werden die darunter liegenden Zeilen genutzt.
+		
+		// Platz den ein Zeichen im durchschnitt beötigt
+		requiredWidth = (int) gc.getFontMetrics().getAverageCharacterWidth();
+		space = size.x - 30;
+		y = size.y - 25 - space / gridSize;
+		space -= space / gridSize;
+		for (int i = 1; i <= gridSize; i++) {
+			if (i % ySpacing == 0) {
+				gc.drawLine(18, (int) y, 32, (int) y);
+//				gc.drawText(i + "", i < 10 ? 2 * requiredWidth : 0, (int) y - fontHeight / 2, true); //$NON-NLS-1$
+				gc.drawText(i + "", i < 10 ? requiredWidth : 0, (int) y - fontHeight / 2, true); //$NON-NLS-1$
+			} else {
+				gc.drawLine(23, (int) y, 27, (int) y);
+				if (gridSize < 15) {
+//					gc.drawText(i + "", i < 10 ? 2 * requiredWidth : 0, (int) y - fontHeight / 2, true); //$NON-NLS-1$
+					gc.drawText(i + "", i < 10 ? requiredWidth : 0, (int) y - fontHeight / 2, true); //$NON-NLS-1$
+				}	
 			}
+			y -= space / (gridSize - i);
+			space -= space / (gridSize - i);
+		}
 
 		if(points != null) {
 			double grid = (double)(size.x - 30) / gridSize;
