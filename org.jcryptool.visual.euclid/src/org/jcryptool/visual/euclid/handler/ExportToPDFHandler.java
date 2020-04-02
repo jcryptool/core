@@ -18,7 +18,7 @@ public class ExportToPDFHandler extends AbstractHandler {
 		
 		if (HandlerUtil.getActivePart(event) instanceof View) {
 			View view = ((View) HandlerUtil.getActivePart(event));
-			view.exportToPdf();
+			view.getExtendedEuclid().exportToPdf();
 		}
 		
 		return null;
