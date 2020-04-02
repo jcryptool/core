@@ -25,7 +25,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Device;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -42,9 +42,11 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.euclid.handler.CommandStateChanger;
 import org.jcryptool.visual.euclid.handler.CommandState.State;
 import org.jcryptool.visual.euclid.handler.CommandState.Variable;
@@ -63,10 +65,8 @@ public class View extends ViewPart {
 	private Composite parent;
 	private ScrolledComposite scrolledComposite;
 	private Composite composite_1;
-	private Label lblHeader_1;
 	private TabFolder tabFolder;
 	private TabItem tbtmEuclidean;
-	private StyledText txtDescription_1;
 	private Group grpInput_1;
 	private Label lblP_1;
 	private Label lblQ_1;
@@ -106,14 +106,12 @@ public class View extends ViewPart {
 
 	private CommandStateChanger csc = new CommandStateChanger();
 
-	private static final Color WHITE = Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
-	private static final Color BLACK = Display.getCurrent().getSystemColor(SWT.COLOR_BLACK);
-	private static final Color GREEN = Display.getCurrent().getSystemColor(SWT.COLOR_GREEN);
-	private static final Color RED = Display.getCurrent().getSystemColor(SWT.COLOR_RED);
-	private static final Color BLUE = Display.getCurrent().getSystemColor(SWT.COLOR_BLUE);
-	private static final Color MAGENTA = Display.getCurrent().getSystemColor(SWT.COLOR_MAGENTA);
+	private static final Color BLACK = ColorService.BLACK;
+	private static final Color GREEN = ColorService.GREEN;
+	private static final Color RED = ColorService.RED;
+	private static final Color BLUE = ColorService.BLUE;
+	private static final Color MAGENTA = ColorService.getColor(SWT.COLOR_MAGENTA);
 
-	private ImageBuffer imageBuffer;
 	private ArrayList<int[]> values;
 	private int step = -1;
 	private int state;
@@ -144,26 +142,30 @@ public class View extends ViewPart {
 			values.add(new int[] { p, q, n, r });
 		}
 
+		// Recalculate the size of the scrolled composite holding the 
+		// canvas. This is necessary in the case the user entered a large p value
+		// and the available space on the screen is not enough to display it.
+		// This will then show the scrollbars.
 		scrolledComposite_canvas.setMinSize(canvas.computeSize(20 + 5 * values.get(0)[0], 100 + 45 * values.size()));
-		Device device = this.getSite().getShell().getDisplay();
-		imageBuffer = new ImageBuffer(device, canvas.getSize().x, canvas.getSize().y);
-		imageBuffer.paintImage(values);
 
 		btnResetAll_1.setEnabled(true);
 	}
+	
 
 	private void nextStep_1() {
 		step++;
 
-		if (step == 0)
+		if (step == 0) {
 			initialize_1();
+		}
 
 		// paint(step);
 		canvas.redraw();
 		canvas.update();
 
-		if (step > 0)
+		if (step > 0) {
 			btnPrevStep_1.setEnabled(true);
+		}
 		if (step == values.size() - 1) {
 			btnNextStep_1.setEnabled(false);
 			btnCompute_1.setEnabled(false);
@@ -184,8 +186,9 @@ public class View extends ViewPart {
 	}
 
 	private void compute_1() {
-		if (step == -1)
+		if (step == -1) {
 			initialize_1();
+		}
 
 		step = values.size() - 1;
 
@@ -209,30 +212,6 @@ public class View extends ViewPart {
 		canvas.redraw();
 		canvas.update();
 	}
-
-	/*
-	 * private void paint(final int s) { if(s==0) { canvas.addPaintListener(new
-	 * PaintListener() { public void paintControl(PaintEvent e) {
-	 * e.gc.setForeground(BLACK);
-	 * e.gc.drawText(Messages.Euclid_Long_Line+values.get(0)[0], 10, 10, true);
-	 * e.gc.drawText(Messages.Euclid_Short_Line+values.get(0)[1], 10, 40, true);
-	 * drawLine(10, 30, values.get(0)[0], GREEN, e.gc); drawLine(10, 60,
-	 * values.get(0)[1], RED, e.gc); } }); canvas.redraw(); } else {
-	 * canvas.addPaintListener(new PaintListener() { public void
-	 * paintControl(PaintEvent e) { int i=s; e.gc.setForeground(BLACK);
-	 * e.gc.drawText(values.get(i)[0]+" - "+values.get(i)[2]+"*"+values.get(i)[1]
-	 * +" = "+values.get(i)[3], 10, 75+45*(i-1), true); drawLine(10, 95+45*(i-1),
-	 * values.get(i)[0], GREEN, e.gc); for(int j=0; j<values.get(i)[2]; j++) {
-	 * drawLine(10+5*j*values.get(i)[1], 105+45*(i-1)+(j%2)*2, values.get(i)[1],
-	 * RED, e.gc); }
-	 * 
-	 * if (values.get(i)[3]==0) { e.gc.setForeground(BLACK);
-	 * e.gc.drawText(Messages.Euclid_GCD+values.get(0)[0]+","+values.get(0)[1]
-	 * +") = "+values.get(i)[1], 10, 75+45*(i), true); } else {
-	 * drawLine(10+5*values.get(i)[1]*values.get(i)[2], 105+45*(i-1),
-	 * values.get(i)[3], BLUE, e.gc); } } }); } canvas.redraw(0, 75+45*(s-1),
-	 * 20+5*values.get(0)[0], 75+45*s, false); canvas.update(); }
-	 */
 
 	private void initialize_2() {
 		TableItem tableItem1 = new TableItem(table, SWT.BORDER);
@@ -748,17 +727,13 @@ public class View extends ViewPart {
 		composite_1 = new Composite(tabFolder, SWT.NONE);
 		tbtmEuclidean.setControl(composite_1);
 		composite_1.setLayout(new GridLayout(6, false));
-
-		lblHeader_1 = new Label(composite_1, SWT.NONE);
-		lblHeader_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 6, 1));
-		lblHeader_1.setFont(FontService.getHeaderFont());
-		lblHeader_1.setText(Messages.Euclid_Euclidean);
-
-		txtDescription_1 = new StyledText(composite_1, SWT.READ_ONLY | SWT.WRAP);
-		txtDescription_1.setText(Messages.Euclid_Description_1);
-		GridData gd_txtDescription_1 = new GridData(SWT.FILL, SWT.FILL, true, false, 6, 1);
-		gd_txtDescription_1.widthHint = 600;
-		txtDescription_1.setLayoutData(gd_txtDescription_1);
+		
+		TitleAndDescriptionComposite titleAndDescriptionComposite = new TitleAndDescriptionComposite(composite_1);
+		GridData gd_titleAndDescriptionComposite = new GridData(SWT.FILL, SWT.FILL, true, false, 6, 1);
+		gd_titleAndDescriptionComposite.widthHint = 600;
+		titleAndDescriptionComposite.setLayoutData(gd_titleAndDescriptionComposite);
+		titleAndDescriptionComposite.setTitle(Messages.Euclid_Euclidean);
+		titleAndDescriptionComposite.setDescription(Messages.Euclid_Description_1);
 
 		grpInput_1 = new Group(composite_1, SWT.NONE);
 		grpInput_1.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 6, 1));
@@ -889,7 +864,9 @@ public class View extends ViewPart {
 		grpComputation_1.setText(Messages.Euclid_Computation);
 
 		scrolledComposite_canvas = new ScrolledComposite(grpComputation_1, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		scrolledComposite_canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		GridData gd_scrolledComposite_canvas = new GridData(SWT.FILL, SWT.FILL, true, true);
+		gd_scrolledComposite_canvas.widthHint = 500;
+		scrolledComposite_canvas.setLayoutData(gd_scrolledComposite_canvas);
 		scrolledComposite_canvas.setExpandHorizontal(true);
 		scrolledComposite_canvas.setExpandVertical(true);
 
@@ -899,17 +876,55 @@ public class View extends ViewPart {
 		canvas.addPaintListener(new PaintListener() {
 			@Override
 			public void paintControl(PaintEvent e) {
+				// Only paint if the user started the algorithm.
 				if (step > -1) {
-					imageBuffer.copyImageToUI(e);
-					if (step != values.size() - 1) {
-						e.gc.setBackground(WHITE);
-						e.gc.fillRectangle(0, 75 + 45 * (step), canvas.getSize().x,
-								canvas.getSize().y - (75 + 45 * (step)));
+					// This are the first and secon line in the canvas "Long line" and 
+					// "shot line"
+					if (step >= 0) {
+						e.gc.setForeground(BLACK);
+						e.gc.drawText(Messages.Euclid_Long_Line + values.get(0)[0], 10, 10, true);
+						e.gc.drawText(Messages.Euclid_Short_Line + values.get(0)[1], 10, 40, true);
+						drawLine(10, 30, values.get(0)[0], GREEN, e.gc);
+						drawLine(10, 60, values.get(0)[1], RED, e.gc);
+					}
+
+					for (int i = 1; i <= step; i++) {
+						e.gc.setForeground(BLACK);
+						e.gc.drawText(
+								values.get(i)[0] + " - " + values.get(i)[2] + "*" + values.get(i)[1] + " = " + values.get(i)[3], 10,
+								75 + 45 * (i - 1), true);
+						drawLine(10, 95 + 45 * (i - 1), values.get(i)[0], GREEN, e.gc);
+						for (int j = 0; j < values.get(i)[2]; j++) {
+							drawLine(10 + 5 * j * values.get(i)[1], 105 + 45 * (i - 1) + (j % 2) * 2, values.get(i)[1], RED,
+									e.gc);
+						}
+
+						if (values.get(i)[3] == 0) {
+							e.gc.setForeground(BLACK);
+							e.gc.drawText(
+									Messages.Euclid_GCD + values.get(0)[0] + "," + values.get(0)[1] + ") = " + values.get(i)[1], 10,
+									75 + 45 * (i), true);
+						} else {
+							drawLine(10 + 5 * values.get(i)[1] * values.get(i)[2], 105 + 45 * (i - 1), values.get(i)[3], BLUE,
+									e.gc);
+						}
 					}
 				}
 			}
+			
+		    private void drawLine(int x, int y, int w, Color color, GC gc) {
+		        gc.setForeground(color);
+		        gc.drawLine(x, y, x + w * 5, y);
+		        gc.drawLine(x, y + 5, x + w * 5, y + 5);
+		        for (int i = 0; i <= w; i++) {
+		            gc.drawLine(x + 5 * i, y, x + 5 * i, y + 5);
+		        }
+		    }
 		});
 
+		
+		// 2nd tab item
+		
 		tbtmXEuclidean = new TabItem(tabFolder, SWT.NONE);
 		tbtmXEuclidean.setText(Messages.Euclid_XEuclidean);
 
