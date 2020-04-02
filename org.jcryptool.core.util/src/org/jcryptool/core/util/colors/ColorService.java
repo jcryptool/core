@@ -63,6 +63,12 @@ public class ColorService {
 	 * Same as <code>SWT.COLOR_YELLOW</code>
 	 */
     public static final Color YELLOW;
+    
+	/**
+	 * Yellow <br>
+	 * Same as <code>SWT.COLOR_YELLOW</code>
+	 */
+    public static final Color BLUE;
 
     static {
         WHITE = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
@@ -72,6 +78,7 @@ public class ColorService {
         LIGHTGRAY = Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND);
         BLACK = Display.getDefault().getSystemColor(SWT.COLOR_BLACK);
         YELLOW = Display.getDefault().getSystemColor(SWT.COLOR_YELLOW);
+        BLUE = Display.getDefault().getSystemColor(SWT.COLOR_BLUE);
     }
     
     /**
