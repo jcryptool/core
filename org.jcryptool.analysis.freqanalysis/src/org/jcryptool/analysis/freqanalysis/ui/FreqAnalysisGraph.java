@@ -168,9 +168,26 @@ public class FreqAnalysisGraph extends Graph implements MouseMoveListener, Mouse
 		thisBGColor.setColor(gc);
 		thisBGColor.setBGColor(gc);
 		gc.fillRectangle(thisArea);
-
-//		boolean hasDrawnLbl = false;
-				
+		
+		double highestBarValue = 0;
+		
+		// Get the highest bar value from all bars that are shown.
+		for (int i = 0; i < bars.size(); i++) {
+			Bar bar = bars.get(i);
+			FreqAnalysisData barData = (FreqAnalysisData) bar.attachedData.get(0);
+			
+			// Check if the highest value (highesBarDataValue) is less or equal
+			// to the current Bar value (barData.relOcc). If it is true, set the 
+			// highest value (highesBarDataValue) to the current bar value (barData.relOcc).
+			if (highestBarValue <= barData.relOcc) {
+				highestBarValue = barData.relOcc;
+			}
+		}
+		
+		// Now set the highest value as heighestBar. heighestBar is used in several other 
+		// calculations.
+		highestBar = highestBarValue;
+		
 		for (int i = 0; i < bars.size(); i++) {
 			// Only shift when the bar is no overlay bar.
 			Bar bar = bars.get(i);
@@ -179,16 +196,14 @@ public class FreqAnalysisGraph extends Graph implements MouseMoveListener, Mouse
 			} else {
 				barBox = calculateBarContainerShifted(barDrawingRect, bar.getIndex(), biggestBarIndex);
 			}
-			// barBox = calculateBarContainer(barDrawingRect, ((Bar)bars.get(i)).getIndex(),
-			// biggestBarIndex);
+
 			bar.setBox(barBox);
 			bar.setGC(gc);
-			
-			FreqAnalysisData barData = (FreqAnalysisData) bar.attachedData.get(0);
-			if(highestBar <= barData.relOcc) {
-				highestBar = barData.relOcc;
-				highestBarY = barBox.height;
-			}
+						
+			// This resets highestBarY to the available height of the graph.
+			// This is necessary to calculate the correct distances between the 
+			// labels on the y-axis.
+			highestBarY = barBox.height;
 			
 			if (this.lastMouseCursorSensitivityPos != null) {
 
@@ -202,6 +217,7 @@ public class FreqAnalysisGraph extends Graph implements MouseMoveListener, Mouse
 					}
 				}
 
+				// FIXME Displaying the value of the selected value does not work correctly.
 				if (mouseIsNear && stat != null && ! (bar instanceof OverlayBar || bar instanceof OverlayLabelBar) ) {
 					String lbl = String.format("%1.2f", stat.relOcc);
 					bar.drawBar(lbl);
@@ -243,12 +259,15 @@ public class FreqAnalysisGraph extends Graph implements MouseMoveListener, Mouse
 		Rectangle descDrawingRect = new Rectangle(descLeftRect.x, 0, descLeftRect.width + marginLeft + marginRight,
 				descLeftRect.height + 2 * marginTop + marginBottom);
 		Rectangle textBox = calculateTextContainer(descDrawingRect, 0, 0);
+		
+		
 
 		gc.fillRectangle(textBox);
 		
 		// y - axis labels
 		DecimalFormat format = new DecimalFormat("#0.00");
 		highestBarY = highestBarY - descBottomRect.height - marginBottom;
+		
 		double spacing = highestBar / 4;
 		double spacingY = highestBarY / 4;
 						
