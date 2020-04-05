@@ -126,7 +126,7 @@ public class GraphenisomorphieView extends ViewPart implements Observer, Protoco
 		sc.setMinSize(pageComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(),
-				"org.jcryptool.visual.zeroknowledge.graphenisomorphieView"); //$NON-NLS-1$
+				"org.jcryptool.visual.zeroknowledge.graphisomorpismHelpID"); //$NON-NLS-1$
 	}
 
 	/**

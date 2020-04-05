@@ -48,7 +48,6 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
     private FFSBob bob;
     private Buttons buttons;
     private FFSCarol carol;
-//    private Introduction constOne;
     private FFSFlow flow;
     private Composite main;
     private Modell modell;
@@ -73,7 +72,6 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
                 new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
         sc.setExpandHorizontal(true);
         sc.setExpandVertical(true);
-        sc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         Composite pageComposite = new Composite(sc, SWT.NONE);
         sc.setContent(pageComposite);
         pageComposite.setLayout(new GridLayout());
@@ -100,7 +98,6 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
         carol.addObserver(this);
 
         // Einfuehrung und Auswahl, ob das Geheimnis bekannt sein soll
-//        constOne = new Introduction(this, main, "FFS"); //$NON-NLS-1$
         new Introduction(this, main, "FFS");
 
         // Modul zum Erstellen von n
@@ -205,7 +202,7 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
         sc.setMinSize(pageComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(),
-                "org.jcryptool.visual.zeroknowledge.feigefiatshamirView"); //$NON-NLS-1$
+                "org.jcryptool.visual.zeroknowledge.feigefiatshamirContextHelp"); //$NON-NLS-1$
     }
 
     /**

@@ -122,7 +122,7 @@ public class MagicDoorView extends ViewPart implements Observer, Protocol {
         sc.setMinSize(pageComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(),
-                "org.jcryptool.visual.zeroknowledge.magicdoorView"); //$NON-NLS-1$
+                "org.jcryptool.visual.zeroknowledge.magicdoorViewHelp"); //$NON-NLS-1$
     }
 
     /**

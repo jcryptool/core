@@ -124,7 +124,7 @@ public class FiatShamirView extends ViewPart implements Observer, ModNCalculator
         sc.setMinSize(pageComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(),
-                "org.jcryptool.visual.zeroknowledge.fiatshamirView"); //$NON-NLS-1$
+                "org.jcryptool.visual.zeroknowledge.fiatshamirContextHelpID"); //$NON-NLS-1$
     }
 
     /**
