@@ -50,8 +50,11 @@ public class FreqAnalysisGraph extends Graph implements MouseMoveListener, Mouse
 	private int currentShift = 0;
 	private int savedShift = 0;
 
-	// This field stores where the Mouse was seen last and may be null to signify
-	// "there is no mouse to consider"
+
+	/**
+	 * This field stores where the Mouse was seen last and may be null to signify
+	 * there is no mouse to consider"
+	 */
 	private Point lastMouseCursorSensitivityPos = null;
 
 	private boolean dragged = false;
@@ -87,7 +90,6 @@ public class FreqAnalysisGraph extends Graph implements MouseMoveListener, Mouse
 		descRightBGColor = new MColor("B60000", 255); //$NON-NLS-1$
 		barAreaBGColor = new MColor("306A90", 255); //$NON-NLS-1$
 		overlayBarColor = new MColor("FFFFFF", 255); //$NON-NLS-1$
-		// MColor("006AB0", 255); //$NON-NLS-1$
 		
 		highestBar = 0;
 		highestBarY = 0;
