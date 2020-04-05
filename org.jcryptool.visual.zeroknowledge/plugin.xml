@@ -85,14 +85,6 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:org.jcryptool.visual.zeroknowledge.views.MagicDoorView">
-         <command
-               commandId="org.jcryptool.visual.zeroknowledge.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
-               style="push">
-         </command>
-      </menuContribution>
-      <menuContribution
             locationURI="toolbar:org.jcryptool.visual.zeroknowledge.views.MagicDoorView">
          <command
                commandId="org.jcryptool.visual.zeroknowledge.restartCommand"
