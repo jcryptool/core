@@ -15,7 +15,7 @@
    <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
-            contextHelpId="org.jcryptool.visual.extendedrsa.rsaExtView"
+            contextHelpId="org.jcryptool.visual.extendedrsa.contextHelpID"
             name="%Visual.name"
             viewId="org.jcryptool.visual.extendedrsa.ExtendedRSAView">
       </Visual>
