@@ -55,6 +55,8 @@ public class ARC4Composite extends Composite {
 
     // Part of the UI that shows the internal variables of the algorithm
     private VariablesVisual var;
+    
+    
 
     // radioyes is the button to highlight changes
     // radiono is the opposite
@@ -77,6 +79,8 @@ public class ARC4Composite extends Composite {
     // the label that labels the w combo that allows the user to choose a value for w
     private Label wlabel;
 
+    private int keyLength;
+    
     /**
      * Constructor for the ARC4Composite
      * 
@@ -103,6 +107,10 @@ public class ARC4Composite extends Composite {
         // the s-box of the algorithm
         vector = new VectorVisual(this, SWT.NONE);
         vector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, ARC4Con.H_SPAN_LEFT, ARC4Con.S_BOX_HEIGTH));
+        
+        KeylengthVisual length = new KeylengthVisual(this, SWT.NONE);
+        length.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, ARC4Con.H_SPAN_RIGHT, 1));
+        
         // initialize the variables section
         var = new VariablesVisual(this, SWT.NONE);
         var.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, ARC4Con.H_SPAN_RIGHT, 1));
@@ -396,5 +404,13 @@ public class ARC4Composite extends Composite {
             syncronizeInternWithExtern();
         }
     }
+
+	public int getKeyLength() {
+		return keyLength;
+	}
+
+	public void setKeyLength(int keyLength) {
+		this.keyLength = keyLength;
+	}
 
 }
