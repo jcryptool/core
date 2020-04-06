@@ -20,18 +20,6 @@ import org.jcryptool.core.util.colors.ColorService;
  */
 public abstract class ARC4Con {
 
-    // Identifies a key data vector, as well as a wizard for key changing
-    public static final int KEY = 1;
-
-    // Identifies a ciphertext data vector
-    public static final int ENC = 2;
-
-    // Identifies a plain text data vector, as well as a wizard for changing the plain text
-    public static final int PLAIN = 3;
-
-    // Identifies a pseudo random data vector
-    public static final int RAND = 4;
-
     // The color of row and column names
     public static final Color VH_COLOR = ColorService.GRAY;
 

@@ -11,8 +11,8 @@
 package org.jcryptool.visual.arc4.wizard;
 
 import org.eclipse.jface.wizard.Wizard;
-import org.jcryptool.visual.arc4.ARC4Con;
 import org.jcryptool.visual.arc4.Messages;
+import org.jcryptool.visual.arc4.Type;
 import org.jcryptool.visual.arc4.ui.DatavectorVisual;
 
 /**
@@ -24,7 +24,7 @@ public class ARC4Wizard extends Wizard {
 
     // type of the wizard: there are key and plaintext wizards; values are defined
     // in ARC4Con
-    private int type;
+    private Type type;
 
     // the description of the wizard page
     private String description;
@@ -47,7 +47,7 @@ public class ARC4Wizard extends Wizard {
      * @param type the type of wizard to create, values are defined in ARC4Con
      * @param parent the datavector visual object to which to pass the data
      */
-    public ARC4Wizard(int type, DatavectorVisual parent) {
+    public ARC4Wizard(Type type, DatavectorVisual parent) {
         this.parent = parent;
         this.type = type;
         this.setNameAndDescription();
@@ -57,11 +57,11 @@ public class ARC4Wizard extends Wizard {
      * Set the pagenamen and description for the single page depending on the type of wizard
      */
     public void setNameAndDescription() {
-        if (this.type == ARC4Con.KEY) {
+        if (this.type == Type.KEY) {
             this.pagename = Messages.DatavectorVisualKEYWizard;
             this.description = Messages.WizardPageDescriptionKey;
             this.heading = Messages.KeySelectionWizardHeading;
-        } else if (this.type == ARC4Con.PLAIN) {
+        } else if (this.type == Type.PLAIN) {
             this.pagename = Messages.DatavectorVisualPLAINWizard;
             this.description = Messages.WizardPageDescriptionPlain;
             this.heading = Messages.PlainSelectionWizardHeading;

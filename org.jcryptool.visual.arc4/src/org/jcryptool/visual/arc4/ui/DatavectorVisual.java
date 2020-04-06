@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.visual.arc4.ARC4Con;
 import org.jcryptool.visual.arc4.Messages;
+import org.jcryptool.visual.arc4.Type;
 import org.jcryptool.visual.arc4.algorithm.ARC4Algorithm;
 import org.jcryptool.visual.arc4.wizard.ARC4Wizard;
 
@@ -60,7 +61,7 @@ public class DatavectorVisual extends Composite {
     private ARC4Algorithm alg;
 
     // The type of the data vector visual; values are defined in ARC4Con
-    private int type;
+    private Type type;
 
     /**
      * The constructor of the datavector visual class
@@ -72,7 +73,7 @@ public class DatavectorVisual extends Composite {
      *            pretty but i think making a subclass for every type would be overkill
      * @param alg the algorithm that holds the data on which this datavector visual operates
      */
-    public DatavectorVisual(Composite parent, int style, int type, ARC4Algorithm alg) {
+    public DatavectorVisual(Composite parent, int style, Type type, ARC4Algorithm alg) {
         super(parent, style);
         this.alg = alg;
         this.type = type;
@@ -118,9 +119,9 @@ public class DatavectorVisual extends Composite {
         createClipButton(type);
 
         // to initialize key and plain with pseudorandom values
-        if (type == ARC4Con.KEY) {
+        if (type == Type.KEY) {
             setData(alg.getKey());
-        } else if (type == ARC4Con.PLAIN) {
+        } else if (type == Type.PLAIN) {
             setData(alg.getPlain());
         }
     }
@@ -133,23 +134,23 @@ public class DatavectorVisual extends Composite {
      * @param type a numeric constant that describes the kind of the datavector; values are defined
      *            in ARC4Con
      */
-    private void setTextForType(int type) {
+    private void setTextForType(Type type) {
         // As only KEY and PLAIN have got a button, only they get a text and tool tip for their
         // button
-        if (type == ARC4Con.KEY) {
+        if (type == Type.KEY) {
             groupText = Messages.DatavectorVisualKEYGroup;
             toolTip = Messages.DatavectorVisualKEYTool;
             buttonText = Messages.DatavectorVisualKEYButton;
             buttonTool = Messages.DatavectorVisualKEYButtonTool;
-        } else if (type == ARC4Con.ENC) {
+        } else if (type == Type.ENC) {
             groupText = Messages.DatavectorVisualENCGroup;
             toolTip = Messages.DatavectorVisualENCTool;
-        } else if (type == ARC4Con.PLAIN) {
+        } else if (type == Type.PLAIN) {
             groupText = Messages.DatavectorVisualPLAINGroup;
             buttonText = Messages.DatavectorVisualPLAINButton;
             toolTip = Messages.DatavectorVisualPLAINTool;
             buttonTool = Messages.DatavectorVisualPLAINButtonTool;
-        } else if (type == ARC4Con.RAND) {
+        } else if (type == Type.RAND) {
             groupText = Messages.DatavectorVisualRANDGroup;
             toolTip = Messages.DatavectorVisualRANDTool;
         }
@@ -172,14 +173,14 @@ public class DatavectorVisual extends Composite {
      * 
      * @param type the integer constant from ARC4Con that represents the type of datavector
      */
-    private void createWizardButton(int type) {
+    private void createWizardButton(Type type) {
         wizbutton = new Button(this, SWT.PUSH);
         wizbutton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
         // Actually for the sake of simplicity and proper alignment a button is created in any case,
         // even if the
         // type of datavector visual does not permit one, but in those cases it is just made
         // invisible
-        if (type == ARC4Con.ENC || type == ARC4Con.RAND) {
+        if (type == Type.ENC || type == Type.RAND) {
             wizbutton.setVisible(false);
             return;
         }
@@ -197,9 +198,9 @@ public class DatavectorVisual extends Composite {
      * 
      * @param type the numeric constant from ARC4Con that represents the kind of datavector
      */
-    private void addActionToWizButton(final int type) {
+    private void addActionToWizButton(final Type type) {
         // those types do not even have a visible button
-        if (type == ARC4Con.ENC || type == ARC4Con.RAND) {
+        if (type == Type.ENC || type == Type.RAND) {
             return;
         }
         this.wizbutton.addSelectionListener(new SelectionAdapter() {
@@ -217,7 +218,7 @@ public class DatavectorVisual extends Composite {
     /**
      * Create the button that allows you to copy the data from the datavector to the system clipboard
      */
-    private void createClipButton(int type) {
+    private void createClipButton(Type type) {
     	clipbutton = new Button(this, SWT.PUSH);
     	clipbutton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
         clipbutton.setText(Messages.CopyToClipboard);
@@ -230,7 +231,7 @@ public class DatavectorVisual extends Composite {
      * 
      * @param type the numeric constant from ARC4Con that represents the kind of datavector
      */
-    private void addActionToClipButton(final int type) {
+    private void addActionToClipButton(final Type type) {
         this.clipbutton.addSelectionListener(new SelectionAdapter() {
             @Override
 			public void widgetSelected(SelectionEvent e) {
@@ -238,13 +239,13 @@ public class DatavectorVisual extends Composite {
                 int [] dataint = new int[ARC4Con.DATAVECTOR_VISUAL_LENGTH];
                 String datastring = "";
                 // get the right data from the algorithm depending on the type
-                if (type == ARC4Con.ENC) {
+                if (type == Type.ENC) {
                     dataint = alg.getEnc();
-                } else if (type == ARC4Con.KEY) {
+                } else if (type == Type.KEY) {
                     dataint = alg.getKey();
-                } else if (type == ARC4Con.PLAIN) {
+                } else if (type == Type.PLAIN) {
                     dataint = alg.getPlain();
-                } else if (type == ARC4Con.RAND) {
+                } else if (type == Type.RAND) {
                     dataint = alg.getRandom();
                 }
                 // alg returns the integers in decimal number format:
@@ -279,9 +280,9 @@ public class DatavectorVisual extends Composite {
         }
         for (int a = 0; a < data.length; a++) {
             // pass the new data to the internal representation of the data
-            if (this.type == ARC4Con.KEY) {
+            if (this.type == Type.KEY) {
                 this.alg.setKey(data);
-            } else if (this.type == ARC4Con.PLAIN) {
+            } else if (this.type == Type.PLAIN) {
                 this.alg.setPlain(data);
             }
             // the purpose of this differentiation is padding: if it was not for this if, if you had

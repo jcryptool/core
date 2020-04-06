@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.arc4.ARC4Con;
 import org.jcryptool.visual.arc4.Messages;
+import org.jcryptool.visual.arc4.Type;
 import org.jcryptool.visual.arc4.algorithm.ARC4Algorithm;
 import org.jcryptool.visual.arc4.algorithm.AlgARC4;
 import org.jcryptool.visual.arc4.algorithm.AlgSpritz;
@@ -117,7 +118,7 @@ public class ARC4Composite extends Composite {
         initMisc();
 
         // initialize the key section
-        key = new DatavectorVisual(this, SWT.BORDER, ARC4Con.KEY, alg);
+        key = new DatavectorVisual(this, SWT.BORDER, Type.KEY, alg);
         key.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, ARC4Con.H_SPAN_MAIN, 1));
         
         // a seperator to make the relation between plaintext, pseudorandom numbers and ciphertext clear
@@ -125,7 +126,7 @@ public class ARC4Composite extends Composite {
         sep1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, ARC4Con.H_SPAN_MAIN, 1));
         
         // initialize the plaintext section
-        plain = new DatavectorVisual(this, SWT.BORDER, ARC4Con.PLAIN, alg);
+        plain = new DatavectorVisual(this, SWT.BORDER, Type.PLAIN, alg);
         plain.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, ARC4Con.H_SPAN_MAIN, 1));
 
         // initialize the xor
@@ -137,7 +138,7 @@ public class ARC4Composite extends Composite {
         xorpic.setImage(ImageDescriptor.createFromURL(getClass().getResource(ARC4Con.PATH_TO_XOR_IMAGE)).createImage());
 
         // initialize the vector with the pseudorandom numbers
-        random = new DatavectorVisual(this, SWT.BORDER, ARC4Con.RAND, alg);
+        random = new DatavectorVisual(this, SWT.BORDER, Type.RAND, alg);
         random.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, ARC4Con.H_SPAN_MAIN, 1));
         
         // initialize the image of the arrow
@@ -149,7 +150,7 @@ public class ARC4Composite extends Composite {
                 ARC4Con.PATH_TO_ARROW_IMAGE)).createImage());
 
         // initialize the vector with the ciphertext
-        enc = new DatavectorVisual(this, SWT.BORDER, ARC4Con.ENC, alg);
+        enc = new DatavectorVisual(this, SWT.BORDER, Type.ENC, alg);
         enc.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, ARC4Con.H_SPAN_MAIN, 1));
 
         // fetch the data from the algorithm object and fill it into the GUI
