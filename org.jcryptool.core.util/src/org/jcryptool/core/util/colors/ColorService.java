@@ -12,6 +12,7 @@ package org.jcryptool.core.util.colors;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 
 /**
@@ -65,10 +66,34 @@ public class ColorService {
     public static final Color YELLOW;
     
 	/**
-	 * Yellow <br>
-	 * Same as <code>SWT.COLOR_YELLOW</code>
+	 * Blue <br>
+	 * Same as <code>SWT.COLOR_BLUE</code>
 	 */
     public static final Color BLUE;
+
+    /**
+	 * Light Red - best fitting as decent background color for buttons or other areas.
+	 * Best used with a black font. White font possible but weak.
+	 * <br><br>
+	 * RGB: 255, 160, 200<br>HEX: #FFB4C8
+	 */
+	public static final Color LIGHT_AREA_RED;
+
+	/**
+	 * Light Blue - best fitting as decent background color for buttons or other areas.
+	 * Best used with a black font. White font possible but weak.
+	 * <br><br>
+	 * RGB: 190, 220, 255<br>HEX: #BEDCFF
+	 */
+	public static final Color LIGHT_AREA_BLUE;
+
+	/**
+	 * Light Green - best fitting as decent background color for buttons or other areas.
+	 * Best used with a black font. White font not possible.
+	 * <br><br>
+	 * RGB: 203, 255, 100<br>HEX: #CBFF63
+	 */
+	public static final Color LIGHT_AREA_GREEN;
 
     static {
         WHITE = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
@@ -79,6 +104,10 @@ public class ColorService {
         BLACK = Display.getDefault().getSystemColor(SWT.COLOR_BLACK);
         YELLOW = Display.getDefault().getSystemColor(SWT.COLOR_YELLOW);
         BLUE = Display.getDefault().getSystemColor(SWT.COLOR_BLUE);
+
+        LIGHT_AREA_RED = createColor(new RGB(255, 180, 200));
+        LIGHT_AREA_BLUE = createColor(new RGB(190, 220, 255));
+        LIGHT_AREA_GREEN = createColor(new RGB(203, 255, 100));
     }
     
     /**
@@ -88,5 +117,16 @@ public class ColorService {
      */
     public static Color getColor(int colorID) {
     	return Display.getDefault().getSystemColor(colorID);
+    }
+
+
+    /**
+     * Creates a color from the given RGB values. Display is default.
+     *
+     * @param rgb the RGB values as RGB Object.
+     * @return a color
+     */
+    private static Color createColor(RGB rgb) {
+    	return new Color(Display.getDefault(), rgb);
     }
 }
