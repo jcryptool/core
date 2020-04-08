@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE HTML PUBLenentIC "-//W3C//DTDhne HTML 4.0 Transitional//EN">
 
 <html>
 <head>
@@ -9,41 +9,153 @@
 <body>
 <h1>Teilerspiel</h1>
 
-<p>Das Teilerspiel ist ein von Christiane Licht selbst erdachtes Spiel für zwei Personen. Mit diesem Spiel gewann sie 2010 den Regionalwettbewerb NRW bei „Jugend forscht“.</p>
-
-<p>Hierbei wird zuerst eine beliebige Anfangszahl ausgewählt. Gespielt wird dann nur noch mit deren Teilern. Ein Spieler wählt einen beliebigen Teiler aus. Dieser und alle seine Vielfachen werden gestrichen. Dies wird abwechselnd fortgeführt. Der Spieler, der die 1 auswählt oder auswählen muss, hat verloren.</p>
-
-<p>Das Spiel lässt sich gut in der Schule zur Festigung der Begriffe Teiler und Teilbarkeit einsetzen.</p>
-
-<p>Das Teilerspiel greift eine spieltheoretische Frage auf: Gibt es für jede beliebige Anfangszahl immer einen optimalen Gewinnzug für Spieler 1, egal welche Zahlen Spieler 2 anschließend streicht. Mit zahlentheoretischen Methoden kann man eine Gewinnstrategie entwickeln.</p>
 <p>
-<h2>Strategien</h2>
-<p>Der Benutzer hat die Möglichkeit zwischen verschiedenen Strategien zu wählen. Derzeit sind die folgenden Strategien implementiert:</p>
+	Das Teilerspiel ist ein von Christiane Licht selbst erdachtes Spiel für zwei Personen.
+	Es funktioniert nach dem Prinzip eines Nim- oder Misère-Spiels <a href="#link1">[1]</a>.
+	Mit diesem Spiel gewann sie 2010 den Regionalwettbewerb „Jugend forscht“ in Nordrhein-Westfalen (Deutschland)
+	<a href="#link2">[2]</a><a href="#link2">[3]</a>.
+</p>
+
+
+<h2> Über Nim- und Misère-Spiele </h2>
+
 <p>
-<table border="1">
-	<tr>
-		<th>Strategie</th>
-		<th>Erläuterung</th>
+	Bei dieser Art von Spiel entnehmen die Mitspieler
+	Elemente aus einer Menge. Dazu können zum Beispiel Streichhölzer aufgelegt und wieder weggenommen werden, oder die
+	Spieler zeichnen Linien auf Papier und streichen diese durch. Die Objekte werden pyramidenförmig angeordnet.
+	Die Spieler können abwechselnd einen oder mehrere nebeneinanderliegende Streichhölzer einer waagrechten Ebene entfernen.
+	Je nach Spiel gewinnt diejenige, die das letzte Streihholz entfernt (Nim) oder die den Gegner dazu zwingt das letzte
+	Streichholz zu nehmen (Misère). Folgende Bilder zeigen ein typisches Nim-Spiel.
+</p>
+
+<table >
+<tr>
+	<td><img src="NimGame.svg.png" width=100% id="nim_img"></td>
+	<td><img src="NimGame_turn1.svg.png" width=100%></td>
+	<td><img src="NimGame_turn2.svg.png" width=100%></td>
+	<td><img src="NimGame_turn3.svg.png" width=100%></td>
+	<td><img src="NimGame_turn4.svg.png" width=100%></td>
+</tr>
+<tr>
+	<td><p align="center">Spielfeld zu Beginn</p></td>
+	<td><p align="center">Zug 1: weiß beginnt</p></td>
+	<td><p align="center">Zug 2: rot</p></td>
+	<td><p align="center">Zug 3: weiß</p></td>
+	<td><p align="center">Zug 4: rot</p></td>
+</tr>
+</table>
+
+<p>
+	In diesem Beispiel endet das Spiel sehr schnell, da die Spieler jeweils große Gruppen entnehmen. Spieler weiß
+	streicht in Zug 3 die letzte verbliebene Gruppe an Streichhölzern. Ab hier können die Spieler nur mehr einzelne
+	Elemente entfernen und den Ausgang nicht mehr beeinflussen.
+</p> 
+
+ <ul>
+  <li>Weiß würde bei <b>Nim</b> gewinnen (nimmt das letzte Streichholz)</li>
+  <li>Rot würde bei <b>Misère</b> gewinnen (weiß muss das letzte Streichholz nehmen)</li>
+</ul>
+
+<hr>
+
+<h2> Das Teilerspiel </h2>
+
+<p>
+	Das Teilerspiel verbindet den Spieltyp von Misère auf eine clevere Art und Weise mit Zahlentheorie. Anstatt mit
+	waagrecht angeordneten Objekten spielt man mit Zahlen und deren Teilern. Wird eine Zahl weggenommen, werden auch alle
+	Zahlen entfernt die diesen Wert als Teiler haben. Eine 3 entfernt zum Beispiel 6, 9, 12 etc. 
+</p>
+
+<h3> Das Spielfeld </h3>
+
+<p>
+Das Spielfeld wird aus den Teilern einer beliebig wählbaren Anfangszahl aufgebaut. Als Standardwert ist 2520 gesetzt.
+</p>
+
+<p align="center"> <img src="play_field.png" width=60% style="min-width: 600px"></p>
+
+<p>
+	Um genügend Spielfelder zu haben, empfiehlt es sich Zahlen mit vielen Teilern zu wählen. Am besten im Bereich
+	zwischen 1000 und 10&thinsp;000.
+</p> 
+
+<h3> Spielen und gewinnen </h3>
+
+<p>
+	Die Spieler wählen abwechselnd eine Zahl und entfernen damit Felder aus dem Spiel.
+	Ähnlich zum Spielprinzip von <i>Misère</i> verliert der Spieler, welcher die 1 anklicken muss (oder anklickt). Die
+	Welcher Spieler beginnt kann beim Spielstart festgelegt werden.
+</p>
+
+<hr>
+
+<h2> Gegen den Computer</h2>
+
+<p>
+	Es ist auch möglich gegen den Computer zu spielen. Dazu wird beim <b>Spieltyp</b> der Punkt <b>1P/Computer</b>
+	ausgewählt.
+<p>
+
+<h3>Strategien des Computer-Gegners</h3>
+<p>Der Benutzer hat dabei Möglichkeit zwischen verschiedenen Strategien des Computergegners zu wählen.
+Derzeit sind die folgenden Strategien verfügbar:</p>
+	
+<table style="border-collapse: collapse; margin: 0 auto">
+	<tr style="border-bottom: 2px solid #909090;background: white">
+		<th bgcolor="white">Strategie</th>
+		<th bgcolor="white">Erläuterung</th>
 	</tr>
-	<tr>
+	<tr style="border-bottom: 1px solid #333333;">
 		<td>Zufällig</td>
 		<td>Der Computer wählt zufällig eine Zahl</td>
 	</tr>
-	<tr>
+	<tr style="border-bottom: 1px solid #333333;">
 		<td>Höchste</td>
 		<td>Der Computer wählt immer die höchstmögliche Zahl</td>
 	</tr>
-	<tr>
+	<tr style="border-bottom: 1px solid #333333;">
 		<td>Niedrigste</td>
 		<td>Der Computer wählt immer die kleinstmögliche Zahl</td>
 	</tr>
 </table>
+
+<hr>
+
+<h2>Hintergrund</h2>
+
+<p>Das Spiel lässt sich gut in der Schule zur Festigung der Begriffe Teiler und Teilbarkeit einsetzen.</p>
+
+<p>
+	Das Teilerspiel greift eine spieltheoretische Frage auf: Gibt es für jede beliebige Anfangszahl immer einen
+	optimalen Gewinnzug für den Spieler der beginnt, egal welche Zahlen der andere Spieler anschließend streicht?
+	Mit zahlentheoretischen Methoden kann man eine optimale Gewinnstrategie entwickeln.
 </p>
+<p>
+	Das bekannte Spiel <b>Tic-Tac-Toe</b> hat keine optimale Gewinnstrategie. Spielen beide Spieler optimal, endet das Spiel
+	immer in einem Unentschieden.<br>
+	In <b>Vier Gewinnt</b> hingegen ist es möglich, dass der beginnende Spieler immer gewinnt - sofern er optimal spielt.
+	Auch wenn der andere Spieler bestmöglich spielt kann man nicht gewinnen.
+</p>
+
+<hr>
+
 <h2>Referenzen</h2>
-<a href="http://www.jugend-forscht.de/projektdatenbank/das-teilerspiel-teilen-oder-nicht-teilen-das-ist-hier-die-frage.html">http://www.jugend-forscht.de/projektdatenbank/das-teilerspiel-teilen-oder-nicht-teilen-das-ist-hier-die-frage.html</a><br>
-<a href="http://www.kappenberg.com/hosted/jufo/arbeiten.php5?jahr=-1&eintrag=1206">http://www.kappenberg.com/hosted/jufo/arbeiten.php5?jahr=-1&eintrag=1206</a><br>
-<a href="http://en.wikipedia.org/wiki/Nim">http://en.wikipedia.org/wiki/Nim</a><br>
-<a href="http://de.wikipedia.org/wiki/Nim-Spiel">http://de.wikipedia.org/wiki/Nim-Spiel</a><br>
+<p id="link1" >[1] Mehr Information zu Nim-Spielen (Wikipedia)<br>
+	<a href="https://de.wikipedia.org/wiki/Nim-Spiel">https://de.wikipedia.org/wiki/Nim-Spiel</a>
+</p>
+<p id="link2" >[2] Referenz zu <i>Jugend forscht</i><br>
+	<a href="https://www.jugend-forscht.de/projektdatenbank/das-teilerspiel-teilen-oder-nicht-teilen-das-ist-hier-die-frage.html">https://www.jugend-forscht.de/projektdatenbank/das-teilerspiel-teilen-oder-nicht-teilen-das-ist-hier-die-frage.html</a>
+</p>
+<p id="link3" >[3] Referenz zu <i>Jugend forscht</i><br>
+	<a href="https://www.kappenberg.com/hosted/jufo/arbeiten.php5?jahr=-1&eintrag=1206">https://www.kappenberg.com/hosted/jufo/arbeiten.php5?jahr=-1&amp;eintrag=1206</a>
+</p>
+
+<h2>Bild-Referenzen</h2>
+
+<p>
+	Bilder zum <a href="#nim_img">Nim Spiel</a><br>Urheber (Pseudonym) <i>Uncopy</i>.
+	Quelle <a href="https://commons.wikimedia.org/wiki/File:NimGame.svg">https://commons.wikimedia.org/wiki/File:NimGame.svg</a>.
+	Lizensiert unter <a href="https://creativecommons.org/licenses/by-sa/3.0/"> CC BY-SA 3.0</a> 
 </p>
 </body>
 </html>
