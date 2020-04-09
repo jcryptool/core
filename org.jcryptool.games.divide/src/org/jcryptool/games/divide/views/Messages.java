@@ -36,6 +36,7 @@ public class Messages extends NLS {
     public static String DivideView_3;
     public static String DivideView_4;
     public static String DivideView_5;
+    public static String DivideView_51;
     public static String DivideView_6;
     public static String DivideView_7;
     public static String DivideView_8;

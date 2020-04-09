@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
 	<context id="helpView" title="Teilerspiel">
-    <description>Das Teilerspiel ist ein von Christiane Licht selbst erdachtes Spiel für zwei Personen. Mit diesem Spiel gewann sie 2010 den Regionalwettbewerb NRW bei „Jugend forscht“.
+    <description>Das Teilerspiel ist ein von Christiane Licht selbst erdachtes Spiel für zwei Personen.
 
-Hierbei wird zuerst eine beliebige Anfangszahl ausgewählt. Gespielt wird dann nur noch mit deren Teilern.
+Hierbei wird zuerst eine beliebige Anfangszahl ausgewählt - aus allen Teilern dieser Zahl wird das Spielfeld konstruiert.
 
-Ein Spieler wählt einen beliebigen Teiler aus. Dieser und alle seine Vielfachen werden gestrichen. Dies wird abwechselnd fortgeführt. Der Spieler, der die 1 auswählt oder auswählen muss, hat verloren.
+Die Spieler wählen abwechselnd einen Teiler aus. Gewählte Teiler und ihre Vielfachen werden gestrichen.
+Der Spieler, der die 1 auswählt oder auswählen muss, hat verloren.
 
-Das Spiel lässt sich gut in der Schule zur Festigung der Begriffe Teiler und Teilbarkeit einsetzen.
+Es kann sowohl eine Partie [Mensch gegen Mensch] als auch [Mensch gegen Computer] gespielt werden.
 
-Das Teilerspiel greift eine spieltheoretische Frage auf: Gibt es für jede beliebige Anfangszahl immer einen optimalen Gewinnzug für Spieler 1, egal welche Zahlen Spieler 2 anschließend streicht. Mit zahlentheoretischen Methoden kann man eine Gewinnstrategie entwickeln.</description>
+Das Teilerspiel greift eine spieltheoretische Frage auf: Gibt es für jede beliebige Anfangszahl immer einen optimalen
+Gewinnzug für den Spieler der beginnt, egal welche Zahlen der andere Spieler anschließend streicht?
+Mit zahlentheoretischen Methoden kann man eine Gewinnstrategie entwickeln.</description>
 	</context>
 </contexts>
