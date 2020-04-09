@@ -30,6 +30,7 @@ import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Path;
+import org.eclipse.swt.graphics.PathData;
 import org.eclipse.swt.graphics.Transform;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -1233,11 +1234,11 @@ public class ShamirsSecretSharingComposite extends Composite {
         
         //determine label jump
         if (maxX <= 150){
-        	labeljumps = 5;
-        } else if (maxX <= 250) {
         	labeljumps = 10;
-        } else {
+        } else if (maxX <= 250) {
         	labeljumps = 20;
+        } else {
+        	labeljumps = 40;
         }
 
         /*
@@ -1278,7 +1279,7 @@ public class ShamirsSecretSharingComposite extends Composite {
         // GC polynomial = new GC(gc.getDevice());
         
         Path polynomPath = new Path(null);
-        float dx = 2.0f / gridSizeY;
+        float dx = 0.1f / gridSizeY;
         polynomPath.moveTo(-10, valueAt(-10));
 
         for (float x = -10.0f; x < size.x / 2; x += dx) {
@@ -1287,13 +1288,13 @@ public class ShamirsSecretSharingComposite extends Composite {
         }
         polynomial.setForeground(Constants.BLUE);
 
-        Transform polynomTransform = new Transform(gc.getDevice());
-        polynomTransform.translate(xAxisGap, yAxisGap);
-        polynomTransform.scale(gridSizeX, -gridSizeY);
+//        Transform polynomTransform = new Transform(gc.getDevice());
+//        polynomTransform.translate(xAxisGap, yAxisGap);
+//        polynomTransform.scale(gridSizeX, -gridSizeY);
         // polynomial.setTransform(polynomTransform);
 
         
-        this.drawPath(polynomial, polynomPath, polynomTransform);
+        this.drawPath(polynomial, polynomPath, gridSizeX, -gridSizeY, xAxisGap, yAxisGap);
 
         /*
          * new GraphicContent for drawing the reconstructed polynomial curve
@@ -1317,7 +1318,7 @@ public class ShamirsSecretSharingComposite extends Composite {
                 subPolynomial.setForeground(Constants.RED);
             }
             // subPolynomial.setTransform(polynomTransform);
-            this.drawPath(subPolynomial, subPolynomialPath, polynomTransform);
+            this.drawPath(subPolynomial, subPolynomialPath, gridSizeX, -gridSizeY, xAxisGap, yAxisGap);
             
             // subPolynomial.dispose();
         }
@@ -1339,10 +1340,10 @@ public class ShamirsSecretSharingComposite extends Composite {
                 points.setBackground(Constants.DARKPURPLE);
             }
             if (pointValue == Integer.MAX_VALUE) {
-                this.fillOval(points, gridSizeX * k - 3, (pointValue) * -gridSizeY - 3, 6, 6, pointTransform);
+                this.fillOval(points, gridSizeX * k - 3, (pointValue) * -gridSizeY - 3, 6, 6, 1.0f, 1.0f, xAxisGap, yAxisGap);
             	// points.fillOval(gridSizeX * k - 3, (pointValue) * -gridSizeY - 3, 6, 6);
             } else {
-            	this.fillOval(points, gridSizeX * k - 3, ((int) valueAt(k)) * -gridSizeY - 3, 6, 6, pointTransform);
+            	this.fillOval(points, gridSizeX * k - 3, ((int) valueAt(k)) * -gridSizeY - 3, 6, 6, 1.0f, 1.0f, xAxisGap, yAxisGap);
                 // points.fillOval(gridSizeX * k - 3, ((int) valueAt(k)) * -gridSizeY - 3, 6, 6);
             }
         }
@@ -1351,23 +1352,72 @@ public class ShamirsSecretSharingComposite extends Composite {
         // points.dispose();
     }
     
-    private void fillOval(GC gc, int x, int y, int w, int h, Transform tf) {
+    private void fillOval(GC gc, int x, int y, int w, int h, float scaleX, float scaleY, float translateX, float translateY) {
 		Transform prevTf = new Transform(gc.getDevice());
 		gc.getTransform(prevTf);
-		gc.setTransform(tf);
-    	gc.fillOval(x, y, w, h);
-    	gc.setTransform(prevTf);
+
+		// gc.setTransform(tf);
+		Transform scaleTf= new Transform(gc.getDevice());
+		scaleTf.scale(scaleX, scaleY);
 		
+		Transform transTf= new Transform(gc.getDevice());
+		transTf.translate(translateX, translateY);
+		
+		Transform fullTf = new Transform(gc.getDevice());
+		fullTf.multiply(transTf);
+		fullTf.multiply(scaleTf);
+		
+		float xTfd = x;
+		float yTfd = y;
+		float wTfd = w;
+		float hTfd = h;
+		float[] pt = new float[] {xTfd,yTfd};
+		float[] wh = new float[] {wTfd,hTfd};
+		
+		fullTf.transform(pt);
+		scaleTf.transform(wh);
+		
+		gc.fillOval((int) Math.round(pt[0]), (int) Math.round(pt[1]), (int) Math.round(wh[0]), (int) Math.round(wh[1]));
+//    	gc.setTransform(prevTf);
 	}
 
 
 
-	private void drawPath(GC gc, Path path, Transform tf) {
-		Transform prevTf = new Transform(gc.getDevice());
-		gc.getTransform(prevTf);
-		gc.setTransform(tf);
-    	gc.drawPath(path);
-    	gc.setTransform(prevTf);
+	private void drawPath(GC gc, Path path, float scaleX, float scaleY, int translateX, int translateY) {
+		Path transformed = new Path(gc.getDevice());
+		PathData pd = path.getPathData();
+				
+		Transform scaleTf= new Transform(gc.getDevice());
+		scaleTf.scale(scaleX, scaleY);
+		
+		Transform transTf= new Transform(gc.getDevice());
+		transTf.translate(translateX, translateY);
+		
+		Transform fullTf = new Transform(gc.getDevice());
+		fullTf.multiply(transTf);
+		fullTf.multiply(scaleTf);
+				
+		int i=0;
+		float xTfd = -1000;
+		float yTfd = -1000;
+		for (float el: pd.points) {
+			if(i % 2 == 1) {
+				yTfd = el;
+				
+				float[] point=new float[] {xTfd, yTfd};
+				fullTf.transform(point);
+				if (i == 1) {
+					transformed.moveTo(point[0], point[1]);
+				}
+				transformed.lineTo(point[0], point[1]);
+			} else {
+				xTfd = el;
+			}
+			i++;
+		}
+		
+		gc.drawPath(transformed);
+		//gc.setTransform(prevTf);    	
 	}
 
 
