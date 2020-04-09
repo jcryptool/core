@@ -34,6 +34,7 @@ import org.jcryptool.visual.arc4.algorithm.AlgSpritz;
  * This class holds the contents of the plug-in
  * 
  * @author Luca Rupp
+ * @author Thorben Groos (switchable keylength)
  */
 public class ARC4Composite extends Composite {
 
@@ -79,7 +80,6 @@ public class ARC4Composite extends Composite {
     // the label that labels the w combo that allows the user to choose a value for w
     private Label wlabel;
 
-    private int keyLength;
     
     /**
      * Constructor for the ARC4Composite
@@ -94,6 +94,8 @@ public class ARC4Composite extends Composite {
         finish.setText(Messages.CompositeAlgFinishTitle);
         finish.setMessage(Messages.CompositeAlgFinishText);
 
+        // Create a new Algorithm object with keylength 16, random
+        // key and plaintext.
         alg = new AlgARC4();
 
         // The layout is intended as three to one, but as it is rather difficult to let the xor
@@ -107,16 +109,13 @@ public class ARC4Composite extends Composite {
         // the s-box of the algorithm
         vector = new VectorVisual(this, SWT.NONE);
         vector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, ARC4Con.H_SPAN_LEFT, ARC4Con.S_BOX_HEIGTH));
-        
-        KeylengthVisual length = new KeylengthVisual(this, SWT.NONE);
-        length.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, ARC4Con.H_SPAN_RIGHT, 1));
-        
+               
         // initialize the variables section
         var = new VariablesVisual(this, SWT.NONE);
         var.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, ARC4Con.H_SPAN_RIGHT, 1));
 
         // initialize the control section
-        inst = new InstructionVisual(this, SWT.NONE);
+        inst = new InstructionVisual(this, SWT.NONE, alg);
         inst.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, ARC4Con.H_SPAN_RIGHT, 1));
 
         // initialize the section that allows you to choose a variant of the ARC4 algorithm
@@ -191,7 +190,7 @@ public class ARC4Composite extends Composite {
         arc4.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                alg = new AlgARC4();
+                alg = new AlgARC4(alg.getKey(), alg.getPlain());
                 chooseW.setEnabled(false);
             }
             
@@ -213,7 +212,7 @@ public class ARC4Composite extends Composite {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
-                alg = new AlgSpritz(1);
+                alg = new AlgSpritz(alg.getKey(), alg.getPlain(), 1);
                 chooseW.setEnabled(true);
             }
 
@@ -363,11 +362,11 @@ public class ARC4Composite extends Composite {
      * Pull the data from the algorithm object and fill it into the UI
      */
     private void syncronizeInternWithExtern() {
-        vector.setData(alg.getVector());
-        key.setData(alg.getKey());
-        plain.setData(alg.getPlain());
-        random.setData(alg.getRandom());
-        enc.setData(alg.getEnc());
+        vector.setDataToGUI(alg.getVector());
+        key.setDataToGUI(alg.getKey());
+        plain.setDataToGUI(alg.getPlain());
+        random.setDataToGUI(alg.getRandom());
+        enc.setDataToGUI(alg.getEnc());
         var.setI(alg.getI());
         var.setJ(alg.getJ());
         // to highlight the changes on every step if the option is active
@@ -405,12 +404,5 @@ public class ARC4Composite extends Composite {
         }
     }
 
-	public int getKeyLength() {
-		return keyLength;
-	}
-
-	public void setKeyLength(int keyLength) {
-		this.keyLength = keyLength;
-	}
 
 }

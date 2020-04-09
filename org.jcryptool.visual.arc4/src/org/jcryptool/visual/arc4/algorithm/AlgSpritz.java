@@ -14,9 +14,10 @@ import org.jcryptool.visual.arc4.ARC4Con;
 
 /**
  * This class implements the Spritz algorithm. Most of the functionality is not specific to Spritz 
- * and thereby inherited from the abstract ARC4Algorithm
+ * and thereby inherited from the abstract ARC4Algorithm.
  * 
  * @author Luca Rupp
+ * @author Thorben Groos (switchable keylength)
  *
  */
 public class AlgSpritz extends ARC4Algorithm {
@@ -28,8 +29,15 @@ public class AlgSpritz extends ARC4Algorithm {
         super();
         this.w = w;
     }
+    
 
-    /**
+    public AlgSpritz(int[] key, int[] plain, int w) {
+    	super(key, plain);
+    	this.w = w;
+	}
+
+
+	/**
      * Reset the step to zero; reset all internal variables accordingly
      */
     @Override
@@ -39,8 +47,8 @@ public class AlgSpritz extends ARC4Algorithm {
         // default value for w is three; this is not part of the algorithm and has just been chosen arbitrarily by me
         w = ARC4Con.DEFAULT_W_VALUE;
         currentStep = 0;
-        random = new int[ARC4Con.DATAVECTOR_VISUAL_LENGTH];
-        enc = new int[ARC4Con.DATAVECTOR_VISUAL_LENGTH];
+        random = new int[plain.length];
+        enc = new int[plain.length];
         finish = false;
         // reset the byte vector
         for (int a = 0; a < ARC4Con.TWO_FIFE_SIX; a++) {

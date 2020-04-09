@@ -17,6 +17,7 @@ import org.jcryptool.core.util.colors.ColorService;
  * Holds constants for the plug-in to allow to change them in a systematical fashion
  * 
  * @author Luca Rupp
+ * @author Thorben Groos (switchable keylength)
  */
 public abstract class ARC4Con {
 
@@ -40,11 +41,6 @@ public abstract class ARC4Con {
      */
     public static final int VECTOR_VISUAL_LABEL_HEIGHT = 20;
 
-    /**
-     * initial length of the datavector in byte
-     */
-    public static final int DEFAULT_DATAVECTOR_VISUAL_LENGTH = 16;;
-    
     /**
      * number of bytes of the datavector
      */
@@ -129,7 +125,7 @@ public abstract class ARC4Con {
     /**
      * Height of the s-box in rows
      */
-    public static final int S_BOX_HEIGTH = 5;
+    public static final int S_BOX_HEIGTH = 4;
 
     /**
      * number of columns in the variable display section of the GUI

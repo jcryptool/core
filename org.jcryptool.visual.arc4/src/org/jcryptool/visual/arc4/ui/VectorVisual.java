@@ -25,6 +25,7 @@ import org.jcryptool.visual.arc4.Messages;
  * accessing it
  * 
  * @author Luca Rupp
+ * @author Thorben Groos (switchable keylength)
  */
 public class VectorVisual extends Composite {
 
@@ -132,7 +133,7 @@ public class VectorVisual extends Composite {
      * 
      * @param data an integer array that holds only the real data (no row or column names)
      */
-    public void setData(int[] data) {
+    public void setDataToGUI(int[] data) {
         // check if the vector has the correct length
         if (data.length != (int) Math.pow(ARC4Con.DATAVECTOR_VISUAL_LENGTH, 2)) {
             return;

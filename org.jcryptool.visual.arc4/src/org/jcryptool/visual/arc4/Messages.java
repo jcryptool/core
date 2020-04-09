@@ -17,6 +17,7 @@ import org.eclipse.osgi.util.NLS;
  * are found in "messages_de.properties" and "messages_en.properties"
  * 
  * @author Luca Rupp
+ * @author Thorben Groos (switchable keylength)
  */
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.jcryptool.visual.arc4.messages";
@@ -150,6 +151,18 @@ public class Messages extends NLS {
     public static String KeySelectionWizardHeading;
     
     public static String PlainSelectionWizardHeading;
+    
+    public static String WizardPageKeyLengthInfo1;
+    
+    public static String WizardPageKeyLengthInfo2;
+    
+    public static String WizardPageKeyLengthInfo3;
+    
+    public static String WizardPagePlaintextLengthInfo1;
+    
+    public static String WizardPagePlaintextLengthInfo2;
+    
+    public static String WizardPagePlaintextLengthInfo3;
 
     static {
         // initialize resource bundle

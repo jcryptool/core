@@ -13,15 +13,19 @@ package org.jcryptool.visual.arc4.wizard;
 import org.eclipse.jface.wizard.Wizard;
 import org.jcryptool.visual.arc4.Messages;
 import org.jcryptool.visual.arc4.Type;
+import org.jcryptool.visual.arc4.algorithm.ARC4Algorithm;
 import org.jcryptool.visual.arc4.ui.DatavectorVisual;
 
 /**
  * The class that manages single pages of the wizard; currently this wizards only have one page
  * 
  * @author Luca Rupp
- */
+ * @author Thorben Groos (switchable keylength)
+ *  */
 public class ARC4Wizard extends Wizard {
 
+	private ARC4Algorithm alg;
+	
     // type of the wizard: there are key and plaintext wizards; values are defined
     // in ARC4Con
     private Type type;
@@ -47,14 +51,15 @@ public class ARC4Wizard extends Wizard {
      * @param type the type of wizard to create, values are defined in ARC4Con
      * @param parent the datavector visual object to which to pass the data
      */
-    public ARC4Wizard(Type type, DatavectorVisual parent) {
+    public ARC4Wizard(ARC4Algorithm alg, Type type, DatavectorVisual parent) {
         this.parent = parent;
+        this.alg = alg;
         this.type = type;
         this.setNameAndDescription();
     }
 
     /**
-     * Set the pagenamen and description for the single page depending on the type of wizard
+     * Set the pagename and description for the single page depending on the type of wizard
      */
     public void setNameAndDescription() {
         if (this.type == Type.KEY) {
@@ -74,15 +79,24 @@ public class ARC4Wizard extends Wizard {
     @Override
 	public void addPages() {
     	this.setWindowTitle(pagename);
-        page = new ARC4WizardPage(heading, description);
+        page = new ARC4WizardPage(alg, type, heading, description);
         addPage(page);
     }
 
     @Override
     public boolean performFinish() {
-        // pass the data to the datavector visual object
-        parent.setData(page.getInput());
+    	
+    	int[] data = page.getData();
+
+    	if (this.type == Type.KEY) {
+    		alg.setKey(data);
+    	} else if (this.type == Type.PLAIN) {
+    		// pass the new data to the internal representation of the data
+            alg.setPlain(data);
+        }
+
+    	parent.setDataToGUI(data);
+        
         return true;
     }
-
 }
