@@ -82,7 +82,7 @@ public class AtStartup implements IStartup {
 		List<File> outputs = new LinkedList<File>();
 		String[] cmdlineargs = Platform.getCommandLineArgs();
 
-		System.err.println("[JCT-debug] Function List Plugin is processing command line parameters of length " + cmdlineargs.length + "...");
+		//System.err.println("[JCT-debug] Function List Plugin is processing command line parameters of length " + cmdlineargs.length + "...");
 		boolean pluginActivated = false;
 		for (int i = 0; i < cmdlineargs.length; i++) {
 			String currentArg = cmdlineargs[i];
