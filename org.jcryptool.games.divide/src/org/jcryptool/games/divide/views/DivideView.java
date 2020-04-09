@@ -10,6 +10,7 @@
 package org.jcryptool.games.divide.views;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
@@ -18,28 +19,30 @@ import java.util.Observer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowData;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
@@ -75,7 +78,10 @@ public class DivideView extends ViewPart implements Observer {
     private Composite playingField;
     private Composite lowerContent;
     private Group gameInformationGroup;
-    private CLabel[] labelPlayerActive;
+    private StackLayout gameInformationStack;
+    private Composite gameInfoStartContainer;
+    private HashMap<IPlayer, Composite> gameInfoPlayerContainers;
+    private Composite gameInfoEndContainer;
     private Button button1pVsComp;
     private Button button1pVs2P;
     private Group detailedGameInformationGroup;
@@ -87,6 +93,7 @@ public class DivideView extends ViewPart implements Observer {
     private Label labelStrategy;
     private Combo strategyCombo;
     private ArrayList<IStrategy> strategies;
+    private MouseAdapter userInputListener;
 
     // constructor
     public DivideView() {
@@ -117,7 +124,6 @@ public class DivideView extends ViewPart implements Observer {
         descriptionComposite = new Composite(content, SWT.NONE);
         descriptionComposite.setLayout(new GridLayout(1, false));
         descriptionComposite.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
-        descriptionComposite.setBackground(ColorService.WHITE);
         
         scrolledComposite.setContent(content);
         
@@ -125,7 +131,6 @@ public class DivideView extends ViewPart implements Observer {
         titleText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         titleText.setFont(FontService.getHeaderFont());
         titleText.setText(Messages.DivideView_19);
-        titleText.setBackground(ColorService.WHITE);
         titleText.setEditable(false);
         
         descriptionText = new Text(descriptionComposite, SWT.WRAP);
@@ -134,7 +139,6 @@ public class DivideView extends ViewPart implements Observer {
         gd_descriptionText.widthHint = 800;
         descriptionText.setLayoutData(gd_descriptionText);
         descriptionText.setText(Messages.DivideView_20);
-        descriptionText.setBackground(ColorService.WHITE);
         descriptionText.setEditable(false);
         
         upperContent = new Composite(content, SWT.NONE);
@@ -148,12 +152,12 @@ public class DivideView extends ViewPart implements Observer {
         optionsGroup.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
 
         Label labelStartValue = new Label(optionsGroup, SWT.NONE);
-        labelStartValue.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 2));
+        labelStartValue.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 2));
         labelStartValue.setText(Messages.DivideView_4);
         labelStartValue.setFont(FontService.getNormalBoldFont());
 
         textStartValue = new Text(optionsGroup, SWT.NONE);
-        textStartValue.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 2));
+        textStartValue.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 2));
         textStartValue.setTextLimit(9);
         textStartValue.setText(Messages.DivideView_18);
         textStartValue.addVerifyListener(new VerifyListener() {
@@ -166,11 +170,29 @@ public class DivideView extends ViewPart implements Observer {
                 }
             }
         });
+		textStartValue.addModifyListener(new ModifyListener() {
+
+			@Override
+			public void modifyText(ModifyEvent e) {
+				var currentInput = textStartValue.getText();
+				if (currentInput.startsWith("0") && currentInput.endsWith("0") || currentInput.length() == 0) {
+					// If no input is provided, disable the start game button and color the input field red.
+					buttonStartGame.setEnabled(false);
+					textStartValue.setBackground(ColorService.LIGHT_AREA_RED);
+					textStartValue.setForeground(ColorService.BLACK);
+				} else if (!buttonStartGame.getEnabled()) {
+					// If the conditions are valid, but the start game button is disabled --> enable it again
+					buttonStartGame.setEnabled(true);
+					textStartValue.setBackground(null);
+					textStartValue.setForeground(null);
+				}
+			}
+		});
 
         gameType = new Label(optionsGroup, SWT.NONE);
         GridData gd_gameType = new GridData();
         gd_gameType.horizontalIndent = 40;
-        gd_gameType.verticalAlignment = SWT.TOP;
+        gd_gameType.verticalAlignment = SWT.CENTER;
         gd_gameType.verticalSpan = 2;
         gameType.setLayoutData(gd_gameType);
         gameType.setText(Messages.DivideView_1);
@@ -184,11 +206,14 @@ public class DivideView extends ViewPart implements Observer {
         labelStrategy = new Label(optionsGroup, SWT.NONE);
         GridData gd_labelStrategy = new GridData();
         gd_labelStrategy.horizontalIndent = 40;
+        gd_labelStrategy.verticalSpan = 2;
+        gd_labelStrategy.verticalAlignment = SWT.CENTER;
         labelStrategy.setLayoutData(gd_labelStrategy);
         labelStrategy.setText(Messages.DivideView_21);
         labelStrategy.setFont(FontService.getNormalBoldFont());
 
         strategyCombo = new Combo(optionsGroup, SWT.READ_ONLY);
+        strategyCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 2));
         
         for (IStrategy strategy : strategies) {
             if (strategy != null && strategy.getName() != null) {
@@ -204,6 +229,7 @@ public class DivideView extends ViewPart implements Observer {
         buttonStartGame.setLayoutData(gd_buttonStartGame);
         buttonStartGame.setText(Messages.DivideView_5);
         buttonStartGame.setFont(FontService.getNormalFont());
+        buttonStartGame.setFocus();
         buttonStartGame.addListener(SWT.Selection, new Listener() {
 
             @Override
@@ -221,7 +247,7 @@ public class DivideView extends ViewPart implements Observer {
                         players.add(new HumanPlayer(Messages.DivideView_8));
                         players.add(new HumanPlayer(Messages.DivideView_9));
                     }
-                    ChoosePlayerDialog choosePlayer = new ChoosePlayerDialog(players, new Shell());
+                    ChoosePlayerDialog choosePlayer = new ChoosePlayerDialog(players, Display.getCurrent().getActiveShell());
                     int playerIndex = choosePlayer.open();
                     if (playerIndex != SWT.DEFAULT) {
                         IMathEngine mathEngine = new TrivialMathEngine();
@@ -240,13 +266,7 @@ public class DivideView extends ViewPart implements Observer {
 
             @Override
             public void handleEvent(Event event) {
-                if (button1pVsComp.getSelection()) {
-                    labelStrategy.setEnabled(true);
-                    strategyCombo.setEnabled(true);
-                } else {
-                    labelStrategy.setEnabled(false);
-                    strategyCombo.setEnabled(false);
-                }
+                syncStrategyButtonsEnabled();
             }
         });
 
@@ -265,11 +285,18 @@ public class DivideView extends ViewPart implements Observer {
         lowerContent.setLayout(gl_lowerContent);
         lowerContent.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
 
-        // game information
+        // game information (basically displays current player and who won)
         gameInformationGroup = new Group(lowerContent, SWT.NONE);
-        gameInformationGroup.setText(Messages.DivideView_10);
-        gameInformationGroup.setLayout(new RowLayout());
-        gameInformationGroup.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
+        gameInformationStack = new StackLayout();
+        gameInformationGroup.setLayout(gameInformationStack);
+        GridData gameInformationGroupLayout = new GridData(GridData.CENTER, GridData.FILL, true, false);
+        gameInformationGroupLayout.minimumWidth = 300;
+        gameInformationGroupLayout.minimumHeight = 50;
+        gameInformationGroup.setLayoutData(gameInformationGroupLayout);
+        
+        // The initial view of the game information group (empty) 
+        gameInfoStartContainer = new Composite(gameInformationGroup, SWT.NONE);
+        gameInformationStack.topControl = gameInfoStartContainer;
 
         // score table
         detailedGameInformationGroup = new Group(lowerContent, SWT.NONE);
@@ -281,9 +308,7 @@ public class DivideView extends ViewPart implements Observer {
         scoreTable.setLinesVisible(true);
         scoreTable.setHeaderVisible(true);
         GridData gd_scoreTable = new GridData(GridData.FILL, GridData.FILL, true, true);
-        gd_scoreTable.heightHint = 150;
         scoreTable.setLayoutData(gd_scoreTable);
-        scoreTable.setFocus();
         
         TableColumn[] columns = new TableColumn[5];
         for (int i = 0; i < columns.length; i++) {
@@ -298,7 +323,7 @@ public class DivideView extends ViewPart implements Observer {
             columns[i].pack();
         }
 
-        scrolledComposite.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        scrolledComposite.setMinSize(725, content.computeSize(SWT.DEFAULT, SWT.DEFAULT).x);
         
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, DividePlugin.PLUGIN_ID + ".helpView");
     }
@@ -326,6 +351,8 @@ public class DivideView extends ViewPart implements Observer {
                     MenuBarActivation.enableSaveGameState(false);
                     // disable options
                     enableOptionsGroup(optionsGroup, false);
+                    // reset the who's next text (may have been altered if game has been won before)
+                    gameInformationGroup.setText(Messages.DivideView_10);
 
                     if (NewGameStateSourceProvider.hasBeenEnabledEver() || startingValueChanged()) {
                         /*
@@ -337,16 +364,37 @@ public class DivideView extends ViewPart implements Observer {
                     }
                     updatePlayingField(state.getListOfNumbers());
 
-                    labelPlayerActive = new CLabel[gameMachine.getPlayers().size()];
-                    for (int i = 0; i < labelPlayerActive.length; i++) {
-                        labelPlayerActive[i] = new CLabel(gameInformationGroup, SWT.CENTER | SWT.SHADOW_OUT);
-                        labelPlayerActive[i].setText(gameMachine.getPlayers().get(i).getName());
-                        labelPlayerActive[i].setFont(FontService.getNormalFont());
+                    
+                    gameInfoPlayerContainers = new HashMap<IPlayer, Composite>();
+                    var players = gameMachine.getPlayers();
+                    /*
+                     * Each player gets his own composite, which displays him as active player
+                     * The outer loop goes through all players and creates a composite for each of them.
+                     * These can then be switched by the StackLayout provided on the parent group.
+                     */
+                    for (var active : players) {
+                    	gameInfoPlayerContainers.put(active, new Composite(gameInformationGroup, SWT.NONE));
+                    	gameInfoPlayerContainers.get(active).setLayout(new GridLayout(2, true));
+                    	/*
+                    	 * The inner loop fills the composite with a label for each player. Obviously the active player
+                    	 * label gets a different design.
+                    	 */
+                    	for (var player : players) {
+                        	// The label of the current turn's player has a SHADOW_OUT and NormalBoldFont
+                    		// The label of the inactive player has a SHADOW_IN and NormalFont
+                    		var style = player == active ? SWT.CENTER | SWT.SHADOW_OUT : SWT.CENTER | SWT.SHADOW_IN;
+                    		var font = player == active ? FontService.getNormalBoldFont() : FontService.getNormalFont();
+                    		
+                    		var clabel = new CLabel(gameInfoPlayerContainers.get(active), style);
+                    		clabel.setFont(font);
+                    		clabel.setText(player.getName());
+                    		clabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
+                        }
                     }
+                    
                     setActivePlayer(state.getPlayerCurrentRound());
-                    lowerContent.layout();
-
-                    nextTurn(state.getPlayerCurrentRound(), state.getListOfNumbers());
+                    if (!state.getPlayerCurrentRound().isHuman())
+                    	computerTurn(state.getPlayerCurrentRound(), state.getListOfNumbers());
                     break;
                 }
 
@@ -362,7 +410,8 @@ public class DivideView extends ViewPart implements Observer {
                         setActivePlayer(state.getPlayerCurrentRound());
                         setUndoRedo(state);
                     }
-                    nextTurn(state.getPlayerCurrentRound(), state.getListOfNumbers());
+                    if (!state.getPlayerCurrentRound().isHuman())
+                    	computerTurn(state.getPlayerCurrentRound(), state.getListOfNumbers());
                     break;
                 }
 
@@ -376,28 +425,31 @@ public class DivideView extends ViewPart implements Observer {
                         scoreTable.remove(scoreTable.getItemCount() - 1);
                     }
                     setActivePlayer(state.getPlayerCurrentRound());
-                    nextTurn(state.getPlayerCurrentRound(), state.getListOfNumbers());
+                    if (!state.getPlayerCurrentRound().isHuman())
+                    	computerTurn(state.getPlayerCurrentRound(), state.getListOfNumbers());
                     break;
                 }
 
                 case END_EVENT: {
                     // update playing field
                     updatePlayingField(state.getListOfNumbers());
-                    setActivePlayer(null);
+                    enableOptionsGroup(optionsGroup, true);
+                    syncStrategyButtonsEnabled();
+                    
+                    gameInformationGroup.setText(Messages.DivideView_51);
+                    gameInfoEndContainer = new Composite(gameInformationGroup, SWT.NONE);
+                    gameInfoEndContainer.setLayout(new GridLayout());
+                    CLabel winnerLabel = new CLabel(gameInfoEndContainer, SWT.CENTER);
+                    winnerLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+                    winnerLabel.setText(Messages.DivideView_17 + state.getPlayerCurrentRound().getName());
+                    winnerLabel.setFont(FontService.getLargeBoldFont());
 
-                    RowData fieldData = new RowData(5, 20);
-                    Label gap = new Label(gameInformationGroup, SWT.CENTER);
-                    gap.setLayoutData(fieldData);
-                    gap.setFont(FontService.getLargeBoldFont());
-                    CLabel winner = new CLabel(gameInformationGroup, SWT.CENTER);
-                    winner.setText(Messages.DivideView_17 + state.getPlayerCurrentRound().getName());
-                    winner.setFont(FontService.getLargeBoldFont());
+                    gameInformationStack.topControl = gameInfoEndContainer;
                     gameInformationGroup.layout();
 
                     // update table
                     addTableRow(state);
 
-                    // MenuBarActivation.enableNewGameState(true);
                     MenuBarActivation.enableSaveGameState(true);
                     MenuBarActivation.enableUndo(false);
                     MenuBarActivation.enableRedo(false);
@@ -426,9 +478,14 @@ public class DivideView extends ViewPart implements Observer {
         tableEntry.setText(3, eliminatedNumbers);
         tableEntry.setText(4, remainingNumbers);
 
-        for (TableColumn col : scoreTable.getColumns()) {
-            col.pack();
-        }
+        var items = scoreTable.getColumns();
+        items[1].pack();  // Pack column "Player"
+        items[3].pack();  // Pack column "Eliminated"
+        items[4].pack();  // Pack column "Remaining"
+        // For the rest of the Columns I don't think a pack is required.
+        // Too many packs() in tables lead to not so nice artifacts on slow machines.
+
+        scoreTable.setTopIndex(scoreTable.getItems().length - 1);
     }
 
     private void createPlayingField(List<Integer> listOfNumbers) {
@@ -438,6 +495,20 @@ public class DivideView extends ViewPart implements Observer {
          */
         int numOfLabels = listOfNumbers.size();
         labels = new CLabel[numOfLabels];
+        
+        userInputListener = new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent e) {
+				/*
+				 * The handler for human interaction.
+				 */
+				CLabel label = (CLabel) e.widget;
+				int number = Integer.valueOf(label.getText());
+				gameMachine.nextTurn(number);
+
+			}
+		};
+        
         for (int i = 0; i < labels.length; i++) {
             labels[i] = new CLabel(playingField, SWT.PUSH | SWT.CENTER);
             labels[i].setText(listOfNumbers.get(i).toString());
@@ -446,26 +517,8 @@ public class DivideView extends ViewPart implements Observer {
             labels[i].setFont(FontService.getLargeBoldFont());
             labels[i].setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
             labels[i].setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
-            labels[i].addMouseListener(new MouseListener() {
-
-                @Override
-                public void mouseUp(MouseEvent e) {
-
-                }
-
-                @Override
-                public void mouseDown(MouseEvent e) {
-                    // human interaction
-                    CLabel label = (CLabel) e.widget;
-                    int number = Integer.valueOf(label.getText());
-                    gameMachine.nextTurn(number);
-                }
-
-                @Override
-                public void mouseDoubleClick(MouseEvent e) {
-
-                }
-            });
+            labels[i].addMouseListener(userInputListener);
+               
             labels[i].setEnabled(false);
             playingField.layout();
         }
@@ -491,35 +544,39 @@ public class DivideView extends ViewPart implements Observer {
         playingField.layout();
     }
 
-    private void nextTurn(IPlayer player, List<Integer> listOfNumbers) {
-        if (!player.isHuman()) {
-            gameMachine.nextTurn(player.getStrategy().chooseNumber(listOfNumbers));
-        }
-    }
+	private void computerTurn(IPlayer player, List<Integer> listOfNumbers) {
+		Display.getCurrent().asyncExec(new Runnable() {
 
-    public void enableOptionsGroup(Composite comp, boolean b) {
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(700);
+					gameMachine.nextTurn(player.getStrategy().chooseNumber(listOfNumbers));
+				} catch (InterruptedException e) {
+					// We do not care if we get interrupted
+				}
+			}
+		});
+	}
+
+    /**
+     * Recursively enables/disables children of a composite.
+     * This is used for enabling/disabling the options if a game is currently running or not.
+     * @param comp A composite which children should be disabled.
+     * @param enable whether all children should be enabled (true) or disabled (false)
+     */
+    public void enableOptionsGroup(Composite comp, boolean enable) {
         for (Control c : comp.getChildren()) {
             if (c instanceof Composite) {
-                enableOptionsGroup((Composite) c, b);
+                enableOptionsGroup((Composite) c, enable);
             }
-            c.setEnabled(b);
+            c.setEnabled(enable);
         }
-        optionsGroup.setEnabled(b);
+        optionsGroup.setEnabled(enable);
     }
 
     private void setActivePlayer(IPlayer player) {
-        for (CLabel label : labelPlayerActive) {
-            if (player == null) {
-                label.setFont(FontService.getNormalFont());
-                continue;
-            }
-            String labelText = label.getText();
-            if (labelText.compareTo(player.getName()) == 0) {
-                label.setFont(FontService.getNormalBoldFont());
-            } else {
-                label.setFont(FontService.getNormalFont());
-            }
-        }
+    	gameInformationStack.topControl = gameInfoPlayerContainers.get(player);
         gameInformationGroup.layout();
     }
 
@@ -583,6 +640,25 @@ public class DivideView extends ViewPart implements Observer {
         } else {
             MenuBarActivation.enableRedo(false);
         }
+    }
+    
+    /**
+     * Enable or disable the strategy selection depending on whether a computer player is chosen or not.
+     * If the game mode is set vs Computer --> enable<br>
+     * If the game mode is set vs Human--> disable<br>
+     */
+    public void syncStrategyButtonsEnabled() {
+    	if (button1pVsComp.getSelection()) {
+            labelStrategy.setEnabled(true);
+            strategyCombo.setEnabled(true);
+        } else {
+            labelStrategy.setEnabled(false);
+            strategyCombo.setEnabled(false);
+        }
+    }
+    
+    public void resetInfoGroupText() {
+    	gameInformationGroup.setText("");
     }
 
     private boolean startingValueChanged() {

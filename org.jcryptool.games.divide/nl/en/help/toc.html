@@ -9,42 +9,157 @@
 <body>
 <h1>Divider Game</h1>
 
-<p>Divider Game is a game for two people invented by Christiane Licht. In 2010 she has won the regional contest in NRW at "Jugend forscht" with it.</p>
-
-<p>The procedure is as follows. First an arbitrary number is chosen. The playing field is then made up of all of the dividers of that number.
-A player chooses a random divider. This number and all of its multiples will be removed. This step will be repeated alternately. The player who chooses or is forced to choose the number 1 looses.</p>
-
-<p>The game can be used in school to tighten the terms divider and divisibility.</p>
-
-<p>The input of Christiane Licht evaluates a question from game theory: Is there an optimal solution for every initial number for player 1 regardless of which number is choosen by player 2. With number theoretical methods a strategy to win can be established.</p>
 <p>
-<h2>Strategies</h2>
-<p>The user has the possibility to choose between different strategies. Right now the following strategies are implemented:</p>
+	Divider Game is a game for two people invented by Christiane Licht.
+	It works on the principle of a Nim or misère game <a href="#link1">[1]</a>.
+	In 2010 she has won the regional contest "Jugend forscht" (Youth researches) in Nordrhein-Westfalen (Germany) with it
+	<a href="#link2">[2]</a><a href="#link2">[3]</a>.
+</p>
+
+<h2> About Nim and misère games </h2>
+
 <p>
-<table border="1">
-	<tr>
-		<th>Strategy</th>
-		<th>Description</th>
+	In this type of game, the players remove elements from a set.
+	For example, matches can be put on and taken away, or the
+	players draw lines on paper and cross them out. The objects are arranged in a pyramid shape.
+	The players can alternately remove one or more matches from a horizontal plane lying next to each other.
+	Depending on the game, the player who removes the last match wins (Nim) or who forces the opponent to take the last
+	match (misère).
+	<br><br>
+	Following images show an example of how this looks like.
+</p>
+
+<table >
+<tr>
+	<td><img src="NimGame.svg.png" width=100% id="nim_img"></td>
+	<td><img src="NimGame_turn1.svg.png" width=100%></td>
+	<td><img src="NimGame_turn2.svg.png" width=100%></td>
+	<td><img src="NimGame_turn3.svg.png" width=100%></td>
+	<td><img src="NimGame_turn4.svg.png" width=100%></td>
+</tr>
+<tr>
+	<td><p align="center">Playing field at the beginning</p></td>
+	<td><p align="center">Turn 1: white begins</p></td>
+	<td><p align="center">Turn 2: red</p></td>
+	<td><p align="center">Turn 3: white</p></td>
+	<td><p align="center">Turn 4: red</p></td>
+</tr>
+</table>
+
+<p>
+	In this example, the game ends very quickly, as the players each take large groups of matches. Player white
+	takes away the last remaining group of matches in turn 3. From here on, players can only remove individual elements
+	and cannot influence the outcome anymore.
+</p> 
+
+ <ul>
+  <li>White would win at <b>Nim</b> (takes the last match)</li>
+  <li>Red would win at <b>misère</b> (white has to take the last match)</li>
+</ul>
+
+<hr>
+
+<h2> Divider Game </h2>
+
+<p>
+	The divider game combines the game type of misère with number theory in a clever way.
+	Instead of playing with horizontally arranged objects, you play with numbers and their dividers.
+	If a number is removed, all numbers that have this value as divisors are also removed.
+	For example a 3 removes 6, 9, 12 etc. 
+</p>
+
+<h3> Playing field </h3>
+
+<p>
+	The playing field is constructed from the dividers of an arbitrarily selectable starting number.
+	The default value is 2520.
+</p>
+
+<p align="center"> <img src="play_field.png" width=60% style="min-width: 600px"></p>
+
+<p>
+	In order to have enough playing fields, it is recommended to choose numbers with many dividers.
+	Best in the range between 1.000 and 10.000.
+</p> 
+
+<h3> How to play </h3>
+
+<p>
+	The players take turns in choosing a number and removing fields from the game.
+	Similar to the game principle of <i>misère</i>, the player who has to click (or clicks) on the 1 loses.
+	Which player starts can be determined at the start of the game.
+</p>	
+
+<hr>
+
+<h2> Playing against the computer</h2>
+
+<p>It is possible to play against a computer opponent. Chose <b>1P/Computer</b> under <b>Game type</b>.</p>
+
+<h3>Strategies of the computer opponent</h3>
+
+<p>
+	The user can choose between different strategies of the computer opponent.
+	The following strategies are currently available:
+<p>
+
+<table style="border-collapse: collapse; margin: 0 auto">
+	<tr style="border-bottom: 2px solid #909090;background: white">
+		<th bgcolor="white">Strategy</th>
+		<th bgcolor="white">Description</th>
 	</tr>
-	<tr>
+	<tr style="border-bottom: 1px solid #333333;">
 		<td>Random</td>
 		<td>The computer chooses a number randomly</td>
 	</tr>
-	<tr>
+	<tr style="border-bottom: 1px solid #333333;">
 		<td>Highest</td>
 		<td>The computer always chooses the highest possible number</td>
 	</tr>
-	<tr>
+	<tr style="border-bottom: 1px solid #333333;">
 		<td>Lowest</td>
 		<td>The computer always chooses the lowest possible number</td>
 	</tr>
 </table>
+
+<hr>
+
+<h2>Further notices about the game</h2>
+
+<p>The game can be used well at school to reinforce the concepts of divider and divisibility.</p>
+
+<p>
+	The divider game picks up a game theory question: Is there always an
+	optimal winning move for the player who starts, no matter what numbers the other player subsequently strikes?
+	With number-theoretical methods one can develop an optimal winning strategy.
 </p>
+
+<p>
+	The well-known game <b>Tic-Tac-Toe</b> does not have an optimal winning strategy.
+	If both players play optimally, the game always ends in a draw.<br>
+	In <b>Connect Four</b>, on the other hand, it is possible that the starting player always wins - provided he plays optimally.
+	Even if the other player plays optimally, they cannot win. 
+</p>
+
+<hr>
+
 <h2>References</h2>
-<a href="http://www.jugend-forscht.de/projektdatenbank/das-teilerspiel-teilen-oder-nicht-teilen-das-ist-hier-die-frage.html">http://www.jugend-forscht.de/projektdatenbank/das-teilerspiel-teilen-oder-nicht-teilen-das-ist-hier-die-frage.html</a><br>
-<a href="http://www.kappenberg.com/hosted/jufo/arbeiten.php5?jahr=-1&eintrag=1206">http://www.kappenberg.com/hosted/jufo/arbeiten.php5?jahr=-1&eintrag=1206</a><br>
-<a href="http://en.wikipedia.org/wiki/Nim">http://en.wikipedia.org/wiki/Nim</a><br>
-<a href="http://de.wikipedia.org/wiki/Nim-Spiel">http://de.wikipedia.org/wiki/Nim-Spiel</a><br>
+<p id="link1" >[1] More information about Nim (Wikipedia)<br>
+	<a href="https://en.wikipedia.org/wiki/Nim">https://en.wikipedia.org/wiki/Nim</a>
+</p>
+<p id="link2" >[2] Reference to <i>Jugend forscht</i> (German)<br>
+	<a href="https://www.jugend-forscht.de/projektdatenbank/das-teilerspiel-teilen-oder-nicht-teilen-das-ist-hier-die-frage.html">https://www.jugend-forscht.de/projektdatenbank/das-teilerspiel-teilen-oder-nicht-teilen-das-ist-hier-die-frage.html</a>
+</p>
+<p id="link3" >[3] Reference to <i>Jugend forscht</i> (German)<br>
+	<a href="https://www.kappenberg.com/hosted/jufo/arbeiten.php5?jahr=-1&eintrag=1206">https://www.kappenberg.com/hosted/jufo/arbeiten.php5?jahr=-1&amp;eintrag=1206</a>
+</p>
+
+<h2>Image-References</h2>
+
+<p>
+	<a href="#nim_img">Nim game images</a><br>Author (pseudonym) <i>Uncopy</i>.
+	Source <a href="https://commons.wikimedia.org/wiki/File:NimGame.svg">https://commons.wikimedia.org/wiki/File:NimGame.svg</a>.
+	Licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/"> CC BY-SA 3.0</a>
 </p>
 </body>
 </html>
