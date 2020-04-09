@@ -1129,6 +1129,7 @@ public class ShamirsSecretSharingComposite extends Composite {
      */
     private void drawPolynomial(PaintEvent e) {
         GC gc = e.gc;
+        gc.setLineWidth(0);
         //canvasCurve.setSize(getMaxXCoord(), getMaxYCoord());
         
         org.eclipse.swt.graphics.Point size = canvasCurve.getSize();
@@ -1291,7 +1292,7 @@ public class ShamirsSecretSharingComposite extends Composite {
         polynomTransform.scale(gridSizeX, -gridSizeY);
         // polynomial.setTransform(polynomTransform);
 
-        gc.setLineWidth(0);
+        
         this.drawPath(polynomial, polynomPath, polynomTransform);
 
         /*
