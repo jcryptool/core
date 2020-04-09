@@ -458,8 +458,8 @@ public class ShamirsSecretSharingComposite extends Composite {
                          * if the precondition is correct and the input is not empty than select the coefficients
                          */
                         if (statusPrime == 0 && statusSecret == 0) {
-                            CoefficientDialog cdialog = new CoefficientDialog(getDisplay().getActiveShell(), spnrT
-                                    .getSelection(), secret, coefficients, modul);
+                            CoefficientDialog cdialog = new CoefficientDialog(getDisplay().getActiveShell(), 
+                            		spnrT.getSelection(), secret, coefficients, modul);
                             int statusCoefficient = cdialog.open();
                             if (statusCoefficient == 0) {
                                 /*

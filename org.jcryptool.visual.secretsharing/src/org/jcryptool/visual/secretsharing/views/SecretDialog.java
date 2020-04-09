@@ -114,6 +114,7 @@ public class SecretDialog extends TitleAreaDialog implements Constants {
 				if (okButton != null) {
 					okButton.setEnabled(false);
 				}
+				verify();
 			}
 		});
 		secretText.addDisposeListener(new DisposeListener() {
@@ -133,49 +134,54 @@ public class SecretDialog extends TitleAreaDialog implements Constants {
 		style.fontStyle = SWT.BOLD;
 		secretText.setStyleRange(style);
 
-		final Button checkInputButton = new Button(container, SWT.NONE);
-		checkInputButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(final SelectionEvent e) {
-				String text = secretText.getText();
-				style = new StyleRange();
-				style.start = 0;
-				style.length = secretText.getText().length();
-
-				if (text.matches("[0-9]*")) {
-
-					if (new BigInteger(secretText.getText()).compareTo(new BigInteger(modulText.getText())) < 0) {
-						style = new StyleRange();
-						style.start = 0;
-						style.length = secretText.getText().length();
-						style.foreground = GREEN;
-						style.fontStyle = SWT.BOLD;
-						secretText.setStyleRange(style);
-						okButton.setEnabled(true);
-					} else {
-						style = new StyleRange();
-						style.start = 0;
-						style.length = secretText.getText().length();
-						style.foreground = RED;
-						style.fontStyle = SWT.BOLD;
-						secretText.setStyleRange(style);
-						okButton.setEnabled(false);
-					}
-				} else {
-					style.foreground = RED;
-					style.fontStyle = SWT.BOLD;
-					secretText.setStyleRange(style);
-				}
-			}
-		});
-		final GridData gd_checkInputButton = new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1);
-		checkInputButton.setLayoutData(gd_checkInputButton);
-		checkInputButton.setText(Messages.SSSConstants_Dialog_Verify_Input);
+//		final Button checkInputButton = new Button(container, SWT.NONE);
+//		checkInputButton.addSelectionListener(new SelectionAdapter() {
+//			@Override
+//			public void widgetSelected(final SelectionEvent e) {
+//				verify();
+//			}
+//		});
+//		final GridData gd_checkInputButton = new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1);
+//		checkInputButton.setLayoutData(gd_checkInputButton);
+//		checkInputButton.setText(Messages.SSSConstants_Dialog_Verify_Input);
 
 		setMessage(Messages.SSSConstants_Dialog_Secret_Message);
 		setTitle(Messages.SSSConstants_Dialog_Secret_Header);
 		
 		return area;
+	}
+
+	protected void verify() {
+		// TODO Auto-generated method stub
+		String text = secretText.getText();
+		style = new StyleRange();
+		style.start = 0;
+		style.length = secretText.getText().length();
+
+		if (text.matches("[0-9]*")) {
+
+			if (new BigInteger(secretText.getText()).compareTo(new BigInteger(modulText.getText())) < 0) {
+				style = new StyleRange();
+				style.start = 0;
+				style.length = secretText.getText().length();
+				style.foreground = GREEN;
+				style.fontStyle = SWT.BOLD;
+				secretText.setStyleRange(style);
+				okButton.setEnabled(true);
+			} else {
+				style = new StyleRange();
+				style.start = 0;
+				style.length = secretText.getText().length();
+				style.foreground = RED;
+				style.fontStyle = SWT.BOLD;
+				secretText.setStyleRange(style);
+				okButton.setEnabled(false);
+			}
+		} else {
+			style.foreground = RED;
+			style.fontStyle = SWT.BOLD;
+			secretText.setStyleRange(style);
+		}
 	}
 
 	/**
@@ -187,14 +193,6 @@ public class SecretDialog extends TitleAreaDialog implements Constants {
 		okButton = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
 		okButton.setEnabled(false);
 		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
-	}
-
-	/**
-	 * Return the initial size of the dialog
-	 */
-	@Override
-	protected Point getInitialSize() {
-		return new Point(500, 300);
 	}
 
 	@Override
