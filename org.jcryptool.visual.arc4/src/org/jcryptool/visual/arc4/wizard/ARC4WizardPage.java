@@ -34,7 +34,6 @@ public class ARC4WizardPage extends WizardPage {
 
 	private ARC4Algorithm alg;
 	
-    // the background for the page
     private Composite page;
 
     // the input field
@@ -52,6 +51,10 @@ public class ARC4WizardPage extends WizardPage {
     // Which button was pressed? Choose key or choose plain text.
     private Type type;
     
+    /**
+     * This is the verify listener for the input field.</br>
+     * It checks the input on length and valid chars.
+     */
     private VerifyListener verifyInput = new VerifyListener() {
 		
 		@Override

@@ -361,7 +361,7 @@ public class ARC4Composite extends Composite {
     /**
      * Pull the data from the algorithm object and fill it into the UI
      */
-    private void syncronizeInternWithExtern() {
+    public void syncronizeInternWithExtern() {
         vector.setDataToGUI(alg.getVector());
         key.setDataToGUI(alg.getKey());
         plain.setDataToGUI(alg.getPlain());

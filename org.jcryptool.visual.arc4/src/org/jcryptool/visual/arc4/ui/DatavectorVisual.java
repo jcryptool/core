@@ -59,6 +59,11 @@ public class DatavectorVisual extends Composite {
 
     // The algorithm object is where the data from the wizard is ultimately passed to
     private ARC4Algorithm alg;
+    
+    /**
+     * The parent Composite of this Composite.
+     */
+    private ARC4Composite parent;
 
 
     /**
@@ -71,9 +76,10 @@ public class DatavectorVisual extends Composite {
      *            pretty but i think making a subclass for every type would be overkill
      * @param alg the algorithm that holds the data on which this datavector visual operates
      */
-    public DatavectorVisual(Composite parent, int style, Type type, ARC4Algorithm alg) {
+    public DatavectorVisual(ARC4Composite parent, int style, Type type, ARC4Algorithm alg) {
         super(parent, style);
         this.alg = alg;
+        this.parent = parent;
         // three columns for the data and one column for the button; this assures proper alignment
         // of the widgets
         // in ARC4Composite; for the explanation of the factor two look into the comments in
@@ -290,6 +296,10 @@ public class DatavectorVisual extends Composite {
     	for (int i = data.length; i < ARC4Con.DATAVECTOR_VISUAL_LENGTH; i++) {
     		this.data[i].setVisible(false);
     	}
+    }
+    
+    public void updateCompleteGUI() {
+    	parent.syncronizeInternWithExtern();
     }
   
 

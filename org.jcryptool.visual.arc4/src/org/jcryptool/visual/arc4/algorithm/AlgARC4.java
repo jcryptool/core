@@ -32,8 +32,8 @@ public class AlgARC4 extends ARC4Algorithm {
     /**
      * Constructor that is used when switching between ARC4 and Spritz.</br>
      * It creates an object with the given key and plain text.
-     * @param key The key of the new object.
-     * @param plain The plaintext of the new object.
+     * @param key The key of the new object. Get it with alg.getKey() from the old alg-Onject.
+     * @param plain The plaintext of the new object. Get it with alg.getPlain() from the old alg-Onject.
      */
 	public AlgARC4(int[] key, int[] plain) {
 		super(key, plain);

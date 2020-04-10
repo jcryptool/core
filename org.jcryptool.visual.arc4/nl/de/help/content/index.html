@@ -192,9 +192,10 @@
 	<p>Unter diesem Gruppierungs-Kasten finden Sie einen weiteren, mit dem Sie den 
 	Ablauf des Algorithmus steuern können. In das Feld <i>Zahl der Schritte</i> kann eine positive Zahl eingetragen werden. Mit einem 
 	Klick auf <i>Ausführen</i> führt der Algorithmus die eingetragene Zahl an Schritten durch. Mit einem Klick auf <i>Alles 
-	verschlüsseln</i> wird der Algorithmus auf einmal vollständig durchlaufen. Beachten Sie, dass der Algorithmus hier 272 Schritte 
-	hat. 256 davon werden zur Initialisierung der S-Box benötigt. In den übrigen 16 Schritten werden dann für den 16 Byte 
-	langen Klartext 16 Zufalls-Bytes zur Verschlüsselung generiert und XOR-verknüpft.</p>	
+	verschlüsseln</i> wird der Algorithmus auf einmal vollständig durchlaufen. Beachten Sie, dass der Algorithmus hier 256 + Anzahl der 
+	Klartext-Bytes Schritte 
+	hat. 256 davon werden zur Initialisierung der S-Box benötigt. In den übrigen Schritten werden dann für den
+	Klartext Zufalls-Bytes zur Verschlüsselung generiert und XOR-verknüpft.</p>	
 	<img src="screenshot_control.png" alt="ScreenshotControl">
 
 	<p>Im Gruppierungs-Kasten darunter (<i>Auswahl des Algorithmus</i>) kann man den gewünschten Algorithmus wählen. Hierbei stehen der 
@@ -215,7 +216,8 @@
 	
 	<p>
 	Unter der S-Box befinden sich 4 Vektoren, die den Schlüssel, den Klartext, die generierten Zufallszahlen und den resultierenden 
-	verschlüsselten Text repräsentieren, wobei in dieser Visualisierung für alle eine Länge von 16 Byte verwendet wird. 
+	verschlüsselten Text repräsentieren. In dieser Visualisierung können alle eine Länge von einem bis 16 Byte annehmen. Die Schlüssel
+	und Klartextlänge muss nicht identisch sein.
 	Zu jedem der 4 Vektoren gibt es einen Button <i>In Zwischenablage kopieren</i>: Damit können Sie die Werte des jeweiligen Vektors 
 	in die Zwischenablage Ihres Systems kopieren, um diese weiter zu
 	verwenden. Der Schlüssel und der Klartext 
@@ -228,22 +230,23 @@
 	<p>
 	In beiden Fällen öffnet sich ein 
 	Wizard, in dem Sie den Schlüssel bzw. den Klartext in hexadezimaler Darstellung eingeben können. Es stehen Ihnen jeweils 
-	16 Bytes (also 32 Hex-Zeichen) zur Verfügung. Falsche Eingaben, wie Buchstaben, die keine Hex-Zeichen darstellen, werden nicht 
+	bis zu 16 Bytes (also 32 Hex-Zeichen) zur Verfügung. Falsche Eingaben, wie Buchstaben, die keine Hex-Zeichen darstellen, werden nicht 
 	übernommen und mit einer entsprechenden Meldung unter dem Eingabefeld gemeldet. Sie können die Eingabe jederzeit mit 
 	<i>Abbrechen</i> beenden, wobei der vor dem Aufruf des Wizards gespeicherte Schlüssel/Klartext unverändert bleibt. Sobald Sie 
-	16 Bytes eingegeben haben, können Sie den Button <i>Fertigstellen</i> anklicken, um Ihre Eingabe zu übernehmen. Beachten Sie, 
+	eine gerade Anzahl an Hex-Zeichen eingegeben haben, können Sie den Button <i>Fertigstellen</i> anklicken, um Ihre Eingabe zu übernehmen.
+	Der Wizard berechnet dann aus ihrer Eingabe die Schlüssellänge.  Beachten Sie, 
 	dass Sie Schlüssel und Klartext nur dann ändern können, wenn Sie den Algorithmus noch nicht mit einem Klick auf 
 	<i>Ausführen</i> gestartet haben, die Anzahl der erledigten Schritte also noch auf 0 steht.
 	</p>
 	
 	<p>
-	Bemerkung: Im ARC4-Visualisierungs-Plug-in muss der Schlüssel genau 16 Bytes lang sein; im ARC4-Krypto-Plug-in kann die
+	Bemerkung: Im ARC4-Visualisierungs-Plug-in muss der Schlüssel zwischen einem und 16 Bytes lang sein; im ARC4-Krypto-Plug-in kann die
 	Schlüssellänge zwischen 5 und 256 Bytes liegen (entsprechend der Spezifikation des Algorithmus).
 	</p>
 	<img src="screenshot_wizard_key.png" width="80%" alt="Wizard Key">
 	
 	<p>
-	Haben Sie den Algorithmus bis Schritt 272 durchgearbeitet, ist der Verschlüsselungsvorgang abgeschlossen und der 
+	Haben Sie den Algorithmus vollständig durchgearbeitet, ist der Verschlüsselungsvorgang abgeschlossen und der 
 	vollständige verschlüsselte Text Ihres Klartextes ist zu sehen. Wenn Sie danach nochmals auf <i>Ausführen</i> oder 
 	<i>Alles verschlüsseln</i> klicken, wird eine Nachricht erscheinen, die Sie darauf hinweist, dass der Algorithmus fertig ist. Um die 
 	Visualisierung ein weiteres Mal zu starten und von Neuem zu beginnen, können Sie auf den kleinen Button <i>Neustart</i> klicken, 

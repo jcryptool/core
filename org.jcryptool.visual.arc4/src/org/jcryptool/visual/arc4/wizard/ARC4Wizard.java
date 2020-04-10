@@ -85,7 +85,8 @@ public class ARC4Wizard extends Wizard {
 
     @Override
     public boolean performFinish() {
-    	
+    	// Get the data from the input and 
+    	// set it to the corresponding alg field.
     	int[] data = page.getData();
 
     	if (this.type == Type.KEY) {
@@ -95,7 +96,10 @@ public class ARC4Wizard extends Wizard {
             alg.setPlain(data);
         }
 
-    	parent.setDataToGUI(data);
+    	// update the whole GUI. This is necessary, because if the user
+    	// selects a shorter Plaintext the random and enc get also shorter and
+    	// this has to be shown in the GUI:
+    	parent.updateCompleteGUI();
         
         return true;
     }

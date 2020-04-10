@@ -25,12 +25,24 @@ public class AlgSpritz extends ARC4Algorithm {
     // the variables of the algorithm
     private int w = 1, k = 0, z = 0;
     
+    /**
+     * Default constructor. Can be used for initial creation of AlgSpritz object.</br>
+     * Creates a random key and plaintext.
+     * @param w 
+     */
     public AlgSpritz(int w) {
         super();
         this.w = w;
     }
     
 
+    /**
+     * Consructor that can be used when a key and plaintext is already entered, e.g. 
+     * when the user switches from ARC4 to Spritz.
+     * @param key The key the user has already entered. Get it with alg.getKey() from the old alg-Obejct.
+     * @param plain The plaintext the user has already entered. Get it with alg.getPlain() from the old alg-Obejct.
+     * @param w
+     */
     public AlgSpritz(int[] key, int[] plain, int w) {
     	super(key, plain);
     	this.w = w;
