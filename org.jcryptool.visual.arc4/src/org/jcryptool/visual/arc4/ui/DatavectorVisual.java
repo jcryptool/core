@@ -300,41 +300,35 @@ public class DatavectorVisual extends Composite {
             this.data[a].setVisible(true);
     	}
     	
-    	// Hide labels if the key is not 16 byte long.
+    	// Hide labels if the plaintext is not 16 byte long.
     	for (int i = data.length; i < ARC4Con.DATAVECTOR_VISUAL_LENGTH; i++) {
     		this.data[i].setVisible(false);
     	}
     	
-    	// Disable labels for random and encrypted text if they are not 
-    	// set yet.
-    	if (type == Type.RAND) {
-        	boolean zero = false; 	
-    		
-    		for (int i = 0; i < alg.getRandom().length; i++) {
-    			if (!(alg.getRandom()[i] == 0)) {
-    				zero = true;
-    			}
-    		}
-    		
+
+    	// This disables the labels if they display the random or
+    	// the encrypted text and if they are not set yet.
+    	if (type == Type.RAND || type == Type.ENC) {
+        	boolean isAllZero = true; 	
+        	for (int i = 0; i < alg.getRandom().length; i++) {
+        		if (type == Type.RAND) {
+        			if (!(alg.getRandom()[i] == 0)) {
+        				isAllZero = false;
+        			}
+        		} else if (type == Type.ENC) {
+        			if (!(alg.getEnc()[i] == 0)) {
+        				isAllZero = false;
+        			}
+        		}
+        	}
+        	
     		for (int i = 0; i < ARC4Con.DATAVECTOR_VISUAL_LENGTH; i++) {
-    			this.data[i].setEnabled(zero);
+    			this.data[i].setEnabled(!isAllZero);
     		}
     	}
-    	
-    	if (type == Type.ENC) {
-    		boolean zero = false;
-    		
-    		for (int i = 0; i < alg.getEnc().length; i++) {
-    			if (!(alg.getEnc()[i] == 0)) {
-    				zero = true;
-    			}
-    		}
-    		
-    		for (int i = 0; i < ARC4Con.DATAVECTOR_VISUAL_LENGTH; i++) {
-    			this.data[i].setEnabled(zero);
-    		}
-    	}
-    	
+
+
+
     }
     
     public void updateCompleteGUI() {
