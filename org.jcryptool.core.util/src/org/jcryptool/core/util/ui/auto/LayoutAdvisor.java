@@ -2,9 +2,7 @@ package org.jcryptool.core.util.ui.auto;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Predicate;
 
-import org.eclipse.jface.viewers.CellEditor.LayoutData;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
@@ -71,7 +69,7 @@ public class LayoutAdvisor {
 				traverseMarkWidthHint_FirstStrategy(child);
 			}
 		} else {
-			boolean hasWrap = (c.getStyle() & SWT.WRAP) != 0;
+//			boolean hasWrap = (c.getStyle() & SWT.WRAP) != 0;
 // 			System.err.println(String.format("%s has wrap: %s", c, hasWrap));
 			if ( c instanceof Text || c instanceof StyledText || c instanceof Label ) {
 				Object layoutData = c.getLayoutData();
@@ -89,7 +87,7 @@ public class LayoutAdvisor {
 							// * has a GridLayout object 
 							int computedSize = c.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
 							gridData.widthHint = computedSize;
-							System.err.println(String.format("corrected GridData.widthHint for element %s with computed width %s", c, computedSize));
+//							System.err.println(String.format("corrected GridData.widthHint for element %s with computed width %s", c, computedSize));
 						}
 					}
 				}
