@@ -65,19 +65,16 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
     @Override
     public void createPartControl(Composite parent) {
         this.parent = parent;
-        // Define layout elements
-//        parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
+        
         // Create srollable composite and composite within it
         ScrolledComposite sc =
-                new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+                new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
         sc.setExpandHorizontal(true);
         sc.setExpandVertical(true);
         
         Composite pageComposite = new Composite(sc, SWT.NONE);
         sc.setContent(pageComposite);
         pageComposite.setLayout(new GridLayout());
-//        pageComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         
 		titleAndDescription = new TitleAndDescriptionComposite(pageComposite);
 		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 4 ,1));
