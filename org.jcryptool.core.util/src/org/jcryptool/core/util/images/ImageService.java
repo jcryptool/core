@@ -69,7 +69,7 @@ public class ImageService {
 	
 	/**
 	 * This is the default icon for the button that resets a plugin.</br>
-	 * The icon can be found in: platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png
+	 * The icon can be found in: platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png
 	 */
 	public static final Image ICON_RESET;
 	/**
@@ -151,8 +151,8 @@ public class ImageService {
 		ICON_HELP = ImageService.getImage("org.eclipse.ui", "icons/full/etool16/help_contents.png");
 		IMAGEDESCRIPTOR_HELP = ImageService.getImageDescriptor("org.eclipse.ui", "icons/full/etool16/help_contents.png");
 		
-		ICON_RESET = ImageService.getImage("org.eclipse.ui", "icons/full/etool16/new_wiz.png");
-		IMAGEDESCRIPTOR_RESET = ImageService.getImageDescriptor("org.eclipse.ui", "icons/full/etool16/new_wiz.png");
+		ICON_RESET = ImageService.getImage("org.jcryptool.core.util", "icons/icon_reset.png");
+		IMAGEDESCRIPTOR_RESET = ImageService.getImageDescriptor("org.jcryptool.core.util", "icons/icon_reset.png");
 
 		ICON_VISUALIZATIONS = ImageService.getImage("org.eclipse.ui", "icons/full/eview16/defaultview_misc.png");
 		IMAGEDESCRIPTOR_VISUALIZATIONS = ImageService.getImageDescriptor("org.eclipse.ui", "icons/full/eview16/defaultview_misc.png");
