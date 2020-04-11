@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.zeroknowledge.ModNCalculator;
 import org.jcryptool.visual.zeroknowledge.Protocol;
 import org.jcryptool.visual.zeroknowledge.algorithm.Modell;
@@ -59,28 +60,29 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
     // Amount of entries in a vector
     private static final int vectorEntries = 4;
     private Composite parent;
-    private ZKHeaderComposite headerComp;
+	private TitleAndDescriptionComposite titleAndDescription;
 
     @Override
     public void createPartControl(Composite parent) {
         this.parent = parent;
         // Define layout elements
-        parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+//        parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         // Create srollable composite and composite within it
         ScrolledComposite sc =
                 new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
         sc.setExpandHorizontal(true);
         sc.setExpandVertical(true);
+        
         Composite pageComposite = new Composite(sc, SWT.NONE);
         sc.setContent(pageComposite);
         pageComposite.setLayout(new GridLayout());
-        pageComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
-		headerComp = new ZKHeaderComposite(pageComposite);
-		headerComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 4, 1));
-		headerComp.setTitle(Messages.FeigeFiatShamirView_title);
-		headerComp.setDescription(Messages.FeigeFiatShamirView_text);
+//        pageComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        
+		titleAndDescription = new TitleAndDescriptionComposite(pageComposite);
+		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 4 ,1));
+		titleAndDescription.setTitle(Messages.FeigeFiatShamirView_title);
+		titleAndDescription.setDescription(Messages.FeigeFiatShamirView_text);
 
 		// pointer main points to pageComposite
         main = pageComposite;

@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.zeroknowledge.Protocol;
 import org.jcryptool.visual.zeroknowledge.algorithm.magischetuer.MAlice;
 import org.jcryptool.visual.zeroknowledge.algorithm.magischetuer.MBob;
@@ -54,6 +55,7 @@ public class MagicDoorView extends ViewPart implements Observer, Protocol {
     private Group info;
     private Composite parent;
     private Composite pageComposite;
+	private TitleAndDescriptionComposite titleAndDescription;
 
     @Override
     public void createPartControl(final Composite parent) {
@@ -67,10 +69,11 @@ public class MagicDoorView extends ViewPart implements Observer, Protocol {
         pageComposite = new Composite(sc, SWT.NONE);
         sc.setContent(pageComposite);
         pageComposite.setLayout(new GridLayout());
-        
-		ZKHeaderComposite headerComp = new ZKHeaderComposite(pageComposite);
-		headerComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
-				1, 1));
+		
+		titleAndDescription = new TitleAndDescriptionComposite(pageComposite);
+		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		titleAndDescription.setTitle(Messages.Header_title);
+		titleAndDescription.setDescription(Messages.Header_text);
 
         bob = new MBob();
         alice = new MAlice();
