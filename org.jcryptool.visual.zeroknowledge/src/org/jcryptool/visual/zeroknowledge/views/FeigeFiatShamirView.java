@@ -201,7 +201,7 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
 
         sc.setMinSize(pageComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(),
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
                 "org.jcryptool.visual.zeroknowledge.feigefiatshamirContextHelp"); //$NON-NLS-1$
     }
 

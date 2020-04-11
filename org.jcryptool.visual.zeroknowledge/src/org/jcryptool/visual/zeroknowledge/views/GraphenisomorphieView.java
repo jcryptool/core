@@ -125,7 +125,7 @@ public class GraphenisomorphieView extends ViewPart implements Observer, Protoco
 		// make whole content scrollable
 		sc.setMinSize(pageComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(),
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
 				"org.jcryptool.visual.zeroknowledge.graphisomorpismHelpID"); //$NON-NLS-1$
 	}
 
