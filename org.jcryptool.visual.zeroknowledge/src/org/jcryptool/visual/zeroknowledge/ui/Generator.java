@@ -36,8 +36,6 @@ import org.jcryptool.visual.zeroknowledge.algorithm.Primzahlen;
  */
 public class Generator extends Dialog {
 
-    private Button abbrechen;
-
     private Shell akt;
 
     private boolean both;
@@ -116,6 +114,7 @@ public class Generator extends Dialog {
     	GridLayout gd_main = new GridLayout(2, true);
     	gd_main.marginWidth = 30;
     	main.setLayout(gd_main);
+   
     	
         // allgemeine Ueberschrift
     	Label description = new Label(main, SWT.FILL);
@@ -145,7 +144,8 @@ public class Generator extends Dialog {
              * den RadioButton "unabhängig" auf nicht gewahlt und vermerkt, dass die Wertebereich
              * gleich sein sollen
              */
-            public void widgetSelected(SelectionEvent arg0) {
+            @Override
+			public void widgetSelected(SelectionEvent arg0) {
                 unabhaengig.setSelection(false);
                 gleich.setSelection(true);
                 both = true;
@@ -169,7 +169,8 @@ public class Generator extends Dialog {
              * Setzt den RadioButton "gleich" auf nicht gewahlt und vermerkt, dass die Wertebereich
              * nicht gleich sein muessen
              */
-            public void widgetSelected(SelectionEvent arg0) {
+            @Override
+			public void widgetSelected(SelectionEvent arg0) {
                 gleich.setSelection(false);
                 unabhaengig.setSelection(true);
                 both = false;
@@ -183,15 +184,15 @@ public class Generator extends Dialog {
         q = new PrimePanel("q", main);
         
         compositeButtons = new Composite(main, SWT.NONE);
-        compositeButtons.setLayout(new GridLayout(3, true));
-        GridData gd_compositeButtons = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
+        compositeButtons.setLayout(new GridLayout(2, true));
+        GridData gd_compositeButtons = new GridData(SWT.RIGHT, SWT.BOTTOM, true, true, 2, 1);
         gd_compositeButtons.verticalIndent = 20;
         compositeButtons.setLayoutData(gd_compositeButtons);
         
         
         // Button zum Generieren der Primzahlen
         generieren = new Button(compositeButtons, SWT.PUSH);
-        generieren.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        generieren.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
         generieren.setText(Messages.Generator_6);
         generieren.addSelectionListener(
         /**
@@ -202,7 +203,8 @@ public class Generator extends Dialog {
              * Methode, die aufgerufen wird, wenn der "generieren"-Button geklickt wurde. Liest die
              * Ober- und Untergrenzen ein und erzeugt zwei Primzahlen in diesen Bereichen.
              */
-            public void widgetSelected(SelectionEvent arg0) {
+            @Override
+			public void widgetSelected(SelectionEvent arg0) {
                 nehmen.setEnabled(true);
                 removeExceptionLabel();
 
@@ -294,7 +296,7 @@ public class Generator extends Dialog {
 
         // Button zum Uebernehmen der Primzahlen
         nehmen = new Button(compositeButtons, SWT.PUSH);
-        nehmen.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        nehmen.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
         nehmen.setText(Messages.Generator_18);
         nehmen.addSelectionListener(
         /**
@@ -305,7 +307,8 @@ public class Generator extends Dialog {
              * Methode, die aufgerufen wird, wenn der "Nehmen"-Button betätigt wurde. Setzt p und q
              * im Modell und schaltet den Button "Geheimnis erstellen" an.
              */
-            public void widgetSelected(SelectionEvent arg0) {
+            @Override
+			public void widgetSelected(SelectionEvent arg0) {
                 removeExceptionLabel();
                 if (shamir.setP(p.getErgebnis()) && shamir.setQ(q.getErgebnis())) {
                     shamir.removeException();// getPrimeGen().removeException();
@@ -316,26 +319,6 @@ public class Generator extends Dialog {
         });
         nehmen.setToolTipText(Messages.Generator_19);
         nehmen.setEnabled(false);
-
-        // Button zum Abbrechen der Aktion
-        abbrechen = new Button(compositeButtons, SWT.PUSH);
-        abbrechen.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        abbrechen.setText(Messages.Generator_20);
-        abbrechen.addSelectionListener(
-        /**
-         * Selection-Listener, der auf Events vom "Abbrechen"-Button achtet
-         */
-        new SelectionAdapter() {
-            /**
-             * Methode, die aufgerufen wird, wenn der "Abbrechen"-Button betätigt wurde. Schließt
-             * den Generator.
-             */
-            public void widgetSelected(SelectionEvent arg0) {
-                akt.dispose();
-                shamir.removeException();
-            }
-        });
-        abbrechen.setToolTipText(Messages.Generator_21);
 
         exception = new Label(main, SWT.BOLD);
         exception.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
@@ -354,7 +337,7 @@ public class Generator extends Dialog {
     private void open() {
         Shell parent = getParent();
         akt = new Shell(parent, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
-        akt.setText("Primzahlen generieren");
+        akt.setText(Messages.Generator_6);
         createGui(akt);
         akt.pack();
         akt.open();
