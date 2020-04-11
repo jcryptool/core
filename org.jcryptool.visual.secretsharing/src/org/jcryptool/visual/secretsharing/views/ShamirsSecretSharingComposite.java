@@ -1165,7 +1165,7 @@ public class ShamirsSecretSharingComposite extends Composite {
         int textOffset = gapBig + 8;
         int fontWidth = (int) Math.round(gc.getFontMetrics().getAverageCharacterWidth());
         int fontHeight = gc.getFontMetrics().getHeight();
-        System.out.println("font height leto 20: " + fontHeight);
+        
         int numberLength = 0;
         
         yAxisGap = gridSizeY * ((size.y / gridSizeY)) - ((int)Math.round(1.4 * fontHeight));
@@ -1252,7 +1252,7 @@ public class ShamirsSecretSharingComposite extends Composite {
         
 //        float tickHeightInPx = 3.0f * fontHeight;
 //        float tickDistInUnits = (int)Math.round( (float)(fontHeight * tickFontHeightFactor) / pxPerUnitInY );
-        System.out.println(idealTickDistInUnits + " | " + tickDiffBest + " | " + tickDistance);
+        
         //determine label jump
 //        if (maxX <= 150){
 //        	labeljumps = 10;
