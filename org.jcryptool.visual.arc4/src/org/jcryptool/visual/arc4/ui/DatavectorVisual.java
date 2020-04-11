@@ -64,6 +64,8 @@ public class DatavectorVisual extends Composite {
      * The parent Composite of this Composite.
      */
     private ARC4Composite parent;
+    
+    private Type type;
 
 
     /**
@@ -80,6 +82,7 @@ public class DatavectorVisual extends Composite {
         super(parent, style);
         this.alg = alg;
         this.parent = parent;
+        this.type = type;
         // three columns for the data and one column for the button; this assures proper alignment
         // of the widgets
         // in ARC4Composite; for the explanation of the factor two look into the comments in
@@ -141,6 +144,11 @@ public class DatavectorVisual extends Composite {
             // center text on the labels
             data[i] = new Label(group, SWT.CENTER);
             data[i].setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
+            
+            if (type == Type.ENC || type == Type.RAND) {
+            	data[i].setEnabled(false);
+            }
+            
         }
     }
 
@@ -296,6 +304,37 @@ public class DatavectorVisual extends Composite {
     	for (int i = data.length; i < ARC4Con.DATAVECTOR_VISUAL_LENGTH; i++) {
     		this.data[i].setVisible(false);
     	}
+    	
+    	// Disable labels for random and encrypted text if they are not 
+    	// set yet.
+    	if (type == Type.RAND) {
+        	boolean zero = false; 	
+    		
+    		for (int i = 0; i < alg.getRandom().length; i++) {
+    			if (!(alg.getRandom()[i] == 0)) {
+    				zero = true;
+    			}
+    		}
+    		
+    		for (int i = 0; i < ARC4Con.DATAVECTOR_VISUAL_LENGTH; i++) {
+    			this.data[i].setEnabled(zero);
+    		}
+    	}
+    	
+    	if (type == Type.ENC) {
+    		boolean zero = false;
+    		
+    		for (int i = 0; i < alg.getEnc().length; i++) {
+    			if (!(alg.getEnc()[i] == 0)) {
+    				zero = true;
+    			}
+    		}
+    		
+    		for (int i = 0; i < ARC4Con.DATAVECTOR_VISUAL_LENGTH; i++) {
+    			this.data[i].setEnabled(zero);
+    		}
+    	}
+    	
     }
     
     public void updateCompleteGUI() {
