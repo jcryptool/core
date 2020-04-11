@@ -50,7 +50,7 @@
             locationURI="toolbar:org.jcryptool.analysis.substitution.views.View">
          <command
                commandId="org.jcryptool.analysis.substitution.RestartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
+               icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
                style="push"
                tooltip="%command.restart.tooltip">
          </command>

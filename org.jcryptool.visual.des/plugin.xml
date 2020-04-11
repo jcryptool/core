@@ -52,7 +52,7 @@
             locationURI="menu:org.jcryptool.visual.des.view.DesView">
          <command
                commandId="org.jcryptool.visual.des.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
+               icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
                style="push">
          </command>
       </menuContribution>
@@ -60,7 +60,7 @@
             locationURI="toolbar:org.jcryptool.visual.des.view.DesView">
          <command
                commandId="org.jcryptool.visual.des.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
+               icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
                style="push">
          </command>
       </menuContribution>

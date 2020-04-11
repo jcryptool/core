@@ -88,7 +88,7 @@
             locationURI="toolbar:org.jcryptool.visual.zeroknowledge.views.MagicDoorView">
          <command
                commandId="org.jcryptool.visual.zeroknowledge.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
+               icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
                style="push">
          </command>
       </menuContribution>
@@ -97,7 +97,7 @@
             locationURI="menu:org.jcryptool.visual.zeroknowledge.views.FiatShamirView">
          <command
                commandId="org.jcryptool.visual.zeroknowledge.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
+               icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
                style="push">
          </command>
       </menuContribution>
@@ -105,7 +105,7 @@
             locationURI="toolbar:org.jcryptool.visual.zeroknowledge.views.FiatShamirView">
          <command
                commandId="org.jcryptool.visual.zeroknowledge.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
+               icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
                style="push">
          </command>
       </menuContribution>
@@ -114,7 +114,7 @@
             locationURI="menu:org.jcryptool.visual.zeroknowledge.views.FeigeFiatShamirView">
          <command
                commandId="org.jcryptool.visual.zeroknowledge.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
+               icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
                style="push">
          </command>
       </menuContribution>
@@ -122,7 +122,7 @@
             locationURI="toolbar:org.jcryptool.visual.zeroknowledge.views.FeigeFiatShamirView">
          <command
                commandId="org.jcryptool.visual.zeroknowledge.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
+               icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
                style="push">
          </command>
       </menuContribution>
@@ -131,7 +131,7 @@
             locationURI="menu:org.jcryptool.visual.zeroknowledge.views.GraphenisomorphieView">
          <command
                commandId="org.jcryptool.visual.zeroknowledge.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
+               icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
                style="push">
          </command>
       </menuContribution>
@@ -139,7 +139,7 @@
             locationURI="toolbar:org.jcryptool.visual.zeroknowledge.views.GraphenisomorphieView">
          <command
                commandId="org.jcryptool.visual.zeroknowledge.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
+               icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
                style="push">
          </command>
       </menuContribution>
