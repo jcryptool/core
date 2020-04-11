@@ -28,6 +28,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.graphics.PathData;
@@ -1156,16 +1157,24 @@ public class ShamirsSecretSharingComposite extends Composite {
 
         gc.setForeground(Constants.LIGHTGREY);
         
+        //gc.setFont(new Font(gc.getDevice(), "Leto", 20, SWT.NORMAL));
+        
+        
+        int gapSmall = 3;
+        int gapBig = 7;
+        int textOffset = gapBig + 8;
+        int fontWidth = (int) Math.round(gc.getFontMetrics().getAverageCharacterWidth());
+        int fontHeight = gc.getFontMetrics().getHeight();
+        System.out.println("font height leto 20: " + fontHeight);
+        int numberLength = 0;
+        
+        yAxisGap = gridSizeY * ((size.y / gridSizeY)) - ((int)Math.round(1.4 * fontHeight));
+        xAxisGap = (int)Math.round(1.5 * fontWidth * 4); // 1.5 (to be safe) * width of one char * four as in four-digit numbers
+        
         /*
          * draw the grid in x direction
          */
-        xAxisGap = 0;
         for (int i = 0; i < size.x; i += gridSizeX) {
-            if (xAxisGap + gridSizeX <= size.x / 2) {
-                xAxisGap += gridSizeX;
-            }
-            xAxisGap = gridSizeX;
-            
             //x axis lines
             gc.drawLine(i, 0, i, size.y); 
         }
@@ -1173,12 +1182,8 @@ public class ShamirsSecretSharingComposite extends Composite {
         /*
          * draw the grid in y direction
          */
-        yAxisGap = 0;
         for (int i = 0; i < size.y; i += gridSizeY) {
-            if (yAxisGap + gridSizeY <= size.y / 2) {
-                yAxisGap += gridSizeY;
-            }
-            yAxisGap = gridSizeY * ((size.y / gridSizeY)) - 20;
+            yAxisGap = gridSizeY * ((size.y / gridSizeY)) - ((int)Math.round(1.5 * fontHeight));
             
             if (maxX <= 150) {
                 gc.drawLine(0, i, size.x, i);
@@ -1189,14 +1194,7 @@ public class ShamirsSecretSharingComposite extends Composite {
             
         }
         
-        int labeljumps = 1;
-        int gapSmall = 3;
-        int gapBig = 7;
-        int textOffset = gapBig + 8;
-        int fontWidth = 6;
-        int fontHeight = 10;
-        int numberLength = 0;
-        
+
         /*
          * draw the axis
          */
@@ -1205,6 +1203,7 @@ public class ShamirsSecretSharingComposite extends Composite {
         gc.drawLine(xAxisGap, 0, xAxisGap, size.y);
         gc.drawLine(0, yAxisGap, size.x, yAxisGap);
 
+        int labeljumps = 1;
         /*
          * draw the x marker
          */
@@ -1225,21 +1224,44 @@ public class ShamirsSecretSharingComposite extends Composite {
                 gc.drawLine(xAxisGap - i * labeljumps * gridSizeX, yAxisGap - gapBig, xAxisGap - i * labeljumps
                         * gridSizeX, yAxisGap + gapBig);
                 if (i != 1) {
-                    gc.drawText(String.valueOf(i - 1), x - (fontWidth * numberLength) / 2, yAxisGap - gapBig
-                            + textOffset, true);
-                    gc.drawText(String.valueOf(i - 1), xAxisGap - i * labeljumps * gridSizeX, yAxisGap + gapBig, true);
+                    gc.drawText(String.valueOf(i - 1), x - (fontWidth * numberLength) / 2, yAxisGap - gapBig + textOffset, true);
+                    // gc.drawText(String.valueOf(i - 1), xAxisGap - i * labeljumps * gridSizeX, yAxisGap + gapBig, true);
                 }
             }
         }
         
+        int maxXAssumed = maxX;
+        if(maxXAssumed <= 0) maxXAssumed = 100; 
+        float pxPerUnitInY = (int)Math.round( (float) size.y / (float) maxXAssumed );
+        float tickHeightInPx = 2.5f * fontHeight;
+        float idealTickDistInUnits = tickHeightInPx / pxPerUnitInY;
+        int[] tickDistances = new int[] {1, 2, 5, 10, 20, 50, 100, 200, 500, 1000};
+        int tickDistance = 50;
+        float tickDiffBest = 100000;
+        for (int dist : tickDistances) {
+        	if(dist - idealTickDistInUnits < 0) continue;
+			float diff = Math.abs(dist - idealTickDistInUnits);
+			
+			if (diff < tickDiffBest) {
+				tickDistance = dist;
+				tickDiffBest = diff;
+			}
+		}
+        labeljumps = tickDistance;
+        
+        
+//        float tickHeightInPx = 3.0f * fontHeight;
+//        float tickDistInUnits = (int)Math.round( (float)(fontHeight * tickFontHeightFactor) / pxPerUnitInY );
+        System.out.println(idealTickDistInUnits + " | " + tickDiffBest + " | " + tickDistance);
         //determine label jump
-        if (maxX <= 150){
-        	labeljumps = 10;
-        } else if (maxX <= 250) {
-        	labeljumps = 20;
-        } else {
-        	labeljumps = 40;
-        }
+//        if (maxX <= 150){
+//        	labeljumps = 10;
+//        } else if (maxX <= 250) {
+//        	labeljumps = 20;
+//        } else {
+//        	labeljumps = 40;
+//        }
+         
 
         /*
          * draw the y markers
@@ -1269,8 +1291,7 @@ public class ShamirsSecretSharingComposite extends Composite {
                 }
             }
         }
-        gc.drawText(String.valueOf(-5), xAxisGap - gapBig - 2 - (fontWidth * numberLength), yAxisGap + 5 * gridSizeY
-                - 8, true);
+        // gc.drawText(String.valueOf(-5), xAxisGap - gapBig - 2 - (fontWidth * numberLength), yAxisGap + 5 * gridSizeY - 8, true);
 
         /*
          * new GraphicContent for drawing the polynomial curve
@@ -1333,6 +1354,7 @@ public class ShamirsSecretSharingComposite extends Composite {
         // points.setTransform(pointTransform);
 
         pointValue = (int) valueAt(shares.length);
+        int pointValueMod = pointValue % modul.intValue();
         for (int k = 1; k <= shares.length; k++) {
             if (sharesUseCheckButtonSet[k - 1].getSelection()) {
                 points.setBackground(Constants.RED);
@@ -1346,6 +1368,22 @@ public class ShamirsSecretSharingComposite extends Composite {
             	this.fillOval(points, gridSizeX * k - 3, ((int) valueAt(k)) * -gridSizeY - 3, 6, 6, 1.0f, 1.0f, xAxisGap, yAxisGap);
                 // points.fillOval(gridSizeX * k - 3, ((int) valueAt(k)) * -gridSizeY - 3, 6, 6);
             }
+            
+//            for (int modMult = -30; modMult < 50; modMult++) {
+//            	if (sharesUseCheckButtonSet[k - 1].getSelection()) {
+//                    points.setBackground(Constants.LIGHTBLUE);
+//                } else {
+//                    points.setBackground(Constants.BLUE);
+//                }
+//                if (pointValue == Integer.MAX_VALUE) {
+//                    this.fillOval(points, gridSizeX * k - 3, (pointValueMod) * -gridSizeY - 3, 6, 6, 1.0f, 1.0f, xAxisGap, yAxisGap);
+//                	// points.fillOval(gridSizeX * k - 3, (pointValue) * -gridSizeY - 3, 6, 6);
+//                } else {
+//                	this.fillOval(points, gridSizeX * k - 3, (((int) valueAt(k)) % modul.intValue() + modMult * modul.intValue()) * -gridSizeY - 3, 6, 6, 1.0f, 1.0f, xAxisGap, yAxisGap);
+//                    // points.fillOval(gridSizeX * k - 3, ((int) valueAt(k)) * -gridSizeY - 3, 6, 6);
+//                }
+//            }
+            
         }
         
         // polynomial.dispose();
