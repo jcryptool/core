@@ -144,11 +144,6 @@ public class DatavectorVisual extends Composite {
             // center text on the labels
             data[i] = new Label(group, SWT.CENTER);
             data[i].setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
-            
-            if (type == Type.ENC || type == Type.RAND) {
-            	data[i].setEnabled(false);
-            }
-            
         }
     }
 
@@ -298,37 +293,22 @@ public class DatavectorVisual extends Composite {
                 this.data[a].setText(ARC4Con.HEX_MARK + "0" + Integer.toHexString(data[a]));
             }
             this.data[a].setVisible(true);
+            
+            // Show instead of the values .. if no random or enc is set.
+            if (type == Type.RAND || type == Type.ENC) {
+	        	if (a < (alg.getStep() - 256)) {
+	        		// Do nothing
+	        	} else {
+	        		// Replace the value with ".."
+	        		this.data[a].setText("..");
+	        	}
+            }
     	}
     	
     	// Hide labels if the plaintext is not 16 byte long.
     	for (int i = data.length; i < ARC4Con.DATAVECTOR_VISUAL_LENGTH; i++) {
     		this.data[i].setVisible(false);
     	}
-    	
-
-    	// This disables the labels if they display the random or
-    	// the encrypted text and if they are not set yet.
-    	if (type == Type.RAND || type == Type.ENC) {
-        	boolean isAllZero = true; 	
-        	for (int i = 0; i < alg.getRandom().length; i++) {
-        		if (type == Type.RAND) {
-        			if (!(alg.getRandom()[i] == 0)) {
-        				isAllZero = false;
-        			}
-        		} else if (type == Type.ENC) {
-        			if (!(alg.getEnc()[i] == 0)) {
-        				isAllZero = false;
-        			}
-        		}
-        	}
-        	
-    		for (int i = 0; i < ARC4Con.DATAVECTOR_VISUAL_LENGTH; i++) {
-    			this.data[i].setEnabled(!isAllZero);
-    		}
-    	}
-
-
-
     }
     
     public void updateCompleteGUI() {
