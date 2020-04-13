@@ -34,7 +34,7 @@ public class PrimePanel {
 
     private Group group;
 
-    private Label input_ergebnis;
+    private Text input_ergebnis;
 
     private Text input_obergrenze;
 
@@ -79,7 +79,8 @@ public class PrimePanel {
         ergebnis.setText(Messages.PrimePanel_5);
         ergebnis.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         
-        input_ergebnis = new Label(group, SWT.FILL);
+        input_ergebnis = new Text(group, SWT.BORDER);
+        input_ergebnis.setEditable(false);
         input_ergebnis.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         
     }

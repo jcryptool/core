@@ -324,7 +324,6 @@ public class FiatShamirView extends ViewPart implements Observer, ModNCalculator
         
         if (!modell.getQ().equals(BigInteger.ZERO) &&
         		!modell.getP().equals(BigInteger.ZERO)) {
-        	System.out.println(modell.getQ().toString());
             alice.setN(p, modell.getQ());
             bob.setN(p, modell.getQ());
             carol.setN(p, modell.getQ());
@@ -351,7 +350,6 @@ public class FiatShamirView extends ViewPart implements Observer, ModNCalculator
         modell.setQ(q);
         if (!modell.getP().equals(BigInteger.ZERO) &&
         		!modell.getQ().equals(BigInteger.ZERO)) {
-        	System.out.println(modell.getP().toString());
             alice.setN(modell.getP(), q);
             bob.setN(modell.getP(), q);
             carol.setN(modell.getP(), q);
