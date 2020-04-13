@@ -63,7 +63,7 @@ public class PrimePanel {
         untergrenze.setText(Messages.PrimePanel_1);
         untergrenze.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         
-        input_untergrenze = new Text(group, SWT.NONE);
+        input_untergrenze = new Text(group, SWT.BORDER);
         input_untergrenze.setText(Messages.PrimePanel_2);
         input_untergrenze.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
     	
@@ -71,7 +71,7 @@ public class PrimePanel {
         obergrenze.setText(Messages.PrimePanel_3);
         obergrenze.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         
-        input_obergrenze = new Text(group, SWT.NONE);
+        input_obergrenze = new Text(group, SWT.BORDER);
         input_obergrenze.setText(Messages.PrimePanel_4);
         input_obergrenze.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         
