@@ -81,6 +81,7 @@ public class PrimePanel {
         
         input_ergebnis = new Text(group, SWT.BORDER);
         input_ergebnis.setEditable(false);
+        input_ergebnis.setText("-");
         input_ergebnis.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         
     }
