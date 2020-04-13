@@ -15,7 +15,7 @@
 
 <p>Below the description header, the plug-in is divided into three sections:
 <ol>
-  <li>on the left, <b>settings</b> (and below dynamic information),</li>
+  <li>on the left, <b>Parameter</b> (and below dynamic information),</li>
   <li>in the middle, the output of the <b>shares</b> and below the <b>reconstruction</b>, and</li>
   <li>on the right, the <b>graph</b> of the polynomial, calculated from the reconstruction.</li>
 </ol>
@@ -27,36 +27,31 @@
 
 <p>In the <b>Parameter</b> area, you can set parameters necessary to conduct the algorithm. Select the <b>number n of persons</b> which will get <b>shares</b>, and the <b>number t of persons</b> needed for reconstruction, where t &le; n.</p>
 
-<p>Furthermore you choose a prime <b>p</b> as modulus and a secret <b>s</b> which is smaller than the modulus. Remark: The modulus is a modulo operator.</p>
+<p>Furthermore you choose a prime <b>p</b> as modulus and a secret <b>s</b> which is smaller than the modulus. Remark: <i>Modulus</i> means a modulo operator.</p>
 
 <img src="sss_parameter.jpg" width="298" height="235">
 
-<p>Pressing the <b>Select</b> button opens a dialog where you can select the coefficients of the polynomial. The coefficient <i>a<sub>0</sub></i> is the selected secret and cannot be changed.  Allowed values for the coefficients are only non-negative integers with the upper limit <i>p-1</i>.  By pressing the button <b>Generate coefficients</b> it is also possible to generate valid values for the coefficients.</p>
+<p>Pressing the <b>Select</b> button opens a dialog where you can select the coefficients of the polynomial (you can enter values by yourself, for instance if you want to reproduce exercise examples). The coefficient <i>a<sub>0</sub></i> is the selected secret and cannot be changed.  Allowed values for the coefficients are only non-negative integers with the upper limit <i>p-1</i>.  By pressing the button <b>Generate coefficients</b> it is also possible to generate valid values for the coefficients.</p>
 
 <img src="sss_coefficients.jpg" width="344" height="403">
 
 <p>Pressing the <b>OK</b> button closes the dialog, and the polynomial is represented as a formula.</p>
 
-<p> If the value for the modulus <b>p</b> is not a prime number, another dialog opens where you can correct the input.</p>
+
+
+
+<p> If the value for the modulus <b>p</b> is not a prime number, first the dialog <b>Prime number verification</b> opens where you can correct the input.</p>
 
 <img src="sss_prime_dialog.jpg" width="437" height="259">
 
+<p>Invalid values of <b>p</b> are shown in the color <b>red</b>. Users can now enter a prime number manually or press the button <b>Generate next prime</b> to generate a prime number (starting from the number that is shown the next bigger prime is generated). Pressing the button again calculates further primes.
 
-
-<p>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  The invalid value is shown in the color <b>red</b>. The user has now the opportunity There to generate a prime number, starting from the number that was entered or to enter 
-their own number. If you generate a number by the program the button <b>input verify</b> disables because the proposed value is valid and the verification is not necessary. 
-You can now generated more numbers by pressing the <b>next prime</b> button.  If the user makes an entry, the number is first shown in <b>black</b> in color. The user have to 
-verify the entered number by the program. He presses the <b>verify</b> button. If it is a prime number, the number is highlighted in <b>green</b> and activates the <b>OK</b>
-button, otherwise the number is colored <b>red</b> and the user must either enter a different number or the program can generate a valid primes. Once a valid prime number is 
-entered, the user can leave the dialog with the <b>OK</b> button.</p>
+If a prime number was entered or generated, the number is highlighted in <b>green</b> and the <b>OK</b> button is activated. Pressing this button leaves the dialog and then you can select the coefficients in the following dialog.</p>
 
 
 
-<p>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  Now it may be that the secret <b>s</b> either less than before the verification dialog or meanwhile, through the user's input is smaller now than the modulus. In this case, 
-opens another dialog to the condition that the secret <b>s</b> is strictly less than the modulus <b>p</b> must be fulfilled, too. The user can now change the secret <b>s</b>, in 
-which he enters a smaller number than the modulus <b>p</b>. For a better overview of the modulus is shown above. The user input must be verified by pressing the <b>check input</b> 
-button. If the value of the secret s is smaller than the modulus p, the value is shown in <b>green</b>, otherwise in color <b>red</b>. If it is a valid value, the <b>OK</b> button
-is activated and the user can leave the dialog with the <b>OK</b> button.</p>
+<p>It might be that the secret <b>s</b> was not smaller than the modulus <b>p</b> either already before the prime number verification dialog was used or through the user's input in this dialog. In this case, the dialog <b>Prime number verification</b> opens in order to satisfy the condition that the secret <b>s</b> is strictly less than the modulus <b>p</b>. The user can here enter an according value of the secret <b>s</b>. For a better overview, the modulus is shown above. Correct values of s are shown in <b>green</b>, otherwise in the color <b>red</b>. If s is valid, the <b>OK</b> button
+is activated, and the user can leave the dialog with this button.</p>
 
 <img src="sss_secret_dialog.jpg" width="344" height="258">
 
@@ -100,6 +95,9 @@ is activated and the user can leave the dialog with the <b>OK</b> button.</p>
 
 <p>If you move the mouse cursor over a point in the graph, you see the according share coordinates.</p>
 
+
+
+<p>Pressing the button <b>Reset</b> (lower left) xxxxxxxxxxxxxxxxxxx all parameters besides <b>n</b> and <b>t</b> are set back. Clicking the <b>Restart</b> icon (upper right) also <b>n</b> and <b>t</b> are set back to their default values 4 and 3.</p>
 
 
 
