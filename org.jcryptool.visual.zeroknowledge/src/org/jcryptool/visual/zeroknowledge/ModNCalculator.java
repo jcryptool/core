@@ -11,7 +11,6 @@ package org.jcryptool.visual.zeroknowledge;
 
 import java.math.BigInteger;
 
-import org.eclipse.swt.widgets.Button;
 import org.jcryptool.visual.zeroknowledge.algorithm.Modell;
 import org.jcryptool.visual.zeroknowledge.ui.Buttons;
 
@@ -21,7 +20,7 @@ import org.jcryptool.visual.zeroknowledge.ui.Buttons;
  * anzuzeigen und auszublenden etc.
  * 
  * @author Mareike Paul
- *@version 1.0.0
+ * @version 1.0.0
  */
 public interface ModNCalculator extends Protocol {
 
@@ -43,13 +42,6 @@ public interface ModNCalculator extends Protocol {
      * @return Wert von n
      */
     public BigInteger getN();
-
-    /**
-     * Methode, die den Button zurückgibt, der das Geheimnis erstellt.
-     * 
-     * @return Button, der das Geheimnis erstellt.
-     */
-    public Button getSecret();
 
     /**
      * Entfernt das Label, das eventuelle Fehlermeldungen ausgibt.
@@ -79,7 +71,7 @@ public interface ModNCalculator extends Protocol {
      * @param p String, der in ein int oder ein BigInteger umgewandelt werden soll
      * @return false, wenn ein Fehler auftritt, true bei erfolgreicher Umwandlung
      */
-    public boolean setP(String p);
+    public boolean setP(BigInteger p);
 
     /**
      * Methode, die Q setzen soll. Der String soll in ein int oder ein BigInteger umgewandelt
@@ -89,5 +81,7 @@ public interface ModNCalculator extends Protocol {
      * @param q String, der in ein int oder ein BigInteger umgewandelt werden soll
      * @return false, wenn ein Fehler auftritt, true bei erfolgreicher Umwandlung
      */
-    public boolean setQ(String q);
+    public boolean setQ(BigInteger q);
+
+
 }

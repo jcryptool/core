@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Text;
  * die Beschreibung, eins für den Inhalt).
  *
  * @author Mareike Paul
- *@version 1.0.0
+ * @version 1.0.0
  */
 public class PrimePanel {
 

@@ -9,6 +9,8 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.zeroknowledge.ui;
 
+import java.math.BigInteger;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -37,6 +39,8 @@ import org.jcryptool.visual.zeroknowledge.algorithm.Primzahlen;
 public class Generator extends Dialog {
 
     private Shell akt;
+    
+    private PrimeGenerator gen;
 
     private boolean both;
 
@@ -68,9 +72,10 @@ public class Generator extends Dialog {
      * @param fiatShamir Objekt, in dem die Modelle gespeichert sind.
      * @param s Parent der graphischen Komponente
      */
-    public Generator(ModNCalculator fiatShamir, Shell s) {
+    public Generator(PrimeGenerator gen, ModNCalculator fiatShamir, Shell s) {
         super(s);
         shamir = fiatShamir;
+        this.gen = gen;
         open();
     }
 
@@ -310,11 +315,15 @@ public class Generator extends Dialog {
             @Override
 			public void widgetSelected(SelectionEvent arg0) {
                 removeExceptionLabel();
-                if (shamir.setP(p.getErgebnis()) && shamir.setQ(q.getErgebnis())) {
-                    shamir.removeException();// getPrimeGen().removeException();
-                }
-                shamir.getSecret().setEnabled(true);
-                akt.dispose();
+
+                shamir.setP(new BigInteger(p.getErgebnis()));
+                shamir.setQ(new BigInteger(q.getErgebnis()));
+                shamir.removeException();
+                
+                gen.setP(p.getErgebnis());
+                gen.setQ(q.getErgebnis());
+                
+                akt.close();
             }
         });
         nehmen.setToolTipText(Messages.Generator_19);

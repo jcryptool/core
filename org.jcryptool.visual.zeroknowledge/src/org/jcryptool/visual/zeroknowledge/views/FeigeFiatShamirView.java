@@ -19,7 +19,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -151,7 +150,8 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
              * nicht gesetzt war, wird der Button zum Generieren des Geheimnisses nicht
              * freigeschaltet.
              */
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 int index = anzahl.getSelectionIndex() + 1;
                 resetNotSecret();
                 flow.disableAll();
@@ -166,7 +166,7 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
                     alice.setN(modell.getP(), modell.getQ());
                     bob.setN(modell.getP(), modell.getQ());
                     carol.setN(modell.getP(), modell.getQ());
-                    prime.getSecret().setEnabled(true);
+//                    prime.getSecret().setEnabled(true);
                 }
 
                 paramsBob.getGroup().dispose();
@@ -209,7 +209,8 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
      *
      * @see ModNCalculator#disableAllInFlow()
      */
-    public void disableAllInFlow() {
+    @Override
+	public void disableAllInFlow() {
         flow.disableAll();
     }
 
@@ -236,11 +237,13 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
      *
      * @return Buttons-Objekt
      */
-    public Buttons getButtons() {
+    @Override
+	public Buttons getButtons() {
         return buttons;
     }
 
-    public void setSecret() {
+    @Override
+	public void setSecret() {
         alice.generateSecret();
         bob.setV(alice.getV());
         carol.generateSecret();
@@ -271,7 +274,8 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
      *
      * @return Modell, das die Primzahlen p und q enthält
      */
-    public Modell getModell() {
+    @Override
+	public Modell getModell() {
         return modell;
     }
 
@@ -280,7 +284,8 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
      *
      * @return Wert von n
      */
-    public BigInteger getN() {
+    @Override
+	public BigInteger getN() {
         return alice.getN();
     }
 
@@ -304,20 +309,12 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
     }
 
     /**
-     * gibt den Button zurück, der die Erstellung des Geheimnisses aufruft
-     *
-     * @return Button, der für die Erstellung des Geheimnisses zuständig ist
-     */
-    public Button getSecret() {
-        return prime.getSecret();
-    }
-
-    /**
      * Entfernt das Label, das Fehlermeldungen anzeigt
      *
      * @see ModNCalculator#removeException()
      */
-    public void removeException() {
+    @Override
+	public void removeException() {
         prime.removeException();
     }
 
@@ -326,7 +323,8 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
      *
      * @see ModNCalculator#removeVerifingItem
      */
-    public void removeVerifingItem() {
+    @Override
+	public void removeVerifingItem() {
         paramsBob.getVerifiziert().setVisible(false);
     }
 
@@ -335,7 +333,14 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
      *
      * @see Protocol#reset()
      */
-    public void reset() {
+    @Override
+	public void reset() {
+    	// Reset the textfields for the primes p and q
+    	prime.setP("");
+    	prime.setQ("");
+    	prime.removeException();
+    	
+    	
         alice.reset();
         bob.reset();
         carol.reset();
@@ -343,6 +348,8 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
         removeVerifingItem();
         flow.disableAll();
         flow.setStep(0);
+        buttons.enableOK(false);
+        buttons.enableMehrmals(false);
         paramsBob.verifizieren(false);
     }
 
@@ -351,14 +358,15 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
      *
      * @see Protocol#reset()
      */
-    public void resetNotSecret() {
+    @Override
+	public void resetNotSecret() {
         getAlice().resetNotSecret();
         getBob().resetNotSecret();
-        getCarol().resetNotSecret();
-        buttons.enableOK(false);
+        getCarol().resetNotSecret();       
         getFlow().enableFirst();
         getFlow().setStep(0);
         removeVerifingItem();
+        buttons.enableOK(false);
         getParamsBob().verifizieren(false);
     }
 
@@ -368,7 +376,8 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
      * @param b true, wenn die Komponenten für den ersten Fall sichtbar sein sollen, false sonst
      * @see Protocol#setFirstCase(boolean)
      */
-    public void setFirstCase(boolean b) {
+    @Override
+	public void setFirstCase(boolean b) {
         if (b) {
             if (paramsAlice != null) {
                 Control[] children = paramsAlice.getGroup().getChildren();
@@ -409,24 +418,28 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
      * Methode zum Setzen von p im Modell. Wenn q schon gesetzt ist, wird in den einzelnen Modellen
      * n gesetzt.
      *
-     * @param p_string String, der zum BigInteger geparst wird, und dann als Primzahl gesetzt wird
+     * @param p BigInteger Der zu setzende p Wert.
      * @see ModNCalculator#setP(String)
      */
-    public boolean setP(String p_string) {
-        BigInteger p;
-        try {
-            p = new BigInteger(p_string);
-        } catch (NumberFormatException e) {
-            prime.setException(Messages.FeigeFiatShamirView_9);
-            return false;
-        }
+    @Override
+	public boolean setP(BigInteger p) {
+
         modell.setP(p);
-        if (!modell.getQ().equals(BigInteger.ZERO)) {
+        
+        if (!modell.getQ().equals(BigInteger.ZERO) &&
+        		!modell.getP().equals(BigInteger.ZERO)) {
             alice.setN(p, modell.getQ());
             bob.setN(p, modell.getQ());
             carol.setN(p, modell.getQ());
+            
+        	prime.setN(alice.getN().toString());
+
+        	setSecret();	
+        }  else {
+        	flow.disableAll();
+        	buttons.enableMehrmals(false);
         }
-        prime.removeException();
+        
         return true;
     }
 
@@ -434,25 +447,28 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
      * Methode zum Setzen von q im Modell. Wenn p schon gesetzt ist, wird in den einzelnen Modellen
      * n gesetzt.
      *
-     * @param q_string String, der zum BigInteger geparst wird, und dann als Primzahl gesetzt wird
+     * @param p BigInteger Der zu setzende q Wert.
      * @see ModNCalculator#setQ(String)
      */
-    public boolean setQ(String q_string) {
-        BigInteger q;
-        try {
-            q = new BigInteger(q_string);
-        } catch (NumberFormatException e) {
-            prime.setException(Messages.FeigeFiatShamirView_10);
-            return false;
-        }
+    @Override
+	public boolean setQ(BigInteger q) {
+
         modell.setQ(q);
-        if (!modell.getP().equals(BigInteger.ZERO)) {
+        
+        if (!modell.getP().equals(BigInteger.ZERO) &&
+        		!modell.getQ().equals(BigInteger.ZERO)) {
             alice.setN(modell.getP(), q);
             bob.setN(modell.getP(), q);
             carol.setN(modell.getP(), q);
+            
+            prime.setN(getN().toString());
+            
+            setSecret();
+        }  else {
+        	flow.disableAll();
+        	buttons.enableMehrmals(false);
         }
-        prime.removeException();
-        update(null, null);
+
         return true;
     }
 
@@ -462,13 +478,13 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
      *
      * @see Observer#update(Observable, Object)
      */
-    public void update(Observable arg0, Object arg1) {
+    @Override
+	public void update(Observable arg0, Object arg1) {
         if (paramsAlice != null)
             this.paramsAlice.update();
         this.paramsBob.update();
         if (paramsCarol != null)
             this.paramsCarol.update();
-        this.prime.update(this);
     }
 
     @Override

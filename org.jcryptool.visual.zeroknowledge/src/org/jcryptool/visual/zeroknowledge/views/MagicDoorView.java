@@ -213,7 +213,8 @@ public class MagicDoorView extends ViewPart implements Observer, Protocol {
      *
      * @see Protocol#reset()
      */
-    public void reset() {
+    @Override
+	public void reset() {
         alice.reset();
         bob.reset();
         carol.reset();
@@ -233,7 +234,8 @@ public class MagicDoorView extends ViewPart implements Observer, Protocol {
      *
      * @see Protocol#resetNotSecret()
      */
-    public void resetNotSecret() {
+    @Override
+	public void resetNotSecret() {
         alice.resetNotSecret();
         bob.resetNotSecret();
         carol.resetNotSecret();
@@ -253,7 +255,8 @@ public class MagicDoorView extends ViewPart implements Observer, Protocol {
      *        sonst
      * @see Protocol#setFirstCase(boolean)
      */
-    public void setFirstCase(boolean firstCase) {
+    @Override
+	public void setFirstCase(boolean firstCase) {
         // reset when changing situation
         this.resetNotSecret();
         if (firstCase) {
@@ -360,7 +363,8 @@ public class MagicDoorView extends ViewPart implements Observer, Protocol {
      *
      * @see Observer#update(Observable, Object)
      */
-    public void update(Observable arg0, Object arg1) {
+    @Override
+	public void update(Observable arg0, Object arg1) {
         paramsAC.update();
         paramsBob.update();
     }

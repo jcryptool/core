@@ -17,7 +17,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.ui.PlatformUI;
@@ -130,7 +129,8 @@ public class FiatShamirView extends ViewPart implements Observer, ModNCalculator
      *
      * @see ModNCalculator#disableAllInFlow()
      */
-    public void disableAllInFlow() {
+    @Override
+	public void disableAllInFlow() {
         flow.disableAll();
     }
 
@@ -143,7 +143,8 @@ public class FiatShamirView extends ViewPart implements Observer, ModNCalculator
         return alice;
     }
 
-    public void setSecret() {
+    @Override
+	public void setSecret() {
         alice.generateSecret();
         bob.setV(alice.getV());
         carol.generateSecret();
@@ -165,7 +166,8 @@ public class FiatShamirView extends ViewPart implements Observer, ModNCalculator
      *
      * @return Buttons-Objekt
      */
-    public Buttons getButtons() {
+    @Override
+	public Buttons getButtons() {
         return buttons;
     }
 
@@ -192,7 +194,8 @@ public class FiatShamirView extends ViewPart implements Observer, ModNCalculator
      *
      * @return Modell der Applikation
      */
-    public Modell getModell() {
+    @Override
+	public Modell getModell() {
         return modell;
     }
 
@@ -201,7 +204,8 @@ public class FiatShamirView extends ViewPart implements Observer, ModNCalculator
      *
      * @return Modul n
      */
-    public BigInteger getN() {
+    @Override
+	public BigInteger getN() {
         return alice.getN();
     }
 
@@ -223,33 +227,34 @@ public class FiatShamirView extends ViewPart implements Observer, ModNCalculator
         return prime;
     }
 
-    /**
-     * gibt den Button zurück, der die Erstellung des Geheimnisses aufruft
-     *
-     * @return Button, der für die Erstellung des Geheimnisses zuständig ist
-     */
-    public Button getSecret() {
-        return prime.getSecret();
-    }
+
 
     /**
      * schaltet das Label für Exceptions aus
      */
-    public void removeException() {
+    @Override
+	public void removeException() {
         prime.removeException();
     }
 
     /**
      * macht das "Verifiziert"-Feld unsichtbar
      */
-    public void removeVerifingItem() {
+    @Override
+	public void removeVerifingItem() {
         params_bob.getVerifiziert().setVisible(false);
     }
 
     /**
      * setzt das Protokoll zurück
      */
-    public void reset() {
+    @Override
+	public void reset() {
+    	// Reset the textfields for the primes p and q
+    	prime.setP("");
+    	prime.setQ("");
+    	prime.removeException();
+    	
         alice.reset();
         bob.reset();
         carol.reset();
@@ -257,6 +262,7 @@ public class FiatShamirView extends ViewPart implements Observer, ModNCalculator
         removeVerifingItem();
         flow.disableAll();
         flow.setStep(0);
+        buttons.enableOK(false);
         buttons.enableMehrmals(false);
         params_bob.verifizieren(false);
     }
@@ -264,15 +270,15 @@ public class FiatShamirView extends ViewPart implements Observer, ModNCalculator
     /**
      * setzt alles außer dem Geheimnis und v zurück
      */
-    public void resetNotSecret() {
+    @Override
+	public void resetNotSecret() {
         alice.resetNotSecret();
         bob.resetNotSecret();
         carol.resetNotSecret();
-        buttons.enableOK(false);
-        buttons.enableMehrmals(false);
         flow.enableFirst();
         flow.setStep(0);
         removeVerifingItem();
+        buttons.enableOK(false);
         params_bob.verifizieren(false);
     }
 
@@ -281,7 +287,8 @@ public class FiatShamirView extends ViewPart implements Observer, ModNCalculator
      *
      * @param b true, wenn die Komponenten für den ersten Fall sichtbar sein sollen, false sonst
      */
-    public void setFirstCase(boolean b) {
+    @Override
+	public void setFirstCase(boolean b) {
         if (b) {
             params_carol.getGroup().dispose();
             params_carol = null;
@@ -308,23 +315,27 @@ public class FiatShamirView extends ViewPart implements Observer, ModNCalculator
      * Methode zum Setzen von p im Modell. Wenn q schon gesetzt ist, wird in den einzelnen Modellen
      * n gesetzt.
      *
-     * @param p_string String, der zum BigInteger geparst wird, und dann als Primzahl gesetzt wird
+     * @param p BigInteger Der zu setzende p Wert.
      */
-    public boolean setP(String p_string) {
-        BigInteger p;
-        try {
-            p = new BigInteger(p_string);
-        } catch (NumberFormatException e) {
-            prime.setException(Messages.FiatShamirView_3);
-            return false;
-        }
+    @Override
+	public boolean setP(BigInteger p) {
+
         modell.setP(p);
-        if (!modell.getQ().equals(BigInteger.ZERO)) {
+        
+        if (!modell.getQ().equals(BigInteger.ZERO) &&
+        		!modell.getP().equals(BigInteger.ZERO)) {
+        	System.out.println(modell.getQ().toString());
             alice.setN(p, modell.getQ());
             bob.setN(p, modell.getQ());
             carol.setN(p, modell.getQ());
+            
+        	prime.setN(alice.getN().toString());
+        	
+        	setSecret();
+        } else {
+        	flow.disableAll();
+        	buttons.enableMehrmals(false);
         }
-        prime.removeException();
         return true;
     }
 
@@ -332,23 +343,26 @@ public class FiatShamirView extends ViewPart implements Observer, ModNCalculator
      * Methode zum Setzen von q im Modell. Wenn p schon gesetzt ist, wird in den einzelnen Modellen
      * n gesetzt.
      *
-     * @param q_string String, der zum BigInteger geparst wird, und dann als Primzahl gesetzt wird
+     * @param p BigInteger Der zu setzende q Wert.
      */
-    public boolean setQ(String q_string) {
-        BigInteger q;
-        try {
-            q = new BigInteger(q_string);
-        } catch (NumberFormatException e) {
-            prime.setException(Messages.FiatShamirView_4);
-            return false;
-        }
+    @Override
+	public boolean setQ(BigInteger q) {
+
         modell.setQ(q);
-        if (!modell.getP().equals(BigInteger.ZERO)) {
+        if (!modell.getP().equals(BigInteger.ZERO) &&
+        		!modell.getQ().equals(BigInteger.ZERO)) {
+        	System.out.println(modell.getP().toString());
             alice.setN(modell.getP(), q);
             bob.setN(modell.getP(), q);
             carol.setN(modell.getP(), q);
+            
+            prime.setN(getN().toString());
+            
+            setSecret();
+        } else {
+        	flow.disableAll();
+        	buttons.enableMehrmals(false);
         }
-        prime.removeException();
         return true;
     }
 
@@ -356,13 +370,13 @@ public class FiatShamirView extends ViewPart implements Observer, ModNCalculator
      * Methode zum Updaten der einzelnen Komponenten. Dies geschieht in erster Linie durch das
      * Updaten der einzelnen Komponenten des Composites
      */
-    public void update(Observable arg0, Object arg1) {
+    @Override
+	public void update(Observable arg0, Object arg1) {
         if (paramsAC != null)
             this.paramsAC.update();
         this.params_bob.update();
         if (params_carol != null)
             this.params_carol.update();
-        this.prime.update(this);
     }
 
     @Override
