@@ -51,7 +51,7 @@ import org.jcryptool.visual.secretsharing.views.Constants;
 
 public class ShamirsSecretSharingComposite extends Composite {
 
-	private Group groupSecretSharing;
+	private Composite groupSecretSharing;
 	private Button resetButton;
 	private Label reconstructPxLabel;
 	private StyledText stValue;
@@ -133,9 +133,9 @@ public class ShamirsSecretSharingComposite extends Composite {
 	
 	
     private void createGroupSecretSharing(Composite parent) {
-        groupSecretSharing = new Group(parent, SWT.NONE);
+        groupSecretSharing = new Composite(parent, SWT.NONE);
         groupSecretSharing.setLayout(new GridLayout(2, true));
-        groupSecretSharing.setText(Messages.ShamirsCompositeGraphical_title);
+        // groupSecretSharing.setText(Messages.ShamirsCompositeGraphical_title);
         GridData gd_groupSecretSharing = new GridData(SWT.FILL, SWT.FILL, false, true);
         groupSecretSharing.setLayoutData(gd_groupSecretSharing);
 
