@@ -18,6 +18,7 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.grille.algorithm.Schablone;
 
@@ -42,6 +43,9 @@ public class DemonstrationPainter implements PaintListener {
 
 	@Override
 	public void paintControl(PaintEvent e) {
+		
+		e.gc.setAntialias(SWT.ON);
+		
 		width = parent.getSize().x;
 		height = parent.getSize().y;
 		if (width > height) {
@@ -128,7 +132,7 @@ public class DemonstrationPainter implements PaintListener {
             }
 
             savedColor = e.gc.getForeground();
-            e.gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
+            e.gc.setForeground(ColorService.RED);
 
             for (int i = 0; i < crypt.getSize(); i++) {
                 e.gc.drawLine(cellWidth / 2, cellHeight / 2 + i * cellHeight, cellWidth / 2 + (crypt.getSize() - 1)
@@ -175,17 +179,28 @@ public class DemonstrationPainter implements PaintListener {
     }
 
 	/**
-	 * 
-	 * @param e
-	 * @param x
-	 * @param y
-	 * @param c
+	 * Set a Character c to a cell x y.
+	 * @param e The paint listener
+	 * @param x x-coordinate of the cell
+	 * @param y y-coordinate of the cell
+	 * @param c The character that should be set to this cell.
 	 */
     private void fillCell(PaintEvent e, int x, int y, char c) {
-        Point eckeLO = new Point(x * cellWidth, y * cellHeight);
-        int fontSize =  (int) (0.5 * cellHeight);
+    	
+    	// Set the fontsize.
+    	int fontSize = cellHeight / 2;
         e.gc.setFont(new Font(Display.getCurrent(), "Times Roman", fontSize, SWT.NORMAL)); //$NON-NLS-1$
-        e.gc.drawString("" + c, eckeLO.x + (cellWidth / 5), eckeLO.y); //$NON-NLS-1$
+        
+    	// This calculates space the characters needs to be displayed fully.
+    	Point estimatedTextSize = e.gc.textExtent("" + c);
+    	
+    	
+    	int paddingWidth = (cellWidth - estimatedTextSize.x) / 2;
+    	int paddingHeight = (cellHeight - estimatedTextSize.y) / 2;
+    	
+    	// This puts the character in the top left corner of a cell x y.
+        Point eckeLO = new Point(x * cellWidth + paddingWidth, y * cellHeight + paddingHeight);
+        e.gc.drawString("" + c, eckeLO.x, eckeLO.y); //$NON-NLS-1$
     }
 
 }

@@ -9,6 +9,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.grille.ui;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
@@ -35,6 +36,7 @@ public class KeyPainter implements PaintListener {
 
     @Override
 	public void paintControl(PaintEvent e) {
+    	e.gc.setAntialias(SWT.ON);
         KeySchablone key = model.getKey();
         width = Math.min(parent.getSize().x, parent.getSize().y);
         cellWidth = width / key.getSize();

@@ -51,19 +51,6 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:org.jcryptool.visual.grille.view">
-         <command
-               commandId="org.jcryptool.visual.grille.restartCommand"
-               icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
-               style="push">
-         </command>
-         <command 
-               commandId="org.jcryptool.visual.grille.helpCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png"
-               style="push">
-         </command>
-      </menuContribution>
-      <menuContribution
             locationURI="toolbar:org.jcryptool.visual.grille.view">
          <command
                commandId="org.jcryptool.visual.grille.restartCommand"

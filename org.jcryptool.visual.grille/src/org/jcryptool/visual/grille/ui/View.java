@@ -85,7 +85,11 @@ public class View extends ViewPart {
 	@Override
 	public void createPartControl(Composite viewParent) {
 		this.viewParent = viewParent;
+		
 		ScrolledComposite scrolledComposite = new ScrolledComposite(viewParent, SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite.setExpandHorizontal(true);
+		scrolledComposite.setExpandVertical(true);
+		
 		parent = new Composite(scrolledComposite, SWT.NONE);
 		parent.setLayout(new GridLayout(3, false));
 
@@ -97,9 +101,6 @@ public class View extends ViewPart {
 
 		scrolledComposite.setContent(parent);
 		scrolledComposite.setMinSize(parent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		scrolledComposite.setExpandHorizontal(true);
-		scrolledComposite.setExpandVertical(true);
-		scrolledComposite.layout();
 
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewParent, "org.jcryptool.visual.grille.grille");
 	}
@@ -610,6 +611,8 @@ public class View extends ViewPart {
 				canvas_schluessel.addMouseListener(schluessel_listener);
 				checkOkButton();
 				updateKeyText();
+				
+				text_input.setFocus();
 			}
 
 			@Override
@@ -776,7 +779,7 @@ public class View extends ViewPart {
 
 	@Override
 	public void setFocus() {
-		parent.setFocus();
+		setHoles.setFocus();
 	}
 
 	public void checkOkButton() {
