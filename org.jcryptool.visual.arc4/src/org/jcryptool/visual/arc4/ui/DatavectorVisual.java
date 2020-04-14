@@ -64,6 +64,8 @@ public class DatavectorVisual extends Composite {
      * The parent Composite of this Composite.
      */
     private ARC4Composite parent;
+    
+    private Type type;
 
 
     /**
@@ -80,6 +82,7 @@ public class DatavectorVisual extends Composite {
         super(parent, style);
         this.alg = alg;
         this.parent = parent;
+        this.type = type;
         // three columns for the data and one column for the button; this assures proper alignment
         // of the widgets
         // in ARC4Composite; for the explanation of the factor two look into the comments in
@@ -290,9 +293,19 @@ public class DatavectorVisual extends Composite {
                 this.data[a].setText(ARC4Con.HEX_MARK + "0" + Integer.toHexString(data[a]));
             }
             this.data[a].setVisible(true);
+            
+            // Show instead of the values .. if no random or enc is set.
+            if (type == Type.RAND || type == Type.ENC) {
+	        	if (a < (alg.getStep() - 256)) {
+	        		// Do nothing
+	        	} else {
+	        		// Replace the value with ".."
+	        		this.data[a].setText("..");
+	        	}
+            }
     	}
     	
-    	// Hide labels if the key is not 16 byte long.
+    	// Hide labels if the plaintext is not 16 byte long.
     	for (int i = data.length; i < ARC4Con.DATAVECTOR_VISUAL_LENGTH; i++) {
     		this.data[i].setVisible(false);
     	}

@@ -33,7 +33,7 @@ import org.jcryptool.visual.zeroknowledge.views.FiatShamirView;
  * welchen Schritten Alice bzw. Carol agiert.
  *
  * @author Mareike Paul
- *@version 1.0.0
+ * @version 1.0.0
  */
 public class FSFlow {
 
@@ -112,7 +112,6 @@ public class FSFlow {
         genB.setEnabled(false);
         calcY.setEnabled(false);
         verify.setEnabled(false);
-        genRandom.setFocus();
     }
 
     /**
