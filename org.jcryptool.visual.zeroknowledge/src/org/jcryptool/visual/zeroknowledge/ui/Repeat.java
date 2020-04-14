@@ -32,11 +32,11 @@ import org.jcryptool.visual.zeroknowledge.algorithm.Funcs;
  */
 public class Repeat extends Dialog {
     private Button aliceButton;
-    private Label aliceInfo;
+//    private Label aliceInfo;
     private Scale amount;
     private Label amountAnzeige;
     private Button carolButton;
-    private Label carolInfo;
+//    private Label carolInfo;
     private Label carolPercent;
     private Label ergebnis;
     private Funcs funcs;
@@ -86,7 +86,8 @@ public class Repeat extends Dialog {
     	gl_main.marginHeight = 20;
     	main.setLayout(gl_main);
     	
-        aliceButton = new Button(main, SWT.RADIO);
+        aliceButton = new Button(main, SWT.RADIO | SWT.WRAP);
+        aliceButton.setText(Messages.Repeat_2);
         aliceButton.addSelectionListener(
 
         new SelectionAdapter() {
@@ -95,7 +96,8 @@ public class Repeat extends Dialog {
              * Geheimnis bekannt ist. Zusätzlich wird der RadioButton für Carol auf
              * "nicht ausgewählt" gesetzt
              */
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 aliceButton.setSelection(true);
                 carolButton.setSelection(false);
                 carolPercent.setVisible(false);
@@ -103,13 +105,12 @@ public class Repeat extends Dialog {
             }
         });
         aliceButton.setSelection(true);
-        aliceButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-        
-        aliceInfo = new Label(main, SWT.NONE);
-        aliceInfo.setText(Messages.Repeat_2);
-        aliceInfo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-        
-        carolButton = new Button(main, SWT.RADIO);
+        GridData gd_aliceButton = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
+        gd_aliceButton.heightHint = 50;
+        aliceButton.setLayoutData(gd_aliceButton);
+                
+        carolButton = new Button(main, SWT.RADIO | SWT.WRAP);
+        carolButton.setText(Messages.Repeat_3);
         carolButton.addSelectionListener(
         new SelectionAdapter() {
             /**
@@ -117,19 +118,18 @@ public class Repeat extends Dialog {
              * Geheimnis nicht bekannt ist. Zusätzlich wird der RadioButton für Alice auf
              * "nicht ausgewählt" gesetzt
              */
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 aliceButton.setSelection(false);
                 carolButton.setSelection(true);
                 carolPercent.setVisible(true);
                 funcs.setSecretKnown(false);
             }
         });
-        carolButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-        
-        carolInfo = new Label(main, SWT.NONE);
-        carolInfo.setText(Messages.Repeat_3);
-        carolInfo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-        
+        GridData gd_carolButton = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
+        gd_carolButton.heightHint = 50;
+        carolButton.setLayoutData(gd_carolButton);
+                
         info = new Label(main, SWT.NONE);
         info.setText(Messages.Repeat_4);
         GridData gd_info = new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1);
@@ -156,7 +156,8 @@ public class Repeat extends Dialog {
              * Methode, die aufgerufen wird, wenn der Scale bewegt wurde. Aktualisiert den Wert im
              * Label, das die Anzahl der Durchläufe angibt
              */
-            public void widgetSelected(SelectionEvent arg0) {
+            @Override
+			public void widgetSelected(SelectionEvent arg0) {
                 amountAnzeige.setText(amount.getSelection() + ""); //$NON-NLS-1$
                 // If Carol:
                 // Calculate how likely it is for the specified amount of iterations
@@ -182,11 +183,12 @@ public class Repeat extends Dialog {
              * des Sliders aus, lässt das Protokoll dementsprechend oft laufen und gibt das Ergebnis
              * aus.
              */
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 int amount_int = amount.getSelection();
                 int result = funcs.protokoll(amount_int);
                 String s = result + Messages.Repeat_5;
-                String s1 = new Double(result * 100.0 / amount_int).toString();
+                String s1 = String.valueOf(((double) result * 100) / amount_int);
                 int length = Math.min(s1.indexOf(".") + 3, s1.length()); //$NON-NLS-1$
                 s1 = s1.substring(0, length).concat("%"); //$NON-NLS-1$
                 ergebnis.setText(s + " " + s1); //$NON-NLS-1$
