@@ -297,7 +297,6 @@ public class GFlow {
 	 *            true, wenn der erste Fall betrachtet wird, ansonsten false
 	 */
 	public void setFirstCase(boolean b) {
-		secretKnown = b;
 		if (b) {
 			erklaerung01.setText(Messages.GFlow_0);
 			erklaerung02.setText(Messages.GFlow_1);
