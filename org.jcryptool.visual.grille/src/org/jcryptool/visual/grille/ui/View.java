@@ -11,7 +11,6 @@ package org.jcryptool.visual.grille.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -27,19 +26,16 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
-import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.images.ImageService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.grille.algorithm.Grille;
 import org.jcryptool.visual.grille.algorithm.KeySchablone;
 
@@ -153,6 +149,8 @@ public class View extends ViewPart {
 		text_input = new Text(group_input, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
 		GridData gd_text_input = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gd_text_input.minimumWidth = 200;
+		gd_text_input.widthHint = text_input.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
+		gd_text_input.heightHint = text_input.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
 		text_input.setLayoutData(gd_text_input);
 		text_input.addModifyListener(new ModifyListener() {
 
@@ -179,6 +177,8 @@ public class View extends ViewPart {
 		text_output = new Text(group_output, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
 		GridData gd_text_output = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gd_text_output.minimumWidth = 200;
+		gd_text_output.widthHint = text_output.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
+		gd_text_output.heightHint = text_output.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
 		text_output.setLayoutData(gd_text_output);
 		text_output.addKeyListener(new org.eclipse.swt.events.KeyListener() {
 
@@ -492,22 +492,8 @@ public class View extends ViewPart {
 
 		Group illustration = new Group(parent, SWT.NONE);
 		illustration.setLayout(new GridLayout());
-		illustration.setText(Messages.getString("View.visualisation")); //$NON-NLS-1$
+		illustration.setText(Messages.getString("View.2")); //$NON-NLS-1$
 		illustration.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
-		final ToolTip tip = new ToolTip(composite_illustration.getShell(), SWT.BALLOON);
-		tip.setMessage(Messages.getString("View.2")); //$NON-NLS-1$
-
-		Label help = new Label(illustration, SWT.NONE);
-		help.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false));
-		help.setImage(ImageService.ICON_HELP);
-		help.addListener(SWT.MouseDown, new Listener() {
-
-			@Override
-			public void handleEvent(Event event) {
-				tip.setVisible(true);
-			}
-		});
 
 		composite_canvas_demonstration = new Composite(illustration, SWT.NONE);
 		composite_canvas_demonstration.setLayout(new FormLayout());
@@ -523,6 +509,7 @@ public class View extends ViewPart {
 		fd_canvas_demonstration.bottom = new FormAttachment(100);
 		canvas_demonstration.setLayoutData(fd_canvas_demonstration);
 		canvas_demonstration.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+		canvas_demonstration.setToolTipText(Messages.getString("View.2"));
 
 		int width_Canvas_demonstration = canvas_demonstration.getSize().x;
 		int height_Canvas_demonstration = canvas_demonstration.getSize().y;
@@ -658,7 +645,9 @@ public class View extends ViewPart {
 		keyText = new Text(schablone, SWT.H_SCROLL);
 		keyText.setText(Messages.getString("View.key"));
 		keyText.setEditable(false);
-		keyText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
+		GridData gd_keyText = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
+		gd_keyText.widthHint = keyText.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
+		keyText.setLayoutData(gd_keyText);
 
 	}
 
@@ -746,22 +735,11 @@ public class View extends ViewPart {
 	 * 
 	 * @param parent The parent composite.
 	 */
-	private void createDescription(Composite parent) {
-		Composite compositeIntro = new Composite(parent, SWT.NONE);
-		compositeIntro.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-		compositeIntro.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
-		compositeIntro.setLayout(new GridLayout(1, false));
-
-		Label label = new Label(compositeIntro, SWT.NONE);
-		label.setFont(FontService.getHeaderFont());
-		label.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-		label.setText(Messages.getString("View.title")); //$NON-NLS-1$
-
-		StyledText stDescription = new StyledText(compositeIntro, SWT.READ_ONLY);
-		stDescription.setText(Messages.getString("View.description1") + //$NON-NLS-1$
-				Messages.getString("View.description2") + //$NON-NLS-1$
-				Messages.getString("View.description3")); //$NON-NLS-1$
-		stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+	private void createDescription(Composite parent) {		
+		TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(parent);
+		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
+		titleAndDescription.setTitle(Messages.getString("View.title"));
+		titleAndDescription.setDescription(Messages.getString("View.description"));
 	}
 
 	private void reset() {
