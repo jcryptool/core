@@ -294,6 +294,7 @@ public class View extends ViewPart {
 					canvas_demonstration.redraw();
 					canvas_schluessel.removeMouseListener(schluessel_listener);
 					button_step1.setEnabled(true);
+					button_step1.setFocus();
 					label_step1.setEnabled(true);
 				}
 
@@ -328,17 +329,19 @@ public class View extends ViewPart {
 		steps.setLayout(new GridLayout(1, true));
 
 		Group step1 = new Group(steps, SWT.NONE);
-
 		step1.setLayout(new GridLayout(2, false));
 		step1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		step1.setText(Messages.getString("View.step1")); //$NON-NLS-1$
+		
 		label_step1 = new Label(step1, SWT.NONE);
 		label_step1.setText(Messages.getString("View.check")); //$NON-NLS-1$
-		label_step1.setLayoutData(new GridData(SWT.FILL | SWT.LEFT, SWT.FILL, true, false));
+		label_step1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		
 		button_step1 = new Button(step1, SWT.NONE);
 		button_step1.setText(Messages.getString("View.proceed")); //$NON-NLS-1$
 		button_step1.setEnabled(false);
 		button_step1.addSelectionListener(new SelectionListener() {
+			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
@@ -352,6 +355,7 @@ public class View extends ViewPart {
 				demonstration.showStep2();
 				label_step1.setEnabled(false);
 				button_step2.setEnabled(true);
+				button_step2.setFocus();
 				label_step2.setEnabled(true);
 			}
 		});
@@ -361,13 +365,17 @@ public class View extends ViewPart {
 		step2.setLayout(new GridLayout(2, false));
 		step2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		step2.setText(Messages.getString("View.step2")); //$NON-NLS-1$
+		
 		label_step2 = new Label(step2, SWT.NONE);
 		label_step2.setText(Messages.getString("View.first_turn")); //$NON-NLS-1$
-		label_step2.setLayoutData(new GridData(SWT.FILL | SWT.LEFT, SWT.FILL, true, false));
+		label_step2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		label_step2.setEnabled(false);
+		
 		button_step2 = new Button(step2, SWT.NONE);
 		button_step2.setText(Messages.getString("View.proceed")); //$NON-NLS-1$
 		button_step2.setEnabled(false);
 		button_step2.addSelectionListener(new SelectionListener() {
+			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
@@ -381,22 +389,27 @@ public class View extends ViewPart {
 				button_step2.setEnabled(false);
 				label_step2.setEnabled(false);
 				button_step3.setEnabled(true);
+				button_step3.setFocus();
 				label_step3.setEnabled(true);
 			}
 		});
-		label_step2.setEnabled(false);
+		
 
 		Group step3 = new Group(steps, SWT.NONE);
 		step3.setLayout(new GridLayout(2, false));
 		step3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		step3.setText(Messages.getString("View.step3")); //$NON-NLS-1$
+		
 		label_step3 = new Label(step3, SWT.NONE);
 		label_step3.setText(Messages.getString("View.second_turn")); //$NON-NLS-1$
+		label_step3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		label_step3.setEnabled(false);
+		
 		button_step3 = new Button(step3, SWT.NONE);
 		button_step3.setText(Messages.getString("View.proceed")); //$NON-NLS-1$
-		label_step3.setLayoutData(new GridData(SWT.FILL | SWT.LEFT, SWT.FILL, true, false));
 		button_step3.setEnabled(false);
 		button_step3.addSelectionListener(new SelectionListener() {
+			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
@@ -410,22 +423,26 @@ public class View extends ViewPart {
 				button_step3.setEnabled(false);
 				label_step3.setEnabled(false);
 				button_step4.setEnabled(true);
+				button_step4.setFocus();
 				label_step4.setEnabled(true);
 			}
-		});
-		label_step3.setEnabled(false);
+		});	
 
 		Group step4 = new Group(steps, SWT.NONE);
 		step4.setLayout(new GridLayout(2, false));
 		step4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		step4.setText(Messages.getString("View.step4")); //$NON-NLS-1$
+		
 		label_step4 = new Label(step4, SWT.NONE);
 		label_step4.setText(Messages.getString("View.third_turn")); //$NON-NLS-1$
-		label_step4.setLayoutData(new GridData(SWT.FILL | SWT.LEFT, SWT.FILL, true, false));
+		label_step4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		label_step4.setEnabled(false);
+		
 		button_step4 = new Button(step4, SWT.NONE);
 		button_step4.setText(Messages.getString("View.proceed")); //$NON-NLS-1$
 		button_step4.setEnabled(false);
 		button_step4.addSelectionListener(new SelectionListener() {
+			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
@@ -439,22 +456,27 @@ public class View extends ViewPart {
 				button_step4.setEnabled(false);
 				label_step4.setEnabled(false);
 				button_step5.setEnabled(true);
+				button_step5.setFocus();
 				label_step5.setEnabled(true);
 			}
 		});
-		label_step4.setEnabled(false);
+		
 
 		Group step5 = new Group(steps, SWT.NONE);
 		step5.setLayout(new GridLayout(2, false));
 		step5.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		step5.setText(Messages.getString("View.step5")); //$NON-NLS-1$
+		
 		label_step5 = new Label(step5, SWT.NONE);
 		label_step5.setText(Messages.getString("View.fourth_turn")); //$NON-NLS-1$
-		label_step5.setLayoutData(new GridData(SWT.FILL | SWT.LEFT, SWT.FILL, true, false));
+		label_step5.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		label_step5.setEnabled(false);
+		
 		button_step5 = new Button(step5, SWT.NONE);
 		button_step5.setText(Messages.getString("View.proceed")); //$NON-NLS-1$
 		button_step5.setEnabled(false);
 		button_step5.addSelectionListener(new SelectionListener() {
+			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
@@ -470,8 +492,7 @@ public class View extends ViewPart {
 				label_step6.setEnabled(true);
 				text_output.setText(demonstration.getOutput());
 			}
-		});
-		label_step5.setEnabled(false);
+		});	
 
 		Group step6 = new Group(steps, SWT.NONE);
 		step6.setLayout(new GridLayout(2, false));
@@ -480,7 +501,7 @@ public class View extends ViewPart {
 
 		label_step6 = new Label(step6, SWT.NONE);
 		label_step6.setText(Messages.getString("View.linewise")); //$NON-NLS-1$
-		label_step6.setLayoutData(new GridData(SWT.FILL | SWT.LEFT, SWT.FILL, true, false, 2, 1));
+		label_step6.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		label_step6.setEnabled(false);
 	}
 
@@ -695,13 +716,18 @@ public class View extends ViewPart {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				reset();
-				setEncrypt = true;
-				group_input.setText(Messages.getString("View.plaintext") + " (0)"); //$NON-NLS-1$
-				group_output.setText(Messages.getString("View.ciphertext") + " (0)"); //$NON-NLS-1$
-				button_stepwise.setEnabled(true);
-				text_input.setText("");
-				updateKeyText();
+				// Nur etwas tun, wenn der Button ausgewählt wurde.
+				// Das SelectionEvent wird auch bei der abwahl des Buttons aufgerufen.
+				if (button_encrypt.getSelection()) {
+					String temp = text_output.getText();
+					reset();
+					setEncrypt = true;
+					group_input.setText(Messages.getString("View.plaintext") + " (0)"); //$NON-NLS-1$
+					group_output.setText(Messages.getString("View.ciphertext") + " (0)"); //$NON-NLS-1$
+					button_stepwise.setEnabled(true);
+					text_input.setText(temp);
+					updateKeyText();
+				}
 			}
 		});
 		button_encrypt.setSelection(true);
@@ -717,18 +743,24 @@ public class View extends ViewPart {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				reset();
-				setEncrypt = false;
-				group_output.setText(Messages.getString("View.plaintext") + " (0)"); //$NON-NLS-1$
-				group_input.setText(Messages.getString("View.ciphertext") + " (0)"); //$NON-NLS-1$
-				button_stepwise.setEnabled(false);
-				button_stepwise.setSelection(false);
-				button_direct.setSelection(true);
-				// Copy the output to input field when mode switched from encryption to
-				// decryption.
-				text_input.setText(text_output.getText());
-				text_output.setText(""); //$NON-NLS-1$
-				updateKeyText();
+				// Nur etwas tun, wenn der Button ausgewählt wurde.
+				// Das SelectionEvent wird auch bei der abwahl des Buttons aufgerufen.
+				if (button_decrypt.getSelection()) {
+					// Zwischenspeichern des Output der Verschlüsselung, um ihn
+					// als input zu setzen.
+					String temp = text_output.getText();
+					reset();
+					setEncrypt = false;
+					group_output.setText(Messages.getString("View.plaintext") + " (0)"); //$NON-NLS-1$
+					group_input.setText(Messages.getString("View.ciphertext") + " (0)"); //$NON-NLS-1$
+					button_stepwise.setEnabled(false);
+					button_stepwise.setSelection(false);
+					button_direct.setSelection(true);
+					// Copy the output to input field when mode switched from encryption to
+					// decryption.
+					text_input.setText(temp);
+					updateKeyText();
+				}
 			}
 		});
 	}
@@ -751,6 +783,7 @@ public class View extends ViewPart {
 		}
 
 		checkOkButton();
+		text_output.setText("");
 		button_step1.setEnabled(false);
 		button_step2.setEnabled(false);
 		button_step3.setEnabled(false);
@@ -774,11 +807,12 @@ public class View extends ViewPart {
 		createPartControl(viewParent);
 		viewParent.layout();
 		model.setKey(new KeySchablone(Integer.parseInt(spinner_keySize.getText())));
-		reset();
 	}
 
 	@Override
 	public void setFocus() {
+		// Set focus on "put holes"-button after
+		// plugin start.
 		setHoles.setFocus();
 	}
 
