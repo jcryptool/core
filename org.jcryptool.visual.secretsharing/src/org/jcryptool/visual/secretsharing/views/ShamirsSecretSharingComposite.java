@@ -444,7 +444,7 @@ public class ShamirsSecretSharingComposite extends Composite {
                         /*
                          * check if the secret is smaller than the modul
                          */
-                        if (secret.compareTo(modul) >= 0 && statusPrime != 1) {
+                        if (secret.compareTo(modul) > 0 && statusPrime != 1) {
 
                             SecretDialog secretDialog = new SecretDialog(getDisplay().getActiveShell(), secret, result);
                             statusSecret = secretDialog.open();

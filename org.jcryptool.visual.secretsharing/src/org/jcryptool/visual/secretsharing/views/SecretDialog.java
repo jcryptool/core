@@ -160,7 +160,7 @@ public class SecretDialog extends TitleAreaDialog implements Constants {
 
 		if (text.matches("[0-9]*")) {
 
-			if (new BigInteger(secretText.getText()).compareTo(new BigInteger(modulText.getText())) < 0) {
+			if (new BigInteger(secretText.getText()).compareTo(new BigInteger(modulText.getText())) <= 0) {
 				style = new StyleRange();
 				style.start = 0;
 				style.length = secretText.getText().length();
