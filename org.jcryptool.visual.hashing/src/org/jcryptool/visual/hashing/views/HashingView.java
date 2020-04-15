@@ -58,6 +58,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.hashing.HashingPlugin;
@@ -103,7 +104,7 @@ public class HashingView extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 
-		ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
 
 		Composite compositeMain = new Composite(scrolledComposite, SWT.NONE);
 		compositeMain.setLayout(new GridLayout(2, true));
@@ -442,11 +443,13 @@ public class HashingView extends ViewPart {
 		textDifference.invokeAction(ST.PASTE);
 		
 		scrolledComposite.setContent(compositeMain);
-//		scrolledComposite.setMinSize(compositeMain.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		scrolledComposite.setMinSize(compositeMain.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
 		
 		loadExampleText();
+		
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, HashingPlugin.PLUGIN_ID + ".hashingContextHelp");
 	}
 
 	private String hexToDecimal(String hex) {
