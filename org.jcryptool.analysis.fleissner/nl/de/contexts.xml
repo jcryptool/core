@@ -4,12 +4,6 @@
 		<description>Mit diesem Plugin können Sie Texte mit der Fleißner-Schablone ver- und entschlüsseln, aber vor allem können Sie auch Fleißner-Geheimtexte automatisiert brechen (und das für gerade und ungerade Schablonengrößen). Die maximale Schablonengröße ist 20 x 20.
 
 Weitere Informationen finden Sie in der Online-Hilfe unter Fleißner-Analyse. Diese können Sie durch Klicken des Fragezeichens in der Symbolleiste oben links aufrufen.</description>
-		<topic href="/PLUGINS_ROOT/org.eclipse.platform.doc.isv/guide/ua_help_context.htm" label="Context-sensitive help">
-			<enablement>
-				<with variable="platform">
-	            	<test property="org.eclipse.core.runtime.isBundleInstalled" args="org.eclipse.platform.doc.isv"/>
-	     		</with>
-			</enablement>
-		</topic>
+		<topic href="$nl$/content/index.html" label="Fleissner / Grille Analyse"/>
 	</context>
 </contexts>
