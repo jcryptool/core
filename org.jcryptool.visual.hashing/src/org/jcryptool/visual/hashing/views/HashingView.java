@@ -220,7 +220,7 @@ public class HashingView extends ViewPart {
 		grpInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		grpInput.setText(Messages.HashingView_7);
 
-		textInput = new Text(grpInput, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.MULTI);
+		textInput = new Text(grpInput, SWT.BORDER | SWT.V_SCROLL | SWT.WRAP | SWT.MULTI);
 		textInput.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -253,6 +253,7 @@ public class HashingView extends ViewPart {
 		});
 		GridData gd_textInput = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gd_textInput.heightHint = 90;
+		gd_textInput.widthHint = textInput.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
 		textInput.setLayoutData(gd_textInput);
 
 		Group grpOutput = new Group(compositeMain, SWT.NONE);
@@ -260,7 +261,7 @@ public class HashingView extends ViewPart {
 		grpOutput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		grpOutput.setText(Messages.HashingView_9);
 
-		textOutput = new Text(grpOutput, SWT.BORDER | SWT.H_SCROLL |  SWT.V_SCROLL | SWT.MULTI);
+		textOutput = new Text(grpOutput, SWT.BORDER | SWT.V_SCROLL |  SWT.WRAP | SWT.MULTI);
 		textOutput.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -293,6 +294,7 @@ public class HashingView extends ViewPart {
 		});
 		GridData gd_textOutput = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gd_textOutput.heightHint = 90;
+		gd_textOutput.widthHint = textOutput.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
 		textOutput.setLayoutData(gd_textOutput);
 
 		Group grpHashInput = new Group(compositeMain, SWT.NONE);
@@ -300,7 +302,7 @@ public class HashingView extends ViewPart {
 		grpHashInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		grpHashInput.setText(Messages.HashingView_10);
 
-		textHashInput = new Text(grpHashInput, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
+		textHashInput = new Text(grpHashInput, SWT.BORDER | SWT.READ_ONLY | SWT.H_SCROLL);
 		Font specialFont = new Font(Display.getCurrent(), "Courier New", 9, SWT.NORMAL);
 		textHashInput.setFont(specialFont);
 		textHashInput.addKeyListener(new KeyAdapter() {
@@ -311,14 +313,16 @@ public class HashingView extends ViewPart {
 				}
 			}
 		});
-		textHashInput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		GridData gd_textHashInput = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_textHashInput.widthHint = textHashInput.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
+		textHashInput.setLayoutData(gd_textHashInput);
 
 		Group grpHashOutput = new Group(compositeMain, SWT.NONE);
 		grpHashOutput.setLayout(new GridLayout(1, false));
 		grpHashOutput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		grpHashOutput.setText(Messages.HashingView_8);
 
-		textHashOutput = new Text(grpHashOutput, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
+		textHashOutput = new Text(grpHashOutput, SWT.BORDER | SWT.READ_ONLY | SWT.H_SCROLL);
 		textHashOutput.setFont(specialFont);
 		textHashOutput.addKeyListener(new KeyAdapter() {
 			@Override
@@ -328,7 +332,10 @@ public class HashingView extends ViewPart {
 				}
 			}
 		});
-		textHashOutput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
+		GridData gd_textHashOutput = new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1);
+		gd_textHashOutput.widthHint = textHashOutput.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
+		textHashOutput.setLayoutData(gd_textHashOutput);
+		
 
 		Group grpUnterschied = new Group(compositeMain, SWT.NONE);
 		grpUnterschied.setLayout(new GridLayout(2, false));
