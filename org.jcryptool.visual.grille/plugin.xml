@@ -32,20 +32,12 @@
             class="org.jcryptool.visual.grille.handlers.RestartHandler"
             commandId="org.jcryptool.visual.grille.restartCommand">
       </handler>
-      <handler
-      		class="org.jcryptool.visual.grille.handlers.HelpHandler"
-            commandId="org.jcryptool.visual.grille.helpCommand">
-      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
       <command
             id="org.jcryptool.visual.grille.restartCommand"
             name="%restart.command.name">
-      </command>
-      <command
-            id="org.jcryptool.visual.grille.helpCommand"
-            name="%help.command.name">
       </command>
    </extension>
    <extension
@@ -55,11 +47,6 @@
          <command
                commandId="org.jcryptool.visual.grille.restartCommand"
                icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
-               style="push">
-         </command>
-         <command
-               commandId="org.jcryptool.visual.grille.helpCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png"
                style="push">
          </command>
       </menuContribution>
