@@ -53,24 +53,11 @@ public class Grille {
     public String encrypt(String plaintext) {
         KeySchablone encKey = key;
         StringBuilder cipher = new StringBuilder();
+        
         for (int i = 0; i < plaintext.length(); i += encKey.getSize() * encKey.getSize() - encKey.getSize() % 2) {
             cipher.append(encryptSingleBlock(plaintext, i));
-        }
-//        System.out.println(plaintext.length());
-//        System.out.println(encKey.getSize());
-        int timesToRotateKey = plaintext.length() / (encKey.getSize() * encKey.getSize());
-//        System.out.println("timeToRotate" + timesToRotateKey);
-        
-        // The key needs to be rotated clockwise after the calculation because the calculation 
-        // rotates the key one time counterclockwise for each block that has been encrypted. 
-        // If you have a 72 chars as input an a 6*6 key you have to blocks that have to be encrypted.
-        // The encryption rotates the key 2 times counterclockwise. After the calculation the key must 
-        // be rotated two times clockwise to get the same key as the user has entered.
-        for (int i = 0; i < timesToRotateKey; i++) {
             encKey.rotateClockwise();
-//            System.out.println(i + " mal clockwiese rotiert");
         }
-
 
         return cipher.toString();
     }
@@ -78,13 +65,19 @@ public class Grille {
     public String encryptSingleBlock(String plaintext, int plaintextBlockPosition) {
         KeySchablone encKey = key;
         Schablone crypt = new Schablone(encKey.getSize());
+        
         encKey.rotateCounterClockwise();
+        
         for (int rotation = 0; rotation < 4; rotation++) {
             plaintextBlockPosition = encryptAndTurn(plaintext, plaintextBlockPosition, crypt);
         }
+        
+        // Do something if the key is not of the size 4, 6, 8 or 10
         if (encKey.getSize() % 2 != 0)
             crypt.set(encKey.getSize() / 2, encKey.getSize() / 2, generateRandomChar(plaintext));
+        
         StringBuilder ciphertext = new StringBuilder();
+        
         for (int r = 0; r < crypt.getSize(); r++) {
             for (int c = 0; c < crypt.getSize(); c++) {
                 ciphertext.append(crypt.get(r, c));
@@ -96,6 +89,7 @@ public class Grille {
 
     public int encryptAndTurn(String plaintext, int plaintextBlockPosition, Schablone crypt) {
         KeySchablone encKey = key;
+        
         encKey.rotateClockwise();
         for (int r = 0; r < encKey.getSize(); r++) {
             for (int c = 0; c < encKey.getSize(); c++) {
@@ -117,6 +111,7 @@ public class Grille {
      */
     public String decrypt(String ciphertext) {
         StringBuilder plain = new StringBuilder();
+        
         for (int i = 0; i < ciphertext.length(); i += key.getSize() * key.getSize() - key.getSize() % 2) {
             plain.append(decryptSingleBlock(ciphertext, i));
         }
@@ -128,10 +123,13 @@ public class Grille {
         KeySchablone decKey = key.clone();
         StringBuilder plaintext = new StringBuilder();
         Schablone decrypt = new Schablone(decKey.getSize());
+        
         for (int i = 0; i < decrypt.getSize() * decrypt.getSize(); i++) {
             decrypt.set(i / decrypt.getSize(), i % decrypt.getSize(), ciphertext.charAt(ciphertextBlockPosition + i));
         }
+        
         decKey.rotateCounterClockwise();
+        
         for (int rotation = 0; rotation < 4; rotation++) {
             decKey.rotateClockwise();
             for (int r = 0; r < decKey.getSize(); r++) {
