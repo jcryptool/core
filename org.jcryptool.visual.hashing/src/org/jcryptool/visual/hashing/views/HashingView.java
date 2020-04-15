@@ -61,6 +61,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.hashing.HashingPlugin;
 import org.jcryptool.visual.hashing.algorithms.HashFunction;
 
@@ -81,8 +82,6 @@ public class HashingView extends ViewPart {
 	private String hashInputValueHex = ""; //$NON-NLS-1$
 	private String hashOutputValueHex = ""; //$NON-NLS-1$
 
-	private StyledText styledTextDescription;
-	private StyleRange header;
 	private Text textInput;
 	private Text textHashInput;
 	private Text textOutput;
@@ -109,53 +108,12 @@ public class HashingView extends ViewPart {
 		Composite compositeMain = new Composite(scrolledComposite, SWT.NONE);
 		compositeMain.setLayout(new GridLayout(2, true));
 		
-		styledTextDescription = new StyledText(compositeMain, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
-		styledTextDescription.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				styledTextDescription.setSelection(0, 0);
-			}
-		});
-		styledTextDescription.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.stateMask == SWT.CTRL && e.keyCode == 'a') {
-					styledTextDescription.selectAll();
-				}
-			}
-		});
-		styledTextDescription.setEditable(false);
-		styledTextDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		styledTextDescription.setText(Messages.HashingView_0 + Messages.HashingView_1);
-
-		header = new StyleRange();
-		header.start = 0;
-		header.length = Messages.HashingView_0.length();
-		header.fontStyle = SWT.BOLD;
-		styledTextDescription.setStyleRange(header);
-
-		Menu menu_1 = new Menu(styledTextDescription);
-		styledTextDescription.setMenu(menu_1);
-
-		MenuItem mntmCopy_1 = new MenuItem(menu_1, SWT.NONE);
-		mntmCopy_1.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				styledTextDescription.copy();
-			}
-		});
-		mntmCopy_1.setText(Messages.HashingView_mntmCopy_text);
-
-//		MenuItem menuItem_1 = new MenuItem(menu_1, SWT.SEPARATOR);
-
-		MenuItem mntmSelectAll_1 = new MenuItem(menu_1, SWT.NONE);
-		mntmSelectAll_1.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				styledTextDescription.selectAll();
-			}
-		});
-		mntmSelectAll_1.setText(Messages.HashingView_mntmSelectAll_text);
+		// The area that shows the plugin title and description
+		TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(compositeMain);
+		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		titleAndDescription.setTitle(Messages.HashingView_0);
+		titleAndDescription.setDescription(Messages.HashingView_1);
+		
 
 		Group grpHashfunction = new Group(compositeMain, SWT.NONE);
 		grpHashfunction.setLayout(new GridLayout(1, false));
@@ -515,8 +473,6 @@ public class HashingView extends ViewPart {
 	}
 
 	public void resetView() {
-		styledTextDescription.setText(Messages.HashingView_0 + Messages.HashingView_1);
-		styledTextDescription.setStyleRange(header);
 
 		comboHash.select(0);
 		btnHexadezimal.setSelection(true);

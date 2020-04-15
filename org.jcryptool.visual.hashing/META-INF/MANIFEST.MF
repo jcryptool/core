@@ -8,7 +8,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.help,
  org.jcryptool.core.operations,
- org.bouncycastle
+ org.bouncycastle,
+ org.jcryptool.core.util
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Import-Package: org.jcryptool.core.logging.utils
