@@ -1380,6 +1380,7 @@ public class ShamirsSecretSharingComposite extends Composite {
 				}
 			}
         	
+			int[] pointCoords = calcCoord(k, 0); 
         	drawPoint(points, k, Constants.RED, Constants.DARKPURPLE);
             
         }
@@ -1390,21 +1391,28 @@ public class ShamirsSecretSharingComposite extends Composite {
 
 
 
+    private int[] calcCoord(int nShare, int modOffset) {
+    	
+		if (pointValue == Integer.MAX_VALUE) {
+			
+			int imgX = gridSizeX * nShare;
+			int imgY = ((int) pointValue) * (-gridSizeY); 
+			return new int[] {imgX, imgY};
+		} else {
+			int imgX = gridSizeX * nShare;
+			int imgY = ((int) valueAt(nShare)) * (-gridSizeY); 
+			return new int[] {imgX, imgY};
+		    // points.fillOval(gridSizeX * k - 3, ((int) valueAt(k)) * -gridSizeY - 3, 6, 6);
+		}
+    }
     
-	private void drawPoint(GC gc, int k, Color knownColor, Color unknownColor) {
+	private void drawPoint(GC gc, int[] coords, Color knownColor, Color unknownColor) {
 		if (sharesUseCheckButtonSet[k - 1].getSelection()) {
 		    gc.setBackground(knownColor);
 		} else {
 		    gc.setBackground(unknownColor);
 		}
 		if (pointValue == Integer.MAX_VALUE) {
-			int modDev = 0;
-			int[] imgCoord=new int[] {0,0};
-			int imgX = gridSizeX * k - 3;
-			int imgY = (pointValue) * -gridSizeY - 3;
-			imgCoord[0] = imgX;
-			imgCoord[1] = imgY;
- 					
 			this.fillOval(gc, imgCoord[0], imgCoord[1], 6, 6, 1.0f, 1.0f, xAxisGap, yAxisGap);
 			// points.fillOval(gridSizeX * k - 3, (pointValue) * -gridSizeY - 3, 6, 6);
 		} else {
