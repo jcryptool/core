@@ -12,6 +12,10 @@ package org.jcryptool.visual.secretsharing.views;
 
 import java.math.BigInteger;
 import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import org.eclipse.swt.SWT;
@@ -28,6 +32,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Path;
@@ -1356,38 +1361,86 @@ public class ShamirsSecretSharingComposite extends Composite {
         pointValue = (int) valueAt(shares.length);
         int pointValueMod = pointValue % modul.intValue();
         for (int k = 1; k <= shares.length; k++) {
-            if (sharesUseCheckButtonSet[k - 1].getSelection()) {
-                points.setBackground(Constants.RED);
-            } else {
-                points.setBackground(Constants.DARKPURPLE);
-            }
-            if (pointValue == Integer.MAX_VALUE) {
-                this.fillOval(points, gridSizeX * k - 3, (pointValue) * -gridSizeY - 3, 6, 6, 1.0f, 1.0f, xAxisGap, yAxisGap);
-            	// points.fillOval(gridSizeX * k - 3, (pointValue) * -gridSizeY - 3, 6, 6);
-            } else {
-            	this.fillOval(points, gridSizeX * k - 3, ((int) valueAt(k)) * -gridSizeY - 3, 6, 6, 1.0f, 1.0f, xAxisGap, yAxisGap);
-                // points.fillOval(gridSizeX * k - 3, ((int) valueAt(k)) * -gridSizeY - 3, 6, 6);
-            }
-            
-//            for (int modMult = -30; modMult < 50; modMult++) {
-//            	if (sharesUseCheckButtonSet[k - 1].getSelection()) {
-//                    points.setBackground(Constants.LIGHTBLUE);
-//                } else {
-//                    points.setBackground(Constants.BLUE);
-//                }
-//                if (pointValue == Integer.MAX_VALUE) {
-//                    this.fillOval(points, gridSizeX * k - 3, (pointValueMod) * -gridSizeY - 3, 6, 6, 1.0f, 1.0f, xAxisGap, yAxisGap);
-//                	// points.fillOval(gridSizeX * k - 3, (pointValue) * -gridSizeY - 3, 6, 6);
-//                } else {
-//                	this.fillOval(points, gridSizeX * k - 3, (((int) valueAt(k)) % modul.intValue() + modMult * modul.intValue()) * -gridSizeY - 3, 6, 6, 1.0f, 1.0f, xAxisGap, yAxisGap);
-//                    // points.fillOval(gridSizeX * k - 3, ((int) valueAt(k)) * -gridSizeY - 3, 6, 6);
-//                }
-//            }
+			for (int modMult = -30; modMult < 50; modMult++) {
+				if (sharesUseCheckButtonSet[k - 1].getSelection()) {
+					points.setBackground(Constants.LIGHTBLUE);
+				} else {
+					points.setBackground(Constants.BLUE);
+				}
+				if (pointValue == Integer.MAX_VALUE) {
+					this.fillOval(points, gridSizeX * k - 3, (pointValueMod) * -gridSizeY - 3, 6, 6, 1.0f, 1.0f,
+							xAxisGap, yAxisGap);
+					// points.fillOval(gridSizeX * k - 3, (pointValue) * -gridSizeY - 3, 6, 6);
+				} else {
+					this.fillOval(points, gridSizeX * k - 3,
+							(((int) valueAt(k)) % modul.intValue() + modMult * modul.intValue()) * -gridSizeY - 3, 6, 6,
+							1.0f, 1.0f, xAxisGap, yAxisGap);
+					// points.fillOval(gridSizeX * k - 3, ((int) valueAt(k)) * -gridSizeY - 3, 6,
+					// 6);
+				}
+			}
+        	
+        	drawPoint(points, k, Constants.RED, Constants.DARKPURPLE);
             
         }
         
         // polynomial.dispose();
         // points.dispose();
+    }
+
+
+
+    
+	private void drawPoint(GC gc, int k, Color knownColor, Color unknownColor) {
+		if (sharesUseCheckButtonSet[k - 1].getSelection()) {
+		    gc.setBackground(knownColor);
+		} else {
+		    gc.setBackground(unknownColor);
+		}
+		if (pointValue == Integer.MAX_VALUE) {
+			int modDev = 0;
+			int[] imgCoord=new int[] {0,0};
+			int imgX = gridSizeX * k - 3;
+			int imgY = (pointValue) * -gridSizeY - 3;
+			imgCoord[0] = imgX;
+			imgCoord[1] = imgY;
+ 					
+			this.fillOval(gc, imgCoord[0], imgCoord[1], 6, 6, 1.0f, 1.0f, xAxisGap, yAxisGap);
+			// points.fillOval(gridSizeX * k - 3, (pointValue) * -gridSizeY - 3, 6, 6);
+		} else {
+			this.fillOval(gc, gridSizeX * k - 3, ((int) valueAt(k)) * -gridSizeY - 3, 6, 6, 1.0f, 1.0f, xAxisGap, yAxisGap);
+		    // points.fillOval(gridSizeX * k - 3, ((int) valueAt(k)) * -gridSizeY - 3, 6, 6);
+		}
+	}
+    
+    
+    
+    private boolean vis_isShareKnown(int n) {
+    	return sharesUseCheckButtonSet[n - 1].getSelection();
+    }
+    
+    private boolean vis_moduloActivatedUnknown = false;
+    private boolean vis_moduloActivatedKnown = false;
+    private int     vis_hoveredShare = -1;
+    private boolean vis_hoveredShare_showActualLabel = false;
+    private boolean vis_hoveredShare_showReconstructedLabel = false;
+    
+    private Map<int[], String> vis_moduloMultipleLabel=new HashMap<>();
+    
+    private boolean is_hover = false;
+    
+    private void vis_init_on_reconstruction() {
+//    	vis_moduloActivated
+    }
+    
+    private void vis_reflect_in_ui() {
+    	// set the 
+    }
+    
+    
+    private void processVisState() {
+//    	int index_mouseover = get_;
+    	
     }
     
     private void fillOval(GC gc, int x, int y, int w, int h, float scaleX, float scaleY, float translateX, float translateY) {
