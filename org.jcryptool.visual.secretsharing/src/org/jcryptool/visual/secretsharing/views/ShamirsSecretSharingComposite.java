@@ -224,9 +224,9 @@ public class ShamirsSecretSharingComposite extends Composite {
 
         Text stDescription = new Text(compositeIntro, SWT.READ_ONLY | SWT.WRAP);
         stDescription.setBackground(ColorService.WHITE);
-        stDescription.setText(Messages.SSSConstants_Title_Info + " "  //$NON-NLS-1$
-        		+ Messages.SSSConstants_Title_Info_Formula + " " //$NON-NLS-1$
-        		+ Messages.lagrange_formular); //$NON-NLS-1$ //$NON-NLS-2$
+        stDescription.setText(Messages.SSSConstants_Title_Info + " ");  //$NON-NLS-1$
+//        		+ Messages.SSSConstants_Title_Info_Formula + " " //$NON-NLS-1$
+//        		+ Messages.lagrange_formular); //$NON-NLS-1$ //$NON-NLS-2$
         stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
     }
     
