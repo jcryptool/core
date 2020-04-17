@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Vector;
 
 import org.eclipse.swt.SWT;
@@ -1050,24 +1051,27 @@ public class ShamirsSecretSharingComposite extends Composite {
             public void mouseMove(final MouseEvent e) {
                 mousePosX = e.x;
                 mousePosY = e.y;
-                int mousePosXCorrected = canvasCurve.toControl(new org.eclipse.swt.graphics.Point(e.x, e.y)).x;
-                int mousePosYCorrected = canvasCurve.toControl(new org.eclipse.swt.graphics.Point(e.x, e.y)).y;
-//                int mousePosXCorrected = e.x;
-//                int mousePosYCorrected = e.y;
-                System.out.println(String.format("Move 1: %s,%s", mousePosXCorrected, mousePosYCorrected));
-                System.out.println(String.format("Move 2: %s,%s", e.x, e.y));
+//                int mousePosXCorrected = canvasCurve.toControl(new org.eclipse.swt.graphics.Point(e.x, e.y)).x;
+//                int mousePosYCorrected = canvasCurve.toControl(new org.eclipse.swt.graphics.Point(e.x, e.y)).y;
+                int mousePosXCorrected = e.x;
+                int mousePosYCorrected = e.y;
+//                 System.out.println(String.format("Move 1: %s,%s", mousePosXCorrected, mousePosYCorrected));
+//                 System.out.println(String.format("Move 2: %s,%s", e.x, e.y));
                 
         
-                hover.clear();
+                  hover.clear();
                 over.clear();
                 
                 for (org.eclipse.swt.graphics.Point point : pointsDrawn.keySet()) {
                 	org.eclipse.swt.graphics.Point screenCoord = pointsDrawn.get(point);
+                	Optional<org.eclipse.swt.graphics.Point> currentHoverPt = hover.keySet().stream().filter(x -> hover.get(x) && point.equals(x)).findFirst();
+                	currentHoverPt.ifPresent(p -> System.out.println(String.format("current hover: %s, current: %s | mpxC = %s, sCx = %s, %s, %s", p, point, mousePosXCorrected, screenCoord.x, mousePosYCorrected, screenCoord.y)));
 					if (Math.abs(mousePosXCorrected - screenCoord.x) < vis_mousevicinity && Math.abs(mousePosYCorrected - screenCoord.y) < vis_mousevicinity) {
 						over.put(point, true);
-						System.out.println(String.format("Move put true: %s", point));
+// 						System.out.println(String.format("Move put true: %s", point));
 					} else {
 						over.put(point, false);
+//						System.out.println(String.format("Move put false: %s", point));
 					}
 				}
         
@@ -1116,10 +1120,10 @@ public class ShamirsSecretSharingComposite extends Composite {
                 for (org.eclipse.swt.graphics.Point point : pointsDrawn.keySet()) {
                 	org.eclipse.swt.graphics.Point screenCoord = pointsDrawn.get(point);
 
-					System.out.println(String.format("Hover 1: %s,%s", e.x, e.y));
+// 					System.out.println(String.format("Hover 1: %s,%s", e.x, e.y));
 					if (Math.abs(e.x - screenCoord.x) < vis_mousevicinity && Math.abs(e.y - screenCoord.y) < vis_mousevicinity) {
 						hover.put(point, true);
-						System.out.println(String.format("Hover put true: %s", point));
+// 						System.out.println(String.format("Hover put true: %s", point));
 					} else {
 						hover.put(point, false);
 					}
@@ -1485,8 +1489,11 @@ public class ShamirsSecretSharingComposite extends Composite {
             
         }
     	
-    	for (org.eclipse.swt.graphics.Point hovered : hover.keySet()) {
-			if (hover.get(hovered) || over.get(hovered)) {
+    	for (org.eclipse.swt.graphics.Point hovered : over.keySet()) {
+			Boolean hovering = hover.getOrDefault(hovered, false);
+			Boolean overing = over.getOrDefault(hovered, false);
+
+			if (hovering || overing) {
 				org.eclipse.swt.graphics.Point hoveredF = pointsDrawnFctval.get(hovered);
 				String pointKind = pointsDrawnKinds.get(hovered);
 				int desc_realX = hoveredF.x;
@@ -1500,7 +1507,7 @@ public class ShamirsSecretSharingComposite extends Composite {
 				int[] hoverCoords = new int[] {hovered.x, hovered.y};
 				Integer oldRad = radii.getOrDefault(new org.eclipse.swt.graphics.Point(hoverCoords[0], hoverCoords[1]), 1);
 				Color oldCol = colors.getOrDefault(new org.eclipse.swt.graphics.Point(hoverCoords[0], hoverCoords[1]), Constants.MAGENTA);
-				drawPoint(points, hoverCoords, oldCol, (int) Math.round(oldRad * vis_rHover_factor));
+				drawPoint(points, hoverCoords, oldCol, (int) Math.round(oldRad * hovering ? vis_rHover_factor, vis_rOver_factor));
 				canvasCurve.setToolTipText(ptDescription);
 			}
 		}
