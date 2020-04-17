@@ -16,6 +16,10 @@ public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.visual.secretsharing.views.messages"; //$NON-NLS-1$
 	public static String lagrange_formular;
 	public static String ShamirsCompositeGraphical_title;
+	public static String ShamirsSecretSharingComposite_16;
+	public static String ShamirsSecretSharingComposite_17;
+	public static String ShamirsSecretSharingComposite_18;
+	public static String ShamirsSecretSharingComposite_19;
 	public static String SSSConstants_Coefficient;
 	public static String SSSConstants_Compute_Share_Button;
 	public static String SSSConstants_Concerned_Persons;

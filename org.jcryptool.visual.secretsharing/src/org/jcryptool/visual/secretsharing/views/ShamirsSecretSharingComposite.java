@@ -1,3 +1,4 @@
+
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
 * Copyright (c) 2011, 2020 JCrypTool Team and Contributors
@@ -12,10 +13,12 @@ package org.jcryptool.visual.secretsharing.views;
 
 import java.math.BigInteger;
 import java.text.MessageFormat;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Vector;
 
 import org.eclipse.swt.SWT;
@@ -25,7 +28,9 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
+import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -87,7 +92,7 @@ public class ShamirsSecretSharingComposite extends Composite {
 	protected BigInteger[] coefficients;
 	protected BigInteger modul;
 	protected BigInteger secret;
-	protected String polynomialString = "";
+	protected String polynomialString = ""; //$NON-NLS-1$
 	protected ShamirsSecretSharing shamirsSecretSharing;
 	protected Point[] shares = new Point[] {};
 	protected Canvas canvasCurve;
@@ -219,8 +224,8 @@ public class ShamirsSecretSharingComposite extends Composite {
 
         Text stDescription = new Text(compositeIntro, SWT.READ_ONLY | SWT.WRAP);
         stDescription.setBackground(ColorService.WHITE);
-        stDescription.setText(Messages.SSSConstants_Title_Info + " " 
-        		+ Messages.SSSConstants_Title_Info_Formula + " "
+        stDescription.setText(Messages.SSSConstants_Title_Info + " "  //$NON-NLS-1$
+        		+ Messages.SSSConstants_Title_Info_Formula + " " //$NON-NLS-1$
         		+ Messages.lagrange_formular); //$NON-NLS-1$ //$NON-NLS-2$
         stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
     }
@@ -232,7 +237,7 @@ public class ShamirsSecretSharingComposite extends Composite {
     private void createGroupShares(Composite parent) {
         groupShares = new Group(parent, SWT.NONE);
         groupShares.setLayout(new GridLayout());
-        groupShares.setText("Shares");
+        groupShares.setText("Shares"); //$NON-NLS-1$
         groupShares.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         scrolledShares = new ScrolledComposite(groupShares, SWT.V_SCROLL | SWT.BORDER);
@@ -352,7 +357,7 @@ public class ShamirsSecretSharingComposite extends Composite {
 
         modulText = new Text(groupParameter, SWT.BORDER);
         modulText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
-        modulText.setText("23");
+        modulText.setText("23"); //$NON-NLS-1$
         numberOnlyVerifyListenerModul = new VerifyListener() {
             public void verifyText(VerifyEvent e) {
                 /*
@@ -380,7 +385,7 @@ public class ShamirsSecretSharingComposite extends Composite {
 
         secretText = new Text(groupParameter, SWT.BORDER);
         secretText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
-        secretText.setText("8");
+        secretText.setText("8"); //$NON-NLS-1$
         numberOnlyVerifyListenerSecret = new VerifyListener() {
             public void verifyText(VerifyEvent e) {
                 /*
@@ -508,7 +513,7 @@ public class ShamirsSecretSharingComposite extends Composite {
         polynomLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 6, 1));
 
         pxLabel = new Label(groupParameter, SWT.NONE);
-        pxLabel.setText("P(x):");
+        pxLabel.setText("P(x):"); //$NON-NLS-1$
         pxLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         
         stPolynom = new StyledText(groupParameter, SWT.READ_ONLY | SWT.BORDER);
@@ -555,15 +560,15 @@ public class ShamirsSecretSharingComposite extends Composite {
         sharesUseCheckButtonSet = new Button[n];
         for (int i = 0; i < n; i++) {
             Label sharesPLabel = new Label(compositeShares, SWT.NONE);
-            sharesPLabel.setText("Share " + (i + 1));
+            sharesPLabel.setText("Share " + (i + 1)); //$NON-NLS-1$
             sharesPLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
             
             Label sharesEquivalentLabel = new Label(compositeShares, SWT.NONE);
-            sharesEquivalentLabel.setText("=");
+            sharesEquivalentLabel.setText("="); //$NON-NLS-1$
             sharesEquivalentLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
             Label sharesOpenBracetLabel = new Label(compositeShares, SWT.NONE);
-            sharesOpenBracetLabel.setText("(");
+            sharesOpenBracetLabel.setText("("); //$NON-NLS-1$
             sharesOpenBracetLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
             Label sharesXCoordinateLabel = new Label(compositeShares, SWT.NONE);
@@ -571,7 +576,7 @@ public class ShamirsSecretSharingComposite extends Composite {
             sharesXCoordinateLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
             Label sharesSeperatorLabel = new Label(compositeShares, SWT.NONE);
-            sharesSeperatorLabel.setText("|");
+            sharesSeperatorLabel.setText("|"); //$NON-NLS-1$
             sharesSeperatorLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
             shareYCoordinateModText = new Text(compositeShares, SWT.READ_ONLY | SWT.BORDER);
@@ -591,7 +596,7 @@ public class ShamirsSecretSharingComposite extends Composite {
             sharesYCoordinateText.setLayoutData(gd_sharesYCoordinateText);
 
             Label sharesCloseBarcetLabel = new Label(compositeShares, SWT.NONE);
-            sharesCloseBarcetLabel.setText(")");
+            sharesCloseBarcetLabel.setText(")"); //$NON-NLS-1$
             sharesCloseBarcetLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
             Button sharesUseCheckButton = new Button(compositeShares, SWT.CHECK);
@@ -775,10 +780,10 @@ public class ShamirsSecretSharingComposite extends Composite {
     private void createReconstruction(int n) {
         for (int i = 0; i < n; i++) {
             Label reconstructionLabel = new Label(compositeReconstruction, SWT.NONE);
-            reconstructionLabel.setText("w" + convertToSubset(i));
+            reconstructionLabel.setText("w" + convertToSubset(i)); //$NON-NLS-1$
 
             Label reconstructEquivalentLabel = new Label(compositeReconstruction, SWT.NONE);
-            reconstructEquivalentLabel.setText("=");
+            reconstructEquivalentLabel.setText("="); //$NON-NLS-1$
 
             Text reconstructPolynomial = new Text(compositeReconstruction, SWT.READ_ONLY | SWT.BORDER);
 
@@ -989,7 +994,7 @@ public class ShamirsSecretSharingComposite extends Composite {
     private void createGroupCurve(Composite parent) {
         groupCurve = new Group(parent, SWT.NONE);
         groupCurve.setLayout(new GridLayout(11, false));
-        groupCurve.setText("Graph");
+        groupCurve.setText("Graph"); //$NON-NLS-1$
         final GridData gd_groupCurve = new GridData(SWT.FILL, SWT.FILL, true, true);
         gd_groupCurve.heightHint = 558;
         groupCurve.setLayoutData(gd_groupCurve);
@@ -1047,6 +1052,30 @@ public class ShamirsSecretSharingComposite extends Composite {
             public void mouseMove(final MouseEvent e) {
                 mousePosX = e.x;
                 mousePosY = e.y;
+//                int mousePosXCorrected = canvasCurve.toControl(new org.eclipse.swt.graphics.Point(e.x, e.y)).x;
+//                int mousePosYCorrected = canvasCurve.toControl(new org.eclipse.swt.graphics.Point(e.x, e.y)).y;
+                int mousePosXCorrected = e.x;
+                int mousePosYCorrected = e.y;
+//                 System.out.println(String.format("Move 1: %s,%s", mousePosXCorrected, mousePosYCorrected));
+//                 System.out.println(String.format("Move 2: %s,%s", e.x, e.y));
+                
+        
+                  hover.clear();
+                over.clear();
+                
+                for (org.eclipse.swt.graphics.Point point : pointsDrawn.keySet()) {
+                	org.eclipse.swt.graphics.Point screenCoord = pointsDrawn.get(point);
+                	Optional<org.eclipse.swt.graphics.Point> currentHoverPt = hover.keySet().stream().filter(x -> hover.get(x) && point.equals(x)).findFirst();
+                	currentHoverPt.ifPresent(p -> System.out.println(String.format("current hover: %s, current: %s | mpxC = %s, sCx = %s, %s, %s", p, point, mousePosXCorrected, screenCoord.x, mousePosYCorrected, screenCoord.y))); //$NON-NLS-1$
+					if (Math.abs(mousePosXCorrected - screenCoord.x) < vis_mousevicinity && Math.abs(mousePosYCorrected - screenCoord.y) < vis_mousevicinity) {
+						over.put(point, true);
+// 						System.out.println(String.format("Move put true: %s", point));
+					} else {
+						over.put(point, false);
+//						System.out.println(String.format("Move put false: %s", point));
+					}
+				}
+        
 
                 if (shares != null) {
                     Point point = nearSharePoint(shares, mousePosX, mousePosY);
@@ -1054,7 +1083,7 @@ public class ShamirsSecretSharingComposite extends Composite {
                     if (point != null) {
                         xText.setText(point.getX().toString());
                         yText.setText(point.getY().toString());
-                        makePointVisible(true);
+                        //makePointVisible(true);
                     } else if (pointValue == Integer.MAX_VALUE) {
                         boolean found = false;
                         for (int i = 0; i < shares.length; i++) {
@@ -1071,7 +1100,7 @@ public class ShamirsSecretSharingComposite extends Composite {
                             }
                         }
                         if (found) {
-                            makePointVisible(true);
+                            // makePointVisible(true);
                         } else {
                             makePointVisible(false);
                         }
@@ -1079,8 +1108,46 @@ public class ShamirsSecretSharingComposite extends Composite {
                         makePointVisible(false);
                     }
                 }
+                canvasCurve.setToolTipText(null);
+                canvasCurve.redraw();
             }
+            
         });
+        canvasCurve.addMouseTrackListener(new MouseTrackListener() {
+			
+			@Override
+			public void mouseHover(MouseEvent e) {
+				hover.clear();
+                for (org.eclipse.swt.graphics.Point point : pointsDrawn.keySet()) {
+                	org.eclipse.swt.graphics.Point screenCoord = pointsDrawn.get(point);
+
+// 					System.out.println(String.format("Hover 1: %s,%s", e.x, e.y));
+					if (Math.abs(e.x - screenCoord.x) < vis_mousevicinity && Math.abs(e.y - screenCoord.y) < vis_mousevicinity) {
+						hover.put(point, true);
+// 						System.out.println(String.format("Hover put true: %s", point));
+					} else {
+						hover.put(point, false);
+					}
+				}
+                canvasCurve.redraw();
+			}
+			
+			@Override
+			public void mouseExit(MouseEvent e) {
+				hover.clear();
+				over.clear();
+				canvasCurve.setToolTipText(null);
+				canvasCurve.redraw();
+				
+			}
+			
+			@Override
+			public void mouseEnter(MouseEvent e) {
+				hover.clear();
+				over.clear();
+				canvasCurve.redraw();
+			}
+		});
         canvasCurve.setBackground(Constants.WHITE);
         GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true, 11, 1);
         gridData.widthHint = 506;
@@ -1135,6 +1202,11 @@ public class ShamirsSecretSharingComposite extends Composite {
      * @param e the PaintEvent that represents the graphic context
      */
     private void drawPolynomial(PaintEvent e) {
+    	
+    	pointsDrawn.clear();
+    	pointsDrawnFctval.clear();
+    	pointsDrawnKinds.clear();
+    	
         GC gc = e.gc;
         gc.setLineWidth(0);
         //canvasCurve.setSize(getMaxXCoord(), getMaxYCoord());
@@ -1360,42 +1432,109 @@ public class ShamirsSecretSharingComposite extends Composite {
 
         pointValue = (int) valueAt(shares.length);
         int pointValueMod = pointValue % modul.intValue();
+        
+        Map<org.eclipse.swt.graphics.Point, Integer> radii = new HashMap<>();
+        Map<org.eclipse.swt.graphics.Point, Color> colors = new HashMap<>();
+        
         for (int k = 1; k <= shares.length; k++) {
-//			for (int modMult = -30; modMult < 50; modMult++) {
-//				if (sharesUseCheckButtonSet[k - 1].getSelection()) {
-//					points.setBackground(Constants.LIGHTBLUE);
-//				} else {
-//					points.setBackground(Constants.BLUE);
-//				}
-//				if (pointValue == Integer.MAX_VALUE) {
-//					this.fillOval(points, gridSizeX * k - 3, (pointValueMod) * -gridSizeY - 3, 6, 6, 1.0f, 1.0f,
-//							xAxisGap, yAxisGap);
-//					// points.fillOval(gridSizeX * k - 3, (pointValue) * -gridSizeY - 3, 6, 6);
-//				} else {
-//					this.fillOval(points, gridSizeX * k - 3,
-//							(((int) valueAt(k)) % modul.intValue() + modMult * modul.intValue()) * -gridSizeY - 3, 6, 6,
-//							1.0f, 1.0f, xAxisGap, yAxisGap);
-//					// points.fillOval(gridSizeX * k - 3, ((int) valueAt(k)) * -gridSizeY - 3, 6,
-//					// 6);
-//				}
-//			}
-//        	
-			int[] pointCoords = calcCoord(k, 0);
-			Color color = Constants.RED;
-			if (! vis_isShareKnown(k)) {
-				color = Constants.DARKPURPLE;
-			}
+        	List<Integer> whichToShowModulae = new LinkedList<>();
+            if (vis_moduloActivatedKnown) {
+        		for (int j=1; j<=shares.length; j++) {
+        			if(vis_isShareKnown(j)) {
+        				for (int n = -30; n < 30; n++) {
+    						int[] modShiftedCoords = calcCoord(j, n);
+    						int rad = isCoordAtReco(j, 0, modShiftedCoords) ? vis_rReco : vis_rNoReco;
+							String ptKind= Messages.ShamirsSecretSharingComposite_16;
+							Color col = isCoordAtReco(j, 0, modShiftedCoords) ? vis_color_orig_known: vis_color_shareKnown;
+							org.eclipse.swt.graphics.Point hoverCoords = drawPoint(points, modShiftedCoords, col , rad);
+    						radii.put(new org.eclipse.swt.graphics.Point(modShiftedCoords[0], modShiftedCoords[1]), rad);
+    						colors.put(new org.eclipse.swt.graphics.Point(modShiftedCoords[0], modShiftedCoords[1]), col);
+        					pointsDrawn.put(new org.eclipse.swt.graphics.Point(modShiftedCoords[0], modShiftedCoords[1]), hoverCoords);
+        					pointsDrawnFctval.put(new org.eclipse.swt.graphics.Point(modShiftedCoords[0], modShiftedCoords[1]), new org.eclipse.swt.graphics.Point(j, n));
+    						pointsDrawnKinds.put(new org.eclipse.swt.graphics.Point(modShiftedCoords[0], modShiftedCoords[1]), ptKind);
+    					}
+        			}
+        		}
+        	}
+        	if (vis_moduloActivatedUnknown) {
+        		for (int j=1; j<=shares.length; j++) {
+        			if(! vis_isShareKnown(j)) {
+        				for (int n = -30; n < 30; n++) {
+    						int[] modShiftedCoords = calcCoord(j, n);
+							String ptKind= Messages.ShamirsSecretSharingComposite_17;
+    						int rad = isCoordAtReco(j, 0, modShiftedCoords) ? vis_rReco : vis_rNoReco;
+    						Color col = isCoordAtReco(j, 0, modShiftedCoords) ? vis_color_orig_unknown : vis_color_shareUnknown;
+    						org.eclipse.swt.graphics.Point hoverCoords = drawPoint(points, modShiftedCoords, col, rad);
+    						radii.put(new org.eclipse.swt.graphics.Point(modShiftedCoords[0], modShiftedCoords[1]), rad);
+    						colors.put(new org.eclipse.swt.graphics.Point(modShiftedCoords[0], modShiftedCoords[1]), col);
+    						pointsDrawnKinds.put(new org.eclipse.swt.graphics.Point(modShiftedCoords[0], modShiftedCoords[1]), ptKind);
+							pointsDrawn.put(new org.eclipse.swt.graphics.Point(modShiftedCoords[0], modShiftedCoords[1]), hoverCoords);
+        					pointsDrawnFctval.put(new org.eclipse.swt.graphics.Point(modShiftedCoords[0], modShiftedCoords[1]), new org.eclipse.swt.graphics.Point(j, n));
+    					}
+        			}
+        		}
+        	}
+        }
+    	for (int k = 1; k <= shares.length; k++) {
+        	int[] pointCoords = calcCoord(k, 0);
+			Color col= vis_isShareKnown(k) ? vis_color_orig_known : vis_color_orig_unknown;
+			String ptKind= vis_isShareKnown(k) ? Messages.ShamirsSecretSharingComposite_18 : Messages.ShamirsSecretSharingComposite_19;
+			int rad = vis_rOrig;
 			
-        	drawPoint(points, pointCoords, color);
+        	org.eclipse.swt.graphics.Point canvasCoord = drawPoint(points, pointCoords, col, rad);
+        	colors.put(new org.eclipse.swt.graphics.Point(pointCoords[0], pointCoords[1]), col);
+        	radii.put(new org.eclipse.swt.graphics.Point(pointCoords[0], pointCoords[1]), rad);
+        	pointsDrawn.put(new org.eclipse.swt.graphics.Point(pointCoords[0], pointCoords[1]), canvasCoord);
+			pointsDrawnFctval.put(new org.eclipse.swt.graphics.Point(pointCoords[0], pointCoords[1]), new org.eclipse.swt.graphics.Point(k, 0));
+			pointsDrawnKinds.put(new org.eclipse.swt.graphics.Point(pointCoords[0], pointCoords[1]), ptKind);
             
         }
+    	
+    	for (org.eclipse.swt.graphics.Point hovered : over.keySet()) {
+			Boolean hovering = hover.getOrDefault(hovered, false);
+			Boolean overing = over.getOrDefault(hovered, false);
+
+			if (hovering || overing) {
+				org.eclipse.swt.graphics.Point hoveredF = pointsDrawnFctval.get(hovered);
+				String pointKind = pointsDrawnKinds.get(hovered);
+				int desc_realX = hoveredF.x;
+				int desc_realShift = hoveredF.y;
+				int[] funval = calcCoord(desc_realX, desc_realShift);
+// 				String coordDescr = String.format("y = %s ≡ %s [mod %s]", funval[1] , funval[1] % modul.intValue(), modul.intValue());
+				float y = valueAt(desc_realX) + desc_realShift * modul.intValue();
+				String coordDescr = String.format("y = %s ≡ %s [mod %s]", y, y % modul.intValue(), modul.intValue()); //$NON-NLS-1$
+				String ptDescription = String.format("%s\n%s", pointKind, coordDescr); //$NON-NLS-1$
+
+				int[] hoverCoords = new int[] {hovered.x, hovered.y};
+				Integer oldRad = radii.getOrDefault(new org.eclipse.swt.graphics.Point(hoverCoords[0], hoverCoords[1]), 1);
+				Color oldCol = colors.getOrDefault(new org.eclipse.swt.graphics.Point(hoverCoords[0], hoverCoords[1]), Constants.MAGENTA);
+				drawPoint(points, hoverCoords, oldCol, (int) Math.round(oldRad * (hovering ? vis_rHover_factor : vis_rOver_factor)));
+				canvasCurve.setToolTipText(ptDescription);
+			}
+		}
         
         // polynomial.dispose();
         // points.dispose();
     }
 
+    private Map<org.eclipse.swt.graphics.Point, org.eclipse.swt.graphics.Point> pointsDrawnFctval = new HashMap<>();
+    private Map<org.eclipse.swt.graphics.Point, String> pointsDrawnKinds = new HashMap<>();
+    private Map<org.eclipse.swt.graphics.Point, org.eclipse.swt.graphics.Point> pointsDrawn = new HashMap<>();
+    private Map<org.eclipse.swt.graphics.Point, Boolean> hover = new HashMap<>();
+    private Map<org.eclipse.swt.graphics.Point, Boolean> over = new HashMap<>();
+    
 
-
+    private boolean isCoordAtReco(int nShare, int modOffset, int[] modShiftedCoords) {
+    	if (reconstructedPolynomial == null) {
+			return false;
+		}
+    	int[] recoPt = calcCoordReco(nShare, modOffset);
+    	
+    	if (recoPt[0] == modShiftedCoords[0] && recoPt[1] == modShiftedCoords[1]) {
+			return true;
+		}
+    	return false;
+    }
     private int[] calcCoord(int nShare, int modOffset) {
     	
     	int imgX = gridSizeX * nShare;
@@ -1403,13 +1542,24 @@ public class ShamirsSecretSharingComposite extends Composite {
 		if (pointValue == Integer.MAX_VALUE) {
 			imgY = ((int) pointValue) * (-gridSizeY);
 		}
+		imgY = imgY - (modOffset * modul.intValue());
+		return new int[] {imgX, imgY};
+    }
+    private int[] calcCoordReco(int nShare, int modOffset) {
+    	
+    	int imgX = gridSizeX * nShare;
+		int imgY = ((int) valueAtReconstruction(nShare)) * (-gridSizeY);
+		if (pointValue == Integer.MAX_VALUE) {
+			imgY = ((int) pointValue) * (-gridSizeY);
+		}
+		imgY = imgY - (modOffset * modul.intValue());
 		return new int[] {imgX, imgY};
     }
     
-	private void drawPoint(GC gc, int[] coords, Color color) {
-		int pointRadius = 6;
+	private org.eclipse.swt.graphics.Point drawPoint(GC gc, int[] coords, Color color, int radius) {
+		int pointRadius = radius;
 		gc.setBackground(color);
-		this.fillOval(gc, coords[0] - pointRadius/2, coords[1]- pointRadius/2, pointRadius, pointRadius, 1.0f, 1.0f, xAxisGap, yAxisGap);
+		return this.fillOval(gc, coords[0] - pointRadius, coords[1]- pointRadius, pointRadius*2, pointRadius*2, 1.0f, 1.0f, xAxisGap, yAxisGap);
 	}
     
     
@@ -1418,11 +1568,24 @@ public class ShamirsSecretSharingComposite extends Composite {
     	return sharesUseCheckButtonSet[n - 1].getSelection();
     }
     
-    private boolean vis_moduloActivatedUnknown = false;
-    private boolean vis_moduloActivatedKnown = false;
+    private boolean vis_moduloActivatedUnknown = true;
+    private boolean vis_moduloActivatedKnown = true;
     private int     vis_hoveredShare = -1;
     private boolean vis_hoveredShare_showActualLabel = false;
     private boolean vis_hoveredShare_showReconstructedLabel = false;
+    
+    int vis_rNoReco = 2;
+    int vis_rReco = 4;
+    int vis_rOrig = 4;
+    float vis_rHover_factor = 2.3f;
+    float vis_rOver_factor = 2.0f;
+    
+    int vis_mousevicinity = 10;
+    
+	private Color vis_color_shareKnown = Constants.GREY;
+	private Color vis_color_shareUnknown = Constants.MEDIUMGREY;
+	private Color vis_color_orig_unknown = Constants.LIGHTBLUE;
+	private Color vis_color_orig_known = Constants.BLUE;
     
     private Map<int[], String> vis_moduloMultipleLabel=new HashMap<>();
     
@@ -1442,7 +1605,7 @@ public class ShamirsSecretSharingComposite extends Composite {
     	
     }
     
-    private void fillOval(GC gc, int x, int y, int w, int h, float scaleX, float scaleY, float translateX, float translateY) {
+    private org.eclipse.swt.graphics.Point fillOval(GC gc, int x, int y, int w, int h, float scaleX, float scaleY, float translateX, float translateY) {
 		Transform prevTf = new Transform(gc.getDevice());
 		gc.getTransform(prevTf);
 
@@ -1467,7 +1630,12 @@ public class ShamirsSecretSharingComposite extends Composite {
 		fullTf.transform(pt);
 		scaleTf.transform(wh);
 		
-		gc.fillOval((int) Math.round(pt[0]), (int) Math.round(pt[1]), (int) Math.round(wh[0]), (int) Math.round(wh[1]));
+		int screenX = (int) Math.round(pt[0]);
+		int screenY = (int) Math.round(pt[1]);
+		int screenW = (int) Math.round(wh[0]);
+		int screenH = (int) Math.round(wh[1]);
+		gc.fillOval(screenX, screenY, screenW, screenH);
+		return new org.eclipse.swt.graphics.Point(screenX + screenW/2, screenY + screenH/2);
 //    	gc.setTransform(prevTf);
 	}
 
