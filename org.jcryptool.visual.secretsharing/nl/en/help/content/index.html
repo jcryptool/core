@@ -50,7 +50,7 @@ If a prime number was entered or generated, the number is highlighted in <b>gree
 
 
 
-<p>It might be that the secret <b>s</b> was not smaller than the modulus <b>p</b> either already before the prime number verification dialog was used or through the user's input in this dialog. In this case, the dialog <b>Prime number verification</b> opens in order to satisfy the condition that the secret <b>s</b> is strictly less than the modulus <b>p</b>. The user can here enter an according value of the secret <b>s</b>. For a better overview, the modulus is shown above. Correct values of s are shown in <b>green</b>, otherwise in the color <b>red</b>. If s is valid, the <b>OK</b> button
+<p>It might be that the secret <b>s</b> was not smaller than the modulus <b>p</b> either already before the prime number verification dialog was used or through the user's input in this dialog. In this case, the dialog <b>Prime number verification</b> opens in order to satisfy the condition that the secret <b>s</b> is strictly less than the modulus <b>p</b>. The user can here enter an according value of the secret <b>s</b>. For a better overview, the modulus is shown above. If s is valid, the <b>OK</b> button
 is activated, and the user can leave the dialog with this button.</p>
 
 <img src="sss_secret_dialog.jpg" width="344" height="258">
@@ -68,9 +68,9 @@ is activated, and the user can leave the dialog with this button.</p>
 
 
 
-<p>On the right side, the corresponding <b>graph</b> of the polynomial is shown. The individual shares are shown in the graph as points in the color <b>magenta</b>.</p>
+<p>On the right side, the corresponding <b>graph</b> of the polynomial is shown. The individual shares are shown in the graph as points in the color <b>blue</b>.</p>
 
-<img src="sss_graph.jpg" width="548" height="506">
+<img src="sss_graph2.png" width="548" height="506">
 
 
 
@@ -91,7 +91,9 @@ is activated, and the user can leave the dialog with this button.</p>
 
 <p>In the event that the polynomial was not properly restored, the two polynomials represented as a graph in different colors.</p>
 
-<img src="sss_graph_reconstruct.jpg" width="544" height="503">
+<img src="sss_graph_reconstruct2.png" width="544" height="503">
+
+<p>The points in <b>deep blue</b> represent the shares that are known. Grey points represent equivalent points to the actual share with respect to the module p. When reconstructing with too few shares, the red curve, representing the wrong reconstruction, passes through equivalent points to the known shares, but this information is not enough to infer the correct values of the unknown shares.</p>
 
 <p>If you move the mouse cursor over a point in the graph, you see the according share coordinates.</p>
 
