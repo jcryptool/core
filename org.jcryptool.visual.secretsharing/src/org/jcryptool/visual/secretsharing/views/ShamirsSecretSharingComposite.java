@@ -1050,7 +1050,19 @@ public class ShamirsSecretSharingComposite extends Composite {
             public void mouseMove(final MouseEvent e) {
                 mousePosX = e.x;
                 mousePosY = e.y;
+        
                 hover.clear();
+                over.clear();
+                
+                for (org.eclipse.swt.graphics.Point point : pointsDrawn.keySet()) {
+                	org.eclipse.swt.graphics.Point screenCoord = pointsDrawn.get(point);
+					if (Math.abs(e.x - screenCoord.x) < 7 && Math.abs(e.y - screenCoord.y) < 7) {
+						over.put(point, true);
+					} else {
+						over.put(point, false);
+					}
+				}
+        
 
                 if (shares != null) {
                     Point point = nearSharePoint(shares, mousePosX, mousePosY);
@@ -1083,6 +1095,7 @@ public class ShamirsSecretSharingComposite extends Composite {
                         makePointVisible(false);
                     }
                 }
+                canvasCurve.redraw();
             }
             
         });
@@ -1099,18 +1112,20 @@ public class ShamirsSecretSharingComposite extends Composite {
 						hover.put(point, false);
 					}
 				}
-                redraw();
+                canvasCurve.redraw();
 			}
 			
 			@Override
 			public void mouseExit(MouseEvent e) {
 				hover.clear();
+				over.clear();
 				canvasCurve.redraw();
 			}
 			
 			@Override
 			public void mouseEnter(MouseEvent e) {
 				hover.clear();
+				over.clear();
 				canvasCurve.redraw();
 			}
 		});
@@ -1396,7 +1411,7 @@ public class ShamirsSecretSharingComposite extends Composite {
 
         pointValue = (int) valueAt(shares.length);
         int pointValueMod = pointValue % modul.intValue();
-         
+        
         for (int k = 1; k <= shares.length; k++) {
         	List<Integer> whichToShowModulae = new LinkedList<>();
             if (vis_moduloActivatedKnown) {
@@ -1404,7 +1419,8 @@ public class ShamirsSecretSharingComposite extends Composite {
         			if(vis_isShareKnown(j)) {
         				for (int n = -30; n < 30; n++) {
     						int[] modShiftedCoords = calcCoord(j, n);
-    						org.eclipse.swt.graphics.Point hoverCoords = drawPoint(points, modShiftedCoords, Constants.LIGHTBLUE);
+    						int rad1 = isCoordAtReco(j, 0, modShiftedCoords) ? vis_rReco : vis_rNoReco;
+    						org.eclipse.swt.graphics.Point hoverCoords = drawPoint(points, modShiftedCoords, Constants.LIGHTBLUE, rad1);
         					pointsDrawn.put(new org.eclipse.swt.graphics.Point(modShiftedCoords[0], modShiftedCoords[1]), hoverCoords);
     					}
         			}
@@ -1415,8 +1431,9 @@ public class ShamirsSecretSharingComposite extends Composite {
         			if(! vis_isShareKnown(j)) {
         				for (int n = -30; n < 30; n++) {
     						int[] modShiftedCoords = calcCoord(j, n);
-    						org.eclipse.swt.graphics.Point hoverCoords = drawPoint(points, modShiftedCoords, Constants.LIGHTGREY);
-							pointsDrawn.put(new org.eclipse.swt.graphics.Point(modShiftedCoords[0], modShiftedCoords[1]), hoverCoords );
+    						int rad2 = isCoordAtReco(j, 0, modShiftedCoords) ? vis_rReco : vis_rNoReco;
+    						org.eclipse.swt.graphics.Point hoverCoords = drawPoint(points, modShiftedCoords, Constants.LIGHTGREY, rad2);
+							pointsDrawn.put(new org.eclipse.swt.graphics.Point(modShiftedCoords[0], modShiftedCoords[1]), hoverCoords);
     					}
         			}
         		}
@@ -1429,14 +1446,14 @@ public class ShamirsSecretSharingComposite extends Composite {
 				color = Constants.DARKPURPLE;
 			}
 			
-        	org.eclipse.swt.graphics.Point canvasCoord = drawPoint(points, pointCoords, color);
+        	org.eclipse.swt.graphics.Point canvasCoord = drawPoint(points, pointCoords, color, vis_rOrig);
         	pointsDrawn.put(new org.eclipse.swt.graphics.Point(pointCoords[0], pointCoords[1]), canvasCoord);
             
         }
     	for (org.eclipse.swt.graphics.Point hovered : hover.keySet()) {
 			if (hover.get(hovered)) {
 				int[] hoverCoords = new int[] {hovered.x, hovered.y};
-				drawPoint(points, hoverCoords, Constants.BLACK);
+				drawPoint(points, hoverCoords, Constants.BLACK, vis_rHover);
 			}
 		}
         
@@ -1446,8 +1463,20 @@ public class ShamirsSecretSharingComposite extends Composite {
 
     private Map<org.eclipse.swt.graphics.Point, org.eclipse.swt.graphics.Point> pointsDrawn = new HashMap<>();
     private Map<org.eclipse.swt.graphics.Point, Boolean> hover = new HashMap<>();
+    private Map<org.eclipse.swt.graphics.Point, Boolean> over = new HashMap<>();
     
 
+    private boolean isCoordAtReco(int nShare, int modOffset, int[] modShiftedCoords) {
+    	if (reconstructedPolynomial == null) {
+			return false;
+		}
+    	int[] recoPt = calcCoordReco(nShare, modOffset);
+    	
+    	if (recoPt[0] == modShiftedCoords[0] && recoPt[1] == modShiftedCoords[1]) {
+			return true;
+		}
+    	return false;
+    }
     private int[] calcCoord(int nShare, int modOffset) {
     	
     	int imgX = gridSizeX * nShare;
@@ -1458,11 +1487,21 @@ public class ShamirsSecretSharingComposite extends Composite {
 		imgY = imgY - (modOffset * modul.intValue());
 		return new int[] {imgX, imgY};
     }
+    private int[] calcCoordReco(int nShare, int modOffset) {
+    	
+    	int imgX = gridSizeX * nShare;
+		int imgY = ((int) valueAtReconstruction(nShare)) * (-gridSizeY);
+		if (pointValue == Integer.MAX_VALUE) {
+			imgY = ((int) pointValue) * (-gridSizeY);
+		}
+		imgY = imgY - (modOffset * modul.intValue());
+		return new int[] {imgX, imgY};
+    }
     
-	private org.eclipse.swt.graphics.Point drawPoint(GC gc, int[] coords, Color color) {
-		int pointRadius = 6;
+	private org.eclipse.swt.graphics.Point drawPoint(GC gc, int[] coords, Color color, int radius) {
+		int pointRadius = radius;
 		gc.setBackground(color);
-		return this.fillOval(gc, coords[0] - pointRadius/2, coords[1]- pointRadius/2, pointRadius, pointRadius, 1.0f, 1.0f, xAxisGap, yAxisGap);
+		return this.fillOval(gc, coords[0] - pointRadius, coords[1]- pointRadius, pointRadius*2, pointRadius*2, 1.0f, 1.0f, xAxisGap, yAxisGap);
 	}
     
     
@@ -1476,6 +1515,12 @@ public class ShamirsSecretSharingComposite extends Composite {
     private int     vis_hoveredShare = -1;
     private boolean vis_hoveredShare_showActualLabel = false;
     private boolean vis_hoveredShare_showReconstructedLabel = false;
+    
+    int vis_rNoReco = 2;
+    int vis_rReco = 4;
+    int vis_rOrig = 4;
+    int vis_rHover = 7;
+    
     
     private Map<int[], String> vis_moduloMultipleLabel=new HashMap<>();
     
