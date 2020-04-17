@@ -13,7 +13,6 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IViewReference;
@@ -44,8 +43,6 @@ public class VigenereBreakerView extends ViewPart {
     private boolean first = true;
 
     private ScrolledComposite scroll;
-
-//	private Composite pageComposite;
 
     /**
      * Constructs a new view of the Vigenère plug-in.

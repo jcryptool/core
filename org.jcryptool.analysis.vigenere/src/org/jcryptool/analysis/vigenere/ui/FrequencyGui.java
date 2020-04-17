@@ -99,7 +99,10 @@ public class FrequencyGui extends Content {
 			this.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 			cselection = new Composite(this, SWT.NONE);
-			cselection.setLayout(new GridLayout(3, false));
+			GridLayout gl_cselection = new GridLayout(3, false);
+			gl_cselection.marginHeight = 0;
+			gl_cselection.marginWidth = 0;
+			cselection.setLayout(gl_cselection);
 			cselection.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
 			lsone = new Label(cselection, SWT.BORDER | SWT.CENTER);
@@ -136,7 +139,10 @@ public class FrequencyGui extends Content {
 			tsample.setEditable(false);
 
 			cgraph = new Composite(mainComposite, SWT.NONE);
-			cgraph.setLayout(new GridLayout());
+			GridLayout gl_cgraph = new GridLayout();
+			gl_cgraph.marginHeight = 0;
+			gl_cgraph.marginWidth = 0;
+			cgraph.setLayout(gl_cgraph);
 			GridData gd_cgraph = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
 			gd_cgraph.widthHint = 600;
 			gd_cgraph.minimumHeight = 250;

@@ -131,7 +131,10 @@ public class DecryptionGui extends Content {
 			this.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 			cselection = new Composite(this, SWT.NONE);
-			cselection.setLayout(new GridLayout(3, false));
+			GridLayout gl_cselection = new GridLayout(3, false);
+			gl_cselection.marginHeight = 0;
+			gl_cselection.marginWidth = 0;
+			cselection.setLayout(gl_cselection);
 			cselection.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
 			labelOne = new Label(cselection, SWT.BORDER | SWT.CENTER);
