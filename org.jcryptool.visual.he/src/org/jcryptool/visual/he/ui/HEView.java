@@ -17,6 +17,7 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.ui.auto.LayoutAdvisor;
 import org.jcryptool.visual.he.HEPlugin;
 import org.jcryptool.visual.he.Messages;
 import org.eclipse.swt.layout.FillLayout;
@@ -69,6 +70,20 @@ public class HEView extends ViewPart {
         sc.setContent(c);
         sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti.setControl(sc);
+        
+        /**
+         * This sets all labels and text a widthHint.
+         * It is necessary, because the TitleAndDescriptionComposite (
+         * the GUI part which contains the title and the description of the
+         * plugin adds a resize listener to sc (the scrolledComposite that 
+         * contains all content).
+         * Unfortunately, if a textfield gets a long input and the resize listener
+         * is triggered it resizes the textfield to its preferrred size.
+         * Its prefferred size is the size to show the complete input.
+         * By setting a width hint this can be avoided and 
+         * LayoutAdvisor.addPreLayoutRootComposite(parent); does this.
+         */
+        LayoutAdvisor.addPreLayoutRootComposite(parent);
 
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, HEPlugin.PLUGIN_ID + ".heview");
 	}
