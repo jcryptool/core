@@ -70,7 +70,7 @@ public class HEView extends ViewPart {
         sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti.setControl(sc);
 
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), HEPlugin.PLUGIN_ID + ".heview");
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, HEPlugin.PLUGIN_ID + ".heview");
 	}
 
 	@Override
