@@ -498,6 +498,8 @@ public class HEComposite extends Composite {
         				newKeyWizardDialog = new WizardDialog(getShell(), new PaillierKeySelectionWizard(paillierData, HEComposite.this.getDisplay()));
         				break;
         		}
+        		// Remove the help icon from the wizard. There is no help available.
+        		newKeyWizardDialog.setHelpAvailable(false);
         		if (newKeyWizardDialog != null) {
             		recalcMinSizeOnPageChange(newKeyWizardDialog);
             		if (newKeyWizardDialog.open() == Window.OK) keySelected();
@@ -579,7 +581,7 @@ public class HEComposite extends Composite {
         this.initTextSel.addSelectionListener(new SelectionAdapter() {
         	@Override
 			public void widgetSelected(final SelectionEvent e) {
-        		WizardDialog initialTextWizardDialog = null;
+        		WizardDialog initialTextWizardDialog = null;       		
         		/** Since the modulus is different for each scheme, they each require an own wizard*/
         		switch(tabChoice) {
         		case RSA: 
@@ -589,6 +591,8 @@ public class HEComposite extends Composite {
         			initialTextWizardDialog = new WizardDialog(HEComposite.this.getShell(), new PaillierInitialTextWizard(paillierData));
         			break;
         		}
+        		// Remove the help icon from the wizard. There is no help available.
+        		initialTextWizardDialog.setHelpAvailable(false);
         		if (initialTextWizardDialog != null) {
         			recalcMinSizeOnPageChange(initialTextWizardDialog);
         			if (initialTextWizardDialog.open() == Window.OK) initialTextSelected();
@@ -656,6 +660,8 @@ public class HEComposite extends Composite {
 				public void widgetSelected(final SelectionEvent e) {
 	        		if (tabChoice == PAILLIER) {
 	        			WizardDialog wizardDialog = new WizardDialog(HEComposite.this.getShell(), new PaillierOperationTextWizard(paillierData));
+	        			// Remove the help icon from the wizard. There is no help available.
+	        			wizardDialog.setHelpAvailable(false);
 	        			recalcMinSizeOnPageChange(wizardDialog);
 	        			if (wizardDialog.open() == Window.OK) addTextSelected();
 	        		}
@@ -674,6 +680,8 @@ public class HEComposite extends Composite {
 				public void widgetSelected(final SelectionEvent e) {
         			if (tabChoice == RSA) {
 	        			WizardDialog wizardDialog = new WizardDialog(HEComposite.this.getShell(), new RSAOperationTextWizard(rsaEncData));
+	        			// Remove the help icon from the wizard. There is no help available.
+	        			wizardDialog.setHelpAvailable(false);
 	        			recalcMinSizeOnPageChange(wizardDialog);
 	        			if (wizardDialog.open() == Window.OK) multTextSelected();
 	        		}
@@ -696,6 +704,8 @@ public class HEComposite extends Composite {
 	        		case RSA: {
 	        			if (rsaDecData.getD() == null) {
 	        				WizardDialog wizardDialog = new WizardDialog(getShell(), new RSAKeySelectionWizard(rsaDecData, false));
+	        				// Remove the help icon from the wizard. There is no help available.
+		        			wizardDialog.setHelpAvailable(false);
 	        				recalcMinSizeOnPageChange(wizardDialog);			
 	        				if (wizardDialog.open() == Window.OK) {
 	        						//dText.setText(rsaDecData.getD().toString());

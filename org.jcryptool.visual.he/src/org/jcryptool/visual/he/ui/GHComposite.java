@@ -169,7 +169,7 @@ public class GHComposite extends Composite {
 	public GHComposite(final Composite parent, final int style) {
 		super(parent,style);
 		this.initialize();
-		YELLOW = GHComposite.this.getDisplay().getSystemColor(SWT.COLOR_YELLOW);
+		YELLOW = ColorService.YELLOW;
 
 		/**
 		 * The job which will be run when the addition or multiplication job is done,
@@ -632,6 +632,8 @@ public class GHComposite extends Composite {
 			public void widgetSelected(final SelectionEvent e) {
         		WizardDialog wd = new WizardDialog(GHComposite.this.getShell(),
     					new GHKeySelectionWizard(keyPair, fheParams, GHComposite.this.getDisplay()));
+        		// Remove the help icon from the wizard. There is no help available.
+        		wd.setHelpAvailable(false);
         		recalcMinSizeOnPageChange(wd);
         		if (wd.open() == Window.OK) keySelected();
         	}
@@ -730,6 +732,8 @@ public class GHComposite extends Composite {
 			public void widgetSelected(final SelectionEvent e) {
         		WizardDialog wd = new WizardDialog(GHComposite.this.getShell(),
     					new GHModulusWizard(data));
+        		// Remove help icon from wizard, because no help is available.
+        		wd.setHelpAvailable(false);
         		recalcMinSizeOnPageChange(wd);
         		if (wd.open() == Window.OK) modulusSelected();
         	}
@@ -774,6 +778,8 @@ public class GHComposite extends Composite {
 			public void widgetSelected(final SelectionEvent e) {
         		WizardDialog wd = new WizardDialog(GHComposite.this.getShell(),
         				new GHInitialTextWizard(logMod, data));
+        		// Remove help icon from wizard, because no help is available.
+        		wd.setHelpAvailable(false);
         		recalcMinSizeOnPageChange(wd);
         		if (wd.open() == Window.OK) initialTextSelected();
         	}
@@ -842,6 +848,8 @@ public class GHComposite extends Composite {
 			public void widgetSelected(final SelectionEvent e) {
         		WizardDialog wd = new WizardDialog(GHComposite.this.getShell(),
         				new GHOperationTextWizard(logMod, data));
+        		// Remove help icon from wizard, because no help is available.
+        		wd.setHelpAvailable(false);
         		recalcMinSizeOnPageChange(wd);
         		if (wd.open() == Window.OK) addTextSelected();
         	}
@@ -856,6 +864,8 @@ public class GHComposite extends Composite {
 			public void widgetSelected(final SelectionEvent e) {
 	    		WizardDialog wd = new WizardDialog(GHComposite.this.getShell(),
 		        		new GHOperationTextWizard(logMod, data));
+	    		// Remove help icon from wizard, because no help is available.
+        		wd.setHelpAvailable(false);
 	    		recalcMinSizeOnPageChange(wd);
 	    		if (wd.open() == Window.OK) multTextSelected();
 	    		}
@@ -1003,6 +1013,8 @@ public class GHComposite extends Composite {
 			public void widgetSelected(final SelectionEvent e) {
         		WizardDialog wd = new WizardDialog(GHComposite.this.getShell(),
     					new GHSettingsWizard(data));
+        		// Remove help icon from wizard, because no help is available.
+        		wd.setHelpAvailable(false);
         		recalcMinSizeOnPageChange(wd);
         		wd.open();
         	}
