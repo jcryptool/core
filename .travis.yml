@@ -16,15 +16,15 @@ before_deploy:
 - git tag "Weekly-Build--$(date +'%Y-%m-%d')"
 after_success:
 # Rename files for better readability
-- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-linux.gtk.x86_64.tar.gz" "org.jcryptool.product/target/products/JCrypTool\ 1.0.0\ Linux\ 64bit.tar.gz"
-- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-linux.gtk.x86_64.tar.gz.md5" "org.jcryptool.product/target/products/JCrypTool\ 1.0.0\ Linux\ 64bit.tar.gz.md5"
-- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-linux.gtk.x86_64.tar.gz.sha1" "org.jcryptool.product/target/products/JCrypTool\ 1.0.0\ Linux\ 64bit.tar.gz.sha1"
-- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-macosx.cocoa.x86_64.tar.gz" "org.jcryptool.product/target/products/JCrypTool\ 1.0.0\ macOS\ 64bit.tar.gz"
-- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-macosx.cocoa.x86_64.tar.gz.md5" "org.jcryptool.product/target/products/JCrypTool\ 1.0.0\ macOS\ 64bit.tar.gz.md5"
-- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-macosx.cocoa.x86_64.tar.gz.sha1" "org.jcryptool.product/target/products/JCrypTool\ 1.0.0\ macOS\ 64bit.tar.gz.sha1"
-- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-win32.win32.x86_64.zip" "org.jcryptool.product/target/products/JCrypTool\ 1.0.0\ Windows\ 64bit.zip" 
-- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-win32.win32.x86_64.zip.md5" "org.jcryptool.product/target/products/JCrypTool\ 1.0.0\ Windows\ 64bit.zip.md5"
-- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-win32.win32.x86_64.zip.sha1" "org.jcryptool.product/target/products/JCrypTool\ 1.0.0\ Windows\ 64bit.zip.sha1"
+- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-linux.gtk.x86_64.tar.gz" "org.jcryptool.product/target/products/JCrypTool 1.0.0 Linux 64bit.tar.gz"
+- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-linux.gtk.x86_64.tar.gz.md5" "org.jcryptool.product/target/products/JCrypTool 1.0.0 Linux 64bit.tar.gz.md5"
+- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-linux.gtk.x86_64.tar.gz.sha1" "org.jcryptool.product/target/products/JCrypTool 1.0.0 Linux 64bit.tar.gz.sha1"
+- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-macosx.cocoa.x86_64.tar.gz" "org.jcryptool.product/target/products/JCrypTool 1.0.0 macOS 64bit.tar.gz"
+- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-macosx.cocoa.x86_64.tar.gz.md5" "org.jcryptool.product/target/products/JCrypTool 1.0.0 macOS 64bit.tar.gz.md5"
+- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-macosx.cocoa.x86_64.tar.gz.sha1" "org.jcryptool.product/target/products/JCrypTool 1.0.0 macOS 64bit.tar.gz.sha1"
+- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-win32.win32.x86_64.zip" "org.jcryptool.product/target/products/JCrypTool 1.0.0 Windows 64bit.zip" 
+- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-win32.win32.x86_64.zip.md5" "org.jcryptool.product/target/products/JCrypTool 1.0.0 Windows 64bit.zip.md5"
+- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-win32.win32.x86_64.zip.sha1" "org.jcryptool.product/target/products/JCrypTool 1.0.0 Windows 64bit.zip.sha1"
 deploy:
   - provider: releases
     prerelease: true
