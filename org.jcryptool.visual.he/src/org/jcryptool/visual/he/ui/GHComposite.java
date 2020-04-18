@@ -301,7 +301,10 @@ public class GHComposite extends Composite {
 	 * and the main composite, which holds the visualization
 	 */
 	private void initialize() {
-		this.setLayout(new GridLayout());
+		GridLayout gl = new GridLayout();
+		gl.marginHeight = 0;
+		gl.marginWidth = 0;
+		this.setLayout(gl);
 		this.createHead();
 		this.createMain();
 	}
@@ -331,6 +334,8 @@ public class GHComposite extends Composite {
 	private void createMain() {
 		final Group mainGroup = new Group(this, SWT.NONE);
 		final GridLayout gl = new GridLayout(1, false);
+		gl.marginHeight = 0;
+		gl.marginWidth = 0;
 		mainGroup.setText(Messages.HEComposite_Scheme);
         mainGroup.setLayout(gl);
         mainGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));

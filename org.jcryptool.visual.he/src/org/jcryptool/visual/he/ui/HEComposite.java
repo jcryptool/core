@@ -129,7 +129,7 @@ public class HEComposite extends Composite {
 		super(parent,style);
 		this.tabChoice = tabChoice;
 		this.initialize();
-		YELLOW = HEComposite.this.getDisplay().getSystemColor(SWT.COLOR_YELLOW);
+		YELLOW = ColorService.YELLOW;
 	}
 
 	/**
@@ -137,7 +137,10 @@ public class HEComposite extends Composite {
 	 * and the main composite, which holds the visualization
 	 */
 	private void initialize() {
-		this.setLayout(new GridLayout());
+		GridLayout gl = new GridLayout();
+		gl.marginHeight = 0;
+		gl.marginWidth = 0;
+		this.setLayout(gl);
 		this.createHead();
 		this.createMain();
 	}
@@ -176,6 +179,8 @@ public class HEComposite extends Composite {
 		final Group g = new Group(this, SWT.NONE);
 		g.setText(Messages.HEComposite_Scheme);
 		final GridLayout gl = new GridLayout(2, false);
+		gl.marginHeight = 0;
+		gl.marginWidth = 0;
         g.setLayout(gl);
         g.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         this.createAlgoArea(g);
