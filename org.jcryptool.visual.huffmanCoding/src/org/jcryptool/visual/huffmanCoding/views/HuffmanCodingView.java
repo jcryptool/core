@@ -43,6 +43,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -1122,11 +1123,19 @@ public class HuffmanCodingView extends ViewPart {
 		return new BitString[0];
 	}
 
+	/**
+	 * Switch to huffman tree tab and highlight the path to the selected node.
+	 * @param nodeValue
+	 */
 	public void setAndHiglightGraph(String nodeValue) {
-		if (treeView != null) {
-			treeView.highlightNode(nodeValue);
-			tabFolder.setSelection(tbtmHuffmanTree);
-		}
+
+		// This opens the Huffman tree tab folder
+		tabFolder.setSelection(VIEWTREE);
+		tabFolder.notifyListeners(SWT.Selection, new Event());
+
+		// This highlights the path to the selected char.
+		treeView.highlightNode(nodeValue);
+		tabFolder.setSelection(tbtmHuffmanTree);
 	}
 
 	public int getMode() {
