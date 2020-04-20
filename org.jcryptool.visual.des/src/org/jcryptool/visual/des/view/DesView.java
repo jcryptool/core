@@ -39,8 +39,8 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.des.algorithm.DESController;
 
 public class DesView extends ViewPart {
@@ -59,8 +59,6 @@ public class DesView extends ViewPart {
 	private ScrolledComposite wrapper = null;
 	private TabFolder tfolder_1;
 	private TabItem tabAlg = null;;
-	private Text lblTitle = null;
-	private Text lblInformationText = null;
 	private Composite comAlgMain = null;
 	private Group grpAlgInput = null;
 	private Group grpAlgOutput = null;
@@ -211,18 +209,10 @@ public class DesView extends ViewPart {
 	 * @param parent The parent COmposite. must have an GrifLayout with 2 Columns.
 	 */
 	private void createTitleAndDescription(Composite parent) {
-		// title
-		lblTitle = new Text(parent, SWT.NONE);
-		lblTitle.setEditable(false);
-		lblTitle.setBackground(ColorService.WHITE);
-		lblTitle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
-		lblTitle.setFont(FontService.getHeaderFont());
-		lblTitle.setText(Messages.DesView_title);
-		
-		// title description
-		lblInformationText = new Text(parent, SWT.WRAP | SWT.READ_ONLY);
-		lblInformationText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
-		lblInformationText.setText(Messages.DesView_text);
+		TitleAndDescriptionComposite titleAndDescriptionComposite = new TitleAndDescriptionComposite(parent);
+		titleAndDescriptionComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
+		titleAndDescriptionComposite.setTitle(Messages.DesView_title);
+		titleAndDescriptionComposite.setDescription(Messages.DesView_text);
 	}
 	
 	/**
