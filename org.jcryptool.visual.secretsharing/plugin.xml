@@ -34,27 +34,6 @@
       </contexts>
    </extension>
    <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="toolbar:org.jcryptool.visual.secretsharing.views.SecretSharingView">
-         <command
-               commandId="org.jcryptool.visual.secretsharing.helpCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png"
-               style="push"
-               tooltip="%help.command.tooltip">
-         </command>
-      </menuContribution>
-      <menuContribution
-            locationURI="menu:org.jcryptool.visual.secretsharing.views.SecretSharingView">
-         <command
-               commandId="org.jcryptool.visual.secretsharing.helpCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png"
-               style="push"
-               tooltip="%help.command.tooltip">
-         </command>
-      </menuContribution>
-   </extension>
-   <extension
          point="org.eclipse.ui.commands">
       <command
             id="org.jcryptool.visual.secretsharing.helpCommand"
@@ -85,14 +64,6 @@
    </extension>
    <extension
          point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="menu:org.jcryptool.visual.secretsharing.views.SecretSharingView">
-         <command
-               commandId="org.jcryptool.visual.secretsharing.restartCommand"
-               icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
-               style="push">
-         </command>
-      </menuContribution>
       <menuContribution
             locationURI="toolbar:org.jcryptool.visual.secretsharing.views.SecretSharingView">
          <command

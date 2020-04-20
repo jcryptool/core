@@ -65,11 +65,6 @@
                icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
                style="push">
          </command>
-         <command
-               commandId="org.jcryptool.visual.elGamal.helpCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png"
-               style="push">
-         </command>
       </menuContribution>
    </extension>
 

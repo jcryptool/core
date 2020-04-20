@@ -15,20 +15,20 @@
 		Eine digitale Signatur kann zur Authentifizierung der Identität des Senders oder des Unterzeichners des Dokuments genutzt werden. 
 		Sie sichert außerdem die Integrität des Dokumentes selbst.
 		</p>
-		<p align=center><img src="GUI1.png" width="90%"></p> 
+		<p align=center><img src="GUI1.png" width="85%"></p> 
 		<h2>Allgemeine Informationen</h2>
         <h3>Schritt zurück-Funktion</h3>
 		<p>Schrittweises zurückgehen. Alle vorgenommenen änderungen oder Einstellungen bleiben gespeichert, bis zu dem Schritt zu dem man zurück geht.</p>
 		
 		<h2>Schritt 1 – Input auswählen</h2>
         <p>Um den Signaturverifizierungsprozess zu starten, klicken Sie den Button "Input auswählen". Wählen Sie eine bereits vorhandene Signatur-Datei aus, die mit der "Signatur-Demo"-Visualisierung erzeugt wurde. Die maximale Dateigröße wird Ihnen in der Titelzeile des Fensters angezeigt. Sollten Sie noch keine signierte Datei besitzen, können Sie sich mit der Signatur-Demo Visualisierung eine solche Datei erstellen.</p>
-      	<p><img src="DateiAuswahlen.png"></p>
+      	<p><img width="85%" src="DateiAuswahlen.png"></p>
 		
 		<h2>Schritt 2 – Hashfunktion auswählen</h2>
         <p>Der zweite Schritt des Signaturverifizierungsprozesses ist die Berechnung des Hashwertes der signierten Datei. Eine Hashfunktion bildet Daten variabler Länge auf einen Wert fester Länge ab. Statt der eigentlichen Nachricht wird nur deren Hashwert signiert (bzw. verifiziert). Dies erhöht die Effizienz in der Regel deutlich, da der Hashwert oft deutlich kleiner ist als die eigentliche Nachricht. Mit der Neuberechnung des Hashwertes der Datei kann diese auf Veränderung geprüft werden. 
         Es muss der gleiche Hashalgorithmus verwendet werden wie bei der Signaturerstellung. Normalerweise enthält die Signatur eine Angabe dazu, welcher Algorithmus bei der Signierung verwendet wurde. Das ist hier nicht der Fall, sodass der Nutzer diese manuell angeben muss.</p>
         
-        <img src="HashWahlen.png">
+        <img width="85%" src="HashWahlen.png">
         
         <h3>Beschreibung der unterstützten Hashfunktionen</h3>
         <h4>MD5</h4>
@@ -44,7 +44,7 @@
         
         <h2>Schritt  3 – Signatur verifizieren</h2>
         <p>Um die von Ihnen gewählte Signatur zu verifizieren, müssen Sie die Signaturfunktionen auswählen, mit der die Signatur erstellt wurde.</p>
-        <img src="Signaturmethode.png">
+        <img width="85%" src="Signaturmethode.png">
         
         <h3>Beschreibung der unterstützten Signaturfunktionen</h3>
         <h4>DSA</h4>
@@ -67,8 +67,8 @@
 		<p>Nun benötigen Sie noch den öffentlichen Schlüssel, der zu dem privaten Schlüssel passt, mit dem die Signatur erzeugt wurde. Wurde die Signatur mit einem Schlüssel aus dem JCT-üsselspeicher signiert (was momentan die einzige Möglichkeit darstellt), so kann der entsprechende öffentliche Schlüssel hier geladen werden.</p>
 		
         <h2>Schritt 4 – Ergebnis anzeigen</h2>
-        <img src="Hacken.png">
-        <img src="Kreutz.png">
+        <img width="85%" src="Hacken.png">
+        <img width="85%" src="Kreutz.png">
         <p>Wenn die Signatur als gültig verifiziert wurde, erscheint ein grüner Haken neben dem Button "Ergebnis anzeigen", ansonsten erscheint ein rotes Kreutz. Für nähere Informationen, klicken Sie auf den Button „Ergebnis anzeigen“. Dort finden Sie alle relevanten Informationen zu der verifizierten Signatur:</p>
         <ul>
             <li>Den verwendeten Schlüssel</li>
@@ -77,12 +77,12 @@
 			<li>Die hexadezimale Darstellung des Hashwertes sowie dessen Länge</li>
 		</ul>
         <!--<p>Klicken Sie auf den Button “Gültigkeitsmodelle”, um sich die Verifizierung von Zertifikaten nach dem Schalenmodell genauer anzusehen.</p>-->
-		<img src="ErgebnisAnzeigen.png">
+		<img width="85%" src="ErgebnisAnzeigen.png">
 		
 		<h1 id="GUI2">Gültigkeitsvalidierung von Zertifikaten mit dem Schalenmodell</h1>
 		<p>Diese für Lernzwecke erstellte Oberfläche zeigt, wie sich bei der Validierung nach dem Schalenmodell verschiedene Zertifikat-Gültigkeiten auf das Ergebnis auswirken.
 		Eine ausführlichere Visualisierung mit 3 Gültigkeitsmodellen, in der man die Zeitpunkte auch mit Slidern einstellen kann, finden Sie im Menü "Visualisierungen -> Zertifikat-Verifikation".</p>
-		<img src="2ob.png">
+		<img width="85%" src="2ob.png">
 		<h2>Schalenmodell</h2>
 		<p>Beim Schalenmodell wird eine Signatur nur für gültig erklärt, wenn zum überprüfungszeitpunkt alle Zertifikate gültig sind. Dh. wenn zum Zeitpunkt der überprüfung zwar das Teilnehmer-Zertifikat und das Level 2-Zertifikat noch gültig sind, das Wurzel-Zertifikat aber nicht mehr gültig ist, dann wird die Signatur für ungültig erklärt. Genauso können die unteren Zertifikate kein längeres Gültigkeitsdatum als die höhergestellten haben (z. B.: Level 2 als Wurzel)</p>
 		<h3>Zertifikate</h3>

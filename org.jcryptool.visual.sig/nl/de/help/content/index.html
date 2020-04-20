@@ -14,7 +14,7 @@
 		(Nachricht). Eine digitale Signatur kann man benutzen, um den Unterzeichner der Nachricht zu verifizieren.
 		Sie sichert außerdem die Integrität des Dokumentes selbst.
 		</p>
-		<img src="MainStart.png">
+		<img width="85%" src="MainStart.png">
         <h2>Allgemeine Informationen</h2>
         <h3>Reset-Funktion</h3>
 		<p>Die ausgewählten Hash- und Signaturfunktionen werden gespeichert, alle anderen vorgenommenen Änderungen oder Einstellungen werden auf den Ausgangszustand zurückgesetzt.</p>
@@ -23,13 +23,13 @@
               
         <h2>Schritt 1 – Input auswählen</h2>
         <p>Um den Signaturerstellungsprozess zu starten, klicken Sie den Button "Input auswählen". Wählen Sie eine bereits vorhandene Datei oder geben Sie selbst einen Text ein. Wollen Sie eine bereits vorhandene Datei signieren, können Sie einen beliebigen Dateitypen wählen. Die Dateigröße wird (in etwa) durch den von JCT maximal anforderbaren Arbeitsspeicher begrenzt.</p>
-      	<img src="InputWizard.png"> 
-      	<img src="InputFile.png">
-      	<img src="InputText.png">
+      	<img width="85%" src="InputWizard.png"> 
+      	<img width="85%" src="InputFile.png">
+      	<img width="85%" src="InputText.png">
         
         <h2>Schritt 2 – Hashfunktion auswählen</h2>
         <p>Der zweite Schritt des Signaturerstellungsprozesses ist die Berechnung des Hashwertes des Dokumentes. Eine Hashfunktion ist ein Algorithmus, der einen Datensatz variabler Länge (eine Nachricht) auf einen Datensatz fixer Länge (den Hashwert) abbildet. Da die Größe des Hashwertes normalerweise viel kleiner ist als die Nachricht, wird der Hashwert signiert. Dadurch wird die Effizient des Signaturerzeugungsprozesses gesteigert. Bei der Signaturerstellung sowie bei der Verifikation der Signatur muss der gleich Hashalgorithmus verwendet werden.</p>
-        <img src="HashWizard.png">
+        <img width="85%" src="HashWizard.png">
         <h3>Beschreibung der unterstützten Hashfunktionen</h3>
         <h4>MD5</h4>
         <p>Der MD5-Algoritmus (veröffentlicht im Jahr 1992 und spezifiziert in RFC 1321) generiert aus einer gegebenen Nachricht einen 128-Bit langen "Fingerabdruck" oder "Hashwert". Der MD5-Algoritmus ist für digitale Signaturapplikationen vorgesehen, in der sehr große Dateien sicher "komprimiert" werden müssen, bevor sie, wie beispielsweise in einem Public-Key-Kryptosystem wie RSA, mit einem privaten Schlüssel verschlüsselt werden. </p>
@@ -44,7 +44,7 @@
         
         <h2>Schritt  3 – Signaturfunktion auswählen</h2>
         <p>Um den von Ihnen gewählten Input zu signieren, können Sie zwischen verschieden Signaturfunktionen auswählen. Einige Signaturverfahren basieren auf asymmetrischer Verschlüsselung, wie beispielsweise RSA, andere Verfahren wurden eigens für diesen Zweck entwickelt, wie DSA.</p>
-        <img src="SignatureWizard.png">
+        <img width="85%" src="SignatureWizard.png">
         <p>Um eine Signatur zu erstellen und anschließend zu verifizieren, benötigt man zwei verschiedene Schlüssel. Der private Schlüssel wird für die Erstellung der Signatur genutzt. Nur der Besitzer des Schlüssels kennt ihn und muss ihn geheim halten. Der öffentliche Schlüssel kann von jedem verwendet werden, um die Signatur zu verifizieren. <br> Um die Signatur zu erzeugen, müssen Sie einen Schlüssel wählen, die vom Standard-JCT-Keystore zu Verfügung gestellt werden.</p>
         <a href="https://github.com/jcryptool/core/tree/master/org.jcryptool.crypto.keystore" target="_blank">Besuchen Sie den Standard-JCT-Keystore</a> 
         <h3>Beschreibung der unterstützten Signaturfunktionen</h3>
@@ -65,7 +65,7 @@
         	<li><a href="http://www.mobilefish.com/developer/bouncycastle/bouncycastle.html" target="_blank">Beispiele mit BouncyCastle</a></li>
   		</ul>
         <br>
-        <img src="MainFinished.png">
+        <img width="85%" src="MainFinished.png">
         <h2>Schritt 4 – Erzeugte Signatur anzeigen</h2>
         <p>Um die erzeugte Signatur anzuzeigen, klicken Sie auf den Button „Erzeugte Signatur anzeigen“. Dort finden Sie alle relevanten Informationen zu der Signatur:</p>
         <ul>
@@ -75,7 +75,7 @@
             <li>die hexadezimale, oktale oder die binäre Darstellung der signierten Datei sowie der erzeugten Signatur.</li>
         </ul>
         <p>Um die Signatur und die dazugehörige Nachricht abzuspeichern, klicken Sie auf "Speichern". Klicken Sie anschließend auf den Button “Im Hexeditor öffnen” um die signierte Datei und die erzeugte Signatur im Hex Editor des JCrypTools anzuziegen.</p>
-		<img src="ShowSigWizard.png">
+		<img width="85%" src="ShowSigWizard.png">
 
     </body>
 </html>

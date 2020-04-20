@@ -56,7 +56,7 @@
 
 <h4>Structure</h4>
 
-<img src="img/mss.png" alt="Structure of a MSS Tree" height="800"/>
+<img src="img/mss.png" alt="Structure of a MSS Tree" width="85%" />
 <br>
 <br>
 
@@ -93,7 +93,7 @@ Altogether, 2^h messages with a length of m bytes can be signed.</p>
 
 <h4>Structure</h4>
 
-<img src="img/xmss.png" alt="Structure of a XMSS-Trees" height="800"/>
+<img src="img/xmss.png" alt="Structure of a XMSS-Trees" width="85%" />
 <br>
 <br>
 
@@ -119,26 +119,26 @@ Altogether, 2^h messages with a length of m bytes can be signed.</p>
 
 <h4>Tab 1: Seed and Key Generation</h4>
 
-<img src="img/page1.png" alt="Create the seed and generate the keypairs" width="70%"/>  <!-- be: Statt width="1200" -->
+<img src="img/page1.png" alt="Create the seed and generate the keypairs" width="85%"/>  <!-- be: Statt width="1200" -->
 <p>In this tab you can switch between the different modes (MSS, XMSS, XMSS^MT). There is also an option to define the seed, set the Winternitz parameter, set the amount of the secret keys, and generate the secret keys.</p>
 	
 <p> </br> </p>
-<img src="img/seed.png" alt="This is where the seed is defined" width="70%"/>  <!-- be: Statt width="1200" -->
+<img src="img/seed.png" alt="This is where the seed is defined" width="85%"/>  <!-- be: Statt width="1200" -->
 <p>This image shows where the seed is defined. The seed is used to generate the secret keys. It is  possible to either use a self-defined numeric seed, or create a random seed with the button <b>Generate new seed</b>.</p>
 	
 <p> </br> </p>
-<img src="img/bitmask.png" alt="Here you can define the seed for the bitmask" width="70%"/>  <!-- be: Statt width="1200" -->
+<img src="img/bitmask.png" alt="Here you can define the seed for the bitmask" width="85%"/>  <!-- be: Statt width="1200" -->
 <p>If the <b>eXtended Merkle signature scheme (XMSS)</b> is used, there is another box, where you can define the seed for the bitmask.</p>
 
 <p> </br> </p>
-<img src="img/winternitz.png" alt="Here you can define the Winternitz parameter" width="70%"/>  <!-- be: Statt width="1200" -->
+<img src="img/winternitz.png" alt="Here you can define the Winternitz parameter" width="85%"/>  <!-- be: Statt width="1200" -->
 <p>Despite the Winternitz parameter could have any size, here it can be set only to 4 or 16 as these are the most commonly used values.</p>
 
 
 <br>
 <h4>Tab 2: Merkle Tree</h4>
 	
-<img src="img/page2.png" alt="Merkle Tree" width="70%"/>  <!-- be: Statt width="1200" -->
+<img src="img/page2.png" alt="Merkle Tree" width="85%"/>  <!-- be: Statt width="1200" -->
 <p>This tab is used to display the created Merkle tree. The tree consists of leafs, the nodes, and the root node. The root node is also known as the Merkle public key.
 If a node is chosen, the path to the root node is marked yellow.
 The verification path, which is part of the signature, is marked red.
@@ -146,7 +146,7 @@ If a node or a leaf is chosen its hash value is displayed in the upper left area
 The full tree can be viewed by clicking <b>Hide Description</b>.
 If you are in the XMSS^MT mode, the multitrees will display in different colors.</p>
 
-<img src="img/extended.png" alt="Merkle Tree" width="70%"/>  <!-- be: Statt width="1200" -->
+<img src="img/extended.png" alt="Merkle Tree" width="85%"/>  <!-- be: Statt width="1200" -->
 
 
 
@@ -154,17 +154,17 @@ If you are in the XMSS^MT mode, the multitrees will display in different colors.
 <h4>Tab 3: Key Pair</h4>
 
 <p>The public key and the private key are shown in the third tab.</p>
-<img src="img/keypair.png" alt="Merkle Tree" width="70%"/>  <!-- be: Statt width="1200" -->
+<img src="img/keypair.png" alt="Merkle Tree" width="85%"/>  <!-- be: Statt width="1200" -->
 
 
 <p></p><br>
 <h4>Tab 4: Signing</h4>
 	
-<img src="img/page3.png" alt="Sign message" width="70%"/>  <!-- be: Statt width="1200" -->
+<img src="img/page3.png" alt="Sign message" width="85%"/>  <!-- be: Statt width="1200" -->
 <p>This tab is used to generate signatures. The signature are generated using the keys defined in tab 1. With the <b>Interactive Signature Generator</b> you can follow the signature generation process step by step. If you choose <b>Simple Signature Generation</b> you can enter a user defined text, and after pressing <b>Sign message</b> this message is going to be signed, using the Merkle signature scheme.</p>
 
 <p> </br> </p>
-<img src="img/sign.png" alt="Signature" width="70%"/>  <!-- be: Statt width="1200" -->
+<img src="img/sign.png" alt="Signature" width="85%"/>  <!-- be: Statt width="1200" -->
 <p>This picture shows the signature of a message and the length of the signature in bytes.
 The signature has the following structure: Index of the key pair | OTS signature | Authentication path.</p>
 
@@ -174,13 +174,13 @@ The signature has the following structure: Index of the key pair | OTS signature
 <br>
 <h4>Tab 5: Verification</h4>
 
-<img src="img/page4.png" alt="Verification" width="70%"/>  <!-- be: Statt width="1200" -->
+<img src="img/page4.png" alt="Verification" width="85%"/>  <!-- be: Statt width="1200" -->
 <p>The signature created before can be verified in this tab.
 The correct leaf (this is the one with the correct index) is pre-selected when opening this tab.
 Clicking on <b>Verify</b> tries to verify the signature with the selected leaf by calculating the WOTS public key of the WOTS signature. Then this WOTS key is used to calculate the corresponding leaf of the L-Tree.</p>
 
 <p> </br> </p>
-<img src="img/verify.png" alt="Successful Verification" width="70%"/>  <!-- be: Statt width="1200" -->
+<img src="img/verify.png" alt="Successful Verification" width="85%"/>  <!-- be: Statt width="1200" -->
 <p>If you click <b>Created Signatures</b> it will display all your signatures. You can also choose another (wrong) leaf. If you do so, the verification will fail.</p>
 
 

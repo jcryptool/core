@@ -414,7 +414,7 @@ public class HashingView extends ViewPart {
 		
 		loadExampleText();
 		
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, HashingPlugin.PLUGIN_ID + ".hashingContextHelp");
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, HashingPlugin.PLUGIN_ID + ".view");
 	}
 
 	private String hexToDecimal(String hex) {

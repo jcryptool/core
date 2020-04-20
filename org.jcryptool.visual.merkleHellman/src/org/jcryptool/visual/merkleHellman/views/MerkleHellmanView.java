@@ -926,6 +926,9 @@ public class MerkleHellmanView extends ViewPart {
 		int startValue = Integer.parseInt(comboStartValue.getText());
 
 		generatePrivateKey(numberOfElements, startValue);
+
+
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.visual.merkleHellman.view");
 	}
 
 	protected boolean isSuperIncreasing() {

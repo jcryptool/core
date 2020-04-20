@@ -193,7 +193,7 @@ public class MerkleTreeView extends ViewPart {
 		scrolledComposite.setMinSize(MerkleConst.PLUGIN_WIDTH, MerkleConst.PLUGIN_HEIGTH);
 
 		// makes the connection to the help of the plug-in
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), "org.jcryptool.visual.merkletree.merkletreeview");
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), "org.jcryptool.visual.merkletree.MerkleTreeView");
 	}
 
 	/**

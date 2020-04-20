@@ -106,8 +106,7 @@ public class SslView extends ViewPart {
         scrolledComposite.setMinSize(mainContent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         
         // Fuer die Hilfe:
-        // PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), SslPlugin.PLUGIN_ID
-        // + ".sslview");
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), "org.jcryptool.visual.ssl.view");
     }
 
     /**
