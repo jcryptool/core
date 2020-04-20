@@ -35,7 +35,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.kleptography.ui.KleptoView.PrimeGenSetting;
 
@@ -55,9 +54,9 @@ public class RSAKeyView extends Composite {
     private StyledText textN;
     private StyledText textE;
     private StyledText textD;
-    private Text tMessage;
-    private Text tCiphertext;
-    private Text tDecrypt;
+    private StyledText tMessage;
+    private StyledText tCiphertext;
+    private StyledText tDecrypt;
     private Combo tBits;
     private Label labelP;
     private Label labelQ;
@@ -554,10 +553,12 @@ public class RSAKeyView extends Composite {
         textP = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
         textP.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 2, 1));
         textP.setMargins(4, 0, 4, 0);
+        textP.setAlwaysShowScrollBars(false);
 
         textQ = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
         textQ.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 2, 1));
         textQ.setMargins(4, 0, 4, 0);
+        textQ.setAlwaysShowScrollBars(false);
 
         bCalcN = new Button(localParent, SWT.PUSH);
         bCalcN.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 2));
@@ -570,6 +571,7 @@ public class RSAKeyView extends Composite {
         textN = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
         textN.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 4, 1));
         textN.setMargins(4, 0, 4, 0);
+        textN.setAlwaysShowScrollBars(false);
 
         lBlankE = new Label(localParent, SWT.None);
         lBlankE.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 2));
@@ -590,6 +592,7 @@ public class RSAKeyView extends Composite {
         textE = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
         textE.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 2, 1));
         textE.setMargins(4, 0, 4, 0);
+        textE.setAlwaysShowScrollBars(false);
 
         bCalcD = new Button(localParent, SWT.PUSH);
         bCalcD.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 2));
@@ -602,6 +605,7 @@ public class RSAKeyView extends Composite {
         textD = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
         textD.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 4, 1));
         textD.setMargins(4, 0, 4, 0);
+        textD.setAlwaysShowScrollBars(false);
     }
 
     /**
@@ -631,11 +635,11 @@ public class RSAKeyView extends Composite {
         stSpecificDescription = new StyledText(cDescription, SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
         stSpecificDescription.setText(""); //$NON-NLS-1$
         gd = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-        gd.minimumHeight = 300;
         gd.heightHint = 300;
-        gd.minimumWidth = 10;
         gd.widthHint = 150;
         stSpecificDescription.setLayoutData(gd);
+        stSpecificDescription.setAlwaysShowScrollBars(false);
+        
     }
 
     /**
@@ -667,13 +671,17 @@ public class RSAKeyView extends Composite {
         gDecrypt.setText(Messages.RSAKeyView_Decrypted);
 
         // Set up the actual text fields and associated buttons.
-        tMessage = new Text(gMessage, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
+        tMessage = new StyledText(gMessage, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
         tMessage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        tMessage.setAlwaysShowScrollBars(false);
+        
         bEncrypt = new Button(gMessage, SWT.PUSH);
         bEncrypt.setText(Messages.RSAKeyView_Encrypt);
 
-        tCiphertext = new Text(gCipher, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
+        tCiphertext = new StyledText(gCipher, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
         tCiphertext.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+        tCiphertext.setAlwaysShowScrollBars(false);
+        
         bDecrypt = new Button(gCipher, SWT.PUSH);
         bDecrypt.setLayoutData(new GridData(SWT.NONE, SWT.NONE, false, false, 1, 1));
         bDecrypt.setText(Messages.RSAKeyView_Decrypt);
@@ -681,8 +689,9 @@ public class RSAKeyView extends Composite {
         bSave.setLayoutData(new GridData(SWT.NONE, SWT.NONE, false, false, 1, 1));
         bSave.setText(Messages.RSAKeyView_Save);
 
-        tDecrypt = new Text(gDecrypt, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
+        tDecrypt = new StyledText(gDecrypt, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
         tDecrypt.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        tDecrypt.setAlwaysShowScrollBars(false);
     }
 
     /**
@@ -1097,6 +1106,7 @@ public class RSAKeyView extends Composite {
                     kleptoView.setAttackTabVisibility(false);
                     kleptoView.klepto.rsa.setInitFixed(false);
                     kleptoView.klepto.attack.resetFixedTextsSaved();
+                    resetIDAndIndex();
                 }
                 break;
             case 3:

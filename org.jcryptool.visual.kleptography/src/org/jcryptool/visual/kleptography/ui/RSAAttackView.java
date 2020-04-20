@@ -24,7 +24,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.kleptography.ui.KleptoView.PrimeGenSetting;
 
@@ -39,10 +38,10 @@ public class RSAAttackView extends Composite {
 	private Group gCalculationsFixed;
 	private Group gCipherTextFixed;
 	private Group gDecryptionsFixed;
-	private Text tCipherFixed1;
-	private Text tTextFixed1;
-	private Text tCipherFixed2;
-	private Text tTextFixed2;
+	private StyledText tCipherFixed1;
+	private StyledText tTextFixed1;
+	private StyledText tCipherFixed2;
+	private StyledText tTextFixed2;
 	private StyledText tNFixed1;
 	private StyledText tNFixed2;
 	private StyledText tEFixed1;
@@ -85,11 +84,11 @@ public class RSAAttackView extends Composite {
 	private Group gCalculationsSETUP;
 	private Group gCipherTextSETUP;
 	private Group gDecryptionsSETUP;
-	private Text tCipherSETUP;
+	private StyledText tCipherSETUP;
 	private Label lTextSETUP1;
 	private Label lTextSETUP2;
-	private Text tTextSETUP1;
-	private Text tTextSETUP2;
+	private StyledText tTextSETUP1;
+	private StyledText tTextSETUP2;
 	private Composite cAttackSETUP;
 	private Group cButtonsSETUP;
 	private Button bCalcPrivateKeysSETUP;
@@ -180,8 +179,8 @@ public class RSAAttackView extends Composite {
 
 		stGeneralDescription = new StyledText(cHeader, SWT.READ_ONLY | SWT.WRAP);
 		stGeneralDescription.setText(Messages.RSAAttackView_Gen_Desc);
-		GridData gd = new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1);
-		stGeneralDescription.setLayoutData(gd);
+		stGeneralDescription.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
+		stGeneralDescription.setAlwaysShowScrollBars(false);
 	}
 	/**
 	 * Sets up the StackLayout used to switch between different attack pages.
@@ -292,9 +291,10 @@ public class RSAAttackView extends Composite {
 		lDescTitleFixed.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 
 		// The text here depends on the current step - hence initialize it to be blank.
-		stSpecDescFixed = new StyledText(cDescriptionFixed, SWT.READ_ONLY | SWT.WRAP);
+		stSpecDescFixed = new StyledText(cDescriptionFixed, SWT.READ_ONLY | SWT.V_SCROLL | SWT.WRAP);
 		stSpecDescFixed.setText(""); //$NON-NLS-1$
 		stSpecDescFixed.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		stSpecDescFixed.setAlwaysShowScrollBars(false);
 	}
 
 	/**
@@ -360,10 +360,12 @@ public class RSAAttackView extends Composite {
 		tNFixed1 = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
 		tNFixed1.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		tNFixed1.setMargins(4, 0, 4, 0);
+		tNFixed1.setAlwaysShowScrollBars(false);
 
 		tNFixed2 = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
 		tNFixed2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		tNFixed2.setMargins(4, 0, 4, 0);
+		tNFixed2.setAlwaysShowScrollBars(false);
 
 		lEFixed1 = new Label(localParent, SWT.None);
 		lEFixed1.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
@@ -376,10 +378,12 @@ public class RSAAttackView extends Composite {
 		tEFixed1 = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
 		tEFixed1.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		tEFixed1.setMargins(4, 0, 4, 0);
+		tEFixed1.setAlwaysShowScrollBars(false);
 
 		tEFixed2 = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
 		tEFixed2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		tEFixed2.setMargins(4, 0, 4, 0);
+		tEFixed2.setAlwaysShowScrollBars(false);
 	}
 
 	/**
@@ -414,10 +418,12 @@ public class RSAAttackView extends Composite {
 		tQFixed1 = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
 		tQFixed1.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		tQFixed1.setMargins(4, 0, 4, 0);
+		tQFixed1.setAlwaysShowScrollBars(false);
 
 		tQFixed2 = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
 		tQFixed2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		tQFixed2.setMargins(4, 0, 4, 0);
+		tQFixed2.setAlwaysShowScrollBars(false);
 
 		lDFixed1 = new Label(localParent, SWT.None);
 		lDFixed1.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
@@ -430,10 +436,12 @@ public class RSAAttackView extends Composite {
 		tDFixed1 = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
 		tDFixed1.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		tDFixed1.setMargins(4, 0, 4, 0);
+		tDFixed1.setAlwaysShowScrollBars(false);
 
 		tDFixed2 = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
 		tDFixed2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		tDFixed2.setMargins(4, 0, 4, 0);
+		tDFixed2.setAlwaysShowScrollBars(false);
 	}
 
 	/**
@@ -454,6 +462,7 @@ public class RSAAttackView extends Composite {
 		tPFixed = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
 		tPFixed.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 2, 1));
 		tPFixed.setMargins(4, 0, 4, 0);
+		tPFixed.setAlwaysShowScrollBars(false);
 	}
 
 	/**
@@ -480,16 +489,19 @@ public class RSAAttackView extends Composite {
 		lCipherFixed2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		lCipherFixed2.setText(Messages.RSAAttackView_Fixed_Ciphertext2);
 
-		tCipherFixed1 = new Text(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
-		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd.minimumHeight = 10;
-		gd.heightHint = 10;
-		tCipherFixed1.setLayoutData(gd);
-//		tCipherFixed1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		tCipherFixed1 = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
+		GridData gd_tCipherFixed1 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_tCipherFixed1.minimumHeight = 10;
+		gd_tCipherFixed1.heightHint = 10;
+		tCipherFixed1.setLayoutData(gd_tCipherFixed1);
+		tCipherFixed1.setAlwaysShowScrollBars(false);
 
-		tCipherFixed2 = new Text(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
-		tCipherFixed2.setLayoutData(gd);
-//		tCipherFixed2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		tCipherFixed2 = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
+		GridData gd_tCipherFixed2 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_tCipherFixed2.minimumHeight = 10;
+		gd_tCipherFixed2.heightHint = 10;
+		tCipherFixed2.setLayoutData(gd_tCipherFixed2);
+		tCipherFixed2.setAlwaysShowScrollBars(false);
 	}
 
 	/**
@@ -506,10 +518,6 @@ public class RSAAttackView extends Composite {
 
 		lDecryptionsFixed = new Label(cText, SWT.WRAP);
 		lDecryptionsFixed.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 2, 1));
-//		GridData gd2 = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-//		gd2.minimumWidth = 0;
-//		gd2.widthHint = 100;
-//		lDecryptionsFixed.setLayoutData(gd2);
 		lDecryptionsFixed.setText(Messages.RSAAttackView_Fixed_Decrypted_Desc);
 
 		lTextFixed1 = new Label(localParent, SWT.None);
@@ -520,16 +528,19 @@ public class RSAAttackView extends Composite {
 		lTextFixed2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		lTextFixed2.setText(Messages.RSAAttackView_Fixed_Decrypted2);
 
-		tTextFixed1 = new Text(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
-		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd.minimumHeight = 10;
-		gd.heightHint = 10;
-		tTextFixed1.setLayoutData(gd);
-//		tTextFixed1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		tTextFixed1 = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
+		GridData gd_tTextFixed1 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_tTextFixed1.minimumHeight = 10;
+		gd_tTextFixed1.heightHint = 10;
+		tTextFixed1.setLayoutData(gd_tTextFixed1);
+		tTextFixed1.setAlwaysShowScrollBars(false);
 
-		tTextFixed2 = new Text(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
-		tTextFixed2.setLayoutData(gd);
-//		tTextFixed2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		tTextFixed2 = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
+		GridData gd_tTextFixed2 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_tTextFixed2.minimumHeight = 10;
+		gd_tTextFixed2.heightHint = 10;
+		tTextFixed2.setLayoutData(gd_tTextFixed2);
+		tTextFixed2.setAlwaysShowScrollBars(false);
 	}
 
 	/**
@@ -620,6 +631,7 @@ public class RSAAttackView extends Composite {
 		stSpecDescSETUP = new StyledText(cDescriptionSETUP, SWT.READ_ONLY | SWT.WRAP);
 		stSpecDescSETUP.setText(""); //$NON-NLS-1$
 		stSpecDescSETUP.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		stSpecDescSETUP.setAlwaysShowScrollBars(false);
 	}
 
 	/**
@@ -693,10 +705,12 @@ public class RSAAttackView extends Composite {
 		tNSETUP = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
 		tNSETUP.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		tNSETUP.setMargins(4, 0, 4, 0);
+		tNSETUP.setAlwaysShowScrollBars(false);
 
 		tESETUP = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
 		tESETUP.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		tESETUP.setMargins(4, 0, 4, 0);
+		tESETUP.setAlwaysShowScrollBars(false);
 	}
 
 	/**
@@ -726,10 +740,12 @@ public class RSAAttackView extends Composite {
 		tEncryptedP = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
 		tEncryptedP.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		tEncryptedP.setMargins(4, 0, 4, 0);
+		tEncryptedP.setAlwaysShowScrollBars(false);
 
 		tAttackersD = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
 		tAttackersD.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		tAttackersD.setMargins(4, 0, 4, 0);
+		tAttackersD.setAlwaysShowScrollBars(false);
 	}
 
 	/**
@@ -759,10 +775,12 @@ public class RSAAttackView extends Composite {
 		tPSETUP1 = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
 		tPSETUP1.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		tPSETUP1.setMargins(4, 0, 4, 0);
+		tPSETUP1.setAlwaysShowScrollBars(false);
 
 		tPSETUP2 = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
 		tPSETUP2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		tPSETUP2.setMargins(4, 0, 4, 0);
+		tPSETUP2.setAlwaysShowScrollBars(false);
 
 		lQSETUP1 = new Label(localParent, SWT.None);
 		lQSETUP1.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
@@ -775,10 +793,12 @@ public class RSAAttackView extends Composite {
 		tQSETUP1 = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
 		tQSETUP1.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		tQSETUP1.setMargins(4, 0, 4, 0);
+		tQSETUP1.setAlwaysShowScrollBars(false);
 
 		tQSETUP2 = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
 		tQSETUP2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		tQSETUP2.setMargins(4, 0, 4, 0);
+		tQSETUP2.setAlwaysShowScrollBars(false);
 
 		lDSETUP1 = new Label(localParent, SWT.None);
 		lDSETUP1.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
@@ -791,10 +811,12 @@ public class RSAAttackView extends Composite {
 		tDSETUP1 = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
 		tDSETUP1.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		tDSETUP1.setMargins(4, 0, 4, 0);
+		tDSETUP1.setAlwaysShowScrollBars(false);
 
 		tDSETUP2 = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
 		tDSETUP2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		tDSETUP2.setMargins(4, 0, 4, 0);
+		tDSETUP2.setAlwaysShowScrollBars(false);
 	}
 
 	/**
@@ -819,11 +841,12 @@ public class RSAAttackView extends Composite {
 		Label lPlaceHolder3 = new Label(localParent, SWT.None);
 		lPlaceHolder3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		tCipherSETUP = new Text(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
+		tCipherSETUP = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
 		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
 		gd.minimumHeight = 40;
 		gd.heightHint = 40;
 		tCipherSETUP.setLayoutData(gd);
+		tCipherSETUP.setAlwaysShowScrollBars(false);
 //		tCipherSETUP.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 
 		Label lPlaceHolder4 = new Label(localParent, SWT.None);
@@ -854,16 +877,19 @@ public class RSAAttackView extends Composite {
 		lTextSETUP2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		lTextSETUP2.setText(Messages.RSAAttackView_SETUP_Decrypted2);
 
-		tTextSETUP1 = new Text(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
-		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd.minimumHeight = 40;
-		gd.heightHint = 40;
-		tTextSETUP1.setLayoutData(gd);
-//		tTextSETUP1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		tTextSETUP1 = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
+		GridData gd_tTextSETUP1 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_tTextSETUP1.minimumHeight = 40;
+		gd_tTextSETUP1.heightHint = 40;
+		tTextSETUP1.setLayoutData(gd_tTextSETUP1);
+		tTextSETUP1.setAlwaysShowScrollBars(false);
 
-		tTextSETUP2 = new Text(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
-		tTextSETUP2.setLayoutData(gd);
-//		tTextSETUP2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		tTextSETUP2 = new StyledText(localParent, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
+		GridData gd_tTextSETUP2 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_tTextSETUP2.minimumHeight = 40;
+		gd_tTextSETUP2.heightHint = 40;
+		tTextSETUP2.setLayoutData(gd_tTextSETUP2);
+		tTextSETUP2.setAlwaysShowScrollBars(false);
 	}
 
 	/**
