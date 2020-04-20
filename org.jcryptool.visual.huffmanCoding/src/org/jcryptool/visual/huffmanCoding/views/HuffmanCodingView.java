@@ -238,8 +238,6 @@ public class HuffmanCodingView extends ViewPart {
 		scrolledComposite.setContent(tabFolder);
 		scrolledComposite.setMinSize(tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
-		mainViewComposite.pack();
-
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, HuffmanCodingPlugin.PLUGIN_ID + ".view");
 	}
 	

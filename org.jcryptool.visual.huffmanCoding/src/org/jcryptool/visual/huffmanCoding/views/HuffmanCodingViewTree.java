@@ -25,7 +25,6 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.zest.core.viewers.AbstractZoomableViewer;
 import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.viewers.IZoomableWorkbenchPart;
-import org.eclipse.zest.core.viewers.ZoomContributionViewItem;
 import org.eclipse.zest.core.viewers.internal.ZoomManager;
 import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.GraphConnection;
@@ -66,7 +65,13 @@ public class HuffmanCodingViewTree extends Composite implements IZoomableWorkben
 		this.addControlListener(new ControlAdapter() {
 			@Override
 			public void controlResized(ControlEvent e) {
-				viewer.applyLayout();
+//				viewer.applyLayout();
+				System.out.println("GraphViewer Size: " + viewer.getControl().getSize().toString());
+				System.out.println("This size: " + getSize().toString());
+				viewer.getControl().pack();
+				System.out.println("GraphViewer Size: " + viewer.getControl().getSize().toString());
+				System.out.println("This size: " + getSize().toString());
+				System.out.println("----------------------");
 			}
 		});
 		this.setLayout(new GridLayout(1, false));
@@ -88,6 +93,8 @@ public class HuffmanCodingViewTree extends Composite implements IZoomableWorkben
 		// Add LayoutData to the Graph.
 		Control control = viewer.getControl();
 		GridData gd_control = new GridData(SWT.FILL, SWT.FILL, true, true);
+		gd_control.widthHint = control.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
+		gd_control.heightHint = control.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
 		control.setLayoutData(gd_control);
 
 		viewer.setInput(nodes);
