@@ -199,6 +199,9 @@ public class DesView extends ViewPart {
 
 		// Create DES Controller
 		dESCon = new DESController();
+
+
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.visual.des.view");
 	}
 
 	@Override

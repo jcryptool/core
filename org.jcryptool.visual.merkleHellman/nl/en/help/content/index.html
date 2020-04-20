@@ -27,7 +27,7 @@ Table of contents:<br>
 The plug-in can be started via the menu <b>Visuals</b> or via the crypto explorer tab <b>Visuals</b>.
 <p>
 
-<img width="700" src="merkleHellman_main.jpg">
+<img width="85%" src="merkleHellman_main.jpg">
 
 <p>
 The plug-in consists of a description field at the top, and three basic areas below: <b>Key generation</b>, <b>Encryption</b> and <b>Decryption</b>.
@@ -50,7 +50,7 @@ start value is needed for the generation of the first element of the private key
 value]. The number of the private key elements will be dynamically created
 depending on user selection.
 <p>
-<img width="700" src="merkleHellman_key.jpg">
+<img width="85%" src="merkleHellman_key.jpg">
 <p>
 
 On this selection, the user can either use the automatically and randomly generated sample values for <b>A(i)</b>, <b>M</b> and <b>W</b>, or he can manually enter new values, or he can generate new values for the private key by clicking the button <b>Generate private key</b> <img src="merkleHellman_generatePrivKey.jpg">.
@@ -58,23 +58,23 @@ On this selection, the user can either use the automatically and randomly genera
 <p>
 If the entered private key elements A(i) are not a superincreasing vector and the user is clicking on the button <img src="merkleHellman_generatePubKey.jpg" style="vertical-align:middle">, the user gets displayed the following note message:
 <p>
-<img src="merkleHellman_superIncreasing.jpg">
+<img width="85%" src="merkleHellman_superIncreasing.jpg">
 <p>
 
 There is also a check for the parameters ​​<b>M</b> and <b>W</b> when the user is clicking the button <img src="merkleHellman_generatePubKey.jpg" style="vertical-align:middle">. Depending on which condition is violated different information dialogs pop up.
 <p>
 For M <= SUM(A(i)) the following information is shown:
 <p>
-<img src="merkleHellman_M.jpg">
+<img width="85%" src="merkleHellman_M.jpg">
 <p>
 For ggT(M,W) != 1 the following information is shown:
 <p>
-<img src="merkleHellman_W.jpg">
+<img width="85%" src="merkleHellman_W.jpg">
 <p>
 
 After all conditions are met the public key will be calculated and the elements B(i) are shown in the <b>Public key B</b> area.
 <p>
-<img width="700" src="merkleHellman_pubKey.jpg">
+<img width="85%" src="merkleHellman_pubKey.jpg">
 <p>
 
 <a name="Kapitel2"><b>2) Encryption</b></a> 
@@ -82,11 +82,11 @@ After all conditions are met the public key will be calculated and the elements 
 
 After the keys have been generated, the user can enter a message <b>m</b> in the corresponding field. As you type the message, the binary representation is dynamically calculated in addition and shown below in the field <b>binary representation of m</b>. The button <img src="merkleHellman_encrypt.jpg" style="vertical-align:middle"> will be activated once a valid value <b>m</b> is entered.
 <p>
-<img src="merkleHellman_bin.jpg">
+<img width="85%" src="merkleHellman_bin.jpg">
 <p>
 When you click on the button <img src="merkleHellman_encrypt.jpg" style="vertical-align:middle"> the message parts are calculated and the iterations of the calculation will be shown in the table below. The ciphertext is calculated, displayed and entered into the decryption area.
 <p>
-<img src="merkleHellman_encryptIteration.jpg">
+<img width="85%" src="merkleHellman_encryptIteration.jpg">
 <p>
 
 <a name="Kapitel3"><b>3) Decryption</b></a> 
@@ -94,19 +94,19 @@ When you click on the button <img src="merkleHellman_encrypt.jpg" style="vertica
 For the decryption you can enter any value for <b>c</b>. The binary representation of the entered value is dynamically calculated and shown again. 
 
 <p>
-<img src="merkleHellman_decrypt.jpg">
+<img width="85%" src="merkleHellman_decrypt.jpg">
 <p>
 By clicking the button <img src="merkleHellman_decrypt_button.jpg" style="vertical-align:middle"> the ciphertext will be decryped and its iterations of the calculation will be shown in the table. After the decryption the user has the possibility to decrypt other messages with the same keys.
 <p>
-<img src="merkleHellman_decrypt_iteration.jpg">
+<img width="85%" src="merkleHellman_decrypt_iteration.jpg">
 <p>
 In case that the decryption was successful the following message will be displayed and both the plaintext and the ciphertest will be colored green:
 <p>
-<img src="merkleHellman_decrypt_success.jpg">
+<img width="85%" src="merkleHellman_decrypt_success.jpg">
 <p>
 Otherwise, the plaintext and the ciphertext are highlighted in red color and the following message appears:
 <p>
-<img src="merkleHellman_decrypt_failed.jpg">
+<img width="85%" src="merkleHellman_decrypt_failed.jpg">
 <p>
 
 <a name="Kapitel4"><b>4) Meaning of the icons in the menu bar</b></a>

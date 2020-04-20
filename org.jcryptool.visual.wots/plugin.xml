@@ -35,18 +35,6 @@
                tooltip="%menu.reset.tooltip">
          </command>
       </menuContribution>
-      <menuContribution
-            allPopups="false"
-            locationURI="toolbar:org.jcryptool.visual.wots.WotsView">
-         <command
-               commandId="org.jcryptool.visual.wots.HelpCommand"
-               icon="platform:/plugin/org.eclipse.help.ui/icons/view16/help_view.gif"
-               style="push"
-               tooltip="%menu.help.tooltip">
-         </command>
-      </menuContribution>
-      
-     
   </extension>
   <extension
          point="org.eclipse.ui.commands">
