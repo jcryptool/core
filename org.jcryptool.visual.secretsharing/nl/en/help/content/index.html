@@ -9,9 +9,9 @@
 
 <p>The demonstration shows how <b>Shamir's Secret Sharing</b> works. The idea is to generate a random polynomial which can be uniquely determined, if a minimum number of points on it are known.</p>
 
-<p>You can start this Secret Sharing plug-in using the menu visualizations or via the Crypto Explorer within the tab <b>Visuals</b>.</p>
+<p>You can start this Secret Sharing plug-in using the menu <b>Visuals</b> or via the Crypto Explorer within the tab <b>Visuals</b>. Processed until the end it could look like this:</p>
 
-<img src="sss_plugin.jpg" width="866" height="687">
+<img src="sss_plugin.png" width="85%">
 
 <p>Below the description header, the plug-in is divided into three sections:
 <ol>
@@ -29,11 +29,11 @@
 
 <p>Furthermore you choose a prime <b>p</b> as modulus and a secret <b>s</b> which is smaller than the modulus. Remark: <i>Modulus</i> means a modulo operator.</p>
 
-<img src="sss_parameter.jpg" width="298" height="235">
+<img src="sss_parameter.jpg" width="85%">
 
 <p>Pressing the <b>Select</b> button opens a dialog where you can select the coefficients of the polynomial (you can enter values by yourself, for instance if you want to reproduce exercise examples). The coefficient <i>a<sub>0</sub></i> is the selected secret and cannot be changed.  Allowed values for the coefficients are only non-negative integers with the upper limit <i>p-1</i>.  By pressing the button <b>Generate coefficients</b> it is also possible to generate valid values for the coefficients.</p>
 
-<img src="sss_coefficients.jpg" width="344" height="403">
+<img src="sss_coefficients.jpg" width="85%">
 
 <p>Pressing the <b>OK</b> button closes the dialog, and the polynomial is represented as a formula.</p>
 
@@ -42,7 +42,7 @@
 
 <p> If the value for the modulus <b>p</b> is not a prime number, first the dialog <b>Prime number verification</b> opens where you can correct the input.</p>
 
-<img src="sss_prime_dialog.jpg" width="437" height="259">
+<img src="sss_prime_dialog.jpg" width="85%">
 
 <p>Invalid values of <b>p</b> are shown in the color <b>red</b>. Users can now enter a prime number manually or press the button <b>Generate next prime</b> to generate a prime number (starting from the number that is shown the next bigger prime is generated). Pressing the button again calculates further primes.
 
@@ -53,24 +53,24 @@ If a prime number was entered or generated, the number is highlighted in <b>gree
 <p>It might be that the secret <b>s</b> was not smaller than the modulus <b>p</b> either already before the prime number verification dialog was used or through the user's input in this dialog. In this case, the dialog <b>Prime number verification</b> opens in order to satisfy the condition that the secret <b>s</b> is strictly less than the modulus <b>p</b>. The user can here enter an according value of the secret <b>s</b>. For a better overview, the modulus is shown above. If s is valid, the <b>OK</b> button
 is activated, and the user can leave the dialog with this button.</p>
 
-<img src="sss_secret_dialog.jpg" width="344" height="258">
+<img src="sss_secret_dialog.jpg" width="85%">
 
 
 <p>Pressing the button <b>Compute shares</b> will calculate the <b>n</b> shares to be distributed to the people.</p>
 
-<img src="sss_polynom.jpg" width="284" height="76">
+<img src="sss_polynom.jpg" width="85%">
 
 
 
 <p>The calculated shares are displayed in the area <b>Shares</b> (in the middle).</p>
 
-<img src="sss_shares.jpg" width="303" height="147">
+<img src="sss_shares.jpg" width="85%">
 
 
 
 <p>On the right side, the corresponding <b>graph</b> of the polynomial is shown. The individual shares are shown in the graph as points in the color <b>blue</b>.</p>
 
-<img src="sss_graph2.png" width="548" height="506">
+<img src="sss_graph2.png" width="85%">
 
 
 
@@ -78,20 +78,20 @@ is activated, and the user can leave the dialog with this button.</p>
 
 <p>By pressing the button <b>Reconstruct</b> then the reconstruction of the polynomial is calculated. The interim results of the calculation are displayed in the area of <b>Reconstruction</b>.<br> Remark: If you selected less than <b>t</b> check boxes, a wrong curve is painted and you get an explanation on a red ground in the area Info.</p>
 
-<img src="sss_reconstruction.jpg" width="297" height="119">
+<img src="sss_reconstruction.jpg" width="85%">
 
 
 
 <p>In the lower part, right from the button <b>Reset</b>, the reconstructed polynomial is shown. The result is shown in <b>green</b>, if the polynomial has been fully reconstructed. The color <b>red</b> is used, if not enough points (shares) were selected for reconstruction.</p>
 
-<img src="sss_ergebnis.jpg" width="538" height="74">
+<img src="sss_ergebnis.jpg" width="85%">
 
 
 
 
 <p>In the event that the polynomial was not properly restored, the two polynomials represented as a graph in different colors.</p>
 
-<img src="sss_graph_reconstruct2.png" width="544" height="503">
+<img src="sss_graph_reconstruct2.png" width="85%">
 
 <p>The points in <b>deep blue</b> represent the shares that are known. Grey points represent equivalent points to the actual share with respect to the module p. When reconstructing with too few shares, the red curve, representing the wrong reconstruction, passes through equivalent points to the known shares, but this information is not enough to infer the correct values of the unknown shares.</p>
 
@@ -108,7 +108,7 @@ is activated, and the user can leave the dialog with this button.</p>
 
 <p>The notification area shows comments the respective final result after the calculation.</p>
 
-<img src="sss_info.jpg" width="298" height="185">
+<img src="sss_info.jpg" width="85%">
 
 
 
@@ -118,9 +118,9 @@ is activated, and the user can leave the dialog with this button.</p>
 
 <p>While large numbers cannot be recognized well in the graph, they are shown in the in the middle in the two areas <b>Shares</b> and <b>Reconstruction</b>. </p>
 
-<img src="sss_shares_big.jpg" width="552" height="283">
+<img src="sss_shares_big.jpg" width="85%">
 <p> </br> </p>
-<img src="sss_reconstruction_big.jpg" width="550" height="199">
+<img src="sss_reconstruction_big.jpg" width="85%">
 
 
 
