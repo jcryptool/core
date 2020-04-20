@@ -7,11 +7,11 @@
 <body>
 <h1>Shamirs Secret Sharing</h1>
 
-<p>Diese Demonstration zeigt die Funktionsweise von <b>Shamirs Secret Sharing</b>-Verfahrens. Die Idee dahinter ist, dass man ein zufälliges Polynom erzeugt, das sich genau dann eindeutig bestimmen lässt, wenn man eine Mindestzahl an Punkten darauf kennt.</p>
+<p>Diese Demonstration zeigt die Funktionsweise von <b>Shamirs Secret Sharing</b>-Verfahren. Die Idee dahinter ist, dass man ein zufälliges Polynom erzeugt, das sich genau dann eindeutig bestimmen lässt, wenn man eine Mindestzahl an Punkten darauf kennt.</p>
 
-<p>Dieses Secret Sharing-Plugin lässt sich über das Menü Visualisierungen oder über den Krypto-Explorer im Tab <b>Visualisierungen</b> starten.</p>
+<p>Dieses Secret Sharing-Plugin lässt sich über das Menü <b>Visualisierungen</b> oder über den Krypto-Explorer im Tab <b>Visualisierungen</b> starten. Fertig zu Ende durchgeführt sieht es beispielsweise so aus:</p>
 
-<img src="sss_plugin.jpg" width="640" height="464">
+<img src="sss_plugin.png" width="85%">
 
 <p>Das Plug-in gliedert sich – unterhalb des Beschreibungskopfs – in drei Bereiche:
 <ol>
@@ -31,12 +31,12 @@ für den Ablauf des Algorithmus einstellen. Man wählt die Anzahl <b>n</b> der P
 <p> Desweiteren wählt man eine Primzahl <b>p</b> als Modulus
 und ein Geheimnis <b>s</b>, das kleiner als der Modulus ist. Bemerkung: Mit <i>Modulus</i> ist ein modulo-Operator gemeint.</p>
 
-<img src="sss_parameter.jpg" width="298" height="235">
+<img src="sss_parameter.jpg" width="85%">
 
 <p>Durch Drücken des <b>Wählen</b>-Buttons öffnet sich ein Dialog, in dem man die Koeffizienten des Polynoms auswählen kann (selbst Werte eingeben, um z.B. übungsbeispiele nachzuvollziehen). Dabei ist der Koeffizient <i>a<sub>0</sub></i> das gewählte Geheimnis und kann nicht verändert werden. Zulässige Werte für die Koeffizienten sind nur nicht-negative, ganze Zahlen bis zu der oberen Grenze <i>p-1</i>. Es ist auch möglich, durch Betätigen
 des Buttons <b>Koeffizienten generieren</b>, sich gültige Werte für die Koeffizienten generieren zu lassen.</p>
 
-<img src="sss_coefficients.jpg" width="344" height="403">
+<img src="sss_coefficients.jpg" width="85%">
 
 <p>Durch Drücken des <b>OK</b>-Buttons wird der Dialog geschlossen und das Polynom als Formel dargestellt.</p>
 
@@ -44,7 +44,7 @@ des Buttons <b>Koeffizienten generieren</b>, sich gültige Werte für die Koeffi
 
 <p>Falls der Wert für den Modulus <b>p</b> keine Primzahl ist, öffnet sich zuerst der Dialog <b>Primzahl-Überprüfung</b>, in dem man die Eingabe korrigieren kann.</p>
 
-<img src="sss_prime_dialog.jpg" width="437" height="259">
+<img src="sss_prime_dialog.jpg" width="85%">
 
 <p>War der Wert für <b>p</b> ungültig, wird er in der Farbe <b>rot</b> dargestellt. Man kann nun eine Primzahl von Hand eingeben oder sich durch Drücken des Buttons <b>Primzahl generieren</b> eine Primzahl erzeugen lassen (das Programm sucht ausgehend von der angezeigten Zahl die nächstgrößere Primzahl). Erneutes Drücken des Buttons berechnet weitere Primzahlen. 
 
@@ -55,25 +55,25 @@ Wurde eine Primzahl eingegeben oder generiert, wird die Zahl in <b>grün</b> dar
 
 <p>Nun kann es sein, dass das Geheimnis <b>s</b> entweder schon vor dem Dialog zur Primzahl-Überprüfung nicht kleiner als der Modulus <b>p</b> war oder währendessen durch die Eingabe des Benutzers größer-gleich als der Modulus geworden ist. Für diesen Fall öffnet sich der Dialog <b>Geheimnis-Überprüfung</b>, um die Bedingung, dass das Geheimnis <b>s</b> echt kleiner als der Modulus <b>p</b> ist, zu erfüllen. Der Benutzer kann hier ein entsprechendes Geheimnis eingeben. Zur besseren Übersicht wird der Modulus darüber angezeigt. Korrekte Werte für s werden in <b>grün</b> dargestellt, andernfalls in der Farbe <b>rot</b>. Falls s einen gültigen Wert hat, wird der <b>Ok</b>-Button aktiviert, mit dem der Benutzer den Dialog verlassen kann.</p>
 
-<img src="sss_secret_dialog.jpg" width="344" height="258">
+<img src="sss_secret_dialog.jpg" width="85%">
 
 
 
 
 <p>Durch Drücken des Buttons <b>Shares berechnen</b> werden die <b>n</b> Shares berechnet, die an die Personen verteilt werden.</p>
 
-<img src="sss_polynom.jpg" width="284" height="76">
+<img src="sss_polynom.jpg" width="85%">
 
 
 <p>Die berechneten Shares werden in der Mitte im Bereich <b>Shares</b> angezeigt.</p>
 
-<img src="sss_shares.jpg" width="303" height="147">
+<img src="sss_shares.jpg" width="85%">
 
 
 
 <p>Auf der rechten Seite wird der dazugehörige <b>Graph</b> des Polynoms dargestellt. Die einzelnen Shares werden im Graphen als Punkte in der Farbe <b>blau</b> angezeigt.</p>
 
-<img src="sss_graph2.png" width="548" height="506">
+<img src="sss_graph2.png" width="85%">
 
 
 
@@ -83,27 +83,27 @@ zur besseren Übersicht im Graphen in einer anderen Farbe dargestellt. Es müsse
 
 <p>Durch Drücken des Buttons <b>Rekonstruieren</b> wird dann die Berechnung der Rekonstruktion des Polynoms durchgeführt. Die Zwischenergebnisse der Berechnung werden im Bereich <b>Rekonstruktion</b> angezeigt.</p>
 
-<img src="sss_reconstruction.jpg" width="297" height="119">
+<img src="sss_reconstruction.jpg" width="85%">
 
 
 
 
 <p>Ganz unten, rechts vom Button <b>Zurücksetzen</b> wird das rekonstruierte Polynom angezeigt. Dabei wird das Ergebnis in <b>grün</b> angezeigt, falls das Polynom vollständig rekonstruiert wurde. Die Farbe <b>rot</b> bedeutet, dass nicht genug Punkte (shares) für die Rekonstruktion ausgewählt wurden.</p>
 
-<img src="sss_ergebnis.jpg" width="538" height="74">
+<img src="sss_ergebnis.jpg" width="85%">
 
 
 
 <p>Für den Fall, dass das Polynom nicht richtig rekonstruiert wurde, werden beide Polynome als Graph in unterschiedlichen Farben dargestellt.</p>
 
-<p>Die <b>tiefblauen</b> Punkte zeigen hierbei die als bekannt angenommenen Shares an. Die grauen Punkte zeigen alle andere Punkte an, die äquivalent zum jeweiligen Share, modulo p, sind. Bei einer Rekonstruktion mit zu wenig shares passiert die rote (falsche) Kurve zwar die Äquivalenklasse mod p (s. Bild), jedoch reichen dies noch nicht aus um auf die restlichen Shares zu schließen.</p>
+<p>Die <b>tiefblauen</b> Punkte zeigen hierbei die als bekannt angenommenen Shares an. Die grauen Punkte zeigen alle anderen Punkte an, die äquivalent zum jeweiligen Share, modulo p, sind. Bei einer Rekonstruktion mit zu wenig Shares passiert die rote (falsche) Kurve zwar die Äquivalenklasse mod p (s. Bild), jedoch reichen dies noch nicht aus um auf die restlichen Shares zu schließen.</p>
 
-<img src="sss_graph_reconstruct2.png" width="544" height="503">
+<img src="sss_graph_reconstruct2.png" width="85%">
 
 <p>Man kann jederzeit mit dem Mauszeiger über einen Punkt im Graphen fahren, um sich dessen Share-Koordinaten anzeigen zu lassen.</p>
 
 
-<p>Mit dem Button <b>Zurücksetzen</b> (unten links) werden die Koeffizienten xxxxxxxxxx alle Parameter bis auf <b>n</b> und <b>t</b> xxxxxxxxxxx zurück gesetzt, die anderen Parameter bleiben. Beim Klick auf die <b>Neustart</b>-Ikone (oben rechts) werden xxxxx alle Parameter incl. xxxxxxxxxxx auch <b>n</b> und <b>t</b> auf ihre Defaultwerte 4 und 3 zurück gesetzt.</p>
+<p>Mit dem Button <b>Zurücksetzen</b> (unten links) werden die Koeffizienten xxxxxxxxxx alle Parameter bis auf <b>n</b> und <b>t</b> xxxxxx(PRUEFEN, WIE ES INDER FINALEN FASSUNG IST, WENN DAS RESET FUNKTIONIERT)xxxxxxx zurück gesetzt, die anderen Parameter bleiben. Beim Klick auf die <b>Neustart</b>-Ikone (oben rechts) werden xxxxx alle Parameter incl. xxxxxxxxxxx auch <b>n</b> und <b>t</b> auf ihre Defaultwerte 4 und 3 zurück gesetzt.</p>
 
 
 <p> </br> </p>
@@ -111,7 +111,7 @@ zur besseren Übersicht im Graphen in einer anderen Farbe dargestellt. Es müsse
 
 <p>Der Benachrichtigungsbereich kommentiert das jeweilige Endergebnis nach der Berechnung.</p>
 
-<img src="sss_info.jpg" width="298" height="185">
+<img src="sss_info.jpg" width="85%">
 
 
 
@@ -122,9 +122,9 @@ zur besseren Übersicht im Graphen in einer anderen Farbe dargestellt. Es müsse
 
 <p>Auch wenn man große Zahlen in Graph schlecht darstellen kann, kann man in der Mitte in den zwei Bereichen <b>Shares</b> und <b>Rekonstruktion</b> die genauen Werte sehen. </p>
 
-<img src="sss_shares_big.jpg" width="552" height="283">
+<img src="sss_shares_big.jpg" width="85%">
 <p> </br> </p>
-<img src="sss_reconstruction_big.jpg" width="550" height="199">
+<img src="sss_reconstruction_big.jpg" width="85%">
 
 <p> </br> </p>
 </body>
