@@ -162,6 +162,10 @@ public class KleptoView extends ViewPart {
         }
     }
 
+    /**
+     * Reset the plugin.</br>
+     * Disposes all widgets and creates them new.
+     */
     public void reset() {
         Control[] children = parent.getChildren();
         for (Control control : children) {

@@ -138,7 +138,10 @@ public class RSAAttackView extends Composite {
 	public RSAAttackView(final Composite parent, final int style, KleptoView kleptoView) {
 		// Set up the basic appearance.
 		super(parent, style);
-		setLayout(new GridLayout(1, true));
+        GridLayout gl = new GridLayout(1, true);
+        gl.marginHeight = 0;
+        gl.marginWidth = 0;
+        setLayout(gl);
 		setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		// Save a reference to the driver class.

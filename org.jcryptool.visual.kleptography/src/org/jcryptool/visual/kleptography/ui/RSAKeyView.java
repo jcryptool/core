@@ -244,7 +244,10 @@ public class RSAKeyView extends Composite {
     public RSAKeyView(final Composite parent, final int style, KleptoView kleptoView) {
         // Set up the basic appearance.
         super(parent, style);
-        setLayout(new GridLayout(3, true));
+        GridLayout gl = new GridLayout(3, true);
+        gl.marginHeight = 0;
+        gl.marginWidth = 0;
+        setLayout(gl);
         setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
         // Save a reference to the driver class and initialize the sequencing.
@@ -644,47 +647,33 @@ public class RSAKeyView extends Composite {
         // Set up the group to contain all the texts.
         gTexts = new Group(localParent, SWT.None);
         gTexts.setLayout(new GridLayout(3, true));
-        GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
-        gd.minimumHeight = 10;
-        gd.heightHint = 10;
-        gTexts.setLayoutData(gd);
+        gTexts.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
         gTexts.setText(Messages.RSAKeyView_Texts);
 
         // Define the subgroups (plaintext/message, ciphertext, deciphered text)
         gMessage = new Group(gTexts, SWT.NONE);
         gMessage.setLayout(new GridLayout(1, false));
-        gd = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-        gd.minimumHeight = 10;
-        gd.heightHint = 10;
-        gMessage.setLayoutData(gd);
-        // gMessage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        gMessage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         gMessage.setText(Messages.RSAKeyView_Plaintext);
 
         gCipher = new Group(gTexts, SWT.NONE);
         gCipher.setLayout(new GridLayout(2, false));
-        gCipher.setLayoutData(gd);
-        // gCipher.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        gCipher.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         gCipher.setText(Messages.RSAKeyView_Ciphertext);
 
         gDecrypt = new Group(gTexts, SWT.NONE);
         gDecrypt.setLayout(new GridLayout(1, true));
-        gDecrypt.setLayoutData(gd);
-        // gDecrypt.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        gDecrypt.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         gDecrypt.setText(Messages.RSAKeyView_Decrypted);
 
         // Set up the actual text fields and associated buttons.
         tMessage = new Text(gMessage, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
-        tMessage.setLayoutData(gd);
-        // tMessage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        tMessage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         bEncrypt = new Button(gMessage, SWT.PUSH);
         bEncrypt.setText(Messages.RSAKeyView_Encrypt);
 
         tCiphertext = new Text(gCipher, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
-        gd = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-        gd.minimumHeight = 10;
-        gd.heightHint = 10;
-        tCiphertext.setLayoutData(gd);
-        // tCipher.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+        tCiphertext.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
         bDecrypt = new Button(gCipher, SWT.PUSH);
         bDecrypt.setLayoutData(new GridData(SWT.NONE, SWT.NONE, false, false, 1, 1));
         bDecrypt.setText(Messages.RSAKeyView_Decrypt);
@@ -693,11 +682,7 @@ public class RSAKeyView extends Composite {
         bSave.setText(Messages.RSAKeyView_Save);
 
         tDecrypt = new Text(gDecrypt, SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
-        gd = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-        gd.minimumHeight = 10;
-        gd.heightHint = 10;
-        tDecrypt.setLayoutData(gd);
-        // tDecrypt.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        tDecrypt.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
     }
 
     /**
