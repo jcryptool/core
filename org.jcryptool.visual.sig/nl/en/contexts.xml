@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
- <context id="sigview" title="Demonstration of the signature process">
+ <context id="view" title="Demonstration of the signature process">
     <description>This visualization demonstrates the process of the signature generation for an electronic document.</description>
     <topic href="help/content/index.html" label="Signature Demonstration"/>
  </context>

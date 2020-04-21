@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
@@ -106,7 +107,7 @@ public class SslView extends ViewPart {
         scrolledComposite.setMinSize(mainContent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         
         // Fuer die Hilfe:
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), "org.jcryptool.visual.ssl.view");
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.visual.ssl.view");
     }
 
     /**

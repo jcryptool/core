@@ -24,7 +24,7 @@
       <Visual
             name="%Visual.name.0"
             viewId="org.jcryptool.visual.babystepgiantstep.views.BabystepGiantstepView"
-            contextHelpId="org.jcryptool.visual.babystepgiantstep.contexthelp">
+            contextHelpId="org.jcryptool.visual.babystepgiantstep.view">
       </Visual>
    </extension>
    <extension

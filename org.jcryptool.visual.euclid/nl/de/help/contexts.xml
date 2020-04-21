@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
-   <context id="contextHelpID" title="Erweiterter Euklid / Wechselwegnahme">
+   <context id="view" title="Erweiterter Euklid / Wechselwegnahme">
       <description>In die Eingabemaske können zwei positive ganze Zahlen <b>p</b> und <b>q</b> eingegeben werden.
       
 Danach kann über die Buttons die Berechnung schrittweise oder vollständig automatisch durchgeführt werden.</description>

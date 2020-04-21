@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
-   <context id="SphincsView" title="Sphincs-Signaturverfahren">
+   <context id="view" title="Sphincs-Signaturverfahren">
       <description>This visualization demonstrates the quantum computer-proof signature method SPHINCS.</description>
       <topic href="nl/en/help/content/deSphincs.html" label="SPHINCS signature"/>
    </context>

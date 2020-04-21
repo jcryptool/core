@@ -81,7 +81,7 @@ public class SphincsView extends ViewPart {
                
         
         // makes the connection to the help of the plug-in
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), "org.jcryptool.visual.sphincs.contexthelp");
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.visual.sphincs.view");
         
         // Main Composite
         scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);

@@ -14,7 +14,7 @@
    <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
-      		contextHelpId="org.jcryptool.visual.elGamal.elGamalHelp"
+      		contextHelpId="org.jcryptool.visual.elGamal.view"
             name="%Visual.name"
             viewId="org.jcryptool.visual.elGamal.view">
       </Visual>

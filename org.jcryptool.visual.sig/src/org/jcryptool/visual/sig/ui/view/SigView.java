@@ -32,7 +32,7 @@ public class SigView extends ViewPart {
         sc.setContent(c);
         sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), "org.jcryptool.visual.sig.sigview"); //$NON-NLS-1$
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.visual.sig.view"); //$NON-NLS-1$
     }
 
     /**
