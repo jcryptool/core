@@ -614,13 +614,13 @@ public class SigComposite extends Composite {
                     // Create the InputWizard
                     InputWizard wiz = new InputWizard();
                     // Display it
-                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
-                        @Override
-                        protected void configureShell(Shell newShell) {
-                            super.configureShell(newShell);
-                            newShell.setSize(800, 480);  // set size of the wizard-window (x,y)
-                            newShell.setMinimumSize(800, 480);
-                        }
+                    WizardDialog dialog = new WizardDialog(SigComposite.this.getShell(), wiz) {
+//                        @Override
+//                        protected void configureShell(Shell newShell) {
+//                            super.configureShell(newShell);
+//                            newShell.setSize(800, 480);  // set size of the wizard-window (x,y)
+//                            newShell.setMinimumSize(800, 480);
+//                        }
                     };
                  
                     if (dialog.open() == Window.OK) {                 	
@@ -685,7 +685,7 @@ public class SigComposite extends Composite {
                     // Create the HashWizard
                     HashWizard wiz = new HashWizard();
                     // Display it
-                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
+                    WizardDialog dialog = new WizardDialog(SigComposite.this.getShell(), wiz) {
                         @Override
                         protected void configureShell(Shell newShell) {
                             super.configureShell(newShell);
@@ -732,7 +732,7 @@ public class SigComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
                 try {  	
                     SignatureWizard wiz = new SignatureWizard(hash);
-                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
+                    WizardDialog dialog = new WizardDialog(SigComposite.this.getShell(), wiz) {
                         @Override
                         protected void configureShell(Shell newShell) {
                             super.configureShell(newShell);
@@ -787,7 +787,7 @@ public class SigComposite extends Composite {
                                 + Messages.SigComposite_txtDescriptionOfStep4);
 
                         if (called) {
-                            MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()),
+                            MessageBox messageBox = new MessageBox(SigComposite.this.getShell(),
                                     SWT.ICON_INFORMATION | SWT.OK);
                             messageBox.setText(Messages.SigComposite_MessageTitleReturn);
                             messageBox.setMessage(Messages.SigComposite_MessageTextReturn);
