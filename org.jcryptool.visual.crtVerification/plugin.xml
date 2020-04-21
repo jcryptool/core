@@ -18,7 +18,7 @@
       <Visual
             name="%Visual.name"
             viewId="org.jcryptool.visual.crtverification.views.CrtVerView"
-            contextHelpId="org.jcryptool.visual.crtVerification.CRTVERcontextHelpID">
+            contextHelpId="org.jcryptool.visual.crtVerification.view">
       </Visual>
    </extension>
    <extension

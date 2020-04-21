@@ -14,7 +14,7 @@
    <extension
          point="org.jcryptool.core.operations.games">
       <Game
-            contextHelpId="org.jcryptool.games.sudoku.sudokuview"
+            contextHelpId="org.jcryptool.games.sudoku.view"
             name="%Game.name"
             viewId="org.jcryptool.games.sudoku.views.SudokuView">
       </Game>

@@ -22,7 +22,7 @@
       <Visual
             name="%Visual.name"
             viewId="org.jcryptool.visual.sig.view"
-            contextHelpId="org.jcryptool.visual.sig.sigview">
+            contextHelpId="org.jcryptool.visual.sig.view">
       </Visual>
    </extension>
    <extension

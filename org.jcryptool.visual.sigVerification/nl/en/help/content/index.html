@@ -13,19 +13,19 @@
         <br>
 		This visualization shows the verification process of a signature of a signed document. A digital signature ensures the authenticity of the sender and the integrity of the sent document. 
 		</p>
-		<p align=center><img src="GUI1.png" width="90%"></p>
+		<p align=center><img src="GUI1.png" width="85%"></p>
 		<h2>General Information</h2>
         <h3>Back function</h3>
 		<p>Step by step return. All changes and attitudes are preserved till the chosen step.</p>
 		
 		<h2>Step 1 – Choose input</h2>
         <p>In order to start the verification process, click the button "Choose input". Select an existing signed file, that has been created using the "Signature Demonstration" visualization. The maximum file size is shown at the top of the window. If you don't own a signed file yet, feel free to create one using the "Signature Demonstration" visualization.</p>
-      	<p><img src="DateiAuswahlen.png"></p>
+      	<p><img width="85%" src="DateiAuswahlen.png"></p>
 		
 		<h2>Step 2 – Choose hash method</h2>
         <p>The second step of the signature verification process is to calculate the message digest or hash value of the document. A hash function is an algorithm or subroutine that maps data sets of variable length to data sets of a fixed length (digest). Signing the message digest rather than the documents (the message or the file) improves the efficiency of the process because the message digest is usually much smaller in size than the document. The same hash algorithm used by the creator of the digital signature must be used by the verifier of a digital signature.
         Usually, the signature contains some information about the used algorithm. Here, the user has to choose the correct algorithm, manually. </p>
-        <img src="HashWahlen.png">
+        <img width="85%" src="HashWahlen.png">
         <h3>Description of provided hash functions</h3>
         <h4>MD5</h4>
         <p>The MD5 algorithm (published in 1992 and specified in RFC 1321) takes as input a message of arbitrary length and produces as output a 128-bit "fingerprint" or "message digest". The MD5 algorithm is intended for digital signature applications, where a large file must be "compressed" in a secure manner before being encrypted with a private key under a public-key cryptosystem such as RSA.</p>
@@ -40,7 +40,7 @@
         
         <h2>Step  3 – Verify signature</h2>
         <p>To verify your signed message, you now need to select the signature function that was used to sign it.</p>
-        <img src="Signaturmethode.png">
+        <img width="85%" src="Signaturmethode.png">
         
         <h3>Description of provided signature functions</h3>
         <h4>DSA</h4>
@@ -63,8 +63,8 @@
 		<p>You now still need the public key. If the signature was created using a key from the JCT-Keystore (currently this is the only possibility), you can load the corresponding public key here.</p>
 
         <h2>Step 4 – Show result</h2>
-        <img src="Hacken.png">
-        <img src="Kreutz.png">
+        <img width="85%" src="Hacken.png">
+        <img width="85%" src="Kreutz.png">
         <p>If the verification succeeded, there will be a green tick next to the button "Show result". If not, there will be a red cross. For further information, click on the button "Show result". There, you'll find more relevant information:</p>
         <ul>
             <li>The used key/curve</li>
@@ -73,12 +73,12 @@
 			<li>The hexadecimal representation of the hash and its length</li>
 		</ul>
         <!--<p>Click on the button "Validity models" to take a look at the verification of certificates using the shell model (chain model will follow)</p>-->
-		<img src="ErgebnisAnzeigen.png">
+		<img width="85%" src="ErgebnisAnzeigen.png">
 		
 		<h1 id="GUI2">Certificate validation using the shell model</h1>
 		<p>This user interface was included for learning purposes. It shows how the validity dates of the different certificates affect the result of the shell model validation.
 		In the menu "Visuals -> Certificate verification", you can find a more comprehensive visualization with 3 validity models, in which you can adjust the dates with sliders.</p>
-		<img src="2ob.png">
+		<img width="85%" src="2ob.png">
 		<h2>Shell model</h2>
 		<p>The shell model validation only succeeds if all certificates are valid at the time of the verification. I.e. if the user certificate and the level 2 certificate are valid at the time of the verification but the root certificate is not, the signature is considered invalid. At the same time, lower certificates are not allowed to have a longer validity period than those of a higher level(e.g.: Level 2 compared to root).</p>
 		<h3>Certificates</h3>

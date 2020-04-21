@@ -96,7 +96,7 @@ public class SphincsPlusView extends ViewPart {
         sc_forsView.setMinSize(forsView.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti_forsView.setControl(sc_forsView);
 
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, SphincsPlusPlugin.PLUGIN_ID + ".view"); //$NON-NLS-1$
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, SphincsPlusPlugin.PLUGIN_ID + ".contexthelp"); //$NON-NLS-1$
     }
 
     public void restartSphincsPlusView() {

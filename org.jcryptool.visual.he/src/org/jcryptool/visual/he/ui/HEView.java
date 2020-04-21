@@ -71,6 +71,8 @@ public class HEView extends ViewPart {
         sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti.setControl(sc);
         
+        
+        
         /**
          * This sets all labels and text a widthHint.
          * It is necessary, because the TitleAndDescriptionComposite (
@@ -85,7 +87,7 @@ public class HEView extends ViewPart {
          */
         LayoutAdvisor.addPreLayoutRootComposite(parent);
 
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, HEPlugin.PLUGIN_ID + ".heview");
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.visual.he.view");
 	}
 
 	@Override

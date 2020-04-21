@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
- <context id="org.jcryptool.visual.sigVerification.SigVerView" title="Signature Verification">
+ <context id="SigVerView" title="Signature Verification">
     <description>This visualization demonstrates the process of the signature verification for an electronic document.</description>
     <topic href="nl/en/help/content/index.html" label="Signature Verification"/>
  </context>

@@ -28,6 +28,7 @@
    <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
+          contextHelpId="org.jcryptool.visual.hashing.view"
             name="%Visual.name.0"
             viewId="org.jcryptool.visual.hashing.views.HashingView">
       </Visual>

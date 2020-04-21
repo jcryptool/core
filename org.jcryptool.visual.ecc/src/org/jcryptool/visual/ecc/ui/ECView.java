@@ -77,8 +77,8 @@ public class ECView extends ViewPart {
 
         layout.topControl = contentReal;
 
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(),
-                "org.jcryptool.visual.ecc.eccview"); //$NON-NLS-1$
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
+                "org.jcryptool.visual.ecc.view"); //$NON-NLS-1$
 
         Calendar c = new GregorianCalendar();
         c.setTimeInMillis(System.currentTimeMillis());

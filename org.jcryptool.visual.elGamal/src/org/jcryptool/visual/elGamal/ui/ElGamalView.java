@@ -85,8 +85,8 @@ public class ElGamalView extends ViewPart {
 		sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		ti.setControl(sc);
 
-		 PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(),
-				 ElGamalPlugin.PLUGIN_ID + ".elGamalHelp");
+		 PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
+				 ElGamalPlugin.PLUGIN_ID + ".view");
 	}
 
 	@Override

@@ -27,7 +27,7 @@
    <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
-            contextHelpId="org.jcryptool.visual.sidechannelattack.spa.spaview"
+            contextHelpId="org.jcryptool.visual.sidechannelattack.spa.view"
             name="%view.name"
             viewId="org.jcryptool.visual.sidechannelattack.spaview">
       </Visual>

@@ -13,7 +13,7 @@
 		This visualization demonstrates the creation of a digital signature for a given document (message).
 		A digital signature can be used to verify the identity of the message's signer.
 		It also ensures the document's integrity.</p>
-		<img src="MainStart.png">
+		<img width="85%" src="MainStart.png">
         <h2>General information</h2>
         <h3>Reset function</h3>
 		<p>The selected hash and signature function are saved. Everything else is reset to the initial state of the plug in.</p>
@@ -22,13 +22,13 @@
               
         <h2>Step 1 – Choose input</h2>
         <p>Use the button “Choose input” to start the signature process. Select an existing file or enter a text by yourself. If you want to sign an existing file, you can choose any file type you want. The file size is (approximately) limited by the maximum working memory that JCT is able to acquire.</p>
-      	<img src="InputWizard.png"> 
-      	<img src="InputFile.png">
-      	<img src="InputText.png">
+      	<img width="85%" src="InputWizard.png"> 
+      	<img width="85%" src="InputFile.png">
+      	<img width="85%" src="InputText.png">
         
         <h2>Step 2 – Hash function</h2>
         <p>The second step of the signature process is to calculate the message digest or hash value of the document. A hash function is an algorithm that maps a data set of variable length (the message) to a data set of a fixed length (hash value or message digest). Signing the hash value rather than the message improves the efficiency of the process because the hash value is usually much smaller in size than the message. The same hash algorithm used by the creator of the digital signature must be used by the verifier of a digital signature.</p>
-        <img src="HashWizard.png">
+        <img width="85%" src="HashWizard.png">
         <h3>Description of provided hash functions</h3>
         <h4>MD5</h4>
         <p>The MD5 algorithm (published in 1992 and specified in RFC 1321) takes as input a message of arbitrary length and produces as output a 128-bit "fingerprint" or "message digest". The MD5 algorithm is intended for digital signature applications, where a large file must be "compressed" in a secure manner before being encrypted with a private key under a public-key cryptosystem such as RSA.</p>
@@ -43,7 +43,7 @@
         
         <h2>Step 3 – Signature function</h2>
         <p>You can choose between different signature functions to sign the input. Some signature procedures are based on asymmetric encryption like RSA, other methods have been developed only for this purpose, for example DSA.</p>
-        <img src="SignatureWizard.png">
+        <img width="85%" src="SignatureWizard.png">
         <p>To sign a file and verify the signature, you need two different keys. The private key is for generating the signature. Only the owner of the key knows it and it has to be kept secret. The public key can be used by anybody else to verify the signature. <br> To create a signature, you have to select one of the given keys from the Standard-JCT-Keystore.</p>
         <a href="https://github.com/jcryptool/core/tree/master/org.jcryptool.crypto.keystore" target="_blank">Visit Standard-JCT-Keystore</a> 
         <h3>Description of provided signature functions</h3>
@@ -64,7 +64,7 @@
         	<li><a href="http://www.mobilefish.com/developer/bouncycastle/bouncycastle.html" target="_blank">Examples using BouncyCastle</a></li>
   		</ul>
   		<br>
-  		<img src="MainFinished.png">
+  		<img width="85%" src="MainFinished.png">
         <h2>Step 4 – Show generated signature</h2>
         <p>To show the signature of the chosen input, click on the button “Show generated signature”. There you see all relevant information about the signature:</p>
         <ul>
@@ -74,7 +74,7 @@
             <li>the hexadecimal, octal or binary representation of the signed file and the generated signature.</li>
         </ul>
         <p>To store the signature and the according message in a file, click on "Save". To show the signed file and the generated signature in the hex editor of JCrypTool, use the button “Open in hex editor”.</p>
-		<img src="ShowSigWizard.png">
+		<img width="85%" src="ShowSigWizard.png">
 
     </body>
 </html>

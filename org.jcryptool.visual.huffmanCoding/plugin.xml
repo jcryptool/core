@@ -28,6 +28,7 @@
    <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
+          contextHelpId="org.jcryptool.visual.huffmanCoding.view"
             name="%Visual.name.0"
             viewId="org.jcryptool.visual.huffmanCoding.views.HuffmanCodingView">
       </Visual>
