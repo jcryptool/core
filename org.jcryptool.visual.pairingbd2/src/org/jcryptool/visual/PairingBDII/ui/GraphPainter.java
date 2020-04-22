@@ -110,6 +110,7 @@ public class GraphPainter implements PaintListener {
     private void drawArrow(PaintEvent e, Point source, Point target, double labelPosition) {
         final double distance = 0.1;
         e.gc.setForeground(red);
+        e.gc.setBackground(((Canvas) e.widget).getBackground());
         source = new Point((int) Math.round(source.x * (1 - distance) + target.x * distance), (int) Math.round(source.y
                 * (1 - distance) + target.y * distance));
 
