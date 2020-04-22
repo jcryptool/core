@@ -12,7 +12,6 @@ package org.jcryptool.visual.arc4.ui;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
@@ -20,13 +19,13 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
-import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.arc4.ARC4Con;
 import org.jcryptool.visual.arc4.Messages;
+import org.jcryptool.visual.arc4.Type;
 import org.jcryptool.visual.arc4.algorithm.ARC4Algorithm;
 import org.jcryptool.visual.arc4.algorithm.AlgARC4;
 import org.jcryptool.visual.arc4.algorithm.AlgSpritz;
@@ -35,6 +34,7 @@ import org.jcryptool.visual.arc4.algorithm.AlgSpritz;
  * This class holds the contents of the plug-in
  * 
  * @author Luca Rupp
+ * @author Thorben Groos (switchable keylength)
  */
 public class ARC4Composite extends Composite {
 
@@ -52,10 +52,12 @@ public class ARC4Composite extends Composite {
     private InstructionVisual inst;
 
     // descr holds the description of the plugin as a whole; xor displays a picture, arrow displays another picture
-    private Composite descr, xor, arrow;
+    private Composite xor, arrow;
 
     // Part of the UI that shows the internal variables of the algorithm
     private VariablesVisual var;
+    
+    
 
     // radioyes is the button to highlight changes
     // radiono is the opposite
@@ -78,6 +80,7 @@ public class ARC4Composite extends Composite {
     // the label that labels the w combo that allows the user to choose a value for w
     private Label wlabel;
 
+    
     /**
      * Constructor for the ARC4Composite
      * 
@@ -91,6 +94,8 @@ public class ARC4Composite extends Composite {
         finish.setText(Messages.CompositeAlgFinishTitle);
         finish.setMessage(Messages.CompositeAlgFinishText);
 
+        // Create a new Algorithm object with keylength 16, random
+        // key and plaintext.
         alg = new AlgARC4();
 
         // The layout is intended as three to one, but as it is rather difficult to let the xor
@@ -104,12 +109,13 @@ public class ARC4Composite extends Composite {
         // the s-box of the algorithm
         vector = new VectorVisual(this, SWT.NONE);
         vector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, ARC4Con.H_SPAN_LEFT, ARC4Con.S_BOX_HEIGTH));
+               
         // initialize the variables section
         var = new VariablesVisual(this, SWT.NONE);
         var.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, ARC4Con.H_SPAN_RIGHT, 1));
 
         // initialize the control section
-        inst = new InstructionVisual(this, SWT.NONE);
+        inst = new InstructionVisual(this, SWT.NONE, alg);
         inst.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, ARC4Con.H_SPAN_RIGHT, 1));
 
         // initialize the section that allows you to choose a variant of the ARC4 algorithm
@@ -119,7 +125,7 @@ public class ARC4Composite extends Composite {
         initMisc();
 
         // initialize the key section
-        key = new DatavectorVisual(this, SWT.BORDER, ARC4Con.KEY, alg);
+        key = new DatavectorVisual(this, SWT.BORDER, Type.KEY, alg);
         key.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, ARC4Con.H_SPAN_MAIN, 1));
         
         // a seperator to make the relation between plaintext, pseudorandom numbers and ciphertext clear
@@ -127,7 +133,7 @@ public class ARC4Composite extends Composite {
         sep1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, ARC4Con.H_SPAN_MAIN, 1));
         
         // initialize the plaintext section
-        plain = new DatavectorVisual(this, SWT.BORDER, ARC4Con.PLAIN, alg);
+        plain = new DatavectorVisual(this, SWT.BORDER, Type.PLAIN, alg);
         plain.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, ARC4Con.H_SPAN_MAIN, 1));
 
         // initialize the xor
@@ -139,7 +145,7 @@ public class ARC4Composite extends Composite {
         xorpic.setImage(ImageDescriptor.createFromURL(getClass().getResource(ARC4Con.PATH_TO_XOR_IMAGE)).createImage());
 
         // initialize the vector with the pseudorandom numbers
-        random = new DatavectorVisual(this, SWT.BORDER, ARC4Con.RAND, alg);
+        random = new DatavectorVisual(this, SWT.BORDER, Type.RAND, alg);
         random.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, ARC4Con.H_SPAN_MAIN, 1));
         
         // initialize the image of the arrow
@@ -151,7 +157,7 @@ public class ARC4Composite extends Composite {
                 ARC4Con.PATH_TO_ARROW_IMAGE)).createImage());
 
         // initialize the vector with the ciphertext
-        enc = new DatavectorVisual(this, SWT.BORDER, ARC4Con.ENC, alg);
+        enc = new DatavectorVisual(this, SWT.BORDER, Type.ENC, alg);
         enc.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, ARC4Con.H_SPAN_MAIN, 1));
 
         // fetch the data from the algorithm object and fill it into the GUI
@@ -162,30 +168,10 @@ public class ARC4Composite extends Composite {
      * Create the part of the plug-in that displays its description
      */
     private void initDsc() {
-        // to make the text wrap lines automatically
-    	descr = new Composite(this, SWT.NONE);
-    	GridData gd_descr = new GridData(SWT.FILL, SWT.FILL, true, false, ARC4Con.H_SPAN_MAIN, ARC4Con.DESC_HEIGHT);
-    	//need to be set to cause the description text to wrap. Without it the text would be in one line.
-    	//FIXME the width hint is the reason why there is empty space at the bottom 
-    	//of the size. Would be nice, if this could be solved.
-    	gd_descr.widthHint = 1000;
-        descr.setLayoutData(gd_descr);
-        descr.setLayout(new GridLayout(1, true));
-        descr.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-
-        // the heading of the description; is not selectable by mouse
-        Label descLabel = new Label(descr, SWT.NONE);
-        descLabel.setText(Messages.PluginDescriptionCaption);
-        descLabel.setFont(FontService.getHeaderFont());
-        descLabel.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-
-        // this divide has been made to allow selection of text in this section but not of the
-        // heading
-        // while not allowing modification of either section
-        StyledText descText = new StyledText(descr, SWT.WRAP);
-        descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        descText.setText(Messages.PluginDescription);
-        descText.setEditable(false);
+    	TitleAndDescriptionComposite td = new TitleAndDescriptionComposite(this);
+    	td.setLayoutData(new GridData(SWT.FILL, SWT.UP, true, false, ARC4Con.H_SPAN_MAIN, ARC4Con.DESC_HEIGHT));
+    	td.setTitle(Messages.PluginDescriptionCaption);
+    	td.setDescription(Messages.PluginDescription);
     }
     
     private void initAlgoSec() {
@@ -204,7 +190,7 @@ public class ARC4Composite extends Composite {
         arc4.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                alg = new AlgARC4();
+                alg = new AlgARC4(alg.getKey(), alg.getPlain());
                 chooseW.setEnabled(false);
             }
             
@@ -226,7 +212,7 @@ public class ARC4Composite extends Composite {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
-                alg = new AlgSpritz(1);
+                alg = new AlgSpritz(alg.getKey(), alg.getPlain(), 1);
                 chooseW.setEnabled(true);
             }
 
@@ -375,12 +361,12 @@ public class ARC4Composite extends Composite {
     /**
      * Pull the data from the algorithm object and fill it into the UI
      */
-    private void syncronizeInternWithExtern() {
-        vector.setData(alg.getVector());
-        key.setData(alg.getKey());
-        plain.setData(alg.getPlain());
-        random.setData(alg.getRandom());
-        enc.setData(alg.getEnc());
+    public void syncronizeInternWithExtern() {
+        vector.setDataToGUI(alg.getVector());
+        key.setDataToGUI(alg.getKey());
+        plain.setDataToGUI(alg.getPlain());
+        random.setDataToGUI(alg.getRandom());
+        enc.setDataToGUI(alg.getEnc());
         var.setI(alg.getI());
         var.setJ(alg.getJ());
         // to highlight the changes on every step if the option is active
@@ -417,5 +403,6 @@ public class ARC4Composite extends Composite {
             syncronizeInternWithExtern();
         }
     }
+
 
 }

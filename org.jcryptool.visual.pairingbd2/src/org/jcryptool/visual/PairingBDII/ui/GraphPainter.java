@@ -17,6 +17,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 
 public class GraphPainter implements PaintListener {
@@ -24,6 +25,22 @@ public class GraphPainter implements PaintListener {
     private int nodeNumber;
     private int counter;
     private Point[][] pointTree;
+    
+    private Color black = ColorService.BLACK;
+    private Color yellow = new Color(Display.getCurrent(), 190, 190, 30);
+    private Color green = new Color(Display.getCurrent(), 100, 200, 10);
+    private Color blue = new Color(Display.getCurrent(), 0, 0, 230);
+    private Color red = new Color(Display.getCurrent(), 200, 10, 10);
+    
+    /**
+     * The GCs height.
+     */
+    private int height;
+    
+    /**
+     * The GCs width.
+     */
+    private int width;
 
     private void calculateChildren(PaintEvent e, Point middle, Point node, double slice, int radius, int max) {
         double rotate = 0;
@@ -92,7 +109,8 @@ public class GraphPainter implements PaintListener {
 
     private void drawArrow(PaintEvent e, Point source, Point target, double labelPosition) {
         final double distance = 0.1;
-        e.gc.setForeground(new Color(e.display, 200, 10, 10));
+        e.gc.setForeground(red);
+        e.gc.setBackground(((Canvas) e.widget).getBackground());
         source = new Point((int) Math.round(source.x * (1 - distance) + target.x * distance), (int) Math.round(source.y
                 * (1 - distance) + target.y * distance));
 
@@ -118,7 +136,7 @@ public class GraphPainter implements PaintListener {
     private void drawConnections(PaintEvent e) {
         // draw point connections
         for (int i = 0; i < pointTree.length; i++) {
-            e.gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_BLACK));
+            e.gc.setForeground(black);
             e.gc.drawLine(pointTree[i][0].x, pointTree[i][0].y, pointTree[(i + 1) % pointTree.length][0].x,
                     pointTree[(i + 1) % pointTree.length][0].y);
         }
@@ -139,17 +157,92 @@ public class GraphPainter implements PaintListener {
             }
         }
     }
-
-    private void drawPoint(PaintEvent e, Point p, Color color) {
-        // draw point
-        e.gc.setBackground(color);
-        e.gc.fillOval(p.x - 4, p.y - 4, 8, 8);
-
+    
+    private void drawNumber(PaintEvent e, Point p, Color color) {
         // draw number
         e.gc.setForeground(color);
         e.gc.setBackground(((Canvas) e.widget).getBackground());
         e.gc.setFont(FontService.getSmallFont());
-        e.gc.drawString("" + nodeNumber++, p.x - 3, p.y + 7); //$NON-NLS-1$
+        int numberWidth = e.gc.textExtent("" + nodeNumber).x;
+        e.gc.drawString("" + nodeNumber++, p.x - numberWidth / 2, p.y + 5); //$NON-NLS-1$
+    }
+    
+    private void drawGraphNumbers(PaintEvent e) {
+        // draw inner points
+        nodeNumber = 1;
+        for (final Point[] element : pointTree) {
+        	drawNumber(e, element[0], black);
+        }
+        // draw outer points
+        for (final Point[] element : pointTree) {
+            for (int j = 1; j < element.length; j++) {
+                if (Model.getDefault().isOnBNCurve) {
+                    if (element.length % 2 == 0 && j == element.length - 1) {
+                    	drawNumber(e, element[j], blue);
+                    } else {
+                        if (j % 2 == 1) {
+                        	drawNumber(e, element[j], yellow);
+                        } else {
+                        	drawNumber(e, element[j], green);
+                        }
+                    }
+
+                } else {
+                	drawNumber(e, element[j], black);
+                }
+            }
+        }
+    }
+    
+    private void drawPoint(PaintEvent e, Point p, Color color) {
+        // draw point
+        e.gc.setBackground(color);
+        e.gc.fillOval(p.x - 4, p.y - 4, 8, 8);
+    }
+
+    private void drawGraphPoints(PaintEvent e) {
+        // draw inner points
+        nodeNumber = 1;
+        for (final Point[] element : pointTree) {
+            drawPoint(e, element[0], black);
+        }
+        // draw outer points
+        for (final Point[] element : pointTree) {
+            for (int j = 1; j < element.length; j++) {
+                if (Model.getDefault().isOnBNCurve) {
+                    if (element.length % 2 == 0 && j == element.length - 1) {
+                        drawPoint(e, element[j], blue);
+                    } else {
+                        if (j % 2 == 1) {
+                            drawPoint(e, element[j], yellow);
+                        } else {
+                            drawPoint(e, element[j], green);
+                        }
+                    }
+
+                    e.gc.setForeground(yellow);
+                    e.gc.drawString("PK(i) = Z(i)", 30, height - 60); //$NON-NLS-1$
+                    e.gc.setBackground(yellow);
+                    e.gc.fillOval(20, height - 60 + 3, 6, 6);
+                    e.gc.setBackground(((Canvas) e.widget).getBackground());
+
+                    e.gc.setForeground(green);
+                    e.gc.drawString("PK(i) = R(i)", 30, height - 40); //$NON-NLS-1$
+                    e.gc.setBackground(green);
+                    e.gc.fillOval(20, height - 40 + 3, 6, 6);
+                    e.gc.setBackground(((Canvas) e.widget).getBackground());
+
+                    e.gc.setForeground(blue);
+                    e.gc.drawString("PK(i) = {Z(i),R(i)}", 30, height - 20); //$NON-NLS-1$
+                    e.gc.setBackground(blue);
+                    e.gc.fillOval(20, height - 20 + 3, 6, 6);
+                    e.gc.setBackground(((Canvas) e.widget).getBackground());
+
+                } else {
+                    drawPoint(e, element[j], black);
+                }
+            }
+        }
     }
 
     private double getDirection(Point middle, Point node) {
@@ -179,13 +272,11 @@ public class GraphPainter implements PaintListener {
 
     @Override
 	public void paintControl(PaintEvent e) {
-        final Color COLOR_BLACK = Display.getCurrent().getSystemColor(SWT.COLOR_BLACK);
-        final Color yellow = new Color(Display.getCurrent(), 230, 230, 10);
-        final Color green = new Color(Display.getCurrent(), 100, 200, 10);
-        final Color blue = new Color(Display.getCurrent(), 0, 0, 230);
+    	
+    	e.gc.setAntialias(SWT.ON);
 
-        final int width = ((Canvas) e.widget).getSize().x;
-        final int height = ((Canvas) e.widget).getSize().y;
+        width = ((Canvas) e.widget).getSize().x;
+        height = ((Canvas) e.widget).getSize().y;
         final Point middle = new Point(width / 2, width / 2 - 20);
 
         final int innerNodes = 3;
@@ -194,8 +285,74 @@ public class GraphPainter implements PaintListener {
         counter = Model.getDefault().numberOfUsers;
         pointTree = new Point[innerNodes][childNodes];
 
+        // Calculate the position of the nodes
         calculatePoints(e, middle, (int) Math.round(middle.x / 2.3), 0, innerNodes, childNodes);
+        
+        // ---------------------NOTE-----------------------
+        // Die Reihenfolge in der der Code ausgeführt wird ist wichtig
+        // für die Qualität des Graphen. 
+        // Der Code ist so aufgebaut, dass erst Strings gemalt werden,
+        // diese mit einem weißen Hintergrund gemalt werden. Danach werden
+        // die Punkte und Linien zwischen den Punkten gemalt. 
+        // Diese Reihenfolge ist wichtig, da der weiße Hintergrund der
+        // Strings sonst die Punkte und Linien übermalt. Das sieht dann
+        // schlecht aus.
+        // -------------------------------------------------
+        
+        
+        if (Model.getDefault().currentStep == 5) {
+            // draw the common keys
+            e.gc.setForeground(blue);
+            e.gc.setBackground(((Canvas) e.widget).getBackground());
+            e.gc.setFont(FontService.getHugeBoldFont());
+            // This calculates the size the K in the middle of 
+            // the graph needs. This is used to center it correct.
+            int kWidth = e.gc.textExtent("K").x;
+            int kHeight = e.gc.textExtent("K").y;
+            e.gc.drawString("K", middle.x - kWidth / 2, middle.y - kHeight / 2); //$NON-NLS-1$
+
+            // draw the common keys at every node
+            for (final Point[] element : pointTree) {
+                for (int j = 0; j < element.length; j++) {
+                    e.gc.setForeground(blue);
+                    e.gc.setBackground(((Canvas) e.widget).getBackground());
+                    e.gc.setFont(FontService.getNormalBoldFont());
+                    // This is used to center the question mark on top of a node.
+                    int questionmarkWidth = e.gc.textExtent("?").x;
+                    int questionmarkHeight = e.gc.textExtent("?").y;
+                    e.gc.drawString("?", element[j].x - questionmarkWidth / 2,
+                    		element[j].y - questionmarkHeight - 5); //$NON-NLS-1$
+                }
+            }
+        }
+
+        if (Model.getDefault().currentStep == 6) {
+            // draw the common keys at every node
+            for (final Point[] element : pointTree) {
+                for (int j = 0; j < element.length; j++) {
+                    e.gc.setForeground(blue);
+                    e.gc.setBackground(((Canvas) e.widget).getBackground());
+                    e.gc.setFont(FontService.getNormalBoldFont());
+                    // This is used to center the "K" in the last step.
+                    int kWidth = e.gc.textExtent("K").x;
+                    int kHeight = e.gc.textExtent("K").y;
+                    e.gc.drawString("K", element[j].x - kWidth / 2, element[j].y - kHeight - 5); //$NON-NLS-1$
+                }
+            }
+        }
+        
+        // Zeichne die Beschriftung der Knoten (1, 2, 3, 4, ...)
+        drawGraphNumbers(e);
+        
+        // Zeichne die Linien zwischen den Knoten. Das muss gemacht werden,
+        // bevor die Knoten gezeichnet werden, da sonst auf den Knoten 
+        // die schwarzen Verbindungslinien sind. 
         drawConnections(e);
+        
+        // Zeichne die Punkte der Knoten. Das muss gemacht werden, nachdem 
+        // die Linien zwischen den Knoten gemalt werden, da die Punkte 
+        // die Linien zum Teil übermalen.
+        drawGraphPoints(e);
 
         if (Model.getDefault().currentStep == 3) {
             // draw arrows heading middle
@@ -227,81 +384,5 @@ public class GraphPainter implements PaintListener {
             }
         }
 
-        if (Model.getDefault().currentStep == 5) {
-            // draw the common keys
-            e.gc.setForeground(blue);
-            e.gc.setBackground(((Canvas) e.widget).getBackground());
-            e.gc.setFont(FontService.getHugeBoldFont());
-            e.gc.drawString("K", middle.x - 9, middle.y - 9); //$NON-NLS-1$
-
-            // draw the common keys at every node
-            for (final Point[] element : pointTree) {
-                for (int j = 0; j < element.length; j++) {
-                    e.gc.setForeground(blue);
-                    e.gc.setBackground(((Canvas) e.widget).getBackground());
-                    e.gc.setFont(FontService.getNormalBoldFont());
-                    e.gc.drawString("?", element[j].x - 4, element[j].y - 20); //$NON-NLS-1$
-                }
-            }
-        }
-
-        if (Model.getDefault().currentStep == 6) {
-            // draw the common keys at every node
-            for (final Point[] element : pointTree) {
-                for (int j = 0; j < element.length; j++) {
-                    e.gc.setForeground(blue);
-                    e.gc.setBackground(((Canvas) e.widget).getBackground());
-                    e.gc.setFont(FontService.getNormalBoldFont());
-                    e.gc.drawString("K", element[j].x - 4, element[j].y - 20); //$NON-NLS-1$
-                }
-            }
-        }
-
-        // draw inner points
-        nodeNumber = 1;
-        for (final Point[] element : pointTree) {
-            drawPoint(e, element[0], COLOR_BLACK);
-        }
-        // draw outer points
-        for (final Point[] element : pointTree) {
-            for (int j = 1; j < element.length; j++) {
-                if (Model.getDefault().isOnBNCurve) {
-                    if (element.length % 2 == 0 && j == element.length - 1) {
-                        drawPoint(e, element[j], new Color(e.display, 0, 0, 230));
-                    } else {
-                        if (j % 2 == 1) {
-                            drawPoint(e, element[j], yellow);
-                        } else {
-                            drawPoint(e, element[j], green);
-                        }
-                    }
-
-                    e.gc.setForeground(yellow);
-                    e.gc.drawString("PK(i) = Z(i)", 30, height - 60); //$NON-NLS-1$
-                    e.gc.setBackground(yellow);
-                    e.gc.fillOval(20, height - 60 + 3, 6, 6);
-                    e.gc.setBackground(((Canvas) e.widget).getBackground());
-
-                    e.gc.setForeground(green);
-                    e.gc.drawString("PK(i) = R(i)", 30, height - 40); //$NON-NLS-1$
-                    e.gc.setBackground(green);
-                    e.gc.fillOval(20, height - 40 + 3, 6, 6);
-                    e.gc.setBackground(((Canvas) e.widget).getBackground());
-
-                    e.gc.setForeground(blue);
-                    e.gc.drawString("PK(i) = {Z(i),R(i)}", 30, height - 20); //$NON-NLS-1$
-                    e.gc.setBackground(blue);
-                    e.gc.fillOval(20, height - 20 + 3, 6, 6);
-                    e.gc.setBackground(((Canvas) e.widget).getBackground());
-
-                } else {
-                    drawPoint(e, element[j], COLOR_BLACK);
-                }
-            }
-        }
-
-        yellow.dispose();
-        green.dispose();
-        blue.dispose();
     }
 }

@@ -14,7 +14,6 @@ import java.util.Vector;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -24,12 +23,13 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
-import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.core.util.ui.auto.LayoutAdvisor;
 import org.jcryptool.crypto.keystore.ui.views.nodes.Contact;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 import org.jcryptool.visual.extendedrsa.ui.wizards.DeleteIdentityWizard;
@@ -49,10 +49,8 @@ public class ExtendedRSA_Visual extends ViewPart {
 	private final String BLANK = Messages.ExtendedRSA_Visual_3;
 
 	private ScrolledComposite sc;
-	private Composite sc_explain;
 	private Composite composite;
 	private Composite headComposite;
-	private StyledText head_description;
 	private Group grp_id_mgmt;
 	private Button btn_newID;
 	private Button btn_manageID;
@@ -82,17 +80,10 @@ public class ExtendedRSA_Visual extends ViewPart {
 		headComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		headComposite.setLayout(new GridLayout());
 
-		Label label = new Label(headComposite, SWT.NONE);
-		label.setFont(FontService.getHeaderFont());
-		label.setBackground(ColorService.WHITE);
-		label.setText(Messages.ExtendedRSA_Visual_4);
 
-		head_description = new StyledText(headComposite, SWT.READ_ONLY | SWT.WRAP);
-		GridData gd_head_description = new GridData(SWT.FILL, SWT.FILL, true, true);
-		gd_head_description.widthHint = 600;
-		head_description.setLayoutData(gd_head_description);
-		head_description.setText(Messages.ExtendedRSA_Visual_5);
-		// End - Header
+		TitleAndDescriptionComposite headerTextfield = new TitleAndDescriptionComposite(headComposite);
+		headerTextfield.setTitleAndDescription(Messages.ExtendedRSA_Visual_4, Messages.ExtendedRSA_Visual_5);
+		headerTextfield.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		grp_id_mgmt = new Group(composite, SWT.NONE);
 		grp_id_mgmt.setText(Messages.ExtendedRSA_Visual_6);
@@ -164,11 +155,7 @@ public class ExtendedRSA_Visual extends ViewPart {
 		grp_explain.setText(Messages.ExtendedRSA_Visual_10);
 		grp_explain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
 
-		sc_explain = new Composite(grp_explain, SWT.NONE);
-		sc_explain.setLayout(new GridLayout());
-		sc_explain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
-		txtExplain = new Text(sc_explain, SWT.V_SCROLL | SWT.WRAP);
+		txtExplain = new Text(grp_explain, SWT.V_SCROLL | SWT.WRAP);
 		GridData gd_txtEplain = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gd_txtEplain.widthHint = 400;
 		txtExplain.setLayoutData(gd_txtEplain);
@@ -178,6 +165,10 @@ public class ExtendedRSA_Visual extends ViewPart {
 
 		sc.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
+		LayoutAdvisor.addPreLayoutRootComposite(sc);
+		
+		// Register the context help
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, Activator.PLUGIN_ID + ".view"); //$NON-NLS-1$
 	}
 
 	private void initKeystore() {

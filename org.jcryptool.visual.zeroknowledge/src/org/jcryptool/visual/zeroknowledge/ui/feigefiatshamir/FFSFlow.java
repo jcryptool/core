@@ -58,8 +58,6 @@ public class FFSFlow {
 
     private Button verify;
 
-    // private GridData gridData1 = new GridData();
-
     /**
      * Konstruktor, der die graphische Oberfläche erstellt.
      *
@@ -103,7 +101,6 @@ public class FFSFlow {
         genB.setEnabled(false);
         calcY.setEnabled(false);
         verify.setEnabled(false);
-        genRandom.setFocus();
     }
 
     /**
@@ -189,21 +186,18 @@ public class FFSFlow {
                 break;
             case 1:
                 erklaerung01.setFont(FontService.getNormalBoldFont());
-                erklaerung01.getParent().layout();
                 break;
             case 2:
                 erklaerung02.setFont(FontService.getNormalBoldFont());
-                erklaerung02.getParent().layout();
                 break;
             case 3:
                 erklaerung03.setFont(FontService.getNormalBoldFont());
-                erklaerung03.getParent().layout();
                 break;
             case 4:
                 erklaerung04.setFont(FontService.getNormalBoldFont());
-                erklaerung04.getParent().layout();
                 break;
         }
+        group.layout();
     }
 
     /**

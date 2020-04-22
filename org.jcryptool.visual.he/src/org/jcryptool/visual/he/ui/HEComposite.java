@@ -17,7 +17,6 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
@@ -31,7 +30,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.util.colors.ColorService;
-import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.he.Messages;
 import org.jcryptool.visual.he.algo.Paillier;
 import org.jcryptool.visual.he.algo.PaillierData;
@@ -52,7 +51,7 @@ import org.jcryptool.visual.he.wizards.RSAOperationTextWizard;
 
 public class HEComposite extends Composite {
 	/** Yellow */
-	public Color YELLOW;
+	public Color YELLOW = ColorService.YELLOW;
 
 	/** Holds the tab choice */
 	public int tabChoice;
@@ -129,7 +128,6 @@ public class HEComposite extends Composite {
 		super(parent,style);
 		this.tabChoice = tabChoice;
 		this.initialize();
-		YELLOW = HEComposite.this.getDisplay().getSystemColor(SWT.COLOR_YELLOW);
 	}
 
 	/**
@@ -137,7 +135,10 @@ public class HEComposite extends Composite {
 	 * and the main composite, which holds the visualization
 	 */
 	private void initialize() {
-		this.setLayout(new GridLayout());
+		GridLayout gl = new GridLayout();
+		gl.marginHeight = 0;
+		gl.marginWidth = 0;
+		this.setLayout(gl);
 		this.createHead();
 		this.createMain();
 	}
@@ -146,27 +147,20 @@ public class HEComposite extends Composite {
 	 * Creates the head of the screen, holds the title and description
 	 */
 	private void createHead() {
-		final Composite head = new Composite(this, SWT.NONE);
-        head.setBackground(ColorService.WHITE);
-        head.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        head.setLayout(new GridLayout());
-
-        final Label label = new Label(head, SWT.NONE);
-        label.setFont(FontService.getHeaderFont());
-        label.setBackground(ColorService.WHITE);
+		
+		TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(this);
+		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
         /** Deals with the choice of scheme */
         switch(tabChoice) {
-	        case RSA:  label.setText(Messages.HEComposite_RSA_Title); break;
-	        case PAILLIER:  label.setText(Messages.HEComposite_Paillier_Title); break;
+	        case RSA:  titleAndDescription.setTitle(Messages.HEComposite_RSA_Title); break;
+	        case PAILLIER:  titleAndDescription.setTitle(Messages.HEComposite_Paillier_Title); break;
         }
 
-        final StyledText stDescription = new StyledText(head, SWT.READ_ONLY);
         switch(tabChoice) {
-	        case RSA:  stDescription.setText(Messages.HEComposite_RSA_Description); break;
-	        case PAILLIER:  stDescription.setText(Messages.HEComposite_Paillier_Description); break;
+	        case RSA:  titleAndDescription.setDescription(Messages.HEComposite_RSA_Description); break;
+	        case PAILLIER:  titleAndDescription.setDescription(Messages.HEComposite_Paillier_Description); break;
         }
-        stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 	}
 
 	/**
@@ -176,6 +170,8 @@ public class HEComposite extends Composite {
 		final Group g = new Group(this, SWT.NONE);
 		g.setText(Messages.HEComposite_Scheme);
 		final GridLayout gl = new GridLayout(2, false);
+		gl.marginHeight = 0;
+		gl.marginWidth = 0;
         g.setLayout(gl);
         g.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         this.createAlgoArea(g);
@@ -498,6 +494,8 @@ public class HEComposite extends Composite {
         				newKeyWizardDialog = new WizardDialog(getShell(), new PaillierKeySelectionWizard(paillierData, HEComposite.this.getDisplay()));
         				break;
         		}
+        		// Remove the help icon from the wizard. There is no help available.
+        		newKeyWizardDialog.setHelpAvailable(false);
         		if (newKeyWizardDialog != null) {
             		recalcMinSizeOnPageChange(newKeyWizardDialog);
             		if (newKeyWizardDialog.open() == Window.OK) keySelected();
@@ -506,53 +504,35 @@ public class HEComposite extends Composite {
         });
 			
 		Group mainGroup = new Group(parent, SWT.SHADOW_NONE);
-		mainGroup.setText(org.jcryptool.visual.he.Messages.HEComposite_KeyArea_Public_Key);
-		mainGroup.setLayout(new GridLayout(2, true));
+		mainGroup.setText(Messages.HEComposite_KeyArea_Public_Key);
+		mainGroup.setLayout(new GridLayout(4, false));
 		mainGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		if (tabChoice == RSA) {
-			Composite composite_e = new Composite(mainGroup, SWT.NONE);
-			composite_e.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-			GridLayout gl_composite_e = new GridLayout(2, false);
-			gl_composite_e.marginHeight = 0;
-			gl_composite_e.marginWidth = 0;
-			composite_e.setLayout(gl_composite_e);
-	        Label lbl_e = new Label(composite_e, SWT.RIGHT);
+	        Label lbl_e = new Label(mainGroup, SWT.RIGHT);
 	        lbl_e.setText("e  "); //$NON-NLS-1$
 			GridData gd_lbl_e = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 			gd_lbl_e.widthHint = lblWidth;
 	        lbl_e.setLayoutData(gd_lbl_e);
-	        eText = new Text(composite_e, SWT.READ_ONLY | SWT.BORDER | SWT.H_SCROLL);
+	        eText = new Text(mainGroup, SWT.READ_ONLY | SWT.BORDER | SWT.H_SCROLL);
 	        eText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		}
-        
-		Composite composite_N = new Composite(mainGroup, SWT.NONE);
-		composite_N.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		GridLayout gl_composite_N = new GridLayout(2, false);
-		gl_composite_N.marginHeight = 0;
-		gl_composite_N.marginWidth = 0;
-		composite_N.setLayout(gl_composite_N);
-        Label lbl_N = new Label(composite_N, SWT.RIGHT);
+        		
+        Label lbl_N = new Label(mainGroup, SWT.RIGHT);
         lbl_N.setText("N  "); //$NON-NLS-1$
         GridData gd_lbl_N = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
         gd_lbl_N.widthHint = lblWidth;
         lbl_N.setLayoutData(gd_lbl_N);
-        nText = new Text(composite_N, SWT.READ_ONLY | SWT.BORDER | SWT.H_SCROLL);
+        nText = new Text(mainGroup, SWT.READ_ONLY | SWT.BORDER | SWT.H_SCROLL);
         nText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         
         if (tabChoice == PAILLIER) {
-    		Composite composite_g = new Composite(mainGroup, SWT.NONE);
-    		composite_g.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-    		GridLayout gl_composite_g = new GridLayout(2, false);
-    		gl_composite_g.marginHeight = 0;
-    		gl_composite_g.marginWidth = 0;
-    		composite_g.setLayout(gl_composite_g);
-            Label lbl_g = new Label(composite_g, SWT.RIGHT);
+            Label lbl_g = new Label(mainGroup, SWT.RIGHT);
             lbl_g.setText("g  "); //$NON-NLS-1$
             GridData gd_lbl_g = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
             gd_lbl_g.widthHint = lblWidth;
             lbl_g.setLayoutData(gd_lbl_g);
-            gText = new Text(composite_g, SWT.READ_ONLY | SWT.BORDER | SWT.H_SCROLL);
+            gText = new Text(mainGroup, SWT.READ_ONLY | SWT.BORDER | SWT.H_SCROLL);
             gText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         }
     }
@@ -579,7 +559,7 @@ public class HEComposite extends Composite {
         this.initTextSel.addSelectionListener(new SelectionAdapter() {
         	@Override
 			public void widgetSelected(final SelectionEvent e) {
-        		WizardDialog initialTextWizardDialog = null;
+        		WizardDialog initialTextWizardDialog = null;       		
         		/** Since the modulus is different for each scheme, they each require an own wizard*/
         		switch(tabChoice) {
         		case RSA: 
@@ -589,6 +569,8 @@ public class HEComposite extends Composite {
         			initialTextWizardDialog = new WizardDialog(HEComposite.this.getShell(), new PaillierInitialTextWizard(paillierData));
         			break;
         		}
+        		// Remove the help icon from the wizard. There is no help available.
+        		initialTextWizardDialog.setHelpAvailable(false);
         		if (initialTextWizardDialog != null) {
         			recalcMinSizeOnPageChange(initialTextWizardDialog);
         			if (initialTextWizardDialog.open() == Window.OK) initialTextSelected();
@@ -656,6 +638,8 @@ public class HEComposite extends Composite {
 				public void widgetSelected(final SelectionEvent e) {
 	        		if (tabChoice == PAILLIER) {
 	        			WizardDialog wizardDialog = new WizardDialog(HEComposite.this.getShell(), new PaillierOperationTextWizard(paillierData));
+	        			// Remove the help icon from the wizard. There is no help available.
+	        			wizardDialog.setHelpAvailable(false);
 	        			recalcMinSizeOnPageChange(wizardDialog);
 	        			if (wizardDialog.open() == Window.OK) addTextSelected();
 	        		}
@@ -674,6 +658,8 @@ public class HEComposite extends Composite {
 				public void widgetSelected(final SelectionEvent e) {
         			if (tabChoice == RSA) {
 	        			WizardDialog wizardDialog = new WizardDialog(HEComposite.this.getShell(), new RSAOperationTextWizard(rsaEncData));
+	        			// Remove the help icon from the wizard. There is no help available.
+	        			wizardDialog.setHelpAvailable(false);
 	        			recalcMinSizeOnPageChange(wizardDialog);
 	        			if (wizardDialog.open() == Window.OK) multTextSelected();
 	        		}
@@ -696,6 +682,8 @@ public class HEComposite extends Composite {
 	        		case RSA: {
 	        			if (rsaDecData.getD() == null) {
 	        				WizardDialog wizardDialog = new WizardDialog(getShell(), new RSAKeySelectionWizard(rsaDecData, false));
+	        				// Remove the help icon from the wizard. There is no help available.
+		        			wizardDialog.setHelpAvailable(false);
 	        				recalcMinSizeOnPageChange(wizardDialog);			
 	        				if (wizardDialog.open() == Window.OK) {
 	        						//dText.setText(rsaDecData.getD().toString());

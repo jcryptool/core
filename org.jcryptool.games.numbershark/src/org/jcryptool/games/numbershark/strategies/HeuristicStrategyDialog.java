@@ -41,6 +41,7 @@ public class HeuristicStrategyDialog extends AbstractStrategyDialog {
         setMessage(Messages.HeuStratDialog_5);
 
         Composite area = (Composite) super.createDialogArea(parent);
+        area.setLayout(new GridLayout());
 
         Composite composite = new Composite(area, SWT.NONE);
         GridData gd_composite = new GridData(SWT.FILL, SWT.FILL, true, false);

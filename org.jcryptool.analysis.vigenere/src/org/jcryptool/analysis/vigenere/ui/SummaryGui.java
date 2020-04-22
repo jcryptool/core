@@ -30,7 +30,9 @@ import org.jcryptool.analysis.vigenere.interfaces.DataProvider;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.editors.EditorNotFoundException;
 import org.jcryptool.core.operations.editors.EditorsManager;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -43,6 +45,7 @@ import org.jcryptool.core.util.fonts.FontService;
  * ANY CORPORATE OR COMMERCIAL PURPOSE.
  */
 public class SummaryGui extends Content {
+	
 	private Group gsteps;
 	private Text tinto;
 
@@ -75,7 +78,12 @@ public class SummaryGui extends Content {
 		try {
 			this.setLayout(new GridLayout());
 			this.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
+			
+			TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(this);
+			titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+			titleAndDescription.setTitle(Messages.SummaryGui_text_title);
+			titleAndDescription.setDescription(Messages.SummaryGui_text_description);
+			
 			gsteps = new Group(this, SWT.NONE);
 			gsteps.setLayout(new GridLayout());
 			gsteps.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));

@@ -18,7 +18,7 @@ public class ExportToCSVHandler extends AbstractHandler {
 
 		if (HandlerUtil.getActivePart(event) instanceof View) {
 			View view = ((View) HandlerUtil.getActivePart(event));
-			view.exportToCSV();
+			view.getExtendedEuclid().exportToCSV();
 		}
 		
 		return null;

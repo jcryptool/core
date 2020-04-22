@@ -14,9 +14,10 @@ import org.jcryptool.visual.arc4.ARC4Con;
 
 /**
  * This class implements the Spritz algorithm. Most of the functionality is not specific to Spritz 
- * and thereby inherited from the abstract ARC4Algorithm
+ * and thereby inherited from the abstract ARC4Algorithm.
  * 
  * @author Luca Rupp
+ * @author Thorben Groos (switchable keylength)
  *
  */
 public class AlgSpritz extends ARC4Algorithm {
@@ -24,12 +25,31 @@ public class AlgSpritz extends ARC4Algorithm {
     // the variables of the algorithm
     private int w = 1, k = 0, z = 0;
     
+    /**
+     * Default constructor. Can be used for initial creation of AlgSpritz object.</br>
+     * Creates a random key and plaintext.
+     * @param w 
+     */
     public AlgSpritz(int w) {
         super();
         this.w = w;
     }
+    
 
     /**
+     * Consructor that can be used when a key and plaintext is already entered, e.g. 
+     * when the user switches from ARC4 to Spritz.
+     * @param key The key the user has already entered. Get it with alg.getKey() from the old alg-Obejct.
+     * @param plain The plaintext the user has already entered. Get it with alg.getPlain() from the old alg-Obejct.
+     * @param w
+     */
+    public AlgSpritz(int[] key, int[] plain, int w) {
+    	super(key, plain);
+    	this.w = w;
+	}
+
+
+	/**
      * Reset the step to zero; reset all internal variables accordingly
      */
     @Override
@@ -39,8 +59,8 @@ public class AlgSpritz extends ARC4Algorithm {
         // default value for w is three; this is not part of the algorithm and has just been chosen arbitrarily by me
         w = ARC4Con.DEFAULT_W_VALUE;
         currentStep = 0;
-        random = new int[ARC4Con.DATAVECTOR_VISUAL_LENGTH];
-        enc = new int[ARC4Con.DATAVECTOR_VISUAL_LENGTH];
+        random = new int[plain.length];
+        enc = new int[plain.length];
         finish = false;
         // reset the byte vector
         for (int a = 0; a < ARC4Con.TWO_FIFE_SIX; a++) {

@@ -18,12 +18,10 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.jcryptool.analysis.freqanalysis.FreqAnalysisPlugin;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 
 /**
  * @author SLeischnig
@@ -31,11 +29,10 @@ import org.jcryptool.core.util.fonts.FontService;
  */
 
 public class FreqAnalysisUI extends Composite {
+	private TitleAndDescriptionComposite td;
 	private Group group1;
 	private Button button2;
 	private Button button1;
-	private Composite headerComposite;
-	private Label label;
 	SimpleAnalysisUI C1;
 	FullAnalysisUI C2;
 
@@ -47,15 +44,10 @@ public class FreqAnalysisUI extends Composite {
 	private void initGUI() {
 		try {
 			setLayout(new GridLayout());
-			headerComposite = new Composite(this, SWT.NONE);
-			headerComposite.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-			headerComposite.setLayout(new GridLayout(1, false));
-			headerComposite.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
-
-			label = new Label(headerComposite, SWT.NONE);
-			label.setFont(FontService.getHeaderFont());
-			label.setText(Messages.FreqAnalysisUI_frequency_analysis);
-			label.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+			
+			td = new TitleAndDescriptionComposite(this);
+			td.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+			td.setTitle(Messages.FreqAnalysisUI_frequency_analysis);
 
 			group1 = new Group(this, SWT.NONE);
 			group1.setLayout(new GridLayout(2, true));
@@ -71,7 +63,7 @@ public class FreqAnalysisUI extends Composite {
 					switchComposites(evt);
 				}
 			});
-			button1.setSelection(false);
+			button1.setSelection(true);
 
 			button2 = new Button(group1, SWT.RADIO | SWT.LEFT);
 			button2.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
@@ -97,7 +89,9 @@ public class FreqAnalysisUI extends Composite {
 			C2.setLayoutData(C2LData);
 			C2.setLayout(new GridLayout());
 			C2.setVisible(false);
+			
 			layout();
+			hideObject(C1, false);
 		} catch (Exception e) {
 			LogUtil.logError(FreqAnalysisPlugin.PLUGIN_ID, e);
 		}
@@ -162,6 +156,17 @@ public class FreqAnalysisUI extends Composite {
 			C2.execute(keyLength, keyPos, overlayIndex, resetShift, executeCalc, whichTab, activateOverlay);
 		}
 
+	}
+
+	public void resetClick() {
+		td.dispose();
+		group1.dispose();
+		C1.dispose();
+		C2.dispose();
+		initGUI();
+		this.layout(true);
+//		C1.resetClick();
+//		C2.resetClick();
 	}
 
 }

@@ -27,8 +27,10 @@ public interface Constants {
 	Color RED = new Color(null, 255, 0, 0);
 	Color GREEN = new Color(null, 0, 255, 0);
 	Color BLUE = new Color(null, 0, 0, 255);
+	Color MEDIUMGREY = new Color(null, 200, 200, 200);
 	Color LIGHTGREY = new Color(null, 240, 240, 240);
-	Color LIGHTBLUE = new Color(null, 0, 255, 255);
+	Color GREY = new Color(null, 160, 160, 160);
+	Color LIGHTBLUE = new Color(null, 50, 150, 220);
 	Color PURPLE = new Color(null, 255, 0, 255);
 	Color DARKPURPLE = new Color(null, 148, 3, 148);
 	Color MAGENTA = new Color(null, 255, 0, 255);

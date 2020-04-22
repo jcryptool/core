@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.jcryptool.core.logging.dialogs.JCTMessageDialog;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -90,6 +91,7 @@ public class ModifySelectionComposite extends Composite implements Listener {
      */
     public ModifySelectionComposite(Composite parent, int style, TransformData defaultData, AlphabetSelectorComposite.Mode customAlphaMode) {
         super(parent, style);
+        this.setLayout(new GridLayout());
 
         this.customAlphabetMode = customAlphaMode;
 
@@ -215,17 +217,17 @@ public class ModifySelectionComposite extends Composite implements Listener {
      */
     private void createUppercaseGroup(final Composite parent) {
 
-        uppercaseYESNO = new Button(parent, SWT.CHECK);
+        uppercaseYESNO = new Button(parent, SWT.CHECK | SWT.BORDER);
         uppercaseYESNO.setText(Messages.ModifyWizardPage_upperLower);
         uppercaseYESNO.addListener(SWT.Selection, this);
 
-        Composite innerGroup = new Composite(parent, SWT.NONE);
+        Composite innerGroup = new Composite(parent, SWT.NONE | SWT.BORDER);
         GridData singleTransformationInnerBoxGData = new GridData(SWT.FILL, SWT.FILL, true, false);
         singleTransformationInnerBoxGData.horizontalIndent = 20;
         innerGroup.setLayoutData(singleTransformationInnerBoxGData);
         innerGroup.setLayout(new GridLayout(2, true));
 
-        uppercase = new Button(innerGroup, SWT.RADIO);
+        uppercase = new Button(innerGroup, SWT.RADIO | SWT.BORDER);
         uppercase.setText(Messages.ModifyWizardPage_alltoupper);
         uppercase.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
         uppercase.addListener(SWT.Selection, this);

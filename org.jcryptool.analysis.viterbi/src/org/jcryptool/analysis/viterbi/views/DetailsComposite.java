@@ -31,10 +31,11 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.analysis.viterbi.algorithm.Path;
 import org.jcryptool.analysis.viterbi.algorithm.Viterbi;
 import org.jcryptool.analysis.viterbi.algorithm.Viterbi.IterationRecord;
+import org.jcryptool.core.util.colors.ColorService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 
 /**
  * This class generates the content of the "Viterbi" tab. With this tab the user can break the running key cipher
@@ -44,23 +45,8 @@ import org.jcryptool.analysis.viterbi.algorithm.Viterbi.IterationRecord;
  */
 public class DetailsComposite extends Composite {
     private static final int LIMIT_CONST = 50;
-	/* set default values */
-//    private static final int HORIZONTAL_SPACING = 15;
-//    private static final int MARGIN_WIDTH = 5;
 
-//    private static final int LOADBUTTONHEIGHT = 30;
-//    private static final int LOADBUTTONWIDTH = 120;
-
-//    private static final int CONTINUEBUTTONHEIGHT = 30;
-//    private static final int CONTINUEBUTTONWIDTH = 150;
-
-    /* colors for backgrounds. */
-//    private static final Color WHITE = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
-
-	private ViterbiView viterbiView;
 	private Table table;
-	
-	
 	
 	private Optional<Viterbi> finishedAnalysis; // recalculate all, refresh all
 	private Map<Integer, IterationRecord> records() {
@@ -148,24 +134,18 @@ public class DetailsComposite extends Composite {
      * Creates the tab
      *
      */
-    public DetailsComposite(final Composite parent, final int style, ViterbiView viterbiView) {
+    public DetailsComposite(final Composite parent, final int style) {
         super(parent, style);
-		this.viterbiView = viterbiView;
 		GridLayout gridLayout = new GridLayout(2, false);
 		gridLayout.horizontalSpacing = 15;
+		gridLayout.marginHeight = 0;
+		gridLayout.marginWidth = 0;
 		setLayout(gridLayout);
 		
-		Label lblViterbiAnalysisDetails = new Label(this, SWT.NONE);
-		lblViterbiAnalysisDetails.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		lblViterbiAnalysisDetails.setText(Messages.DetailsComposite_lblViterbiAnalysisDetails_text);
-		lblViterbiAnalysisDetails.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD));
-		lblViterbiAnalysisDetails.setBackground(SWTResourceManager.getColor(255, 255, 255));
-		
-		Text lblInThisComposite = new Text(this, SWT.WRAP);
-		GridData lbl1LData = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
-		lbl1LData.widthHint = 400;
-		lblInThisComposite.setLayoutData(lbl1LData);
-		lblInThisComposite.setText(Messages.DetailsComposite_0);
+		TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(this);
+		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		titleAndDescription.setTitle(Messages.DetailsComposite_lblViterbiAnalysisDetails_text);
+		titleAndDescription.setDescription(Messages.DetailsComposite_0);
 		
 		Composite composite_2 = new Composite(this, SWT.NONE);
 		GridLayout gl_composite_2 = new GridLayout(3, false);
@@ -177,8 +157,9 @@ public class DetailsComposite extends Composite {
 		lblWinningPath.setText(Messages.DetailsComposite_1);
 		
 		dyns_winning = new Text(composite_2, SWT.BORDER);
-		dyns_winning.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		dyns_winning.setSize(434, 31);
+		GridData gridData_dyns_winning = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
+		gridData_dyns_winning.widthHint = 400;
+		dyns_winning.setLayoutData(gridData_dyns_winning);
 		dyns_winning.setText(Messages.DetailsComposite_2);
 		dyns_winning.setEditable(false);
 		
@@ -223,7 +204,9 @@ public class DetailsComposite extends Composite {
 		lblCandidatePathsOf.setText(Messages.DetailsComposite_lblCandidatePathsOf_text);
 		
 		table = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 7, 1));
+		GridData gridData_table = new GridData(SWT.FILL, SWT.FILL, true, true, 7, 1);
+		gridData_table.heightHint = composite.getClientArea().y;
+		table.setLayoutData(gridData_table);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 		
@@ -232,11 +215,11 @@ public class DetailsComposite extends Composite {
 		tblclmnRank.setText(Messages.DetailsComposite_11);
 		
 		TableColumn tblclmnPp = new TableColumn(table, SWT.NONE);
-		tblclmnPp.setWidth(108);
+		tblclmnPp.setWidth(120);
 		tblclmnPp.setText(Messages.DetailsComposite_12);
 		
 		TableColumn tblclmnNewColumn = new TableColumn(table, SWT.NONE);
-		tblclmnNewColumn.setWidth(700);
+		tblclmnNewColumn.setWidth(300);
 		tblclmnNewColumn.setText(Messages.DetailsComposite_13);
 		
 		Composite composite_1 = new Composite(this, SWT.NONE);
@@ -258,7 +241,9 @@ public class DetailsComposite extends Composite {
 		table_1 = new Table(composite_1, SWT.BORDER | SWT.FULL_SELECTION);
 		table_1.setLinesVisible(true);
 		table_1.setHeaderVisible(true);
-		table_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+		GridData gridData_table_1 = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
+		gridData_table_1.heightHint = composite_1.getClientArea().y;
+		table_1.setLayoutData(gridData_table_1);
 		
 		TableColumn tblclmnStep = new TableColumn(table_1, SWT.NONE);
 		tblclmnStep.setWidth(65);
@@ -269,7 +254,7 @@ public class DetailsComposite extends Composite {
 		tblclmnRank_1.setText(Messages.DetailsComposite_tblclmnRank_1_text);
 		
 		TableColumn tableColumn_2 = new TableColumn(table_1, SWT.NONE);
-		tableColumn_2.setWidth(700);
+		tableColumn_2.setWidth(300);
 		tableColumn_2.setText(Messages.DetailsComposite_xnew7);
 		
 		Label lblHighlighted_1 = new Label(composite_1, SWT.NONE);
@@ -278,7 +263,9 @@ public class DetailsComposite extends Composite {
 		
 		dyns_rightPathDisplay = new Text(composite_1, SWT.BORDER);
 		dyns_rightPathDisplay.setEditable(false);
-		dyns_rightPathDisplay.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		GridData gridData_dyns_rightPathDisplay = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
+		gridData_dyns_rightPathDisplay.widthHint = composite_1.getClientArea().x - 10 - lblHighlighted_1.getSize().x;
+		dyns_rightPathDisplay.setLayoutData(gridData_dyns_rightPathDisplay);
 		
 		Label lblSelected = new Label(composite, SWT.NONE);
 		lblSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -286,7 +273,9 @@ public class DetailsComposite extends Composite {
 		
 		dyns_leftPathDisplay = new Text(composite, SWT.BORDER);
 		dyns_leftPathDisplay.setEditable(false);
-		dyns_leftPathDisplay.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 6, 1));
+		GridData gd_dyns_leftPathDisplay = new GridData(SWT.FILL, SWT.CENTER, true, false, 6, 1);
+		gd_dyns_leftPathDisplay.widthHint = composite.getClientArea().x - 10 - lblSelected.getSize().x;
+		dyns_leftPathDisplay.setLayoutData(gd_dyns_leftPathDisplay);
 		
         table.addSelectionListener(new SelectionAdapter() {
         	@Override
@@ -475,7 +464,7 @@ public class DetailsComposite extends Composite {
 			
 			TableItem ti = new TableItem(table, SWT.NONE);
 			if(derivedHighlights.isPresent() && derivedHighlights.get().stream().map(a->a.resolvePath()).anyMatch(q -> q.equals(p))) {
-				ti.setBackground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+				ti.setBackground(ColorService.getColor(SWT.COLOR_GRAY));
 			}
 			ti.setText(new String[]{""+(i+1), ""+prob, displ}); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -493,7 +482,7 @@ public class DetailsComposite extends Composite {
 			String displ = limitTo(pathToString(p), LIMIT_CONST);
 			
 			TableItem ti = new TableItem(table_1, SWT.NONE);
-			ti.setBackground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+			ti.setBackground(ColorService.getColor(SWT.COLOR_GRAY));
 			ti.setText(new String[]{""+(h.step), ""+(h.rank+1), displ}); //$NON-NLS-1$ //$NON-NLS-2$
 		});
 	}

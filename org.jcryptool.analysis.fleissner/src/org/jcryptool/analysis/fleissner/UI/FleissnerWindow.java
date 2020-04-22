@@ -32,10 +32,8 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
@@ -49,11 +47,11 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 
 public class FleissnerWindow extends Composite{
     
     private Grille model;
-    private Composite headerComposite;
     private Composite mainComposite;
     private Composite method;
     private Composite process;
@@ -966,9 +964,7 @@ public class FleissnerWindow extends Composite{
         Shell shell = new Shell();
         
         logOutput = new Button(analysis, SWT.PUSH);
-        GridData gridPush = new GridData(SWT.FILL, SWT.UP, false, false);
-        gridPush.heightHint = 30;
-        logOutput.setLayoutData(gridPush);
+        logOutput.setLayoutData(new GridData(SWT.FILL, SWT.UP, false, false));
         logOutput.setText(Messages.FleissnerWindow_label_outputDetails);
         logOutput.setEnabled(false);
         logOutput.addSelectionListener(new SelectionListener() {
@@ -988,8 +984,7 @@ public class FleissnerWindow extends Composite{
     
         analysisOutput = new Text(analysis, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
         GridData gridOut = new GridData(SWT.FILL, SWT.FILL, true, true);
-        gridOut.widthHint = analysis.getSize().x;
-        gridOut.heightHint = analysis.getSize().y;
+        gridOut.heightHint = 150;
         analysisOutput.setLayoutData(gridOut);
         analysisOutput.setText(Messages.FleissnerWindow_output_progress);
         analysisOutput.setEditable(false);
@@ -1051,38 +1046,44 @@ public class FleissnerWindow extends Composite{
      * @param parent
      */
     private void createHeader(Composite parent) {
-        headerComposite = new Composite(parent, SWT.NONE);
-        headerComposite.setBackground(ColorService.WHITE);
-        headerComposite.setLayout(new GridLayout());
-        headerComposite.setLayoutData(new GridData(SWT.FILL, SWT.UP, true, false,3,1));
-   
-        Text headerText = new Text(headerComposite, SWT.READ_ONLY);
-        headerText.setText(Messages.FleissnerWindow_title);
-        headerText.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false));
-        headerText.setFont(FontService.getHeaderFont());
-        headerText.setEditable(false);
-        headerText.setBackground(ColorService.WHITE);
-        
-        descriptionText = new Text(headerComposite, SWT.READ_ONLY |SWT.WRAP);
-        descriptionText.setBackground(ColorService.WHITE);
-        
-//        field 'descriptionText' has to be limited so it won't allocate unnecessary space
-        final GridData gridData = new GridData(SWT.FILL, SWT.UP, true, false);
-        gridData.widthHint = headerComposite.getClientArea().width;
-        gridData.heightHint = (descriptionText.getLineCount())*(descriptionText.getLineHeight());
-        descriptionText.setLayoutData(gridData);
-        descriptionText.setEditable(false);       
-        descriptionText.addListener(SWT.Resize | SWT.MouseDoubleClick, new Listener(){
-            
-            @Override
-//            recalculating needed space for description with resize by movement of text field
-            public void handleEvent(Event arg0)
-            {
-                gridData.heightHint = (descriptionText.getLineCount())*(descriptionText.getLineHeight());
-                descriptionText.requestLayout();
-            } 
-         });
-        descriptionText.setText(Messages.FleissnerWindow_subtitle);
+    	TitleAndDescriptionComposite td = new TitleAndDescriptionComposite(parent);
+    	td.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
+    	td.setTitle(Messages.FleissnerWindow_title);
+    	td.setDescription(Messages.FleissnerWindow_subtitle);
+    	
+//        headerComposite = new Composite(parent, SWT.NONE);
+//        headerComposite.setBackground(ColorService.WHITE);
+//        headerComposite.setLayout(new GridLayout());
+//        headerComposite.setLayoutData(new GridData(SWT.FILL, SWT.UP, true, false,3,1));
+//   
+//        Text headerText = new Text(headerComposite, SWT.READ_ONLY);
+//        headerText.setText(Messages.FleissnerWindow_title);
+//        headerText.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false));
+//        headerText.setFont(FontService.getHeaderFont());
+//        headerText.setEditable(false);
+//        headerText.setBackground(ColorService.WHITE);
+//        
+//        descriptionText = new Text(headerComposite, SWT.READ_ONLY |SWT.WRAP);
+//        descriptionText.setBackground(ColorService.WHITE);
+//        
+////        field 'descriptionText' has to be limited so it won't allocate unnecessary space
+//        final GridData gridData = new GridData(SWT.FILL, SWT.UP, true, false);
+//        gridData.widthHint = headerComposite.getClientArea().width;
+//        System.err.println("Fleißner line count: " + descriptionText.getLineHeight());
+//        gridData.heightHint = (descriptionText.getLineCount())*(descriptionText.getLineHeight());
+//        descriptionText.setLayoutData(gridData);
+//        descriptionText.setEditable(false);       
+//        descriptionText.addListener(SWT.Resize | SWT.MouseDoubleClick, new Listener(){
+//            
+//            @Override
+////            recalculating needed space for description with resize by movement of text field
+//            public void handleEvent(Event arg0)
+//            {
+//                gridData.heightHint = (descriptionText.getLineCount())*(descriptionText.getLineHeight());
+//                descriptionText.requestLayout();
+//            } 
+//         });
+//        descriptionText.setText(Messages.FleissnerWindow_subtitle);
     }
     
     /**

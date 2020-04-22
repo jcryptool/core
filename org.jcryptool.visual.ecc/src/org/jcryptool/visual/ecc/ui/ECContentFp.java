@@ -12,7 +12,6 @@ package org.jcryptool.visual.ecc.ui;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseMoveListener;
@@ -32,17 +31,16 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.colors.ColorService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.ecc.Messages;
 import org.jcryptool.visual.ecc.algorithm.EC;
 import org.jcryptool.visual.ecc.algorithm.ECFp;
@@ -59,14 +57,13 @@ public class ECContentFp extends Composite{
 	private Button btnSave = null;
 	private Canvas canvasCurve = null;
 	private Button cbAutoSave = null;
-	private Color black = Display.getCurrent().getSystemColor(SWT.COLOR_BLACK);
-	private Color white = Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
+	private Color black = ColorService.BLACK;
+	private Color white = ColorService.WHITE;
 	private Color lightBlue = new Color(this.getDisplay(), 0, 255, 255);
 	private Color purple = new Color(this.getDisplay(), 255, 0, 255);
 	private Color grey = new Color(this.getDisplay(), 235, 235, 235);
 	private Color red = new Color(this.getDisplay(), 203, 0, 0);
 	private Combo cSaveResults = null;
-	private Composite compositeIntro = null;
 	private EC curve;
 	private Group groupCalculations = null;
 	private Group groupCurve = null;
@@ -92,12 +89,10 @@ public class ECContentFp extends Composite{
 	private Button rbtnFM = null;
 	private Button rbtnReal = null;
 	private Button rbtnLarge = null;
-	private Slider sliderZoom = null;
 	private Spinner spnrA = null;
 	private Spinner spnrB = null;
 	private Spinner spnrK = null;
 	private Spinner spnrP = null;
-	private StyledText stDescription = null;
 	private Table tablePoints = null;
 	private TableCursor tcPoints;
 	private TableItem[] tiPoints;
@@ -137,7 +132,7 @@ public class ECContentFp extends Composite{
 		lightBlue.dispose();
 		purple.dispose();
 		grey.dispose();
-		red .dispose();
+		red.dispose();
 		super.dispose();
 	}
 
@@ -150,10 +145,13 @@ public class ECContentFp extends Composite{
 		groupCurve.setLayout(new GridLayout(3, false));
 		groupCurve.setText(Messages.ECContentFp_0); //$NON-NLS-1$
 		groupCurve.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		
 		createCanvasCurve();
+		
 		lblCurve = new Label(groupCurve, SWT.NONE);
 		lblCurve.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		lblCurve.setText(""); //$NON-NLS-1$
+		
 		btnDeletePoints = new Button(groupCurve, SWT.NONE);
 		btnDeletePoints.setToolTipText(Messages.ECContentFp_3); //$NON-NLS-1$
 		btnDeletePoints.setText(Messages.ECView_RemoveSelection); //$NON-NLS-1$
@@ -161,7 +159,10 @@ public class ECContentFp extends Composite{
 		btnDeletePoints.setEnabled(false);
 		btnDeletePoints.addSelectionListener(new SelectionListener(){
 			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				btnPQ.setSelection(true);
@@ -177,24 +178,7 @@ public class ECContentFp extends Composite{
 				updateCurve(false);
 			}
 		});
-		Label label = new Label(groupCurve, SWT.NONE);
-		label.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false));
-		label.setText(Messages.ECView_ZoomGraph); //$NON-NLS-1$
-		sliderZoom = new Slider(groupCurve, SWT.NONE);
-		sliderZoom.setSelection(10);
-		sliderZoom.setMaximum(57);
-		sliderZoom.setMinimum(0);
-		sliderZoom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		sliderZoom.addSelectionListener(new SelectionListener(){
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {widgetSelected(e);}
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				curve.updateCurve(spnrA.getSelection(), spnrB.getSelection(), 50 - sliderZoom.getSelection(), canvasCurve.getSize());
-				points = curve.getPoints();
-				updateCurve(false);
-			}
-		});
+
 	}
 
 	/**
@@ -301,8 +285,11 @@ public class ECContentFp extends Composite{
 		canvasCurve.setSize(500,500);
 		canvasCurve.addPaintListener(new PaintListener(){
 			@Override
-			public void paintControl(PaintEvent e) {drawDiscrete(e);}
+			public void paintControl(PaintEvent e) {
+				drawDiscrete(e);
+			}
 		});
+		
 		canvasCurve.addMouseMoveListener(new MouseMoveListener(){
 			@Override
 			public void mouseMove(MouseEvent e) {
@@ -333,7 +320,10 @@ public class ECContentFp extends Composite{
 		});
 		canvasCurve.addMouseTrackListener(new MouseTrackListener(){
 			@Override
-			public void mouseEnter(MouseEvent e) {}
+			public void mouseEnter(MouseEvent e) {
+				
+			}
+			
 			@Override
 			public void mouseExit(MouseEvent e) {
 				pointSelect = null;
@@ -344,8 +334,11 @@ public class ECContentFp extends Composite{
 				if(pointQ == null)
 					lblQ.setText(""); //$NON-NLS-1$
 			}
+			
 			@Override
-			public void mouseHover(MouseEvent e) {}
+			public void mouseHover(MouseEvent e) {
+				
+			}
 		});
 	}
 
@@ -360,8 +353,7 @@ public class ECContentFp extends Composite{
         groupSave.setText(Messages.ECView_SaveResults); //$NON-NLS-1$
 
         cSaveResults = new Combo(groupSave, SWT.READ_ONLY);
-        cSaveResults
-                .setItems(new String[] {
+        cSaveResults.setItems(new String[] {
                         Messages.ECView_No, Messages.ECView_ToTextEditor, Messages.ECView_ToTextFile}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         cSaveResults.select(view.saveTo);
         cSaveResults.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 2, 1));
@@ -394,8 +386,9 @@ public class ECContentFp extends Composite{
 
             @Override
 			public void widgetSelected(SelectionEvent e) {
-                view.selectFileLocation();
-                lblSaveResults.setText(view.saveTo == 2 ? view.getFileName() : ""); //$NON-NLS-1$
+                if (view.selectFileLocation()) {
+                	lblSaveResults.setText(view.saveTo == 2 ? view.getFileName() : ""); //$NON-NLS-1$
+                }
             }
         });
         btnSave = new Button(groupSave, SWT.NONE);
@@ -495,9 +488,9 @@ public class ECContentFp extends Composite{
 
 	private void createGroupAttributesFp() {
 		Control[] c = groupCurveAttributes.getChildren();
-		for(int i = 0; i < c.length; i++)
+		for(int i = 0; i < c.length; i++) {
 			c[i].dispose();
-		sliderZoom.setEnabled(false);
+		}
 
 		Label label = new Label(groupCurveAttributes, SWT.NONE);
 		label.setText("a ="); //$NON-NLS-1$
@@ -615,24 +608,16 @@ public class ECContentFp extends Composite{
 
 
 	/**
-	 * This method initializes compositeIntro
+	 * This method creates the area for the title and the description of the plugin.
 	 *
 	 */
-	private void createCompositeIntro() {
-		compositeIntro = new Composite(content, SWT.NONE);
-		compositeIntro.setBackground(white);
-		compositeIntro.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		compositeIntro.setLayout(new GridLayout(1, false));
-
-		Label label = new Label(compositeIntro, SWT.NONE);
-		label.setFont(FontService.getHeaderFont());
-		label.setBackground(white);
-		label.setText(Messages.ECView_Title); //$NON-NLS-1$
-
-//		stDescription = new StyledText(compositeIntro, SWT.READ_ONLY);
-		stDescription = new StyledText(compositeIntro, SWT.READ_ONLY | SWT.WRAP);
-		stDescription.setText(Messages.ECView_Description); //$NON-NLS-1$
-		stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+	private void createCompositeIntro() {	
+    	TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(content);
+    	GridData gd_titleAndDescription = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
+    	gd_titleAndDescription.widthHint = 800;
+    	titleAndDescription.setLayoutData(gd_titleAndDescription);
+    	titleAndDescription.setTitle(Messages.ECView_Title);
+    	titleAndDescription.setDescription(Messages.ECView_Description);
 	}
 
 	/**
@@ -971,6 +956,8 @@ public class ECContentFp extends Composite{
 		gridSize = lastPrime - 1;
 		int xSpacing = 5;
 		int ySpacing = 5;
+		int fontHeight = gc.getFontMetrics().getHeight();
+		int requiredWidth;
 		
 		int p = spnrP.getSelection();
 		
@@ -1006,39 +993,54 @@ public class ECContentFp extends Composite{
 			space -= space / (gridSize - i);
 		}
 
+		// x-Achsen Beschriftung
 		gc.setForeground(black);
 		gc.drawLine(25, 5, 25, size.y - 25);
 		gc.drawLine(25, size.y - 25, size.x - 5, size.y - 25);
 		space = size.x - 30;
-			x = 25 + space / gridSize;
-			space -= space / gridSize;
-			for(int i = 1; i <= gridSize; i++) {
-				if(i % xSpacing == 0) {
-					gc.drawLine((int)x, size.y - 32, (int)x, size.y - 18);
-					gc.drawText(i + "", (int)x - (i < 10 ? 2 : 6), size.y - 17, true); //$NON-NLS-1$
-				} else {
-					gc.drawLine((int)x, size.y - 27, (int)x, size.y - 23);
-					if(gridSize < 15)
-						gc.drawText(i + "", (int)x - (i < 10 ? 2 : 6), size.y - 17, true); //$NON-NLS-1$
+		x = 25 + space / gridSize;
+		space -= space / gridSize;
+		for (int i = 1; i <= gridSize; i++) {
+			if (i % xSpacing == 0) {
+				gc.drawLine((int) x, size.y - 32, (int) x, size.y - 18);
+				requiredWidth = gc.textExtent(i + "").x;
+				gc.drawText(i + "", (int) x - requiredWidth / 2, size.y - fontHeight, true); //$NON-NLS-1$
+			} else {
+				gc.drawLine((int) x, size.y - 27, (int) x, size.y - 23);
+				if (gridSize < 15) {
+					requiredWidth = gc.textExtent(i + "").x;
+					gc.drawText(i + "", (int) x - requiredWidth / 2, size.y - fontHeight, true); //$NON-NLS-1$
 				}
-				x += space / (gridSize - i);
-				space -= space / (gridSize - i);
 			}
-			space = size.x - 30;
-			y = size.y - 25 - space / gridSize;
-			space -= space / gridSize;
-			for(int i = 1; i <= gridSize; i++) {
-				if(i % ySpacing == 0) {
-					gc.drawLine(18, (int)y, 32, (int)y);
-					gc.drawText(i + "", i < 10 ? 5 : 3, (int)y - 7, true); //$NON-NLS-1$
-				} else {
-					gc.drawLine(23, (int)y, 27, (int)y);
-					if(gridSize < 15)
-						gc.drawText(i + "", i < 10 ? 5 : 3, (int)y - 7, true); //$NON-NLS-1$
-				}
-				y -= space / (gridSize - i);
-				space -= space / (gridSize - i);
+			x += space / (gridSize - i);
+			space -= space / (gridSize - i);
+		}
+		
+		// y-Achsen Beschriftung
+		// Die auskommentierten Zeilen richten die Beschriftung besser am Graphen aus
+		// als die eweils darunter liegenden Zeilen. Da aber bei großer Schrift
+		// der Platz nicht ausreicht werden die darunter liegenden Zeilen genutzt.
+		
+		// Platz den ein Zeichen im durchschnitt beötigt
+		requiredWidth = (int) gc.getFontMetrics().getAverageCharacterWidth();
+		space = size.x - 30;
+		y = size.y - 25 - space / gridSize;
+		space -= space / gridSize;
+		for (int i = 1; i <= gridSize; i++) {
+			if (i % ySpacing == 0) {
+				gc.drawLine(18, (int) y, 32, (int) y);
+//				gc.drawText(i + "", i < 10 ? 2 * requiredWidth : 0, (int) y - fontHeight / 2, true); //$NON-NLS-1$
+				gc.drawText(i + "", i < 10 ? requiredWidth : 0, (int) y - fontHeight / 2, true); //$NON-NLS-1$
+			} else {
+				gc.drawLine(23, (int) y, 27, (int) y);
+				if (gridSize < 15) {
+//					gc.drawText(i + "", i < 10 ? 2 * requiredWidth : 0, (int) y - fontHeight / 2, true); //$NON-NLS-1$
+					gc.drawText(i + "", i < 10 ? requiredWidth : 0, (int) y - fontHeight / 2, true); //$NON-NLS-1$
+				}	
 			}
+			y -= space / (gridSize - i);
+			space -= space / (gridSize - i);
+		}
 
 		if(points != null) {
 			double grid = (double)(size.x - 30) / gridSize;

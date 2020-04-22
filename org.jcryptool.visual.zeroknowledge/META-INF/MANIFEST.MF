@@ -5,7 +5,8 @@ Bundle-SymbolicName: org.jcryptool.visual.zeroknowledge; singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ org.jcryptool.core.util
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.visual.zeroknowledge,
  org.jcryptool.visual.zeroknowledge.algorithm,
@@ -21,6 +22,6 @@ Export-Package: org.jcryptool.visual.zeroknowledge,
  org.jcryptool.visual.zeroknowledge.ui.graphenisomorphie,
  org.jcryptool.visual.zeroknowledge.ui.magischetuer,
  org.jcryptool.visual.zeroknowledge.views
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: org.jcryptool.core.util.fonts
 Automatic-Module-Name: org.jcryptool.visual.zeroknowledge

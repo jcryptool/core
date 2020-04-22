@@ -13,22 +13,19 @@ import java.util.Random;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
-import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.ecc.Messages;
 import org.jcryptool.visual.ecc.algorithm.LargeCurves;
 
@@ -48,9 +45,7 @@ public class ECContentLarge extends Composite {
 	private Group groupSize = null;
 	private Button rbtnSmall = null;
 	private Button rbtnLarge = null;
-	private Composite compositeIntro = null;
 	private Label lblSaveResults = null;
-	private StyledText stDescription = null;
 	private Group groupSettings = null;
 	private Group groupType = null;
 	private Button rbtnFP = null;
@@ -73,7 +68,6 @@ public class ECContentLarge extends Composite {
 	private Text txtGx = null;
 	private Text txtGy = null;
 	private Text txtOrderG = null;
-	private Color white = Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
 
 	private int radix = 10;
 
@@ -111,7 +105,6 @@ public class ECContentLarge extends Composite {
 	private Button btnSave = null;
 	private Label lblP = null;
 	private Composite content;
-//    private ScrolledComposite scrolledCompositeSettings;
 
 	public ECContentLarge(Composite parent, int style, ECView v) {
 		super(parent, style);
@@ -174,24 +167,16 @@ public class ECContentLarge extends Composite {
 
 
 	/**
-	 * This method initializes compositeIntro
+	 * This method creates the area for the title and description of the plugin
 	 *
 	 */
-	private void createCompositeIntro() {
-		compositeIntro = new Composite(content, SWT.NONE);
-		compositeIntro.setBackground(white);
-		compositeIntro.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		compositeIntro.setLayout(new GridLayout(1, false));
-
-		Label label = new Label(compositeIntro, SWT.NONE);
-		label.setFont(FontService.getHeaderFont());
-		label.setBackground(white);
-		label.setText(Messages.ECView_Title); //$NON-NLS-1$
-
-//		stDescription = new StyledText(compositeIntro, SWT.READ_ONLY);
-		stDescription = new StyledText(compositeIntro, SWT.READ_ONLY | SWT.WRAP);
-		stDescription.setText(Messages.ECView_LargeDescription); //$NON-NLS-1$
-		stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+	private void createCompositeIntro() {		
+    	TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(content);
+    	GridData gd_titleAndDescription = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
+    	gd_titleAndDescription.widthHint = 800;
+    	titleAndDescription.setLayoutData(gd_titleAndDescription);
+    	titleAndDescription.setTitle(Messages.ECView_Title);
+    	titleAndDescription.setDescription(Messages.ECView_Description);
 	}
 
 	/**
@@ -327,34 +312,19 @@ public class ECContentLarge extends Composite {
 	 *
 	 */
 	private void createGroupCalculations() {
-		GridData gridData45 = new GridData();
-		gridData45.horizontalSpan = 2;
-		gridData45.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-		GridData gridData29 = new GridData();
-		gridData29.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-		GridLayout gridLayout3 = new GridLayout();
-		gridLayout3.numColumns = 2;
-		GridData gridData7 = new GridData();
-		gridData7.horizontalAlignment = org.eclipse.swt.layout.GridData.END;
-		GridData gridData6 = new GridData();
-		gridData6.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-		gridData6.grabExcessHorizontalSpace = true;
-		gridData6.horizontalSpan = 2;
-		GridData gridData5 = new GridData();
-		gridData5.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-		gridData5.horizontalSpan = 2;
-		GridData gridData4 = new GridData();
-		gridData4.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
+				
 		groupCalculations = new Group(groupSettings, SWT.NONE);
-		groupCalculations.setLayoutData(gridData4);
-		groupCalculations.setLayout(gridLayout3);
+		groupCalculations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		groupCalculations.setLayout(new GridLayout(2, false));
 		groupCalculations.setText(Messages.ECView_Calculations); //$NON-NLS-1$
+		
 		btnClearPoints = new Button(groupCalculations, SWT.NONE);
 		btnClearPoints.setText(Messages.ECView_ClearPoints); //$NON-NLS-1$
-		btnClearPoints.setLayoutData(gridData45);
+		btnClearPoints.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		btnClearPoints.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) { }
+			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				pointP = null;
@@ -363,35 +333,82 @@ public class ECContentLarge extends Composite {
 				updateScreen();
 			}
 		});
+		
 		rbtnPQ = new Button(groupCalculations, SWT.RADIO);
 		rbtnPQ.setText(Messages.ECContentLarge_17); //$NON-NLS-1$
-		rbtnPQ.setLayoutData(gridData6);
+		rbtnPQ.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		rbtnPQ.setSelection(true);
 		rbtnPQ.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) { }
+			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (pointP != null && pointQ != null) {
 					pointR = pointP.add(pointQ);
+					
+					lblR.setText("R = P + Q"); //$NON-NLS-1$
+					view.log("\nR = P + Q"); //$NON-NLS-1$
+					view.log(Messages.ECView_Point + " R = " + pointR.toString()); //$NON-NLS-1$ //$NON-NLS-2$
+
 				} else {
 					pointR = null;
 				}
+
 				txtQX.setEnabled(true);
 				txtQY.setEnabled(true);
 				updateScreen();
 			}
 		});
+		
 		rbtnKP = new Button(groupCalculations, SWT.RADIO);
 		rbtnKP.setText(Messages.ECContentLarge_18); //$NON-NLS-1$
-		rbtnKP.setLayoutData(gridData5);
+		rbtnKP.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		rbtnKP.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) { }
+			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if(rbtnKP.getSelection()) {
-					//pointQ = null;
+					if (pointP != null) {
+						//pointQ = null;
+						int i = spnrK.getSelection();
+						String s = "R = P + " + (i > 2 ? i - 1 : "") + "P"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						if(i > 3) {
+							s += " = "; //$NON-NLS-1$
+							if(i % 2 == 1)
+								s += "P + "; //$NON-NLS-1$
+							s += (i / 2) + "P + " + (i / 2) + "P"; //$NON-NLS-1$ //$NON-NLS-2$
+						}
+						pointR = multiplyPoint(pointP, i);
+						
+						lblR.setText(s);
+						view.log("\n" + s); //$NON-NLS-1$
+						view.log(Messages.ECView_Point + " R = " + pointR.toString()); //$NON-NLS-1$ //$NON-NLS-2$
+					}
+					
+					updateScreen();
+					txtQX.setEnabled(false);
+					txtQY.setEnabled(false);
+				}
+			}
+		});
+		
+		Label label = new Label(groupCalculations, SWT.NONE);
+		label.setText("k ="); //$NON-NLS-1$
+		
+		spnrK = new Spinner(groupCalculations, SWT.NONE);
+		spnrK.setMinimum(2);
+		spnrK.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		spnrK.setMaximum(Integer.MAX_VALUE);
+		spnrK.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) { }
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (pointP != null) {
 					int i = spnrK.getSelection();
 					String s = "R = P + " + (i > 2 ? i - 1 : "") + "P"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 					if(i > 3) {
@@ -404,35 +421,8 @@ public class ECContentLarge extends Composite {
 					lblR.setText(s);
 					view.log("\n" + s); //$NON-NLS-1$
 					view.log(Messages.ECView_Point + " R = " + pointR.toString()); //$NON-NLS-1$ //$NON-NLS-2$
-					updateScreen();
-					txtQX.setEnabled(false);
-					txtQY.setEnabled(false);
+					
 				}
-			}
-		});
-		Label label = new Label(groupCalculations, SWT.NONE);
-		label.setText("k ="); //$NON-NLS-1$
-		spnrK = new Spinner(groupCalculations, SWT.NONE);
-		spnrK.setMinimum(2);
-		spnrK.setLayoutData(gridData29);
-		spnrK.setMaximum(Integer.MAX_VALUE);
-		spnrK.addSelectionListener(new SelectionListener() {
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) { }
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				int i = spnrK.getSelection();
-				String s = "R = P + " + (i > 2 ? i - 1 : "") + "P"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				if(i > 3) {
-					s += " = "; //$NON-NLS-1$
-					if(i % 2 == 1)
-						s += "P + "; //$NON-NLS-1$
-					s += (i / 2) + "P + " + (i / 2) + "P"; //$NON-NLS-1$ //$NON-NLS-2$
-				}
-				pointR = multiplyPoint(pointP, i);
-				lblR.setText(s);
-				view.log("\n" + s); //$NON-NLS-1$
-				view.log(Messages.ECView_Point + " R = " + pointR.toString()); //$NON-NLS-1$ //$NON-NLS-2$
 				updateScreen();
 			}
 		});
@@ -448,9 +438,11 @@ public class ECContentLarge extends Composite {
 		groupCurve.setLayout(new GridLayout());
 		GridData gd_groupCurve = new GridData(SWT.FILL, SWT.FILL, true, false);
 		gd_groupCurve.minimumWidth = 600;
+		gd_groupCurve.widthHint = 600;
 		groupCurve.setLayoutData(gd_groupCurve);
-		createGroupAttributes();
 		groupCurve.setText(Messages.ECView_EllipticCurve); //$NON-NLS-1$
+		
+		createGroupAttributes();
 		createGroupP();
 		createGroupQ();
 		createGroupR();
@@ -461,82 +453,65 @@ public class ECContentLarge extends Composite {
 	 *
 	 */
 	private void createGroupAttributes() {
-		GridData gridData28 = new GridData();
-		gridData28.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-		GridData gridData27 = new GridData();
-		gridData27.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-		GridData gridData26 = new GridData();
-		gridData26.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-		GridData gridData25 = new GridData();
-		gridData25.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-		GridData gridData24 = new GridData();
-		gridData24.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-		GridData gridData22 = new GridData();
-		gridData22.grabExcessHorizontalSpace = true;
-		gridData22.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-		GridLayout gridLayout5 = new GridLayout();
-		gridLayout5.numColumns = 2;
-		GridData gridData19 = new GridData();
-		gridData19.horizontalAlignment = org.eclipse.swt.layout.GridData.END;
-		GridData gridData18 = new GridData();
-		gridData18.horizontalAlignment = org.eclipse.swt.layout.GridData.END;
-		GridData gridData16 = new GridData();
-		gridData16.horizontalAlignment = org.eclipse.swt.layout.GridData.END;
-		GridData gridData15 = new GridData();
-		gridData15.horizontalAlignment = org.eclipse.swt.layout.GridData.END;
-		GridData gridData14 = new GridData();
-		gridData14.horizontalAlignment = org.eclipse.swt.layout.GridData.END;
-		GridData gridData13 = new GridData();
-		gridData13.horizontalAlignment = org.eclipse.swt.layout.GridData.END;
-		GridData gridData12 = new GridData();
-		gridData12.horizontalAlignment = org.eclipse.swt.layout.GridData.END;
-		GridData gridData11 = new GridData();
-		gridData11.horizontalAlignment = org.eclipse.swt.layout.GridData.FILL;
-		gridData11.grabExcessHorizontalSpace = true;
+		
 		groupAttributes = new Group(groupCurve, SWT.NONE);
-		groupAttributes.setLayoutData(gridData11);
-		groupAttributes.setLayout(gridLayout5);
+		groupAttributes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		groupAttributes.setLayout(new GridLayout(2, false));
 		groupAttributes.setText(Messages.ECView_CurveAttributes); //$NON-NLS-1$
-		Label label = new Label(groupAttributes, SWT.NONE);
+		
+		Label label = new Label(groupAttributes, SWT.RIGHT);
 		label.setText("a ="); //$NON-NLS-1$
-		label.setLayoutData(gridData12);
+		label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		
 		txtA = new Text(groupAttributes, SWT.BORDER | SWT.READ_ONLY);
 		txtA.setEditable(false);
-		txtA.setLayoutData(gridData22);
-		label = new Label(groupAttributes, SWT.NONE);
+		txtA.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		
+		label = new Label(groupAttributes, SWT.RIGHT);
 		label.setText("b ="); //$NON-NLS-1$
-		label.setLayoutData(gridData13);
+		label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		
 		txtB = new Text(groupAttributes, SWT.BORDER | SWT.READ_ONLY);
 		txtB.setEditable(false);
-		txtB.setLayoutData(gridData24);
-		lblP = new Label(groupAttributes, SWT.NONE);
+		txtB.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		
+		lblP = new Label(groupAttributes, SWT.RIGHT);
 		lblP.setText("p ="); //$NON-NLS-1$
-		lblP.setLayoutData(gridData14);
+		lblP.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		
 		txtP = new Text(groupAttributes, SWT.BORDER);
 		txtP.setEditable(false);
-		txtP.setLayoutData(gridData25);
-		label = new Label(groupAttributes, SWT.NONE);
-		label.setText(Messages.ECView_Basepoint + " G:"); //$NON-NLS-1$ //$NON-NLS-2$
-		label.setLayoutData(gridData15);
+		txtP.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		
+		label = new Label(groupAttributes, SWT.RIGHT);
+		label.setText(Messages.ECView_Basepoint + " G:"); //$NON-NLS-1$
+		label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		
 		new Label(groupAttributes, SWT.NONE);
-		label = new Label(groupAttributes, SWT.NONE);
+		
+		label = new Label(groupAttributes, SWT.RIGHT);
 		label.setText("x ="); //$NON-NLS-1$
-		label.setLayoutData(gridData18);
+		label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		
 		txtGx = new Text(groupAttributes, SWT.BORDER);
 		txtGx.setEditable(false);
-		txtGx.setLayoutData(gridData26);
-		label = new Label(groupAttributes, SWT.NONE);
+		txtGx.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		
+		label = new Label(groupAttributes, SWT.RIGHT);
 		label.setText("y ="); //$NON-NLS-1$
-		label.setLayoutData(gridData19);
+		label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		
 		txtGy = new Text(groupAttributes, SWT.BORDER);
 		txtGy.setEditable(false);
-		txtGy.setLayoutData(gridData27);
-		label = new Label(groupAttributes, SWT.NONE);
+		txtGy.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		
+		label = new Label(groupAttributes, SWT.RIGHT);
 		label.setText(Messages.ECView_OrderOf + " G ="); //$NON-NLS-1$ //$NON-NLS-2$
-		label.setLayoutData(gridData16);
+		label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		
 		txtOrderG = new Text(groupAttributes, SWT.BORDER);
 		txtOrderG.setEditable(false);
-		txtOrderG.setLayoutData(gridData28);
+		txtOrderG.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 	}
 
 	private void fillCSelection() {
@@ -606,10 +581,11 @@ public class ECContentLarge extends Composite {
 	private void updateScreen() {
 		txtA.setText(fbiA.toString(radix));
 		txtB.setText(fbiB.toString(radix));
-		if(rbtnFP.getSelection())
+		if(rbtnFP.getSelection()) {
 			txtP.setText(fbiP.toString(radix));
-		else
+		} else {
 			txtP.setText(fbiP.toString(10));
+		}
 		txtGx.setText(new FlexiBigInt(pointG.getXAffin().toString(16).replaceAll("\\s", ""), 16).toString(radix));
 		txtGy.setText(new FlexiBigInt(pointG.getYAffin().toString(16).replaceAll("\\s", ""), 16).toString(radix));
 		txtOrderG.setText(fbiOrderG.toString(radix));
@@ -824,10 +800,13 @@ public class ECContentLarge extends Composite {
 				
 		Label label = new Label(groupP, SWT.NONE);
 		label.setText("x ="); //$NON-NLS-1$
+		
 		txtPX = new Text(groupP, SWT.BORDER | SWT.READ_ONLY);
 		txtPX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		
 		label = new Label(groupP, SWT.NONE);
 		label.setText("y ="); //$NON-NLS-1$
+		
 		txtPY = new Text(groupP, SWT.BORDER | SWT.READ_ONLY);
 		txtPY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 	}
@@ -841,6 +820,7 @@ public class ECContentLarge extends Composite {
 		groupQ.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		groupQ.setLayout(new GridLayout(4, false));
 		groupQ.setText(Messages.ECView_Point + " Q"); //$NON-NLS-1$ //$NON-NLS-2$
+		
 		btnQGenerate = new Button(groupQ, SWT.NONE);
 		btnQGenerate.setText(Messages.ECView_GenerateRandomPoint); //$NON-NLS-1$
 		btnQGenerate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
@@ -906,15 +886,20 @@ public class ECContentLarge extends Composite {
 		groupR.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		groupR.setLayout(new GridLayout(2, false));
 		groupR.setText(Messages.ECView_Point + " R"); //$NON-NLS-1$ //$NON-NLS-2$
+		
 		lblR = new Label(groupR, SWT.NONE);
 		lblR.setText(""); //$NON-NLS-1$
 		lblR.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		
 		Label label = new Label(groupR, SWT.NONE);
 		label.setText("x ="); //$NON-NLS-1$
+		
 		txtRX = new Text(groupR, SWT.BORDER | SWT.READ_ONLY);
 		txtRX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		
 		label = new Label(groupR, SWT.NONE);
 		label.setText("y ="); //$NON-NLS-1$
+		
 		txtRY = new Text(groupR, SWT.BORDER | SWT.READ_ONLY);
 		txtRY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 	}
@@ -930,8 +915,7 @@ public class ECContentLarge extends Composite {
         groupSave.setText(Messages.ECView_SaveResults); //$NON-NLS-1$
 
         cSaveResults = new Combo(groupSave, SWT.READ_ONLY);
-        cSaveResults
-                .setItems(new String[] {
+        cSaveResults.setItems(new String[] {
                         Messages.ECView_No, Messages.ECView_ToTextEditor, Messages.ECView_ToTextFile}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         cSaveResults.select(view.saveTo);
         cSaveResults.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 2, 1));
@@ -964,8 +948,9 @@ public class ECContentLarge extends Composite {
 
             @Override
 			public void widgetSelected(SelectionEvent e) {
-                view.selectFileLocation();
-                lblSaveResults.setText(view.saveTo == 2 ? view.getFileName() : ""); //$NON-NLS-1$
+                if (view.selectFileLocation()) {
+                	lblSaveResults.setText(view.saveTo == 2 ? view.getFileName() : ""); //$NON-NLS-1$
+                }
             }
         });
         btnSave = new Button(groupSave, SWT.NONE);

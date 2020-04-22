@@ -20,7 +20,7 @@
             locationURI="toolbar:org.jcryptool.visual.wots.WotsView">
          <command
                commandId="org.jcryptool.visual.wots.RestartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
+               icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
                style="push"
                tooltip="%menu.restart.tooltip">
          </command>
@@ -35,18 +35,6 @@
                tooltip="%menu.reset.tooltip">
          </command>
       </menuContribution>
-      <menuContribution
-            allPopups="false"
-            locationURI="toolbar:org.jcryptool.visual.wots.WotsView">
-         <command
-               commandId="org.jcryptool.visual.wots.HelpCommand"
-               icon="platform:/plugin/org.eclipse.help.ui/icons/view16/help_view.gif"
-               style="push"
-               tooltip="%menu.help.tooltip">
-         </command>
-      </menuContribution>
-      
-     
   </extension>
   <extension
          point="org.eclipse.ui.commands">

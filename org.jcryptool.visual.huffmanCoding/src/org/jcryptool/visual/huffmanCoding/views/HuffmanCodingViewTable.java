@@ -17,7 +17,6 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.huffmanCoding.algorithm.BitString;
 import org.jcryptool.visual.huffmanCoding.algorithm.Node;
 
@@ -48,15 +47,16 @@ public class HuffmanCodingViewTable extends Composite {
 		bitStrings = mainView.getBitStringTable();
 		mode = mainView.getMode();
 
-		styledTextCodetable = new StyledText(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
+		styledTextCodetable = new StyledText(this, SWT.READ_ONLY | SWT.WRAP);
 		styledTextCodetable.setText(Messages.HuffmanCodingView_29);
-		styledTextCodetable.setFont(FontService.getNormalFont());
 		styledTextCodetable.setEditable(false);
 		GridData gd_styledTextCodetable = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd_styledTextCodetable.heightHint = 90;
+		gd_styledTextCodetable.minimumWidth = 600;
+		gd_styledTextCodetable.widthHint = styledTextCodetable.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
 		styledTextCodetable.setLayoutData(gd_styledTextCodetable);
 
 		btnShowBranch = new Button(this, SWT.NONE);
+		btnShowBranch.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		btnShowBranch.setEnabled(false);
 		btnShowBranch.setText(Messages.HuffmanCodingView_15);
 		btnShowBranch.addSelectionListener(new SelectionAdapter() {
@@ -76,13 +76,12 @@ public class HuffmanCodingViewTable extends Composite {
 			}
 		});
 
-		GridData gd_btnShowBranch = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_btnShowBranch.heightHint = 40;
-		gd_btnShowBranch.widthHint = 120;
-		btnShowBranch.setLayoutData(gd_btnShowBranch);
 
 		table = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		GridData gd_table = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+		gd_table.widthHint = table.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
+		gd_table.heightHint = table.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
+		table.setLayoutData(gd_table);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 
@@ -95,7 +94,6 @@ public class HuffmanCodingViewTable extends Composite {
 		});
 
 		final TableColumn tblclmnCharacter = new TableColumn(table, SWT.NONE);
-		tblclmnCharacter.setWidth(100);
 		tblclmnCharacter.setText(Messages.HuffmanCodingView_tblclmnCharacter_text);
 		tblclmnCharacter.addListener(SWT.Selection, new Listener() {
 
@@ -141,7 +139,6 @@ public class HuffmanCodingViewTable extends Composite {
 		});
 
 		TableColumn tblclmnProbability = new TableColumn(table, SWT.NONE);
-		tblclmnProbability.setWidth(140);
 		tblclmnProbability.setText(Messages.HuffmanCodingView_tblclmnPropability_text);
 		tblclmnProbability.addListener(SWT.Selection, new Listener() {
 
@@ -186,7 +183,7 @@ public class HuffmanCodingViewTable extends Composite {
 		});
 
 		TableColumn tblclmnCode = new TableColumn(table, SWT.NONE);
-		tblclmnCode.setWidth(140);
+//		tblclmnCode.setWidth(140);
 		tblclmnCode.setText(Messages.HuffmanCodingView_tblclmnCode_text);
 		tblclmnCode.addListener(SWT.Selection, new Listener() {
 
@@ -231,7 +228,6 @@ public class HuffmanCodingViewTable extends Composite {
 		});
 
 		TableColumn tblclmnCodeLength = new TableColumn(table, SWT.NONE);
-		tblclmnCodeLength.setWidth(100);
 		tblclmnCodeLength.setText(Messages.HuffmanCodingView_tblclmnCodeLength_text);
 		tblclmnCodeLength.addListener(SWT.Selection, new Listener() {
 
@@ -351,11 +347,16 @@ public class HuffmanCodingViewTable extends Composite {
 			sb.append("\n\n" + Messages.HuffmanCodingView_codetable_stat_2);
 			styledTextCodetable.setText(sb.toString());
 
+			// Make the word "Statistic" bold.
 			StyleRange title = new StyleRange();
 			title.start = 0;
 			title.length = Messages.HuffmanCodingView_codetable_stat_header.length();
 			title.fontStyle = SWT.BOLD;
 			styledTextCodetable.setStyleRange(title);
+			
+			for (TableColumn tc : table.getColumns()) {
+				tc.pack();
+			}
 		}
 	}
 

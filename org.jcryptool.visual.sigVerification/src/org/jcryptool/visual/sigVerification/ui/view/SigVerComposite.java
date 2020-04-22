@@ -527,7 +527,7 @@ public class SigVerComposite extends Composite {
                 try {
                     // Create the InputWizard and display it
                     InputWizard wiz = new InputWizard(input);
-                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
+                    WizardDialog dialog = new WizardDialog(SigVerComposite.this.getShell(), wiz) {
                         @Override
                         protected void configureShell(Shell newShell) {
                             super.configureShell(newShell);
@@ -583,7 +583,7 @@ public class SigVerComposite extends Composite {
                 try {
                     // Create the HashWizard and display it
                     HashWizard wiz = new HashWizard(input);
-                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
+                    WizardDialog dialog = new WizardDialog(SigVerComposite.this.getShell(), wiz) {
                         @Override
                         protected void configureShell(Shell newShell) {
                             super.configureShell(newShell);
@@ -630,7 +630,7 @@ public class SigVerComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
                 try {
                     SignatureWizard wiz = new SignatureWizard(input.h, input);
-                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
+                    WizardDialog dialog = new WizardDialog(SigVerComposite.this.getShell(), wiz) {
                         @Override
                         protected void configureShell(Shell newShell) {
                             super.configureShell(newShell);

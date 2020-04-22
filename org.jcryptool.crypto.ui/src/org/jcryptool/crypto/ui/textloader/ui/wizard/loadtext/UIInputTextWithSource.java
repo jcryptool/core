@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorReference;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.editors.EditorUtils;
 import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.input.AbstractUIInput;
@@ -114,13 +115,17 @@ public abstract class UIInputTextWithSource extends AbstractUIInput<TextInputWit
 			if (!getContent().getSourceType().equals(TextSourceType.USERINPUT)) {
 				userinputSource = getContent();
 			}
-			return new TextInputWithSource(text, userinputSource);
+			TextInputWithSource textInputWithSource = new TextInputWithSource(text, userinputSource);
+			textInputWithSource.setTransform(getTransformData());
+			return textInputWithSource;
 		} else if (getFileRadioButton().getSelection()) {
 			try {
 				// reset user input origin
 				userinputSource = null;
 				String textFromFile = getTextFromFile(getSelectedFile());
-				return new TextInputWithSource(textFromFile, getSelectedFile());
+				TextInputWithSource textInputWithSource = new TextInputWithSource(textFromFile, getSelectedFile());
+				textInputWithSource.setTransform(getTransformData());
+				return textInputWithSource;
 			} catch (FileNotFoundException ex) {
 				// should not happen since existence of file has been
 				// tested
@@ -132,11 +137,14 @@ public abstract class UIInputTextWithSource extends AbstractUIInput<TextInputWit
 			userinputSource = null;
 			if (getComboEditors().getSelectionIndex() < 0) {
 				IEditorReference bestEditor = getBestEditorReference();
-				return new TextInputWithSource(EditorUtils.retrieveTextForEditor(bestEditor), bestEditor);
+				TextInputWithSource textInputWithSource = new TextInputWithSource(EditorUtils.retrieveTextForEditor(bestEditor), bestEditor);
+				textInputWithSource.setTransform(getTransformData());
+				return textInputWithSource;
 			} else {
 				IEditorReference currentlySelectedEditor = getSelectedEditor();
-				return new TextInputWithSource(EditorUtils.retrieveTextForEditor(currentlySelectedEditor),
-					currentlySelectedEditor);
+				TextInputWithSource textInputWithSource = new TextInputWithSource(EditorUtils.retrieveTextForEditor(currentlySelectedEditor), currentlySelectedEditor);
+				textInputWithSource.setTransform(getTransformData());
+				return textInputWithSource;
 			}
 		} else {
 			throw new RuntimeException("Not all input method cases covered at reading input text!"); //$NON-NLS-1$
@@ -145,6 +153,12 @@ public abstract class UIInputTextWithSource extends AbstractUIInput<TextInputWit
 
 	@Override
 	public void writeContent(TextInputWithSource content) {
+		if (content.getTransform() != null) {
+			getBtnTransformation().setSelection(true);
+		} else {
+			getBtnTransformation().setSelection(false);
+		}
+
 		if (content.getSourceType().equals(TextSourceType.FILE)) {
 			setUIState(content, true);
 		} else if (content.getSourceType().equals(TextSourceType.JCTEDITOR)) {
@@ -275,4 +289,7 @@ public abstract class UIInputTextWithSource extends AbstractUIInput<TextInputWit
 
 	protected abstract AbstractUIInput<String> getTextOnlyInput();
 
+	protected abstract TransformData getTransformData();
+
+	protected abstract Button getBtnTransformation();
 }

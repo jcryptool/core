@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.colors.ColorService;
+import org.jcryptool.core.util.ui.auto.LayoutAdvisor;
 import org.jcryptool.visual.kleptography.KleptographyPlugin;
 import org.jcryptool.visual.kleptography.algorithm.Kleptography;
 
@@ -80,6 +81,18 @@ public class KleptoView extends ViewPart {
         this.parent = parent;
         klepto = new Kleptography();
         setUpGUI(parent);
+        
+        /**
+         * This is necessary, because this plugin uses the
+         * <see>TitleAndDescriptionComposite</see> to display
+         * the title and the description of the plugin. 
+         * The problem with this way of displaying the title and
+         * description is, that it adds a resize listener to 
+         * the top scrolledcomposite. On resize it lays out ALL
+         * widgets. If there is a widget with much content it 
+         * will stretch horizontally. This is not intended.
+         */
+        LayoutAdvisor.addPreLayoutRootComposite(parent);
 
         PlatformUI.getWorkbench().getHelpSystem()
                 .setHelp(parent.getShell(), KleptographyPlugin.PLUGIN_ID + ".kleptoview");
@@ -162,6 +175,10 @@ public class KleptoView extends ViewPart {
         }
     }
 
+    /**
+     * Reset the plugin.</br>
+     * Disposes all widgets and creates them new.
+     */
     public void reset() {
         Control[] children = parent.getChildren();
         for (Control control : children) {

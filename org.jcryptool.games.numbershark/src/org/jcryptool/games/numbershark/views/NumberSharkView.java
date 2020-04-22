@@ -80,11 +80,13 @@ public class NumberSharkView extends ViewPart {
     private ScoreTableRow scoreTableRow;
     private Hashtable<Integer, ScoreTableRow> scoreTableRowList = new Hashtable<Integer, ScoreTableRow>();
     private int playerMove;
+	private Shell shell;
     
 
     @Override
     public void createPartControl(final Composite parent) {
         this.parent = parent;
+        this.shell = parent.getShell();
 
         SashForm sashForm = new SashForm(parent, SWT.VERTICAL);
         sashForm.setLayout(new GridLayout(1, false));
@@ -291,7 +293,7 @@ public class NumberSharkView extends ViewPart {
         commandStateChanger.chageCommandState(CommandState.Variable.REDO_STATE, CommandState.State.REDO_DISABLED);
 
         if (remainingNumbers == 0) {
-            Shell shell = Display.getCurrent().getActiveShell();
+            Shell shell = this.shell;
             EndOfGameDialog dialog = new EndOfGameDialog(shell, this);
             dialog.open();
         }

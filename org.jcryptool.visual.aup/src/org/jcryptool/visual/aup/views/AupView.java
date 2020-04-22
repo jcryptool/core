@@ -369,16 +369,16 @@ public class AupView extends ViewPart {
 		headingBox = new Composite(child, SWT.NONE);
 		headingBox.setLayout(new GridLayout());
 		headingBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		headingBox.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+		headingBox.setBackground(ColorService.WHITE);
 		
-		Label heading = new Label(headingBox, SWT.NONE);
-		heading.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+		Text heading = new Text(headingBox, SWT.READ_ONLY);
+		heading.setBackground(ColorService.WHITE);
 		heading.setFont(FontService.getHeaderFont());
 		heading.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		heading.setText(Messages.AndroidUnlockPattern_Heading);
 
 		Text lblHeaderInfoText = new Text(headingBox, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
-		lblHeaderInfoText.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+		lblHeaderInfoText.setBackground(ColorService.WHITE);
 		lblHeaderInfoText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		lblHeaderInfoText.setText(Messages.AndroidUnlockPattern_HeadingInfoText);		
 		

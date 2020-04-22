@@ -39,23 +39,23 @@ public class AntColVisualComposite extends Composite {
 		visualGroup.setLayout(new GridLayout(1, false));
 
 		selectGraph = new Button(visualGroup, SWT.RADIO);
-		selectGraph
-				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		selectGraph.setText(Messages.Visual_graphVisualRadio); //$NON-NLS-1$
+		selectGraph.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		selectGraph.setText(Messages.Visual_graphVisualRadio); 
 		selectGraph.setSelection(true);
 		selectGraph.setEnabled(false);
 		selectGraph.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				controller.onSelectShowGraph();
 			}
 		});
 
 		selectMatrix = new Button(visualGroup, SWT.RADIO);
-		selectMatrix
-				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		selectMatrix.setText(Messages.Visual_matrixVisualRadio); //$NON-NLS-1$
+		selectMatrix.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		selectMatrix.setText(Messages.Visual_matrixVisualRadio); 
 		selectMatrix.setEnabled(false);
 		selectMatrix.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				controller.onSelectShowMatrix();
 			}

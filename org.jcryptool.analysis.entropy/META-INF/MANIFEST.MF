@@ -8,15 +8,15 @@ Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.jcryptool.core.operations,
- org.jcryptool.analysis.textmodify
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+ org.jcryptool.analysis.textmodify,
+ org.jcryptool.core.util
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Import-Package: org.jcryptool.crypto.ui.textmodify.wizard,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.constants
 Automatic-Module-Name: org.jcryptool.analysis.entropy
-Export-Package: com.cloudgarden.resource,
- org.jcryptool.analysis.entropy,
+Export-Package: org.jcryptool.analysis.entropy,
  org.jcryptool.analysis.entropy.calc,
  org.jcryptool.analysis.entropy.ui,
  org.jcryptool.analysis.entropy.views

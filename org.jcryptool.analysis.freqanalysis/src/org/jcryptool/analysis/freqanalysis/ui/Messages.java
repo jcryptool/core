@@ -29,6 +29,8 @@ public class Messages extends NLS {
 	public static String FreqAnalysisGraph_shiftgraph0;
 	public static String FreqAnalysisGraph_shiftgraph1;
 	public static String FreqAnalysisGraph_shiftgraph2;
+	public static String FreqAnalysisGraph_graph0;
+	public static String FreqAnalysisGraph_graph1;
 	public static String FreqAnalysisUI_descision1label;
 	public static String FreqAnalysisUI_descision2label;
 	public static String FreqAnalysisUI_frequency_analysis;
@@ -38,6 +40,7 @@ public class Messages extends NLS {
 	public static String FullAnalysisUI_2;
 	public static String FullAnalysisUI_3;
 	public static String FullAnalysisUI_5;
+	public static String FullAnalysisUI_6;
 	public static String FullAnalysisUI_alphabetused;
 	public static String FullAnalysisUI_enabledecrOverlay;
 	public static String FullAnalysisUI_englishreftextname1;

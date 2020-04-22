@@ -83,7 +83,10 @@ public class VigenereBreakerGui extends ContentDelegator {
 	 * Initializes the first GUI window.
 	 */
 	private void initGUI() {
-		this.setLayout(new GridLayout());
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.marginHeight = 0;
+		gridLayout.marginWidth = 0;
+		this.setLayout(gridLayout);
 		this.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		content = new SummaryGui(this, SWT.NONE);
 		this.layout(new Control[] { content });

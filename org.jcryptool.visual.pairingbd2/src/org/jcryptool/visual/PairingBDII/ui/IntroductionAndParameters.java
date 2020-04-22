@@ -15,16 +15,14 @@ import java.math.BigInteger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
-import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 
 public class IntroductionAndParameters {
 	private static final int PARAMETER_u = 0;
@@ -47,8 +45,6 @@ public class IntroductionAndParameters {
 	private final Text parameters_k;
 	private final Text parameters_e;
 
-	private Color white = Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
-
 	private final Spinner spinner_NumberOfUsers;
 
 	private final Button radio_PenAndPaper;
@@ -59,22 +55,12 @@ public class IntroductionAndParameters {
 	private final Button radio_WeilPairing;
 
 	public IntroductionAndParameters(final Composite parent) {
-		Composite compositeIntro = new Composite(parent, SWT.NONE);
-		compositeIntro.setBackground(white);
-		compositeIntro.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		compositeIntro.setLayout(new GridLayout(1, false));
 
-		Text headerTitle = new Text(compositeIntro, SWT.WRAP | SWT.READ_ONLY);
-		headerTitle.setFont(FontService.getHeaderFont());
-		headerTitle.setBackground(white);
-		headerTitle.setText(Messages.IntroductionAndParameters_0); 
-
-		Text text = new Text(compositeIntro, SWT.READ_ONLY | SWT.WRAP | SWT.MULTI);
-		text.setText(Messages.IntroductionAndParameters_1); 
-		text.setBackground(white);
-		GridData gd_text = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd_text.widthHint = 800;
-		text.setLayoutData(gd_text);
+		// This creates the area where the title and the description of the plugin are shown.
+		TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(parent);
+		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		titleAndDescription.setTitle(Messages.IntroductionAndParameters_0);
+		titleAndDescription.setDescription(Messages.IntroductionAndParameters_1);
 
 		Group groupParameters = new Group(parent, SWT.NONE);
 		groupParameters.setLayout(new GridLayout(1, false));
@@ -206,8 +192,8 @@ public class IntroductionAndParameters {
 		panel.setLayout(new GridLayout(3, false));
 		panel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		
-		headerTitle = new Text(panel, SWT.READ_ONLY);
-		headerTitle.setText(Messages.IntroductionAndParameters_23);
+		Text users = new Text(panel, SWT.READ_ONLY);
+		users.setText(Messages.IntroductionAndParameters_23);
 		
 		spinner_NumberOfUsers = new Spinner(panel, SWT.BORDER);
 		spinner_NumberOfUsers.setSelection(4);
@@ -231,11 +217,11 @@ public class IntroductionAndParameters {
 			}
 		});
 
-		headerTitle = new Text(panel, SWT.WRAP | SWT.READ_ONLY);
-		GridData gd_label = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
-		gd_label.widthHint = 200;
-		headerTitle.setLayoutData(gd_label);
-		headerTitle.setText(Messages.IntroductionAndParameters_24);
+		Text maxUserHint = new Text(panel, SWT.WRAP | SWT.READ_ONLY);
+		GridData gd_maxUserHint = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
+		gd_maxUserHint.widthHint = 200;
+		maxUserHint.setLayoutData(gd_maxUserHint);
+		maxUserHint.setText(Messages.IntroductionAndParameters_24);
 
 		group = new Group(groupParameters, SWT.NONE);
 		group.setLayout(new GridLayout(1, false));

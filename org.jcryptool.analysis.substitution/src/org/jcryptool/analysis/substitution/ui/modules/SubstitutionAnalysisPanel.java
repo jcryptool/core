@@ -37,6 +37,7 @@ import org.jcryptool.analysis.substitution.ui.modules.utils.SubstKeyViewer;
 import org.jcryptool.analysis.substitution.ui.modules.utils.SubstitutionAnalysisText;
 import org.jcryptool.analysis.substitution.ui.modules.utils.SubstitutionKeyEditor;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.crypto.ui.textsource.TextInputWithSourceDisplayer;
 import org.jcryptool.editor.text.JCTTextEditorPlugin;
 
@@ -72,14 +73,18 @@ public class SubstitutionAnalysisPanel extends Composite {
 	}
 
 	private void initGUI() {
-		setLayout(new GridLayout(2, false));
-		
-		Group grpSubstitutionAnalysis = new Group(this, SWT.NONE);
-		grpSubstitutionAnalysis.setText(Messages.SubstitutionAnalysisPanel_0);
-		grpSubstitutionAnalysis.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		grpSubstitutionAnalysis.setLayout(new GridLayout(1, false));
-		
-		initHelpGroup(grpSubstitutionAnalysis);
+		GridLayout gridLayout = new GridLayout(2, false);
+		gridLayout.marginHeight = 0;
+		gridLayout.marginWidth = 0;
+		setLayout(gridLayout);
+	
+		TitleAndDescriptionComposite td = new TitleAndDescriptionComposite(this);
+		GridData gdTitle = new GridData(SWT.FILL, SWT.FILL, true, false);
+		gdTitle.minimumWidth = MAIN_LBL_WIDTH_HINT;
+		td.setLayoutData(gdTitle);
+		td.setTitle(Messages.SubstitutionAnalysisPanel_0);
+		td.setDescription(Messages.SubstitutionAnalysisPanel_4);
+
 		
 		Group grpLetterFrequencyStatistics = new Group(this, SWT.NONE);
 		grpLetterFrequencyStatistics.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 3));
@@ -101,14 +106,6 @@ public class SubstitutionAnalysisPanel extends Composite {
 		grpPreviewOfThe.setLayout(new GridLayout(1, false));
 		
 		initPreviewGroup(grpPreviewOfThe);
-	}
-
-	private void initHelpGroup(Group grpSubstitutionAnalysis) {
-		Label lblTheSubstitutionAnalysis = new Label(grpSubstitutionAnalysis, SWT.WRAP);
-		GridData lblTheSubstitutionAnalysisLayoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		lblTheSubstitutionAnalysisLayoutData.widthHint = MAIN_LBL_WIDTH_HINT;
-		lblTheSubstitutionAnalysis.setLayoutData(lblTheSubstitutionAnalysisLayoutData);
-		lblTheSubstitutionAnalysis.setText(Messages.SubstitutionAnalysisPanel_4);
 	}
 
 	private void initPreviewGroup(Group grpPreviewOfThe) {
@@ -154,7 +151,7 @@ public class SubstitutionAnalysisPanel extends Composite {
 		keyPreview.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		Button lblKeyPreview = new Button(keyPreview, SWT.PUSH);
-		GridData lblKeyPreviewLayoutData = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		GridData lblKeyPreviewLayoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		lblKeyPreview.setLayoutData(lblKeyPreviewLayoutData);
 		lblKeyPreview.setText(Messages.SubstitutionAnalysisPanel_7);
 		lblKeyPreview.addSelectionListener(new SelectionAdapter() {

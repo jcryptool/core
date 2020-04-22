@@ -19,6 +19,7 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.visual.zeroknowledge.algorithm.graphenisomorphie.math.Graph;
 import org.jcryptool.visual.zeroknowledge.algorithm.graphenisomorphie.math.Kante;
 import org.jcryptool.visual.zeroknowledge.algorithm.graphenisomorphie.math.Knoten;
@@ -31,7 +32,7 @@ import org.jcryptool.visual.zeroknowledge.algorithm.graphenisomorphie.math.Knote
  * in der Farbe des Graphen, aus dem dieser Graph entstanden ist.
  *
  * @author Mareike Paul
- *@version 1.0.0
+ * @version 1.0.0
  */
 public class Zeichenflaeche extends Canvas {
     private int color_main;
@@ -59,7 +60,6 @@ public class Zeichenflaeche extends Canvas {
      * @param color_vorher Farbe für den zweiten Teil der Erklärung zu dne Punkten
      * @param vorher gibt an, ob ausgegeben werden soll, welche Nummer der Punkt vorher hatte
      */
-//    public Zeichenflaeche(Group parent, Graph graph, int color, int color_vorher, boolean vorher) {
     public Zeichenflaeche(Composite parent, Graph graph, int color, int color_vorher, boolean vorher) {
         super(parent, SWT.NONE | SWT.BORDER | SWT.BACKGROUND);
 
@@ -78,7 +78,8 @@ public class Zeichenflaeche extends Canvas {
             /**
              * Methode, die das Canvas neu zeichnet.
              */
-            public void paintControl(PaintEvent e) {
+            @Override
+			public void paintControl(PaintEvent e) {
                 paint(e);
             }
         });
@@ -100,10 +101,48 @@ public class Zeichenflaeche extends Canvas {
     public void paint(PaintEvent e) {
         // Werte im gc setzen
         gc = e.gc;
-        gc.setLineWidth(1);
+        
+        // This is a great way to sharpen graphics.
         gc.setAntialias(SWT.ON);
+
+        // Zuerst wird die Beschriftung der Knoten gezeichnet, danach 
+        // erst die Knoten und Kanten. Das hat den Grund, dass die 
+        // Beschriftung auf weißem Hintergrund gezeichnet wird und der 
+        // Hintergrund die Knoten und Kanten überzeichnet und man sie 
+        // nicht mehr erkennt. Daher wird erst die Beschriftung und dann
+        // die Knoten und Kanten gezeichnet, da diese über den weißen Hintergrund
+        // drübermalen.
+        
+        // Farben neu setzen
+        gc.setBackground(ColorService.WHITE);
+        gc.setForeground(this.getDisplay().getSystemColor(color_main));
+
+        // Position der begleitenden Texte setzen
+        int backx = -(int) e.gc.getFontMetrics().getAverageCharacterWidth() / 2;
+        if (vorher) {
+            backx -= (int) e.gc.getFontMetrics().getAverageCharacterWidth() * 0.75;
+        }
+        
+        int backy = e.gc.getFontMetrics().getHeight() / 2;
+
+        // jeden Knoten beschriften
+        for (Point n : numbers) {
+            gc.drawString(String.valueOf(n.getNummer() + 1), n.getXCoord() + backx,
+                    n.getYCoord() - backy);
+        }
+
+        // u.U. angeben, welche Nummer der Knoten frueher hatte
+        if (vorher) {
+            gc.setForeground(this.getDisplay().getSystemColor(color_vorher));
+            for (Point n : numbers) {
+                gc.drawString(n.getAlt(), n.getXCoord() +  backx + (int) e.gc.getFontMetrics().getAverageCharacterWidth(), n.getYCoord() - backy);
+            }
+        }
+        
+        
+     // Farben neu setzen
         gc.setBackground(this.getDisplay().getSystemColor(color_main));
-        gc.setForeground(this.getDisplay().getSystemColor(SWT.COLOR_BLACK));
+        gc.setForeground(ColorService.BLACK);
 
         // jede Kante zeichnen
         for (Line l : lines) {
@@ -113,29 +152,7 @@ public class Zeichenflaeche extends Canvas {
         for (Point p : points) {
             gc.fillOval(p.getXCoord() - 5, p.getYCoord() - 5, 10, 10);
         }
-
-        // Farben neu setzen
-        gc.setBackground(this.getDisplay().getSystemColor(SWT.COLOR_WHITE));
-        gc.setForeground(this.getDisplay().getSystemColor(color_main));
-
-        // Position der begleitenden Texte setzen
-        int backx = -3;
-        if (vorher)
-            backx -= 7;
-
-        // jeden Knoten beschriften
-        for (Point n : numbers) {
-            gc.drawString(String.valueOf(n.getNummer() + 1), n.getXCoord() + backx,
-                    n.getYCoord() - 6);
-        }
-
-        // u.U. angeben, welche Nummer der Knoten frueher hatte
-        if (vorher) {
-            gc.setForeground(this.getDisplay().getSystemColor(color_vorher));
-            for (Point n : numbers) {
-                gc.drawString(n.getAlt(), n.getXCoord() + backx + 7, n.getYCoord() - 6);
-            }
-        }
+        
         gc.dispose();
     }
 

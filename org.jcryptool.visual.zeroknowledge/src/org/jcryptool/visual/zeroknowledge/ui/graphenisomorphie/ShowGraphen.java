@@ -170,10 +170,10 @@ public class ShowGraphen extends Composite {
 	 */
 	public void setH(Graph h, GBeweiser p) {
 		if (p.getA() == 0) {
-			H = new Zeichenflaeche(hComposite, h, SWT.COLOR_GREEN, SWT.COLOR_BLUE, true);
+			H = new Zeichenflaeche(hComposite, h, SWT.COLOR_DARK_GREEN, SWT.COLOR_BLUE, true);
 			H.setToolTipText(Messages.ShowGraphen_6);
 		} else {
-			H = new Zeichenflaeche(hComposite, h, SWT.COLOR_GREEN, SWT.COLOR_RED, true);
+			H = new Zeichenflaeche(hComposite, h, SWT.COLOR_DARK_GREEN, SWT.COLOR_RED, true);
 			H.setToolTipText(Messages.ShowGraphen_7);
 		}
 		redraw();

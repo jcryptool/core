@@ -44,14 +44,6 @@
                tooltip="%help.command.tooltip">
          </command>
       </menuContribution>
-      <menuContribution
-            locationURI="menu:org.jcryptool.analysis.friedman.views.FriedmanView">
-         <command
-               commandId="org.jcryptool.analysis.friedman.helpCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png"
-               style="push">
-         </command>
-      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.commands">

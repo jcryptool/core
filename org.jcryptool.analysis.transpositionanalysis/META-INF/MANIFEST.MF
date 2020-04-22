@@ -13,14 +13,13 @@ Require-Bundle: org.eclipse.ui,
  org.jcryptool.crypto.classic.transposition,
  org.jcryptool.crypto.ui
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: org.jcryptool.crypto.ui.textmodify.wizard,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.fonts,
  org.jcryptool.crypto.classic.alphabets.ui
 Bundle-Vendor: %Bundle-Vendor
-Export-Package: com.cloudgarden.resource,
- org.jcryptool.analysis.transpositionanalysis,
+Export-Package: org.jcryptool.analysis.transpositionanalysis,
  org.jcryptool.analysis.transpositionanalysis.calc,
  org.jcryptool.analysis.transpositionanalysis.calc.transpositionanalysis,
  org.jcryptool.analysis.transpositionanalysis.calc.transpositionanalysis.model,

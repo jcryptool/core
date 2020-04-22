@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -27,7 +26,7 @@ import org.jcryptool.analysis.viterbi.algorithm.IO;
 import org.jcryptool.analysis.viterbi.algorithm.ModularAddition;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
-import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 
 /**
  *
@@ -38,8 +37,6 @@ import org.jcryptool.core.util.fonts.FontService;
  */
 public class XORComposite extends Composite {
 	/* set default values */
-	private static final int HORIZONTAL_SPACING = 5;
-	private static final int MARGIN_WIDTH = 5;
 
 	private static final int LOADBUTTONHEIGHT = 30;
 	private static final int LOADBUTTONWIDTH = 120;
@@ -53,7 +50,6 @@ public class XORComposite extends Composite {
 	private String cipherString = ""; //$NON-NLS-1$
 	private Button xor;
 	private Button mod;
-	private StyledText stDescription;
 
 	/* default value for the combination is xor */
 	private Combination combi = new BitwiseXOR();
@@ -70,7 +66,12 @@ public class XORComposite extends Composite {
 		super(parent, style);
 
 		this.viterbiView = viterbiView;
-		setLayout(new GridLayout());
+		
+		GridLayout gl = new GridLayout();
+		gl.marginHeight = 0;
+		gl.marginWidth = 0;
+		setLayout(gl);
+		
 		createHead();
 		createMainArea();
 
@@ -96,33 +97,16 @@ public class XORComposite extends Composite {
 		fDoUI.accept(canEncrypt, canProceed);
 	}
 
-	/**
-	 * Sets the default texts in the plaintext fields. This is just a bugfix,
-	 * because setting the texts earlier would destroy the layout.
-	 */
-	public void displayDefaultTexts() {
-		plain2.setText(Messages.XORComposite_Plain2DefaultText);
-		plain1.setText(Messages.XORComposite_Plain1DefaultText);
-		stDescription.setText(Messages.XORComposite_description);
-	}
 
 	/**
 	 * This method generates the head of the tab. The head has a title and a
 	 * description.
 	 */
 	private void createHead() {
-		final Composite head = new Composite(this, SWT.NONE);
-		head.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
-		head.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		head.setLayout(new GridLayout());
-
-		final Label label = new Label(head, SWT.NONE);
-		label.setFont(FontService.getHeaderFont());
-		label.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
-		label.setText(Messages.XORComposite_tab_title);
-
-		stDescription = new StyledText(head, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
-		stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(this);
+		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		titleAndDescription.setTitle(Messages.XORComposite_tab_title);
+		titleAndDescription.setDescription(Messages.XORComposite_description);
 	}
 
 	/**
@@ -223,7 +207,11 @@ public class XORComposite extends Composite {
 		GridData gd_plain1 = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gd_plain1.horizontalIndent = 1;
 		gd_plain1.heightHint = 100;
+		// This avoids that the textfield width stays optimal when resizing the window.
+		gd_plain1.widthHint = parent.getClientArea().x;
 		plain1.setLayoutData(gd_plain1);
+		plain1.setText(Messages.XORComposite_Plain1DefaultText);
+		
 		final Canvas canvas = new Canvas(parent, SWT.NONE);
 		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
 		canvas.setLayout(new GridLayout());
@@ -335,7 +323,10 @@ public class XORComposite extends Composite {
 		plain2 = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		GridData gd_plain2 = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gd_plain2.heightHint = 100;
+		// This avoids that the textfields width stays optimal when resizing the window.
+		gd_plain2.widthHint = parent.getClientArea().x;
 		plain2.setLayoutData(gd_plain2);
+		plain2.setText(Messages.XORComposite_Plain2DefaultText);
 
 		Canvas canvas_1 = new Canvas(g, SWT.NONE);
 		canvas_1.setLayout(new GridLayout(2, false));
@@ -455,8 +446,10 @@ public class XORComposite extends Composite {
 			}
 		});
 		cipher = new Text(parent, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
-		GridData gd_cipher = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		GridData gd_cipher = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gd_cipher.heightHint = 100;
+		// This avoids that the textfields width stays optimal when resizing the window.
+		gd_cipher.widthHint = parent.getClientArea().x;
 		cipher.setLayoutData(gd_cipher);
 
 		next = new Button(g, SWT.PUSH);

@@ -26,29 +26,19 @@ import org.jcryptool.analysis.friedman.IFriedmanAccess;
 import org.jcryptool.analysis.friedman.calc.FriedmanCalc;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.ui.textloader.ui.wizard.TextLoadController;
-
-import com.cloudgarden.resource.SWTResourceManager;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 
 /**
  * @author SLeischnig
  *
  */
-public class FriedmanGraphUI extends org.eclipse.swt.widgets.Composite implements IFriedmanAccess {
-
-	@SuppressWarnings("unused")
-	private static final String ACTION_CANCELLED = "#cancelled#"; //$NON-NLS-1$
-
-	{
-		// Register as a resource user - SWTResourceManager will
-		// handle the obtaining and disposing of resources
-		SWTResourceManager.registerResourceUser(this);
-	}
+public class FriedmanGraphUI extends Composite implements IFriedmanAccess {
 
 	private Button btnShowTable;
 	private Button btnResetGraph;
 	private String message;
 
-	public FriedmanGraphUI(final org.eclipse.swt.widgets.Composite parent, final int style) {
+	public FriedmanGraphUI(final Composite parent, final int style) {
 		super(parent, style);
 		initGUI();
 
@@ -56,9 +46,14 @@ public class FriedmanGraphUI extends org.eclipse.swt.widgets.Composite implement
 
 	private void initGUI() {
 		try {
-			GridLayout thisLayout = new GridLayout();
-			thisLayout.makeColumnsEqualWidth = true;
-			this.setLayout(thisLayout);
+			this.setLayout(new GridLayout());
+			
+			TitleAndDescriptionComposite td = new TitleAndDescriptionComposite(this);
+			td.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+			td.setTitle(Messages.FriedmanGraphUI_0);
+			td.setDescription(Messages.FriedmanGraphUI_1);
+			
+
 			Composite composite1 = new Composite(this, SWT.NONE);
 			GridLayout composite1Layout = new GridLayout();
 			composite1Layout.numColumns = 4;
@@ -66,72 +61,70 @@ public class FriedmanGraphUI extends org.eclipse.swt.widgets.Composite implement
 			composite1Layout.marginWidth = 0;
 			composite1Layout.horizontalSpacing = 0;
 			composite1Layout.makeColumnsEqualWidth = true;
-			GridData composite1LData = new GridData();
-			composite1LData.verticalAlignment = GridData.FILL;
-			composite1LData.horizontalAlignment = GridData.FILL;
-			composite1LData.grabExcessHorizontalSpace = true;
-			composite1.setLayoutData(composite1LData);
 			composite1.setLayout(composite1Layout);
-			{
-				TextLoadController textSelector = new TextLoadController(composite1, this, SWT.NONE, true, true);
-				GridData textSelectorLData = new GridData(SWT.CENTER, SWT.CENTER, true, false, 4, 1);
-				textSelectorLData.widthHint = 275;
-				textSelector.setLayoutData(textSelectorLData);
-				
-				Button button2 = new Button(composite1, SWT.PUSH | SWT.CENTER);
-				GridData button2LData = new GridData(SWT.CENTER, SWT.CENTER, true, false, 4, 1);
-				button2LData.widthHint = 275;
-				button2.setLayoutData(button2LData);
-				button2.setText(Messages.FriedmanGraphUI_start);
-				button2.setEnabled(false);
-				button2.addSelectionListener(new SelectionAdapter() {
-					@Override
-					public void widgetSelected(SelectionEvent e) {
-						startAnalysis(e);
-					}
-				});
 
-				textSelector.addObserver(new Observer() {
+			composite1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-					@Override
-					public void update(Observable o, Object arg) {
-						if (textSelector.getText() != null) {
-							if (textSelector.getText().getText() != null) {
-								message = textSelector.getText().getText();
-							}
-						}
 
-						if (message != null && message.length() > 0) {
-							button2.setEnabled(true);
+			TextLoadController textSelector = new TextLoadController(composite1, this, SWT.NONE, true, true);
+			GridData textSelectorLData = new GridData(SWT.CENTER, SWT.CENTER, true, false, 4, 1);
+			textSelectorLData.widthHint = 275;
+			textSelector.setLayoutData(textSelectorLData);
 
-							// After loading a text the button is replaced with information.
-							// To let this be displayed properly the button size is removed,
-							// and resizes to preferred
-							textSelectorLData.widthHint = SWT.DEFAULT;
-							textSelector.pack();
-							composite1.layout();
+			Button button2 = new Button(composite1, SWT.PUSH | SWT.CENTER);
+			GridData button2LData = new GridData(SWT.CENTER, SWT.CENTER, true, false, 4, 1);
+			button2LData.widthHint = 275;
+			button2.setLayoutData(button2LData);
+			button2.setText(Messages.FriedmanGraphUI_start);
+			button2.setEnabled(false);
+			button2.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					startAnalysis(e);
+				}
+			});
+
+			textSelector.addObserver(new Observer() {
+
+				@Override
+				public void update(Observable o, Object arg) {
+					if (textSelector.getText() != null) {
+						if (textSelector.getText().getText() != null) {
+							message = textSelector.getText().getText();
 						}
 					}
-				});
-				
-				btnShowTable = new Button(composite1, SWT.PUSH | SWT.CENTER);
-				GridData btnShowTableLData = new GridData(SWT.CENTER, SWT.CENTER, true, false, 4, 1);
-				btnShowTableLData.widthHint = 275;
-				btnShowTable.setLayoutData(btnShowTableLData);
-				btnShowTable.setText(Messages.FriedmanGraphUI_showastable);
-				btnShowTable.setEnabled(false);
-				btnShowTable.addSelectionListener(new SelectionAdapter() {
-					@Override
-					public void widgetSelected(SelectionEvent e) {
-						showTableDialog(e);
-					}
-				});
 
-				Label spacer4 = new Label(composite1, SWT.NONE);
-				spacer4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-				Label spacer5 = new Label(composite1, SWT.NONE);
-				spacer5.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-			}
+					if (message != null && message.length() > 0) {
+						button2.setEnabled(true);
+
+						// After loading a text the button is replaced with information.
+						// To let this be displayed properly the button size is removed,
+						// and resizes to preferred
+						textSelectorLData.widthHint = SWT.DEFAULT;
+						textSelector.pack();
+						composite1.layout();
+					}
+				}
+			});
+
+			btnShowTable = new Button(composite1, SWT.PUSH | SWT.CENTER);
+			GridData btnShowTableLData = new GridData(SWT.CENTER, SWT.CENTER, true, false, 4, 1);
+			btnShowTableLData.widthHint = 275;
+			btnShowTable.setLayoutData(btnShowTableLData);
+			btnShowTable.setText(Messages.FriedmanGraphUI_showastable);
+			btnShowTable.setEnabled(false);
+			btnShowTable.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					showTableDialog(e);
+				}
+			});
+
+			Label spacer4 = new Label(composite1, SWT.NONE);
+			spacer4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+			Label spacer5 = new Label(composite1, SWT.NONE);
+			spacer5.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+
 			group1 = new Group(this, SWT.NONE);
 			GridLayout group1Layout = new GridLayout();
 			group1Layout.makeColumnsEqualWidth = true;
@@ -143,18 +136,18 @@ public class FriedmanGraphUI extends org.eclipse.swt.widgets.Composite implement
 			group1LData.grabExcessVerticalSpace = true;
 			group1.setLayoutData(group1LData);
 			group1.setText(Messages.FriedmanGraphUI_graph);
-			{
-				myGraph = new CustomFriedmanCanvas(group1, SWT.DOUBLE_BUFFERED);
 
-				GridLayout myGraphLayout = new GridLayout();
-				myGraph.setLayout(myGraphLayout);
-				GridData myGraphLData = new GridData();
-				myGraphLData.verticalAlignment = GridData.FILL;
-				myGraphLData.grabExcessHorizontalSpace = true;
-				myGraphLData.horizontalAlignment = GridData.FILL;
-				myGraphLData.grabExcessVerticalSpace = true;
-				myGraph.setLayoutData(myGraphLData);
-			}
+			myGraph = new CustomFriedmanCanvas(group1, SWT.DOUBLE_BUFFERED);
+
+			GridLayout myGraphLayout = new GridLayout();
+			myGraph.setLayout(myGraphLayout);
+			GridData myGraphLData = new GridData();
+			myGraphLData.verticalAlignment = GridData.FILL;
+			myGraphLData.grabExcessHorizontalSpace = true;
+			myGraphLData.horizontalAlignment = GridData.FILL;
+			myGraphLData.grabExcessVerticalSpace = true;
+			myGraph.setLayoutData(myGraphLData);
+
 			Composite composite2 = new Composite(this, SWT.NONE);
 			GridLayout composite2Layout = new GridLayout();
 			composite2Layout.numColumns = 2;
@@ -163,19 +156,19 @@ public class FriedmanGraphUI extends org.eclipse.swt.widgets.Composite implement
 			composite2LData.horizontalAlignment = GridData.FILL;
 			composite2.setLayoutData(composite2LData);
 			composite2.setLayout(composite2Layout);
-			{
-				btnResetGraph = new Button(composite2, SWT.PUSH | SWT.CENTER);
-				btnResetGraph.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-				btnResetGraph.setText("Reset graph");
-				btnResetGraph.setEnabled(false);
-				btnResetGraph.addSelectionListener(new SelectionAdapter() {
-					@Override
-					public void widgetSelected(SelectionEvent e) {
-						myGraph.getFrequencyGraph().resetDrag(40);
-						myGraph.redraw();
-					}
-				});
-			}
+
+			btnResetGraph = new Button(composite2, SWT.PUSH | SWT.CENTER);
+			btnResetGraph.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+			btnResetGraph.setText(Messages.FriedmanGraphUI_2);
+			btnResetGraph.setEnabled(false);
+			btnResetGraph.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					myGraph.getFrequencyGraph().resetDrag(40);
+					myGraph.redraw();
+				}
+			});
+
 			this.layout();
 		} catch (Exception e) {
 			LogUtil.logError(FriedmanPlugin.PLUGIN_ID, e);
@@ -211,17 +204,18 @@ public class FriedmanGraphUI extends org.eclipse.swt.widgets.Composite implement
 		myGraph.redraw();
 	}
 
-	//	/**
-	//	 * message shows a message box
-	//	 */
-	//	private void showMessage(final String message) {
-	//		MessageBox messageBox = new MessageBox(getShell());
-	//		messageBox.setText(""); //$NON-NLS-1$
-	//		messageBox.setMessage(message);
-	//		messageBox.open();
-	//	}
+	// /**
+	// * message shows a message box
+	// */
+	// private void showMessage(final String message) {
+	// MessageBox messageBox = new MessageBox(getShell());
+	// messageBox.setText(""); //$NON-NLS-1$
+	// messageBox.setMessage(message);
+	// messageBox.open();
+	// }
 
-	// Leaves only chars with byte values from 65 to 90 (A-Z), thus replacing ö, ä, ü, ß and casting
+	// Leaves only chars with byte values from 65 to 90 (A-Z), thus replacing ö, ä,
+	// ü, ß and casting
 	// to upper case
 	private String makeFormattedString(final String input) {
 		String textOld = input;
@@ -244,59 +238,61 @@ public class FriedmanGraphUI extends org.eclipse.swt.widgets.Composite implement
 		return textOld;
 	}
 
-	//	/**
-	//	 * reads the current value from an input stream
-	//	 *
-	//	 * @param in
-	//	 *            the input stream
-	//	 */
-	//	private String InputStreamToString(InputStream in) {
-	//		BufferedReader reader = null;
-	//		try {
-	//			reader = new BufferedReader(new InputStreamReader(in, IConstants.UTF8_ENCODING));
-	//		} catch (UnsupportedEncodingException e1) {
-	//			LogUtil.logError(FriedmanPlugin.PLUGIN_ID, e1);
-	//		}
+	// /**
+	// * reads the current value from an input stream
+	// *
+	// * @param in
+	// * the input stream
+	// */
+	// private String InputStreamToString(InputStream in) {
+	// BufferedReader reader = null;
+	// try {
+	// reader = new BufferedReader(new InputStreamReader(in,
+	// IConstants.UTF8_ENCODING));
+	// } catch (UnsupportedEncodingException e1) {
+	// LogUtil.logError(FriedmanPlugin.PLUGIN_ID, e1);
+	// }
 	//
-	//		StringBuffer myStrBuf = new StringBuffer();
-	//		int charOut = 0;
-	//		String output = ""; //$NON-NLS-1$
-	//		try {
-	//			while ((charOut = reader.read()) != -1) {
-	//				myStrBuf.append(String.valueOf((char) charOut));
-	//			}
-	//		} catch (IOException e) {
-	//			LogUtil.logError(FriedmanPlugin.PLUGIN_ID, e);
-	//		}
-	//		output = myStrBuf.toString();
-	//		return output;
-	//	}
+	// StringBuffer myStrBuf = new StringBuffer();
+	// int charOut = 0;
+	// String output = ""; //$NON-NLS-1$
+	// try {
+	// while ((charOut = reader.read()) != -1) {
+	// myStrBuf.append(String.valueOf((char) charOut));
+	// }
+	// } catch (IOException e) {
+	// LogUtil.logError(FriedmanPlugin.PLUGIN_ID, e);
+	// }
+	// output = myStrBuf.toString();
+	// return output;
+	// }
 
-	//	/**
-	//	 * reads the text from the opened editor
-	//	 */
-	//	private void getText() {
-	//		InputStream stream = EditorsManager.getInstance().getActiveEditorContentInputStream();
-	//		if (stream == null) {
-	//			showMessage(Messages.FriedmanGraphUI_openandselect);
-	//			return;
-	//		} else {
-	//			ciphertext = InputStreamToString(stream);
-	//		}
+	// /**
+	// * reads the text from the opened editor
+	// */
+	// private void getText() {
+	// InputStream stream =
+	// EditorsManager.getInstance().getActiveEditorContentInputStream();
+	// if (stream == null) {
+	// showMessage(Messages.FriedmanGraphUI_openandselect);
+	// return;
+	// } else {
+	// ciphertext = InputStreamToString(stream);
+	// }
 	//
-	//		analyzedFile = EditorsManager.getInstance().getActiveEditorTitle();
+	// analyzedFile = EditorsManager.getInstance().getActiveEditorTitle();
 	//
-	//		if (ciphertext.hashCode() != ciphertextHash) {
-	//			ciphertextHash = ciphertext.hashCode();
-	//			goodCiphertext = makeFormattedString(ciphertext);
-	//		}
-	//	}
+	// if (ciphertext.hashCode() != ciphertextHash) {
+	// ciphertextHash = ciphertext.hashCode();
+	// goodCiphertext = makeFormattedString(ciphertext);
+	// }
+	// }
 
 	/**
 	 * The main function of this plug-in
 	 */
 	private void executeMainfunction() {
-		//getText();
+		// getText();
 
 		if (message != null && message.length() > 0) {
 			goodCiphertext = makeFormattedString(message);

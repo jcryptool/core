@@ -22,8 +22,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.arc4.ARC4Con;
 import org.jcryptool.visual.arc4.Messages;
+import org.jcryptool.visual.arc4.algorithm.ARC4Algorithm;
 import org.jcryptool.visual.library.Lib;
 
 /**
@@ -48,14 +50,20 @@ public class InstructionVisual extends Composite {
     private ARC4Composite parent;
 
     /**
+     * The Algorithm object containing all the data (key, keylength, plaintext, ...)
+     */
+	private ARC4Algorithm alg;
+
+    /**
      * The constructor for the instruction visual
      * 
      * @param parent the parent of this composite
      * @param style is ignored, this is just here due to the inheritance
      */
-    public InstructionVisual(ARC4Composite parent, int style) {
+    public InstructionVisual(ARC4Composite parent, int style, ARC4Algorithm alg) {
         super(parent, SWT.NONE);
         this.parent = parent;
+        this.alg = alg;
         // The instruction composite has just one child: the group
         GridLayout tlayout = new GridLayout(1, true);
         tlayout.marginHeight = 0;
@@ -120,7 +128,7 @@ public class InstructionVisual extends Composite {
                     String temp = input.getText().replaceAll("\\s+", "");
                     parent.performSteps(Integer.parseInt(temp));
                 } catch (NumberFormatException nfe) {
-                    // just do nothing; no action needed
+                    LogUtil.logError(nfe);
                     return;
                 }
 			}
@@ -140,7 +148,8 @@ public class InstructionVisual extends Composite {
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				parent.performSteps(ARC4Con.S_BOX_LEN + ARC4Con.DATAVECTOR_VISUAL_LENGTH);
+//				parent.performSteps(ARC4Con.S_BOX_LEN + ARC4Con.DATAVECTOR_VISUAL_LENGTH);
+				parent.performSteps(ARC4Con.S_BOX_LEN + alg.getPlain().length);
 			}
 			
 			@Override

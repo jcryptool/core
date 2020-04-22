@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.visual.crtverification.Activator;
 import org.jcryptool.visual.crtverification.verification.CertPathVerifier;
 import org.jcryptool.visual.crtverification.verification.KeystoreConnector;
@@ -445,15 +446,15 @@ public class CrtVerViewController {
     }
 
     public void reset() {
-
-        composite.scaleRootCaBegin.setSelection(70);
-        composite.scaleRootCaEnd.setSelection(330);
-        composite.scaleCaBegin.setSelection(100);
-        composite.scaleCaEnd.setSelection(300);
-        composite.scaleCertBegin.setSelection(130);
-        composite.scaleCertEnd.setSelection(230);
-        composite.scaleVerificationDate.setSelection(380);
-        composite.scaleSignatureDate.setSelection(340);
+    	// Here you can set the start values of the plugin.
+        composite.scaleRootCaBegin.setSelection(64);
+        composite.scaleRootCaEnd.setSelection(324);
+        composite.scaleCaBegin.setSelection(94);
+        composite.scaleCaEnd.setSelection(294);
+        composite.scaleCertBegin.setSelection(124);
+        composite.scaleCertEnd.setSelection(224);
+        composite.scaleVerificationDate.setSelection(368);
+        composite.scaleSignatureDate.setSelection(328);
 
         updateElements(composite.fromRootCa, composite.scaleRootCaBegin, 180);
         updateElements(composite.thruRootCa, composite.scaleRootCaEnd, 180);
@@ -514,7 +515,7 @@ public class CrtVerViewController {
         setLogText(Messages.crtVerification_status_flushCerts);
     }
 
-    public void loadCertificate(ChooseCertPage p, X509Certificate cert, String contact_name) {
+    public void loadCertificate(ChooseCertPage p, X509Certificate cert, IKeyStoreAlias contact_alias) {
     	composite.labelValiditySymbol.setVisible(false);
         switch (p.getCertType()) {
         case 1: // [1] UserCert
@@ -522,21 +523,21 @@ public class CrtVerViewController {
             setScales(1);
             flag = true;
             composite.btnLoadUserCert.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN));
-            setLogText("\"" + contact_name + "\" " + Messages.crtVerification_status_UserCertLoaded);
+            setLogText("\"" + contact_alias.getContactName() + " - " + contact_alias.getOperation() + "\" " + Messages.crtVerification_status_UserCertLoaded);
             break;
         case 2: // [2] Cert
             setCA(cert);
             setScales(2);
             flag = true;
             composite.btnLoadCa.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN));
-            setLogText("\"" + contact_name + "\" " + Messages.crtVerification_status_CaLoaded);
+            setLogText("\"" + contact_alias.getContactName() + " - " + contact_alias.getOperation() + "\" " + Messages.crtVerification_status_CaLoaded);
             break;
         case 3: // [3] RootCert
             setRootCA(cert);
             setScales(3);
             flag = true;
             composite.btnLoadRootCa.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN));
-            setLogText("\"" + contact_name + "\" " + Messages.crtVerification_status_RootCaLoaded);
+            setLogText("\"" + contact_alias.getContactName() + " - " + contact_alias.getOperation() + "\" " + Messages.crtVerification_status_RootCaLoaded);
             break;
         }
         p.setPageComplete(true);

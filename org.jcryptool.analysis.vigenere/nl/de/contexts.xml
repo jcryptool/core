@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
    <context id="vigenerebreaker" title="Vigenère-Breaker">
-      <description>Im Vigenère-Breaker können Sie manuell oder vollautomatisch eine Vigenère-verschlüsselte Chiffre entschlüsseln.&lt;br&gt;
-Wählen Sie im ersten Bildschirm aus, ob Sie die "Automatische Analyse" oder die "Manuelle Analyse" bevorzugen.&lt;br&gt;
-Bei der &lt;b&gt;vollständigen Analyse&lt;/b&gt; wird Ihnen gleich das Ergebnis angezeigt. Sie können sich die automatisch ausgeführten Zwischenschritte jedoch ansehen, indem Sie auf die Buttons neben deren Anzeigen klicken ("Friedman"/"Häufigkeit").&lt;br&gt;
-Diese einzelnen Schritte können Sie im &lt;b&gt;manuellen Modus&lt;/b&gt; selbst nachvollziehen. Sie müssen dazu durch Anwendung des Friedman-Tests und der darauf basierenden Häufigkeitsanalyse Schlüssellänge und -inhalt ermitteln, welche in den Hilfeseiten erklärt werden.
+      <description>Wählen Sie im ersten Bildschirm aus, ob Sie die "Automatische Analyse" oder die "Manuelle Analyse" bevorzugen.&lt;br&gt;
+Bei der <b>vollständigen Analyse</b> wird Ihnen gleich das Ergebnis angezeigt. Sie können sich die automatisch ausgeführten Zwischenschritte jedoch ansehen, indem Sie auf die Buttons neben deren Anzeigen klicken ("Friedman"/"Häufigkeit").&lt;br&gt;
+Diese einzelnen Schritte können Sie im <b>manuellen Modus</b> selbst nachvollziehen. Sie müssen dazu durch Anwendung des Friedman-Tests und der darauf basierenden Häufigkeitsanalyse Schlüssellänge und -inhalt ermitteln, welche in den Hilfeseiten erklärt werden.
       </description>
       <topic href="$nl$/content/index.html" label="Vigenère-Breaker" />
    </context>

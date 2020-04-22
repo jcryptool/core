@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.zeroknowledge.Protocol;
 import org.jcryptool.visual.zeroknowledge.algorithm.magischetuer.MAlice;
 import org.jcryptool.visual.zeroknowledge.algorithm.magischetuer.MBob;
@@ -54,6 +55,7 @@ public class MagicDoorView extends ViewPart implements Observer, Protocol {
     private Group info;
     private Composite parent;
     private Composite pageComposite;
+	private TitleAndDescriptionComposite titleAndDescription;
 
     @Override
     public void createPartControl(final Composite parent) {
@@ -67,10 +69,11 @@ public class MagicDoorView extends ViewPart implements Observer, Protocol {
         pageComposite = new Composite(sc, SWT.NONE);
         sc.setContent(pageComposite);
         pageComposite.setLayout(new GridLayout());
-        
-		ZKHeaderComposite headerComp = new ZKHeaderComposite(pageComposite);
-		headerComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
-				1, 1));
+		
+		titleAndDescription = new TitleAndDescriptionComposite(pageComposite);
+		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		titleAndDescription.setTitle(Messages.Header_title);
+		titleAndDescription.setDescription(Messages.Header_text);
 
         bob = new MBob();
         alice = new MAlice();
@@ -121,8 +124,8 @@ public class MagicDoorView extends ViewPart implements Observer, Protocol {
 
         sc.setMinSize(pageComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(),
-                "org.jcryptool.visual.zeroknowledge.magicdoorView"); //$NON-NLS-1$
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
+                "org.jcryptool.visual.zeroknowledge.magicdoorViewHelp"); //$NON-NLS-1$
     }
 
     /**
@@ -210,7 +213,8 @@ public class MagicDoorView extends ViewPart implements Observer, Protocol {
      *
      * @see Protocol#reset()
      */
-    public void reset() {
+    @Override
+	public void reset() {
         alice.reset();
         bob.reset();
         carol.reset();
@@ -230,7 +234,8 @@ public class MagicDoorView extends ViewPart implements Observer, Protocol {
      *
      * @see Protocol#resetNotSecret()
      */
-    public void resetNotSecret() {
+    @Override
+	public void resetNotSecret() {
         alice.resetNotSecret();
         bob.resetNotSecret();
         carol.resetNotSecret();
@@ -250,7 +255,8 @@ public class MagicDoorView extends ViewPart implements Observer, Protocol {
      *        sonst
      * @see Protocol#setFirstCase(boolean)
      */
-    public void setFirstCase(boolean firstCase) {
+    @Override
+	public void setFirstCase(boolean firstCase) {
         // reset when changing situation
         this.resetNotSecret();
         if (firstCase) {
@@ -357,7 +363,8 @@ public class MagicDoorView extends ViewPart implements Observer, Protocol {
      *
      * @see Observer#update(Observable, Object)
      */
-    public void update(Observable arg0, Object arg1) {
+    @Override
+	public void update(Observable arg0, Object arg1) {
         paramsAC.update();
         paramsBob.update();
     }

@@ -12,12 +12,12 @@ package org.jcryptool.visual.PairingBDII.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.ui.auto.LayoutAdvisor;
 
 public class View extends ViewPart {
 	private IntroductionAndParameters situation;
@@ -30,14 +30,10 @@ public class View extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 		this.parent = parent;
-		parent.setLayout(new FillLayout());
 
-		scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL
-				| SWT.V_SCROLL);
+		scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
 
-		final Composite scrolledContent = new Composite(scrolledComposite,
-				SWT.NONE);
-
+		Composite scrolledContent = new Composite(scrolledComposite, SWT.NONE);
 		scrolledContent.setLayout(new GridLayout(2, false));
 		
 		situation = new IntroductionAndParameters(scrolledContent);
@@ -54,12 +50,12 @@ public class View extends ViewPart {
 		scrolledComposite.setMinSize(scrolledContent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
-		scrolledComposite.getVerticalBar().setIncrement(20);
-		scrolledComposite.getVerticalBar().setPageIncrement(250);
-		scrolledComposite.layout();
 		
+		LayoutAdvisor.addPreLayoutRootComposite(parent);
+		
+		// Register the context help for this plugin.
 		PlatformUI.getWorkbench().getHelpSystem()
-			.setHelp(parent.getShell(),"org.jcryptool.visual.PairingBDII.pairingBD2HelpContextId");
+			.setHelp(parent.getShell(),"org.jcryptool.visual.PairingBDII.view");
 	}
 
 	@Override

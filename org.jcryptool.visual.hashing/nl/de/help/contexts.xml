@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
    <context id="view" title="Hash-Sensitivität">
-      <description>Hash-Sensitivität</description>
+      <description>Mithilfe dieses Plugins können Sie unterschiedliche Hashwerte von zwei Texten vergleichen. Das Plugin stellt die Unterschiede zwischen den beiden erzeugten Hashs heraus. 
+
+Mehr Informationen über die Bedienung des Plugins finden sie in der Online-Hilfe zu, welche in dem Link hier drunter verlinkt ist.</description>
       <topic href="nl/de/help/content/index.html" label="Hashing-Visualisierung"/>
    </context>
 </contexts>

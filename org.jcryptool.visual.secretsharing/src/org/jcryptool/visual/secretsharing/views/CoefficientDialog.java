@@ -155,7 +155,7 @@ public class CoefficientDialog extends TitleAreaDialog implements Constants {
 			}
 
 		}
-		coefficientsGroup.pack();
+		
 		if (t > 6) {
 			scrolledComposite.setExpandVertical(false);
 		}

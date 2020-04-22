@@ -17,7 +17,7 @@
     <Visual
           name="%view.name"
           viewId="org.jcryptool.visual.ecbd2"
-          contextHelpId="org.jcryptool.visual.pairingbd2.pairingBD2HelpContextId">
+          contextHelpId="org.jcryptool.visual.pairingbd2.view">
     </Visual>
  </extension>
  <!-- Extension of the online help -->
@@ -48,18 +48,10 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:org.jcryptool.visual.ecbd2">
-         <command
-               commandId="org.jcryptool.visual.PairingBDII.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
-               style="push">
-         </command>
-      </menuContribution>
-      <menuContribution
             locationURI="toolbar:org.jcryptool.visual.ecbd2">
          <command
                commandId="org.jcryptool.visual.PairingBDII.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
+               icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
                style="push">
          </command>
       </menuContribution>

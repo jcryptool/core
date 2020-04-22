@@ -18,7 +18,7 @@ public class ExportToTEXHandler extends AbstractHandler {
 
 		if (HandlerUtil.getActivePart(event) instanceof View) {
 			View view = ((View) HandlerUtil.getActivePart(event));
-			view.exportToTex();
+			view.getExtendedEuclid().exportToTex();
 		}
 		
 		return null;

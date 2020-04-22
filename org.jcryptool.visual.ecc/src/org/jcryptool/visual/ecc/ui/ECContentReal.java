@@ -12,7 +12,6 @@ package org.jcryptool.visual.ecc.ui;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseTrackListener;
@@ -41,7 +40,7 @@ import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
-import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.ecc.ECCPlugin;
 import org.jcryptool.visual.ecc.Messages;
 import org.jcryptool.visual.ecc.algorithm.EC;
@@ -65,7 +64,6 @@ public class ECContentReal extends Composite {
     private Color darkPurple = new Color(this.getDisplay(), 148, 3, 148);
     private Color red = new Color(this.getDisplay(), 203, 0, 0);
     private Combo cSaveResults = null;
-    private Composite compositeIntro = null;
     private EC curve;
     private Group groupCalculations = null;
     private Group groupCurve = null;
@@ -91,7 +89,6 @@ public class ECContentReal extends Composite {
     private Spinner spnrA = null;
     private Spinner spnrB = null;
     private Spinner spnrK = null;
-    private StyledText stDescription = null;
     private ECView view;
     private Composite content;
     private Group groupSize;
@@ -364,8 +361,9 @@ public class ECContentReal extends Composite {
 
             @Override
 			public void widgetSelected(SelectionEvent e) {
-                view.selectFileLocation();
-                lblSaveResults.setText(view.saveTo == 2 ? view.getFileName() : ""); //$NON-NLS-1$
+                if (view.selectFileLocation()) {
+                    lblSaveResults.setText(view.saveTo == 2 ? view.getFileName() : ""); //$NON-NLS-1$
+                }
             }
         });
         btnSave = new Button(groupSave, SWT.NONE);
@@ -541,23 +539,16 @@ public class ECContentReal extends Composite {
     }
 
     /**
-     * This method initializes compositeIntro
+     * This method creates the Area for the title and description.
      *
      */
     private void createCompositeIntro() {
-        compositeIntro = new Composite(content, SWT.NONE);
-        compositeIntro.setBackground(white);
-        compositeIntro.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-        compositeIntro.setLayout(new GridLayout(1, false));
-
-        Label label = new Label(compositeIntro, SWT.NONE);
-        label.setFont(FontService.getHeaderFont());
-        label.setBackground(white);
-        label.setText(Messages.ECView_Title); //$NON-NLS-1$
-
-        stDescription = new StyledText(compositeIntro, SWT.READ_ONLY | SWT.WRAP);
-        stDescription.setText(Messages.ECView_Description); //$NON-NLS-1$
-        stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+    	TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(content);
+    	GridData gd_titleAndDescription = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
+    	gd_titleAndDescription.widthHint = 800;
+    	titleAndDescription.setLayoutData(gd_titleAndDescription);
+    	titleAndDescription.setTitle(Messages.ECView_Title);
+    	titleAndDescription.setDescription(Messages.ECView_Description);
     }
 
     /**

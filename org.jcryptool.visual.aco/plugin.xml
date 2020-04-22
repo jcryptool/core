@@ -8,7 +8,7 @@
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.aco.view.AntColView"
             icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png"
-            id="org.jcryptool.visual.aco.view.View"
+            id="org.jcryptool.visual.aco.view.ViewID"
             name="%viewName">
       </view>
    </extension>
@@ -16,8 +16,8 @@
          point="org.jcryptool.core.operations.visuals">
       <Visual
             name="%visualName"
-            viewId="org.jcryptool.visual.aco.view.View"
-            contextHelpId="org.jcryptool.visual.aco.view">
+            viewId="org.jcryptool.visual.aco.view.ViewID"
+            contextHelpId="org.jcryptool.visual.aco.ContextHelpID">
       </Visual>
    </extension>
    <extension
@@ -50,19 +50,10 @@
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
-            locationURI="menu:org.jcryptool.visual.aco.view.View">
+            locationURI="toolbar:org.jcryptool.visual.aco.view.ViewID">
          <command
                commandId="org.jcryptool.visual.aco.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
-               style="push">
-         </command>
-      </menuContribution>
-      <menuContribution
-            allPopups="false"
-            locationURI="toolbar:org.jcryptool.visual.aco.view.View">
-         <command
-               commandId="org.jcryptool.visual.aco.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
+               icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
                style="push">
          </command>
       </menuContribution>

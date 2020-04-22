@@ -28,7 +28,7 @@
       <Visual
             name="%view.name.0"
             viewId="org.jcryptool.visual.ecc.views.view"
-            contextHelpId="org.jcryptool.visual.ecc.eccview">
+            contextHelpId="org.jcryptool.visual.ecc.view">
       </Visual>
    </extension>
 
@@ -49,18 +49,10 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:org.jcryptool.visual.ecc.views.view">
-         <command
-               commandId="org.jcryptool.visual.ecc.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
-               style="push">
-         </command>
-      </menuContribution>
-      <menuContribution
             locationURI="toolbar:org.jcryptool.visual.ecc.views.view">
          <command
                commandId="org.jcryptool.visual.ecc.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
+               icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
                style="push">
          </command>
       </menuContribution>

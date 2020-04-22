@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
- <context id="ecdhview" title="ECDH demonstration">
-    <description>This visualization demonstrates the Diffie-Hellman key exchange using elliptic curves.</description>
+ <context id="view" title="ECDH demonstration">
+    <description>This visualization demonstrates the <b>Diffie-Hellman key exchange</b> using elliptic curves.</description>
     <topic href="help/content/index.html" label="ECDH demonstration"/>
  </context>
 </contexts>

@@ -17,6 +17,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.internal.Workbench;
 import org.jcryptool.games.numbershark.strategies.HeuristicStrategyDialog;
 import org.jcryptool.games.numbershark.strategies.ResultDialHeuristicStrategy;
 import org.jcryptool.games.numbershark.util.CommandState;
@@ -45,9 +46,9 @@ public class HeuristicStrategyHandler extends AbstractHandler {
             if (heuStrat.getReturnCode() == IDialogConstants.OK_ID) {
 
                 ResultDialHeuristicStrategy calculate;
-                calculate = new ResultDialHeuristicStrategy(HandlerUtil.getActiveShell(event),
+                calculate = new ResultDialHeuristicStrategy(Workbench.getInstance().getActiveWorkbenchWindow().getShell(),
                         heuStrat.getSelectedStrategy());
-                calculate.setBounds(heuStrat.getMin(), heuStrat.getMax());
+//                 calculate.setBounds(heuStrat.getMin(), heuStrat.getMax());
 
                 calculate.open();
 

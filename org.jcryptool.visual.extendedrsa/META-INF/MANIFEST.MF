@@ -13,9 +13,10 @@ Require-Bundle:
  net.sourceforge.codec;bundle-version="1.7.0",
  org.jcryptool.crypto.flexiprovider,
  org.jcryptool.crypto.flexiprovider.keystore,
- org.jcryptool.crypto.keystore
+ org.jcryptool.crypto.keystore,
+ org.jcryptool.core.util
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.colors,
  org.jcryptool.core.util.fonts

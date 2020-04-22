@@ -8,7 +8,7 @@
             category="org.jcryptool.analysis"
             class="org.jcryptool.analysis.fleissner.views.SampleView"
             icon="platform:/plugin/org.jcryptool.core.util/icons/analysis_icon.gif"
-            id="org.jcryptool.analysis.fleissner.views.SampleView"
+            id="org.jcryptool.analysis.fleissner.FleissnerView"
             name="%view.name">
       </view>
    </extension>
@@ -16,7 +16,7 @@
          point="org.jcryptool.core.operations.analysis">
       <analysis
             name="%analysis.name"
-            viewId="org.jcryptool.analysis.fleissner.views.SampleView">
+            viewId="org.jcryptool.analysis.fleissner.FleissnerView">
       </analysis>
    </extension>
    
@@ -59,10 +59,10 @@
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
-            locationURI="toolbar:org.jcryptool.analysis.fleissner.views.SampleView">
+            locationURI="toolbar:org.jcryptool.analysis.fleissner.FleissnerView">
          <command
                commandId="org.jcryptool.analysis.fleissner.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
+               icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
                style="push">
          </command>
          <command

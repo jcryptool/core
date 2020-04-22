@@ -69,7 +69,7 @@ public class Demonstration {
 		if (key.getSize()%2 != 0)
 			crypt.set(key.getSize()/2, key.getSize()/2, model.generateRandomChar(input+padding));
 
-		// TODO continue block encryption
+
 		key.rotateClockwise();
 		output = model.encrypt(input+padding);
 	}

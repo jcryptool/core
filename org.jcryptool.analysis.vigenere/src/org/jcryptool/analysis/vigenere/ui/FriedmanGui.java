@@ -6,12 +6,13 @@
  */
 package org.jcryptool.analysis.vigenere.ui;
 
+import java.text.MessageFormat;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -19,7 +20,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.ui.IEditorReference;
 import org.jcryptool.analysis.vigenere.exceptions.IllegalActionException;
 import org.jcryptool.analysis.vigenere.exceptions.IllegalInputException;
@@ -93,7 +93,11 @@ public class FriedmanGui extends Content {
         	this.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
             
         	cselection = new Composite(this, SWT.NONE);
-			cselection.setLayout(new GridLayout(3, false));
+        	GridLayout gl_cselection = new GridLayout(3, false);
+        	// Display no 5px border aroung the composite.
+        	gl_cselection.marginHeight = 0;
+        	gl_cselection.marginWidth = 0;
+			cselection.setLayout(gl_cselection);
 			cselection.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
 			lsone = new Label(cselection, SWT.BORDER | SWT.CENTER);
@@ -114,7 +118,14 @@ public class FriedmanGui extends Content {
 			lsthree.setForeground(ColorService.GRAY);
 
 			mainComposite = new Composite(this, SWT.NONE);
-			mainComposite.setLayout(new GridLayout(2, true));
+			GridLayout gl_mainComposite = new GridLayout(2, false);
+			// Display no 5px border around the composite
+			gl_mainComposite.marginHeight = 0;
+			gl_mainComposite.marginWidth = 0;
+			// No spacing between the components in the composite.
+			gl_mainComposite.verticalSpacing = 0;
+			gl_mainComposite.horizontalSpacing = 0;
+			mainComposite.setLayout(gl_mainComposite);
 			mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 			
 			tfile = new Text(mainComposite, SWT.NONE);
@@ -133,16 +144,14 @@ public class FriedmanGui extends Content {
             container.initGraph();
 
             thelp = new Text(mainComposite, SWT.MULTI | SWT.WRAP);
-            GridData gd_thelp = new GridData(SWT.FILL, SWT.FILL, false, false);
-            gd_thelp.widthHint = 300;
-            thelp.setLayoutData(gd_thelp);
+            thelp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
             thelp.setText(Messages.FriedmanGui_text_help);
             thelp.setFont(FontService.getSmallFont());
             thelp.setEditable(false);
             
             passwordComposite = new Composite(mainComposite, SWT.NONE);
             passwordComposite.setLayout(new GridLayout(2, true));
-            passwordComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false));
+            passwordComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false));
             
             llength = new Label(passwordComposite, SWT.NONE);
             llength.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
@@ -155,29 +164,30 @@ public class FriedmanGui extends Content {
             tlength.addKeyListener(new KeyAdapter() {
                 @Override
 				public void keyPressed(KeyEvent event) {
+                	// If the user hits enter check his input.
                     if (13 == event.keyCode) {
                         start();
                     }
                 }
             });
+            
             autodetect();
             
-            final ToolTip tip = new ToolTip(tlength.getShell(), SWT.BALLOON);
-            tip.setMessage(Messages.FriedmanGui_2);
-//            tip.setLocation(new Point(tlength.getBounds().x, tlength.getBounds().y));
-            tip.addSelectionListener(new SelectionListener() {
-				
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					tip.dispose();
-				}
-				
-				@Override
-				public void widgetDefaultSelected(SelectionEvent e) {
-					
-				}
-			});
-            tip.setVisible(true);
+//            tip = new ToolTip(Display.getCurrent().getActiveShell(), SWT.BALLOON);
+//            tip.setMessage(Messages.FriedmanGui_2);
+//            tip.addSelectionListener(new SelectionListener() {
+//				
+//				@Override
+//				public void widgetSelected(SelectionEvent e) {
+//					tip.dispose();
+//				}
+//				
+//				@Override
+//				public void widgetDefaultSelected(SelectionEvent e) {
+//					
+//				}
+//			});
+//            tip.setVisible(true);
             
             lsepend = new Label(this, SWT.SEPARATOR | SWT.HORIZONTAL);
             lsepend.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -288,5 +298,7 @@ public class FriedmanGui extends Content {
         tlength.setText(String.valueOf(length));
         tlength.setFocus();
         tlength.selectAll();
+        
+        thelp.setText(MessageFormat.format(Messages.FriedmanGui_text_help, length));
     }
 }

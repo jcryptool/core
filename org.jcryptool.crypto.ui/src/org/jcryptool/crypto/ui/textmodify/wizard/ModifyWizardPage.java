@@ -15,6 +15,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite.Mode;
 
@@ -56,22 +57,18 @@ public class ModifyWizardPage extends WizardPage{
 	 */
 	@Override
 	public final void createControl(final Composite parent) {
-		Composite pageComposite = new Composite(parent, SWT.NULL);
+		Composite pageComposite = new Composite(parent, SWT.NONE);
 		GridData pageCompositeLayoutData = new GridData();
 		GridLayout pageCompositeLayout = new GridLayout();
 		pageCompositeLayoutData.grabExcessHorizontalSpace = true; pageCompositeLayoutData.grabExcessVerticalSpace = true;
-		pageCompositeLayoutData.horizontalAlignment = SWT.FILL; pageCompositeLayoutData.verticalAlignment = SWT.FILL;
+		pageCompositeLayoutData.horizontalAlignment = SWT.FILL;
 		pageComposite.setLayout(pageCompositeLayout);
 		pageComposite.setLayoutData(pageCompositeLayoutData);
 
 		{
 			addControlsBefore(pageComposite);
 
-			GridData composite1LData = new GridData();
-			composite1LData.grabExcessHorizontalSpace = true;
-			composite1LData.horizontalAlignment = GridData.FILL;
-			composite1LData.verticalAlignment = GridData.FILL;
-
+			GridData composite1LData = new GridData(GridData.FILL_BOTH);
 			composite1 = new ModifySelectionComposite(pageComposite, SWT.NONE, new TransformData(), alphabetSelectionMode);
 			composite1.setLayoutData(composite1LData);
 

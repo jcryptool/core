@@ -47,7 +47,6 @@ public class KeyListener implements MouseListener {
 			((Canvas) e.widget).redraw();
 			view.checkOkButton();
 			view.updateKeyText();
-//			System.out.println(model.getKey().toString());
 		}
 	}
 }

@@ -13,6 +13,8 @@ package org.jcryptool.crypto.ui.textsource;
 import java.io.File;
 
 import org.eclipse.ui.IEditorReference;
+import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
+import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 
 /**
  * Data structure for delivering text and referencing the source of it. Very
@@ -26,6 +28,7 @@ public class TextInputWithSource {
 	public File file;
 	public IEditorReference editorReference;
 	private String text;
+	private TransformData transformation = null;
 	public TextInputWithSource userInputOrigin;
 
 	private TextInputWithSource(String text, TextSourceType sourceType) {
@@ -60,13 +63,23 @@ public class TextInputWithSource {
 	}
 
 	public String getText() {
-		return text;
+		if (this.transformation == null) {
+			return this.text;
+		}
+		Transform transform = new Transform();
+		transform.setMyTransform(this.transformation);
+		String transformed = transform.transformText(this.text);
+		return transformed;
 	}
 
+	public void setTransform(TransformData data) {
+		this.transformation = data;
+	}
+		
 	public void setText(String text) {
 		this.text = text;
 	}
-
+	
 	public TextSourceType getSourceType() {
 		return sourceType;
 	}
@@ -93,6 +106,10 @@ public class TextInputWithSource {
 		} else {
 			return super.toString();
 		}
+	}
+
+	public TransformData getTransform() {
+		return this.transformation;
 	}
 
 }

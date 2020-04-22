@@ -77,12 +77,12 @@ public class ECView extends ViewPart {
 
         layout.topControl = contentReal;
 
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(),
-                "org.jcryptool.visual.ecc.eccview"); //$NON-NLS-1$
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
+                "org.jcryptool.visual.ecc.view"); //$NON-NLS-1$
 
         Calendar c = new GregorianCalendar();
         c.setTimeInMillis(System.currentTimeMillis());
-        log(Messages.ECView_LogHeader1 + c.get(Calendar.DATE) + "-" + c.get(Calendar.MONTH) + "-" 
+        log(Messages.ECView_LogHeader1 + c.get(Calendar.DATE) + "-" + (c.get(Calendar.MONTH) + 1) + "-" 
         		+ c.get(Calendar.YEAR) + " " + Messages.ECView_LogHeader2 
         		+ c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE) + "\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
     }
@@ -201,20 +201,26 @@ public class ECView extends ViewPart {
         }
     }
 
-    public void selectFileLocation() {
+    /**
+     * Opens a dialog in which the user can select a file where he wants to
+     * save the the log.
+     * @return True, if the user has selected a file. False, if the 
+     * the users cancelled the file selection or an error occured.
+     */
+    public boolean selectFileLocation() {
         FileDialog dialog = new FileDialog(layout.topControl.getShell(), SWT.SAVE);
         dialog.setFilterNames(new String[] {IConstants.TXT_FILTER_NAME, IConstants.ALL_FILTER_NAME});
         dialog.setFilterExtensions(new String[] {IConstants.TXT_FILTER_EXTENSION, IConstants.ALL_FILTER_EXTENSION});
         dialog.setFilterPath(DirectoryService.getUserHomeDir()); 
         dialog.setFileName("calculations.txt"); //$NON-NLS-1$
         dialog.setOverwrite(true);
-        saveLocation = dialog.open();
-        saveFileName = dialog.getFileName();
-
-        if (saveLocation != null && saveFileName != null) {
+        if ((saveLocation = dialog.open()) != null) {
+        	saveFileName = dialog.getFileName();
             logFile = new File(saveLocation);
             saveToFile();
+            return true;
         }
+        return false;
     }
 
 	public void reset() {

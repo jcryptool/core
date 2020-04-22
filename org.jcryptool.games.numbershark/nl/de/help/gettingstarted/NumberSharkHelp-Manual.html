@@ -32,8 +32,8 @@
 
 <p>Das folgende Bild zeigt das Hauptfenster des Zahlenhai-Spiels. Es besteht aus der Toolbar mit den Optionen zum Spiel, dem Spielfeld, dem Spielstand und einer Tabelle, in der sich detaillierte Informationen über den Spielverlauf befinden.</p>
 
-<img src="Manual_1.jpg"
-	alt="Zahlenhai Hauptfenster mit Zahlenfeld Kontroll- und Auswahlbereich und Informationsbereich und -fenster" ></img>
+<p align=center><img src="Manual_1.jpg"
+	alt="Zahlenhai Hauptfenster mit Zahlenfeld Kontroll- und Auswahlbereich und Informationsbereich und -fenster" width="95%"/></p>
 
 
 <p>&nbsp;</p>
@@ -57,30 +57,30 @@
 
 <ul>
   <li><strong>"Neues Spiel"</strong></li>
-  <p>Durch einen Klick auf den Button &quot;Neues Spiel&quot; öffnet sich ein Dialogfenster und ein neues Spiel mit beliebiger Spielfeldgröße (2 bis 1024) kann erzeugen werden. Das bisher laufende Spiel wird dabei  verworfen (abgebrochen).</p>
+  <p>Durch einen Klick auf den Button "Neues Spiel" öffnet sich ein Dialogfenster und ein neues Spiel mit beliebiger Spielfeldgröße (2 bis 1024) kann erzeugen werden. Das bisher laufende Spiel wird dabei  verworfen (abgebrochen).</p>
   <p><img src="Manual_4.jpg" alt="Neues Spiel Dialog"></p>
   
   <li><strong>"Rückgängig"</strong></li>
   <p>Mit diesem Knopf lässt sich der letzte Zug rückgängig machen. Es lassen sich schrittweise so alle Züge des Spiels rückgängig machen. Somit kannst du einen Zug zurück nehmen und eine andere Zugfolge wählen (wenn du denkst, du hast einen Fehler gemacht).</p>
 
   <li>"<strong>Wiederherstellen</strong>"</li>
-  <p>Durch Klicken auf &quot;Wiederherstellen&quot; kann ein Zug, der zuvor rückgängig gemacht wurde, wiederhergestellt werden.</p>
+  <p>Durch Klicken auf "Wiederherstellen" kann ein Zug, der zuvor rückgängig gemacht wurde, wiederhergestellt werden.</p>
 
   <li><strong>"Haifutter"</strong></li>
   <p>Dieser Button deaktiviert alle Zahlen, die der Zahlenhai beim gegenwärtigen Spielstand auf jeden Fall bekommen wird. Dies sind Zahlen, die größer als die Hälfte der aktuellen Spielfeldgröße sind und keinen aktiven Teiler mehr besitzen.</p>
 
-  <li><strong>"Hinweis&quot;</strong></li>
+  <li><strong>"Hinweis"</strong></li>
   <p>Liefert einen Vorschlag, welche Zahl als nächstes gewählt werden sollte. In manchen Spielsituationen kann kein Hinweis generiert werden.</p>
 
-  <li><strong>&quot;Heuristische Strategien&quot;</strong></li>
+  <li><strong>"Heuristische Strategien"</strong></li>
   <p>Diese Ikone öffnet einen Wizard, mit dem diverse heuristische Algorithmen solche Zugfolgen generieren, die zum Gewinn führen. Mehr dazu unter Punkt
   <a href="#heuStrat"><b>2. Heuristische Strategien</b></a>.</p>
 
-  <li><strong>&quot;Optimale Strategien&quot;</strong></li>
+  <li><strong>"Optimale Strategien"</strong></li>
   <p>Öffnet einen Wizard, in dem Zugfolgen mit maximalem Punktegewinn berechnet und angezeigt werden. Genaueres dazu ist unter Punkt
   <a href="#optStrat"><b>3. Optimale Strategien</b></a> aufgeführt.</p>
 
-  <li><strong>&quot;Hilfe&quot;</strong></li>
+  <li><strong>"Hilfe"</strong></li>
   <p>Öffnet die Onlinehilfe.</p>
 </ul>
 
@@ -93,7 +93,7 @@
 <ul>
 <li><strong>"Spielstand"</strong></li>
 <p>In der Gruppierung Spielstand werden die aktuellen Scores des Spielers und des Zahlenhais angezeigt &ndash; dabei kennzeichnet die Farbe der Zahl, wer beim aktuellen Stand vorne liegt. Ist der Punktestand beim Spieler in grün, liegt der Spieler vorne, ist sie hingegen rot gefärbt, liegt der Zahlenhai vorne.<br>
-Die Zahl neben &quot;Minimale Punkte zum Sieg&quot; ist die mindestens benötigte Gesamtpunktzahl (Score), um das Spiel zu gewinnen.</p>
+Die Zahl neben "Minimale Punkte zum Sieg" ist die mindestens benötigte Gesamtpunktzahl (Score), um das Spiel zu gewinnen.</p>
   
 <li><strong>"Spielverlaufstabelle"</strong></li>
 <p>In der Spielverlaufstabelle werden Details zu allen Zügen des Spiels angezeigt. Für jeden Zug kann man sehen, welche Zahl der Spieler gezogen hat, wieviele Punkte er hatte, sowie die Zahlen, die er an den Zahlenhai im entsprechenden Zug verloren hat. Außerdem lassen sich für jeden Zug die Punkte des Zahlenhais und die Anzahl der verbliebenen aktiven Zahlen ablesen.</p>
@@ -154,11 +154,11 @@ Die Zahl neben &quot;Minimale Punkte zum Sieg&quot; ist die mindestens benötigt
 <p><br>Nähere (mathematische) Informationen und eine Diskussion der Strategien finden sich hier (nur in englisch): <br>
 <a href="../reference/NumberSharkHelp-Discussion.html">Discussion of good and optimal strategies for the Number Shark game</a></p>
 
-<p>Klickt man auf &quot;OK&quot; werden die Zugfolgen mit dem ausgewählten Algorithmus und den eingestellten Grenzen berechnet. Dies kann je nach Leistung des Computers und den eingestellten Spielfeldgrößen einen Moment dauern.</p>
+<p>Klickt man auf "OK" werden die Zugfolgen mit dem ausgewählten Algorithmus und den eingestellten Grenzen berechnet. Dies kann je nach Leistung des Computers und den eingestellten Spielfeldgrößen einen Moment dauern.</p>
 
-<p>Dann erscheint das Ergebnis-Fenster. Dort sieht man, sortiert nach der Spielfeldgröße, welche Punktzahl erreicht werden kann und wieviele Punkte der Hai bekommt. Dann kommt die zugehörige Zugfolge und die benötigte Rechenzeit. Wählt man eine Zeile aus und klickt auf &quot;Auswahl spielen...&quot; wird das ausgewählte Spiel mit den berechneten Zügen im Zahlenhai-Hauptfenster gespielt.</p>
+<p>Dann erscheint das Ergebnis-Fenster. Dort sieht man, sortiert nach der Spielfeldgröße, welche Punktzahl erreicht werden kann und wieviele Punkte der Hai bekommt. Dann kommt die zugehörige Zugfolge und die benötigte Rechenzeit. Wählt man eine Zeile aus und klickt auf "Auswahl spielen..." wird das ausgewählte Spiel mit den berechneten Zügen im Zahlenhai-Hauptfenster gespielt.</p>
 
-<p>Mit &quot;Speichern unter...&quot; lässt sich die Tabelle als .csv-Datei exportieren und z.B. in Excel oder Calc einlesen.</p>
+<p>Mit "Speichern unter..." lässt sich die Tabelle als .csv-Datei exportieren und z.B. in Excel oder Calc einlesen.</p>
 <img src="Manual_5.jpg" alt="" width="650" height="510" />
 
 
@@ -204,11 +204,11 @@ Die Zahl neben &quot;Minimale Punkte zum Sieg&quot; ist die mindestens benötigt
 </ul>
 
 
-<p>Klickt man auf &quot;OK&quot; werden die Zugfolgen für die gewählten Spielfeldgrößen entweder neu berechnet oder die vorberechneten Ergebnisse angezeigt. Die Berechnung kann einige Zeit dauern.</p>
+<p>Klickt man auf "OK" werden die Zugfolgen für die gewählten Spielfeldgrößen entweder neu berechnet oder die vorberechneten Ergebnisse angezeigt. Die Berechnung kann einige Zeit dauern.</p>
 
-<p>Dann erscheint das Ergebnis-Fenster. Dort sieht man, sortiert nach der Spielfeldgröße, welche maximale Punktzahl erreicht werden kann, wieviele Punkte der Hai bekommt sowie die zugehörige Zugfolge. Wählt man eine Zeile aus und klickt auf &quot;Auswahl spielen...&quot;, wird das ausgewählte Spiel mit den berechneten Zügen im Zahlenhai-Hauptfenster gespielt.</p>
+<p>Dann erscheint das Ergebnis-Fenster. Dort sieht man, sortiert nach der Spielfeldgröße, welche maximale Punktzahl erreicht werden kann, wieviele Punkte der Hai bekommt sowie die zugehörige Zugfolge. Wählt man eine Zeile aus und klickt auf "Auswahl spielen...", wird das ausgewählte Spiel mit den berechneten Zügen im Zahlenhai-Hauptfenster gespielt.</p>
 
-<p>Mit &quot;Speichern unter...&quot; lässt sich die Tabelle als .csv-Datei exportieren und dann z.B. in Excel oder Calc einlesen.</p>
+<p>Mit "Speichern unter..." lässt sich die Tabelle als .csv-Datei exportieren und dann z.B. in Excel oder Calc einlesen.</p>
 <img src="Manual_6.jpg" alt="" width="650" height="510" />
 
 

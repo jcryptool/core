@@ -150,8 +150,8 @@ public class SPAView extends ViewPart implements Constants {
 		scrolledComposite.setContent(content);
 		scrolledComposite.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(),
-				"org.jcryptool.visual.sidechannelattack.spa.spaview"); //$NON-NLS-1$
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
+				"org.jcryptool.visual.sidechannelattack.spa.view"); //$NON-NLS-1$
 	}
 
 	/**

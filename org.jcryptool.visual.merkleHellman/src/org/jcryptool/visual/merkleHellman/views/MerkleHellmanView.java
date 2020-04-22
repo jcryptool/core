@@ -37,6 +37,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkleHellman.algorithm.MerkleHellman;
 
@@ -926,6 +927,9 @@ public class MerkleHellmanView extends ViewPart {
 		int startValue = Integer.parseInt(comboStartValue.getText());
 
 		generatePrivateKey(numberOfElements, startValue);
+
+
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.visual.merkleHellman.view");
 	}
 
 	protected boolean isSuperIncreasing() {

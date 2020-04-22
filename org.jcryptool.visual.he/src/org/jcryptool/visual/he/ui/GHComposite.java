@@ -13,7 +13,6 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
@@ -26,7 +25,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
-import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.he.Messages;
 import org.jcryptool.visual.he.algo.FHEParams;
 import org.jcryptool.visual.he.algo.Functions;
@@ -54,7 +53,7 @@ import org.eclipse.swt.graphics.Point;
 
 public class GHComposite extends Composite {
 	/** Yellow */
-	public Color YELLOW;
+	public Color YELLOW = ColorService.YELLOW;
 
 	/** Button for running the key selection wizard */
 	private Button keySel;
@@ -148,14 +147,10 @@ public class GHComposite extends Composite {
 	/**The width of the buttons on the left side */
 	private int buttonWidth = 200;
 	
+	private Group mainGroup;
 	private Label labelDeterminant;
 	private Label labelRoot;
-	private Composite compositeDeterminant;
-	private Composite compositeRoot;
-	private Composite compositeBlocks;
 	private Label labelBlocks;
-	private Composite compositeVector;
-	private Group mainGroup;
 	private Label lblEncVectorOp1;
 	private Label lblBitVectorOp1;
 	private Label lblBitVectorOp2;
@@ -169,7 +164,6 @@ public class GHComposite extends Composite {
 	public GHComposite(final Composite parent, final int style) {
 		super(parent,style);
 		this.initialize();
-		YELLOW = GHComposite.this.getDisplay().getSystemColor(SWT.COLOR_YELLOW);
 
 		/**
 		 * The job which will be run when the addition or multiplication job is done,
@@ -177,6 +171,7 @@ public class GHComposite extends Composite {
 		 * decryptButton must be enabled so the user can decrypt
 		 */
 		jobDone = new Runnable() {
+			@Override
 			public void run() {
 				homomorphResultEncrypted = data.getArray3();
 				for (int i = 0; i < homomorphResultEncrypted.length; i++) {
@@ -210,6 +205,7 @@ public class GHComposite extends Composite {
 		 * puts the old results back
 		 */
 		jobCanceled = new Runnable() {
+			@Override
 			public void run() {
 				homomorphPlain.setText("");
 				homomorphPlainBits.setText("");
@@ -301,7 +297,10 @@ public class GHComposite extends Composite {
 	 * and the main composite, which holds the visualization
 	 */
 	private void initialize() {
-		this.setLayout(new GridLayout());
+		GridLayout gl = new GridLayout();
+		gl.marginHeight = 0;
+		gl.marginWidth = 0;
+		this.setLayout(gl);
 		this.createHead();
 		this.createMain();
 	}
@@ -309,20 +308,11 @@ public class GHComposite extends Composite {
 	/**
 	 * Creates the head of the screen, holds the title and description
 	 */
-	private void createHead() {
-		final Composite head = new Composite(this, SWT.NONE);
-        head.setBackground(ColorService.WHITE);
-        head.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        head.setLayout(new GridLayout());
-
-        final Label label = new Label(head, SWT.NONE);
-        label.setFont(FontService.getHeaderFont());
-        label.setBackground(ColorService.WHITE);
-        label.setText(Messages.HEComposite_GentryHalevi_Title);
-	    
-        final StyledText stDescription = new StyledText(head, SWT.READ_ONLY);
-        stDescription.setText(Messages.HEComposite_GentryHalevi_Description);
-	    stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+	private void createHead() {	
+		TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(this);
+		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		titleAndDescription.setTitle(Messages.HEComposite_GentryHalevi_Title);
+		titleAndDescription.setDescription(Messages.HEComposite_GentryHalevi_Description);      
 	}
 
 	/**
@@ -331,6 +321,8 @@ public class GHComposite extends Composite {
 	private void createMain() {
 		final Group mainGroup = new Group(this, SWT.NONE);
 		final GridLayout gl = new GridLayout(1, false);
+		gl.marginHeight = 0;
+		gl.marginWidth = 0;
 		mainGroup.setText(Messages.HEComposite_Scheme);
         mainGroup.setLayout(gl);
         mainGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -632,76 +624,63 @@ public class GHComposite extends Composite {
 			public void widgetSelected(final SelectionEvent e) {
         		WizardDialog wd = new WizardDialog(GHComposite.this.getShell(),
     					new GHKeySelectionWizard(keyPair, fheParams, GHComposite.this.getDisplay()));
+        		// Remove the help icon from the wizard. There is no help available.
+        		wd.setHelpAvailable(false);
         		recalcMinSizeOnPageChange(wd);
         		if (wd.open() == Window.OK) keySelected();
         	}
         });
 		
 		Group mainGroup = new Group(parent, SWT.SHADOW_NONE);
-		mainGroup.setLayout(new GridLayout(2, false));
-		((GridLayout)mainGroup.getLayout()).verticalSpacing = 10;
+		GridLayout gl_mainGroup = new GridLayout(4, false);
+		gl_mainGroup.verticalSpacing = 10;
+		mainGroup.setLayout(gl_mainGroup);
 		mainGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		mainGroup.setText(Messages.GHComposite_KeyArea_Public_Key);
 		
-		compositeDeterminant = new Composite(mainGroup, SWT.NONE);
-		compositeDeterminant.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		GridLayout gl_compositeDeterminant = new GridLayout(2, false);
-		gl_compositeDeterminant.marginHeight = 0;
-		gl_compositeDeterminant.marginWidth = 0;
-		compositeDeterminant.setLayout(gl_compositeDeterminant);
-		labelDeterminant = new Label(compositeDeterminant, SWT.RIGHT);
+		
+		labelDeterminant = new Label(mainGroup, SWT.RIGHT);
 		GridData gd_labelDeterminant = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 		gd_labelDeterminant.widthHint = lblWidth;
 		labelDeterminant.setLayoutData(gd_labelDeterminant);
 		labelDeterminant.setText(Messages.HEComposite_GH_KeyArea_Determinant);
-		detText = new Text(compositeDeterminant, SWT.BORDER | SWT.MULTI | SWT.H_SCROLL);
-		detText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		detText.setEditable(false);
 		
-		compositeRoot = new Composite(mainGroup, SWT.NONE);
-		compositeRoot.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		GridLayout gl_compositeRoot = new GridLayout(2, false);
-		gl_compositeRoot.marginHeight = 0;
-		gl_compositeRoot.marginWidth = 0;
-		compositeRoot.setLayout(gl_compositeRoot);		
-		labelRoot = new Label(compositeRoot, SWT.RIGHT);
+		detText = new Text(mainGroup, SWT.BORDER | SWT.MULTI | SWT.H_SCROLL);
+		detText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
+		detText.setEditable(false);
+			
+		
+		labelRoot = new Label(mainGroup, SWT.RIGHT);
 		GridData gd_labelRoot = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 		gd_labelRoot.widthHint = lblWidth;
 		labelRoot.setLayoutData(gd_labelRoot);
 		labelRoot.setText(Messages.HEComposite_GH_KeyArea_Root);
-		rootText = new Text(compositeRoot, SWT.BORDER | SWT.MULTI | SWT.H_SCROLL);
-		rootText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		rootText = new Text(mainGroup, SWT.BORDER | SWT.MULTI | SWT.H_SCROLL);
+		rootText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		rootText.setEditable(false);
 		
-		compositeBlocks = new Composite(mainGroup, SWT.NONE);
-		compositeBlocks.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		GridLayout gl_compositeBlocks = new GridLayout(2, false);
-		gl_compositeBlocks.marginHeight = 0;
-		gl_compositeBlocks.marginWidth = 0;
-		compositeBlocks.setLayout(gl_compositeBlocks);
-		labelBlocks = new Label(compositeBlocks, SWT.RIGHT);
+		
+		labelBlocks = new Label(mainGroup, SWT.RIGHT);
 		GridData gd_labelBlocks = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 		gd_labelBlocks.widthHint = lblWidth;
 		labelBlocks.setLayoutData(gd_labelBlocks);
 		labelBlocks.setText(Messages.HEComposite_GH_KeyArea_Public_Key_Blocks);
-		pkBlockText = new Text(compositeBlocks, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
+		
+		pkBlockText = new Text(mainGroup, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
 		GridData gd_pkBlockText = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_pkBlockText.heightHint = 50;
 		pkBlockText.setLayoutData(gd_pkBlockText);
 		pkBlockText.setEditable(false);
+	
 		
-		compositeVector = new Composite(mainGroup, SWT.NONE);
-		compositeVector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		GridLayout gl_compositeVector = new GridLayout(2, false);
-		gl_compositeVector.marginHeight = 0;
-		gl_compositeVector.marginWidth = 0;
-		compositeVector.setLayout(gl_compositeVector);		
-        Label labelVector = new Label(compositeVector, SWT.RIGHT);
+        Label labelVector = new Label(mainGroup, SWT.RIGHT);
         GridData gd_labelVector = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
         gd_labelVector.widthHint = lblWidth;
         labelVector.setLayoutData(gd_labelVector);
         labelVector.setText(Messages.HEComposite_GH_KeyArea_Secret_Vector);
-        cText = new Text(compositeVector, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+        
+        cText = new Text(mainGroup, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
         GridData gd_cText = new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1);
         gd_cText.heightHint = 50;
         cText.setLayoutData(gd_cText);
@@ -730,6 +709,8 @@ public class GHComposite extends Composite {
 			public void widgetSelected(final SelectionEvent e) {
         		WizardDialog wd = new WizardDialog(GHComposite.this.getShell(),
     					new GHModulusWizard(data));
+        		// Remove help icon from wizard, because no help is available.
+        		wd.setHelpAvailable(false);
         		recalcMinSizeOnPageChange(wd);
         		if (wd.open() == Window.OK) modulusSelected();
         	}
@@ -774,6 +755,8 @@ public class GHComposite extends Composite {
 			public void widgetSelected(final SelectionEvent e) {
         		WizardDialog wd = new WizardDialog(GHComposite.this.getShell(),
         				new GHInitialTextWizard(logMod, data));
+        		// Remove help icon from wizard, because no help is available.
+        		wd.setHelpAvailable(false);
         		recalcMinSizeOnPageChange(wd);
         		if (wd.open() == Window.OK) initialTextSelected();
         	}
@@ -842,6 +825,8 @@ public class GHComposite extends Composite {
 			public void widgetSelected(final SelectionEvent e) {
         		WizardDialog wd = new WizardDialog(GHComposite.this.getShell(),
         				new GHOperationTextWizard(logMod, data));
+        		// Remove help icon from wizard, because no help is available.
+        		wd.setHelpAvailable(false);
         		recalcMinSizeOnPageChange(wd);
         		if (wd.open() == Window.OK) addTextSelected();
         	}
@@ -856,6 +841,8 @@ public class GHComposite extends Composite {
 			public void widgetSelected(final SelectionEvent e) {
 	    		WizardDialog wd = new WizardDialog(GHComposite.this.getShell(),
 		        		new GHOperationTextWizard(logMod, data));
+	    		// Remove help icon from wizard, because no help is available.
+        		wd.setHelpAvailable(false);
 	    		recalcMinSizeOnPageChange(wd);
 	    		if (wd.open() == Window.OK) multTextSelected();
 	    		}
@@ -1003,6 +990,8 @@ public class GHComposite extends Composite {
 			public void widgetSelected(final SelectionEvent e) {
         		WizardDialog wd = new WizardDialog(GHComposite.this.getShell(),
     					new GHSettingsWizard(data));
+        		// Remove help icon from wizard, because no help is available.
+        		wd.setHelpAvailable(false);
         		recalcMinSizeOnPageChange(wd);
         		wd.open();
         	}
@@ -1053,7 +1042,8 @@ public class GHComposite extends Composite {
     private void recalcMinSizeOnPageChange(WizardDialog dialog) {
     	if (dialog != null) {
         	dialog.addPageChangedListener(new IPageChangedListener() {
-    			public void pageChanged(PageChangedEvent event) {
+    			@Override
+				public void pageChanged(PageChangedEvent event) {
     				WizardPage page = ((WizardPage)event.getSelectedPage());
     				Point newMinSize = page.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT);
     				newMinSize.y += 122 + 69 + 41; //add the height of titleArea, buttonArea and titleBar

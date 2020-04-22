@@ -20,40 +20,92 @@ import org.jcryptool.visual.arc4.ARC4Con;
  * initStep, createRandomAndEncrypt and reset methods
  * 
  * @author Luca Rupp
+ * @author Thorben Groos (switchable keylength)
  */
 public abstract class ARC4Algorithm {
 
-    // the representation of the s box that is used to do the calculation
+	/**
+	 * The representation of the s box that is used to do the calculation
+	 */
     protected int[] vector = new int[ARC4Con.S_BOX_LEN];
 
-    // the key used for encryption
+    /**
+     * The key used for encryption
+     */
     protected int[] key = new int[ARC4Con.DATAVECTOR_VISUAL_LENGTH];
 
-    // the plaintext that shall be encrypted
+    /**
+     * The plaintext that shall be encrypted
+     */
     protected int[] plain = new int[ARC4Con.DATAVECTOR_VISUAL_LENGTH];
 
-    // contains the generated pseudo random numbers
+    /**
+     * Contains the generated pseudo random numbers
+     */
     protected int[] random = new int[ARC4Con.DATAVECTOR_VISUAL_LENGTH];
 
-    // contains the ciphertext
+    /**
+     * Contains the ciphertext
+     */
     protected int[] enc = new int[ARC4Con.DATAVECTOR_VISUAL_LENGTH];
 
-    // the two internal variables of ARC4 and the step counter;
+    /**
+     * The two internal variables of ARC4 and the step counter;
+     */
     protected int i = 0, j = 0, currentStep = 0;
 
-    // weather the algorithm is finished
+    /**
+     * Weather the algorithm is finished
+     */
     protected boolean finish = false;
 
     /**
-     * Constructor for the ARC4Algorithm class
+     * Constructor for the ARC4Algorithm class.</br>
+     * Creates a random key and plaintext.
      */
     public ARC4Algorithm() {
-        // Fill the byte vector with numbers from 0 to 255
+
+        // Fill the byte vector
+    	fillByteVector();
+    	
+        // initialize key and plaintext with pseudorandom numbers
+        randomizeKeyPlain();
+    }
+    
+    /**
+     * Constructor for a new algorithm object with a specific key and plaintext.</br>
+     * This constructor is used, if a user has already entered some plaintext or
+     * a key and then changes the key length.
+     * @param keylength The key length
+     * @param key The key the user has already entered (Note: key.length must be equal to keylength
+     * else some IndexOutOfBoundsException are thrown.)
+     * @param plain The plaintext the user has already entered (Note: plain.length must be
+     * equal to keylength, else some IndexOutOfBoundsException are thrown.
+     */
+    public ARC4Algorithm(int[] key, int[] plain) {
+    	this.key = new int[key.length];
+    	this.key = key;
+    	
+    	this.plain = new int[plain.length];
+    	this.plain = plain;
+    	
+    	this.random = new int[plain.length];
+    	this.enc = new int[plain.length];
+
+        // Fill the byte vector 
+    	fillByteVector();
+
+    }
+
+
+    
+    /**
+     * Fill the byte vector with numbers from 0 to 255
+     */
+    private void fillByteVector() {
         for (int a = 0; a < ARC4Con.S_BOX_LEN; a++) {
             this.vector[a] = a;
         }
-        // initialize key and plaintext with pseudorandom numbers
-        randomizeKeyPlain();
     }
     
     /**
@@ -108,7 +160,7 @@ public abstract class ARC4Algorithm {
             if (this.currentStep < ARC4Con.TWO_FIFE_SIX) {
                 initStep(this.currentStep);
             // and then the pseudorandom numbers are generated and the plaintext is encrypted
-            } else if (this.currentStep < (ARC4Con.TWO_FIFE_SIX + ARC4Con.DATAVECTOR_VISUAL_LENGTH)) {
+            } else if (this.currentStep < (ARC4Con.TWO_FIFE_SIX + plain.length)) {
                 // createRandomAndEncrypt wants the index of the step without initialization
                 createRandomAndEncrypt(this.currentStep % ARC4Con.TWO_FIFE_SIX);
             } else {
@@ -132,14 +184,22 @@ public abstract class ARC4Algorithm {
 
     /**
      * Set the plaintext the algorithm will encrypt. One can not change the plaintext after the
-     * algorithm started execution
+     * algorithm started execution.
      * 
      * @param plain the plaintext the user wants to encrypt in form of an array of integers
      */
     public void setPlain(int[] plain) {
         // to prevent changing the plaintext after starting the algorithm
+    	// This could never happen, because the button for changing the plaintext
+    	// gets disabled after starting the algorithm.
         if (this.currentStep == 0) {
-            this.plain = plain;
+        	this.plain = new int[plain.length];
+        	this.plain = plain;
+        	
+        	// Set the length of random and enc.
+        	// They have the same length as plain.
+        	this.random = new int[plain.length];
+        	this.enc = new int[plain.length];
         }
     }
 
@@ -152,6 +212,7 @@ public abstract class ARC4Algorithm {
     public void setKey(int[] key) {
         // to prevent changing the key after starting the algorithm
         if (this.currentStep == 0) {
+        	this.key = new int[key.length];
             this.key = key;
         }
     }
@@ -244,5 +305,6 @@ public abstract class ARC4Algorithm {
     public int[] getPlain() {
         return this.plain;
     }
+    
 
 }

@@ -10,6 +10,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -36,9 +37,7 @@ public class AntColConfigComposite extends Composite {
 	private Group firstStepGroup;
 	private int currKeyLength = 4;
 	private Label textLengthLabel;
-	private SelectionAdapter startAnalysisListener;
-	private SelectionAdapter stopAnalysisListener;
-
+	private SelectionListener startStopListener;
 	/**
 	 * Konstruktor. Erhaelt das Model, das die Daten des Tutorials verwaltet und
 	 * das Composite an das das Func-Objekt angehaengt werden soll.
@@ -55,62 +54,64 @@ public class AntColConfigComposite extends Composite {
 	}
 
 	private void initConfigurationComp() {
+		
 		firstStepGroup = new Group(this, SWT.NONE);
-
-		firstStepGroup.setText(Messages.Func_analyseConfiguration); //$NON-NLS-1$
-		GridLayout layout = new GridLayout(1, false);
-		firstStepGroup.setLayout(layout);
-
-		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
-
-		firstStepGroup.setLayoutData(gridData);
+		firstStepGroup.setText(Messages.Func_analyseConfiguration); 
+		firstStepGroup.setLayout(new GridLayout(1, false));
+		firstStepGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
 		generateTextButton = new Button(firstStepGroup, SWT.PUSH);
-		generateTextButton.setText(Messages.Control_generateText); //$NON-NLS-1$
-		generateTextButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
-				true, false));
+		generateTextButton.setText(Messages.Control_generateText); 
+		generateTextButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		generateTextButton.addSelectionListener(new SelectionAdapter() {
+			
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				controller.onGenerateText();
 			}
 		});
 
 		Label label = new Label(firstStepGroup, SWT.NONE);
-		label.setText(Messages.Control_or); //$NON-NLS-1$
+		label.setText(Messages.Control_or); 
 		label.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
 
 		label = new Label(firstStepGroup, SWT.NONE);
 		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		label.setText(Messages.Func_ciphertext); //$NON-NLS-1$
+		label.setText(Messages.Func_ciphertext); 
+		
 		txtCipher = new StyledText(firstStepGroup, SWT.SINGLE | SWT.BORDER);
-		txtCipher.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		GridData styledTextGridData = new GridData(SWT.FILL, SWT.FILL, true, false);
+//		// This avoids that the horizontal size of txtCipher increases with 
+//		// longer texts.
+		styledTextGridData.widthHint = txtCipher.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
+		txtCipher.setLayoutData(styledTextGridData);
 
 		textLengthLabel = new Label(firstStepGroup, SWT.FILL);
+		textLengthLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		textLengthLabel.setText(Messages.Control_textLength + " 0"); //$NON-NLS-1$
 
 		labelSlider = new Label(firstStepGroup, SWT.NONE);
-		labelSlider.setText(Messages.Func_keyLength); //$NON-NLS-1$ //$NON-NLS-2$
+		labelSlider.setText(Messages.Func_keyLength); 
 		GridData gd_labelSlider = new GridData(SWT.FILL, SWT.FILL, true, false);
 		gd_labelSlider.verticalIndent = 30;
 		labelSlider.setLayoutData(gd_labelSlider);
 
 		keyLengthSlider = new Spinner(firstStepGroup, SWT.BORDER);
-
 		keyLengthSlider.setMinimum(3);
 		keyLengthSlider.setMaximum(9);
 		keyLengthSlider.setSelection(4);
-		keyLengthSlider.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-				false));
+		keyLengthSlider.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		keyLengthSlider.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 
-				controller.onKeyLengthChange(keyLengthSlider.getSelection(),
-						currKeyLength);
+				controller.onKeyLengthChange(keyLengthSlider.getSelection(), currKeyLength);
 				currKeyLength = keyLengthSlider.getSelection();
 			}
 		});
 
 		label = new Label(firstStepGroup, SWT.FILL);
-		label.setText(Messages.Func_textLanguage); //$NON-NLS-1$
+		label.setText(Messages.Func_textLanguage); 
 		GridData gd_label = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		gd_label.verticalIndent = 30;
 		label.setLayoutData(gd_label);
@@ -119,11 +120,10 @@ public class AntColConfigComposite extends Composite {
 		String items[] = { Messages.Control_language1,
 				Messages.Control_language2, Messages.Control_language_own };
 		languageCombo.setItems(items);
-		languageCombo.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true,
-				false));
-
+		languageCombo.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 		languageCombo.select(0);
 		languageCombo.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				controller.onChangeLanguage();
 			}
@@ -132,26 +132,31 @@ public class AntColConfigComposite extends Composite {
 		// Weiter-Button
 
 		startAnalysisButton = new Button(firstStepGroup, SWT.PUSH);
-		startAnalysisButton.setText(Messages.Func_proceedToAnalysis); //$NON-NLS-1$
-		startAnalysisButton.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM,
-				true, true));
+		startAnalysisButton.setText(Messages.Func_proceedToAnalysis); 
+		startAnalysisButton.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true));
 		startAnalysisButton.setEnabled(false);
-		startAnalysisListener = new SelectionAdapter() {
+		
+		startStopListener = new SelectionListener() {
+			
+			@Override
 			public void widgetSelected(SelectionEvent e) {
-				controller.onStartAnalyseButtonClick();
-				toggleAnalyseButton();
+				if (startAnalysisButton.getText().equals(Messages.Func_proceedToAnalysis)) {
+					controller.onStartAnalyseButtonClick();
+					startAnalysisButton.setText(Messages.Func_stopAnalysis);
+				} else {
+					controller.onStopAnalyseButtonClick();
+					startAnalysisButton.setText(Messages.Func_proceedToAnalysis);
+				}
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
 			}
 		};
-		stopAnalysisListener = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				controller.onStopAnalyseButtonClick();
-				toggleAnalyseButton();
-			}
-		};
-		startAnalysisButton.addSelectionListener(startAnalysisListener);
+		
+		startAnalysisButton.addSelectionListener(startStopListener);
 		addCipherTextListener();
-
-		layout();
 	}
 
 	private void addCipherTextListener() {
@@ -173,7 +178,6 @@ public class AntColConfigComposite extends Composite {
 
 				textLengthLabel.setText(Messages.Control_textLength
 						+ " " + modifiedText.length()); //$NON-NLS-1$
-				firstStepGroup.layout();
 				controller.onCipherTextModify(modifiedText);
 			}
 
@@ -238,19 +242,6 @@ public class AntColConfigComposite extends Composite {
 		startAnalysisButton.setEnabled(b);
 	}
 
-	public void toggleAnalyseButton() {
-		if (startAnalysisButton.getText().equals(
-				Messages.Func_proceedToAnalysis)) {
-			startAnalysisButton.removeSelectionListener(startAnalysisListener);
-			startAnalysisButton.setText(Messages.Func_stopAnalysis);
-			startAnalysisButton.addSelectionListener(stopAnalysisListener);
-		} else {
-			startAnalysisButton.removeSelectionListener(stopAnalysisListener);
-			startAnalysisButton.setText(Messages.Func_proceedToAnalysis);
-			startAnalysisButton.addSelectionListener(startAnalysisListener);
-		}
-
-	}
 
 	public String getCipherTextFieldValue() {
 		return txtCipher.getText();

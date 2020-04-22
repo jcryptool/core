@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
@@ -70,7 +71,7 @@ public abstract class AbstractResultDialog extends TitleAreaDialog {
 
     public AbstractResultDialog(Shell shell, int selectedStrategy) {
         super(shell);
-        setShellStyle(SWT.TITLE | SWT.APPLICATION_MODAL);
+        setShellStyle(SWT.TITLE | SWT.APPLICATION_MODAL | SWT.CLOSE);
         this.selectedStrategy = selectedStrategy;
     }
 
@@ -82,8 +83,9 @@ public abstract class AbstractResultDialog extends TitleAreaDialog {
         try {
             new ProgressMonitorDialog(shell).run(true, true, calculateSequences);
         } catch (InvocationTargetException e) {
-        	
+        	e.printStackTrace();
         } catch (InterruptedException e) {
+        	e.printStackTrace();
         	
         }
         
@@ -95,8 +97,10 @@ public abstract class AbstractResultDialog extends TitleAreaDialog {
             max = stoppedAt;
         }
 
-        Composite area = (Composite) super.createDialogArea(parent);
-//        area.setLayout(new GridLayout(1, false));
+         Composite area = (Composite) super.createDialogArea(parent);
+        parent.setLayout(new GridLayout());
+        //parent.setLayoutData(new GridData(GridData.FILL_BOTH));
+
         
         Composite composite = new Composite(area, SWT.NONE);
         composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));

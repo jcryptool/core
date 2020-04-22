@@ -53,7 +53,6 @@ public class ViterbiView extends ViewPart {
 		xorComposite = new XORComposite(sc, SWT.NONE, this);
 		sc.setContent(xorComposite);
 		ti.setControl(sc);
-		xorComposite.displayDefaultTexts();
 
 		// Viterbi Tab
 		ti = new TabItem(tf, SWT.NONE);
@@ -64,7 +63,6 @@ public class ViterbiView extends ViewPart {
 		viterbiComposite = new ViterbiComposite(sc, SWT.NONE, this);
 		sc.setContent(viterbiComposite);
 		ti.setControl(sc);
-		viterbiComposite.displayDefaultTexts();
 
 		// Viterbi Details Tab
 		ti = new TabItem(tf, SWT.NONE);
@@ -72,7 +70,7 @@ public class ViterbiView extends ViewPart {
 		sc = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
 		sc.setExpandHorizontal(true);
 		sc.setExpandVertical(true);
-		detailsComposite = new DetailsComposite(sc, SWT.NONE, this);
+		detailsComposite = new DetailsComposite(sc, SWT.NONE);
 		sc.setContent(detailsComposite);
 		ti.setControl(sc);
 

@@ -10,6 +10,8 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.analysis.freqanalysis.ui;
 
+import java.text.DecimalFormat;
+//import java.util.LinkedList;
 import java.util.Vector;
 
 import org.eclipse.osgi.util.NLS;
@@ -48,12 +50,20 @@ public class FreqAnalysisGraph extends Graph implements MouseMoveListener, Mouse
 	private int currentShift = 0;
 	private int savedShift = 0;
 
-	// This field stores where the Mouse was seen last and may be null to signify
-	// "there is no mouse to consider"
+
+	/**
+	 * This field stores where the Mouse was seen last and may be null to signify
+	 * there is no mouse to consider"
+	 */
 	private Point lastMouseCursorSensitivityPos = null;
 
 	private boolean dragged = false;
-
+	
+	private double highestBar;
+	private int highestBarY;
+	
+	private String graphAreaMessage;
+	
 	/**
 	 * In this method, standard settings from the super class are overridden
 	 */
@@ -80,7 +90,11 @@ public class FreqAnalysisGraph extends Graph implements MouseMoveListener, Mouse
 		descRightBGColor = new MColor("B60000", 255); //$NON-NLS-1$
 		barAreaBGColor = new MColor("306A90", 255); //$NON-NLS-1$
 		overlayBarColor = new MColor("FFFFFF", 255); //$NON-NLS-1$
-		// MColor("006AB0", 255); //$NON-NLS-1$
+		
+		highestBar = 0;
+		highestBarY = 0;
+		
+		graphAreaMessage = Messages.FreqAnalysisGraph_graph0;
 	}
 
 	public FreqAnalysisGraph(final GC gc, final int areaWidth, final int areaHeight) {
@@ -142,7 +156,8 @@ public class FreqAnalysisGraph extends Graph implements MouseMoveListener, Mouse
 	}
 
 	@Override
-	protected final void paintBarArea(final Rectangle thisArea, final MColor thisBGColor) {
+	protected final void paintBarArea(final Rectangle thisArea, final MColor thisBGColor) {	
+		
 		// The bar drawing rectangle without margins
 		Rectangle barDrawingRect = new Rectangle(barAreaRect.x + 2 * marginLeft, barAreaRect.y + marginTop,
 				barAreaRect.width - marginLeft - marginRight, barAreaRect.height - marginTop - marginBottom);
@@ -155,8 +170,26 @@ public class FreqAnalysisGraph extends Graph implements MouseMoveListener, Mouse
 		thisBGColor.setColor(gc);
 		thisBGColor.setBGColor(gc);
 		gc.fillRectangle(thisArea);
-
-		boolean hasDrawnLbl = false;
+		
+		double highestBarValue = 0;
+		
+		// Get the highest bar value from all bars that are shown.
+		for (int i = 0; i < bars.size(); i++) {
+			Bar bar = bars.get(i);
+			FreqAnalysisData barData = (FreqAnalysisData) bar.attachedData.get(0);
+			
+			// Check if the highest value (highesBarDataValue) is less or equal
+			// to the current Bar value (barData.relOcc). If it is true, set the 
+			// highest value (highesBarDataValue) to the current bar value (barData.relOcc).
+			if (highestBarValue <= barData.relOcc) {
+				highestBarValue = barData.relOcc;
+			}
+		}
+		
+		// Now set the highest value as heighestBar. heighestBar is used in several other 
+		// calculations.
+		highestBar = highestBarValue;
+		
 		for (int i = 0; i < bars.size(); i++) {
 			// Only shift when the bar is no overlay bar.
 			Bar bar = bars.get(i);
@@ -165,11 +198,15 @@ public class FreqAnalysisGraph extends Graph implements MouseMoveListener, Mouse
 			} else {
 				barBox = calculateBarContainerShifted(barDrawingRect, bar.getIndex(), biggestBarIndex);
 			}
-			// barBox = calculateBarContainer(barDrawingRect, ((Bar)bars.get(i)).getIndex(),
-			// biggestBarIndex);
+
 			bar.setBox(barBox);
 			bar.setGC(gc);
-
+						
+			// This resets highestBarY to the available height of the graph.
+			// This is necessary to calculate the correct distances between the 
+			// labels on the y-axis.
+			highestBarY = barBox.height;
+			
 			if (this.lastMouseCursorSensitivityPos != null) {
 
 				boolean mouseIsNear = this.lastMouseCursorSensitivityPos != null
@@ -182,7 +219,8 @@ public class FreqAnalysisGraph extends Graph implements MouseMoveListener, Mouse
 					}
 				}
 
-				if (mouseIsNear && stat != null) {
+				// FIXME Displaying the value of the selected value does not work correctly.
+				if (mouseIsNear && stat != null && ! (bar instanceof OverlayBar || bar instanceof OverlayLabelBar) ) {
 					String lbl = String.format("%1.2f", stat.relOcc);
 					bar.drawBar(lbl);
 				} else {
@@ -202,17 +240,17 @@ public class FreqAnalysisGraph extends Graph implements MouseMoveListener, Mouse
 		thisBGColor.setBGColor(gc);
 		gc.fillRectangle(thisArea);
 
-		thisFontColor.setColor(gc);
+		thisFontColor.setColor(gc);	
+		
 		if (dragged) {
 			gc.drawText(NLS.bind(Messages.FreqAnalysisGraph_shiftgraph1, getCurrentShift()),
 					3 + marginLeft + marginRight,
 					(int) Math.round(Math.floor((double) (descTopRect.height - gc.getFontMetrics().getAscent()) / 2)));
 		} else {
-			gc.drawText(NLS.bind(Messages.FreqAnalysisGraph_shiftgraph0, getCurrentShift()),
+			gc.drawText(NLS.bind(graphAreaMessage, getCurrentShift()),
 					3 + marginLeft + marginRight,
 					(int) Math.round(Math.floor((double) (descTopRect.height - gc.getFontMetrics().getAscent()) / 2)));
 		}
-
 	}
 
 	@Override
@@ -223,9 +261,22 @@ public class FreqAnalysisGraph extends Graph implements MouseMoveListener, Mouse
 		Rectangle descDrawingRect = new Rectangle(descLeftRect.x, 0, descLeftRect.width + marginLeft + marginRight,
 				descLeftRect.height + 2 * marginTop + marginBottom);
 		Rectangle textBox = calculateTextContainer(descDrawingRect, 0, 0);
+		
+		
 
 		gc.fillRectangle(textBox);
-		gc.drawText("FREQ", 5, descLeftRect.height / 2);
+		
+		// y - axis labels
+		DecimalFormat format = new DecimalFormat("#0.00");
+		highestBarY = highestBarY - descBottomRect.height - marginBottom;
+		
+		double spacing = highestBar / 4;
+		double spacingY = highestBarY / 4;
+						
+		gc.drawText(format.format(spacing), 5, highestBarY);
+		gc.drawText(format.format(spacing * 2), 5, (int) spacingY * 3);
+		gc.drawText(format.format(spacing * 3), 5, (int) spacingY * 2);
+		gc.drawText(format.format(highestBar), 5, (int) spacingY);
 	}
 
 	@Override
@@ -370,7 +421,6 @@ public class FreqAnalysisGraph extends Graph implements MouseMoveListener, Mouse
 
 	@Override
 	public void mouseHover(MouseEvent e) {
-		System.out.println("Hover");
 		this.lastMouseCursorSensitivityPos = new Point(e.x, e.y);
 	}
 
@@ -378,6 +428,10 @@ public class FreqAnalysisGraph extends Graph implements MouseMoveListener, Mouse
 	public void mouseMove(MouseEvent e) {
 		this.lastMouseCursorSensitivityPos = new Point(e.x, e.y);
 // 		this.lastMouseCursorSensitivityPos = null;
+	}
+	
+	public void setInstruction(String msg) {
+		graphAreaMessage = msg;
 	}
 
 }

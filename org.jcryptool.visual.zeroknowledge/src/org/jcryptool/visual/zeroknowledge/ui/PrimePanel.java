@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Text;
  * die Beschreibung, eins für den Inhalt).
  *
  * @author Mareike Paul
- *@version 1.0.0
+ * @version 1.0.0
  */
 public class PrimePanel {
 
@@ -34,7 +34,7 @@ public class PrimePanel {
 
     private Group group;
 
-    private Label input_ergebnis;
+    private Text input_ergebnis;
 
     private Text input_obergrenze;
 
@@ -63,7 +63,7 @@ public class PrimePanel {
         untergrenze.setText(Messages.PrimePanel_1);
         untergrenze.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         
-        input_untergrenze = new Text(group, SWT.NONE);
+        input_untergrenze = new Text(group, SWT.BORDER);
         input_untergrenze.setText(Messages.PrimePanel_2);
         input_untergrenze.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
     	
@@ -71,7 +71,7 @@ public class PrimePanel {
         obergrenze.setText(Messages.PrimePanel_3);
         obergrenze.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         
-        input_obergrenze = new Text(group, SWT.NONE);
+        input_obergrenze = new Text(group, SWT.BORDER);
         input_obergrenze.setText(Messages.PrimePanel_4);
         input_obergrenze.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         
@@ -79,7 +79,9 @@ public class PrimePanel {
         ergebnis.setText(Messages.PrimePanel_5);
         ergebnis.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         
-        input_ergebnis = new Label(group, SWT.FILL);
+        input_ergebnis = new Text(group, SWT.BORDER);
+        input_ergebnis.setEditable(false);
+        input_ergebnis.setText("-");
         input_ergebnis.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         
     }

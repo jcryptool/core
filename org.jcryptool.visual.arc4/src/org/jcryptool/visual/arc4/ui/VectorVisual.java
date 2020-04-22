@@ -25,6 +25,7 @@ import org.jcryptool.visual.arc4.Messages;
  * accessing it
  * 
  * @author Luca Rupp
+ * @author Thorben Groos (switchable keylength)
  */
 public class VectorVisual extends Composite {
 
@@ -33,9 +34,6 @@ public class VectorVisual extends Composite {
 
     // what you actually see of the vector: the labels that show the data
     private Label[] vector = new Label[(ARC4Con.DATAVECTOR_VISUAL_LENGTH + 1) * (ARC4Con.DATAVECTOR_VISUAL_LENGTH + 1)];
-
-    // style data for every label; in SWT GridData objects should not be reused
-    //private GridData[] data = new GridData[vector.length];
 
     /**
      * Constructor for the VectorVisual class
@@ -74,13 +72,8 @@ public class VectorVisual extends Composite {
         for (int a = 0; a < vector.length; a++) {
             // SWT.CENTER for centering text on the label
             vector[a] = new Label(group, SWT.CENTER);
-            //data[a] = new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1);
             // make the labels big enough from the beginning as they do not resign themselves when
-            // you assign them
-            // a text that is to long for their current size
-			//data[a].minimumHeight = ARC4Con.VECTOR_VISUAL_LABEL_HEIGHT;
-			//data[a].minimumWidth = ARC4Con.VECTOR_VISUAL_LABEL_WIDTH;
-			//vector[a].setLayoutData(data[a]);
+            // you assign them a text that is to long for their current size
             vector[a].setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
             // they get their groups tool tip in order to have it displayed even if the use
             // technically hovers
@@ -132,7 +125,7 @@ public class VectorVisual extends Composite {
      * 
      * @param data an integer array that holds only the real data (no row or column names)
      */
-    public void setData(int[] data) {
+    public void setDataToGUI(int[] data) {
         // check if the vector has the correct length
         if (data.length != (int) Math.pow(ARC4Con.DATAVECTOR_VISUAL_LENGTH, 2)) {
             return;

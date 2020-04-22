@@ -14,7 +14,7 @@ package org.jcryptool.visual.zeroknowledge.algorithm;
  * durchführen sollen
  * 
  * @author Mareike Paul
- *@version 1.0.0
+ * @version 1.0.0
  */
 public interface Funcs {
 

@@ -16,11 +16,9 @@ import java.util.function.Consumer;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -44,7 +42,7 @@ import org.jcryptool.analysis.viterbi.algorithm.ViterbiObserver;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
-import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 
 /**
  * This class generates the content of the "Viterbi" tab. With this tab the user can break the running key cipher
@@ -63,9 +61,6 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
     private static final int CONTINUEBUTTONHEIGHT = 36;
     private static final int CONTINUEBUTTONWIDTH = 150;
 
-    /* colors for backgrounds. */
-    private static final Color WHITE = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
-
     private Text cipher;
     private Text solution1;
     private Text solution2;
@@ -82,9 +77,8 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
     /* latest path computed by the viterbi algorithm */
     private Path currentPath;
     private Button startButton;
-    private boolean isRunning; /* if the viterbi-algorithm is runnung */
+    private boolean isRunning; /* if the viterbi-algorithm is running */
     private Viterbi viterbi;
-    private StyledText stDescription;
 
     private static final char DEFAULT_CHARACTER_SET_BEGIN = '\u0000';
     private static final char DEFAULT_CHARACTER_SET_END = '\u00ff';
@@ -110,7 +104,11 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
             LogUtil.logError(ViterbiPlugin.PLUGIN_ID, ex);
         }
 
-        setLayout(new GridLayout());
+        GridLayout gl = new GridLayout();
+        gl.marginHeight = 0;
+        gl.marginWidth = 0;
+        setLayout(gl);
+        
         createHead();
         createInput();
         createCalculation();
@@ -132,30 +130,15 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
 		fDoUI.accept(proceed);
 	}
 
-    /**
-     * Sets the default texts. This is just a bugfix, because setting the texts earlier would
-     * destroy the layout.
-     */
-    public void displayDefaultTexts() {
-    	stDescription.setText(Messages.ViterbiComposite_description);
-    }
 
     /**
      * Generates the head of the tab. The head has a title and a description.
      */
     private void createHead() {
-        final Composite head = new Composite(this, SWT.NONE);
-        head.setBackground(WHITE);
-        head.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        head.setLayout(new GridLayout());
-
-        final Label label = new Label(head, SWT.NONE);
-        label.setFont(FontService.getHeaderFont());
-        label.setBackground(WHITE);
-        label.setText(Messages.ViterbiComposite_tab_title);
-
-        stDescription = new StyledText(head, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
-        stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(this);
+		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		titleAndDescription.setTitle(Messages.ViterbiComposite_tab_title);
+		titleAndDescription.setDescription(Messages.ViterbiComposite_description);
     }
 
     /**
@@ -275,6 +258,8 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         cipher.setEditable(false);
         GridData gd_cipher = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
         gd_cipher.heightHint = 150;
+     // This avoids that the textfield width stays optimal when resizing the window.
+        gd_cipher.widthHint = parent.getClientArea().x;
         cipher.setLayoutData(gd_cipher);
     }
 
@@ -482,7 +467,6 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
 
         createLabel1(g);
         createSolution1(g);
-        createExportArea(g);
         createLabel2(g);
         createSolution2(g);
 
@@ -537,17 +521,12 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
      */
     private void createSolution1(final Composite parent) {
         solution1 = new Text(parent, SWT.READ_ONLY | SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.WRAP);
-        solution1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        GridData gridData_solution1 = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        gridData_solution1.heightHint = 100;
+        gridData_solution1.widthHint = parent.getClientArea().x;
+        solution1.setLayoutData(gridData_solution1);
     }
 
-    /**
-     * Creates a button which allows the user to export the solution to a textfile.
-     *
-     * @param parent
-     */
-    private void createExportArea(final Composite parent) {
-
-    }
 
     /**
      * Creates a label to describe the solution text field.
@@ -571,7 +550,10 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
      */
     private void createSolution2(final Composite parent) {
         solution2 = new Text(parent, SWT.READ_ONLY | SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.WRAP);
-        solution2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        GridData gridData_solution2 = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        gridData_solution2.heightHint = 100;
+        gridData_solution2.widthHint = parent.getClientArea().x;
+        solution2.setLayoutData(gridData_solution2);
     }
 
     /**

@@ -7,8 +7,9 @@ Bundle-Activator: org.jcryptool.visual.sphincs.SphincsPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.zest.layouts,
  org.eclipse.gef,
- org.eclipse.zest.core
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+ org.eclipse.zest.core,
+ org.jcryptool.thirdparty.m2bundle.jaxb
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor.0
 Export-Package: org.jcryptool.visual.sphincs,

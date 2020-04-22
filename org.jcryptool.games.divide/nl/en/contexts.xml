@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
 	<context id="helpView" title="Divider Game">
-    <description>Divider Game is a game for two people invented by Christiane Licht. In 2010 she has won the regional contest in NRW at &quot;Jugend forscht&quot; with it.
-The procedure is as follows. First an arbitrary number is chosen. The playing field is then made up of all of the dividers of that number.
+    <description>Divider Game is a game for two people invented by Christiane Licht.
+    
+This is how the game works.
+A number is chosen. The playing field is then made up of all of the dividers of that number.
 
-A player chooses a random divider. This number and all of its multiples will be removed. This step will be repeated alternately. The player who chooses or is forced to choose the number 1 looses.
+The players take turns in selecting a divider. Selected divisors and their multiples are removed.
+The player who selects or has to select the 1 has lost.
 
-The game can be used in school to tighten the terms divider and divisibility.
+Both Human vs. Human [1P / 2P] and Human vs. Computer [1P / Computer] games can be played.
 
-The input of Christiane Licht evaluates a question from game theory: Is there an optimal solution for every initial number for player 1 regardless of which number is choosen by player 2. With number theoretical methods a strategy to win can be established.</description>
+The divider game picks up a question of game theory: Is there always an optimal winning move for the player who starts,
+no matter what numbers the other player then choses?
+	</description>
 	</context>
 </contexts>

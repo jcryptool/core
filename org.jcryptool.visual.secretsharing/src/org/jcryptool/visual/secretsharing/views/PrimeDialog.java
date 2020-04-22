@@ -21,6 +21,8 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.custom.VerifyKeyListener;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.VerifyEvent;
@@ -115,12 +117,16 @@ public class PrimeDialog extends TitleAreaDialog implements Constants {
 				style.fontStyle = SWT.BOLD;
 				primeText.setStyleRange(style);
 
-				verifyInputButton.setEnabled(true);
+//				verifyInputButton.setEnabled(true);
 				if (okButton != null) {
 					okButton.setEnabled(false);
 				}
+
+				verify();
 			}
 		});
+
+		
 
 		generateNextPrimeButton = new Button(container, SWT.NONE);
 		generateNextPrimeButton.addSelectionListener(new SelectionAdapter() {
@@ -142,50 +148,57 @@ public class PrimeDialog extends TitleAreaDialog implements Constants {
 				style.fontStyle = SWT.BOLD;
 				primeText.setStyleRange(style);
 
-				verifyInputButton.setEnabled(false);
+//				verifyInputButton.setEnabled(false);
 				okButton.setEnabled(true);
 			}
 		});
 		generateNextPrimeButton.setText(Messages.SSSConstants_Dialog_Next_Prime);
 		generateNextPrimeButton.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false));
 
-		verifyInputButton = new Button(container, SWT.NONE);
-		verifyInputButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(final SelectionEvent e) {
-				String text = primeText.getText();
-
-				style = new StyleRange();
-				style.start = 0;
-				style.length = primeText.getText().length();
-
-				if (text.matches("[0-9]")) {
-
-					BigInteger tmpValue = new BigInteger(primeText.getText());
-					if (tmpValue.isProbablePrime(2000000)) {
-						style.foreground = GREEN;
-						okButton.setEnabled(true);
-						verifyInputButton.setEnabled(false);
-					} else {
-						style.foreground = RED;
-						verifyInputButton.setEnabled(true);
-					}
-					style.fontStyle = SWT.BOLD;
-					primeText.setStyleRange(style);
-				} else {
-					style.foreground = RED;
-					style.fontStyle = SWT.BOLD;
-					primeText.setStyleRange(style);
-				}
-			}
-		});
-		verifyInputButton.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false));
-		verifyInputButton.setText(Messages.SSSConstants_Dialog_Verify_Input);
+//		verifyInputButton = new Button(container, SWT.NONE);
+//		verifyInputButton.addSelectionListener(new SelectionAdapter() {
+//			@Override
+//			public void widgetSelected(final SelectionEvent e) {
+//				verify();
+//			}
+//		});
+//		verifyInputButton.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false));
+//		verifyInputButton.setText(Messages.SSSConstants_Dialog_Verify_Input);
 		
 		setMessage(Messages.SSSConstants_Dialog_Message);
 		setTitle(Messages.SSSConstants_Dialog_Prime_Title);
 		
 		return area;
+	}
+
+	protected void verify() {
+		// TODO Auto-generated method stub
+		String text = primeText.getText();
+
+		style = new StyleRange();
+		style.start = 0;
+		style.length = primeText.getText().length();
+
+		okButton.setEnabled(false);
+		if (text.matches("[0-9]*")) {
+
+			if (primeText.getText().length() == 0) return;
+			BigInteger tmpValue = new BigInteger(primeText.getText());
+			if (tmpValue.isProbablePrime(2000000)) {
+				style.foreground = GREEN;
+				okButton.setEnabled(true);
+				// verifyInputButton.setEnabled(false);
+			} else {
+				style.foreground = RED;
+				// verifyInputButton.setEnabled(true);
+			}
+			style.fontStyle = SWT.BOLD;
+			primeText.setStyleRange(style);
+		} else {
+			style.foreground = RED;
+			style.fontStyle = SWT.BOLD;
+			primeText.setStyleRange(style);
+		}
 	}
 
 	/**
@@ -205,13 +218,6 @@ public class PrimeDialog extends TitleAreaDialog implements Constants {
 		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
 	}
 
-	/**
-	 * Return the initial size of the dialog
-	 */
-	@Override
-	protected Point getInitialSize() {
-		return new Point(600, 250);
-	}
 
 	@Override
 	protected void configureShell(Shell newShell) {

@@ -17,11 +17,32 @@ import org.jcryptool.visual.arc4.ARC4Con;
  * specific to arc4 are implemented in the ARC4Algorithm class
  * 
  * @author Luca Rupp
+ * @author Thorben Groos (switchable keylength)
  */
 public class AlgARC4 extends ARC4Algorithm {
     
+	/**
+	 * Default constructor</br>
+	 * Creates a new object with key length 16 and a random key and plain text.
+	 */
+    public AlgARC4() {
+		super();
+	}
+
     /**
-     * Create pseudorandom numbers and encrypt the plaintext
+     * Constructor that is used when switching between ARC4 and Spritz.</br>
+     * It creates an object with the given key and plain text.
+     * @param key The key of the new object. Get it with alg.getKey() from the old alg-Onject.
+     * @param plain The plaintext of the new object. Get it with alg.getPlain() from the old alg-Onject.
+     */
+	public AlgARC4(int[] key, int[] plain) {
+		super(key, plain);
+	}
+
+
+
+	/**
+     * Create pseudorandom numbers and encrypt the plaintext.
      * 
      * @param n number of this createRandomAndEncrypt step (index without the initialization steps
      *            that came before)
@@ -47,8 +68,8 @@ public class AlgARC4 extends ARC4Algorithm {
         i = 0;
         j = 0;
         currentStep = 0;
-        random = new int[ARC4Con.DATAVECTOR_VISUAL_LENGTH];
-        enc = new int[ARC4Con.DATAVECTOR_VISUAL_LENGTH];
+        random = new int[plain.length];
+        enc = new int[plain.length];
         finish = false;
         for (int a = 0; a < ARC4Con.TWO_FIFE_SIX; a++) {
             this.vector[a] = a;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
-   <context id="pairingBD2HelpContextId" title="Multipartite Key Exchange">
-      <description>under construction</description>
+   <context id="view" title="Multipartite Key Exchange">
+   	  <description></description>
       <topic href="nl/en/help/index.html" label="Multipartite Key Exchange"/>
    </context>
 </contexts>

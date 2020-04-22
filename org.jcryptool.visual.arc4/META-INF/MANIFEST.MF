@@ -5,11 +5,13 @@ Bundle-SymbolicName: org.jcryptool.visual.arc4;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.visual.arc4.ARC4Visual
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+ org.eclipse.core.runtime,
+ org.jcryptool.core.util
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor
-Import-Package: org.jcryptool.core.util.colors,
+Import-Package: org.jcryptool.core.logging.utils,
+ org.jcryptool.core.util.colors,
  org.jcryptool.core.util.fonts,
  org.jcryptool.visual.library
 Automatic-Module-Name: org.jcryptool.visual.arc4

@@ -14,7 +14,7 @@
    <extension
          point="org.jcryptool.core.operations.games">
       <Game
-            contextHelpId="org.jcryptool.games.sudoku.sudokuview"
+            contextHelpId="org.jcryptool.games.sudoku.view"
             name="%Game.name"
             viewId="org.jcryptool.games.sudoku.views.SudokuView">
       </Game>
@@ -54,7 +54,7 @@
              locationURI="toolbar:org.jcryptool.games.sudoku.views.SudokuView">
          <command
                commandId="org.jcryptool.games.sudoku.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
+               icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
                style="push">
          </command>
       </menuContribution>

@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.zeroknowledge.Protocol;
 import org.jcryptool.visual.zeroknowledge.algorithm.graphenisomorphie.GAlice;
 import org.jcryptool.visual.zeroknowledge.algorithm.graphenisomorphie.GBob;
@@ -52,7 +53,7 @@ public class GraphenisomorphieView extends ViewPart implements Observer, Protoco
 	private Group info;
 	private Group action;
 	private Composite parent;
-	private ZKHeaderComposite headerComp;
+	private TitleAndDescriptionComposite titleAndDescription;
 
 	@Override
 	public void createPartControl(Composite parent) {
@@ -67,11 +68,11 @@ public class GraphenisomorphieView extends ViewPart implements Observer, Protoco
 		Composite pageComposite = new Composite(sc, SWT.NONE);
 		sc.setContent(pageComposite);
 		pageComposite.setLayout(new GridLayout());
-
-		headerComp = new ZKHeaderComposite(pageComposite);
-		headerComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		headerComp.setTitle(Messages.GraphenisomorphieView_title);
-		headerComp.setDescription(Messages.GraphenisomorphieView_text);
+		
+		titleAndDescription = new TitleAndDescriptionComposite(pageComposite);
+		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		titleAndDescription.setTitle(Messages.GraphenisomorphieView_title);
+		titleAndDescription.setDescription(Messages.GraphenisomorphieView_text);
 
 		// Modelle
 		alice = new GAlice(6);
@@ -125,8 +126,8 @@ public class GraphenisomorphieView extends ViewPart implements Observer, Protoco
 		// make whole content scrollable
 		sc.setMinSize(pageComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(),
-				"org.jcryptool.visual.zeroknowledge.graphenisomorphieView"); //$NON-NLS-1$
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
+				"org.jcryptool.visual.zeroknowledge.graphisomorpismHelpID"); //$NON-NLS-1$
 	}
 
 	/**

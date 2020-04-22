@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.analysis.transpositionanalysis.TranspositionAnalysisPlugin;
 import org.jcryptool.analysis.transpositionanalysis.ui.TranspAnalysisUI;
 
 public class TranspAnalysisView extends ViewPart {
@@ -74,7 +75,7 @@ public class TranspAnalysisView extends ViewPart {
 		myUI = new TranspAnalysisUI(parent, SWT.NONE);
 
 		PlatformUI.getWorkbench().getHelpSystem()
-			.setHelp(parent, "org.jcryptool.analysis.transpositionanalysis.transpositionanalysis"); //$NON-NLS-1$
+			.setHelp(parent, TranspositionAnalysisPlugin.PLUGIN_ID + ".transpositionanalysis"); //$NON-NLS-1$
 
 		hookActionBar();
 	}

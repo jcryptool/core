@@ -13,12 +13,21 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.visual.ECDH.handlers.ShowAnimationHandler;
 
 public class ECDHView extends ViewPart {
 
 	private Composite parent;
 	private ECDHComposite ecdhComposite;
+	private ScrolledComposite sc;
+	
+	/**
+	 * Show the animation (moving keys from A to S and B to S) or not.</br>
+	 * Default is true
+	 */
+	public boolean showAnimation = true;
 
 	/**
 	 * The constructor.
@@ -32,14 +41,14 @@ public class ECDHView extends ViewPart {
 	 */
 	public void createPartControl(Composite parent) {
 		this.parent = parent;
-		final ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+		sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
 		sc.setExpandHorizontal(true);
 		sc.setExpandVertical(true);
 		ecdhComposite = new ECDHComposite(sc, SWT.NONE, this);
 		sc.setContent(ecdhComposite);
 		sc.setMinSize(ecdhComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), "org.jcryptool.visual.ecdh.ecdhview"); //$NON-NLS-1$
+		
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.visual.ecdh.view"); //$NON-NLS-1$
 	}
 	/**
 	 * Passing the focus request to the viewer's control.
@@ -52,5 +61,17 @@ public class ECDHView extends ViewPart {
 	
 	public void reset() {
 		ecdhComposite.reset(ECDHComposite.RESET_ALL);
+		
+		// Reset the showAnimation Icon in the top right corner of the plugin.
+		ShowAnimationHandler.showAnimation = true;
+		ICommandService commands = (ICommandService) PlatformUI.getWorkbench().getService(ICommandService.class);
+		commands.refreshElements("org.jcryptool.visual.ecdh.showAnimationCommand", null); //$NON-NLS-1$
+	
+		recalculateWindowSize();
+	}
+	
+	public void recalculateWindowSize() {
+		ecdhComposite.layout();
+		sc.setMinSize(ecdhComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
 }

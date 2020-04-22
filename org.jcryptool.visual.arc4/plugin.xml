@@ -12,7 +12,7 @@
 	</extension>
 	<extension point="org.jcryptool.core.operations.visuals">
 		<Visual
-			contextHelpId="org.jcryptool.visual.arc4.arc4view"
+			contextHelpId="org.jcryptool.visual.arc4.view"
 			name="%visual.name"
 			viewId="org.jcryptool.visual.arc4.view">
 		</Visual>
@@ -43,7 +43,7 @@
 			locationURI="toolbar:org.jcryptool.visual.arc4.view">
 			<command
 				commandId="org.jcryptool.visual.arc4.restartCommand"
-				icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.png"
+				icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
 				style="push">
 			</command>
 		</menuContribution>
