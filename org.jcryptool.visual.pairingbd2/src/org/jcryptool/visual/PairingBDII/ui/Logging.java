@@ -50,9 +50,7 @@ public class Logging {
         group_Logging = new Group(parent, SWT.NONE);
         group_Logging.setText(Messages.Logging_0);
         group_Logging.setLayout(new GridLayout(2, false));
-        GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, false);
-        gridData.horizontalSpan = 2;
-        group_Logging.setLayoutData(gridData);
+        group_Logging.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 
         label_Title = new Text(group_Logging, SWT.READ_ONLY);
         label_Title.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
@@ -62,11 +60,13 @@ public class Logging {
         label_TimePerBurdenedUser.setText(Messages.Logging_2);
 
         timePerBurdenedUser = new Text(group_Logging, SWT.READ_ONLY);
+        timePerBurdenedUser.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
         label_TimePerUnburdenedUser = new Text(group_Logging, SWT.READ_ONLY);
         label_TimePerUnburdenedUser.setText(Messages.Logging_3);
 
         timePerUnburdenedUser = new Text(group_Logging, SWT.READ_ONLY);
+        timePerUnburdenedUser.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
         buttonSaveLogfile = new Button(group_Logging, SWT.PUSH);
         buttonSaveLogfile.setText(Messages.Logging_4);
