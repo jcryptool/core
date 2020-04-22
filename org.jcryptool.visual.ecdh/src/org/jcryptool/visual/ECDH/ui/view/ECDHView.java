@@ -48,7 +48,7 @@ public class ECDHView extends ViewPart {
 		sc.setContent(ecdhComposite);
 		sc.setMinSize(ecdhComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), "org.jcryptool.visual.ecdh.ecdhview"); //$NON-NLS-1$
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.visual.ecdh.view"); //$NON-NLS-1$
 	}
 	/**
 	 * Passing the focus request to the viewer's control.

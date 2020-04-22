@@ -80,11 +80,11 @@
 	<h3 id="visual">1.1) Visualization of the SPHINCS structure </h3>
 	
 	<p>The following graphic shows the SPHINCS hypertree. This hypertree can also be seen (partially) in the JCT plugin in the "SPHINCS Overview" tab. The lowest of the 12 layers is called the "first" layer.</p>
-	<img src=images/explanation.png alt="Legend" id=explanation width = "90%" />
-	<img src=images/structure.png alt="SPHINCS Structure" id=structure width = "90%" />
+	<img src=images/explanation.png alt="Legend" id=explanation width = "85%" />
+	<img src=images/structure.png alt="SPHINCS Structure" id=structure width = "85%" />
 
 	<p>The following graphic zooms into a part of the above hypertree: A WOTS+ structure consists of several WOTS+ public key nodes, each of which results in a key pair:</p>
-	<img src=images/tree.jpg alt="WOTS+-Tree" id=baum width = "90%" />
+	<img src=images/tree.jpg alt="WOTS+-Tree" id=baum width = "85%" />
 	<p>Each WOTS+ structure is a binary hash tree and each contains 2^(h/d) = 2^5 = 32 nodes.</p> 
 	
 	<p>The following sections explain the 3 main operations in more detail. Then the operation of the plugin is explained by its 3 tabs. </p>
@@ -128,7 +128,7 @@
 	<p>The SPHINCS signature &Sigma; therefore consists of (i; R_1; &sigma;H; &sigma;W,0; Auth_A_0;...; &sigma;W,d-1; Auth_A_d-1), where (&sigma;H = HORST signature, &sigma;W,i = WOTS+ signature).</p>
 	
 	<p>The following graphics shows the interaction of the parameters. Further details in [0, page 11].</p>
-	<img src=images/signierung_final.jpg alt=Signatur width = "90%" />
+	<img src=images/signierung_final.jpg alt=Signatur width = "85%" />
 	  
 	  
 	
@@ -169,7 +169,7 @@
 	 
 	<h3>Sub-tab 1: Bitmask and Key Generation </h3>
 	<p>In the 1st tab, the components of the used keys (seed, bit masks) and the generated public SPHINCS key PK are displayed. In addition, information about the key length is displayed at the bottom. The keys created will then be used for signing and verifying in the second sub-tab.</p>
-	<img src="images/SPHINCS_Sub-tab1_After-Pressing-KeyGen.png" alt="Sub-tab 1" id="subtab1" width = "90%" />
+	<img src="images/SPHINCS_Sub-tab1_After-Pressing-KeyGen.png" alt="Sub-tab 1" id="subtab1" width = "85%" />
 	
 	<p>Each time you press the button <b>Generate key pair</b> again, a random seed (bitmasks) and a <b>new</b> public key PK will be generated. </p>
 	 
@@ -180,7 +180,7 @@
 	<h3>Sub-tab 2: Sign and Verify</h3>
 	 
 	<p>In the 2nd sub-tab, you can enter a message (or keep the default) and then sign it with SPHINCS (prerequisite is, that keys have been created in advance in the 1st sub-tab). Afterwards you can verify the signature.</p>
-	<img src="images/SPHINCS_Sub-tab2_After-Pressing-Sign.png" alt="Sub-tab 2" id="subtab2" width = "90%" />
+	<img src="images/SPHINCS_Sub-tab2_After-Pressing-Sign.png" alt="Sub-tab 2" id="subtab2" width = "85%" />
 
 	 
 	<p>Please enter a message text (or leave the default) and then press the button <b>Sign message</b>.</p>
@@ -207,7 +207,7 @@
 	
 	<p>The 3rd sub-tab graphically displays a section of the hypertree and gives information about the SPHINCS structure. If the mouse pointer is over an element, its data is displayed as balloon text (tooltip). If you click on the element, the data is also displayed in the output field at the top (below the description).</p>
 	
-	<img src="images/SPHINCS_Sub-tab3_Hypertree.png" alt="Sub-tab 3" id="subtab3" width = "90%" />
+	<img src="images/SPHINCS_Sub-tab3_Hypertree.png" alt="Sub-tab 3" id="subtab3" width = "85%" />
 
 	<p>The individual layers of the structure are color-coded so that you can see which element belongs to which layer. With the mouse wheel you can zoom in and out of the tree.</p>
 

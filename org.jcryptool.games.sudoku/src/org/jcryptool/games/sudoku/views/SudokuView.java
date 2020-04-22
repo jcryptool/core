@@ -68,7 +68,7 @@ public class SudokuView extends ViewPart {
         sc3.setMinSize(hexadecimalSudoku.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti3.setControl(sc3);
 
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), SudokuPlugin.PLUGIN_ID + ".sudokuview");
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, SudokuPlugin.PLUGIN_ID + ".view");
 	}
 
 	@Override

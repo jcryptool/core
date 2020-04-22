@@ -168,7 +168,7 @@ public class ExtendedRSA_Visual extends ViewPart {
 		LayoutAdvisor.addPreLayoutRootComposite(sc);
 		
 		// Register the context help
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), Activator.PLUGIN_ID + ".contextHelpID"); //$NON-NLS-1$
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, Activator.PLUGIN_ID + ".view"); //$NON-NLS-1$
 	}
 
 	private void initKeystore() {

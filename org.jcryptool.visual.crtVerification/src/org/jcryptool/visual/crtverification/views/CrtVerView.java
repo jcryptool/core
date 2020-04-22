@@ -33,7 +33,7 @@ public class CrtVerView extends ViewPart {
         sc.setContent(c);
         sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), Activator.PLUGIN_ID + ".CRTVERcontextHelpID"); //$NON-NLS-1$
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, Activator.PLUGIN_ID + ".view"); //$NON-NLS-1$
     }
 
     /**

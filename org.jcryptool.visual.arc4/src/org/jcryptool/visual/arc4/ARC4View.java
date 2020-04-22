@@ -59,7 +59,7 @@ public class ARC4View extends ViewPart {
         LayoutAdvisor.addPreLayoutRootComposite(scroll);
         
         // makes the connection to the help of the plug-in
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), "org.jcryptool.visual.arc4.arc4view");
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.visual.arc4.view");
     }
 
     @Override

@@ -88,7 +88,7 @@ public class View extends ViewPart {
 		scrolledComposite.setContent(tabFolder);
 		scrolledComposite.setMinSize(tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT));	
 		
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), EuclidPlugin.PLUGIN_ID + ".contextHelpID"); //$NON-NLS-1$
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, EuclidPlugin.PLUGIN_ID + ".view"); //$NON-NLS-1$
 	}
 
 	public void reset() {
