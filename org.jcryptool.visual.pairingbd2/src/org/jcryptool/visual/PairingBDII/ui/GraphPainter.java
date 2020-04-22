@@ -288,42 +288,18 @@ public class GraphPainter implements PaintListener {
         // Calculate the position of the nodes
         calculatePoints(e, middle, (int) Math.round(middle.x / 2.3), 0, innerNodes, childNodes);
         
-        drawGraphNumbers(e);
+        // ---------------------NOTE-----------------------
+        // Die Reihenfolge in der der Code ausgeführt wird ist wichtig
+        // für die Qualität des Graphen. 
+        // Der Code ist so aufgebaut, dass erst Strings gemalt werden,
+        // diese mit einem weißen Hintergrund gemalt werden. Danach werden
+        // die Punkte und Linien zwischen den Punkten gemalt. 
+        // Diese Reihenfolge ist wichtig, da der weiße Hintergrund der
+        // Strings sonst die Punkte und Linien übermalt. Das sieht dann
+        // schlecht aus.
+        // -------------------------------------------------
         
-        drawConnections(e);
         
-        drawGraphPoints(e);
-
-        if (Model.getDefault().currentStep == 3) {
-            // draw arrows heading middle
-            nodeNumber = 1;
-            for (final Point[] element : pointTree) {
-                drawArrow(e, element[0], middle, 0.3);
-            }
-            for (final Point[] element : pointTree) {
-                for (int j = 1; j < element.length; j++) {
-                    drawArrow(e, element[j], middle, 0.3);
-                }
-            }
-        }
-
-        if (Model.getDefault().currentStep == 4) {
-            // draw arrows heading children
-            nodeNumber = 1;
-            for (final Point[] element : pointTree) {
-                nodeNumber += element.length;
-            }
-
-            for (final Point[] element : pointTree) {
-                for (int j = 1; j < element.length; j++) {
-                    drawArrow(e, element[0], element[j], 0.5);
-                    if (j % 2 == 1) {
-                        nodeNumber--;
-                    }
-                }
-            }
-        }
-
         if (Model.getDefault().currentStep == 5) {
             // draw the common keys
             e.gc.setForeground(blue);
@@ -364,49 +340,49 @@ public class GraphPainter implements PaintListener {
                 }
             }
         }
-       
+        
+        // Zeichne die Beschriftung der Knoten (1, 2, 3, 4, ...)
+        drawGraphNumbers(e);
+        
+        // Zeichne die Linien zwischen den Knoten. Das muss gemacht werden,
+        // bevor die Knoten gezeichnet werden, da sonst auf den Knoten 
+        // die schwarzen Verbindungslinien sind. 
+        drawConnections(e);
+        
+        // Zeichne die Punkte der Knoten. Das muss gemacht werden, nachdem 
+        // die Linien zwischen den Knoten gemalt werden, da die Punkte 
+        // die Linien zum Teil übermalen.
+        drawGraphPoints(e);
 
-//        // draw inner points
-//        nodeNumber = 1;
-//        for (final Point[] element : pointTree) {
-//            drawPoint(e, element[0], COLOR_BLACK);
-//        }
-//        // draw outer points
-//        for (final Point[] element : pointTree) {
-//            for (int j = 1; j < element.length; j++) {
-//                if (Model.getDefault().isOnBNCurve) {
-//                    if (element.length % 2 == 0 && j == element.length - 1) {
-//                        drawPoint(e, element[j], blue);
-//                    } else {
-//                        if (j % 2 == 1) {
-//                            drawPoint(e, element[j], yellow);
-//                        } else {
-//                            drawPoint(e, element[j], green);
-//                        }
-//                    }
-//
-//                    e.gc.setForeground(yellow);
-//                    e.gc.drawString("PK(i) = Z(i)", 30, height - 60); //$NON-NLS-1$
-//                    e.gc.setBackground(yellow);
-//                    e.gc.fillOval(20, height - 60 + 3, 6, 6);
-//                    e.gc.setBackground(((Canvas) e.widget).getBackground());
-//
-//                    e.gc.setForeground(green);
-//                    e.gc.drawString("PK(i) = R(i)", 30, height - 40); //$NON-NLS-1$
-//                    e.gc.setBackground(green);
-//                    e.gc.fillOval(20, height - 40 + 3, 6, 6);
-//                    e.gc.setBackground(((Canvas) e.widget).getBackground());
-//
-//                    e.gc.setForeground(blue);
-//                    e.gc.drawString("PK(i) = {Z(i),R(i)}", 30, height - 20); //$NON-NLS-1$
-//                    e.gc.setBackground(blue);
-//                    e.gc.fillOval(20, height - 20 + 3, 6, 6);
-//                    e.gc.setBackground(((Canvas) e.widget).getBackground());
-//
-//                } else {
-//                    drawPoint(e, element[j], COLOR_BLACK);
-//                }
-//            }
-//        }
+        if (Model.getDefault().currentStep == 3) {
+            // draw arrows heading middle
+            nodeNumber = 1;
+            for (final Point[] element : pointTree) {
+                drawArrow(e, element[0], middle, 0.3);
+            }
+            for (final Point[] element : pointTree) {
+                for (int j = 1; j < element.length; j++) {
+                    drawArrow(e, element[j], middle, 0.3);
+                }
+            }
+        }
+
+        if (Model.getDefault().currentStep == 4) {
+            // draw arrows heading children
+            nodeNumber = 1;
+            for (final Point[] element : pointTree) {
+                nodeNumber += element.length;
+            }
+
+            for (final Point[] element : pointTree) {
+                for (int j = 1; j < element.length; j++) {
+                    drawArrow(e, element[0], element[j], 0.5);
+                    if (j % 2 == 1) {
+                        nodeNumber--;
+                    }
+                }
+            }
+        }
+
     }
 }
