@@ -55,17 +55,5 @@
             commandId="org.jcryptool.webbrowser.open">
       </handler>
    </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            allPopups="false"
-            locationURI="toolbar:org.jcryptool.core.toolbar?after=additions">
-         <command
-               commandId="org.jcryptool.webbrowser.open"
-               icon="icons/internal_browser.png"
-               style="push">
-         </command>
-      </menuContribution>
-   </extension>
 
 </plugin>
