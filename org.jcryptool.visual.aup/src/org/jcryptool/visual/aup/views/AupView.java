@@ -42,12 +42,11 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.colors.ColorService;
-import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.images.ImageService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.aup.AndroidUnlockPatternPlugin;
 
 /**
@@ -365,22 +364,11 @@ public class AupView extends ViewPart {
 		sc.setContent(child);
 		sc.setExpandHorizontal(true);
 		sc.setExpandVertical(true);
-
-		headingBox = new Composite(child, SWT.NONE);
-		headingBox.setLayout(new GridLayout());
-		headingBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		headingBox.setBackground(ColorService.WHITE);
 		
-		Text heading = new Text(headingBox, SWT.READ_ONLY);
-		heading.setBackground(ColorService.WHITE);
-		heading.setFont(FontService.getHeaderFont());
-		heading.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		heading.setText(Messages.AndroidUnlockPattern_Heading);
-
-		Text lblHeaderInfoText = new Text(headingBox, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
-		lblHeaderInfoText.setBackground(ColorService.WHITE);
-		lblHeaderInfoText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		lblHeaderInfoText.setText(Messages.AndroidUnlockPattern_HeadingInfoText);		
+		TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(child);
+		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		titleAndDescription.setTitle(Messages.AndroidUnlockPattern_Heading);
+		titleAndDescription.setDescription(Messages.AndroidUnlockPattern_HeadingInfoText);
 		
 		controlBox = new Composite(child, SWT.NONE);
 		controlBox.setLayout(new GridLayout());
@@ -613,7 +601,7 @@ public class AupView extends ViewPart {
 	}
 
 	/**
-	 * Recalculate the size aof a control
+	 * Recalculate the size of a control
 	 */
 	private void resizeControl(Control control) {
 		parent.layout(new Control[] {control});
