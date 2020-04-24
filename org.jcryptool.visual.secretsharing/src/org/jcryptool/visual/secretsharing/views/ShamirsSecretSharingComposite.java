@@ -122,12 +122,14 @@ public class ShamirsSecretSharingComposite extends Composite {
 	protected int pointValue;
 	private int gridSizeY;
 	private int gridSizeX;
+	private SecretSharingView view;
 	
 
 
 
-	public ShamirsSecretSharingComposite(Composite parent, int style) {
+	public ShamirsSecretSharingComposite(Composite parent, int style, SecretSharingView secretSharingView) {
 		super(parent, style);
+		this.view = secretSharingView;
 		
 		setLayout(new GridLayout(2, false));
 		setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -174,18 +176,20 @@ public class ShamirsSecretSharingComposite extends Composite {
         resetButton.addSelectionListener(new SelectionAdapter() {
         	@Override
         	public void widgetSelected(final SelectionEvent e) {
-        		adjustButtonsForReset();
-        		
-        		coefficients = null;
-        		shamirsSecretSharing = null;
-        		shares = null;
-        		result = null;
-        		sharesUseCheckButtonSet = null;
-        		subpolynomial = null;
-        		reconstructedPolynomial = null;
-        		
-        		canvasCurve.setBackground(ColorService.WHITE);
-        		canvasCurve.redraw();
+        		ShamirsSecretSharingComposite.this.view.reset();
+
+//        		adjustButtonsForReset();
+//        		
+//        		coefficients = null;
+//        		shamirsSecretSharing = null;
+//        		shares = new Point[] {};
+//        		result = null;
+//        		sharesUseCheckButtonSet = null;
+//        		subpolynomial = null;
+//        		reconstructedPolynomial = null;
+//        		
+//        		canvasCurve.setBackground(ColorService.WHITE);
+//        		canvasCurve.redraw();
         	}
         });
         resetButton.setText(Messages.SSSConstants_Reset);
