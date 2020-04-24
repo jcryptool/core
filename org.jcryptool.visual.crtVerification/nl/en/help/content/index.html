@@ -23,7 +23,7 @@
   <li>as well as the verification and signature date.</li>
 </ul>
 <p>All 8 points in time can be manipulated via sliders, and then a validation can be processed again.</p>
-<p><img src="GUI-Start.png" width="811" height="506" alt="Graphical User Interface" /></p>
+<p><img src="GUI-Start.png" width="85%" alt="Graphical User Interface" /></p>
 
 <p>&nbsp;</p>
 <h2>General information</h2>
@@ -50,7 +50,8 @@
     Verification date: Jul-01, 2020
 </pre>
 <p>Alternativly, you can take the points of time from certificates stored in JCT. If you click on the buttons "Load Root CA", "Load CA" and "Load User Certificate" a dialog window opens and you can choose the certificate, which you want to load out of the JCT keystore. After you have chosen the right certificate you have to click on "finish". The sliders in the graphical user interface (GUI) are now in the right position and the font color of the buttons is now green. Please note that these changes are just a simulation. That means: No certificates are changed and no new certificates are created.</p>
-<p><img src="PopUp.png" width="459" height="418" alt="dialog window to load certificates" /></p>
+<p><img src="PopUp.png" width="85%" alt="dialog window to load certificates" /></p>
+ 
 
 
 <h3>&nbsp;</h3>
@@ -58,13 +59,13 @@
 <p>If all three certificates (Root CA, Intermediate CA, and User CA) were loaded successfully you can choose the validity model with the radio buttons. Now you can press the "Validate" button. If the symbol next to this button is an X in a red circle the validation was unsuccessful if the symbol is a checkmark in a green circle the validation was successful. </p>
 <p>The log shows you all the information, which leads to this result.</p>
 <p>Selection of the validity model:</p>
-<p><img src="Gueltigkeitsmodelle.png" width="327" height="29" alt="validity models" /></p>
+<p><img src="Gueltigkeitsmodelle.png" width="85%" alt="validity models" /></p>
 <p>Successfully validated:</p>
-<p><img src="gruenerHaken.png" width="353" height="34" alt="successfully validated" /></p>
+<p><img src="gruenerHaken.png" width="85%" alt="successfully validated" /></p>
 <p>Unsuccessfully validated:</p>
-<p><img src="rotesKreuz.png" width="353" height="31" alt="unsuccessfully validated" /></p>
+<p><img src="rotesKreuz.png" width="85%" alt="unsuccessfully validated" /></p>
 <p>Log:</p>
-<p><img src="Log.png" width="350" height="267" alt="Log" /></p>
+<p><img src="Log.png" width="85%" alt="Log" /></p>
 
 
 <h3>&nbsp;</h3>
@@ -76,10 +77,10 @@
 <p>The arrows in light blue below the sliders for the validity period of the 3 certificates show the signing date, and the purple arrows show the verification date. [[[TODO: Auch wenn das Verifizierungsdatum nur im Schalenmodell für die Bewertung des Verifizierungsergebnisses berücksichtigt wird, kann man den Slider in allen 3 Fällen verändern.]]]</p>
 
 <p>Sliders:</p>
-<p><img src="Schieberegler.png" width="730" height="294" alt="Slider" /></p>
+<p><img src="Schieberegler.png" width="85%" alt="Slider" /></p>
 
 <p>Details of the points in time:</p>
-<p><img src="Details.png" width="734" height="120" alt="Details" /></p>
+<p><img src="Details.png" width="85%" alt="Details" /></p>
 
 
 
@@ -96,34 +97,34 @@
   <li>the regarded time is within the validity period of the certificate,</li>
   <li>when the check is performed, the certificate is not on the issuing CA's Certificate Revocation List or if the certificate is on this list, the revocation time is later than the time of the check</li>
 </ul>
-<p><img src="shellmodel.png" width="524" height="170" alt="shell model" /></p>
+<p><img src="shellmodel.png" width="85%" alt="shell model" /></p>
 
 <h3>&nbsp;</h3>
 <h3>Modified shell model</h3>
 <p>The modified shell model is, with the exception of a special condition, equivalent to the shell model, which is described above. The difference is, that when  the check of a certification path is performed, the signing date of a document is used. This is normally used in Europe.</p>
-<p><img src="modShellmodel.png" width="524" height="166" alt="modified shell model" /></p>
+<p><img src="modShellmodel.png" width="85%" alt="modified shell model" /></p>
 
 <h3>&nbsp;</h3>
 <h3>Chain model</h3>
 <p>In the chain model, the only requirement is, that each certificate had to be valid at the moment it was used to create a signature. This means that: at the signing time of a document, the client's certificate had to be valid, at the time when the clients' certificate was issued, the issuing CA's certificate had to be valid and so on. This model does not consider if a certificate was revoked since the signing time.</p>
-<p><img src="chainmodel.png" width="527" height="169" /></p>
+<p><img src="chainmodel.png" width="85%" /></p>
 
 
 <h3>&nbsp;</h3><h3>Examples</h3>
 <h4>1) All models valid</h4>
-<p><img src="allValid.png" width="523" height="178" alt="all models valid" /></p>
+<p><img src="allValid.png" width="85%" alt="all models valid" /></p>
 
 <h3>&nbsp;</h3>
 <h4>2) Only modified shell and chain model valid</h4>
-<p><img src="chainShellValid2.png" width="522" height="177" alt="chain and modified shell models valid" /></p>
+<p><img src="chainShellValid2.png" width="85%" alt="chain and modified shell models valid" /></p>
 <p>&nbsp;</p>
-<p><img src="chainShellValid.png" width="524" height="202" alt="chain and modified shell model valid" /></p>
+<p><img src="chainShellValid.png" width="85%" alt="chain and modified shell model valid" /></p>
 
 <h3>&nbsp;</h3>
 <h4>3) Only chain model valid</h4>
-<p><img src="chainValid2.png" width="523" height="164" alt="chain model valid" /></p>
+<p><img src="chainValid2.png" width="85%" alt="chain model valid" /></p>
 <p>&nbsp;</p>
-<p><img src="chainValid.png" width="532" height="207" alt="chain model valid" /></p>
+<p><img src="chainValid.png" width="85%" alt="chain model valid" /></p>
 
 <h3>&nbsp;</h3>
 <p>You can notice the following: Depending on the validity model, a signature can be evaluated as invalid, if just the validation point of time is changed. It's astonishing that even if the message and the according signature didn't change, you today can get the evaluation result that the signature is valid, and tomorrow that the signature is invalid. One of the reasons that the simple shell validity model was no success was, that this was unintelligible for users.</p>
