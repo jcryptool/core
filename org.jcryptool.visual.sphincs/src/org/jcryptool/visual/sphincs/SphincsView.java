@@ -78,7 +78,6 @@ public class SphincsView extends ViewPart {
         shell = parent.getShell();
         
         bcSphincs = new bcSPHINCS256();
-               
         
         // makes the connection to the help of the plug-in
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.visual.sphincs.view");
