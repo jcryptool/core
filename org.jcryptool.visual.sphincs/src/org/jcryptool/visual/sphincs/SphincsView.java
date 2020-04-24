@@ -212,7 +212,9 @@ public class SphincsView extends ViewPart {
     }
     
   private void resetTabs() {
-      signatureTab = null;
+      if(signatureTab != null && !signatureTab.isDisposed()) signatureTab.dispose();
+      if(descriptionTab != null && !descriptionTab.isDisposed()) descriptionTab.dispose();
+	  signatureTab = null;
       descriptionTab = null;
   }
   
