@@ -17,6 +17,8 @@ public class Messages extends NLS {
     public static String HexTextbox_1;
     public static String PasswordPrompt_0;
     public static String PasswordPrompt_1;
+    public static String TitleAndDescriptionCopyMenuItem;
+    public static String TitleAndDescriptionSelectAllMenuItem;
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

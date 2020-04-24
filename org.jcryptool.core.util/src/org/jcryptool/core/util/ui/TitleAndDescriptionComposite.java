@@ -4,10 +4,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 
@@ -47,12 +51,44 @@ public class TitleAndDescriptionComposite extends Composite {
 					scrolledComp.notifyListeners(SWT.Resize, new Event());
 					
 				}
-				
+			}
+		} );
+		
+		// This is the menu that is shown after richt clicking on the Title and Description.
+		Menu selectAndCopyMenu = new Menu(styledText);
+		styledText.setMenu(selectAndCopyMenu);
+		
+		// This is the menu entry to copy the marked text to the clipsboard
+		MenuItem copyItem = new MenuItem(selectAndCopyMenu, SWT.NONE);
+		copyItem.setText(Messages.TitleAndDescriptionCopyMenuItem);
+		copyItem.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				styledText.copy();
 			}
 			
-		} );
-			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				styledText.copy();
+			}
+		});
 		
+		// This is the menu entry to mark the title and description
+		MenuItem selectAllItem = new MenuItem(selectAndCopyMenu, SWT.NONE);
+		selectAllItem.setText(Messages.TitleAndDescriptionSelectAllMenuItem);
+		selectAllItem.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				styledText.selectAll();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				styledText.selectAll();
+			}
+		});	
 		
 		getScrolledCompositeParent(this);
 		
