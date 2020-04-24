@@ -178,6 +178,7 @@ public class ShamirsSecretSharingComposite extends Composite {
         	public void widgetSelected(final SelectionEvent e) {
         		ShamirsSecretSharingComposite.this.view.reset();
 
+//				TODO: obsolete code        		
 //        		adjustButtonsForReset();
 //        		
 //        		coefficients = null;
