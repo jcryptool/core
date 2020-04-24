@@ -23,21 +23,21 @@ stage produces 64 bits of pseudorandom keystream per round of operation.<br>
 Both stages utilize the 'update function' F, which uses three 'G' functions (G1, G2 and G3)
 and three 'H' functions (H1, H2 and H3). Each of the G and H functions index into two
 carefully-selected 8x32-bit S-boxes. The sequential operation of F is depicted as follows:<br>
-<br><img src="figure1.png"><br><br>
+<br><img src="figure1.png" width="85%"/><br><br>
 The initialization stage is performed at the initial keying of the cipher, and on every
 rekeying of the cipher. It is recommended that the key be replaced, and the cipher be
 rekeyed and reinitialized after every 2^64 bits of generated keystream, for security
 reasons. Initialization consists of particular concatenation of the key and IV to produce the
 initial 1024-bit state (As well as the 64-bit memory/counter value), followed by sixteen
 iterations of the F function. The full initialization procedure is as follows:<br>
-<br><img src="figure2.png"><br><br>
+<br><img src="figure2.png" width="85%"/><br><br>
 Once the cipher has been initialized, keystream generation translates the non-linear
 feedback shift register (NLFSR), as well as the memory/counter value, into 64 bits of
 keystream and some 'feedback' information that mutates the NLFSR state. The 1024-bit
 NLFSR is split into thirty two 32-bit words, labelled B0 through B31. This keystream
 generation process is as follows:<br>
-<br><img src="figure3.png"><br><br>
-<br><img src="figure4.png"><br><br>
+<br><img src="figure3.png" width="85%"/><br><br>
+<br><img src="figure4.png" width="85%"/><br><br>
 <b>Why is the Dragon Cipher useful?</b><br>
 The Dragon Cipher has not yet been proven to be insecure (Some attacks, such as a
 Distinguishing Attack, have been raised and subsequently dismissed), and so can
