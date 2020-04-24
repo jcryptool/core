@@ -23,7 +23,7 @@ A way through a graph with n vertices consists of n-1 edges of tuples (i,j). Eac
 another knot j x<sub>ij</sub> happens with different Probability. The term for the probability for an 
 ant to chose knot j while being at knot i is:<br>
 
-<br><img src="formula.png"><br><br>
+<br><img src="formula.png" width="85%"/><br><br>
 
 
 <img src="tau.png"> <sub>ij</sub> is the value of the pheromone at the edge (i,j) and <img src="vau.png"> <sub>ij</sub> is the value of the
@@ -41,7 +41,7 @@ The final result of the ant will as well be encoded in the pheromone matrix, to 
 the influence of the old entries will be decreased by the evaporation factor.
 In mathematical terms:<br>
 
-<br><img src="formula2.png"><br><br>
+<br><img src="formula2.png" width="85%"/><br><br>
 
 Hereby <img src="tau.png"><sub>ij</sub>*(1-<img src="pau.png">) is the evaporation and <img src="tau.png"> is the factor of evaporation.
 The second part of the formula represents the deposition of pheromone. This summand is zero if
@@ -57,7 +57,7 @@ Evaporation to force the ants to take different paths. More precisely, a high va
 of the solutions, on the other hand a higher value for Beta means, the search is more greedy, i.e. more randomly.
 A way to escape the problem of stagnation is to reset the pheromone values to its initial values:<br>
 
-<br><img src="formula3.png"><br><br>
+<br><img src="formula3.png" width="85%"/><br><br>
 
 where <img src="tau.png"><sub>0</sub> is the initial value of the pheromone. The artificial value of the scent will be
 adjusted depending on <img src="gau.png">, if the edges (i,j) takes part in the current solution.
