@@ -64,7 +64,7 @@ Der Dealer (auch Leader oder Processor genannt) will ein Geheimnis <i>s &#x2208;
 <p>
 Der Dealer wählt geheime Elemente <i>a<sub>e</sub> &#x2208; &#x2115; [1 &#x2264; e &#x2264; (t-1); 1 &#x2264 a<sub>e</sub> &#x3C; q]</i> zufällig und konstruiert daraus das Polynom P(x):</p>
 
-<p><img src="vss_polynom.jpg"></p>
+<p><img src="vss_polynom.jpg" width="85%"/></p>
 		 
 <p>Das Polynom ist vom Grad <i>t-1</i>. Der Koeffizient <i>a<sub>0</sub></i> ist das Geheimnis <i>s</i>, so dass <i>P(0) = s</i>. <i>P(x)</i> wird <i>mod p</i> berechnet.</p>
 
@@ -80,7 +80,7 @@ Der Dealer wählt geheime Elemente <i>a<sub>e</sub> &#x2208; &#x2115; [1 &#x2264
 		Die Berechnung der Commitments sieht folgendermaßen aus.
 	</p>
 	<p>
-		<img src="vss_compute_commitments.jpg">
+		<img src="vss_compute_commitments.jpg" width="85%"/>
 	</p>
 	<p>
 		Bei <i>a<sub>e</sub></i> handelt es sich um die Koeffizienten.
@@ -101,7 +101,7 @@ Der Dealer wählt geheime Elemente <i>a<sub>e</sub> &#x2208; &#x2115; [1 &#x2264
 <p>
 	Jeder Spieler sollte seinen Shares nach Erhalt prüfen. Bei diesem Check wird die Korrektheit folgender Gleichung überprüft:</p>
 
-<p><img src="vss_check.jpg"></p>
+<p><img src="vss_check.jpg" width="85%"/></p>
 
 <p>
 	Auf der linken Seite wird der Generator <i>g</i> mit dem persönlichen Share des jeweiligen Spielers potenziert.</br>
@@ -122,7 +122,7 @@ Der Dealer wählt geheime Elemente <i>a<sub>e</sub> &#x2208; &#x2115; [1 &#x2264
 	Um eine erfolgreiche Rekonstruktion durchführen zu können, muss mindestens die in Schritt 1 definierte Anzahl an Spielern zur Rekonstruktion <i>t</i> anwesend sein. 
 	Diese Spieler müssen ihren persönlichen Share zur Verfügung stellen, damit durch nachfolgende Berechnung das ursprüngliche Polynom wiederhergestellt werden kann.</p>
 	
-	<p><img src="vss_lagrange.jpg"></p>
+	<p><img src="vss_lagrange.jpg" width="85%"/></p>
 	
 	<p>
 		Diese Formel beschreibt den Polynominterpolation-Algorithmus von Lagrange. Bei <i>u</i> handelt es sich um die Anzahl der zur Rekonstruktion ausgewählten Shares (<i>u &ge; t</i>); und bei <i>k</i> und <i>l</i> um die IDs der jeweiligen Spieler. Als Ergebnis erhält man ein Polynom <i>P'(x)</i>. 
