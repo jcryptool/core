@@ -16,8 +16,6 @@ import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -99,11 +97,8 @@ public class MerkleTreeView extends ViewPart {
 		mode = SUIT.MSS;
 		shell = parent.getShell();
 
-		parent.setLayout(new GridLayout(1, false));
-
 		// Main composite
 		scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
-		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
 
@@ -113,7 +108,7 @@ public class MerkleTreeView extends ViewPart {
 		// Key-generation
 		tbtmParameter0 = new TabItem(tabFolder, SWT.NONE);
 		tbtmParameter0.setText(Descriptions.MerkleTreeTab_0);
-		baseComposite = new MerkleTreeComposite(tabFolder, masterView);
+		baseComposite = new MerkleTreeComposite(tabFolder, (MerkleTreeView) masterView);
 		tbtmParameter0.setControl(baseComposite);
 
 		// TreeView

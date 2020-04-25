@@ -19,11 +19,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.merkletree.Descriptions;
 import org.jcryptool.visual.merkletree.MerkleTreeView;
@@ -40,10 +35,11 @@ import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
 
 public class MerkleTreeComposite extends Composite {
 
-	private Composite descr;
-	// private MerkleTreeSeed generationTab;
+	private StyledText descText;
+	private MerkleTreeView masterView;
 	private MerkleTreeGeneration generationTab;
-	private SUIT mode;
+	private MerkleTreeComposite merkleTreeComposite;
+	private SUIT mode = SUIT.MSS;
 
 	/**
 	 * Create the composite. Including Descriptions, Seed (,Bitmask) and Key
@@ -53,29 +49,40 @@ public class MerkleTreeComposite extends Composite {
 	 * @param masterView
 	 *        Plugin-Main-Composite
 	 */
-	public MerkleTreeComposite(Composite parent, ViewPart masterView) {
+	public MerkleTreeComposite(Composite parent, MerkleTreeView masterView) {
 		super(parent, SWT.NONE);
 
-		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
-		mode = SUIT.MSS;
+		this.setLayout(new GridLayout());
+		this.masterView = masterView;
+		merkleTreeComposite = this;
+		
+		// Create the GUI
+		createContent();
 
-		// to make the text wrap lines automatically
-		descr = new Composite(this, SWT.WRAP | SWT.LEFT);
-		descr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, MerkleConst.H_SPAN_MAIN, 1));
-		descr.setLayout(new GridLayout(1, true));
-		descr.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+	}
 
+	private void createContent() {
 		// Combobox, to switch the different SUIT's (MSS,XMSS,XMSS_MT)
-		Combo combo = new Combo(descr, SWT.READ_ONLY);
-		GridData gd_combo = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 0, 1);
-		gd_combo.widthHint = 340;
-		combo.setLayoutData(gd_combo);
+		Combo combo = new Combo(this, SWT.READ_ONLY);
+		combo.setFont(FontService.getLargeFont());
+		combo.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false));
 		combo.add(Descriptions.CompositeDescriptionMerkleTree);
 		combo.add(Descriptions.CompositeDescriptionXMSS);
 		combo.add(Descriptions.CompositeDescriptionXMSS_MT);
+		
+		switch (mode) {
+		case XMSS:
+			combo.select(1);
+			break;
+		case XMSS_MT:
+			combo.select(2);
+			break;
+		case MSS:
+		default:
+			combo.select(0);
+			break;
+		}
 
-		combo.setEnabled(true);
-		combo.select(0);
 
 		// listener if another SUIT is selected
 		combo.addSelectionListener(new SelectionAdapter() {
@@ -96,43 +103,29 @@ public class MerkleTreeComposite extends Composite {
 				((MerkleTreeView) masterView).setAlgorithm(null, mode);
 
 				// clear actual frame before creating a new one
-				Control[] children = descr.getChildren();
+				// simply throw everything away and create 
+				// new GUI with createContent();.
+				Control[] children = merkleTreeComposite.getChildren();
 				for (Control control : children) {
-					if (control.getClass() != Combo.class)
-						control.dispose();
+					control.dispose();
 				}
 
-				// sets new main-description
-				MerkleTreeDescription(descr, mode);
+				createContent();
 
-				// refresh generation tab with new bitmask box
-				generationTab = new MerkleTreeGeneration(descr, SWT.NONE, mode, masterView);
-				generationTab.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
-				generationTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-				setLocalFocus();
-
-				descr.layout();
+				merkleTreeComposite.layout();
 			}
 		});
 
 		// initial MSS - Layout
-		MerkleTreeDescription(descr, mode);
-		generationTab = new MerkleTreeGeneration(descr, SWT.NONE, mode, masterView);
-		generationTab.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, SWT.FILL));
-		generationTab.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-		setLocalFocus();
+		createMerkleTreeDescription();
+		
+		
+		generationTab = new MerkleTreeGeneration(this, SWT.NONE, mode, masterView);
+		generationTab.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 
-		Listener triggerLocalFocus = new Listener() {
-			@Override
-			public void handleEvent(Event event) {
-				setLocalFocus();
-			}
-		};
-		descr.addListener(SWT.MouseDown, triggerLocalFocus);
+		setLocalFocus();
 	}
 
-	Label descLabel;
-	StyledText descText;
 
 	/**
 	 * Generates the main description for the first tab
@@ -143,26 +136,21 @@ public class MerkleTreeComposite extends Composite {
 	 *        SUIT { MSS, XMSS or XMSS_MT }
 	 * @author Maximilian Lindpointner
 	 */
-	private void MerkleTreeDescription(Composite descr, SUIT mode) {
-
-		descLabel = new Label(descr, SWT.NONE);
-		descLabel.setFont(FontService.getHeaderFont());
-		descText = new StyledText(descr, SWT.WRAP);
-		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		descText.setCaret(null);
-		descText.setEditable(false);
+	private void createMerkleTreeDescription() {
+		
+		descText = new StyledText(this, SWT.WRAP | SWT.READ_ONLY);
+		GridData gd_descText = new GridData(SWT.FILL, SWT.FILL, true, false);
+		gd_descText.widthHint = MerkleConst.PLUGIN_WIDTH;
+		descText.setLayoutData(gd_descText);
 
 		switch (mode) {
 		case XMSS:
-			descLabel.setText(Descriptions.XMSS.Tab0_Head0);
 			descText.setText(Descriptions.XMSS.Tab0_Txt0);
 			break;
 		case XMSS_MT:
-			descLabel.setText(Descriptions.XMSS_MT.Tab0_Head0);
 			descText.setText(Descriptions.XMSS_MT.Tab0_Txt0);
 			break;
 		case MSS:
-			descLabel.setText(Descriptions.MSS.Tab0_Head0);
 			descText.setText(Descriptions.MSS.Tab0_Txt0);
 			break;
 		}

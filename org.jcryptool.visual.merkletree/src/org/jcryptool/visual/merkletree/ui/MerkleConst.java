@@ -42,8 +42,8 @@ public abstract class MerkleConst {
 	// Height of the description of the plug-in in rows
 	public static final int DESC_HEIGHT = 4;
 
-	// enum to marke the aktual usesd suit
+	// enum to mark the actual used suit
 	public enum SUIT {
-		XMSS, XMSS_MT, MSS
+		MSS, XMSS, XMSS_MT
 	}
 }
