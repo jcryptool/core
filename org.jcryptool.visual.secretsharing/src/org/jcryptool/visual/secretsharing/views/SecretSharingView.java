@@ -44,7 +44,7 @@ public class SecretSharingView extends ViewPart {
         scrolledComposite.setExpandVertical(true);
         scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		ShamirsSecretSharingComposite sscc = new ShamirsSecretSharingComposite(scrolledComposite, SWT.NONE);
+		ShamirsSecretSharingComposite sscc = new ShamirsSecretSharingComposite(scrolledComposite, SWT.NONE, this);
 		
 		
 		scrolledComposite.setContent(sscc);;

@@ -11,7 +11,7 @@
 		<h2>Android Unlock Pattern (AUP)</h2>
 		<p>The AUP authentication scheme is supported by the Android operating system since October 2008 with version 1. The scheme is used to prevent unauthorized access to the device and to data stored on it. In the following the AUP design and security is described.</p>	
 		
-		<p align=center><img src="../../../nl/img/AupEn.png"></p>
+		<p align=center><img src="./img/Aup.png"  width="85%"/></p>
 		
 		<h3 id="design">AUP Design</h3>
 		<p>The AUP uses nine quadratic arranged fields in a grid to describe a &lsquo;password&rsquo;. This resulting pattern is then used like a password for unlocking a device.</p>
@@ -30,7 +30,7 @@
 		
 		<p>For comparison: There are 985,824 different PINs of length four to nine, using the digits 1 to 9, and containing every digit <b>only once</b>. These PINs are called limited PINs. The rules for limited PINs are similar to that of the AUP. The calculation is done as sum of the k-permutations of n<sup><a id="anker1" title="Source" href="#fn1">[1]</a></sup> over the PIN lengths four to nine:</p>
 		
-		<p><img src="../../../nl/img/formula_pin_perm.png"></p>
+		<p><img src="./img/formula_pin_perm.png"></p>
 		
 		<p>The table below lists the quantity of AUP permutations in direct comparison to the above explained limited PIN. The column &lsquo;Multiplier&rsquo; lists the growing factor of the permutations when their length is increased by one. The column &lsquo;AUP/PIN&rsquo; lists the ratio of the AUP quantity to the PIN quantity.</p>
 		
@@ -129,9 +129,9 @@
 		
 		<p><table border=0 align=center>
 			<tr>
-				<td align=center><img src="../../../nl/img/DasUserInput.png"></td>
+				<td align=center><img src="./img/DasUserInput.png" width="85%"/></td>
 				<td width=20></td>
-				<td align=center><img src="../../../nl/img/DasInternal.png"></td>
+				<td align=center><img src="./img/DasInternal.png"  width="85%"/></td>
 			</tr>
 			<tr>
 				<td align=center>User input</td>
@@ -145,7 +145,7 @@
 		
 		<h3 id="win8">2. Windows 8: Picture Password</h3>
 		
-		<p align=center><img src="../../../nl/img/PicturePassword.png"></p>
+		<p align=center><img src="./img/PicturePassword.png"  width="85%"/></p>
 		<p>Windows 8 adopts the idea of graphical passwords to offer a login technique based on this idea.<sup><a id="anker5" title="Source" href="#fn5">[5]</a></sup> In order to use this authentication scheme, the user has to choose a picture and highlight different areas with gestures thereafter. In comparison to the DAS no freeform gestures are supported; they are limited to circles, lines and taps. Another difference is that only certain &lsquo;characteristics&rsquo; are saved for the authentication and not a sequence of fields. For lines the start and end point, as well as their direction is saved. The grid moreover has a much higher resolution. &ldquo;The longest dimension of the image is divided into 100 segments. The shorter dimension is then divided on that scale to create the grid upon which you draw gestures.&rdquo;<sup><a title="Source" href="#fn5">[5]</a></sup> According to Sinofsky this authentication procedure has a much better security than traditional passwords.<sup><a title="Source" href="#fn5">[5]</a></sup></p>
 		<hr>
 		<p>Sources</p>

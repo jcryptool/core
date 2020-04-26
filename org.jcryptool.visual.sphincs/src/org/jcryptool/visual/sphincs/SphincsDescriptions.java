@@ -21,7 +21,7 @@ import org.eclipse.osgi.util.NLS;
  * @author Klaus Kaiser
  */
 public class SphincsDescriptions extends NLS {
-	private static final String BUNDLE_NAME = "org.jcryptool.visual.sphincs";
+	private static final String BUNDLE_NAME = SphincsPlugin.PLUGIN_ID;
 
 	// Tab descriptions
 	public static String SphincsTab_0;

@@ -78,7 +78,6 @@ public class SphincsView extends ViewPart {
         shell = parent.getShell();
         
         bcSphincs = new bcSPHINCS256();
-               
         
         // makes the connection to the help of the plug-in
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.visual.sphincs.view");
@@ -212,7 +211,9 @@ public class SphincsView extends ViewPart {
     }
     
   private void resetTabs() {
-      signatureTab = null;
+      if(signatureTab != null && !signatureTab.isDisposed()) signatureTab.dispose();
+      if(descriptionTab != null && !descriptionTab.isDisposed()) descriptionTab.dispose();
+	  signatureTab = null;
       descriptionTab = null;
   }
   
