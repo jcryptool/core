@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.custom.StyleRange;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -39,6 +37,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.merkleHellman.algorithm.MerkleHellman;
 
 /**
@@ -52,14 +51,19 @@ public class MerkleHellmanView extends ViewPart {
 	 * The ID of the view as specified by the extension.
 	 */
 	public static final String ID = "org.jcryptool.visual.merkleHellman.views.MerkleHellmanView"; //$NON-NLS-1$
-	private Composite compositePrivateKey;
-	private ScrolledComposite scrolledCompositePrivateKey;
+	private Composite compositeMain;
+	private ScrolledComposite scrolledComposite;
+	
+//	private Composite compositePrivateKey;
+//	private ScrolledComposite scrolledCompositePrivateKey;
+	private Group grpPrivateKey;
+	private Group grpPublicKey;
 	private Text textM;
 	private Text textSumA;
 	private Text textW;
 	private Text textU;
-	private ScrolledComposite scrolledCompositePublicKey;
-	private Composite compositePublicKey;
+//	private ScrolledComposite scrolledCompositePublicKey;
+//	private Composite compositePublicKey;
 
 	private ArrayList<Text> privateKeyFields = new ArrayList<Text>();
 	private ArrayList<Text> publicKeyFields = new ArrayList<Text>();
@@ -159,8 +163,7 @@ public class MerkleHellmanView extends ViewPart {
 	private Text textBinary_decrypted;
 	private Table tableDecrypt;
 	private Label lblPublicKeyB;
-	private StyledText styledTextDescription;
-	private StyleRange header;
+	private TitleAndDescriptionComposite titleAndDescription;
 	private Text textBinaryC;
 
 	/**
@@ -172,25 +175,19 @@ public class MerkleHellmanView extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 
-		ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
 
-		Composite compositeMain = new Composite(scrolledComposite, SWT.NONE);
+		compositeMain = new Composite(scrolledComposite, SWT.NONE);
 		compositeMain.setLayout(new GridLayout(2, false));
 		
-		styledTextDescription = new StyledText(compositeMain, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
-		styledTextDescription.setEditable(false);
-		GridData gd_styledTextDescription = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
-		gd_styledTextDescription.widthHint = 400;
-		styledTextDescription.setLayoutData(gd_styledTextDescription);
-		styledTextDescription.setText(Messages.MerkleHellmanView_0000 + Messages.MerkleHellmanView_0);
-
-		header = new StyleRange();
-		header.start = 0;
-		header.length = Messages.MerkleHellmanView_0000.length();
-		header.fontStyle = SWT.BOLD;
-		styledTextDescription.setStyleRange(header);
+		// This creates the area on top of the plugin that
+		// contains the title and the changing descriptions.
+		titleAndDescription = new TitleAndDescriptionComposite(compositeMain);
+		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		titleAndDescription.setTitle(Messages.MerkleHellmanView_0000);
+		titleAndDescription.setDescription(Messages.MerkleHellmanView_0);
 
 		Group grpGroup = new Group(compositeMain, SWT.NONE);
 		grpGroup.setLayout(new GridLayout(1, false));
@@ -209,8 +206,12 @@ public class MerkleHellmanView extends ViewPart {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				MerkleHellmanView.this.resetView();
-
+				
 				createPrivateKey();
+				
+				// After creating the textfield for the As layout the GUI 
+				// to have enough space and adjust the scrollbars.
+				layoutAndRecalculateSize();
 				lblPublicKeyB.setText(Messages.MerkleHellmanView_6 + comboKeyElements.getText());
 
 			}
@@ -247,7 +248,7 @@ public class MerkleHellmanView extends ViewPart {
 			public void widgetSelected(SelectionEvent e) {
 				createPrivateKey();
 
-				Control[] content = compositePublicKey.getChildren();
+				Control[] content = grpPublicKey.getChildren();
 				for (Control c : content) {
 					c.dispose();
 				}
@@ -259,25 +260,26 @@ public class MerkleHellmanView extends ViewPart {
 		});
 		btnGenerateNewKey.setText(Messages.MerkleHellmanView_4);
 
-		Group grpPrivateKey = new Group(grpGroup, SWT.NONE);
+		grpPrivateKey = new Group(grpGroup, SWT.NONE);
 		grpPrivateKey.setText(Messages.MerkleHellmanView_5);
-		grpPrivateKey.setLayout(new GridLayout(1, false));
-		GridData gd_grpPrivateKey = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
-		gd_grpPrivateKey.heightHint = 71;
-		grpPrivateKey.setLayoutData(gd_grpPrivateKey);
-		scrolledCompositePrivateKey = new ScrolledComposite(grpPrivateKey, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		scrolledCompositePrivateKey.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		scrolledCompositePrivateKey.setExpandHorizontal(true);
-		scrolledCompositePrivateKey.setExpandVertical(true);
-		scrolledCompositePrivateKey.getVerticalBar().setIncrement(10);
-		scrolledCompositePrivateKey.getHorizontalBar().setIncrement(10);
+		grpPrivateKey.setLayout(new GridLayout(10, false));
+//		GridData gd_grpPrivateKey = ;
+//		gd_grpPrivateKey.heightHint = 71;
+		grpPrivateKey.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
+//		scrolledCompositePrivateKey = new ScrolledComposite(grpPrivateKey, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+//		scrolledCompositePrivateKey.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+//		scrolledCompositePrivateKey.setExpandHorizontal(true);
+//		scrolledCompositePrivateKey.setExpandVertical(true);
+//		scrolledCompositePrivateKey.getVerticalBar().setIncrement(10);
+//		scrolledCompositePrivateKey.getHorizontalBar().setIncrement(10);
 
-		compositePrivateKey = new Composite(scrolledCompositePrivateKey, SWT.NONE);
-		compositePrivateKey.setLayout(new GridLayout(10, false));
+//		compositePrivateKey = new Composite(grpPrivateKey, SWT.NONE);
+//		compositePrivateKey.setLayout(new GridLayout(10, false));
+//		compositePrivateKey.setBackground(ColorService.LIGHT_AREA_RED);
 
-		scrolledCompositePrivateKey.setContent(compositePrivateKey);
-		scrolledCompositePrivateKey.setMinSize(compositePrivateKey.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		scrolledCompositePrivateKey.layout();
+//		scrolledCompositePrivateKey.setContent(compositePrivateKey);
+//		scrolledCompositePrivateKey.setMinSize(compositePrivateKey.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+//		scrolledCompositePrivateKey.layout();
 
 		createPrivateKeyFields(Integer.parseInt(comboKeyElements.getText()));
 
@@ -450,7 +452,8 @@ public class MerkleHellmanView extends ViewPart {
 					}
 
 					createPublicKeyFields(Integer.parseInt(comboKeyElements.getText()));
-					scrolledCompositePublicKey.setMinSize(compositePublicKey.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+					
+//					scrolledCompositePublicKey.setMinSize(compositePublicKey.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 					btnCreateKeys.setEnabled(false);
 					btnGenerateNewKey.setEnabled(false);
 					textM_encryption.setEnabled(true);
@@ -464,8 +467,10 @@ public class MerkleHellmanView extends ViewPart {
 					}
 					textM.setEditable(false);
 					textW.setEditable(false);
-					styledTextDescription.setText(Messages.MerkleHellmanView_0000 + Messages.MerkleHellmanView_00);
-					styledTextDescription.setStyleRange(header);
+					titleAndDescription.setDescription(Messages.MerkleHellmanView_00);
+					
+					//Recalculate the size of the window
+					layoutAndRecalculateSize();
 					textM_encryption.setFocus();
 				}
 			}
@@ -473,25 +478,30 @@ public class MerkleHellmanView extends ViewPart {
 		btnCreateKeys.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		btnCreateKeys.setText(Messages.MerkleHellmanView_7);
 
-		Group grpPublicKey = new Group(grpGroup, SWT.NONE);
+		grpPublicKey = new Group(grpGroup, SWT.NONE);
 		grpPublicKey.setText(Messages.MerkleHellmanView_8);
-		GridData gd_grpPublicKey = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-		gd_grpPublicKey.heightHint = 71;
+		GridData gd_grpPublicKey = new GridData(SWT.FILL, SWT.FILL, false, true);
+		// Set the group a minimal size that avoid disappearing
+		// of the group after a call of layoutAndRecalculateSize().
+		gd_grpPublicKey.minimumHeight = 55;
 		grpPublicKey.setLayoutData(gd_grpPublicKey);
-		grpPublicKey.setLayout(new GridLayout(1, false));
+		grpPublicKey.setLayout(new GridLayout(10, false));
+		
+		// This avoids the Public Key group of being empty after starting the plugin
+//		new Label(grpPublicKey, SWT.NONE);
 
-		scrolledCompositePublicKey = new ScrolledComposite(grpPublicKey, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		scrolledCompositePublicKey.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		scrolledCompositePublicKey.setExpandHorizontal(true);
-		scrolledCompositePublicKey.setExpandVertical(true);
-		scrolledCompositePublicKey.getVerticalBar().setIncrement(10);
-		scrolledCompositePublicKey.getHorizontalBar().setIncrement(10);
+//		scrolledCompositePublicKey = new ScrolledComposite(grpPublicKey, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+//		scrolledCompositePublicKey.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+//		scrolledCompositePublicKey.setExpandHorizontal(true);
+//		scrolledCompositePublicKey.setExpandVertical(true);
+//		scrolledCompositePublicKey.getVerticalBar().setIncrement(10);
+//		scrolledCompositePublicKey.getHorizontalBar().setIncrement(10);
 
-		compositePublicKey = new Composite(scrolledCompositePublicKey, SWT.NONE);
-		compositePublicKey.setLayout(new GridLayout(10, false));
+//		compositePublicKey = new Composite(scrolledCompositePublicKey, SWT.NONE);
+//		compositePublicKey.setLayout(new GridLayout(10, false));
 
-		scrolledCompositePublicKey.setContent(compositePublicKey);
-		scrolledCompositePublicKey.setMinSize(compositePublicKey.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+//		scrolledCompositePublicKey.setContent(compositePublicKey);
+//		scrolledCompositePublicKey.setMinSize(compositePublicKey.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 		Group grpEncryption = new Group(compositeMain, SWT.NONE);
 		grpEncryption.setLayout(new GridLayout(4, false));
@@ -558,7 +568,9 @@ public class MerkleHellmanView extends ViewPart {
 		textBinaryM.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 
 		tableEncrypt = new Table(grpEncryption, SWT.BORDER | SWT.FULL_SELECTION);
-		tableEncrypt.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 4, 1));
+		GridData gd_tableEncrypt = new GridData(SWT.FILL, SWT.FILL, false, true, 4, 1);
+		gd_tableEncrypt.minimumHeight = 150;
+		tableEncrypt.setLayoutData(gd_tableEncrypt);
 		tableEncrypt.setHeaderVisible(true);
 		tableEncrypt.setLinesVisible(true);
 
@@ -605,6 +617,11 @@ public class MerkleHellmanView extends ViewPart {
 
 				String result = String.valueOf(privKey.encrypt(new BigInteger(textM_encryption.getText())));
 
+				// This resizes the 3 TableColumns that the entire content is visible.
+				for (TableColumn tc : tableEncrypt.getColumns()) {
+					tc.pack();
+				}
+				
 				tableEncrypt.setSelection(numberOfElement - 1);
 				tableEncrypt.showSelection();
 
@@ -622,8 +639,7 @@ public class MerkleHellmanView extends ViewPart {
 				btnEncrypt.setEnabled(false);
 				btnDecrypt.setEnabled(true);
 
-				styledTextDescription.setText(Messages.MerkleHellmanView_0000 + Messages.MerkleHellmanView_000);
-				styledTextDescription.setStyleRange(header);
+				titleAndDescription.setDescription(Messages.MerkleHellmanView_000);
 				textC_decryption.setFocus();
 				textC_decryption.setSelection(textC_decryption.getText().length());
 			}
@@ -694,7 +710,9 @@ public class MerkleHellmanView extends ViewPart {
 		textBinaryC.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
 		tableDecrypt = new Table(grpDecryption, SWT.BORDER | SWT.FULL_SELECTION);
-		tableDecrypt.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
+		GridData gd_tableDecrypt = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
+		gd_tableDecrypt.minimumHeight = 150;
+		tableDecrypt.setLayoutData(gd_tableDecrypt);
 		tableDecrypt.setHeaderVisible(true);
 		tableDecrypt.setLinesVisible(true);
 
@@ -891,7 +909,15 @@ public class MerkleHellmanView extends ViewPart {
 	
 					}
 	
+					// This resizes the 2 TableColumns that the entire content is visible.
+					for (TableColumn tc : tableDecrypt.getColumns()) {
+						tc.pack();
+					}
+					
 					tableDecrypt.setSelection(numberOfElement - 1);
+					
+					
+					
 					textBinary_decrypted.setText(binResult.toString());
 					textBinary_decrypted.setEnabled(true);
 					// btnDecrypt.setEnabled(false);
@@ -921,8 +947,11 @@ public class MerkleHellmanView extends ViewPart {
 		}
 		btnDecrypt.setLayoutData(gd_btnDecrypt);
 		btnDecrypt.setText(Messages.MerkleHellmanView_17);
+		
 		scrolledComposite.setContent(compositeMain);
-		scrolledComposite.setMinSize(compositeMain.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		layoutAndRecalculateSize();
+		
 		int numberOfElements = Integer.parseInt(comboKeyElements.getText());
 		int startValue = Integer.parseInt(comboStartValue.getText());
 
@@ -930,6 +959,11 @@ public class MerkleHellmanView extends ViewPart {
 
 
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.visual.merkleHellman.view");
+	}
+	
+	private void layoutAndRecalculateSize() {
+		compositeMain.layout();
+		scrolledComposite.setMinSize(compositeMain.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
 
 	protected boolean isSuperIncreasing() {
@@ -987,38 +1021,39 @@ public class MerkleHellmanView extends ViewPart {
 	}
 
 	private void createPrivateKeyFields(int parseInt) {
-		Control[] content = compositePrivateKey.getChildren();
+		Control[] content = grpPrivateKey.getChildren();
 		for (Control c : content) {
 			c.dispose();
 		}
 		privateKeyFields.clear();
 
 		for (int i = 0; i < parseInt; i++) {
-			Label lblA = new Label(compositePrivateKey, SWT.NONE);
+			Label lblA = new Label(grpPrivateKey, SWT.NONE);
 			lblA.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 			lblA.setText("A(" + (i + 1) + "):"); //$NON-NLS-1$ //$NON-NLS-2$
-			Text text = new Text(compositePrivateKey, SWT.BORDER);
+			Text text = new Text(grpPrivateKey, SWT.BORDER);
 			text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 			text.addVerifyListener(vlNumber);
 			privateKeyFields.add(text);
 		}
 
-		compositePrivateKey.layout();
-		scrolledCompositePrivateKey.setMinSize(compositePrivateKey.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		grpPrivateKey.layout();
+//		compositePrivateKey.layout();
+//		scrolledCompositePrivateKey.setMinSize(compositePrivateKey.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
 
 	private void createPublicKeyFields(int parseInt) {
-		Control[] content = compositePublicKey.getChildren();
+		Control[] content = grpPublicKey.getChildren();
 		for (Control c : content) {
 			c.dispose();
 		}
 		publicKeyFields.clear();
 
 		for (int i = 0; i < parseInt; i++) {
-			Label lblA = new Label(compositePublicKey, SWT.NONE);
+			Label lblA = new Label(grpPublicKey, SWT.NONE);
 			lblA.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 			lblA.setText("B(" + (i + 1) + "):"); //$NON-NLS-1$ //$NON-NLS-2$
-			Text text = new Text(compositePublicKey, SWT.BORDER);
+			Text text = new Text(grpPublicKey, SWT.BORDER);
 			text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 			publicKeyFields.add(text);
@@ -1030,8 +1065,9 @@ public class MerkleHellmanView extends ViewPart {
 			publicKeyFields.get(i).setText(String.valueOf(privKey.getPublicKeyElement(i)));
 		}
 
-		compositePublicKey.layout();
-		scrolledCompositePublicKey.setMinSize(compositePublicKey.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		grpPublicKey.layout();
+//		compositePublicKey.layout();
+//		scrolledCompositePublicKey.setMinSize(compositePublicKey.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
 
 	@Override
@@ -1043,14 +1079,15 @@ public class MerkleHellmanView extends ViewPart {
 		/*
 		 * reset public key area
 		 */
-		Control[] content = compositePublicKey.getChildren();
+		Control[] content = grpPublicKey.getChildren();
 		for (Control c : content) {
 			c.dispose();
 		}
-		styledTextDescription.setText(Messages.MerkleHellmanView_0000 + Messages.MerkleHellmanView_0);
-		styledTextDescription.setStyleRange(header);
-		compositePublicKey.layout();
-		scrolledCompositePublicKey.setMinSize(compositePublicKey.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+//		grpPublicKey.layout();
+		
+		titleAndDescription.setDescription(Messages.MerkleHellmanView_0);
+//		compositePublicKey.layout();
+//		scrolledCompositePublicKey.setMinSize(compositePublicKey.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 		privateKeyFields.clear();
 		publicKeyFields.clear();
@@ -1094,24 +1131,30 @@ public class MerkleHellmanView extends ViewPart {
 		comboStartValue.select(0);
 		lblPublicKeyB.setText(Messages.MerkleHellmanView_6 + comboKeyElements.getText());
 		createPrivateKey();
+		grpPrivateKey.layout();
 		btnCreateKeys.setFocus();
+		
+		layoutAndRecalculateSize();
 
 	}
 	
 	public void undo() {
-		Control[] content = compositePublicKey.getChildren();
+		//Reset tje PublicKey Goup
+		Control[] content = grpPublicKey.getChildren();
 		for (Control c : content) {
 			c.dispose();
 		}
+		// This avoids the Public Key group of being empty after resetting the plugin
+		new Label(grpPublicKey, SWT.NONE);
+		grpPublicKey.layout();
 		
 		for (Text t : privateKeyFields) {
 			t.setEditable(true);
 		}
 
-		styledTextDescription.setText(Messages.MerkleHellmanView_0000 + Messages.MerkleHellmanView_0);
-		styledTextDescription.setStyleRange(header);
-		compositePublicKey.layout();
-		scrolledCompositePublicKey.setMinSize(compositePublicKey.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		titleAndDescription.setDescription(Messages.MerkleHellmanView_0);
+//		compositePublicKey.layout();
+//		scrolledCompositePublicKey.setMinSize(compositePublicKey.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 		publicKeyFields.clear();
 
@@ -1141,6 +1184,8 @@ public class MerkleHellmanView extends ViewPart {
 		textBinary_decrypted.setBackground(new Color(null, new RGB(240, 240, 240)));
 		
 		btnGenerateNewKey.setFocus();
+		
+		layoutAndRecalculateSize();
 
 	}
 
