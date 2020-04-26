@@ -62,6 +62,7 @@ public class MerkleTreeComposite extends Composite {
 	}
 
 	private void createContent() {
+		
 		// Combobox, to switch the different SUIT's (MSS,XMSS,XMSS_MT)
 		Combo combo = new Combo(this, SWT.READ_ONLY);
 		combo.setFont(FontService.getLargeFont());
@@ -111,37 +112,15 @@ public class MerkleTreeComposite extends Composite {
 				}
 
 				createContent();
+				
+				masterView.computeMinimalWindowSize();
 
-				merkleTreeComposite.layout();
 			}
 		});
 
 		// initial MSS - Layout
-		createMerkleTreeDescription();
-		
-		
-		generationTab = new MerkleTreeGeneration(this, SWT.NONE, mode, masterView);
-		generationTab.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-
-		setLocalFocus();
-	}
-
-
-	/**
-	 * Generates the main description for the first tab
-	 * 
-	 * @param descr
-	 *        Parent Composite
-	 * @param mode
-	 *        SUIT { MSS, XMSS or XMSS_MT }
-	 * @author Maximilian Lindpointner
-	 */
-	private void createMerkleTreeDescription() {
-		
 		descText = new StyledText(this, SWT.WRAP | SWT.READ_ONLY);
-		GridData gd_descText = new GridData(SWT.FILL, SWT.FILL, true, false);
-		gd_descText.widthHint = MerkleConst.PLUGIN_WIDTH;
-		descText.setLayoutData(gd_descText);
+		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
 		switch (mode) {
 		case XMSS:
@@ -154,7 +133,15 @@ public class MerkleTreeComposite extends Composite {
 			descText.setText(Descriptions.MSS.Tab0_Txt0);
 			break;
 		}
+		
+		
+		generationTab = new MerkleTreeGeneration(this, SWT.NONE, mode, masterView);
+		generationTab.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
+		merkleTreeComposite.layout();
+		
+		setLocalFocus();
+		
 	}
 
 	/**
@@ -168,6 +155,6 @@ public class MerkleTreeComposite extends Composite {
 	}
 
 	public void setLocalFocus() {
-		descText.setFocus();
+		this.setFocus();
 	}
 }

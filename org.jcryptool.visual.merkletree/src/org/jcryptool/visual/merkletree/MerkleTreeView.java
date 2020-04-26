@@ -11,6 +11,7 @@
 package org.jcryptool.visual.merkletree;
 
 import java.util.Arrays;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -65,7 +66,7 @@ public class MerkleTreeView extends ViewPart {
 	private ISimpleMerkle merkle;
 	private SUIT mode;
 	private int previousTab = 0;
-	private ViewPart masterView;
+	private MerkleTreeView masterView;
 	private ScrolledComposite scrolledComposite;
 	private Shell shell;
 
@@ -108,7 +109,7 @@ public class MerkleTreeView extends ViewPart {
 		// Key-generation
 		tbtmParameter0 = new TabItem(tabFolder, SWT.NONE);
 		tbtmParameter0.setText(Descriptions.MerkleTreeTab_0);
-		baseComposite = new MerkleTreeComposite(tabFolder, (MerkleTreeView) masterView);
+		baseComposite = new MerkleTreeComposite(tabFolder, masterView);
 		tbtmParameter0.setControl(baseComposite);
 
 		// TreeView
@@ -185,10 +186,19 @@ public class MerkleTreeView extends ViewPart {
 		});
 
 		scrolledComposite.setContent(tabFolder);
-		scrolledComposite.setMinSize(MerkleConst.PLUGIN_WIDTH, MerkleConst.PLUGIN_HEIGTH);
+		
+		computeMinimalWindowSize();
 
 		// makes the connection to the help of the plug-in
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.visual.merkletree.view");
+	}
+	
+	/**
+	 * Recalculate the minimal size of the scrolledComposite.</br>
+	 * This is necessary to show scrollbars when the content in the GUI changes.
+	 */
+	public void computeMinimalWindowSize() {
+		scrolledComposite.setMinSize(tabFolder.computeSize(MerkleConst.PLUGIN_WIDTH, SWT.DEFAULT));
 	}
 
 	/**
@@ -223,7 +233,7 @@ public class MerkleTreeView extends ViewPart {
 	 */
 	@Override
 	public void setFocus() {
-		scrolledComposite.setFocus();
+		tabFolder.setFocus();
 	}
 
 	/**

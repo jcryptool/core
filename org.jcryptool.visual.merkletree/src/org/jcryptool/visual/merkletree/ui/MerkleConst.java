@@ -20,13 +20,9 @@ package org.jcryptool.visual.merkletree.ui;
  */
 public abstract class MerkleConst {
 
-	// height of the plug-in as a whole (this is important for the scrolling of
-	// the plug-in)
-	public static final int PLUGIN_HEIGTH = 680;
-
 	// width of the plug-in as a whole (this is important for the scrolling of
 	// the plug-in)
-	public static final int PLUGIN_WIDTH = 900;
+	public static final int PLUGIN_WIDTH = 1100;
 
 	// this is used for the layout of the plug-in and has to be even, because
 	// the xor is placed at

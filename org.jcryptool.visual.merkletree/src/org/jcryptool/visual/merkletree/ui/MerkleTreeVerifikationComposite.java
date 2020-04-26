@@ -175,7 +175,7 @@ public class MerkleTreeVerifikationComposite extends Composite {
 		descriptionComposite.setLayout(new GridLayout(1, true));
 
 		descText = new StyledText(descriptionComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
-		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 		// Set Strings according to mode
 		switch (mode) {

@@ -623,7 +623,7 @@ public class InteractiveSignatureComposite extends Composite {
 		guideText.setEditable(false);
 		guideText.setCaret(null);
 
-		inputText = new Text(popup, SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
+		inputText = new Text(popup, SWT.WRAP | SWT.BORDER |  SWT.MULTI | SWT.V_SCROLL);
 		inputText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 6, 1));
 
 		Composite buttonRow = new Composite(popup, SWT.DOUBLE_BUFFERED);
