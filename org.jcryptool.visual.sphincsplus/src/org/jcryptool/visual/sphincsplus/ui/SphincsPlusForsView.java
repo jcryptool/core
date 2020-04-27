@@ -198,7 +198,7 @@ public class SphincsPlusForsView extends Composite {
         });
 
         // Camera Movement
-        MouseListener dragQueen = new MouseListener() {
+        MouseListener draglistener = new MouseListener() {
 
             @Override
             public void mouseUp(MouseEvent e) {
@@ -238,8 +238,8 @@ public class SphincsPlusForsView extends Composite {
             }
         };
 
-        graphViewer.getGraphControl().addMouseListener(dragQueen);
-        zestComposite.addMouseListener(dragQueen);
+        graphViewer.getGraphControl().addMouseListener(draglistener);
+        zestComposite.addMouseListener(draglistener);
 
         // We give the focus to our graphViewer, so it receives the MouseWheel Events.
         graphViewer.getControl().forceFocus();
