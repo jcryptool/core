@@ -19,6 +19,7 @@ import org.eclipse.swt.events.ExpandEvent;
 import org.eclipse.swt.events.ExpandListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseWheelListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
@@ -313,21 +314,6 @@ public class SphincsPlusTreeView extends Composite {
 
                 if (distinctListener == false)
                     zestComposite.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_SIZEALL));
-                Runnable runnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        while (mouseDragging) {
-                            if (distinctListener == false)
-                                updateViewLocation();
-                            try {
-                                Thread.sleep(2);
-
-                            } catch (InterruptedException e) {
-                            }
-                        }
-                    }
-                };
-                new Thread(runnable).start();
             }
 
             @Override
@@ -337,6 +323,14 @@ public class SphincsPlusTreeView extends Composite {
         };
 
         graphViewer.getGraphControl().addMouseListener(dragQueen);
+        graphViewer.getGraphControl().addMouseMoveListener(new MouseMoveListener() {
+			
+			@Override
+			public void mouseMove(MouseEvent e) {
+ 				updateViewLocation();
+			}
+		});
+
         zestComposite.addMouseListener(dragQueen);
 
         // We give the focus to our graphViewer, so it receives the MouseWheel Events
@@ -380,10 +374,10 @@ public class SphincsPlusTreeView extends Composite {
      * Sets the current view location based on mouse movement
      */
     private void updateViewLocation() {
-        curDisplay.asyncExec(new Runnable() {
-
-            @Override
-            public void run() {
+//        curDisplay.asyncExec(new Runnable() {
+//
+//            @Override
+//            public void run() {
                 newMouse = getDisplay().getCursorLocation();
                 differenceMouseX = newMouse.x - oldMouse.x;
                 differenceMouseY = newMouse.y - oldMouse.y;
@@ -395,8 +389,8 @@ public class SphincsPlusTreeView extends Composite {
                         oldMouse = newMouse;
                     }
                 }
-            }
-        });
+//            }
+//        });
     }
 
     /**
