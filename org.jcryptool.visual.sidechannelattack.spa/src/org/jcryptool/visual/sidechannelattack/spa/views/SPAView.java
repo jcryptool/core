@@ -27,8 +27,6 @@ import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.custom.TableCursor;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.VerifyEvent;
@@ -48,9 +46,9 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.algorithm.SquareandMultiply;
-import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.images.ImageService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.sidechannelattack.SPAPlugIn;
 
 public class SPAView extends ViewPart implements Constants {
@@ -67,13 +65,14 @@ public class SPAView extends ViewPart implements Constants {
 	private Combo exponent;
 	private Text basis;
 	private int counter = 1;
-	private int exp_selected = 0;
 	// this is the ....
 	private int q_selected = 0;
 	private int p_selected = 0;
 	private StyledText rsaProcessText;
 
 	private Combo modeSelection;
+	private Button executeButton;
+	private Button clearButton;
 
 	// declare a object of SquareandMultiply, which is used to process the
 	// "square and multiply" algorithm
@@ -91,8 +90,6 @@ public class SPAView extends ViewPart implements Constants {
 	private Composite powerTraceVisualizationGroup;
 	private Text exponentBinary;
 	private Composite parent;
-	private Composite descriptionComposite;
-	private Text description;
 	private Composite content;
 
 	@Override
@@ -105,25 +102,13 @@ public class SPAView extends ViewPart implements Constants {
 
 		content = new Composite(scrolledComposite, SWT.NONE);
 		content.setLayout(new GridLayout());
-
-		descriptionComposite = new Composite(content, SWT.NONE);
-		descriptionComposite.setLayout(new GridLayout());
-		descriptionComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		descriptionComposite.setBackground(ColorService.WHITE);
-
-		Label lblHeader = new Label(descriptionComposite, SWT.NONE);
-		lblHeader.setFont(FontService.getHeaderFont());
-		lblHeader.setBackground(ColorService.WHITE);
-		lblHeader.setText(MAIN_GROUP_TITLE);
-
-		description = new Text(descriptionComposite, SWT.WRAP);
-		description.setText(
-				Messages.SPAView_description);
-		GridData gd_description = new GridData(SWT.FILL, SWT.FILL, true, false);
-		gd_description.widthHint = 800;
-		description.setLayoutData(gd_description);
-		description.setBackground(ColorService.WHITE);
-		description.setEditable(false);
+		
+		// THis creates the top area of the plugin. 
+		// It shows the  title and the description of the plugin.
+		TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(content);
+		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		titleAndDescription.setTitle(Messages.Constants_114);
+		titleAndDescription.setDescription(Messages.SPAView_description);
 
 		mainContent = new Composite(content, SWT.NONE);
 		mainContent.setLayout(new GridLayout(2, false));
@@ -145,8 +130,6 @@ public class SPAView extends ViewPart implements Constants {
 		AddVisualizedGroupContent();
 		AddRsaAlgorithmGroupContent();
 		
-		// mainContent.setSize(mainContent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		// content.setSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		scrolledComposite.setContent(content);
 		scrolledComposite.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
@@ -161,10 +144,10 @@ public class SPAView extends ViewPart implements Constants {
 		rsaProcessText = new StyledText(informationGroup, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
 		GridData gd_rsaProcessText = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gd_rsaProcessText.widthHint = 760;
-		gd_rsaProcessText.heightHint = 200;
+		gd_rsaProcessText.minimumHeight = 150;
 		rsaProcessText.setLayoutData(gd_rsaProcessText);
 		rsaProcessText.setEditable(false);
-		rsaProcessText.setText(INFORMATION_SAM_TEXT);
+		rsaProcessText.setText(Messages.Constants_125);
 	}
 
 	/**
@@ -173,19 +156,19 @@ public class SPAView extends ViewPart implements Constants {
 	private void AddParameterOfRsaGroupContent() {
 
 		CLabel lblParameterOfRSAGroup = new CLabel(parameterOfRSAGroup, SWT.NONE);
-		lblParameterOfRSAGroup.setText(Constants.INPUT);
-		lblParameterOfRSAGroup.setFont(FontService.getSmallBoldFont());
+		lblParameterOfRSAGroup.setText(Messages.Constants_100);
+		lblParameterOfRSAGroup.setFont(FontService.getNormalBoldFont());
 		lblParameterOfRSAGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
 		final Label enterTheBasisLabel = new Label(parameterOfRSAGroup, SWT.NONE);
 		enterTheBasisLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-		enterTheBasisLabel.setText(BASIS_LABEL);
+		enterTheBasisLabel.setText(Messages.Constants_115);
 
 		// basis is used to save the ciphertext c in RSA: R = c^d mod n
 		basis = new Text(parameterOfRSAGroup, SWT.BORDER);
 		basis.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		basis.setTextLimit(9);
-		basis.setToolTipText(TOOL_TIP_TEXT_BASIS);
+		basis.setToolTipText(Messages.Constants_135);
 
 		// the verifylistener on basis is used to verify the correctness of
 		// input
@@ -202,43 +185,53 @@ public class SPAView extends ViewPart implements Constants {
 					e.doit = false;
 				else
 					e.doit = true;
+				
+				String currentText = ((Text) e.widget).getText();
+				String newName = (currentText.substring(0, e.start) + e.text + currentText.substring(e.end));
+				if (newName.isEmpty()) {
+					executeButton.setEnabled(false);
+				} else {
+					checkInputFields();
+				}
+				
 			}
 		});
+		
 
 		// it's a cue label.
 		final Label exponentLabel = new Label(parameterOfRSAGroup, SWT.NONE);
 		exponentLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-		exponentLabel.setText(EXPONENT_LABEL);
+		exponentLabel.setText(Messages.Constants_116_1);
 
 		// basis is used to save the exponent d in RSA: R = c^d mod n
 		exponent = new Combo(parameterOfRSAGroup, SWT.READ_ONLY);
 		exponent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		exponent.setToolTipText(TOOL_TIP_TEXT_EXPONENT);
+		exponent.setToolTipText(Messages.Constants_134);
 
 		Label exponentBinaryLabel = new Label(parameterOfRSAGroup, SWT.NONE);
 		exponentBinaryLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-		exponentBinaryLabel.setText("="); //$NON-NLS-1$
+		exponentBinaryLabel.setText(Messages.Constants_116_2);
 
 		exponentBinary = new Text(parameterOfRSAGroup, SWT.BORDER);
 		exponentBinary.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		exponentBinary.setToolTipText(Constants.TOOL_TIP_TEXT_EXPONENT_BINARY);
+		exponentBinary.setToolTipText(Messages.Constants_144);
 		exponentBinary.setEditable(false);
-
+		
 		CLabel parameterLabel = new CLabel(parameterOfRSAGroup, SWT.NONE);
 		GridData gd_parameterLabel = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
 		gd_parameterLabel.verticalIndent = 30;
 		parameterLabel.setLayoutData(gd_parameterLabel);
-		parameterLabel.setText(Constants.PARAMETER);
-		parameterLabel.setFont(FontService.getSmallBoldFont());
+		parameterLabel.setText(Messages.Constants_143);
+		parameterLabel.setFont(FontService.getNormalBoldFont());
 
 		// two cue labels
 		final Label chooseQLabel = new Label(parameterOfRSAGroup, SWT.NONE);
 		chooseQLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		chooseQLabel.setText(CHOOSE_Q_LABEL);
+		chooseQLabel.setText(Messages.Constants_117);
 
 		qSelectCombo = new Combo(parameterOfRSAGroup, SWT.READ_ONLY);
 		qSelectCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		qSelectCombo.setToolTipText(TOOL_TIP_TEXT_Q_SELECTION);
+		qSelectCombo.setToolTipText(Messages.Constants_139);
 		// the selectionlistener is used to determine which prime number has
 		// been chosen
 		qSelectCombo.addSelectionListener(new SelectionAdapter() {
@@ -257,17 +250,19 @@ public class SPAView extends ViewPart implements Constants {
 				if (p_selected != 0 && q_selected != 0) {
 					mod.setText(String.valueOf((p_selected) * (q_selected)));
 				}
+				
+				checkInputFields();
 			}
 		});
 
 		final Label choosePLabel = new Label(parameterOfRSAGroup, SWT.NONE);
 		choosePLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-		choosePLabel.setText(CHOOSE_P_LABEL);
+		choosePLabel.setText(Messages.Constants_118);
 
 		// Q and P can be selected in qselectcombo and pselectcombo
 		pSelectCombo = new Combo(parameterOfRSAGroup, SWT.READ_ONLY);
 		pSelectCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		pSelectCombo.setToolTipText(TOOL_TIP_TEXT_P_SELECTION);
+		pSelectCombo.setToolTipText(Messages.Constants_14);
 
 		// the selectionlistener is used to determine which prime number has
 		// been chosen
@@ -287,45 +282,48 @@ public class SPAView extends ViewPart implements Constants {
 				if (p_selected != 0 && q_selected != 0) {
 					mod.setText(String.valueOf((p_selected) * (q_selected)));
 				}
+				
+				checkInputFields();
 			}
 		});
 
 		final Label moduleLabel = new Label(parameterOfRSAGroup, SWT.NONE);
 		moduleLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		moduleLabel.setText(MODULE_LABEL_TEXT);
+		moduleLabel.setText(Messages.Constants_128);
 
 		// mod is used here to save the module n in R = c^d mod n
 		mod = new Text(parameterOfRSAGroup, SWT.BORDER);
 		mod.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		mod.setToolTipText(TOOL_TIP_TEXT_MODULE_N);
+		mod.setToolTipText(Messages.Constants_140);
 		mod.setEditable(false);
 
 		CLabel selectModeLabel = new CLabel(parameterOfRSAGroup, SWT.NONE);
 		GridData gd_selectModeLabel = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
 		gd_selectModeLabel.verticalIndent = 30;
 		selectModeLabel.setLayoutData(gd_selectModeLabel);
-		selectModeLabel.setText(Constants.MODE);
-		selectModeLabel.setFont(FontService.getSmallBoldFont());
+		selectModeLabel.setText(Messages.Constants_10);
+		selectModeLabel.setFont(FontService.getNormalBoldFont());
 
 		modeSelection = new Combo(parameterOfRSAGroup, SWT.READ_ONLY);
 		modeSelection.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
-		modeSelection.add(SAM_MODE);
-		modeSelection.add(SAMA_MODE);
+		modeSelection.add(Messages.Constants_141);
+		modeSelection.add(Messages.Constants_142);
 		modeSelection.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				rsaProcessText
-						.setText(modeSelection.getSelectionIndex() == 0 ? INFORMATION_SAM_TEXT : INFORMATION_SAMA_TEXT);
+						.setText(modeSelection.getSelectionIndex() == 0 ? Messages.Constants_125 : Messages.Constants_132);
 				super.widgetSelected(e);
+				
+				checkInputFields();
 			}
 		});
 		modeSelection.select(0);
 
 		// the executeButton is used here to start the process of
 		// "Square and Multiply" Algorithm
-		final Button executeButton = new Button(parameterOfRSAGroup, SWT.NONE);
-		executeButton.setEnabled(false);
-		executeButton.setText(EXECUTION_BUTTON_TEXT);
+		executeButton = new Button(parameterOfRSAGroup, SWT.NONE);
+		executeButton.setText(Messages.Constants_126);
 
 		// executeButton is used to start the process of "square and multiply"
 		// algorithm
@@ -334,27 +332,7 @@ public class SPAView extends ViewPart implements Constants {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
 				Execute();
-			}
-		});
-
-		mod.addModifyListener(new ModifyListener() {
-			@Override
-			public void modifyText(final ModifyEvent e) {
-
-				if (!basis.getText().equals("") && (exp_selected != 0) && (!mod.getText().equals(""))) { //$NON-NLS-1$ //$NON-NLS-2$
-
-					executeButton.setEnabled(true);
-				}
-			}
-		});
-
-		basis.addModifyListener(new ModifyListener() {
-			@Override
-			public void modifyText(final ModifyEvent e) {
-
-				if (!basis.getText().equals("") && (exp_selected != 0) && (!mod.getText().equals(""))) { //$NON-NLS-1$ //$NON-NLS-2$
-					executeButton.setEnabled(true);
-				}
+				clearButton.setFocus();
 			}
 		});
 
@@ -364,12 +342,9 @@ public class SPAView extends ViewPart implements Constants {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
 
-				exp_selected = primeDataExponent[exponent.getSelectionIndex()];
 				exponentBinary.setText(Integer.toBinaryString(Integer.parseInt(exponent.getText())));
 
-				if (!basis.getText().equals("") && (exp_selected != 0) && (!mod.getText().equals(""))) { //$NON-NLS-1$ //$NON-NLS-2$
-					executeButton.setEnabled(true);
-				}
+				checkInputFields();
 
 			}
 		});
@@ -378,22 +353,22 @@ public class SPAView extends ViewPart implements Constants {
 		GridData gd_resultLabel = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
 		gd_resultLabel.verticalIndent = 30;
 		resultLabel.setLayoutData(gd_resultLabel);
-		resultLabel.setText(Constants.RESULT);
-		resultLabel.setFont(FontService.getSmallBoldFont());
+		resultLabel.setText(Messages.Constants_1);
+		resultLabel.setFont(FontService.getNormalBoldFont());
 
 		// it's a cue label
 		final Label resultDescLabel = new Label(parameterOfRSAGroup, SWT.NONE);
 		resultDescLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-		resultDescLabel.setText(TOOL_TIP_TEXT_RESULT_LABEL);
+		resultDescLabel.setText(Messages.Constants_137);
 
 		// result is used to save the result R in R = c^d mod n
 		result = new Text(parameterOfRSAGroup, SWT.BORDER);
 		result.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-		result.setToolTipText(TOOL_TIP_TEXT_RESULT);
+		result.setToolTipText(Messages.Constants_138);
 		result.setEditable(false);
 
 		// clearButton is used to clear the table
-		final Button clearButton = new Button(parameterOfRSAGroup, SWT.NONE);
+		clearButton = new Button(parameterOfRSAGroup, SWT.NONE);
 		GridData gd_clearButton = new GridData(SWT.RIGHT, SWT.BOTTOM, false, true, 2, 1);
 		gd_clearButton.verticalIndent = 30;
 		clearButton.setLayoutData(gd_clearButton);
@@ -401,29 +376,29 @@ public class SPAView extends ViewPart implements Constants {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
 
+				// Reset the table.
 				recordTable.removeAll();
-				exponentBinary.setText(""); //$NON-NLS-1$
-				basis.setText(""); //$NON-NLS-1$
-				exponent.setText(""); //$NON-NLS-1$
-				mod.setText(""); //$NON-NLS-1$
-				exp_selected = 0;
-				result.setText(""); //$NON-NLS-1$
-				exponent.deselectAll();
-				pSelectCombo.deselectAll();
-				qSelectCombo.deselectAll();
-				p_selected = 0;
-				q_selected = 0;
+				
 				modeSelection.select(0);
-				executeButton.setEnabled(false);
 				basis.setFocus();
-				for (Control ctrl : powerTraceVisualizationGroup.getChildren())
+				
+				// Remove the image.
+				for (Control ctrl : powerTraceVisualizationGroup.getChildren()) {
 					ctrl.dispose();
-				rsaProcessText.setText(INFORMATION_SAM_TEXT);
+				}
+				
+				rsaProcessText.setText(Messages.Constants_125);
+				
+				// Set the default values to the GUI.
+				setStartValues();
+				
+				checkInputFields();
 			}
 		});
-		clearButton.setToolTipText(TOOL_TIP_TEXT_CLEARBUTTON);
-		clearButton.setText(CLEAR_BUTTON_TEXT);
+		clearButton.setToolTipText(Messages.Constants_136);
+		clearButton.setText(Messages.Constants_127);
 
+		// Fill private key d combo
 		int dataLengthExponent = primeDataExponent.length;
 		int dataElementIndexExponent = 0;
 		while (dataLengthExponent > 0) {
@@ -431,32 +406,81 @@ public class SPAView extends ViewPart implements Constants {
 			dataLengthExponent--;
 			dataElementIndexExponent++;
 		}
+		
 
 		// the range in which p and q can be selected
 		final int[] primeData = { 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181,
 				191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293 };
 
+		// Fill "choose Q" combo box.
 		int data_length = primeData.length;
 		int data_element_index = 0;
 		while (data_length > 0) {
-
 			qSelectCombo.add(String.valueOf(primeData[data_element_index]));
 			data_length--;
 			data_element_index++;
-
 		}
+		
 
+		// Fill "choose P" combo box
 		data_length = primeData.length;
 		data_element_index = 0;
 		while (data_length > 0) {
-
 			pSelectCombo.add(String.valueOf(primeData[data_element_index]));
 			data_length--;
 			data_element_index++;
-
 		}
+		
+		// Fill the GUI with default values.
+		setStartValues();
+		
+		checkInputFields();
+		
+	}
+	
+	/**
+	 * This method checks, if all entry field contain
+	 * values. If this is the case the "execute" button is
+	 * enabled. If no value is entered in an input field the
+	 * "execute" button is disabled.
+	 */
+	private void checkInputFields() {
+		boolean inputCorrect = false;
+		// user entered a ciphertext
+		if (!basis.getText().isBlank()) {
+			// user selected a private key.
+			if (!exponent.getText().isBlank()) {
+				// user entered a prime q.
+				if (!qSelectCombo.getText().isBlank()) {
+					// user entered a prime p
+					if (!pSelectCombo.getText().isBlank()) {
+						// Enable the execute button
+						inputCorrect = true;
+					}
+				}
+			}
+		}
+		
+		executeButton.setEnabled(inputCorrect);
+		
 	}
 
+	/**
+	 * This method sets default values to all
+	 * entry field
+	 */
+	private void setStartValues() {
+		basis.setText("5454");
+		exponent.setText("101");
+		exponentBinary.setText("1100101");
+		mod.setText("21877");
+		qSelectCombo.setText("131");
+		q_selected = 131;
+		pSelectCombo.setText("167");
+		p_selected = 167;
+	}
+	
+	
 	/**
 	 * Fill the table with values and print the pictures below the table.
 	 */
@@ -482,20 +506,20 @@ public class SPAView extends ViewPart implements Constants {
 		// "square and multiply always" in table
 		final TableItem initialTableItemBasis = new TableItem(recordTable, SWT.BORDER);
 
-		initialTableItemBasis.setText(0, INPUT_BASIS_ENG);
+		initialTableItemBasis.setText(0, Messages.Constants_106);
 
-		String text = RES_AFTER_SQUARE_ENG;
+		String text = Messages.Constants_108;
 		initialTableItemBasis.setText(1, text);
-		text = isSaMmode ? RES_AFTER_MUL_BIT_1_ENG : RES_AFTER_MUL;
+		text = isSaMmode ? Messages.Constants_109 : Messages.Constants_145;
 		initialTableItemBasis.setText(2, text);
 
 		if (isSaMmode) {
 			final TableItem initialTableItemBasis2 = new TableItem(recordTable, SWT.BORDER);
-			initialTableItemBasis2.setText(2, RES_AFTER_MUL_BIT_0_ENG);
+			initialTableItemBasis2.setText(2, Messages.Constants_131);
 		}
 
 		final TableItem initialTableItemProcess = new TableItem(recordTable, SWT.BORDER);
-		initialTableItemProcess.setText(0, INITIAL_ITEM_TEXT_3_IN_TABLE);
+		initialTableItemProcess.setText(0, Messages.Constants_123);
 
 		int achse_x = 0;
 
@@ -509,18 +533,18 @@ public class SPAView extends ViewPart implements Constants {
 
 		while (exp_in_binar_length > 0) {
 			final TableItem tempTableItems = new TableItem(recordTable, SWT.BORDER);
-			tempTableItems.setText(0, "  " + counter + HIGHEST_BIT_ENG + exp_in_binary.charAt(count)); //$NON-NLS-1$
+			tempTableItems.setText(0, "  " + counter + Messages.Constants_104 + exp_in_binary.charAt(count)); //$NON-NLS-1$
 
 			long tempres_byExp = res;
 
-			text = NLS.bind(S_RES, INDICES[counter]);
+			text = NLS.bind(Messages.Constants_103, INDICES[counter]);
 
 			res = (long) Math.pow(res, 2) % Integer.parseInt(mod.getText());
-			tempTableItems.setText(1, text + tempres_byExp + HOCH_2_MOD_ENG + mod.getText() + " = " + res); //$NON-NLS-1$
+			tempTableItems.setText(1, text + tempres_byExp + Messages.Constants_112 + mod.getText() + " = " + res); //$NON-NLS-1$
 
 			long tempres = res;
 
-			text = NLS.bind(R_RES, INDICES[counter + 1]);
+			text = NLS.bind(Messages.Constants_111, INDICES[counter + 1]);
 
 			if (exp_in_binary.charAt(count) == '1') {
 				long tempres_byMul = res;
@@ -559,11 +583,11 @@ public class SPAView extends ViewPart implements Constants {
 		achseX_squareLabel.setImage(ImageService.getImage(SPAPlugIn.PLUGIN_ID, IMGADDRESSE_X_ACHSE_ENG));
 
 		final TableItem outPutTableItems = new TableItem(recordTable, SWT.BORDER);
-		outPutTableItems.setText(0, OUTPUT_TABLE_ITEM_TEXT);
+		outPutTableItems.setText(0, Messages.Constants_124);
 
 		final TableItem finalTableItems = new TableItem(recordTable, SWT.BORDER);
 
-		finalTableItems.setText(0, "  " + FINAL_RESULT_ENG + res); //$NON-NLS-1$
+		finalTableItems.setText(0, "  " + Messages.Constants_105 + res); //$NON-NLS-1$
 		result.setText("" + res); //$NON-NLS-1$
 
 		res = squareandMultiply.sqmulExcution(Integer.parseInt(basis.getText()), Integer.parseInt(exponent.getText()),
@@ -597,19 +621,19 @@ public class SPAView extends ViewPart implements Constants {
 		// information will be saved
 		final TableColumn roundCol = new TableColumn(recordTable, SWT.NONE);
 		roundCol.setWidth(180);
-		roundCol.setText(FIRST_COLUMN_IN_TABLE);
+		roundCol.setText(Messages.Constants_119);
 
 		// resSquareCol is the second low of recorder table in which the result
 		// after squaring will be saved
 		final TableColumn resSquareCol = new TableColumn(recordTable, SWT.NONE);
 		resSquareCol.setWidth(210);
-		resSquareCol.setText(SECOND_COLUMN_IN_TABLE);
+		resSquareCol.setText(Messages.Constants_12);
 
 		// resMultiCol is the last low in which the result after multiplication
 		// will be saved
 		final TableColumn resMultiCol = new TableColumn(recordTable, SWT.NONE);
 		resMultiCol.setWidth(255);
-		resMultiCol.setText(THIRD_COLUMN_IN_TABLE);
+		resMultiCol.setText(Messages.Constants_120);
 
 		new TableCursor(recordTable, SWT.NONE);
 		

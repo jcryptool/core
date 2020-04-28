@@ -13,7 +13,7 @@
 
 <h2>RSA Parameter Erklärung</h2>
 
-<img width="85%" src="rsa_parameter.jpg">
+<img width="40%" src="rsa_parameter.PNG">
 
 <p>Chiffretext c: Zeigt den, mit dem geheimen privaten Schlüssel d (z. B. 101) verschlüsselten Geheimtext (z. B. 5454).</p>
 
@@ -23,11 +23,11 @@
 
 <h2>Unsicherer "Square and Multiply"-Algorithmus</h2>
 
-<img width="85%" src="square_and_multiply.jpg">
+<img width="60%" src="square_and_multiply.jpg">
 
 <p>Der "Square and Multiply"-Algorithmus wird verwendet, um die Potenzierung des privaten und des öffentliche Schlüssels während der Ver- und Entschlüsselung des RSA-Algorithmus auszuführen. </p>
 
-<img width="85%" src="executeprocessofsaq.jpg">
+<img width="85%" src="executeprocessofsaq.PNG">
 
 <p> Wie oben gezeigt, wird der private Schlüssel zunächst von der dezimalen Darstellung in binäre Darstellung umgewandelt (z.B. 101 (dezimal) zu 1100101 (binär)). Danach quadrieren wir die Bits von links nach rechts und verrechnen sie mit dem vorherigen Ergebnis: Ist das gegenwärtige Bit ein "1", wird eine Multiplikation (Res = Res * c mod n) 
 nach der Quadrierung (Res = Res <sup>2</sup> mod n) durchgeführt. Ist das gegenwärtige Bit eine "0", führen wir nur die Quadrierung aus.</p>
@@ -36,7 +36,7 @@ nach der Quadrierung (Res = Res <sup>2</sup> mod n) durchgeführt. Ist das gegen
 
 <p> Der "Square and Multiply"-Algorithmus ist anfällig für "Power Analysis Attack", da die Operationen "Square and Multiply" und "Multiply" unterschiedliche Spuren in Stromkurven verursachen.</p>
 
-<img width="85%" src="visual_of_sam.jpg">
+<img width="85%" src="visual_of_sam.PNG">
 
 <p> Die Stromkurve (Power Trace) ist zwischen den Operationen "Square and Multiply" und "Square" unterschiedlich. Dadurch kann die "Simple Power Analysis" jedes Bit des geheimen Exponenten d durch den Vergleich und die Analyse der Stromkurve feststellen. In der Abbildung oben wird die Stromkurve des privaten Schlüssel 1100101 gezeigt.</p>
 
@@ -44,17 +44,19 @@ nach der Quadrierung (Res = Res <sup>2</sup> mod n) durchgeführt. Ist das gegen
 
 <p> Der original "Square and Multiply"-Algorithmus kann durch hinzufügen einer Dummy-Multiplikation, wenn das gegenwärtige Bit gleich "0" ist, verbessert werden. </p>
 
-<img width="85%" src="square_and_multiply_always.jpg"> <img width="85%" src="processofsama.jpg">
+<img width="60%" src="square_and_multiply_always.jpg">
+
+<img width="85%" src="processofsama.PNG">
 
 <p>Egal, ob das gegenwärtige Bit gleich "1" oder "0" ist, es wird immer quadriert und multipliziert.</p>
 
-<img width="85%" src="powertraceofsama.jpg">
+<img width="85%" src="powertraceofsama.PNG">
 
-<p> Offensichtlich gibt es keine Unterschiede mehr, ob eine "0" oder eine "1" verarbeitet wurde. Es kann nicht mehr herausgefunden werden, ob der private Schlüssel d eine "0" oder "1" an einer Stelle enthält.<\p>
+<p> Offensichtlich gibt es keine Unterschiede mehr, ob eine "0" oder eine "1" verarbeitet wurde. Es kann nicht mehr herausgefunden werden, ob der private Schlüssel d eine "0" oder "1" an einer Stelle enthält.</p>
 
 <p> Für weitere Informationen über elliptischen Kurve Berechnung, siehe Unterabschnitt "Simple Power Analysis" in "Power-Analyse" oder
 <a href="http://en.wikipedia.org/wiki/Power_analysis#Simple_Power_Analysis">http://en.wikipedia.org/wiki/Power_analysis#Simple_Power_Analysis</a>.</p>
 
-<\p>
 </body>
 </html>
+<br>
