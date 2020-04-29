@@ -25,7 +25,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 public class CalculationThread implements IRunnableWithProgress {
     private int min = 2;
     private int max = 100;
-    private int stoppedAt = 250;
+    private int stoppedAt = 519;
     private int selectedStrategy = 0;
 
     public CalculationThread(int min, int max, int selectedStrategy) {

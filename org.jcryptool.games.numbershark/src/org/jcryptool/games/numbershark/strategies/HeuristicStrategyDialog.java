@@ -73,18 +73,16 @@ public class HeuristicStrategyDialog extends AbstractStrategyDialog {
         	
             @Override
 			public void widgetSelected(SelectionEvent e) {
-                if (e.getSource() == radioButton[0]) {
-                    selectedStrategy = 2;
-                } else if (e.getSource() == radioButton[1]) {
-                    selectedStrategy = 3;
-                } else if (e.getSource() == radioButton[2]) {
-                    selectedStrategy = 4;
-                } else if (e.getSource() == radioButton[3]) {
-                    selectedStrategy = 5;
-                }
+                updateRadioButton(radioButton, e.getSource());
             }
         };
 
+        radioButton[0].setSelection(true);
+        radioButton[1].setSelection(false);
+        radioButton[2].setSelection(false);
+        
+        updateRadioButton(radioButton, radioButton[0]);
+        
         radioButton[0].addSelectionListener(radioButtonListener);
         radioButton[1].addSelectionListener(radioButtonListener);
         radioButton[2].addSelectionListener(radioButtonListener);
@@ -99,7 +97,19 @@ public class HeuristicStrategyDialog extends AbstractStrategyDialog {
         return area;
     }
 
-    @Override
+    private void updateRadioButton(final Button[] radioButton, Object source) {
+		if (source == radioButton[0]) {
+	        selectedStrategy = 2;
+	    } else if (source == radioButton[1]) {
+	        selectedStrategy = 3;
+	    } else if (source == radioButton[2]) {
+	        selectedStrategy = 4;
+	    } else if (source == radioButton[3]) {
+	        selectedStrategy = 5;
+	    }
+	}
+
+	@Override
     protected void configureShell(Shell newShell) {
         super.configureShell(newShell);
         newShell.setText(Messages.HeuStratDialog_7);
