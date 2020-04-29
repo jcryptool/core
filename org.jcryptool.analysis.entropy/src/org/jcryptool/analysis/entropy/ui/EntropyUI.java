@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -86,6 +87,16 @@ public class EntropyUI extends Composite {
 
 	private void initGUI() {
 		try {
+
+            mainComp = new Composite(this, SWT.NONE);
+            mainComp.setLayout(new GridLayout(1, false))
+            mainComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true))
+            
+            TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(mainComp);
+            titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+            titleAndDescription.setTitle("Entropy Analysis");
+            titleAndDescription.setDescription("TODO: TAD description (fill in!)");
+
 			this.setLayout(new FormLayout());
 			{
 				cMainTabFolder = new CTabFolder(this, SWT.NONE);
