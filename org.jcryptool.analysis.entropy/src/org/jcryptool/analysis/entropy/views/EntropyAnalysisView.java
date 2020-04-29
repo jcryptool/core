@@ -11,6 +11,8 @@ package org.jcryptool.analysis.entropy.views;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
@@ -26,9 +28,11 @@ public class EntropyAnalysisView extends ViewPart {
 	 */
 	public void createPartControl(Composite parent) {
 		final ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+		sc.setLayout(new GridLayout());
 		sc.setExpandHorizontal(true);
 		sc.setExpandVertical(true);
 		ui = new EntropyUI(sc, SWT.NONE);
+		ui.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		sc.setContent(ui);
 		sc.setMinSize(ui.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 

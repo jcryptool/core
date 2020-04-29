@@ -48,7 +48,7 @@ public class HeuristicStrategyHandler extends AbstractHandler {
                 ResultDialHeuristicStrategy calculate;
                 calculate = new ResultDialHeuristicStrategy(Workbench.getInstance().getActiveWorkbenchWindow().getShell(),
                         heuStrat.getSelectedStrategy());
-//                 calculate.setBounds(heuStrat.getMin(), heuStrat.getMax());
+                calculate.setBounds(heuStrat.getMin(), heuStrat.getMax());
 
                 calculate.open();
 

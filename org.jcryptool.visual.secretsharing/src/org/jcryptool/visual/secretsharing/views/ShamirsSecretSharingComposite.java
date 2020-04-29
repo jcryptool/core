@@ -55,6 +55,7 @@ import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.secretsharing.algorithm.Point;
 import org.jcryptool.visual.secretsharing.algorithm.ShamirsSecretSharing;
 import org.jcryptool.visual.secretsharing.views.Constants;
@@ -214,25 +215,12 @@ public class ShamirsSecretSharingComposite extends Composite {
      * Created the info header. Plugin title + description.
      */
     private void createCompositeIntro(Composite parent) {
-    	
-        Composite compositeIntro = new Composite(parent, SWT.NONE);
-        compositeIntro.setBackground(ColorService.WHITE);
-        compositeIntro.setLayout(new GridLayout());
-        GridData gd_compositeIntro = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
-        gd_compositeIntro.widthHint = 1000;
-        compositeIntro.setLayoutData(gd_compositeIntro);
 
-        Label label = new Label(compositeIntro, SWT.NONE);
-        label.setFont(FontService.getHeaderFont());
-        label.setBackground(ColorService.WHITE);
-        label.setText(Messages.ShamirsCompositeGraphical_title);
-
-        Text stDescription = new Text(compositeIntro, SWT.READ_ONLY | SWT.WRAP);
-        stDescription.setBackground(ColorService.WHITE);
-        stDescription.setText(Messages.SSSConstants_Title_Info + " ");  //$NON-NLS-1$
-//        		+ Messages.SSSConstants_Title_Info_Formula + " " //$NON-NLS-1$
-//        		+ Messages.lagrange_formular); //$NON-NLS-1$ //$NON-NLS-2$
-        stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(parent);
+        titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+        titleAndDescription.setTitle(Messages.ShamirsCompositeGraphical_title);
+        titleAndDescription.setDescription(Messages.SSSConstants_Title_Info);
+        
     }
     
     

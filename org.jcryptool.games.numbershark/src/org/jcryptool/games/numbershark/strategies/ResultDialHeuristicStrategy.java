@@ -14,6 +14,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.games.numbershark.NumberSharkPlugin;
@@ -28,7 +29,7 @@ public class ResultDialHeuristicStrategy extends AbstractResultDialog {
     public ResultDialHeuristicStrategy(Shell shell, int selectedStrategy) {
         super(shell, selectedStrategy);
     }
-
+    
     @Override
 	protected Control createDialogArea(Composite parent) {
         setTitle(Messages.ShowHeuStrategy_1);
@@ -65,7 +66,7 @@ public class ResultDialHeuristicStrategy extends AbstractResultDialog {
                 .setHelp(parent, NumberSharkPlugin.PLUGIN_ID + ".heuStratResultDialog"); //$NON-NLS-1$
 
         parent.layout(true);
-        parent.getShell().pack();
+//        parent.getShell().pack();
         return area;
     }
 
@@ -78,5 +79,6 @@ public class ResultDialHeuristicStrategy extends AbstractResultDialog {
     protected void configureShell(Shell newShell) {
         super.configureShell(newShell);
         newShell.setText(Messages.ShowHeuStrategy_0);
+        newShell.setSize(Display.getCurrent().getBounds().width / 3, (int) (Display.getCurrent().getBounds().height * (0.75)));
     }
 }
