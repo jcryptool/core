@@ -46,6 +46,7 @@ import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.games.divide.DividePlugin;
 import org.jcryptool.games.divide.dialogs.ChoosePlayerDialog;
 import org.jcryptool.games.divide.logic.ComputerPlayer;
@@ -120,26 +121,13 @@ public class DivideView extends ViewPart implements Observer {
         gl_content.marginHeight = 0;
         content.setLayout(gl_content);
 
-        // description
-        descriptionComposite = new Composite(content, SWT.NONE);
-        descriptionComposite.setLayout(new GridLayout(1, false));
-        descriptionComposite.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
-        
         scrolledComposite.setContent(content);
         
-        titleText = new Text(descriptionComposite, SWT.NONE);
-        titleText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        titleText.setFont(FontService.getHeaderFont());
-        titleText.setText(Messages.DivideView_19);
-        titleText.setEditable(false);
         
-        descriptionText = new Text(descriptionComposite, SWT.WRAP);
-        GridData gd_descriptionText = new GridData(SWT.FILL, SWT.FILL, true, false);
-        //Needed that the text will wrap
-        gd_descriptionText.widthHint = 800;
-        descriptionText.setLayoutData(gd_descriptionText);
-        descriptionText.setText(Messages.DivideView_20);
-        descriptionText.setEditable(false);
+		TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(content);
+		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		titleAndDescription.setTitle(Messages.DivideView_19);
+		titleAndDescription.setDescription(Messages.DivideView_20);
         
         upperContent = new Composite(content, SWT.NONE);
         upperContent.setLayout(new GridLayout(1, true));

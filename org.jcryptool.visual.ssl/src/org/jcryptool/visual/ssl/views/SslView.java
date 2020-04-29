@@ -28,6 +28,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.ssl.protocol.Message;
 
 /**
@@ -78,22 +79,11 @@ public class SslView extends ViewPart {
         gl.verticalSpacing = 0;
         mainContent.setLayout(gl);
         
-        Composite compositeIntro = new Composite(mainContent, SWT.NONE);
-        compositeIntro.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-        GridData gd_compositeIntro = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        gd_compositeIntro.widthHint = widthHint;
-        compositeIntro.setLayoutData(gd_compositeIntro);
-        compositeIntro.setLayout(new GridLayout(1, false));
-
-        Label headline = new Label(compositeIntro, SWT.NONE);
-        headline.setFont(FontService.getHeaderFont());
-        headline.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-        headline.setText(Messages.SslViewHeadline);
-
-        StyledText stDescription = new StyledText(compositeIntro, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
-        stDescription.setText(Messages.SslViewHeadlineInformation);
-        stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-
+        TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(mainContent);
+        titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        titleAndDescription.setTitle(Messages.SslViewHeadline);
+        titleAndDescription.setDescription(Messages.SslViewHeadlineInformation);
+        
         content = new Composite(mainContent, SWT.NONE);
         GridData gd_content = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         gd_content.widthHint = widthHint;

@@ -47,6 +47,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.numbers.NumberService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.games.numbershark.NumberSharkPlugin;
 import org.jcryptool.games.numbershark.dialogs.EndOfGameDialog;
 import org.jcryptool.games.numbershark.util.CommandState;
@@ -81,6 +82,7 @@ public class NumberSharkView extends ViewPart {
     private Hashtable<Integer, ScoreTableRow> scoreTableRowList = new Hashtable<Integer, ScoreTableRow>();
     private int playerMove;
 	private Shell shell;
+	private Composite mainComp;
     
 
     @Override
@@ -88,7 +90,15 @@ public class NumberSharkView extends ViewPart {
         this.parent = parent;
         this.shell = parent.getShell();
 
-        SashForm sashForm = new SashForm(parent, SWT.VERTICAL);
+        mainComp = new Composite(parent, SWT.NONE);
+        mainComp.setLayout(new GridLayout());
+
+        TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(mainComp);
+        titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        titleAndDescription.setTitle(Messages.NumberSharkView_zzTitle);
+        titleAndDescription.setDescription(Messages.NumberSharkView_zzDescr);
+        
+        SashForm sashForm = new SashForm(mainComp, SWT.VERTICAL);
         sashForm.setLayout(new GridLayout(1, false));
         sashForm.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
         playingField = new Composite(sashForm, SWT.NONE);
@@ -332,7 +342,7 @@ public class NumberSharkView extends ViewPart {
         tab = new TabItem[numOfTabs];
         for (int j = 0; j < numOfTabs; j++) {
             tab[j] = new TabItem(numberTabs, SWT.NONE);
-            tab[j].setText(j * MAX_NUM_PER_TAB + 1 + "-" + min((j + 1) * MAX_NUM_PER_TAB, numberOfFields));
+            tab[j].setText(j * MAX_NUM_PER_TAB + 1 + "-" + min((j + 1) * MAX_NUM_PER_TAB, numberOfFields)); //$NON-NLS-1$
         }
         this.numberOfFields = numberOfFields;
 
@@ -371,7 +381,7 @@ public class NumberSharkView extends ViewPart {
             int translation = selectedTab * MAX_NUM_PER_TAB + 1;
             if (i <= numberOfFields) {
                 buttons[i - translation] = new CLabel(compTabs, SWT.CENTER | SWT.SHADOW_OUT | SWT.PUSH);
-                buttons[i - translation].setText("" + i);
+                buttons[i - translation].setText("" + i); //$NON-NLS-1$
                 buttons[i - translation].setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
                 buttons[i - translation].setEnabled(numberField[i - 1].isEnabled());
                 buttons[i - translation].setFont(FontService.getHugeBoldFont());
@@ -419,7 +429,7 @@ public class NumberSharkView extends ViewPart {
      */
     private String calcToolTip(int i) {
         StringBuffer sb = new StringBuffer();
-        sb.append("" + Messages.NumberSetView_31 + i + "\n");
+        sb.append("" + Messages.NumberSetView_31 + i + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
         ArrayList<Integer> activeDivisors = new ArrayList<Integer>();
         ArrayList<Integer> divisors = numberField[i - 1].getDivisors();
 
@@ -429,13 +439,13 @@ public class NumberSharkView extends ViewPart {
             }
         }
         if (activeDivisors.size() == 0) {
-            sb.append(Messages.NumberSetView_33 + "\n");
+            sb.append(Messages.NumberSetView_33 + "\n"); //$NON-NLS-1$
         } else {
             sb.append(Messages.NumberSetView_32);
             for (int j = 0; j < activeDivisors.size() - 1; j++) {
-                sb.append(activeDivisors.get(j) + ", ");
+                sb.append(activeDivisors.get(j) + ", "); //$NON-NLS-1$
             }
-            sb.append(activeDivisors.get(activeDivisors.size() - 1) + " \n");
+            sb.append(activeDivisors.get(activeDivisors.size() - 1) + " \n"); //$NON-NLS-1$
         }
         int m = 2;
         if (m * i > numberOfFields) {
@@ -443,7 +453,7 @@ public class NumberSharkView extends ViewPart {
         } else {
             sb.append(Messages.NumberSetView_34);
             while (m * i <= numberOfFields - i) {
-                sb.append(m * i + ", ");
+                sb.append(m * i + ", "); //$NON-NLS-1$
                 m++;
             }
             sb.append(m * i);
