@@ -61,6 +61,7 @@ public class SslView extends ViewPart {
 
     public static final String ID = "org.jcryptool.visual.ssl.views.SslView"; //$NON-NLS-1$
 	private Group grp_stxInfo;
+	public Composite rootComp;
 
     public SslView() {
     }
@@ -72,6 +73,7 @@ public class SslView extends ViewPart {
      */
     @Override
     public void createPartControl(final Composite parent) {
+    	this.rootComp = parent;
     	LogUtil.setAutoMessageboxOnError(SslPlugin.PLUGIN_ID, true);
     	int widthHint = 1200;
     	
@@ -102,7 +104,7 @@ public class SslView extends ViewPart {
         scrolledComposite.setMinSize(mainContent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         
         // Fuer die Hilfe:
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.visual.ssl.view");
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.visual.ssl.view"); //$NON-NLS-1$
     }
 
     /**
@@ -366,7 +368,7 @@ public class SslView extends ViewPart {
 		MessageBox messageBox = new MessageBox(PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getShell(), SWT.ICON_WARNING
 				| SWT.OK);
-		messageBox.setText("Step parameters are incorrect");
+		messageBox.setText(Messages.SslView_1);
 		messageBox.setMessage(result);
 		messageBox.open();
 	}
