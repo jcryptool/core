@@ -27,6 +27,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
@@ -113,14 +114,9 @@ public class WotsView extends ViewPart {
 	private Composite composite;
 	private Text txtTheWinternitzonetimesignatureIs;
 	private Text txtWinternitzOtsignaturewots;
+	private ResizeListener imgResizer;
 
 
-	/**
-	 * Create contents of the view part. The layout manager has no option to define
-	 * a maximum size for text boxes, buttons, etc.
-	 * 
-	 * @param parent
-	 */
 	@Override
 	public void createPartControl(Composite parent) {
 
@@ -568,7 +564,8 @@ public class WotsView extends ViewPart {
 		gd_img_right.heightHint = 50;
 		img_right.setLayoutData(gd_img_right);
 		img_right.setImage(ImageService.getImage(WOTSPlugin.PLUGIN_ID, Messages.WotsView_Overview2));
-		img_right.addControlListener(new ResizeListener(img_right, composite));
+		imgResizer = new ResizeListener(img_right, composite);
+		img_right.addControlListener(imgResizer);
 
 		txt_SigKeySize = new Label(container, SWT.NONE);
 		txt_SigKeySize.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 2, 1));

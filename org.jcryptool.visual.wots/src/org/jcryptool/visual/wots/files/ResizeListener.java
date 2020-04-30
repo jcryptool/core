@@ -53,8 +53,11 @@ public class ResizeListener implements ControlListener {
      **/
     @Override
     public void controlResized(ControlEvent e) {
-       
-    	image = img.getImage();
+    	triggerResize();
+    }
+
+	public void triggerResize() {
+		image = img.getImage();
         if (image != null) {
             int width = image.getBounds().width;
             int height = image.getBounds().height;
@@ -67,6 +70,9 @@ public class ResizeListener implements ControlListener {
 
 
             // if container is smaller than image
+            if (comp_image.getBounds().height <= 0) {
+            	return;
+			}
             if ((comp_image.getBounds().width / comp_image.getBounds().height) < ratio) {
                 width_scaled = comp_image.getBounds().width;
 //                int temp = width_scaled / width;
@@ -103,7 +109,7 @@ public class ResizeListener implements ControlListener {
 //        System.out.println("--------------------------------------------------");
        	comp_image.layout();
         }
-    }
+	}
 }
 
 
