@@ -290,8 +290,8 @@ public class ServerFinishedComposite extends Composite implements ProtocolStep {
 	}
 
 	@Override
-	public boolean checkParameters() {
-		return true;
+	public String checkParameters() {
+		return ProtocolStep.OK;
 	}
 
 	@Override

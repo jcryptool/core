@@ -341,7 +341,7 @@ public class ServerCertificateComposite extends Composite implements
 	 * @return
 	 */
 	@Override
-	public boolean checkParameters() {
+	public String checkParameters() {
 
 		// Server Certificate hex message
 		String ServerCertificate;
@@ -375,7 +375,7 @@ public class ServerCertificateComposite extends Composite implements
 		Message.setServerCertificateServerHelloDone(Message
 				.getServerHelloKeyExchange());
 		infoText = false;
-		return true;
+		return ProtocolStep.OK;
 	}
 
 	/**

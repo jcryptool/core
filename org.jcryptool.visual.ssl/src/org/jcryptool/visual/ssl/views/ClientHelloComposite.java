@@ -366,7 +366,7 @@ public class ClientHelloComposite extends Composite implements ProtocolStep {
 	 * @see org.jcryptool.visual.ssl.protocol.ProtocolStep#checkParameters()
 	 */
 	@Override
-	public boolean checkParameters() {
+	public String checkParameters() {
 		String version="";
 		String length = "0000ad";
 		String type ="01";
@@ -391,7 +391,7 @@ public class ClientHelloComposite extends Composite implements ProtocolStep {
 			messageBox.setMessage(Messages.ServerHelloCompositeErrorRandom);
 			messageBox.setText(Messages.ServerHelloCompositeError);
 			messageBox.open();
-			return false;
+			return "";
 		} catch (Exception exc) {
 			MessageBox messageBox = new MessageBox(PlatformUI.getWorkbench()
 					.getActiveWorkbenchWindow().getShell(), SWT.ICON_WARNING
@@ -400,7 +400,7 @@ public class ClientHelloComposite extends Composite implements ProtocolStep {
 					.setMessage(Messages.ServerHelloCompositeErrorRandomShort);
 			messageBox.setText(Messages.ServerHelloCompositeError);
 			messageBox.open();
-			return false;
+			return "";
 		}
 		Message.setClientHelloVersion(cmdVersion.getSelectionIndex());
 		Message.setClientHelloSessionID(0);
@@ -451,7 +451,7 @@ public class ClientHelloComposite extends Composite implements ProtocolStep {
 			cipherSuiteLength = "0" + cipherSuiteLength;
 		}
 		Message.setMessageClientHello(type + length + version + txtRandom.getText() + sessionID + cipherSuiteLength + cipherSuite);
-		return true;
+		return ProtocolStep.OK;
 	}
 
 	/* (non-Javadoc)

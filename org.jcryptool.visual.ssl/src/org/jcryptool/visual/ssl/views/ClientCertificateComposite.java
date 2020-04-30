@@ -365,7 +365,7 @@ public class ClientCertificateComposite extends Composite implements
 	 * @return
 	 */
 	@Override
-	public boolean checkParameters() {
+	public String checkParameters() {
 		// Client Key Exchange
 		try {
 			String ClientKeyExchange = Hex.encode(exchangeKey.getPublic()
@@ -392,7 +392,7 @@ public class ClientCertificateComposite extends Composite implements
 			LogUtil.logError(SslPlugin.PLUGIN_ID, e);
 		}
 		Message.setClientCertificateServerKeyExchange(exchangeKey);
-		return true;
+		return ProtocolStep.OK;
 	}
 
 	/**

@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -32,6 +33,7 @@ import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.ssl.SslPlugin;
 import org.jcryptool.visual.ssl.protocol.Message;
+import org.jcryptool.visual.ssl.protocol.ProtocolStep;
 
 /**
  * Represents the visual TLS-Plugin.
@@ -277,7 +279,8 @@ public class SslView extends ViewPart {
      */
     public void nextStep() {
         if (serverHelloComposite.getVisible() == false) {
-            if (clientHelloComposite.checkParameters()) {
+			String result = clientHelloComposite.checkParameters();
+            if (result.equals(ProtocolStep.OK)) {
                 serverHelloComposite.startStep();
                 serverHelloComposite.setVisible(true);
                 serverHelloComposite.enableControls();
@@ -286,16 +289,22 @@ public class SslView extends ViewPart {
                 int arrowStartHeight = clientHelloCompositeBounds.y + clientHelloCompositeBounds.height / 2;
                 arrow.nextArrow(0, arrowStartHeight, 100, arrowStartHeight, 0, 0, 0);
                 btnPreviousStep.setEnabled(true);
+            } else {
+                handleStepFailure(result);
             }
         } else if (serverCertificateComposite.getVisible() == false) {
-            if (serverHelloComposite.checkParameters()) {
+			String result = serverHelloComposite.checkParameters();
+            if (result.equals(ProtocolStep.OK)) {
                 serverCertificateComposite.startStep();
                 serverCertificateComposite.setVisible(true);
                 serverCertificateComposite.enableControls();
                 serverHelloComposite.disableControls();
+            } else {
+                handleStepFailure(result);
             }
         } else if (clientCertificateComposite.getVisible() == false) {
-            if (serverCertificateComposite.checkParameters()) {
+			String result = serverCertificateComposite.checkParameters();
+            if (result.equals(ProtocolStep.OK)) {
                 clientCertificateComposite.startStep();
                 clientCertificateComposite.setVisible(true);
                 clientCertificateComposite.enableControls();
@@ -306,9 +315,12 @@ public class SslView extends ViewPart {
                 arrow.nextArrow(100, arrowStartHeight, 0, arrowStartHeight, 0, 0, 0);
                 if (!Message.getServerCertificateServerCertificateRequest())
                     clientCertificateComposite.btnShow.setEnabled(false);
+            } else {
+                handleStepFailure(result);
             }
         } else if (serverChangeCipherSpecComposite.getVisible() == false) {
-            if (clientCertificateComposite.checkParameters()) {
+			String result = clientCertificateComposite.checkParameters();
+            if (result.equals(ProtocolStep.OK)) {
                 serverChangeCipherSpecComposite.startStep();
                 serverChangeCipherSpecComposite.setVisible(true);
                 serverChangeCipherSpecComposite.enableControls();
@@ -320,9 +332,12 @@ public class SslView extends ViewPart {
                 Rectangle clientCertificateCompositeBounds = clientCertificateComposite.getBounds();
                 int arrowStartHeight = clientCertificateCompositeBounds.y + clientCertificateCompositeBounds.height / 2 + 20;
                 arrow.nextArrow(0, arrowStartHeight, 100, arrowStartHeight + 100, 0, 0, 0);
+            } else {
+                handleStepFailure(result);
             }
         } else if (clientChangeCipherSpecComposite.getVisible() == false) {
-            if (serverChangeCipherSpecComposite.checkParameters()) {
+			String result = serverChangeCipherSpecComposite.checkParameters();
+            if (result.equals(ProtocolStep.OK)) {
                 clientChangeCipherSpecComposite.startStep();
                 clientChangeCipherSpecComposite.setVisible(true);
                 clientChangeCipherSpecComposite.enableControls();
@@ -341,11 +356,22 @@ public class SslView extends ViewPart {
                 int arrows2StartHeight = serverFinishedBounds.y + serverFinishedBounds.height / 2 - 10; 
                 arrow.nextArrow(100, arrows2StartHeight - 12, 0, arrows2StartHeight - 12, 0, 180, 0);
                 arrow.nextArrow(0, arrows2StartHeight + 12, 100, arrows2StartHeight + 12, 0, 180, 0);
+            } else {
+                handleStepFailure(result);
             }
         }
     }
 
-    /**
+    private void handleStepFailure(String result) {
+		MessageBox messageBox = new MessageBox(PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow().getShell(), SWT.ICON_WARNING
+				| SWT.OK);
+		messageBox.setText("Step parameters are incorrect");
+		messageBox.setMessage(result);
+		messageBox.open();
+	}
+
+	/**
      * Restarts the whole Plugin.
      */
     public void resetStep() {

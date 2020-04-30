@@ -433,11 +433,11 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 	}
 
 	@Override
-	public boolean checkParameters() {
+	public String checkParameters() {
 		doClientChangeCipherSpec();
 		infoText = false;
 		refreshInformations();
-		return true;
+		return ProtocolStep.OK;
 	}
 
 	/**

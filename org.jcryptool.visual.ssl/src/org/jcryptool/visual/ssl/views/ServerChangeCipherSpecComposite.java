@@ -475,9 +475,9 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 	}
 
 	@Override
-	public boolean checkParameters() {
+	public String checkParameters() {
 		doServerChangeCipherSpec();
-		return true;
+		return ProtocolStep.OK;
 	}
 
 	/**

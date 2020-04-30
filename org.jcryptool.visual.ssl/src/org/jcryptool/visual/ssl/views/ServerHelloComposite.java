@@ -330,7 +330,7 @@ public class ServerHelloComposite extends Composite implements ProtocolStep {
 	 * @see protocol.ProtocolStep#checkParameters()
 	 */
 	@Override
-	public boolean checkParameters() {
+	public String checkParameters() {
 		String length = "00004c";
 		String type ="02";
 		String sessionIDLength="";
@@ -357,7 +357,7 @@ public class ServerHelloComposite extends Composite implements ProtocolStep {
 			messageBox.setMessage(Messages.ServerHelloCompositeErrorRandom);
 			messageBox.setText(Messages.ServerHelloCompositeError);
 			messageBox.open();
-			return false;
+			return "";
 		} catch (IllegalArgumentException exc) {
 			MessageBox messageBox = new MessageBox(PlatformUI.getWorkbench()
 					.getActiveWorkbenchWindow().getShell(), SWT.ICON_WARNING
@@ -366,7 +366,7 @@ public class ServerHelloComposite extends Composite implements ProtocolStep {
 					.setMessage(Messages.ServerHelloCompositeErrorRandomShort);
 			messageBox.setText(Messages.ServerHelloCompositeError);
 			messageBox.open();
-			return false;
+			return "";
 		}
 		
 		try 
@@ -411,7 +411,7 @@ public class ServerHelloComposite extends Composite implements ProtocolStep {
 			messageBox.setMessage(Messages.ServerHelloCompositeErrorSessionIDNull);
 			messageBox.setText(Messages.ServerHelloCompositeError);
 			messageBox.open();
-			return false;
+			return "";
 		}
 		catch (NumberFormatException exc) 
 		{
@@ -421,7 +421,7 @@ public class ServerHelloComposite extends Composite implements ProtocolStep {
 			messageBox.setMessage(Messages.ServerHelloCompositeErrorSessionID);
 			messageBox.setText(Messages.ServerHelloCompositeError);
 			messageBox.open();
-			return false;
+			return "";
 		}
 		catch (IllegalArgumentException exc) {
 			MessageBox messageBox = new MessageBox(PlatformUI.getWorkbench()
@@ -430,26 +430,25 @@ public class ServerHelloComposite extends Composite implements ProtocolStep {
 			messageBox.setMessage(Messages.ServerHelloCompositeErrorSessionIDLength);
 			messageBox.setText(Messages.ServerHelloCompositeError);
 			messageBox.open();
-			return false;
+			return "";
 		}
+		String item = cmbCipherSuite.getItem(cmbCipherSuite
+				.getSelectionIndex());
 		if (cmbVersion.getSelectionIndex() == 0
 				&& Message.getClientHelloTls0CipherSuites().contains(
-						cmbCipherSuite.getItem(cmbCipherSuite
-								.getSelectionIndex())) == false) {
+						item) == false) {
 			jumpToClientHello();
-			return false;
+			return String.format("%s is not a %s cipher suite; the protocol has been reset.", item, "TLS 0");
 		} else if (cmbVersion.getSelectionIndex() == 1
 				&& Message.getClientHelloTls1CipherSuites().contains(
-						cmbCipherSuite.getItem(cmbCipherSuite
-								.getSelectionIndex())) == false) {
+						item) == false) {
 			jumpToClientHello();
-			return false;
+			return String.format("%s is not a %s cipher suite; the protocol has been reset.", item, "TLS 1");
 		} else if (cmbVersion.getSelectionIndex() == 2
 				&& Message.getClientHelloTls2CipherSuites().contains(
-						cmbCipherSuite.getItem(cmbCipherSuite
-								.getSelectionIndex())) == false) {
+						item) == false) {
 			jumpToClientHello();
-			return false;
+			return String.format("%s is not a %s cipher suite; the protocol has been reset.", item, "TLS 2");
 		}
 		infoText = false;
 		refreshInformations();
@@ -469,7 +468,7 @@ public class ServerHelloComposite extends Composite implements ProtocolStep {
 		Message.setMessageServerHello(type+length+Message.getServerHelloVersion()+txtRandom.getText()+sessionIDLength+sessionID+cipherSuite);
 		
 		Attacks attack = new Attacks();
-		return attack.getDecision();
+		return attack.getDecision() ? ProtocolStep.OK : "";
 	}
 
 	/**
