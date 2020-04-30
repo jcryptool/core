@@ -26,9 +26,11 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.visual.ssl.SslPlugin;
 import org.jcryptool.visual.ssl.protocol.Message;
 
 /**
@@ -68,6 +70,7 @@ public class SslView extends ViewPart {
      */
     @Override
     public void createPartControl(final Composite parent) {
+    	LogUtil.setAutoMessageboxOnError(SslPlugin.PLUGIN_ID, true);
     	int widthHint = 1200;
     	
         scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
