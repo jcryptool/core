@@ -9,6 +9,9 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.core.logging.utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -35,7 +38,18 @@ public class LogUtil {
     public static final String LOGGER_LOG_LEVEL = "org.jcryptool.core.logging.logLevel"; //$NON-NLS-1$
     private static int loglevel = IStatus.ERROR;
     private static boolean jctVersionLogged = false;
+    
+    private static Map<String, Boolean> autoMessageBoxOnError = new HashMap<>();
 
+    public static boolean isAutoMessageboxOnError(String bundleId) {
+    	return autoMessageBoxOnError.getOrDefault(bundleId, false);
+    }
+    
+    public static void setAutoMessageboxOnError(String bundleId, boolean autoErrorDialog) {
+    	autoMessageBoxOnError.put(bundleId, autoErrorDialog);
+    }
+    
+    
     /**
      * Sets a new logging level.
      *
@@ -126,7 +140,15 @@ public class LogUtil {
      * @param ex The exception to log
      */
     public static void logError(Exception ex) {
-        log(null, ex.getMessage(), ex, IStatus.ERROR, false);
+        logError(ex, false);
+    }
+
+    /**
+     * Logs the exception with status <b>error</b>. This shows an error dialog     *
+     * @param ex The exception to log
+     */
+    public static void logError(Exception ex, boolean showAsMessagebox) {
+        log(null, ex.getMessage(), ex, IStatus.ERROR, showAsMessagebox);
     }
 
     /**
@@ -170,6 +192,7 @@ public class LogUtil {
      */
     private static void log(String bundleId, String message, Exception ex, int severity,
             boolean showErrorDialog) {
+    	boolean showAsDialog = showErrorDialog || ( isAutoMessageboxOnError(bundleId) && severity >= IStatus.ERROR );
         if (bundleId == null) {
             bundleId = LoggingPlugin.PLUGIN_ID;
         }
@@ -197,7 +220,7 @@ public class LogUtil {
             Platform.getLog(Platform.getBundle(bundleId)).log(status);
 
 
-            if (showErrorDialog) {
+            if (showAsDialog) {
                 JCTMessageDialog.showErrorDialog(status, message);
             }
         }
