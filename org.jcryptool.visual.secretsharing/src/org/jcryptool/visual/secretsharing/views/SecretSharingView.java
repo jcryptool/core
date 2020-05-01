@@ -29,31 +29,30 @@ import org.jcryptool.visual.secretsharing.SecretSharingPlugin;
  */
 public class SecretSharingView extends ViewPart {
 
-	private Composite parent;
+    private Composite parent;
 
-	/**
-	 * Create contents of the view part
-	 * @param parent
-	 */
-	@Override
-	public void createPartControl(Composite parent) {
-		this.parent = parent;
+    /**
+     * Create contents of the view part
+     * @param parent
+     */
+    @Override
+    public void createPartControl(Composite parent) {
+        this.parent = parent;
 
-		ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
-		scrolledComposite.setExpandHorizontal(true);
+        ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+        scrolledComposite.setExpandHorizontal(true);
         scrolledComposite.setExpandVertical(true);
-        scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		ShamirsSecretSharingComposite sscc = new ShamirsSecretSharingComposite(scrolledComposite, SWT.NONE);
-		
-		
-		scrolledComposite.setContent(sscc);;
-		scrolledComposite.setMinSize(sscc.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        ShamirsSecretSharingComposite sscc = new ShamirsSecretSharingComposite(scrolledComposite, SWT.NONE, this);
+        
+
+        scrolledComposite.setContent(sscc);;
+        scrolledComposite.setMinSize(sscc.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, SecretSharingPlugin.PLUGIN_ID + ".view");
 
         hookActionBar();
-	}
+    }
 
     private void hookActionBar() {
         IToolBarManager mgr = getViewSite().getActionBars().getToolBarManager();
@@ -61,18 +60,18 @@ public class SecretSharingView extends ViewPart {
         getViewSite().getActionBars().updateActionBars();
     }
 
-	@Override
-	public void setFocus() {
-		parent.setFocus();
-	}
+    @Override
+    public void setFocus() {
+        parent.setFocus();
+    }
 
-	public void reset() {
-		Control[] children = parent.getChildren();
-		for (Control control : children) {
-			control.dispose();
-		}
-		createPartControl(parent);
-		parent.layout();
-	}
+    public void reset() {
+        Control[] children = parent.getChildren();
+        for (Control control : children) {
+            control.dispose();
+        }
+        createPartControl(parent);
+        parent.layout();
+    }
 
 }

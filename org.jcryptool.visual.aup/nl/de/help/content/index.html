@@ -11,7 +11,7 @@
 		<h2>Android-Mustersperre (AUP)</h2>
 		<p>Dieses Authentifizierungsverfahren wird beim Android-Betriebssystem seit Oktober 2008 in der Version 1.0 als Entsperrmechanismus angeboten. Ziel dieser Methode ist es, Unbefugten den Zugriff auf Daten des Smartphones zu verweigern. Im Folgenden werden Aufbau und Sicherheit des AUP erläutert.</p>
 		
-		<p align=center><img src="../../../nl/img/AupDe.png"></p>
+		<p align=center><img src="./img/Aup.png"  width="85%"/></p>
 		
 		<h3 id="design">AUP-Aufbau</h3>
 		<p>Das AUP besteht aus dem Muster, das sich aus einer Verbindung von neun quadratisch angeordneten Feldern ergibt. Dieses Muster wird dann wie ein Passwort zum Entsperren verwendet.</p>
@@ -30,7 +30,7 @@
 		
 		<p>Zum Vergleich: Bei einer vier bis neun stelligen PIN, die aus Ziffern von 1 bis 9 gebildet wird und bei der jede Ziffer <b>nur einmal</b> vorkommen darf, gibt es 985.824 verschiedene Möglichkeiten. Diese PINs werden im Folgenden als eingeschränkte PINs bezeichnet. Die Regeln für die eingeschränkten PINs ähneln denen für AUP-Muster; ihre Anzahl lässt sich durch die Summe der Variationen ohne Zurücklegen<sup><a id="anker1" title="Zur Quelle" href="#fn1">[1]</a></sup> über die PIN-Längen vier bis neun berechnen:</p>
 		
-		<p><img src="../../../nl/img/formula_pin_perm.png"></p>
+		<p><img src="./img/formula_pin_perm.png"></p>
 		
 		<!-- see http://www.unics.uni-hannover.de/nhtcapri/mathematics.html for details -->
 		<!--<p><table cellspacing=0 cellpadding=0>
@@ -152,9 +152,9 @@
 		
 		<p><table border=0 align=center>
 			<tr>
-				<td align=center><img src="../../../nl/img/DasUserInput.png"></td>
+				<td align=center><img src="./img/DasUserInput.png"  width="85%"/></td>
 				<td width=20></td>
-				<td align=center><img src="../../../nl/img/DasInternal.png"></td>
+				<td align=center><img src="./img/DasInternal.png"  width="85%"/></td>
 			</tr>
 			<tr>
 				<td align=center>Nutzereingabe</td>
@@ -168,7 +168,7 @@
 		
 		<h3 id="win8">2. Windows 8: Picture-Passwort</h3>
 		
-		<p align=center><img src="../../../nl/img/PicturePassword.png"></p>
+		<p align=center><img src="./img/PicturePassword.png" width="85%"/></p>
 		<p>Windows 8 greift die Idee der grafischen Passwörter auf und bietet sie als Login-Möglichkeit an.<sup><a id="anker5" title="Zur Quelle" href="#fn5">[5]</a></sup> Der Nutzer kann sich für diesen Mechanismus ein Bild auswählen und im Anschluss Bereiche darauf mit verschiedenen Gesten hervorheben. Im Gegensatz zum DAS sind keine freien Gesten möglich. Die Gesten sind auf Kreise, Linien und Punkte limitiert. Ein weiterer Unterschied ist, dass lediglich &bdquo;Charakteristiken&ldquo; für die Authentisierung gespeichert werden und nicht die berührten Felder. Bei Linien sind dies der Anfangs- und Endpunkt, sowie ihre Richtung. Darüber hinaus ist das Raster beim Picture-Passwort deutlich feiner. So wird die längere Seite des Bildes in 100 Abschnitte unterteilt. Diese Skalierung wird anschließend auf die kürzere Seite übertragen, um das Raster zu bilden, welches über das Bild gelegt wird. Nach Aussage von Sinofsky bietet auch dieses Verfahren eine deutlich größere Sicherheit als traditionelle Passwörter.<sup><a title="Zur Quelle" href="#fn5">[5]</a></sup></p>
 		<hr>
 		<p>Quellen</p>

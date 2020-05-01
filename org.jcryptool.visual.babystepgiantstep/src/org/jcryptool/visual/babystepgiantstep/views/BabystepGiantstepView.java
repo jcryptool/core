@@ -41,9 +41,11 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.babystepgiantstep.algorithm.BabystepGiantstep;
 
 /**
@@ -153,24 +155,14 @@ public class BabystepGiantstepView extends ViewPart {
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
 
-		Group grpBabyStepGiant = new Group(scrolledComposite, SWT.NONE);
+		Composite grpBabyStepGiant = new Group(scrolledComposite, SWT.NONE);
 		grpBabyStepGiant.setFont(FontService.getNormalBoldFont());
-		grpBabyStepGiant.setText(Messages.BabystepGiantstepView_0);
 		grpBabyStepGiant.setLayout(new GridLayout(1, false));
 
-		compositeDescription = new Composite(grpBabyStepGiant, SWT.NONE);
-		compositeDescription.setBackground(Constants.LIGHTGREY);
-		compositeDescription.setLayout(new GridLayout(1, false));
-		compositeDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-
-		styledText = new Text(compositeDescription, SWT.WRAP | SWT.MULTI);
-		styledText.setFont(FontService.getNormalFont());
-		styledText.setText(Messages.BabystepGiantstepView_2);
-		styledText.setBackground(Constants.LIGHTGREY);
-		styledText.setEditable(false);
-		GridData gd_styledText = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd_styledText.widthHint = 400;
-		styledText.setLayoutData(gd_styledText);
+		TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(grpBabyStepGiant);
+		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		titleAndDescription.setTitle(Messages.BabystepGiantstepView_0);
+		titleAndDescription.setDescription(Messages.BabystepGiantstepView_2);
 
 		Group grpEnterTheParameters = new Group(grpBabyStepGiant, SWT.NONE);
 		grpEnterTheParameters.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -760,6 +752,7 @@ public class BabystepGiantstepView extends ViewPart {
 			}
 		});
 
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.visual.babystepgiantstep.view");
 	}
 	
 	private void resizeButtons() {

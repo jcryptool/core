@@ -12,6 +12,7 @@ package org.jcryptool.games.numbershark.strategies;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.games.numbershark.NumberSharkPlugin;
@@ -44,7 +45,7 @@ public class ResultDialOptimalStrategy extends AbstractResultDialog {
                 .setHelp(parent, NumberSharkPlugin.PLUGIN_ID + ".optStratResultDialog"); //$NON-NLS-1$
 
         parent.layout(true);
-        parent.getShell().pack();
+//        parent.getShell().pack();
         return area;
     }
 
@@ -57,5 +58,6 @@ public class ResultDialOptimalStrategy extends AbstractResultDialog {
     protected void configureShell(Shell newShell) {
         super.configureShell(newShell);
         newShell.setText(Messages.ShowOptStrategy_0);
+        newShell.setSize(Display.getCurrent().getBounds().width / 3, (int) (Display.getCurrent().getBounds().height * (0.75)));
     }
 }

@@ -16,6 +16,8 @@ public class Messages extends NLS {
 	public static String EntropyUI_0;
 	public static String EntropyUI_1;
 	public static String EntropyUI_2;
+	public static String EntropyUI_desc;
+	public static String EntropyUI_title;
 	public static String EntropyUIconfig_0;
 	public static String EntropyUIconfig_1;
 	public static String EntropyUIconfig_10;

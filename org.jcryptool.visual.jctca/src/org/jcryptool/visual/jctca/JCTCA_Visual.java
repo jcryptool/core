@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.images.ImageService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.jctca.listeners.PluginBtnListener;
 import org.jcryptool.visual.jctca.listeners.ResizeListener;
 import org.jcryptool.visual.jctca.listeners.TabItemListener;
@@ -67,33 +68,11 @@ public class JCTCA_Visual extends ViewPart {
 
         composite.setLayout(new GridLayout(1, false));
 
-        // Begin - headline area
-        head_composite = new Composite(composite, SWT.NONE);
-        head_composite.setBackground(WHITE);
-        head_composite.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
-        head_composite.setLayout(new GridLayout());
+        TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(composite);
+        titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        titleAndDescription.setTitle(Messages.JCTCA_Visual_Plugin_Headline);
+        titleAndDescription.setDescription(Messages.JCTCA_Visual_archpic_create_text);
 
-        Label headline = new Label(head_composite, SWT.NONE);
-        headline.setFont(FontService.getHeaderFont());
-        headline.setBackground(WHITE);
-        // Set the headline text to the title of the plugin
-        headline.setText(Messages.JCTCA_Visual_Plugin_Headline);
-        head_description = new StyledText(head_composite, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
-        GridData gd_head_description = new GridData(SWT.FILL, SWT.FILL, true, false);
-        gd_head_description.widthHint = 700;
-        head_description.setLayoutData(gd_head_description);
-        // set the short introduction text for the certificate creation picture
-        // because this is the first text that needs to be shown
-        head_description.setText(Messages.JCTCA_Visual_archpic_create_text);
-        head_description.addModifyListener(new ModifyListener() {
-			
-			@Override
-			public void modifyText(ModifyEvent e) {
-				//Resize the control when the text changes
-				parent.layout(new Control[] {head_description});
-			}
-		});
-        // End - Header
         showArchitecture();
 
     }

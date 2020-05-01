@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
    <context id="view" title="Merkle-Hellman">
-      <description>Test deutsch</description>
+      <description>
+         Dieses Plugin visualisiert die Merkle-Hellman Rucksack-Verschlüsselung.\n
+Für mehr Informationen über die Verschlüsselung und die Bedienung des Plugins klicken Sie auf den Link hier drunter.</description>
       <topic href="nl/de/help/content/index.html" label="Merkle-Hellman"/>
    </context>
 </contexts>

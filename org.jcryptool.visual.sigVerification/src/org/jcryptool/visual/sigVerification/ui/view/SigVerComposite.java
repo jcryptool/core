@@ -47,6 +47,7 @@ import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.images.ImageService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.sigVerification.Messages;
 import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
 import org.jcryptool.visual.sigVerification.algorithm.Hash;
@@ -179,31 +180,11 @@ public class SigVerComposite extends Composite {
         Color white = SWTResourceManager.getColor(255, 255, 255);
         setLayout(new GridLayout());
 
-        //HEADER AND DESCRPITION (TOP)
-        Composite introComposite = new Composite(this, SWT.NONE);
-        introComposite.setBackground(white);
-        introComposite.setLayout(new GridLayout());
-        introComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(this);
+        titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        titleAndDescription.setTitle(Messages.SigVerComposite_lblHeader);
+        titleAndDescription.setDescription(Messages.SigVerComposite_description);
         
-        lblHeader = new Text(introComposite, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
-        lblHeader.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        lblHeader.setEditable(false);
-        lblHeader.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD));
-        lblHeader.setText(Messages.SigVerComposite_lblHeader);
-        lblHeader.setBackground(white);
-
-        textGeneralDescription = new Text(introComposite, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
-        GridData gd_textGeneralDescription = new GridData(SWT.FILL, SWT.FILL, true, false);
-        gd_textGeneralDescription.widthHint = 600;
-        textGeneralDescription.setLayoutData(gd_textGeneralDescription);
-        textGeneralDescription.setText(Messages.SigVerComposite_description);
-        textGeneralDescription.setEditable(false);
-        textGeneralDescription.setBackground(white);
-        Menu menu = new Menu(textGeneralDescription);
-        textGeneralDescription.setMenu(menu);
-        mntm0 = new MenuItem(menu, SWT.NONE);
-        mntm0.setText(Messages.SigVerComposite_menu);
-
         Group mainGroup = new Group(this, SWT.NONE);
         mainGroup.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
         mainGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -527,7 +508,7 @@ public class SigVerComposite extends Composite {
                 try {
                     // Create the InputWizard and display it
                     InputWizard wiz = new InputWizard(input);
-                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
+                    WizardDialog dialog = new WizardDialog(SigVerComposite.this.getShell(), wiz) {
                         @Override
                         protected void configureShell(Shell newShell) {
                             super.configureShell(newShell);
@@ -583,7 +564,7 @@ public class SigVerComposite extends Composite {
                 try {
                     // Create the HashWizard and display it
                     HashWizard wiz = new HashWizard(input);
-                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
+                    WizardDialog dialog = new WizardDialog(SigVerComposite.this.getShell(), wiz) {
                         @Override
                         protected void configureShell(Shell newShell) {
                             super.configureShell(newShell);
@@ -630,7 +611,7 @@ public class SigVerComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
                 try {
                     SignatureWizard wiz = new SignatureWizard(input.h, input);
-                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
+                    WizardDialog dialog = new WizardDialog(SigVerComposite.this.getShell(), wiz) {
                         @Override
                         protected void configureShell(Shell newShell) {
                             super.configureShell(newShell);
@@ -756,13 +737,7 @@ public class SigVerComposite extends Composite {
         });
         
         
-        // Context menu entries to select all text
-        mntm0.addSelectionListener(new SelectionAdapter() {
-            @Override
-			public void widgetSelected(SelectionEvent e) {
-            	textGeneralDescription.selectAll();
-            }
-        });
+
         mntm1.addSelectionListener(new SelectionAdapter() {
             @Override
 			public void widgetSelected(SelectionEvent e) {

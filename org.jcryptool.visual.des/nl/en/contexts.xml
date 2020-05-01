@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
- <context id="desvis" title="Data Encryption Standard">
-    <description>Data Encryption Standard</description>
+ <context id="view" title="Data Encryption Standard">
+    <description>This plugin visualizes the inner states of the Data Encryption Standard (DES).</description>
     <topic href="help/content/index.html" label="Data Encryption Standard"/>
  </context>
 </contexts>

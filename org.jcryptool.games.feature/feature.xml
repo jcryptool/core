@@ -237,12 +237,15 @@ litigation.
          version="0.0.0"
          unpack="false"/>
 
-   <plugin
+<!-- Removed for Release 1.0.0 because of a major bug in the autosolver (stackoverflow).
+		Remove the comments after the release of 1.0.0. The plugin should be
+		in a later release.   -->
+<!--   <plugin
          id="org.jcryptool.games.sudoku"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>
+         unpack="false"/>   -->
 
    <plugin
          id="org.jcryptool.games.zudoku"

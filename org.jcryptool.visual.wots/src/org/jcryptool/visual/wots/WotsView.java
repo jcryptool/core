@@ -27,6 +27,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
@@ -37,6 +38,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.images.ImageService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.wots.files.Converter;
 import org.jcryptool.visual.wots.files.ResizeListener;
 
@@ -112,15 +114,9 @@ public class WotsView extends ViewPart {
 	private Composite composite;
 	private Text txtTheWinternitzonetimesignatureIs;
 	private Text txtWinternitzOtsignaturewots;
-	private Composite header;
+	private ResizeListener imgResizer;
 
 
-	/**
-	 * Create contents of the view part. The layout manager has no option to define
-	 * a maximum size for text boxes, buttons, etc.
-	 * 
-	 * @param parent
-	 */
 	@Override
 	public void createPartControl(Composite parent) {
 
@@ -134,21 +130,10 @@ public class WotsView extends ViewPart {
 		container = new Composite(scrolledContainer, SWT.NONE);
 		container.setLayout(new GridLayout(6, true));
 		
-		header = new Composite(container, SWT.None);
-		header.setLayout(new GridLayout());
-		header.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 6, 1));
-		header.setBackground(ColorService.WHITE);
-
-		txtWinternitzOtsignaturewots = new Text(header, SWT.NONE);
-		txtWinternitzOtsignaturewots.setFont(FontService.getHeaderFont());
-		txtWinternitzOtsignaturewots.setBackground(ColorService.WHITE);
-		txtWinternitzOtsignaturewots.setText(Messages.headline_txt);
-		txtWinternitzOtsignaturewots.setEditable(false);
-
-		txtTheWinternitzonetimesignatureIs = new Text(header, SWT.NONE);
-		txtTheWinternitzonetimesignatureIs.setBackground(ColorService.WHITE);
-		txtTheWinternitzonetimesignatureIs.setText(Messages.header_txt);
-		txtTheWinternitzonetimesignatureIs.setEditable(false);
+        TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(container);
+        titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 6, 1));
+        titleAndDescription.setTitle(Messages.headline_txt);
+        titleAndDescription.setDescription(Messages.header_txt);
 
 		lblMessage = new Label(container, SWT.NONE);
 		lblMessage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
@@ -579,7 +564,8 @@ public class WotsView extends ViewPart {
 		gd_img_right.heightHint = 50;
 		img_right.setLayoutData(gd_img_right);
 		img_right.setImage(ImageService.getImage(WOTSPlugin.PLUGIN_ID, Messages.WotsView_Overview2));
-		img_right.addControlListener(new ResizeListener(img_right, composite));
+		imgResizer = new ResizeListener(img_right, composite);
+		img_right.addControlListener(imgResizer);
 
 		txt_SigKeySize = new Label(container, SWT.NONE);
 		txt_SigKeySize.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 2, 1));

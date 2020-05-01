@@ -16,6 +16,8 @@ public class Messages extends NLS
 {
 	private static final String BUNDLE_NAME = "org.jcryptool.visual.ssl.views.messages"; //$NON-NLS-1$
 
+	public static String SslView_1;
+
 	public static String SslViewLblClient;
 	public static String SslViewLblServer;
 	public static String SslViewLblInfo;
@@ -47,6 +49,10 @@ public class Messages extends NLS
 	public static String ClientHelloCompositeBtnNextStep;
 	public static String ClientHelloCompositeGrpClientHello;
 	public static String ClientHelloInformationText;
+	public static String ServerHelloComposite_0;
+
+	public static String ServerHelloComposite_1;
+
 	public static String ServerHelloCompositeError;
 	public static String ServerHelloCompositeErrorSessionID;
 	public static String ServerHelloCompositeErrorRandom;

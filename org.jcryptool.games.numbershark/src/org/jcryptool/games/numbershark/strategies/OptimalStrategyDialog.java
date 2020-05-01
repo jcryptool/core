@@ -52,41 +52,54 @@ public class OptimalStrategyDialog extends AbstractStrategyDialog {
         gl_composite.marginRight = 15;
         composite.setLayout(gl_composite);
 
-        Button showButton = new Button(composite, SWT.RADIO);
-        showButton.setText(Messages.OptStratDialog_2);
-
         Button calcButton = new Button(composite, SWT.RADIO);
         calcButton.setText(Messages.OptStratDialog_1);
 
+        Button showButton = new Button(composite, SWT.RADIO);
+        showButton.setText(Messages.OptStratDialog_2);
+
         final Group groupSliders = createSliders(composite, true, 400, 40);
 
+        showButton.setSelection(false);
+        calcButton.setSelection(true);
+        calcSelected(groupSliders);
+        
         calcButton.addSelectionListener(new SelectionAdapter() {
             @Override
 			public void widgetSelected(SelectionEvent e) {
-                selectedStrategy = 1;
-                groupSliders.setVisible(true);
+                calcSelected(groupSliders);
             }
         });
 
         showButton.addSelectionListener(new SelectionAdapter() {
             @Override
 			public void widgetSelected(SelectionEvent e) {
-                selectedStrategy = 0;
-                groupSliders.setVisible(false);
+                showSelected(groupSliders);
             }
         });
         
-        Label separartor = new Label(area, SWT.SEPARATOR | SWT.HORIZONTAL);
-        separartor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        
+        Label separator = new Label(area, SWT.SEPARATOR | SWT.HORIZONTAL);
+        separator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, NumberSharkPlugin.PLUGIN_ID + ".optStratDialog"); //$NON-NLS-1$
 
         return area;
     }
 
-    @Override
-    protected void configureShell(Shell newShell) {
-        super.configureShell(newShell);
-        newShell.setText(Messages.OptStratDialog_7);
-    }
+    private void showSelected(final Group groupSliders) {
+		selectedStrategy = 0;
+	    groupSliders.setVisible(false);
+	}
+
+	private void calcSelected(final Group groupSliders) {
+		selectedStrategy = 1;
+	    groupSliders.setVisible(true);
+	}
+
+	@Override
+	protected void configureShell(Shell newShell) {
+	    super.configureShell(newShell);
+	    newShell.setText(Messages.OptStratDialog_7);
+	}
 }

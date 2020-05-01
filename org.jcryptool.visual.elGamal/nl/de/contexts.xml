@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <contexts>
-   <context id="elGamalHelp" title="Demonstration von ElGamal">
+   <context id="view" title="Demonstration von ElGamal">
       <description>Diese Visualisierung demonstriert das asymmetrische Verschlüsselungs- und Signaturverfahren ElGamal.</description>
       <topic href="nl/de/help/content/index.html" label="ElGamal-Kryptosystem"/>
    </context>

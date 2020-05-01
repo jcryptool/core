@@ -66,12 +66,12 @@ public abstract class AbstractResultDialog extends TitleAreaDialog {
     private int selectedStrategy;
     private Button playSelected;
     private int min = 2;
-    private int max = 250;
+    private int max = 519;
     TableColumn[] columns;
 
     public AbstractResultDialog(Shell shell, int selectedStrategy) {
         super(shell);
-        setShellStyle(SWT.TITLE | SWT.APPLICATION_MODAL | SWT.CLOSE);
+        setShellStyle(SWT.TITLE | SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.RESIZE);
         this.selectedStrategy = selectedStrategy;
     }
 

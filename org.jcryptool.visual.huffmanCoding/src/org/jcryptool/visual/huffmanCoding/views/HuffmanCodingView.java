@@ -238,8 +238,6 @@ public class HuffmanCodingView extends ViewPart {
 		scrolledComposite.setContent(tabFolder);
 		scrolledComposite.setMinSize(tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
-		mainViewComposite.pack();
-
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, HuffmanCodingPlugin.PLUGIN_ID + ".view");
 	}
 	
@@ -862,6 +860,7 @@ public class HuffmanCodingView extends ViewPart {
 
 		inputSize = new Text(grpCenterData, SWT.BORDER | SWT.READ_ONLY | SWT.CENTER);
 		inputSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		inputSize.setText(textInput.getText().length() + " " + Messages.HuffmanCodingView_24);
 
 		Label spacerLabel = new Label(grpCenterData, SWT.NONE);
 		spacerLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));

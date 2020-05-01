@@ -64,7 +64,7 @@ public class MerkleTreeKeyComposite extends Composite {
 
 	public MerkleTreeKeyComposite(Composite parent, int style, ISimpleMerkle merkle, SUIT mode) {
 		super(parent, style);
-		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN * 2, true));
+		this.setLayout(new GridLayout());
 		this.merkle = merkle;
 
 		publicKey = merkle.getPublicKey();

@@ -12,7 +12,7 @@
 	</extension>
 	<extension point="org.jcryptool.core.operations.visuals">
 		<Visual
-			contextHelpId="org.jcryptool.visual.merkletree.MerkleTreeView"
+			contextHelpId="org.jcryptool.visual.merkletree.view"
 			name="%visual.name"
 			viewId="org.jcryptool.visual.merkletree.view">
 		</Visual>

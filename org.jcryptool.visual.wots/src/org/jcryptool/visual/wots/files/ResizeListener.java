@@ -18,6 +18,8 @@ import org.eclipse.swt.widgets.Label;
 import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.visual.wots.WotsView;
 
+import wots.WOTSPlugin;
+
 /**
  * Listener for resizing images in the plugin
  * 
@@ -51,8 +53,11 @@ public class ResizeListener implements ControlListener {
      **/
     @Override
     public void controlResized(ControlEvent e) {
-       
-    	image = img.getImage();
+    	triggerResize();
+    }
+
+	public void triggerResize() {
+		image = img.getImage();
         if (image != null) {
             int width = image.getBounds().width;
             int height = image.getBounds().height;
@@ -65,6 +70,9 @@ public class ResizeListener implements ControlListener {
 
 
             // if container is smaller than image
+            if (comp_image.getBounds().height <= 0) {
+            	return;
+			}
             if ((comp_image.getBounds().width / comp_image.getBounds().height) < ratio) {
                 width_scaled = comp_image.getBounds().width;
 //                int temp = width_scaled / width;
@@ -87,19 +95,21 @@ public class ResizeListener implements ControlListener {
     	
             
 //        Image img_scaled = new Image(img.getDisplay(), org.eclipse.ui.plugin.AbstractUIPlugin.imageDescriptorFromPlugin("org.jcryptool.visual.wots", org.jcryptool.visual.wots.WotsView.currentImg).createImage().getImageData().scaledTo(width_scaled, height_scaled));
-        Image img_scaled = new Image(img.getDisplay(), 
-        		ImageService.getImage(WotsView.PLUGIN_ID, WotsView.currentImg)
-        		.getImageData().scaledTo(width_scaled, height_scaled));
-//            System.err.println("-----------------------------------");
-//            System.out.println(e.toString());
-//            System.err.println("-----------------------------------");
-//            System.out.println(e.getSource().toString());
-        img.setImage(img_scaled);
+        if(WotsView.currentImg != null && img != null && img.getDisplay() != null) {
+			Image img_scaled = new Image(img.getDisplay(), 
+					ImageService.getImage(WOTSPlugin.PLUGIN_ID, WotsView.currentImg)
+					.getImageData().scaledTo(width_scaled, height_scaled));
+	//            System.err.println("-----------------------------------");
+	//            System.out.println(e.toString());
+	//            System.err.println("-----------------------------------");
+	//            System.out.println(e.getSource().toString());
+			img.setImage(img_scaled);
+        }
 //        System.out.println("Breite/Höhe Bild (nach skalierung): " + img.getImage().getBounds().width + " " + img.getImage().getBounds().height);
 //        System.out.println("--------------------------------------------------");
        	comp_image.layout();
         }
-    }
+	}
 }
 
 

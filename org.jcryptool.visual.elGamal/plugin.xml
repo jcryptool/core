@@ -14,7 +14,7 @@
    <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
-      		contextHelpId="org.jcryptool.visual.elGamal.elGamalHelp"
+      		contextHelpId="org.jcryptool.visual.elGamal.view"
             name="%Visual.name"
             viewId="org.jcryptool.visual.elGamal.view">
       </Visual>
@@ -63,11 +63,6 @@
          <command
                commandId="org.jcryptool.visual.elGamal.restartCommand"
                icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
-               style="push">
-         </command>
-         <command
-               commandId="org.jcryptool.visual.elGamal.helpCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png"
                style="push">
          </command>
       </menuContribution>

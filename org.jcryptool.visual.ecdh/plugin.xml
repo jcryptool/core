@@ -17,7 +17,7 @@
       <Visual
             name="%Visual.name.0"
             viewId="org.jcryptool.visual.ECDH.view"
-            contextHelpId="org.jcryptool.visual.ecdh.ecdhview">
+            contextHelpId="org.jcryptool.visual.ecdh.view">
       </Visual>
    </extension>
    <extension

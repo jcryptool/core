@@ -27,7 +27,7 @@
    <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
-            contextHelpId="org.jcryptool.visual.sidechannelattack.spa.spaview"
+            contextHelpId="org.jcryptool.visual.sidechannelattack.spa.view"
             name="%view.name"
             viewId="org.jcryptool.visual.sidechannelattack.spaview">
       </Visual>
@@ -50,14 +50,6 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:org.jcryptool.visual.sidechannelattack.spaview">
-         <command
-               commandId="org.jcryptool.visual.sidechannelattack.spa.restartCommand"
-               icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
-               style="push">
-         </command>
-      </menuContribution>
-      <menuContribution
             locationURI="toolbar:org.jcryptool.visual.sidechannelattack.spaview">
          <command
                commandId="org.jcryptool.visual.sidechannelattack.spa.restartCommand"
@@ -65,5 +57,12 @@
                style="push">
          </command>
       </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="$nl$/toc.xml"
+            primary="false">
+      </toc>
    </extension>
 </plugin>
