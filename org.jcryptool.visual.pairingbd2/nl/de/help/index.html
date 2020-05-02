@@ -2,14 +2,75 @@
 
 <html>
 <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	  <title>Multipartite Key Exchange</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Multi-Party-Schlüsselaustausch</title>
 </head>
 
 <body>
+  <h1>Multi-Party-Schlüsselaustausch</h1>
 
-<h1>Multipartite Key Exchange</h1>
-<h2>under construction</h2>
+  <p>This help file describes two things:<br/>
+  1) <a href="#scheme-general">Multi-Party-Schlüsselaustausch-Algorithmen</a><br/>
+  2) <a href="#plugin">Handhabung: Wie man diese Visualisierung benutzt</a> </p>
 
+
+
+<br/>  
+  <h2 id="scheme-general">1) Multi-Party-Schlüsselaustausch-Algorithmen (MPKE)</h2>
+  
+  <p>Multi-Party- oder Mehrparteien-Schlüsselvereinbarung (englischer Name multi-party key agreement MPKA) [andere verwendete Namen sind Gruppenschlüsselaustausch-Protokoll (<b>GKE</b>) oder Konferenzschlüssel-Einrichtungs-Protokoll] sind Methoden zum sicheren Austausch von Informationen über einen unsicheren/öffentlichen Kanal, um sich auf einen gemeinsamen kryptographischen Schlüssel zwischen mehr als 2 Parteien zu einigen. Das erste Schema dieser Art war der <a href="PLUGINS_ROOT/org.jcryptool.visual.ecdh/$nl$/help/content/index.html">Diffie-Hellman-Schlüsselaustausch (<b>DH</b>)</a>, der dieses Protokoll für 2 Parteien beschrieb.</p>
+
+  <p>Multi-Party-Schlüsselvereinbarungs-Protokolle sind Teil des Forschungsgebiets der sicheren Mehrparteien-Berechnung (<b>MPC</b>) und diese Protokolle sind z.B. für Video-Broadcasting, Mobiltelefone oder 3G, 4G oder 5G relevant.</p>
+
+  <p>Hier betrachten wir nur solche Multi-Party-Schlüsselvereinbarungs-Protokolle, die keine vertrauenswürdige dritte Instanz (trusted third party) erfordern. Der ursprüngliche Diffie-Hellman-Schlüsselaustausch (DHKE) wurde ursprünglich nur in endlichen Körpern primzahliger Ordnung umgesetzt. Es können jedoch auch andere kryptographische Primitive verwendet werden, nämlich elliptische Kurven und Paarungen (pairings) auf elliptischen Kurven.</p>
+
+  <p>Diese Visualisierung zeigt für eine beliebige Anzahl von Benutzern das BD II-Schlüsselaustauschprotokoll (benannt nach seinen Erfindern <b>B</b>urmester und <b>D</b>esmedt), dargestellt in den Paarungen von Weil und Tate für einen kleinen Grad und xxxx-Paarungen für einen höheren, sichereren Grad. Weitere Einzelheiten finden sich in [Onete 2008].</p>
+  
+  <p>xxxxxxxxxxxxxx.</p>
+ 
+
+
+
+
+  
+<br/>  
+  <h2 id="plugin">2) Handhabung: Wie man diese Visualisierung benutzt</h2>
+  
+  <p> xxxNach dem Start der MPKE-Visualisierung können Sie die gewünschte Operation xxx auswählen, indem Sie die entsprechende Einstellung setzen.</p>
+
+  <p>xxxxxxxxxxxxxx.</p>
+
+
+
+
+ <br/>  
+  <h3 id="Sig">Weitere Informationen / Literaturhinweise</h3>
+  <p>Weitere Informationen über das BD II-Schlüsselaustauschprotokoll finden Sie unter:</p>
+  <ul>
+  <li><a href="http://www.springer.com/de/book/9783662484234">Joachim von zur Gathen: CryptoSchool, Springer, 2015, Kapitel 4.2 und 8.2</a></li>
+
+  <li><a href="https://www.researchgate.net/publication/228543859_Visualisation_of_Modern_Key_Exchange_Schemes_for_more_than_two_Parties_in_CrypTool_and_their_Security_Analysis">Cristina Onete: Visualisation of Modern Key Exchange Schemes for more than two Parties in JCrypTool and their Security Analysis, Eindhoven, 2008, Master Thesis</a></li>
+
+  <li><a href="https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange">Wikipedia: Diffie-Hellman key exchange</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Secure_multi-party_computation">Wikipedia: Secure multi-party computation</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Key-agreement_protocol">Wikipedia: Key-agreement protocol</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Password-authenticated_key_agreement">Wikipedia: Password-authenticated key agreement</a></li>
+  </ul>
+
+  <br/>
 </body>
 </html>
+
+
+<!-- ################
+Auch das DH-Schlüsselaustauschprotokoll kann mit mehr als zwei Parteien betrieben werden, aber dann gibt es eine Menge Overhead. [https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange]
+
+Modernere lesenswerte Literatur:
+
+https://is.muni.cz/th/l407o/thesis.pdf
+Conference key establishment protocols BACHELOR THESIS Zuzana Melová 2014
+
+https://is.muni.cz/th/w2027/m_thesis.pdf
+Schlüsselvereinbarung für Mobiltelefone MASTERS THESIS Shkodran Gerguri 2011
+##################### -->
+
