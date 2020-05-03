@@ -9,25 +9,25 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.visual.sphincs;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.sphincs.algorithm.Signature;
 import org.jcryptool.visual.sphincs.algorithm.aSPHINCS256;
 import org.jcryptool.visual.sphincs.algorithm.bcSPHINCS256;
 import org.jcryptool.visual.sphincs.ui.SphincsConstant;
-import org.jcryptool.visual.sphincs.ui.SphincsTreeView;
 import org.jcryptool.visual.sphincs.ui.SphincsKeyGenerationView;
 import org.jcryptool.visual.sphincs.ui.SphincsSignVerifyView;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.TabItem;
+import org.jcryptool.visual.sphincs.ui.SphincsTreeView;
 
 
 /**

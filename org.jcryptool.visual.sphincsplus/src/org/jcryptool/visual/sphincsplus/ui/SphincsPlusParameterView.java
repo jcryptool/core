@@ -9,37 +9,38 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.sphincsplus.ui;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.layout.GridLayout;
 import java.util.Base64;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.wb.swt.SWTResourceManager;
-import org.jcryptool.core.util.fonts.FontService;
-import org.jcryptool.visual.sphincsplus.interfaces.ISphincsPlus;
-import org.jcryptool.visual.sphincsplus.EnvironmentParameters;
-import org.jcryptool.visual.sphincsplus.HashFunctionType;
-import org.jcryptool.visual.sphincsplus.SphincsPlus;
-import org.jcryptool.visual.sphincsplus.algorithm.Key;
-import org.jcryptool.visual.sphincsplus.algorithm.Utils;
-import org.jcryptool.visual.sphincsplus.algorithm.Hypertree;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.VerifyEvent;
-import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.SWTResourceManager;
+import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.visual.sphincsplus.EnvironmentParameters;
+import org.jcryptool.visual.sphincsplus.HashFunctionType;
+import org.jcryptool.visual.sphincsplus.SphincsPlus;
+import org.jcryptool.visual.sphincsplus.algorithm.Hypertree;
+import org.jcryptool.visual.sphincsplus.algorithm.Key;
+import org.jcryptool.visual.sphincsplus.algorithm.Utils;
+import org.jcryptool.visual.sphincsplus.interfaces.ISphincsPlus;
 
 /**
  * 

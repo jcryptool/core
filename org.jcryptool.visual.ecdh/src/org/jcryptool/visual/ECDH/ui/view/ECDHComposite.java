@@ -59,6 +59,7 @@ import org.jcryptool.visual.ECDH.handlers.ShowAnimationHandler;
 import org.jcryptool.visual.ECDH.ui.wizards.PublicParametersWizard;
 import org.jcryptool.visual.ECDH.ui.wizards.SecretKeyComposite;
 import org.jcryptool.visual.ECDH.ui.wizards.SecretKeyWizard;
+
 import de.flexiprovider.common.math.FlexiBigInt;
 import de.flexiprovider.common.math.ellipticcurves.EllipticCurve;
 import de.flexiprovider.common.math.ellipticcurves.Point;

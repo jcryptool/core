@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.ECDH.ECDHPlugin;
+import org.jcryptool.visual.ECDH.ECDHUtil;
 import org.jcryptool.visual.ECDH.Messages;
 import org.jcryptool.visual.ECDH.algorithm.EC;
 import org.jcryptool.visual.ECDH.algorithm.ECFm;
@@ -38,7 +39,6 @@ import org.jcryptool.visual.ECDH.algorithm.ECFp;
 import org.jcryptool.visual.ECDH.algorithm.ECPoint;
 import org.jcryptool.visual.ECDH.algorithm.LargeCurves;
 import org.jcryptool.visual.ECDH.data.Curves;
-import org.jcryptool.visual.ECDH.ECDHUtil;
 
 import de.flexiprovider.common.math.FlexiBigInt;
 import de.flexiprovider.common.math.ellipticcurves.EllipticCurve;

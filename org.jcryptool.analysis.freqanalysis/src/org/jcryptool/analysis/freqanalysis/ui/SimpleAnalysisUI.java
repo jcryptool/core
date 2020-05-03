@@ -10,9 +10,6 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.analysis.freqanalysis.ui;
 
-//import java.io.BufferedReader;
-import org.jcryptool.crypto.ui.textloader.ui.wizard.TextLoadController;
-
 //import java.io.File;
 //import java.io.FileReader;
 import java.util.Observable;
@@ -42,6 +39,8 @@ import org.eclipse.swt.widgets.Text;
 //import org.eclipse.ui.PlatformUI;
 import org.jcryptool.analysis.freqanalysis.calc.FreqAnalysisCalc;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
+//import java.io.BufferedReader;
+import org.jcryptool.crypto.ui.textloader.ui.wizard.TextLoadController;
 //import org.jcryptool.core.operations.editors.EditorsManager;
 //import org.jcryptool.crypto.ui.textmodify.wizard.ModifyWizard;
 import org.jcryptool.crypto.ui.textsource.TextInputWithSource;

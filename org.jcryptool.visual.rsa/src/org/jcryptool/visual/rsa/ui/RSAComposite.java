@@ -10,6 +10,7 @@
 package org.jcryptool.visual.rsa.ui;
 
 import static org.jcryptool.visual.library.Constants.BIGBUTTONHEIGHT;
+
 import java.math.BigInteger;
 import java.util.Collections;
 import java.util.HashMap;
@@ -21,7 +22,6 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;

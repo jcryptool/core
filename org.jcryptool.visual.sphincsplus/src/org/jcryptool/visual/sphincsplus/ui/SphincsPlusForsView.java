@@ -15,6 +15,7 @@ import org.eclipse.draw2d.SWTEventDispatcher;
 import org.eclipse.gef.editparts.ZoomManager;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ExpandEvent;
 import org.eclipse.swt.events.ExpandListener;
 import org.eclipse.swt.events.MouseEvent;
@@ -41,7 +42,6 @@ import org.eclipse.zest.core.widgets.GraphNode;
 import org.eclipse.zest.core.widgets.ZestStyles;
 import org.eclipse.zest.layouts.LayoutStyles;
 import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
-import org.eclipse.swt.custom.StyledText;
 
 /**
  * 

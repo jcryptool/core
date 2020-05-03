@@ -36,7 +36,6 @@ import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
-import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.verifiablesecretsharing.VerifiableSecretSharingPlugin;

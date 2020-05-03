@@ -25,8 +25,8 @@ import org.jcryptool.analysis.friedman.FriedmanPlugin;
 import org.jcryptool.analysis.friedman.IFriedmanAccess;
 import org.jcryptool.analysis.friedman.calc.FriedmanCalc;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.crypto.ui.textloader.ui.wizard.TextLoadController;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.crypto.ui.textloader.ui.wizard.TextLoadController;
 
 /**
  * @author SLeischnig
