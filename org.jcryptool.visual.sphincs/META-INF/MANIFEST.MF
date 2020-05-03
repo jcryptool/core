@@ -32,3 +32,4 @@ Import-Package: org.bouncycastle.crypto,
  org.eclipse.core.databinding,
  org.eclipse.wb.swt,
  org.jcryptool.core.util.fonts
+Automatic-Module-Name: org.jcryptool.visual.sphincs
