@@ -2,14 +2,14 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.bouncycastle;singleton:=true
-Bundle-Version: 1.62.0
+Bundle-Version: 1.65.0
 Bundle-Activator: org.bouncycastle.BouncyCastlePlugin
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.core.runtime
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ClassPath: .,
- libs/bcprov-jdk15on-162.jar
+ libs/bcprov-jdk15on-165.jar
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.providers
 Automatic-Module-Name: org.bouncycastle
@@ -35,6 +35,7 @@ Export-Package: org.bouncycastle,
  org.bouncycastle.asn1.gnu,
  org.bouncycastle.asn1.iana,
  org.bouncycastle.asn1.icao,
+ org.bouncycastle.asn1.isara,
  org.bouncycastle.asn1.isismtt,
  org.bouncycastle.asn1.isismtt.ocsp,
  org.bouncycastle.asn1.isismtt.x509,
@@ -86,7 +87,6 @@ Export-Package: org.bouncycastle,
  org.bouncycastle.crypto.prng,
  org.bouncycastle.crypto.prng.drbg,
  org.bouncycastle.crypto.signers,
- org.bouncycastle.crypto.tls,
  org.bouncycastle.crypto.util,
  org.bouncycastle.i18n,
  org.bouncycastle.i18n.filter,
@@ -141,6 +141,7 @@ Export-Package: org.bouncycastle,
  org.bouncycastle.pqc.crypto,
  org.bouncycastle.pqc.crypto.gmss,
  org.bouncycastle.pqc.crypto.gmss.util,
+ org.bouncycastle.pqc.crypto.lms,
  org.bouncycastle.pqc.crypto.mceliece,
  org.bouncycastle.pqc.crypto.newhope,
  org.bouncycastle.pqc.crypto.qtesla,
@@ -152,6 +153,7 @@ Export-Package: org.bouncycastle,
  org.bouncycastle.pqc.jcajce.interfaces,
  org.bouncycastle.pqc.jcajce.provider,
  org.bouncycastle.pqc.jcajce.provider.gmss,
+ org.bouncycastle.pqc.jcajce.provider.lms,
  org.bouncycastle.pqc.jcajce.provider.mceliece,
  org.bouncycastle.pqc.jcajce.provider.newhope,
  org.bouncycastle.pqc.jcajce.provider.qtesla,
