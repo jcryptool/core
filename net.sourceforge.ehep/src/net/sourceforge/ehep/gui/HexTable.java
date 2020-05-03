@@ -14,10 +14,6 @@ package net.sourceforge.ehep.gui;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
-import net.sourceforge.ehep.EhepPlugin;
-import net.sourceforge.ehep.core.EHEP;
-import net.sourceforge.ehep.core.Utils;
-
 import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
@@ -34,6 +30,10 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+
+import net.sourceforge.ehep.EhepPlugin;
+import net.sourceforge.ehep.core.EHEP;
+import net.sourceforge.ehep.core.Utils;
 
 /**
  * @author Marcel Palko

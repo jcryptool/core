@@ -15,10 +15,6 @@ package net.sourceforge.ehep.editors;
 import java.io.File;
 import java.text.MessageFormat;
 
-import net.sourceforge.ehep.EhepPlugin;
-import net.sourceforge.ehep.core.FileManager;
-import net.sourceforge.ehep.gui.HexEditorControl;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
@@ -43,6 +39,10 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.EditorActionBarContributor;
 import org.eclipse.ui.part.EditorPart;
 import org.jcryptool.core.operations.util.PathEditorInput;
+
+import net.sourceforge.ehep.EhepPlugin;
+import net.sourceforge.ehep.core.FileManager;
+import net.sourceforge.ehep.gui.HexEditorControl;
 
 /**
  * The main EHEP plug-in editor part

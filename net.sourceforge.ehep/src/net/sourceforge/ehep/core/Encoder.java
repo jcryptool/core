@@ -16,9 +16,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-import net.sourceforge.ehep.EhepPlugin;
-
 import org.eclipse.swt.widgets.Composite;
+
+import net.sourceforge.ehep.EhepPlugin;
 
 /**
  * @author Marcel Palko alias Randallco

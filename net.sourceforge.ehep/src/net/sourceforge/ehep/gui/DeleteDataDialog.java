@@ -12,8 +12,6 @@
  *==========================================================================*/
 package net.sourceforge.ehep.gui;
 
-import net.sourceforge.ehep.core.EHEP;
-
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
@@ -28,6 +26,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+
+import net.sourceforge.ehep.core.EHEP;
 
 /**
  * @author Marcel Palko alias Randallco
