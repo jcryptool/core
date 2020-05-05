@@ -20,9 +20,9 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
-import org.jcryptool.visual.euclid.handler.CommandStateChanger;
 import org.jcryptool.visual.euclid.handler.CommandState.State;
 import org.jcryptool.visual.euclid.handler.CommandState.Variable;
+import org.jcryptool.visual.euclid.handler.CommandStateChanger;
 
 /**
  * @author Felix Eckardt

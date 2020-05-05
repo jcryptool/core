@@ -11,22 +11,21 @@ package org.jcryptool.visual.sphincs.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
-import org.jcryptool.core.util.fonts.FontService;
-import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
-import org.jcryptool.visual.sphincs.SphincsDescriptions;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.jcryptool.visual.sphincs.algorithm.PrivateKey;
-import org.jcryptool.visual.sphincs.algorithm.PublicKey;
-import org.jcryptool.visual.sphincs.algorithm.aSPHINCS256;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.visual.sphincs.SphincsDescriptions;
+import org.jcryptool.visual.sphincs.algorithm.PrivateKey;
+import org.jcryptool.visual.sphincs.algorithm.PublicKey;
+import org.jcryptool.visual.sphincs.algorithm.aSPHINCS256;
 
 /**
  * Class for the Composite of Tabpage "Bitmasks and Key generation" It provides

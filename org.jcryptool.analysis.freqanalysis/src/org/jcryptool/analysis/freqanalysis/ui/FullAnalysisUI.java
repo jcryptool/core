@@ -9,11 +9,6 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.analysis.freqanalysis.ui;
 
-//import java.io.BufferedReader;
-
-import org.jcryptool.crypto.ui.textloader.ui.wizard.TextLoadController;
-import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
-
 //import java.io.File;
 //import java.io.FileReader;
 import java.io.IOException;
@@ -55,6 +50,11 @@ import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 //import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.ui.SingleVanishTooltipLauncher;
+
+//import java.io.BufferedReader;
+
+import org.jcryptool.crypto.ui.textloader.ui.wizard.TextLoadController;
+import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
 
 /**
  * @author SLeischnig

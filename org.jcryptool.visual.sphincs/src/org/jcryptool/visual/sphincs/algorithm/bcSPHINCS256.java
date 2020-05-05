@@ -1,19 +1,28 @@
 package org.jcryptool.visual.sphincs.algorithm;
 
 
-import java.util.List;
-import java.util.Base64.Encoder;
 import java.security.SecureRandom;
 import java.security.Security;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Base64.Encoder;
+import java.util.List;
 
+//import org.bouncycastle.pqc.crypto.sphincs.*;
+import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
+import org.bouncycastle.crypto.Digest;
 //add the provider package
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-//import org.bouncycastle.pqc.crypto.sphincs.*;
-import org.bouncycastle.crypto.*;
-
-import org.jcryptool.visual.sphincs.algorithm.bc_code.*;
+import org.jcryptool.visual.sphincs.algorithm.bc_code.HashFunctions;
+import org.jcryptool.visual.sphincs.algorithm.bc_code.SHA256Digest;
+import org.jcryptool.visual.sphincs.algorithm.bc_code.SHA512Digest;
+import org.jcryptool.visual.sphincs.algorithm.bc_code.SPHINCS256Config;
+import org.jcryptool.visual.sphincs.algorithm.bc_code.SPHINCS256KeyGenerationParameters;
+import org.jcryptool.visual.sphincs.algorithm.bc_code.SPHINCS256KeyPairGenerator;
+import org.jcryptool.visual.sphincs.algorithm.bc_code.SPHINCS256Signer;
+import org.jcryptool.visual.sphincs.algorithm.bc_code.SPHINCSPrivateKeyParameters;
+import org.jcryptool.visual.sphincs.algorithm.bc_code.SPHINCSPublicKeyParameters;
+import org.jcryptool.visual.sphincs.algorithm.bc_code.Tree;
 
 public class bcSPHINCS256 extends aSPHINCS256 {
 	SPHINCS256KeyGenerationParameters _GenerationParameter;

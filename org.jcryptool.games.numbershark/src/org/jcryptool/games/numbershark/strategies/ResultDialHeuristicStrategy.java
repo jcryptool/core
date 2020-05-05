@@ -11,7 +11,6 @@ package org.jcryptool.games.numbershark.strategies;
 
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;

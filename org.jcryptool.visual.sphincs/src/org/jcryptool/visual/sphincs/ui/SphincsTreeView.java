@@ -12,6 +12,7 @@ package org.jcryptool.visual.sphincs.ui;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.SWTEventDispatcher;

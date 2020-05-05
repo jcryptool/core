@@ -12,6 +12,7 @@ package org.jcryptool.analysis.fleissner.logic;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Locale;
+
 import org.jcryptool.analysis.fleissner.Activator;
 import org.jcryptool.core.logging.utils.LogUtil;
 

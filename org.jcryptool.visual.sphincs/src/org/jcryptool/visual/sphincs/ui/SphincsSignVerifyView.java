@@ -10,14 +10,6 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.visual.sphincs.ui;
 
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.MessageBox;
-import org.jcryptool.core.util.fonts.FontService;
-import org.jcryptool.visual.sphincs.SphincsDescriptions;
-import org.jcryptool.visual.sphincs.algorithm.*;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
@@ -29,6 +21,15 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
+import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.visual.sphincs.SphincsDescriptions;
+import org.jcryptool.visual.sphincs.algorithm.Signature;
+import org.jcryptool.visual.sphincs.algorithm.aSPHINCS256;
 
 /**
  * Class for the Composite of Tab "Sign and Verify" It provides a GUI interface

@@ -22,6 +22,5 @@ Import-Package: org.bouncycastle.crypto.digests,
 Export-Package: org.jcryptool.visual.sphincsplus,
  org.jcryptool.visual.sphincsplus.algorithm,
  org.jcryptool.visual.sphincsplus.interfaces,
- org.jcryptool.visual.sphincsplus.ui,
- org.jcryptool.visual.sphincsplus.views
+ org.jcryptool.visual.sphincsplus.ui
 Bundle-Vendor: %Bundle-Vendor.0

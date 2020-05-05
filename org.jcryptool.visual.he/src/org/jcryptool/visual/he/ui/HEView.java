@@ -11,6 +11,7 @@ package org.jcryptool.visual.he.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TabFolder;
@@ -18,9 +19,7 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.ui.auto.LayoutAdvisor;
-import org.jcryptool.visual.he.HEPlugin;
 import org.jcryptool.visual.he.Messages;
-import org.eclipse.swt.layout.FillLayout;
 
 
 public class HEView extends ViewPart {

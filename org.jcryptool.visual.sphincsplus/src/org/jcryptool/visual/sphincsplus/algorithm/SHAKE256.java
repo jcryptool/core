@@ -11,6 +11,7 @@ package org.jcryptool.visual.sphincsplus.algorithm;
 
 import org.jcryptool.visual.sphincsplus.EnvironmentParameters;
 import org.jcryptool.visual.sphincsplus.interfaces.IHashFunction;
+
 import com.github.aelstad.keccakj.fips202.Shake256;
 
 /**
