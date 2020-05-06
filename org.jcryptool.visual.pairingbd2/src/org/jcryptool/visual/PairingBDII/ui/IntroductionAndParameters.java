@@ -68,22 +68,31 @@ public class IntroductionAndParameters {
 		groupParameters.setText(Messages.IntroductionAndParameters_6);
 		
 		parameters_u = new Text(groupParameters, SWT.READ_ONLY);
+		parameters_u.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		displayParameter(PARAMETER_u, ""); //$NON-NLS-1$
 		parameters_q = new Text(groupParameters, SWT.READ_ONLY);
+		parameters_q.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		displayParameter(PARAMETER_q, ""); //$NON-NLS-1$
 		parameters_E = new Text(groupParameters, SWT.READ_ONLY);
+		parameters_E.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		displayParameter(PARAMETER_E, ""); //$NON-NLS-1$
 		parameters_E2 = new Text(groupParameters, SWT.READ_ONLY);
+		parameters_E2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		displayParameter(PARAMETER_E2, ""); //$NON-NLS-1$
 		parameters_l = new Text(groupParameters, SWT.READ_ONLY);
+		parameters_l.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		displayParameter(PARAMETER_l, ""); //$NON-NLS-1$
 		parameters_P = new Text(groupParameters, SWT.READ_ONLY);
+		parameters_P.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		displayParameter(PARAMETER_P, ""); //$NON-NLS-1$
 		parameters_Q2 = new Text(groupParameters, SWT.READ_ONLY);
+		parameters_Q2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		displayParameter(PARAMETER_Q2, ""); //$NON-NLS-1$
 		parameters_k = new Text(groupParameters, SWT.READ_ONLY);
+		parameters_k.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		displayParameter(PARAMETER_k, ""); //$NON-NLS-1$
 		parameters_e = new Text(groupParameters, SWT.READ_ONLY);
+		parameters_e.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		displayParameter(PARAMETER_e, ""); //$NON-NLS-1$
 
 		groupParameters = new Group(parent, SWT.NONE);
