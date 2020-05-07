@@ -20,7 +20,6 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 public class Illustration {
@@ -33,7 +32,7 @@ public class Illustration {
     private final Button CompKey;
     private final Button Verify;
 
-    private final Label VerifyLabel;
+    private final Text VerifyLabel;
 
     private final Text Step1;
     private final Text Step2;
@@ -167,7 +166,7 @@ public class Illustration {
         groupStep5.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
         groupStep5.setLayout(new GridLayout(1, false));
         
-        VerifyLabel = new Label(groupStep5, SWT.WRAP);
+        VerifyLabel = new Text(groupStep5, SWT.READ_ONLY);
         VerifyLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         VerifyLabel.setText(Messages.Illustration_20);
         VerifyLabel.setEnabled(false);
@@ -227,7 +226,7 @@ public class Illustration {
         return Verify;
     }
 
-    public Label getVerifyLabel() {
+    public Text getVerifyLabel() {
         return VerifyLabel;
     }
 
