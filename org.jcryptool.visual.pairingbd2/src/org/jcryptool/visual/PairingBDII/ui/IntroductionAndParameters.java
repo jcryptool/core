@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 
 public class IntroductionAndParameters {
@@ -231,6 +232,7 @@ public class IntroductionAndParameters {
 		gd_maxUserHint.widthHint = 200;
 		maxUserHint.setLayoutData(gd_maxUserHint);
 		maxUserHint.setText(Messages.IntroductionAndParameters_24);
+		maxUserHint.setForeground(ColorService.GRAY);
 
 		group = new Group(groupParameters, SWT.NONE);
 		group.setLayout(new GridLayout(1, false));
