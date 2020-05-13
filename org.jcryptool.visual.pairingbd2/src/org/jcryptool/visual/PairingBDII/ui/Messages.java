@@ -82,6 +82,7 @@ public class Messages extends NLS {
 	public static String IntroductionAndParameters_17;
 	public static String IntroductionAndParameters_18;
 	public static String IntroductionAndParameters_19;
+	public static String IntroductionAndParameters_2;
 	public static String IntroductionAndParameters_20;
 	public static String IntroductionAndParameters_21;
 	public static String IntroductionAndParameters_22;
@@ -109,6 +110,7 @@ public class Messages extends NLS {
 	public static String IntroductionAndParameters_62;
 	public static String IntroductionAndParameters_63;
 	public static String IntroductionAndParameters_64;
+	public static String IntroductionAndParameters_65;
 	public static String Logging_0;
 	public static String Logging_1;
 	public static String Logging_10;

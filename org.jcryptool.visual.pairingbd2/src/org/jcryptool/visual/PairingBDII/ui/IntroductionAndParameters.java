@@ -133,7 +133,7 @@ public class IntroductionAndParameters {
 				}
 			}
 		});
-		radio_EmbeddedDegreeSmall.setSelection(true);
+
 		radio_EmbeddedDegreeLarge = new Button(group, SWT.RADIO);
 		radio_EmbeddedDegreeLarge.setText(Messages.IntroductionAndParameters_19);
 		radio_EmbeddedDegreeLarge.addSelectionListener(new SelectionListener() {
@@ -397,6 +397,9 @@ public class IntroductionAndParameters {
 		displayParameter(PARAMETER_k, ""); //$NON-NLS-1$
 	}
 
+	/**
+	 * Sets the parameters for embedding degree 12 (smaller parameters)
+	 */
 	public void setBNCurves() {
 		final BigInteger u = new BigInteger("110100001000000000000100010000000000011", 2); //$NON-NLS-1$
 		displayParameter(PARAMETER_u, u.toString(16) + Messages.IntroductionAndParameters_49);
@@ -409,16 +412,25 @@ public class IntroductionAndParameters {
 		displayParameter(PARAMETER_e, Messages.IntroductionAndParameters_56);
 	}
 
+	/** 
+	 * Sets the parameters for embedding degree = 2 and security level = "industrial security"
+	 */
 	public void setHighSecurity() {
 		displayParameter(PARAMETER_q, Messages.IntroductionAndParameters_57);
 		displayParameter(PARAMETER_l, Messages.IntroductionAndParameters_58);
 		displayParameter(PARAMETER_P, Messages.IntroductionAndParameters_59);
+		displayParameter(PARAMETER_k, Messages.IntroductionAndParameters_65);
 	}
 
+	/**
+	 * Sets the parameters for embedding degree 2 (large parameters) and 
+	 * security level "pen and paper".
+	 */
 	public void setLowSecurity() {
 		displayParameter(PARAMETER_q, Messages.IntroductionAndParameters_60);
 		displayParameter(PARAMETER_l, Messages.IntroductionAndParameters_61);
 		displayParameter(PARAMETER_P, Messages.IntroductionAndParameters_62);
+		displayParameter(PARAMETER_k, Messages.IntroductionAndParameters_65);
 	}
 
 	public void setTatePairing() {
