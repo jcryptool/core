@@ -19,7 +19,9 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 public class Illustration {
@@ -71,6 +73,7 @@ public class Illustration {
             @Override
 			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
+                Step1.notifyListeners(SWT.MouseWheel, new Event());
             }
 
             @Override
@@ -84,7 +87,7 @@ public class Illustration {
         groupStep2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
         groupStep2.setLayout(new GridLayout(1, false));
         
-        Step2 = new Text(groupStep2, SWT.WRAP | SWT.READ_ONLY);
+        Step2 = new Text(groupStep2, SWT.V_SCROLL | SWT.WRAP | SWT.READ_ONLY);
         Step2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         Step2.setText(Messages.Illustration_5);
         Step2.setEnabled(false);
@@ -108,6 +111,8 @@ public class Illustration {
         groupStep3.setText(Messages.Illustration_7);
         groupStep3.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
         groupStep3.setLayout(new GridLayout(1, false));
+        
+        new Label(group_Illustration, SWT.NONE);
         
         Step3 = new Text(groupStep3, SWT.WRAP | SWT.READ_ONLY);
         Step3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
