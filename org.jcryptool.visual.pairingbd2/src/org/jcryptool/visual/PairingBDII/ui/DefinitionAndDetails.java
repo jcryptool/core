@@ -11,6 +11,8 @@
 package org.jcryptool.visual.PairingBDII.ui;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ExpandEvent;
+import org.eclipse.swt.events.ExpandListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -19,6 +21,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.ExpandBar;
+import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
@@ -39,17 +43,26 @@ public class DefinitionAndDetails {
     private final Spinner spinnerUserIndex;
     private final Label labelUserIndex;
 
-    public DefinitionAndDetails(Composite parent) {
+    public DefinitionAndDetails(Composite parent, View view) {
+
+    	
         groupDefinitions = new Group(parent, SWT.NONE);
         groupDefinitions.setText(Messages.DefinitionAndDetails_0);
-        groupDefinitions.setLayout(new GridLayout(2, false));
+        groupDefinitions.setLayout(new GridLayout(1, false));
         groupDefinitions.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 2, 1));
+        
+    	ExpandBar bar_definitions = new ExpandBar(groupDefinitions, SWT.NONE);
+    	GridData gd_bar_definitions =new GridData(SWT.FILL, SWT.FILL, true, false);
+    	bar_definitions.setLayoutData(gd_bar_definitions);
+    	
+    	Composite comp_definitions = new Composite(bar_definitions, SWT.NONE);
+    	comp_definitions.setLayout(new GridLayout(2, false));
 
-        label = new Text(groupDefinitions, SWT.WRAP | SWT.READ_ONLY);
+        label = new Text(comp_definitions, SWT.WRAP | SWT.READ_ONLY);
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
         label.setText(Messages.DefinitionAndDetails_1);
 
-        label = new Text(groupDefinitions, SWT.WRAP | SWT.READ_ONLY);
+        label = new Text(comp_definitions, SWT.WRAP | SWT.READ_ONLY);
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 3));
         label.setText(Messages.DefinitionAndDetails_2
                         + Messages.DefinitionAndDetails_3
@@ -60,31 +73,80 @@ public class DefinitionAndDetails {
                         + Messages.DefinitionAndDetails_8
                         + Messages.DefinitionAndDetails_9);
 
-        label = new Text(groupDefinitions, SWT.WRAP | SWT.READ_ONLY);
+        label = new Text(comp_definitions, SWT.WRAP | SWT.READ_ONLY);
         label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         label.setText(Messages.DefinitionAndDetails_10 
         		+ Messages.DefinitionAndDetails_11
                 + Messages.DefinitionAndDetails_12);
         
-        labelPK = new Text(groupDefinitions, SWT.WRAP | SWT.READ_ONLY);
+        labelPK = new Text(comp_definitions, SWT.WRAP | SWT.READ_ONLY);
         labelPK.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-        labelExplanation = new Text(groupDefinitions, SWT.WRAP | SWT.READ_ONLY);
+        labelExplanation = new Text(comp_definitions, SWT.WRAP | SWT.READ_ONLY);
         labelExplanation.setText(Messages.DefinitionAndDetails_13 
         		+ Messages.DefinitionAndDetails_14
                 + Messages.DefinitionAndDetails_15
                 + Messages.DefinitionAndDetails_16);
         labelExplanation.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-        labelAuthetification = new Text(groupDefinitions, SWT.WRAP | SWT.READ_ONLY);
+        labelAuthetification = new Text(comp_definitions, SWT.WRAP | SWT.READ_ONLY);
         labelAuthetification.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+        labelAuthetification.setText("\n\n\n"); //$NON-NLS-1$
+        
+        
+        ExpandItem item_definitions = new ExpandItem(bar_definitions, SWT.NONE, 0);
+        item_definitions.setHeight(comp_definitions.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+        item_definitions.setControl(comp_definitions);
+        item_definitions.setExpanded(true);
+        item_definitions.setText(Messages.DefinitionAndDetails_26);
+
+        bar_definitions.addExpandListener(new ExpandListener() {
+			
+			@Override
+			public void itemExpanded(ExpandEvent e) {
+				changed(e, true);
+			}
+			
+			@Override
+			public void itemCollapsed(ExpandEvent e) {
+				changed(e, false);
+			}
+			
+		    private void changed(ExpandEvent e, boolean expand) {
+		        if (e.item instanceof ExpandItem) {
+		            ExpandItem expItem = (ExpandItem) e.item;
+		            if (expand) {
+		            	// The user expanded the tab
+		            	expItem.setHeight(comp_definitions.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+		            	gd_bar_definitions.heightHint = comp_definitions.computeSize(SWT.DEFAULT, SWT.DEFAULT).y
+		            			+ bar_definitions.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
+		            } else {
+		            	// The user collapsed the item.
+		            	expItem.setHeight(0);
+		            	gd_bar_definitions.heightHint = bar_definitions.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
+		            }
+		            // Layout and recalculate the size of the whole window.
+		            // This is especially necessary for the correct
+		            // behaviour of the scrollbars.
+					view.layTheShitOut();
+		        }
+		    }
+		});
+        
 
         groupDetails = new Group(parent, SWT.NONE);
         groupDetails.setText(Messages.DefinitionAndDetails_17);
         groupDetails.setLayout(new GridLayout(1, false));
         groupDetails.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 2, 1));
+        
+    	ExpandBar bar_details = new ExpandBar(groupDetails, SWT.NONE);
+    	GridData gd_bar_details =new GridData(SWT.FILL, SWT.FILL, true, false);
+    	bar_details.setLayoutData(gd_bar_details);
+    	
+    	Composite comp_details = new Composite(bar_details, SWT.NONE);
+    	comp_details.setLayout(new GridLayout(1, false));
 
-        final Composite userSelection = new Composite(groupDetails, SWT.NONE);
+        final Composite userSelection = new Composite(comp_details, SWT.NONE);
         userSelection.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         userSelection.setLayout(new GridLayout(2, false));
 
@@ -111,7 +173,8 @@ public class DefinitionAndDetails {
             }
         });
 
-        labelDetails = new Text(groupDetails, SWT.MULTI | SWT.READ_ONLY | SWT.H_SCROLL);
+        labelDetails = new Text(comp_details, SWT.MULTI | SWT.READ_ONLY | SWT.H_SCROLL);
+        labelDetails.setText("\n\n\n\n\n\n\n"); //$NON-NLS-1$
         labelDetails.addMouseMoveListener(new MouseMoveListener() {
             // work around to ensure parent can be scrolled when entering this text field
             @Override
@@ -121,6 +184,48 @@ public class DefinitionAndDetails {
         });
 
         labelDetails.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        
+        
+        ExpandItem item_details = new ExpandItem(bar_details, SWT.NONE, 0);
+        item_details.setHeight(comp_details.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+        item_details.setControl(comp_details);
+        item_details.setExpanded(true);
+        item_details.setText(Messages.DefinitionAndDetails_28);
+
+        bar_details.addExpandListener(new ExpandListener() {
+			
+			@Override
+			public void itemExpanded(ExpandEvent e) {
+				changed(e, true);
+			}
+			
+			@Override
+			public void itemCollapsed(ExpandEvent e) {
+				changed(e, false);
+			}
+			
+		    private void changed(ExpandEvent e, boolean expand) {
+		        if (e.item instanceof ExpandItem) {
+		            ExpandItem expItem = (ExpandItem) e.item;
+		            if (expand) {
+		            	// The user expanded the tab
+		            	expItem.setHeight(comp_details.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+		            	gd_bar_details.heightHint = comp_details.computeSize(SWT.DEFAULT, SWT.DEFAULT).y
+		            			+ bar_details.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
+		            } else {
+		            	// The user collapsed the item.
+		            	expItem.setHeight(0);
+		            	gd_bar_details.heightHint = bar_details.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
+		            }
+		            // Layout and recalculate the size of the whole window.
+		            // This is especially necessary for the correct
+		            // behaviour of the scrollbars.
+					view.layTheShitOut();
+		        }
+		    }
+		});
+        
+        
         parent.getParent().layout();
     }
 

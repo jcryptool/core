@@ -32,6 +32,8 @@ public class Messages extends NLS {
 	public static String DefinitionAndDetails_22;
 	public static String DefinitionAndDetails_23;
 	public static String DefinitionAndDetails_24;
+	public static String DefinitionAndDetails_26;
+	public static String DefinitionAndDetails_28;
 	public static String DefinitionAndDetails_29;
 	public static String DefinitionAndDetails_3;
 	public static String DefinitionAndDetails_30;
