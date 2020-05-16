@@ -100,7 +100,6 @@ public class TextFoldViewer extends Composite {
 					parentComposite.getShell().setSize(parentComposite.getShell().getSize().x,
 							parentComposite.getShell().getSize().y + twiddleWindowSize());
 					listener.run();
-					System.out.println("resized");
 				}
 			}
 		});
