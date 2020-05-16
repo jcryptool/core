@@ -95,6 +95,7 @@ public class Messages extends NLS {
 	public static String IntroductionAndParameters_27;
 	public static String IntroductionAndParameters_28;
 	public static String IntroductionAndParameters_29;
+	public static String IntroductionAndParameters_3;
 	public static String IntroductionAndParameters_49;
 	public static String IntroductionAndParameters_50;
 	public static String IntroductionAndParameters_51;

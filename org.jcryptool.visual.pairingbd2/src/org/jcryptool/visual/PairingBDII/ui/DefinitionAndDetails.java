@@ -91,8 +91,7 @@ public class DefinitionAndDetails {
 
         labelAuthetification = new Text(comp_definitions, SWT.WRAP | SWT.READ_ONLY);
         labelAuthetification.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-        labelAuthetification.setText("\n\n\n"); //$NON-NLS-1$
-        
+        labelAuthetification.setText("\n\n\n");
         
         ExpandItem item_definitions = new ExpandItem(bar_definitions, SWT.NONE, 0);
         item_definitions.setHeight(comp_definitions.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
@@ -174,7 +173,8 @@ public class DefinitionAndDetails {
         });
 
         labelDetails = new Text(comp_details, SWT.MULTI | SWT.READ_ONLY | SWT.H_SCROLL);
-        labelDetails.setText("\n\n\n\n\n\n\n"); //$NON-NLS-1$
+        labelDetails.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        labelDetails.setText("\n\n\n\n\n\n\n\n"); //$NON-NLS-1$
         labelDetails.addMouseMoveListener(new MouseMoveListener() {
             // work around to ensure parent can be scrolled when entering this text field
             @Override
@@ -182,8 +182,6 @@ public class DefinitionAndDetails {
                 groupDetails.getParent().setFocus();
             }
         });
-
-        labelDetails.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         
         
         ExpandItem item_details = new ExpandItem(bar_details, SWT.NONE, 0);
@@ -245,14 +243,14 @@ public class DefinitionAndDetails {
     }
 
     public void displayUserDetails(UserData_BNP userData) {
-        labelDetails.setText(userData.toString() + " "); //$NON-NLS-1$
+        labelDetails.setText(userData.toString()); //$NON-NLS-1$
         labelDetails.setEnabled(true);
         
         groupDetails.getParent().layout(new Control[] {labelDetails});
     }
 
     public void displayUserDetails(UserData_ECBDII userData) {
-        labelDetails.setText(userData.toString() + " "); //$NON-NLS-1$
+        labelDetails.setText(userData.toString()); //$NON-NLS-1$
         labelDetails.setEnabled(true);
         
         groupDetails.getParent().layout(new Control[] {labelDetails});
@@ -270,7 +268,7 @@ public class DefinitionAndDetails {
         labelUserIndex.setEnabled(false);
         labelDetails.setEnabled(false);
         spinnerUserIndex.setEnabled(false);
-        labelDetails.setText("\n\n\n\n\n\n\n"); //$NON-NLS-1$
+        labelDetails.setText("\n\n\n\n\n\n\n\n"); //$NON-NLS-1$
     }
 
     public void setMaximumNumberOfUsers(int numberOfUsers) {
@@ -282,7 +280,7 @@ public class DefinitionAndDetails {
         labelUserIndex.setEnabled(isvisible);
         spinnerUserIndex.setEnabled(isvisible);
         if (!isvisible) {
-            labelDetails.setText("\n\n\n\n\n\n\n"); //$NON-NLS-1$
+            labelDetails.setText("\n\n\n\n\n\n\n\n"); //$NON-NLS-1$
         }
     }
 
