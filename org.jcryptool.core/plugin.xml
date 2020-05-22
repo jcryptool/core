@@ -302,19 +302,24 @@
       </product>
    </extension>
 
+	<!-- Hier werden shortcuts definiert -->
    <extension point="org.eclipse.ui.bindings">
-      <key commandId="org.eclipse.ui.help.dynamicHelp" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" sequence="F1"/>
+      <key 
+      		commandId="org.eclipse.ui.help.dynamicHelp" 
+      		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" 
+      		sequence="F1"/>
       <key
             commandId="org.jcryptool.core.action.open"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+O">
       </key>
-      <key
-            commandId="org.eclipse.text.quicksearch.commands.quicksearchCommand"
+            <key
+            commandId="org.eclipse.ui.window.quickAccess"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+3">
       </key>
+      
    </extension>
 </plugin>
