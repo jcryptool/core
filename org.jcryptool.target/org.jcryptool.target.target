@@ -13,20 +13,43 @@
 		<unit id="org.eclipse.rcp.sdk.id" version="4.13.0.I20190916-1045"/>
 		<unit id="org.eclipse.zest.sdk.feature.group" version="1.7.0.201606061308"/>
 	</location>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="https://download.eclipse.org/technology/babel/update-site/R0.17.1/2019-12/"/>
 		<unit id="org.eclipse.babel.nls_datatools_de.feature.group" version="4.14.0.v20200113020001"/>
 		<unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="4.14.0.v20200113020001"/>
 	</location>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
-		<repository location="https://simlei.github.io/org.jcryptool.thirdparty/site/m2bundle"/>
-		<unit id="org.jcryptool.thirdparty.m2bundle.jaxb" version="0.0.1"/>
-	</location>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="https://simlei.github.io/org.jcryptool.thirdparty/site/jre"/>
 		<unit id="org.jcryptool.thirdparty.jre.linux64.feature.feature.group" version="11.0.5.009"/>
 		<unit id="org.jcryptool.thirdparty.jre.macosx.feature.feature.group" version="11.0.5.009"/>
 		<unit id="org.jcryptool.thirdparty.jre.win64.feature.feature.group" version="11.0.5.009"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="file:///media/shared/jct-devops/workspaces/mainline/repocollection/thirdparty/releng/org.jcryptool.thirdparty.m2bundle.p2/target/repository"/>
+		<unit id="org.jcryptool.thirdparty.m2bundle.jaxb" version="0.0.1"/>
+		<unit id="org.jcryptool.thirdparty.m2bundle.misc" version="0.0.1"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20200224183213/repository/"/>
+		<unit id="org.junit" version="4.12.0.v201504281640"/>
+		<unit id="org.junit" version="4.13.0.v20200204-1500"/>
+		<unit id="org.junit.jupiter.api" version="5.6.0.v20200203-2009"/>
+		<unit id="org.junit.jupiter.api.source" version="5.6.0.v20200203-2009"/>
+		<unit id="org.junit.jupiter.engine" version="5.6.0.v20200203-2009"/>
+		<unit id="org.junit.jupiter.engine.source" version="5.6.0.v20200203-2009"/>
+		<unit id="org.junit.platform.commons" version="1.6.0.v20200203-2009"/>
+		<unit id="org.junit.platform.commons.source" version="1.6.0.v20200203-2009"/>
+		<unit id="org.junit.platform.engine" version="1.6.0.v20200203-2009"/>
+		<unit id="org.junit.platform.engine.source" version="1.6.0.v20200203-2009"/>
+		<unit id="org.junit.platform.launcher" version="1.6.0.v20200203-2009"/>
+		<unit id="org.junit.platform.launcher.source" version="1.6.0.v20200203-2009"/>
+		<unit id="org.junit.platform.runner" version="1.6.0.v20200203-2009"/>
+		<unit id="org.junit.platform.runner.source" version="1.6.0.v20200203-2009"/>
+		<unit id="org.junit.platform.suite.api" version="1.6.0.v20200203-2009"/>
+		<unit id="org.junit.platform.suite.api.source" version="1.6.0.v20200203-2009"/>
+		<unit id="org.junit.source" version="4.12.0.v201504281640"/>
+		<unit id="org.junit.vintage.engine" version="5.6.0.v20200203-2009"/>
+		<unit id="org.junit.vintage.engine.source" version="5.6.0.v20200203-2009"/>
 	</location>
 </locations>
 <launcherArgs>
