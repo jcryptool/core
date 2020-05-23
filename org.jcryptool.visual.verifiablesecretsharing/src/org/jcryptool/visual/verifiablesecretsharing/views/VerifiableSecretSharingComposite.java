@@ -36,8 +36,8 @@ import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
-import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.images.ImageService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.verifiablesecretsharing.VerifiableSecretSharingPlugin;
 import org.jcryptool.visual.verifiablesecretsharing.algorithm.Polynomial;
 import org.jcryptool.visual.verifiablesecretsharing.algorithm.VerifiableSecretSharing;
@@ -164,21 +164,11 @@ public class VerifiableSecretSharingComposite extends Composite {
      * Generates the head of the tab. The head has a title and a description.
      */
     private void createHead() {
-        final Composite head = new Composite(this, SWT.NONE);
-        head.setBackground(WHITE);
-        head.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        head.setLayout(new GridLayout());
 
-        final Label label = new Label(head, SWT.NONE);
-        label.setFont(FontService.getHeaderFont());
-        label.setBackground(WHITE);
-        label.setText(Messages.VerifiableSecretSharingComposite_title);
-
-        stDescription = new StyledText(head, SWT.READ_ONLY | SWT.WRAP);
-        GridData gd_stDescription = new GridData(SWT.FILL, SWT.FILL, true, false);
-		gd_stDescription.widthHint = 1000;
-		stDescription.setLayoutData(gd_stDescription);
-        stDescription.setText(Messages.VerifiableSecretSharingComposite_description);
+    	TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(this);
+        titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        titleAndDescription.setTitle(Messages.VerifiableSecretSharingComposite_title);
+        titleAndDescription.setDescription(Messages.VerifiableSecretSharingComposite_description);
     }
 
     private void createBody() {

@@ -20,8 +20,10 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 
 public class IntroductionAndParameters {
@@ -68,22 +70,31 @@ public class IntroductionAndParameters {
 		groupParameters.setText(Messages.IntroductionAndParameters_6);
 		
 		parameters_u = new Text(groupParameters, SWT.READ_ONLY);
+		parameters_u.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		displayParameter(PARAMETER_u, ""); //$NON-NLS-1$
 		parameters_q = new Text(groupParameters, SWT.READ_ONLY);
+		parameters_q.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		displayParameter(PARAMETER_q, ""); //$NON-NLS-1$
 		parameters_E = new Text(groupParameters, SWT.READ_ONLY);
+		parameters_E.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		displayParameter(PARAMETER_E, ""); //$NON-NLS-1$
 		parameters_E2 = new Text(groupParameters, SWT.READ_ONLY);
+		parameters_E2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		displayParameter(PARAMETER_E2, ""); //$NON-NLS-1$
 		parameters_l = new Text(groupParameters, SWT.READ_ONLY);
+		parameters_l.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		displayParameter(PARAMETER_l, ""); //$NON-NLS-1$
 		parameters_P = new Text(groupParameters, SWT.READ_ONLY);
+		parameters_P.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		displayParameter(PARAMETER_P, ""); //$NON-NLS-1$
 		parameters_Q2 = new Text(groupParameters, SWT.READ_ONLY);
+		parameters_Q2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		displayParameter(PARAMETER_Q2, ""); //$NON-NLS-1$
 		parameters_k = new Text(groupParameters, SWT.READ_ONLY);
+		parameters_k.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		displayParameter(PARAMETER_k, ""); //$NON-NLS-1$
 		parameters_e = new Text(groupParameters, SWT.READ_ONLY);
+		parameters_e.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		displayParameter(PARAMETER_e, ""); //$NON-NLS-1$
 
 		groupParameters = new Group(parent, SWT.NONE);
@@ -124,7 +135,7 @@ public class IntroductionAndParameters {
 				}
 			}
 		});
-		radio_EmbeddedDegreeSmall.setSelection(true);
+
 		radio_EmbeddedDegreeLarge = new Button(group, SWT.RADIO);
 		radio_EmbeddedDegreeLarge.setText(Messages.IntroductionAndParameters_19);
 		radio_EmbeddedDegreeLarge.addSelectionListener(new SelectionListener() {
@@ -220,8 +231,20 @@ public class IntroductionAndParameters {
 		Text maxUserHint = new Text(panel, SWT.WRAP | SWT.READ_ONLY);
 		GridData gd_maxUserHint = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
 		gd_maxUserHint.widthHint = 200;
+		maxUserHint.setForeground(ColorService.GRAY);
 		maxUserHint.setLayoutData(gd_maxUserHint);
 		maxUserHint.setText(Messages.IntroductionAndParameters_24);
+		
+		Label horizontalSeparator = new Label(panel, SWT.SEPARATOR | SWT.HORIZONTAL);
+		horizontalSeparator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		horizontalSeparator.setForeground(ColorService.GRAY);
+		
+		Text perforamceHint = new Text(panel, SWT.WRAP | SWT.READ_ONLY);
+		GridData gd_perforamceHint = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
+		gd_perforamceHint.widthHint = 200;
+		perforamceHint.setForeground(ColorService.GRAY);
+		perforamceHint.setLayoutData(gd_perforamceHint);
+		perforamceHint.setText(Messages.IntroductionAndParameters_3);
 
 		group = new Group(groupParameters, SWT.NONE);
 		group.setLayout(new GridLayout(1, false));
@@ -388,9 +411,12 @@ public class IntroductionAndParameters {
 		displayParameter(PARAMETER_k, ""); //$NON-NLS-1$
 	}
 
+	/**
+	 * Sets the parameters for embedding degree 12 (smaller parameters)
+	 */
 	public void setBNCurves() {
 		final BigInteger u = new BigInteger("110100001000000000000100010000000000011", 2); //$NON-NLS-1$
-		displayParameter(PARAMETER_u, u.toString(16) + Messages.IntroductionAndParameters_49);
+		displayParameter(PARAMETER_u, u.toString(10) + Messages.IntroductionAndParameters_49);
 		displayParameter(PARAMETER_q, Messages.IntroductionAndParameters_50);
 		displayParameter(PARAMETER_E, Messages.IntroductionAndParameters_51);
 		displayParameter(PARAMETER_E2, Messages.IntroductionAndParameters_52);
@@ -400,16 +426,25 @@ public class IntroductionAndParameters {
 		displayParameter(PARAMETER_e, Messages.IntroductionAndParameters_56);
 	}
 
+	/** 
+	 * Sets the parameters for embedding degree = 2 and security level = "industrial security"
+	 */
 	public void setHighSecurity() {
 		displayParameter(PARAMETER_q, Messages.IntroductionAndParameters_57);
 		displayParameter(PARAMETER_l, Messages.IntroductionAndParameters_58);
 		displayParameter(PARAMETER_P, Messages.IntroductionAndParameters_59);
+		displayParameter(PARAMETER_k, Messages.IntroductionAndParameters_65);
 	}
 
+	/**
+	 * Sets the parameters for embedding degree 2 (large parameters) and 
+	 * security level "pen and paper".
+	 */
 	public void setLowSecurity() {
 		displayParameter(PARAMETER_q, Messages.IntroductionAndParameters_60);
 		displayParameter(PARAMETER_l, Messages.IntroductionAndParameters_61);
 		displayParameter(PARAMETER_P, Messages.IntroductionAndParameters_62);
+		displayParameter(PARAMETER_k, Messages.IntroductionAndParameters_65);
 	}
 
 	public void setTatePairing() {

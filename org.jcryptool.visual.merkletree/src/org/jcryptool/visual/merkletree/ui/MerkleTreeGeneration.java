@@ -50,7 +50,7 @@ public class MerkleTreeGeneration extends Composite {
 	private byte[] publicSeed;
 	private byte[] privateSeed;
 
-	private Composite groupMaster;
+	private Composite compositeMaster;
 
 	private Group publicSeedGroup;
 	private Group wParameterGroup;
@@ -94,7 +94,12 @@ public class MerkleTreeGeneration extends Composite {
 	 */
 	public MerkleTreeGeneration(Composite parent, int style, SUIT mode, ViewPart masterView) {
 		super(parent, style);
-		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
+		
+		GridLayout gl_this = new GridLayout();
+		gl_this.marginHeight = 0;
+		gl_this.marginWidth = 0;
+		this.setLayout(gl_this);
+		
 		this.mode = mode;
 		this.masterView = masterView;
 
@@ -102,25 +107,31 @@ public class MerkleTreeGeneration extends Composite {
 		// Beginning of GUI elements
 		// ***********************************
 
-		groupMaster = new Composite(this, SWT.NONE);
-		groupMaster.setLayout(new GridLayout(8, true));
-		groupMaster.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
+		compositeMaster = new Composite(this, SWT.NONE);
+		GridLayout gl_compositeMaster = new GridLayout();
+		// No 5 px border around this composite.
+		gl_compositeMaster.marginHeight = 0;
+		gl_compositeMaster.marginWidth = 0;
+		compositeMaster.setLayout(gl_compositeMaster);
+		compositeMaster.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		publicSeedGroup = new Group(groupMaster, SWT.NONE);
-		publicSeedGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
-		publicSeedGroup.setLayout(new GridLayout(10, true));
+		publicSeedGroup = new Group(compositeMaster, SWT.NONE);
+		publicSeedGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		GridLayout gl_publicSeedGroup = new GridLayout(4, true);
+		gl_publicSeedGroup.verticalSpacing = 15;
+		publicSeedGroup.setLayout(gl_publicSeedGroup);
 		publicSeedGroup.setFont(FontService.getNormalBoldFont());
 
-		Label leftSpacer0 = new Label(publicSeedGroup, SWT.NONE);
-		leftSpacer0.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
+//		Spacer Label
+		new Label(publicSeedGroup, SWT.NONE);
 
 		publicSeedText = new Text(publicSeedGroup, SWT.BORDER | SWT.CENTER);
-		publicSeedText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
+		publicSeedText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		publicSeed = generateNewSeed();
 		publicSeedText.setText(Converter._byteToHex(publicSeed));
 
 		publicSeedButton = new Button(publicSeedGroup, SWT.NONE);
-		publicSeedButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 3, 1));
+		publicSeedButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false));
 
 		publicSeedButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -130,35 +141,33 @@ public class MerkleTreeGeneration extends Composite {
 				((MerkleTreeView) masterView).updateElement();
 			}
 		});
+		
+		// Spacer label for distance below the public seed.
+		Label label1 = new Label(publicSeedGroup, SWT.NONE);
+		label1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 4, 1));
+		
+		
 
 		if (mode == SUIT.XMSS || mode == SUIT.XMSS_MT) {
-			privateSeedGroup = new Group(groupMaster, SWT.NONE);
-			privateSeedGroup.setText(Descriptions.Tab0_Head5);
-			privateSeedGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
-			privateSeedGroup.setLayout(new GridLayout(10, true));
+			privateSeedGroup = new Group(compositeMaster, SWT.NONE);
+			privateSeedGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+			GridLayout gl_privateSeedGroup = new GridLayout(4, true);
+			gl_privateSeedGroup.verticalSpacing = 15;
+			privateSeedGroup.setLayout(gl_privateSeedGroup);
 			privateSeedGroup.setText(Descriptions.Tab0_Seed0);
 			privateSeedGroup.setFont(FontService.getNormalBoldFont());
 
-			// bitmaskDescription = new StyledText(bitmaskGroup, SWT.WRAP |
-			// SWT.BORDER);
-			// bitmaskDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL,
-			// true, false, 10, 2));
-			// bitmaskDescription.setText(Descriptions.Tab0_Txt3);
-			// bitmaskDescription.setEditable(false);
-			// bitmaskDescription.setCaret(null);
-
-			Label leftSpacer1 = new Label(privateSeedGroup, SWT.NONE);
-			leftSpacer1.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 3, 1));
+			// Spacer Label left of private seed text
+			new Label(privateSeedGroup, SWT.NONE);
 
 			privateSeedText = new Text(privateSeedGroup, SWT.BORDER | SWT.CENTER);
-			privateSeedText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
-
-			privateSeedButton = new Button(privateSeedGroup, SWT.NONE);
-			privateSeedButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 3, 1));
-			privateSeedButton.setText(Descriptions.Tab0_Seed3);
-
+			privateSeedText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 			privateSeed = generateNewSeed();
 			privateSeedText.setText(Converter._byteToHex(privateSeed));
+
+			privateSeedButton = new Button(privateSeedGroup, SWT.NONE);
+			privateSeedButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false));
+			privateSeedButton.setText(Descriptions.Tab0_Seed3);
 
 			privateSeedButton.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -168,6 +177,10 @@ public class MerkleTreeGeneration extends Composite {
 					((MerkleTreeView) masterView).updateElement();
 				}
 			});
+			
+			// Spacer label for distance below the private seed.
+			Label label2 = new Label(privateSeedGroup, SWT.NONE);
+			label2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 4, 1));
 		}
 
 		/**
@@ -177,19 +190,17 @@ public class MerkleTreeGeneration extends Composite {
 		 * 
 		 */
 
-		wParameterGroup = new Group(groupMaster, SWT.NONE);
+		wParameterGroup = new Group(compositeMaster, SWT.NONE);
 		wParameterGroup.setText(Descriptions.Tab0_Head5);
-		wParameterGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
-		GridLayout wParameterGroupLayout = new GridLayout(8, true);
-		wParameterGroupLayout.verticalSpacing = 13;
-		wParameterGroup.setLayout(wParameterGroupLayout);
+		wParameterGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		GridLayout gl_wParameterGroup = new GridLayout(MerkleConst.H_SPAN_MAIN, true);
+		gl_wParameterGroup.verticalSpacing = 15;
+		wParameterGroup.setLayout(gl_wParameterGroup);
 		wParameterGroup.setFont(FontService.getNormalBoldFont());
 
-		wParamDescription = new StyledText(wParameterGroup, SWT.WRAP | SWT.BORDER);
-		wParamDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 2));
-		wParamDescription.setEditable(false);
-		wParamDescription.setCaret(null);
-
+		wParamDescription = new StyledText(wParameterGroup, SWT.WRAP | SWT.READ_ONLY);
+		wParamDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 1));
+		
 		buttonSet4 = new Button(wParameterGroup, SWT.RADIO);
 		buttonSet4.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		buttonSet4.setText("4");
@@ -225,34 +236,31 @@ public class MerkleTreeGeneration extends Composite {
 			}
 
 		});
+		
+		// Spacer label for distance below the 4 and 16 button
+		Label label4 = new Label(wParameterGroup, SWT.NONE);
+		label4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 1));
 
-		generateKeyGroup = new Group(groupMaster, SWT.NONE);
+		generateKeyGroup = new Group(compositeMaster, SWT.NONE);
 		generateKeyGroup.setText(Descriptions.Tab0_Head2);
-		generateKeyGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
-		GridLayout generateKeyGroupLayout = new GridLayout(1, true);
-		generateKeyGroupLayout.verticalSpacing = 13;
+		generateKeyGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		GridLayout generateKeyGroupLayout = new GridLayout(16, true);
+		generateKeyGroupLayout.verticalSpacing = 15;
 		generateKeyGroup.setLayout(generateKeyGroupLayout);
 		generateKeyGroup.setFont(FontService.getNormalBoldFont());
 
 		// text
-		generateKeyDescription = new StyledText(generateKeyGroup, SWT.WRAP | SWT.BORDER);
-		generateKeyDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, MerkleConst.H_SPAN_MAIN, 1));
-		generateKeyDescription.setCaret(null);
-		generateKeyDescription.setEditable(false);
-		//
-		Composite keyRow = new Composite(generateKeyGroup, SWT.NONE);
-		GridLayout keyRowLayout = new GridLayout(16, true);
-		keyRowLayout.verticalSpacing = 13;
-		keyRow.setLayout(keyRowLayout);
-		keyRow.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, true, 8, 1));
+		generateKeyDescription = new StyledText(generateKeyGroup, SWT.WRAP | SWT.READ_ONLY);
+		generateKeyDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2 * MerkleConst.H_SPAN_MAIN, 1));
+
 
 		// spinner for the key-ammount
 		if (mode != SUIT.XMSS_MT) {
-			Label keysum = new Label(keyRow, SWT.NONE);
+			Label keysum = new Label(generateKeyGroup, SWT.NONE);
 			keysum.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 4, 1));
 			keysum.setText(Descriptions.Tab0_Lable1);
 
-			keypairSpinner = new Spinner(keyRow, SWT.BORDER);
+			keypairSpinner = new Spinner(generateKeyGroup, SWT.BORDER);
 			keypairSpinner.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
 			keypairSpinner.setMinimum(2);
 			keypairSpinner.setMaximum(64);
@@ -264,7 +272,7 @@ public class MerkleTreeGeneration extends Composite {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					int selection = keypairSpinner.getSelection();
-					//
+
 					if (selection < spinnerValue) {
 						keypairSpinner.setSelection(spinnerValue / 2);
 					} else {
@@ -280,29 +288,25 @@ public class MerkleTreeGeneration extends Composite {
 			// been commented because they make the tree look too messy.
 			multiTreeArguments = new int[][] { /* { 1, 16 }, */ { 3, 16 }, /* { 1, 64 }, */ { 3, 64 }, { 4, 64 } };
 
-			Label multiTreeAmountDescription = new Label(keyRow, SWT.NONE);
+			Label multiTreeAmountDescription = new Label(generateKeyGroup, SWT.NONE);
 			multiTreeAmountDescription.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 4, 1));
 			multiTreeAmountDescription.setText(Descriptions.Tab0_Lable1);
 
-			multitreeAmountLabel = new Label(keyRow, SWT.NONE);
+			multitreeAmountLabel = new Label(generateKeyGroup, SWT.NONE);
 			multitreeAmountLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
 			multitreeAmountLabel.setText(String.valueOf(multiTreeArguments[0][1]));
 
 		}
 
-		// createdKey = new Label(keyRow, SWT.NONE);
-		// createdKey.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 5, 2));
-		// createdKey.setText(Descriptions.MerkleTreeKey_1);
-
-		createKeysButton = new Button(keyRow, SWT.NONE);
-		createKeysButton.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false, 10, 2));
+		createKeysButton = new Button(generateKeyGroup, SWT.NONE);
+		createKeysButton.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, true, false, 10, 2));
 		createKeysButton.setFont(FontService.getNormalBoldFont());
 
 		if (mode == SUIT.XMSS_MT) {
-			Label keysum = new Label(keyRow, SWT.NONE);
+			Label keysum = new Label(generateKeyGroup, SWT.NONE);
 			keysum.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
 			keysum.setText(Descriptions.Tab0_Head6);
-			multiTreeCombo = new Combo(keyRow, SWT.READ_ONLY);
+			multiTreeCombo = new Combo(generateKeyGroup, SWT.READ_ONLY);
 			multiTreeCombo.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 4, 1));
 
 			// combobox arguments when calling MultiTree, some variants have
@@ -401,7 +405,7 @@ public class MerkleTreeGeneration extends Composite {
 			}
 		};
 		// Gets all groups in this tab and adds above listener
-		Control groupChildren[] = groupMaster.getChildren();
+		Control groupChildren[] = compositeMaster.getChildren();
 
 		for (int i = 0; i < groupChildren.length; ++i) {
 			if (groupChildren[i] instanceof Group) {

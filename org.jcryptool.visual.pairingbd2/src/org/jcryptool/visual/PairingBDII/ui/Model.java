@@ -119,23 +119,25 @@ public class Model {
         model = new Model();
         model.setLinks(situation, illustration, protocol, tryagain);
         model.numberOfUsers = situation.getText().getSelection();
+        
+        if (situation.getTatePairing().getSelection()) {
+            model.setParameter(Model.TATEPAIRING);
+        } else {
+            model.setParameter(Model.WEILPARING);
+        }
+        
+        if (situation.getIndustrialSecurity().getSelection()) {
+            model.setParameter(Model.INDUSTRIALSECURITY);
+        } else {
+            model.setParameter(Model.PENANDPAPER);
+        }
+        
         if (situation.getEmbeddedDegreeLarge().getSelection()) {
             model.setParameter(Model.DEGREE_LARGE);
         } else {
             model.setParameter(Model.DEGREE_SMALL);
         }
 
-        if (situation.getIndustrialSecurity().getSelection()) {
-            model.setParameter(Model.INDUSTRIALSECURITY);
-        } else {
-            model.setParameter(Model.PENANDPAPER);
-        }
-
-        if (situation.getTatePairing().getSelection()) {
-            model.setParameter(Model.TATEPAIRING);
-        } else {
-            model.setParameter(Model.WEILPARING);
-        }
 
         protocol.step1ExplVisible(false);
         illustration.getCanvas().redraw();
@@ -156,6 +158,11 @@ public class Model {
     }
 
     public void setParameter(int parameter) {
+    	
+    	Vector<GFPElement> Pcoords;
+    	Vector<GFPElement> p3, p4, p5;
+    	PolynomialMod pol3, pol4, pol5;
+    	
         if (parameter == DEGREE_LARGE) {
             isOnBNCurve = false;
             illustration.changeToKis2(true);
@@ -178,7 +185,7 @@ public class Model {
             q = new FlexiBigInt("103"); //$NON-NLS-1$
             l = new FlexiBigInt("13"); //$NON-NLS-1$
 
-            final Vector<GFPElement> Pcoords = new Vector<GFPElement>(2);
+            Pcoords = new Vector<GFPElement>(2);
             Pcoords.setSize(2);
 
             Pcoords.set(0, new GFPElement(new FlexiBigInt("26"), q)); //$NON-NLS-1$
@@ -188,7 +195,6 @@ public class Model {
             keysize = 5;
             a = new GFPElement(FlexiBigInt.ONE, q);
 
-            Vector<GFPElement> p3, p4, p5;
             p3 = new Vector<GFPElement>(2);
             p4 = new Vector<GFPElement>(3);
             p5 = new Vector<GFPElement>(2);
@@ -203,7 +209,6 @@ public class Model {
             p5.set(0, GFPElement.ONE(q));
             p5.set(1, GFPElement.ZERO(q));
 
-            PolynomialMod pol3, pol4, pol5;
             pol3 = new PolynomialMod(true, p3, q);
             pol4 = new PolynomialMod(true, p4, q);
             pol5 = new PolynomialMod(true, p5, q);
@@ -221,7 +226,7 @@ public class Model {
             q = new FlexiBigInt("13407807929942597099574024998205846127479365820656611338971283446046867015142005411144178117863615299181622743868603093972561776274533618051815316861876223"); //$NON-NLS-1$
             l = new FlexiBigInt("1461501637330902918203684832716283019655932542983"); //$NON-NLS-1$
 
-            final Vector<GFPElement> Pcoords = new Vector<GFPElement>(2);
+            Pcoords = new Vector<GFPElement>(2);
             Pcoords.setSize(2);
 
             Pcoords.set(0, new GFPElement(
@@ -235,9 +240,9 @@ public class Model {
             keysize = 160;
             a = new GFPElement(FlexiBigInt.ONE, q);
 
-            final Vector<GFPElement> p3 = new Vector<GFPElement>(2);
-            final Vector<GFPElement> p4 = new Vector<GFPElement>(3);
-            final Vector<GFPElement> p5 = new Vector<GFPElement>(2);
+            p3 = new Vector<GFPElement>(2);
+            p4 = new Vector<GFPElement>(3);
+            p5 = new Vector<GFPElement>(2);
             p3.setSize(2);
             p4.setSize(3);
             p5.setSize(2);
@@ -249,7 +254,6 @@ public class Model {
             p5.set(0, GFPElement.ONE(q));
             p5.set(1, GFPElement.ZERO(q));
 
-            PolynomialMod pol3, pol4, pol5;
             pol3 = new PolynomialMod(true, p3, q);
             pol4 = new PolynomialMod(true, p4, q);
             pol5 = new PolynomialMod(true, p5, q);

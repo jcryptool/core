@@ -105,6 +105,7 @@ public class Message
 	private static String serverChangeCipherSpecChangeCipherSpec="";
 	
 	private static String serverFinishedFinished="";
+	private static boolean debuglog = true;
 	
 	/**
 	 * 
@@ -532,6 +533,9 @@ public class Message
 	 */
 	public static void setMessageClientHello(String messageClientHello) {
 		Message.messageClientHello = messageClientHello;
+		if(debuglog) {
+			System.out.println("messageClientHello" + Message.messageClientHello);
+		}
 	}
 
 	/**
@@ -546,6 +550,9 @@ public class Message
 	 */
 	public static void setMessageServerHello(String messageServerHello) {
 		Message.messageServerHello = messageServerHello;
+		if(debuglog) {
+			System.out.println("messageServerHello: " + Message.messageServerHello);
+		}
 	}
 
 	/**
@@ -561,6 +568,9 @@ public class Message
 	public static void setMessageClientCertfificate(
 			String messageClientCertfificate) {
 		Message.messageClientCertfificate = messageClientCertfificate;
+		if(debuglog) {
+			System.out.println("messageClientCertfificate" + Message.messageClientCertfificate);
+		}
 	}
 
 	/**
@@ -576,6 +586,9 @@ public class Message
 	public static void setMessageServerCertificate(
 			String messageServerCertificate) {
 		Message.messageServerCertificate = messageServerCertificate;
+		if(debuglog) {
+			System.out.println("messageServerCertificate" + Message.messageServerCertificate);
+		}
 	}
 
 	/**
@@ -591,6 +604,9 @@ public class Message
 	public static void setMessageClientChangeCipherSpec(
 			String messageClientChangeCipherSpec) {
 		Message.messageClientChangeCipherSpec = messageClientChangeCipherSpec;
+		if(debuglog) {
+			System.out.println("messageClientChangeCipherSpec" + Message.messageClientChangeCipherSpec);
+		}
 	}
 
 	/**
@@ -605,6 +621,9 @@ public class Message
 	 */
 	public static void setMessageClientFinished(String messageClientFinished) {
 		Message.messageClientFinished = messageClientFinished;
+		if(debuglog) {
+			System.out.println("messageClientFinished" + Message.messageClientFinished);
+		}
 	}
 
 	/**
@@ -620,6 +639,9 @@ public class Message
 	public static void setMessageServerChangeCipherSpec(
 			String messageServerChangeCipherSpec) {
 		Message.messageServerChangeCipherSpec = messageServerChangeCipherSpec;
+		if(debuglog) {
+			System.out.println("messageServerChangeCipherSpec" + Message.messageServerChangeCipherSpec);
+		}
 	}
 
 	/**
@@ -634,6 +656,9 @@ public class Message
 	 */
 	public static void setMessageServerFinished(String messageServerFinished) {
 		Message.messageServerFinished = messageServerFinished;
+		if(debuglog) {
+			System.out.println("messageServerFinished" + Message.messageServerFinished);
+		}
 	}
 
 	public static String getClientCertificatePremasterEncrypted() {
@@ -652,6 +677,9 @@ public class Message
 	public static void setMessageServerKeyExchange(
 			String messageServerKeyExchange) {
 		Message.messageServerKeyExchange = messageServerKeyExchange;
+		if(debuglog) {
+			System.out.println("messageServerKeyExchange" + Message.messageServerKeyExchange);
+		}
 	}
 
 	public static String getMessageClientKeyExchange() {
@@ -661,6 +689,9 @@ public class Message
 	public static void setMessageClientKeyExchange(
 			String messageClientKeyExchange) {
 		Message.messageClientKeyExchange = messageClientKeyExchange;
+		if(debuglog) {
+			System.out.println("messageClientKeyExchange" + Message.messageClientKeyExchange);
+		}
 	}
 
 	public static String getMessageServerHelloDone() {
@@ -669,6 +700,9 @@ public class Message
 
 	public static void setMessageServerHelloDone(String messageServerHelloDone) {
 		Message.messageServerHelloDone = messageServerHelloDone;
+		if(debuglog) {
+			System.out.println("messageServerHelloDone" + Message.messageServerHelloDone);
+		}
 	}
 
 	public static String getMessageServerRequest() {
@@ -677,6 +711,9 @@ public class Message
 
 	public static void setMessageServerRequest(String messageServerRequest) {
 		Message.messageServerRequest = messageServerRequest;
+		if(debuglog) {
+			System.out.println("messageServerRequest" + Message.messageServerRequest);
+		}
 	}
 
 	public static String getMessageClientVerify() {
@@ -685,6 +722,9 @@ public class Message
 
 	public static void setMessageClientVerify(String messageClientVerify) {
 		Message.messageClientVerify = messageClientVerify;
+		if(debuglog) {
+			System.out.println("messageClientVerify" + Message.messageClientVerify);
+		}
 	}
 
 	public static String getServerKey() {

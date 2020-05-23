@@ -10,6 +10,7 @@
 package org.jcryptool.visual.elGamal.ui.wizards.wizardpages;
 
 import static java.math.BigInteger.ONE;
+
 import java.math.BigInteger;
 
 import org.eclipse.jface.wizard.IWizardPage;

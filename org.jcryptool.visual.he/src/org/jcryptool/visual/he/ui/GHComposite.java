@@ -3,6 +3,9 @@ package org.jcryptool.visual.he.ui;
 
 import java.math.BigInteger;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.PojoProperties;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -16,6 +19,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -38,11 +43,6 @@ import org.jcryptool.visual.he.wizards.GHKeySelectionWizard;
 import org.jcryptool.visual.he.wizards.GHModulusWizard;
 import org.jcryptool.visual.he.wizards.GHOperationTextWizard;
 import org.jcryptool.visual.he.wizards.GHSettingsWizard;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.core.databinding.beans.PojoProperties;
-import org.eclipse.swt.graphics.Point;
 
 
 /**

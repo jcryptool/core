@@ -14,7 +14,8 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Canvas;
-import org.jcryptool.analysis.fleissner.key.*;
+import org.jcryptool.analysis.fleissner.key.Grille;
+import org.jcryptool.analysis.fleissner.key.KeySchablone;
 
 public class KeyPainter implements PaintListener {
 

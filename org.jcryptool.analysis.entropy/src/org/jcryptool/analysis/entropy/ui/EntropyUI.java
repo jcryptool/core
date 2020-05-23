@@ -15,14 +15,12 @@ import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -81,20 +79,23 @@ public class EntropyUI extends Composite {
 
 	public EntropyUI(org.eclipse.swt.widgets.Composite parent, int style) {
 		super(parent, style);
+
 		initGUI();
 	}
 
 	private void initGUI() {
-		try {
-			this.setLayout(new FormLayout());
+            Composite mainComp = this;
+            mainComp.setLayout(new GridLayout(1, false));
+            mainComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+            
+            TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(mainComp);
+            titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+            titleAndDescription.setTitle(Messages.EntropyUI_title);
+            titleAndDescription.setDescription(Messages.EntropyUI_desc);
+
 			{
-				cMainTabFolder = new CTabFolder(this, SWT.NONE);
-				FormData cMainTabFolderLData = new FormData();
-				cMainTabFolderLData.left = new FormAttachment(0, 1000, 0);
-				cMainTabFolderLData.top = new FormAttachment(0, 1000, 0);
-				cMainTabFolderLData.bottom = new FormAttachment(1000, 1000, 0);
-				cMainTabFolderLData.right = new FormAttachment(1000, 1000, 0);
-				cMainTabFolder.setLayoutData(cMainTabFolderLData);
+				cMainTabFolder = new CTabFolder(mainComp, SWT.NONE);
+				cMainTabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 				{
 					cTabConfig = new CTabItem(cMainTabFolder, SWT.NONE);
 					cTabConfig.setText(Messages.EntropyUI_0);
@@ -129,9 +130,6 @@ public class EntropyUI extends Composite {
 			}
 			this.layout();
 			pack();
-		} catch (Exception e) {
-			LogUtil.logError(e);
-		}
 		compositeConfig.setEntropyUIpointer(this);
 	}
 

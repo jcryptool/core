@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.visual.ssl.SslPlugin;
 import org.jcryptool.visual.ssl.protocol.Crypto;
 import org.jcryptool.visual.ssl.protocol.Message;
 import org.jcryptool.visual.ssl.protocol.ProtocolStep;
@@ -175,7 +176,7 @@ public class ServerCertificateComposite extends Composite implements
 //							exchKey.getPublic());
 					new CertificateShow(certServer,	exchKey.getPublic());
 				} catch (IllegalStateException e1) {
-					LogUtil.logError(e1);
+					LogUtil.logError(SslPlugin.PLUGIN_ID, e1);
 				}
 			}
 		});
@@ -287,7 +288,7 @@ public class ServerCertificateComposite extends Composite implements
 		try {
 			calculateCertificate(exchKey, Message.getServerHelloHash());
 		} catch (Exception e1) {
-			LogUtil.logError(e1);
+			LogUtil.logError(SslPlugin.PLUGIN_ID, e1);
 		}
 
 		// Server Certificate Request
@@ -340,7 +341,7 @@ public class ServerCertificateComposite extends Composite implements
 	 * @return
 	 */
 	@Override
-	public boolean checkParameters() {
+	public String checkParameters() {
 
 		// Server Certificate hex message
 		String ServerCertificate;
@@ -354,7 +355,7 @@ public class ServerCertificateComposite extends Composite implements
 					+ getNumber(ServerCertificate.length()) + ServerCertificate;
 			Message.setMessageServerCertificate(ServerCertificate);
 		} catch (CertificateEncodingException e1) {
-			LogUtil.logError(e1);
+			LogUtil.logError(SslPlugin.PLUGIN_ID, e1);
 		}
 
 		// Sets a certificate request hex message
@@ -374,7 +375,7 @@ public class ServerCertificateComposite extends Composite implements
 		Message.setServerCertificateServerHelloDone(Message
 				.getServerHelloKeyExchange());
 		infoText = false;
-		return true;
+		return ProtocolStep.OK;
 	}
 
 	/**
@@ -400,9 +401,9 @@ public class ServerCertificateComposite extends Composite implements
 					+ ServerKeyExchange;
 			Message.setMessageServerKeyExchange(ServerKeyExchange);
 		} catch (NoSuchAlgorithmException e) {
-			LogUtil.logError(e);
+			LogUtil.logError(SslPlugin.PLUGIN_ID, e);
 		} catch (UnsupportedEncodingException e) {
-			LogUtil.logError(e);
+			LogUtil.logError(SslPlugin.PLUGIN_ID, e);
 		}
 	}
 
@@ -448,7 +449,7 @@ public class ServerCertificateComposite extends Composite implements
 			}
 			strText = strText + exchKey.getPublic();
 		} catch (Exception e) {
-			LogUtil.logError(e);
+			LogUtil.logError(SslPlugin.PLUGIN_ID, e);
 		}
 		return exchKey;
 	}

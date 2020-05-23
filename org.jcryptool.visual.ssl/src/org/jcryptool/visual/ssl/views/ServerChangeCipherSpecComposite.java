@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.visual.ssl.SslPlugin;
 import org.jcryptool.visual.ssl.protocol.Crypto;
 import org.jcryptool.visual.ssl.protocol.Message;
 import org.jcryptool.visual.ssl.protocol.ProtocolStep;
@@ -384,9 +385,9 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 			try {
 				hash = hash + c.generateHash(Hash, secret + A(i, Hash) + seed);
 			} catch (NoSuchAlgorithmException e) {
-	            LogUtil.logError(e);
+	            LogUtil.logError(SslPlugin.PLUGIN_ID, e);
 			} catch (UnsupportedEncodingException e) {
-	            LogUtil.logError(e);
+	            LogUtil.logError(SslPlugin.PLUGIN_ID, e);
 			}
 		}
 		return hash;
@@ -405,9 +406,9 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 			try {
 				return c.generateHash(Hash, secret + A(i-1, Hash) + clientRandom + serverRandom);
 			} catch (NoSuchAlgorithmException e) {
-	            LogUtil.logError(e);
+	            LogUtil.logError(SslPlugin.PLUGIN_ID, e);
 			} catch (UnsupportedEncodingException e) {
-	            LogUtil.logError(e);
+	            LogUtil.logError(SslPlugin.PLUGIN_ID, e);
 			}
 			return clientRandom + serverRandom;
 		}
@@ -445,7 +446,7 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 						.generateSecret());
 			}
 		} catch (Exception e) {
-            LogUtil.logError(e);
+            LogUtil.logError(SslPlugin.PLUGIN_ID, e);
 		}
 		return secret;
 	}
@@ -474,9 +475,9 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 	}
 
 	@Override
-	public boolean checkParameters() {
+	public String checkParameters() {
 		doServerChangeCipherSpec();
-		return true;
+		return ProtocolStep.OK;
 	}
 
 	/**

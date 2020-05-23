@@ -9,7 +9,8 @@ Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.help
+ org.eclipse.help,
+ org.jcryptool.core.util
 Import-Package: org.jcryptool.core.util.colors,
  org.jcryptool.core.util.fonts
 Bundle-Localization: OSGI-INF/l10n/bundle

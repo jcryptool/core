@@ -18,6 +18,7 @@ import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.swt.SWT;
@@ -46,11 +47,10 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.PartInitException;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.operations.editors.EditorsManager;
+import org.jcryptool.core.operations.util.PathEditorInput;
 import org.jcryptool.visual.sig.SigPlugin;
 import org.jcryptool.visual.sig.algorithm.Input;
-import org.jcryptool.core.operations.util.PathEditorInput;
-import org.jcryptool.core.operations.editors.EditorsManager;
-import org.eclipse.core.runtime.Path;
 
 public class ShowSig extends Shell {
     private Table table;

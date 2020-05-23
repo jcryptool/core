@@ -32,6 +32,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.visual.ssl.SslPlugin;
 import org.jcryptool.visual.ssl.protocol.Crypto;
 import org.jcryptool.visual.ssl.protocol.Message;
 import org.jcryptool.visual.ssl.protocol.ProtocolStep;
@@ -147,23 +148,23 @@ public class ClientFinishedComposite extends Composite implements ProtocolStep {
 				cFinished = c.encryptGCM(key, finished);
 			}
 		} catch (NoSuchAlgorithmException e) {
-            LogUtil.logError(e);
+            LogUtil.logError(SslPlugin.PLUGIN_ID, e);
 		} catch (UnsupportedEncodingException e) {
-            LogUtil.logError(e);
+            LogUtil.logError(SslPlugin.PLUGIN_ID, e);
 		} catch (InvalidKeyException e) {
-            LogUtil.logError(e);
+            LogUtil.logError(SslPlugin.PLUGIN_ID, e);
 		} catch (NoSuchPaddingException e) {
-            LogUtil.logError(e);
+            LogUtil.logError(SslPlugin.PLUGIN_ID, e);
 		} catch (IllegalBlockSizeException e) {
-            LogUtil.logError(e);
+            LogUtil.logError(SslPlugin.PLUGIN_ID, e);
 		} catch (BadPaddingException e) {
-            LogUtil.logError(e);
+            LogUtil.logError(SslPlugin.PLUGIN_ID, e);
 		} catch (NoSuchProviderException e) {
-            LogUtil.logError(e);
+            LogUtil.logError(SslPlugin.PLUGIN_ID, e);
 		} catch (IOException e) {
-            LogUtil.logError(e);
+            LogUtil.logError(SslPlugin.PLUGIN_ID, e);
 		} catch (InvalidAlgorithmParameterException e) {
-            LogUtil.logError(e);
+            LogUtil.logError(SslPlugin.PLUGIN_ID, e);
 		}
 
 		strText = Messages.ClientFinishedInitationText + cFinished;
@@ -229,9 +230,9 @@ public class ClientFinishedComposite extends Composite implements ProtocolStep {
 			try {
 				hash = hash + c.generateHash(Hash, secret + A(i, Hash) + seed);
 			} catch (NoSuchAlgorithmException e) {
-	            LogUtil.logError(e);
+	            LogUtil.logError(SslPlugin.PLUGIN_ID, e);
 			} catch (UnsupportedEncodingException e) {
-	            LogUtil.logError(e);
+	            LogUtil.logError(SslPlugin.PLUGIN_ID, e);
 			}
 		}
 		return hash;
@@ -252,9 +253,9 @@ public class ClientFinishedComposite extends Composite implements ProtocolStep {
 				return c.generateHash(Hash, masterSecret + A(i - 1, Hash)
 						+ clientRandom + serverRandom);
 			} catch (NoSuchAlgorithmException e) {
-	            LogUtil.logError(e);
+	            LogUtil.logError(SslPlugin.PLUGIN_ID, e);
 			} catch (UnsupportedEncodingException e) {
-	            LogUtil.logError(e);
+	            LogUtil.logError(SslPlugin.PLUGIN_ID, e);
 			}
 			return clientRandom + serverRandom;
 		}
@@ -293,8 +294,8 @@ public class ClientFinishedComposite extends Composite implements ProtocolStep {
 	}
 
 	@Override
-	public boolean checkParameters() {
-		return true;
+	public String checkParameters() {
+		return ProtocolStep.OK;
 	}
 
 	@Override

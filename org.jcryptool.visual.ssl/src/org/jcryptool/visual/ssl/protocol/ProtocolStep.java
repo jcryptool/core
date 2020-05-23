@@ -16,6 +16,8 @@ package org.jcryptool.visual.ssl.protocol;
  */
 public interface ProtocolStep 
 {
+	String OK = "Oll Korrekt";
+
 	/**
 	 * Disables all controls of the ProtocolStep
 	 */
@@ -30,10 +32,10 @@ public interface ProtocolStep
 	 * Checks if all chosen parameters are correct
 	 * 
 	 * @return
-	 * 		false if parameters are incorrect
-	 * 		true if parameters are correct
+	 * 		the error reason, if parameters are incorrect. May be empty to not complain at all
+	 * 		"Oll Korrekt" if parameters are correct
 	 */
-	public boolean checkParameters();
+	public String checkParameters();
 	
 	/**
 	 * Refreshes the information shown in stxInformation

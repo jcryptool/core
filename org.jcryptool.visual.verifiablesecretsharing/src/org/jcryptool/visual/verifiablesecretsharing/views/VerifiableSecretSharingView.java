@@ -44,6 +44,9 @@ public class VerifiableSecretSharingView extends ViewPart {
 	@Override
 	public void createPartControl(final Composite parent) {
 		this.parent = parent;
+
+
+
 		tf = new TabFolder(parent, SWT.TOP);
 
 		tiVssc = new TabItem(tf, SWT.NONE);

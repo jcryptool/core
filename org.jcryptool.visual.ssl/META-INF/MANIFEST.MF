@@ -5,7 +5,8 @@ Bundle-SymbolicName: org.jcryptool.visual.ssl;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Vendor: %Bundle-Vendor.0
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ org.jcryptool.core.util
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Import-Package: codec,
@@ -24,3 +25,4 @@ Automatic-Module-Name: org.jcryptool.visual.ssl
 Export-Package: org.jcryptool.visual.ssl.handler,
  org.jcryptool.visual.ssl.protocol,
  org.jcryptool.visual.ssl.views
+Bundle-Activator: org.jcryptool.visual.ssl.SslPlugin

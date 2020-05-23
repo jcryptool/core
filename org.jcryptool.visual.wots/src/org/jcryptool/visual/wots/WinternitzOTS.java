@@ -10,16 +10,16 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.visual.wots;
 
-import org.jcryptool.visual.wots.files.ByteUtils;
-import org.jcryptool.visual.wots.files.MathUtils;
-import org.jcryptool.core.logging.utils.LogUtil;
-
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.visual.wots.files.ByteUtils;
+import org.jcryptool.visual.wots.files.MathUtils;
 
 /**
  * @author Hannes Sochor <sochorhannes@gmail.com>

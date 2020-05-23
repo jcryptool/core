@@ -5,3 +5,4 @@ Bundle-SymbolicName: org.jcryptool.crypto.modern;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Vendor: %Bundle-Vendor
 Bundle-RequiredExecutionEnvironment: JavaSE-11
+Automatic-Module-Name: org.jcryptool.crypto.modern

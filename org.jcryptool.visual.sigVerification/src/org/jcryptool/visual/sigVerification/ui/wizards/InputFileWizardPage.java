@@ -11,7 +11,6 @@ package org.jcryptool.visual.sigVerification.ui.wizards;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
-import org.jcryptool.visual.sigVerification.ui.wizards.Messages;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
 
 /**

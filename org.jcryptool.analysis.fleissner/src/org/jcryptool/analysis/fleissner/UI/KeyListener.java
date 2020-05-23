@@ -12,7 +12,8 @@ package org.jcryptool.analysis.fleissner.UI;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.widgets.Canvas;
-import org.jcryptool.analysis.fleissner.key.*;
+import org.jcryptool.analysis.fleissner.key.Grille;
+import org.jcryptool.analysis.fleissner.key.KeySchablone;
 
 public class KeyListener implements MouseListener {
 

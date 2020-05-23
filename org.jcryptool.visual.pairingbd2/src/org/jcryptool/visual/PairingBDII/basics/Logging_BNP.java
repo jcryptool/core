@@ -52,13 +52,13 @@ public class Logging_BNP {
         s.append(u);
         s.append(Messages.Logging_BNP_12);
         s.append("\n"); //$NON-NLS-1$
-        s.append("p = 36u^4 + 36u\u00b3 + 24u\u00b2 + 6u + 1"); //$NON-NLS-1$
+        s.append("p = 36u^4 + 36u\u00b3 + 24u\u00b2 + 6u + 1 = "); //$NON-NLS-1$
         s.append(p);
         s.append(Messages.Logging_BNP_15);
         s.append("\n"); //$NON-NLS-1$
-        s.append("l = 36u^4 + 36u\u00b3 + 18u\u00b2 + 6u + 1"); //$NON-NLS-1$
+        s.append("l = 36u^4 + 36u\u00b3 + 18u\u00b2 + 6u + 1 = "); //$NON-NLS-1$
         s.append(n);
-        s.append(" = #E(GF(p));"); //$NON-NLS-1$
+        s.append(" = #E(GF(q));"); //$NON-NLS-1$
         s.append("\n"); //$NON-NLS-1$
         s.append("t = 6u + 1"); //$NON-NLS-1$
         s.append(t);
@@ -67,7 +67,7 @@ public class Logging_BNP {
         s.append(Messages.Logging_BNP_23);
         s.append("\n"); //$NON-NLS-1$
         s.append(Messages.Logging_BNP_25);
-        s.append("P = "); //$NON-NLS-1$
+        s.append(" P = "); //$NON-NLS-1$
         s.append(protocol.GetE().getG());
         s.append("\n"); //$NON-NLS-1$
         s.append("Q'= "); //$NON-NLS-1$
