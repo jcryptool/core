@@ -446,6 +446,22 @@ public class FleissnerGrille {
 		}
 	}
 	
+	public String templateToString(int holes) {
+	    
+	    int[] template = this.saveTemplate(holes);
+	    
+	    if (template == null) {
+	        return null;
+	    }
+	    else {
+            String templateCoordinates = Messages.MethodApplication_output_coordinates;
+            for (int i = 0; i<template.length;i++) {
+                templateCoordinates+=template[i];
+            }
+            return templateCoordinates;
+	    }
+	}
+	
 	/**
 	 * builds a visualization of the current grille with an "X" at the coordinates of a hole and a "-" else
 	 */

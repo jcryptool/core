@@ -50,11 +50,24 @@ public class TextValuator {
 	public double evaluate(String text)
 	{	
 		double value = 0;
-		int textLength = text.length();
 		int[] letterNumber = new int[n];
+		String digits = "0123456789";
+		String evaluationText = "";
+		boolean digit;
+		for (int j=0; j<text.length();j++) {
+		    digit = false;
+		    for (int i=0; i<digits.length();i++) {
+		        if (text.charAt(j)==digits.charAt(i))
+		            digit = true;
+		    }
+		    if (digit==false)
+		        evaluationText+=text.charAt(j);
+		}
+//		System.out.println("EvaluationText: "+evaluationText);
+		int textLength = evaluationText.length();
 		for (int i=0; i< textLength-n; i++)
 		{
-			String ngram = text.substring(i, i+n);
+			String ngram = evaluationText.substring(i, i+n);
 			for (int k=0; k<n; k++) {	
 				for (int j=0;j<alphabet.length();j++) {
 					if ((ngram.charAt(k))==(alphabet.charAt(j))) {

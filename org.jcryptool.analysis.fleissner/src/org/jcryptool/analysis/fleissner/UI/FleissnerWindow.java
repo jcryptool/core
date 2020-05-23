@@ -15,6 +15,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -122,7 +124,8 @@ public class FleissnerWindow extends Composite{
     private InputStream fisOld = null;
     private LoadFiles lf = new LoadFiles();
     private OutputDialog dialog;
-    private String dialogOutput;
+//    private String dialogOutput;
+    private ArrayList<String> outputInput;
 
     /**
      * Constructor creates header and main, sets new default grille
@@ -202,7 +205,7 @@ public class FleissnerWindow extends Composite{
                     }  
                     else {
                         analysisOutput.setText(Messages.FleissnerWindow_output_progress);
-                        dialogOutput = analysisOutput.getText();
+//                        dialogOutput = analysisOutput.getText();
                     }
                 }
             }
@@ -507,6 +510,7 @@ public class FleissnerWindow extends Composite{
 //          parameter 'argText' is set every time ciphertext input is modified
             public void modifyText(ModifyEvent e) {
                 ciphertextComposite.setText(Messages.FleissnerWindow_label_ciphertext+" (" + ciphertext.getText().length() + ")");   //$NON-NLS-1$//$NON-NLS-2$ 
+                updatePlaintext();
                 if (!startSettings) {
                     if (writeText.getSelection() && !encrypt.getSelection()) {
                         argText =ciphertext.getText();
@@ -583,9 +587,15 @@ public class FleissnerWindow extends Composite{
         language = new Combo(thirdGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
         language.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,3,1));
         language.setItems(langItems);
-        language.select(0);
+        
 //        default language
-        argLanguage = Messages.FleissnerWindow_language_german;
+        if (Locale.getDefault().toString().equals("de")) {
+            language.select(0);
+            argLanguage = Messages.FleissnerWindow_language_german;
+        }else {
+            language.select(1);
+            argLanguage = Messages.FleissnerWindow_language_english;
+        }
         language.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetDefaultSelected(SelectionEvent e) {
@@ -642,7 +652,12 @@ public class FleissnerWindow extends Composite{
         chooseExample = new Combo(thirdGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
         chooseExample.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
         chooseExample.setItems(items);
-        chooseExample.select(0);
+        if (Locale.getDefault().toString().equals("de")) {
+            chooseExample.select(0);
+        }else {
+            chooseExample.select(2);
+        }
+        
         chooseExample.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetDefaultSelected(SelectionEvent e) {
@@ -666,7 +681,7 @@ public class FleissnerWindow extends Composite{
                     }  
                     if (argMethod.equals(Messages.FleissnerWindow_method_analyze)) {
                         analysisOutput.setText(Messages.FleissnerWindow_output_progress);
-                        dialogOutput = analysisOutput.getText();
+//                        dialogOutput = analysisOutput.getText();
                     }
  
                     textState = chooseExample.getSelectionIndex(); 
@@ -768,7 +783,7 @@ public class FleissnerWindow extends Composite{
                 
                 if (argMethod.equals(Messages.FleissnerWindow_method_analyze)) {
                     analysisOutput.setText(Messages.FleissnerWindow_output_progress);
-                    dialogOutput = analysisOutput.getText();
+//                    dialogOutput = analysisOutput.getText();
                 }
                 
                 refreshInOutTexts();
@@ -827,7 +842,12 @@ public class FleissnerWindow extends Composite{
          selectStatistic = new Combo(thirdGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
          selectStatistic.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
          selectStatistic.setItems(items);
-         selectStatistic.select(0);
+         if (Locale.getDefault().toString().equals("de")) {
+             selectStatistic.select(0);
+         }else {
+             selectStatistic.select(1);
+         }
+         
          refreshStatistics(null);
          selectStatistic.addSelectionListener(new SelectionListener() {
              @Override
@@ -951,11 +971,10 @@ public class FleissnerWindow extends Composite{
         logOutput.addSelectionListener(new SelectionListener() {
 
             @Override
-            public void widgetSelected(SelectionEvent e) {
+            public void widgetSelected(SelectionEvent e) {              
                 
-                dialog = new OutputDialog(shell);
+                dialog = new OutputDialog(shell, outputInput);
                 dialog.create(Messages.FleissnerWindow_label_dialogOutput, Messages.FleissnerWindow_label_dialogDescription);
-                dialog.getOutput().setText(dialogOutput);
                 dialog.open();    
             }
 
@@ -973,7 +992,7 @@ public class FleissnerWindow extends Composite{
         analysisOutput.setBackground(ColorService.WHITE);
         analysisOutput.setFont(FontService.getNormalMonospacedFont());
        
-        dialogOutput = new String(analysisOutput.getText());
+//        dialogOutput = new String(analysisOutput.getText());
     }
     
     /**
@@ -1308,12 +1327,15 @@ public class FleissnerWindow extends Composite{
         
           switch (argMethod) {
           case "analyze": analysisOutput.append(Messages.FleissnerWindow_parameter_enlistment_analysisOut+checkArgs()); //$NON-NLS-1$
-                          dialogOutput = new String(Messages.FleissnerWindow_parameter_enlistment_dialog+checkArgs());
+//                          dialogOutput = new String(Messages.FleissnerWindow_parameter_enlistment_dialog+checkArgs());
                           ma.analyze();
                           logOutput.setEnabled(true);
-                          dialogOutput += new String(ma.getFwAnalysisOutput());
+                          outputInput = ma.getAnalysisOut();
+                          outputInput.add(0, new String(Messages.FleissnerWindow_parameter_enlistment_dialog+checkArgs()));
+//                          dialogOutput += new String(ma.getFwAnalysisOutput());
                           analysisOutput.append(ma.toString());
-                          dialogOutput += new String(ma.toString());
+//                          dialogOutput += new String(ma.toString());
+                          outputInput.add(new String(ma.toString()));
                           plaintext.setEnabled(true);
                           plaintext.setForeground(ColorService.GRAY);
                           plaintext.setText(Messages.FleissnerWindow_output_foundPlaintext+ma.getBestDecryptedText());
@@ -1468,7 +1490,7 @@ public class FleissnerWindow extends Composite{
       
         if (argMethod.equals(Messages.FleissnerWindow_method_analyze)) {
             analysisOutput.setText(Messages.FleissnerWindow_output_progress);
-            dialogOutput = analysisOutput.getText();
+//            dialogOutput = analysisOutput.getText();
         }
             
         
@@ -1718,6 +1740,16 @@ public class FleissnerWindow extends Composite{
         if (encrypt.getSelection())
             ciphertext.setText(Messages.FleissnerWindow_empty);
     }
+    
+    public void updatePlaintext() {
+
+        if (decrypt.getSelection())
+            plaintext.setText(Messages.FleissnerWindow_empty);
+        else if (analyze.getSelection()) {
+            plaintext.setText(Messages.FleissnerWindow_empty);
+            analysisOutput.setText(Messages.FleissnerWindow_output_progress);
+        }
+    }
 
     /**
      * 
@@ -1772,5 +1804,12 @@ public class FleissnerWindow extends Composite{
      */
     public Text getDescriptionText() {
         return descriptionText;
+    }
+
+    /**
+     * @return the dialog
+     */
+    public OutputDialog getDialog() {
+        return dialog;
     }
 }
