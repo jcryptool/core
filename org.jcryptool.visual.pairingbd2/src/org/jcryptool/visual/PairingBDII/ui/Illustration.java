@@ -11,6 +11,8 @@
 package org.jcryptool.visual.PairingBDII.ui;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
@@ -18,11 +20,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.core.util.colors.ColorService;
 
 public class Illustration {
 
@@ -49,12 +49,25 @@ public class Illustration {
         group_Illustration.setText(Messages.Illustration_0);
 
         canvas = new Canvas(group_Illustration, SWT.NONE);
-        canvas.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+        canvas.setBackground(ColorService.WHITE);
         GridData gridData = new GridData(SWT.FILL, SWT.TOP, false, false, 1, 5);
-        gridData.widthHint = 300;
-        gridData.heightHint = 360;
+        gridData.widthHint = 400;
+        gridData.heightHint = 480;
         canvas.setLayoutData(gridData);
         canvas.addPaintListener(new GraphPainter());
+        canvas.addControlListener(new ControlListener() {
+			
+			@Override
+			public void controlResized(ControlEvent e) {
+		        gridData.heightHint = group_Illustration.getClientArea().height - 10;
+		        gridData.widthHint = (int) ((float) gridData.heightHint * 300f / 360f) - 10;
+			}
+			
+			@Override
+			public void controlMoved(ControlEvent e) {
+				
+			}
+		});
 
         final Group groupStep1 = new Group(group_Illustration, SWT.NONE);
         groupStep1.setText(Messages.Illustration_1);
@@ -73,7 +86,6 @@ public class Illustration {
             @Override
 			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
-                Step1.notifyListeners(SWT.MouseWheel, new Event());
             }
 
             @Override
@@ -112,8 +124,6 @@ public class Illustration {
         groupStep3.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
         groupStep3.setLayout(new GridLayout(1, false));
         
-        new Label(group_Illustration, SWT.NONE);
-        
         Step3 = new Text(groupStep3, SWT.WRAP | SWT.READ_ONLY);
         Step3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         Step3.setText(Messages.Illustration_8
@@ -124,6 +134,7 @@ public class Illustration {
         Step3.setEnabled(false);
         
         Broadcast3 = new Button(groupStep3, SWT.PUSH);
+        Broadcast3.setText(Messages.Illustration_13);
         Broadcast3.setEnabled(false);
         Broadcast3.addSelectionListener(new SelectionListener() {
             @Override
@@ -136,8 +147,7 @@ public class Illustration {
                 Model.getDefault().setupStep4();
             }
         });
-        // Broadcast3.addListener(SWT.Selection, listener);
-        Broadcast3.setText(Messages.Illustration_13);
+        
 
         final Group groupStep4 = new Group(group_Illustration, SWT.NONE);
         groupStep4.setText(Messages.Illustration_14);
@@ -150,6 +160,7 @@ public class Illustration {
                         + Messages.Illustration_16
                         + Messages.Illustration_17);
         Step4.setEnabled(false);
+        
         CompKey = new Button(groupStep4, SWT.PUSH);
         CompKey.addSelectionListener(new SelectionListener() {
             @Override
