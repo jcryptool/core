@@ -10,6 +10,9 @@
       </application>
    </extension>
 
+	
+	
+	
    <extension point="org.eclipse.ui.perspectives">
       <perspective class="org.jcryptool.core.Perspective" icon="icons/jct_persp.png" id="org.jcryptool.core.perspective" name="%perspective.jcryptool"/>
    </extension>
