@@ -9,7 +9,10 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.analysis.fleissner.logic;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.StringReader;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.time.Duration;
@@ -17,6 +20,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.jcryptool.analysis.fleissner.Activator;
+import org.jcryptool.analysis.fleissner.UI.FleissnerWindow;
 import org.jcryptool.core.logging.utils.LogUtil;
 
 
@@ -27,6 +31,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 public class MethodApplication{
     
     private ArrayList<Integer> possibleTemplateLengths = new ArrayList<>();
+    private ArrayList<String> analysisOut = new ArrayList<>();
 
 //  parameters given by user or default
     private String method, decryptedText, encryptedText, textInLine, language;
@@ -42,7 +47,7 @@ public class MethodApplication{
     
 //  parameters for analysis
     private double value, oldValue, alltimeLow=Double.MAX_VALUE;
-    private int changes=0, iAll=0, grilleNumber=0, improvement = 0; 
+    private int changes=0, iAll=0, grilleNumber=0, improvement = 0, rotMove = 0;; 
     private int x,y,move;
     private int[] bestTemplate=null;
     private String lastImprovement = null, bestDecryptedText = Messages.MethodApplication_empty, procedure = Messages.MethodApplication_empty, change =Messages.MethodApplication_empty;
@@ -229,13 +234,24 @@ public class MethodApplication{
                 grilleNumber = iAll;
             }   
             
-            fwAnalysisOutput += Messages.MethodApplication_output_grille+iAll+fg;
-            fwAnalysisOutput += Messages.MethodApplication_output_acurateness + myRound(value) + Messages.MethodApplication_output_best+myRound(alltimeLow)+")"; //$NON-NLS-3$
+            fwAnalysisOutput += Messages.MethodApplication_output_grille+iAll+Messages.FleissnerGrille_break+fg+Messages.MethodApplication_break+fg.templateToString(holes);
+            fwAnalysisOutput += Messages.MethodApplication_output_acurateness + myRound(value) +" (" +Messages.MethodApplication_output_best+myRound(alltimeLow)+")";
             fwAnalysisOutput += Messages.MethodApplication_output_decrypted+decryptedText+Messages.MethodApplication_break;
 
-            LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_output_grille+iAll+fg);
-            LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_info_acurateness + myRound(value) + Messages.MethodApplication_output_best+myRound(alltimeLow)+")"); //$NON-NLS-3$
+            LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_output_grille+iAll+Messages.FleissnerGrille_break+fg+Messages.FleissnerGrille_break+fg.templateToString(holes));
+            LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_info_acurateness + myRound(value) +" ("+ Messages.MethodApplication_output_best+myRound(alltimeLow)+")");
             LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_info_decrypted+decryptedText+Messages.MethodApplication_break);
+            
+            String lastLine = fwAnalysisOutput.substring(fwAnalysisOutput.lastIndexOf("\n"));
+            
+            analysisOut.add(fwAnalysisOutput);
+            this.fwAnalysisOutput = new String(Messages.MethodApplication_empty);
+            
+            String visualDivide = Messages.MethodApplication_break;
+            for (int i=0;i<lastLine.length()*2;i++)
+                visualDivide+="-";
+            LogUtil.logInfo(Activator.PLUGIN_ID, visualDivide+Messages.MethodApplication_break); //$NON-NLS-1$
+
         }
         fg.useTemplate(bestTemplate, templateLength);   
     }
@@ -322,32 +338,51 @@ public class MethodApplication{
                         bestTemplate = fg.saveTemplate(holes);
                         lastImprovement = String.valueOf(sub);
                         changes++;
-                        fwAnalysisOutput += Messages.MethodApplication_output_bestGrilleYet+changes+" "+countChanges()+Messages.MethodApplication_output_costFunctionValue +myRound(alltimeLow/*, 2*/)+Messages.MethodApplication_break+fg+Messages.MethodApplication_break; //$NON-NLS-2$ //$NON-NLS-4$ //$NON-NLS-5$
-                        LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_info_bestGrilleYet+changes+" "+countChanges()+Messages.MethodApplication_output_costFunctionValue +myRound(alltimeLow/*, 2*/)+Messages.MethodApplication_break+fg); //$NON-NLS-2$ //$NON-NLS-4$
+                        fwAnalysisOutput += Messages.MethodApplication_output_bestGrilleYet+changes+" "+countChanges()+Messages.MethodApplication_output_costFunctionValue +myRound(alltimeLow)+Messages.MethodApplication_break+fg+Messages.MethodApplication_break+fg.templateToString(holes); //$NON-NLS-2$ //$NON-NLS-4$ //$NON-NLS-5$
+                        LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_info_bestGrilleYet+changes+" "+countChanges()+Messages.MethodApplication_output_costFunctionValue +myRound(alltimeLow)+Messages.MethodApplication_break+fg+Messages.MethodApplication_break+fg.templateToString(holes)); //$NON-NLS-2$ //$NON-NLS-4$
                     } 
-                    fwAnalysisOutput += Messages.MethodApplication_output_try + iAll + Messages.MethodApplication_output_changes+changes + " ("+Messages.MethodApplication_output_lastChange + grilleNumber + Messages.MethodApplication_output_inRestart+lastImprovement+")"+Messages.MethodApplication_output_acurateness2 + myRound(min/*, 2*/) + " ("+Messages.MethodApplication_output_best+myRound(oldValue/*, 2*/)+Messages.MethodApplication_output_alltime+myRound(alltimeLow/*, 2*/)+")"+Messages.MethodApplication_break; //$NON-NLS-8$
-                    fwAnalysisOutput += "\n==> "+decryptedText+Messages.MethodApplication_output_grille+fg+Messages.MethodApplication_break; //$NON-NLS-1$ //$NON-NLS-3$
-                    LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_output_try2 + iAll + Messages.MethodApplication_output_changes+changes +" ("+Messages.MethodApplication_output_lastChange + grilleNumber + Messages.MethodApplication_output_inRestart+lastImprovement+Messages.MethodApplication_output_acurateness2 + myRound(min/*, 2*/) +" ("+Messages.MethodApplication_output_best+myRound(oldValue/*, 2*/)+Messages.MethodApplication_output_alltime+myRound(alltimeLow/*, 2*/)+")"); //$NON-NLS-8$
-                    LogUtil.logInfo(Activator.PLUGIN_ID, "==> "+decryptedText+Messages.MethodApplication_info_grille+fg); //$NON-NLS-1$
+                    fwAnalysisOutput += Messages.MethodApplication_output_try + iAll + Messages.MethodApplication_output_changes+changes + " ("+Messages.MethodApplication_output_lastChange + grilleNumber + Messages.MethodApplication_output_inRestart+lastImprovement+")"+Messages.MethodApplication_output_acurateness2 + myRound(min) + " ("+Messages.MethodApplication_output_best+myRound(oldValue)+Messages.MethodApplication_output_alltime+myRound(alltimeLow)+")"+Messages.MethodApplication_break; //$NON-NLS-8$
+                    fwAnalysisOutput += "\n==> "+decryptedText+Messages.MethodApplication_output_grille+fg+Messages.MethodApplication_break+fg.templateToString(holes); //$NON-NLS-1$ //$NON-NLS-3$
+                    LogUtil.logInfo(Activator.PLUGIN_ID, Messages.MethodApplication_output_try2 + iAll + Messages.MethodApplication_output_changes+changes +" ("+Messages.MethodApplication_output_lastChange + grilleNumber + Messages.MethodApplication_output_inRestart+lastImprovement+Messages.MethodApplication_output_acurateness2 + myRound(min) +" ("+Messages.MethodApplication_output_best+myRound(oldValue)+Messages.MethodApplication_output_alltime+myRound(alltimeLow)+")"); //$NON-NLS-8$
+                    LogUtil.logInfo(Activator.PLUGIN_ID, "==> "+decryptedText+Messages.MethodApplication_info_grille+fg+Messages.MethodApplication_break+fg.templateToString(holes)); //$NON-NLS-1$
                 }
             } while (Math.abs(iAll-improvement)<1);
             tries = restart.subtract(sub);
             sub = sub.add(BigInteger.valueOf(1));
             improvement = 0;
             iAll = 0;
+            
+            String lastLine = fwAnalysisOutput.substring(fwAnalysisOutput.lastIndexOf("\n"));
+            analysisOut.add(fwAnalysisOutput);
+            this.fwAnalysisOutput = new String(Messages.MethodApplication_empty);
+            String visualDivide = Messages.MethodApplication_break;
+            for (int i=0;i<lastLine.length()*2;i++)
+                visualDivide+="-";
+            LogUtil.logInfo(Activator.PLUGIN_ID, visualDivide+Messages.MethodApplication_break); //$NON-NLS-1$
+
+            
 //          start next restart
             
         }while(tries.compareTo(BigInteger.valueOf(0))==1);
         
         fg.useTemplate(bestTemplate, templateLength);
-        int rotMove = 0;
-//      checks all 4 rotation positions of the found grille
+//        int rotMove = 0;
+//      checks all 4 rotation positions of the found grille for improvement
+        this.fwAnalysisOutput+=Messages.MethodApplication_output_rotations;
         for (move=1; move<=4; move++)
         {
+            String rotation;
+            if (move!=4)
+                rotation = Messages.MethodApplication_output_rotationPos+move;
+            else
+                rotation = Messages.MethodApplication_output_originalPos;
             fg.rotate();
             decryptedText = fg.decryptText(ct.getText());
             value = tv.evaluate(decryptedText);
-                        
+            this.fwAnalysisOutput+=rotation+":\n"+fg+"\n\n"+fg.templateToString(holes)+"\nwith value "+myRound(value)+" and decrypted text:\n\n"+decryptedText+"\n\n";
+            analysisOut.add(fwAnalysisOutput);
+            this.fwAnalysisOutput = new String(Messages.MethodApplication_empty);            
+            
             if (value < alltimeLow)
             {
                 alltimeLow = value;
@@ -421,6 +456,24 @@ public class MethodApplication{
             change = Messages.MethodApplication_output_countChanges_sg;
         return change;
     }
+    
+    public String countRotations() {
+        String rotations = Messages.MethodApplication_empty;
+        if (this.rotMove!=1)
+            rotations = Messages.MethodApplication_output_countRotations_pl;
+        else
+            rotations = Messages.MethodApplication_output_countRotations_sg;
+        return rotations;
+    }
+    
+    public String countImprovements() {
+        String improvements = Messages.MethodApplication_empty;
+        if (this.improvement!=1)
+            improvements = Messages.MethodApplication_output_countImprovements_pl;
+        else
+            improvements = Messages.MethodApplication_output_countImprovements_sg;
+        return improvements;
+    }
   
     public String myRound(double wert) {
         double tempWert = wert;
@@ -473,6 +526,13 @@ public class MethodApplication{
         this.fwAnalysisOutput = fwAnalysisOutput;
     }
 
+    /**
+     * @return the analysisOut
+     */
+    public ArrayList<String> getAnalysisOut() {
+        return analysisOut;
+    }
+
     @Override
     public String toString() {
         
@@ -488,7 +548,8 @@ public class MethodApplication{
             for (int i = 0; i<bestTemplate.length;i++) {
                 bestTemplateCoordinates+=bestTemplate[i];
             }
-            output = Messages.MethodApplication_output_bestGrille+bestTemplateCoordinates+Messages.MethodApplication_break+fg+Messages.MethodApplication_output_length_final+templateLength+Messages.MethodApplication_output_try_final+grilleNumber+Messages.MethodApplication_output_restart_final+lastImprovement; //$NON-NLS-2$
+            output = Messages.MethodApplication_output_bestGrille+bestTemplateCoordinates+Messages.MethodApplication_break+fg+Messages.MethodApplication_output_length_final+templateLength+Messages.MethodApplication_output_try_final+grilleNumber+Messages.MethodApplication_output_restart_final+lastImprovement+" with value "+myRound(value); //$NON-NLS-2$
+            output += Messages.MethodApplication_break+rotMove+countRotations()+improvement+countImprovements();
             output += Messages.MethodApplication_output_decrypted_final+bestDecryptedText+Messages.MethodApplication_doubleBreak; //$NON-NLS-2$
 //          adjusts time format depending of spent time for analysis
             if (end<60000)

@@ -30,6 +30,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.ui.auto.LayoutAdvisor;
 
 public class View extends ViewPart {
+	private Composite scrolledContent;
 	private IntroductionAndParameters situation;
 	private Illustration illustration;
 	private DefinitionAndDetails protocol;
@@ -43,12 +44,12 @@ public class View extends ViewPart {
 
 		scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
 
-		Composite scrolledContent = new Composite(scrolledComposite, SWT.NONE);
+		scrolledContent = new Composite(scrolledComposite, SWT.NONE);
 		scrolledContent.setLayout(new GridLayout(2, false));
 		
 		situation = new IntroductionAndParameters(scrolledContent);
 		illustration = new Illustration(scrolledContent);
-		protocol = new DefinitionAndDetails(scrolledContent);
+		protocol = new DefinitionAndDetails(scrolledContent, this);
 		tryagain = new Logging(scrolledContent);
 
 		Model.getDefault().setLinks(situation, illustration, protocol, tryagain);
@@ -196,6 +197,12 @@ public class View extends ViewPart {
 				addScrollListnerToChildren(c);
 			}
 		}
+	}
+	
+	public void layTheShitOut() {
+//		parent.layout();
+		scrolledContent.layout();
+		scrolledComposite.setMinSize(scrolledContent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
 
 	@Override

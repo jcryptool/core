@@ -20,6 +20,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.util.colors.ColorService;
@@ -230,9 +231,21 @@ public class IntroductionAndParameters {
 		Text maxUserHint = new Text(panel, SWT.WRAP | SWT.READ_ONLY);
 		GridData gd_maxUserHint = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
 		gd_maxUserHint.widthHint = 200;
+		maxUserHint.setForeground(ColorService.GRAY);
 		maxUserHint.setLayoutData(gd_maxUserHint);
 		maxUserHint.setText(Messages.IntroductionAndParameters_24);
 		maxUserHint.setForeground(ColorService.GRAY);
+		
+		Label horizontalSeparator = new Label(panel, SWT.SEPARATOR | SWT.HORIZONTAL);
+		horizontalSeparator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		horizontalSeparator.setForeground(ColorService.GRAY);
+		
+		Text perforamceHint = new Text(panel, SWT.WRAP | SWT.READ_ONLY);
+		GridData gd_perforamceHint = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
+		gd_perforamceHint.widthHint = 200;
+		perforamceHint.setForeground(ColorService.GRAY);
+		perforamceHint.setLayoutData(gd_perforamceHint);
+		perforamceHint.setText(Messages.IntroductionAndParameters_3);
 
 		group = new Group(groupParameters, SWT.NONE);
 		group.setLayout(new GridLayout(1, false));

@@ -9,7 +9,13 @@
 <body>
   <h1>Multi-Partite Key Exchange</h1>
 
-  <p>This help file describes two things:<br/><br/>
+  <p>Multi-party or multi-partite key exchange (MPKE) are methods to exchange information over unsecure/public channels in order to agree on a secure common cryptographic key between more than 2 parties.</p>
+
+	<img src="MPKE_full-window_BD2-n6-k12.png" alt="Main-windows-MPKE" id="Main-windows-MPKE" width = "90%" />
+
+
+<br/><br/>  
+ <p>This help file describes two things:<br/><br/>
   1) <a href="#scheme-general">Multi-Partite Key Exchange Algorithms</a><br/><br/>
   2) <a href="#plugin">Handling Instructions: How to Use this Visualization</a> </p>
 
@@ -18,29 +24,57 @@
 <br/>  
   <h2 id="scheme-general">1) Multi-Partite Key Exchange (MPKE) Algorithms</h2>
   
-  <p>Multi-party or multi-partite key agreement (MPKA) [other names used in literature are group key exchange (<b>GKE</b>) protocol or conference key establishment protocol] are methods to exchange information over unsecure/public channels in order to agree on a secure common cryptographic key between more than 2 parties (sometimes called session key). The first scheme of this kind was the <a href="PLUGINS_ROOT/org.jcryptool.visual.ecdh/$nl$/help/content/index.html">Diffie-Hellman key exchange (<b>DH</b>)</a> which described this protocol for 2 parties.</p>
+  <p>Multi-party or multi-partite key agreement (MPKA) [other names used in literature are group key exchange (<b>GKE</b>) protocol or conference key establishment protocol] are methods to exchange information over unsecure/public channels in order to agree on a secure common cryptographic key (sometimes called session key) between more than 2 parties. The first scheme of this kind was the <a href="PLUGINS_ROOT/org.jcryptool.visual.ecdh/$nl$/help/content/index.html">Diffie-Hellman key exchange (<b>DH</b>)</a> which described this protocol for 2 parties.</p>
   
-  <p>Multi-partite key agreement protocols are part of the research area of secure multi-party computation (<b>MPC</b>) and these protocols are relevant e.g. for video broadcasting, gmobile phones, or 3G, 4G, or 5G.</p>
+  <p>Multi-partite key agreement protocols are part of the research area of secure multi-party computation (<b>MPC</b>) and these protocols are relevant e.g. for video broadcasting, video conferencing (e.g. in Riot or Jitsi), mobile phones, or 3G, 4G, or 5G.</p>
   
-  <p>Here we consider only such multi-partite key agreement protocols which do not require any trusted third party. The original Diffie-Hellman key exchange (DHKE) was originally implemented only in finite fields of prime order. However, also other cryptographic primitives can be used namely elliptic curves and pairings on elliptic curves.</p>
+  <p>Here we consider only such multi-partite key agreement protocols which do not require any trusted third party. The original Diffie-Hellman key exchange (DHKE) was originally implemented only in finite fields of prime order. However, also other cryptographic "settings" can be used namely elliptic curves and pairings on elliptic curves.</p>
   
-  <p>This visualization shows for an arbitrary number of users the BD II key exchange protocol (named after its inventors <b>B</b>urmester and <b>D</b>esmedt), presented in the pairings from Weil and Tate for a small degree and xxxx-pairings for a higher, more secure degree. More details can be found in [Onete 2008].</p>
-  
-  <p>xxxxxxxxxxxxxx.</p>
- 
+  <p>This visualization shows for an arbitrary number of users the BD II key exchange protocol (named after its inventors <b>B</b>urmester and <b>D</b>esmedt), presented in the pairings from Weil and Tate for a degree k=2 and in pairings for a degree k=12. More details can be found in [Onete 2008].</p>
 
 
 
 
-  
 <br/>  
   <h2 id="plugin">2) Handling Instructions: How to Use this Visualization</h2>
 
-  <p> xxxWhen the MPKE visualization is started, you can select the desired operation xxx by choosing the corresponding setting.</p>
-  
-  <p>xxxxxxxxxxxxxx.</p>
+  <p> The broadcast BD II algorithm in the pairing setting uses the elliptic curve E set by default to have the short Weierstrass equation y^2 = x^3 + 3. The according users' arrangement is shown in the <b>Protocol</b> grouping: Given an initial triangle of 3 users, all users then have up to 2 children, exactly 1 parent, and 0 or 1 sibling.</p> 
 
+  <p> After starting the MPKE visualization you can select the initial setting parameters for the MPKE operation using :</p>
+<ul>
+   <li>Number of users to participate (3 < n < 101)</li>
+   <li>Embedding degree k (2 or 12)</li>
+</ul>
 
+  <p> For the embedding degree k=2 you have further options:</p>
+<ul>
+   <li>Level of security (pen&paper or industrial security)</li>
+   <li>Pairing type (Tate or Weil)</li>
+</ul>
+
+  <p> The default parameters (which you also get after clicking on the restart icon) are:
+n=4, k=12</p> 
+
+  <p> Then on the left, you can see the real initial parameters the program uses according to your settings before. Currently, these initial parameters cannot be changed manually, only indirectly by selecting other initial settings. </p> 
+
+  <p> In the default case (k=12) these initial parameters are the public parameters: q, l, E, E', P on E and Q' on E'.</p> 
+
+  <p> Within the <b>Protocol</b> grouping, each user U_i with i=1, ..., n has to perform 4 steps:</p>
+<ul>
+   <li>Step 1: generates secret s=r_i</li>
+   <li>Step 2: calculates public Q=Z_i=s*P 
+               [or R_i=s*Q'] and broadcasts them</li>
+   <li>Step 3: users besides the leaves calculate an additional broadcast value X_i </li>
+   <li>Step 4: each user calculates from his secret s and the received broadcast messages the common conference key</li>
+</ul>
+
+  <p> Step 5 is just for verification that all conference keys are equal (this step is only in the demonstration, it's not needed in reality).</p>
+
+  <p> Below the <b>Protocol</b> grouping is a grouping with used definitions and formulars. This grouping can be extracted and folded.</p>
+
+  <p> Below that is the <b>Details</b> grouping where you can see the calculated values for each user.</p>
+
+  <p> At the bottom is the <b>Logging</b> grouping with the button <b>Save results</b>. This area shows the needed time. Clicking on the button generates a file with all values (initial settings, initial parameters, generated and calculated values of all steps). You have to tell JCT where to store this file to.</p>
 
 
  <br/>  
