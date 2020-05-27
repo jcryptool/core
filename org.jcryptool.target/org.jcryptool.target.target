@@ -27,7 +27,40 @@
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="file:///media/shared/jct-devops/workspaces/mainline/repocollection/thirdparty/releng/org.jcryptool.thirdparty.m2bundle.p2/target/repository"/>
 		<unit id="org.jcryptool.thirdparty.m2bundle.jaxb" version="0.0.1"/>
-		<unit id="org.jcryptool.thirdparty.m2bundle.misc" version="0.0.1"/>
+		<unit id="checker-qual" version="2.11.1"/>
+		<unit id="com.google.errorprone.error_prone_annotations" version="2.3.4"/>
+		<unit id="com.google.guava" version="29.0.0.jre"/>
+		<unit id="com.google.guava.failureaccess" version="1.0.1"/>
+		<unit id="com.google.guava.listenablefuture" version="9999.0.0.empty-to-avoid-conflict-with-guava"/>
+		<unit id="com.google.j2objc.annotations" version="1.3.0"/>
+		<unit id="org.jsr-305" version="3.0.2"/>
+		<unit id="com.diffplug.durian" version="3.4.0"/>
+		<unit id="org.jsr-305.source" version="3.0.2"/>
+		<unit id="checker-qual.source" version="2.11.1"/>
+		<unit id="com.diffplug.durian.source" version="3.4.0"/>
+		<unit id="com.google.errorprone.error_prone_annotations.source" version="2.3.4"/>
+		<unit id="com.google.guava.failureaccess.source" version="1.0.1"/>
+		<unit id="com.google.guava.source" version="29.0.0.jre"/>
+		<unit id="com.google.j2objc.annotations.source" version="1.3.0"/>
+		<unit id="com.diffplug.osgi.extension.sun.misc" version="0.0.0"/>
+		<unit id="com.diffplug.durian.collect" version="1.2.0"/>
+		<unit id="com.diffplug.durian.collect.source" version="1.2.0"/>
+		<unit id="com.diffplug.durian.concurrent" version="1.2.0"/>
+		<unit id="com.diffplug.durian.concurrent.source" version="1.2.0"/>
+		<unit id="com.diffplug.durian.core" version="1.2.0"/>
+		<unit id="com.diffplug.durian.core.source" version="1.2.0"/>
+		<unit id="com.diffplug.durian.rx" version="3.0.0"/>
+		<unit id="com.diffplug.durian.rx.source" version="3.0.0"/>
+		<unit id="com.diffplug.durian.swt" version="3.3.1"/>
+		<unit id="com.diffplug.durian.swt.source" version="3.3.1"/>
+		<unit id="io.reactivex.rxjava2.rxjava" version="2.0.0"/>
+		<unit id="io.reactivex.rxjava2.rxjava.source" version="2.0.0"/>
+		<unit id="org.jcryptool.thirdparty.m2bundle.durian-swt" version="0.0.1"/>
+		<unit id="org.reactivestreams.reactive-streams" version="1.0.0.release"/>
+		<unit id="org.reactivestreams.reactive-streams.source" version="1.0.0.release"/>
+		<unit id="com.fasterxml.jackson.core.jackson-core" version="2.11.0"/>
+		<unit id="com.fasterxml.jackson.core.jackson-annotations" version="2.11.0"/>
+		<unit id="com.fasterxml.jackson.core.jackson-databind" version="2.11.0"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20200224183213/repository/"/>
