@@ -285,6 +285,11 @@ public class DefinitionAndDetails {
     }
 
     public void step2ExplVisible(boolean isvisible) {
+    	// The setText("") is a quich workaround for a 
+    	// problem that overwrites (I mean really overwrites
+    	// the text (two texts above each other))
+    	labelExplanation.setText("");
+    	
         labelExplanation.setText(Messages.DefinitionAndDetails_13
                 + Messages.DefinitionAndDetails_30
                 + Messages.DefinitionAndDetails_31
