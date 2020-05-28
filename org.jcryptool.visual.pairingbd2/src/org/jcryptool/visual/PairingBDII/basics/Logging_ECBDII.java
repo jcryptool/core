@@ -121,7 +121,12 @@ public class Logging_ECBDII {
     	s.append(Messages.Logging_ECBDII_17);
     	s.append(P.GetPrintP() + "\n"); //$NON-NLS-1$
     	s.append(Messages.Logging_ECBDII_19 + pol.PrintP() + "\n"); //$NON-NLS-2$
-    	s.append(Messages.Logging_ECBDII_21 + withelim + Messages.Logging_ECBDII_22);
+    	if (withelim) {
+    		s.append(Messages.Logging_ECBDII_21);
+    	} else {
+    		s.append(Messages.Logging_ECBDII_22);
+    	}
+    	s.append("\n\n\n");
     	
     	for (int i = 0; i < nusers; i++) {
     		s.append(Messages.Logging_ECBDII_23 + (i + 1) + ":\n"); //$NON-NLS-2$
