@@ -110,28 +110,28 @@ public class Logging_ECBDII {
      */
     public String PrintLog() {
     	StringBuilder s = new StringBuilder();
-    	s.append("Log Information for BD II with pairings (embedding degree k = 2;");
-    	s.append(" pairing type: " + ((Tatepairing == true) ? "Tate" : "Weil"));
-    	s.append("; security level: " + ((Model.getDefault().securityLevel == Model.PENANDPAPER) ? "Pen & Paper (8 bit)" : "Industrial security (512 bit)")+ ")\n\n");
-    	s.append("There were " + nusers + " users.\n");
-    	s.append("The key size is " + keysize + " bits.\n");
-    	s.append("Parameters of the system:\n");
-    	s.append("p = " + p.toString(10) +"\n");
-    	s.append("l = " + order.toString(10) + "\n");
-    	s.append("P is a point on the curve, such that:\n");
-    	s.append(P.GetPrintP() + "\n");
-    	s.append("The distortion map is (x, y) --> (-x, [X] y), where [X]\\u00b3 + 1 = 0 pol = " + pol.PrintP() + "\n");
-    	s.append("Denominator elimination is " + withelim + "\n\n\n");
+    	s.append(Messages.Logging_ECBDII_0);
+    	s.append(Messages.Logging_ECBDII_1 + ((Tatepairing == true) ? "Tate" : "Weil")); //$NON-NLS-2$ //$NON-NLS-3$
+    	s.append(Messages.Logging_ECBDII_4 + ((Model.getDefault().securityLevel == Model.PENANDPAPER) ? Messages.Logging_ECBDII_5 : Messages.Logging_ECBDII_6)+ ")\n\n"); //$NON-NLS-4$
+    	s.append(Messages.Logging_ECBDII_8 + nusers + Messages.Logging_ECBDII_9);
+    	s.append(Messages.Logging_ECBDII_10 + keysize + Messages.Logging_ECBDII_11);
+    	s.append(Messages.Logging_ECBDII_12);
+    	s.append("p = " + p.toString(10) +"\n"); //$NON-NLS-1$ //$NON-NLS-2$
+    	s.append("l = " + order.toString(10) + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+    	s.append(Messages.Logging_ECBDII_17);
+    	s.append(P.GetPrintP() + "\n"); //$NON-NLS-1$
+    	s.append(Messages.Logging_ECBDII_19 + pol.PrintP() + "\n"); //$NON-NLS-2$
+    	s.append(Messages.Logging_ECBDII_21 + withelim + Messages.Logging_ECBDII_22);
     	
     	for (int i = 0; i < nusers; i++) {
-    		s.append("This is the user data for user " + (i + 1) + ":\n");
-    		s.append(udata.get(i).toString() + "\n\n");
+    		s.append(Messages.Logging_ECBDII_23 + (i + 1) + ":\n"); //$NON-NLS-2$
+    		s.append(udata.get(i).toString() + "\n\n"); //$NON-NLS-1$
     	}
     	
     	if (timepbduser != 0 || timepubduser != 0) {
-    		s.append("The average computation time per user is:\n");
-    		s.append("Burdened user:" + timepbduser + " ms\n");
-    		s.append("Unburdened user:" + timepubduser + " ms\n");
+    		s.append(Messages.Logging_ECBDII_26);
+    		s.append(Messages.Logging_ECBDII_27 + timepbduser + " ms\n"); //$NON-NLS-2$
+    		s.append(Messages.Logging_ECBDII_29 + timepubduser + " ms\n"); //$NON-NLS-2$
     	}
 
     	return s.toString();
