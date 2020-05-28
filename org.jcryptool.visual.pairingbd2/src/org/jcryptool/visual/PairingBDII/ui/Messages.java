@@ -34,13 +34,11 @@ public class Messages extends NLS {
 	public static String DefinitionAndDetails_24;
 	public static String DefinitionAndDetails_26;
 	public static String DefinitionAndDetails_28;
-	public static String DefinitionAndDetails_29;
 	public static String DefinitionAndDetails_3;
 	public static String DefinitionAndDetails_30;
 	public static String DefinitionAndDetails_31;
 	public static String DefinitionAndDetails_32;
 	public static String DefinitionAndDetails_33;
-	public static String DefinitionAndDetails_34;
 	public static String DefinitionAndDetails_35;
 	public static String DefinitionAndDetails_4;
 	public static String DefinitionAndDetails_5;
@@ -94,7 +92,6 @@ public class Messages extends NLS {
 	public static String IntroductionAndParameters_26;
 	public static String IntroductionAndParameters_27;
 	public static String IntroductionAndParameters_28;
-	public static String IntroductionAndParameters_29;
 	public static String IntroductionAndParameters_3;
 	public static String IntroductionAndParameters_49;
 	public static String IntroductionAndParameters_50;

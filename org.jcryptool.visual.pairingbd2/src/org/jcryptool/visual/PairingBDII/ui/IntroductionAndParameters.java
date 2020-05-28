@@ -293,7 +293,7 @@ public class IntroductionAndParameters {
 	// which means K = 2.
 
 	public void changePairRedraw() {
-		displayParameter(PARAMETER_e, Messages.IntroductionAndParameters_29);
+		displayParameter(PARAMETER_e, Messages.IntroductionAndParameters_28);
 
 		cancelPair();
 	}

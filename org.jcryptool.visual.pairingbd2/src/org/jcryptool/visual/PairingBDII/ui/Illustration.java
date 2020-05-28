@@ -48,19 +48,22 @@ public class Illustration {
         group_Illustration.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
         group_Illustration.setText(Messages.Illustration_0);
 
+        // This  is the illustration on the left side of the plugin.
         canvas = new Canvas(group_Illustration, SWT.NONE);
         canvas.setBackground(ColorService.WHITE);
-        GridData gridData = new GridData(SWT.FILL, SWT.TOP, false, false, 1, 5);
-        gridData.widthHint = 400;
-        gridData.heightHint = 480;
-        canvas.setLayoutData(gridData);
         canvas.addPaintListener(new GraphPainter());
+        GridData gridData_canvas = new GridData(SWT.FILL, SWT.TOP, false, false, 1, 5);
+        gridData_canvas.widthHint = 400;
+        gridData_canvas.heightHint = 480;
+        canvas.setLayoutData(gridData_canvas);
         canvas.addControlListener(new ControlListener() {
 			
 			@Override
 			public void controlResized(ControlEvent e) {
-		        gridData.heightHint = group_Illustration.getClientArea().height - 10;
-		        gridData.widthHint = (int) ((float) gridData.heightHint * 300f / 360f) - 10;
+				// Resize the illustration that it consumes the 
+				// full height of the illustration group
+		        gridData_canvas.heightHint = group_Illustration.getClientArea().height - 10;
+		        gridData_canvas.widthHint = (int) ((float) gridData_canvas.heightHint * 300f / 360f) - 10;
 			}
 			
 			@Override
@@ -69,9 +72,10 @@ public class Illustration {
 			}
 		});
 
+
         final Group groupStep1 = new Group(group_Illustration, SWT.NONE);
         groupStep1.setText(Messages.Illustration_1);
-        groupStep1.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+        groupStep1.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true));
         groupStep1.setLayout(new GridLayout(1, false));
         
         Step1 = new Text(groupStep1, SWT.WRAP | SWT.READ_ONLY);
@@ -96,7 +100,7 @@ public class Illustration {
 
         final Group groupStep2 = new Group(group_Illustration, SWT.NONE);
         groupStep2.setText(Messages.Illustration_4);
-        groupStep2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+        groupStep2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true));
         groupStep2.setLayout(new GridLayout(1, false));
         
         Step2 = new Text(groupStep2, SWT.V_SCROLL | SWT.WRAP | SWT.READ_ONLY);
@@ -121,7 +125,7 @@ public class Illustration {
 
         final Group groupStep3 = new Group(group_Illustration, SWT.NONE);
         groupStep3.setText(Messages.Illustration_7);
-        groupStep3.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+        groupStep3.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true));
         groupStep3.setLayout(new GridLayout(1, false));
         
         Step3 = new Text(groupStep3, SWT.WRAP | SWT.READ_ONLY);
@@ -151,7 +155,7 @@ public class Illustration {
 
         final Group groupStep4 = new Group(group_Illustration, SWT.NONE);
         groupStep4.setText(Messages.Illustration_14);
-        groupStep4.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+        groupStep4.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true));
         groupStep4.setLayout(new GridLayout(1, false));
         
         Step4 = new Text(groupStep4, SWT.WRAP | SWT.READ_ONLY);
@@ -179,7 +183,7 @@ public class Illustration {
 
         final Group groupStep5 = new Group(group_Illustration, SWT.NONE);
         groupStep5.setText(Messages.Illustration_19);
-        groupStep5.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+        groupStep5.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true));
         groupStep5.setLayout(new GridLayout(1, false));
         
         VerifyLabel = new Text(groupStep5, SWT.READ_ONLY);
@@ -202,6 +206,7 @@ public class Illustration {
                 Verify.setEnabled(false);
             }
         });
+        
     }
 
     public void changeToKis2(boolean change) {

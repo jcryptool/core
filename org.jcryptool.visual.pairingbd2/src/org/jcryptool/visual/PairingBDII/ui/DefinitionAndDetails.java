@@ -285,7 +285,7 @@ public class DefinitionAndDetails {
     }
 
     public void step2ExplVisible(boolean isvisible) {
-        labelExplanation.setText(Messages.DefinitionAndDetails_29
+        labelExplanation.setText(Messages.DefinitionAndDetails_13
                 + Messages.DefinitionAndDetails_30
                 + Messages.DefinitionAndDetails_31
                 + Messages.DefinitionAndDetails_32
@@ -294,7 +294,7 @@ public class DefinitionAndDetails {
     }
 
     public void step3ExplVisible(boolean isvisible) {
-        labelExplanation.setText(Messages.DefinitionAndDetails_34
+        labelExplanation.setText(Messages.DefinitionAndDetails_13
                 + Messages.DefinitionAndDetails_35);
         groupDefinitions.layout();
     }
