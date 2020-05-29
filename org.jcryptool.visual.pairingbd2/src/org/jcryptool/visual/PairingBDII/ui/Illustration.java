@@ -103,7 +103,7 @@ public class Illustration {
         groupStep2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true));
         groupStep2.setLayout(new GridLayout(1, false));
         
-        Step2 = new Text(groupStep2, SWT.V_SCROLL | SWT.WRAP | SWT.READ_ONLY);
+        Step2 = new Text(groupStep2, SWT.WRAP | SWT.READ_ONLY);
         Step2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         Step2.setText(Messages.Illustration_5);
         Step2.setEnabled(false);
