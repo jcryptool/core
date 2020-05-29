@@ -91,9 +91,8 @@ public class UserData_ECBDII {
         	tempSK = tempSK.substring(0, SK.toString().indexOf('\n'));
         	// replace all superfluous empty spaces.
         	tempSK = tempSK.replaceAll("\\s+", " ");
-        	// add a line break to the end of the line.
-        	tempSK += "\n";
-            s += Messages.UserData_ECBDII_1 + tempSK; 
+        	// set it to brackets and add a line break to the end of the line.
+            s += Messages.UserData_ECBDII_1 + "\"" + tempSK + "\"\n"; 
         }
         if (PK != null) {
         	//prepare output 
@@ -103,9 +102,8 @@ public class UserData_ECBDII {
         	// Remove empty space an equal sign with a colon to get a similar 
         	// output like the secret key
         	tempPK = tempPK.replace(" =", ":");
-        	// add a line break to the end of the line.
-        	tempPK += "\n";
-            s += Messages.UserData_ECBDII_3 + tempPK; 
+        	// set it to brackets and add a line break to the end of the line.
+            s += Messages.UserData_ECBDII_3 + "\"" + tempPK + "\"\n"; 
         }
         if (nonce != null) {
             s += Messages.UserData_ECBDII_5 + nonce.toString() + "\n"; 
