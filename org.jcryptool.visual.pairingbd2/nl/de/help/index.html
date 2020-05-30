@@ -3,22 +3,24 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Multi-Party-Schlüsselaustausch</title>
+  <title>Mehrparteien-Schlüsselaustausch (BD II)</title>
 </head>
 
 <body>
-  <h1>Multi-Party-Schlüsselaustausch</h1>
+  <h1>Mehrparteien-Schlüsselaustausch (BD II)</h1>
 
   <p>Multi-Party- oder Mehrparteien-Schlüsselvereinbarung (englischer Name multi-party key exchange MPKE) sind Methoden zum Austausch von Informationen über unsichere/öffentliche Kanäle, um sich auf einen sicheren, gemeinsamen kryptographischen Schlüssel zwischen mehr als 2 Parteien zu einigen.</p>
 
+<p>xxxxxxxxxxxxxx.</p>
+
   <p>Diese Hilfe beschreibt zwei Themen:<br/><br/>
-  1) <a href="#scheme-general">Multi-Party-Schlüsselaustausch-Algorithmen</a><br/><br/>
+  1) <a href="#scheme-general">Mehrparteien-Schlüsselaustausch-Algorithmen</a><br/><br/>
   2) <a href="#plugin">Handhabung in JCT: Wie man diese Visualisierung benutzt</a> </p>
 
 
 
 <br/>  
-  <h2 id="scheme-general">1) Multi-Party-Schlüsselaustausch-Algorithmen (MPKE)</h2>
+  <h2 id="scheme-general">1) Mehrparteien-Schlüsselaustausch-Algorithmen (MPKE)</h2>
   
   <p>Multi-Party- oder Mehrparteien-Schlüsselvereinbarung (englischer Name multi-party key agreement MPKA) [andere in der Literatur verwendete Namen sind Gruppenschlüsselaustausch-Protokoll (<b>GKE</b>) oder Konferenzschlüssel-Einrichtungs-Protokoll] sind Methoden zum Austausch von Informationen über unsichere/öffentliche Kanäle, um sich auf einen sicheren, gemeinsamen kryptographischen Schlüssel (manchmal auch Session-Key genannt) zwischen mehr als 2 Parteien zu einigen. Das erste Schema dieser Art war der <a href="PLUGINS_ROOT/org.jcryptool.visual.ecdh/$nl$/help/content/index.html">Diffie-Hellman-Schlüsselaustausch (<b>DH</b>)</a>, der dieses Protokoll für 2 Parteien beschrieb.</p>
 
@@ -26,20 +28,54 @@
 
   <p>Hier betrachten wir nur solche Multi-Party-Schlüsselvereinbarungs-Protokolle, die keine vertrauenswürdige dritte Instanz (trusted third party) erfordern. Der ursprüngliche Diffie-Hellman-Schlüsselaustausch (DHKE) wurde ursprünglich nur in endlichen Körpern primzahliger Ordnung umgesetzt. Es können jedoch auch andere kryptographische "Settings" verwendet werden, nämlich elliptische Kurven und Paarungen (pairings) auf elliptischen Kurven.</p>
 
-  <p>Diese Visualisierung zeigt für eine beliebige Anzahl von Benutzern das BD II-Schlüsselaustauschprotokoll (benannt nach seinen Erfindern <b>B</b>urmester und <b>D</b>esmedt), dargestellt in den Paarungen von Weil und Tate für einen embedded Grad k=2 und in den Paarungen für einen embedded Grad k=12. Weitere Einzelheiten finden sich in [Onete 2008].</p>
+  <p>Diese Visualisierung zeigt für eine beliebige Anzahl von Benutzern das <b>BD II</b>-Schlüsselaustauschprotokoll (benannt nach seinen Erfindern <b>B</b>urmester und <b>D</b>esmedt), dargestellt in den Paarungen von Weil und Tate für einen embedded Grad k=2 und in den Paarungen für einen embedded Grad k=12. Weitere Einzelheiten finden sich in [Onete 2008].</p>
   
-  <p>xxxxxxxxxxxxxx.</p>
-
-
-
-
+  
 
 <br/>  
   <h2 id="plugin">2) Handhabung in JCT: Wie man diese Visualisierung benutzt</h2>
-  
-  <p> xxxNach dem Start der MPKE-Visualisierung können Sie die gewünschte Operation xxx auswählen, indem Sie die entsprechende Einstellung setzen.</p>
 
-  <p>xxxxxxxxxxxxxx.</p>
+  <p>Der Broadcast-Algorithmus BD II in der Paarungseinstellung verwendet die elliptische Kurve E, die standardmäßig so eingestellt ist, dass sie die kurze Weierstraß-Gleichung y^2 = x^3 + 3 nutzt. Die entsprechende Anordnung der Benutzer wird in der Gruppierung <b>Protokoll-Visualisierung</b> angezeigt: Bei einem Ausgangsdreieck von 3 Benutzern haben alle Benutzer dann bis zu 4 Kinder, genau 1 Elternteil und 0 oder 1 Geschwister. Wenn Sie den Spinner für die Anzahl der Benutzer hochzählen und dabei die Protokoll-Visualisierung beobachten, können Sie sehen, wie neue Benutzer im Graphen eingeordnet werden.</p> 
+
+    <!-- /$nl$/ -->
+	<img src="../../en/help/Graphic-from-MA-Onete_Fig-5.6_BD-II-arrangement-for-pairings.png" alt="BD-II-arrangement-for-pairings" id="BD-II-arrangement-for-pairings" width = "90%" />
+
+
+  <p> Nach dem Start der MPKE-Visualisierung können Sie die Parameter der Voreinstellung für die MPKE-Operationen setzen:</p>
+<ul>
+   <li>Anzahl n der Benutzer, die teilnehmen (3 < n < 101)</li>
+   <li>Embedding-Grad k (2 oder 12)</li>
+</ul>
+
+  <p> Für den Embedding-Grad k=2 haben Sie weitere Optionen:</p>
+<ul>
+   <li>Sicherheits-Level (Papier&Bleistift oder Industrielle Sichehrheit)</li>
+   <li>Pairing-Typ (Tate oder Weil)</li>
+</ul>
+
+
+  <p> Die Standardparameter (die Sie auch nach einem Klick auf das Neustart-Icon erhalten) sind: n=4, k=12</p> 
+
+  <p> Auf der linken Seite sehen Sie dann die wirklichen Anfangsparameter, die das Programm gemäß Ihren Voreinstellungen verwendet. Derzeit können diese Anfangsparameter nicht manuell geändert werden, sondern nur indirekt durch Auswahl der Voreinstellungen. </p> 
+
+  <p> Im Standardfall (k=12) sind diese Anfangsparameter die öffentlichen Parameter: q, l, E, E', P auf E und Q' auf E'.</p> 
+
+  <p> Innerhalb der Gruppierung <b>Protokoll-Visualisierung</b> muss jeder Benutzer U_i mit i=1, ..., n vier Schritte durchführen:</p>
+<ul>
+   <li>Schritt 1: Erzeuge Geheimnis s=r_i</li>
+   <li>Schritt 2: Berechne das öffentliche Q=Z_i=s*P 
+               [oder R_i=s*Q'] und sende es an alle (broadcasten)</li>
+   <li>Schritt 3: Alle Benutzer außer den Blättern im Graphen berechnen einen zusätzlichen Broadcast-Wert X_i</li>
+   <li>Schritt 4: Jeder Benutzer berechnet aus seinem geheimen s und den empfangenen Broadcast-Meldungen den gemeinsamen Konferenzschlüssel</li>
+</ul>
+
+  <p> Schritt 5 dient nur zur Überprüfung, ob alle Konferenzschlüssel gleich sind (dieser Schritt ist nur in der Demonstration, er wird in der Realität nicht benötigt).</p>
+
+  <p> Unterhalb der Gruppierung <b>Protokoll-Visualisierung</b> befindet sich eine Gruppierung mit den verwendeten Definitionen und Formeln. Diese Gruppierung kann auseinander und zusammen gefaltet werden.</p>
+
+  <p> Darunter befindet sich die Gruppierung <b>Details</b>, in der Sie die berechneten Werte für jeden Benutzer sehen können. Diese Gruppierung kann ebenfalls auseinander und zusammen gefaltet werden.</p>
+
+  <p> Unten ist die Gruppierung <b>Protokollierung</b>: Sie zeigt die benötigte Zeit an und enthält den Knopf <b>Ergebnisse speichern</b>. Ein Klick auf den Knopf erzeugt eine Datei mit dem Standardnamen JCT_BDII_Log.txt mit allen Werten (Voreinstellungen, Anfangsparameter, generierte und berechnete Werte aller Schritte). Vor dem Abspeichern müssen Sie JCT mitteilen, wohin diese Datei gespeichert werden soll.</p>
 
 
 
@@ -74,4 +110,5 @@ Conference key establishment protocols BACHELOR THESIS Zuzana Melová 2014
 https://is.muni.cz/th/w2027/m_thesis.pdf
 Schlüsselvereinbarung für Mobiltelefone MASTERS THESIS Shkodran Gerguri 2011
 ##################### -->
+
 
