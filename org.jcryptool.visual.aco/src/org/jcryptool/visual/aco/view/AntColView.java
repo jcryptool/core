@@ -19,6 +19,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.core.util.ui.auto.LayoutAdvisor;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.visual.aco.ACOPlugin;
 import org.jcryptool.visual.aco.controller.AntColEventController;
 import org.jcryptool.visual.aco.model.ACO;
@@ -83,6 +84,10 @@ public class AntColView extends ViewPart {
 		scrollComposite.setMinSize(container.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
 		LayoutAdvisor.addPreLayoutRootComposite(scrollComposite);
+		
+		// This makes the Text scrollable.
+		SmoothScroller.scrollWidgetSmooth(scrollComposite);
+		
 
 		PlatformUI.getWorkbench().getHelpSystem()
 				.setHelp(parent, ACOPlugin.PLUGIN_ID + ".ContextHelpID"); //$NON-NLS-1$
