@@ -44,8 +44,8 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.sigVerification.Messages;
@@ -67,7 +67,6 @@ import org.jcryptool.visual.sigVerification.ui.wizards.SignatureWizard;
  * @author Holger Friedrich (replaced an Action with a Command)
  */
 public class SigVerComposite extends Composite {
-    private Text lblHeader;
     private Text lblDescriptionStep1;
     private Text lblDescriptionStep2;
     private Text lblDescriptionStep3;
@@ -78,13 +77,11 @@ public class SigVerComposite extends Composite {
     private Button btnVerify;
     private Button btnResult;
     private TabFolder tabFolderSteps;
-    private Text textGeneralDescription;
     private Label lblProgress;
     private MenuItem mntm1;
     private MenuItem mntm2;
     private MenuItem mntm3;
     private MenuItem mntm4;
-    private MenuItem mntm0;
     private boolean resultOk = false;
     private boolean resultErr = false;
     private int btnHeight = 90;
@@ -143,7 +140,7 @@ public class SigVerComposite extends Composite {
      */
     public SigVerComposite(Composite parent, int style, SigVerView view) {
         super(parent, style);
-        setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+        setBackground(ColorService.LIGHTGRAY);
         createContents(parent);
         createActions();
         this.sigVerView = view;
@@ -176,8 +173,6 @@ public class SigVerComposite extends Composite {
      * @param parent
      */
     private void createContents(Composite parent) {
-        parent.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD));
-        Color white = SWTResourceManager.getColor(255, 255, 255);
         setLayout(new GridLayout());
 
         TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(this);
@@ -186,7 +181,7 @@ public class SigVerComposite extends Composite {
         titleAndDescription.setDescription(Messages.SigVerComposite_description);
         
         Group mainGroup = new Group(this, SWT.NONE);
-        mainGroup.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+        mainGroup.setBackground(ColorService.LIGHTGRAY);
         mainGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         GridLayout gl_mainGroup = new GridLayout(3, false);
         gl_mainGroup.horizontalSpacing = 0;
@@ -449,7 +444,7 @@ public class SigVerComposite extends Composite {
         tabStep1 = new TabItem(tabFolderSteps, SWT.NONE);
         tabStep1.setText(Messages.SigVerComposite_tbtmNewItem_0 + Messages.SigVerComposite_tabNextStep);
         lblDescriptionStep1 = new Text(tabFolderSteps, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY | SWT.V_SCROLL);
-        lblDescriptionStep1.setBackground(SWTResourceManager.getColor(255, 255, 255));
+        lblDescriptionStep1.setBackground(ColorService.WHITE);
         lblDescriptionStep1.setEditable(false);
         lblDescriptionStep1.setText(Messages.SigVerComposite_txtDescriptionOfStep1);
         tabStep1.setControl(lblDescriptionStep1);
@@ -462,7 +457,7 @@ public class SigVerComposite extends Composite {
 	    tabStep2 = new TabItem(tabFolderSteps, SWT.NONE);
 	    tabStep2.setText(Messages.SigVerComposite_tbtmNewItem_1);
         lblDescriptionStep2 = new Text(tabFolderSteps, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY | SWT.V_SCROLL);
-        lblDescriptionStep2.setBackground(SWTResourceManager.getColor(255, 255, 255));
+        lblDescriptionStep2.setBackground(ColorService.WHITE);
         lblDescriptionStep2.setEditable(false);
         lblDescriptionStep2.setText(Messages.SigVerComposite_txtDescriptionOfStep2);
         tabStep2.setControl(lblDescriptionStep2);      
@@ -475,7 +470,7 @@ public class SigVerComposite extends Composite {
         tabStep3 = new TabItem(tabFolderSteps, SWT.NONE);
         tabStep3.setText(Messages.SigVerComposite_tbtmNewItem_2);
         lblDescriptionStep3 = new Text(tabFolderSteps, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY | SWT.V_SCROLL);
-        lblDescriptionStep3.setBackground(SWTResourceManager.getColor(255, 255, 255));
+        lblDescriptionStep3.setBackground(ColorService.WHITE);
         lblDescriptionStep3.setEditable(false);
         lblDescriptionStep3.setText(Messages.SigVerComposite_txtDescriptionOfStep3);
         tabStep3.setControl(lblDescriptionStep3);     
@@ -488,7 +483,7 @@ public class SigVerComposite extends Composite {
         tabStep4 = new TabItem(tabFolderSteps, SWT.NONE);
         tabStep4.setText(Messages.SigVerComposite_tbtmNewItem_3);
         lblDescriptionStep4 = new Text(tabFolderSteps, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY | SWT.V_SCROLL);
-        lblDescriptionStep4.setBackground(SWTResourceManager.getColor(255, 255, 255));
+        lblDescriptionStep4.setBackground(ColorService.WHITE);
         lblDescriptionStep4.setEditable(false);
         lblDescriptionStep4.setText(Messages.SigVerComposite_txtDescriptionOfStep4);
         tabStep4.setControl(lblDescriptionStep4);        

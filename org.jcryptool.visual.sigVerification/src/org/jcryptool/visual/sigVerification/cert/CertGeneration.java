@@ -33,7 +33,6 @@ import org.bouncycastle.x509.X509V3CertificateGenerator;
 * @author abdul/Huber
 *
 */
-@SuppressWarnings("deprecation")
 public class CertGeneration{
 
   private static final String CERTIFICATE_ALIAS = "JCT";

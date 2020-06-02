@@ -23,7 +23,6 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
@@ -41,6 +40,7 @@ import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.images.ImageService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.sigVerification.Messages;
 import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
 import org.jcryptool.visual.sigVerification.cert.CertGeneration;
@@ -51,8 +51,6 @@ import org.jcryptool.visual.sigVerification.cert.CertGeneration;
  *
  */
 public class ModelComposite extends Composite {
-    private Text lblGeneralDescription;
-    private Text lblHeader;
     private Label lblRoot;
     private Label lbllevel2;
     private Label lbllevel3;
@@ -120,8 +118,6 @@ public class ModelComposite extends Composite {
      * @param parent
      */
     private void createContents(final Composite parent) {
-        parent.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD));
-        Color white = SWTResourceManager.getColor(255, 255, 255);
         setLayout(new GridLayout());
 
         certificates = new CertGeneration();
@@ -134,26 +130,11 @@ public class ModelComposite extends Composite {
 		}
         
         //HEADER AND DESCRPITION (TOP)
-        Composite introComposite = new Composite(this, SWT.NONE);
-        introComposite.setBackground(white);
-        introComposite.setLayout(new GridLayout());
-        introComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(this);
+        titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        titleAndDescription.setTitle(Messages.ModelComposite_lblHeader);
+        titleAndDescription.setDescription(Messages.ModelComposite_description);
         
-		lblHeader = new Text(introComposite, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
-        lblHeader.setEditable(false);
-        lblHeader.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        lblHeader.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD));
-        lblHeader.setText(Messages.ModelComposite_lblHeader);
-        lblHeader.setBackground(SWTResourceManager.getColor(255, 255, 255));
-
-        lblGeneralDescription = new Text(introComposite, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
-        lblGeneralDescription.setEditable(false);
-        GridData gd_lblGeneralDescription = new GridData(SWT.FILL, SWT.FILL, true, false);
-        gd_lblGeneralDescription.widthHint = 600;
-		lblGeneralDescription.setLayoutData(gd_lblGeneralDescription);
-		lblGeneralDescription.setBackground(SWTResourceManager.getColor(255, 255, 255));
-		lblGeneralDescription.setText(Messages.ModelComposite_description);
-
 		//MAIN GROUP
         mainGroup = new Group(this, SWT.NONE);
         mainGroup.setText(Messages.ModelComposite_lblTitle);
