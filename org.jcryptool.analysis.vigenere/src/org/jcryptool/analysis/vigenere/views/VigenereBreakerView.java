@@ -22,6 +22,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.analysis.vigenere.VigenereBreakerPlugin;
 import org.jcryptool.analysis.vigenere.ui.VigenereBreakerGui;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 
 public class VigenereBreakerView extends ViewPart {
     /**
@@ -64,6 +65,11 @@ public class VigenereBreakerView extends ViewPart {
         
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
             VigenereBreakerPlugin.PLUGIN_ID + ".vigenerebreaker"); //$NON-NLS-1$
+        
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT-H_SCROLL.
+		SmoothScroller.scrollSmooth(scroll);
     
         hookActionBar();
     }

@@ -28,6 +28,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.analysis.ngram.tools.NgramCode;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.osgi.framework.Bundle;
 
 public class NgramView extends ViewPart {
@@ -397,6 +398,11 @@ public class NgramView extends ViewPart {
 
 		sc_Container.setContent(cp_Container);
 		sc_Container.setMinSize(cp_Container.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT-H_SCROLL.
+		SmoothScroller.scrollSmooth(sc_Container);
 
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.analysis.ngram.view"); //$NON-NLS-1$
 

@@ -98,11 +98,7 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 		this.setLayout(thisLayout);
 
 		transpTable = new Table(this, SWT.FULL_SELECTION | SWT.BORDER);
-		GridData transpTableLData = new GridData();
-		transpTableLData.grabExcessHorizontalSpace = true;
-		transpTableLData.horizontalAlignment = GridData.FILL;
-		transpTableLData.verticalAlignment = GridData.FILL;
-		transpTableLData.grabExcessVerticalSpace = true;
+		GridData transpTableLData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		transpTableLData.minimumWidth = 5 * columnWidth + 4;
 		transpTable.setLayoutData(transpTableLData);
 		transpTable.setHeaderVisible(true);

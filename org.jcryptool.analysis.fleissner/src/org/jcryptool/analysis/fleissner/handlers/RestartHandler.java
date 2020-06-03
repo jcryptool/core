@@ -14,7 +14,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.jcryptool.analysis.fleissner.views.SampleView;
+import org.jcryptool.analysis.fleissner.views.FleissnerView;
 
 /**
  * This handler starts a new game.
@@ -25,8 +25,8 @@ import org.jcryptool.analysis.fleissner.views.SampleView;
 public class RestartHandler extends AbstractHandler {
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-        if (HandlerUtil.getActivePart(event) instanceof SampleView) {
-                SampleView view = ((SampleView) HandlerUtil.getActivePart(event));
+        if (HandlerUtil.getActivePart(event) instanceof FleissnerView) {
+                FleissnerView view = ((FleissnerView) HandlerUtil.getActivePart(event));
                 
                 view.resetView();
         }

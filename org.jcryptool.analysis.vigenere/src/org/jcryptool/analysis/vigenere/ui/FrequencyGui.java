@@ -130,13 +130,12 @@ public class FrequencyGui extends Content {
 			lpreview.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 			lpreview.setText(Messages.FrequencyGui_label_preview1 + " " + edtitle);
 
-			tsample = new Text(mainComposite, SWT.MULTI | SWT.WRAP | SWT.BORDER | SWT.V_SCROLL);
+			tsample = new Text(mainComposite, SWT.READ_ONLY | SWT.WRAP | SWT.BORDER | SWT.V_SCROLL);
 			GridData gd_tsample = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
 			gd_tsample.widthHint = 600;
 			gd_tsample.heightHint = 150;
 			tsample.setLayoutData(gd_tsample);
 			tsample.setFont(coufont);
-			tsample.setEditable(false);
 
 			cgraph = new Composite(mainComposite, SWT.NONE);
 			GridLayout gl_cgraph = new GridLayout();

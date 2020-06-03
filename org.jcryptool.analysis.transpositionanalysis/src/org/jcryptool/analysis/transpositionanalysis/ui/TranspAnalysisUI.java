@@ -38,6 +38,7 @@ import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.core.util.input.ButtonInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionKey;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionTable;
 import org.jcryptool.crypto.classic.transposition.ui.TranspositionKeyInputWizard;
@@ -316,10 +317,7 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		GridLayout compApplyTransformLayout = new GridLayout(1, false);
 		compApplyTransformLayout.marginWidth = 0;
 		compApplyTransformLayout.marginHeight = 0;
-		GridData compApplyTransformLData = new GridData();
-		compApplyTransformLData.grabExcessHorizontalSpace = true;
-		compApplyTransformLData.horizontalAlignment = SWT.FILL;
-		compApplyTransform.setLayoutData(compApplyTransformLData);
+		compApplyTransform.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
 		compApplyTransform.setLayout(compApplyTransformLayout);
 
 		btnCheckButton = new Button(compApplyTransform, SWT.CHECK | SWT.WRAP);
@@ -445,14 +443,11 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		GridLayout gl_compResults = new GridLayout();
 		gl_compResults.marginHeight = 0;
 		gl_compResults.marginWidth = 0;
-		gl_compResults.makeColumnsEqualWidth = true;
 		compResults.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		compResults.setLayout(gl_compResults);
 
 		previewGroup = new Group(compResults, SWT.NONE);
-		GridLayout previewGroupLayout = new GridLayout();
-		previewGroupLayout.makeColumnsEqualWidth = true;
-		previewGroup.setLayout(previewGroupLayout);
+		previewGroup.setLayout(new GridLayout());
 		previewGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		previewGroup.setText(Messages.TranspAnalysisUI_Results);
 		previewGroup.setFont(FontService.getLargeFont());
@@ -461,10 +456,7 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		GridLayout composite4Layout = new GridLayout();
 		composite4Layout.marginWidth = 0;
 		composite4Layout.marginHeight = 0;
-		GridData composite4LData = new GridData();
-		composite4LData.grabExcessHorizontalSpace = true;
-		composite4LData.horizontalAlignment = GridData.FILL;
-		composite4.setLayoutData(composite4LData);
+		composite4.setLayoutData(new GridData(SWT.FILL, SWT.DEFAULT, true, false));
 		composite4.setLayout(composite4Layout);
 
 		keyfound = new Label(composite4, SWT.NONE);
@@ -667,6 +659,12 @@ public class TranspAnalysisUI extends Composite implements Observer {
 			//Recalc size after new line added
 			content.layout();
 			scrolledComposite.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+			
+			// This makes the ScrolledComposite scrolling, when the mouse 
+			// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+			// SWT.V_SCROLL or SWT-H_SCROLL.
+			SmoothScroller.scrollSmooth(scrolledComposite);
+
 		}
 	}
 

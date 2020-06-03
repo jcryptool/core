@@ -19,6 +19,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.analysis.viterbi.ViterbiPlugin;
 import org.jcryptool.analysis.viterbi.algorithm.Combination;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 
 /**
  * This class provides the basic structure for the gui. It creates the tabs.
@@ -46,14 +47,19 @@ public class ViterbiView extends ViewPart {
 		// XOR Tab
 		TabItem ti = new TabItem(tf, SWT.NONE);
 		ti.setText(Messages.XORComposite_tab_title);
-		ScrolledComposite sc = new ScrolledComposite(tf, SWT.H_SCROLL
-				| SWT.V_SCROLL);
+		ScrolledComposite sc = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
 		sc.setExpandHorizontal(true);
 		sc.setExpandVertical(true);
 		xorComposite = new XORComposite(sc, SWT.NONE, this);
 		sc.setContent(xorComposite);
 		ti.setControl(sc);
+		
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT-H_SCROLL.
+		SmoothScroller.scrollSmooth(sc);
 
+		
 		// Viterbi Tab
 		ti = new TabItem(tf, SWT.NONE);
 		ti.setText(Messages.ViterbiComposite_tab_title);
@@ -63,7 +69,13 @@ public class ViterbiView extends ViewPart {
 		viterbiComposite = new ViterbiComposite(sc, SWT.NONE, this);
 		sc.setContent(viterbiComposite);
 		ti.setControl(sc);
+		
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT-H_SCROLL.
+		SmoothScroller.scrollSmooth(sc);
 
+		
 		// Viterbi Details Tab
 		ti = new TabItem(tf, SWT.NONE);
 		ti.setText(Messages.ViterbiView_0);
@@ -73,6 +85,11 @@ public class ViterbiView extends ViewPart {
 		detailsComposite = new DetailsComposite(sc, SWT.NONE);
 		sc.setContent(detailsComposite);
 		ti.setControl(sc);
+		
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT-H_SCROLL.
+		SmoothScroller.scrollSmooth(sc);
 
 		PlatformUI.getWorkbench().getHelpSystem()
 				.setHelp(parent, ViterbiPlugin.PLUGIN_ID + ".view"); //$NON-NLS-1$

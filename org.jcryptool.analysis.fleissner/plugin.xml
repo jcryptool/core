@@ -6,7 +6,7 @@
          point="org.eclipse.ui.views">
       <view
             category="org.jcryptool.analysis"
-            class="org.jcryptool.analysis.fleissner.views.SampleView"
+            class="org.jcryptool.analysis.fleissner.views.FleissnerView"
             icon="platform:/plugin/org.jcryptool.core.util/icons/analysis_icon.gif"
             id="org.jcryptool.analysis.fleissner.FleissnerView"
             name="%view.name">

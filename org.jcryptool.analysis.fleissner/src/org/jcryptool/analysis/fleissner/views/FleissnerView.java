@@ -21,11 +21,15 @@ import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.analysis.fleissner.Activator;
 import org.jcryptool.analysis.fleissner.UI.FleissnerWindow;
 import org.jcryptool.analysis.fleissner.key.KeySchablone;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
  
 
-public class SampleView extends ViewPart {
+public class FleissnerView extends ViewPart {
 	
-    public SampleView() {
+	/**
+	 * This is the constructor but it is not used -> contains no code.
+	 */
+    public FleissnerView() {
 
     }
     
@@ -54,6 +58,11 @@ public class SampleView extends ViewPart {
         scrolledComposite.setMinSize(fw.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         scrolledComposite.setExpandHorizontal(true);
         scrolledComposite.setExpandVertical(true);
+        
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT-H_SCROLL.
+		SmoothScroller.scrollSmooth(scrolledComposite);
 
 		// Create the help context id for the viewer's control
         PlatformUI.getWorkbench().getHelpSystem().setHelp(fw, Activator.PLUGIN_ID + ".helpContextId");

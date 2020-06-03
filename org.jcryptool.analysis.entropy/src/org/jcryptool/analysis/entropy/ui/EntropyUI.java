@@ -77,59 +77,49 @@ public class EntropyUI extends Composite {
 		}
 	}
 
-	public EntropyUI(org.eclipse.swt.widgets.Composite parent, int style) {
+	public EntropyUI(Composite parent, int style) {
 		super(parent, style);
-
 		initGUI();
 	}
 
+	/**
+	 * Creates the GUI.
+	 */
 	private void initGUI() {
-            Composite mainComp = this;
-            mainComp.setLayout(new GridLayout(1, false));
-            mainComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-            
-            TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(mainComp);
-            titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-            titleAndDescription.setTitle(Messages.EntropyUI_title);
-            titleAndDescription.setDescription(Messages.EntropyUI_desc);
+		Composite mainComp = this;
+		mainComp.setLayout(new GridLayout(1, false));
+		mainComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-			{
-				cMainTabFolder = new CTabFolder(mainComp, SWT.NONE);
-				cMainTabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-				{
-					cTabConfig = new CTabItem(cMainTabFolder, SWT.NONE);
-					cTabConfig.setText(Messages.EntropyUI_0);
-					{
-						compositeConfig = new EntropyUIconfig(cMainTabFolder, SWT.NONE);
-						GridLayout composite1Layout = new GridLayout();
-						composite1Layout.makeColumnsEqualWidth = true;
-						cTabConfig.setControl(compositeConfig);
-					}
-				}
-				{
-					cTabResult = new CTabItem(cMainTabFolder, SWT.NONE);
-					cTabResult.setText(Messages.EntropyUI_1);
-					{
-						compositeResults = new EntropyUIresults(cMainTabFolder, SWT.NONE);
-						GridLayout compositeResultsLayout = new GridLayout();
-						compositeResultsLayout.makeColumnsEqualWidth = true;
-						cTabResult.setControl(compositeResults);
-					}
-				}
-				{
-					cTabDetails = new CTabItem(cMainTabFolder, SWT.NONE);
-					cTabDetails.setText(Messages.EntropyUI_2);
-					{
-						compositeTable = new EntropyUItable(cMainTabFolder, SWT.NONE);
-						GridLayout compositeTableLayout = new GridLayout();
-						compositeTableLayout.makeColumnsEqualWidth = true;
-						cTabDetails.setControl(compositeTable);
-					}
-				}
-				cMainTabFolder.setSelection(0);
-			}
-			this.layout();
-			pack();
+		TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(mainComp);
+		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		titleAndDescription.setTitle(Messages.EntropyUI_title);
+		titleAndDescription.setDescription(Messages.EntropyUI_desc);
+
+		cMainTabFolder = new CTabFolder(mainComp, SWT.BORDER);
+		cMainTabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+		cTabConfig = new CTabItem(cMainTabFolder, SWT.NONE);
+		cTabConfig.setText(Messages.EntropyUI_0);
+
+		compositeConfig = new EntropyUIconfig(cMainTabFolder, SWT.NONE);
+		cTabConfig.setControl(compositeConfig);
+
+		cTabResult = new CTabItem(cMainTabFolder, SWT.NONE);
+		cTabResult.setText(Messages.EntropyUI_1);
+
+		compositeResults = new EntropyUIresults(cMainTabFolder, SWT.NONE);
+		cTabResult.setControl(compositeResults);
+
+		cTabDetails = new CTabItem(cMainTabFolder, SWT.NONE);
+		cTabDetails.setText(Messages.EntropyUI_2);
+
+		compositeTable = new EntropyUItable(cMainTabFolder, SWT.NONE);
+		cTabDetails.setControl(compositeTable);
+
+		cMainTabFolder.setSelection(0);
+
+		this.layout();
+		pack();
 		compositeConfig.setEntropyUIpointer(this);
 	}
 

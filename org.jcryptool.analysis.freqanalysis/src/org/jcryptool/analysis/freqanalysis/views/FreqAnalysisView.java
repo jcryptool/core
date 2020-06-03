@@ -40,6 +40,8 @@ public class FreqAnalysisView extends ViewPart implements IFreqAnalysisAccess {
 	@Override
 	public final void createPartControl(final Composite parent) {
 		myUI = new FreqAnalysisUI(parent, SWT.NONE);
+		
+		// This line registers the context help on this view.
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, FreqAnalysisPlugin.PLUGIN_ID + ".freqanalysis"); //$NON-NLS-1$
 
 		hookActionBar();
