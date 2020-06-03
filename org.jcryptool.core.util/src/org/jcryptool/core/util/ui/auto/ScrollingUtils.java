@@ -7,14 +7,12 @@ import java.util.stream.Collectors;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Scrollable;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
 
 /**
@@ -67,7 +65,8 @@ public class ScrollingUtils {
 				return Optional.of(new ScrollableControl(scrolledComposite, scrolledComposite.getVerticalBar()));
 			}
 			
-			if (c instanceof Text || c instanceof StyledText) {
+//			if (c instanceof Text || c instanceof StyledText) {
+			if (c instanceof Scrollable) {
 				Scrollable text = (Scrollable) c;
 				if (ScrollingUtils.controlHasFlag(text, new int[] {SWT.V_SCROLL, SWT.H_SCROLL, SWT.READ_ONLY})) {
 					if (text.getVerticalBar() != null) {
