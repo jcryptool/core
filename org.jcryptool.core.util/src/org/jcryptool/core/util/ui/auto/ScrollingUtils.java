@@ -50,9 +50,15 @@ public class ScrollingUtils {
 		}
 
 		/**
-		 * 
-		 * @param w
-		 * @return
+         *
+         * Takes any widget (superclass of Control), tests whether the
+         * widget can be wrapped with the class "ScrollableControl",
+         * and returns the appropriate Optional<ScrollableControl>.
+         * In the context of SmoothScroller, this is effectively the test
+         * of whether to propagate scroll-whell signals to that control or not
+         * 
+		 * @param w the widget
+		 * @return an Optional of that class if, and an empty Optional otherwise.
 		 */
 		public static Optional<ScrollableControl> ofWidgetOptional(Widget w) {
 			if (!(w instanceof Control)) {
