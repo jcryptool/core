@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.ui.auto.LayoutAdvisor;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 
 public class View extends ViewPart {
 	private Composite scrolledContent;
@@ -53,6 +54,11 @@ public class View extends ViewPart {
 		scrolledComposite.setExpandVertical(true);
 
 		LayoutAdvisor.addPreLayoutRootComposite(parent);
+		
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(scrolledComposite);
 		
 		// Register the context help for this plugin.
 		PlatformUI.getWorkbench().getHelpSystem()

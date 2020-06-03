@@ -14,19 +14,18 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.visual.jctca.listeners.PluginBtnListener;
 import org.jcryptool.visual.jctca.listeners.ResizeListener;
 import org.jcryptool.visual.jctca.listeners.TabItemListener;
@@ -44,10 +43,8 @@ import org.jcryptool.visual.jctca.tabs.UserTab;
  */
 
 public class JCTCA_Visual extends ViewPart {
-    private static final Color WHITE = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
 
     private Composite composite;
-    private Composite head_composite;
     private StyledText head_description;
     private Composite comp_center;
     private TabFolder tabFolder;
@@ -70,6 +67,11 @@ public class JCTCA_Visual extends ViewPart {
         titleAndDescription.setDescription(Messages.JCTCA_Visual_archpic_create_text);
 
         showArchitecture();
+        
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(root);
 
     }
 
@@ -106,23 +108,23 @@ public class JCTCA_Visual extends ViewPart {
         lbl_img.addControlListener(new ResizeListener(lbl_img, comp_image));
         Button btn_showCreate = new Button(comp_buttons, SWT.PUSH);
         btn_showCreate.setText(Messages.JCTCA_Visual_btn_show_archpic_create);
-        btn_showCreate.setData(new Integer(0)); // set data for the listener -
+        btn_showCreate.setData(0); // set data for the listener -
                                                 // see PluginBtnListener.java
         btn_showCreate.addSelectionListener(new PluginBtnListener(this, lbl_img, head_description));
 
         Button btn_showRevoke = new Button(comp_buttons, SWT.PUSH);
         btn_showRevoke.setText(Messages.JCTCA_Visual_btn_show_archpic_revoke);
-        btn_showRevoke.setData(new Integer(1));
+        btn_showRevoke.setData(1);
         btn_showRevoke.addSelectionListener(new PluginBtnListener(this, lbl_img, head_description));
 
         Button btn_showCheck = new Button(comp_buttons, SWT.PUSH);
         btn_showCheck.setText(Messages.JCTCA_Visual_btn_show_archpic_check);
-        btn_showCheck.setData(new Integer(2));
+        btn_showCheck.setData(2);
         btn_showCheck.addSelectionListener(new PluginBtnListener(this, lbl_img, head_description));
 
         Button btn_continue = new Button(comp_buttons, SWT.PUSH);
         btn_continue.setText(Messages.JCTCA_Visual_btn_continue_to_plugin);
-        btn_continue.setData(new Integer(3));
+        btn_continue.setData(3);
         btn_continue.addSelectionListener(new PluginBtnListener(this, lbl_img, head_description));
         composite.layout(true);
         

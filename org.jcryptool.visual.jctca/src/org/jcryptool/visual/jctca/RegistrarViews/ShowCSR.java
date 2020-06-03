@@ -106,14 +106,14 @@ public class ShowCSR implements Views {
         center_btn.setLayoutData(btn_gd);
         Button btn_verify_identity = new Button(center_btn, SWT.NONE);
         btn_verify_identity.setText(Messages.ShowCSR_btn_check_identity);
-        btn_verify_identity.setData(new Integer(0));
+        btn_verify_identity.setData(0);
         GridData btn_ld = new GridData(SWT.FILL, SWT.NONE, false, true);
         btn_ld.horizontalSpan = 2;
         btn_verify_identity.setLayoutData(btn_ld);
 
         Button btn_forward_csr = new Button(center_btn, SWT.NONE);
         btn_forward_csr.setText(Messages.ShowCSR_btn_csr_to_ca);
-        btn_forward_csr.setData(new Integer(0));
+        btn_forward_csr.setData(0);
         btn_forward_csr.setLayoutData(new GridData(SWT.FILL, SWT.NONE, false, true));
         btn_forward_csr.setEnabled(false);
 

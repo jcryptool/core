@@ -188,7 +188,7 @@ public class MerkleTreeKeyComposite extends Composite {
 
 		otsLabel.setText(Descriptions.MerkleTreeKeyTab_7 + " " + privateOTSSpinner.getSelection() + "/" + (merkle.getLeafCounter() - 1));
 
-		privateOTSKey = new Text(privateKeyGroup, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.READ_ONLY);
+		privateOTSKey = new Text(privateKeyGroup, SWT.WRAP | SWT.V_SCROLL | SWT.READ_ONLY);
 		privateOTSKey.setText(splittedPrivateKey[arrayCounter]);
 		privateOTSKey.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 13, 1));
 

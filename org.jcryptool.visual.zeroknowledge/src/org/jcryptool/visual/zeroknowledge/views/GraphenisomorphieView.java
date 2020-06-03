@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.visual.zeroknowledge.Protocol;
 import org.jcryptool.visual.zeroknowledge.algorithm.graphenisomorphie.GAlice;
 import org.jcryptool.visual.zeroknowledge.algorithm.graphenisomorphie.GBob;
@@ -125,6 +126,11 @@ public class GraphenisomorphieView extends ViewPart implements Observer, Protoco
 
 		// make whole content scrollable
 		sc.setMinSize(pageComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(sc);
 
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
 				"org.jcryptool.visual.zeroknowledge.graphisomorpismHelpID"); //$NON-NLS-1$

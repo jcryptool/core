@@ -49,6 +49,7 @@ import org.jcryptool.algorithm.SquareandMultiply;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.visual.sidechannelattack.SPAPlugIn;
 
 public class SPAView extends ViewPart implements Constants {
@@ -132,7 +133,13 @@ public class SPAView extends ViewPart implements Constants {
 		
 		scrolledComposite.setContent(content);
 		scrolledComposite.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-
+		
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(scrolledComposite);
+		
+		// This registers the context help files to this view.
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
 				"org.jcryptool.visual.sidechannelattack.spa.view"); //$NON-NLS-1$
 	}

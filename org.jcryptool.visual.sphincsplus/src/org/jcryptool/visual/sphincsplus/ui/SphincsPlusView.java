@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.visual.sphincsplus.SphincsPlusPlugin;
 
 /**
@@ -59,6 +60,11 @@ public class SphincsPlusView extends ViewPart {
         sc_parameterView.setContent(parameterView);
         sc_parameterView.setMinSize(parameterView.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti_parameterView.setControl(sc_parameterView);
+        
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(sc_parameterView);
 
         ti_signAndVerifyView = new TabItem(tf, SWT.NONE);
         ti_signAndVerifyView.setText(Messages.SphincsPlusTab_2);
@@ -71,6 +77,11 @@ public class SphincsPlusView extends ViewPart {
         sc_signAndVerifyView.setContent(signAndVerifyView);
         sc_signAndVerifyView.setMinSize(signAndVerifyView.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti_signAndVerifyView.setControl(sc_signAndVerifyView);
+        
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(sc_signAndVerifyView);
 
         ti_treeView = new TabItem(tf, SWT.NONE);
         ti_treeView.setText(Messages.SphincsPlusTab_3);
@@ -83,6 +94,11 @@ public class SphincsPlusView extends ViewPart {
         sc_treeView.setContent(treeView);
         sc_treeView.setMinSize(treeView.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti_treeView.setControl(sc_treeView);
+        
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(sc_treeView);
 
         ti_forsView = new TabItem(tf, SWT.NONE);
         ti_forsView.setText(Messages.SphincsPlusTab_4);
@@ -95,6 +111,11 @@ public class SphincsPlusView extends ViewPart {
         sc_forsView.setContent(forsView);
         sc_forsView.setMinSize(forsView.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti_forsView.setControl(sc_forsView);
+        
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(sc_forsView);
 
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, SphincsPlusPlugin.PLUGIN_ID + ".contexthelp"); //$NON-NLS-1$
     }

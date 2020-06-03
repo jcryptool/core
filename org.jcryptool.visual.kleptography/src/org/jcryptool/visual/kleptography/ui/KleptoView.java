@@ -20,6 +20,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.ui.auto.LayoutAdvisor;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.visual.kleptography.KleptographyPlugin;
 import org.jcryptool.visual.kleptography.algorithm.Kleptography;
 
@@ -120,6 +121,11 @@ public class KleptoView extends ViewPart {
         scKeys.setContent(keyView);
         scKeys.setMinSize(keyView.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         tabKeys.setControl(scKeys);
+        
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(scKeys);
 
         // Start with a tab and a scrolledComposite and then put the
         // attack composite within it. Note that the tab itself is left
@@ -134,7 +140,11 @@ public class KleptoView extends ViewPart {
 
         scAttack.setContent(attackView);
         scAttack.setMinSize(attackView.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-        // tabAttacks.setControl(scAttack);
+        
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(scAttack);
     }
 
     @Override

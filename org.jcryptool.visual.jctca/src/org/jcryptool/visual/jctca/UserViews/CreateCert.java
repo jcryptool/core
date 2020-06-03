@@ -93,7 +93,7 @@ public class CreateCert implements Views {
         Button btn_proof = new Button(createCertGroup, SWT.None);
         btn_proof.setText(Messages.CreateCert_btn_select_file);
         btn_proof.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        btn_proof.setData(new Integer(0));
+        btn_proof.setData(0);
 
         Label lbl_pubKey = new Label(createCertGroup, SWT.NONE);
         lbl_pubKey.setText(Messages.CreateCert_public_key);

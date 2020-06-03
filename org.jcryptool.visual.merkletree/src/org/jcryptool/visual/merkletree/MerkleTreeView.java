@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.visual.merkletree.algorithm.ISimpleMerkle;
 import org.jcryptool.visual.merkletree.ui.MerkleConst;
 import org.jcryptool.visual.merkletree.ui.MerkleConst.SUIT;
@@ -188,6 +189,11 @@ public class MerkleTreeView extends ViewPart {
 		scrolledComposite.setContent(tabFolder);
 		
 		computeMinimalWindowSize();
+		
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(scrolledComposite);
 
 		// makes the connection to the help of the plug-in
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.visual.merkletree.view");

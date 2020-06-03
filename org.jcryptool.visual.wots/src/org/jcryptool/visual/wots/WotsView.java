@@ -37,6 +37,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.visual.wots.files.Converter;
 import org.jcryptool.visual.wots.files.ResizeListener;
 
@@ -104,14 +105,11 @@ public class WotsView extends ViewPart {
 	private Text[] txtToEnableOrDisable;
 	private Button[] btnToEnableOrDisable;
 	
-//	private static String language = getLanguage();
 	public static String currentImg = Messages.WotsView_Overview2;
 
 	private ScrolledComposite scrolledContainer;
 	private Composite container;
 	private Composite composite;
-	private Text txtTheWinternitzonetimesignatureIs;
-	private Text txtWinternitzOtsignaturewots;
 	private ResizeListener imgResizer;
 
 
@@ -843,6 +841,11 @@ public class WotsView extends ViewPart {
 
 		scrolledContainer.setContent(container);
 		scrolledContainer.setMinSize(container.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(scrolledContainer);
 	}
 
 	@Override

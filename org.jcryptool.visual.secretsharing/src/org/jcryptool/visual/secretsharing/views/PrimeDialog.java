@@ -40,7 +40,6 @@ public class PrimeDialog extends TitleAreaDialog implements Constants {
 
 	private Button generateNextPrimeButton;
 	private Button okButton;
-	private Button verifyInputButton;
 	private StyledText primeText;
 	private BigInteger number;
 	private StyleRange style;
@@ -114,7 +113,6 @@ public class PrimeDialog extends TitleAreaDialog implements Constants {
 				style.fontStyle = SWT.BOLD;
 				primeText.setStyleRange(style);
 
-//				verifyInputButton.setEnabled(true);
 				if (okButton != null) {
 					okButton.setEnabled(false);
 				}
@@ -145,22 +143,11 @@ public class PrimeDialog extends TitleAreaDialog implements Constants {
 				style.fontStyle = SWT.BOLD;
 				primeText.setStyleRange(style);
 
-//				verifyInputButton.setEnabled(false);
 				okButton.setEnabled(true);
 			}
 		});
 		generateNextPrimeButton.setText(Messages.SSSConstants_Dialog_Next_Prime);
 		generateNextPrimeButton.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false));
-
-//		verifyInputButton = new Button(container, SWT.NONE);
-//		verifyInputButton.addSelectionListener(new SelectionAdapter() {
-//			@Override
-//			public void widgetSelected(final SelectionEvent e) {
-//				verify();
-//			}
-//		});
-//		verifyInputButton.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false));
-//		verifyInputButton.setText(Messages.SSSConstants_Dialog_Verify_Input);
 		
 		setMessage(Messages.SSSConstants_Dialog_Message);
 		setTitle(Messages.SSSConstants_Dialog_Prime_Title);
@@ -169,7 +156,7 @@ public class PrimeDialog extends TitleAreaDialog implements Constants {
 	}
 
 	protected void verify() {
-		// TODO Auto-generated method stub
+		
 		String text = primeText.getText();
 
 		style = new StyleRange();

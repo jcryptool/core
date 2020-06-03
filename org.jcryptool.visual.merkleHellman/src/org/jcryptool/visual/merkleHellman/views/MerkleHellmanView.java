@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.visual.merkleHellman.algorithm.MerkleHellman;
 
 /**
@@ -54,16 +55,12 @@ public class MerkleHellmanView extends ViewPart {
 	private Composite compositeMain;
 	private ScrolledComposite scrolledComposite;
 	
-//	private Composite compositePrivateKey;
-//	private ScrolledComposite scrolledCompositePrivateKey;
 	private Group grpPrivateKey;
 	private Group grpPublicKey;
 	private Text textM;
 	private Text textSumA;
 	private Text textW;
 	private Text textU;
-//	private ScrolledComposite scrolledCompositePublicKey;
-//	private Composite compositePublicKey;
 
 	private ArrayList<Text> privateKeyFields = new ArrayList<Text>();
 	private ArrayList<Text> publicKeyFields = new ArrayList<Text>();
@@ -956,6 +953,12 @@ public class MerkleHellmanView extends ViewPart {
 		int startValue = Integer.parseInt(comboStartValue.getText());
 
 		generatePrivateKey(numberOfElements, startValue);
+		
+		
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(scrolledComposite);
 
 
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.visual.merkleHellman.view");

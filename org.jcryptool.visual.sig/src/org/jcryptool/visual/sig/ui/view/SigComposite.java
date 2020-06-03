@@ -60,6 +60,7 @@ import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.services.IServiceLocator;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
@@ -80,7 +81,6 @@ import org.jcryptool.visual.sig.ui.wizards.SignatureWizard;
  */
 public class SigComposite extends Composite {
     private Text txtHash;
-    private Text txtGeneralDescription;
     private Text txtDescriptionOfStep1;
     private Text txtDescriptionOfStep2;
     private Text txtDescriptionOfStep3;
@@ -99,7 +99,6 @@ public class SigComposite extends Composite {
     private MenuItem mntm2;
     private MenuItem mntm3;
     private MenuItem mntm4;
-    private MenuItem mntm0;
     private boolean called = false;
     private int hash = 0; // Values: 0-4. Hash and signature contain the
                           // selected method; default is 0
@@ -183,7 +182,7 @@ public class SigComposite extends Composite {
         
         Clipboard clipboard = new Clipboard(getDisplay());
         
-        Color white = new Color(Display.getCurrent(), 255, 255, 255);
+        Color white = ColorService.WHITE;
         
         Composite introComposite = new Composite(this, SWT.NONE);
         introComposite.setBackground(white);

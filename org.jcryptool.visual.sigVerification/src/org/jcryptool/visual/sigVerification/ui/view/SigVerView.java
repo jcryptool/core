@@ -16,6 +16,7 @@ import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.util.images.ImageService;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 
 public class SigVerView extends ViewPart {
     private boolean showModelTab = false;
@@ -36,8 +37,12 @@ public class SigVerView extends ViewPart {
 	public void createPartControl(Composite parent) {  
         this.parent = parent;
     	
+        // This registers the context help for this view.
         PlatformUI.getWorkbench().getHelpSystem()
                 .setHelp(parent.getShell(), "org.jcryptool.visual.sigVerification.SigVerView"); //$NON-NLS-1$
+        
+        
+        // This creates the reset icon in the top right corner.
         toolBarMenu = getViewSite().getActionBars().getToolBarManager();
         resetCommandId = "org.jcryptool.visual.sigVerification.commands.reset"; //$NON-NLS-1$
         addContributionItem(toolBarMenu, resetCommandId, ImageService.IMAGEDESCRIPTOR_RESET, "Reset", SWT.PUSH);
@@ -57,6 +62,11 @@ public class SigVerView extends ViewPart {
         sc.setMinSize(sigVerComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         sigVerComposite.addResetIconHandler();
         
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(sc);
+        
         //Gültigkeitsmodelle-Tab
         ti2 = new TabItem(tf, SWT.NONE);
         ti2.setText(Messages.SigVerView_Validity_models);
@@ -67,6 +77,11 @@ public class SigVerView extends ViewPart {
         sc2.setContent(modelComposite);
         ti2.setControl(sc2);
         sc2.setMinSize(modelComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(sc2);
         
         tf.addSelectionListener(new SelectionAdapter() {
         	@Override

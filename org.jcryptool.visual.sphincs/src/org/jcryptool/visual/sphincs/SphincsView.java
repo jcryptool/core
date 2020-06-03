@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.visual.sphincs.algorithm.Signature;
 import org.jcryptool.visual.sphincs.algorithm.aSPHINCS256;
 import org.jcryptool.visual.sphincs.algorithm.bcSPHINCS256;
@@ -117,6 +118,11 @@ public class SphincsView extends ViewPart {
         });
         scrolledComposite.setContent(tabFolder);
         scrolledComposite.setMinSize(SphincsConstant.PLUGIN_WIDTH, SphincsConstant.PLUGIN_HEIGTH);
+        
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(scrolledComposite);
     }
 
     /**
