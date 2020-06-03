@@ -43,7 +43,10 @@ public class SmoothScroller {
 	/**
 	 * Call this method on the top level scrolled composite.</br>
 	 * Not on "parent" given by <code>createPartControl(Composite parent)</code>
-	 * but on its first child.
+	 * but on its first child.</br></br>
+	 * The method should be called after all children and children of children
+	 * are created. More easy formulated: At the end of the createPartControl-method
+	 * in a plugin.
 	 * @param c
 	 */
 	public static void scrollSmooth(ScrolledComposite sc) {
