@@ -2,6 +2,7 @@ package org.jcryptool.core.util.ui.auto;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseWheelListener;
 import org.eclipse.swt.widgets.Composite;
@@ -68,7 +69,7 @@ public class SmoothScroller {
 	private void addTo(Control control) {
 		for (Control child : ((Composite) control).getChildren()) {
 			// We only want to add the MouseWheel Listener to SWT Texts.
-			if (child instanceof Text) {
+			if (child instanceof Text || child instanceof StyledText) {
 				// Texts with one of the following SWT-tags prevent 
 				// a scolledComposite from being scrolled, if the user
 				// scrolls on its mouse wheel.
