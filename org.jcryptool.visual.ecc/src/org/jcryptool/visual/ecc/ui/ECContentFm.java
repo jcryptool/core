@@ -41,6 +41,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.visual.ecc.Messages;
 import org.jcryptool.visual.ecc.algorithm.EC;
 import org.jcryptool.visual.ecc.algorithm.ECFm;
@@ -130,6 +131,11 @@ public class ECContentFm extends Composite{
 
 		createGroupAttributesFm();
 		createGroupPoints();
+		
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(scrolledComposite);
 	}
 
 	@Override

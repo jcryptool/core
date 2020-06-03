@@ -61,6 +61,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.visual.huffmanCoding.HuffmanCodingPlugin;
 import org.jcryptool.visual.huffmanCoding.algorithm.BitString;
 import org.jcryptool.visual.huffmanCoding.algorithm.Huffman;
@@ -237,6 +238,11 @@ public class HuffmanCodingView extends ViewPart {
 
 		scrolledComposite.setContent(tabFolder);
 		scrolledComposite.setMinSize(tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(scrolledComposite);
 
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, HuffmanCodingPlugin.PLUGIN_ID + ".view");
 	}

@@ -14,6 +14,7 @@ import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.visual.crtverification.Activator;
 
 public class CrtVerView extends ViewPart {
@@ -32,6 +33,11 @@ public class CrtVerView extends ViewPart {
         c = new CrtVerViewComposite(sc, SWT.NONE, this);
         sc.setContent(c);
         sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT-H_SCROLL.
+		SmoothScroller.scrollSmooth(sc);
         
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, Activator.PLUGIN_ID + ".view"); //$NON-NLS-1$
     }

@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.visual.ECDH.handlers.ShowAnimationHandler;
 
 public class ECDHView extends ViewPart {
@@ -47,6 +48,11 @@ public class ECDHView extends ViewPart {
 		ecdhComposite = new ECDHComposite(sc, SWT.NONE, this);
 		sc.setContent(ecdhComposite);
 		sc.setMinSize(ecdhComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(sc);
 		
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.visual.ecdh.view"); //$NON-NLS-1$
 	}

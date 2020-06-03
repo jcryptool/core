@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.ui.auto.LayoutAdvisor;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.visual.he.Messages;
 
 
@@ -47,6 +48,11 @@ public class HEView extends ViewPart {
         sc.setContent(ghc);
         sc.setMinSize(ghc.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti.setControl(sc);
+        
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(sc);
 
         // RSA
         ti = new TabItem(tf, SWT.NONE);
@@ -58,6 +64,10 @@ public class HEView extends ViewPart {
         sc.setContent(c);
         sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti.setControl(sc);
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(sc);
 
         // Paillier
         ti = new TabItem(tf, SWT.NONE);
@@ -69,6 +79,10 @@ public class HEView extends ViewPart {
         sc.setContent(c);
         sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti.setControl(sc);
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(sc);
         
         
         

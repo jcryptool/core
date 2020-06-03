@@ -62,6 +62,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.visual.hashing.HashingPlugin;
 import org.jcryptool.visual.hashing.algorithms.HashFunction;
 
@@ -403,6 +404,7 @@ public class HashingView extends ViewPart {
 		});
 		btnChanged.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
 		btnChanged.setText(Messages.HashingView_btnChanged_text);
+		
 		textDifference.invokeAction(ST.CUT);
 		textDifference.invokeAction(ST.COPY);
 		textDifference.invokeAction(ST.PASTE);
@@ -413,6 +415,11 @@ public class HashingView extends ViewPart {
 		scrolledComposite.setExpandVertical(true);
 		
 		loadExampleText();
+		
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(scrolledComposite);
 		
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, HashingPlugin.PLUGIN_ID + ".view");
 	}

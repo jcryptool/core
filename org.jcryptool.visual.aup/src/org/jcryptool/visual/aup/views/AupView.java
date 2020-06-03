@@ -35,7 +35,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
@@ -47,6 +46,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.visual.aup.AndroidUnlockPatternPlugin;
 
 /**
@@ -71,7 +71,6 @@ public class AupView extends ViewPart {
 		248408,	//lenght 8 (4+5+6+7+8)
 		389112	//lenght 9 (4+5+6+7+8+9)
 		};
-	private Composite headingBox;
 	private Composite centerBox;
 	private Group centerGroup;
 	private Composite controlBox;
@@ -182,7 +181,7 @@ public class AupView extends ViewPart {
 							length++;
 					}
 					descText.setText(String.format(Messages.AndroidUnlockPattern_helpBox_descText_Security, Messages.AndroidUnlockPattern_helpBox_descText, length, apuPerm[length-4]));
-					resizeControl(descText);
+					resizeControls();
 				}
 				logic.btnSaveClick();
 			}
@@ -465,7 +464,7 @@ public class AupView extends ViewPart {
 		instrText1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		instrText1.setText(Messages.AupView_1);
 
-		descText = new StyledText(helpBox, SWT.READ_ONLY | SWT.V_SCROLL | SWT.WRAP);
+		descText = new StyledText(helpBox, SWT.READ_ONLY | SWT.WRAP);
 		GridData gd_descText = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 3);
 		gd_descText.horizontalIndent = 40;
 		gd_descText.heightHint = 150;
@@ -487,7 +486,6 @@ public class AupView extends ViewPart {
 		centerResize();
 
 		logic.init();
-		child.pack();	//update the size of the visuals child's
 
 		//dispose allocated resources on shutdown
 		parent.addDisposeListener(new DisposeListener() {
@@ -499,7 +497,6 @@ public class AupView extends ViewPart {
 					if(l.getImage() != null) l.getImage().dispose(); //dispose image
 				}
 				if(statusText.getImage() != null) statusText.getImage().dispose();
-				headingBox.getChildren()[0].getFont().dispose();
 			}
 		});
 
@@ -514,6 +511,11 @@ public class AupView extends ViewPart {
 		img.dispose();
 		
 		sc.setMinSize(child.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT-H_SCROLL.
+		SmoothScroller.scrollSmooth(sc);
 	}
 
 	protected void drawLines(PaintEvent e) {
@@ -595,16 +597,16 @@ public class AupView extends ViewPart {
 			patternInput = inputFinished = false;
 			btnSave.setBackground(ColorService.GRAY);
 			descText.setText(Messages.AndroidUnlockPattern_helpBox_descText);
-			resizeControl(descText);
+			resizeControls();
 			logic.reset();
 		}
 	}
 
 	/**
-	 * Recalculate the size of a control
+	 * Recalculate the size of all controls.
 	 */
-	private void resizeControl(Control control) {
-		parent.layout(new Control[] {control});
+	private void resizeControls() {
+		parent.layout();
 	}
 
 	public void setBtnSaveText(String text) {

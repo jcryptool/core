@@ -14,6 +14,7 @@ import java.util.Vector;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -23,13 +24,13 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.core.util.ui.auto.LayoutAdvisor;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.crypto.keystore.ui.views.nodes.Contact;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 import org.jcryptool.visual.extendedrsa.ui.wizards.DeleteIdentityWizard;
@@ -57,7 +58,7 @@ public class ExtendedRSA_Visual extends ViewPart {
 	private Button btn_delID;
 	private Composite comp_center;
 	private ExtendedTabFolder tabFolder;
-	private Text txtExplain;
+	private StyledText txtExplain;
 
 	public ExtendedRSA_Visual() {
 	}
@@ -155,17 +156,23 @@ public class ExtendedRSA_Visual extends ViewPart {
 		grp_explain.setText(Messages.ExtendedRSA_Visual_10);
 		grp_explain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
 
-		txtExplain = new Text(grp_explain, SWT.V_SCROLL | SWT.WRAP);
+		txtExplain = new StyledText(grp_explain, SWT.V_SCROLL | SWT.READ_ONLY | SWT.WRAP);
 		GridData gd_txtEplain = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gd_txtEplain.widthHint = 400;
 		txtExplain.setLayoutData(gd_txtEplain);
-		txtExplain.setEditable(false);
+		txtExplain.setBackground(ColorService.LIGHTGRAY);
+		txtExplain.setAlwaysShowScrollBars(false);
 
 		initKeystore();
 
 		sc.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 		LayoutAdvisor.addPreLayoutRootComposite(sc);
+		
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(sc);
 		
 		// Register the context help
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, Activator.PLUGIN_ID + ".view"); //$NON-NLS-1$

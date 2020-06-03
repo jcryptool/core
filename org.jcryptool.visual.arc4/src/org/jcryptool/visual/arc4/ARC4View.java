@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.ui.auto.LayoutAdvisor;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.visual.arc4.ui.ARC4Composite;
 
 /**
@@ -57,6 +58,11 @@ public class ARC4View extends ViewPart {
         // It avoids all widgets to strecht horizontal after the window is resized 
         // by adding a widthHint.
         LayoutAdvisor.addPreLayoutRootComposite(scroll);
+        
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT-H_SCROLL.
+		SmoothScroller.scrollSmooth(scroll);
         
         // makes the connection to the help of the plug-in
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.visual.arc4.view");

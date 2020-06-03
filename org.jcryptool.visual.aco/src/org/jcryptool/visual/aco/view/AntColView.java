@@ -85,10 +85,11 @@ public class AntColView extends ViewPart {
 		
 		LayoutAdvisor.addPreLayoutRootComposite(scrollComposite);
 		
-		// This makes the Text scrollable.
-		SmoothScroller.scrollWidgetSmooth(scrollComposite);
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT-H_SCROLL.
+		SmoothScroller.scrollSmooth(scrollComposite);
 		
-
 		PlatformUI.getWorkbench().getHelpSystem()
 				.setHelp(parent, ACOPlugin.PLUGIN_ID + ".ContextHelpID"); //$NON-NLS-1$
 	}

@@ -40,8 +40,10 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.visual.des.algorithm.DESController;
 
 public class DesView extends ViewPart {
@@ -198,6 +200,11 @@ public class DesView extends ViewPart {
 
 		// Create DES Controller
 		dESCon = new DESController();
+		
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(wrapper);
 
 
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.visual.des.view");
@@ -231,17 +238,16 @@ public class DesView extends ViewPart {
 		grpInformation.setLayout(new GridLayout());
 		
 		// infobox
-		txtInformation = new StyledText(grpInformation, SWT.WRAP | SWT.V_SCROLL);
+		txtInformation = new StyledText(grpInformation, SWT.WRAP | SWT.READ_ONLY | SWT.V_SCROLL);
 		GridData gd_txtAlgInformation = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gd_txtAlgInformation.widthHint = 350;
 		gd_txtAlgInformation.heightHint = 300;
 		txtInformation.setLayoutData(gd_txtAlgInformation);
-		txtInformation.setEditable(false);
+//		txtInformation.setEditable(false);
 		txtInformation.setAlwaysShowScrollBars(false);
 		txtInformation.setText(info);
 	}
 
-	//TODO nur ein Anker
 	/**
 	 * Creates the "Algorithm Study" tab and all its GUI elements
 	 */
@@ -642,6 +648,8 @@ public class DesView extends ViewPart {
 		tfAlgOutput = new TabFolder(grpAlgOutput, SWT.NONE);
 		tfAlgOutput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		tfAlgOutput.setLayout(new GridLayout());
+		tfAlgOutput.setBackground(ColorService.WHITE);
+		tfAlgOutput.setForeground(ColorService.WHITE);
 
 		tbtmAlgM0M17 = new TabItem(tfAlgOutput, SWT.NONE);
 		tbtmAlgM0M17.setText(Messages.DesView_32);

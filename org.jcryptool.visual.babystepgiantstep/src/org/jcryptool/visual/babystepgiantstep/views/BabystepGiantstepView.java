@@ -46,6 +46,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.visual.babystepgiantstep.algorithm.BabystepGiantstep;
 
 /**
@@ -78,7 +79,6 @@ public class BabystepGiantstepView extends ViewPart {
 	private TableColumn tblclmnCommentBS;
 	private TableColumn tblclmnQ;
 	private TableColumn tblclmnGiantSteps;
-	private Composite compositeDescription;
 	private Text styledText;
 
 	private VerifyListener vl_numbers = new VerifyListener() {
@@ -142,13 +142,14 @@ public class BabystepGiantstepView extends ViewPart {
 	 * The constructor.
 	 */
 	public BabystepGiantstepView() {
+		
 	}
 
 	@Override
 	public void createPartControl(Composite parent) {
 		this.parent = parent;
-
-		parent.setLayout(new GridLayout(1, false));
+		
+		parent.setLayout(new GridLayout());
 
 		scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -156,7 +157,6 @@ public class BabystepGiantstepView extends ViewPart {
 		scrolledComposite.setExpandVertical(true);
 
 		Composite grpBabyStepGiant = new Group(scrolledComposite, SWT.NONE);
-		grpBabyStepGiant.setFont(FontService.getNormalBoldFont());
 		grpBabyStepGiant.setLayout(new GridLayout(1, false));
 
 		TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(grpBabyStepGiant);
@@ -735,10 +735,12 @@ public class BabystepGiantstepView extends ViewPart {
 			}
 		});
 		
+		// Compute the size of the grpBabyStepGiant to set the
+		// scrollbars correctly.
 		scrolledComposite.setMinSize(grpBabyStepGiant.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		scrolledComposite.setContent(grpBabyStepGiant);
 		
-		this.parent.addControlListener(new ControlListener() {
+		parent.addControlListener(new ControlListener() {
 			
 			@Override
 			public void controlResized(ControlEvent e) {
@@ -751,6 +753,11 @@ public class BabystepGiantstepView extends ViewPart {
 				
 			}
 		});
+		
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(scrolledComposite);
 
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.visual.babystepgiantstep.view");
 	}

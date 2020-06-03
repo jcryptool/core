@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.visual.crt.algorithm.ChineseRemainderTheorem;
 import org.jcryptool.visual.crt.xeuclid.XEuclid;
 
@@ -672,6 +673,11 @@ public class CRTGroup extends Composite implements Constants {
 
 		scrolledGroup.setContent(content);
 		scrolledGroup.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT-H_SCROLL.
+		SmoothScroller.scrollSmooth(scrolledGroup);
 
 		setDefaultValues();
 	}

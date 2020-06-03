@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
@@ -175,7 +176,7 @@ public class Identity extends TabItem {
 	private Table keyData;
 	private TableColumn column_parameter;
 	private TableColumn column_value;
-	private Text txtExplain;
+	private StyledText txtExplain;
 	private Label init_tab1;
 	private String pw1;
 	private String pw2;
@@ -275,7 +276,7 @@ public class Identity extends TabItem {
 		}
 	};
 
-	public Identity(ExtendedTabFolder parent, int style, Contact contact, Text explain) {
+	public Identity(ExtendedTabFolder parent, int style, Contact contact, StyledText explain) {
 		super(parent, style);
 		this.extTF = parent;
 		this.identityName = contact.getName();

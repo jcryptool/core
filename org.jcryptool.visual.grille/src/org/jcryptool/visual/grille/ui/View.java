@@ -11,6 +11,7 @@ package org.jcryptool.visual.grille.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -34,8 +35,10 @@ import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.visual.grille.algorithm.Grille;
 import org.jcryptool.visual.grille.algorithm.KeySchablone;
 
@@ -75,7 +78,7 @@ public class View extends ViewPart {
 	private Composite inOutText;
 	private Composite composite_illustration;
 	private Composite composite_canvas_demonstration;
-	private Text keyText;
+	private StyledText keyText;
 
 	public View() {
 		model = new Grille();
@@ -101,6 +104,11 @@ public class View extends ViewPart {
 
 		scrolledComposite.setContent(parent);
 		scrolledComposite.setMinSize(parent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(scrolledComposite);
 
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewParent, "org.jcryptool.visual.grille.grille");
 	}
@@ -666,9 +674,10 @@ public class View extends ViewPart {
 			}
 		});
 
-		keyText = new Text(schablone, SWT.H_SCROLL);
+		keyText = new StyledText(schablone, SWT.READ_ONLY | SWT.H_SCROLL);
 		keyText.setText(Messages.getString("View.key"));
-		keyText.setEditable(false);
+		keyText.setBackground(ColorService.LIGHTGRAY);
+		keyText.setAlwaysShowScrollBars(false);
 		GridData gd_keyText = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
 		gd_keyText.widthHint = keyText.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
 		keyText.setLayoutData(gd_keyText);

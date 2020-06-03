@@ -22,6 +22,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.euclid.handler.CommandState.State;
 import org.jcryptool.visual.euclid.handler.CommandState.Variable;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.visual.euclid.handler.CommandStateChanger;
 
 /**
@@ -87,6 +88,11 @@ public class View extends ViewPart {
 
 		scrolledComposite.setContent(tabFolder);
 		scrolledComposite.setMinSize(tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT));	
+		
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT.H_SCROLL.
+		SmoothScroller.scrollSmooth(scrolledComposite);
 		
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, EuclidPlugin.PLUGIN_ID + ".view"); //$NON-NLS-1$
 	}
