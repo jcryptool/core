@@ -2,11 +2,14 @@ package org.jcryptool.core.util.ui.auto;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseWheelListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Scrollable;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.Text;
 
 /**
  * This class is an (hopefully) easy to use class to
@@ -66,12 +69,16 @@ public class SmoothScroller {
 	 */
 	private void addTo(Control control) {
 		for (Control child : ((Composite) control).getChildren()) {
-			// Add the mouseWheelListener to all controls that are able to scroll.
-			if (child instanceof Scrollable) {
+			// Add the mouseWheelListener to Texts, StyledTexts and Tabels. They are the most common
+			// controls that consume mouse events instead of forwarding them.
+			if (child instanceof Text || child instanceof StyledText || child instanceof Table) {
 				// Scrollable controls with one of the following SWT-tags prevent 
 				// a scolledComposite from being scrolled, if the user
 				// scrolls on its mouse wheel.
-				if (ScrollingUtils.controlHasFlag(child, new int[] {SWT.V_SCROLL, SWT.H_SCROLL, SWT.READ_ONLY})) {
+				// Tables do not need to have on of the flags set. They consume the 
+				// scroll event at every time instead of redirecting it to a control+
+				// that can be scrolled.
+				if (child instanceof Table || ScrollingUtils.controlHasFlag(child, new int[] {SWT.V_SCROLL, SWT.H_SCROLL, SWT.READ_ONLY})) {
 					child.addMouseWheelListener(new MouseWheelListener() {
 						
 						@Override
