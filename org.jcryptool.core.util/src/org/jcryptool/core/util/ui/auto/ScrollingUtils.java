@@ -15,22 +15,45 @@ import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
 
+/**
+ * This class does all the logic work for the SmoothScroller.java.</br></br>
+ * It works like that: It checks if the mouse wheel is scrolled
+ * (this is done by the mouseWheelListener in the SmoothScroller class)
+ * and then checks if the scrolling would have an effect (with effect I
+ * mean some control scrolls or not). If yes it does nothing, but if not
+ * it forwards this scroll event to the next scrollable control in the
+ * parent structure and then this control is scrolled.
+ * 
+ * @author Simon Leischnig
+ *
+ */
 public class ScrollingUtils {
 
 	// assumed immutable by convention
-	public static class ScrollableControl {
+	protected static class ScrollableControl {
 		public static int UP = 1;
 		public static int DOWN = -1;
 
 		public Control control;
 		public ScrollBar scrollBar;
 
+		/**
+		 * Creates an instance of the class <code>ScrollableControl</code>
+		 * @param control A scrollable control like a scrolledComposite.
+		 * @param scrollBar The scrollbar of the scrollable control. You can get it with 
+		 * <code>control.getVerticalBar()</code>.
+		 */
 		public ScrollableControl(Control control, ScrollBar scrollBar) {
 			super();
 			this.control = control;
 			this.scrollBar = scrollBar;
 		}
 
+		/**
+		 * 
+		 * @param w
+		 * @return
+		 */
 		public static Optional<ScrollableControl> ofWidgetOptional(Widget w) {
 			if (!(w instanceof Control)) {
 				return Optional.empty();
@@ -54,10 +77,15 @@ public class ScrollingUtils {
 			return Optional.empty();
 		}
 
-		// this method performs the scroll of a scrolling MouseEvent which is assumed to
-		// be left-over
-		// TODO: this method only handles ScrolledComposites; all else would throw
-		// exception
+		/**
+		 * This method performs the scroll of a scrolling MouseEvent which is assumed to
+		 * be left-over.</br></br>
+		 * This method only handles ScrolledComposites; all else would throw 
+		 * exception. But this is no problem, because it is only added to ScroledComposite. 
+		 * The SmoothScroller class takes care of that.
+		 * @param count The amount of lines the scrollbar should be scroller.</br>
+		 * This is 3 (scroll up) or -3 (scroll down) by default (at least on windows).
+		 */
 		public void scrollByCount(int count) {
 			this.scrollBar.setSelection(this.scrollBar.getSelection() - count * this.scrollBar.getIncrement());
 			if (this.control instanceof ScrolledComposite) {
@@ -71,14 +99,20 @@ public class ScrollingUtils {
 			this.control.redraw();
 		}
 
+		/**
+		 * Forwards a mouse event (scrolling of the mouse wheel) to the 
+		 * scrollable control that should be scrolled instead of the 
+		 * control the mouse is currently on.
+		 * @param e The scroll event from the mouseWheelListener.
+		 */
 		public void propagateScrollIfNecessary(MouseEvent e) {
 			// test if the event has any effect
-			if (ScrollingUtils.isScrollEventWithoutEffectHere(this.control, this.scrollBar, e)) {
+			if (ScrollingUtils.isScrollEventWithoutEffectHere(this.scrollBar, e)) {
 				// get scrollable controls up the SWT tree
 				List<ScrollableControl> scrollableAbove = ScrollingUtils.getScrollableWidgetsAbove(this.control);
 				// ... only those that have scrolling place left
 				List<ScrollableControl> scrollableWithSpaceAbove = scrollableAbove.stream()
-						.filter(x -> !ScrollingUtils.isScrollEventWithoutEffectHere(x.control, x.scrollBar, e))
+						.filter(x -> !ScrollingUtils.isScrollEventWithoutEffectHere(x.scrollBar, e))
 						.collect(Collectors.toList());
 
 				// if there are any such scroll receivers, scroll the first (nearest) one!
@@ -135,21 +169,31 @@ public class ScrollingUtils {
 		return result;
 	}
 
+	/**
+	 * This method searches for scrollable control in the parent structure
+	 * of a control.
+	 * @param control The control for which you want to check whether it is within a scrollable control.
+	 * @return A maybe empty list with scrollable controls that are around/contain
+	 * the given control.
+	 */
 	public static List<ScrollableControl> getScrollableWidgetsAbove(Control control) {
-		return getParentsOf(control).stream().map(x -> ScrollableControl.ofWidgetOptional(x)).filter(x -> x.isPresent())
-				.map(x -> x.get()).collect(Collectors.toList());
+		return getParentsOf(control).stream()
+				.map(ctrl -> ScrollableControl.ofWidgetOptional(ctrl))
+				.filter(x -> x.isPresent())
+				.map(x -> x.get())
+				.collect(Collectors.toList());
 	}
 
 	/**
 	 * Checks if the innerScrollableBar reached the top or bottom position.
 	 * 
-	 * @param control
-	 * @param innerScrollableBar
-	 * @param e
+	 * @param innerScrollableBar The scrollbar of the control the mouse is currently on. Can be null,
+	 * if there is no scrollbar (this is the case when SWT.READ_ONLY is set as only flag.)
+	 * @param e The MouseEvent gotten from the mouseWheelListener (see SmoothScroller.java)
 	 * @return True, if the scrollbar reached the top or bottom. False, if the
 	 *         scrollbar is somewhere between the top and bottom.
 	 */
-	public static boolean isScrollEventWithoutEffectHere(Control control, ScrollBar innerScrollableBar, MouseEvent e) {
+	public static boolean isScrollEventWithoutEffectHere(ScrollBar innerScrollableBar, MouseEvent e) {
 
 		int direction = e.count < 0 ? ScrollableControl.DOWN : ScrollableControl.UP;
 
@@ -167,6 +211,7 @@ public class ScrollingUtils {
 			}
 			return false;
 		}
+		// Scrolling is without effect, because the control has no scrollbar at all.
 		return true;
 	}
 
