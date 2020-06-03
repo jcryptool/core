@@ -46,6 +46,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.games.divide.DividePlugin;
 import org.jcryptool.games.divide.dialogs.ChoosePlayerDialog;
 import org.jcryptool.games.divide.logic.ComputerPlayer;
@@ -71,9 +72,6 @@ public class DivideView extends ViewPart implements Observer {
     private Composite content;
     private Composite upperContent;
     private Group optionsGroup;
-    private Composite descriptionComposite;
-    private Text titleText;
-    private Text descriptionText;
     private Button buttonStartGame;
     private Composite playingField;
     private Composite lowerContent;
@@ -122,7 +120,7 @@ public class DivideView extends ViewPart implements Observer {
 
         scrolledComposite.setContent(content);
         
-        
+        // This creates the upper part in the GUI. The Plugin title and description.
 		TitleAndDescriptionComposite titleAndDescription = new TitleAndDescriptionComposite(content);
 		titleAndDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		titleAndDescription.setTitle(Messages.DivideView_19);
@@ -312,6 +310,12 @@ public class DivideView extends ViewPart implements Observer {
 
         scrolledComposite.setMinSize(725, content.computeSize(SWT.DEFAULT, SWT.DEFAULT).x);
         
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT-H_SCROLL.
+		SmoothScroller.scrollSmooth(scrolledComposite);
+        
+		// This registers the context help on this view.
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, DividePlugin.PLUGIN_ID + ".helpView");
     }
 
