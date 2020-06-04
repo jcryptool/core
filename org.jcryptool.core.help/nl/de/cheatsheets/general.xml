@@ -33,10 +33,10 @@
            serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.jcryptool.webbrowser.browser)"/>
       </subitem>
       <subitem
-            label="Zeigen Sie die Fehlerprotokoll Sicht als Schnellsicht an (eine Schnellsicht wird automatisch wieder ausgeblendet). Klicken Sie dazu auf das Schnellsicht Icon links unten und wählen Sie Andere.... Im Dialog erweitern Sie Allgemein und markieren Fehlerprotokoll. Anschließend klicken Sie auf OK. Die Sicht Fehlerprotokoll wird angezeigt. Wenn Sie außerhalb der Sicht klicken wird sie automatisch ausgeblendet, bleibt aber als zusätzliches Icon neben der Schnellsicht erhalten.">
+            label="Zeigen Sie die Häufigkeitsanalyse an. Alle Analysen, Visualisierungen und Spiele sind Sichten. Klicken Sie dazu auf das Menüitem &quot;Analysen&quot; und wählen Sie den Eintrag &quot;Häufigkeitsanalyse&quot; aus.">
          <command
                required="false"
-               serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.eclipse.pde.runtime.LogView,org.eclipse.ui.views.showView.makeFast=true)"/>
+               serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.jcryptool.analysis.freqanalysis.views.FreqAnalysisView)"/>
       </subitem>
    </item>
    <item title="Öffnen eines Editors" dialog="true" skip="false" href="/org.jcryptool.core.help/nl/de/help/users/general/editors.html">
