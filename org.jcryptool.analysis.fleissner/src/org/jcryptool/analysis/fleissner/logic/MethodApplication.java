@@ -9,10 +9,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.analysis.fleissner.logic;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.StringReader;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.time.Duration;
@@ -20,7 +17,6 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.jcryptool.analysis.fleissner.Activator;
-import org.jcryptool.analysis.fleissner.UI.FleissnerWindow;
 import org.jcryptool.core.logging.utils.LogUtil;
 
 

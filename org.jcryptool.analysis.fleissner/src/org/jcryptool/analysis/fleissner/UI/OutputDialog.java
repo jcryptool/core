@@ -10,17 +10,9 @@
 package org.jcryptool.analysis.fleissner.UI;
 
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
-import java.util.function.BinaryOperator;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -31,13 +23,10 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.analysis.fleissner.Activator;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.core.util.fonts.FontService;
-import org.eclipse.swt.layout.FillLayout;
 
 /**
  * @author Dinah
@@ -206,7 +195,7 @@ public class OutputDialog extends TitleAreaDialog {
         
 //        this.analysisOutput = analysisOutput;
         
-        GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+//        GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 //        output = new Text(this.texts, SWT.BORDER | SWT.MULTI | SWT.WRAP);
 //        output.setLayoutData(gridData);
 //        output.setFont(FontService.getNormalMonospacedFont());
