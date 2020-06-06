@@ -27,19 +27,14 @@
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="file:///media/shared/jct-devops/workspaces/mainline/repocollection/thirdparty/releng/org.jcryptool.thirdparty.m2bundle.p2/target/repository"/>
 		<unit id="org.jcryptool.thirdparty.m2bundle.jaxb" version="0.0.1"/>
-		<unit id="checker-qual" version="2.11.1"/>
-		<unit id="com.google.errorprone.error_prone_annotations" version="2.3.4"/>
-		<unit id="com.google.guava" version="29.0.0.jre"/>
-		<unit id="com.google.guava.failureaccess" version="1.0.1"/>
-		<unit id="com.google.guava.listenablefuture" version="9999.0.0.empty-to-avoid-conflict-with-guava"/>
-		<unit id="com.google.j2objc.annotations" version="1.3.0"/>
+		<unit id="com.google.errorprone.error_prone_annotations" version="2.1.3"/>
+		<unit id="com.google.guava" version="26.0.0.jre"/>
+		<unit id="com.google.j2objc.annotations" version="1.1.0"/>
 		<unit id="org.jsr-305" version="3.0.2"/>
 		<unit id="org.jsr-305.source" version="3.0.2"/>
-		<unit id="checker-qual.source" version="2.11.1"/>
-		<unit id="com.google.errorprone.error_prone_annotations.source" version="2.3.4"/>
-		<unit id="com.google.guava.failureaccess.source" version="1.0.1"/>
-		<unit id="com.google.guava.source" version="29.0.0.jre"/>
-		<unit id="com.google.j2objc.annotations.source" version="1.3.0"/>
+		<unit id="com.google.errorprone.error_prone_annotations.source" version="2.1.3"/>
+		<unit id="com.google.guava.source" version="26.0.0.jre"/>
+		<unit id="com.google.j2objc.annotations.source" version="1.1.0"/>
 		<unit id="com.diffplug.osgi.extension.sun.misc" version="0.0.0"/>
 		<unit id="com.diffplug.durian.collect" version="1.2.0"/>
 		<unit id="com.diffplug.durian.collect.source" version="1.2.0"/>
@@ -64,6 +59,28 @@
 		<unit id="com.diffplug.durian.reflect.source" version="1.2.0"/>
 		<unit id="com.google.gson" version="2.8.6"/>
 		<unit id="com.google.gson.source" version="2.8.6"/>
+		<unit id="com.google.dagger" version="2.4.0"/>
+		<unit id="com.google.dagger.compiler" version="2.4.0"/>
+		<unit id="com.google.dagger.compiler.source" version="2.4.0"/>
+		<unit id="com.google.dagger.producers" version="2.4.0"/>
+		<unit id="com.google.dagger.producers.source" version="2.4.0"/>
+		<unit id="com.google.dagger.source" version="2.4.0"/>
+		<unit id="com.squareup.javapoet" version="1.11.1"/>
+		<unit id="com.squareup.javapoet.source" version="1.11.1"/>
+		<unit id="javax.inject" version="1.0.0"/>
+		<unit id="javax.inject.source" version="1.0.0"/>
+		<unit id="org.checkerframework.checker-qual" version="2.5.2"/>
+		<unit id="org.checkerframework.checker-qual.source" version="2.5.2"/>
+		<unit id="org.codehaus.mojo.animal-sniffer-annotations" version="1.14.0"/>
+		<unit id="org.codehaus.mojo.animal-sniffer-annotations.source" version="1.14.0"/>
+		<unit id="org.derive4j" version="1.1.1"/>
+		<unit id="org.derive4j.annotation" version="1.1.1"/>
+		<unit id="org.derive4j.annotation.source" version="1.1.1"/>
+		<unit id="org.derive4j.processor-api" version="1.1.1"/>
+		<unit id="org.derive4j.processor-api.source" version="1.1.1"/>
+		<unit id="org.derive4j.source" version="1.1.1"/>
+		<unit id="org.functionaljava" version="4.8.1"/>
+		<unit id="org.functionaljava.source" version="4.8.1"/>
 	</location>
 </locations>
 <launcherArgs>
