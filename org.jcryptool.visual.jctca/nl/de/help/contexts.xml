@@ -2,6 +2,6 @@
 <contexts>
    <context id="jctCAView" title="JCTCA">
       <description>jctCA</description>
-      <topic href="nl/en/help/content/rsaHelp.html" label="JCTCA"/>
+      <topic href="$nl$/help/content/rsaHelp.html" label="JCTCA"/>
    </context>
 </contexts>

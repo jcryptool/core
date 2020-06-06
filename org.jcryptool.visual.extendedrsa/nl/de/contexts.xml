@@ -2,6 +2,6 @@
 <contexts>
    <context id="view" title="Erweitertes RSA-Kryptosystem">
       <description>Diese Visualisierung demonstriert das asymmetrische Verschlüsselungs- und Signaturverfahren RSA.</description>
-      <topic href="nl/de/help/content/rsaHelp.html" label="Erweitertes RSA-Kryptosystem"/>
+      <topic href="$nl$/help/content/rsaHelp.html" label="Erweitertes RSA-Kryptosystem"/>
    </context>
 </contexts>

@@ -2,6 +2,6 @@
 <contexts>
    <context id="view" title="SSL/TLS-Visualisierung">
       <description>Beschreibung.</description>
-      <topic href="nl/de/help/content/index.html" label="SSL/TLS-Visualisierung"/>
+      <topic href="$nl$/help/content/index.html" label="SSL/TLS-Visualisierung"/>
    </context>
 </contexts>

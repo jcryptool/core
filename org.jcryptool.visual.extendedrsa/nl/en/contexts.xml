@@ -2,6 +2,6 @@
 <contexts>
    <context id="view" title="Extended RSA Cryptosystem">
       <description>This visual demonstrates the asymmetric encryption and signature-algorithm RSA.</description>
-      <topic href="nl/en/help/content/rsaHelp.html" label="Extended RSA Cryptosystem"/>
+      <topic href="$nl$/help/content/rsaHelp.html" label="Extended RSA Cryptosystem"/>
    </context>
 </contexts>

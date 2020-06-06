@@ -2,6 +2,6 @@
 <contexts>
    <context id="view" title="Huffman Coding">
       <description>Die Huffman-Kodierung ist ein Verfahren zur verlustlosen Datenkomprimierung. Hierbei wird jedem einzelnen Zeichen eines Textes je nach der Häufigkeit des Auftretens eine unterschiedlich lange Folge von Bits zugeordnet. Häufig auftretende Zeichen werden mit einer kurzen Bitfolge, selten auftretende mit einer längeren Bitfolge dargestellt. Dadurch sind die Informationen möglichst redundanzfrei zusammengefasst und somit der benötigte Speicherplatz reduziert.</description>
-      <topic href="nl/de/help/content/index.html" label="Huffman Coding"/>
+      <topic href="$nl$/help/content/index.html" label="Huffman Coding"/>
    </context>
 </contexts>

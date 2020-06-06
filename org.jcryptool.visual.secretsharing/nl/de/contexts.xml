@@ -2,6 +2,6 @@
 <contexts>
    <context id="view" title="Shamirs Secret Sharing">
       <description>Shamirs Secret Sharing ist ein Secret-Sharing-Algorithmus, um ein Geheimnis zu verteilen. Das Geheimnis wird so verteilt, dass jede Person ihren eigenen eindeutigen Teil bekommt. Eine Mindestanzahl dieser Teile werden später benötigt, um das Geheimnis zu rekonstruieren. Das Geheimnis wird mit Hilfe der Lagrange-Interpolation berechnet.</description>
-      <topic href="nl/de/help/content/index.html" label="Shamirs Secret Sharing"/>
+      <topic href="$nl$/help/content/index.html" label="Shamirs Secret Sharing"/>
    </context>
 </contexts>

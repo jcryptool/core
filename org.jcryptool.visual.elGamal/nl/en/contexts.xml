@@ -2,6 +2,6 @@
 <contexts>
    <context id="view" title="Demonstration of ElGamal">
       <description>This visualization demonstrates the asymetric encryption and signature scheme ElGamal.</description>
-      <topic href="nl/en/help/content/index.html" label="ElGamal Cryptographic System"/>
+      <topic href="$nl$/help/content/index.html" label="ElGamal Cryptographic System"/>
    </context>
 </contexts>

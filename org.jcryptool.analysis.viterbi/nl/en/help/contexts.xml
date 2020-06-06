@@ -2,6 +2,6 @@
 <contexts>
    <context id="view" title="Viterbi">
       <description>Basically the <b>Viterbi algorithm</b> is like a frequency analysis. Depending on the probabilities of the single characters it puts the plaintext together.</description>
-      <topic href="nl/de/help/content/index.html" label="Viterbi Tutorial"/>
+      <topic href="$nl$/help/content/index.html" label="Viterbi Tutorial"/>
    </context>
 </contexts>

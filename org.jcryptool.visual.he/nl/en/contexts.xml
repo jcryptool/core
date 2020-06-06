@@ -2,6 +2,6 @@
 <contexts>
    <context id="view" title="Demonstration of Homomorphic Encryption Schemes">
       <description>This visualization demonstrates fully and partially homomorphic encryption schemes</description>
-      <topic href="nl/en/help/content/index.html" label="Homomorphic Encryption"/>
+      <topic href="$nl$/help/content/index.html" label="Homomorphic Encryption"/>
    </context>
 </contexts>

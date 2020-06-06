@@ -4,6 +4,6 @@
       <description>Start by entering two positive integers for <b>p</b> and <b>q</b>.
       
 After that use the buttons to execute the calculation step by step or completely automatical.</description>
-      <topic href="nl/de/help/content/index.html" label="Reciprocal Subtraction/Extended Euclidean"/>
+      <topic href="$nl$/help/content/index.html" label="Reciprocal Subtraction/Extended Euclidean"/>
    </context>
 </contexts>

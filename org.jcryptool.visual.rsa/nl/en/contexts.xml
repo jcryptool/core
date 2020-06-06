@@ -2,6 +2,6 @@
 <contexts>
    <context id="rsaview" title="Demonstration of RSA">
       <description>This visualization demonstrates the asymetric encryption and signature scheme RSA.</description>
-      <topic href="nl/en/help/content/index.html" label="RSA Cryptographic System"/>
+      <topic href="$nl$/help/content/index.html" label="RSA Cryptographic System"/>
    </context>
 </contexts>

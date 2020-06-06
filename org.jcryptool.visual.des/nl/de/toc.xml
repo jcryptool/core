@@ -2,5 +2,5 @@
 <?NLS TYPE="org.eclipse.help.toc"?>
 
 <toc label="Data Encryption Standard" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins"> 
-    <topic label="Data Encryption Standard" href="nl/de/help/content/index.html" /> 
+    <topic label="Data Encryption Standard" href="$nl$/help/content/index.html" /> 
 </toc>

@@ -2,6 +2,6 @@
 <contexts>
    <context id="view" title="Demonstration von homomorphen Verschlüsselungsschemas">
       <description>Diese Visualisierung demonstriert zwei partiell-homomorphe Verschlüsselunsschemas und ein voll-homomorphes Verschlüsselungsschema.</description>
-      <topic href="nl/de/help/content/index.html" label="Homomorphe Verschlüsselung"/>
+      <topic href="$nl$/help/content/index.html" label="Homomorphe Verschlüsselung"/>
    </context>
 </contexts>

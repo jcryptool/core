@@ -2,6 +2,6 @@
 <contexts>
  <context id="SigVerView" title="Signatur-Verifikation">
     <description>Diese Visualisierung demonstriert, wie ein elektronisches signiertes Dokument verifiziert wird.</description>
-    <topic href="nl/de/help/content/index.html" label="Signatur-Verifikation"/>
+    <topic href="$nl$/help/content/index.html" label="Signatur-Verifikation"/>
  </context>
 </contexts>

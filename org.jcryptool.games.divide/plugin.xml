@@ -142,10 +142,10 @@
             file="$nl$/contexts.xml">
       </contexts>
       <contexts
-            file="nl/en/contexts.xml">
+            file="$nl$/contexts.xml">
       </contexts>
       <contexts
-            file="nl/de/contexts.xml">
+            file="$nl$/contexts.xml">
       </contexts>
    </extension>
    <extension

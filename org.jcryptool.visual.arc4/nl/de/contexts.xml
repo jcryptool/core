@@ -2,6 +2,6 @@
 <contexts>
 	<context id="view" title="Visualisierung von ARC4">
 		<description>Diese Visualisierung demonstriert die Funktionsweise von <b>ARC4</b>.</description>
-		<topic href="nl/de/help/content/index.html" label="ARC4-Algorithmus"/>
+		<topic href="$nl$/help/content/index.html" label="ARC4-Algorithmus"/>
 	</context>
 </contexts>

@@ -2,6 +2,6 @@
 <contexts>
    <context id="view" title="Chinese Remainder Theorem">
       <description>Auf der linken Seite wird die Beschreibung und die Berechnungsvorschrift des aktuellen Schrittes dargestellt, auf der rechten Seite die Eingabefelder und Ergebnisse der Berechnung.</description>
-      <topic href="nl/de/help/content/index.html" label="Chinese Remainder Theorem"/>
+      <topic href="$nl$/help/content/index.html" label="Chinese Remainder Theorem"/>
    </context>
 </contexts>

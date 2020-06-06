@@ -2,6 +2,6 @@
 <?NLS TYPE="org.eclipse.help.toc"?>
 
 <toc label="N-Gram Analysis" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#analysisPlugins">
-   <topic href="nl/en/help/content/ngram_userguide.html" label="N-Gram Analysis">
+   <topic href="$nl$/help/content/ngram_userguide.html" label="N-Gram Analysis">
    </topic>
 </toc>

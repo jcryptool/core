@@ -2,8 +2,8 @@
 <?NLS TYPE="org.eclipse.help.toc"?>
 
 <toc label="Shamirs Secret Sharing" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
-	<topic href="nl/de/help/content/index.html" label="Shamirs Secret Sharing">
-    <topic href="nl/de/help/content/sssAlgorithm.html" label="Shamirs Secret Sharing-Algorithmus">
+	<topic href="$nl$/help/content/index.html" label="Shamirs Secret Sharing">
+    <topic href="$nl$/help/content/sssAlgorithm.html" label="Shamirs Secret Sharing-Algorithmus">
     </topic>
  </topic>
 </toc>

@@ -2,6 +2,6 @@
 <?NLS TYPE="org.eclipse.help.toc"?>
 
 <toc label="Viterbi-Analyse" link_to="../org.jcryptool.core.help/$nl$/toc.xml#analysisPlugins">
-	<topic href="nl/de/help/content/index.html" label="Viterbi-Analyse">
+	<topic href="$nl$/help/content/index.html" label="Viterbi-Analyse">
  </topic>
 </toc>

@@ -2,6 +2,6 @@
 <?NLS TYPE="org.eclipse.help.toc"?>
 
 <toc label="Wots/Wots+ Visualisation" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
-	<topic href="nl/en/help/content/index.html" label="Wots/Wots+ Visualisation">
+	<topic href="$nl$/help/content/index.html" label="Wots/Wots+ Visualisation">
     </topic>
 </toc>

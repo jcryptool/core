@@ -2,6 +2,6 @@
 <contexts>
    <context id="view" title="Shanks Babystep-Giantstep">
       <description>On the left side the description and the computational procedure of the current step is presented, on the right side the input and results of the calculation.</description>
-      <topic href="nl/en/help/content/index.html" label="Shanks Babystep-Giantstep"/>
+      <topic href="$nl$/help/content/index.html" label="Shanks Babystep-Giantstep"/>
    </context>
 </contexts>

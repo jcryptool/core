@@ -2,6 +2,6 @@
 <contexts>
  <context id="view" title="Data Encryption Standard">
     <description>Dieses Plugin visualisiert die inneren Zustände des Data Encryption Standard (DES).</description>
-    <topic href="help/content/index.html" label="Data Encryption Standard"/>
+    <topic href="$nl$/help/content/index.html" label="Data Encryption Standard"/>
  </context>
 </contexts>
