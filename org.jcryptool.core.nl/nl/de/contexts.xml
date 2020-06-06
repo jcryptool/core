@@ -2,30 +2,30 @@
 <contexts>
    <context id="algorithmsPreferences" title="Algorithmen">
       <description>Dies ist die Startseite für Krypto Plug-ins der Kategorie <b>Algorithmen</b>. Auf den Unterseiten finden Sie die Benutzereinstellungen für Plug-ins dieser Kategorie. Nicht jedes Krypto Plug-in verfügt über eigene Benutzereinstellungen.</description>
-      <topic href="../org.jcryptool.core.help/nl/de/help/users/algorithms/toc.html" label="Algorithmen"/>
+      <topic href="../org.jcryptool.core.help/$nl$/help/users/algorithms/toc.html" label="Algorithmen"/>
    </context>
    <context id="analysisPreferences" title="Analysen">
       <description>Dies ist die Startseite für Krypto Plug-ins der Kategorie <b>Analysen</b>. Auf den Unterseiten finden Sie die Benutzereinstellungen für Plug-ins dieser Kategorie. Nicht jedes Krypto Plug-in verfügt über eigene Benutzereinstellungen.</description>
-      <topic href="../org.jcryptool.core.help/nl/de/help/users/analysis/toc.html" label="Analysen"/>
+      <topic href="../org.jcryptool.core.help/$nl$/help/users/analysis/toc.html" label="Analysen"/>
    </context>
    <context id="cryptoPreferences" title="Kryptografie">
       <description>Dies ist die allgemeine Kategorie für kryptografische Einstellungen aller Art. Auf den Unterseiten können Sie hier Einstellungen für Krypto Plug-ins festlegen. Dazu gehören z.B. die klassischen Alphabete oder die Schlüsselspeicher für moderne Algorithmen. Diese Einstellungen werden meist von mehr als einem Plug-in verwendet.</description>
-      <topic href="../org.jcryptool.core.help/nl/de/help/users/general/preferences_provider.html" label="Krypto-Anbieter"/>
+      <topic href="../org.jcryptool.core.help/$nl$/help/users/general/preferences_provider.html" label="Krypto-Anbieter"/>
    </context>
    <context id="editorsPreferences" title="Editoren">
       <description>Dies ist die Startseite für die in JCrypTool verfügbaren <b>Editoren</b>. Auf den Unterseiten können Sie für jeden Editor spezifische Einstellungen vornehmen (sofern verfügbar).</description>
-      <topic href="../org.jcryptool.core.help/nl/de/help/users/general/editors.html" label="Editoren"/>
+      <topic href="../org.jcryptool.core.help/$nl$/help/users/general/editors.html" label="Editoren"/>
    </context>
    <context id="gamesPreferences" title="Spiele">
       <description>Dies ist die Startseite für Krypto Plug-ins der Kategorie <b>Spiele</b>. Auf den Unterseiten finden Sie die Benutzereinstellungen für Plug-ins dieser Kategorie. Nicht jedes Krypto Plug-in verfügt über eigene Benutzereinstellungen.</description>
-      <topic href="../org.jcryptool.core.help/nl/de/help/users/games/toc.html" label="Spiele"/>
+      <topic href="../org.jcryptool.core.help/$nl$/help/users/games/toc.html" label="Spiele"/>
    </context>
    <context id="visualsPreferences" title="Visualisierungen">
       <description>Dies ist die Startseite für Krypto Plug-ins der Kategorie <b>Visualisierungen</b>. Auf den Unterseiten finden Sie die Benutzereinstellungen für Plug-ins dieser Kategorie. Nicht jedes Krypto Plug-in verfügt über eigene Benutzereinstellungen.</description>
-      <topic href="../org.jcryptool.core.help/nl/de/help/users/visualizations/toc.html" label="Visualisierungen"/>
+      <topic href="../org.jcryptool.core.help/$nl$/help/users/visualizations/toc.html" label="Visualisierungen"/>
    </context>
    <context id="generalPreferences" title="Allgemein">
       <description>In diesem Bereich können Sie allgemeine JCrypTool Einstellungen festlegen und auch die JCrypTool Sprache einstellen. Die Sprache wird ohne weitere Eingabe den Regionaleinstellungen Ihres Betriebssystems angepasst, kann aber auch von Ihnen explizit festgelegt werden. Nach dem Sprachwechsel werden Sie zum Neustart von JCrypTool aufgefordert.&lt;br&gt;Beachten Sie, dass unter Umständen nicht jedes Plug-in (jeder Dialog, Hilfe, ...) in der von Ihnen gewählten Sprache verfügbar ist.</description>
-      <topic href="../org.jcryptool.core.help/nl/de/help/users/about/tips.html" label="Tipps und Tricks"/>
+      <topic href="../org.jcryptool.core.help/$nl$/help/users/about/tips.html" label="Tipps und Tricks"/>
    </context>
 </contexts>

@@ -2,7 +2,7 @@
 <contexts>
    <context id="preferences" title="Logging">
       <description>Auf dieser Seite können Sie das Loglevel für das gesamte JCrypTool festlegen. Die Standardeinstellung ist <b>Fehler</b>, wodurch nur kritische Fehler protokolliert werden. <b>Warnung</b> erfasst auch Probleme bzw. unkritische Fehler. <b>Info</b> schließlich protokolliert alles, von Fehlern bis hin zu den Debug-Meldungen die hauptsächlich bei der Plug-in Entwicklung notwendig sind. Da auf den letzten beiden Stufen sehr viele Daten anfallen wird JCrypTool spürbar langsamer. Sie sollten daher immer mit dem Standardlevel <b>Fehler</b> arbeiten, es sei denn Sie benötigen die zusätzlichen Informationen z.B. zur Fehlersuche in einem Plug-in.</description>
-      <topic href="../org.jcryptool.core.help/nl/de/help/users/general/views.html" label="Sichten"/>
-      <topic href="../org.jcryptool.core.help/nl/de/help/users/about/tips.html" label="Tipps und Tricks"/>
+      <topic href="../org.jcryptool.core.help/$nl$/help/users/general/views.html" label="Sichten"/>
+      <topic href="../org.jcryptool.core.help/$nl$/help/users/about/tips.html" label="Tipps und Tricks"/>
    </context>
 </contexts>
