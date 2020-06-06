@@ -2,12 +2,12 @@
 <contexts>
    <context id="fileExplorerView" title="File Explorer View">
       <description>The <b>File Explorer</b> view offers access to your file system. You can open a file by double clicking on the name which then opens the hexeditor. The context menu offers access to many more operations.</description>
-      <topic href="nl/en/help/view.html" label="File Explorer View" />
+      <topic href="$nl$/help/view.html" label="File Explorer View" />
    </context>
    <context id="fileExplorerPreferences" title="File Explorer Preferences">
       <description>Here you can select the starting directory of the File Explorer view. This directory is automatically selected during the start of JCrypTool. Additionally you can select to automatically open the source and target files before and after a cryptographic operation in an editor. It is wise to disable this functionality in case of huge files.</description>
-      <topic href="nl/en/help/preferences.html" label="File Explorer Preferences" />
-      <topic href="nl/en/help/view.html" label="File Explorer View" />
+      <topic href="$nl$/help/preferences.html" label="File Explorer Preferences" />
+      <topic href="$nl$/help/view.html" label="File Explorer View" />
    </context>
 
 </contexts>

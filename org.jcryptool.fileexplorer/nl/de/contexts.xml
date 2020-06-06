@@ -2,12 +2,12 @@
 <contexts>
    <context id="fileExplorerView" title="Datei-Explorer Sicht">
       <description>Die <b>Datei-Explorer</b> Sicht bietet Zugriff auf das Dateisystem. Sie können Dateien öffnen in dem Sie auf den Dateinamen doppelklicken. Die gewählte Datei wird anschließend im Hexeditor geöffnet. Über das Kontextmenü haben Sie Zugriff auf viele weitere Operationen.</description>
-      <topic href="nl/de/help/view.html" label="Datei-Explorer Sicht" />
+      <topic href="$nl$/help/view.html" label="Datei-Explorer Sicht" />
    </context>
    <context id="fileExplorerPreferences" title="Datei-Explorer Einstellungen">
       <description>Hier können Sie das Startverzeichnis der Datei-Explorer Sicht angeben. Dieses Verzeichnis wird beim Start von JCrypTool automatisch angezeigt und markiert. Außerdem können Sie festlegen, ob die gewählte Datei bei kryptografischen Operationen vor und nach der Operation in einem Editor geöffnet werden soll. Vor allem beim Bearbeiten von sehr großen Dateien ist es empfehlenswert, diese nicht automatisch zu öffnen.</description>
-      <topic href="nl/de/help/preferences.html" label="Datei-Explorer Benutzervorgaben" />
-      <topic href="nl/de/help/view.html" label="Datei-Explorer Sicht" />
+      <topic href="$nl$/help/preferences.html" label="Datei-Explorer Benutzervorgaben" />
+      <topic href="$nl$/help/view.html" label="Datei-Explorer Sicht" />
    </context>
 
 </contexts>

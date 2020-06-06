@@ -41,7 +41,7 @@
         </topic>
         <topic href="$nl$/help/users/general/cheatsheets.html" label="Spickzettel">
         </topic>
-        <topic href="nl/de/help/users/general/language.html" label="Wechseln der Sprache">
+        <topic href="$nl$/help/users/general/language.html" label="Wechseln der Sprache">
         </topic>
     </topic>
     <topic href="$nl$/help/users/cryptology/toc.html" label="Kryptologie">
