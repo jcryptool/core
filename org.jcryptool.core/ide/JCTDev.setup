@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup:ProjectCatalog
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:pde="http://www.eclipse.org/oomph/setup/pde/1.0"
+    xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
+    xmlns:setup.targlets="http://www.eclipse.org/oomph/setup/targlets/1.0"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/pde/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/PDE.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupTarglets.ecore"
+    name="jctdev"
+    label="JCTDev">
+  <annotation
+      source="http://www.eclipse.org/oomph/setup/BrandingInfo">
+    <detail
+        key="imageURI">
+      <value>platform:/plugin/org.eclipse.oomph.setup.ui/icons/committers.png</value>
+    </detail>
+    <detail
+        key="siteURI">
+      <value>https://projects.eclipse.org/</value>
+    </detail>
+  </annotation>
+  <setupTask
+      xsi:type="setup:CompoundTask"
+      name="Global Variables">
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="eclipse.target.platform"
+        defaultValue="None"
+        storageURI="scope://Workspace"
+        label="Target Platform">
+      <annotation
+          source="http://www.eclipse.org/oomph/setup/GlobalVariable"/>
+      <choice
+          value="2020-06"
+          label="Eclipse 2020-06 - 4.16"/>
+      <choice
+          value="2020-03"
+          label="Eclipse 2020-03 - 4.15"/>
+      <choice
+          value="2019-12"
+          label="Eclipse 2019-12 - 4.14"/>
+      <choice
+          value="2019-09"
+          label="Eclipse 2019-09 - 4.13"/>
+      <choice
+          value="2019-06"
+          label="Eclipse 2019-06 - 4.12"/>
+      <choice
+          value="2019-03"
+          label="Eclipse 2019-03 - 4.11"/>
+      <choice
+          value="2018-12"
+          label="Eclipse 2018-12 - 4.10"/>
+      <choice
+          value="2018-09"
+          label="Eclipse 2018-09 - 4.9"/>
+      <choice
+          value="Photon"
+          label="Eclipse Photon- 4.8"/>
+      <choice
+          value="Oxygen"
+          label="Eclipse Oxygen - 4.7"/>
+      <choice
+          value="Neon"
+          label="Eclipse Neon - 4.6"/>
+      <choice
+          value="Mars"
+          label="Eclipse Mars - 4.5"/>
+      <choice
+          value="Luna"
+          label="Eclipse Luna - 4.4"/>
+      <choice
+          value="Kepler"
+          label="Eclipse Kepler - 4.3"/>
+      <choice
+          value="Juno"
+          label="Eclipse Juno - 4.2"/>
+      <choice
+          value="Indigo"
+          label="Eclipse Indigo - 3.7"/>
+      <choice
+          value="Helios"
+          label="Eclipse Helios - 3.6"/>
+      <choice
+          value="Galileo"
+          label="Eclipse Galileo - 3.5"/>
+      <choice
+          value="None"
+          label="None"/>
+      <description>Choose the compatibility level of the target platform</description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="eclipse.api.baseline.target.platform"
+        value="None"
+        storageURI="scope://Workspace"
+        label="API Baseline Target Platform">
+      <annotation
+          source="http://www.eclipse.org/oomph/setup/GlobalVariable"/>
+      <choice
+          value="2020-03"
+          label="Eclipse 2020-03 - 4.15"/>
+      <choice
+          value="2019-12"
+          label="Eclipse 2019-12 - 4.14"/>
+      <choice
+          value="2019-09"
+          label="Eclipse 2019-09 - 4.13"/>
+      <choice
+          value="2019-06"
+          label="Eclipse 2019-06 - 4.12"/>
+      <choice
+          value="2019-03"
+          label="Eclipse 2019-03 - 4.11"/>
+      <choice
+          value="2018-12"
+          label="Eclipse 2018-12 - 4.10"/>
+      <choice
+          value="2018-09"
+          label="Eclipse 2018-09 - 4.9"/>
+      <choice
+          value="Photon"
+          label="Eclipse Photon- 4.8"/>
+      <choice
+          value="Oxygen"
+          label="Eclipse Oxygen - 4.7"/>
+      <choice
+          value="Neon"
+          label="Eclipse Neon - 4.6"/>
+      <choice
+          value="Mars"
+          label="Eclipse Mars - 4.5"/>
+      <choice
+          value="Luna"
+          label="Eclipse Luna - 4.4"/>
+      <choice
+          value="Kepler"
+          label="Eclipse Kepler - 4.3"/>
+      <choice
+          value="Juno"
+          label="Eclipse Juno - 4.2"/>
+      <choice
+          value="Indigo"
+          label="Eclipse Indigo - 3.7"/>
+      <choice
+          value="Helios"
+          label="Eclipse Helios - 3.6"/>
+      <choice
+          value="Galileo"
+          label="Eclipse Galileo - 3.5"/>
+      <choice
+          value="None"
+          label="None"/>
+      <description>Choose the compatibility level of the target platform for the modular API baseline</description>
+    </setupTask>
+  </setupTask>
+  <setupTask
+      xsi:type="setup:WorkspaceTask"
+      id="workspace"/>
+  <setupTask
+      xsi:type="setup:ResourceCreationTask"
+      content="MAX_RECENT_WORKSPACES=5&#xD;&#xA;RECENT_WORKSPACES=${workspace.location|property}&#xD;&#xA;RECENT_WORKSPACES_PROTOCOL=3&#xD;&#xA;SHOW_WORKSPACE_SELECTION_DIALOG=true&#xD;&#xA;eclipse.preferences.version=1"
+      targetURL="configuration:/.settings/org.eclipse.ui.ide.prefs"/>
+  <setupTask
+      xsi:type="setup:TextModifyTask"
+      url="configuration:/config.ini">
+    <modification
+        pattern="osgi\.instance\.area\.default=(@user\.home/workspace)">
+      <substitution>${workspace.location|path}</substitution>
+    </modification>
+  </setupTask>
+  <setupTask
+      xsi:type="setup.targlets:TargletTask">
+    <targlet
+        name="Eclipse Platform"
+        activeRepositoryList="${eclipse.target.platform}">
+      <repositoryList
+          name="None"/>
+      <repositoryList
+          name="2020-06">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.16-I-builds"/>
+      </repositoryList>
+      <repositoryList
+          name="2020-03">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.15/R-4.15-202003050155"/>
+      </repositoryList>
+      <repositoryList
+          name="2019-12">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.14/R-4.14-201912100610"/>
+      </repositoryList>
+      <repositoryList
+          name="2019-09">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.13/R-4.13-201909161045"/>
+      </repositoryList>
+      <repositoryList
+          name="2019-06">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.12/R-4.12-201906051800"/>
+      </repositoryList>
+      <repositoryList
+          name="2019-03">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.11/R-4.11-201903070500"/>
+      </repositoryList>
+      <repositoryList
+          name="2018-12">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.10/R-4.10-201812060815"/>
+      </repositoryList>
+      <repositoryList
+          name="2018-09">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.9/R-4.9-201809060745"/>
+      </repositoryList>
+      <repositoryList
+          name="Photon">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.8/R-4.8-201806110500"/>
+      </repositoryList>
+      <repositoryList
+          name="Oxygen">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.7/R-4.7.3a-201803300640"/>
+      </repositoryList>
+      <repositoryList
+          name="Neon">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.6/R-4.6.3-201703010400"/>
+      </repositoryList>
+      <repositoryList
+          name="Mars">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.5/R-4.5.2-201602121500"/>
+      </repositoryList>
+      <repositoryList
+          name="Luna">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.4/R-4.4.2-201502041700"/>
+      </repositoryList>
+      <repositoryList
+          name="Kepler">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.3/R-4.3.2-201402211700"/>
+      </repositoryList>
+      <repositoryList
+          name="Juno">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.2/R-4.2.2-201302041200"/>
+      </repositoryList>
+      <repositoryList
+          name="Indigo">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/3.7/R-3.7.2-201202080800"/>
+      </repositoryList>
+      <repositoryList
+          name="Helios">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/3.6/R-3.6.2-201102101200"/>
+      </repositoryList>
+      <repositoryList
+          name="Galileo">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/3.5/R-3.5.2-201002111343"/>
+      </repositoryList>
+    </targlet>
+  </setupTask>
+  <setupTask
+      xsi:type="setup.targlets:TargletTask"
+      id="api.baseline.targlet"
+      targetName="Modular API Baseline Target"
+      activateTarget="false">
+    <targlet
+        name="Eclipse Platform"
+        activeRepositoryList="${eclipse.api.baseline.target.platform}"
+        includeSources="false">
+      <repositoryList
+          name="None"/>
+      <repositoryList
+          name="2020-03">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.15/R-4.15-202003050155"/>
+      </repositoryList>
+      <repositoryList
+          name="2019-12">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.14/R-4.14-201912100610"/>
+      </repositoryList>
+      <repositoryList
+          name="2019-09">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.13/R-4.13-201909161045"/>
+      </repositoryList>
+      <repositoryList
+          name="2019-06">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.12/R-4.12-201906051800"/>
+      </repositoryList>
+      <repositoryList
+          name="2019-03">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.11/R-4.11-201903070500"/>
+      </repositoryList>
+      <repositoryList
+          name="2018-12">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.10/R-4.10-201812060815"/>
+      </repositoryList>
+      <repositoryList
+          name="2018-09">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.9/R-4.9-201809060745"/>
+      </repositoryList>
+      <repositoryList
+          name="Photon">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.8/R-4.8-201806110500"/>
+      </repositoryList>
+      <repositoryList
+          name="Oxygen">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.7/R-4.7.3a-201803300640"/>
+      </repositoryList>
+      <repositoryList
+          name="Neon">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.6/R-4.6.3-201703010400"/>
+      </repositoryList>
+      <repositoryList
+          name="Mars">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.5/R-4.5.2-201602121500"/>
+      </repositoryList>
+      <repositoryList
+          name="Luna">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.4/R-4.4.2-201502041700"/>
+      </repositoryList>
+      <repositoryList
+          name="Kepler">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.3/R-4.3.2-201402211700"/>
+      </repositoryList>
+      <repositoryList
+          name="Juno">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.2/R-4.2.2-201302041200"/>
+      </repositoryList>
+      <repositoryList
+          name="Indigo">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/3.7/R-3.7.2-201202080800"/>
+      </repositoryList>
+      <repositoryList
+          name="Helios">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/3.6/R-3.6.2-201102101200"/>
+      </repositoryList>
+      <repositoryList
+          name="Galileo">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/3.5/R-3.5.2-201002111343"/>
+      </repositoryList>
+    </targlet>
+  </setupTask>
+  <setupTask
+      xsi:type="pde:APIBaselineFromTargetTask"
+      predecessor="api.baseline.targlet"
+      name="Modular API Baseline"
+      targetName="Modular API Baseline Target">
+    <description>An API baseline based on the target platform named 'Modular API Baseline Target'</description>
+  </setupTask>
+  <project href="user:/JCTDev.setup?name='user.project',label='&lt;User>',description='A container project for local user projects that are virtual members of the JCTDev project catalog'#/"/>
+  <description>JCTDev provides cool projects.</description>
+</setup:ProjectCatalog>
