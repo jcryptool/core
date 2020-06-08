@@ -14,7 +14,7 @@
       name="jctide.installation"
       label="JCTIDE Installation">
     <productVersion
-        href="index:/org.eclipse.setup#//@productCatalogs[name='org.eclipse.products']/@products[name='epp.package.rcp']/@versions[name='latest']"/>
+        href="index:/org.eclipse.setup#//@productCatalogs[name='org.eclipse.products']/@products[name='epp.package.rcp']/@versions[name='2020-03']"/>
     <description>The JCTIDE installation provides cool stuff.</description>
   </installation>
   <workspace
@@ -34,7 +34,7 @@
         id="git.jct.core"
         location="${JCT_GIT_ROOT_DIRECTORY}/core"
         remoteURI="https://github.com/jcryptool/core"
-        checkoutBranch="">
+        checkoutBranch="develop">
       <description>The JCT core repository</description>
     </setupTask>
     <setupTask
@@ -42,7 +42,7 @@
         id="git.jct.crypto"
         location="${JCT_GIT_ROOT_DIRECTORY}/crypto"
         remoteURI="https://github.com/jcryptool/crypto"
-        checkoutBranch="">
+        checkoutBranch="develop">
       <description>The JCT core repository</description>
     </setupTask>
     <setupTask
