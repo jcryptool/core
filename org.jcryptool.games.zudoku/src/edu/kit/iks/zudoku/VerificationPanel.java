@@ -279,10 +279,12 @@ public class VerificationPanel extends JPanel implements ActionListener {
 
 	private JPanel createControls() {
 		JPanel controls = new JPanel();
+		controls.setBackground(Color.black);
 
 		GenericRoundedButton button = null;
 		List<JButton> buttons = new ArrayList<JButton>();
 
+		// Currently completely unused if
 		if(ZudokuConfig.PROOF_MODE_ACTIVE && ZudokuConfig.VERIFICATION_MODE_ACTIVE) {
 			// If both modes are active, there is a welcome panel to go back to.
 			// Otherwise omit this button.
@@ -296,7 +298,7 @@ public class VerificationPanel extends JPanel implements ActionListener {
 			});
 			buttons.add(button);
 		}
-
+		
 		button = new GenericRoundedButton();
 		button.setText(Messages.VP_NEW_SUDOKU);
 		button.addActionListener(new ActionListener() {
@@ -307,6 +309,25 @@ public class VerificationPanel extends JPanel implements ActionListener {
 		});
 		buttons.add(button);
 		button_new = button;
+		
+		button = new GenericRoundedButton();
+		button.setText(Messages.VP_CHALLENGE);
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(vfy_step == 0 && cheat_overlay == null) {
+					vfy_step++;
+					verify(vfy_step);
+
+					// FIXME: Shouldn't use the cheat stuff
+					cheat_overlay = new Overlay(Messages.VP_PICK_ROW_COLUMN_OR_BLOCK);
+					cheat_overlay.startFadeout(2000, 3000);
+					field.add(cheat_overlay, SudokuField.OVERLAY_LAYER);
+				}
+			}
+		});
+		buttons.add(button);
+		button_challenge = button;
 
 		button = new GenericRoundedButton();
 		button.setText(Messages.VP_CHEAT);
@@ -315,7 +336,7 @@ public class VerificationPanel extends JPanel implements ActionListener {
 			public void actionPerformed(ActionEvent arg0) {
 				if(vfy_step == 0 && cheat_overlay == null) {
 					cheat_counter++;
-					String number = "";
+					String number;
 					switch(cheat_counter) {
 						case 1: number = Messages.VP_CHEAT_INFO_01; break;
 						case 2: number = Messages.VP_CHEAT_INFO_02; break;
@@ -329,9 +350,10 @@ public class VerificationPanel extends JPanel implements ActionListener {
 						case 10: number = Messages.VP_CHEAT_INFO_10; break;
 						case 11: number = Messages.VP_CHEAT_INFO_11; break;
 						case 12: number = Messages.VP_CHEAT_INFO_12; break;
+						default: number = "";
 					}
 
-					String text = Messages.VP_CHEAT_INFO + number + ".";
+					String text = Messages.VP_CHEAT_INFO + " " + number + ".";
 					if(cheat_counter > 12) {
 						text = Messages.VP_CHEAT_INFO_LIMIT;
 					} else {
@@ -364,31 +386,15 @@ public class VerificationPanel extends JPanel implements ActionListener {
 		});
 		button_flip = button;
 		buttons.add(button);
+		
+		var layout = new GridLayout(buttons.size(), 1);
+		layout.setVgap(20);
 
-		button = new GenericRoundedButton();
-		button.setText(Messages.VP_CHALLENGE);
-		button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				if(vfy_step == 0 && cheat_overlay == null) {
-					vfy_step++;
-					verify(vfy_step);
-
-					// FIXME: Shouldn't use the cheat stuff
-					cheat_overlay = new Overlay(Messages.VP_PICK_ROW_COLUMN_OR_BLOCK);
-					cheat_overlay.startFadeout(2000, 3000);
-					field.add(cheat_overlay, SudokuField.OVERLAY_LAYER);
-				}
-			}
-		});
-		buttons.add(button);
-		button_challenge = button;
-
-		controls.setLayout(new GridLayout(buttons.size(), 1));
+		controls.setLayout(layout);
 		for(JButton b : buttons) {
 			controls.add(b);
 		}
-
+		
 		return controls;
 	}
 
@@ -541,7 +547,7 @@ public class VerificationPanel extends JPanel implements ActionListener {
 		    		card.flip();
 		    	}
 	    	}
-	    	String text = Messages.VP_VERIFICATION_CHECK;
+	    	String text = Messages.VP_VERIFICATION_CHECK + " ";
 	    	if(sudoku.checkCards(vfy_cards)) {
 	    		color = Color.green;
 	    		text += Messages.VP_VERIFICATION_CHECK_OK;
