@@ -27,7 +27,7 @@
 	</location>
 	
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="file:/home/snuc/eclipsebased/git/thirdparty/releng/org.jcryptool.thirdparty.m2bundle.p2/target/repository/"/>
+		<repository location="https://simlei.github.io/org.jcryptool.thirdparty/site/m2bundle"/>
 		<unit id="org.jcryptool.thirdparty.m2bundle.jaxb" version="0.0.1"/>
 		<unit id="com.diffplug.durian.collect" version="1.2.0"/>
 		<unit id="com.diffplug.durian.collect.source" version="1.2.0"/>

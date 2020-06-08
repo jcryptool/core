@@ -77,6 +77,10 @@
         xsi:type="setup:PreferenceTask"
         key="/instance/org.eclipse.core.resources/encoding"
         value="UTF-8"/>
+    <setupTask
+        xsi:type="setup:PreferenceTask"
+        key="/instance/org.eclipse.oomph.setup.ui/skip.startup.tasks"
+        value="true"/>
     <description>The JCTIDE workspace provides cool stuff.</description>
   </workspace>
   <description>The JCTIDE configuration provides cool stuff.</description>
