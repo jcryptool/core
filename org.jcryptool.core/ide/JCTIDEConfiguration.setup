@@ -34,7 +34,7 @@
         id="git.jct.core"
         location="${JCT_GIT_ROOT_DIRECTORY}/core"
         remoteURI="https://github.com/jcryptool/core"
-        checkoutBranch="">
+        checkoutBranch="develop">
       <description>The JCT core repository</description>
     </setupTask>
     <setupTask
@@ -42,7 +42,7 @@
         id="git.jct.crypto"
         location="${JCT_GIT_ROOT_DIRECTORY}/crypto"
         remoteURI="https://github.com/jcryptool/crypto"
-        checkoutBranch="">
+        checkoutBranch="develop">
       <description>The JCT core repository</description>
     </setupTask>
     <setupTask
