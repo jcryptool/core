@@ -45,11 +45,11 @@
         <p>You can choose between different signature functions to sign the input. Some signature procedures are based on asymmetric encryption like RSA, other methods have been developed only for this purpose, for example DSA.</p>
         <img width="85%" src="SignatureWizard.png">
         <p>To sign a file and verify the signature, you need two different keys. The private key is for generating the signature. Only the owner of the key knows it and it has to be kept secret. The public key can be used by anybody else to verify the signature. <br> To create a signature, you have to select one of the given keys from the Standard-JCT-Keystore.</p>
-        <a href="https://github.com/jcryptool/core/tree/master/org.jcryptool.crypto.keystore" target="_blank">Visit Standard-JCT-Keystore</a> 
+        <a target="_blank" href="https://github.com/jcryptool/core/tree/master/org.jcryptool.crypto.keystore" target="_blank">Visit Standard-JCT-Keystore</a> 
         <h3>Description of provided signature functions</h3>
         <h4>DSA</h4>
         <p>The Digital Signature Algorithm (DSA) (published by the NIST in 1991) is a United States Federal Government standard for digital signatures. Entropy, secrecy, and uniqueness of the random parameter k are critical for the security of DSA. It is so critical that violating any one of those three requirements can reveal the entire private key to an attacker. Using the same value twice (even while keeping random signature value secret), using a predictable value, or leaking even a few bits of random signature value in each of several signatures, is enough to break DSA.</p>
-        <p>To learn more about DSA: <a href="https://en.wikipedia.org/wiki/Digital_Signature_Algorithm" target="_blank">Visit DSA on Wikipedia</a></p>
+        <p>To learn more about DSA: <a target="_blank" href="https://en.wikipedia.org/wiki/Digital_Signature_Algorithm" target="_blank">Visit DSA on Wikipedia</a></p>
         <h4>RSA</h4>
         <p>RSA (the algorithm was published in 1977) is an algorithm for public-key cryptography that is based on the presumed difficulty of factoring large integers, the factoring problem. Anyone can use the public key to encrypt a message, but with currently published methods, if the public key is large enough, only someone with knowledge of the prime factors can feasibly decode the message. Secure padding schemes such as RSA-PSS are as essential for the security of message signing as they are for message encryption. The PKCS #1 cryptography standard provides recommendations for the implementation of public-key cryptography based on the RSA algorithm.</p>
         <p>To learn more about RSA: <a href="PLUGINS_ROOT/org.jcryptool.visual.rsa/$nl$/help/content/index.html">Visit JCT-RSA</a></p>
@@ -59,9 +59,9 @@
         <p>A Mask Generation Function (MGF) is used to generate pseudo random numbers in an arbitrary length. Without knowing the initial value (seed) it is infeasible to predict these random numbers. MGF1, specified in PKCS#1, is a method to archive this goal by using Hash functions like SHA-1. Random numbers are an important part of Public Key Cryptography. Using MGF1 and therefore random Numbers ensure plaintext awareness. Without knowing anything about the plaintext it is basically impossible to generate a valid ciphertext.</p>
         <h3>More information about the advanced cryptographic library BouncyCastle:</h3>
        	<ul>
-        	<li><a href="http://www.bouncycastle.org/" target="_blank">Visit BouncyCastle</a></li>
-        	<li><a href="https://github.com/jcryptool/core/tree/master/org.bouncycastle" target="_blank">Visit BouncyCastle on github</a></li>
-        	<li><a href="http://www.mobilefish.com/developer/bouncycastle/bouncycastle.html" target="_blank">Examples using BouncyCastle</a></li>
+        	<li><a target="_blank" href="http://www.bouncycastle.org/" target="_blank">Visit BouncyCastle</a></li>
+        	<li><a target="_blank" href="https://github.com/jcryptool/core/tree/master/org.bouncycastle" target="_blank">Visit BouncyCastle on github</a></li>
+        	<li><a target="_blank" href="http://www.mobilefish.com/developer/bouncycastle/bouncycastle.html" target="_blank">Examples using BouncyCastle</a></li>
   		</ul>
   		<br>
   		<img width="85%" src="MainFinished.png">
