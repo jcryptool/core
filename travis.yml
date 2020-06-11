@@ -58,3 +58,4 @@ deploy:
       repo: jcryptool/core
       branch: master
       tags: true
+
