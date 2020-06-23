@@ -45,7 +45,7 @@
         <h3>Description of provided signature functions</h3>
         <h4>DSA</h4>
         <p>The Digital Signature Algorithm (DSA) (published by the NIST in 1991) is a United States Federal Government standard for digital signatures. With DSA, the entropy, secrecy, and uniqueness of the random signature value is critical. It is so critical that violating any one of those three requirements can reveal the entire private key to an attacker. Using the same value twice (even while keeping random signature value secret), using a predictable value, or leaking even a few bits of random signature value in each of several signatures, is enough to break DSA.</p>
-        <p>To learn more about DSA: <a href="https://en.wikipedia.org/wiki/Digital_Signature_Algorithm" target="_blank">Visit DSA on Wikipedia</a></p>
+        <p>To learn more about DSA: <a target="_blank" href="https://en.wikipedia.org/wiki/Digital_Signature_Algorithm" target="_blank">Visit DSA on Wikipedia</a></p>
         <h4>RSA</h4>
         <p>RSA (the algorithm was published in 1977) is an algorithm for public-key cryptography that is based on the presumed difficulty of factoring large integers, the factoring problem. Anyone can use the public key to encrypt a message, but with currently published methods, if the public key is large enough, only someone with knowledge of the prime factors can feasibly decode the message. Secure padding schemes such as RSA-PSS are as essential for the security of message signing as they are for message encryption. The PKCS #1 cryptography standard provides recommendations for the implementation of public-key cryptography based on the RSA algorithm.</p>
         <p>To learn more about RSA: <a href="PLUGINS_ROOT/org.jcryptool.visual.rsa/$nl$/help/content/index.html">Visit JCT-RSA</a></p>
@@ -55,9 +55,9 @@
         <p>A Mask Generation Function (MGF) is a function to generate pseudo random numbers of variable length. It's practically impossible to tell the random number without any knowledge about the starting value(seed). MGF1 is a method specified within the PKCS#1 which uses hash methods like SHA-1 to create pseudo random numbers.  </p>
         <h3>More information about the advanced cryptographic library BouncyCastle:</h3>
        	<ul>
-        	<li><a href="http://www.bouncycastle.org/" target="_blank">Visit BouncyCastle</a></li>
-        	<li><a href="https://github.com/jcryptool/core/tree/master/org.bouncycastle" target="_blank">Visit BouncyCastle on github</a></li>
-        	<li><a href="http://www.mobilefish.com/developer/bouncycastle/bouncycastle.html" target="_blank">Examples using BouncyCastle</a></li>
+        	<li><a target="_blank" href="http://www.bouncycastle.org/" target="_blank">Visit BouncyCastle</a></li>
+        	<li><a target="_blank" href="https://github.com/jcryptool/core/tree/master/org.bouncycastle" target="_blank">Visit BouncyCastle on github</a></li>
+        	<li><a target="_blank" href="http://www.mobilefish.com/developer/bouncycastle/bouncycastle.html" target="_blank">Examples using BouncyCastle</a></li>
   		</ul>
 		<h3>Select public key</h3>
 		<p>You now still need the public key. If the signature was created using a key from the JCT-Keystore (currently this is the only possibility), you can load the corresponding public key here.</p>

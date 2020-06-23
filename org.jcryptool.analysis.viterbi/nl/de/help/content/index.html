@@ -19,13 +19,13 @@
 
 
 	<h1 id="1">Einführung in die Viterbi-Analyse</h1>
-		<p>Der Viterbi-Algorithmus dient Angriffen auf die <a href="http://en.wikipedia.org/wiki/Running_key_cipher">Running-Key-Verschlüsselung</a> [1]  im Ciphertext-only-Modus.</p>
+		<p>Der Viterbi-Algorithmus dient Angriffen auf die <a target="_blank" href="http://en.wikipedia.org/wiki/Running_key_cipher">Running-Key-Verschlüsselung</a> [1]  im Ciphertext-only-Modus.</p>
 
 		<p>Die Running-Key-Verschlüsselung kombiniert die Einzelzeichen von zwei Klartexten mittels XOR oder modularer Addition.</p>
 
 		<p>Man kann -- wie bei einer Buchchiffre -- den einen Klartext als Schlüsselstrom (hergeleitet aus dem Passwort) betrachten, und den anderen Klartext als zu verschlüsselnde Nachricht. Das Passwort sollte mindestens so lang sein wie die Nachricht (ansonsten wird es zyklisch wiederholt). Wenn die Nachricht n Zeichen lang ist, hat die Running-Key-Verschlüsselung 2*n Zeichen als Input (Nachricht und Schlüssel). Als Output erhält man ein Chiffrat der Länge n.</p>
 
-		<p>Wenn einer der beiden Klartexte bekannt ist, kann man den anderen ganz leicht und direkt finden. In dem Szenario hier ist jedoch nur der Geheimtext bekannt, und die Viterbi-Analyse generiert die doppelte Menge Klartext (Nachricht und Schlüssel) mit erstaunlicher Treffsicherheit (aber nur, wenn der Schlüsselstrom nicht zufällig, sondern eben normaler Text ist). Der Viterbi-Algorithmus basiert auf der Annahme, dass die Klartexte ähnliche Muster wie normale Bücher aufweisen. Das zugrunde liegende <a href="https://de.wikipedia.org/wiki/Hidden_Markov_Model">Hidden-Markov-Modell</a> [2] nutzt die Häufigkeitsanalyse von Zeichenfolgen. Die Implementierung basiert auf der Arbeit von <a href="http://www.csc.kth.se/utbildning/kth/kurser/DD2449/krypto09/pdf/rapport_vernam080309.pdf">M. Eker&aring; und B. Terelius</a> [3].</p>
+		<p>Wenn einer der beiden Klartexte bekannt ist, kann man den anderen ganz leicht und direkt finden. In dem Szenario hier ist jedoch nur der Geheimtext bekannt, und die Viterbi-Analyse generiert die doppelte Menge Klartext (Nachricht und Schlüssel) mit erstaunlicher Treffsicherheit (aber nur, wenn der Schlüsselstrom nicht zufällig, sondern eben normaler Text ist). Der Viterbi-Algorithmus basiert auf der Annahme, dass die Klartexte ähnliche Muster wie normale Bücher aufweisen. Das zugrunde liegende <a target="_blank" href="https://de.wikipedia.org/wiki/Hidden_Markov_Model">Hidden-Markov-Modell</a> [2] nutzt die Häufigkeitsanalyse von Zeichenfolgen. Die Implementierung basiert auf der Arbeit von <a target="_blank" href="http://www.csc.kth.se/utbildning/kth/kurser/DD2449/krypto09/pdf/rapport_vernam080309.pdf">M. Eker&aring; und B. Terelius</a> [3].</p>
 		
 		<p>Der Viterbi-Algorithmus ist deterministisch, d. h. jede Analyse läuft exakt gleich unter denselben Eingabeparametern. Es ist keine heuristische Abbruchbedingung vorgesehen. Das Ergebnis jeder Iteration des Algorithmus bedingt das Ergebnis der nächsten Iteration, unter Beachtung der Markov-Ordnung (bzw n-Gramm-Länge). Eine kleinere Ordnung bedeutet schnelleres "Verschwinden" dieser Abhängigkeiten.</p>
 		
@@ -176,7 +176,7 @@
 	
 		<p>
         	<ul>
-          	<li>Neuere kryptoanalytische Ansätze gegen die Running-Key-Verschlüsselung implementieren, wie z.B. den Ansatz von <a href="http://dl.acm.org/citation.cfm?id=2390686">Sravana Reddy und Kevin Knight</a> [4], der Wort-basierte statt Zeichen-basierte Sprachmodelle benutzt.</li>
+          	<li>Neuere kryptoanalytische Ansätze gegen die Running-Key-Verschlüsselung implementieren, wie z.B. den Ansatz von <a target="_blank" href="http://dl.acm.org/citation.cfm?id=2390686">Sravana Reddy und Kevin Knight</a> [4], der Wort-basierte statt Zeichen-basierte Sprachmodelle benutzt.</li>
           	<li>Laden weiterer Referenzmodelle: GUI für die dynamische Berechnung von N-Grammen. Der Quellcode dazu ist unter /src/org/jcryptool/analysis/viterbi/algorithm/NGramGen.java verfügbar. Wenn man damit die entsprechenden Referenzmodelle erzeugt hat, könnte man Viterbi-Analyse auch mit n-Gramm-Längen > 5 ausführen.</li>
           	<li>Analyse bei Klartexten mit verschiedenen Sprachen.</li>
           	<li>Vertikale und horizontale Scrollbars fehlen.</li>
@@ -187,10 +187,10 @@
 
 	<h2>Referenzen</h2>
 		<p>
-  			<b>[1]</b> Running-Key-Verschlüsselung bei Wikipedia:  <a href="http://en.wikipedia.org/wiki/Running_key_cipher">http://en.wikipedia.org/wiki/Running_key_cipher</a> <br />
-  			<b>[2]</b> Hidden-Markov-Modell bei Wikipedia: <a href="https://de.wikipedia.org/wiki/Hidden_Markov_Model">https://de.wikipedia.org/wiki/Hidden_Markov_Model</a> <br />
-  			<b>[3]</b> M. Eker&aring; und B. Terelius. "Automatic solution in depth of one time pads". Royal Institute of Technology, Stockholm, Sweden. März 2008. <a href="http://www.csc.kth.se/utbildning/kth/kurser/DD2449/krypto09/pdf/rapport_vernam080309.pdf">http://www.csc.kth.se/utbildning/kth/kurser/DD2449/krypto09/pdf/rapport_vernam080309.pdf</a>. <br />
-  			<b>[4]</b> Sravana Reddy und Kevin Knight. <a href="http://dl.acm.org/citation.cfm?id=2390686">Decoding running key ciphers</a>. ACL '12 Proceedings of the 50th Annual Meeting of the Association for Computational Linguistics: Short Papers -- Volume 2. 2012. <br />
+  			<b>[1]</b> Running-Key-Verschlüsselung bei Wikipedia:  <a target="_blank" href="http://en.wikipedia.org/wiki/Running_key_cipher">http://en.wikipedia.org/wiki/Running_key_cipher</a> <br />
+  			<b>[2]</b> Hidden-Markov-Modell bei Wikipedia: <a target="_blank" href="https://de.wikipedia.org/wiki/Hidden_Markov_Model">https://de.wikipedia.org/wiki/Hidden_Markov_Model</a> <br />
+  			<b>[3]</b> M. Eker&aring; und B. Terelius. "Automatic solution in depth of one time pads". Royal Institute of Technology, Stockholm, Sweden. März 2008. <a target="_blank" href="http://www.csc.kth.se/utbildning/kth/kurser/DD2449/krypto09/pdf/rapport_vernam080309.pdf">http://www.csc.kth.se/utbildning/kth/kurser/DD2449/krypto09/pdf/rapport_vernam080309.pdf</a>. <br />
+  			<b>[4]</b> Sravana Reddy und Kevin Knight. <a target="_blank" href="http://dl.acm.org/citation.cfm?id=2390686">Decoding running key ciphers</a>. ACL '12 Proceedings of the 50th Annual Meeting of the Association for Computational Linguistics: Short Papers -- Volume 2. 2012. <br />
 
 		</p>
 		<br>

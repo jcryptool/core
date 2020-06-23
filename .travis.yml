@@ -1,0 +1,12 @@
+language: java
+jdk:
+- openjdk11
+branches:
+  only:
+  - develop
+before_install:
+- git clone https://github.com/jcryptool/core.git ~/build/jcryptool/core
+- echo "MAVEN_OPTS=-Xmx2048m" > ~/.mavenrc
+install: true
+script:
+- mvn clean verify -f ~/build/jcryptool/core/org.jcryptool.releng/pom.xml -DskipTests=true
