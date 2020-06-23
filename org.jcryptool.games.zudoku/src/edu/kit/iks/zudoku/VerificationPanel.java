@@ -206,6 +206,7 @@ public class VerificationPanel extends JPanel implements ActionListener {
 	private JPanel controls;
 
 	private boolean ouvert = false;
+	private boolean supportsTooltips;
 
 	private Overlay cheat_overlay = null;
 	private int cheat_counter = 0;
@@ -241,6 +242,7 @@ public class VerificationPanel extends JPanel implements ActionListener {
     	/*
     	 * Set up controls
     	 */
+    	detectTooltipSupport();
     	controls = createControls();
     	add(controls, BorderLayout.LINE_START);
 
@@ -279,10 +281,12 @@ public class VerificationPanel extends JPanel implements ActionListener {
 
 	private JPanel createControls() {
 		JPanel controls = new JPanel();
+		controls.setBackground(Color.black);
 
 		GenericRoundedButton button = null;
 		List<JButton> buttons = new ArrayList<JButton>();
 
+		// Currently completely unused if
 		if(ZudokuConfig.PROOF_MODE_ACTIVE && ZudokuConfig.VERIFICATION_MODE_ACTIVE) {
 			// If both modes are active, there is a welcome panel to go back to.
 			// Otherwise omit this button.
@@ -296,7 +300,7 @@ public class VerificationPanel extends JPanel implements ActionListener {
 			});
 			buttons.add(button);
 		}
-
+		
 		button = new GenericRoundedButton();
 		button.setText(Messages.VP_NEW_SUDOKU);
 		button.addActionListener(new ActionListener() {
@@ -305,66 +309,12 @@ public class VerificationPanel extends JPanel implements ActionListener {
 				newSudoku();
 			}
 		});
+		if (supportsTooltips) {
+			button.setToolTipText(Messages.VP_NEW_SUDOKU_TOOLTIP);
+		}
 		buttons.add(button);
 		button_new = button;
-
-		button = new GenericRoundedButton();
-		button.setText(Messages.VP_CHEAT);
-		button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				if(vfy_step == 0 && cheat_overlay == null) {
-					cheat_counter++;
-					String number = "";
-					switch(cheat_counter) {
-						case 1: number = Messages.VP_CHEAT_INFO_01; break;
-						case 2: number = Messages.VP_CHEAT_INFO_02; break;
-						case 3: number = Messages.VP_CHEAT_INFO_03; break;
-						case 4: number = Messages.VP_CHEAT_INFO_04; break;
-						case 5: number = Messages.VP_CHEAT_INFO_05; break;
-						case 6: number = Messages.VP_CHEAT_INFO_06; break;
-						case 7: number = Messages.VP_CHEAT_INFO_07; break;
-						case 8: number = Messages.VP_CHEAT_INFO_08; break;
-						case 9: number = Messages.VP_CHEAT_INFO_09; break;
-						case 10: number = Messages.VP_CHEAT_INFO_10; break;
-						case 11: number = Messages.VP_CHEAT_INFO_11; break;
-						case 12: number = Messages.VP_CHEAT_INFO_12; break;
-					}
-
-					String text = Messages.VP_CHEAT_INFO + number + ".";
-					if(cheat_counter > 12) {
-						text = Messages.VP_CHEAT_INFO_LIMIT;
-					} else {
-						field.getSudoku().cheat();
-					}
-					cheat_overlay = new Overlay(text);
-					cheat_overlay.startFadeout(3000, 4000);
-					field.add(cheat_overlay, SudokuField.OVERLAY_LAYER);
-				}
-			}
-		});
-		buttons.add(button);
-		button_cheat = button;
-
-		button = new GenericRoundedButton();
-		button.setText(Messages.VP_EXPOSE_CARDS);
-		button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				if(vfy_step == 0 && cheat_overlay == null) { // no verification going on
-					field.getSudoku().flipCards();
-					ouvert = !ouvert;
-					if(ouvert) {
-						button_flip.setText(Messages.VP_COVER_CARDS);
-					} else {
-						button_flip.setText(Messages.VP_EXPOSE_CARDS);
-					}
-				}
-			}
-		});
-		button_flip = button;
-		buttons.add(button);
-
+		
 		button = new GenericRoundedButton();
 		button.setText(Messages.VP_CHALLENGE);
 		button.addActionListener(new ActionListener() {
@@ -381,14 +331,90 @@ public class VerificationPanel extends JPanel implements ActionListener {
 				}
 			}
 		});
+		if (supportsTooltips) {
+			button.setToolTipText(Messages.VP_CHALLENGE_TOOLTIP);
+		}
 		buttons.add(button);
 		button_challenge = button;
 
-		controls.setLayout(new GridLayout(buttons.size(), 1));
+		button = new GenericRoundedButton();
+		button.setText(Messages.VP_CHEAT);
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(vfy_step == 0 && cheat_overlay == null) {
+					cheat_counter++;
+					String number;
+					switch(cheat_counter) {
+						case 1: number = Messages.VP_CHEAT_INFO_01; break;
+						case 2: number = Messages.VP_CHEAT_INFO_02; break;
+						case 3: number = Messages.VP_CHEAT_INFO_03; break;
+						case 4: number = Messages.VP_CHEAT_INFO_04; break;
+						case 5: number = Messages.VP_CHEAT_INFO_05; break;
+						case 6: number = Messages.VP_CHEAT_INFO_06; break;
+						case 7: number = Messages.VP_CHEAT_INFO_07; break;
+						case 8: number = Messages.VP_CHEAT_INFO_08; break;
+						case 9: number = Messages.VP_CHEAT_INFO_09; break;
+						case 10: number = Messages.VP_CHEAT_INFO_10; break;
+						case 11: number = Messages.VP_CHEAT_INFO_11; break;
+						case 12: number = Messages.VP_CHEAT_INFO_12; break;
+						default: number = "";
+					}
+
+					String text = Messages.VP_CHEAT_INFO + " " + number + ".";
+					if(cheat_counter > 12) {
+						text = Messages.VP_CHEAT_INFO_LIMIT;
+					} else {
+						field.getSudoku().cheat();
+					}
+					cheat_overlay = new Overlay(text);
+					cheat_overlay.startFadeout(3000, 4000);
+					field.add(cheat_overlay, SudokuField.OVERLAY_LAYER);
+				}
+			}
+		});
+		if (supportsTooltips) {
+			button.setToolTipText(Messages.VP_CHEAT_TOOLTIP);
+		}
+		buttons.add(button);
+		button_cheat = button;
+
+		button = new GenericRoundedButton();
+		button.setText(Messages.VP_EXPOSE_CARDS);
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(vfy_step == 0 && cheat_overlay == null) { // no verification going on
+					field.getSudoku().flipCards();
+					ouvert = !ouvert;
+					if(ouvert) {
+						button_flip.setText(Messages.VP_COVER_CARDS);
+						if (supportsTooltips) {
+							button_flip.setToolTipText("");
+						}
+					} else {
+						button_flip.setText(Messages.VP_EXPOSE_CARDS);
+						if (supportsTooltips) {
+							button_flip.setToolTipText(Messages.VP_EXPOSE_CARDS_TOOLTIP);
+						}
+					}
+				}
+			}
+		});
+		button_flip = button;
+		if (supportsTooltips) {
+			button.setToolTipText(Messages.VP_EXPOSE_CARDS_TOOLTIP);
+		}
+		buttons.add(button);
+		
+		var layout = new GridLayout(buttons.size(), 1);
+		layout.setVgap(20);
+
+		controls.setLayout(layout);
 		for(JButton b : buttons) {
 			controls.add(b);
 		}
-
+		
 		return controls;
 	}
 
@@ -541,7 +567,7 @@ public class VerificationPanel extends JPanel implements ActionListener {
 		    		card.flip();
 		    	}
 	    	}
-	    	String text = Messages.VP_VERIFICATION_CHECK;
+	    	String text = Messages.VP_VERIFICATION_CHECK + " ";
 	    	if(sudoku.checkCards(vfy_cards)) {
 	    		color = Color.green;
 	    		text += Messages.VP_VERIFICATION_CHECK_OK;
@@ -630,6 +656,30 @@ public class VerificationPanel extends JPanel implements ActionListener {
 			break;
 		}
 	}
+	
+	/*
+	 * About this method:
+	 * we had the problem that under Linux/gtk-3 a button tooltip would run into an assertion error and crash whole
+	 * JCrypTool (tested under Ubuntu 20.24 / gtk unknown and Manjaro-Linux / gtk 3.24.20)
+	 * 
+	 * I decided to implement a simple OS detection which enables the Tooltips on MacOS/Windows and disables them
+	 * on any other unix-like systems just to be sure.
+	 * If you want you can look into the bug.
+	 */
+	private void detectTooltipSupport() {
+		String os;
+		try {
+			os = System.getProperty("os.name");
+		} catch (Exception e) {
+			os = "";
+		}
+		os = os.toLowerCase();
+		if (os.indexOf("win")  >= 0 || os.indexOf("mac") >= 0) {
+			supportsTooltips = true;
+		} else {
+			supportsTooltips = false;
+		}
+    }
 
 	public void newSudoku() {
 		if(vfy_step == 0 && cheat_overlay == null) {
