@@ -206,6 +206,7 @@ public class VerificationPanel extends JPanel implements ActionListener {
 	private JPanel controls;
 
 	private boolean ouvert = false;
+	private boolean supportsTooltips;
 
 	private Overlay cheat_overlay = null;
 	private int cheat_counter = 0;
@@ -241,6 +242,7 @@ public class VerificationPanel extends JPanel implements ActionListener {
     	/*
     	 * Set up controls
     	 */
+    	detectTooltipSupport();
     	controls = createControls();
     	add(controls, BorderLayout.LINE_START);
 
@@ -307,6 +309,9 @@ public class VerificationPanel extends JPanel implements ActionListener {
 				newSudoku();
 			}
 		});
+		if (supportsTooltips) {
+			button.setToolTipText(Messages.VP_NEW_SUDOKU_TOOLTIP);
+		}
 		buttons.add(button);
 		button_new = button;
 		
@@ -326,6 +331,9 @@ public class VerificationPanel extends JPanel implements ActionListener {
 				}
 			}
 		});
+		if (supportsTooltips) {
+			button.setToolTipText(Messages.VP_CHALLENGE_TOOLTIP);
+		}
 		buttons.add(button);
 		button_challenge = button;
 
@@ -365,6 +373,9 @@ public class VerificationPanel extends JPanel implements ActionListener {
 				}
 			}
 		});
+		if (supportsTooltips) {
+			button.setToolTipText(Messages.VP_CHEAT_TOOLTIP);
+		}
 		buttons.add(button);
 		button_cheat = button;
 
@@ -378,13 +389,22 @@ public class VerificationPanel extends JPanel implements ActionListener {
 					ouvert = !ouvert;
 					if(ouvert) {
 						button_flip.setText(Messages.VP_COVER_CARDS);
+						if (supportsTooltips) {
+							button_flip.setToolTipText("");
+						}
 					} else {
 						button_flip.setText(Messages.VP_EXPOSE_CARDS);
+						if (supportsTooltips) {
+							button_flip.setToolTipText(Messages.VP_CHALLENGE_TOOLTIP);
+						}
 					}
 				}
 			}
 		});
 		button_flip = button;
+		if (supportsTooltips) {
+			button.setToolTipText(Messages.VP_CHALLENGE_TOOLTIP);
+		}
 		buttons.add(button);
 		
 		var layout = new GridLayout(buttons.size(), 1);
@@ -636,6 +656,30 @@ public class VerificationPanel extends JPanel implements ActionListener {
 			break;
 		}
 	}
+	
+	/*
+	 * About this method:
+	 * we had the problem that under Linux/gtk-3 a button tooltip would run into an assertion error and crash whole
+	 * JCrypTool (tested under Ubuntu 20.24 / gtk unknown and Manjaro-Linux / gtk 3.24.20)
+	 * 
+	 * I decided to implement a simple OS detection which enables the Tooltips on MacOS/Windows and disables them
+	 * on any other unix-like systems just to be sure.
+	 * If you want you can look into the bug.
+	 */
+	private void detectTooltipSupport() {
+		String os;
+		try {
+			os = System.getProperty("os.name");
+		} catch (Exception e) {
+			os = "";
+		}
+		os = os.toLowerCase();
+		if (os.indexOf("win")  >= 0 || os.indexOf("mac") >= 0) {
+			supportsTooltips = true;
+		} else {
+			supportsTooltips = false;
+		}
+    }
 
 	public void newSudoku() {
 		if(vfy_step == 0 && cheat_overlay == null) {

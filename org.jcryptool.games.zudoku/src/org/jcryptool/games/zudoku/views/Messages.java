@@ -17,8 +17,11 @@ public class Messages extends NLS {
 	
     // Messages for VerificationPanel
 	public static String VP_NEW_SUDOKU;
+	public static String VP_NEW_SUDOKU_TOOLTIP;
 	public static String VP_EXPOSE_CARDS;
+	public static String VP_EXPOSE_CARDS_TOOLTIP;
 	public static String VP_CHEAT;
+	public static String VP_CHEAT_TOOLTIP;
 	public static String VP_CHEAT_INFO;
 	public static String VP_CHEAT_INFO_01;
 	public static String VP_CHEAT_INFO_02;
@@ -35,6 +38,7 @@ public class Messages extends NLS {
 	public static String VP_CHEAT_INFO_LIMIT;
 	public static String VP_COVER_CARDS;
 	public static String VP_CHALLENGE;
+	public static String VP_CHALLENGE_TOOLTIP;
 	public static String VP_PICK_ROW_COLUMN_OR_BLOCK;
 	public static String VP_VERIFICATION_TAKE_CARDS;
 	public static String VP_VERIFICATION_SHUFFLE_CARDS;
