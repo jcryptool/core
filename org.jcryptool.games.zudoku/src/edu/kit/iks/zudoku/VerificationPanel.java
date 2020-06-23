@@ -395,7 +395,7 @@ public class VerificationPanel extends JPanel implements ActionListener {
 					} else {
 						button_flip.setText(Messages.VP_EXPOSE_CARDS);
 						if (supportsTooltips) {
-							button_flip.setToolTipText(Messages.VP_CHALLENGE_TOOLTIP);
+							button_flip.setToolTipText(Messages.VP_EXPOSE_CARDS_TOOLTIP);
 						}
 					}
 				}
@@ -403,7 +403,7 @@ public class VerificationPanel extends JPanel implements ActionListener {
 		});
 		button_flip = button;
 		if (supportsTooltips) {
-			button.setToolTipText(Messages.VP_CHALLENGE_TOOLTIP);
+			button.setToolTipText(Messages.VP_EXPOSE_CARDS_TOOLTIP);
 		}
 		buttons.add(button);
 		
