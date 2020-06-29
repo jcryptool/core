@@ -30,7 +30,7 @@ von Moment der Untersuchung an völlig kompromittiert.</p>
 dem Blum-Blum-Shub-Algorithmus. Das Gerät enthält eine 48-Bit Zahl,
 die auf einen pseudozufälligen, dem Angreifer bekannten Wert initialisiert wird. Dieser Wert wird als
 Startwert x in der Funktion (x ^ (2 ^ i) mod n) mod 2 für i = 0 bis 50 benutzt, wobei in jeder
-Iteration das höchstwertige Byte gespeichert wird, um den nächsten Startwert zu bilden. Die n in dieser
+Iteration das höchstwertige Byte gespeichert wird, um den nächsten Startwert zu bilden. Die N in dieser
 Funktion ist das Produkt von zwei 256-Bit pseudozufällige Primzahlen, die von dem aktuellen Startwert
 hergeleitet sind, und die kongruent 3 mod 4 sein müssen. Nach Erzeugung dieser neuen, 51-Bit
 pseudozufälligen Zahl werden die ersten drei Bits in einem besonderen Bitstrom und
@@ -51,7 +51,7 @@ im Endeffekt den Arbeitsablauf eines anderen infizierten Geräts.</p>
 <p>Es gibt keine extra Simulation der Perspektive des Angreifers für diesen Angriff, denn die Reihenfolge
 wäre fast genau dieselbe, wie die, was das Gerät selbst gemacht hat: Der Angreifer würde den gleichen
 Startwert als Eingabe zu der gleichen Generatorfunktion nutzen, um den gleichen Startwert zu bilden, um die
-gleiche Primzahl P zu erzeugen. Weil das Modul N ein Teil des öffentlichen Schlüssels ist,
+gleiche Primzahl P zu erzeugen. Weil das Modulus N ein Teil des öffentlichen Schlüssels ist,
 kann die zweite Primzahl Q mittels Division von N durch P gefunden werden, und der private
 Exponent D kann mithilfe von dem öffentlichen Exponent E berechnet werden.</p>
 

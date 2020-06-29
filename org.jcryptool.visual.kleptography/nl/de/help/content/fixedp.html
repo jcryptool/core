@@ -23,7 +23,7 @@ wird festgehalten. Für den normalen Zuschauer wird nichts anders scheinen, weil
 dem Benutzer gesehen werden, und der öffentliche und der private Schlüssel werden immer noch zufällig
 erscheinen - wegen der zufälligen Wahl der anderen Primzahl. Der Angreifer muss jedoch nur zwei
 unterschiedliche öffentliche Schlüssel von dem Gerät finden und dann den größten
-gemeinsamen Teiler der Module N der beiden Schlüssel berechnen. Dieser Wert ist die
+gemeinsamen Teiler der Moduli N der beiden Schlüssel berechnen. Dieser Wert ist die
 Primzahl P, and die zweite Primzahl Q kann man dann berechnen, indem man N durch P teilt.
 Da der öffentliche Exponent E schon bekannt ist (weil es ja öffentlich ist), kann man D
 genau wie in dem Gerät berechnen.</p>
@@ -31,7 +31,7 @@ genau wie in dem Gerät berechnen.</p>
 <p>Das Problem ist, dass jeder das Nachrechnen ausführen kann, nicht nur der Angreifer, der das
 kryptographische Gerät mit dieser Schwäche konstruiert bzw. modifiziert hat.
 Deswegen kann jeder beliebige Beobachter, der den gemeinsamen Teiler von allen erzeugten
-Modulen bemerkt, den Angriff auch ausführen. Weil der Angriff so leicht zu
+Moduli bemerkt, den Angriff auch ausführen. Weil der Angriff so leicht zu
 entdecken und nachzubilden ist, ist das Gerät in jedem Fall kompromittiert.</p>
 
 <p>Mit diesem Algorithmus kann man auch den Angreifer (bzw. neugierigen Zuschauer) simulieren.
@@ -59,7 +59,7 @@ dann fragt, welche von den schon erzeugten Schlüsseln und Geheimtexten es  übe
 <p align=center><img src="fixed3.png" width="85%"/></p>
 
 <p>Sie sollen auch bemerken, dass wenn man zwei Geheimtexte mit dem gleichen öffentlichen Schlüssel
-speichert, wird der Angriff nicht funktionieren; die Module N werden dann gleich sein,
+speichert, wird der Angriff nicht funktionieren; die Moduli N werden dann gleich sein,
 und der größte gemeinsame Teiler wird genau dieses, anstatt der festen Primzahl P.
 Das Programm wird davor warnen, falls man es versucht:</p>
 

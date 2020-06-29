@@ -28,7 +28,7 @@ observer, the device is compromised from the point of investigation onwards.</p>
 Blum-Blum-Shub algorithm. The device is designed to contain a 48-bit number, initialized
 to a pseudo-random number known to the attacker. This number is used as the seed x in the
 function (x ^ (2 ^ i) mod n) mod 2 for i = 0 to 50, where in each iteration the most-significant
-bit is stored and used to build the next seed. The n in this function is the product of two
+bit is stored and used to build the next seed. The N in this function is the product of two
 256-bit pseudo-random primes derived from the current seed, both of which must be congruent
 to 3 mod 4. After generating this new, 51-bit pseudo-random number, the first three bits are
 stored in a special bitstream and the remaining 48 bits are saved as a new seed.

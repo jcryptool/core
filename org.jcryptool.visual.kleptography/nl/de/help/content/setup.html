@@ -19,7 +19,7 @@ Ablauf verständlicher zu machen.</p>
 
 <p>Die Hauptidee ist, dass der Angreifer seinen öffentlichen Schlüssel in dem kryptographischen
 Gerät speichert, der dann benutzt wird, die zufällig (unmanipuliert) erzeugte Primzahl P
-zu verschlüsseln. Das Modul N wird so konstruiert, dass es diesen verschlüsselten Wert enthält,
+zu verschlüsseln. Der Modul N wird so konstruiert, dass es diesen verschlüsselten Wert enthält,
 und noch in P und Q zerlegbar ist. Der Angreifer muss dann nur den bestimmten Teil
 des öffentlich übersendeten Moduls N finden und ihn mit seinem eigenen privaten Schlüssel
 entschlüsseln, um P zu finden. Danach ist es trivial für den Angreifer, um den entsprechenden
@@ -41,10 +41,10 @@ Länge wie die Primzahl P, d.h. die Hälfte der Länge der Schlüssel, die durch
 Da die Primzahlen des Angreifers genau halb so lang sein müssen, muss die Schlüsselbitlänge teilbar
 durch vier sein. Weiterhin muss die Schlüssellänge von N mindestens 20 Bit sein, damit der
 Schlüsselraum groß genug ist, um wirksame Schlüssel zu erzeugen. P wird unmanipuliert zufällig
-erzeugt, und dann verschlüsselt mit dem öffentlichen Schlüssel des Angreifers. Ein vorläufiges
+erzeugt, und dann verschlüsselt mit dem öffentlichen Schlüssel des Angreifers. Ein vorläufiger
 Modul N' wird erzeugt, so dass die obere Hälfte der Bits gleich dem verschlüsselten
 P ist und der Rest zufällig bestimmt wird. Die zweite Primzahl Q wird berechnet, indem N' durch P
-geteilt und der Rest R ignoriert wird, damit (P * Q) + R = N'. Das echte Modul N wird
+geteilt und der Rest R ignoriert wird, damit (P * Q) + R = N'. Der echte Modul N wird
 dann unmanipuliert berechnet, damit P * Q = N = N' - R. Jedoch wird nicht jedes N' durch P teilbar sein,
 um ein gültiges Q zu erzeugen; deswegen muss dieser Ablauf üblicherweise mehrere Male
 durchgeführt werden, bevor ein passendes Paar gefunden wird, was bedeutet, dass dieser Prozess
@@ -65,7 +65,7 @@ entsprechenden privaten Schlüssels trivial.</p>
 <p>Die Benutzeroberfläche für diesen Angriff ist ein bisschen komplizierter als die anderen.
 Im ersten Schritt erzeugt man die Schlüssel des Angreifers, von denen der öffentliche Schlüssel (N, E)
 im Gerät gespeichert und deswegen hier angezeigt wird. Nach der Erzeugung der Primzahlen werden
-das verschlüsselte P und das vorläufige Modul N' angezeigt. Wenn man die Anzeige in Binär
+das verschlüsselte P und den vorläufigen Modul N' angezeigt. Wenn man die Anzeige in Binär
 oder Hexadezimal auswählte, werden nach der Berechnung von N das verschlüsselte P und die
 obere Hälfte der Bits von N' und N gelb markiert, weil sie gleich sein werden (es sei denn, die
 obere Hälfte von N ein Bit kleiner ist).</p>

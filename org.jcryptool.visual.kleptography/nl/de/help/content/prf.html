@@ -16,7 +16,7 @@ vielleicht besser durch pseudozufällige Werte erzeugt werden sollte, die auf ei
 jedes infizierte Gerät eine eindeutige, 160-Bit ID und einen auf null initialisierten Zähler hat.
 Jedes Mal, wenn ein Schlüssel erzeugt wird, wird aus der ID und dem Zähler ein Hashwert gebildet,
 der als Startwert bei der Erzeugung von P benutzt wird. Das Ergebnis wird zufällig aussehen,
-die Module werden keinen gemeinsamen Nenner größer als eins haben, und der Angreifer
+die Moduli werden keinen gemeinsamen Nenner größer als eins haben, und der Angreifer
 muss bloß die IDs und Zähler im Auge behalten und die gleichen Funktionen benutzen, um
 den privaten Schlüssel nachbilden zu können.</p>
 
@@ -50,7 +50,7 @@ Geräts.</p>
 wäre fast genau dieselbe, die das Gerät selbst durchführte: Der Angreifer würde die gleiche ID und
 den gleichen Index als Eingabe zu der gleichen Hashfunktion nutzen, um den gleichen Startwert für die
 gleiche pseudozufällige Funktion zu erzeugen, um die gleiche Primzahl P zu erzeugen. Weil das
-Modul N ein Teil des öffentlichen Schlüssels ist, kann die zweite Primzahl Q mittels
+Modulus N ein Teil des öffentlichen Schlüssels ist, kann die zweite Primzahl Q mittels
 Division von N durch P gefunden werden, und der private Exponent D kann mithilfe des öffentlichen
 Exponenten E berechnet werden.</p>
 
