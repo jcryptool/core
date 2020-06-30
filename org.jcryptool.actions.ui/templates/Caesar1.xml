@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ActionCascade xmlns="http://www.jcryptool.org/actioncascade" name="unbenannt001Cascade" passwords="true">
+<ActionCascade xmlns="http://www.jcryptool.org/actioncascade" name="unsaved001Cascade" passwords="true">
   <ActionItems>
     <ActionItem>
       <ActionType>encrypt</ActionType>
-      <FileName>out001.bin</FileName>
-      <ActionName plugin="org.jcryptool.crypto.classic.caesar.algorithm">Caesar</ActionName>
+      <FileName>out005.txt</FileName>
+      <ActionName plugin="org.jcryptool.crypto.classic.caesar.algorithm_cmd">Caesar</ActionName>
       <Alphabet>Upper and lower Latin (A-Z,a-z)</Alphabet>
       <Parameters dataobjecttype="org.jcryptool.core.operations.dataobject.classic.ClassicDataObject">
         <Parameter>
@@ -20,8 +20,12 @@
           <Value>null</Value>
         </Parameter>
         <Parameter>
+          <Key>outputIS</Key>
+          <Value>null</Value>
+        </Parameter>
+        <Parameter>
           <Key>transformData</Key>
-          <Value>filterBlanks=on, filterUmlauts=on</Value>
+          <Value>filterUmlauts=on</Value>
         </Parameter>
         <Parameter>
           <Key>filterNonAlphaChars</Key>
@@ -31,8 +35,8 @@
     </ActionItem>
     <ActionItem>
       <ActionType>encrypt</ActionType>
-      <FileName>out002.bin</FileName>
-      <ActionName plugin="org.jcryptool.crypto.classic.caesar.algorithm">Caesar</ActionName>
+      <FileName>out006.txt</FileName>
+      <ActionName plugin="org.jcryptool.crypto.classic.caesar.algorithm_cmd">Caesar</ActionName>
       <Alphabet>Upper and lower Latin (A-Z,a-z)</Alphabet>
       <Parameters dataobjecttype="org.jcryptool.core.operations.dataobject.classic.ClassicDataObject">
         <Parameter>
@@ -48,8 +52,12 @@
           <Value>null</Value>
         </Parameter>
         <Parameter>
+          <Key>outputIS</Key>
+          <Value>null</Value>
+        </Parameter>
+        <Parameter>
           <Key>transformData</Key>
-          <Value>filterBlanks=on, filterUmlauts=on</Value>
+          <Value>filterUmlauts=on</Value>
         </Parameter>
         <Parameter>
           <Key>filterNonAlphaChars</Key>
@@ -59,8 +67,8 @@
     </ActionItem>
     <ActionItem>
       <ActionType>decrypt</ActionType>
-      <FileName>out003.bin</FileName>
-      <ActionName plugin="org.jcryptool.crypto.classic.caesar.algorithm">Caesar</ActionName>
+      <FileName>out007.txt</FileName>
+      <ActionName plugin="org.jcryptool.crypto.classic.caesar.algorithm_cmd">Caesar</ActionName>
       <Alphabet>Upper and lower Latin (A-Z,a-z)</Alphabet>
       <Parameters dataobjecttype="org.jcryptool.core.operations.dataobject.classic.ClassicDataObject">
         <Parameter>
@@ -73,6 +81,10 @@
         </Parameter>
         <Parameter>
           <Key>key2</Key>
+          <Value>null</Value>
+        </Parameter>
+        <Parameter>
+          <Key>outputIS</Key>
           <Value>null</Value>
         </Parameter>
         <Parameter>
@@ -87,8 +99,8 @@
     </ActionItem>
     <ActionItem>
       <ActionType>decrypt</ActionType>
-      <FileName>out004.bin</FileName>
-      <ActionName plugin="org.jcryptool.crypto.classic.caesar.algorithm">Caesar</ActionName>
+      <FileName>out008.txt</FileName>
+      <ActionName plugin="org.jcryptool.crypto.classic.caesar.algorithm_cmd">Caesar</ActionName>
       <Alphabet>Upper and lower Latin (A-Z,a-z)</Alphabet>
       <Parameters dataobjecttype="org.jcryptool.core.operations.dataobject.classic.ClassicDataObject">
         <Parameter>
@@ -101,6 +113,10 @@
         </Parameter>
         <Parameter>
           <Key>key2</Key>
+          <Value>null</Value>
+        </Parameter>
+        <Parameter>
+          <Key>outputIS</Key>
           <Value>null</Value>
         </Parameter>
         <Parameter>
