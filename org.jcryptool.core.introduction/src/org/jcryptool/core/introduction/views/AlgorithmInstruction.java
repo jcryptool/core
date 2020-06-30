@@ -257,6 +257,8 @@ public class AlgorithmInstruction extends ViewPart {
 		gl_content.verticalSpacing = 0;
 		content.setLayout(gl_content);
 		content.setBackground(ColorService.GREEN);
+		
+		scrolledComposite.setContent(content);
 
 
 		initializeScaledImages();
