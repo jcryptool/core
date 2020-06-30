@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="viewer" title="Bedienungsanleitung Algorithmen-Perspektive">
+		<description>&lt;b&gt;1.&lt;/b&gt; Wählen Sie einen Schlüssel im ... 
+&lt;b&gt;2.&lt;/b&gt; ... 
+&lt;b&gt;3.&lt;/b&gt;</description>
+		<topic href="$nl$/help/index.html" label="Context-sensitive help">
+			<enablement>
+				<with variable="platform">
+	            	<test property="org.eclipse.core.runtime.isBundleInstalled" args="org.eclipse.platform.doc.isv"/>
+	     		</with>
+			</enablement>
+		</topic>
+	</context>
+</contexts>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="org.eclipse.ui"
+            class="org.jcryptool.core.introduction.views.AlgorithmInstruction"
+            icon="icons/sample.png"
+            id="org.jcryptool.core.introduction.views.AlgorithmInstruction"
+            inject="true"
+            name="%view.name">
+      </view>
+   </extension>
+      <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="$nl$/toc.xml"
+            primary="false">
+      </toc>
+   </extension>
+   
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="$nl$/contexts.xml">
+      </contexts>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.jcryptool.crypto.flexiprovider.ui.perspective.FlexiProviderPerspective">
+         <viewShortcut
+               id="org.jcryptool.core.introduction.views.AlgorithmInstruction">
+         </viewShortcut>
+         <view
+               id="org.jcryptool.core.introduction.views.AlgorithmInstruction"
+               minimized="false"
+               relationship="stack"
+               relative="org.eclipse.ui.editorss"
+               visible="false">
+         </view>
+      </perspectiveExtension>
+   </extension>
+
+</plugin>
