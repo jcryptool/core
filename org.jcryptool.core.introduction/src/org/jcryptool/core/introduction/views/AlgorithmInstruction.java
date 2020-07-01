@@ -73,13 +73,17 @@ public class AlgorithmInstruction extends ViewPart {
 	 * Images in the slideshow.
 	 */
 	private Image[] original_imgs = new Image[] {
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/1.PNG"), //$NON-NLS-1$
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/2.PNG"), //$NON-NLS-1$
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/3.PNG"), //$NON-NLS-1$
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/4.PNG"), //$NON-NLS-1$
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/5.PNG"), //$NON-NLS-1$
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/6.PNG"), //$NON-NLS-1$
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/7.PNG") //$NON-NLS-1$
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/1_intro.png"), //$NON-NLS-1$
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/2_algorithm_selection.png"), //$NON-NLS-1$
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/3.1_specific_settings.png"), //$NON-NLS-1$
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/3.2_algorithmn_in_operations.png"), //$NON-NLS-1$
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/3.3_input.png"), //$NON-NLS-1$
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/3.4_output.png"), //$NON-NLS-1$
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/3.5_key_selection.png"), //$NON-NLS-1$
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/4_password_input.png"), //$NON-NLS-1$
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/5_operationen.png"), //$NON-NLS-1$
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/6_start.png"), //$NON-NLS-1$
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/7_output.png") //$NON-NLS-1$
 	};
 	
 	/**
