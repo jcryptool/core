@@ -76,12 +76,12 @@ public class AlgorithmInstruction extends ViewPart {
 			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/1_intro.png"), //$NON-NLS-1$
 			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/2_algorithm_selection.png"), //$NON-NLS-1$
 			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/3.1_specific_settings.png"), //$NON-NLS-1$
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/3.2_algorithmn_in_operations.png"), //$NON-NLS-1$
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/3.2_algorithm_in_operations.png"), //$NON-NLS-1$
 			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/3.3_input.png"), //$NON-NLS-1$
 			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/3.4_output.png"), //$NON-NLS-1$
 			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/3.5_key_selection.png"), //$NON-NLS-1$
 			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/4_password_input.png"), //$NON-NLS-1$
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/5_operationen.png"), //$NON-NLS-1$
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/5_operation.png"), //$NON-NLS-1$
 			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/6_start.png"), //$NON-NLS-1$
 			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/7_output.png") //$NON-NLS-1$
 	};
@@ -260,7 +260,7 @@ public class AlgorithmInstruction extends ViewPart {
 		gl_content.horizontalSpacing = 0;
 		gl_content.verticalSpacing = 0;
 		content.setLayout(gl_content);
-		content.setBackground(ColorService.GREEN);
+//		content.setBackground(ColorService.GREEN);
 		
 		scrolledComposite.setContent(content);
 
@@ -271,7 +271,7 @@ public class AlgorithmInstruction extends ViewPart {
 		// Composite that should grab space on the left.
 		// This should center the slideshow
 		Composite left = new Composite(content, SWT.NONE);
-		GridData gd_left = new GridData(SWT.FILL, SWT.FILL, true, false);
+		GridData gd_left = new GridData(SWT.FILL, SWT.FILL, false, false);
 		left.setLayoutData(gd_left);
 		GridLayout gl_left = new GridLayout();
 		gl_left.marginHeight = 0;
@@ -327,7 +327,7 @@ public class AlgorithmInstruction extends ViewPart {
 		// Composite right beneath the slideshow. Should center the slideshow
 		// in the middle of the plugin.
 		Composite right = new Composite(content, SWT.NONE);
-		right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		GridLayout gl_right = new GridLayout();
 		gl_right.marginHeight = 0;
 		gl_left.marginWidth = 0;
