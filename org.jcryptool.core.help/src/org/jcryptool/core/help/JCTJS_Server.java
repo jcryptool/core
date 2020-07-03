@@ -2,9 +2,34 @@ package org.jcryptool.core.help;
 
 import java.util.Optional;
 
+import org.eclipse.core.runtime.Platform;
+
+import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.server.ResourceService;
+import org.eclipse.jetty.server.handler.AbstractHandler;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.ServerSocket;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.eclipse.core.runtime.PlatformObject;
+import org.eclipse.jetty.server.Handler;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.DefaultHandler;
+import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.server.handler.ResourceHandler;
+import org.eclipse.jetty.util.resource.PathResource;
+import org.eclipse.jetty.util.resource.Resource;
+
+
 public class JCTJS_Server {
 	
-	private static Optional<JCTJS_Server> instance;
+	private static Optional<JCTJS_Server> instance = Optional.empty();
 	
 	public static JCTJS_Server getInstance() {
 		if(instance.isEmpty()) {
@@ -21,50 +46,72 @@ public class JCTJS_Server {
 	}
 
 	private static int get_open_port() {
-		// TODO Auto-generated method stub
-		return 31339;
+		try (ServerSocket socket = new ServerSocket(0);) {
+			int openport = socket.getLocalPort();
+			socket.close();
+			return openport;
+		} catch (IOException e) {
+			e.printStackTrace();
+			// if something fails, try port 31339. Guaranteed to work (R).
+			return 31339;
+		}
 	}
 
 	private int port;
+	private Server server;
 	public int getPort() {
 		return this.port;
 	}
 
+	public static URL getRootURL() {
+		return Platform.getBundle("org.jcryptool.core.help").getEntry(".");
+	}
+	
+	public String makeUrlStringFor(String projectRelativePath) {
+		return String.format("http://127.0.0.1:%s/%s", getPort(), projectRelativePath);
+	}
+	
 	public JCTJS_Server(int open_port) {
-		this.port = open_port; //TODO: this must be dynamical
-		Resource baseResource = null; //TODO
+		this.port = open_port;
+		URL rootResource = getRootURL();
+		System.out.println(rootResource);
+		Resource baseResource = Resource.newResource(rootResource);
 		Server server = new Server(port);
 
-		// Create the ResourceHandler. It is the object that will actually handle the request for a given file. It is
-		// a Jetty Handler object so it is suitable for chaining with other handlers as you will see in other examples.
-		ResourceHandler resourceHandler = new ResourceHandler();
-
-		// Configure the ResourceHandler. Setting the resource base indicates where the files should be served out of.
-		// In this example it is the current directory but it can be configured to anything that the jvm has access to.
+		ResourceHandler resourceHandler = new ResourceHandler(new ResourceService());
+		resourceHandler.setDirAllowed(true);
 		resourceHandler.setDirectoriesListed(true);
 		resourceHandler.setWelcomeFiles(new String[]{"index.html"});
 		resourceHandler.setBaseResource(baseResource);
+		
+ 		URL res = Platform.getBundle("org.jcryptool.core.help").getEntry("./javascript/test.txt");
+		System.out.println();
+		InputStream stream = null;
+		try {
+			stream = Resource.newResource(res).getInputStream();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+		String line;
+		try {
+			while((line = reader.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		// Add the ResourceHandler to the server.
-		HandlerList handlers = new HandlerList();
-		handlers.setHandlers(new Handler[]{resourceHandler, new DefaultHandler()});
-		server.setHandler(handlers);
+		new HandlerList().setHandlers(new Handler[]{resourceHandler, new DefaultHandler()});
+		server.setHandler(new HandlerList());
 
-		return server;
+		this.server = server;
 	}
-
-	    public static void main(String[] args) throws Exception
-	    {
-	        int port = ExampleUtil.getPort(args, "jetty.http.port", 8080);
-	        Path userDir = Paths.get(System.getProperty("user.dir"));
-	        PathResource pathResource = new PathResource(userDir);
-
-	        Server server = createServer(port, pathResource);
-
-	        // Start things up! By using the server.join() the server thread will join with the current thread.
-	        // See "http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/Thread.html#join()" for more details.
-	        server.start();
-	        server.join();
-	    }
+	
+	public void start() throws Exception {
+		this.server.start();
+	}
 	
 }

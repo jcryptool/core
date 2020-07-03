@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.eclipse.help.internal.webapp.servlet.InjectionFilter;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.eclipse.help.webapp.IFilter;
