@@ -12,7 +12,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.ServerSocket;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -46,15 +45,8 @@ public class JCTJS_Server {
 	}
 
 	private static int get_open_port() {
-		try (ServerSocket socket = new ServerSocket(0);) {
-			int openport = socket.getLocalPort();
-			socket.close();
-			return openport;
-		} catch (IOException e) {
-			e.printStackTrace();
-			// if something fails, try port 31339. Guaranteed to work (R).
-			return 31339;
-		}
+		// TODO get open port
+		return 31339;
 	}
 
 	private int port;
@@ -67,45 +59,47 @@ public class JCTJS_Server {
 		return Platform.getBundle("org.jcryptool.core.help").getEntry(".");
 	}
 	
-	public String makeUrlStringFor(String projectRelativePath) {
-		return String.format("http://127.0.0.1:%s/%s", getPort(), projectRelativePath);
-	}
-	
 	public JCTJS_Server(int open_port) {
-		this.port = open_port;
+		this.port = open_port; //TODO: this must be dynamical
 		URL rootResource = getRootURL();
 		System.out.println(rootResource);
 		Resource baseResource = Resource.newResource(rootResource);
+// 		Resource baseResource = Resource.newClassPathResource("."); //TODO
 		Server server = new Server(port);
+//	        Path userDir = Paths.get(System.getProperty("user.dir"));
+//	        PathResource pathResource = new PathResource(userDir);
 
-		ResourceHandler resourceHandler = new ResourceHandler(new ResourceService());
-		resourceHandler.setDirAllowed(true);
+		ResourceService resourceService = new ResourceService();
+		// Create the ResourceHandler. It is the object that will actually handle the request for a given file. It is
+		// a Jetty Handler object so it is suitable for chaining with other handlers as you will see in other examples.
+		ResourceHandler resourceHandler = new ResourceHandler(resourceService);
+
+		
+//		System.out.println(JCTJS_Server.class.getResource("."));
+//		System.out.println(getRootURL());
+//		System.out.println(JCTJS_Server.class.getResource("./test.txt"));
+//		System.out.println(JCTJS_Server.class.getResource("./javascript/test.txt"));
+// 		InputStreamReader testreader = new InputStreamReader(testResource);
+// 		BufferedReader bufferedReader = new BufferedReader(testreader);
+// 		String line;
+// 		try {
+//			while((line = bufferedReader.readLine()) != null) {
+//				System.out.println("test.txt:: " + line);
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+
+		// Configure the ResourceHandler. Setting the resource base indicates where the files should be served out of.
+		// In this example it is the current directory but it can be configured to anything that the jvm has access to.
 		resourceHandler.setDirectoriesListed(true);
 		resourceHandler.setWelcomeFiles(new String[]{"index.html"});
 		resourceHandler.setBaseResource(baseResource);
-		
- 		URL res = Platform.getBundle("org.jcryptool.core.help").getEntry("./javascript/test.txt");
-		System.out.println();
-		InputStream stream = null;
-		try {
-			stream = Resource.newResource(res).getInputStream();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-		String line;
-		try {
-			while((line = reader.readLine()) != null) {
-				System.out.println(line);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
-		new HandlerList().setHandlers(new Handler[]{resourceHandler, new DefaultHandler()});
-		server.setHandler(new HandlerList());
+		// Add the ResourceHandler to the server.
+		HandlerList handlers = new HandlerList();
+		handlers.setHandlers(new Handler[]{resourceHandler, new DefaultHandler()});
+		server.setHandler(handlers);
 
 		this.server = server;
 	}

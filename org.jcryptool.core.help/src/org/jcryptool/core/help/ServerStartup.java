@@ -12,7 +12,7 @@ public class ServerStartup implements IStartup {
 			System.out.println("Starting server...");
 			JCTJS_Server.getInstance().start();
 			System.out.println("Started server on port " + JCTJS_Server.getInstance().getPort());
-			java.awt.Desktop.getDesktop().browse(URI.create((JCTJS_Server.getInstance().makeUrlStringFor("./javascript/test.txt"))));
+			java.awt.Desktop.getDesktop().browse(URI.create("http://127.0.0.1:"+JCTJS_Server.getInstance().getPort()+"/javascript/test.txt"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("Could not start JCTJS server. The help system may malfunction. Please report this bug: http://github.com/jcryptool/core/issues. Thanks.");
