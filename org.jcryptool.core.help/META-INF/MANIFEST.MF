@@ -6,3 +6,8 @@ Bundle-Version: 1.0.0
 Bundle-Vendor: %bundleVendor
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Automatic-Module-Name: org.jcryptool.core.help
+Require-Bundle: org.eclipse.help.webapp,
+ org.eclipse.help.webapp,
+ javax.servlet,
+ org.eclipse.equinox.common,
+ org.eclipse.help.base
