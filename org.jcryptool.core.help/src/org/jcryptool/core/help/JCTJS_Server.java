@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.ServerSocket;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -32,25 +33,44 @@ public class JCTJS_Server {
 	
 	public static JCTJS_Server getInstance() {
 		if(instance.isEmpty()) {
-			instance = Optional.of(startServer());
+			instance = Optional.of(createAndTryStartServer());
 			return getInstance();
 		}
 		return instance.get();
 	}
 	
-	private static JCTJS_Server startServer() {
+	/**
+	 * creates a server instance and tries to start it. Returns the server instance.
+	 * users should check if isServing is true TODO: implement (not implemented yet)
+	 * 
+	 * @return
+	 */
+	private static JCTJS_Server createAndTryStartServer() {
 		int open_port = get_open_port();
-
-		return new JCTJS_Server(open_port);
+		JCTJS_Server server = new JCTJS_Server(open_port);
+		try {
+			server.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return server;
 	}
 
 	private static int get_open_port() {
-		// TODO get open port
-		return 31339;
+		try (ServerSocket socket = new ServerSocket(0);) {
+			int openport = socket.getLocalPort();
+			socket.close();
+			return openport;
+		} catch (IOException e) {
+			e.printStackTrace();
+			// if something fails, try port 31339. Guaranteed to work (R).
+			return 31339;
+		}
 	}
 
 	private int port;
 	private Server server;
+	public final int helpsystemPort;
 	public int getPort() {
 		return this.port;
 	}
@@ -59,49 +79,67 @@ public class JCTJS_Server {
 		return Platform.getBundle("org.jcryptool.core.help").getEntry(".");
 	}
 	
+	public String makeUrlStringFor(String projectRelativePath) {
+		return String.format("http://127.0.0.1:%s/%s", getPort(), projectRelativePath);
+	}
+	
+	public String makeHelpsystemUrlStringFor(String relpath) {
+		return String.format("http://127.0.0.1:%s/%s", this.helpsystemPort, relpath);
+	}
+	
 	public JCTJS_Server(int open_port) {
-		this.port = open_port; //TODO: this must be dynamical
+		this.port = open_port;
+//		try {
+//			org.eclipse.help.internal.server.WebappManager.start(webappName);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		this.helpsystemPort = org.eclipse.help.internal.server.WebappManager.getPort();
+		if(this.helpsystemPort == -1) {
+			throw new RuntimeException("helpsystem not started yet!");
+		}
+
 		URL rootResource = getRootURL();
 		System.out.println(rootResource);
 		Resource baseResource = Resource.newResource(rootResource);
-// 		Resource baseResource = Resource.newClassPathResource("."); //TODO
 		Server server = new Server(port);
-//	        Path userDir = Paths.get(System.getProperty("user.dir"));
-//	        PathResource pathResource = new PathResource(userDir);
 
-		ResourceService resourceService = new ResourceService();
-		// Create the ResourceHandler. It is the object that will actually handle the request for a given file. It is
-		// a Jetty Handler object so it is suitable for chaining with other handlers as you will see in other examples.
-		ResourceHandler resourceHandler = new ResourceHandler(resourceService);
-
-		
-//		System.out.println(JCTJS_Server.class.getResource("."));
-//		System.out.println(getRootURL());
-//		System.out.println(JCTJS_Server.class.getResource("./test.txt"));
-//		System.out.println(JCTJS_Server.class.getResource("./javascript/test.txt"));
-// 		InputStreamReader testreader = new InputStreamReader(testResource);
-// 		BufferedReader bufferedReader = new BufferedReader(testreader);
-// 		String line;
-// 		try {
-//			while((line = bufferedReader.readLine()) != null) {
-//				System.out.println("test.txt:: " + line);
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-
-		// Configure the ResourceHandler. Setting the resource base indicates where the files should be served out of.
-		// In this example it is the current directory but it can be configured to anything that the jvm has access to.
+		ResourceHandler resourceHandler = new ResourceHandler(new ResourceService());
+		resourceHandler.setDirAllowed(true);
 		resourceHandler.setDirectoriesListed(true);
 		resourceHandler.setWelcomeFiles(new String[]{"index.html"});
 		resourceHandler.setBaseResource(baseResource);
+		
+ 		URL res = Platform.getBundle("org.jcryptool.core.help").getEntry("./javascript/test.txt");
+		System.out.println();
 
-		// Add the ResourceHandler to the server.
-		HandlerList handlers = new HandlerList();
-		handlers.setHandlers(new Handler[]{resourceHandler, new DefaultHandler()});
-		server.setHandler(handlers);
+		HandlerList handlerList = new HandlerList();
+		handlerList.setHandlers(new Handler[]{resourceHandler, new DefaultHandler()});
+		server.setHandler(handlerList);
 
 		this.server = server;
+	}
+
+	private String slurpUrl(URL res) {
+		InputStream stream = null;
+		try {
+			stream = Resource.newResource(res).getInputStream();
+		} catch (IOException e1) {
+			throw new RuntimeException(e1);
+		}
+		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+		String line;
+		String result = "";
+		try {
+			while((line = reader.readLine()) != null) {
+				result = result + line + "\n";
+				
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		return result;
 	}
 	
 	public void start() throws Exception {

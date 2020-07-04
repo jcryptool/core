@@ -124,14 +124,20 @@ public class JCTJSInjectionFilter implements IFilter {
 		// construct the javascript injection: provide local port and source the bootstrapping script
 		// see more in JCTJS_Server.java
 		int JCTJSPort               = JCTJS_Server.getInstance().getPort();
+		String jctjs_bootstrap_url  = JCTJS_Server.getInstance().makeUrlStringFor("javascript/bootstrap_jct_utilities.js");
 		String injectionPayload = "\n"
-				+ String.format("<script>bootstrap_JCTJS_PORT=%s</script>\n", JCTJSPort)
-				+ "<script src=\"org.jcryptool.core.help/javascript/bootstrap_jct_utilities.js\"/>\n";
+				+ String.format("<script>_bootstrap_JCTJS_PORT=%s</script>\n", JCTJSPort)
+				+ String.format("<script>_bootstrap_JCTHelpsystem_PORT=%s</script>\n", JCTJS_Server.getInstance().helpsystemPort)
+				+ String.format("<script src=\"%s\"/>\n", jctjs_bootstrap_url);
 		
 		// transform the stream
-		//		OutputStream stdoutTee         = new TeeStdoutStream(out); // debug utility to see in the console what the transformed content is
-		// 		OutputStream transformedStream = new InjectionOutputStream(out, "</head>", "<script>alert('Hello, world!')</script>\n"); // debug utility to display an alert() window in the online help to directly see if this works
-		OutputStream transformedStream = new InjectionOutputStream(out, "</head>", injectionPayload);
+
+//		OutputStream stdoutTee         = new TeeStdoutStream(out); // debug utility to see in the console what the transformed content is
+//		OutputStream transformedStream = new InjectionOutputStream(stdoutTee, "</head>", injectionPayload);
+// 		OutputStream transformedStream = new InjectionOutputStream(stdoutTee, "</head>", "<script>alert('Hello, world!')</script>\n"); // debug utility to display an alert() window in the online help to directly see if this works
+
+ 		OutputStream transformedStream = new InjectionOutputStream(out, "</head>", injectionPayload);
+
 		return transformedStream;
 	}
 
