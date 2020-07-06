@@ -14,6 +14,8 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
@@ -43,6 +45,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 
@@ -63,6 +66,7 @@ public class AlgorithmInstruction extends ViewPart {
 	private boolean allowNextAutoSlide = true;
 	private GridData gridData_cnvs;
 	private Canvas cnvs;
+	
 	
 	/**
 	 * Composite containing the whole GUI of the plugin.
@@ -260,6 +264,7 @@ public class AlgorithmInstruction extends ViewPart {
 		gl_content.horizontalSpacing = 0;
 		gl_content.verticalSpacing = 0;
 		content.setLayout(gl_content);
+		content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 //		content.setBackground(ColorService.GREEN);
 		
 		scrolledComposite.setContent(content);
@@ -267,20 +272,22 @@ public class AlgorithmInstruction extends ViewPart {
 
 		initializeScaledImages();
 		
-		
-		// Composite that should grab space on the left.
-		// This should center the slideshow
-		Composite left = new Composite(content, SWT.NONE);
-		GridData gd_left = new GridData(SWT.FILL, SWT.FILL, false, false);
-		left.setLayoutData(gd_left);
-		GridLayout gl_left = new GridLayout();
-		gl_left.marginHeight = 0;
-		gl_left.marginWidth = 0;
-		left.setLayout(gl_left);
+		content.addListener(SWT.Resize, new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+				int[] sizehint = computeSlideshowSizeHint();
+				gridData_cnvs.widthHint = sizehint[0];
+				gridData_cnvs.heightHint = sizehint[1];
+				content.layout(new Control[] {cnvs});
+			}
+		});
 		
 		// The canvas the slideshow is painted on.
 		cnvs = new Canvas(content, SWT.DOUBLE_BUFFERED);
-		gridData_cnvs = new GridData(SWT.FILL, SWT.FILL, true, true);
+		gridData_cnvs = new GridData(SWT.CENTER, SWT.FILL, true, true);
+		int[] initialSizeHint = computeSlideshowSizeHint();
+		gridData_cnvs.widthHint = initialSizeHint[0];
+		gridData_cnvs.heightHint = initialSizeHint[1];
 		cnvs.setLayoutData(gridData_cnvs);
 		cnvs.addPaintListener(new PaintListener() {
 
@@ -323,15 +330,6 @@ public class AlgorithmInstruction extends ViewPart {
 				// canvas does not change when moving the plugin.
 			}
 		});
-		
-		// Composite right beneath the slideshow. Should center the slideshow
-		// in the middle of the plugin.
-		Composite right = new Composite(content, SWT.NONE);
-		right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
-		GridLayout gl_right = new GridLayout();
-		gl_right.marginHeight = 0;
-		gl_left.marginWidth = 0;
-		right.setLayout(gl_left);
 
 		Composite lowerArea = new Composite(content, SWT.NONE);
 		lowerArea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
@@ -398,6 +396,29 @@ public class AlgorithmInstruction extends ViewPart {
 		// Start the thread that changes the images after 15 seconds.
 		startAutoSwitchImages();
 
+	}
+
+	private int[] computeSlideshowSizeHint() {
+		Rectangle parentSize = content.getBounds();
+		float aspectRatio = getCurrentSlideAspectRatio();
+		float parentAspectRatio = (float) parentSize.width / (float) parentSize.height;
+		int adaptedWidth = parentSize.width;
+		int adaptedHeight = parentSize.height;
+		if(adaptedWidth <= 0 || adaptedHeight <= 0) {
+			adaptedHeight = 10; // TODO: handle better?
+			adaptedWidth = 10;
+		}
+		if (aspectRatio > parentAspectRatio) { // broader than allowed -> adapt height to match parent width
+			adaptedHeight = (int) Math.round(adaptedWidth / aspectRatio);
+		} else {                               // other way around
+			adaptedWidth = (int) Math.round(adaptedHeight * aspectRatio);
+		}
+		int[] adaptedSize = new int[] {adaptedWidth, adaptedHeight};
+		return adaptedSize;
+	}
+
+	protected float getCurrentSlideAspectRatio() {
+		return 16.0f / 9.0f; //TODO: dynamically get aspect ratio from displayed img
 	}
 
 	/**
