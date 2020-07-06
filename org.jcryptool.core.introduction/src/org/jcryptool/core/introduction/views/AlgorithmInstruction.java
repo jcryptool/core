@@ -25,6 +25,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.core.util.ui.auto.SmoothScroller;
+
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.nebula.effects.stw.ImageTransitionable;
@@ -77,17 +78,17 @@ public class AlgorithmInstruction extends ViewPart {
 	 * Images in the slideshow.
 	 */
 	private Image[] original_imgs = new Image[] {
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/1_intro.png"), //$NON-NLS-1$
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/2_algorithm_selection.png"), //$NON-NLS-1$
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/3.1_specific_settings.png"), //$NON-NLS-1$
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/3.2_algorithm_in_operations.png"), //$NON-NLS-1$
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/3.3_input.png"), //$NON-NLS-1$
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/3.4_output.png"), //$NON-NLS-1$
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/3.5_key_selection.png"), //$NON-NLS-1$
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/4_password_input.png"), //$NON-NLS-1$
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/5_operation.png"), //$NON-NLS-1$
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/6_start.png"), //$NON-NLS-1$
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, "/images/de/7_output.png") //$NON-NLS-1$
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_1_1),
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_1_2),
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_2),
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_3_1), 
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_3_2),
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_3_3),
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_3_4), 
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_4),
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_5), 
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_6), 
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_7) 
 	};
 	
 	/**
@@ -245,6 +246,24 @@ public class AlgorithmInstruction extends ViewPart {
 	};
 	
 	private Thread transitionTimerThread = new Thread();
+	
+	private Thread resizeThread = new Thread();
+	
+	private Runnable resizeRunnable = new Runnable() {
+		
+		@Override
+		public void run() {
+			System.out.println("resizeRunnable RUnning"); //$NON-NLS-1$
+			// TODO Auto-generated method stub
+			Display.getDefault().asyncExec(new Runnable() {
+
+				@Override
+				public void run() {
+					scaleImagesToCanvasSize();
+				}
+			});
+		}
+	};
 
 
 	/**
@@ -281,6 +300,7 @@ public class AlgorithmInstruction extends ViewPart {
 				content.layout(new Control[] {cnvs});
 			}
 		});
+		
 		
 		// The canvas the slideshow is painted on.
 		cnvs = new Canvas(content, SWT.DOUBLE_BUFFERED);
@@ -322,6 +342,12 @@ public class AlgorithmInstruction extends ViewPart {
 				}
 				
 				scaleImagesToCanvasSize();
+//				resizeThread = new Thread(resizeRunnable);
+//				System.out.println("resizeThread status " + resizeThread.getState());
+//				if (!resizeThread.isAlive()) {
+//					resizeThread.start();
+//				}
+				
 			}
 			
 			@Override
@@ -356,7 +382,7 @@ public class AlgorithmInstruction extends ViewPart {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// This changes the prefernces if the user changed the
+				// This changes the preferences if the user changed the
 				// "Do no show again" checkbox..
 				IPreferenceStore prefs = new ScopedPreferenceStore(InstanceScope.INSTANCE, CorePlugin.PLUGIN_ID);
 				prefs.setValue("DONT_SHOW_ALGORITHM_INTRODUCTION", checkbox.getSelection()); //$NON-NLS-1$
@@ -470,6 +496,8 @@ public class AlgorithmInstruction extends ViewPart {
 	 * Scales the image to available size of the canvas.
 	 */
 	private void scaleImagesToCanvasSize() {
+		long start = System.nanoTime();
+		System.out.println("scaleImagesToCanvasSize() called"); //$NON-NLS-1$
 		// If a transition is currently in progress do nothing.
 		if (transitionTimerThread.isAlive()) {
 			return;
@@ -489,10 +517,14 @@ public class AlgorithmInstruction extends ViewPart {
 		float resizeFactor;
 
 		// Width and height the image should be scaled to.
-		int width, height;
+//		int width, height;
+		
+//		ExecutorService es = Executors.newCachedThreadPool();
+//		ExecutorService es = Executors.newFixedThreadPool(10);
 		
 		// Iterate through all images.
 		for (int i = 0; i < original_imgs.length; i++) {
+			final int inner_i = i;
 			imageData = original_imgs[i].getImageData();
 			imageWidth = imageData.width;
 			imageHeight = imageData.height;
@@ -502,31 +534,68 @@ public class AlgorithmInstruction extends ViewPart {
 			canvasHeight = cnvs.getClientArea().height;
 			canvasRatio = canvasWidth / canvasHeight;
 			
+			long resizeStart = System.nanoTime();
+			
 			if (imageRatio <= canvasRatio) {
 				// The canvas height is the restricting size.
 				resizeFactor = canvasHeight / imageHeight;
-				width = (int) (imageWidth * resizeFactor);
-				height = (int) canvasHeight;
+				int width = (int) (imageWidth * resizeFactor);
+				int height = (int) canvasHeight;
 				// Use the original, unscaled images as source. This
 				// keeps up the quality of the images if the 
 				// window is often resized.
 				scaled_imgs[i] = ImageScaler.resize(original_imgs[i], width, height);
+//				es.execute(new Runnable() {
+//					
+//					@Override
+//					public void run() {
+//						// TODO Auto-generated method stub
+//						scaled_imgs[inner_i] = ImageScaler.resize(original_imgs[inner_i], width, height);
+//					}
+//				});
 			} else {
 				// The width of the composite is the restricting factor.
 				resizeFactor = canvasWidth / imageWidth;
-				width = (int) canvasWidth;
-				height = (int) (imageData.height * resizeFactor);
+				int width = (int) canvasWidth;
+				int height = (int) (imageData.height * resizeFactor);
 				// Use the original, unscaled images as source. This
 				// keeps up the quality of the images if the 
 				// window is often resized.
 				scaled_imgs[i] = ImageScaler.resize(original_imgs[i], width, height);
+//				es.execute(new Runnable() {
+//					
+//					@Override
+//					public void run() {
+//						// TODO Auto-generated method stub
+//						scaled_imgs[inner_i] = ImageScaler.resize(original_imgs[inner_i], width, height);
+//					}
+//				});
+				
+				
 			}
 			
+
+			
+			long resizeStop = System.nanoTime();
+			System.out.println("Resize time: " + ((resizeStop - resizeStart) / 1000000) + "ms"); //$NON-NLS-1$ //$NON-NLS-2$
+			
 		}
+		
+//		es.shutdown();
+//		try {
+//			es.awaitTermination(1, TimeUnit.SECONDS);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		es.awaitTermination(10, TimeUnit.SECONDS);
 
 		// Set the new scaled images to the transition.
 		transitionManager.clearControlImages();
 		transitionManager.setControlImages(scaled_imgs);
+		
+		long stop = System.nanoTime();
+		System.out.println("scaleImagesToCanvasSize() size: " + ((stop - start) / 1000000) + "ms"); //$NON-NLS-1$ //$NON-NLS-2$
 		
 	}
 	
