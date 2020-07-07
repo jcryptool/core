@@ -36,7 +36,6 @@ import org.jcryptool.crypto.flexiprovider.xml.AlgorithmsXMLManager;
 public class BlockCipherIntroductionPage extends WizardPage implements Listener {
     private BlockCipherWizard wizard;
     private Group modePaddingGroup;
-    private Label modePaddingDescriptionLabel;
     private Label modeLabel;
     private Label paddingLabel;
     private Combo modeCombo;
@@ -207,9 +206,6 @@ public class BlockCipherIntroductionPage extends WizardPage implements Listener 
         modePaddingGroup.setText(Messages.BlockCipherIntroductionPage_1);
         modePaddingGroup.setLayoutData(gridData1);
         modePaddingGroup.setLayout(gridLayout);
-        modePaddingDescriptionLabel = new Label(modePaddingGroup, SWT.NONE);
-        modePaddingDescriptionLabel.setText(Messages.BlockCipherIntroductionPage_2);
-        modePaddingDescriptionLabel.setLayoutData(gridData);
         modeLabel = new Label(modePaddingGroup, SWT.NONE);
         modeLabel.setText(Messages.BlockCipherIntroductionPage_3);
         modeLabel.setLayoutData(gridData11);
