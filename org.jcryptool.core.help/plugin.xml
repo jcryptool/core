@@ -29,5 +29,18 @@
             <description>%cheatsheet.general.description</description>
       </cheatsheet>
    </extension>
+   <extension
+         point="org.eclipse.help.webapp.contentFilter">
+      <filter
+            class="org.jcryptool.core.help.JCTJSInjectionFilter"
+            priority="1">
+      </filter>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="org.jcryptool.core.help.ServerStartup">
+      </startup>
+   </extension>
 
 </plugin>
