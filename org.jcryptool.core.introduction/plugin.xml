@@ -7,18 +7,11 @@
       <view
             category="org.eclipse.ui"
             class="org.jcryptool.core.introduction.views.AlgorithmInstruction"
-            icon="icons/sample.png"
+            icon="platform:/plugin/org.eclipse.ui.intro/icons/welcome16.gif"
             id="org.jcryptool.core.introduction.views.AlgorithmInstruction"
             inject="true"
             name="%view.name">
       </view>
-   </extension>
-      <extension
-         point="org.eclipse.help.toc">
-      <toc
-            file="$nl$/toc.xml"
-            primary="false">
-      </toc>
    </extension>
    
    <extension
@@ -42,6 +35,40 @@
                visible="false">
          </view>
       </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.jcryptool.core.introduction.autoSlideCommand"
+            name="AutoSlide">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.jcryptool.core.introduction.handler.AutoslideHandler"
+            commandId="org.jcryptool.core.introduction.autoSlideCommand">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.jcryptool.core.introduction.views.AlgorithmInstruction">
+         <command
+               commandId="org.jcryptool.core.introduction.autoSlideCommand"
+               icon="icons/animationenabled.png"
+               style="push"
+               tooltip="%autoSlideCommand.tooltip">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="$nl$/toc.xml"
+            primary="false">
+      </toc>
    </extension>
 
 </plugin>

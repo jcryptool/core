@@ -9,6 +9,7 @@
 // -----END DISCLAIMER-----
 package org.eclipse.nebula.effects.stw.utils;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
@@ -87,7 +88,7 @@ public class Utilities {
     	int verticalCenter = imgData_toImage.height / 2;
     	int verticalPosition = verticalCenter - (imgData_tightArrow.height / 2);
     	int horizontalPosition = imgData_toImage.width - 10 - imgData_tightArrow.width;
-
+    	
     	e.gc.setAlpha(180);
     	e.gc.drawImage(rightArrow, horizontalPosition, verticalPosition);
     	e.gc.setAlpha(255);
@@ -104,6 +105,8 @@ public class Utilities {
 		
 		int horizotalPosition = (imgData_toImage.width / 2) - ((_totalImages * 20) / 2);
 		int verticalPosition = imgData_toImage.height - 20;
+		
+		e.gc.setAntialias(SWT.ON);
 
 		e.gc.setAlpha(180);
 		e.gc.setBackground(ColorService.GRAY);
@@ -116,6 +119,8 @@ public class Utilities {
 			e.gc.drawOval(horizotalPosition + (i * 20) + 5, verticalPosition, 10, 10);
 		}
 		e.gc.setAlpha(255);
+		
+		e.gc.setAntialias(SWT.OFF);
 
 	}
 

@@ -57,6 +57,8 @@ import org.eclipse.swt.layout.GridLayout;
  *
  */
 public class AlgorithmInstruction extends ViewPart {
+	
+	private boolean autoSlide = true;
 
 	/**
 	 * True, if the autoslide slides the next image after 30 seconds</br>
@@ -65,7 +67,15 @@ public class AlgorithmInstruction extends ViewPart {
 	 * slide to true.
 	 */
 	private boolean allowNextAutoSlide = true;
+	
+	/**
+	 * GridData object used for centering the slideshow.
+	 */
 	private GridData gridData_cnvs;
+	
+	/**
+	 * The canvas the slideshow ist printed on.
+	 */
 	private Canvas cnvs;
 	
 	
@@ -108,8 +118,9 @@ public class AlgorithmInstruction extends ViewPart {
 	/**
 	 * A thread that switches the images every x seconds.
 	 */
-	private Thread t = new Thread(new Runnable() {
-
+	
+	Runnable tRunnable = new Runnable() {
+		
 		@Override
 		public void run() {
 			while (true) {
@@ -147,7 +158,8 @@ public class AlgorithmInstruction extends ViewPart {
 
 			}
 		}
-	});
+	};
+	private Thread t = new Thread(tRunnable);
 
 	private TransitionManager transitionManager;
 
@@ -417,7 +429,7 @@ public class AlgorithmInstruction extends ViewPart {
 		SmoothScroller.scrollSmooth(scrolledComposite);
 
 		// Create the help context id for the viewer's control
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "org.jcryptool.core.introduction.viewer"); //$NON-NLS-1$
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, IntroductionPlugin.PLUGIN_ID + ".introductionContexHelpID"); //$NON-NLS-1$
 
 		// Start the thread that changes the images after 15 seconds.
 		startAutoSwitchImages();
@@ -460,14 +472,22 @@ public class AlgorithmInstruction extends ViewPart {
 	 * This starts the automatic switching of images in the slideshow.
 	 */
 	private void startAutoSwitchImages() {
-		t.start();
+		if (!t.isAlive()) {
+			System.out.println("Autoswitch enabled");
+			t = new Thread(tRunnable);
+			t.start();
+		}
 	}
 
 	/**
 	 * This stops the automatic switching of images in the slideshow.
 	 */
 	private void stopAutoSwitchImages() {
-		t.interrupt();
+		if (t.isAlive()) {
+			System.out.println("Autoswitch disabled");
+			t.interrupt();
+		}
+		
 	}
 
 	/**
@@ -615,6 +635,20 @@ public class AlgorithmInstruction extends ViewPart {
 		// Therefore stop it when the user closes the introduction.
 		stopAutoSwitchImages();
 		super.dispose();
+	}
+	
+	public boolean getAutoSlide() {
+		return autoSlide;
+	}
+	
+	public void setAutoSlide(boolean autoSlide) {
+		this.autoSlide = autoSlide;
+		
+		if (autoSlide) {
+			startAutoSwitchImages();
+		} else {
+			stopAutoSwitchImages();
+		}
 	}
 
 }
