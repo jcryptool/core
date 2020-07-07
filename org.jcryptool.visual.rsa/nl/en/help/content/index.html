@@ -2,12 +2,20 @@
 
 <html>
 <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <title>RSA encryption</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>RSA encryption</title>
+	<script id="MathJax-script" async src="${JCTJS_HOST}/javascript/MathJax-master/es5/tex-mml-svg.js"></script>
 </head>
 
 <body>
   <h1>RSA Cryptosystem (Encrypt, Decrypt, Sign, and Verify)</h1>
+
+<!--
+<p>
+  When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and they are
+  \[x = {-b \pm \sqrt{b^2-4ac} \over 2a}.\]
+</p>
+-->
 
   <p>This help file describes two things:<br/>
   1) <a href="#term">The RSA Scheme</a><br/>
@@ -38,7 +46,7 @@
   
   <p>In a second step, the public RSA exponent e is determined and from this, together with phi(N), the secret RSA exponent d is calculated. The number e is chosen as follows 1 < e < phi(N), with the property that e is relatively prime to phi(N). An especially popular value for e is 2^16+1 = 65537, as in most cases this is co-prime to phi(N) and is especially well-suited for square and multiply exponentiation resulting in a very fast public key operation.</p>
   
-  <p>The secret exponent d = e^(-1) mod phi(N) is calculated as the multiplicative inverse of the public exponent e modulo phi(N).</p>
+  <p>The secret exponent \( d = e^{-1}\; \text{mod}\; \text{phi}(\mathbb{N}) \) is calculated as the multiplicative inverse of the public exponent e modulo phi(N).</p>
   
   <p>After the RSA key generation, N and e can be published. Then, anyone could encrypt a message for the owner of the according secret RSA key d or check a digital signature  &nbsp;&ndash;  using only the public key. </p>
   
