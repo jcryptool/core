@@ -50,17 +50,81 @@ public class JCTJSInjectionFilter implements IFilter {
 		
 	}
 
+	public static class ReplacementOutputStream extends OutputStream {
+		
+		private LinkedList<Integer> buffer;
+		private OutputStream outStream;
+		private Charset charset = StandardCharsets.UTF_8;
+		private String replace;
+		private String with;
+
+		public ReplacementOutputStream(OutputStream outStream, String replace, String with) {
+			this.outStream = outStream;
+			this.replace = replace;
+			this.with = with;
+			this.buffer = new LinkedList<Integer>();
+		}
+		
+		public String getBufferTail(int maxChars) {
+			List<Byte> bytelist = buffer.stream().map(i -> i.byteValue()).collect(Collectors.toList());
+			byte[] bytearray = new byte[bytelist.size()];
+			for (int i = 0; i < bytelist.size(); i++) {
+				byte b = bytelist.get(i);
+				bytearray[i] = b;
+			}
+			String bufferstring = new String(bytearray, this.charset);
+			return bufferstring.subSequence(Math.max(bufferstring.length()-maxChars, 0), bufferstring.length()).toString();
+		}
+		public void popFirstIn() throws IOException {
+			if (this.buffer.size() > 0) {
+				this.outStream.write(this.buffer.removeFirst());
+			}
+		}
+		public void popAll() throws IOException {
+			while(this.buffer.size() > 0) {
+				this.popFirstIn();
+			}
+		}
+		
+		@Override
+		public void write(int arrivedByte) throws IOException {
+			String tailToCompare = getBufferTail(replace.length());
+			if (tailToCompare.equals(this.replace)) {
+				// now, after emitting the buffer and continuing, emit the specified sequence of this injector.
+				this.buffer.clear(); // TODO: assuming the buffer contains exactly the content to be replaced which might be inaccurate when the buffer length changes
+				OutputStreamWriter outputStreamWriter = new OutputStreamWriter(this.outStream, this.charset);
+				outputStreamWriter.write(this.with);
+				outputStreamWriter.flush();
+			}
+			this.buffer.add(arrivedByte);
+			if (this.buffer.size() > this.replace.getBytes(this.charset).length) {
+				try {
+					this.popFirstIn();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		public void flush() throws IOException {
+			this.popAll();
+			this.outStream.flush();
+		}
+		public void close() throws IOException {
+			this.outStream.close();
+		}
+
+	}
 	public static class InjectionOutputStream extends OutputStream {
 		
 		private LinkedList<Integer> buffer;
-		private String injectBeforeToken;
+		private String injectAfterToken;
 		private OutputStream outStream;
 		private String injectionContent;
 		private Charset charset = StandardCharsets.UTF_8;
 
-		public InjectionOutputStream(OutputStream outStream, String injectBeforeToken, String injectionContent) {
+		public InjectionOutputStream(OutputStream outStream, String injectAfterToken, String injectionContent) {
 			this.outStream = outStream;
-			this.injectBeforeToken = injectBeforeToken;
+			this.injectAfterToken = injectAfterToken;
 			this.injectionContent = injectionContent;
 			this.buffer = new LinkedList<Integer>();
 		}
@@ -89,18 +153,15 @@ public class JCTJSInjectionFilter implements IFilter {
 		@Override
 		public void write(int arrivedByte) throws IOException {
 			this.buffer.add(arrivedByte);
-			String tailToCompare = getBufferTail(injectBeforeToken.length());
-			if (tailToCompare.contains("head")) {
-// 				System.out.println(String.format("########### |%s|", tailToCompare));
-			}
-			if (tailToCompare.equals(injectBeforeToken)) {
-// 				System.out.println(String.format("!!!!!!!!!!! |%s|", tailToCompare));
-				// now, before emitting the token and continuing, emit the specified sequence of this injector.
+			String tailToCompare = getBufferTail(injectAfterToken.length());
+			if (tailToCompare.equals(this.injectAfterToken)) {
+				// now, after emitting the buffer and continuing, emit the specified sequence of this injector.
+				this.popAll();
 				OutputStreamWriter outputStreamWriter = new OutputStreamWriter(this.outStream, this.charset);
 				outputStreamWriter.write(this.injectionContent);
 				outputStreamWriter.flush();
 			}
-			if (this.buffer.size() > this.injectBeforeToken.getBytes(this.charset).length) {
+			if (this.buffer.size() > this.injectAfterToken.getBytes(this.charset).length) {
 				try {
 					this.popFirstIn();
 				} catch (IOException e) {
@@ -128,7 +189,7 @@ public class JCTJSInjectionFilter implements IFilter {
 		String injectionPayload = "\n"
 				+ String.format("<script>_bootstrap_JCTJS_PORT=%s</script>\n", JCTJSPort)
 				+ String.format("<script>_bootstrap_JCTHelpsystem_PORT=%s</script>\n", JCTJS_Server.getInstance().helpsystemPort)
-				+ String.format("<script src=\"%s\"/>\n", jctjs_bootstrap_url);
+				+ String.format("<script src=\"%s\"></script>\n", jctjs_bootstrap_url);
 		
 		// transform the stream
 
@@ -136,7 +197,8 @@ public class JCTJSInjectionFilter implements IFilter {
 //		OutputStream transformedStream = new InjectionOutputStream(stdoutTee, "</head>", injectionPayload);
 // 		OutputStream transformedStream = new InjectionOutputStream(stdoutTee, "</head>", "<script>alert('Hello, world!')</script>\n"); // debug utility to display an alert() window in the online help to directly see if this works
 
- 		OutputStream transformedStream = new InjectionOutputStream(out, "</head>", injectionPayload);
+		OutputStream replacedPortStream = new ReplacementOutputStream(out, "${JCTJS_HOST}", "http://127.0.0.1:"+JCTJSPort);
+ 		OutputStream transformedStream = new InjectionOutputStream(replacedPortStream, "<head>", injectionPayload);
 
 		return transformedStream;
 	}
