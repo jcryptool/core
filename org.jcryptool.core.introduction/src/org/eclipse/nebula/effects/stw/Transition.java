@@ -199,7 +199,7 @@ public abstract class Transition {
 	 * @param canvas    is the canvas object to draw the transition on
 	 * @param direction determines the direction of the transition in degrees
 	 */
-	public final void start(final Image from, final Image to, final Canvas canvas, final double direction) {
+	public final void start(final Image from, final int fromNr, final Image to, final int toNr, final Canvas canvas, final double direction) {
 
 		// _transitionManager.isAnyTransitionInProgress.setValue(true);
 
@@ -227,7 +227,7 @@ public abstract class Transition {
 
 		xitionBgGC.dispose();
 
-		transitionPainter = new TransitionPainter(canvas, from, to, direction, xitionBg);
+		transitionPainter = new TransitionPainter(canvas, from, fromNr, to, toNr, direction, xitionBg);
 
 		transitionPainter.paintTransition(TransitionPainter.TRANSITION_INIT);
 
@@ -337,27 +337,15 @@ public abstract class Transition {
 		 * @param direction Direction of the animation effect.
 		 * @param xitionBg  Initial background of the transition paint.
 		 */
-		private TransitionPainter(Canvas canvas, final Image from, final Image to, final double direction,
-				final Image xitionBg) {
+		private TransitionPainter(Canvas canvas, final Image from, final int fromNr,
+				final Image to, final int toNr, final double direction, final Image xitionBg){
 			_canvas = canvas;
 			_from = from;
 			_to = to;
 			_direction = direction;
 			_xitionBg = xitionBg;
 
-			int nextImage = 0;
-			switch ((int) _direction) {
-			case (int) DIR_LEFT:
-				nextImage = Math.floorMod(_transitionManager.getTransitionable().getSelection() + 1,
-						_transitionManager.getTotalImages());
-				break;
-			case (int) DIR_RIGHT:
-				nextImage = Math.floorMod(_transitionManager.getTransitionable().getSelection() - 1,
-						_transitionManager.getTotalImages());
-				break;
-			}
-
-			utils = new Utilities(to, _transitionManager.getTotalImages(), nextImage);
+			utils = new Utilities(to, _transitionManager.getTotalImages(), toNr);
 		}
 
 		/**

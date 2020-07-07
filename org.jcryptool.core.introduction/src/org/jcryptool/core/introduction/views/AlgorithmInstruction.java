@@ -57,33 +57,28 @@ import org.eclipse.swt.layout.GridLayout;
  *
  */
 public class AlgorithmInstruction extends ViewPart {
-	
-	private boolean autoSlide = true;
 
 	/**
-	 * True, if the autoslide slides the next image after 30 seconds</br>
-	 * False, if the user slides by hand. The autoslider waits for another 30 secs
-	 * to slide to the next image. The autoslider set this value after an automatic
-	 * slide to true.
+	 * Indicates if the slideshow should automatically slide images. The default is
+	 * true.
 	 */
-	private boolean allowNextAutoSlide = true;
-	
+	private boolean autoSlide = true;
+
 	/**
 	 * GridData object used for centering the slideshow.
 	 */
 	private GridData gridData_cnvs;
-	
+
 	/**
 	 * The canvas the slideshow ist printed on.
 	 */
 	private Canvas cnvs;
-	
-	
+
 	/**
 	 * Composite containing the whole GUI of the plugin.
 	 */
 	private Composite content;
-	
+
 	/**
 	 * Images in the slideshow.
 	 */
@@ -91,75 +86,27 @@ public class AlgorithmInstruction extends ViewPart {
 			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_1_1),
 			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_1_2),
 			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_2),
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_3_1), 
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_3_1),
 			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_3_2),
 			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_3_3),
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_3_4), 
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_3_4),
 			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_4),
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_5), 
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_6), 
-			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_7) 
-	};
-	
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_5),
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_6),
+			ImageService.getImage(IntroductionPlugin.PLUGIN_ID, Messages.AlgorithmInstruction_image_7) };
+
 	/**
 	 * Images for the slideshow scaled to the canvas size.
 	 */
 	private Image[] scaled_imgs;
-	
+
 	/**
 	 * The number of the current image in the slideshow.</br>
 	 * Minimum: 0; Maximum: original_imgs.length(),
 	 */
 	private int curImage = 0;
-	
-	
+
 	private SlideTransition slideTransition;
-	
-	/**
-	 * A thread that switches the images every x seconds.
-	 */
-	
-	Runnable tRunnable = new Runnable() {
-		
-		@Override
-		public void run() {
-			while (true) {
-				try {
-					// Wait 15 seconds between switching the images.
-					Thread.sleep(15000);
-				} catch (InterruptedException e) {
-					return;
-				}
-
-				// We want to access a GUI element that is
-				// used by the GUI thread, so we can not access
-				// it via this thread. We have to use a thread
-				// that can access GUI elements.
-				
-				while (transitionTimerThread.isAlive()) {
-					try {
-						Thread.sleep(50);
-					} catch (InterruptedException e) {
-						LogUtil.logError(IntroductionPlugin.PLUGIN_ID, e);
-					}
-				}
-				
-				if (allowNextAutoSlide) {
-					Display.getDefault().asyncExec(new Runnable() {
-
-						@Override
-						public void run() {
-							slideToNextImage();
-						}
-					});
-				} else {
-					allowNextAutoSlide = true;
-				}
-
-			}
-		}
-	};
-	private Thread t = new Thread(tRunnable);
 
 	private TransitionManager transitionManager;
 
@@ -194,10 +141,12 @@ public class AlgorithmInstruction extends ViewPart {
 		public void addSelectionListener(SelectionListener listener) {
 
 		}
-		
-		
+
 	};
 
+	/**
+	 * This is the mouse listener reacting the canvas.
+	 */
 	private MouseListener mouseListener = new MouseListener() {
 
 		@Override
@@ -211,41 +160,53 @@ public class AlgorithmInstruction extends ViewPart {
 			// This method handles the users clicks on the left/right
 			// side of the slideshow and triggers the switch of the
 			// images.
-			
+
 			if (transitionTimerThread.isAlive()) {
 				return;
 			}
-			
 
 			Point cursorLocation = Display.getCurrent().getCursorLocation();
 			Point relativeCurserLocation = Display.getCurrent().getFocusControl().toControl(cursorLocation);
-			
-			if (relativeCurserLocation.y > 0 && relativeCurserLocation.y < scaled_imgs[curImage].getImageData().height) {
-				if (relativeCurserLocation.x < (scaled_imgs[curImage].getImageData().width / 2)) {
-					// Slide to the left.
-					allowNextAutoSlide = false;
-					slideToPrevImage();
-				} else {
-					// Slide to the right.
-					allowNextAutoSlide = false;
-					slideToNextImage();
+
+			// The width and height of the current image.
+			int imageWidth = scaled_imgs[curImage].getImageData().width;
+			int imageHeight = scaled_imgs[curImage].getImageData().height;
+
+			// The user clicks of on of the points at the bottom.
+			if (relativeCurserLocation.y > (imageHeight - Utilities.pointVerticalDistance)
+					&& relativeCurserLocation.y < imageHeight) {
+				int leftEdge = (imageWidth / 2) - ((scaled_imgs.length * Utilities.pointHorizontalSpacing) / 2);
+				int rightEdge = (imageWidth / 2) + ((scaled_imgs.length * Utilities.pointHorizontalSpacing) / 2);
+				if (relativeCurserLocation.x > leftEdge && relativeCurserLocation.y < rightEdge) {
+					int selectedImage = (relativeCurserLocation.x - leftEdge) / Utilities.pointHorizontalSpacing;
+
+					slideToImageNr(selectedImage);
+					
+					return;
 				}
 			}
 
-
+			// The user clicks somewhere on the right or the left of the image.
+			if (relativeCurserLocation.y > 0 && relativeCurserLocation.y < imageHeight) {
+				if (relativeCurserLocation.x < (imageWidth / 2)) {
+					// Slide to the left.
+					slideToPrevImage();
+				} else {
+					// Slide to the right.
+					slideToNextImage();
+				}
+			}
 
 		}
 
 		@Override
 		public void mouseDoubleClick(MouseEvent e) {
-
+			// Do nothing
 		}
 	};
-	
-	
-	
+
 	private Runnable transitionTimerRunnable = new Runnable() {
-		
+
 		@Override
 		public void run() {
 			try {
@@ -253,30 +214,41 @@ public class AlgorithmInstruction extends ViewPart {
 			} catch (InterruptedException e) {
 				LogUtil.logError(IntroductionPlugin.PLUGIN_ID, e);
 			}
-			
+
 		}
 	};
-	
+
 	private Thread transitionTimerThread = new Thread();
-	
-	private Thread resizeThread = new Thread();
-	
-	private Runnable resizeRunnable = new Runnable() {
-		
+
+	private Runnable timerRunnable = new Runnable() {
+
 		@Override
 		public void run() {
-			System.out.println("resizeRunnable RUnning"); //$NON-NLS-1$
-			// TODO Auto-generated method stub
-			Display.getDefault().asyncExec(new Runnable() {
+			if (autoSlide) {
+				try {
 
-				@Override
-				public void run() {
-					scaleImagesToCanvasSize();
+					// After the countdown has finished switch to the next image.
+					// After 15 seconds it switches to the next image.
+					Thread.sleep(15000);
+
+					Display.getDefault().asyncExec(new Runnable() {
+
+						@Override
+						public void run() {
+							slideToNextImage();
+						}
+					});
+
+				} catch (InterruptedException e) {
+					// Here is an interrupted exception thrown.
+					// I ignore this. I know using exceptions in the
+					// program flow is bad, but it is easy.
 				}
-			});
+			}
 		}
 	};
 
+	private Thread timerThread = new Thread(timerRunnable);
 
 	/**
 	 * The ID of the view as specified by the extension.
@@ -296,24 +268,22 @@ public class AlgorithmInstruction extends ViewPart {
 		gl_content.verticalSpacing = 0;
 		content.setLayout(gl_content);
 		content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-//		content.setBackground(ColorService.GREEN);
-		
+
 		scrolledComposite.setContent(content);
 
-
+		// Load the images to the slideshow.
 		initializeScaledImages();
-		
+
 		content.addListener(SWT.Resize, new Listener() {
 			@Override
 			public void handleEvent(Event event) {
 				int[] sizehint = computeSlideshowSizeHint();
 				gridData_cnvs.widthHint = sizehint[0];
 				gridData_cnvs.heightHint = sizehint[1];
-				content.layout(new Control[] {cnvs});
+				content.layout(new Control[] { cnvs });
 			}
 		});
-		
-		
+
 		// The canvas the slideshow is painted on.
 		cnvs = new Canvas(content, SWT.DOUBLE_BUFFERED);
 		gridData_cnvs = new GridData(SWT.CENTER, SWT.FILL, true, true);
@@ -328,43 +298,37 @@ public class AlgorithmInstruction extends ViewPart {
 				// Initial drawing of the first image in the slideshow
 				Image img = scaled_imgs[curImage];
 				e.gc.drawImage(img, 0, 0);
-				
+
 				// Initial drawing of the arrows on the left and right side of the slideshow
 				// and the points at the bottom of the slideshow.
-				Utilities utils = new  Utilities(scaled_imgs[curImage], scaled_imgs.length, curImage);
+				Utilities utils = new Utilities(scaled_imgs[curImage], scaled_imgs.length, curImage);
 				utils.drawLeftArrow(e);
 				utils.drawRightArrow(e);
 				utils.showPosition(e);
 			}
 		});
 
-
 		cnvs.addMouseListener(mouseListener);
-		
+
 		cnvs.addControlListener(new ControlListener() {
-			
+
 			@Override
 			public void controlResized(ControlEvent e) {
 				// This resizes the images in the slideshow.
-				
+
 				// Do not change the size of the images when the images slide.
 				// Elsewhere a NullPointerException occurs.
 				if (transitionTimerThread.isAlive()) {
 					return;
 				}
-				
+
 				scaleImagesToCanvasSize();
-//				resizeThread = new Thread(resizeRunnable);
-//				System.out.println("resizeThread status " + resizeThread.getState());
-//				if (!resizeThread.isAlive()) {
-//					resizeThread.start();
-//				}
-				
+
 			}
-			
+
 			@Override
 			public void controlMoved(ControlEvent e) {
-				// No need to resize, because the size of the 
+				// No need to resize, because the size of the
 				// canvas does not change when moving the plugin.
 			}
 		});
@@ -420,8 +384,6 @@ public class AlgorithmInstruction extends ViewPart {
 		transitionManager.setTransition(slideTransition);
 
 		transitionManager.setControlImages(scaled_imgs);
-		
-
 
 		// Calculate the minimal size of the plugin to
 		// set the scrollbars correct.
@@ -429,7 +391,8 @@ public class AlgorithmInstruction extends ViewPart {
 		SmoothScroller.scrollSmooth(scrolledComposite);
 
 		// Create the help context id for the viewer's control
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, IntroductionPlugin.PLUGIN_ID + ".introductionContexHelpID"); //$NON-NLS-1$
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
+				IntroductionPlugin.PLUGIN_ID + ".introductionContexHelpID"); //$NON-NLS-1$
 
 		// Start the thread that changes the images after 15 seconds.
 		startAutoSwitchImages();
@@ -442,26 +405,27 @@ public class AlgorithmInstruction extends ViewPart {
 		float parentAspectRatio = (float) parentSize.width / (float) parentSize.height;
 		int adaptedWidth = parentSize.width;
 		int adaptedHeight = parentSize.height;
-		if(adaptedWidth <= 0 || adaptedHeight <= 0) {
+		if (adaptedWidth <= 0 || adaptedHeight <= 0) {
 			adaptedHeight = 10; // TODO: handle better?
 			adaptedWidth = 10;
 		}
 		if (aspectRatio > parentAspectRatio) { // broader than allowed -> adapt height to match parent width
 			adaptedHeight = (int) Math.round(adaptedWidth / aspectRatio);
-		} else {                               // other way around
+		} else { // other way around
 			adaptedWidth = (int) Math.round(adaptedHeight * aspectRatio);
 		}
-		int[] adaptedSize = new int[] {adaptedWidth, adaptedHeight};
+		int[] adaptedSize = new int[] { adaptedWidth, adaptedHeight };
 		return adaptedSize;
 	}
 
 	protected float getCurrentSlideAspectRatio() {
-		return 16.0f / 9.0f; //TODO: dynamically get aspect ratio from displayed img
+		return 16.0f / 9.0f; // TODO: dynamically get aspect ratio from displayed img
 	}
 
 	/**
-	 * This method only initializes <code>scaled_imgs = new Image[original_imgs.length];</code>
-	 * and fills it with the images from <code>original_imgs</code> array.
+	 * This method only initializes
+	 * <code>scaled_imgs = new Image[original_imgs.length];</code> and fills it with
+	 * the images from <code>original_imgs</code> array.
 	 */
 	private void initializeScaledImages() {
 		scaled_imgs = new Image[original_imgs.length];
@@ -472,22 +436,18 @@ public class AlgorithmInstruction extends ViewPart {
 	 * This starts the automatic switching of images in the slideshow.
 	 */
 	private void startAutoSwitchImages() {
-		if (!t.isAlive()) {
-			System.out.println("Autoswitch enabled");
-			t = new Thread(tRunnable);
-			t.start();
-		}
+		autoSlide = true;
+		resetTimer();
 	}
 
 	/**
 	 * This stops the automatic switching of images in the slideshow.
 	 */
 	private void stopAutoSwitchImages() {
-		if (t.isAlive()) {
-			System.out.println("Autoswitch disabled");
-			t.interrupt();
+		autoSlide = false;
+		if (timerThread.isAlive()) {
+			timerThread.interrupt();
 		}
-		
 	}
 
 	/**
@@ -495,10 +455,13 @@ public class AlgorithmInstruction extends ViewPart {
 	 */
 	private void slideToNextImage() {
 		int nextImage = Math.floorMod(curImage + 1, scaled_imgs.length);
+
 		transitionTimerThread = new Thread(transitionTimerRunnable);
 		transitionTimerThread.start();
-		slideTransition.start(scaled_imgs[curImage], scaled_imgs[nextImage], cnvs, SlideTransition.DIR_LEFT);
+		slideTransition.start(scaled_imgs[curImage], curImage, scaled_imgs[nextImage], nextImage, cnvs,
+				SlideTransition.DIR_LEFT);
 		curImage = nextImage;
+		resetTimer();
 	}
 
 	/**
@@ -506,42 +469,73 @@ public class AlgorithmInstruction extends ViewPart {
 	 */
 	private void slideToPrevImage() {
 		int previousImage = Math.floorMod(curImage - 1, scaled_imgs.length);
+
 		transitionTimerThread = new Thread(transitionTimerRunnable);
 		transitionTimerThread.start();
-		slideTransition.start(scaled_imgs[curImage], scaled_imgs[previousImage], cnvs, SlideTransition.DIR_RIGHT);
+		slideTransition.start(scaled_imgs[curImage], curImage, scaled_imgs[previousImage], previousImage, cnvs,
+				SlideTransition.DIR_RIGHT);
 		curImage = previousImage;
+		resetTimer();
 	}
-	
+
+	private void slideToImageNr(int imageNr) {
+		// Only do a slide if the given image is
+		// different from the current image.
+		if (imageNr != curImage) {
+
+			double direction = 0.0;
+
+			if (imageNr < curImage) {
+				// Slide left
+				direction = SlideTransition.DIR_RIGHT;
+			} else {
+				// Slide right
+				direction = SlideTransition.DIR_LEFT;
+			}
+
+			// Start the timer that avoids any interaction when a transition is in progress.
+			transitionTimerThread = new Thread(transitionTimerRunnable);
+			transitionTimerThread.start();
+
+			// This starts the transition
+			slideTransition.start(scaled_imgs[curImage], curImage, scaled_imgs[imageNr], imageNr, cnvs, direction);
+			curImage = imageNr;
+			
+			
+			resetTimer();
+		}
+	}
+
 	/**
 	 * Scales the image to available size of the canvas.
 	 */
 	private void scaleImagesToCanvasSize() {
 		long start = System.nanoTime();
-		System.out.println("scaleImagesToCanvasSize() called"); //$NON-NLS-1$
+//		System.out.println("scaleImagesToCanvasSize() called"); //$NON-NLS-1$
 		// If a transition is currently in progress do nothing.
 		if (transitionTimerThread.isAlive()) {
 			return;
 		}
-		
+
 		// The following code calculates the side ratios of the image
 		// to fit perfectly in the canvas
 		ImageData imageData;
-		
+
 		// Attributes of the original image.
 		float imageWidth, imageHeight, imageRatio;
-		
+
 		// Attributs of the canvas
 		float canvasWidth, canvasHeight, canvasRatio;
-		
+
 		// A factor to calculate the width/height of the scaled image.
 		float resizeFactor;
 
 		// Width and height the image should be scaled to.
 //		int width, height;
-		
+
 //		ExecutorService es = Executors.newCachedThreadPool();
 //		ExecutorService es = Executors.newFixedThreadPool(10);
-		
+
 		// Iterate through all images.
 		for (int i = 0; i < original_imgs.length; i++) {
 			final int inner_i = i;
@@ -549,20 +543,20 @@ public class AlgorithmInstruction extends ViewPart {
 			imageWidth = imageData.width;
 			imageHeight = imageData.height;
 			imageRatio = imageWidth / imageHeight;
-			
+
 			canvasWidth = cnvs.getClientArea().width;
 			canvasHeight = cnvs.getClientArea().height;
 			canvasRatio = canvasWidth / canvasHeight;
-			
+
 			long resizeStart = System.nanoTime();
-			
+
 			if (imageRatio <= canvasRatio) {
 				// The canvas height is the restricting size.
 				resizeFactor = canvasHeight / imageHeight;
 				int width = (int) (imageWidth * resizeFactor);
 				int height = (int) canvasHeight;
 				// Use the original, unscaled images as source. This
-				// keeps up the quality of the images if the 
+				// keeps up the quality of the images if the
 				// window is often resized.
 				scaled_imgs[i] = ImageScaler.resize(original_imgs[i], width, height);
 //				es.execute(new Runnable() {
@@ -579,7 +573,7 @@ public class AlgorithmInstruction extends ViewPart {
 				int width = (int) canvasWidth;
 				int height = (int) (imageData.height * resizeFactor);
 				// Use the original, unscaled images as source. This
-				// keeps up the quality of the images if the 
+				// keeps up the quality of the images if the
 				// window is often resized.
 				scaled_imgs[i] = ImageScaler.resize(original_imgs[i], width, height);
 //				es.execute(new Runnable() {
@@ -590,17 +584,14 @@ public class AlgorithmInstruction extends ViewPart {
 //						scaled_imgs[inner_i] = ImageScaler.resize(original_imgs[inner_i], width, height);
 //					}
 //				});
-				
-				
-			}
-			
 
-			
+			}
+
 			long resizeStop = System.nanoTime();
-			System.out.println("Resize time: " + ((resizeStop - resizeStart) / 1000000) + "ms"); //$NON-NLS-1$ //$NON-NLS-2$
-			
+//			System.out.println("Resize time: " + ((resizeStop - resizeStart) / 1000000) + "ms"); //$NON-NLS-1$ //$NON-NLS-2$
+
 		}
-		
+
 //		es.shutdown();
 //		try {
 //			es.awaitTermination(1, TimeUnit.SECONDS);
@@ -613,13 +604,12 @@ public class AlgorithmInstruction extends ViewPart {
 		// Set the new scaled images to the transition.
 		transitionManager.clearControlImages();
 		transitionManager.setControlImages(scaled_imgs);
-		
+
 		long stop = System.nanoTime();
 		System.out.println("scaleImagesToCanvasSize() size: " + ((stop - start) / 1000000) + "ms"); //$NON-NLS-1$ //$NON-NLS-2$
-		
+
 	}
-	
-	
+
 	@Override
 	public void setFocus() {
 		cnvs.setFocus();
@@ -636,19 +626,43 @@ public class AlgorithmInstruction extends ViewPart {
 		stopAutoSwitchImages();
 		super.dispose();
 	}
-	
+
+	/**
+	 * Returns if the slideshow is activated or not.
+	 * 
+	 * @return True, if the slideshow is working, false if not.
+	 */
 	public boolean getAutoSlide() {
 		return autoSlide;
 	}
-	
+
+	/**
+	 * Sets if the slideshow should work or not.</br>
+	 * This stops / starts the thread sliding the images.
+	 * 
+	 * @param autoSlide True, if the slideshow should work, false it should remain
+	 *                  at the current image.
+	 */
 	public void setAutoSlide(boolean autoSlide) {
-		this.autoSlide = autoSlide;
-		
+
 		if (autoSlide) {
 			startAutoSwitchImages();
 		} else {
 			stopAutoSwitchImages();
 		}
+	}
+
+
+	/**
+	 * This method triggers an slide in 15 seconds.
+	 */
+	private void resetTimer() {
+		if (timerThread.isAlive()) {
+			timerThread.interrupt();
+		}
+
+		timerThread = new Thread(timerRunnable);
+		timerThread.start();
 	}
 
 }

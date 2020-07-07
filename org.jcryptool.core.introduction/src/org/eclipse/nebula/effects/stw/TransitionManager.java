@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -227,7 +226,7 @@ public class TransitionManager {
             canvas.setBounds(to.getBounds());
             
             //make the transition
-            _transition.start(imgFrom, imgTo, canvas, direction);
+            _transition.start(imgFrom, fromIndex,  imgTo, toIndex, canvas, direction);
             _transitionable.setSelection(toIndex);
             
             //dispose the transition canvas
