@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+  - "10"
+sudo: false
+branches:
+  only:
+    - master
+install:
+- npm install
+script:
+- npm run build-all
+after_success:
+- bash ./travis-deploy.sh
+env:
+  global:
+    - GITHUB_REPO: "tscanlin/tocbot"
+    - secure: "OcjGuUYhSLz2ayyNDBdIKYHci2hYn1nKTmYqDU3gBPQIhoGKVdO4+991nzdaanX++oshNO9hBZbvY3FbaeEq3+uYneGNuOoQ8DLDdwDdmvX9WyG6z9iW31e+jtYUNAbm8fhzfm3m5Mk8WWdpZJ9umUq7j61Qg6xXggFNeHjEde5rfo40/eBv7Av3ZXxvfj+jF6OXK89j3KuVxS4Cv3F/fR36hWTtalaRAQPePrLoYvHr0aDDk0oa5MvP0m9uoaD3scWpx46et/1rGLPjMa/AB7lVmctgX8Pzl0BdQIMvM+CylbiPwH/PnToPSQGQllF4RCa/NYMGjQ2hkFFkEUpBZqEag+0nh8f7Cu6SUSPTPbKYv0tNvrJZbco/sk0xsI9Of9udw+MvnUn4z9Zu/1/dG/tVK3q0/KI9hO1Hw0vYaaVmaK8wK27bJuen+dZPq1nft/vBEQCrRqc9vRZ8M8NDLI8gZZ2seAXLzkGW2QqWaTrbmv0h8nHbEjY1jFgW3LmIgiXOFNxoWNfVpIOxafCO3K8j5lGdlvgGHdIule4UT1T+yDLEhzKu+Lk9aZ5OzcG5gmFGJWtdkHruVLlRrq5EazrkYg7y3Wk833B4Uoni4zWswIjFwpn2Ie5eMMIRpSXcqRvtDOBtkdu2A+H709eZQey+IwcAIhL7yDXiLCT0r08="
