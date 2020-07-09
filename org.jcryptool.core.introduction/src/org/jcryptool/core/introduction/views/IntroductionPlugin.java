@@ -10,7 +10,6 @@
 package org.jcryptool.core.introduction.views;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-
 /**
  * This class only provides the plugin ID to other classes.
  * 

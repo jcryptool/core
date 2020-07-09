@@ -20,11 +20,15 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import org.jcryptool.core.CorePlugin;
+import org.jcryptool.core.introduction.utils.DebounceExecutor;
 import org.jcryptool.core.introduction.utils.ImageScaler;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.core.util.ui.auto.SmoothScroller;
+
+//import java.util.concurrent.ExecutorService;
+//import java.util.concurrent.Executors;
 
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -63,6 +67,11 @@ public class AlgorithmInstruction extends ViewPart {
 	 * true.
 	 */
 	private boolean autoSlide = true;
+	
+	/**
+	 * This thing debounces the resize operations.
+	 */
+	private DebounceExecutor debouncer = new DebounceExecutor();
 
 	/**
 	 * GridData object used for centering the slideshow.
@@ -106,6 +115,9 @@ public class AlgorithmInstruction extends ViewPart {
 	 */
 	private int curImage = 0;
 
+	/**
+	 * This is part of the SWT Transition Widget (STW)
+	 */
 	private SlideTransition slideTransition;
 
 	private TransitionManager transitionManager;
@@ -145,7 +157,8 @@ public class AlgorithmInstruction extends ViewPart {
 	};
 
 	/**
-	 * This is the mouse listener reacting the canvas.
+	 * This is the mouse listener reacting to mouse clicks
+	 * on the canvas.
 	 */
 	private MouseListener mouseListener = new MouseListener() {
 
@@ -205,6 +218,10 @@ public class AlgorithmInstruction extends ViewPart {
 		}
 	};
 
+	/**
+	 * This timer simply counts down from 1 second.</br>
+	 * This is used to block transition when a transition is in progress.
+	 */
 	private Runnable transitionTimerRunnable = new Runnable() {
 
 		@Override
@@ -218,8 +235,15 @@ public class AlgorithmInstruction extends ViewPart {
 		}
 	};
 
+	/**
+	 * Thread running the transitionTimerRunnable.
+	 */
 	private Thread transitionTimerThread = new Thread();
 
+	/**
+	 * Runnable that has a countdown and after that countdown finished
+	 * it triggers the automatic sliding.
+	 */
 	private Runnable timerRunnable = new Runnable() {
 
 		@Override
@@ -248,7 +272,29 @@ public class AlgorithmInstruction extends ViewPart {
 		}
 	};
 
+	/**
+	 * Thread for running the timerRunnable.
+	 */
 	private Thread timerThread = new Thread(timerRunnable);
+	
+	/**
+	 * This resizable just calls the resize function.</Br>
+	 * As it uses GUI elements it has to be run in the GUI-thread.
+	 */
+	private Runnable resizeRunnable = new Runnable() {
+		
+		@Override
+		public void run() {
+			
+			Display.getDefault().asyncExec(new Runnable() {
+				
+				@Override
+				public void run() {
+					scaleImagesToCanvasSize();
+				}
+			});
+		}
+	};
 
 	/**
 	 * The ID of the view as specified by the extension.
@@ -321,8 +367,9 @@ public class AlgorithmInstruction extends ViewPart {
 				if (transitionTimerThread.isAlive()) {
 					return;
 				}
-
-				scaleImagesToCanvasSize();
+				
+				// This causes the resize of the slideshow.
+				debouncer.debounce(100, resizeRunnable);
 
 			}
 
@@ -393,14 +440,17 @@ public class AlgorithmInstruction extends ViewPart {
 		// Create the help context id for the viewer's control
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
 				IntroductionPlugin.PLUGIN_ID + ".introductionContexHelpID"); //$NON-NLS-1$
+		
+//		PlatformUI.getWorkbench().getHelpSystem().displayHelp(IntroductionPlugin.PLUGIN_ID + ".introductionContexHelpID");
 
 		// Start the thread that changes the images after 15 seconds.
 		startAutoSwitchImages();
 
 	}
+	
 
 	private int[] computeSlideshowSizeHint() {
-		Rectangle parentSize = content.getBounds();
+		Rectangle parentSize = content.getClientArea();
 		float aspectRatio = getCurrentSlideAspectRatio();
 		float parentAspectRatio = (float) parentSize.width / (float) parentSize.height;
 		int adaptedWidth = parentSize.width;
@@ -418,8 +468,17 @@ public class AlgorithmInstruction extends ViewPart {
 		return adaptedSize;
 	}
 
+	/**
+	 * This functions calculates the current side ration of the slide.</br>
+	 * For exaple 16:9=1.777
+	 * @return The side ratio of the current slide.
+	 */
 	protected float getCurrentSlideAspectRatio() {
-		return 16.0f / 9.0f; // TODO: dynamically get aspect ratio from displayed img
+		ImageData imageData = scaled_imgs[curImage].getImageData();
+		
+		float ratio = (float) imageData.width / (float) imageData.height;
+		
+		return ratio;
 	}
 
 	/**
@@ -510,12 +569,6 @@ public class AlgorithmInstruction extends ViewPart {
 	 * Scales the image to available size of the canvas.
 	 */
 	private void scaleImagesToCanvasSize() {
-		long start = System.nanoTime();
-//		System.out.println("scaleImagesToCanvasSize() called"); //$NON-NLS-1$
-		// If a transition is currently in progress do nothing.
-		if (transitionTimerThread.isAlive()) {
-			return;
-		}
 
 		// The following code calculates the side ratios of the image
 		// to fit perfectly in the canvas
@@ -524,31 +577,20 @@ public class AlgorithmInstruction extends ViewPart {
 		// Attributes of the original image.
 		float imageWidth, imageHeight, imageRatio;
 
-		// Attributs of the canvas
-		float canvasWidth, canvasHeight, canvasRatio;
-
 		// A factor to calculate the width/height of the scaled image.
 		float resizeFactor;
-
-		// Width and height the image should be scaled to.
-//		int width, height;
-
-//		ExecutorService es = Executors.newCachedThreadPool();
-//		ExecutorService es = Executors.newFixedThreadPool(10);
+		
+		// Attributs of the canvas
+		float canvasWidth = cnvs.getClientArea().width;
+		float canvasHeight = cnvs.getClientArea().height;
+		float canvasRatio = canvasWidth / canvasHeight;
 
 		// Iterate through all images.
 		for (int i = 0; i < original_imgs.length; i++) {
-			final int inner_i = i;
 			imageData = original_imgs[i].getImageData();
 			imageWidth = imageData.width;
 			imageHeight = imageData.height;
 			imageRatio = imageWidth / imageHeight;
-
-			canvasWidth = cnvs.getClientArea().width;
-			canvasHeight = cnvs.getClientArea().height;
-			canvasRatio = canvasWidth / canvasHeight;
-
-			long resizeStart = System.nanoTime();
 
 			if (imageRatio <= canvasRatio) {
 				// The canvas height is the restricting size.
@@ -559,14 +601,7 @@ public class AlgorithmInstruction extends ViewPart {
 				// keeps up the quality of the images if the
 				// window is often resized.
 				scaled_imgs[i] = ImageScaler.resize(original_imgs[i], width, height);
-//				es.execute(new Runnable() {
-//					
-//					@Override
-//					public void run() {
-//						// TODO Auto-generated method stub
-//						scaled_imgs[inner_i] = ImageScaler.resize(original_imgs[inner_i], width, height);
-//					}
-//				});
+
 			} else {
 				// The width of the composite is the restricting factor.
 				resizeFactor = canvasWidth / imageWidth;
@@ -576,38 +611,17 @@ public class AlgorithmInstruction extends ViewPart {
 				// keeps up the quality of the images if the
 				// window is often resized.
 				scaled_imgs[i] = ImageScaler.resize(original_imgs[i], width, height);
-//				es.execute(new Runnable() {
-//					
-//					@Override
-//					public void run() {
-//						// TODO Auto-generated method stub
-//						scaled_imgs[inner_i] = ImageScaler.resize(original_imgs[inner_i], width, height);
-//					}
-//				});
 
 			}
-
-			long resizeStop = System.nanoTime();
-//			System.out.println("Resize time: " + ((resizeStop - resizeStart) / 1000000) + "ms"); //$NON-NLS-1$ //$NON-NLS-2$
-
 		}
-
-//		es.shutdown();
-//		try {
-//			es.awaitTermination(1, TimeUnit.SECONDS);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		es.awaitTermination(10, TimeUnit.SECONDS);
 
 		// Set the new scaled images to the transition.
 		transitionManager.clearControlImages();
 		transitionManager.setControlImages(scaled_imgs);
 
-		long stop = System.nanoTime();
-		System.out.println("scaleImagesToCanvasSize() size: " + ((stop - start) / 1000000) + "ms"); //$NON-NLS-1$ //$NON-NLS-2$
-
+		// Redraw the slideshow, because the automatic redraw from the 
+		// resize event already happened.
+		cnvs.redraw();
 	}
 
 	@Override
