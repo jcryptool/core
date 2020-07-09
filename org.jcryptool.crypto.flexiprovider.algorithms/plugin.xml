@@ -22,5 +22,14 @@
             file="$nl$/contexts_algorithms.xml">
       </contexts>
    </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.jcryptool.crypto.flexiprovider.ui.perspective.FlexiProviderPerspective">
+         <viewShortcut
+               id="org.jcryptool.crypto.flexiprovider.algorithms.ui.views.FlexiProviderAlgorithmsView">
+         </viewShortcut>
+      </perspectiveExtension>
+   </extension>
 
 </plugin>

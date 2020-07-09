@@ -34,6 +34,11 @@
             %view.description
          </description>
       </view>
+      
+      
+      <!-- Die Error Log View. Sie wurde auskommentiert, da
+      sie eine Exception produziert hat und nicht angezeigt wurde. 
+      Daher wird sie nicht mehr angezeigt -->
 <!--      <view
             allowMultiple="false"
             category="org.eclipse.ui"
@@ -43,6 +48,8 @@
             name="%views.errorlog"
             restorable="true">
       </view>      -->
+      
+      
       <view
             allowMultiple="false"
             category="org.eclipse.ui"

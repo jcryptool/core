@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="introductionContexHelpID" title="Bedienungsanleitung Algorithmen-Perspektive">
+		<description>&lt;b&gt;1.&lt;/b&gt; Wählen Sie einen Schlüssel im ... 
+&lt;b&gt;2.&lt;/b&gt; ... 
+&lt;b&gt;3.&lt;/b&gt;</description>
+		<topic href="$nl$/help/index.html" label="Algorithmen Bedienungsanleitung" />
+	</context>
+</contexts>
