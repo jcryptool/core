@@ -18,6 +18,7 @@ function HelpDocument() {
 	return window.frames["HelpFrame"].document;	
 }
 
+
 // loads the MathJax library into the help content frame
 // however, I have not gotten this to work.
 function LoadMathjax() {
