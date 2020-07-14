@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
@@ -382,15 +383,18 @@ public class AlgorithmInstruction extends ViewPart {
 
 		Composite lowerArea = new Composite(content, SWT.NONE);
 		lowerArea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
-		GridLayout gl_lowerArea = new GridLayout();
+		GridLayout gl_lowerArea = new GridLayout(2, false);
 		gl_lowerArea.marginHeight = 0;
 		gl_lowerArea.marginWidth = 0;
 		lowerArea.setLayout(gl_lowerArea);
+		
+		// Spacer of the left of the "do not show again" checkbox.
+		new Label(lowerArea, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
 		// This is the "do not show again" checkbox in the bottom right corner.
 		Button checkbox = new Button(lowerArea, SWT.CHECK);
 		checkbox.setOrientation(SWT.RIGHT_TO_LEFT);
-		checkbox.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true));
+		checkbox.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, true));
 		checkbox.setForeground(ColorService.GRAY);
 		checkbox.setText(Messages.AlgorithmInstruction_showAgain);
 
