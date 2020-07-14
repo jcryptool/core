@@ -153,7 +153,6 @@ public class AlgorithmInstruction extends ViewPart {
 
 		@Override
 		public Composite getComposite() {
-//			return content;
 			return cnvsComposite;
 		}
 
@@ -187,7 +186,7 @@ public class AlgorithmInstruction extends ViewPart {
 			}
 
 			Point cursorLocation = Display.getCurrent().getCursorLocation();
-			Point relativeCurserLocation = Display.getCurrent().getFocusControl().toControl(cursorLocation);
+			Point relativeCurserLocation = cnvs.toControl(cursorLocation);
 
 			// The width and height of the current image.
 			int imageWidth = scaled_imgs[curImage].getImageData().width;
@@ -198,7 +197,7 @@ public class AlgorithmInstruction extends ViewPart {
 					&& relativeCurserLocation.y < imageHeight) {
 				int leftEdge = (imageWidth / 2) - ((scaled_imgs.length * Utilities.pointHorizontalSpacing) / 2);
 				int rightEdge = (imageWidth / 2) + ((scaled_imgs.length * Utilities.pointHorizontalSpacing) / 2);
-				if (relativeCurserLocation.x > leftEdge && relativeCurserLocation.y < rightEdge) {
+				if (relativeCurserLocation.x > leftEdge && relativeCurserLocation.x < rightEdge) {
 					int selectedImage = (relativeCurserLocation.x - leftEdge) / Utilities.pointHorizontalSpacing;
 
 					slideToImageNr(selectedImage);
@@ -208,7 +207,7 @@ public class AlgorithmInstruction extends ViewPart {
 			}
 
 			// The user clicks somewhere on the right or the left of the image.
-			if (relativeCurserLocation.y > 0 && relativeCurserLocation.y < imageHeight) {
+			if (relativeCurserLocation.y >= 0 && relativeCurserLocation.y <= imageHeight) {
 				if (relativeCurserLocation.x < (imageWidth / 2)) {
 					// Slide to the left.
 					slideToPrevImage();
@@ -235,7 +234,8 @@ public class AlgorithmInstruction extends ViewPart {
 		@Override
 		public void run() {
 			try {
-				Thread.sleep((long) slideTransition.getTotalTransitionTime());
+				// The 100 ms are just for security reasons.
+				Thread.sleep((long) slideTransition.getTotalTransitionTime() + 100);
 			} catch (InterruptedException e) {
 				LogUtil.logError(IntroductionPlugin.PLUGIN_ID, e);
 			}
