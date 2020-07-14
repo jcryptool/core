@@ -83,11 +83,6 @@ public class AlgorithmInstruction extends ViewPart {
 	 * The canvas the slideshow ist printed on.
 	 */
 	private Canvas cnvs;
-
-	/**
-	 * Composite containing the whole GUI of the plugin.
-	 */
-//	private Composite content;
 	
 	/**
 	 * Composite for the lower area of the Plugin containing
