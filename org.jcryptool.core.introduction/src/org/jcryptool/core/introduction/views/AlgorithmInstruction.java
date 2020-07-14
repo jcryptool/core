@@ -87,8 +87,19 @@ public class AlgorithmInstruction extends ViewPart {
 	/**
 	 * Composite containing the whole GUI of the plugin.
 	 */
-	private Composite content;
-
+//	private Composite content;
+	
+	/**
+	 * Composite for the lower area of the Plugin containing
+	 * the "do not show again" chekcbox
+	 */
+	private Composite lowerArea;
+	
+	/**
+	 * A composite in which the slideshow is contained.
+	 */
+	private Composite cnvsComposite;
+	
 	/**
 	 * Images in the slideshow.
 	 */
@@ -147,7 +158,8 @@ public class AlgorithmInstruction extends ViewPart {
 
 		@Override
 		public Composite getComposite() {
-			return content;
+//			return content;
+			return cnvsComposite;
 		}
 
 		@Override
@@ -309,30 +321,37 @@ public class AlgorithmInstruction extends ViewPart {
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
 
-		content = new Composite(scrolledComposite, SWT.NONE);
+		Composite content = new Composite(scrolledComposite, SWT.NONE);
 		GridLayout gl_content = new GridLayout(3, false);
 		gl_content.horizontalSpacing = 0;
 		gl_content.verticalSpacing = 0;
 		content.setLayout(gl_content);
 		content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
+		
 		scrolledComposite.setContent(content);
 
 		// Load the images to the slideshow.
 		initializeScaledImages();
-
-		content.addListener(SWT.Resize, new Listener() {
+		
+		cnvsComposite = new Composite(content, SWT.NONE);
+		cnvsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		GridLayout gl_cnvsComposite = new GridLayout();
+		gl_cnvsComposite.marginWidth = 0;
+		gl_cnvsComposite.marginHeight = 0;
+		cnvsComposite.setLayout(gl_cnvsComposite);
+		
+		cnvsComposite.addListener(SWT.Resize, new Listener() {
 			@Override
 			public void handleEvent(Event event) {
 				int[] sizehint = computeSlideshowSizeHint();
 				gridData_cnvs.widthHint = sizehint[0];
 				gridData_cnvs.heightHint = sizehint[1];
-				content.layout(new Control[] { cnvs });
+				cnvsComposite.layout(new Control[] { cnvs });
 			}
 		});
 
 		// The canvas the slideshow is painted on.
-		cnvs = new Canvas(content, SWT.DOUBLE_BUFFERED);
+		cnvs = new Canvas(cnvsComposite, SWT.DOUBLE_BUFFERED);
 		gridData_cnvs = new GridData(SWT.CENTER, SWT.FILL, true, true);
 		int[] initialSizeHint = computeSlideshowSizeHint();
 		gridData_cnvs.widthHint = initialSizeHint[0];
@@ -381,7 +400,7 @@ public class AlgorithmInstruction extends ViewPart {
 			}
 		});
 
-		Composite lowerArea = new Composite(content, SWT.NONE);
+		lowerArea = new Composite(content, SWT.NONE);
 		lowerArea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
 		GridLayout gl_lowerArea = new GridLayout(2, false);
 		gl_lowerArea.marginHeight = 0;
@@ -454,13 +473,13 @@ public class AlgorithmInstruction extends ViewPart {
 	
 
 	private int[] computeSlideshowSizeHint() {
-		Rectangle parentSize = content.getClientArea();
+		Rectangle parentSize = cnvsComposite.getClientArea();
 		float aspectRatio = getCurrentSlideAspectRatio();
 		float parentAspectRatio = (float) parentSize.width / (float) parentSize.height;
 		int adaptedWidth = parentSize.width;
 		int adaptedHeight = parentSize.height;
 		if (adaptedWidth <= 0 || adaptedHeight <= 0) {
-			adaptedHeight = 10; // TODO: handle better?
+			adaptedHeight = 10; 
 			adaptedWidth = 10;
 		}
 		if (aspectRatio > parentAspectRatio) { // broader than allowed -> adapt height to match parent width
