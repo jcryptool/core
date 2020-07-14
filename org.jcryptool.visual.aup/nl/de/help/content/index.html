@@ -3,6 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Android-Mustersperre (AUP)</title>
+		<script id="MathJax-script" async src="${JCTJS_HOST}/javascript/MathJax-master/es5/tex-mml-svg.js"></script>
 	</head>
 	<body>
 		<h1>Grafische Passwörter</h1>
@@ -30,7 +31,7 @@
 		
 		<p>Zum Vergleich: Bei einer vier bis neun stelligen PIN, die aus Ziffern von 1 bis 9 gebildet wird und bei der jede Ziffer <b>nur einmal</b> vorkommen darf, gibt es 985.824 verschiedene Möglichkeiten. Diese PINs werden im Folgenden als eingeschränkte PINs bezeichnet. Die Regeln für die eingeschränkten PINs ähneln denen für AUP-Muster; ihre Anzahl lässt sich durch die Summe der Variationen ohne Zurücklegen<sup><a id="anker1" title="Zur Quelle" href="#fn1">[1]</a></sup> über die PIN-Längen vier bis neun berechnen:</p>
 		
-		<p><img src="./img/formula_pin_perm.png"></p>
+		$$\sum_{k = 4}^{9} \frac{9!}{(9 - k)!}$$
 		
 		<!-- see http://www.unics.uni-hannover.de/nhtcapri/mathematics.html for details -->
 		<!--<p><table cellspacing=0 cellpadding=0>
@@ -133,7 +134,7 @@
 		
 		<p>Es sollte aber bedacht werden, dass sich Menschen Muster bzw. Bilder nachweisbar besser merken können.<sup><a id="anker2" title="Zur Quelle" href="#fn2">[2, S. 5]</a></sup> Folglich lassen sich auch längere Muster gut merken, weshalb der Direktvergleich wahrscheinlich keinen hohen Aussagewert besitzt.</p>
 		
-		<p>Auch sollte bedacht werden, dass eine &bdquo;normale&ldquo; PIN deutlich mehr Möglichkeiten besitzt. Die Anzahl der Variationen einer normalen PIN mit 10 Ziffern der Länge <i>l</i> beträgt 10<sup><i>l</i></sup>.</p>
+		<p>Auch sollte bedacht werden, dass eine &bdquo;normale&ldquo; PIN deutlich mehr Möglichkeiten besitzt. Die Anzahl der Variationen einer normalen PIN mit 10 Ziffern der Länge \(l\) beträgt \(10^l\).</p>
 		
 		<p>Das Ergebnis eines Vergleichs der Gesamtanzahl aller 4-9 stelligen eingeschränkten PINs mit der Gesamtheit aller AUP-Muster ergibt, dass es etwa 2.856 so viele PIN-Variationen wie AUP-Variationen gibt. Dadurch, dass es beim AUP weniger Möglichkeiten bei der Passwortwahl gibt, ist es gegen einen Brute-Force-Angriff anfälliger als PIN- oder Passwort-Authentifizierungsverfahren. In der Praxis ist ein Brute-Force-Angriff über die reguläre Eingabe nicht möglich, da nach spätestens 20 Versuchen das Email-Passwort benötigt wird.</p>
 		
@@ -162,7 +163,7 @@
 				<td align=center>Interne Repräsentation</td>
 			</tr>
 		</table></p>
-		<p>Beim DAS werden zur Nutzerauthentifizierung &bdquo;Passwörter&ldquo; gezeichnet. Diese werden als Abfolge von berührten Feldern in einem Raster gespeichert. Einschränkungen bezüglich der Musterlänge oder Wiederholung von Feldern gibt es nicht. Darüber hinaus kann ein Muster aus mehreren, nicht zusammenhängenden Teilen bestehen. Das AUP ist ein Spezialfall des DAS, denn seine Länge ist beschränkt, jedes Feld kann nur einmal verwendet werden und das Muster besteht aus nur einer zusammenhängenden Linie. Die Entwickler des DAS empfehlen eine Rastergröße von fünf mal fünf.<sup><a title="Zur Quelle" href="#fn2">[2]</a></sup></p>
+		<p>Beim DAS werden zur Nutzerauthentifizierung &bdquo;Passwörter&ldquo; gezeichnet. Diese werden als Abfolge von berührten Feldern in einem Raster gespeichert. Einschränkungen bezüglich der Musterlänge oder Wiederholung von Feldern gibt es nicht. Darüber hinaus kann ein Muster aus mehreren, nicht zusammenhängenden Teilen bestehen. Das AUP ist ein Spezialfall des DAS, denn seine Länge ist beschränkt, jedes Feld kann nur einmal verwendet werden und das Muster besteht aus nur einer zusammenhängenden Linie. Die Entwickler des DAS empfehlen eine Rastergröße von \(5 \times 5\).<sup><a title="Zur Quelle" href="#fn2">[2]</a></sup></p>
 		
 		<p>Die Entwickler geben in ihrer Sicherheitsanalyse an, dass das DAS ein höheres Sicherheitsniveau als Passwörter besitzt.<sup><a title="Zur Quelle" href="#fn2">[2]</a></sup> Dies kann darauf zurück geführt werden, dass Menschen sich Grafiken und Figuren besser merken können und sich somit auch längere Muster gut behalten lassen. Es sollte aber auch bedacht werden, dass sich spiegelsymmetrische Bilder besser merken lassen als asymmetrische.<sup><a id="anker4" title="Zur Quelle" href="#fn4">[4]</a></sup> Dadurch kann der Musterraum für Angriffe erheblich verkleinern werden, was in der Folge auch die Sicherheit verringert.</p>
 		

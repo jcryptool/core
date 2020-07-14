@@ -3,6 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Android Unlock Pattern (AUP)</title>
+		<script id="MathJax-script" async src="${JCTJS_HOST}/javascript/MathJax-master/es5/tex-mml-svg.js"></script>
 	</head>
 	<body>
 		<h1>Graphical Passwords</h1>
@@ -26,11 +27,11 @@
 		<h3 id="security">AUP Security</h3>
 		<p>The Google Nexus S with unmodified Android 2.3.4 is used as reference because many devices are operated by vendor modified Android versions: The unmodified Android forces the user to wait for 30 seconds after five failed unlock attempts. From this point on, the Google password can additionally be used for unlocking the device. However, the user is still able to use the pattern for 15 further pattern unlock attempts. Every five failed attempts 30 seconds have to be waited. After a total of 20 failed attempts, the device can be only unlocked with the Google password. The security of this password is not evaluated because it is a standard text based password.</p>
 		
-		<p>The AUP has a total of 389,112 different valid patterns. This value was determined using a brute-force approach. [<b>Remark</b>: If someone knows a formula we are interested to get known of it.]</p>
+		<p>The AUP has a total of 389,112 different valid patterns. This value was determined using a brute-force approach. (<b>Remark:</b> If you know a formula feel free to contact us.)</p>
 		
 		<p>For comparison: There are 985,824 different PINs of length four to nine, using the digits 1 to 9, and containing every digit <b>only once</b>. These PINs are called limited PINs. The rules for limited PINs are similar to that of the AUP. The calculation is done as sum of the k-permutations of n<sup><a id="anker1" title="Source" href="#fn1">[1]</a></sup> over the PIN lengths four to nine:</p>
-		
-		<p><img src="./img/formula_pin_perm.png"></p>
+	
+		$$\sum_{k = 4}^{9} \frac{9!}{(9 - k)!}$$
 		
 		<p>The table below lists the quantity of AUP permutations in direct comparison to the above explained limited PIN. The column &lsquo;Multiplier&rsquo; lists the growing factor of the permutations when their length is increased by one. The column &lsquo;AUP/PIN&rsquo; lists the ratio of the AUP quantity to the PIN quantity.</p>
 		
@@ -109,7 +110,7 @@
 		
 		<p>As the table shows, the AUP grows slower. As a result, with increasing length the direct comparison gets even worse. In the total, the AUP achieves only about 40% of the limited PIN&rsquo;s permutation quantity.</p>
 		
-		<p>However, it should also be noticed that humans are verifiably able to memorise patterns and pictures much better.<sup><a id="anker2" title="Source" href="#fn2">[2, p. 5]</a></sup> Accordingly, longer pattern can be memorised well, resulting in a lower significance of the direct comparison. On the other hand, a not restricted PIN has significant more permutations. These can be calculated as 10<sup><i>l</i></sup> for a normal PIN with 10 digits and length <i>l</i>.</p>
+		<p>However, it should also be noticed that humans are verifiably able to memorise patterns and pictures much better.<sup><a id="anker2" title="Source" href="#fn2">[2, p. 5]</a></sup> Accordingly, longer pattern can be memorised well, resulting in a lower significance of the direct comparison. On the other hand, a not restricted PIN has significant more permutations. These can be calculated as \(10^l\) for a normal PIN with 10 digits and length \(l\).</p>
 		
 		<p>All in all, there are 2,856 times more limited PINs than AUP permutations (for limited PINs of length 4 to 9). Due to the fact, that the AUP has not so many pattern permutations, it is more vulnerable to brute-force attacks than PIN or password authentication methods. However, a brute-force attack which uses the conventional input has only a very little success rate because only 20 pattern can be tried. Thereafter the Google account password is required.</p>
 		
@@ -139,7 +140,7 @@
 				<td align=center>Internal representation</td>
 			</tr>
 		</table></p>
-		<p>The DAS utilizes drawn &lsquo;passwords&rsquo; for user authentication. These passwords are represented as sequence of traversed fields in a grid. The DAS has no limitations regarding the length of the sequence or the repetition of single fields. Additionally, it is possible that a pattern can be composed of many disjoint parts. The AUP can therefore be considered as special case of the DAS because its length is limited, fields can be used only once, and the pattern is one coherent line. The DAS developers recommend a grid size of 5 x 5.<sup><a title="Source" href="#fn2">[2]</a></sup></p>
+		<p>The DAS utilizes drawn &lsquo;passwords&rsquo; for user authentication. These passwords are represented as sequence of traversed fields in a grid. The DAS has no limitations regarding the length of the sequence or the repetition of single fields. Additionally, it is possible that a pattern can be composed of many disjoint parts. The AUP can therefore be considered as special case of the DAS because its length is limited, fields can be used only once, and the pattern is one coherent line. The DAS developers recommend a grid size of \(5 \times 5\).<sup><a title="Source" href="#fn2">[2]</a></sup></p>
 		
 		<p>According to the developers&rsquo; security analysis, the DAS features a higher security level than passwords.<sup><a title="Source" href="#fn2">[2]</a></sup> Due to the much better memory of humans for figures and graphics  long patterns can be chosen. But notice that mirror symmetrical figures can be memorised better than asymmetrical.<sup><a id="anker4" title="Source" href="#fn4">[4]</a></sup> This fact can be exploited to reduce the possible pattern set for an attack significantly which in the end results in a lower security.</p>
 		
