@@ -3,6 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	  <title>Viterbi-Analyse</title>
+	<script id="MathJax-script" async src="${JCTJS_HOST}/javascript/MathJax-master/es5/tex-mml-svg.js"></script>
 </head>
 <body>
 
@@ -23,11 +24,11 @@
 
 		<p>Die Running-Key-Verschlüsselung kombiniert die Einzelzeichen von zwei Klartexten mittels XOR oder modularer Addition.</p>
 
-		<p>Man kann -- wie bei einer Buchchiffre -- den einen Klartext als Schlüsselstrom (hergeleitet aus dem Passwort) betrachten, und den anderen Klartext als zu verschlüsselnde Nachricht. Das Passwort sollte mindestens so lang sein wie die Nachricht (ansonsten wird es zyklisch wiederholt). Wenn die Nachricht n Zeichen lang ist, hat die Running-Key-Verschlüsselung 2*n Zeichen als Input (Nachricht und Schlüssel). Als Output erhält man ein Chiffrat der Länge n.</p>
+		<p>Man kann -- wie bei einer Buchchiffre -- den einen Klartext als Schlüsselstrom (hergeleitet aus dem Passwort) betrachten, und den anderen Klartext als zu verschlüsselnde Nachricht. Das Passwort sollte mindestens so lang sein wie die Nachricht (ansonsten wird es zyklisch wiederholt). Wenn die Nachricht \(n\) Zeichen lang ist, hat die Running-Key-Verschlüsselung \(2 \cdot n\) Zeichen als Input (Nachricht und Schlüssel). Als Output erhält man ein Chiffrat der Länge \(n\).</p>
 
 		<p>Wenn einer der beiden Klartexte bekannt ist, kann man den anderen ganz leicht und direkt finden. In dem Szenario hier ist jedoch nur der Geheimtext bekannt, und die Viterbi-Analyse generiert die doppelte Menge Klartext (Nachricht und Schlüssel) mit erstaunlicher Treffsicherheit (aber nur, wenn der Schlüsselstrom nicht zufällig, sondern eben normaler Text ist). Der Viterbi-Algorithmus basiert auf der Annahme, dass die Klartexte ähnliche Muster wie normale Bücher aufweisen. Das zugrunde liegende <a target="_blank" href="https://de.wikipedia.org/wiki/Hidden_Markov_Model">Hidden-Markov-Modell</a> [2] nutzt die Häufigkeitsanalyse von Zeichenfolgen. Die Implementierung basiert auf der Arbeit von <a target="_blank" href="http://www.csc.kth.se/utbildning/kth/kurser/DD2449/krypto09/pdf/rapport_vernam080309.pdf">M. Eker&aring; und B. Terelius</a> [3].</p>
 		
-		<p>Der Viterbi-Algorithmus ist deterministisch, d. h. jede Analyse läuft exakt gleich unter denselben Eingabeparametern. Es ist keine heuristische Abbruchbedingung vorgesehen. Das Ergebnis jeder Iteration des Algorithmus bedingt das Ergebnis der nächsten Iteration, unter Beachtung der Markov-Ordnung (bzw n-Gramm-Länge). Eine kleinere Ordnung bedeutet schnelleres "Verschwinden" dieser Abhängigkeiten.</p>
+		<p>Der Viterbi-Algorithmus ist deterministisch, d. h. jede Analyse läuft exakt gleich unter denselben Eingabeparametern. Es ist keine heuristische Abbruchbedingung vorgesehen. Das Ergebnis jeder Iteration des Algorithmus bedingt das Ergebnis der nächsten Iteration, unter Beachtung der Markov-Ordnung (bzw \(n\)-Gramm-Länge). Eine kleinere Ordnung bedeutet schnelleres "Verschwinden" dieser Abhängigkeiten.</p>
 		
 		<p>Im Folgenden werden die 3 Reiter des Benutzerinterfaces erklärt, und dann wird das Vorgehen anhand eines Beispiels schrittweise erläutert. Am Ende gibt es FAQs, Ideen zur Weiterentwicklung des Plugins und Referenzen zum Verfahren.</p>
 
@@ -122,9 +123,9 @@
 
 		<p align=center><img src="images/viterbi4.png" width="90%"><br clear="all"></p>
 
-		<p>Dieser Vorgänger mit letztem Zeichen "e" ist nur an Stelle 5! Rang 1 hat das "i" von "is in", das wir erwartet haben! </p>
+		<p>Dieser Vorgänger mit letztem Zeichen "e" ist nur an der 5. Stelle! Rang 1 hat das "i" von "is in", das wir erwartet haben! </p>
 
-		<p>Das bedeutet, die Nachfolger der "s"-Option haben im weiteren Verlauf (Schritt 12 bereits) das vortrainierte Sprachmodell "Englisch" im Rahmen der n-Gramm-Fenster der Breite 5 mehr überzeugen können als alles was mit "i" beginnt, was ja im lokalen Rahmen ("is in" versus "seein") durchaus erst einmal Sinn ergibt. Auch Klartext 2 muss sinnvolle 5-Gramme haben. Die Wahl "seein" vs. "is in" ist also auch noch davon abhängig.</p>
+		<p>Das bedeutet, die Nachfolger der "s"-Option haben im weiteren Verlauf (Schritt 12 bereits) das vortrainierte Sprachmodell "Englisch" im Rahmen der \(n\)-Gramm-Fenster der Breite 5 mehr überzeugen können als alles was mit "i" beginnt, was ja im lokalen Rahmen ("is in" versus "seein") durchaus erst einmal Sinn ergibt. Auch Klartext 2 muss sinnvolle 5-Gramme haben. Die Wahl "seein" vs. "is in" ist also auch noch davon abhängig.</p>
       
       	<p>Dazu kann man sich über den anderen Radiobutton oben ("2" statt "1") ein Bild machen (der Einfachheit halber schauen wir uns das hier erst einmal nicht an).</p>
 	
@@ -156,12 +157,12 @@
     
     <h3>Warum tauchen Wörter aus dem einen Klartext nach der Analyse zuweilen im anderen Klartext auf?</h3>
 	
-		<p>Hier ebenfalls greift die Erklärung von oben. Manchmal kommt der Algorithmus an eine Stelle, an der die historischen Kontexte der Kandidatenpfade (Vorgänger-n-Gramme) konvergieren (annähernd gleiches Muster oder gar Zeichen). In diesem Fall ist der historische Kontext wiederum wertlos, und der Algorithmus muss raten, welchem Klartext er welche XOR-Eingabe-Hypothese zuordnet.</p>
+		<p>Hier ebenfalls greift die Erklärung von oben. Manchmal kommt der Algorithmus an eine Stelle, an der die historischen Kontexte der Kandidatenpfade (Vorgänger-\(n\)-Gramme) konvergieren (annähernd gleiches Muster oder gar Zeichen). In diesem Fall ist der historische Kontext wiederum wertlos, und der Algorithmus muss raten, welchem Klartext er welche XOR-Eingabe-Hypothese zuordnet.</p>
     
     
     <h3>Warum beinhaltet die Lösung der Analyse komische Sonderzeichen?</h3>
 	
-		<p>Sonderzeichen sind durch das Sprachmodell berücksichtigt, haben aber kleine Auftretenswahrscheinlichkeiten. In dieser Hinsicht unterscheidet sich ein "y" kaum von einem Komma o.ä. Für den Viterbi-Algorithmus zählt bloß die relative Häufigkeit eines Zeichens zu seinem historischen n-Gramm-Kontext.</p>
+		<p>Sonderzeichen sind durch das Sprachmodell berücksichtigt, haben aber kleine Auftretenswahrscheinlichkeiten. In dieser Hinsicht unterscheidet sich ein "y" kaum von einem Komma o.ä. Für den Viterbi-Algorithmus zählt bloß die relative Häufigkeit eines Zeichens zu seinem historischen \(n\)-Gramm-Kontext.</p>
     
     
     <h3>Weitere Anmerkungen</h3>
@@ -177,7 +178,7 @@
 		<p>
         	<ul>
           	<li>Neuere kryptoanalytische Ansätze gegen die Running-Key-Verschlüsselung implementieren, wie z.B. den Ansatz von <a target="_blank" href="http://dl.acm.org/citation.cfm?id=2390686">Sravana Reddy und Kevin Knight</a> [4], der Wort-basierte statt Zeichen-basierte Sprachmodelle benutzt.</li>
-          	<li>Laden weiterer Referenzmodelle: GUI für die dynamische Berechnung von N-Grammen. Der Quellcode dazu ist unter /src/org/jcryptool/analysis/viterbi/algorithm/NGramGen.java verfügbar. Wenn man damit die entsprechenden Referenzmodelle erzeugt hat, könnte man Viterbi-Analyse auch mit n-Gramm-Längen > 5 ausführen.</li>
+          	<li>Laden weiterer Referenzmodelle: GUI für die dynamische Berechnung von N-Grammen. Der Quellcode dazu ist unter /src/org/jcryptool/analysis/viterbi/algorithm/NGramGen.java verfügbar. Wenn man damit die entsprechenden Referenzmodelle erzeugt hat, könnte man Viterbi-Analyse auch mit \(n\)-Gramm-Längen \(>\) 5 ausführen.</li>
           	<li>Analyse bei Klartexten mit verschiedenen Sprachen.</li>
           	<li>Vertikale und horizontale Scrollbars fehlen.</li>
         	</ul>

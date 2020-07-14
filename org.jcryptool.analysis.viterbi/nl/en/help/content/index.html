@@ -3,6 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	  <title>Viterbi Analysis</title>
+	<script id="MathJax-script" async src="${JCTJS_HOST}/javascript/MathJax-master/es5/tex-mml-svg.js"></script>
 </head>
 <body>
 	<h1>Table of Contents</h1>
@@ -23,11 +24,11 @@
 
 		<p>The running-key cipher combines two plaintexts using methods like XOR on the single characters to generate a ciphertext.</p>
 
-		<p>Like in a book cipher you may consider one plaintext as key stream (derived from the password), and the other plaintext as the message to encrypt. The password should be at least as long as the message (if not it is used cyclicly again). If the message has a length of n characters, the input of the running-key encryption has a length of 2*n characters (message and key). As output we get a ciphertext of length n.</p>
+		<p>Like in a book cipher you may consider one plaintext as key stream (derived from the password), and the other plaintext as the message to encrypt. The password should be at least as long as the message (if not it is used cyclicly again). If the message has a length of \(n\) characters, the input of the running-key encryption has a length of \(2 \cdot n\) characters (message and key). As output we get a ciphertext of length \(n\).</p>
 
 		<p>If one of the two plaintexts is known, it is very easy to recover the other. However, in our case here, only the ciphertext is known, and the Viterbi analysis generates the double amount of plaintext (message and key) with an astonishing accuracy (remark: only if the key stream is not random but normal text). The Viterbi algorithm is based on the assumption, that the plaintexts have similar patterns as text in ordinary books. The underlying <a target="_blank" href="http://en.wikipedia.org/wiki/Hidden_Markov_model">hidden Markov model</a> [2] uses frequency distribution of sequences of letters. The development of this code is based on the work of <a target="_blank" href="http://www.csc.kth.se/utbildning/kth/kurser/DD2449/krypto09/pdf/rapport_vernam080309.pdf">M. Eker&aring; and B. Terelius</a> [3].</p>
 
-		<p>The Viterbi algorithm is a deterministic algorithm (it runs the same way every time for the same parameters). There is no heuristic termination necessary. The Markov order (n-gram length) implicates the order of dependency from one iteration of the analysis to another, with higher order implying a more "informed" behavior (by past steps).</p>
+		<p>The Viterbi algorithm is a deterministic algorithm (it runs the same way every time for the same parameters). There is no heuristic termination necessary. The Markov order (\(n\)-gram length) implicates the order of dependency from one iteration of the analysis to another, with higher order implying a more "informed" behavior (by past steps).</p>
 
 		<p>In the following, the three tabs of the user interface are introduced, then the procedure is explained with a example step-by-step. At the end, there is a FAQ, ideas for further development, and references to the method used.</p>
 		<br>
@@ -63,7 +64,7 @@
 		
 		<p align=center><img src="images/analysis_params.png" width="90%"></p>
 				
-		<p>As the whole analysis is based on the language model, it is important to select the expected language of the plaintexts before beginning the analysis. The parameter "N-gram size" defines the maximum length of the analyzed sequences. Currently, only the n-grams with a length from 1 to 5 are possible (these are stored as pre-calculated tables) to save disc space. The parameter "Search depth" influences the quality of the results: A higher search depth improves the results but decreases performance. To see the results press the button "Start analysis". Again, the results with the decrypted plaintexts can be exported into text files.</p>
+		<p>As the whole analysis is based on the language model, it is important to select the expected language of the plaintexts before beginning the analysis. The parameter "N-gram size" defines the maximum length of the analyzed sequences. Currently, only the \(n\)-grams with a length from 1 to 5 are possible (these are stored as pre-calculated tables) to save disc space. The parameter "Search depth" influences the quality of the results: A higher search depth improves the results but decreases performance. To see the results press the button "Start analysis". Again, the results with the decrypted plaintexts can be exported into text files.</p>
 		
 		<p>By clicking the button "Show analysis details" (it only becomes active when the analysis is finished), you can look into the details of the various analysis steps in the 3rd tab.</p>
 
@@ -149,7 +150,7 @@
     
     <h3>Why are words sometimes appearing in plaintext 2 that belong to plaintext 1, and vice versa?</h3>
 		
-		<p>As stated above, the XOR is commutative and so it is only due to the historic context of candidate paths (n-grams) that the algorithm knows how to flip it in each step. Sometimes the historic contexts of both paths converge (same previous n-grams) at which point the algorithm has to guess.</p>
+		<p>As stated above, the XOR is commutative and so it is only due to the historic context of candidate paths (\(n\)-grams) that the algorithm knows how to flip it in each step. Sometimes the historic contexts of both paths converge (same previous \(n\)-grams) at which point the algorithm has to guess.</p>
     
     
     <h3>Why are there funny characters in the analysis output?</h3>
@@ -161,7 +162,7 @@
 		
 		<p>At the moment, both plaintexts have to be of the same language for the analysis to work correctly.</p>
 	
-		<p>The start of the analyzed output often reads way worse than the later sequences. This is due to predecessor n-gram information not being available and supporting the later descisions for the first n characters. This propagates into the later steps of the analysis, but loses in influence with later steps.</p>
+		<p>The start of the analyzed output often reads way worse than the later sequences. This is due to predecessor \(n\)-gram information not being available and supporting the later descisions for the first n characters. This propagates into the later steps of the analysis, but loses in influence with later steps.</p>
 
 
 
@@ -169,7 +170,7 @@
 		<p>
 			<ul>
 				<li>Implement new cryptanalysis approaches against the running-key cipher like the one from <a target="_blank" href="http://dl.acm.org/citation.cfm?id=2390686">Sravana Reddy and Kevin Knight</a> [4] which uses a word-based language model instead of a character-based model.</li>
-				<li>Loading further reference models: GUI for calculating the n-grams dynamically. The corresponding source code can be found at /src/org/jcryptool/analysis/viterbi/algorithm/NGramGen.java. With accordingly generated models, Viterbi analysis with n-gram windows of size > 5 could be performed.</li>
+				<li>Loading further reference models: GUI for calculating the \(n\)-grams dynamically. The corresponding source code can be found at /src/org/jcryptool/analysis/viterbi/algorithm/NGramGen.java. With accordingly generated models, Viterbi analysis with \(n\)-gram windows of size > 5 could be performed.</li>
 				<li>Analysis of a ciphertext built from two plaintexts of different languages.</li>
 				<li>Vertical and horizontal scrollbars are missing.</li>
 			</ul>
