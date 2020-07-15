@@ -21,6 +21,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import org.jcryptool.core.CorePlugin;
+import org.jcryptool.core.commands.HelpHrefRegistry;
 import org.jcryptool.core.introduction.utils.DebounceExecutor;
 import org.jcryptool.core.introduction.utils.ImageScaler;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -311,6 +312,15 @@ public class AlgorithmInstruction extends ViewPart {
 
 	@Override
 	public void createPartControl(Composite parent) {
+		
+    	/**
+    	 * This assigns a "wrong" online-help to this plugin.
+    	 * This was added, to force the JCT open the online-help of the
+    	 * Algorithm perspective when clicking on the help icon in the
+    	 * JCT toolbar.
+    	 */
+    	String linkToAlgorithmHelp = "/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html";
+    	HelpHrefRegistry.getInstance().registerHrefFor(IntroductionPlugin.PLUGIN_ID, linkToAlgorithmHelp);
 
 		ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
 		scrolledComposite.setExpandHorizontal(true);
@@ -459,8 +469,6 @@ public class AlgorithmInstruction extends ViewPart {
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
 				IntroductionPlugin.PLUGIN_ID + ".introductionContexHelpID"); //$NON-NLS-1$
 		
-//		PlatformUI.getWorkbench().getHelpSystem().displayHelp(IntroductionPlugin.PLUGIN_ID + ".introductionContexHelpID");
-
 		// Start the thread that changes the images after 15 seconds.
 		startAutoSwitchImages();
 
