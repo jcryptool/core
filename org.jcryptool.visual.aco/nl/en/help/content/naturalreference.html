@@ -2,8 +2,9 @@
 
 <html>
 <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <title>The native model</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>The native model</title>
+    <script id="MathJax-script" async src="${JCTJS_HOST}/javascript/MathJax-master/es5/tex-mml-svg.js"></script>
 </head>
 
 <body>
@@ -32,23 +33,23 @@ the pheromones, even before they have found some food.<br>
 Now, following ant will tend to choose a way which is marked more intensively with the pheromone. 
 As more ants will choose the way, the amount of pheromone will increase potentially, and the way will
 be much more attractive for following ants.
-<br><img src="image.png" width="85%"/><br><br>
+<br><img src="image.png" style="width: 85%; max-width:450px"/><br><br>
 In case that different ants found different ways to the same source of food, after a while the shorter path will be
 automatically marked with more pheromone, as the time for the longer path is higher. So more 
 ants will way more frequently pass the shorter path, such that the shorter path will be marked more.<br>
-<br><img src="image2.png" width="85%"/><br><br>
+<br><img src="image2.png" style="width: 85%; max-width:450px"/><br><br>
 For example let two ways exist and let one be of length half the other. Consider two ants starting
-at the same time on those two not yet marked ways (
-P<sub>A</sub>=0 and P<sub>B</sub>=0 ). The ant on the shorter path will already have reached
+at the same time on those two not yet marked ways (\(P_A = 0\) and \(P_B = 0\) ).
+The ant on the shorter path will already have reached
 the source, when the other is just on the half of its way. When the first ant will already be back at the nest,
 the second ant will just be at the source. So now when other ants will leave the nest, they will find those
 two possible ways, but the shorter one will already be marked twice, as the previous ant has already
-passed it twice (P<sub>A</sub>=2). The longer path will only be marked once. So the following ants
+passed it twice (\(P_A = 2\)). The longer path will only be marked once. So the following ants
 will more likely choose the shorter path.
-<br><img src="image3.png" width="85%"/><br><br>
+<br><img src="image3.png" style="width: 85%; max-width:450px"/><br><br>
 When finally the ant on the long trail will reach the nest, multiple ants will have chosen the
 short path so the shorter path will be marked more quickly.<br>
-<br><img src="image4.png" width="85%"/><br><br>
+<br><img src="image4.png" style="width: 85%; max-width:450px"/><br><br>
 As each ants continues on emitting the pheromone, the scents will be concentrated on the 
 better and shorter paths.
 Important as well is the phenomen of evaporation, the scent will not mark a path for ever. After 
