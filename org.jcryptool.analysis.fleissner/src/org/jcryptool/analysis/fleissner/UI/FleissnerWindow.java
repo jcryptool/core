@@ -16,8 +16,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
@@ -49,6 +53,18 @@ import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+    import java.util.Objects;
+    import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+    import org.eclipse.core.runtime.jobs.Job;
+    import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+    import org.eclipse.core.runtime.jobs.ProgressProvider;
+    import org.eclipse.swt.SWT;
+    import org.eclipse.swt.widgets.Composite;
+    import org.eclipse.swt.widgets.ProgressBar; 
 
 public class FleissnerWindow extends Composite{
     
@@ -1213,6 +1229,45 @@ public class FleissnerWindow extends Composite{
         language.setEnabled(false);
         restarts.setEnabled(false);
         nGramSize.setEnabled(false); 
+    }
+
+
+    public static abstract class BackgroundJob<T> {
+    	public List<Consumer<Double>> progressListeners = new LinkedList<>(); 
+    	public List<Consumer<T>> finalizeListeners = new LinkedList<>(); 
+    	
+    	public String name() {
+    		return "Background Job";
+    	}
+    	public abstract void computation();
+    	public void runInBackground() {
+    		Job job = new Job("My Job") {
+    		    @Override
+    		    protected IStatus run(IProgressMonitor monitor) {
+    		        // convert to SubMonitor and set total number of work units
+    		        SubMonitor subMonitor = SubMonitor.convert(monitor, tasks.size());
+    		        for (Task task : tasks) {
+    		            try {
+    		                // sleep a second
+    		                TimeUnit.SECONDS.sleep(1);
+
+    		                // set the name of the current work
+    		                subMonitor.setTaskName("I'm working on Task " + task.getSummary());
+
+    		                // workOnTask is a method in this class which does some work
+    		                // pass a new child with the totalWork of 1 to the mehtod
+    		                workOnTask(task, subMonitor.split(1));
+
+    		            } catch (InterruptedException e) {
+    		                return Status.CANCEL_STATUS;
+    		            }
+    		        }
+    		        return Status.OK_STATUS;
+    		    }
+
+    		};
+    		job.schedule();	
+    	}
     }
     
     /**
