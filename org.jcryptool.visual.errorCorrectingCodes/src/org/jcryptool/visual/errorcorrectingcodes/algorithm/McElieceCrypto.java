@@ -117,13 +117,34 @@ public class McElieceCrypto {
         }
     }
 
+    private static byte[] hexToBytes(String s) {
+        int len = s.length();
+        byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                                 + Character.digit(s.charAt(i+1), 16));
+        }
+        return data;
+    }
+
+    private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
+    private static String bytesToHex(byte[] bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+        for (int j = 0; j < bytes.length; j++) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = HEX_ARRAY[v >>> 4];
+            hexChars[j * 2 + 1] = HEX_ARRAY[v & 0x0F];
+        }
+        return new String(hexChars);
+    }
+
     /**
      * Decrypt.
      *
      * @throws InvalidCipherTextException the invalid cipher text exception
      */
     public void decrypt(String message) throws InvalidCipherTextException {
-        byte[] cipher = javax.xml.bind.DatatypeConverter.parseHexBinary(message); 
+        byte[] cipher = hexToBytes(message);
         decrypted = new ArrayList<>();
 
         if (cipher.length <= decryptionCipher.cipherTextSize)
@@ -235,7 +256,7 @@ public class McElieceCrypto {
      */
     public String getEncryptedHex() {
         StringBuilder sb = new StringBuilder();
-        encrypted.forEach(cipher -> sb.append(javax.xml.bind.DatatypeConverter.printHexBinary(cipher)));
+        encrypted.forEach(cipher -> sb.append(bytesToHex(cipher)));
         return sb.toString();
     }
 
