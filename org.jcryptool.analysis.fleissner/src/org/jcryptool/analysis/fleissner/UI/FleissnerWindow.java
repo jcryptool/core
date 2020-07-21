@@ -20,6 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -43,6 +44,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 import org.jcryptool.analysis.fleissner.Activator;
 import org.jcryptool.analysis.fleissner.key.Grille;
 import org.jcryptool.analysis.fleissner.key.KeySchablone;
@@ -57,9 +59,11 @@ import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
     import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
-    import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.IJobChangeListener;
+import org.eclipse.core.runtime.jobs.Job;
     import org.eclipse.core.runtime.jobs.JobChangeAdapter;
     import org.eclipse.core.runtime.jobs.ProgressProvider;
     import org.eclipse.swt.SWT;
@@ -68,7 +72,7 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 
 public class FleissnerWindow extends Composite{
     
-    private Grille model;
+	private Grille model;
     private Composite mainComposite;
     private Composite method;
     private Composite process;
@@ -1232,185 +1236,376 @@ public class FleissnerWindow extends Composite{
     }
 
 
-    public static abstract class BackgroundJob<T> {
-    	public List<Consumer<Double>> progressListeners = new LinkedList<>(); 
-    	public List<Consumer<T>> finalizeListeners = new LinkedList<>(); 
+// -- Fragment on how to split a BackgroundJob task into multiple steps which each have a name ("phases" of an algo)
+//    		        SubMonitor subMonitor = SubMonitor.convert(monitor, tasks.size());
+//    		        for (Task task : tasks) {
+//    		            try {
+//    		                // TimeUnit.SECONDS.sleep(0.2L); // example: how to sleep
+//    		                subMonitor.setTaskName("I'm working on Task " + task.getSummary());
+//    		                // workOnTask is a method in this class which does some work, "1" unit of it (one task, submonitor has size tasks.size()))
+//    		                workOnTask(task, subMonitor.split(1));
+//
+//    		            } catch (InterruptedException e) {
+//    		                return Status.CANCEL_STATUS;
+//    		            }
+//    		        }
+//    		        return Status.OK_STATUS;
+    
+    public static abstract class BackgroundJob {
+    	
+//     	public List<Consumer<Double>> progressListeners = new LinkedList<>(); 
+    	public List<Consumer<IStatus>> finalizeListeners = new LinkedList<>(); 
     	
     	public String name() {
     		return "Background Job";
     	}
-    	public abstract void computation();
+    	/**
+    	 * Implement this method to update the progress monitor. return e.g. IStatus.OK.
+    	 * add a finalizeListener to be notified when the algorithm returns.
+    	 * 
+    	 * @param monitor
+    	 * @return
+    	 */
+    	public abstract IStatus computation(IProgressMonitor monitor);
+    	/**
+    	 * starts the computation in the background. Be sure to subscribe to {@link #finalizeListeners} to be notified of the result.
+    	 */
     	public void runInBackground() {
-    		Job job = new Job("My Job") {
+    		Job job = new Job(name()) {
     		    @Override
     		    protected IStatus run(IProgressMonitor monitor) {
-    		        // convert to SubMonitor and set total number of work units
-    		        SubMonitor subMonitor = SubMonitor.convert(monitor, tasks.size());
-    		        for (Task task : tasks) {
-    		            try {
-    		                // sleep a second
-    		                TimeUnit.SECONDS.sleep(1);
-
-    		                // set the name of the current work
-    		                subMonitor.setTaskName("I'm working on Task " + task.getSummary());
-
-    		                // workOnTask is a method in this class which does some work
-    		                // pass a new child with the totalWork of 1 to the mehtod
-    		                workOnTask(task, subMonitor.split(1));
-
-    		            } catch (InterruptedException e) {
-    		                return Status.CANCEL_STATUS;
-    		            }
-    		        }
-    		        return Status.OK_STATUS;
+    		    	return BackgroundJob.this.computation(monitor);
     		    }
 
     		};
     		job.schedule();	
+//     		PlatformUI.getWorkbench().getProgressService().busyCursorWhile();
+    		job.addJobChangeListener(new IJobChangeListener() {
+				
+				private boolean isDone;
+
+				@Override
+				public void sleeping(IJobChangeEvent event) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void scheduled(IJobChangeEvent event) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void running(IJobChangeEvent event) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void done(IJobChangeEvent event) {
+					this.isDone = true;
+					finalizeListeners.forEach(listener -> listener.accept(event.getResult()));
+
+				}
+				
+				@Override
+				public void awake(IJobChangeEvent event) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void aboutToRun(IJobChangeEvent event) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
     	}
     }
+
+    public class FleissnerMethodJob extends BackgroundJob {
+
+		private ParameterSettings ps;
+		private MethodApplication ma;
+		private String keysize1;
+		private String ngramsize1;
+		private String restarts1;
+		private int selection;
+		private boolean encryptSelection;
+		private String checkedArgs;
+
+		/**
+		 * 
+		 * @return the most important parameters for starting analysis. Method will be executed at the start of every analysis
+		 */
+		public String checkArgs() {
+
+			String args = Messages.FleissnerWindow_empty; 
+
+			final String keysize = keySize.getText();
+			args += Messages.FleissnerWindow_parameter_enlistment_text+textName;
+			args += Messages.FleissnerWindow_parameter_enlistment_keyLength+keysize;
+			args += Messages.FleissnerWindow_parameter_enlistment_restarts+restarts.getText();
+			args += Messages.FleissnerWindow_parameter_enlistment_language+argLanguage;
+			args += Messages.FleissnerWindow_parameter_enlistment_statistic+statisticName;
+			args += Messages.FleissnerWindow_parameter_enlistment_nGram+nGramSize.getText();
+
+			return args;
+		}
+
+		@Override
+		public IStatus computation(IProgressMonitor monitor) {
+			if (argMethod != null) {
+				switch (argMethod) {
+				
+				case "analyze": //$NON-NLS-1$
+					monitor.beginTask("Analyze", 100);
+					monitor.worked(1);
+					userText = true;
+					getDisplay().syncExec(() -> analysisOutput.setText(Messages.FleissnerWindow_output_progress));
+
+					getDisplay().syncExec(() -> {
+						this.keysize1 = keySize.getText();
+						this.ngramsize1 = nGramSize.getText();
+						this.restarts1 = restarts.getText();
+						this.selection = nGramSize.getSelection();
+					});
+
+					args = new String[12];
+					args[0] = Messages.FleissnerWindow_input_method;
+					args[1] = argMethod;
+					args[2] = Messages.FleissnerWindow_input_keyLength;
+					args[3] = keysize1;
+					args[4] = Messages.FleissnerWindow_input_cryptedText;
+					args[5] = argText;
+					args[6] = Messages.FleissnerWindow_input_nGramSize;
+					args[7] = ngramsize1;
+					args[8] = Messages.FleissnerWindow_input_language;
+					args[9] = argLanguage;
+					args[10] = Messages.FleissnerWindow_input_restarts;
+					args[11] = restarts1;
+
+					//                argStatistics shall only be reloaded if changed
+					if (fisOld != fis || !oldNgramSize.equals(ngramsize1) || !oldLanguage.equals(argLanguage)) {
+						try {
+							argStatistics = lf.loadBinNgramFrequencies(fis, argLanguage, selection);
+							fisOld = fis;
+							oldNgramSize = ngramsize1;
+							oldLanguage = argLanguage;
+						} catch (NumberFormatException e) {
+							LogUtil.logError(Activator.PLUGIN_ID,Messages.FleissnerWindow_error_enterValidStatistic, e, true);
+							return Status.CANCEL_STATUS;
+						} catch (FileNotFoundException e) {
+							LogUtil.logError(Activator.PLUGIN_ID,Messages.FleissnerWindow_error_fileNotFound, e, true);
+							return Status.CANCEL_STATUS;
+						} catch (IllegalArgumentException e) {
+							LogUtil.logError(Activator.PLUGIN_ID, Messages.FleissnerWindow_error_invalidParameterCombination, e, true);
+							return Status.CANCEL_STATUS;
+						}
+					}
+					break;
+
+				case "encrypt": //$NON-NLS-1$
+					monitor.beginTask("Encrypt", 100); // TODO: internationalize
+					monitor.worked(1);
+					//                if 'encrypt' is not selected this method will only be called in random encryption and userText stays false
+					getDisplay().syncExec(() -> {
+						this.encryptSelection = encrypt.getSelection();
+					});
+					if (encryptSelection) 
+						userText = true;
+
+					args = new String[6];
+					args[0] = Messages.FleissnerWindow_input_method;
+					args[1] = argMethod;
+					args[2] = Messages.FleissnerWindow_input_key;
+					argKey = model.translateKeyToLogic();
+					args[3] = argKey;
+					args[4] = Messages.FleissnerWindow_input_plaintext;
+					args[5] = argText;
+
+					break;
+
+				case "decrypt":    //$NON-NLS-1$
+					monitor.beginTask("Decrypt", 100); // TODO: internationalize
+					monitor.worked(1);
+
+					userText = true;
+
+					args = new String[6];
+					args[0] = Messages.FleissnerWindow_input_method;
+					args[1] = argMethod;
+					args[2] = Messages.FleissnerWindow_input_key;
+					argKey = model.translateKeyToLogic();
+					args[3] = argKey;
+					args[4] = Messages.FleissnerWindow_input_cryptedText;
+					args[5] = argText;
+
+					break;
+				}
+			}else {
+				throw new IllegalArgumentException(Messages.FleissnerWindow_error_noMethod);
+			}
+			return this.run(monitor);
+			
+		}
+
+		private IStatus run(IProgressMonitor monitor) {
+			this.ps = null;
+			this.ma = null;
+			
+			try {
+	//          Configuration of given parameters and selecting and applying one of the three methods
+				
+				this.ps = new ParameterSettings(args);
+				this.ma = new MethodApplication(ps, argStatistics);
+
+			} catch (IllegalArgumentException ex) {
+//				MessageDialog.openError(Display.getCurrent().getActiveShell(),
+//						Messages.FleissnerWindow_error_enterValidParameters,
+//						ex.getMessage());
+				// TODO: when counting up the spinner, "invalid key" is thrown.
+//				LogUtil.logError(Activator.PLUGIN_ID, "wrong parameters", ex, false); 
+				return Status.CANCEL_STATUS;
+			} catch (FileNotFoundException ex) {
+//				MessageDialog.openError(Display.getCurrent().getActiveShell(),
+//						Messages.FleissnerWindow_error_fileNotFound,
+//						ex.getMessage());
+				LogUtil.logError(Activator.PLUGIN_ID, "File not found!", ex, true);
+				
+				return Status.CANCEL_STATUS;
+			} 
+			
+			  switch (argMethod) {
+			  case "analyze": 
+				  getDisplay().syncExec(() -> {
+					  this.checkedArgs = checkArgs();
+					  analysisOutput.append(Messages.FleissnerWindow_parameter_enlistment_analysisOut+checkedArgs); //$NON-NLS-1$
+				  });
+	//                          dialogOutput = new String(Messages.FleissnerWindow_parameter_enlistment_dialog+checkedArgs);
+							  ma.analyze();
+							  getDisplay().syncExec(() -> {
+								  logOutput.setEnabled(true);
+								  outputInput = ma.getAnalysisOut();
+								  outputInput.add(0, new String(Messages.FleissnerWindow_parameter_enlistment_dialog+checkedArgs));
+								  //                          dialogOutput += new String(ma.getFwAnalysisOutput());
+								  analysisOutput.append(ma.toString());
+								  //                          dialogOutput += new String(ma.toString());
+								  outputInput.add(new String(ma.toString()));
+								  plaintext.setEnabled(true);
+								  plaintext.setForeground(ColorService.GRAY);
+								  plaintext.setText(Messages.FleissnerWindow_output_foundPlaintext+ma.getBestDecryptedText());
+							  });
+							  keyToLogic = ma.getBestTemplate();
+							  // TODO: make progress tracking possible in ma, include here
+					monitor.worked(100);
+					monitor.done();
+							  getDisplay().syncExec(() -> {
+								  
+								  printFoundKey();
+							  });
+							  break;
+			  case "encrypt": ma.encrypt(); //$NON-NLS-1$
+							  getDisplay().syncExec(() -> {
+								  if (encrypt.getSelection()) {
+									  ciphertext.setEnabled(true);
+									  ciphertext.setForeground(ColorService.GRAY);
+								  }
+								  ciphertext.setText(ma.getEncryptedText());
+							  });
+					monitor.worked(100);
+					monitor.done();
+							  break;
+			  case "decrypt": ma.decrypt(); //$NON-NLS-1$
+			  				  String decryptedText = ma.getDecryptedText();
+							  getDisplay().syncExec(() -> {
+								  plaintext.setEnabled(true);
+								  plaintext.setForeground(ColorService.GRAY);
+								plaintext.setText(decryptedText);
+							  });
+					monitor.worked(100);
+					monitor.done();
+							  break;
+			  }
+			return Status.OK_STATUS;
+				
+		}
+
+	}
     
     /**
      * sets the arguments for chosen method and starts method 'startApplication' that execudes method
      * @throws IllegalArgumentException
      */
     public void startMethod() throws IllegalArgumentException{
-        
-        if (argMethod != null) {
-            switch (argMethod) {
-            
-            case "analyze": //$NON-NLS-1$
-                userText = true;
-                analysisOutput.setText(Messages.FleissnerWindow_output_progress);
-
-                args = new String[12];
-                args[0] = Messages.FleissnerWindow_input_method;
-                args[1] = argMethod;
-                args[2] = Messages.FleissnerWindow_input_keyLength;
-                args[3] = keySize.getText();
-                args[4] = Messages.FleissnerWindow_input_cryptedText;
-                args[5] = argText;
-                args[6] = Messages.FleissnerWindow_input_nGramSize;
-                args[7] = nGramSize.getText();
-                args[8] = Messages.FleissnerWindow_input_language;
-                args[9] = argLanguage;
-                args[10] = Messages.FleissnerWindow_input_restarts;
-                args[11] = restarts.getText();
-                
-//                argStatistics shall only be reloaded if changed
-                if (fisOld != fis || !oldNgramSize.equals(nGramSize.getText()) || !oldLanguage.equals(argLanguage)) {
-                    try {
-                        argStatistics = lf.loadBinNgramFrequencies(fis, argLanguage, nGramSize.getSelection());
-                        fisOld = fis;
-                        oldNgramSize = nGramSize.getText();
-                        oldLanguage = argLanguage;
-                    } catch (NumberFormatException e) {
-                        LogUtil.logError(Activator.PLUGIN_ID,Messages.FleissnerWindow_error_enterValidStatistic, e, true);
-                    } catch (FileNotFoundException e) {
-                        LogUtil.logError(Activator.PLUGIN_ID,Messages.FleissnerWindow_error_fileNotFound, e, true);
-                    } catch (IllegalArgumentException e) {
-                        LogUtil.logError(Activator.PLUGIN_ID, Messages.FleissnerWindow_error_invalidParameterCombination, e, true);
-                        return;
-                    }
-                }
-                break;
-                
-            case "encrypt": //$NON-NLS-1$
-//                if 'encrypt' is not selected this method will only be called in random encryption and userText stays false
-                if (encrypt.getSelection()) 
-                    userText = true;
-
-                args = new String[6];
-                args[0] = Messages.FleissnerWindow_input_method;
-                args[1] = argMethod;
-                args[2] = Messages.FleissnerWindow_input_key;
-                argKey = model.translateKeyToLogic();
-                args[3] = argKey;
-                args[4] = Messages.FleissnerWindow_input_plaintext;
-                args[5] = argText;
-                
-                break;
-                
-            case "decrypt":    //$NON-NLS-1$
-
-                userText = true;
-
-                args = new String[6];
-                args[0] = Messages.FleissnerWindow_input_method;
-                args[1] = argMethod;
-                args[2] = Messages.FleissnerWindow_input_key;
-                argKey = model.translateKeyToLogic();
-                args[3] = argKey;
-                args[4] = Messages.FleissnerWindow_input_cryptedText;
-                args[5] = argText;
-                
-                break;
-            }
-        }else {
-            throw new IllegalArgumentException(Messages.FleissnerWindow_error_noMethod);
-        }
-        startApplication();
+        FleissnerMethodJob job = new FleissnerMethodJob();
+        job.finalizeListeners.add(status -> {
+//         	liftNoClick(); // TODO: mechanism to not let the user start other things in the background
+        });
+//         imposeNoClick(); // TODO: mechanism to not let the user start other things in the background
+        job.runInBackground();
     }
     
-    /**
-     * executes chosen method with given parameters and returns result in particular text field
-     */
-    public void startApplication() {
-        
-        ParameterSettings ps = null;
-        MethodApplication ma = null;
-        
-        try {
-//          Configuration of given parameters and selecting and applying one of the three methods
-            ps = new ParameterSettings(args);
-            ma = new MethodApplication(ps, argStatistics);
-
-        } catch (IllegalArgumentException ex) {
-            MessageDialog.openError(Display.getCurrent().getActiveShell(),
-                    Messages.FleissnerWindow_error_enterValidParameters,
-                    ex.getMessage());
-            LogUtil.logError(Activator.PLUGIN_ID, ex);
-            return;
-        } catch (FileNotFoundException ex) {
-            MessageDialog.openError(Display.getCurrent().getActiveShell(),
-                    Messages.FleissnerWindow_error_fileNotFound,
-                    ex.getMessage());
-            LogUtil.logError(Activator.PLUGIN_ID, ex);
-            
-            return;
-        } 
-        
-          switch (argMethod) {
-          case "analyze": analysisOutput.append(Messages.FleissnerWindow_parameter_enlistment_analysisOut+checkArgs()); //$NON-NLS-1$
-//                          dialogOutput = new String(Messages.FleissnerWindow_parameter_enlistment_dialog+checkArgs());
-                          ma.analyze();
-                          logOutput.setEnabled(true);
-                          outputInput = ma.getAnalysisOut();
-                          outputInput.add(0, new String(Messages.FleissnerWindow_parameter_enlistment_dialog+checkArgs()));
-//                          dialogOutput += new String(ma.getFwAnalysisOutput());
-                          analysisOutput.append(ma.toString());
-//                          dialogOutput += new String(ma.toString());
-                          outputInput.add(new String(ma.toString()));
-                          plaintext.setEnabled(true);
-                          plaintext.setForeground(ColorService.GRAY);
-                          plaintext.setText(Messages.FleissnerWindow_output_foundPlaintext+ma.getBestDecryptedText());
-                          keyToLogic = ma.getBestTemplate();
-                          printFoundKey();
-                          break;
-          case "encrypt": ma.encrypt(); //$NON-NLS-1$
-                          if (encrypt.getSelection()) {
-                              ciphertext.setEnabled(true);
-                              ciphertext.setForeground(ColorService.GRAY);
-                          }
-                          ciphertext.setText(ma.getEncryptedText());
-                          break;
-          case "decrypt": ma.decrypt(); //$NON-NLS-1$
-                          plaintext.setEnabled(true);
-                          plaintext.setForeground(ColorService.GRAY);
-                          plaintext.setText(ma.getDecryptedText());
-                          break;
-          }
-    }
+//    /**
+//     * executes chosen method with given parameters and returns result in particular text field
+//     */
+//    public void startApplication() {
+//        
+//        ParameterSettings ps = null;
+//        MethodApplication ma = null;
+//        
+//        try {
+////          Configuration of given parameters and selecting and applying one of the three methods
+//            ps = new ParameterSettings(args);
+//            ma = new MethodApplication(ps, argStatistics);
+//
+//        } catch (IllegalArgumentException ex) {
+//            MessageDialog.openError(Display.getCurrent().getActiveShell(),
+//                    Messages.FleissnerWindow_error_enterValidParameters,
+//                    ex.getMessage());
+//            LogUtil.logError(Activator.PLUGIN_ID, ex);
+//            return;
+//        } catch (FileNotFoundException ex) {
+//            MessageDialog.openError(Display.getCurrent().getActiveShell(),
+//                    Messages.FleissnerWindow_error_fileNotFound,
+//                    ex.getMessage());
+//            LogUtil.logError(Activator.PLUGIN_ID, ex);
+//            
+//            return;
+//        } 
+//        
+//          switch (argMethod) {
+//          case "analyze": analysisOutput.append(Messages.FleissnerWindow_parameter_enlistment_analysisOut+checkArgs()); //$NON-NLS-1$
+////                          dialogOutput = new String(Messages.FleissnerWindow_parameter_enlistment_dialog+checkArgs());
+//                          ma.analyze();
+//                          logOutput.setEnabled(true);
+//                          outputInput = ma.getAnalysisOut();
+//                          outputInput.add(0, new String(Messages.FleissnerWindow_parameter_enlistment_dialog+checkArgs()));
+////                          dialogOutput += new String(ma.getFwAnalysisOutput());
+//                          analysisOutput.append(ma.toString());
+////                          dialogOutput += new String(ma.toString());
+//                          outputInput.add(new String(ma.toString()));
+//                          plaintext.setEnabled(true);
+//                          plaintext.setForeground(ColorService.GRAY);
+//                          plaintext.setText(Messages.FleissnerWindow_output_foundPlaintext+ma.getBestDecryptedText());
+//                          keyToLogic = ma.getBestTemplate();
+//                          printFoundKey();
+//                          break;
+//          case "encrypt": ma.encrypt(); //$NON-NLS-1$
+//                          if (encrypt.getSelection()) {
+//                              ciphertext.setEnabled(true);
+//                              ciphertext.setForeground(ColorService.GRAY);
+//                          }
+//                          ciphertext.setText(ma.getEncryptedText());
+//                          break;
+//          case "decrypt": ma.decrypt(); //$NON-NLS-1$
+//                          plaintext.setEnabled(true);
+//                          plaintext.setForeground(ColorService.GRAY);
+//                          plaintext.setText(ma.getDecryptedText());
+//                          break;
+//          }
+//    }
     
     /**
      * generates a random key with current key length and displays key in grille
@@ -1752,23 +1947,6 @@ public class FleissnerWindow extends Composite{
         return change;
     }
     
-    /**
-     * 
-     * @return the most important parameters for starting analysis. Method will be executed at the start of every analysis
-     */
-    public String checkArgs() {
-        
-        String args = Messages.FleissnerWindow_empty; 
-        
-        args += Messages.FleissnerWindow_parameter_enlistment_text+textName;
-        args += Messages.FleissnerWindow_parameter_enlistment_keyLength+keySize.getText();
-        args += Messages.FleissnerWindow_parameter_enlistment_restarts+restarts.getText();
-        args += Messages.FleissnerWindow_parameter_enlistment_language+argLanguage;
-        args += Messages.FleissnerWindow_parameter_enlistment_statistic+statisticName;
-        args += Messages.FleissnerWindow_parameter_enlistment_nGram+nGramSize.getText();
-        
-        return args;
-    }
     
     /**
      * writes key in textform underneath the key template

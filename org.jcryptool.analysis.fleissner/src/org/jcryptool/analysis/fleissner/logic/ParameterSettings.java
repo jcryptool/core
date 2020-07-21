@@ -131,7 +131,7 @@ public class ParameterSettings {
 						}
                         LogUtil.logInfo(Messages.ParameterSettings_info_key+template+Messages.ParameterSettings_info_keyLength2+String.valueOf(templateLength)+Messages.ParameterSettings_info_holes+String.valueOf(holes));                                    
 					} catch (Exception e) {
-						LogUtil.logError(Activator.PLUGIN_ID, Messages.ParameterSettings_InvalidKey, e, true);
+ 						LogUtil.logError(Activator.PLUGIN_ID, Messages.ParameterSettings_InvalidKey, e, false);
 						throw new IllegalArgumentException(Messages.ParameterSettings_InvalidKey); //$NON-NLS-1$
 					}	
 					break;
