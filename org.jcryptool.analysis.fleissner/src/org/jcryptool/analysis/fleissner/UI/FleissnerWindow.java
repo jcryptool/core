@@ -1360,8 +1360,8 @@ public class FleissnerWindow extends Composite{
 				switch (argMethod) {
 				
 				case "analyze": //$NON-NLS-1$
-					monitor.beginTask("Analyze", 100);
-					monitor.worked(1);
+					monitor.beginTask("Analyze", IProgressMonitor.UNKNOWN);
+// 					monitor.worked(1);
 					userText = true;
 					getDisplay().syncExec(() -> analysisOutput.setText(Messages.FleissnerWindow_output_progress));
 
@@ -1407,8 +1407,8 @@ public class FleissnerWindow extends Composite{
 					break;
 
 				case "encrypt": //$NON-NLS-1$
-					monitor.beginTask("Encrypt", 100); // TODO: internationalize
-					monitor.worked(1);
+					monitor.beginTask("Encrypt", IProgressMonitor.UNKNOWN); // TODO: internationalize
+// 					monitor.worked(1);
 					//                if 'encrypt' is not selected this method will only be called in random encryption and userText stays false
 					getDisplay().syncExec(() -> {
 						this.encryptSelection = encrypt.getSelection();
@@ -1428,8 +1428,8 @@ public class FleissnerWindow extends Composite{
 					break;
 
 				case "decrypt":    //$NON-NLS-1$
-					monitor.beginTask("Decrypt", 100); // TODO: internationalize
-					monitor.worked(1);
+					monitor.beginTask("Decrypt", IProgressMonitor.UNKNOWN); // TODO: internationalize
+// 					monitor.worked(1);
 
 					userText = true;
 
@@ -1499,7 +1499,7 @@ public class FleissnerWindow extends Composite{
 							  });
 							  keyToLogic = ma.getBestTemplate();
 							  // TODO: make progress tracking possible in ma, include here
-					monitor.worked(100);
+// 					monitor.worked(100);
 					monitor.done();
 							  getDisplay().syncExec(() -> {
 								  
@@ -1514,7 +1514,7 @@ public class FleissnerWindow extends Composite{
 								  }
 								  ciphertext.setText(ma.getEncryptedText());
 							  });
-					monitor.worked(100);
+// 					monitor.worked(100);
 					monitor.done();
 							  break;
 			  case "decrypt": ma.decrypt(); //$NON-NLS-1$
@@ -1524,7 +1524,7 @@ public class FleissnerWindow extends Composite{
 								  plaintext.setForeground(ColorService.GRAY);
 								plaintext.setText(decryptedText);
 							  });
-					monitor.worked(100);
+// 					monitor.worked(100);
 					monitor.done();
 							  break;
 			  }
