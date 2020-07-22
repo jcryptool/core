@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
@@ -100,6 +101,8 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
     private Button btnCustomAlphabet;
 
     private AbstractAlphabet defaultAlphabet;
+
+	private String hintOnlyThisSelectable;
 
     /**
      * Overriding checkSubclass allows this class to extend org.eclipse.swt.widgets.Composite
@@ -234,6 +237,16 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
                 comboAlphas.setText(""); //$NON-NLS-1$
 
                 reloadAlphabetCombo();
+                
+                if (hintOnlyThisSelectable.length() > 0) {
+                	Label lblHint = new Label(this, SWT.WRAP);
+                	GridData layoutData = new GridData();
+					lblHint.setLayoutData(layoutData);
+					layoutData.grabExcessHorizontalSpace=true;
+					layoutData.horizontalAlignment=SWT.FILL;
+					layoutData.widthHint = 350;
+					lblHint.setText(hintOnlyThisSelectable);
+				}
 
                 if (mode.isWithCustomButton()) {
                     btnCustomAlphabet = new Button(this, SWT.RADIO);
@@ -376,6 +389,13 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
         }
 
         comboAlphas.setEnabled(comboAlphas.getItemCount() >= 2);
+
+        hintOnlyThisSelectable = "";
+        if (mode == Mode.COMBO_BOX_WITH_CUSTOM_ALPHABET_BUTTON || mode == Mode.SINGLE_COMBO_BOX_ONLY_EXISTING_ALPHABETS) {
+        	if(comboAlphas.getItemCount() < 2) {
+        		hintOnlyThisSelectable = "(only one alphabet selectable here)";
+        	}
+        }
         
         if (btnSelectAlphabet != null) {
             btnSelectAlphabet.setEnabled(!registeredAlphas.isEmpty());
