@@ -15,11 +15,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import org.jcryptool.core.CorePlugin;
+import org.jcryptool.core.commands.HelpHrefRegistry;
 import org.jcryptool.core.introduction.utils.DebounceExecutor;
 import org.jcryptool.core.introduction.utils.ImageScaler;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -82,12 +84,18 @@ public class AlgorithmInstruction extends ViewPart {
 	 * The canvas the slideshow ist printed on.
 	 */
 	private Canvas cnvs;
-
+	
 	/**
-	 * Composite containing the whole GUI of the plugin.
+	 * Composite for the lower area of the Plugin containing
+	 * the "do not show again" chekcbox
 	 */
-	private Composite content;
-
+	private Composite lowerArea;
+	
+	/**
+	 * A composite in which the slideshow is contained.
+	 */
+	private Composite cnvsComposite;
+	
 	/**
 	 * Images in the slideshow.
 	 */
@@ -146,7 +154,7 @@ public class AlgorithmInstruction extends ViewPart {
 
 		@Override
 		public Composite getComposite() {
-			return content;
+			return cnvsComposite;
 		}
 
 		@Override
@@ -179,7 +187,7 @@ public class AlgorithmInstruction extends ViewPart {
 			}
 
 			Point cursorLocation = Display.getCurrent().getCursorLocation();
-			Point relativeCurserLocation = Display.getCurrent().getFocusControl().toControl(cursorLocation);
+			Point relativeCurserLocation = cnvs.toControl(cursorLocation);
 
 			// The width and height of the current image.
 			int imageWidth = scaled_imgs[curImage].getImageData().width;
@@ -190,7 +198,7 @@ public class AlgorithmInstruction extends ViewPart {
 					&& relativeCurserLocation.y < imageHeight) {
 				int leftEdge = (imageWidth / 2) - ((scaled_imgs.length * Utilities.pointHorizontalSpacing) / 2);
 				int rightEdge = (imageWidth / 2) + ((scaled_imgs.length * Utilities.pointHorizontalSpacing) / 2);
-				if (relativeCurserLocation.x > leftEdge && relativeCurserLocation.y < rightEdge) {
+				if (relativeCurserLocation.x > leftEdge && relativeCurserLocation.x < rightEdge) {
 					int selectedImage = (relativeCurserLocation.x - leftEdge) / Utilities.pointHorizontalSpacing;
 
 					slideToImageNr(selectedImage);
@@ -200,7 +208,7 @@ public class AlgorithmInstruction extends ViewPart {
 			}
 
 			// The user clicks somewhere on the right or the left of the image.
-			if (relativeCurserLocation.y > 0 && relativeCurserLocation.y < imageHeight) {
+			if (relativeCurserLocation.y >= 0 && relativeCurserLocation.y <= imageHeight) {
 				if (relativeCurserLocation.x < (imageWidth / 2)) {
 					// Slide to the left.
 					slideToPrevImage();
@@ -227,7 +235,8 @@ public class AlgorithmInstruction extends ViewPart {
 		@Override
 		public void run() {
 			try {
-				Thread.sleep((long) slideTransition.getTotalTransitionTime());
+				// The 100 ms are just for security reasons.
+				Thread.sleep((long) slideTransition.getTotalTransitionTime() + 100);
 			} catch (InterruptedException e) {
 				LogUtil.logError(IntroductionPlugin.PLUGIN_ID, e);
 			}
@@ -303,35 +312,51 @@ public class AlgorithmInstruction extends ViewPart {
 
 	@Override
 	public void createPartControl(Composite parent) {
+		
+    	/**
+    	 * This assigns a "wrong" online-help to this plugin.
+    	 * This was added, to force the JCT open the online-help of the
+    	 * Algorithm perspective when clicking on the help icon in the
+    	 * JCT toolbar.
+    	 */
+    	String linkToAlgorithmHelp = "/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html";
+    	HelpHrefRegistry.getInstance().registerHrefFor(IntroductionPlugin.PLUGIN_ID, linkToAlgorithmHelp);
 
 		ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
 
-		content = new Composite(scrolledComposite, SWT.NONE);
+		Composite content = new Composite(scrolledComposite, SWT.NONE);
 		GridLayout gl_content = new GridLayout(3, false);
 		gl_content.horizontalSpacing = 0;
 		gl_content.verticalSpacing = 0;
 		content.setLayout(gl_content);
 		content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
+		
 		scrolledComposite.setContent(content);
 
 		// Load the images to the slideshow.
 		initializeScaledImages();
-
-		content.addListener(SWT.Resize, new Listener() {
+		
+		cnvsComposite = new Composite(content, SWT.NONE);
+		cnvsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		GridLayout gl_cnvsComposite = new GridLayout();
+		gl_cnvsComposite.marginWidth = 0;
+		gl_cnvsComposite.marginHeight = 0;
+		cnvsComposite.setLayout(gl_cnvsComposite);
+		
+		cnvsComposite.addListener(SWT.Resize, new Listener() {
 			@Override
 			public void handleEvent(Event event) {
 				int[] sizehint = computeSlideshowSizeHint();
 				gridData_cnvs.widthHint = sizehint[0];
 				gridData_cnvs.heightHint = sizehint[1];
-				content.layout(new Control[] { cnvs });
+				cnvsComposite.layout(new Control[] { cnvs });
 			}
 		});
 
 		// The canvas the slideshow is painted on.
-		cnvs = new Canvas(content, SWT.DOUBLE_BUFFERED);
+		cnvs = new Canvas(cnvsComposite, SWT.DOUBLE_BUFFERED);
 		gridData_cnvs = new GridData(SWT.CENTER, SWT.FILL, true, true);
 		int[] initialSizeHint = computeSlideshowSizeHint();
 		gridData_cnvs.widthHint = initialSizeHint[0];
@@ -380,17 +405,20 @@ public class AlgorithmInstruction extends ViewPart {
 			}
 		});
 
-		Composite lowerArea = new Composite(content, SWT.NONE);
+		lowerArea = new Composite(content, SWT.NONE);
 		lowerArea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
-		GridLayout gl_lowerArea = new GridLayout();
+		GridLayout gl_lowerArea = new GridLayout(2, false);
 		gl_lowerArea.marginHeight = 0;
 		gl_lowerArea.marginWidth = 0;
 		lowerArea.setLayout(gl_lowerArea);
+		
+		// Spacer of the left of the "do not show again" checkbox.
+		new Label(lowerArea, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
 		// This is the "do not show again" checkbox in the bottom right corner.
 		Button checkbox = new Button(lowerArea, SWT.CHECK);
 		checkbox.setOrientation(SWT.RIGHT_TO_LEFT);
-		checkbox.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true));
+		checkbox.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, true));
 		checkbox.setForeground(ColorService.GRAY);
 		checkbox.setText(Messages.AlgorithmInstruction_showAgain);
 
@@ -441,8 +469,6 @@ public class AlgorithmInstruction extends ViewPart {
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
 				IntroductionPlugin.PLUGIN_ID + ".introductionContexHelpID"); //$NON-NLS-1$
 		
-//		PlatformUI.getWorkbench().getHelpSystem().displayHelp(IntroductionPlugin.PLUGIN_ID + ".introductionContexHelpID");
-
 		// Start the thread that changes the images after 15 seconds.
 		startAutoSwitchImages();
 
@@ -450,13 +476,13 @@ public class AlgorithmInstruction extends ViewPart {
 	
 
 	private int[] computeSlideshowSizeHint() {
-		Rectangle parentSize = content.getClientArea();
+		Rectangle parentSize = cnvsComposite.getClientArea();
 		float aspectRatio = getCurrentSlideAspectRatio();
 		float parentAspectRatio = (float) parentSize.width / (float) parentSize.height;
 		int adaptedWidth = parentSize.width;
 		int adaptedHeight = parentSize.height;
 		if (adaptedWidth <= 0 || adaptedHeight <= 0) {
-			adaptedHeight = 10; // TODO: handle better?
+			adaptedHeight = 10; 
 			adaptedWidth = 10;
 		}
 		if (aspectRatio > parentAspectRatio) { // broader than allowed -> adapt height to match parent width
