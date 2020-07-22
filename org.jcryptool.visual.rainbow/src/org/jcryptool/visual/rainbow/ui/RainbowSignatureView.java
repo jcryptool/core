@@ -55,6 +55,26 @@ public class RainbowSignatureView extends ViewPart {
     private Label lblXMark;
     private Group grpInfoBox;
 
+    private static byte[] hexToBytes(String s) {
+        int len = s.length();
+        byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                                 + Character.digit(s.charAt(i+1), 16));
+        }
+        return data;
+    }
+
+    private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
+    private static String bytesToHex(byte[] bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+        for (int j = 0; j < bytes.length; j++) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = HEX_ARRAY[v >>> 4];
+            hexChars[j * 2 + 1] = HEX_ARRAY[v & 0x0F];
+        }
+        return new String(hexChars);
+    }
 
     @Override
     public void createPartControl(Composite parent) {
@@ -127,7 +147,7 @@ public class RainbowSignatureView extends ViewPart {
         btnSign.setText(Messages.RainbowSignatureView_btnSign);
         btnSign.addListener(SWT.Selection, e -> {
             signature = rainbow.sign(textMessage.getText().getBytes());
-            textSignature.setText(javax.xml.bind.DatatypeConverter.printHexBinary(signature));
+            textSignature.setText(bytesToHex(signature));
             textInfo.setText(getVarString());
             if (rainbowLESWidget != null)
                 rainbowLESWidget.dispose();
@@ -148,7 +168,7 @@ public class RainbowSignatureView extends ViewPart {
         btnVerify.setText(Messages.RainbowSignatureView_btnVerify);
         RowDataFactory.swtDefaults().applyTo(btnVerify);
         btnVerify.addListener(SWT.Selection, e -> {
-            signature = javax.xml.bind.DatatypeConverter.parseHexBinary(textSignature.getText());
+            signature = hexToBytes(textSignature.getText());
             boolean verified = rainbow.verify(textMessage.getText().getBytes(), signature);
             if (verified) {
                 lblCheck.setVisible(true);
