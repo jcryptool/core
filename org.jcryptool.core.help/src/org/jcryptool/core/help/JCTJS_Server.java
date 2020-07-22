@@ -76,7 +76,8 @@ public class JCTJS_Server {
 	}
 
 	public static URL getRootURL() {
-		return Platform.getBundle("org.jcryptool.core.help").getEntry(".");
+		
+		return HelpPlugin.getInstance().getBundle().getEntry("/");
 	}
 	
 	public String makeUrlStringFor(String projectRelativePath) {
@@ -101,7 +102,10 @@ public class JCTJS_Server {
 		}
 
 		URL rootResource = getRootURL();
-		System.out.println(rootResource);
+
+ 		System.out.println("Server root resource: " + rootResource);
+ 		System.out.println("Server root resource: classloader: " + HelpPlugin.getInstance().getClass().getClassLoader());
+ 		System.out.println("Server root resource: classloader type: " + HelpPlugin.getInstance().getClass().getClassLoader().getClass().toString());
 		Resource baseResource = Resource.newResource(rootResource);
 		Server server = new Server(port);
 
@@ -111,8 +115,8 @@ public class JCTJS_Server {
 		resourceHandler.setWelcomeFiles(new String[]{"index.html"});
 		resourceHandler.setBaseResource(baseResource);
 		
- 		URL res = Platform.getBundle("org.jcryptool.core.help").getEntry("./javascript/test.txt");
-		System.out.println();
+// 		URL res = Platform.getBundle("org.jcryptool.core.help").getEntry("./javascript/test.txt");
+//		System.out.println();
 
 		HandlerList handlerList = new HandlerList();
 		handlerList.setHandlers(new Handler[]{resourceHandler, new DefaultHandler()});
