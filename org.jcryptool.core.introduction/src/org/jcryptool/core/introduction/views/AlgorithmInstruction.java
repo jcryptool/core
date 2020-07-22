@@ -664,6 +664,7 @@ public class AlgorithmInstruction extends ViewPart {
 		// is still running, but all widgets are disposed, this NullPointerExceptions.
 		// Therefore stop it when the user closes the introduction.
 		stopAutoSwitchImages();
+		debouncer.cancelAllJobs();
 		super.dispose();
 	}
 

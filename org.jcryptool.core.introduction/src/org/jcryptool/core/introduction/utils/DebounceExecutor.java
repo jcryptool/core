@@ -34,4 +34,14 @@ public class DebounceExecutor {
 
 		future = executor.schedule(task, delay, TimeUnit.MILLISECONDS);
 	}
+	
+	/**
+	 * This method is used to cancel the current job.<br>
+	 * This method is used, when the plugin gets closed.
+	 */
+	public void cancelAllJobs() {
+		if (future != null && !future.isDone()) {
+			future.cancel(false);
+		}
+	}
 }
