@@ -38,6 +38,7 @@ public class AlphabetsManager {
     /** The AlphabetStore (loaded on demand) */
     private AbstractAlphabetStore store = null;
 
+
     /** The name of the factory-default alphabet */
     public static final String FACTORY_DEFAULT_ALPHABET = "Upper Latin (A-Z)"; //$NON-NLS-1$
     public static final String FACTORY_DEFAULT_ALPHABET_DE = "Upper Latin (A-Z)"; //$NON-NLS-1$
