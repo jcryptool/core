@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MultiProperties xmlns="hu.skzs.multiproperties">
+    <Version>1.2</Version>
+    <Name>NL_multi</Name>
+    <Description></Description>
+    <Handler>Text File Handler</Handler>
+    <Columns>
+        <Key>
+            <Width>200</Width>
+        </Key>
+    </Columns>
+    <Records/>
+</MultiProperties>
