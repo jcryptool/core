@@ -33,7 +33,7 @@
 	<p><br></p>
 	<h2>Spielanleitung</h2>
 	<p>
-	Startet man das Spiel neu, wird ein neues 4x4-Sudoku-Rätsel (bestehend aus vier Blöcken der Größe 2x2, was zusammen 16 Kästchen ergibt) erstellt. Vier Zahlen sind  gegebenen und werden auch gleich angezeigt &ndash; eine pro 2x2-Block. Der Computer löst das Sudoku dann verdeckt.
+	Startet man das Spiel neu, wird ein neues 4x4-Sudoku-Rätsel (bestehend aus vier Blöcken der Größe 2x2, was zusammen 16 Kästchen ergibt) erstellt. Vier Zahlen sind  gegeben und werden auch gleich angezeigt &ndash; eine pro 2x2-Block. Der Computer löst das Sudoku dann verdeckt.
 	</p>
 	<p>
 	Wir denken uns, wir spielen das Sudoku mit Spielkarten statt wie üblich mit Stift und Papier.
@@ -94,7 +94,7 @@
 		Zero-Knowledge-Protokolle haben drei wichtige Eigenschaften:
 	 <ul>
   		<li><b>Vollständigkeit:</b> Wenn beide Teilnehmer des Protokolls ehrlich sind, kann der Verifizierer von der Richtigkeit der Aussage überzeugt werden (Computer hat Sudoku gelöst, du hast genug Geld auf dem Konto).</li>
-  		<li><b>Zuverlässigkeit:</b> Ein schummelnder Beweiser kann nur sehr schwer einen ehrlichen Verifizierer von der Richtigkeit der Aussage überzeugen (da es sich um Wahrscheinlichkeiten handelt, kann man nicht zu 100% sicher sein).</li>
+  		<li><b>Zuverlässigkeit:</b> Ein schummelnder Beweiser kann nur sehr schwer einen ehrlichen Verifizierer von der Richtigkeit der Aussage überzeugen (da es sich um Wahrscheinlichkeiten handelt, kann man nicht zu 100% sicher sein, aber sehr nahe dran).</li>
   		<li><b>Zero-knowledge-Eigenschaft:</b> Der Verifizierer kann über die Information/das Geheimnis durch den Prozess nichts lernen, außer ob die Behauptung des Beweisers wahr oder falsch ist.</li>
 	</ul> 
 	</p>
@@ -112,18 +112,18 @@
 	</p>
 	<p>
 		Unabhängig davon probiert nun der Beweiser, die andere Person von der Richtigkeit seiner Lösung zu überzeugen.
-		Die Verifizierin wählt entweder eine Reihe, eine Spalten oder einen 3x3-Block aus. Wenn z. B. eine Reihe ausgewählt wurde, werden alle Karten reihenweise zu einem Pack zusammengenommen und gemischt. Die Verifizierin prüft nun, ob in dem Pack Karten die Ziffern 1-9 sind. Wenn nicht, wurde der Beweiser beim Schummeln erwischt.
+		Die Verifizierin wählt entweder eine Reihe, eine Spalte oder einen 3x3-Block aus. Wenn z. B. eine Reihe ausgewählt wurde, werden alle Karten reihenweise zu einem Pack zusammengenommen und gemischt. Die Verifizierin prüft nun, ob in dem Pack Karten die Ziffern 1-9 sind. Wenn nicht, wurde der Beweiser beim Schummeln erwischt.
 	</p>
 	<p>
 		Das Zurücklegen wie in der digitalen Variante ist nicht wirklich anwendbar. Deswegen können pro Spiel nur jeweils Reihen, Spalten oder Boxen geprüft werden und nicht alle drei. Das führt zu einer Zuverlässigkeit (Wahrscheinlichkeit, dass ein schummelnder Beweiser ertappt wird) von ≥ 1/3.
 	</p>
 	<p>
-		In der <b>erweiterten Variante</b> nimmt man statt einer Karte pro Kästchen 3 Mal die Gleiche. Auf diesem Weg kann die Verifiziererin Spalten, Reihen und Boxen gleichzeitig prüfen. Natürlich öffnet das auch eine neue Möglichkeit zu schummeln. Der Beweiser könnte anstatt den erwarteten {3,3,3} auf einer Zelle z. B. {3,3,4} legen.
+		In der <b>erweiterten Variante</b> liegen auf einem Kästchen statt einer Karte drei Mal die gleiche. Auf diesem Weg kann die Verifiziererin Spalten, Reihen und Boxen gleichzeitig prüfen. Natürlich öffnet das auch eine neue Möglichkeit zu schummeln. Der Beweiser könnte anstatt den erwarteten {3,3,3} auf einer Zelle z. B. {3,3,4} legen.
 		Man braucht hier mehr Karten, die Zuverlässigkeit steigt auf 8/9.
 	</p>
 
 
-	<h3>Ausführungen zu den oben gestellten Fragen</h3>
+	<h3>Antworten zu den oben gestellten Fragen</h3>
 	<p>
 		Für mehr Informationen sei hier noch einmal auf den wissenschaftlichen Artikel verwiesen, auf dem dieses Spiel basiert. <a href="#1">[1]</a>
 	</p>
@@ -148,7 +148,7 @@
   		<li>Der Computer könnte einfach eine Zahl falsch setzen, so wie wenn du auf <b>Lass den Computer betrügen</b> klickst. Dabei kannst du ihn aber schnell ertappen.
 		Wäre der Computer cleverer, könnte er versuchen die Karten zu manipulieren, wenn er sie nimmt, mischt und wieder zurücklegt.</li>
   		<li>Wenn du mit echten Karten spielst, können sich die Teilnehmer gegenseitig auf die Finger schauen.</li>
-  		<li>In der weiterten Variante kann der Beweiser versuchen, die Päckchen aus 3 Karten zu manipulieren.</li>
+  		<li>In der erweiterten Variante kann der Beweiser versuchen, die Päckchen aus 3 Karten zu manipulieren.</li>
 	</ul> 
 	</div>
 	<br>
