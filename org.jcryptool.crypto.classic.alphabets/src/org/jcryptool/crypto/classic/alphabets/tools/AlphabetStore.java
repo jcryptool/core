@@ -34,6 +34,7 @@ import org.eclipse.core.runtime.FileLocator;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabetStore;
+import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.crypto.classic.alphabets.Alphabet;
@@ -181,6 +182,15 @@ public class AlphabetStore extends AbstractAlphabetStore {
         alphabets = new Vector<Alphabet>();
         generateStandardAlphabets();
         generateClassicAlphabets();
+        for (Alphabet alpha: alphabets) {
+        	if (alpha.getName().equals(AlphabetsManager.FACTORY_DEFAULT_ALPHABET) || alpha.getName().equals(AlphabetsManager.FACTORY_DEFAULT_ALPHABET_DE)) {
+        		alpha.setDefaultAlphabet(true);
+			}
+        	else
+        	{
+        		alpha.setDefaultAlphabet(false);
+        	}
+        }
         try {
             storeAlphabets();
         } catch (IOException e) {
