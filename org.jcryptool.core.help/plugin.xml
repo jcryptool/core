@@ -8,6 +8,14 @@
             file="$nl$/toc.xml"
             primary="true">
       </toc>
+      <toc
+            file="$nl$/tocRSA.xml"
+            primary="false">
+      </toc>
+      <toc
+            file="$nl$/tocElGamal.xml"
+            primary="false">
+      </toc>
    </extension>
    <extension
          point="org.eclipse.help.index">

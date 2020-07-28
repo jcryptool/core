@@ -86,11 +86,6 @@
                 sort="true">
                 <anchor id="symmetricAlgorithmPlugins" />
             </topic>
-            <topic label="Hybrid"
-                href="$nl$/help/users/algorithms/encryption/hybrid/toc.html"
-                sort="true">
-                <anchor id="hybridAlgorithmPlugins" />
-            </topic>
         </topic>
         <topic href="$nl$/help/users/algorithms/randomnumber/toc.html" label="Zufallszahlen" sort="true">
            <anchor id="randomNumberPlugins"/>
