@@ -73,11 +73,6 @@
                 sort="true">
                 <anchor id="symmetricAlgorithmPlugins" />
             </topic>
-            <topic label="Hybrid"
-                href="$nl$/help/users/algorithms/encryption/hybrid/toc.html"
-                sort="true">
-                <anchor id="hybridAlgorithmPlugins" />
-            </topic>
         </topic>
         <topic label="Hash"
             href="$nl$/help/users/algorithms/hash/toc.html"
