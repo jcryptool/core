@@ -36,8 +36,8 @@
       <description>This is the FlexiProvider implementation of the MD5 hash. The Algorithm Perspective does provide even more configuration possibilities for this algorithm.</description>
   		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html" label="Algorithm Perspective"/>
    </context>
-   <context id="SHAWizard" title="SHA hash">
-      <description>This is the FlexiProvider implementation of the SHA hash. The Algorithm Perspective does provide even more configuration possibilities for this algorithm.</description>
+   <context id="SHAWizard" title="SHA-256 hash">
+      <description>This is the FlexiProvider implementation of the SHA-256 hash. The Algorithm Perspective does provide even more configuration possibilities for this algorithm.</description>
   		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html" label="Algorithm Perspective"/>
    </context>
 </contexts>

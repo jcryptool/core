@@ -33,7 +33,7 @@ public class Sha extends AbstractAlgorithm {
 
     @Override
     public String getAlgorithmName() {
-        return "SHA"; //$NON-NLS-1$
+        return "SHA-256"; //$NON-NLS-1$
     }
 
 }
