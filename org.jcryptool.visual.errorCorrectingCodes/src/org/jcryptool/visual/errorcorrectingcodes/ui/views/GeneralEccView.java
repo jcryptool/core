@@ -15,6 +15,7 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.layout.RowLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
@@ -25,6 +26,7 @@ import org.jcryptool.visual.errorcorrectingcodes.data.EccData;
 import org.jcryptool.visual.errorcorrectingcodes.ui.Messages;
 import org.jcryptool.visual.errorcorrectingcodes.ui.UIHelper;
 import org.jcryptool.visual.errorcorrectingcodes.ui.widget.ArrowCanvas;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite; 
 
 /**
  * The Class GeneralEccView represents the common process of detecting and correcting errors when
@@ -93,15 +95,20 @@ public class GeneralEccView extends Composite {
         glf.applyTo(this);
         gdf.applyTo(this);
 
-        compHead = new Composite(this, SWT.NONE);
-        glf.applyTo(compHead);
-        gdf.applyTo(compHead);
-        lblHeader = new Label(compHead, SWT.NONE);
-        lblHeader.setFont(FontService.getHeaderFont());
-        lblHeader.setText(Messages.GeneralEccView_lblHeader);
-        textInfoHead = new StyledText(compHead, SWT.MULTI | SWT.READ_ONLY | SWT.WRAP);
-        textInfoHead.setText(Messages.GeneralEccView_textHeader);
-        GridDataFactory.fillDefaults().grab(true, false).hint(_WHINT, SWT.DEFAULT).applyTo(textInfoHead);
+        TitleAndDescriptionComposite header = new TitleAndDescriptionComposite(this);
+        header.setTitle(Messages.GeneralEccView_lblHeader);
+        header.setDescription(Messages.GeneralEccView_textHeader);
+        header.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        
+//        compHead = new Composite(this, SWT.NONE);
+//        glf.applyTo(compHead);
+//        gdf.applyTo(compHead);
+//        lblHeader = new Label(compHead, SWT.NONE);
+//        lblHeader.setFont(FontService.getHeaderFont());
+//        lblHeader.setText(Messages.GeneralEccView_lblHeader);
+//        textInfoHead = new StyledText(compHead, SWT.MULTI | SWT.READ_ONLY | SWT.WRAP);
+//        textInfoHead.setText(Messages.GeneralEccView_textHeader);
+//        GridDataFactory.fillDefaults().grab(true, false).hint(_WHINT, SWT.DEFAULT).applyTo(textInfoHead);
 
         
         mainComposite = new Composite(this, SWT.NONE);

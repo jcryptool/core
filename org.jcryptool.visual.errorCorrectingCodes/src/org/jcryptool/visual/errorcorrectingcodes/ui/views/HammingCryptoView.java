@@ -12,6 +12,7 @@ import org.eclipse.jface.layout.RowLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
@@ -20,6 +21,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.errorcorrectingcodes.algorithm.HammingCrypto;
 import org.jcryptool.visual.errorcorrectingcodes.data.HammingData;
 import org.jcryptool.visual.errorcorrectingcodes.data.Matrix2D;
@@ -99,15 +101,19 @@ public class HammingCryptoView extends Composite {
         glf.applyTo(this);
         gdf.applyTo(this);
 
-        compHead = new Composite(this, SWT.NONE);
-        glf.applyTo(compHead);
-        gdf.applyTo(compHead);
-        lblHeader = new Label(compHead, SWT.NONE);
-        lblHeader.setFont(FontService.getHeaderFont());
-        lblHeader.setText(Messages.HammingCryptoView_lblHeader);
-        textInfoHead = new StyledText(compHead,SWT.READ_ONLY | SWT.WRAP);
-        textInfoHead.setText(Messages.HammingCryptoView_textHeader);
-        GridDataFactory.fillDefaults().grab(true, false).hint(_WHINT, SWT.DEFAULT).applyTo(textInfoHead);
+        TitleAndDescriptionComposite header = new TitleAndDescriptionComposite(this);
+        header.setTitle(Messages.HammingCryptoView_lblHeader);
+        header.setDescription(Messages.HammingCryptoView_textHeader);
+        header.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+//        compHead = new Composite(this, SWT.NONE);
+//        glf.applyTo(compHead);
+//        gdf.applyTo(compHead);
+//        lblHeader = new Label(compHead, SWT.NONE);
+//        lblHeader.setFont(FontService.getHeaderFont());
+//        lblHeader.setText(Messages.HammingCryptoView_lblHeader);
+//        textInfoHead = new StyledText(compHead,SWT.READ_ONLY | SWT.WRAP);
+//        textInfoHead.setText(Messages.HammingCryptoView_textHeader);
+//        GridDataFactory.fillDefaults().grab(true, false).hint(_WHINT, SWT.DEFAULT).applyTo(textInfoHead);
         
         mainComposite = new Composite(this, SWT.NONE);
         GridLayoutFactory.fillDefaults().margins(margins).numColumns(2).spacing(40, SWT.DEFAULT).equalWidth(true)
