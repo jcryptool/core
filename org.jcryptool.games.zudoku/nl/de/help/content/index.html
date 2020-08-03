@@ -26,30 +26,29 @@
 	</p>
 
 
-	<p align="center"> <img src="game_annotated.png" width="85%" style="min-width: 500px"/></p>
+	<p align="center"> <img src="game_annotated.png" width="60%" style="min-width: 500px"/></p>
 
 	
 	
 	<p><br></p>
 	<h2>Spielanleitung</h2>
 	<p>
-	Startet man das Spiel neu, wird ein neues 4x4-Sudoku-Rätsel (bestehend aus vier Blöcken der Größe 2x2, was zusammen 16 Kästchen ergibt) erstellt. Vier Zahlen sind  gegeben und werden auch gleich angezeigt &ndash; eine pro 2x2-Block. Der Computer löst das Sudoku dann verdeckt.
+	Startet man das Spiel neu, wird ein neues \(4 \times 4\)-Sudoku-Rätsel erstellt (bestehend aus vier Blöcken der Größe \(2 \times 2\), was zusammen 16 Kästchen ergibt). Vier Zahlen sind  gegeben und werden auch gleich angezeigt &ndash; eine pro \(2 \times 2\)-Block. Der Computer löst das Sudoku dann verdeckt.
 	</p>
 	<p>
 	Wir denken uns, wir spielen das Sudoku mit Spielkarten statt wie üblich mit Stift und Papier.
 	</p>
-
-    xxxxxx TODO Altenhuber Add another screenshot here xxxxxxxxxxx
-
-
 
 	<p>
 		1) Falls du neue Zahlen (also ein neues Sudoku-Rätsel) möchtest, klicke auf den linken Button <b>Neues Sudoku</b>.
 	</p>
 
 	<p>
-		2) Nach einem Klick auf den Button <b>Herausfordern</b> kannst du eine Reihe, Spalte oder einen Block auswählen, indem du auf die blauen Richtungspfeile im Spielfelds klickst.
+		2) Nach einem Klick auf den Button <b>Herausfordern</b> kannst du eine Reihe, Spalte oder einen Block auswählen, indem du auf die blauen Richtungspfeile im Spielfeld klickst.
 	</p>
+
+	<p align="center"> <img src="playing_field_challenge.png" width="40%" style="min-width: 250px"/></p>
+
 	<p>
 		Die ausgewählten Karten werden gemischt und dir oben im Verifikationsbereich gezeigt. Wenn der Computer wirklich eine korrekte Lösung hat, müssen in dieser Lösung die Zahlen 1 bis 4 jeweils genau einmal vorkommen.<br>
 		Überprüfe, ob das so ist oder ob der Computer dich betrügen wollte! 
@@ -88,19 +87,19 @@
 		Stelle dir vor, du möchtest ein Auto kaufen. Die Verkäuferin verlangt von dir im vorhinein zu beweisen, dass du genug Geld auf dem Konto hast, um es zu bezahlen. Du möchtest aber nicht einfach jemandem Fremden deinen Kontostand zeigen. Hier kann ein Zero-Knowledge-Beweis helfen, um zu beweisen, dass du genug Geld hast, ohne die genaue Zahl preisgeben zu müssen.
 	</p>
 	<p>
-		Die meisten dieser Protokolle benötigen mehrere Runden, genauso wie dieses Zudo-ku-Spiel. Mit jedem erfolgreich verifizierten Schritt steigt die Chance, dass der Beweiser wirklich im Besitz des Geheimnisses ist.
+		Die meisten dieser Protokolle benötigen mehrere Runden, genauso wie dieses Zudo-Ku-Spiel. Mit jedem erfolgreich verifizierten Schritt steigt die Chance, dass der Beweiser wirklich im Besitz des Geheimnisses ist.
 	</p>
 	<p>
 		Zero-Knowledge-Protokolle haben drei wichtige Eigenschaften:
 	 <ul>
   		<li><b>Vollständigkeit:</b> Wenn beide Teilnehmer des Protokolls ehrlich sind, kann der Verifizierer von der Richtigkeit der Aussage überzeugt werden (Computer hat Sudoku gelöst, du hast genug Geld auf dem Konto).</li>
   		<li><b>Zuverlässigkeit:</b> Ein schummelnder Beweiser kann nur sehr schwer einen ehrlichen Verifizierer von der Richtigkeit der Aussage überzeugen (da es sich um Wahrscheinlichkeiten handelt, kann man nicht zu 100% sicher sein, aber sehr nahe dran).</li>
-  		<li><b>Zero-knowledge-Eigenschaft:</b> Der Verifizierer kann über die Information/das Geheimnis durch den Prozess nichts lernen, außer ob die Behauptung des Beweisers wahr oder falsch ist.</li>
+  		<li><b>Zero-Knowledge-Eigenschaft:</b> Der Verifizierer kann über die Information/das Geheimnis durch den Prozess nichts lernen, außer ob die Behauptung des Beweisers wahr oder falsch ist.</li>
 	</ul> 
 	</p>
 
 
-	<h3 id="persona">Zudo-ku mit echten Karten</h3>
+	<h3>Zudo-ku mit echten Karten</h3>
 	<p>
 		Die Idee hinter diesem Spiel kann im echten Leben noch besser demonstriert werden.
 	</p>
@@ -115,7 +114,7 @@
 		Die Verifizierin wählt entweder eine Reihe, eine Spalte oder einen 3x3-Block aus. Wenn z. B. eine Reihe ausgewählt wurde, werden alle Karten reihenweise zu einem Pack zusammengenommen und gemischt. Die Verifizierin prüft nun, ob in dem Pack Karten die Ziffern 1-9 sind. Wenn nicht, wurde der Beweiser beim Schummeln erwischt.
 	</p>
 	<p>
-		Das Zurücklegen wie in der digitalen Variante ist nicht wirklich anwendbar. Deswegen können pro Spiel nur jeweils Reihen, Spalten oder Boxen geprüft werden und nicht alle drei. Das führt zu einer Zuverlässigkeit (Wahrscheinlichkeit, dass ein schummelnder Beweiser ertappt wird) von ≥ 1/3.
+		Das Zurücklegen wie in der digitalen Variante ist dagegen nicht machbar. Deswegen können pro Spiel nur jeweils Reihen, Spalten oder Boxen geprüft werden und nicht alle drei. Das führt zu einer Zuverlässigkeit (Wahrscheinlichkeit, dass ein schummelnder Beweiser ertappt wird) von ≥ 1/3.
 	</p>
 	<p>
 		In der <b>erweiterten Variante</b> liegen auf einem Kästchen statt einer Karte drei Mal die gleiche. Auf diesem Weg kann die Verifiziererin Spalten, Reihen und Boxen gleichzeitig prüfen. Natürlich öffnet das auch eine neue Möglichkeit zu schummeln. Der Beweiser könnte anstatt den erwarteten {3,3,3} auf einer Zelle z. B. {3,3,4} legen.
@@ -158,7 +157,7 @@
 	<button title="Click to show/hide content" type="button" onclick="toggleVisibility(spoiler2)">Anzeigen/Verbergen</button>
 	<div id="spoiler2" style="display:none"> 
 		Der Computer legt immer nur einen Block an Information vor, der gegen die Sudoku-Regeln geprüft werden kann.
-		Es ist nicht möglich aus den gemischten Blöcken an Karten irgendwie die Lösung des Computers abzuleiten. 
+		Es ist nicht möglich, aus den gemischten Blöcken an Karten die Lösung des Computers abzuleiten. 
 	</div>
 
 
