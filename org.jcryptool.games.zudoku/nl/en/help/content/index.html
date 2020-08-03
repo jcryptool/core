@@ -24,22 +24,16 @@
 	 	<a href="http://en.wikipedia.org/wiki/Zero-knowledge_proof" target="_blank">zero-knowledge protocol</a>.
 	</p>
 
-		<p align="center"> <img src="game_annotated.png" width="85%" style="min-width: 500px"/></p>
+	<p align="center"> <img src="game_annotated.png" width="60%" style="min-width: 500px"/></p>
 
-
-	
 	<p><br></p>
 	<h2>How to play</h2>
 	<p>
-	When starting a new game, a new 4x4 Sudoku riddle [consisting of four blocks (subgrids) of size 2x2, which make up 16 boxes] is created. The four given numbers are shown at once &ndash; one per 2x2 subgrid. The computer then covertly solves this Sudoku game.
+	When starting a new game, a new \(4 \times 4\) Sudoku riddle is created [consisting of four blocks (subgrids) of size \(2 \times 2\), which make up 16 boxes]. The four given numbers are shown at once &ndash; one per \(2 \times 2\) subgrid. The computer then covertly solves this Sudoku game.
 	</p>
 	<p>
 	We assume we play Sudoku with playing cards instead of the usual pen and paper.
 	</p>
-
-    xxxxxx TODO Altenhuber Add another screenshot here xxxxxxxxxxx
-	
-
 
 	<p>
 		1) If you want new numbers (i.e. a new Sudoku puzzle), click on the left button <b>New sudoku</b>.
@@ -48,6 +42,9 @@
 	<p>
 		2) After clicking the button <b>Challenge</b> you can select a row, a column, or a block by clicking on one of the blue arrow indicators.
 	</p>
+
+	<p align="center"> <img src="playing_field_challenge.png" width="40%" style="min-width: 250px"/></p>
+
 	<p>
 		The cards of the respective row/column/block will be shuffled face down and then exposed to you in the above verification area. If the computer really has a correct solution, then those four cards must always include the numbers from 1 to 4 exactly once.<br>
 		Check whether the numbers are correct or whether the computer cheated you! 
@@ -79,14 +76,13 @@
 	<p><br></p>
 	<h2>Background</h2>
 	<p>
-		Zero-knowledge proofs and protocols are a special part of cryptography. The basic idea is that a party (<b>Prover</b>) wants to prove it has some information, without revealing it. Another party (<b>Verifier</b>) wants to make sure that the prover actually has that information, that it is correct and you are not only pretending to possess the piece
-		of information.
+		Zero-knowledge proofs and protocols are a special part of cryptography. The basic idea is that one party (<b>prover</b>) wants to prove it has some information (secret), without revealing it. Another party (<b>verifier</b>) wants to make sure that the prover actually has that correct information and is not only pretending to possess the information.
 	</p>
 	<p>
 		Imagine you want to buy a car. The salesperson wants you to prove you have enough money to buy it. But you don't want to reveal to a stranger how much money is on your bank account. As a smart cryptologist you know, that you could use a zero-knowledge proof to show that you have enough money to buy the car, but not reveal how much you actually have.
 	</p>
 	<p>
-		Such protocols mostly rely on multiple iterations, just as the Zudo-ku game. With every correctly verified step the chances increase, that the Prover is actually in possession of the relevant information.
+		Such protocols mostly rely on multiple iterations, just as the Zudo-Ku game. With every correctly verified step the chances increase, that the prover is actually in possession of the relevant information.
 	</p>
 	<p>
 		There are 3 properties important for zero-knowledge protocols:
@@ -98,7 +94,7 @@
 	</ul> 
 
 
-	<h3 id="persona">Playing with cards in person</h3>
+	<h3>Playing with cards in person</h3>
 	<p>
 		The idea of this game can be applied even better in real life.
 	</p>
@@ -112,7 +108,7 @@
 		Either way, the prover tries to convince the other person that he does have a correct solution. The verifying person selects either a row, a column or a subgrid. Then the cards are shuffles. She then checks whether the pack of cards contains each number 1-9 exactly once. If not not she detected the prover to be cheating.
 	</p>
 	<p>
-		If you play in person  you could watch the other person shuffling. Putting them back as in this game is not really feasable in real life. Using one set of cards and checking one topology exclusively leads to a soundness (probability that the prover is caught cheating) with a probability of ≥ 1/3.
+		If you play in person  you could watch the other person shuffling. Putting the cards back as in this digital game is not feasable in real life. Using one set of cards and checking one topology exclusively leads to a soundness (probability that the prover is caught cheating) with a probability of ≥ 1/3.
 	</p>
 	<p>
 		In the <b>extended variant</b> you have packs of 3 cards for each cell. By doing it this way, the verifier can check all rows, columns and subgrids multiple times. Now the prover can only cheat by not using the same 3 cards for a unique cell (he might not place {3,3,3} on a cell as expected, but e.g. {3,3,4}). Nevertheless the soundness improves to 8/9.
