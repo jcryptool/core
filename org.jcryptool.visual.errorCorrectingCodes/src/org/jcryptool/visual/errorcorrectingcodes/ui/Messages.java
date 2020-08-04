@@ -4,10 +4,10 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.jcryptool.visual.errorcorrectingcodes.ui.messages"; //$NON-NLS-1$
-    public static String EccMainView_tabGeneralText;
-    public static String EccMainView_tabHammingText;
-    public static String EccMainView_tabMcElieceText;
-    public static String GeneralEccView_btnNextStep;
+    public static String EccMainView_ztabGeneralText;
+	public static String EccMainView_ztabHammingText;
+	public static String EccMainView_ztabMcElieceText;
+	public static String GeneralEccView_btnNextStep;
     public static String GeneralEccView_btnPrev;
     public static String GeneralEccView_btnReset;
     public static String GeneralEccView_grpErrorCode;

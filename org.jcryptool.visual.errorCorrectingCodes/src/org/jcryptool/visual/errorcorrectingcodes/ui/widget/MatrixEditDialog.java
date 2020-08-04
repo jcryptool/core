@@ -34,7 +34,7 @@ public class MatrixEditDialog extends Dialog {
         txtMatrix = UIHelper.mutltiLineText(container, SWT.FILL, SWT.FILL, SWT.DEFAULT, 8);
         lblError = new Label(container, SWT.NONE);
         GridDataFactory.fillDefaults().applyTo(lblError);
-        lblError.setText("Format error, please check your input and try again.");
+        lblError.setText("Format error, please check your input and try again."); //$NON-NLS-1$
         lblError.setForeground(ColorService.RED);
         lblError.setVisible(false);
         if (matrix != null)
@@ -45,7 +45,7 @@ public class MatrixEditDialog extends Dialog {
     @Override
     protected void configureShell(Shell newShell) {
         super.configureShell(newShell);
-        newShell.setText("Edit Matrix");
+        newShell.setText(Messages.MatrixEditDialog_1);
     }
 
     @Override

@@ -67,7 +67,7 @@ public class InteractiveMatrix extends Composite {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 Button btn = new Button(compMatrixElements, SWT.NONE);
-                btn.setText("0");
+                btn.setText("0"); //$NON-NLS-1$
                 btn.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
                 btn.setData(new Point(i, j));
 
@@ -86,7 +86,7 @@ public class InteractiveMatrix extends Composite {
         GridDataFactory.fillDefaults().grab(true, true).applyTo(compControlButtons);
 
         btnEdit = new Button(compControlButtons,SWT.NONE);
-        btnEdit.setText("Edit");
+        btnEdit.setText(Messages.InteractiveMatrix_1);
         btnEdit.addListener(SWT.Selection, e -> {
             matrixEditDialog = new MatrixEditDialog(this.getShell());
             matrixEditDialog.setMatrix(matrix);
@@ -101,28 +101,28 @@ public class InteractiveMatrix extends Composite {
 
     private void setMatrixValues(Event e, Point p) {
         Button b = (Button) e.widget;
-        if (b.getText().equals("0")) {
-            b.setText("1");
+        if (b.getText().equals("0")) { //$NON-NLS-1$
+            b.setText("1"); //$NON-NLS-1$
             matrix.set(p.x, p.y, 1);
             
             if (isPermutation()) {
                 // value 1 sets every other value in its row and column to 0
                 for (int row = 0; row < rows; row++) {
                     if (row != p.x) {
-                        buttonGrid.get(p.y + (row * rows)).setText("0");
+                        buttonGrid.get(p.y + (row * rows)).setText("0"); //$NON-NLS-1$
                         matrix.set(row, p.y, 0);
                     }
                 }
 
                 for (int col = 0; col < columns; col++) {
                     if (col != p.y) {
-                        buttonGrid.get((p.x * rows) + col).setText("0");
+                        buttonGrid.get((p.x * rows) + col).setText("0"); //$NON-NLS-1$
                         matrix.set(p.x, col, 0);
                     }
                 }
             }
         } else {
-            b.setText("0");
+            b.setText("0"); //$NON-NLS-1$
             matrix.set(p.x, p.y, 0);
         }
     }
@@ -193,7 +193,7 @@ public class InteractiveMatrix extends Composite {
      */
     public void reset() {
         for (int i = 0; i < rows * columns; i++) {
-            buttonGrid.get(i).setText("0");
+            buttonGrid.get(i).setText("0"); //$NON-NLS-1$
         }
     }
 }

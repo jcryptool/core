@@ -40,7 +40,7 @@ public class EccMainView extends ViewPart {
         
         mcEliece = new McElieceView(sc, SWT.NONE);
         tabMcEliece = new CTabItem(tabFolder, SWT.NONE);
-        tabMcEliece.setText(Messages.EccMainView_tabMcElieceText);
+        tabMcEliece.setText(Messages.EccMainView_ztabMcElieceText);
         sc.setContent(mcEliece);
         sc.setMinSize(mcEliece.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         tabMcEliece.setControl(sc);
@@ -51,7 +51,7 @@ public class EccMainView extends ViewPart {
         sc.setExpandVertical(true);
         hammingView = new HammingCryptoView(sc, SWT.NONE);
         tabHamming = new CTabItem(tabFolder, SWT.NONE);
-        tabHamming.setText(Messages.EccMainView_tabHammingText);
+        tabHamming.setText(Messages.EccMainView_ztabHammingText);
         sc.setContent(hammingView);
         sc.setMinSize(hammingView.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         tabHamming.setControl(sc);
@@ -62,7 +62,7 @@ public class EccMainView extends ViewPart {
         sc.setExpandVertical(true);
         generalEcc = new GeneralEccView(sc, SWT.NONE);
         tabGeneral = new CTabItem(tabFolder, SWT.NONE);
-        tabGeneral.setText(Messages.EccMainView_tabGeneralText);
+        tabGeneral.setText(Messages.EccMainView_ztabGeneralText);
         sc.setContent(generalEcc);
         sc.setMinSize(generalEcc.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         tabGeneral.setControl(sc);
