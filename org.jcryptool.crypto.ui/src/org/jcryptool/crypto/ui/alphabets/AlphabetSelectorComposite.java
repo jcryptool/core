@@ -390,10 +390,10 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 
         comboAlphas.setEnabled(comboAlphas.getItemCount() >= 2);
 
-        hintOnlyThisSelectable = "";
+        hintOnlyThisSelectable = ""; //$NON-NLS-1$
         if (mode == Mode.COMBO_BOX_WITH_CUSTOM_ALPHABET_BUTTON || mode == Mode.SINGLE_COMBO_BOX_ONLY_EXISTING_ALPHABETS) {
         	if(comboAlphas.getItemCount() < 2) {
-        		hintOnlyThisSelectable = "(only one alphabet selectable here)";
+        		hintOnlyThisSelectable = Messages.getString("AlphabetSelectorComposite.3"); //$NON-NLS-1$
         	}
         }
         
@@ -413,7 +413,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 
     private String makeAlphaStringForBtn(AbstractAlphabet alpha) {
         return getCustomAlphabetLabel()
-                + Messages.getString("AlphabetSelectorComposite.current") + alpha.getName() + "; Zeichen: " + AbstractAlphabet.alphabetContentAsString(alpha.getCharacterSet()) + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+                + Messages.getString("AlphabetSelectorComposite.current") + alpha.getName() + "; Zeichen: " + AbstractAlphabet.alphabetContentAsString(alpha.getCharacterSet()) + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     private int getIndexForRegisteredAlphabet(AbstractAlphabet content) {
@@ -432,7 +432,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 
             @Override
             protected boolean canAutocorrect(InputVerificationResult result) {
-                if (result.getMessage().contains("cancelled")) {
+                if (result.getMessage().contains("cancelled")) { //$NON-NLS-1$
                     return true;
                 }
                 return super.canAutocorrect(result);
@@ -626,7 +626,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
     }
 
     private String generateAlphaContentTip(AbstractAlphabet content) {
-        return "Content" + ": " + AbstractAlphabet.alphabetContentAsString(content.getCharacterSet());
+        return Messages.getString("AlphabetSelectorComposite.6") + ": " + AbstractAlphabet.alphabetContentAsString(content.getCharacterSet()); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**
