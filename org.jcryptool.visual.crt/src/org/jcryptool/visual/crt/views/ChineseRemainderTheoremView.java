@@ -15,7 +15,7 @@ import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.CommandManager;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.action.IContributionManager;
-import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
@@ -31,6 +31,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.services.IServiceLocator;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.visual.crt.ChineseRemainderTheoremPlugin;
 import org.jcryptool.visual.crt.export.FileExporter;
 
@@ -174,11 +175,26 @@ public class ChineseRemainderTheoremView extends ViewPart implements Constants {
      * Initialize the menu
      */
     private void initializeMenu() {
-        IMenuManager menuManager = getViewSite().getActionBars().getMenuManager();
+    	
+    	IToolBarManager menuManager = getViewSite().getActionBars().getToolBarManager();
 
-        addContributionItem(menuManager, exportToPdfCommandId, null, null);
-        addContributionItem(menuManager, exportToCSVCommandId, null, null);
-        addContributionItem(menuManager, exportToLatexCommandId, null, null);
+        addContributionItem(
+        		menuManager,
+        		exportToPdfCommandId,
+        		ImageService.getImageDescriptor(ChineseRemainderTheoremPlugin.PLUGIN_ID, "icons/pdf.png"),
+        		null);
+        
+        addContributionItem(
+        		menuManager,
+        		exportToCSVCommandId,
+        		ImageService.getImageDescriptor(ChineseRemainderTheoremPlugin.PLUGIN_ID, "icons/csv.png"),
+        		null);
+        
+        addContributionItem(
+        		menuManager,
+        		exportToLatexCommandId,
+        		ImageService.getImageDescriptor(ChineseRemainderTheoremPlugin.PLUGIN_ID, "icons/tex.png"),
+        		null);
     }
 
     public void enableMenu(boolean enable) {
