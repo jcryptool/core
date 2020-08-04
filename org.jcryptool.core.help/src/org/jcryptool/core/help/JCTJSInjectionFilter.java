@@ -44,6 +44,7 @@ public class JCTJSInjectionFilter implements IFilter {
 		
 		@Override
 		public void close() throws IOException {
+			this.flush();
 			super.close();
 			this.wrapped.close();
 		}
@@ -110,6 +111,7 @@ public class JCTJSInjectionFilter implements IFilter {
 			this.outStream.flush();
 		}
 		public void close() throws IOException {
+			this.flush();
 			this.outStream.close();
 		}
 
@@ -174,6 +176,7 @@ public class JCTJSInjectionFilter implements IFilter {
 			this.outStream.flush();
 		}
 		public void close() throws IOException {
+			this.flush();
 			this.outStream.close();
 		}
 
