@@ -6,6 +6,7 @@ import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.errorcorrectingcodes.ui.Messages;
 
@@ -67,6 +68,9 @@ public class EccMainView extends ViewPart {
         sc.setMinSize(generalEcc.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         tabGeneral.setControl(sc);
         tabFolder.setSelection(DEFAULT_TAB);
+
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
+                "org.jcryptool.visual.errorcorrectingcodes.mcElieceHelp"); //$NON-NLS-1$
     }
 
     @Override

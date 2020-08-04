@@ -98,11 +98,11 @@ public class McElieceView extends Composite {
         glf.numColumns(2).applyTo(grpKeyInputParams);
         gdf.applyTo(grpKeyInputParams);
         Label lblValueM = new Label(grpKeyInputParams, SWT.NONE);
-        lblValueM.setText("m"); //$NON-NLS-1$
+        lblValueM.setText("m = "); //$NON-NLS-1$
         comboValueM = new Combo(grpKeyInputParams, SWT.READ_ONLY);
         comboValueM.setItems(mceCrypto.getValidMValues());
         Label lblValueT = new Label(grpKeyInputParams, SWT.NONE);
-        lblValueT.setText("t"); //$NON-NLS-1$
+        lblValueT.setText("t = "); //$NON-NLS-1$
         txtValueT = new Text(grpKeyInputParams, SWT.BORDER);
 
         grpKeyParams = new Group(grpAlgorithmInfo, SWT.NONE);

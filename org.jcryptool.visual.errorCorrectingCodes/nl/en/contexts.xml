@@ -2,6 +2,6 @@
 <contexts>
    <context id="mcElieceHelp" title="McEliece Cryptosystem">
       <description>This visualization demonstrates the asymmetric encryption scheme McEliece and some mathematical background of the algorithm.</description>
-      <topic href="nl/en/help/content/index.html" label="McEliece Cryptographic System"/>
+      <topic href="$nl$/help/content/index.html" label="McEliece Cryptographic System"/>
    </context>
 </contexts>
