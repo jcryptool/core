@@ -3,6 +3,6 @@
 <contexts>
    <context id="rainbowHelp" title="Multivariate Cryptography">
       <description>This visualization demonstrates Multivariate cryptopgrahy via the Rainbow signature scheme.</description>
-      <topic href="nl/en/help/content/index.html" label="Multivariate Cryptography"/>
+      <topic href="$nl$/help/content/index.html" label="Multivariate Cryptography"/>
    </context>
 </contexts>

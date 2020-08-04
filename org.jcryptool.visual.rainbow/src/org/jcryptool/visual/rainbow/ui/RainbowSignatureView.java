@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
@@ -209,6 +210,9 @@ public class RainbowSignatureView extends ViewPart {
         sc.setContent(content);
         sc.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
+
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
+                "org.jcryptool.visual.rainbow.rainbowHelp"); //$NON-NLS-1$
     }
 
     private StyledText multiLineText(Composite p, int hAlign, int vAlign, int lines, boolean readonly) {

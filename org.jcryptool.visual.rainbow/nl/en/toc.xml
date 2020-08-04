@@ -2,5 +2,5 @@
 <?NLS TYPE="org.eclipse.help.toc"?>
 
 <toc label="Multivariate Cryptography" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
-    <topic href="nl/en/help/content/index.html" label="Multivariate Cryptography"/>
+    <topic href="$nl$/help/content/index.html" label="Multivariate Cryptography"/>
 </toc>
