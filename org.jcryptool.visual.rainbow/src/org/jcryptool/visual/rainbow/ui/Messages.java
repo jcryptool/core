@@ -25,6 +25,10 @@ public class Messages extends NLS {
     public static String RainbowSignatureView_varPrivKey;
     public static String RainbowSignatureView_varPubkey;
     public static String RainbowSignatureView_varVi;
+	public static String ViParameterWidget_6;
+	public static String ViParameterWidget_7;
+	public static String ViParameterWidget_8;
+	public static String ViParameterWidget_9;
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

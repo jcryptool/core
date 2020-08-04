@@ -24,7 +24,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 
 public class ViParameterWidget extends Composite {
 
-    private static final String[] NUM_LAYERS = new String[] { "2", "3", "4", "5", "6", "7" };
+    private static final String[] NUM_LAYERS = new String[] { "2", "3", "4", "5", "6", "7" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
     private List<Integer> viList;
 
     private Combo comboNumLayers;
@@ -53,7 +53,7 @@ public class ViParameterWidget extends Composite {
         setViList(vi);
 
         lblNumLayers = new Label(this, SWT.NONE);
-        lblNumLayers.setText("Number of Layers: ");
+        lblNumLayers.setText(Messages.ViParameterWidget_6);
         comboNumLayers = new Combo(this, SWT.READ_ONLY);
         comboNumLayers.setItems(NUM_LAYERS);
         comboNumLayers.setText(String.valueOf(vi.length));
@@ -66,7 +66,7 @@ public class ViParameterWidget extends Composite {
         });
 
         lblLayers = new Label(this, SWT.NONE);
-        lblLayers.setText("Variables per Layer: ");
+        lblLayers.setText(Messages.ViParameterWidget_7);
         gdf.applyTo(lblLayers);
 
         compWrapVi = new Composite(this, SWT.NONE);
@@ -76,9 +76,9 @@ public class ViParameterWidget extends Composite {
         buttonWrap = new Composite(this, SWT.NONE);
         RowLayoutFactory.fillDefaults().applyTo(buttonWrap);
         btnGenerate = new Button(buttonWrap, SWT.NONE);
-        btnGenerate.setText("Generate");
+        btnGenerate.setText(Messages.ViParameterWidget_8);
         btnApply = new Button(buttonWrap, SWT.NONE);
-        btnApply.setText("Apply");
+        btnApply.setText(Messages.ViParameterWidget_9);
     }
 
     private Composite createViComposite(Composite parent) {
@@ -98,7 +98,7 @@ public class ViParameterWidget extends Composite {
 
             if (i < numOfLayers - 1) {
                 Label lblLesser = new Label(comp, SWT.NONE);
-                lblLesser.setText("<");
+                lblLesser.setText("<"); //$NON-NLS-1$
             }
 
             v.addListener(SWT.Modify, e -> {
