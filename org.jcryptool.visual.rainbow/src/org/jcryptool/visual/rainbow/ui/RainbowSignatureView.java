@@ -13,6 +13,7 @@ import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.TextStyle;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -24,6 +25,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.rainbow.algorithm.RainbowSignature;
 
 public class RainbowSignatureView extends ViewPart {
@@ -95,17 +97,22 @@ public class RainbowSignatureView extends ViewPart {
         glf.applyTo(content);
         gdf.applyTo(content);
 
-        compHead = new Composite(content, SWT.NONE);
-        glf.applyTo(compHead);
-        GridDataFactory.fillDefaults().grab(true, false).applyTo(compHead);
-        lblHeader = new Label(compHead, SWT.NONE);
-        lblHeader.setFont(FontService.getHeaderFont());
-        lblHeader.setText(Messages.RainbowSignatureView_lblHeader);
-        textInfoHead = new StyledText(compHead, SWT.MULTI | SWT.READ_ONLY | SWT.WRAP);
-        textInfoHead.setText(
-                Messages.RainbowSignatureView_textInfoHead);
-        glf.applyTo(textInfoHead);
-        GridDataFactory.fillDefaults().grab(true, false).hint(600, SWT.DEFAULT).applyTo(textInfoHead);
+
+        TitleAndDescriptionComposite header = new TitleAndDescriptionComposite(content);
+        header.setTitle(Messages.RainbowSignatureView_lblHeader);
+        header.setDescription(Messages.RainbowSignatureView_textInfoHead);
+        header.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+//        compHead = new Composite(content, SWT.NONE);
+//        glf.applyTo(compHead);
+//        GridDataFactory.fillDefaults().grab(true, false).applyTo(compHead);
+//        lblHeader = new Label(compHead, SWT.NONE);
+//        lblHeader.setFont(FontService.getHeaderFont());
+//        lblHeader.setText(Messages.RainbowSignatureView_lblHeader);
+//        textInfoHead = new StyledText(compHead, SWT.MULTI | SWT.READ_ONLY | SWT.WRAP);
+//        textInfoHead.setText(
+//                Messages.RainbowSignatureView_textInfoHead);
+//        glf.applyTo(textInfoHead);
+//        GridDataFactory.fillDefaults().grab(true, false).hint(600, SWT.DEFAULT).applyTo(textInfoHead);
 
         compAlgorithm = new Composite(content, SWT.NONE); 
         glf.numColumns(2).applyTo(compAlgorithm);
