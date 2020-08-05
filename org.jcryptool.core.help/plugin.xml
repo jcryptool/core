@@ -16,6 +16,38 @@
             file="$nl$/tocElGamal.xml"
             primary="false">
       </toc>
+      <toc
+            file="$nl$/tocDSA.xml"
+            primary="false">
+      </toc>
+      <toc
+            file="$nl$/tocHMACMD5.xml"
+            primary="false">
+      </toc>
+      <toc
+            file="$nl$/tocMD5.xml"
+            primary="false">
+      </toc>
+      <toc
+            file="$nl$/tocRNGSHA1.xml"
+            primary="false">
+      </toc>
+      <toc
+            file="$nl$/tocSHA256.xml"
+            primary="false">
+      </toc>
+      <toc
+            file="$nl$/tocAES.xml"
+            primary="false">
+      </toc>
+      <toc
+            file="$nl$/tocIDEA.xml"
+            primary="false">
+      </toc>
+      <toc
+            file="$nl$/tocRC6.xml"
+            primary="false">
+      </toc>
    </extension>
    <extension
          point="org.eclipse.help.index">
