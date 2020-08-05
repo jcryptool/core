@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="SigDemo" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins"> 
+<toc label="Signatur-Demo" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins"> 
     <topic label="Signatur-Demo" href="$nl$/help/content/index.html" /> 
 </toc>

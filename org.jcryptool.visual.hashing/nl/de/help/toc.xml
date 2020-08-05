@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<toc label="Hashes-Visualisierung" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
-   <topic href="$nl$/help/content/index.html" label="Hashes-Visualisierung">
+<toc label="Hash-Sensitivität" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
+   <topic href="$nl$/help/content/index.html" label="Hash-Sensitivität">
    </topic>
 </toc>

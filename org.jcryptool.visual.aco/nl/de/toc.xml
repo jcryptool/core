@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Ameisenkolonie-Optimierung" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
-  <topic href="$nl$/help/content/toc.html" label="Ameisenkolonie-Optimierung">
+<toc label="Ameisenkolonie-Optimierung (ACO)" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
+  <topic href="$nl$/help/content/toc.html" label="Ameisenkolonie-Optimierung (ACO)">
    <topic href="$nl$/help/content/naturalreference.html" label="Das natürliche Vorbild">
   </topic>
    <topic href="$nl$/help/content/mathematicalabstraction.html" label="Mathematische Formulierung des Algorithmus">

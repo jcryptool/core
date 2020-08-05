@@ -74,7 +74,7 @@
   <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
-            name="WOTS/WOTS+"
+            name="%Visual.name"
             viewId="org.jcryptool.visual.wots.WotsView">
       </Visual>
    </extension> 

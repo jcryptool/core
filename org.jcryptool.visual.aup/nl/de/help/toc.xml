@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Android-Mustersperre" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins" topic="$nl$/help/content/index.html">
-  <topic href="$nl$/help/content/index.html" label="Android-Mustersperre">
+<toc label="Android-Mustersperre (AUP)" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins" topic="$nl$/help/content/index.html">
+  <topic href="$nl$/help/content/index.html" label="Android-Mustersperre (AUP)">
    <topic href="$nl$/help/content/index.html#design" label="AUP-Aufbau">
     </topic>
     <topic href="$nl$/help/content/index.html#security" label="AUP-Sicherheit">

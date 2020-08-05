@@ -2,7 +2,7 @@
 <?NLS TYPE="org.eclipse.help.toc"?>
 
 <toc label="JCrypTool Public-Key Infrastructure (JCT-PKI)" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
-    <topic href="$nl$/help/index.html" label="JCrypTool Certification Authority">
+    <topic href="$nl$/help/index.html" label="JCrypTool Public-Key Infrastructure (JCT-PKI)">
         <topic href="$nl$/help/intro/schutzziele.html" label="Introduction">
         </topic>
         <topic href="$nl$/help/intro/zertifikate.html" label="Digital Signatures and Certificates">

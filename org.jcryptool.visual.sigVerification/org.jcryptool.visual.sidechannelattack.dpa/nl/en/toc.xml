@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Differential Power Analysis" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
-    <topic label="Differential Power Analysis" href="$nl$/help/content/index.html" /> 
+<toc label="Differential Power Analysis / Double and Add" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
+    <topic label="Differential Power Analysis / Double and Add" href="$nl$/help/content/index.html" /> 
 </toc>
