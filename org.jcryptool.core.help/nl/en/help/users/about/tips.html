@@ -46,9 +46,12 @@
 
 	<p>To solve this, you can either delete the <strong>.jcryptool</strong> folder in your document directory (inside your user home directory) manually or you can tell JCrypTool to do that job. For the first case (when trying to delete this folder), please remember that this folder is hidden on macOS and Linux. For the second case (to let JCrypTool delete this folder at each new start) simply add the parameter <strong>-clean</strong> at the end when launching JCrypTool (e.g. add it to the shortcut on Windows). This automatically deletes the workspace folder. This folder is automatically recreated and initialized when starting JCrypTool the next time. Remember to remove the parameter afterwards.</p>
 
-	<p>Here are two examples under Windows how the target command line call could lool like:</br>
+	<p>Here are two examples under Windows how the target command line call could look like:</br>
 	F:\Downloads\jcryptool\JCrypTool.exe -clean</br>
-	F:\Downloads\jcryptool\JCrypTool.exe -nl de -data %LOCALAPPDATA%\jct-de -clean</br>
+	F:\Downloads\jcryptool\JCrypTool.exe -nl de -data %LOCALAPPDATA%\jct-de -clean</p>
+	<p>
+	And here a sample call under Linux:</br>
+	$ ./JCrypTool -nl en -clean -data /home/Documents/.jcryptool/en  & </br>
 	</p></br></br>
 
 </body>
