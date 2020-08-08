@@ -123,7 +123,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
         // Search Toolbar
         IToolBarManager searchToolBar = new ToolBarManager(coolBar.getStyle());
-
+        // The search Toolbar hast one Item, the search icon.
         coolBar.add(new ToolBarContributionItem(searchToolBar, CorePlugin.PLUGIN_ID + ".searchToolbar")); //$NON-NLS-1$
 
         // CoolBar Context Menu

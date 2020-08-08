@@ -44,4 +44,5 @@ public class Perspective implements IPerspectiveFactory {
                 "org.jcryptool.analysis", IPageLayout.BOTTOM, 0.5f, editorArea); //$NON-NLS-1$
         flAnalysis.addPlaceholder("org.jcryptool.analysis.*"); //$NON-NLS-1$
     }
+    
 }

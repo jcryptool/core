@@ -18,7 +18,7 @@
 
    <includes
          id="org.jcryptool.thirdparty.jre.linux64.feature"
-         version="11.0.5.009"
+         version="11.0.5.010"
          optional="true"
          os="linux"
          ws="gtk"
@@ -26,7 +26,7 @@
 
    <includes
          id="org.jcryptool.thirdparty.jre.win64.feature"
-         version="11.0.5.009"
+         version="11.0.5.010"
          optional="true"
          os="win32"
          ws="win32"
@@ -34,7 +34,7 @@
 
    <includes
          id="org.jcryptool.thirdparty.jre.macosx.feature"
-         version="11.0.5.009"
+         version="11.0.5.010"
          optional="true"
          os="macosx"
          ws="cocoa"

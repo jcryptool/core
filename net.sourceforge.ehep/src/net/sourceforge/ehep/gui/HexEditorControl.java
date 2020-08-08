@@ -20,13 +20,6 @@ import java.util.List;
 import java.util.Stack;
 import java.util.Vector;
 
-import net.sourceforge.ehep.EhepPlugin;
-import net.sourceforge.ehep.core.EHEP;
-import net.sourceforge.ehep.core.Encoder;
-import net.sourceforge.ehep.core.Utils;
-import net.sourceforge.ehep.editors.HexEditor;
-import net.sourceforge.ehep.events.CursorKeyListener;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -66,6 +59,13 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.actions.ActionFactory;
+
+import net.sourceforge.ehep.EhepPlugin;
+import net.sourceforge.ehep.core.EHEP;
+import net.sourceforge.ehep.core.Encoder;
+import net.sourceforge.ehep.core.Utils;
+import net.sourceforge.ehep.editors.HexEditor;
+import net.sourceforge.ehep.events.CursorKeyListener;
 
 /**
  * The main plug-in GUI control

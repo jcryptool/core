@@ -8,6 +8,46 @@
             file="$nl$/toc.xml"
             primary="true">
       </toc>
+      <toc
+            file="$nl$/tocRSA.xml"
+            primary="false">
+      </toc>
+      <toc
+            file="$nl$/tocElGamal.xml"
+            primary="false">
+      </toc>
+      <toc
+            file="$nl$/tocDSA.xml"
+            primary="false">
+      </toc>
+      <toc
+            file="$nl$/tocHMACMD5.xml"
+            primary="false">
+      </toc>
+      <toc
+            file="$nl$/tocMD5.xml"
+            primary="false">
+      </toc>
+      <toc
+            file="$nl$/tocRNGSHA1.xml"
+            primary="false">
+      </toc>
+      <toc
+            file="$nl$/tocSHA256.xml"
+            primary="false">
+      </toc>
+      <toc
+            file="$nl$/tocAES.xml"
+            primary="false">
+      </toc>
+      <toc
+            file="$nl$/tocIDEA.xml"
+            primary="false">
+      </toc>
+      <toc
+            file="$nl$/tocRC6.xml"
+            primary="false">
+      </toc>
    </extension>
    <extension
          point="org.eclipse.help.index">
@@ -28,6 +68,19 @@
             name="%cheatsheet.general.name">
             <description>%cheatsheet.general.description</description>
       </cheatsheet>
+   </extension>
+   <extension
+         point="org.eclipse.help.webapp.contentFilter">
+      <filter
+            class="org.jcryptool.core.help.JCTJSInjectionFilter"
+            priority="1">
+      </filter>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="org.jcryptool.core.help.ServerStartup">
+      </startup>
    </extension>
 
 </plugin>

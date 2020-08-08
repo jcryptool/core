@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ActionCascade xmlns="http://www.jcryptool.org/actioncascade" name="unbenannt001Cascade" passwords="true">
+  <ActionItems>
+    <ActionItem>
+      <ActionType>encrypt</ActionType>
+      <FileName>out021.bin</FileName>
+      <ActionName plugin="org.jcryptool.crypto.classic.caesar.algorithm">Caesar</ActionName>
+      <Alphabet>Printable ASCII</Alphabet>
+      <Parameters dataobjecttype="org.jcryptool.core.operations.dataobject.classic.ClassicDataObject">
+        <Parameter>
+          <Key>nullchar</Key>
+          <Value>0</Value>
+        </Parameter>
+        <Parameter>
+          <Key>key</Key>
+          <Value>H</Value>
+        </Parameter>
+        <Parameter>
+          <Key>key2</Key>
+          <Value>null</Value>
+        </Parameter>
+        <Parameter>
+          <Key>transformData</Key>
+          <Value />
+        </Parameter>
+        <Parameter>
+          <Key>filterNonAlphaChars</Key>
+          <Value>true</Value>
+        </Parameter>
+      </Parameters>
+    </ActionItem>
+    <ActionItem>
+      <ActionType>decrypt</ActionType>
+      <FileName>out022.bin</FileName>
+      <ActionName plugin="org.jcryptool.crypto.classic.caesar.algorithm">Caesar</ActionName>
+      <Alphabet>Printable ASCII</Alphabet>
+      <Parameters dataobjecttype="org.jcryptool.core.operations.dataobject.classic.ClassicDataObject">
+        <Parameter>
+          <Key>nullchar</Key>
+          <Value>0</Value>
+        </Parameter>
+        <Parameter>
+          <Key>key</Key>
+          <Value>H</Value>
+        </Parameter>
+        <Parameter>
+          <Key>key2</Key>
+          <Value>null</Value>
+        </Parameter>
+        <Parameter>
+          <Key>transformData</Key>
+          <Value />
+        </Parameter>
+        <Parameter>
+          <Key>filterNonAlphaChars</Key>
+          <Value>false</Value>
+        </Parameter>
+      </Parameters>
+    </ActionItem>
+  </ActionItems>
+</ActionCascade>
+

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="introductionContexHelpID" title="How to use the Algorithm Perspective">
+		<description>This quick introduction explains how to use the Algorithm Perspective. Like in the slideshow, we use the RC6 block cipher as an example. The procedure for other algorithms is similar, so this guide can also be used for other algorithms.
+
+&lt;b&gt;1. Select Algorithm:&lt;/b&gt; Select an algorithm on the right side of the JCT in the &lt;b&gt;Algorithms&lt;/b&gt; explorer. To do this, double-click on an entry. A dialog box appears in which you can make algorithm-specific settings. In this example, we leave the default values and click &quot;Finish&quot;. The selected entry now appears in the lower area of the JCT, in the &lt;b&gt;Operations&lt;/b&gt; view. To see input and output, keys and operations, you have to open the entry by double-clicking it.
+
+&lt;b&gt;2. Define Input and Output:&lt;/b&gt; You can define the input either as an editor content or as a file. The same applies to the output. To do this, open the &quot;Input/Output&quot; entry.  There you can select an editor or file separately for input and output. Simply double-click the entry. A pop-up opens, allowing to switch between &quot;Select file...&quot; and &quot;Use editor&quot;. If you select &quot;Select file...&quot;, a dialog opens in which you can select a file.
+
+&lt;b&gt;3. Select Key:&lt;/b&gt; Now we need to select a matching key from the &lt;b&gt;Keystore&lt;/b&gt; in the upper left-hand corner of JCT. To see the already existing keys, open one of the existing contacts, e.g. &quot;Alice Whitehead&quot;. There are three categories of keys: key pairs (asymmetric), secret keys (symmetric) and certificates. Depending on the algorithm chosen in step 1, we open one of the categories. The block cipher RC6 chosen in our example requires a secret key. We open this category. Since in this category there is no RC6 key for RC6, we must create a new RC6 key. We can do this using icon with the &lt;b&gt;golden key&lt;/b&gt; in the upper part of the keystore. A dialog opens where we create a key for the selected algorithm and click &quot;Finish&quot;. The dialog closes and the new key appears in the category &quot;Secret keys&quot;. Drag&apos;n&apos;drop this new key into the lower part of the JCT, the Operations view. This key is now used for this algorithm.
+
+&lt;b&gt;4. Determine Operation:&lt;/b&gt; Now we determine whether the input is encrypted, decrypted or hashed. To do so, we double-click on the "Operation" entry. A pop-up opens, in which we select one of the three operations. Depending on the selected algorithm, not all three operations are available for selection.
+
+&lt;b&gt;5. Execute Operation:&lt;/b&gt; To execute the operation with the selected algorithm, key, input and output information we click on the green triangle in the upper right corner of the Operations view. The operation is now executed. If you have selected "Use editor" as output, a new editor window opens with the output. If you have selected "Select file..." your file now contains the output.</description>
+		<topic href="../org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html" label="Algorithm Perspective" />
+	</context>
+</contexts>

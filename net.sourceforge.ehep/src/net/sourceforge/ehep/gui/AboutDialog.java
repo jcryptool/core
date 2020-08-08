@@ -14,10 +14,6 @@ package net.sourceforge.ehep.gui;
 
 import java.net.URL;
 
-import net.sourceforge.ehep.EhepPlugin;
-import net.sourceforge.ehep.core.EHEP;
-import net.sourceforge.ehep.core.Utils;
-
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
@@ -35,6 +31,10 @@ import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.osgi.framework.Bundle;
+
+import net.sourceforge.ehep.EhepPlugin;
+import net.sourceforge.ehep.core.EHEP;
+import net.sourceforge.ehep.core.Utils;
 
 /**
  * @author Marcel Palko

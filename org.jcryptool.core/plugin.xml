@@ -84,7 +84,8 @@
    </extension>
 
    <extension point="org.eclipse.ui.menus">
-      <!-- Hilfe -->
+   
+      <!-- Hilfe-Button -->
       <menuContribution locationURI="toolbar:org.jcryptool.core.toolbar?after=additions">
          <command 
          	commandId="org.jcryptool.core.commands.showHelp" 
@@ -105,6 +106,8 @@
              tooltip="%command.tooltip.0">
          </command>
       </menuContribution>
+      
+      <!-- Einträge im neuen-Editor-öffnen-Dropdown -->
       <menuContribution
       		allPopups="false"
       		locationURI="menu:org.jcryptool.core.command.editorsPulldown">
@@ -120,8 +123,11 @@
       		tooltip="%command.tooltip.emptyHexFile"
       		style="push">
         </command>
-        <separator name="separator" visible="true">
-        </separator>
+        
+        <!--  Der Trennstrich zwischen den leere-Datei-öffnen und 
+        Datei-mit-Beispieltext-öffnen Einträgen -->
+        <separator name="separator" visible="true" />
+        
         <command
       		commandId="org.jcryptool.core.command.openSampleTextEditor"
       		icon="icons/editors.gif"
@@ -217,6 +223,8 @@
       <page class="org.jcryptool.core.preferences.pages.VisualsPage" id="org.jcryptool.preferences.visuals" name="%preference.page.visuals"/>
    </extension>
 
+	<!-- Das sorgt eingentlich dafür, dass die Intro-Seite angezeigt wird.
+	Das funktioniert aber aus unerklärlichen Gründen nicht -->
    <extension point="org.eclipse.ui.intro">
       <intro class="org.eclipse.ui.intro.config.CustomizableIntroPart" icon="icons/icon_16.gif" id="org.jcryptool.intro" label="%intro.title"/>
       <introProductBinding introId="org.jcryptool.intro" productId="org.jcryptool.core.product"/>
@@ -235,7 +243,7 @@
          <!-- Here you can specify which views should be opened in the standard
          perspective of the JCT at startup. -->
          <!-- The following code is an example how you can stack multiple 
-         views to one position(relationship) (left, right, op, bottom). In this example the 
+         views to one position(relationship) (left, right, top, bottom). In this example the 
          ActionView and the FileExplorerView are on the same position relationship=left. -->
          <view 
          	id="org.jcryptool.actions.views.ActionView" 
@@ -246,7 +254,6 @@
          <view 
          	id="org.jcryptool.fileexplorer.views.FileExplorerView" 
          	minimized="false" 
-         	ratio="0.25f" 
          	relationship="stack" 
          	relative="org.jcryptool.actions.views.ActionView"/> 
          <view 
@@ -282,7 +289,9 @@
 
 
    <extension id="product" point="org.eclipse.core.runtime.products">
-      <product application="org.jcryptool.core.application" name="JCrypTool">
+      <product
+            application="org.jcryptool.core.application"
+            name="JCrypTool">
       <!--  You can access a property via Platform.getProduct().getProperty("appName") -->
          <property name="appName" value="JCrypTool"/>
          <property name="cssTheme" value="org.jcryptool.themes.default"/>
@@ -302,13 +311,30 @@
       </product>
    </extension>
 
+	<!-- Hier werden shortcuts definiert -->
    <extension point="org.eclipse.ui.bindings">
-      <key commandId="org.eclipse.ui.help.dynamicHelp" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" sequence="F1"/>
+      <key 
+      		commandId="org.eclipse.ui.help.dynamicHelp" 
+      		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" 
+      		sequence="F1"/>
       <key
             commandId="org.jcryptool.core.action.open"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+O">
       </key>
+            <key
+            commandId="org.eclipse.ui.window.quickAccess"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+3">
+      </key>
+      
    </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="org.jcryptool.core.Startup">
+      </startup>
+</extension>
 </plugin>

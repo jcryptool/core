@@ -21,7 +21,7 @@ public class ShaHandler extends IntegratorHandler {
 	@Override
 	protected String getFlexiProviderAlgorithmName() {return "SHA256";} //$NON-NLS-1$
 	@Override
-	protected String getReadableAlgorithmName() {return "SHA";} //$NON-NLS-1$
+	protected String getReadableAlgorithmName() {return "SHA-256";} //$NON-NLS-1$
 	@Override
 	protected String getShowKey() {return null;}
 }

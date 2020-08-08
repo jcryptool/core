@@ -14,11 +14,8 @@
    </configIni>
 
    <launcherArgs>
-      <programArgs>-data @user.home/Documents/.jcryptool
-      </programArgs>
       <vmArgs>-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.SimpleLog
 --add-modules=ALL-SYSTEM -Djceks.key.serialFilter=*
--Djdk.tls.client.protocols=TLSv1.2
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>

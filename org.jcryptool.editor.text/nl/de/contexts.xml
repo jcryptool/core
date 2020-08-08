@@ -2,8 +2,8 @@
 <contexts>
    <context id="textEditor" title="Texteditor">
       <description>Mit dem <b>Texteditor</b> können Textdateien angelegt, bearbeitet und betrachtet werden. Alle vorhandenen kryptografischen Operationen können auf beliebigen Textdateien ausgeführt werden. Das Ergebnis einer solchen Operation kann aber je nach Notwendigkeit automatisch im <b>Hexeditor</b> geöffnet werden.</description>
-      <topic href="../org.jcryptool.core.help/nl/de/help/users/general/editor_text.html" label="Texteditor"/>
-      <topic href="../org.jcryptool.core.help/nl/de/help/users/general/editor_hex.html" label="Hexeditor"/>
+      <topic href="../org.jcryptool.core.help/$nl$/help/users/general/editor_text.html" label="Texteditor"/>
+      <topic href="../org.jcryptool.core.help/$nl$/help/users/general/editor_hex.html" label="Hexeditor"/>
    </context>
 
 </contexts>

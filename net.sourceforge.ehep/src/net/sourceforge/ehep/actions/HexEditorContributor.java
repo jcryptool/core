@@ -12,13 +12,13 @@
  */
 package net.sourceforge.ehep.actions;
 
-import net.sourceforge.ehep.editors.HexEditor;
-
 import org.eclipse.jface.action.Action;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.part.EditorActionBarContributor;
+
+import net.sourceforge.ehep.editors.HexEditor;
 
 /**
  * @author ganzhi

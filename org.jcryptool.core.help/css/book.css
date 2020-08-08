@@ -1,0 +1,321 @@
+body{
+    padding: 2em 3em 10em 3em; 
+    background: #fff;
+    color: #333;
+  }
+  
+  hr{
+    margin: 3em 0;
+  }
+  
+  h1 {
+    font-size: 2em;
+    font-family:   Arial, Helvetica , sans-serif;
+    margin-bottom: .8em;
+    margin-top: 1em;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: .5em;
+  }
+  
+  h2 {
+     font-size: 1.4em;
+     font-family: Arial, Helvetica, sans-serif;
+     margin-top: 2.5em;
+     letter-spacing: 1px;
+  }
+   
+  h3 {
+    font-size: 1.3em;
+    font-family:  Courier New, Helvetica, Arial, sans-serif;
+  }
+   
+  h4 {
+    font-size: 1.1em;
+    font-family: Courier New, Courier New,Arial, Helvetica, sans-serif;
+  }
+  
+  p{
+    line-height: 1.6em;
+  }
+   
+  p, li, a {
+    font-size: 1em;
+    font-family: Verdana, Geneva, serif;
+    line-height: 1.8em;
+  }
+   
+  a {
+    text-decoration: none;
+    color: #176dd0;
+    font-weight: bold;
+  }
+   
+  a:hover {
+    text-decoration: underline;
+    color: #405a83;
+  }
+  
+  strong, b{
+    background: #efefef;
+    padding: 1px .5em;
+    border: 1px solid #ddd;
+  
+  }
+   
+  div.code {
+    background-color: #efefef;
+    border-left-width: 8px;
+    border-left-color: #ccc;
+    border-left-style: solid;
+    padding: .5em 0em .5em 1em;
+    
+    margin-left: 5px;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1.1em;
+    margin: 1em 0;
+  }
+  
+  div.screenshot {
+    background-color: transparent;
+    margin: 3em 0;
+    text-align: center;
+  }
+   
+  table{
+    background: #fff;
+  }
+   
+  th {
+    background-color: #666;
+    text-align: left;
+    font-size: 1em;
+    font-family: Verdana, Geneva, serif;
+  }
+   
+  tr {
+    vertical-align: top;
+  }
+  
+  tr:nth-child(odd){
+    background: #eee;
+  }
+   
+  td {
+    font-size: 0.9em;
+    font-family: Verdana, Geneva, serif;
+    padding: .5em 1em;
+  }
+  
+  td a {
+    white-space: pre-wrap; 
+    white-space: -moz-pre-wrap; 
+    white-space: -pre-wrap;  
+    white-space: -o-pre-wrap;    
+    word-wrap: break-word;
+    word-break: break-all;
+  }
+  
+  
+   /************* BREADCRUMBS STYLES ***********************/
+  
+  @media (min-width: 600px){
+    div.help_breadcrumbs{ 
+      color: #fff;
+      font-size: 0;
+    }
+  
+    div.help_breadcrumbs a{
+  
+      position: relative;
+  
+      display: inline-block;
+      
+      line-height: 16px; /* arrow size / 2 */
+      background: #3498db;
+        
+      text-align: center;
+      padding: 8px 10px 8px 32px;  /* arrow size / 4 as padding top / bottom */
+      position: relative;
+      margin: 0 10px 0 0; 
+      color: #fff;
+      font-size: 12px;
+      text-decoration: none;
+      margin-bottom: 10px;
+    }
+  
+    div.help_breadcrumbs a:after {
+      content: "";  
+      position: absolute; 
+      top: 0;
+      right: -16px; /* - arrow size / 2 */
+      border-top: 16px solid transparent; /* arrow size / 2 */
+      border-bottom: 16px solid transparent; /* arrow size / 2 */
+      border-left: 16px solid #3498db; /* arrow size / 2 */
+      z-index: 5;
+    }
+  
+   div.help_breadcrumbs a:before {
+     content: "";  
+     position: absolute; 
+     left: 0; 
+     top: 0;
+     border-top: 16px solid transparent;
+     border-bottom: 16px solid transparent;
+     border-left: 16px solid #fff;
+   }
+  
+    div.help_breadcrumbs a:first-child{
+      border-top-left-radius: 10px; 
+      border-bottom-left-radius: 10px;
+      border: 1px solid #3498db;
+      padding: 7px 10px 7px 32px;
+      padding-left: 20px;
+    }
+  
+    div.help_breadcrumbs a:first-child::after{
+      right: -17px;
+      top: -1px;
+    }
+   
+    div.help_breadcrumbs a:first-child::before {
+      display: none; 
+    }
+  
+    div.help_breadcrumbs a:last-child {
+      padding-right: 20px;
+      border-top-right-radius: 10px; 
+      border-bottom-right-radius: 10px;
+    }
+  
+    div.help_breadcrumbs a:last-child::after {
+      display: none; 
+    }
+  
+    div.help_breadcrumbs a:hover{  
+      z-index: 1; 
+      background: #1d6ea5;
+      -webkit-transform: translateX(3px);
+      transform: translateX(3px);
+      border-color: #1d6ea5;
+    }
+  
+    div.help_breadcrumbs a:hover:after{
+      border-left: 16px solid #1d6ea5;
+      -webkit-transform: translateX(0);
+      transform: translateX(0);
+      z-index: 5;
+    } 
+  }
+  
+   /************* NARROW STYLES: < 600 px  ***********************/
+  
+  @media (max-width: 600px){
+      body {
+          font-family: Verdana, Geneva, serif;
+          font-size: 0.8em;		
+          word-wrap: break-word;
+          padding: 0 .5em 20px .5em;
+          margin: 0;
+        }
+  
+      hr{
+          margin: 2em 0;
+      }
+    
+      h1 {
+          font-size: 1.3em;
+          text-align: center;
+          text-transform: none;
+          padding-bottom: 1em;
+          border-bottom: 1px solid #ddd;
+          margin-top: 1.4em;
+          margin-bottom: 1.4em;
+        }
+    
+      h2 {
+          font-size: 1.2em;
+          margin-top: 1.3em;
+        }
+    
+      h3 {
+          font-size: 1.15em;
+          margin-top: 1.2em;
+          margin-bottom: .6em;
+          font-family:   Arial, Helvetica , sans-serif;
+        }
+    
+      h4 {
+          font-size: 1.05em;
+          margin-top: 1.2em;
+          margin-bottom: .6em;
+          font-family: Arial, Helvetica, sans-serif;	
+      }
+    
+      img{
+          margin: .8em 0;
+        }
+    
+      a{
+          font-weight: 100;
+      }
+    
+      p, li, a {
+          font-size: 1em;
+          font-family: Verdana, Geneva, serif;
+          line-height: 1.2em;
+          margin: .5em 0;
+      }
+  
+      strong, b{
+          background: transparent;
+          padding: 0;
+          border: none;
+      }
+    
+      div.code {
+          background-color: #fff;
+          border-left-width: 4px;
+          border-left-color: #ccc;
+          border-left-style: solid;
+          padding-left: 2px;
+          margin-left: 2px;
+          font-family: "Courier New", Courier, monospace;
+          font-size: 0.8em;
+        }
+    
+      ul {
+          list-style-type: square;
+          padding-left: 20px;
+      }
+    
+      li{
+          margin: .8em 0;
+        }
+    
+      table{
+          margin: 1.2em 0;
+      }
+      
+      th {
+          background-color: #666;
+          text-align: left;
+          font-size: 0.8em;
+          font-family: Verdana, Geneva, serif;
+        }
+    
+      td {
+          font-size: 0.8em;
+          font-family: Verdana, Geneva, serif;
+          text-align: center;
+          padding: 2px 5px;
+        }
+  
+        .help_breadcrumbs {
+          font-size: 0.8em;
+          margin-top: 1em;
+          word-wrap: normal;
+        }
+  }
+  

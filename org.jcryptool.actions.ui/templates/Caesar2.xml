@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ActionCascade xmlns="http://www.jcryptool.org/actioncascade" name="unbenannt001Cascade" passwords="true">
+<ActionCascade xmlns="http://www.jcryptool.org/actioncascade" name="unsaved001Cascade" passwords="true">
   <ActionItems>
     <ActionItem>
       <ActionType>encrypt</ActionType>
-      <FileName>out021.bin</FileName>
-      <ActionName plugin="org.jcryptool.crypto.classic.caesar.algorithm">Caesar</ActionName>
-      <Alphabet>Printable ASCII</Alphabet>
+      <FileName>out003.txt</FileName>
+      <ActionName plugin="org.jcryptool.crypto.classic.caesar.algorithm_cmd">Caesar</ActionName>
+      <Alphabet>Upper and lower Latin (A-Z,a-z)</Alphabet>
       <Parameters dataobjecttype="org.jcryptool.core.operations.dataobject.classic.ClassicDataObject">
         <Parameter>
           <Key>nullchar</Key>
@@ -20,8 +20,12 @@
           <Value>null</Value>
         </Parameter>
         <Parameter>
+          <Key>outputIS</Key>
+          <Value>null</Value>
+        </Parameter>
+        <Parameter>
           <Key>transformData</Key>
-          <Value />
+          <Value>filterUmlauts=on</Value>
         </Parameter>
         <Parameter>
           <Key>filterNonAlphaChars</Key>
@@ -31,9 +35,9 @@
     </ActionItem>
     <ActionItem>
       <ActionType>decrypt</ActionType>
-      <FileName>out022.bin</FileName>
-      <ActionName plugin="org.jcryptool.crypto.classic.caesar.algorithm">Caesar</ActionName>
-      <Alphabet>Printable ASCII</Alphabet>
+      <FileName>out004.txt</FileName>
+      <ActionName plugin="org.jcryptool.crypto.classic.caesar.algorithm_cmd">Caesar</ActionName>
+      <Alphabet>Upper and lower Latin (A-Z,a-z)</Alphabet>
       <Parameters dataobjecttype="org.jcryptool.core.operations.dataobject.classic.ClassicDataObject">
         <Parameter>
           <Key>nullchar</Key>
@@ -48,12 +52,16 @@
           <Value>null</Value>
         </Parameter>
         <Parameter>
+          <Key>outputIS</Key>
+          <Value>null</Value>
+        </Parameter>
+        <Parameter>
           <Key>transformData</Key>
           <Value />
         </Parameter>
         <Parameter>
           <Key>filterNonAlphaChars</Key>
-          <Value>false</Value>
+          <Value>true</Value>
         </Parameter>
       </Parameters>
     </ActionItem>

@@ -48,7 +48,7 @@
             handlerClass="org.jcryptool.crypto.flexiprovider.integrator.messagedigest.sha.ShaHandler"
             id="org.jcryptool.crypto.flexiprovider.integrator.messagedigest.sha"
             isFlexiProviderAlgorithm="true"
-            name="SHA"
+            name="SHA-256"
             type="hash">
       </algorithm_cmd>
    </extension>

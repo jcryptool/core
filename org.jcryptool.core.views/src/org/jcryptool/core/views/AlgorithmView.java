@@ -37,7 +37,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
@@ -49,6 +48,7 @@ import org.jcryptool.core.operations.CommandInfo;
 import org.jcryptool.core.operations.IOperationsConstants;
 import org.jcryptool.core.operations.OperationsPlugin;
 import org.jcryptool.core.operations.algorithm.ShadowAlgorithmHandler;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.core.views.content.PaletteView;
 import org.jcryptool.core.views.content.TreeView;
@@ -79,8 +79,8 @@ public class AlgorithmView extends ViewPart implements IOperationsConstants {
 
     private boolean initialSearchState = true;
 
-    private static final Color COLOR_FILTER_USER = Display.getCurrent().getSystemColor(SWT.COLOR_BLACK); // black
-    private static final Color COLOR_FILTER_INITIAL = Display.getCurrent().getSystemColor(SWT.COLOR_GRAY); // grey
+    private static final Color COLOR_FILTER_USER = ColorService.BLACK; // black
+    private static final Color COLOR_FILTER_INITIAL = ColorService.getColor(SWT.COLOR_GRAY); // gray
 
     private static ArrayList<ShadowAlgorithmHandler> algorithmTypes = new ArrayList<ShadowAlgorithmHandler>();
 

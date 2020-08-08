@@ -69,5 +69,14 @@
           commandId="org.jcryptool.crypto.keystore.SelectKey">
     </handler>
  </extension>
+ <extension
+       point="org.eclipse.ui.perspectiveExtensions">
+    <perspectiveExtension
+          targetID="org.jcryptool.crypto.flexiprovider.ui.perspective.FlexiProviderPerspective">
+       <viewShortcut
+             id="org.jcryptool.crypto.flexiprovider.operations.OperationsView">
+       </viewShortcut>
+    </perspectiveExtension>
+ </extension>
 
 </plugin>

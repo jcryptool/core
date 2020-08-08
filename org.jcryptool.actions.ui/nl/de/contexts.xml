@@ -1,11 +1,11 @@
 <contexts>
 	<context id="actionView" title="Aktionen-Sicht">
 		<description>Mit der <b>Actions</b> Sicht können Sie aufeinanderfolgende kryptografische Operationen (Kaskaden) aufzeichnen.  Zum Starten der Aufzeichnung öffnen Sie die gewünschte Datei in einem der JCrypTool Editoren (Hex oder Text) und aktivieren den <b>Aufzeichnen</b> Button. Anschließend werden alle kryptografischen Operationen (sofern vom jeweiligen Plug-in unterstützt) aufgezeichnet. Auch während der Aufnahme automatisch geöffnete Editorfenster werden überwacht. Zum Stoppen/ Unterbrechen der Aufzeichnung den Button <b>Aufzeichnen</b> wieder deaktivieren.</description>
-  <topic href="nl/de/help/view.html" label="Aktionen-Sicht"/>
-  <topic href="nl/de/help/preferences.html" label="Actions Benutzervorgaben"/>
+  <topic href="$nl$/help/view.html" label="Aktionen-Sicht"/>
+  <topic href="$nl$/help/preferences.html" label="Actions Benutzervorgaben"/>
 	</context>
  <context id="generalPreferences" title="Actions Benutzervorgaben">
     <description>Mit den Einstellungen für die <b>Actions</b> Sicht können Sie festlegen, ob der Dateiname in der Oberfläche angezeigt werden soll. Außerdem können Sie bestimmen, ob Passwörter, z.B. für kryptografische Schlüssel, in der <b>Action Kaskade</b> (auch in dem daraus exportierten XML-Dokument) gespeichert werden. Achtung: Passwörter werden im Klartext, d.h. für jeden lesbar, gespeichert. Sofern Passwörter nicht gespeichert werden, müssen Sie oder jeder andere Anwender bei der Wiedergabe der Action Kaskade das entsprechende Passwort eingeben.</description>
-    <topic href="nl/de/help/preferences.html" label="Actions Benutzervorgaben"/>
+    <topic href="$nl$/help/preferences.html" label="Actions Benutzervorgaben"/>
  </context>
 </contexts>

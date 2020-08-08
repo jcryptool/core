@@ -18,15 +18,15 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 
-import net.sourceforge.ehep.EhepPlugin;
-import net.sourceforge.ehep.editors.HexEditor;
-import net.sourceforge.ehep.gui.HexTable;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Composite;
+
+import net.sourceforge.ehep.EhepPlugin;
+import net.sourceforge.ehep.editors.HexEditor;
+import net.sourceforge.ehep.gui.HexTable;
 
 /**
  * @author Marcel Palko alias Randallco

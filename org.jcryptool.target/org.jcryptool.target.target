@@ -2,16 +2,6 @@
 <?pde version="3.8"?>
 <target name="JCrypTool RCP" sequenceNumber="41">
 <locations>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
-		<repository location="https://download.eclipse.org/technology/babel/update-site/R0.17.1/2019-06/"/>
-		<unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="4.12.0.v20200113071931"/>
-	</location>
-	
-		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
-		<repository location="https://download.eclipse.org/technology/babel/update-site/R0.17.0/2019-06/"/>
-		<unit id="org.eclipse.babel.nls_datatools_de.feature.group" version="4.12.0.v20190713060001"/>
-	</location>
-
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="http://download.eclipse.org/releases/2019-09"/>
 		<unit id="org.eclipse.equinox.core.sdk.feature.group" version="3.19.0.v20190903-0934"/>
@@ -24,14 +14,19 @@
 		<unit id="org.eclipse.zest.sdk.feature.group" version="1.7.0.201606061308"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+		<repository location="https://download.eclipse.org/technology/babel/update-site/R0.17.1/2019-12/"/>
+		<unit id="org.eclipse.babel.nls_datatools_de.feature.group" version="4.14.0.v20200113020001"/>
+		<unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="4.14.0.v20200113020001"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 		<repository location="https://simlei.github.io/org.jcryptool.thirdparty/site/m2bundle"/>
 		<unit id="org.jcryptool.thirdparty.m2bundle.jaxb" version="0.0.1"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 		<repository location="https://simlei.github.io/org.jcryptool.thirdparty/site/jre"/>
-		<unit id="org.jcryptool.thirdparty.jre.linux64.feature.feature.group" version="11.0.5.009"/>
-		<unit id="org.jcryptool.thirdparty.jre.macosx.feature.feature.group" version="11.0.5.009"/>
-		<unit id="org.jcryptool.thirdparty.jre.win64.feature.feature.group" version="11.0.5.009"/>
+		<unit id="org.jcryptool.thirdparty.jre.linux64.feature.feature.group" version="11.0.5.010"/>
+		<unit id="org.jcryptool.thirdparty.jre.macosx.feature.feature.group" version="11.0.5.010"/>
+		<unit id="org.jcryptool.thirdparty.jre.win64.feature.feature.group" version="11.0.5.010"/>
 	</location>
 </locations>
 <launcherArgs>

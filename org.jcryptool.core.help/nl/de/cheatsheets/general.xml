@@ -5,7 +5,7 @@
          Dieser Spickzettel zeigt Ihnen die allgemeine Verwendung von JCrypTool und soll Ihnen die ersten Schritte mit der erweiterbaren Kryptografie e-learning Software erleichtern.
       </description>
    </intro>
-   <item title="Zwischen Perspektiven wechseln" dialog="true" skip="false" href="/org.jcryptool.core.help/nl/de/help/users/general/perspectives.html">
+   <item title="Zwischen Perspektiven wechseln" dialog="true" skip="false" href="/org.jcryptool.core.help/$nl$/help/users/general/perspectives.html">
       <description>
          JCrypTool besitzt zwei Perspektiven: <b>Standard</b> und <b>Algorithmen</b>. Zwischen diesen Perspektiven kann auf zwei Arten gewechselt werden: Über das <b>Fenster - Perspektive öffnen</b> Menü oder über die Icons rechts oben im Fenster. Es kann immer nur eine Perspektive aktiv sein (welche das ist erkennen Sie am aktiven Icon).
       </description>
@@ -22,7 +22,7 @@
                serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=org.jcryptool.core.perspective)"/>
       </subitem>
    </item>
-   <item title="Öffnen einer Sicht" dialog="true" skip="false" href="/org.jcryptool.core.help/nl/de/help/users/general/views.html">
+   <item title="Öffnen einer Sicht" dialog="true" skip="false" href="/org.jcryptool.core.help/$nl$/help/users/general/views.html">
       <description>
       	JCrypTool besitzt unzählige Sichten (Views). Am einfachsten können Sie eine bestimmte Sicht über das Menü <b>Fenster - Sicht anzeigen</b> aufrufen.
       </description>
@@ -33,13 +33,13 @@
            serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.jcryptool.webbrowser.browser)"/>
       </subitem>
       <subitem
-            label="Zeigen Sie die Fehlerprotokoll Sicht als Schnellsicht an (eine Schnellsicht wird automatisch wieder ausgeblendet). Klicken Sie dazu auf das Schnellsicht Icon links unten und wählen Sie Andere.... Im Dialog erweitern Sie Allgemein und markieren Fehlerprotokoll. Anschließend klicken Sie auf OK. Die Sicht Fehlerprotokoll wird angezeigt. Wenn Sie außerhalb der Sicht klicken wird sie automatisch ausgeblendet, bleibt aber als zusätzliches Icon neben der Schnellsicht erhalten.">
+            label="Zeigen Sie die Häufigkeitsanalyse an. Alle Analysen, Visualisierungen und Spiele sind Sichten. Klicken Sie dazu auf das Menüitem &quot;Analysen&quot; und wählen Sie den Eintrag &quot;Häufigkeitsanalyse&quot; aus.">
          <command
                required="false"
-               serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.eclipse.pde.runtime.LogView,org.eclipse.ui.views.showView.makeFast=true)"/>
+               serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.jcryptool.analysis.freqanalysis.views.FreqAnalysisView)"/>
       </subitem>
    </item>
-   <item title="Öffnen eines Editors" dialog="true" skip="false" href="/org.jcryptool.core.help/nl/de/help/users/general/editors.html">
+   <item title="Öffnen eines Editors" dialog="true" skip="false" href="/org.jcryptool.core.help/$nl$/help/users/general/editors.html">
       <description>
       	JCrypTool besitzt mindestens zwei Editoren: <b>Texteditor</b> und <b>Hexeditor</b>. Sie können mit beiden Editoren neue Dateien anlegen und beliebige Dateien in beiden Editoren öffnen.
       </description>
@@ -51,7 +51,7 @@
       </subitem>
    </item>
    <item
-         href="/org.jcryptool.core.help/nl/de/help/users/general/preferences.html"
+         href="/org.jcryptool.core.help/$nl$/help/users/general/preferences.html"
          title="Bearbeiten von Benutzervorgaben">
       <description>
          Überprüfen oder ändern Sie einige der Benutzervorgaben auf einer der zahlreichen Seiten in den Benutzervorgaben.

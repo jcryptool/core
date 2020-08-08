@@ -5,3 +5,15 @@ Bundle-SymbolicName: org.jcryptool.core.help;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Vendor: %bundleVendor
 Bundle-RequiredExecutionEnvironment: JavaSE-11
+Automatic-Module-Name: org.jcryptool.core.help
+Require-Bundle: org.eclipse.help.webapp,
+ org.eclipse.core.runtime,
+ org.eclipse.help.webapp,
+ javax.servlet,
+ org.eclipse.equinox.common,
+ org.eclipse.help.base,
+ org.eclipse.jetty.server,
+ org.eclipse.jetty.util,
+ org.eclipse.ui
+Bundle-Activator: org.jcryptool.core.help.HelpPlugin
+Bundle-ActivationPolicy: lazy

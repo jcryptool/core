@@ -18,14 +18,14 @@ import java.io.FileOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
-import net.sourceforge.ehep.EhepPlugin;
-import net.sourceforge.ehep.core.EHEP;
-
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.ui.PlatformUI;
+
+import net.sourceforge.ehep.EhepPlugin;
+import net.sourceforge.ehep.core.EHEP;
 
 /**
  * @author Marcel Palko

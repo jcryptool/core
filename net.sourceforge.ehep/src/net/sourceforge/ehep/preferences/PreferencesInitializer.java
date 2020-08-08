@@ -12,10 +12,10 @@
  *==========================================================================*/
 package net.sourceforge.ehep.preferences;
 
-import net.sourceforge.ehep.EhepPlugin;
-
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
+
+import net.sourceforge.ehep.EhepPlugin;
 
 /**
  * @author Marcel Palko

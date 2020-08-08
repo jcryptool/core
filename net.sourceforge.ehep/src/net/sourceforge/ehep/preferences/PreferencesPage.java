@@ -11,9 +11,6 @@
  *==========================================================================*/
 package net.sourceforge.ehep.preferences;
 
-import net.sourceforge.ehep.EhepPlugin;
-import net.sourceforge.ehep.core.EHEP;
-
 import org.eclipse.jface.preference.ColorFieldEditor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.IntegerFieldEditor;
@@ -34,6 +31,9 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+
+import net.sourceforge.ehep.EhepPlugin;
+import net.sourceforge.ehep.core.EHEP;
 
 /**
  * This class represents a preference page that

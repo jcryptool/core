@@ -288,4 +288,18 @@ litigation.
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="org.jcryptool.thirdparty.m2bundle.jaxb"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.jcryptool.core.introduction"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 </feature>

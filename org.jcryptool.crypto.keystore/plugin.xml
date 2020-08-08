@@ -104,4 +104,13 @@
     	commandId="org.jcryptool.crypto.keystore.OpenKeystore">
     </handler>
  </extension>
+ <extension
+       point="org.eclipse.ui.perspectiveExtensions">
+    <perspectiveExtension
+          targetID="org.jcryptool.crypto.flexiprovider.ui.perspective.FlexiProviderPerspective">
+       <viewShortcut
+             id="org.jcryptool.crypto.keystore.KeystoreView">
+       </viewShortcut>
+    </perspectiveExtension>
+ </extension>
 </plugin>

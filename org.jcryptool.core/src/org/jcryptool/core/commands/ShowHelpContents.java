@@ -42,6 +42,18 @@ public class ShowHelpContents extends AbstractHandler {
         BusyIndicator.showWhile(null, new Runnable() {
             @Override
 			public void run() {
+            	String pluginId = findContextId();
+            	System.out.println(pluginId);
+            	// look up whether there is a help resource reference registered explicitely for the current plugin id
+            	// if so, short-circuit and just open it
+            	if (pluginId != null) {
+					String registeredHref = HelpHrefRegistry.getInstance().getHrefFor(findContextId());
+					if (registeredHref != null) {
+						PlatformUI.getWorkbench().getHelpSystem().displayHelpResource(registeredHref);
+						return;
+					}
+				}
+            	
                 IToc[] tocs = HelpSystem.getTocs();
                 boolean foundTopic = false;
                 String contextId = findContextId();
@@ -50,6 +62,7 @@ public class ShowHelpContents extends AbstractHandler {
                     ITopic topic = findTopic(contextId.split("" + IPath.SEPARATOR)[0], tocs);
                     if (topic != null) {
                         foundTopic = true;
+                        System.out.println(topic.getHref());
                         PlatformUI.getWorkbench().getHelpSystem().displayHelpResource(topic.getHref());
                     }
                 }

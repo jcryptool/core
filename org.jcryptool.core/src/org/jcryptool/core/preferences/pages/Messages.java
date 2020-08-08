@@ -20,6 +20,8 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.jcryptool.core.preferences.pages.messages"; //$NON-NLS-1$
     public static String AlgorithmsPage_0;
+	public static String AlgorithmsPage_checkbox_text;
+	public static String AlgorithmsPage_group_title;
     public static String AnalysisPage_0;
     public static String CryptoPage_0;
     public static String Editors_0;

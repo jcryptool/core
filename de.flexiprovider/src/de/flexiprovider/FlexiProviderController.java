@@ -54,26 +54,26 @@ public class FlexiProviderController extends AbstractProviderController {
 		flexiCore.remove("SecureRandom.BBS");
 		flexiCore.remove("SecureRandom.BBSRandom");
 		flexiCore.remove("Alg.Alias.SecureRandom.BBSRandom");
-		int pos = Security.insertProviderAt(flexiCore, 1);
+		Security.addProvider(flexiCore);
 		providers.add(flexiCore.getName() + AbstractProviderController.SEPARATOR + flexiCore.getInfo());
-		LogUtil.logInfo("Security Provider '" + flexiCore.getName() + "' added to pos: " + pos);
+		LogUtil.logInfo("Security Provider '" + flexiCore.getName() + "' added.");
 
 		Provider flexiEC = new FlexiECProvider();
         flexiEC.remove("SecureRandom.ECPRNG");
-		pos = Security.insertProviderAt(flexiEC, 2);
+        Security.addProvider(flexiEC);
 		providers.add(flexiEC.getName() + AbstractProviderController.SEPARATOR + flexiEC.getInfo());
-		LogUtil.logInfo("Security Provider '" + flexiEC.getName() + "' added to pos: " + pos);
+		LogUtil.logInfo("Security Provider '" + flexiEC.getName() + "' added.");
 
 		Provider flexiPQC = new FlexiPQCProvider();
-		pos = Security.insertProviderAt(flexiPQC, 3);
+		Security.addProvider(flexiPQC);
 		providers.add(flexiPQC.getName() + AbstractProviderController.SEPARATOR + flexiPQC.getInfo());
-		LogUtil.logInfo("Security Provider '" + flexiPQC.getName() + "' added to pos: " + pos);
+		LogUtil.logInfo("Security Provider '" + flexiPQC.getName() + "' added.");
 
 		Provider flexiNF = new FlexiNFProvider();
-		pos = Security.insertProviderAt(flexiNF, 4);
+		Security.addProvider(flexiNF);
 		providers.add(flexiNF.getName() + AbstractProviderController.SEPARATOR + flexiNF.getInfo());
-		LogUtil.logInfo("Security Provider '" + flexiNF.getName() + "' added to pos: " + pos);
-
+		LogUtil.logInfo("Security Provider '" + flexiNF.getName() + "' added.");
+		
 		return providers;
 	}
 

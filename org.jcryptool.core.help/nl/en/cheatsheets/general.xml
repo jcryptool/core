@@ -5,7 +5,7 @@
          This cheat sheet shows the general usage of JCrypTool and alleviates your first steps in this extensible cryptography e-learning software.
       </description>
    </intro>
-   <item title="Switching between perspectives" dialog="true" skip="false" href="/org.jcryptool.core.help/nl/en/help/users/general/perspectives.html">
+   <item title="Switching between perspectives" dialog="true" skip="false" href="/org.jcryptool.core.help/$nl$/help/users/general/perspectives.html">
       <description>
          JCrypTool comes with two perspectives: <b>Default</b> and <b>Algorithm</b>. You can switch between those two perspectives in two different ways: By using the <b>Window - Open Perspective</b> menu entry or by using the icons in the upper right of the window. Only one perspective can be active at a time (you can recognize the active one by the selected icon).
       </description>
@@ -22,7 +22,7 @@
                serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=org.jcryptool.core.perspective)"/>
       </subitem>
    </item>
-   <item title="Opening a view" dialog="true" skip="false" href="/org.jcryptool.core.help/nl/en/help/users/general/views.html">
+   <item title="Opening a view" dialog="true" skip="false" href="/org.jcryptool.core.help/$nl$/help/users/general/views.html">
       <description>
          JCrypTool contains an almost countless number of views. The easiest way to open one is to use the menu <b>Window - Show View</b>. You can use both editors to create new files and you can open arbitrary files with them.
       </description>
@@ -33,13 +33,13 @@
            serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.jcryptool.webbrowser.browser)"/>
       </subitem>
       <subitem
-            label="Open the Error Log view as fast view (a fast view hides automatically when losing focus). Click on the fast view icon in the lower left and select Other.... Extend General in the dialog and select Error Log. Click on the OK button. The view Error Log is shown. A click outside of the view automatically hides it, but keeps the additional icon next to the fast view icon.">
+            label="Open the frequency analysis. All analysis, visuals and games are views. To do this click on the menu item &quot;Analysis&quot; and select the entry &quot;Frequency Analysis&quot;">
          <command
                required="false"
-               serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.eclipse.pde.runtime.LogView,org.eclipse.ui.views.showView.makeFast=true)"/>
+               serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.jcryptool.analysis.freqanalysis.views.FreqAnalysisView)"/>
       </subitem>
    </item>
-   <item title="Opening an editor" dialog="true" skip="false" href="/org.jcryptool.core.help/nl/en/help/users/general/editors.html">
+   <item title="Opening an editor" dialog="true" skip="false" href="/org.jcryptool.core.help/$nl$/help/users/general/editors.html">
       <description>
          JCrypTool contains two editors: <b>text</b> and <b>hex</b>. You can use both editors to create new files and open arbitrary files in any of them as well.
       </description>
@@ -51,7 +51,7 @@
       </subitem>
    </item>
    <item
-         href="/org.jcryptool.core.help/nl/en/help/users/general/preferences.html"
+         href="/org.jcryptool.core.help/$nl$/help/users/general/preferences.html"
          title="Editing Preferences">
       <description>
          Verify or change some of the many preferences in the JCrypTool preferences.

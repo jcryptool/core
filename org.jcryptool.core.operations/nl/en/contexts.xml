@@ -2,6 +2,6 @@
 <contexts>
    <context id="providerPreferences" title="Crypto Provider">
       <description>This page contains an overview about all available crypto provider and their version in JCrypTool. With the Up and Down buttons on the right side it is possible to select their order. The first crypto provider automatically becomes the default crypto provider.</description>
-      <topic href="../org.jcryptool.core.help/nl/en/help/users/general/preferences_provider.html" label="Crypto Provider"/>
+      <topic href="../org.jcryptool.core.help/$nl$/help/users/general/preferences_provider.html" label="Crypto Provider"/>
    </context>
 </contexts>
