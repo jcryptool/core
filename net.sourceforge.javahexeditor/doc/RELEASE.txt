@@ -1,0 +1,210 @@
+
+javahexeditor - Java Hex Editor
+
+Copyright (C) 2006 - 2017 Jordi Bergenthal, pestatije(-at_)users.sourceforge.net.
+The official javahexeditor project site is sourceforge.net/projects/javahexeditor.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+
+
+javahexeditor installation notes
+--------------------------------
+
+See http://javahexeditor.sourceforge.net.
+
+
+javahexeditor change log
+------------------------
+
+26/11/2017 version 0.5.1.
+    Adapt wrappers for Windows and Mac OS X to Java 1.8.
+    Update help files and internal help file structure.
+
+09/08/2017 version 0.5.1.
+    Update to Java 1.7 and Eclipse Oxygene.
+ 
+08/08/2017 version 0.5.0
+    Fixed page-up/page-down handling.
+    Enabled opening files from the local history.
+    Thanks to Andrey Loskutov for the fixes.
+
+13/11/2014 version 0.4.9.
+    Separated Eclipse plugin from stand-alone application.
+    Included standard OSGI and SWT jars for location and UI widgets.
+    New build process creates separate self-contained "JavaHexEditor.jar" file for Linux (32-bit), Windows (32-bit) and Windows (64-bit)
+
+29/12/2009 version 0.4.2.
+    Moved precompiled to swt 3.5.1, gcc 4.4.0.
+
+6/12/2009 version 0.4.1.
+    Bugfix: charset 8859-1 chars between 128 and 159 have length 0.
+
+29/11/2009 version 0.4.0.
+    Added Block selection dialog; selection and values in status bar.
+    Use system default character encoding.
+    Added "Open With Hex Editor" menu option in Eclipse context menu.
+    Added plugin to update site.
+    Moved sources to source control (svn).
+    Thanks Andre Bossert and Alexander Kuramshin for your contributions.
+
+28/6/2009 version 0.3.1.
+    Added replace option in Find dialog.
+    User guide available in plugin.
+
+25/1/2009 version 0.3.0.
+    Bugfix: precompiled saving files bigger than 2 megs error.
+    Bugfix: undo restores unchanged text to black color.
+    Bugfix: plugin doesn't activate menu options after "Select All".
+    Added user guide in stand-alone.
+
+16/9/2008, version 0.2.9.
+    Enable [Alt Gr] input.
+    Bugfix: ensure whole screen has data after undo/redo.
+
+1/8/2008, version 0.2.8.
+    Bugfixes for SWT 3.4: re-setting font crash; lost overwrite caret.
+    Bugfix: plugin recognises text editor location provider input.
+
+9/7/2008, version 0.2.7.
+    Bugfix: scrolling up freezes editor in SWT 3.4.
+    Bugfix: lost selection when scrolling.
+
+5/7/2008, version 0.2.6.
+    Bugfix(1990431): in plugin, Eclipse 3.3, external file open error.
+    Bugfix: crash when opening a file with no read access.
+    Enabled drag-select.
+    Precompiled accepts command parameter in the same way as
+    stand-alone.
+
+11/6/2008, version 0.2.5.
+    Bugfix: searching for a new literal leaks previous Finder object.
+    Added win32 precompiled release.
+
+27/5/2008, version 0.2.4.
+    Bugfix: close unreferenced files before saving.
+
+20/3/2008, version 0.2.3.
+    Added overwrite and unfocused carets.
+    Added undo/redo inserts/overwrites.
+
+10/2/2008, version 0.2.2.
+    Preferences dialog: font list loaded asynchronously.
+    Bugfix: empty font list in ubuntu.
+    Bugfix: saving new file crash.
+
+19/1/2008, version 0.2.1.
+    Bugfix: plugin could not open external files.
+    Bugfix: undo/redo: single deletes merging not working.
+    Bugfix: undo/redo: insert then delete not working.
+    Bugfix: font sizes 1 and 2 not used anymore.
+    Bugfix: file drop-open not working in linux.
+
+1/1/2008, version 0.2.0.
+    Added file drop-open to stand-alone.
+    Bugfix: clear finder cache if user modifies data.
+    Added undo/redo deletes.
+    Bugfix: plugin actions were enabled/disabled when showing menu
+    only.
+
+27/5/2007, version 0.1.9.
+    Bugfix: some scrolls were shuffling lines at the top or bottom
+    of the screen.
+
+18/4/2007, version 0.1.8.
+    Bugfix for File->New crash.
+
+24/3/2007, version 0.1.7.
+    Bugfix: save-as or save-selection-as won't overwrite files used
+    for reading.
+    Added optional command parameter: file to edit.
+
+25/1/2007, version 0.1.6.
+    Bugfix: javahexeditor crashed when re-finding after a save.
+
+16/10/2006, version 0.1.5.
+    Bugfix: javahexeditor crashed when combining a large shell with
+    very small fonts.
+    Bugfix: preferences dialog was showing error messages in linux.
+    Bugfix: caret position and caret line color unsincronized,
+    sometimes causing crashes.
+
+8/10/2006, version 0.1.4.
+    Added font preferences.
+    Bugfix: selection was not shown after pasting or trimming.
+
+15/9/2006, version 0.1.3.
+    Enabled editing in text area.
+
+10/9/2006, version 0.1.2.
+    'Go to' highlights location position.
+    Bugfix: text area is now updated when overwriting.
+
+25/8/2006, version 0.1.1.
+    Added 'new file' and trim options.
+
+5/8/2006, version 0.1.0.
+    Added 'go to' shortcut key in plugin.
+    Previous input is now selected when reopening find and 'go to'
+    dialogs.
+
+28/7/2006, version 0.0.9.
+    Added 'go to' option.
+    Bugfix: in Eclipse, an error was shown when javahexeditor was the
+    first editor being opened.
+    Bugfix: stand-alone crashed when clicking inside the text area and
+    dragging the mouse past the bottom.
+    Defined default button for find dialog.
+
+23/7/2006, version 0.0.8.
+    Added 'save as' and 'save selection as' options.
+    Bugfix, now can correctly insert at end of file.
+    User interface response optimized (event queue emptied before
+    redraw).
+
+30/6/2006, version 0.0.7.
+    Added binary cut copy and paste, and text cut and copy.
+    Bugfix, shift + mouse click now correctly selects data.
+    Finished rendering of background vertical hint lines.
+
+18/6/2006, version 0.0.6.
+    Added pasting of text and files.
+    Added stand-alone release.
+
+11/6/2006, version 0.0.5.
+    Added single and block delete.
+    Bugfix, now multiple open files share the same status display.
+    Code rearranged: added Manager class to decouple javahexeditor from
+    Eclipse.
+
+5/6/2006, version 0.0.4.
+    Added insert mode.
+
+14/5/2006, version 0.0.3.
+    Small bugfix, now can handle files of size 21 Gbytes+
+
+13/5/2006, version 0.0.2.
+    Find functionality revamped: forward/backwards, ignore case, only one find
+    dialog open at a time, find dialog reopened restores previous status, only
+    one text box for hex/text, dynamic update of related controls after user
+    interaction, plus, now when finding, a reposition in the editor does
+    reposition find start.
+
+6/5/2006, version 0.0.1. First beta release.
+    First version that can be called a java hex editor. Released as an Eclipse
+    plugin.
+    Basic file viewing/browsing, hex unicode and ASCII find, hex overwriting,
+    and file saving.
+    Support for very big files.

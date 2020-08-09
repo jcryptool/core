@@ -1,0 +1,10 @@
+Project URL https://sourceforge.net/projects/javahexeditor/
+Client: Bitkinex
+Host: web.sourceforge.net
+Protocol: SFTP
+Port: 22
+Username: Your Login Name (User Name) (e.g. peterdell)
+Password: Your Login Password
+Upload path: /home/project-web/javahexeditor/htdocs
+Project Site URL: http://javahexeditor.sourceforge.net
+Update Site URL : http://javahexeditor.sourceforge.net/update
