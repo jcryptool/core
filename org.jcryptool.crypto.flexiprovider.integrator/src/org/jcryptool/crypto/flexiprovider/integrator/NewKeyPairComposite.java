@@ -14,8 +14,6 @@ import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 
-import com.cloudgarden.resource.SWTResourceManager;
-
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -37,12 +35,6 @@ import com.cloudgarden.resource.SWTResourceManager;
  * @author Simon L
  */
 public class NewKeyPairComposite extends NewKeyComposite {
-
-	{
-		//Register as a resource user - SWTResourceManager will
-		//handle the obtaining and disposing of resources
-		SWTResourceManager.registerResourceUser(this);
-	}
 
 	/**
 	* Overriding checkSubclass allows this class to extend org.eclipse.swt.widgets.Composite

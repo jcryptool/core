@@ -16,6 +16,8 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -27,8 +29,6 @@ import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
-
-import com.cloudgarden.resource.SWTResourceManager;
 
 
 /**
@@ -45,11 +45,6 @@ import com.cloudgarden.resource.SWTResourceManager;
 */
 public class NewKeyComposite extends org.eclipse.swt.widgets.Composite {
 
-	{
-		//Register as a resource user - SWTResourceManager will
-		//handle the obtaining and disposing of resources
-		SWTResourceManager.registerResourceUser(this);
-	}
 
 	private Canvas canvas1;
 	private Label labelOwner;
@@ -121,7 +116,8 @@ public class NewKeyComposite extends org.eclipse.swt.widgets.Composite {
 					labelInfo1LData.horizontalAlignment = GridData.FILL;
 					labelInfo1.setLayoutData(labelInfo1LData);
 					setInfoLabelText(); //$NON-NLS-1$
-					labelInfo1.setFont(SWTResourceManager.getFont("Segoe UI", 9, 1, false, false)); //$NON-NLS-1$
+					Font segeo = new Font(labelInfo1.getDisplay(), new FontData("Segoe UI", 9, 1));
+					labelInfo1.setFont(segeo); //$NON-NLS-1$
 				}
 				{
 					labelOwner = new Label(infoComposite, SWT.NONE);
