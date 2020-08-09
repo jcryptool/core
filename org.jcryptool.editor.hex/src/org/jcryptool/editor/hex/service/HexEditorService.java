@@ -10,25 +10,24 @@
 package org.jcryptool.editor.hex.service;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import org.eclipse.ui.IEditorPart;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.editors.AbstractEditorService;
 import org.jcryptool.editor.hex.HexEditorConstants;
 
-import net.sourceforge.ehep.editors.HexEditor;
-import net.sourceforge.ehep.gui.HexEditorControl;
-import net.sourceforge.ehep.gui.HexTable;
+import net.sourceforge.javahexeditor.plugin.editors.HexEditor;
 
 /***
  * 
  * Provides the editorservice to jcryptool
  * 
  * @author Anatoli Barski
+ * @author Thorben Groos (Migration from EHEP to JavaHexEditor)
  * 
  */
 public class HexEditorService extends AbstractEditorService {
@@ -52,72 +51,109 @@ public class HexEditorService extends AbstractEditorService {
     /**
      * gets the content as stream
      */
-    public InputStream getContentOfEditorAsInputStream(IEditorPart editorPart) {
-        byte[] contentAsByteArray = getContentOfEditorAsBytes(editorPart);
-        if(contentAsByteArray == null) return null;
-        
-        InputStream is = new ByteArrayInputStream(contentAsByteArray);
-        return is;
+    @Override
+	public InputStream getContentOfEditorAsInputStream(IEditorPart editorPart) {
+    	
+    	HexEditor editor = getHexEditor(editorPart);
+    	long editorContentLength = editor.getManager().getContent().length();
+    	int bufferSize = 0;
+    	
+    	if (editorContentLength > Integer.MAX_VALUE) {
+    		LogUtil.logWarning("Editor content does not fit into a java array. It will be cut.");
+    		editorContentLength = Integer.MAX_VALUE;
+    		bufferSize = Integer.MAX_VALUE;
+    	} else {
+    		bufferSize = (int) editorContentLength;
+    	}
+    	
+    	ByteBuffer buf = ByteBuffer.allocate(bufferSize);
+    	
+    	try {
+			int readBytes = editor.getManager().getContent().get(buf, bufferSize);
+			System.out.println(readBytes + "\tof " + bufferSize);
+			if (readBytes == bufferSize) {
+				System.out.println("Alle Bytes gelesen.");
+			} else {
+				System.out.println("Somethign went wrong when reading data. Not all data has been read.");
+			}
+		} catch (IOException e) {
+			LogUtil.logError(HexEditorConstants.EditorID, e);
+		}
+    	
+    	byte[] array = buf.array();
+    	
+    	InputStream is = new ByteArrayInputStream(array);
+    	
+    	return is;
     }
 
     /**
      * get the content as byte array
      * max: ~2GB
      */
-    public byte[] getContentOfEditorAsBytes(IEditorPart editorPart) {
-        HexTable hexTable = getHexEditor(editorPart).getControl().getHexTable();
-		if(hexTable == null)
-			return null;
-		
-		// This actually cannot happen because HexTable is backed by an byte array, but may be this will change
-		int size = 0;
-		if (hexTable.getBufferSize() > Integer.MAX_VALUE) {
-		    LogUtil.logWarning("Editor content does not fit into a java array. It will be cut.");
-		    size = Integer.MAX_VALUE;
-		} else
-		    size = (int)hexTable.getBufferSize();
-		ByteBuffer buffer = ByteBuffer.allocate(size);
-		hexTable.getData(buffer.array(), 0, size);
-		return buffer.array();
+    @Override
+	public byte[] getContentOfEditorAsBytes(IEditorPart editorPart) {
+
+    	HexEditor editor = getHexEditor(editorPart);
+    	long editorContentLength = editor.getManager().getContent().length();
+    	int bufferSize = 0;
+    	
+    	if (editorContentLength > Integer.MAX_VALUE) {
+    		LogUtil.logWarning("Editor content does not fit into a java array. It will be cut.");
+    		editorContentLength = Integer.MAX_VALUE;
+    		bufferSize = Integer.MAX_VALUE;
+    	} else {
+    		bufferSize = (int) editorContentLength;
+    	}
+    	
+    	ByteBuffer buf = ByteBuffer.allocate(bufferSize);
+    	
+    	try {
+			int readBytes = editor.getManager().getContent().get(buf, bufferSize);
+			System.out.println("readBytes " + readBytes + " bufferSize " + bufferSize);
+			if (readBytes == bufferSize) {
+				System.out.println("Alle Bytes gelesen.");
+			} else {
+				System.out.println("Somethign went wrong when reading data. Not all data has been read.");
+			}
+		} catch (IOException e) {
+			LogUtil.logError(HexEditorConstants.EditorID, e);
+		}
+    	
+    	return buf.array();
     }
 
 	private HexEditor getHexEditor(IEditorPart editorPart) {
-		HexEditor hexEditor = (HexEditor)editorPart.getAdapter(HexEditor.class);
+		HexEditor hexEditor = editorPart.getAdapter(HexEditor.class);
 		return hexEditor;
 	}
 
-    public String getContentOfEditorAsString(IEditorPart editorPart) {
-    	HexEditorControl control = getHexEditor(editorPart).getControl();
-		if(control == null)
-			return null;
-		try {
-			String content = new String(getContentOfEditorAsBytes(editorPart), control.getCurrentEncoding());
-			return content;
-		} catch (UnsupportedEncodingException e) {
-			LogUtil.logError(e);
-		}
-		return null;
+    @Override
+	public String getContentOfEditorAsString(IEditorPart editorPart) {
+		String content = new String(getContentOfEditorAsBytes(editorPart));
+		return content;
     }
 
-    public void setContentOfEditor(IEditorPart editorPart, String content) {
+    @Override
+	public void setContentOfEditor(IEditorPart editorPart, String content) {
     	HexEditor editor = getHexEditor(editorPart);
     	if(editor == null)
     	{
     		LogUtil.logError(new IllegalArgumentException("cannot set content of undefined editor"));
     		return;
     	}
-    	HexEditorControl control = editor.getControl();
-    	HexTable hexTable = control.getHexTable();
-    	byte[] data = content.getBytes(Charset.forName(control.getCurrentEncoding()));
-    	hexTable.setBufferSize(data.length);
-    	hexTable.setData(data, 0, data.length);
+
+    	byte[] data = content.getBytes(StandardCharsets.UTF_8);
+    	
+    	ByteBuffer buffer = ByteBuffer.wrap(data);
+    	
+    	editor.getManager().getContent().insert(buffer, 0);
     }
     
     @Override
     public void setContentOfEditor(IEditorPart editorPart, InputStream is) {
     	HexEditor editor = getHexEditor(editorPart);
-    	if(editor == null)
-    	{
+    	if(editor == null) {
     		LogUtil.logError(new IllegalArgumentException("cannot set content of undefined editor"));
     		return;
     	}
@@ -136,9 +172,8 @@ public class HexEditorService extends AbstractEditorService {
         	LogUtil.logError(e);
         }
     	
-    	HexEditorControl control = editor.getControl();
-    	HexTable hexTable = control.getHexTable();
-    	hexTable.setBufferSize(data.length);
-    	hexTable.setData(data, 0, data.length);
+    	ByteBuffer buffer = ByteBuffer.wrap(data);
+    	
+    	editor.getManager().getContent().insert(buffer, 0);
     }
 }

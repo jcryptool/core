@@ -13,8 +13,8 @@
 			icon="icons/hex.png"
 			default="true"
 			extensions="*"
-			contributorClass="net.sourceforge.ehep.actions.HexEditorContributor"
-			class="net.sourceforge.ehep.editors.HexEditor"
+			contributorClass="net.sourceforge.javahexeditor.plugin.editors.HexEditorActionBarContributor"
+			class="net.sourceforge.javahexeditor.plugin.editors.HexEditor"
 			id="org.jcryptool.editors.hex.HexEditor">
 		</editor>
 	</extension>

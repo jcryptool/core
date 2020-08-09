@@ -231,13 +231,6 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="net.sourceforge.ehep"
-         download-size="0"
-         install-size="0"
-         version="1.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.jcryptool.editor.hex"
          download-size="0"
          install-size="0"
@@ -246,11 +239,10 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="net.sourceforge.ehep.nl_de"
+         id="net.sourceforge.javahexeditor"
          download-size="0"
          install-size="0"
-         version="1.0.0"
-         fragment="true"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>
