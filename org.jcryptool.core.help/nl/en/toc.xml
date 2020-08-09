@@ -6,7 +6,7 @@
         href="$nl$/help/users/about/about.html" />
     <topic href="$nl$/help/users/about/tips.html" label="Tips and Tricks">
     </topic>
-    <topic label="General Information"
+    <topic label="About: Instruction Manual"
         href="$nl$/help/users/general/toc.html" sort="true">
         <anchor id="general" />
         <topic href="$nl$/help/users/general/perspectives.html" label="Perspectives" sort="true">
@@ -44,7 +44,7 @@
         <topic href="$nl$/help/users/general/updates.html" label="Updates">
         </topic>
     </topic>
-    <topic href="$nl$/help/users/cryptology/toc.html" label="Cryptology">
+    <topic href="$nl$/help/users/cryptology/toc.html" label="About: Cryptology">
 	    <topic label="Cryptographic Mechanisms"
 	        href="$nl$/help/users/cryptology/crypto_methods.html" />
 	    <topic label="Overview"
@@ -56,24 +56,21 @@
     <topic label="Algorithms"
         href="$nl$/help/users/algorithms/toc.html"
         sort="true">
-        <topic label="Encryption"
-            href="$nl$/help/users/algorithms/encryption/toc.html">
-            <topic label="Classic"
-                href="$nl$/help/users/algorithms/encryption/classic/toc.html"
-                sort="true">
-                <anchor id="classicAlgorithmPlugins" />
-            </topic>
-            <topic label="Asymmetric"
-                href="$nl$/help/users/algorithms/encryption/asymmetric/toc.html"
-                sort="true">
-                <anchor id="asymmetricAlgorithmPlugins" />
-            </topic>
-            <topic label="Symmetric"
-                href="$nl$/help/users/algorithms/encryption/symmetric/toc.html"
-                sort="true">
-                <anchor id="symmetricAlgorithmPlugins" />
-            </topic>
-        </topic>
+		<topic label="Classic"
+			href="$nl$/help/users/algorithms/encryption/classic/toc.html"
+			sort="true">
+			<anchor id="classicAlgorithmPlugins" />
+		</topic>
+		<topic label="Asymmetric"
+			href="$nl$/help/users/algorithms/encryption/asymmetric/toc.html"
+			sort="true">
+			<anchor id="asymmetricAlgorithmPlugins" />
+		</topic>
+		<topic label="Symmetric"
+			href="$nl$/help/users/algorithms/encryption/symmetric/toc.html"
+			sort="true">
+			<anchor id="symmetricAlgorithmPlugins" />
+		</topic>
         <topic label="Hash"
             href="$nl$/help/users/algorithms/hash/toc.html"
             sort="true">
@@ -82,7 +79,7 @@
         <topic href="$nl$/help/users/algorithms/mac/toc.html" label="MAC" sort="true">
            <anchor id="macPlugins"/>
         </topic>
-        <topic href="$nl$/help/users/algorithms/randomnumber/toc.html" label="Random Number" sort="true">
+        <topic href="$nl$/help/users/algorithms/randomnumber/toc.html" label="Random Number Generator" sort="true">
            <anchor id="randomNumberPlugins"/>
         </topic>
         <topic label="Signature"
@@ -92,7 +89,7 @@
         </topic>
         <anchor id="algorithmPlugins" />
     </topic>
-    <topic href="$nl$/help/users/analysis/toc.html" label="Cryptanalysis"
+    <topic href="$nl$/help/users/analysis/toc.html" label="Analysis"
     	sort="true">
        <anchor id="analysisPlugins"/>
     </topic>
@@ -103,7 +100,7 @@
         <anchor id="gamePlugins" />
     </topic>
 
-    <topic label="Visualizations"
+    <topic label="Visuals"
         href="$nl$/help/users/visualizations/toc.html"
         sort="true">
         <anchor id="visualizationPlugins" />

@@ -43,9 +43,12 @@
 
 	<p>In diesem Fall können Sie entweder das <strong>.jcryptool</strong> Verzeichnis in Ihrem Dokumente Verzeichnis (innerhalb Ihres Benutzerverzeichnisses) von Hand löschen. Unter macOS und Linux ist dieser Ordner standardmäßig versteckt. Alternativ können Sie einmalig den Parameter <strong>-clean</strong> beim Aufruf von JCrypTool anhängen (z.B. über die Verknüpfung unter Windows). Hiermit wird der Workspace automatisch gelöscht und beim nächsten Start neu angelegt und initialisiert. Anschließend sollten Sie den Parameter wieder entfernen.</p>
 
-	<p>Hier sind zwei Beispiele unter Windows, wie der Kommandozeilen-Aufruf (in dem Eigenschaften-Fenster nach dem Feld "Ziel") aussehen kann:</br>
+	<p>Hier sind zwei Beispiele unter Windows, wie der Kommandozeilen-Aufruf aussehen kann (legt man JCT auf eine Ikone im Startmenü sieht man den Befehl im Eigenschaften-Fenster der Ikone nach dem Feld "Ziel"):</br>
 	F:\Downloads\jcryptool\JCrypTool.exe -clean</br>
-	F:\Downloads\jcryptool\JCrypTool.exe -nl de -data %LOCALAPPDATA%\jct-de -clean</br>
+	F:\Downloads\jcryptool\JCrypTool.exe -nl de -data %LOCALAPPDATA%\jct-de -clean</p>
+	<p>
+	Und hier ein Beispielaufruf unter Linux:</br>
+	$ ./JCrypTool -nl de -clean -data /home/Documents/.jcryptool/de  & </br>
 	</p></br></br>
 
 </body>

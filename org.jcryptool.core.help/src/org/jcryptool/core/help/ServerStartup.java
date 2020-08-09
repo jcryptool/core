@@ -130,11 +130,11 @@ public class ServerStartup implements IStartup {
 	}
 	// does not work, because getting the port without having started the help system does not seem to work...
 	private void startAndOpenServerDirectly_Defunct() throws Exception {
-		System.out.println("Starting server...");
+//		System.out.println("Starting server...");
 		JCTJS_Server.getInstance().start();
-		System.out.println("Started server on port " + JCTJS_Server.getInstance().getPort());
+//		System.out.println("Started server on port " + JCTJS_Server.getInstance().getPort());
 		java.awt.Desktop.getDesktop().browse(URI.create((JCTJS_Server.getInstance().makeHelpsystemUrlStringFor("index.html"))));
-		System.out.println(URI.create((JCTJS_Server.getInstance().makeHelpsystemUrlStringFor("index.html"))));
+//		System.out.println(URI.create((JCTJS_Server.getInstance().makeHelpsystemUrlStringFor("index.html"))));
 	}
 
 }
