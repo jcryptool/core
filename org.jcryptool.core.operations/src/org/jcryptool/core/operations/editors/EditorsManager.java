@@ -60,7 +60,8 @@ public class EditorsManager {
     private IEditorReference lastActiveEditorRef;
 
     private static class ChangeableObservable extends Observable {
-        public void setChanged() {
+        @Override
+		public void setChanged() {
             super.setChanged();
         }
     }
@@ -222,7 +223,8 @@ public class EditorsManager {
      * @param editorPart the editor the content is to be retrieved
      * @return the content as a byte[]
      */
-    public byte[] getContentAsBytes(IEditorPart editorPart) {
+    @Deprecated
+	public byte[] getContentAsBytes(IEditorPart editorPart) {
         if (editorServices == null) {
             editorServices = new HashMap<String, AbstractEditorService>();
             retrieveEditorServices();
@@ -238,7 +240,8 @@ public class EditorsManager {
      * @param editorPart the editor the content is to be retrieved
      * @return the content as a String
      */
-    public String getContentAsString(IEditorPart editorPart) {
+    @Deprecated
+	public String getContentAsString(IEditorPart editorPart) {
         if (editorServices == null) {
             editorServices = new HashMap<String, AbstractEditorService>();
             retrieveEditorServices();
@@ -301,7 +304,7 @@ public class EditorsManager {
             list.add(ref.getTitle());
         }
 
-        return (String[]) list.toArray(new String[0]);
+        return list.toArray(new String[0]);
     }
 
     /**
@@ -353,35 +356,43 @@ public class EditorsManager {
 
     private void addPartListener(IWorkbenchPage page) {
         page.addPartListener(new IPartListener2() {
-            public void partVisible(IWorkbenchPartReference partRef) {
+            @Override
+			public void partVisible(IWorkbenchPartReference partRef) {
                 checkNeedToNotify();
             }
 
-            public void partOpened(IWorkbenchPartReference partRef) {
+            @Override
+			public void partOpened(IWorkbenchPartReference partRef) {
                 checkNeedToNotify();
             }
 
-            public void partHidden(IWorkbenchPartReference partRef) {
+            @Override
+			public void partHidden(IWorkbenchPartReference partRef) {
                 checkNeedToNotify();
             }
 
-            public void partDeactivated(IWorkbenchPartReference partRef) {
+            @Override
+			public void partDeactivated(IWorkbenchPartReference partRef) {
                 checkNeedToNotify();
             }
 
-            public void partClosed(IWorkbenchPartReference partRef) {
+            @Override
+			public void partClosed(IWorkbenchPartReference partRef) {
                 checkNeedToNotify();
             }
 
-            public void partBroughtToTop(IWorkbenchPartReference partRef) {
+            @Override
+			public void partBroughtToTop(IWorkbenchPartReference partRef) {
                 checkNeedToNotify();
             }
 
-            public void partActivated(IWorkbenchPartReference partRef) {
+            @Override
+			public void partActivated(IWorkbenchPartReference partRef) {
                 checkNeedToNotify();
             }
 
-            public void partInputChanged(IWorkbenchPartReference partRef) {
+            @Override
+			public void partInputChanged(IWorkbenchPartReference partRef) {
             }
         });
     }
@@ -395,14 +406,17 @@ public class EditorsManager {
             return;
         }
         window.addPageListener(new IPageListener() {
-            public void pageOpened(IWorkbenchPage page) {
+            @Override
+			public void pageOpened(IWorkbenchPage page) {
                 addPartListener(page);
             }
 
-            public void pageActivated(IWorkbenchPage page) {
+            @Override
+			public void pageActivated(IWorkbenchPage page) {
             }
 
-            public void pageClosed(IWorkbenchPage page) {
+            @Override
+			public void pageClosed(IWorkbenchPage page) {
             }
         });
     }
@@ -422,17 +436,21 @@ public class EditorsManager {
             return;
         }
         PlatformUI.getWorkbench().addWindowListener(new IWindowListener() {
-            public void windowOpened(IWorkbenchWindow window) {
+            @Override
+			public void windowOpened(IWorkbenchWindow window) {
                 addListenerToPage(window);
             }
 
-            public void windowDeactivated(IWorkbenchWindow window) {
+            @Override
+			public void windowDeactivated(IWorkbenchWindow window) {
             }
 
-            public void windowClosed(IWorkbenchWindow window) {
+            @Override
+			public void windowClosed(IWorkbenchWindow window) {
             }
 
-            public void windowActivated(IWorkbenchWindow window) {
+            @Override
+			public void windowActivated(IWorkbenchWindow window) {
             }
         });
     }

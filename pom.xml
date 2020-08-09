@@ -21,8 +21,9 @@
     <module>com.thoughtworks.qdox</module>
     <module>de.flexiprovider</module>
     <module>net.sourceforge.codec</module>
-    <module>net.sourceforge.ehep</module>
-    <module>net.sourceforge.ehep.nl_de</module>
+    <!-- <module>net.sourceforge.ehep</module> -->
+    <!-- <module>net.sourceforge.ehep.nl_de</module> -->
+	<module>net.sourceforge.javahexeditor</module>
     <module>org.apache.commons.cli</module>
     <module>org.bouncycastle</module>
     <module>org.jdom</module>
