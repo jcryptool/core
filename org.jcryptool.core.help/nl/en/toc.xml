@@ -6,7 +6,7 @@
         href="$nl$/help/users/about/about.html" />
     <topic href="$nl$/help/users/about/tips.html" label="Tips and Tricks">
     </topic>
-    <topic label="About: Instruction Manual"
+    <topic label="General Information"
         href="$nl$/help/users/general/toc.html" sort="true">
         <anchor id="general" />
         <topic href="$nl$/help/users/general/perspectives.html" label="Perspectives" sort="true">
@@ -44,7 +44,7 @@
         <topic href="$nl$/help/users/general/updates.html" label="Updates">
         </topic>
     </topic>
-    <topic href="$nl$/help/users/cryptology/toc.html" label="About: Cryptology">
+    <topic href="$nl$/help/users/cryptology/toc.html" label="Cryptology">
 	    <topic label="Cryptographic Mechanisms"
 	        href="$nl$/help/users/cryptology/crypto_methods.html" />
 	    <topic label="Overview"

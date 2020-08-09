@@ -6,7 +6,7 @@
         href="$nl$/help/users/about/about.html" />
     <topic href="$nl$/help/users/about/tips.html" label="Tipps und Tricks">
     </topic>
-    <topic label="Über: Benutzerhandbuch" sort="true"
+    <topic label="Allgemeine Informationen" sort="true"
         href="$nl$/help/users/general/toc.html">
         <anchor id="general" />
         <topic href="$nl$/help/users/general/perspectives.html" label="Perspektiven" sort="true">
@@ -44,7 +44,7 @@
         <topic href="$nl$/help/users/general/language.html" label="Wechseln der Sprache">
         </topic>
     </topic>
-    <topic href="$nl$/help/users/cryptology/toc.html" label="Über: Kryptologie">
+    <topic href="$nl$/help/users/cryptology/toc.html" label="Kryptologie">
 		<topic label="Kryptographische Verfahren"
 	        href="$nl$/help/users/cryptology/crypto_methods.html" />
 	    <topic label="Überblick"
