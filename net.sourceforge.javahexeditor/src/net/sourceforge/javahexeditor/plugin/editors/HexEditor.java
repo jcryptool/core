@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.CoreException;
@@ -66,6 +67,7 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.editors.text.ILocationProvider;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
+import org.jcryptool.core.util.constants.IConstants;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleException;
 
@@ -88,10 +90,10 @@ public final class HexEditor extends EditorPart implements ISelectionProvider {
 
 		public MyAction(Manager manager, String id) {
 			if (manager == null) {
-				throw new IllegalArgumentException("Parameter 'manager' must not be null.");
+				throw new IllegalArgumentException("Parameter 'manager' must not be null."); //$NON-NLS-1$
 			}
 			if (id == null) {
-				throw new IllegalArgumentException("Parameter 'id' must not be null.");
+				throw new IllegalArgumentException("Parameter 'id' must not be null."); //$NON-NLS-1$
 			}
 			this.manager = manager;
 			myId = id;
@@ -120,12 +122,12 @@ public final class HexEditor extends EditorPart implements ISelectionProvider {
 	}
 
 	// Public id from the contributions.
-	public static final String ID = "net.sourceforge.javahexeditor";
+	public static final String ID = "net.sourceforge.javahexeditor"; //$NON-NLS-1$
 
 	// Private ids from the contributions.
-	private static final String OUTLINE_ELEMENT_ATTRIBUTE_CLASS = "class";
-	private static final String OUTLINE_ELEMENT_NAME = "outline";
-	private static final String OUTLINE_ID = "net.sourceforge.javahexeditor.outline";
+	private static final String OUTLINE_ELEMENT_ATTRIBUTE_CLASS = "class"; //$NON-NLS-1$
+	private static final String OUTLINE_ELEMENT_NAME = "outline"; //$NON-NLS-1$
+	private static final String OUTLINE_ID = "net.sourceforge.javahexeditor.outline"; //$NON-NLS-1$
 
 	Manager manager;
 	private IContentOutlinePage outlinePage;
@@ -145,7 +147,9 @@ public final class HexEditor extends EditorPart implements ISelectionProvider {
 			public void touchFile(File contentFile, IProgressMonitor monitor) throws IOException {
 				IWorkspace workspace = ResourcesPlugin.getWorkspace();
 
-				IFile file = workspace.getRoot().getFileForLocation(new Path(contentFile.getAbsolutePath()));
+				Path p = new Path(contentFile.getAbsolutePath());
+				IWorkspaceRoot r = workspace.getRoot();
+				IFile file = r.getFile(p);
 				if (file.exists()) {
 					try {
 						file.appendContents(new ByteArrayInputStream(new byte[0]), true, true, monitor);
@@ -241,7 +245,7 @@ public final class HexEditor extends EditorPart implements ISelectionProvider {
 		manager.addLongSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Log.trace(this, "Long selection: {0}", e);
+				Log.trace(this, "Long selection: {0}", e); //$NON-NLS-1$
 				if (selectionListeners == null) {
 					return;
 				}
@@ -257,7 +261,7 @@ public final class HexEditor extends EditorPart implements ISelectionProvider {
 		
 		
 		// Register the context help on this view
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, ID + ".hexEditor");
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, ID + ".hexEditor"); //$NON-NLS-1$
 
 	}
 
@@ -278,11 +282,23 @@ public final class HexEditor extends EditorPart implements ISelectionProvider {
 	@Override
 	public void doSave(IProgressMonitor monitor) {
 		monitor.beginTask(Texts.EDITOR_MESSAGE_SAVING_FILE_PLEASE_WAIT, IProgressMonitor.UNKNOWN);
-		try {
-			getManager().saveFile(monitor);
-		} catch (IOException ex) {
-			statusLineManager.setErrorMessage(ex.getMessage());
+		
+		// Check if the editor name is unbenannt.txt oder unnamed.txt.
+		// Wenn das der Fall ist, muss der Nutzer zuvor eine Datei auswählen.
+		String name = getPartName();
+
+		if (Pattern.matches(net.sourceforge.javahexeditor.plugin.editors.Texts.HexEditor_unsaved, name) || Pattern.matches(IConstants.OUTPUT_REGEXP, name)) {
+			// Wenn die Datei unbenannt.txt oder unnamde.txt heist muss der Nutzer zuerst eine Datei auswählen.
+			doSaveAs();
+		} else {
+			// Wenn die Datei zuvor schonmal gespeichert wurde, überspeichere diese Datei.
+			try {
+				getManager().saveFile(monitor);
+			} catch (IOException ex) {
+				statusLineManager.setErrorMessage(ex.getMessage());
+			}
 		}
+
 		monitor.done();
 	}
 
@@ -367,12 +383,12 @@ public final class HexEditor extends EditorPart implements ISelectionProvider {
 
 	@Override
 	public void init(IEditorSite site, final IEditorInput input) throws PartInitException {
-		Log.trace(this, "init starts with selection provider {0}", site.getSelectionProvider());
+		Log.trace(this, "init starts with selection provider {0}", site.getSelectionProvider()); //$NON-NLS-1$
 
 		setSite(site);
 		if (!(input instanceof IPathEditorInput) && !(input instanceof ILocationProvider)
 				&& (!(input instanceof IURIEditorInput)) && (!(input instanceof IStorageEditorInput))) {
-			throw new PartInitException("Input '" + input.toString() + "'is not a file");
+			throw new PartInitException("Input '" + input.toString() + "'is not a file"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		setInput(input);
 		// When opening an external file the workbench (Eclipse 3.1) calls

@@ -18,4 +18,5 @@ Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Jordi Bergenthal, Peter Dell, Andrey Loskutov
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: net.sourceforge.javahexeditor
-Import-Package: org.jcryptool.core.util.colors
+Import-Package: org.jcryptool.core.util.colors,
+ org.jcryptool.core.util.constants
