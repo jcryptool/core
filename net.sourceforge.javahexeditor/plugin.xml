@@ -4,6 +4,12 @@
    <extension-point id="outline" name="outline Name" schema="schema/outline.exsd"/>
 
    <extension
+      point="org.eclipse.help.contexts">
+      <contexts
+            file="$nl$/contexts.xml">
+      </contexts>
+   </extension>
+   <extension
          id="javahexeditorIdentifier"
          name="javahexeditorName"
          point="org.eclipse.ui.editors">

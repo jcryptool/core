@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
    <context id="hexEditor" title="Hexeditor">
-      <description>Mit dem <b>Hexeditor</b> können beliebige Dateien angelegt, bearbeitet und betrachtet werden.</description>
+      <description>The <b>Hexeditor</b> can be used to create, edit and view all types of files.</description>
+      <topic href="../net.sourceforge.javahexeditor/src/index.html" label="Manual Hexeditor"/>
       <topic href="../org.jcryptool.core.help/$nl$/help/users/general/editor_hex.html" label="Hexeditor"/>
       <topic href="../org.jcryptool.core.help/$nl$/help/users/general/editor_text.html" label="Texteditor"/>
    </context>

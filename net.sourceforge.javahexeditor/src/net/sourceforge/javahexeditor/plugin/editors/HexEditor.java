@@ -61,6 +61,7 @@ import org.eclipse.ui.IPathEditorInput;
 import org.eclipse.ui.IStorageEditorInput;
 import org.eclipse.ui.IURIEditorInput;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.editors.text.ILocationProvider;
 import org.eclipse.ui.part.EditorPart;
@@ -253,6 +254,10 @@ public final class HexEditor extends EditorPart implements ISelectionProvider {
 				}
 			}
 		});
+		
+		
+		// Register the context help on this view
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, ID + ".hexEditor");
 
 	}
 
