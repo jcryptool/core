@@ -50,7 +50,8 @@ public class SimpleDocumentProvider extends AbstractDocumentProvider {
     /*
      * @see org.eclipse.ui.texteditor.AbstractDocumentProvider#createDocument(java.lang.Object)
      */
-    protected IDocument createDocument(Object element) throws CoreException {
+    @Override
+	protected IDocument createDocument(Object element) throws CoreException {
         if (element instanceof IEditorInput) {
             IDocument document = new Document();
             setDocumentContent(document, (IEditorInput) element);
@@ -116,7 +117,8 @@ public class SimpleDocumentProvider extends AbstractDocumentProvider {
     /*
      * @see org.eclipse.ui.texteditor.AbstractDocumentProvider#createAnnotationModel(java.lang.Object)
      */
-    protected IAnnotationModel createAnnotationModel(Object element) throws CoreException {
+    @Override
+	protected IAnnotationModel createAnnotationModel(Object element) throws CoreException {
         return null;
     }
 
@@ -124,7 +126,8 @@ public class SimpleDocumentProvider extends AbstractDocumentProvider {
      * @see org.eclipse.ui.texteditor.AbstractDocumentProvider#doSaveDocument(org.eclipse.core.runtime
      * .IProgressMonitor, java.lang.Object, org.eclipse.jface.text.IDocument, boolean)
      */
-    protected void doSaveDocument(IProgressMonitor monitor, Object element, IDocument document, boolean overwrite)
+    @Override
+	protected void doSaveDocument(IProgressMonitor monitor, Object element, IDocument document, boolean overwrite)
             throws CoreException {
         if (element instanceof IPathEditorInput) {
             IPathEditorInput pei = (IPathEditorInput) element;
@@ -171,14 +174,16 @@ public class SimpleDocumentProvider extends AbstractDocumentProvider {
      * @see org.eclipse.ui.texteditor.AbstractDocumentProvider#getOperationRunner(org.eclipse.core.runtime
      * .IProgressMonitor)
      */
-    protected IRunnableContext getOperationRunner(IProgressMonitor monitor) {
+    @Override
+	protected IRunnableContext getOperationRunner(IProgressMonitor monitor) {
         return null;
     }
 
     /*
      * @see org.eclipse.ui.texteditor.IDocumentProviderExtension#isModifiable(java.lang.Object)
      */
-    public boolean isModifiable(Object element) {
+    @Override
+	public boolean isModifiable(Object element) {
         if (element instanceof IPathEditorInput) {
             IPathEditorInput pei = (IPathEditorInput) element;
             File file = pei.getPath().toFile();
@@ -190,14 +195,16 @@ public class SimpleDocumentProvider extends AbstractDocumentProvider {
     /*
      * @see org.eclipse.ui.texteditor.IDocumentProviderExtension#isReadOnly(java.lang.Object)
      */
-    public boolean isReadOnly(Object element) {
+    @Override
+	public boolean isReadOnly(Object element) {
         return !isModifiable(element);
     }
 
     /*
      * @see org.eclipse.ui.texteditor.IDocumentProviderExtension#isStateValidated(java.lang.Object)
      */
-    public boolean isStateValidated(Object element) {
+    @Override
+	public boolean isStateValidated(Object element) {
         return true;
     }
 }

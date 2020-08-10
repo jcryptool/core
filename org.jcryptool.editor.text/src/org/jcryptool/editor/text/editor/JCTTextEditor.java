@@ -75,6 +75,7 @@ public class JCTTextEditor extends AbstractTextEditor implements IPropertyListen
 	/**
 	 * override to grab the parent object for drag&drop
 	 */
+	@Override
 	public void createPartControl(Composite parent) {
 		super.createPartControl(parent);
 
@@ -82,6 +83,7 @@ public class JCTTextEditor extends AbstractTextEditor implements IPropertyListen
 		target.setTransfer(new Transfer[] { TextTransfer.getInstance(), FileTransfer.getInstance() });
 
 		target.addDropListener(new DropTargetAdapter() {
+			@Override
 			public void drop(DropTargetEvent event) {
 				if(FileTransfer.getInstance().isSupportedType(event.currentDataType)) {
 					String[] filenames = (String [])event.data;
@@ -107,10 +109,12 @@ public class JCTTextEditor extends AbstractTextEditor implements IPropertyListen
 		return getDocumentProvider().getDocument(getEditorInput());
 	}
 
+	@Override
 	public boolean isSaveAsAllowed() {
 		return true;
 	}
 
+	@Override
 	public void doSaveAs() {
 		performSaveAs(getProgressMonitor());
 	}
@@ -124,6 +128,7 @@ public class JCTTextEditor extends AbstractTextEditor implements IPropertyListen
 		return dialog.open();
 	}
 
+	@Override
 	public void doSave(IProgressMonitor monitor) {
 		final String name = getEditorInput().getName();
 
@@ -134,6 +139,7 @@ public class JCTTextEditor extends AbstractTextEditor implements IPropertyListen
 		}
 	}
 
+	@Override
 	protected void performSaveAs(IProgressMonitor monitor) {
 		String queriedFilePath = queryFilePath();
 		IPath path;
@@ -251,6 +257,7 @@ public class JCTTextEditor extends AbstractTextEditor implements IPropertyListen
 		return true;
 	}
 
+	@Override
 	public boolean isDirty() {
 		return isDirty;
 	}
@@ -265,6 +272,7 @@ public class JCTTextEditor extends AbstractTextEditor implements IPropertyListen
 	 * @see org.eclipse.ui.IPropertyListener#propertyChanged(java.lang.Object,
 	 *      int)
 	 */
+	@Override
 	public void propertyChanged(Object source, int propId) {
 		if (getEditorInput() != null) {
 			final String name = getEditorInput().getName();
