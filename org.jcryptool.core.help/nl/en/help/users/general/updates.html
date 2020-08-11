@@ -9,58 +9,74 @@
 <body>
     <h1>Updates</h1>
 
-    <p>JCrypTool comes with an integrated <strong>Update Manager</strong>. This enables you to search for updates of installed plug-ins,
-    and to install new plug-ins and features directly in JCrypTool. There is no need that new plug-ins must be available on the default
-  	JCrypTool update site. Instead you can add your own update sites by entering their URL.</p>
+    <p>JCrypTool comes with an integrated <strong>Update Manager</strong>. This enables you to search for updates of installed plug-ins, and to install new plug-ins and features directly in JCrypTool. There is no need that new plug-ins must be available on the default
+  	JCrypTool update site. Instead you can add your own update sites by entering their URL or you can copy them directly in the <strong>dropins</strong> directory.</p>
 
-  	<p>All update functionality is accessible via the Help menu: <strong>Check for Updates</strong> and <strong>Install New Software...</strong>.
-  	The preferences allow you to set different options around the update functionality on three pages. Be aware that an active Internet
-  	connection is required for all update operations and that you may have to enter a Proxy for your Internet connection.</p>
+  	<p>All update functionality is accessible via the Help menu:
+	<strong>Check for Updates</strong> and
+	<strong>Install New Software...</strong>.</p>
+  	
+	<p>The preferences allow you to set different options around the update functionality on three pages. Be aware that an Internet connection is required for all update operations and that you may have to enter a Proxy for your Internet connection.</p>
 
-  	<p>By default, JCrypTool automatically scans for new updates during every startup. If new versions are available, a popup notification will
-  	tell you about it:</p>
-
+  	<p>By default, JCrypTool automatically scans for new updates during every startup. If new versions are available, a popup notification will tell you about it:</p>
     <div class="screenshot">
        <img src="images/updates_available.png" width="236" height="108" alt="New updates available"/>
     </div>
-
     <p>Simply click on the notification and follow the instructions in the update wizard.</p>
 
+
+	<p>If the update mechanism does not automatically work, you can either call the update search manually via the menu entry or you can change the <a href="../general/preferences.html">Preferences</a> on the <strong>Automatic Updates</strong> page to search automatically.</p>
+	<div class="screenshot">
+		<img src="../general/images/preferences_updates.png" width="670" height="537" alt="Preferences - Automatic Updates"/>
+	</div>
+	
+
+
+
+<p> </br> </p>
   	<h2>Check for Updates</h2>
 
-  	<p>This menu entry starts the update search for all installed plug-ins. In case updates are discovered you have to select which ones
-  	you want to install. After that you have to (read and) accept the license conditions. In case the plug-in is not signed with a known
+  	<p>This menu entry starts the update search for all installed plug-ins. In case updates are discovered you have to select which ones you want to install. After that you have to (read and) accept the license conditions. In case the plug-in is not signed with a known
   	digital signature you have to agree that you want to install the plug-in anyway.</p>
 
-  	<p>After the installation is completed JCrypTool will ask you to restart the application or to apply the changes. Normally the better
-  	choice is to restart JCrypTool. This makes sure that the newly installed updates can be enabled correctly.</p>
+  	<p>After the installation is completed JCrypTool will ask you to restart the application or to apply the changes. Normally the better choice is to restart JCrypTool. This makes sure that the newly installed updates can be enabled correctly.</p>
 
-  	<p>In order to enable update search for a plug-in, the plug-in's configuration must contain a valid update site. This site is managed
-  	by the plug-in developer. For JCrypTool plug-ins (core and crypto plug-ins) a common update site is available. The URL of that page is
-  	<strong>https://www.cryptool.org/jct/update</strong>. You never need to enter this URL in a browser or somewhere else inside JCrypTool;
-  	it is already configured for all plug-ins. JCrypTool contacts this site while searching for updates. Other plug-ins may configure their
-  	update sites, which will be contacted as well during update search.</p>
+  	<p>In order to enable update search for a plug-in, the plug-in's configuration must contain a valid update site. This site is managed by the plug-in developer. For JCrypTool plug-ins (core and crypto plug-ins) a common update site is available. The URL of that page is <strong>https://www.cryptool.org/jct/update</strong>. You never need to enter this URL in a browser or somewhere else inside JCrypTool; it is already configured for all plug-ins. JCrypTool contacts this site while searching for updates. Other plug-ins may configure their update sites, which will be contacted as well during update search.</p>
 
-  	<h2>Install new Software</h2>
 
-  	<p>Besides the update installation the JCrypTool update manager enables you to install new plug-ins or complete features as well. Update
-  	sites are used for this functionality as well. To enable the installation of new plug-ins, you can enter new update site URLs via the update
-  	dialog.</p>
+<p> </br> </p>
+  	<h2>Install New Software</h2>
 
-  	<p>Afterwards simply choose an update site and search this site. Already installed plug-ins are deactivated and cannot
-  	be selected again. Remember that update sites are grouped. Groups are for example classic plug-ins. However not every update site does use
-  	this grouping feature. In case no plug-ins are shown for installation try to deactivate the grouping functionality (the checkbox). The update
-  	site won't be as organized any more, but all entries will be visible in the dialog.</p>
+  	<p>Besides the update installation the JCrypTool update manager enables you to install new plug-ins or complete features as well. Update sites are used for this functionality as well. To enable the installation of new plug-ins, you can enter new update site URLs via the update dialog.</p>
 
-  	<p>Simply choose the plug-ins you intend to install. Accept the license conditions and confirm the installation of unsigned plug-ins if
-  	necessary. We recommend restarting JCrypTool after the installation to make sure all new plug-ins are properly activated.</p>
+  	<p>Afterwards simply choose an update site and search this site. Already installed plug-ins are deactivated and cannot be selected again. Remember that update sites are grouped. Groups are for example classic plug-ins. However not every update site does use
+  	this grouping feature. In case no plug-ins are shown for installation try to deactivate the grouping functionality (checkbox). The update site won't be as organized any more, but all entries will be visible in the dialog.</p>
 
-  	<h2>Possible Problems</h2>
+  	<p>Simply choose the plug-ins you intend to install. Accept the license conditions and confirm the installation of unsigned plug-ins if necessary. We recommend restarting JCrypTool after the installation to make sure all new plug-ins are properly activated.</p>
 
-  	<p>Sometimes the update installation or the new installation of a plug-in fails. This already can happen in the update manager and a plug-in
-  	which cannot be selected for installation. Even after successfully downloading a plug-in the installation may fail. The reason for that are
-  	most of the time missing requirements (the plug-in requires some other plug-ins to work properly). In case those plug-ins are not available
-  	on your system and are not contained in the new plug-in, it cannot work. The best thing to do is to contact the plug-in developer and to
-  	ask for help.</p>
+
+<p> </br> </p>
+  	<h2>Possible Problems: dependancy</h2>
+
+  	<p>Sometimes the update installation or the new installation of a plug-in fails. This already can happen in the update manager and a plug-in which cannot be selected for installation. Even after successfully downloading a plug-in, the installation may fail. The reason for that are most of the time missing requirements (the plug-in requires some other plug-ins to work properly). In case those plug-ins are not available on your system and are not contained in the new plug-in, it cannot work. The best thing to do is to contact the plug-in developer and to ask for help.</p>
+
+
+	
+<p> </br> </p>
+	<h2>Possible Problems: updates are not visible</h2>
+
+	<p>It is possible that even after a successful installation the updates/changes are not visible. This may occur for newly installed plug-ins as well as updates for existing ones. The reason for that is the JCrypTool workspace folder, which caches and stores all plug-in information. Sometimes this information is not updated and the data stored there does not reflect the current installation any more.</p>
+
+	<p>To solve this, you can either delete the <strong>.jcryptool</strong> folder in your document directory (inside your user home directory) manually or you can tell JCrypTool to do that job. For the first case (when trying to delete this folder), please remember that this folder is hidden on macOS and Linux. For the second case (to let JCrypTool delete this folder at each new start) simply add the parameter <strong>-clean</strong> at the end of the commandline when launching JCrypTool (e.g. add it to the shortcut on Windows). This automatically deletes the workspace folder. This folder is automatically recreated and initialized when starting JCrypTool the next time. Remember to remove the parameter afterwards if you want JCT to remember which plug-ins were opened at the last start.</p>
+
+	<p>Here are two examples how the target command line call could look like under Windows:</br>
+	F:\Downloads\jcryptool\JCrypTool.exe -clean</br>
+	F:\Downloads\jcryptool\JCrypTool.exe -nl de -data %LOCALAPPDATA%\jct-de -clean</p>
+	<p>
+	And here is a sample call under Linux:</br>
+	$ ./JCrypTool -nl en -clean -data /home/Documents/.jcryptool/en  & </br>
+	</p></br></br>
+
+
 </body>
 </html>
