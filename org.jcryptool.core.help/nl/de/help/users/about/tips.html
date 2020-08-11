@@ -14,6 +14,19 @@
 
 	<p>Falls Sie in JCT mehrere Fenster geöffnet haben, z.B. Editoren in der Standardansicht, die Kontexthilfe und einige Visualisierungen, und dann eines der Fenster maximieren wollen, <strong>doppelklicken</strong> Sie einfach den entsprechenden Reiter (bspw. auf den Reiter "Häufigkeits-Analyse" innerhalb der Visualisierungen).</p>
 
+	
+<p> </br> </p>
+	<h2>JCrypTool aktualisieren</h2>
+	
+	<p>
+	JCrypTool verfügt über einen integrierten Aktualisierungsmechanismus.
+	Details dazu und Hinweise zu Problembehebungen dabei finden sich in <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/updates.html">Updates</a>.</p>
+
+	<!--- Test: vorher ohne PLUGINS_ROOT   --->
+	<p>xxxxxxxxxxxxxx <a href="../general/updates.html">Aktualisierungsmechanismus</a>.</p>
+
+
+
 <p> </br> </p>
 	<h2>JCrypTool im Netzwerk oder auf einem USB-Stick verwenden</h2>
 
@@ -25,37 +38,6 @@
 	<p><strong>macOS:</strong><br>
 	Die durchzuführende Änderung ist identisch wie unter Windows oder Linux. Allerdings befindet sich die <strong>JCrypTool.ini</strong> auf macOS unter <strong>JCrypTool.app\Contents\MacOS</strong> in Ihrem Installationsordner.</p>
 
-	
-<p> </br> </p>
-	<h2>JCrypTool aktualisieren</h2>
-	
-	<p>
-	<!--- Ist PLUGINS_ROOT richtig?
-	        (bei den crypto-Plugins war es das, aber nun ist es ja in core)   --->
-	Details dazu finden sich in <a href="PLUGINS_ROOT/org.jcryptool.core/$nl$/help/users/general/updates.html">Updates</a>	.</p>
-	
-
-	<p>JCrypTool verfügt über einen integrierten <a href="../general/updates.html">Aktualisierungsmechanismus</a>. Diesen können Sie über das Menü <strong>Hilfe</strong> aufrufen. Dort finden Sie die beiden Einträge <strong>Nach Aktualisierungen suchen</strong> und <strong>Neue Erweiterungen installieren...</strong>. JCrypTool sucht nicht automatisch regelmäßig nach Aktualisierungen. Sie müssen dies entweder manuell aufrufen oder in den <a href="../general/preferences.html">Benutzervorgaben</a> auf der Seite <strong>Automatische Aktualisierungen</strong> die entsprechenden Vorgaben festlegen.</p>
-
-	<div class="screenshot">
-		<img src="../general/images/preferences_updates.png" width="670" height="537" alt="Benutzervorgaben - Automatische Aktualisierungen"/>
-	</div>
-
-	
-<p> </br> </p>
-	<h2>Aktualisierungen werden nicht angezeigt</h2>
-
-	<p>Es kann vorkommen, dass Aktualisierungen/Änderungen trotz erfolgreicher Installation nicht angezeigt werden. Das kann bei neuen Plug-ins und auch bei Aktualisierungen von vorhandenen Plug-ins der Fall sein. Ursache hierfür ist der von JCrypTool verwendete Workspace Ordner, in dem die Informationen über alle installierten Plug-ins gespeichert werden. Bei Änderungen kann es nun vorkommen, dass die dort gespeicherten Einstellungen nicht aktualisiert werden.</p>
-
-	<p>In diesem Fall können Sie entweder das <strong>.jcryptool</strong> Verzeichnis in Ihrem Dokumente Verzeichnis (innerhalb Ihres Benutzerverzeichnisses) von Hand löschen. Unter macOS und Linux ist dieser Ordner standardmäßig versteckt. Alternativ können Sie einmalig den Parameter <strong>-clean</strong> beim Aufruf von JCrypTool anhängen (z.B. über die Verknüpfung unter Windows). Hiermit wird der Workspace automatisch gelöscht und beim nächsten Start neu angelegt und initialisiert. Anschließend sollten Sie den Parameter wieder entfernen.</p>
-
-	<p>Hier sind zwei Beispiele unter Windows, wie der Kommandozeilen-Aufruf aussehen kann (legt man JCT auf eine Ikone im Startmenü sieht man den Befehl im Eigenschaften-Fenster der Ikone nach dem Feld "Ziel"):</br>
-	F:\Downloads\jcryptool\JCrypTool.exe -clean</br>
-	F:\Downloads\jcryptool\JCrypTool.exe -nl de -data %LOCALAPPDATA%\jct-de -clean</p>
-	<p>
-	Und hier ein Beispielaufruf unter Linux:</br>
-	$ ./JCrypTool -nl de -clean -data /home/Documents/.jcryptool/de  & </br>
-	</p></br></br>
 
 </body>
 </html>
