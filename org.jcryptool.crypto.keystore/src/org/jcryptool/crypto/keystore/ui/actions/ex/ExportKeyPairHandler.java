@@ -45,7 +45,8 @@ public class ExportKeyPairHandler extends AbstractHandler {
         // this.setImageDescriptor(KeyStorePlugin.getImageDescriptor("icons/16x16/kgpg_export.png")); //$NON-NLS-1$
     }
 
-    public Object execute(ExecutionEvent event) {
+    @Override
+	public Object execute(ExecutionEvent event) {
         FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
         dialog.setFilterPath(DirectoryService.getUserHomeDir());
         dialog.setFilterExtensions(new String[] { Messages.getString("ExportKeyPairHandler.2") }); //$NON-NLS-1$
@@ -75,7 +76,8 @@ public class ExportKeyPairHandler extends AbstractHandler {
         InputDialog dialog = new InputDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
                 Messages.getString("ExportKeyPairHandler.0"), Messages.getString("ExportKeyPairHandler.1"), "", null) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-            protected Control createDialogArea(Composite parent) {
+            @Override
+			protected Control createDialogArea(Composite parent) {
                 Control control = super.createDialogArea(parent);
                 getText().setEchoChar('*');
                 return control;

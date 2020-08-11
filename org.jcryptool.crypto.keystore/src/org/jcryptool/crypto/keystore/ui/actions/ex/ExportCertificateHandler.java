@@ -43,7 +43,8 @@ public class ExportCertificateHandler extends AbstractHandler {
         // this.setImageDescriptor(KeyStorePlugin.getImageDescriptor("icons/16x16/kgpg_export.png")); //$NON-NLS-1$
     }
 
-    public Object execute(ExecutionEvent event) {
+    @Override
+	public Object execute(ExecutionEvent event) {
         FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
         dialog.setFilterPath(DirectoryService.getUserHomeDir());
         dialog.setFilterExtensions(new String[] { Messages.getString("ExportCertificateHandler.0") }); //$NON-NLS-1$

@@ -48,7 +48,8 @@ public class ExportSecretKeyHandler extends AbstractHandler {
     /**
      * @see org.eclipse.core.commands.AbstractHandler#execute()
      */
-    public Object execute(ExecutionEvent event) {
+    @Override
+	public Object execute(ExecutionEvent event) {
         FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
         dialog.setFilterPath(DirectoryService.getUserHomeDir());
         dialog.setFilterExtensions(new String[] { Messages.getString("ExportSecretKeyHandler.2") }); //$NON-NLS-1$
@@ -77,7 +78,8 @@ public class ExportSecretKeyHandler extends AbstractHandler {
                 Messages.getString("ExportSecretKeyHandler.0"), Messages.getString("ExportSecretKeyHandler.1"), //$NON-NLS-1$ //$NON-NLS-2$
                 "", null) { //$NON-NLS-1$
 
-            protected Control createDialogArea(Composite parent) {
+            @Override
+			protected Control createDialogArea(Composite parent) {
                 Control control = super.createDialogArea(parent);
                 getText().setEchoChar('*');
                 return control;
