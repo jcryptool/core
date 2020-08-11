@@ -33,14 +33,7 @@
             id="net.sourceforge.javahexeditor.plugin.editors.PreferencesPage"
             name="%preferences-page.name"/>
    </extension>
-   <extension
-         id="javahexeditorHelpExtensionId"
-         name="javahexeditorHelpExtensionName"
-         point="org.eclipse.help.toc">
-      <toc
-            file="doc/toc.xml"
-            primary="true"/>
-   </extension>
+
    <extension
          point="org.eclipse.core.contenttype.contentTypes">
       <content-type
