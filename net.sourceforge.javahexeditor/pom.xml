@@ -9,7 +9,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.sourceforge</groupId>
-	<version>1.0.0</version>
+	<version>0.5.2.qualifier</version>
 	<artifactId>net.sourceforge.javahexeditor</artifactId>
 	<packaging>eclipse-plugin</packaging>
 </project>
