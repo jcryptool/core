@@ -166,11 +166,11 @@ public class IntegratorWizardPage extends WizardPage {
      * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
      */
     public void createControl(Composite parent) {
-        parent.setLayout(new GridLayout());
+//         parent.setLayout(new GridLayout());
 
         masterComp = new Composite(parent, SWT.NONE);
         masterComp.setLayout(new GridLayout(1, true));
-        GridData masterLData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
+        GridData masterLData = new GridData(SWT.FILL, SWT.FILL, true, true);
         masterLData.heightHint = calculateHeightHintForPage();
         masterComp.setLayoutData(masterLData);
 
