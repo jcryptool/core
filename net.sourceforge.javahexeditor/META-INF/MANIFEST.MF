@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Java Hex Editor
 Bundle-SymbolicName: net.sourceforge.javahexeditor; singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 0.5.2.qualifier
 Bundle-Activator: net.sourceforge.javahexeditor.plugin.HexEditorPlugin
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
@@ -13,10 +13,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.resources,
  org.eclipse.ui.ide,
  org.eclipse.core.filesystem,
- org.jcryptool.core.logging
+ org.jcryptool.core.util
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Jordi Bergenthal, Peter Dell, Andrey Loskutov
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Automatic-Module-Name: net.sourceforge.javahexeditor
-Import-Package: org.jcryptool.core.util.colors,
- org.jcryptool.core.util.constants

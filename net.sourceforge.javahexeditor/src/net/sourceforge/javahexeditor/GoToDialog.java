@@ -23,7 +23,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.graphics.FontMetrics;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -212,8 +211,7 @@ final class GoToDialog extends Dialog {
 		text.setTextLimit(30);
 		int columns = 35;
 		GC gc = new GC(text);
-		FontMetrics fm = gc.getFontMetrics();
-		int width = (int)(columns * fm.getAverageCharacterWidth());
+		int width = (int) (columns * SWTUtility.getAverageCharacterWidth(gc));
 		gc.dispose();
 		text.setLayoutData(new GridData(width, SWT.DEFAULT));
 		text.addModifyListener(new ModifyListener() {

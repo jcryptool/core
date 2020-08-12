@@ -30,6 +30,9 @@ public final class Texts extends NLS {
 	public static String BUTTON_CANCEL_LABEL;
 	public static String BUTTON_CLOSE_LABEL;
 
+	// ByteArrayUtility
+	public static String BYTE_ARRAY_UTILITY_INVALID_HEX_STRING;
+
 	public static String DIALOG_ERROR_NOT_A_NUMBER_MESSAGE;
 	public static String DIALOG_ERROR_LOCATION_OUT_OF_RANGE_MESSAGE;
 	public static String DIALOG_ERROR_END_SMALLER_THAN_OR_EQUAL_TO_START_MESSAGE;
@@ -49,6 +52,7 @@ public final class Texts extends NLS {
 	public static String FIND_REPLACE_DIALOG_REPLACE_GROUP_LABEL;
 	public static String FIND_REPLACE_DIALOG_HEX_RADIO_LABEL;
 	public static String FIND_REPLACE_DIALOG_TEXT_RADIO_LABEL;
+	public static String FIND_REPLACE_DIALOG_OPTIONS_GROUP_LABEL;
 
 	public static String FIND_REPLACE_DIALOG_DIRECTION_GROUP_LABEL;
 	public static String FIND_REPLACE_DIALOG_DIRECTION_BACKWARD_RADIO_LABEL;
@@ -87,7 +91,7 @@ public final class Texts extends NLS {
 	public static String MANAGER_OPEN_MESSAGE_CANNOT_OPEN_FILE;
 	public static String MANAGER_OPEN_MESSAGE_CANNOT_DETERMINE_CHARSET_OF_FILE;
 	public static String MANAGER_OPEN_TITLE_FILE_FROM_HISTORY;
-	
+
 	public static String MANAGER_SAVE_DIALOG_TITLE_SAVE_SELECTION_AS;
 	public static String MANAGER_SAVE_DIALOG_TITLE_SAVE_AS;
 	public static String MANAGER_SAVE_DIALOG_TITLE_FILE_ALREADY_EXISTS;
@@ -125,6 +129,7 @@ public final class Texts extends NLS {
 	public static String STATUS_LINE_MESSAGE_SELECTION;
 	public static String STATUS_LINE_MESSAGE_POSITION;
 	public static String STATUS_LINE_MESSAGE_VALUE;
+	public static String STATUS_LINE_MESSAGE_SIZE;
 
 	public static String STATUS_LINE_MODE_INSERT;
 	public static String STATUS_LINE_MODE_OVERWRITE;

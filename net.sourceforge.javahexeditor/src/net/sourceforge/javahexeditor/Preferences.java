@@ -34,7 +34,9 @@ public final class Preferences {
 	public static final String FONT_STYLE = "font.style";
 	public static final String FONT_DATA = "font.data";
 
+	private static final FontData DEFAULT_FONT_DATA = new FontData("Courier New", 10, SWT.NORMAL);
+
 	public static FontData getDefaultFontData() {
-		return new FontData("Courier New", 10, SWT.NORMAL);
+		return DEFAULT_FONT_DATA;
 	}
 }

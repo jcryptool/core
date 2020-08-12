@@ -73,20 +73,20 @@ public final class NumberUtility {
 				+ getHexString(to) + ")";
 	}
 
-	public static long parseString(boolean hex, String newText) {
+	public static long parseString(boolean hex, String value) {
 		int radix = 10;
 		Matcher numberMatcher;
 		if (hex) {
-			if (newText.startsWith(hexPrefix)) {
-				newText = newText.substring(hexPrefix.length());
+			if (value.startsWith(hexPrefix)) {
+				value = value.substring(hexPrefix.length());
 			}
-			numberMatcher = PATTERN_HEX_DIGITS.matcher(newText);
+			numberMatcher = PATTERN_HEX_DIGITS.matcher(value);
 			radix = 16;
 		} else {
-			numberMatcher = PATTERN_DEC_DIGITS.matcher(newText);
+			numberMatcher = PATTERN_DEC_DIGITS.matcher(value);
 		}
 		if (numberMatcher.matches()) {
-			return Long.parseLong(newText, radix);
+			return Long.parseLong(value, radix);
 		}
 		return -1;
 	}

@@ -246,7 +246,7 @@ final class BinaryContentClipboard {
 	private void emptyClipboardFile() {
 		if (clipboardFile.canWrite() && clipboardFile.length() > 0L) {
 			try {
-				RandomAccessFile file = new RandomAccessFile(clipboardFile, "rw");
+				RandomAccessFile file = RandomAccessFileFactory.createRandomAccessFile(clipboardFile, "rw");
 				file.setLength(0L);
 				file.close();
 			} catch (IOException e) {
@@ -481,7 +481,7 @@ final class BinaryContentClipboard {
 	}
 
 	private boolean updateLock(File lock, int references) throws IOException {
-		RandomAccessFile file = new RandomAccessFile(lock, "rw");
+		RandomAccessFile file = RandomAccessFileFactory.createRandomAccessFile(lock, "rw");
 		if (file.length() >= 4) {
 			references += file.readInt();
 		}

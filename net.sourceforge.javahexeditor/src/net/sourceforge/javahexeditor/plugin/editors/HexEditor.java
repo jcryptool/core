@@ -27,7 +27,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import org.eclipse.core.resources.*;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -72,8 +75,8 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleException;
 
 import net.sourceforge.javahexeditor.BinaryContent;
-import net.sourceforge.javahexeditor.FileToucher;
 import net.sourceforge.javahexeditor.BinaryContent.RangeSelection;
+import net.sourceforge.javahexeditor.FileToucher;
 import net.sourceforge.javahexeditor.HexTexts;
 import net.sourceforge.javahexeditor.Manager;
 import net.sourceforge.javahexeditor.Preferences;
@@ -90,10 +93,10 @@ public final class HexEditor extends EditorPart implements ISelectionProvider {
 
 		public MyAction(Manager manager, String id) {
 			if (manager == null) {
-				throw new IllegalArgumentException("Parameter 'manager' must not be null."); //$NON-NLS-1$
+				throw new IllegalArgumentException("Parameter 'manager' must not be null.");
 			}
 			if (id == null) {
-				throw new IllegalArgumentException("Parameter 'id' must not be null."); //$NON-NLS-1$
+				throw new IllegalArgumentException("Parameter 'id' must not be null.");
 			}
 			this.manager = manager;
 			myId = id;
@@ -298,7 +301,6 @@ public final class HexEditor extends EditorPart implements ISelectionProvider {
 				statusLineManager.setErrorMessage(ex.getMessage());
 			}
 		}
-
 		monitor.done();
 	}
 
@@ -398,6 +400,7 @@ public final class HexEditor extends EditorPart implements ISelectionProvider {
 		// but we need an editor to fill the status bar.
 		site.getActionBarContributor().setActiveEditor(this);
 		site.setSelectionProvider(this);
+
 	}
 
 	@Override
@@ -498,6 +501,7 @@ public final class HexEditor extends EditorPart implements ISelectionProvider {
 	void updateActionsStatus() {
 		boolean textSelected = getManager().isTextSelected();
 		boolean lengthModifiable = textSelected && !manager.isOverwriteMode();
+		boolean filled = getManager().isFilled();
 		IActionBars bars = getEditorSite().getActionBars();
 		IAction action = bars.getGlobalActionHandler(ActionFactory.UNDO.getId());
 		if (action != null) {
@@ -522,6 +526,16 @@ public final class HexEditor extends EditorPart implements ISelectionProvider {
 		action = bars.getGlobalActionHandler(ActionFactory.DELETE.getId());
 		if (action != null) {
 			action.setEnabled(lengthModifiable);
+		}
+
+		action = bars.getGlobalActionHandler(ActionFactory.SELECT_ALL.getId());
+		if (action != null) {
+			action.setEnabled(filled);
+		}
+
+		action = bars.getGlobalActionHandler(ActionFactory.FIND.getId());
+		if (action != null) {
+			action.setEnabled(filled);
 		}
 
 		bars.updateActionBars();

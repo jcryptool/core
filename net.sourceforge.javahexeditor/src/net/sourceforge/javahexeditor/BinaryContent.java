@@ -115,7 +115,7 @@ public final class BinaryContent {
 			}
 
 			this.file = file;
-			data = new RandomAccessFile(this.file, "r");
+			data = RandomAccessFileFactory.createRandomAccessFile(this.file, "r");
 			dirty = isDirty;
 		}
 
@@ -490,11 +490,11 @@ public final class BinaryContent {
 
 		if (rangesModified != null) {
 			if (sourceRange.dirty) {
-				rangesModified.add(new Long(position));
-				rangesModified.add(new Long(positionSoFar - position));
+				rangesModified.add(position);
+				rangesModified.add(positionSoFar - position);
 			} else if (changesAdded > 0) {// && !myChangesInserted) {
-				rangesModified.add(new Long(changesPosition));
-				rangesModified.add(new Long(changesAdded));
+				rangesModified.add(changesPosition);
+				rangesModified.add((long) changesAdded);
 				// } else if (myChanges != null && changesPosition >=
 				// myChangesPosition && myChangesInserted &&
 				// positionSoFar - changesPosition > 0) {
@@ -571,8 +571,8 @@ public final class BinaryContent {
 				&& positionSoFar + positionShift < myChangesPosition + myChanges.size()) {
 			int size = fillWithChanges(dst, positionSoFar + positionShift);
 			if (rangesModified != null) {
-				rangesModified.add(new Long(positionSoFar + positionShift));
-				rangesModified.add(new Long(size));
+				rangesModified.add(positionSoFar + positionShift);
+				rangesModified.add((long) size);
 			}
 		}
 
@@ -612,7 +612,7 @@ public final class BinaryContent {
 			actions.endAction();
 		}
 		commitChanges();
-		RandomAccessFile dst = new RandomAccessFile(destinationFile, "rws");
+		RandomAccessFile dst = RandomAccessFileFactory.createRandomAccessFile(destinationFile, "rws");
 		IOException preCloseException = null;
 		try {
 			dst.setLength(length);
@@ -755,7 +755,7 @@ public final class BinaryContent {
 			actions.eventPreModify(BinaryContentActionHistory.TYPE_INSERT, position, true);
 		}
 		updateChanges(position, true);
-		myChanges.set((int) (position - myChangesPosition), new Integer(source & 0x0ff));
+		myChanges.set((int) (position - myChangesPosition), source & 0x0ff);
 		notifyListeners();
 	}
 
@@ -944,10 +944,10 @@ public final class BinaryContent {
 		int previous = (myChanges.get((int) (position - myChangesPosition))).intValue();
 		int mask = (0x0ff >>> offset) & (0x0ff << (8 - offset - length));
 		int newValue = previous & ~mask | (source << (8 - offset - length)) & mask;
-		myChanges.set((int) (position - myChangesPosition), new Integer(newValue));
+		myChanges.set((int) (position - myChangesPosition), newValue);
 		if (actions != null) {
 			if (range == null) {
-				actions.addLostByte(position, new Integer(previous));
+				actions.addLostByte(position, previous);
 			} else {
 				Range clone = range.clone();
 				clone.position = position;
@@ -1198,14 +1198,14 @@ public final class BinaryContent {
 			}
 			if (insert == myChangesInserted && position >= lowerLimit && position <= upperLimit) { // reuse
 				if (insert) {
-					myChanges.add((int) (position - myChangesPosition), new Integer(0));
+					myChanges.add((int) (position - myChangesPosition), 0);
 				} else {
 					result = getRangeAt(position);
 					if (myChangesPosition > position) {
 						myChangesPosition = position;
-						myChanges.add(0, new Integer(getFromRanges(position)));
+						myChanges.add(0, getFromRanges(position));
 					} else if (myChangesPosition + myChanges.size() <= position) {
-						myChanges.add(new Integer(getFromRanges(position)));
+						myChanges.add(getFromRanges(position));
 					}
 				}
 				return result;
@@ -1215,7 +1215,7 @@ public final class BinaryContent {
 
 		}
 		myChanges = new ArrayList<Integer>();
-		myChanges.add(new Integer(getFromRanges(position)));
+		myChanges.add(getFromRanges(position));
 		myChangesInserted = insert;
 		myChangesPosition = position;
 		if (!insert) {

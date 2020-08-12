@@ -23,8 +23,6 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -35,18 +33,13 @@ import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
-import org.eclipse.swt.graphics.FontMetrics;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
@@ -58,6 +51,7 @@ import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
 
 import net.sourceforge.javahexeditor.BinaryContentFinder.Match;
+import net.sourceforge.javahexeditor.common.ByteArrayUtility;
 import net.sourceforge.javahexeditor.common.NumberUtility;
 import net.sourceforge.javahexeditor.common.SWTUtility;
 import net.sourceforge.javahexeditor.common.TextUtility;
@@ -68,12 +62,9 @@ import net.sourceforge.javahexeditor.common.TextUtility;
  * again.
  *
  * @author Jordi Bergenthal
- 
- *         TODO: Fix layout/visiblity and enabling
+ *
  */
 final class FindReplaceDialog extends Dialog {
-
-	static final Pattern patternHexDigits = Pattern.compile("[0-9a-fA-F]*");
 
 	SelectionAdapter defaultSelectionAdapter = new SelectionAdapter() {
 		@Override
@@ -81,7 +72,7 @@ final class FindReplaceDialog extends Dialog {
 			if (lastIgnoreCase != ignoreCaseCheckBox.getSelection() || lastForward != forwardRadioButton.getSelection()
 					|| lastFindHexButtonSelected != findGroup.hexRadioButton.getSelection()
 					|| lastReplaceHexButtonSelected != replaceGroup.hexRadioButton.getSelection()) {
-				feedbackLabel.setText(Texts.EMPTY);
+				sendInfoMessage(Texts.EMPTY);
 			}
 			lastFocused.textCombo.setFocus();
 		}
@@ -106,7 +97,7 @@ final class FindReplaceDialog extends Dialog {
 	private Group directionGroup;
 	Button forwardRadioButton;
 	Button backwardRadioButton;
-	private Composite ignoreCaseComposite;
+	private Group optionsGroup;
 	Button ignoreCaseCheckBox;
 
 	private Composite feedbackComposite;
@@ -145,23 +136,26 @@ final class FindReplaceDialog extends Dialog {
 			GridLayout gridLayout = new GridLayout();
 			gridLayout.numColumns = 2;
 			group.setLayout(gridLayout);
-			createComposite();
+			group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+
+			createRadioButtonComposite();
+
 			textCombo = new Combo(group, SWT.BORDER);
+
+			// Calculate the size of the input field and set it as width hint.
 			int columns = 35;
 			GC gc = new GC(textCombo);
-			FontMetrics fm = gc.getFontMetrics();
-			int width = (int)(columns * fm.getAverageCharacterWidth());
+			int width = (int) (columns * SWTUtility.getAverageCharacterWidth(gc));
 			gc.dispose();
-			textCombo.setLayoutData(new GridData(width, SWT.DEFAULT));
+
+			GridData gridData_textCombo = new GridData();
+			gridData_textCombo.widthHint = width;
+			textCombo.setLayoutData(gridData_textCombo);
 			textCombo.addVerifyListener(new VerifyListener() {
 				@Override
 				public void verifyText(VerifyEvent e) {
 					if (e.keyCode == 0) {
 						return; // a list selection
-					}
-					if (hexRadioButton.getSelection()) {
-						Matcher numberMatcher = patternHexDigits.matcher(e.text);
-						e.doit = numberMatcher.matches();
 					}
 				}
 			});
@@ -178,7 +172,7 @@ final class FindReplaceDialog extends Dialog {
 			textCombo.addModifyListener(new ModifyListener() {
 				@Override
 				public void modifyText(ModifyEvent e) {
-					feedbackLabel.setText(Texts.EMPTY);
+					sendInfoMessage(Texts.EMPTY);
 					if (TextHexInputGroup.this == findGroup) {
 						dataToUI();
 					}
@@ -189,21 +183,21 @@ final class FindReplaceDialog extends Dialog {
 		/**
 		 * This method initializes composite
 		 */
-		private void createComposite() {
-			RowLayout rowLayout1 = new RowLayout();
-			rowLayout1.marginTop = 2;
-			rowLayout1.marginBottom = 2;
-			rowLayout1.type = SWT.VERTICAL;
+		private void createRadioButtonComposite() {
 			composite = new Composite(group, SWT.NONE);
-			composite.setLayout(rowLayout1);
+			composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+			GridLayout gridLayout_composite = new GridLayout();
+			gridLayout_composite.marginHeight = 0;
+			gridLayout_composite.marginWidth = 0;
+			composite.setLayout(gridLayout_composite);
+
 			hexRadioButton = new Button(composite, SWT.RADIO);
 			hexRadioButton.setText(Texts.FIND_REPLACE_DIALOG_HEX_RADIO_LABEL);
 			hexRadioButton.addSelectionListener(defaultSelectionAdapter);
 			hexRadioButton.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					Matcher numberMatcher = patternHexDigits.matcher(textCombo.getText());
-					if (!numberMatcher.matches()) {
+					if (ByteArrayUtility.parseString(textCombo.getText()) == null) {
 						textCombo.setText(Texts.EMPTY);
 					}
 				}
@@ -280,7 +274,7 @@ final class FindReplaceDialog extends Dialog {
 			@Override
 			public void run() {
 				if (searching && !progressComposite.isDisposed()) {
-					progressComposite.setVisible(true);
+					setProgressCompositeVisible(true);
 				}
 			}
 		});
@@ -358,8 +352,11 @@ final class FindReplaceDialog extends Dialog {
 			} catch (IOException ex) {
 				throw new RuntimeException(ex);
 			}
-			for (int i = 0; i < selectionLength; ++i) {
+			for (int i = 0; i < selectionLength; i++) {
 				selectedText.append(HexTexts.byteToHex[selection[i] & 0x0ff]);
+				if (i < selectionLength - 1) {
+					selectedText.append(' ');
+				}
 			}
 			findGroup.textCombo.setText(selectedText.toString());
 			findGroup.selectText();
@@ -377,7 +374,8 @@ final class FindReplaceDialog extends Dialog {
 		} else {
 			backwardRadioButton.setSelection(true);
 		}
-		feedbackLabel.setText(Texts.FIND_REPLACE_DIALOG_MESSAGE_SPECIFY_VALUE_TO_FIND);
+
+		sendInfoMessage(Texts.FIND_REPLACE_DIALOG_MESSAGE_SPECIFY_VALUE_TO_FIND);
 
 		lastFocused = findGroup;
 		lastFocused.textCombo.setFocus();
@@ -388,13 +386,13 @@ final class FindReplaceDialog extends Dialog {
 	/**
 	 * This method initializes composite3
 	 */
-	private void createIgnoreCaseComposite() {
-		FillLayout fillLayout = new FillLayout();
-		fillLayout.marginHeight = 10;
-		fillLayout.marginWidth = 10;
-		ignoreCaseComposite = new Composite(shell, SWT.NONE);
-		ignoreCaseComposite.setLayout(fillLayout);
-		ignoreCaseCheckBox = new Button(ignoreCaseComposite, SWT.CHECK);
+	private void createOptionsGroup() {
+		optionsGroup = new Group(shell, SWT.NONE);
+		optionsGroup.setLayout(new GridLayout());
+		optionsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		optionsGroup.setText(Texts.FIND_REPLACE_DIALOG_OPTIONS_GROUP_LABEL);
+
+		ignoreCaseCheckBox = new Button(optionsGroup, SWT.CHECK);
 		ignoreCaseCheckBox.setText(Texts.FIND_REPLACE_DIALOG_IGNORE_CASE_CHECKBOX_LABEL);
 		ignoreCaseCheckBox.addSelectionListener(defaultSelectionAdapter);
 	}
@@ -405,15 +403,13 @@ final class FindReplaceDialog extends Dialog {
 	private void createDirectionGroup() {
 		directionGroup = new Group(shell, SWT.NONE);
 		directionGroup.setText(Texts.FIND_REPLACE_DIALOG_DIRECTION_GROUP_LABEL);
-
-		RowLayout rowLayout = new RowLayout();
-		rowLayout.fill = true;
-		rowLayout.type = org.eclipse.swt.SWT.HORIZONTAL;
-		directionGroup.setLayout(rowLayout);
+		directionGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		directionGroup.setLayout(new GridLayout());
 
 		forwardRadioButton = new Button(directionGroup, SWT.RADIO);
 		forwardRadioButton.setText(Texts.FIND_REPLACE_DIALOG_DIRECTION_FORWARD_RADIO_LABEL);
 		forwardRadioButton.addSelectionListener(defaultSelectionAdapter);
+
 		backwardRadioButton = new Button(directionGroup, SWT.RADIO);
 		backwardRadioButton.setText(Texts.FIND_REPLACE_DIALOG_DIRECTION_BACKWARD_RADIO_LABEL);
 		backwardRadioButton.addSelectionListener(defaultSelectionAdapter);
@@ -421,63 +417,66 @@ final class FindReplaceDialog extends Dialog {
 
 	private void createFeedbackComposite() {
 		feedbackComposite = new Composite(shell, SWT.NONE);
-		FormLayout formLayout2 = new FormLayout();
-		// formLayout2.spacing = 5;
-		feedbackComposite.setLayout(formLayout2);
+		GridLayout gridLayout_feedbackComposite = new GridLayout();
+		gridLayout_feedbackComposite.verticalSpacing = 0;
+		gridLayout_feedbackComposite.horizontalSpacing = 0;
+		feedbackComposite.setLayout(gridLayout_feedbackComposite);
+		feedbackComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-		feedbackLabel = new Label(feedbackComposite, SWT.LEFT);
-		FormData feedbackLabelData = new FormData();
-		feedbackLabelData.top = new FormAttachment(0);
-		feedbackLabelData.left = new FormAttachment(0);
-		feedbackLabelData.right = new FormAttachment(100);
-		feedbackLabel.setLayoutData(feedbackLabelData);
+		feedbackLabel = new Label(feedbackComposite, SWT.NONE);
+		feedbackLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+	}
+
+	private void sendInfoMessage(String message) {
+		feedbackLabel.setForeground(null);
+		feedbackLabel.setText(message);
+	}
+
+	private void sendErrorMessage(String message) {
+		Color color_red = new Color(Display.getCurrent(), 255, 0, 0);
+		feedbackLabel.setForeground(color_red);
+		feedbackLabel.setText(message);
 	}
 
 	private void createProgressComposite() {
 		progressComposite = new Composite(shell, SWT.NONE);
-		FormLayout formLayout3 = new FormLayout();
-		formLayout3.spacing = 5;
-		progressComposite.setLayout(formLayout3);
-		// FormData formData4 = new FormData();
-		// formData4.top = new FormAttachment(feedbackLabel);
-		// formData4.top = new FormAttachment(feedbackComposite);
-		// formData4.bottom = new FormAttachment(100);
-		// formData4.left = new FormAttachment(0);
-		// formData4.right = new FormAttachment(100);
+		progressComposite.setLayout(new GridLayout(2, false));
+		progressComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
 		progressBar = new ProgressBar(progressComposite, SWT.NONE);
-		FormData formData5 = new FormData();
-		formData5.bottom = new FormAttachment(100);
-		formData5.left = new FormAttachment(0);
-		formData5.height = progressBar.computeSize(SWT.DEFAULT, SWT.DEFAULT, false).y;
-		progressBar.setLayoutData(formData5);
+		progressBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
 		progressBarStopButton = new Button(progressComposite, SWT.NONE);
 		progressBarStopButton.setText(Texts.FIND_REPLACE_DIALOG_STOP_SEARCHING_BUTTON_LABEL);
-		FormData formData6 = new FormData();
-		formData6.right = new FormAttachment(100);
-		progressBarStopButton.setLayoutData(formData6);
-		formData5.right = new FormAttachment(progressBarStopButton);
+
+		setProgressCompositeVisible(false);
 		progressBarStopButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				myTarget.stopSearching();
 			}
 		});
-		// progressComposite.setVisible(false);
+
+	}
+
+
+	private void setProgressCompositeVisible(boolean visible) {
+		progressComposite.setVisible(visible);
+		((GridData) progressComposite.getLayoutData()).exclude = !visible;
+		progressComposite.getParent().pack();
 	}
 
 	private void createButtonBarComposite() {
 
 		Composite buttonBar = new Composite(shell, SWT.NONE);
-		FormData buttonBarData = new FormData();
-		buttonBarData.top = new FormAttachment(feedbackComposite);
-		buttonBarData.bottom = new FormAttachment(100);
-		buttonBarData.left = new FormAttachment(0);
-		buttonBarData.right = new FormAttachment(100);
-		// buttonBar.setLayoutData(buttonBarData);
+		buttonBar.setLayout(new GridLayout(5, false));
+		buttonBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 
-		buttonBar.setLayout(new RowLayout());
+		// This Label does not show anything.
+		// It is just used to push the buttons to the right.
+		Label spacerLabel = new Label(buttonBar, SWT.NONE);
+		spacerLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+
 		findButton = new Button(buttonBar, SWT.NONE);
 		findButton.setText(Texts.FIND_REPLACE_DIALOG_FIND_BUTTON_LABEL);
 		findButton.addSelectionListener(defaultSelectionAdapter);
@@ -509,10 +508,6 @@ final class FindReplaceDialog extends Dialog {
 
 		closeButton = new Button(buttonBar, SWT.NONE);
 		closeButton.setText(Texts.BUTTON_CLOSE_LABEL);
-
-		FormData formData1 = new FormData();
-		formData1.right = new FormAttachment(100);
-		formData1.bottom = new FormAttachment(100);
 		closeButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -527,12 +522,7 @@ final class FindReplaceDialog extends Dialog {
 	private void createShell() {
 		shell = new Shell(getParent(), SWT.MODELESS | SWT.DIALOG_TRIM);
 		shell.setText(Texts.FIND_REPLACE_DIALOG_TITLE);
-		FormLayout formLayout = new FormLayout();
-		formLayout.marginHeight = 5;
-		formLayout.marginWidth = 5;
-		formLayout.spacing = 5;
-		// shell.setLayout(formLayout);
-		shell.setLayout(new RowLayout(SWT.VERTICAL));
+		shell.setLayout(new GridLayout());
 		shell.addShellListener(new ShellAdapter() {
 			@Override
 			public void shellActivated(ShellEvent e) {
@@ -540,6 +530,7 @@ final class FindReplaceDialog extends Dialog {
 			}
 		});
 
+		// Create the search group
 		if (findGroup == null) {
 			findGroup = new TextHexInputGroup(findList);
 		}
@@ -554,17 +545,15 @@ final class FindReplaceDialog extends Dialog {
 		findGroup.textRadioButton.addSelectionListener(hexTextSelectionAdapter);
 		findGroup.hexRadioButton.addSelectionListener(hexTextSelectionAdapter);
 
+		// create the replace with group
 		if (replaceGroup == null) {
 			replaceGroup = new TextHexInputGroup(replaceList);
 		}
 		replaceGroup.initialise();
 		replaceGroup.group.setText(Texts.FIND_REPLACE_DIALOG_REPLACE_GROUP_LABEL);
-		FormData formData = new FormData();
-		formData.top = new FormAttachment(findGroup.group);
-		// replaceGroup.group.setLayoutData(formData);
 
 		createDirectionGroup();
-		createIgnoreCaseComposite();
+		createOptionsGroup();
 		createFeedbackComposite();
 		createProgressComposite();
 		createButtonBarComposite();
@@ -583,26 +572,29 @@ final class FindReplaceDialog extends Dialog {
 		prepareToRun();
 		progressBarStopButton.setText(Texts.FIND_REPLACE_DIALOG_STOP_SEARCHING_BUTTON_LABEL);
 		String findLiteral = findGroup.textCombo.getText();
-		String message;
 
 		if (findLiteral.length() > 0) {
-			Match match = myTarget.findAndSelect(findLiteral, findGroup.hexRadioButton.getSelection(),
-					forwardRadioButton.getSelection(), ignoreCaseCheckBox.getSelection());
-			if (match.isFound()) {
-				message = TextUtility.format(Texts.FIND_REPLACE_DIALOG_MESSAGE_FOUND, findLiteral,
-						NumberUtility.getDecimalAndHexString(match.getStartPosition()));
-			} else {
-				if (match.getException() == null) {
-					message = TextUtility.format(Texts.FIND_REPLACE_DIALOG_MESSAGE_NOT_FOUND, findLiteral);
+			try {
+				Match match = myTarget.findAndSelect(findLiteral, findGroup.hexRadioButton.getSelection(),
+						forwardRadioButton.getSelection(), ignoreCaseCheckBox.getSelection());
+				if (match.isFound()) {
+					sendInfoMessage(TextUtility.format(Texts.FIND_REPLACE_DIALOG_MESSAGE_FOUND, findLiteral,
+							NumberUtility.getDecimalAndHexString(match.getStartPosition())));
 				} else {
-					message = TextUtility.format(Texts.FIND_REPLACE_DIALOG_MESSAGE_ERROR_WHILE_SEARCHING, findLiteral,
-							match.getException().getLocalizedMessage());
+					if (match.getException() == null) {
+						sendErrorMessage(TextUtility.format(Texts.FIND_REPLACE_DIALOG_MESSAGE_NOT_FOUND, findLiteral));
+					} else {
+						sendErrorMessage(TextUtility.format(Texts.FIND_REPLACE_DIALOG_MESSAGE_ERROR_WHILE_SEARCHING,
+								findLiteral, match.getException().getLocalizedMessage()));
+					}
 				}
+			} catch (NumberFormatException ex) {
+				sendErrorMessage(ex.getMessage());
 			}
 		} else {
-			message = Texts.FIND_REPLACE_DIALOG_MESSAGE_SPECIFY_VALUE_TO_FIND;
+			sendErrorMessage(Texts.FIND_REPLACE_DIALOG_MESSAGE_SPECIFY_VALUE_TO_FIND);
 		}
-		endOfRun(message);
+		endOfRun();
 	}
 
 	void doReplace() {
@@ -615,7 +607,6 @@ final class FindReplaceDialog extends Dialog {
 		progressBarStopButton.setText(Texts.FIND_REPLACE_DIALOG_STOP_SEARCHING_BUTTON_LABEL);
 		String findLiteral = findGroup.textCombo.getText();
 		String replaceLiteral = replaceGroup.textCombo.getText();
-		String message = TextUtility.format(Texts.FIND_REPLACE_DIALOG_MESSAGE_NOT_FOUND, findLiteral);
 
 		if (findLiteral.length() > 0) {
 			try {
@@ -627,19 +618,22 @@ final class FindReplaceDialog extends Dialog {
 				long startPosition = result[1];
 
 				if (replacements == 1) {
-					message = TextUtility.format(Texts.FIND_REPLACE_DIALOG_MESSAGE_ONE_REPLACEMENT, findLiteral,
-							replaceLiteral, NumberUtility.getDecimalAndHexString(startPosition));
-					message = Texts.FIND_REPLACE_DIALOG_MESSAGE_ONE_REPLACEMENT;
+					sendInfoMessage(TextUtility.format(Texts.FIND_REPLACE_DIALOG_MESSAGE_ONE_REPLACEMENT, findLiteral,
+							replaceLiteral, NumberUtility.getDecimalAndHexString(startPosition)));
 				} else {
-					message = TextUtility.format(Texts.FIND_REPLACE_DIALOG_MESSAGE_MANY_REPLACEMENTS,
-							NumberUtility.getDecimalString(replacements), findLiteral, replaceLiteral);
+					sendInfoMessage(TextUtility.format(Texts.FIND_REPLACE_DIALOG_MESSAGE_MANY_REPLACEMENTS,
+							NumberUtility.getDecimalString(replacements), findLiteral, replaceLiteral));
 				}
+			} catch (NumberFormatException ex) {
+				sendErrorMessage(ex.getMessage());
 			} catch (IOException ex) {
-				message = TextUtility.format(Texts.FIND_REPLACE_DIALOG_MESSAGE_ERROR_WHILE_REPLACING, findLiteral,
-						replaceLiteral, ex.getLocalizedMessage());
+				sendErrorMessage(TextUtility.format(Texts.FIND_REPLACE_DIALOG_MESSAGE_ERROR_WHILE_REPLACING,
+						findLiteral, replaceLiteral, ex.getLocalizedMessage()));
 			}
+		} else {
+			sendErrorMessage(Texts.FIND_REPLACE_DIALOG_MESSAGE_SPECIFY_VALUE_TO_FIND);
 		}
-		endOfRun(message);
+		endOfRun();
 	}
 
 	void dataToUI() {
@@ -671,14 +665,13 @@ final class FindReplaceDialog extends Dialog {
 		replaceAllButton.setEnabled(somethingToFind);
 	}
 
-	private void endOfRun(String message) {
+	private void endOfRun() {
 		searching = false;
 		if (progressComposite.isDisposed()) {
 			return;
 		}
 
-		progressComposite.setVisible(false);
-		feedbackLabel.setText(message);
+		setProgressCompositeVisible(false);
 		dataToUI();
 	}
 
@@ -696,6 +689,11 @@ final class FindReplaceDialog extends Dialog {
 	}
 
 	private void replace() {
-		myTarget.replace(replaceGroup.textCombo.getText(), replaceGroup.hexRadioButton.getSelection());
+
+		try {
+			myTarget.replace(replaceGroup.textCombo.getText(), replaceGroup.hexRadioButton.getSelection());
+		} catch (NumberFormatException ex) {
+			feedbackLabel.setText(ex.getMessage());
+		}
 	}
 }

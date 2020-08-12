@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
  * Find helper class to find binary and string literals in files. Given a
  * literal, finds its position in the file. It is possible to get subsequent
  * finds. The search is either binary or text based. Text based search uses
- * standard java unicode (all of big and little endian, odd and even address)
+ * standard Java Unicode (all of big and little endian, odd and even address)
  * plus ASCII when the literal falls within ASCII char limits.
  *
  * @author Jordi Bergenthal
@@ -93,7 +93,7 @@ public final class BinaryContentFinder {
 	private boolean stopSearching;
 
 	/**
-	 * Create a finder object for a sequence of characters; uses unicode and ASCII
+	 * Create a finder object for a sequence of characters; uses Unicode and ASCII
 	 * traversing
 	 *
 	 * @param literal

@@ -23,7 +23,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.graphics.FontMetrics;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -108,14 +107,12 @@ final class SelectBlockDialog extends Dialog {
 		lastEndText = Texts.EMPTY;
 	}
 
-
 	/**
 	 * This method initializes composite1
 	 */
 	private void createComposite1() {
 		compositeRadio = new Composite(shell, SWT.NONE);
 		compositeRadio.setLayout(new GridLayout());
-
 
 		SelectionAdapter hexTextSelectionAdapter = new SelectionAdapter() {
 			@Override
@@ -164,7 +161,7 @@ final class SelectBlockDialog extends Dialog {
 		hexRadioButton.addSelectionListener(hexTextSelectionAdapter);
 
 	}
-	
+
 	/**
 	 * This method initializes composite2
 	 *
@@ -172,14 +169,13 @@ final class SelectBlockDialog extends Dialog {
 	private void createComposite2() {
 		compositeTexts = new Composite(shell, SWT.NONE);
 		compositeTexts.setLayout(new GridLayout(2, false));
-		
+
 		startText = new Text(compositeTexts, SWT.BORDER | SWT.SINGLE);
 		GridData gridData_startText = new GridData(SWT.FILL, SWT.CENTER, true, true);
 		startText.setTextLimit(30);
 		int columns = 35;
 		GC gc = new GC(startText);
-		FontMetrics fm = gc.getFontMetrics();
-		int width = (int)(columns * fm.getAverageCharacterWidth());
+		int width = (int) (columns * SWTUtility.getAverageCharacterWidth(gc));
 		gc.dispose();
 		gridData_startText.widthHint = width;
 		startText.setLayoutData(gridData_startText);
@@ -190,8 +186,7 @@ final class SelectBlockDialog extends Dialog {
 		GridData gridData_endText = new GridData(SWT.FILL, SWT.CENTER, true, true);
 		endText.setTextLimit(30);
 		gc = new GC(endText);
-		fm = gc.getFontMetrics();
-		width = (int)(columns * fm.getAverageCharacterWidth());
+		width = (int) (columns * SWTUtility.getAverageCharacterWidth(gc));
 		gc.dispose();
 		gridData_endText.widthHint = width;
 		endText.setLayoutData(gridData_endText);
@@ -206,7 +201,7 @@ final class SelectBlockDialog extends Dialog {
 	private void createComposite3() {
 		compositeButtons = new Composite(shell, SWT.NONE);
 		compositeButtons.setLayout(new GridLayout());
-		
+
 		button = new Button(compositeButtons, SWT.NONE);
 		button.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		button.setText(Texts.SELECTION_BLOCK_DIALOG_SELECT_BUTTON_LABEL);
@@ -221,9 +216,9 @@ final class SelectBlockDialog extends Dialog {
 				shell.close();
 			}
 		});
-		
+
 		shell.setDefaultButton(button);
-		
+
 		button1 = new Button(compositeButtons, SWT.NONE);
 		button1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		button1.setText(Texts.BUTTON_CLOSE_LABEL);
@@ -242,21 +237,18 @@ final class SelectBlockDialog extends Dialog {
 	private void createShell() {
 		shell = new Shell(getParent(), SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 		shell.setText(Texts.SELECTION_BLOCK_DIALOG_TITLE);
-		shell.setLayout(new  GridLayout(3, false));
-		
+		shell.setLayout(new GridLayout(3, false));
+
 		label = new Label(shell, SWT.NONE);
 		label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
-		
+
 		createComposite1();
 		createComposite2();
 		createComposite3();
-		
+
 		statusLabel = new Label(shell, SWT.CENTER);
 		statusLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
 	}
-
-
-
 
 	public boolean open(Shell parentShell, RangeSelection rangeSelection, long aLimit) {
 		if (rangeSelection == null) {
@@ -299,7 +291,7 @@ final class SelectBlockDialog extends Dialog {
 			}
 		}
 
-		return finalStartResult>=0  && finalEndResult >=0;
+		return finalStartResult >= 0 && finalEndResult >= 0;
 	}
 
 	public void validateResults() {

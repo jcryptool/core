@@ -29,7 +29,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -39,7 +38,6 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -72,7 +70,7 @@ public final class Manager {
 
 	// Logic components
 	private FileToucher fileToucher;
-	
+
 	// State
 	private BinaryContent content;
 	private File contentFile;
@@ -93,13 +91,14 @@ public final class Manager {
 	private GoToDialog goToDialog;
 	private SelectBlockDialog selectBlockDialog;
 
-	public Manager(FileToucher fileToucher){
+	public Manager(FileToucher fileToucher) {
 		if (fileToucher == null) {
 			throw new IllegalArgumentException("Parameter 'fileToucher' must not be null.");
 		}
-		this.fileToucher=fileToucher;
-		
+		this.fileToucher = fileToucher;
+
 	}
+
 	/**
 	 * Gets the build OS .
 	 *
@@ -142,24 +141,11 @@ public final class Manager {
 			throw new IllegalStateException("Editor part exists already");
 		}
 
-		GridLayout gridLayout_parent = new GridLayout();
-		gridLayout_parent.marginHeight = 0;
-		gridLayout_parent.marginWidth = 0;
-		parent.setLayout(gridLayout_parent);
-		
 		shell = parent.getShell();
 		textsParent = parent;
-		
-		ScrolledComposite sc = new ScrolledComposite(textsParent, SWT.V_SCROLL | SWT.H_SCROLL);
-		sc.setExpandHorizontal(true);
-		sc.setExpandVertical(true);
-		sc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-		hexTexts = new HexTexts(sc, SWT.NONE);
+		hexTexts = new HexTexts(textsParent, SWT.NONE);
+		hexTexts.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		hexTexts.setEnabled(false);
-		
-		sc.setContent(hexTexts);
-		sc.setMinSize(hexTexts.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 		hexTexts.addDisposeListener(new DisposeListener() {
 			@Override
@@ -270,6 +256,10 @@ public final class Manager {
 		return hexTexts != null && hexTexts.isValid();
 	}
 
+	public boolean isFilled() {
+		return hexTexts != null && hexTexts.getContent().length() > 0;
+	}
+
 	public boolean isEditable() {
 		return hexTexts != null && hexTexts.isEditable();
 	}
@@ -342,6 +332,10 @@ public final class Manager {
 	 * Open find dialog
 	 */
 	public void doFind() {
+		if (hexTexts == null) {
+			return;
+		}
+
 		if (findDialog == null) {
 			findDialog = new FindReplaceDialog(textsParent.getShell());
 			if (findReplaceHistory == null) {
@@ -398,7 +392,8 @@ public final class Manager {
 	public void doOpen(File forceThisFile, boolean createNewFile, String charset) throws CoreException {
 		String filePath = "";
 		if (forceThisFile == null && !createNewFile) {
-			filePath = new FileDialog(shell, SWT.OPEN).open();
+			FileDialog fileDialog = createFileDialog(shell, SWT.OPEN);
+			filePath = fileDialog.open();
 			if (filePath == null) {
 				return;
 			}
@@ -420,9 +415,6 @@ public final class Manager {
 		}
 
 		hexTexts.setFocus();
-		if (createNewFile) {
-			hexTexts.setInsertMode(true);
-		}
 	}
 
 	public boolean canPaste() {
@@ -578,7 +570,7 @@ public final class Manager {
 	 * Open file for editing
 	 *
 	 * @param contentFile
-	 *            the input file, not <code>null</code>
+	 *            the input file or <code>null</code> if this will be a new file
 	 * @param charset
 	 *            the charset, not <code>null</code>
 	 * @throws CoreException
@@ -586,15 +578,26 @@ public final class Manager {
 	 */
 	public void openFile(File contentFile, String charset) throws CoreException {
 		this.contentFile = contentFile;
-		try {
-			content = new BinaryContent(contentFile);
-		} catch (IOException ex) {
-			throw new CoreException(new Status(IStatus.ERROR, HexEditorPlugin.ID,
-					TextUtility.format(Texts.MANAGER_OPEN_MESSAGE_CANNOT_OPEN_FILE, contentFile.getAbsolutePath()),
-					ex));
+		if (contentFile == null) {
+			content = new BinaryContent();
+		} else {
+			try {
+				content = new BinaryContent(contentFile);
+			} catch (IOException ex) {
+				this.contentFile = null;
+				throw new CoreException(new Status(IStatus.ERROR, HexEditorPlugin.ID,
+						TextUtility.format(Texts.MANAGER_OPEN_MESSAGE_CANNOT_OPEN_FILE, contentFile.getAbsolutePath()),
+						ex));
+			}
 		}
 		hexTexts.setCharset(charset);
 		hexTexts.setContentProvider(content);
+		if (contentFile == null || getContent().length() == 0) {
+			hexTexts.setInsertMode(true);
+		} else if (contentFile != null) {
+			hexTexts.setInsertMode(false);
+		}
+		updateStatusLine();
 
 	}
 
@@ -626,12 +629,8 @@ public final class Manager {
 		if (file == null) {
 			throw new IllegalArgumentException("Parameter 'file' must not be null.");
 		}
-		if (file.equals(contentFile)) {
-			saveFile(monitor);
-			return;
-		}
 
-		if (isFileBeingRead(file)) {
+		if (!file.equals(contentFile) && isFileBeingRead(file)) {
 			throw new IOException(TextUtility.format(Texts.MANAGER_SAVE_MESSAGE_CANNOT_OVERWRITE_FILE_IN_USE,
 					file.getAbsolutePath()));
 		}
@@ -639,8 +638,6 @@ public final class Manager {
 		try {
 			content.get(file);
 			content.dispose();
-			content = new BinaryContent();
-			contentFile = null;
 		} catch (IOException ex) {
 			throw new IOException(TextUtility.format(Texts.MANAGER_SAVE_MESSAGE_CANNOT_SAVE_FILE,
 					file.getAbsolutePath(), ex.getMessage()));
@@ -663,21 +660,8 @@ public final class Manager {
 	 *             If the operation fails
 	 */
 	public void saveFile(IProgressMonitor monitor) throws IOException {
-		try {
-			content.get(contentFile); // TODO: Actually use the progress monitor to do something
-			content.dispose();
-			content = new BinaryContent(contentFile);
-		} catch (IOException ex) {
-			content = new BinaryContent();
-			throw new IOException(TextUtility.format(Texts.MANAGER_SAVE_MESSAGE_CANNOT_SAVE_FILE,
-					contentFile.getAbsolutePath(), ex.getMessage()));
-		}
-
-		fileToucher.touchFile(contentFile, monitor);
-
-		hexTexts.setContentProvider(content);
+		saveAsFile(contentFile, monitor);
 	}
-
 
 	/**
 	 * Sets Find/Replace combo lists pre-exisiting values.
@@ -707,15 +691,23 @@ public final class Manager {
 		if (statusLine != null) {
 			statusLine.updateInsertMode(hexTexts == null ? true : !hexTexts.isOverwriteMode());
 			if (hexTexts != null && hexTexts.getContent() != null) {
+				long size = hexTexts.getContent().length();
+				statusLine.updatePositionWidth(size);
+				statusLine.updateSizeWidth(size);
 				if (hexTexts.isSelected()) {
 					statusLine.updateSelection(hexTexts.getSelection());
 				} else {
 					statusLine.updatePosition(hexTexts.getCaretPos());
 				}
 				statusLine.updateValue(hexTexts.getActualValue());
+				statusLine.updateSize(size);
+
 			} else {
+				statusLine.updatePositionWidth(0);
+				statusLine.updateSizeWidth(0);
 				statusLine.clearPosition();
 				statusLine.clearValue();
+				statusLine.clearSize();
 			}
 		}
 	}
@@ -740,7 +732,7 @@ public final class Manager {
 	 */
 	public void setTextFont(FontData aFont) {
 		fontData = aFont;
-		if (HexTexts.fontDataDefault.equals(fontData)) {
+		if (Preferences.getDefaultFontData().equals(aFont)) {
 			fontData = null;
 		}
 		// dispose it after setting new one
@@ -767,7 +759,8 @@ public final class Manager {
 	 * @return
 	 */
 	public File showSaveAsDialog(Shell aShell, boolean selection) {
-		FileDialog dialog = new FileDialog(aShell, SWT.SAVE);
+		FileDialog dialog = createFileDialog(aShell, SWT.SAVE);
+
 		if (selection) {
 			dialog.setText(Texts.MANAGER_SAVE_DIALOG_TITLE_SAVE_SELECTION_AS);
 		} else {
@@ -787,6 +780,18 @@ public final class Manager {
 			}
 		}
 		return file;
+	}
+
+	private FileDialog createFileDialog(Shell aShell, int style) {
+		FileDialog dialog = new FileDialog(aShell, style);
+		String filterPath;
+		if (contentFile != null) {
+			filterPath = contentFile.getParentFile().getAbsolutePath();
+		} else {
+			filterPath = System.getProperty("user.dir");
+		}
+		dialog.setFilterPath(filterPath);
+		return dialog;
 	}
 
 	/**

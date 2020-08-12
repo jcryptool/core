@@ -19,8 +19,6 @@
  */
 package net.sourceforge.javahexeditor.common;
 
-import org.jcryptool.core.logging.utils.LogUtil;
-
 /**
  * Utility class to issue log messages.
  *
@@ -44,8 +42,6 @@ public final class Log {
 
 		@Override
 		public void log(String message, Throwable th) {
-			LogUtil.logError(message);
-			LogUtil.logError(th.toString());
 			System.err.println(message);
 			if (th != null) {
 				th.printStackTrace(System.err);
