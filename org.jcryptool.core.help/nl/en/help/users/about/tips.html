@@ -4,31 +4,79 @@
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	  <title>Tips and Tricks</title>
+      <script src="${JCTJS_HOST}/javascript/jquery.js"></script>
+      <!-- TOCbot: Table of Content generation, see https://github.com/tscanlin/tocbot -->
+      <script src="${JCTJS_HOST}/javascript/tocbot-4.11.2/dist/tocbot.min.js"></script>
+      <script>
+          // many more options available, see TOCbot documentation
+          $(document).ready(function() {
+              tocbot.init({
+                  tocSelector: '.TOC',			 // Where to render the table of contents.
+                  contentSelector: '.content',   // Where to grab the headings to build the table of contents.
+                  headingSelector: 'h2, h3', // Which headings to grab inside of the contentSelector element.
+                  hasInnerContainers: true,      // For headings inside relative or absolute positioned containers within content.
+                  listClass: 'toc-list',
+                  listItemClass: 'toc-list-item',
+                  isCollapsedClass: 'is-collapsed',
+                  collapsibleClass: 'is-collapsible',
+                  collapseDepth: 0,
+              });
+          })
+      </script>
 </head>
+
 
 <body>
 	<h1>Tips and Tricks</h1>
 
+    <div class="TOC"></div>
+    <hr />
+    <div class="content">
+
+
 <p> </br> </p>
-	<h2>Maximizing the window of a plugin</h2>
+	<h2 id="opennew">Quick way to open a new editor</h2>
+
+	<p>To open a new editor (text or hex, empty or filled with a default file) just click on the leftmost icon in the <strong>main toolbar</strong> or the drop-down arrow next to the right. See the screenshots with important icons in the help file <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/toc.html">General Information</a>.</p>
+
+
+
+
+
+<p> </br> </p>
+	<h2 id="max">Maximizing the window of a plugin</h2>
 
 	<p>You might have opened the default view with editors, the context help, and some visualizations. If you then want one of them to be maximized just <strong>double-click</strong> on the tab (e.g. on the "Frequency Analysis" tab within the visualizations).</p>
 
 
-	
-<p> </br> </p>
-	<h2>Updating JCrypTool</h2>
-	
-	<p>
-	JCrypTool contains an integrated update mechanism. Details about this and hints for problem solving can be found in <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/updates.html">Updates</a>.</p>
-	
-	<!--- Test: vorher ohne PLUGINS_ROOT   --->
-	<p>xxxxxxxxxxxxxx <a href="../general/updates.html">update mechanism</a>.</p>
 
 
 
 <p> </br> </p>
-	<h2>Using JCrypTool in a network environment or on a USB stick</h2>
+	<h2 id="fastinfo">How to quickly find information in JCT</h2>
+
+	<p>First of all, you can click the magnifying glass icon in the <strong>main toolbar</strong> in order to get help about a particular topic. Then the <b>Quick Access search field</b> opens: Preferably, you can look for name of a plug-ins or of a method. Screenshots with important icons in the help file <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/toc.html">General Information</a>.</p>
+
+	<p>Alternatively, you can open the exhaustive online help in a browser: To do so, click in JCT on the question-mark icon within the <strong>main toolbar</strong>. Within the online help then click on the left on the entry <b><img src="./../images/plus.svg" /><img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/images/toc_open.svg" />User Guide</b>. Now you can see the different categories, used to structure the help in JCT. To open a category, please click on the small plus icon in front of the particular category. So you can navigate to the according help page and get a good overview. Alternatively, you can use the search field (at the top below the browser toolbar) in the online help.</p>
+
+
+
+
+
+	
+<p> </br> </p>
+	<h2 id="updating">Updating JCrypTool</h2>
+	
+	<p>JCrypTool contains an integrated update mechanism. Details about this and hints for problem solving can be found in <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/updates.html">Updates</a>.</p>
+	
+	<!--- Just as info: this was it before using PLUGINS_ROOT
+	<p><a href="../general/updates.html">update mechanism</a>.</p>    --->
+
+
+
+
+<p> </br> </p>
+	<h2 id="usb">Using JCrypTool in a network environment or on a USB stick</h2>
 
 	<p>In principle it is possible to use JCrypTool in a network environment or on an external storage medium like a USB stick or a USB hard disk. To enable this you have to do a minor change in one of the configuration files: It is necessary to change the path to the default workspace folder. This folder is used by all plug-ins to store your specific preferences.</p>
 
@@ -40,6 +88,8 @@
 	The required changes are identical with the ones described above for Windows/Linux. However, the file
 	<strong>JCrypTool.ini</strong> is located at <strong>JCrypTool.app\Contents\MacOS</strong> in your installation folder.</p>
 
+
+    </div>
 
 </body>
 </html>

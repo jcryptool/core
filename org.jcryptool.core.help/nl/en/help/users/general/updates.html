@@ -4,10 +4,32 @@
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	  <title>Updates</title>
+      <script src="${JCTJS_HOST}/javascript/jquery.js"></script>
+      <!-- TOCbot: Table of Content generation, see https://github.com/tscanlin/tocbot -->
+      <script src="${JCTJS_HOST}/javascript/tocbot-4.11.2/dist/tocbot.min.js"></script>
+      <script>
+          // many more options available, see TOCbot documentation
+          $(document).ready(function() {
+              tocbot.init({
+                  tocSelector: '.TOC',			 // Where to render the table of contents.
+                  contentSelector: '.content',   // Where to grab the headings to build the table of contents.
+                  headingSelector: 'h2, h3', // Which headings to grab inside of the contentSelector element.
+                  hasInnerContainers: true,      // For headings inside relative or absolute positioned containers within content.
+                  listClass: 'toc-list',
+                  listItemClass: 'toc-list-item',
+                  isCollapsedClass: 'is-collapsed',
+                  collapsibleClass: 'is-collapsible',
+                  collapseDepth: 0,
+              });
+          })
+      </script>
 </head>
 
 <body>
     <h1>Updates</h1>
+    <div class="TOC"></div>
+    <hr />
+    <div class="content">
 
     <p>JCrypTool comes with an integrated <strong>Update Manager</strong>. This enables you to search for updates of installed plug-ins, and to install new plug-ins and features directly in JCrypTool. There is no need that new plug-ins must be available on the default
   	JCrypTool update site. Instead you can add your own update sites by entering their URL or you can copy them directly in the <strong>dropins</strong> directory.</p>
@@ -34,7 +56,7 @@
 
 
 <p> </br> </p>
-  	<h2>Check for Updates</h2>
+  	<h2 id="updates">Check for Updates</h2>
 
   	<p>This menu entry starts the update search for all installed plug-ins. In case updates are discovered you have to select which ones you want to install. After that you have to (read and) accept the license conditions. In case the plug-in is not signed with a known
   	digital signature you have to agree that you want to install the plug-in anyway.</p>
@@ -45,7 +67,7 @@
 
 
 <p> </br> </p>
-  	<h2>Install New Software</h2>
+  	<h2 id="install">Install New Software</h2>
 
   	<p>Besides the update installation the JCrypTool update manager enables you to install new plug-ins or complete features as well. Update sites are used for this functionality as well. To enable the installation of new plug-ins, you can enter new update site URLs via the update dialog.</p>
 
@@ -56,14 +78,14 @@
 
 
 <p> </br> </p>
-  	<h2>Possible Problems: dependancy</h2>
+  	<h2 id="deps">Possible Problems: dependency</h2>
 
   	<p>Sometimes the update installation or the new installation of a plug-in fails. This already can happen in the update manager and a plug-in which cannot be selected for installation. Even after successfully downloading a plug-in, the installation may fail. The reason for that are most of the time missing requirements (the plug-in requires some other plug-ins to work properly). In case those plug-ins are not available on your system and are not contained in the new plug-in, it cannot work. The best thing to do is to contact the plug-in developer and to ask for help.</p>
 
 
 	
 <p> </br> </p>
-	<h2>Possible Problems: updates are not visible</h2>
+	<h2 id="visible">Possible Problems: updates are not visible</h2>
 
 	<p>It is possible that even after a successful installation the updates/changes are not visible. This may occur for newly installed plug-ins as well as updates for existing ones. The reason for that is the JCrypTool workspace folder, which caches and stores all plug-in information. Sometimes this information is not updated and the data stored there does not reflect the current installation any more.</p>
 
@@ -78,5 +100,6 @@
 	</p></br></br>
 
 
+    </div>
 </body>
 </html>

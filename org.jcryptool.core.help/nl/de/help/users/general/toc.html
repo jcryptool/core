@@ -4,28 +4,56 @@
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	  <title>Allgemeine Informationen</title>
+
+      <script src="${JCTJS_HOST}/javascript/jquery.js"></script>
+      <!-- TOCbot: Table of Content generation, see https://github.com/tscanlin/tocbot -->
+      <script src="${JCTJS_HOST}/javascript/tocbot-4.11.2/dist/tocbot.min.js"></script>
+      <script>
+          // many more options available, see TOCbot documentation
+          $(document).ready(function() {
+              tocbot.init({
+                  tocSelector: '.TOC',			 // Where to render the table of contents.
+                  contentSelector: '.content',   // Where to grab the headings to build the table of contents.
+                  headingSelector: 'h2, h3', // Which headings to grab inside of the contentSelector element.
+                  hasInnerContainers: true,      // For headings inside relative or absolute positioned containers within content.
+                  listClass: 'toc-list',
+                  listItemClass: 'toc-list-item',
+                  isCollapsedClass: 'is-collapsed',
+                  collapsibleClass: 'is-collapsible',
+                  collapseDepth: 0,
+              });
+          })
+      </script>
 </head>
+
 
 <body>
     <h1>Allgemeine Informationen</h1>
+
+    <div class="TOC"></div>
+    <hr />
+    <div class="content">
+
 
     <p>JCrypTool basiert auf Eclipse, wodurch Eclipse-Konzepte wie <a href="perspectives.html">Perspektiven</a>, <a href="views.html">Sichten</a> und <a href="editors.html">Editoren</a> eine sehr wichtige Rolle für die Bedienung der GUI spielen. Mit diesen Begriffen und den dahinterstehenden Konzepten können Sie sich auf den folgenden Seiten, soweit für JCrypTool notwendig, vertraut machen.</p>
 
 
     </p></br></p>
-	<h2>Screenshots mit den markierten Hauptbestandteilen der GUI</h2>
+	<h2 id="Labelled_screenshots">Screenshots mit den markierten Hauptbestandteilen der GUI</h2>
  	<!xxxTODOxxx Noch deutsche Fassung der odg Files machen.>
 
 	<p>Die folgenden Screenshots zeigen die wichtigsten Komponenten im JCT-Fenster.</p>
 
-	<h3>Sichten (Views), Editoren, Haupt-Menüleiste und Haupt-Toolbar</h3>
+
+    </p></br></p>
+	<h3 id="Views_and_mainbars">Sichten (Views), Editoren, Haupt-Menüleiste und Haupt-Toolbar</h3>
 
     <div class="screenshot">
     	<img src="images/JCT_GUI-Components-01_en.png"  width="80%" style="min-width: 250px" alt="Komponenten der GUI_1"/>
     </div>
 
     </p></br></p>
-	<h3>Wichtige Ikonen, Menüs und Toolbars von Sichten (Views), Perspektiven-Wechsler</h3>
+	<h3 id="Icons_and_viewbars">Wichtige Ikonen, Menüs und Toolbars von Sichten (Views), Perspektiven-Wechsler</h3>
 
     <div class="screenshot">
     	<img src="images/JCT_GUI-Components-02_en.png"  width="80%" style="min-width: 250px" alt="Komponenten der GUI_2"/>
@@ -36,7 +64,13 @@
     </p></br></p>
 	<h2>Zugang zur Onlinehilfe</h2>
 
-    <p>Um die Verwendung von JCrypTool so einfach wie möglich zu machen, zeigt das Hauptfenster in beiden Perspektiven links unten eine Sicht mit einer <strong>kontextsensitiven Kurzhilfe</strong>. Hier werden Ihnen übersichtliche Information zum gerade aktiven Element angezeigt.</p>
+    </p id="Getting_online_help">Es gibt zwei Arten von Onlinehilfe in JCT: eine Kontext-sensitiven Kurzhilfe, die innerhalb des JCT-Fensters angezeigt wird, und eine ausführliche Onlinehilfe, die in einem extra Browser-Fenster anzeigt wird.</p>
+
+
+    </p></br></p>
+	<h3 id="Context_sensitive_help">Kontext-sensitive Kurzhilfe</h3>
+
+    <p>Um die Verwendung von JCrypTool so einfach wie möglich zu machen, zeigt das Hauptfenster in beiden Perspektiven links unten eine Sicht mit einer <strong>Kontext-sensitiven Kurzhilfe</strong>. Hier werden Ihnen übersichtliche Informationen zum gerade aktiven Element angezeigt.</p>
 
     <div class="screenshot">
     	<img src="images/context_help.png" width="256" height="386" alt="Kontexthilfe"/>
@@ -44,11 +78,17 @@
 
     <p>Diese Kontexthilfe erhalten Sie durch Drücken der Taste <strong>F1</strong>.</p>
 
+
+    </p></br></p>
+	<h3 id="Exhaustive_help">Ausführliche Onlinehilfe</h3>
     <p>Die <strong>ausführliche Onlinehilfe</strong> wird in einem extra Browser-Fenster anzeigt. Diese rufen Sie auf über das Hilfe-Icon (dargestellt durch ein <strong>?</strong>) oben im Haupt-Toolbar.</p>
 
     <p>Sowohl die Kontexthilfe als auch die ausführliche Onlinehilfe werden von jedem Plug-in selbst beigesteuert. Sofern der Plug-in-Autor diese Information (noch) nicht lieferte, werden nur allgemeine Informationen angezeigt.</p>
 
-    <p>PS: <strong>Genderneutrale Sprache</strong>: Wir nutzen zwecks besserer Lesbarkeit immer das Geschlecht des jeweiligen Wortes, meinen damit natürlich alle Menschen jeglichen Geschlechts: Mit einem Benutzer oder Anwender sind also (w/m/d) gemeint.</p></br></br>
+
+
+    <p>PS: <strong>Genderneutrale Sprache</strong>: Wir nutzen zwecks besserer Lesbarkeit immer das Geschlecht des jeweiligen Wortes und meinen damit natürlich alle Menschen jeglichen Geschlechts: Mit einem Benutzer oder Anwender sind also (w/m/d) gemeint.</p></br></br>
+
 
 </body>
 </html>

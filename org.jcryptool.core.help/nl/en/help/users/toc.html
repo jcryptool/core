@@ -4,28 +4,63 @@
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	  <title>User Guide</title>
+      <script src="${JCTJS_HOST}/javascript/jquery.js"></script>
+      <!-- TOCbot: Table of Content generation, see https://github.com/tscanlin/tocbot -->
+      <script src="${JCTJS_HOST}/javascript/tocbot-4.11.2/dist/tocbot.min.js"></script>
+      <script>
+          // many more options available, see TOCbot documentation
+          $(document).ready(function() {
+              tocbot.init({
+                  tocSelector: '.TOC',			 // Where to render the table of contents.
+                  contentSelector: '.content',   // Where to grab the headings to build the table of contents.
+                  headingSelector: 'h2, h3', // Which headings to grab inside of the contentSelector element.
+                  hasInnerContainers: true,      // For headings inside relative or absolute positioned containers within content.
+                  listClass: 'toc-list',
+                  listItemClass: 'toc-list-item',
+                  isCollapsedClass: 'is-collapsed',
+                  collapsibleClass: 'is-collapsible',
+                  collapseDepth: 0,
+              });
+          })
+      </script>
 </head>
 
 <body>
 	<h1>User Guide</h1>
+    <div class="TOC"></div>
+    <hr />
+    <div class="content">
 
 	<p>JCrypTool (JCT) is a free and open-source cryptographic e-learning software with many visualizations.</p>
-    <p>It is based on the <a href="http://www.eclipse.org">Eclipse</a> Rich Client Platform (RCP). You will recognize a lot of concepts
-	in case you ever worked with Eclipse or an Eclipse RCP.</p>
+    <p>It is based on the <a href="http://www.eclipse.org">Eclipse</a> Rich Client Platform (RCP). You will recognize a lot of concepts in case you ever worked with Eclipse or an Eclipse RCP.</p>
 
+
+	<h2 id="first">First steps and help</h2>
 	<p>Beginner or not, the <strong>User Guide</strong> will introduce you in the many possibilities you have with JCrypTool. The following pages therefore contain information about the different <a href="general/editors.html">Editors</a>, <a href="general/views.html">Views</a> and <a href="general/perspectives.html">Perspectives</a>. And of course the crypto plug-ins, starting from <a href="algorithms/toc.html">Algorithms</a>, <a href="analysis/toc.html">Cryptanalysis</a>, <a href="games/toc.html">Games</a>, and last but not least <a href="visualizations/toc.html">Visualizations</a>.</p>
 
-    <p>The content of the <strong>User Guide</strong> (online help) is delivered by the developers of the crypto plug-ins. This means that one plug-in contains more help, the other one less. The JCT core team tries to ensure a minimum and consistent quality over all plug-ins and their according online help. In case you do have any question about a certain plug-in or need more assistance it is best to contact the plug-in developer directly. In case you do not know the developer or you cannot reach him, feel free to post a message in the <a href="https://gitter.im/dschadow/jcryptool">JCrypTool Developer Chat</a>.</p>
+    <p>The online help (User Guide) for JCT is available in English and German. The content of the <strong>User Guide</strong> is delivered by the developers of the crypto plug-ins. This means that one plug-in may contain more help, the other one less. The JCT core team tries to ensure a minimum and consistent quality over all plug-ins and their according online help.</p>
 
-    <p>The online help for the JCrypTool core is fully available in German and English.</p>
+	
+	<p>The user guide shows different categories, which structure the online help in JCT, e.g. <b><img src="images/plus.svg" /><img src="images/container_topic.svg" /> General Information</b> or <b><img src="images/plus.svg" /><img src="images/container_topic.svg" /> Cryptology</b> or <b><img src="images/plus.svg" /><img src="images/container_topic.svg" /> Visuals</b>. These categories can be opened by clicking on the plus icon in front the according entry. So you can navigate down to the help page you are looking for.	
+	</p>
 
-    <p>Your feedback (bugs, ideas, and wishes) is very welcome, no matter whether it's for a core or a crypto plug-in.
-	Feel free to post to our <a href="https://github.com/jcryptool/core/issues">JCrypTool Issue Tracker</a> or within the <a href="https://gitter.im/dschadow/jcryptool">JCrypTool Developer Gitter Chat</a>.
+	
+	
+	<p>Please start reading with the help file <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/toc.html">General Information</a>, which contains screenshots with the JCT window components, and explains how to start the online help and where to find icons with important functions.</p>
+
+
+
+	<h2 id="contact">Contact</h2>
+
+    <p>Your feedback (bugs, ideas, and wishes) is very welcome, no matter whether it's for a core or a crypto plug-in. Feel free to post to our <a href="https://github.com/jcryptool/core/issues">JCrypTool Issue Tracker</a> or within the <a href="https://gitter.im/dschadow/jcryptool">JCrypTool Developer Gitter Chat</a>.
 	For the Issue Tracker you need a GitHub account, for the Gitter chat you need either a Twitter, a GitLab or a GitHub account.</p>
 	
-    <p>If you want to contact us via email you might use the following email address: bernhard.esslinger@gmail.com.</p>
+    <p>If you want to contact us via email you might use the following email address: <br>
+	<a href="mailto:info@xml-sicherheit.de">Dominik Schadow &ndash; info@xml-sicherheit.de</a><br><a href="mailto:esslinger@cryptool.org">Prof. Bernhard Esslinger &ndash; esslinger@cryptool.org</a>
+	</p>
 	
     <p>If you want to become an active contributor, please let us know. We would be very pleased.</p>
 
+    </div>
 </body>
 </html>

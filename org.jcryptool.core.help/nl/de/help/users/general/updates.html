@@ -4,11 +4,36 @@
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	  <title>Aktualisierungen / Updates</title>
+	  
+      <script src="${JCTJS_HOST}/javascript/jquery.js"></script>   <!-- TODOS_Content -->
+      <!-- TOCbot: Table of Content generation, see https://github.com/tscanlin/tocbot -->
+      <script src="${JCTJS_HOST}/javascript/tocbot-4.11.2/dist/tocbot.min.js"></script>
+      <script>
+          // many more options available, see TOCbot documentation
+          $(document).ready(function() {
+              tocbot.init({
+                  tocSelector: '.TOC',			 // Where to render the table of contents.
+                  contentSelector: '.content',   // Where to grab the headings to build the table of contents.
+                  headingSelector: 'h2, h3',  // Which headings to grab inside of the contentSelector element.
+                  hasInnerContainers: true,  // For headings inside relative or absolute positioned containers within content.
+                  listClass: 'toc-list',
+                  listItemClass: 'toc-list-item',
+                  isCollapsedClass: 'is-collapsed',
+                  collapsibleClass: 'is-collapsible',
+                  collapseDepth: 0,
+              });
+          })
+      </script>
+	  
 </head>
 
 <body>
     <h1>Aktualisierungen / Updates</h1>
 
+    <div class="TOC"></div>   <!-- TODOS_Content -->
+    <hr />
+    <div class="content">
+	
     <p>JCrypTool verfügt über einen integrierten <strong>Update Manager</strong>. Dieser bietet neben der Suche nach Aktualisierungen für installierte Plug-ins auch die Möglichkeit, neue Plug-ins und Features zu installieren. Dabei müssen neue Plug-ins nicht
     zwangsläufig auf der JCrypTool-Update-Site vorhanden sein, sondern können auch über andere/eigene Update-Sites hinzugefügt werden oder Sie kopieren diese direktl in das <strong>dropins</strong>-Verzeichnis.</p>
 
@@ -35,7 +60,7 @@
 
 
  <p> </br> </p>
- 	<h2>Nach Aktualisierungen suchen</h2>
+ 	<h2 id="updates">Nach Aktualisierungen suchen</h2>
 
   	<p>Die Suche nach Aktualisierungen sucht für alle korrekt installierten Plug-ins nach Updates. Sofern neuere Versionen gefunden werden, können Sie in einem Dialog auswählen, welche davon Sie installieren möchten. Außerdem müssen Sie den Lizenzbedingungen der Plug-ins zustimmen und ggf. bestätigen, dass Sie Plug-ins auch ohne gültige digitale Signatur installieren möchten.</p>
 
@@ -49,7 +74,7 @@
 
  
 <p> </br> </p>
- <h2>Neue Erweiterungen installieren</h2>
+ <h2 id="install">Neue Erweiterungen installieren</h2>
 
   	<p>Neben der Installation von Updates können mit dem JCrypTool Update Manager auch neue Plug-ins und komplette Features installiert werden. Auch hierzu werden Update-Sites verwendet. Neben den bereits vorhandenen Update-Sites können Sie über
   	den Dialog auch neue Update-Sites hinzufügen.</p>
@@ -63,14 +88,14 @@
 
 
 <p> </br> </p>
-  	<h2>Mögliches Problem: Abhängigkeit</h2>
+  	<h2 id="deps">Mögliches Problem: Abhängigkeit</h2>
 
   	<p>Möglicherweise schlägt die Installation eines Updates oder eines neuen Plug-ins fehl. Dies kann schon im Update Manager passieren, d.h. das Plug-in lässt sich überhaupt nicht zur Installation / zum Update auswählen. Auch nach dem Herunterladen des Plug-ins kann die Installation noch fehlschlagen. Ursache sind meist fehlende Abhängigkeiten, d.h. das Plug-in benötigt bestimmte andere Plug-ins, um korrekt zu arbeiten. Sofern diese Abhängigkeiten auf Ihrem System nicht aufgelöst werden können, kann das Plug-in nicht korrekt funktionieren. Kontaktieren Sie in diesem Fall am besten den Entwickler des Plug-ins.</p>
 
 
 
 <p> </br> </p>
-	<h2>Mögliches Problem: Aktualisierungen sind nicht sichtbar</h2>
+	<h2 id="visible">Mögliches Problem: Aktualisierungen sind nicht sichtbar</h2>
 
 	<p>Es kann vorkommen, dass Aktualisierungen/Änderungen trotz erfolgreicher Installation nicht angezeigt werden. Das kann bei neuen Plug-ins und auch bei Aktualisierungen von vorhandenen Plug-ins der Fall sein. Ursache hierfür ist der von JCrypTool verwendete Workspace-Ordner, in dem die Informationen über alle installierten Plug-ins gespeichert werden. Bei Änderungen kann es nun vorkommen, dass die dort gespeicherten Einstellungen nicht aktualisiert werden.</p>
 
@@ -86,5 +111,6 @@
 
 
 
+    </div>
 </body>
 </html>

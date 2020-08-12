@@ -4,28 +4,56 @@
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	  <title>General Information</title>
+
+      <script src="${JCTJS_HOST}/javascript/jquery.js"></script>
+      <!-- TOCbot: Table of Content generation, see https://github.com/tscanlin/tocbot -->
+      <script src="${JCTJS_HOST}/javascript/tocbot-4.11.2/dist/tocbot.min.js"></script>
+      <script>
+          // many more options available, see TOCbot documentation
+          $(document).ready(function() {
+              tocbot.init({
+                  tocSelector: '.TOC',			 // Where to render the table of contents.
+                  contentSelector: '.content',   // Where to grab the headings to build the table of contents.
+                  headingSelector: 'h2, h3', // Which headings to grab inside of the contentSelector element.
+                  hasInnerContainers: true,      // For headings inside relative or absolute positioned containers within content.
+                  listClass: 'toc-list',
+                  listItemClass: 'toc-list-item',
+                  isCollapsedClass: 'is-collapsed',
+                  collapsibleClass: 'is-collapsible',
+                  collapseDepth: 0,
+              });
+          })
+      </script>
 </head>
+
 
 <body>
 	<h1>General Information</h1>
+
+    <div class="TOC"></div>
+    <hr />
+    <div class="content">
+
 
 	<p>JCrypTool is based on Eclipse, which brings in important concepts like <a href="perspectives.html">perspectives</a>, <a href="views.html">views</a>, and <a href="editors.html">editors</a>. You can learn on the following pages all you need to know  about these concepts for using JCrypTool.</p>
 
 
     </p></br></p>
-	<h2>Labelled screenshots with the main parts of the GUI</h2>
+	<h2 id="Labelled_screenshots">Labelled screenshots with the main parts of the GUI</h2>
  	   <!xxxTODOxxx Noch deutsche Fassung der odg Files machen.>
 
 	<p>The following screenshots show the major components in the JCT window.</p>
 
-	<h3>Views, editors, main menu and tool bar</h3>
+
+    </p></br></p>
+	<h3 id="Views_and_mainbars">Views, editors, main menu and tool bar</h3>
 
     <div class="screenshot">
     	<img src="images/JCT_GUI-Components-01_en.png"  width="80%" style="min-width: 250px" alt="Components of the GUI_1"/>
     </div>
 
     </p></br></p>
-	<h3>Important icons, menu and tool bar per view, perspective switcher</h3>
+	<h3 id="Icons_and_viewbars">Important icons, menu and tool bar per view, perspective switcher</h3>
     <div class="screenshot">
     	<img src="images/JCT_GUI-Components-02_en.png"  width="80%" style="min-width: 250px" alt="Components of the GUI_2"/>
     </div>
@@ -33,7 +61,12 @@
 
 
     </p></br></p>
-	<h2>Getting online help</h2>
+	<h2 id="Getting_online_help">Getting online help</h2>
+
+    </p>There are two kinds of online help incorporated in JCT: a context-sensitive help shown within the JCT window, and an exhaustive online help shown in an extra browser window.</p>
+
+    </p></br></p>
+	<h3 id="Context_sensitive_help">Context-sensitive help</h3>
 
 	<p>In oder to make using JCrypTool as easy as possible, the main window in both perspectives shows a view with <strong>context-sensitive help</strong> in the lower left corner. Here you get information about the active (currently selected) GUI part.</p>
 
@@ -41,11 +74,16 @@
     	<img src="images/context_help.png" width="257" height="384" alt="Context Help"/>
     </div>
 
-	<p>This conext help can be accessed via the pressing <strong>F1</strong>) on the keyboard</p>
+	<p>This conext help can be accessed via pressing <strong>F1</strong>) on the keyboard.</p>
 	
+
+    </p></br></p>
+	<h3 id="Exhaustive_help">Exhaustive online help</h3>
+
 	<p>The exhaustive online help is shown in an extra browser window. You can call this via the help icon (presented by <strong>?</strong>) in the main tool bar at the top.</p>
 	
-	</p>Both, context help and complete online help, are part the particular plug-in. In case the plug-in author did not deliver this information (yet), general information is shown.</p></br></br>
+	</p>Both, context help and exhaustive online help, are part the particular plug-in. In case the plug-in author did not deliver this information (yet), general information is shown.</p></br></br>
+	
 	
 </body>
 </html>
