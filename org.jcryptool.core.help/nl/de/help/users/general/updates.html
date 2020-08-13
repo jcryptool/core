@@ -8,23 +8,7 @@
       <script src="${JCTJS_HOST}/javascript/jquery.js"></script>   <!-- TODOS_Content -->
       <!-- TOCbot: Table of Content generation, see https://github.com/tscanlin/tocbot -->
       <script src="${JCTJS_HOST}/javascript/tocbot-4.11.2/dist/tocbot.min.js"></script>
-      <script>
-          // many more options available, see TOCbot documentation
-          $(document).ready(function() {
-              tocbot.init({
-                  tocSelector: '.TOC',			 // Where to render the table of contents.
-                  contentSelector: '.content',   // Where to grab the headings to build the table of contents.
-                  headingSelector: 'h2, h3',  // Which headings to grab inside of the contentSelector element.
-                  hasInnerContainers: true,  // For headings inside relative or absolute positioned containers within content.
-                  listClass: 'toc-list',
-                  listItemClass: 'toc-list-item',
-                  isCollapsedClass: 'is-collapsed',
-                  collapsibleClass: 'is-collapsible',
-                  collapseDepth: 0,
-              });
-          })
-      </script>
-	  
+	  <script>TOC_generate_default("h2, h3")</script>
 </head>
 
 <body>
@@ -32,7 +16,6 @@
 
     <div class="TOC"></div>   <!-- TODOS_Content -->
     <hr />
-    <div class="content">
 	
     <p>JCrypTool verfügt über einen integrierten <strong>Update Manager</strong>. Dieser bietet neben der Suche nach Aktualisierungen für installierte Plug-ins auch die Möglichkeit, neue Plug-ins und Features zu installieren. Dabei müssen neue Plug-ins nicht
     zwangsläufig auf der JCrypTool-Update-Site vorhanden sein, sondern können auch über andere/eigene Update-Sites hinzugefügt werden oder Sie kopieren diese direktl in das <strong>dropins</strong>-Verzeichnis.</p>
@@ -111,6 +94,5 @@
 
 
 
-    </div>
 </body>
 </html>
