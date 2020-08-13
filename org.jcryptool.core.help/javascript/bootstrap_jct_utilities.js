@@ -30,17 +30,39 @@ function LoadMathjax() {
 // loads a javascript file into the help content frame
 // however, I have not gotten it to work
 function LoadJavascript(scriptfile, id="") {
-	var script = HelpDocument().createElement('script');
+	// var script = HelpDocument().createElement('script'); // TODO: doesnt work because of HelpDocument()
+	script = document.createElement('script')
 	if(id != "") {
 		script.id = id;
 	}
-// script.onload = function () {
-// 	alert("loaded!")
-// };
 	script.src = JCTUrl(scriptfile);
-// 	alert('would now load... ' + script.src)
-	HelpDocument().head.appendChild(script);
-// 	alert('should be loaded..?')
+	// HelpDocument().head.appendChild(script); // TODO: doesnt work because of HelpDocument()
+	document.head.appendChild(script);
+}
+
+// optional args: contentselector (defaults to "body", but could be e.g. ".content") if there is a <div id="content">parse_only_here_for_TOC_headings</div>
+function TOC_generate_default(headingSelector, ...restargs) {
+	var contentselector = "body"
+	if(restargs.length > 0) {
+		contentselector = restargs[0]	
+	}
+	// required libraries
+	LoadJavascript("javascript/tocbot-4.11.2/dist/tocbot.min.js")
+	LoadJavascript("javascript/jquery.js")
+    $(document).ready(function() {
+  	  tocbot.init({
+  		  tocSelector: '.TOC',			 // Where to render the table of contents.
+  		  contentSelector: contentselector,   // Where to grab the headings to build the table of contents.
+  		  headingSelector: headingSelector, // Which headings to grab inside of the contentSelector element.
+  		  hasInnerContainers: true,      // For headings inside relative or absolute positioned containers within content.
+  		  listClass: 'toc-list',
+  		  listItemClass: 'toc-list-item',
+  		  isCollapsedClass: 'is-collapsed',
+  		  collapsibleClass: 'is-collapsible',
+  		  collapseDepth: 0,
+  	  });
+    })
+
 }
 
 // this is a welcome message that displays info to prove that javascript 
