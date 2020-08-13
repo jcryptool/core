@@ -4,32 +4,15 @@
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	  <title>User Guide</title>
-      <script src="${JCTJS_HOST}/javascript/jquery.js"></script>
-      <!-- TOCbot: Table of Content generation, see https://github.com/tscanlin/tocbot -->
-      <script src="${JCTJS_HOST}/javascript/tocbot-4.11.2/dist/tocbot.min.js"></script>
-      <script>
-          // many more options available, see TOCbot documentation
-          $(document).ready(function() {
-              tocbot.init({
-                  tocSelector: '.TOC',			 // Where to render the table of contents.
-                  contentSelector: '.content',   // Where to grab the headings to build the table of contents.
-                  headingSelector: 'h2, h3', // Which headings to grab inside of the contentSelector element.
-                  hasInnerContainers: true,      // For headings inside relative or absolute positioned containers within content.
-                  listClass: 'toc-list',
-                  listItemClass: 'toc-list-item',
-                  isCollapsedClass: 'is-collapsed',
-                  collapsibleClass: 'is-collapsible',
-                  collapseDepth: 0,
-              });
-          })
-      </script>
+      <script src="${JCTJS_HOST}/javascript/jquery.js"></script> <!-- TODO: remove this and load automatically! Reason this is here is that certain onLoad methods require this early i.e. statically loaded. -->
+	  <script>TOC_generate_default("h2, h3")</script>
 </head>
 
 <body>
 	<h1>User Guide</h1>
+
     <div class="TOC"></div>
     <hr />
-    <div class="content">
 
 	<p>JCrypTool (JCT) is a free and open-source cryptographic e-learning software with many visualizations.</p>
     <p>It is based on the <a href="http://www.eclipse.org">Eclipse</a> Rich Client Platform (RCP). You will recognize a lot of concepts in case you ever worked with Eclipse or an Eclipse RCP.</p>
@@ -61,6 +44,5 @@
 	
     <p>If you want to become an active contributor, please let us know. We would be very pleased.</p>
 
-    </div>
 </body>
 </html>
