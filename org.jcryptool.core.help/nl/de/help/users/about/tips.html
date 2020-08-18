@@ -5,24 +5,7 @@
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	  <title>Tipps und Tricks</title>
       <script src="${JCTJS_HOST}/javascript/jquery.js"></script>
-      <!-- TOCbot: Table of Content generation, see https://github.com/tscanlin/tocbot -->
-      <script src="${JCTJS_HOST}/javascript/tocbot-4.11.2/dist/tocbot.min.js"></script>
-      <script>
-          // many more options available, see TOCbot documentation
-          $(document).ready(function() {
-              tocbot.init({
-                  tocSelector: '.TOC',			 // Where to render the table of contents.
-                  contentSelector: '.content',   // Where to grab the headings to build the table of contents.
-                  headingSelector: 'h2, h3', // Which headings to grab inside of the contentSelector element.
-                  hasInnerContainers: true,      // For headings inside relative or absolute positioned containers within content.
-                  listClass: 'toc-list',
-                  listItemClass: 'toc-list-item',
-                  isCollapsedClass: 'is-collapsed',
-                  collapsibleClass: 'is-collapsible',
-                  collapseDepth: 0,
-              });
-          })
-      </script>
+	  <script>TOC_generate_default("h2, h3")</script>
 </head>
 
 
@@ -31,7 +14,6 @@
 
     <div class="TOC"></div>
     <hr />
-    <div class="content">
 
 
 <p> </br> </p>
@@ -54,9 +36,11 @@
 <p> </br> </p>
 	<h2 id="fastinfo">Wie findet man in JCT schnell Infomationen?</h2>
 
-	<p>Zuallererst können Sie die Lupen-Ikone  im <strong>Haupt-Toolbar</strong> anklicken, um Hilfe zu einem bestimmten Thema zu bekommen. Dann öffnet sich das <b>Quick-Access-Suchfeld</b>: Suchen Sie darin am besten nach dem Namen eines Plug-ins oder Verfahrens. Screenshots mit wichtigen Ikonen finden Sie in der Hilfedatei <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/toc.html">Allgemeine Informationen</a>.</p>
+	<p>Zuallererst können Sie die Lupen-Ikone  im <strong>Haupt-Toolbar</strong> anklicken, um Hilfe zu einem bestimmten Thema zu bekommen. Dann öffnet sich das <b>Quick-Access-Suchfeld</b>: Suchen Sie darin am besten nach dem Namen eines Plug-ins oder Verfahrens.</p>
 
-	<p>Alternativ können Sie die ausführliche Onlinehilfe in einem Browser öffnen: Klicken Sie dazu in JCT die Fragezeichen-Ikone im <strong>Haupt-Toolbar</strong>. In der Onlinehilfe klicken Sie dann auf der linken Seite auf den Eintrag <b><img src="images/plus.svg" /><img src="images/toc_open.svg" />Anwenderhandbuch</b>. Jetzt sehen Sie die verschiedenen Kategorien, in denen die Hilfe in JCT kategorisiert ist. Diese Kategorien können Sie mit einem Klick auf die kleine Plus-Ikone vor dem jeweiligen Eintrag öffnen. So können Sie sich bis zur gesuchten Hilfeseite durchnavigieren und bekommen einen guten Überblick. Alternativ können Sie auch das Suchfeld (oben unter der Browser-Toolbar) in der Onlinehilfe nutzen.</p>
+	<p>Screenshots mit wichtigen Ikonen finden Sie in der Hilfedatei <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/toc.html">Allgemeine Informationen</a>.</p>
+
+	<p>Alternativ können Sie die ausführliche Onlinehilfe in einem Browser öffnen: Klicken Sie dazu in JCT die Fragezeichen-Ikone im <strong>Haupt-Toolbar</strong>. In der Onlinehilfe klicken Sie dann auf der linken Seite auf den Eintrag <b><img src="./../images/plus.svg" /><img src="./../images/toc_open.svg" />Anwenderhandbuch</b>. Jetzt sehen Sie die verschiedenen Kategorien, in denen die Hilfe in JCT kategorisiert ist. Diese Kategorien können Sie mit einem Klick auf die kleine Plus-Ikone vor dem jeweiligen Eintrag öffnen. So können Sie sich bis zur gesuchten Hilfeseite durchnavigieren und bekommen einen guten Überblick. Alternativ können Sie auch das Suchfeld (oben unter der Browser-Toolbar) in der Onlinehilfe nutzen.</p>
 
 
 
@@ -77,13 +61,13 @@
 
 	<p>Prinzipiell kann JCrypTool auch im Netzwerk oder auf einem externen Speichermedium wie einem USB-Stick oder einer USB-Festplatte verwendet werden. Dazu müssen Sie jedoch eine Änderung in einer Konfigurationsdatei vornehmen. Konkret müssen Sie den Pfad zum Workspace-Ordner anpassen. In diesem Ordner speichern alle Plug-ins die von Ihnen getroffenen Einstellungen.</p>
 
-	<p><strong>Windows/ Linux:</strong><br>
-	Öffnen Sie die <strong>JCrypTool.ini</strong> in Ihrem Installationsordner und suchen Sie nach der Zeile <strong>-data @user.home/documents/.jcryptool</strong>. Hier müssen Sie <strong>@user.home/documents/.jcryptool</strong> durch einen in Ihrer Umgebung verfügbaren absoluten Pfad ersetzen.</p>
+	<p><strong>Windows/ Linux:</strong></p>
+	<p>Öffnen Sie die <strong>JCrypTool.ini</strong> in Ihrem Installationsordner und suchen Sie nach der Zeile <strong>-data @user.home/documents/.jcryptool</strong>. Hier müssen Sie <strong>@user.home/documents/.jcryptool</strong> durch einen in Ihrer Umgebung verfügbaren absoluten Pfad ersetzen.</p>
 
-	<p><strong>macOS:</strong><br>
-	Die durchzuführende Änderung ist identisch wie unter Windows oder Linux. Allerdings befindet sich die <strong>JCrypTool.ini</strong> auf macOS unter <strong>JCrypTool.app\Contents\MacOS</strong> in Ihrem Installationsordner.</p>
+	<p><strong>macOS:</strong></p>
+	<p>Die durchzuführende Änderung ist identisch wie unter Windows oder Linux. Allerdings befindet sich die <strong>JCrypTool.ini</strong> auf macOS unter <strong>JCrypTool.app\Contents\MacOS</strong> in Ihrem Installationsordner.</p>
 
 
-    </div>
+<p> </br> </p>
 </body>
 </html>

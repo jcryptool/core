@@ -6,24 +6,7 @@
 	  <title>Allgemeine Informationen</title>
 
       <script src="${JCTJS_HOST}/javascript/jquery.js"></script>
-      <!-- TOCbot: Table of Content generation, see https://github.com/tscanlin/tocbot -->
-      <script src="${JCTJS_HOST}/javascript/tocbot-4.11.2/dist/tocbot.min.js"></script>
-      <script>
-          // many more options available, see TOCbot documentation
-          $(document).ready(function() {
-              tocbot.init({
-                  tocSelector: '.TOC',			 // Where to render the table of contents.
-                  contentSelector: '.content',   // Where to grab the headings to build the table of contents.
-                  headingSelector: 'h2, h3', // Which headings to grab inside of the contentSelector element.
-                  hasInnerContainers: true,      // For headings inside relative or absolute positioned containers within content.
-                  listClass: 'toc-list',
-                  listItemClass: 'toc-list-item',
-                  isCollapsedClass: 'is-collapsed',
-                  collapsibleClass: 'is-collapsible',
-                  collapseDepth: 0,
-              });
-          })
-      </script>
+	  <script>TOC_generate_default("h2, h3")</script>
 </head>
 
 
@@ -32,7 +15,6 @@
 
     <div class="TOC"></div>
     <hr />
-    <div class="content">
 
 
     <p>JCrypTool basiert auf Eclipse, wodurch Eclipse-Konzepte wie <a href="perspectives.html">Perspektiven</a>, <a href="views.html">Sichten</a> und <a href="editors.html">Editoren</a> eine sehr wichtige Rolle für die Bedienung der GUI spielen. Mit diesen Begriffen und den dahinterstehenden Konzepten können Sie sich auf den folgenden Seiten, soweit für JCrypTool notwendig, vertraut machen.</p>
@@ -40,7 +22,7 @@
 
     </p></br></p>
 	<h2 id="Labelled_screenshots">Screenshots mit den markierten Hauptbestandteilen der GUI</h2>
- 	<!xxxTODOxxx Noch deutsche Fassung der odg Files machen.>
+ 	<!---xxxTODOxxx Noch deutsche Fassung der odg Files machen. Low Prio. -->
 
 	<p>Die folgenden Screenshots zeigen die wichtigsten Komponenten im JCT-Fenster.</p>
 
@@ -88,6 +70,7 @@
 
 
     <p>PS: <strong>Genderneutrale Sprache</strong>: Wir nutzen zwecks besserer Lesbarkeit immer das Geschlecht des jeweiligen Wortes und meinen damit natürlich alle Menschen jeglichen Geschlechts: Mit einem Benutzer oder Anwender sind also (w/m/d) gemeint.</p></br></br>
+
 
 
 </body>

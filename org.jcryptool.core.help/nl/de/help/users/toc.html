@@ -2,34 +2,16 @@
 
 <html>
 <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	  <title>Anwenderhandbuch</title>
-      <script src="${JCTJS_HOST}/javascript/jquery.js"></script>
-      <!-- TOCbot: Table of Content generation, see https://github.com/tscanlin/tocbot -->
-      <script src="${JCTJS_HOST}/javascript/tocbot-4.11.2/dist/tocbot.min.js"></script>
-      <script>
-          // many more options available, see TOCbot documentation
-          $(document).ready(function() {
-              tocbot.init({
-                  tocSelector: '.TOC',			 // Where to render the table of contents.
-                  contentSelector: '.content',   // Where to grab the headings to build the table of contents.
-                  headingSelector: 'h2, h3', // Which headings to grab inside of the contentSelector element.
-                  hasInnerContainers: true,      // For headings inside relative or absolute positioned containers within content.
-                  listClass: 'toc-list',
-                  listItemClass: 'toc-list-item',
-                  isCollapsedClass: 'is-collapsed',
-                  collapsibleClass: 'is-collapsible',
-                  collapseDepth: 0,
-              });
-          })
-      </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Anwenderhandbuch</title>
+    <script src="${JCTJS_HOST}/javascript/jquery.js"></script>
+	<script>TOC_generate_default("h2, h3")</script>
 </head>
 
 <body>
     <h1>Anwenderhandbuch</h1>
     <div class="TOC"></div>
     <hr />
-    <div class="content">
 
     <p>JCrypTool (JCT) ist eine freie Open-Source E-Learning-Software zur kryptographischen Themen mit vielen Visualisierungen.</p>
     <p>Die JCrypTool-Anwendung basiert auf der <a target="_blank" href="http://www.eclipse.org">Eclipse</a> Rich Client Platform (RCP).
@@ -65,6 +47,5 @@
 	
     <p>Ganz besonders freuen würden wir uns, wenn Sie ein aktiver Mitentwickler werden wollen.</p>
 	
-    </div>
 </body>
 </html>
