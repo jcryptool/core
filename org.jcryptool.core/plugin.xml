@@ -245,12 +245,12 @@
          <!-- The following code is an example how you can stack multiple 
          views to one position(relationship) (left, right, top, bottom). In this example the 
          ActionView and the FileExplorerView are on the same position relationship=left. -->
-         <view 
+         <!-- <view 
          	id="org.jcryptool.actions.views.ActionView" 
          	minimized="false" 
          	ratio="0.25f" 
          	relationship="left" 
-         	relative="org.eclipse.ui.editorss"/>
+         	relative="org.eclipse.ui.editorss"/> -->
          <view 
          	id="org.jcryptool.fileexplorer.views.FileExplorerView" 
          	minimized="false" 
