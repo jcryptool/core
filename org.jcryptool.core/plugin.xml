@@ -254,8 +254,9 @@
          <view 
          	id="org.jcryptool.fileexplorer.views.FileExplorerView" 
          	minimized="false" 
-         	relationship="stack" 
-         	relative="org.jcryptool.actions.views.ActionView"/> 
+         	ratio="0.25f" 
+         	relationship="left" 
+         	relative="org.eclipse.ui.editorss"/> 
          <view 
          	id="org.jcryptool.core.views.AlgorithmView" 
          	minimized="false" 
