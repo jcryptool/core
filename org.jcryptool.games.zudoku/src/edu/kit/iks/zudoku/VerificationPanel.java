@@ -22,6 +22,8 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
 import java.io.IOException;
@@ -87,9 +89,13 @@ public class VerificationPanel extends JPanel implements ActionListener {
 
 				@Override
 				public void mouseClicked(java.awt.event.MouseEvent arg0) {
+					allowAbort = false;
 					VerificationPanel.this.vfy_step++;
 					VerificationPanel.this.vfy_cards = SelectionButton.this.cards;
 					VerificationPanel.this.vfy_marker = SelectionButton.this.marker;
+					if (button_challenge != null && escapeListener != null) {
+						button_challenge.removeKeyListener(escapeListener);
+					}
 					VerificationPanel.this.verify(VerificationPanel.this.vfy_step);
 				}
 			});
@@ -115,7 +121,8 @@ public class VerificationPanel extends JPanel implements ActionListener {
 		}
 
 	}
-
+	
+	
 	private class Overlay extends JPanel implements ActionListener {
 		private String text;
 
@@ -137,18 +144,23 @@ public class VerificationPanel extends JPanel implements ActionListener {
 
 		public void startFadeout(int offset, int duration) {
 			// set up timer
-			fadeout_start = offset / 1000 * ZudokuConfig.FADEOUTS_FRAMERATE;
-			fadeout_frames = duration / 1000 * ZudokuConfig.FADEOUTS_FRAMERATE;
+			double tmp_offset = offset / 1000.;
+			double tmp_duration = duration / 1000.;
+			fadeout_start = (int) (tmp_offset * ZudokuConfig.FADEOUTS_FRAMERATE);
+			fadeout_frames = (int) (tmp_duration  * ZudokuConfig.FADEOUTS_FRAMERATE);
 			fadeout_framecounter = 0;
 			fadeout_timer = new Timer(1000 / ZudokuConfig.FADEOUTS_FRAMERATE, this);
 			fadeout_timer.setInitialDelay(0);
 			fadeout_timer.start();
-
 		}
-
+		
 		public void setText(String text) {
 			this.text = text;
 			repaint();
+		}
+		
+		public void cancelFadeout() {
+			fadeout_framecounter = fadeout_frames;
 		}
 
 		@Override
@@ -200,7 +212,7 @@ public class VerificationPanel extends JPanel implements ActionListener {
 			}
 		}
 	}
-
+	
 	private Zudoku parent;
 	private SudokuField field;
 	private JPanel controls;
@@ -231,6 +243,9 @@ public class VerificationPanel extends JPanel implements ActionListener {
     private JLabel vfy_vmarker;
     private Timer vfy_timer = null;
 	private Overlay vfy_overlay = null;
+	private KeyListener escapeListener;
+	private boolean abort;
+	private boolean allowAbort;
 
 	public VerificationPanel(Zudoku parent, SudokuField field) {
 		super();
@@ -277,9 +292,34 @@ public class VerificationPanel extends JPanel implements ActionListener {
 		} catch (IOException e) {
             LogUtil.logError(e);
 		}
-    }
+    	
+    	/*
+    	 * Set up Escape listener for aborting Challenge
+    	 */
+    	escapeListener = new KeyListener() {
+		
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE && allowAbort) {
+					verify(8);
+					abort = true;
+					if(cheat_overlay != null) {
+						cheat_overlay.cancelFadeout();
+					}
+				}
+				
+			}
 
-	private JPanel createControls() {
+			@Override
+			public void keyTyped(KeyEvent e) {}
+
+			@Override
+			public void keyPressed(KeyEvent arg0) { }
+		
+		};
+	}
+		
+		private JPanel createControls() {
 		JPanel controls = new JPanel();
 		controls.setBackground(Color.black);
 
@@ -321,13 +361,22 @@ public class VerificationPanel extends JPanel implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if(vfy_step == 0 && cheat_overlay == null) {
+					// Set the abort flag to false every time the button is pressed.
+					// Else we could run into concurrency issues.
+					abort = false;
+					
+					// Increase the verify step to start and call verify
 					vfy_step++;
 					verify(vfy_step);
-
+					
+					// If the abort has been set in the meantime, don't even bother starting this.
+					// However the user should not be able to be quick enough - just a precaution.
 					// FIXME: Shouldn't use the cheat stuff
-					cheat_overlay = new Overlay(Messages.VP_PICK_ROW_COLUMN_OR_BLOCK);
-					cheat_overlay.startFadeout(2000, 3000);
-					field.add(cheat_overlay, SudokuField.OVERLAY_LAYER);
+					if (!abort) {
+						cheat_overlay = new Overlay(Messages.VP_PICK_ROW_COLUMN_OR_BLOCK);
+						cheat_overlay.startFadeout(1000, 500);
+						field.add(cheat_overlay, SudokuField.OVERLAY_LAYER);
+					}
 				}
 			}
 		});
@@ -431,6 +480,9 @@ public class VerificationPanel extends JPanel implements ActionListener {
 		  	vfy_cards = null;
 	    	vfy_marker = null;
 	    	vfy_selection_buttons = new HashSet<SelectionButton>();
+	    	button_challenge.addKeyListener(escapeListener);
+			allowAbort = true;
+	    	
 
 	    	// Mark inactive buttons as inactive ;)
 	    	button_new.setTextColor(ZudokuConfig.KRYPTOLOGIKUM_GREY);
@@ -440,7 +492,7 @@ public class VerificationPanel extends JPanel implements ActionListener {
 
 	    	Set<Card> cards;
     		JLabel marker;
-
+    		
     		// Create column buttons
     		for(int i = 0; i < ZudokuConfig.SUDOKU_SIZE; i++) {
     			cards = sudoku.getColumn(i);
@@ -473,7 +525,7 @@ public class VerificationPanel extends JPanel implements ActionListener {
 	    				cards,
 	    				select_row_img));
     		}
-
+    		
     		// Create block buttons
     		// TODO positioning works correctly only for sudoku of size 4 at the moment
     		for(int k = 0; k < ZudokuConfig.SUDOKU_SIZE; k++) {
@@ -505,7 +557,7 @@ public class VerificationPanel extends JPanel implements ActionListener {
 			/*
 	    	 * Move cards to verification stacks
 	    	 */
-
+			
 			// Clean up selection buttons first
 			for(SelectionButton button : vfy_selection_buttons) {
 	    		field.remove(button);
@@ -640,15 +692,24 @@ public class VerificationPanel extends JPanel implements ActionListener {
 			break;
 		case 8:
 			vfy_step = 0; // no verification currently going on
-			vfy_timer.stop();
-			vfy_timer = null;
+			if (vfy_timer != null) {
+				vfy_timer.stop();
+				vfy_timer = null;
+			}
+			
+			if (vfy_selection_buttons != null) {
+				for(SelectionButton button : vfy_selection_buttons) {
+					field.remove(button);
+				}
+				vfy_selection_buttons = null;
+			}
 
 			// Mark other buttons as active again
 	    	button_new.setTextColor(ZudokuConfig.KRYPTOLOGIKUM_BLUE);
 	    	button_cheat.setTextColor(ZudokuConfig.KRYPTOLOGIKUM_BLUE);
 	    	button_flip.setTextColor(ZudokuConfig.KRYPTOLOGIKUM_BLUE);
 	    	button_challenge.setTextColor(ZudokuConfig.KRYPTOLOGIKUM_BLUE);
-
+	    	field.repaint();
 			break;
 		default:
 			// We should never end up here
@@ -681,6 +742,7 @@ public class VerificationPanel extends JPanel implements ActionListener {
 		}
     }
 
+	
 	public void newSudoku() {
 		if(vfy_step == 0 && cheat_overlay == null) {
 			cheat_counter = 0;
