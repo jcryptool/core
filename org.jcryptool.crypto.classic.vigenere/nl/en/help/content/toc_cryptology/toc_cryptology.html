@@ -4,13 +4,13 @@
 
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-	  <title>Caesar cipher</title>
+	  <title>Vigenère cipher</title>
 </head>
 <body>
 
-<h1>Caesar cipher</h1>
+<h1>Vigenère cipher</h1>
 <p>
-	The Vigen&#232;re cipher is one of the most widely known substitution techniques. It is a polyalphabetic substitution, and shifts letters of the plaintext down the alphabet, according to the Caesar cipher. The difference is that the key can contain multiple letters, and so the letters are shifted not only by one offset. The Vigen&#232;re chiffre was considered unbreakable a long time, until Charles Babbage succeeded in deciphering it first in 1854.
+	The Vigenère cipher is one of the most widely known substitution techniques. It is a polyalphabetic substitution, and shifts letters of the plaintext down the alphabet, according to the Caesar cipher. The difference is that the key can contain multiple letters, and so the letters are shifted not only by one offset. The Vigenère chiffre was considered unbreakable a long time, until Charles Babbage succeeded in deciphering it first in 1854.
 </p>
 
 <h3 id="classification">Classification</h3>
@@ -20,12 +20,16 @@
 
 <h3 id="scheme">Input and output scheme</h3>
 <img src="in_out_scheme.png" width="85%" />
+
+
 <h3 id="algorithm">The en- and decryption algorithm</h3>
+
 <p>The Vigenère-Encryption is a polyalphabetic
 substitution, where the single alphabets are Caesar substitution alphabets.
 Thus, encrypting a text with the Vigenère algorithm is just Caesar-encrypting
 every n-th character with the first character of the key, the next n-th
 characters with the second character of the key, and so on.</p>
+
 
 <h4>Encryption</h4>
 
@@ -37,6 +41,7 @@ encrypted with “E”, and the rest with “Y”:</p>
 
 <p><img id="Grafik 0"
 src="encryption_example.png" alt="encryption_example.png"></p>
+
 
 <h4>Decryption</h4>
 
