@@ -1,25 +1,30 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
 	  <title>ADFGVX-Bedienung</title>
 </head>
 <body>
+
+
 <h1>ADFGVX-Bedienung</h1>
 
 <p>Diese Seite erklärt die Bedienung der Ver-/Entschlüsselungsoberfläche der ADFGVX-Verschlüsselung. Allgemeine Informationen zur ADFGVX-Verschlüsselung: <a href="toc_cryptology/toc_cryptology.html">ADFGVX-Verschlüsselung im Kryptologie-Handbuch</a>.</p>
 <p>Im Folgenden werden die Optionengruppen des Assistenten vorgestellt. Bei der ADFGVX-Verschlüsselung muss meist nur der "Operation"- und den "Schlüssel"-Gruppen Beachtung geschenkt werden.</p>
-<h3>Operation - Verschlüsseln oder Entschlüsseln?</h3>
+
+
+<h3>Operation &ndash; Verschlüsseln oder Entschlüsseln</h3>
 <p>Zuerst sollte ausgewählt werden, ob der Text verschlüsselt oder entschlüsselt werden soll. Da die ADFGVX-Verschlüsselung symmetrisch ist, endet die Verschlüsselung  und danach  ausgeführte Entschlüsselung eines Textes mit ein und denselben Schlüsseln wieder im Originaltext.</p>
+
 
 <h3>Alphabet</h3>
 <p>Das Alphabet, über dem ein kryptographisches Verfahren (z. B eine Ver- oder Entschlüsselung) auf einen Text angewendet wird, beschreibt die Zeichen, welche dieses Verfahren akzeptieren und verarbeiten (hier: verschlüsseln) wird. Der Button "Gewähltes Alphabet anzeigen" zeigt alle Zeichen, die das ausgewählte Alphabet beinhaltet.<p>Zum Beispiel werden Kleinbuchstaben nicht verschlüsselt, wenn ein Alphabet gewählt wird, dass nur Großbuchstaben enthält (wie "Upper Latin (A-Z)"). Mit der Checkbox "filtere Nichtalphabet-Zeichen" wird festgelegt, ob (in unserem Beispiel) die Kleinbuchstaben nur unverändert stehenbleiben (Checkbox abgewählt), oder ob sie ganz herausgefiltert werden (Checkbox angewählt).</p>
 
+
 <h3>Vorangehende Text-Transformation</h3>
 <p>Es besteht die Möglichkeit, vor der Verschlüsselung noch häufig nützliche Text-Transformation durchzuführen.  Dazu zählen zum Beispiel die Entfernung von Zeilenumbrüchen, Leerzeichen, oder die Umwandlung in Groß- oder Kleinschreibung. Je nach Umständen kann eine solche Umformung auch die Sicherheit des Geheimtextes verbessern. </p>
 <p>Die Text-Transformation ist in den allermeisten Fällen nur bei der Verschlüsselung hilfreich! Bei der Entschlüsselung führt sie meist zur Sinnentstellung des Textes.</p>
+
 
 <h3>Schlüssel</h3>
 <p>Die ADFGVX-Verschlüsselung benötigt zwei Schlüssel. Der erste wird zur Substitution des Textes mit einer durch den Schlüssel erzeugte Matrix verwendet; der zweite wird zur Transposition des substituierten Textes verwendet. <b>Beide Schlüssel dürfen nur Zeichen enthalten, die auch im oben ausgewählten Alphabet vorkommen.</b></p>
