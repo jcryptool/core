@@ -31,6 +31,8 @@
                 href="$nl$/help/users/general/editor_hex.html" />
             <topic label="Texteditor"
                 href="$nl$/help/users/general/editor_text.html" />
+            <topic label="Hexeditor Bedienungsanleitung" 
+            	href="nl/de/help/users/general/editor_hex_manual.html" />
         </topic>
         <topic href="$nl$/help/users/general/preferences.html" label="Benutzervorgaben" sort="true">
            <anchor id="preferences"/>

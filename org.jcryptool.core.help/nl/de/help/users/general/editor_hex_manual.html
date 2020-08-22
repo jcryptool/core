@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type"
+			content="text/html; charset=ISO-8859-1" />
+		<title>javahexeditor User Guide</title>
+	</head>
+	<body>
+			<h1>
+				<em>javahexeditor</em>
+				User Guide
+			</h1>
+			<h2>Introduction</h2>
+			<p>
+				<em>javahexeditor</em>
+				is a
+				<a href="http://en.wikipedia.org/wiki/Hex_editor" target="_blank">hex
+					editor
+				</a>
+				written in
+				<a href="http://java.sun.com" target="_blank">Java</a>
+				. It is available as
+				<a href="http://www.eclipse.org" target="_blank">Eclipse</a>
+				plugin and as a stand-alone application for Windows, Linux and MacOS
+				X using
+				<a href="http://www.eclipse.org/swt" target="_blank">SWT</a>
+				widgets. It offers:
+			</p>
+			<ul>
+				<li>Support for very large files</li>
+				<li> Hex, ASCII and Unicode find</li>
+				<li>Overwrite/insert modes</li>
+				<li>Binary and text cut/copy/paste</li>
+				<li>Undo/redo</li>
+				<li>English and German screen texts</li>
+			</ul>
+			
+			<h2>Usage</h2>
+			<h3>Eclipse Editor</h3>
+			Any file currently in the workspace (but not part of a jar file) with
+			one of the extensions listed below can be opened with
+			<em>javahexeditor</em>
+			by right clicking on the file name, expanding the "Open With" menu
+			item, and selecting
+			<em>javahexeditor</em>
+			:
+			<br />
+			<code>a, bin, cab, class, com, dat, data, drv, dll, exe, hex, iso,
+				jar, lib, o, out, part, pdf, png, ram, res, rom, sys, txt, zip
+			</code>
+			.
+			<br />
+			Other file extensions can be added in the preferences dialog via
+			"Window / Preferences... / General / Editors / File Associations".
+
+			<h3>Browsing the File Content</h3>
+			<p>You can move around the file as you would in any other text
+				editor. To change from hex to text, or vice versa, press the [Tab]
+				key, or click the mouse in
+				the appropriate area.
+			</p>
+			<p> To locate a specific position within the file use the Goto
+				dialog. The dialog can be opened via the menu item "Edit / Go to
+				Location.." (CTRL-L). This
+				kind of positioning is especially useful
+				when editing very big files and the scroll bar is not accurate
+				enough.
+			</p>
+			<p> To select text move the cursor to the selection start and then
+				press the SHIFT key when changing the cursor to the selection end.
+			</p>
+			<h3>Editing the File Content</h3>
+			<p>There are two modify modes: insert and overwrite. You can switch
+				between insert/overwrite modes with the INSERT key in your keyboard
+				(as in some text
+				editors, for instance).
+			</p>
+			<p>You can insert/delete/trim bytes in insert mode only. In overwrite
+				mode the file length never changes and you cannot paste things
+				bigger than the space
+				left in the file.
+			</p>
+			<p>
+				You can insert other files by copying by copying them to the
+				clipboard. This can be achieve for example via "Edit / Copy"
+				(CTRL-C) in Windows and and
+				pasting it in
+				<em>javahexeditor</em>
+				via "Edit / Paste" (CTRL-V). Copying to a text editor has a limit of
+				4 MB. Binary copying (from
+				<em>javahexeditor</em>
+				to
+				<em>javahexeditor</em>
+				) is limited by the free disk space only.
+			</p>
+			<p> Modified text is displayed in blue, so it is easier to see the
+				changes made to the file.
+			</p>
+			<h2>Screen Shots</h2>
+			This is how the Eclipse plugin looks like. Here the find and replace
+			dialog is currently open.
+			<br />
+			<p align="center"><img src="images/screenshot-01.png" width="80%" alt="Find and Replace Dialog" /></p>
+			<br />
+			<br />
+			This is how the stand-alone application looks like. Here the block
+			selection dialog is currently open.
+			<br />
+			<p align="center"><img src="images/screenshot-02.png" width="80%" alt="Block Selection Dialog" /></p>
+			<h2>Change History</h2>
+			<h3>Version 0.5.2 from 2020-08-10</h3>
+			<ul>
+				<li>Implemented feature #16 to display the file size in the status
+					bar and adapt status bar spacing based in actual file size
+				</li>
+				<li>Implemented feature #15 to support screen scaling in
+					SelectBlockDialog
+				</li>
+				<li>Fixed bug #18 preliminary to not cause exceptions in the Eclipse
+					error log when clicking outside of the resized text area
+				</li>
+				<li>Fixed bug #17 regarding SWT related exception</li>
+				<li>Fixed bug #16 to make FindReplaceDialog tolerant regarding
+					whitespaces in the input
+				</li>
+				<li>Fixed bug #14 regarding font resizing issues</li>
+				<li>Added SWT wrapper class to make the program compatible with all
+					SWT versions from 4.7.3 to 4.17
+				</li>
+				<li>Extended FindReplaceDialog, so it is now pre-filled with values
+					from currently active selection
+				</li>
+				<li>Added an exception dialog to display exception and startup
+					problems
+				</li>
+				<li>All actions and menu items which make no sense for empty files
+					are now disabled, if the file is empty
+				</li>
+				<li>Default input mode for new files and empty files is now always
+					"Insert"
+				</li>
+				<li>Default input mode for non-empty files is now always "Overwrite"
+				</li>
+				<li>Swapped the positions for "Find" and "Goto Location" in the
+					stand-alone version, so they are in sync with Eclipse
+				</li>
+			</ul>
+			<h3>Version 0.5.1 from 2019-01-12</h3>
+			<ul>
+				<li>Added stand-alone builds for Windows, Linux and OS X, each for
+					32/64 bit
+				</li>
+				<li>Updated online help</li>
+				<li>Added new large icons and fix icon display issues</li>
+				<li>Updated to Java 8 as minimum requirement</li>
+				<li>Fixed bug #12 - Editor crashes when editing a line out of sight
+					while using overwrite mode
+				</li>
+			</ul>
+	</body>
+</html>
