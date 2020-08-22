@@ -7,7 +7,8 @@ Bundle-Activator: org.jcryptool.visual.secretsharing.SecretSharingPlugin
 Bundle-Vendor: %Bundle-Vendor.0
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.jcryptool.core.util
+ org.jcryptool.core.util,
+ org.jcryptool.crypto.ui;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Import-Package: org.jcryptool.core.util.fonts

@@ -23,6 +23,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -159,6 +160,8 @@ public class Arc4WizardPage extends WizardPage implements Listener {
      */
     private ArrayList<String> hexValues = new ArrayList<String>(16);
 
+	private Composite pageComposite;
+
     /**
      * create Wizard Page set Title and Message; setup the Hexadecimal values.
      */
@@ -199,7 +202,8 @@ public class Arc4WizardPage extends WizardPage implements Listener {
      * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
      */
     public void createControl(Composite parent) {
-        Composite pageComposite = new Composite(parent, SWT.NULL);
+        pageComposite = new Composite(parent, SWT.NULL);
+        pageComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         encrypt_decrypt(pageComposite);
         arc4_spritz(pageComposite);
@@ -504,10 +508,10 @@ public class Arc4WizardPage extends WizardPage implements Listener {
             }
         });
 
-        keyDigitCountLabel = new Label(comper, SWT.None);
-        keyDigitCountLabel.setLayoutData(keyDigitCountLabelGridData);
-        keyDigitCountLabel.setText(Messages.Arc4Page_max2_hex + " 512"); //$NON-NLS-2$ //$NON-NLS-1$
-
+        keyDigitCountLabel = new Label(comper, SWT.NONE);
+        keyDigitCountLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        keyDigitCountLabel.setText(Messages.Arc4Page_max2_hex + " 512" + "\n "); //$NON-NLS-2$ //$NON-NLS-1$
+        
     }
 
     /**
@@ -738,6 +742,8 @@ public class Arc4WizardPage extends WizardPage implements Listener {
             isRand = true;
         }
         setPageComplete(mayFinish());
+        this.pageComposite.layout(new Control[] {keyDigitCountLabel});
+//         this.getShell().pack();
     }
 
     /**

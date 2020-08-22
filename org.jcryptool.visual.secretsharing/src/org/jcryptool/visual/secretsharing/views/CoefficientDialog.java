@@ -11,6 +11,7 @@ package org.jcryptool.visual.secretsharing.views;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.Random;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -46,6 +47,7 @@ public class CoefficientDialog extends TitleAreaDialog implements Constants {
 	private BigInteger[] coefficient;
 	private Spinner[] spinnerSet;
 	private Button generateCoefficientsButton;
+	private Random sr = new Random();
 
 	/**
 	 * Create the dialog
@@ -167,7 +169,7 @@ public class CoefficientDialog extends TitleAreaDialog implements Constants {
 	 * create random numbers for the coefficients
 	 */
 	private void calculateRandomNumbersForSpinners() {
-		SecureRandom sr = new SecureRandom();
+// 		sr.setSeed(1L);
 		for (int i = 0; i < coefficient.length - 1; i++) {
 			int randomValue = Math.abs(sr.nextInt()) % modul.intValue() + 1;
 			spinnerSet[i].setSelection(randomValue);
