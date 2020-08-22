@@ -1,22 +1,32 @@
 package org.jcryptool.core.util.ui;
 
+import java.util.Optional;
+import java.util.function.Consumer;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.images.ImageService;
 
 public class TitleAndDescriptionComposite extends Composite {
-	
 	
 	private StyledText styledText;
 	private GridData styledTextGridData;
@@ -25,24 +35,78 @@ public class TitleAndDescriptionComposite extends Composite {
 	private Composite sc;
 	private Composite firstChildOfsc;
 	
-
+	
+	/**
+	 * If this option is present, display a help button that, on click, consumes this widget and is intended to show help. The class VisualPluginHelp contains some useful consumers for visual plugins.
+	 */
+	private Optional<Consumer<TitleAndDescriptionComposite>> helpAction;
 	
 	public TitleAndDescriptionComposite(Composite parent) {
+		this(parent, VisualPluginHelp.makeDefaultTADHelpAction(parent));
+	}
+
+	public TitleAndDescriptionComposite(Composite parent, Optional<Consumer<TitleAndDescriptionComposite>> helpAction) {
 		super(parent, SWT.NONE);
 		this.setBackground(ColorService.WHITE);
-		this.setLayout(new GridLayout());
+		this.helpAction = helpAction;
+		GridLayout thisLayout = new GridLayout(2, false);
+		thisLayout.horizontalSpacing = 0;
+		thisLayout.verticalSpacing = 0;
+		this.setLayout(thisLayout);
+
+		Composite tadArea = new Composite(this, SWT.NONE);
+		tadArea.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		tadArea.setBackground(getDisplay().getSystemColor(SWT.COLOR_TRANSPARENT));
+
+		Composite helpArea = new Composite(this, SWT.NONE);
+		helpArea.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
+		GridLayout hLayout = new GridLayout(2, false);
+		hLayout.marginWidth = 0;
+		hLayout.marginHeight = 0;
+		helpArea.setLayout(hLayout);
+
+		makeTitleAndDescriptionWidgets(tadArea);
+
+		if (this.helpAction.isPresent()) {
+			Label helpButton = new Label(helpArea, SWT.NONE);
+			helpButton.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
+			helpButton.setCursor(new org.eclipse.swt.graphics.Cursor(getDisplay(), SWT.CURSOR_HAND));
+			helpButton.setImage(ImageService.getImage("org.jcryptool.core.util", "icons/tadHelpButton_72.png"));
+			GridData helpBtnLayoutData = new GridData(SWT.CENTER, SWT.CENTER, false, false);
+			helpBtnLayoutData.widthHint = 72;
+			helpBtnLayoutData.heightHint = 72;
+			helpButton.setLayoutData(helpBtnLayoutData);
+			helpButton.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseDown(MouseEvent e) {
+					TitleAndDescriptionComposite.this.helpAction.get().accept(TitleAndDescriptionComposite.this);
+				}
+			});
+		}
 		
+		if (this.helpAction.isPresent()) {
+			Consumer<TitleAndDescriptionComposite> helpConsumer = this.helpAction.get();
+// 			helpConsumer.accept(this);
+		}
 		
-		styledText = new StyledText(this, SWT.READ_ONLY | SWT.WRAP);
+	}
+	
+	private void makeTitleAndDescriptionWidgets(Composite parent) {
+		GridLayout pLayout = new GridLayout();
+		pLayout.marginWidth = 0;
+		pLayout.marginHeight = 0;
+		parent.setLayout(pLayout);
+		
+		styledText = new StyledText(parent, SWT.READ_ONLY | SWT.WRAP);
 
 		styledTextGridData = new GridData(SWT.FILL, SWT.FILL, true, false);
-		styledTextGridData.widthHint = this.getClientArea().width - 10;
+		styledTextGridData.widthHint = parent.getClientArea().width - 10;
 		
 		styledText.setLayoutData(styledTextGridData);	
 		styledText.addListener(SWT.Resize, event -> {
 
-			if (styledTextGridData.heightHint != styledText.computeSize(this.getClientArea().width - 10, SWT.DEFAULT).y) {
-				styledTextGridData.heightHint = styledText.computeSize(this.getClientArea().width - 10, SWT.DEFAULT).y;
+			if (styledTextGridData.heightHint != styledText.computeSize(parent.getClientArea().width - 10, SWT.DEFAULT).y) {
+				styledTextGridData.heightHint = styledText.computeSize(parent.getClientArea().width - 10, SWT.DEFAULT).y;
 				styledText.requestLayout();
 				
 				
@@ -90,7 +154,7 @@ public class TitleAndDescriptionComposite extends Composite {
 			}
 		});	
 		
-		getScrolledCompositeParent(this);
+		getScrolledCompositeParent(parent);
 		
 		
 		// If there is a ScrolledComposite somewhere in the parent composites
@@ -106,7 +170,6 @@ public class TitleAndDescriptionComposite extends Composite {
 
 		}
 	}
-	
 	
 	private void getScrolledCompositeParent(Composite current) {
 		sc = current;
