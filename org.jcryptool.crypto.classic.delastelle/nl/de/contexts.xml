@@ -8,8 +8,8 @@ Der Schlüssel darf nur Zeichen enthalten, die im ausgewählten Alphabet enthalt
   <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="Die Bifid-Verschlüsselung (Kryptologie-Handbuch)"/>
 	</context>
 	<context id="algorithm" title="Bifid">
-    <description>Die Bifid-Verschl&#252;sselung ist ein Substitutionsverfahren mit Transpositionsmechanismus, der substituierte Buchstaben aufspaltet, in einer Reihe anordnet, und als Paare zusammenf&#252;hrt.
-&lt;br&gt;Diese Verschl&#252;sselung ist auch als Delastelle-Verschl&#252;sselung bekannt, nach ihrem Erfinder, Felix Delastelle.
+    <description>Die Bifid-Verschlüsselung ist ein Substitutionsverfahren mit Transpositionsmechanismus, der substituierte Buchstaben aufspaltet, in einer Reihe anordnet, und als Paare zusammenführt.
+&lt;br&gt;Diese Verschlüsselung ist auch als Delastelle-Verschlüsselung bekannt, nach ihrem Erfinder, Felix Delastelle.
     </description>
     <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="Die Bifid-Verschlüsselung (Kryptologie-Handbuch)"/>
 	</context>
