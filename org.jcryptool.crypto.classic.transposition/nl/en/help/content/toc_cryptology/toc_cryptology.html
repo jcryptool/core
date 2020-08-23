@@ -30,13 +30,14 @@ src="in_out_scheme.png" alt="in_out_scheme.png"></p>
 
 <h4>Encryption</h4>
 
-<p>The columnar transposition uses a so-called
-transposition table, which contains the content that is subject of the encryption.
-The columns of the transposition table are transposed in the encryption
-progress to displace the characters of the whole text in one step. All in one,
-there are three steps to do: 1) reading in the plain text into the
-transposition table; 2) transposing the columns of the table; 3) reading out
-the content of the table into the ciphertext.</p>
+<p>The columnar transposition uses a so-called transposition table, which contains the content that is subject of the encryption.
+The columns of the transposition table are transposed in the encryption progress to displace the characters of the whole text. Overall, there are three steps to do:
+<ol>
+  <li>reading in the plain text into the transposition table</li>
+  <li>transposing the columns of the table</li>
+  <li>reading out the content of the table into the ciphertext</li>
+</ol>
+ </p>
 
 <p>We begin with the second step – the <b>column
 transposition</b>: The key determines the new order of the columns. It consists
