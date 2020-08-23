@@ -1,29 +1,39 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-	  <title>Transposition Bedienung</title>
+	  <title>Transposition-Bedienung</title>
 </head>
 <body>
-<h1>Transposition Bedienung</h1>
+
+
+<h1>Transposition-Bedienung</h1>
 
 <p>Diese Seite erklärt die Bedienung der Ver-/Entschlüsselungsoberfläche der Transpositionsverschlüsselung. Allgemeine Informationen zur Transpositionsverschlüsselung: <a href="toc_cryptology/toc_cryptology.html">Transpositionsverschlüsselung im Kryptologie-Handbuch</a>.</p>
 <p>Im Folgenden werden die Optionengruppen des Assistenten vorgestellt. Da die Transpositionsverschlüsselung recht einfach ist, muss meistens nur der "Operation"- und den "Transpositions"-Gruppen Beachtung geschenkt werden.<br>Bei der Transpositionsverschlüsselung kann über die Checkbox bei der zweiten Transpositions-Gruppe festgelegt werden, ob ein- oder zweimal transponiert werden soll.</p>
-<h3>Operation - Verschlüsseln oder Entschlüsseln?</h3>
+
+
+<h3>Operation &ndash; Verschlüsseln oder Entschlüsseln</h3>
 <p>Zuerst sollte ausgewählt werden, ob der Text verschlüsselt oder entschlüsselt werden soll. Da die Transpositionsverschlüsselung symmetrisch ist, endet die Verschlüsselung  und danach  ausgeführte Entschlüsselung eines Textes mit ein und demselben Schlüssel wieder im Originaltext.</p>
+
 
 <h3>Alphabet</h3>
 <p>Die Transpositionsverschlüsselung vertauscht die Reihenfolge der Zeichen, und ist an kein Alphabet gebunden.</p>
+
+
 <h3>Vorangehende Text-Transformation</h3>
 <p>Es besteht die Möglichkeit, vor der Verschlüsselung noch häufig nützliche Text-Transformationen durchzuführen.  Dazu zählen zum Beispiel die Entfernung von Zeilenumbrüchen, Leerzeichen, oder die Umwandlung in Groß- oder Kleinschreibung. Je nach Umständen kann eine solche Umformung auch die Sicherheit des Geheimtextes verbessern. </p>
 <p>Die Text-Transformation ist in den allermeisten Fällen nur bei der Verschlüsselung hilfreich! Bei der Entschlüsselung führt sie meist zur Sinnentstellung des Textes.</p>
 
+
 <h3>Transposition(en)</h3>
 <p>Wie bereits erwähnt, können zwei Transpositionsschritte hintereinander ausgeführt werden. Sie können also entscheiden, ob Sie eine einfache, oder eine doppelte Spaltentransposition ausführen wollen. Jeder Schritt erfordert folgende Parameter:</p>
-<p><i>Einleserichtung und Ausleserichtung:</i> <br /><img src="readDir1.png" width="85%" /><img src="readDir2.png" width="85%" /><br />Die Transpositionsverschlüsselung trägt den Text in eine "Transpositionstabelle" ein und vertauscht die Spalten der Tabellen im Verschlüsselungsschritt. Festgelegt werden muss nun auch, in welcher Art und Weise der Klartext in die Tabelle eingelesen wird, und wie der Tabelleninhalt nach der Verschlüsselung wieder in einen fließenden Text umgewandelt wird. Dies kann entweder Zeilenweise geschehen, d. h. der Text wird zeilenweise in die Tabelle geschrieben, bzw. zeilenweise daraus ausgelesen und hintereinandergeschrieben, oder andersherum, spaltenweise. Eine genaue Erklärung bietet der Artikel zur Transpositionsverschlüsselung im Kryptologie-Handbuch.</p>
+
+<p><i>Einleserichtung und Ausleserichtung:</i> <br /><img src="readDir1.png" width="85%" /><img src="readDir2.png" width="85%" /><br />
+Die Transpositionsverschlüsselung trägt den Text in eine "Transpositionstabelle" ein und vertauscht die Spalten der Tabellen im Verschlüsselungsschritt. Festgelegt werden muss nun auch, in welcher Art und Weise der Klartext in die Tabelle eingelesen wird, und wie der Tabelleninhalt nach der Verschlüsselung wieder in einen fließenden Text umgewandelt wird. Dies kann entweder Zeilenweise geschehen, d. h. der Text wird zeilenweise in die Tabelle geschrieben, bzw. zeilenweise daraus ausgelesen und hintereinandergeschrieben, oder andersherum, spaltenweise. Eine genaue Erklärung bietet der Artikel zur Transpositionsverschlüsselung im Kryptologie-Handbuch.</p>
+
 <p><i>Transpositionsschlüssel:</i><br /><img src="key.png" width="85%" /><br /> Der Transpositionsschlüssel kann aus beliebigen Zeichen des Alphabets bestehen. Je länger der Schlüssel, desto besser werden in der Regel die Spalten der Transpositionstabelle "durchgemischt".</p>
+
 <p><br />Wichtig ist, dass bei der <b>Entschlüsselung</b> eines Geheimtextes nicht nur die Schlüsseleingabe identisch zur Schlüsseleingabe bei der Erzeugung des verschlüsselten Textes sein muss - auch die Ein-/ Ausleserichtung muss übereinstimmen. Man könnte auch (richtigerweise) annehmen, dass die Ein-/ Ausleserichtungen beim Entschlüsseln genau spiegelverkehrt zu den Einstellungen bei der Verschlüsselung sein müssen, jedoch wird dies automatisch erledigt. <b>Merke: Beim Entschlüsseln dieselben Eingaben wie bei der Verschlüsselung machen.</b></p>
 
 <p>Nachdem alles ausgefüllt ist, kann der Assistent beendet, und der Text ver-/entschlüsselt werden.  Der neue Text wird dann in einem neu geöffneten Editorfenster angezeigt.</p>

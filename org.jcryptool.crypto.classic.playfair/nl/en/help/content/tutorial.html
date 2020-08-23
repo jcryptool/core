@@ -1,27 +1,32 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
 	  <title>Playfair Usage</title>
 </head>
 <body>
+
+
 <h1>Playfair Usage</h1>
 
 <p>This page is about using the user interface for the Playfair cipher. For general information about this algorithm, see: <a href="toc_cryptology/toc_cryptology.html">Playfair cipher in the cryptology manual</a>.</p>
 <p>Below you will find explanation of what the different "groups" of options shown in the wizard mean, and what to fill in. In the Playfair wizard, you will hardly need all options to change. Just the "Key" and "Operation" groups are mandatory to take care of in most cases.</p>
-<h3>Operation - Encryption or decryption?</h3>
+
+
+<h3>Operation &ndash; encryption or decryption</h3>
 <p>First, choose, whether you want to en- or decrypt the text in this dialog. As this is a symmetric cipher, a text encrypted with a certain key can be decrypted to the original text, using the same key.</p>
+
 
 <h3>Alphabet</h3>
 <p>The alphabet, over which a cryptographic operation (like en- or decryption) is executed, holds all the characters that this operation will accept and process. Use the "show alphabet" button to see, which characters the selected alphabet contains.</p>
 
 <p>For example, if you choose an alphabet that holds only UPPERCASE characters (like "Upper Latin (A-Z)"), lowercase characters will not be encrypted. With the checkbox "filter non-alphabet characters", you can choose whether just to neglect (unchecked), or to completely delete those characters, which would be all lowercase characters in the example.
 
+
 <h3>Pre-operation text transformation</h3>
 <p>If you would like to change the input text before you apply the algorithm, you can check this box, and you will be able to select from a range of text-altering operations after completing this wizard page. For example, you can choose to delete all blanks for increased security.</p>
 <p>Pre-operation text transformation should only be used when encrypting a text. When used with decryption, there will be information loss or unreadable text in most cases.</p>
+
 
 <h3>Key</h3>
 <p>The Key of the Playfair cipher is a word, where all characters must be contained in the alphabet selected above.</p>

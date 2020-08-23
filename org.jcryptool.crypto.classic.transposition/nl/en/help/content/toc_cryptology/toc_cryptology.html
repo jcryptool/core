@@ -1,29 +1,32 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-	  <title>Transposition cipher</title>
+	  <title>Transposition Cipher</title>
 </head>
 <body>
 
-<h1>Transposition cipher</h1>
+
+<h1>Transposition Cipher</h1>
 <p>
 	The transposition cipher relocates the letters of the plaintext based on an order generated from the keyword. Transposition ciphers are one of the oldest cryptographic algorithms. A well-known example is the Scytale, which was documented first in the Pelleponesian war, 431 BC.
 </p>
+
 
 <h3 id="classification">Classification</h3>
 <p>
 	Transposition ciphers are one of the basic encryption algorithm classes. The transposition cipher which is implemented in the JCrypTool is the columnar transposition, but transposition itself covers all ciphers where the pure replacement of characters in a text takes place.
 </p>
 
+
 <h3 id="scheme">Input and output scheme</h3>
 
 <p><img id="scheme"
 src="in_out_scheme.png" alt="in_out_scheme.png"></p>
 
+
 <h3 id="algorithm">The en- and decryption algorithm</h3>
+
 
 <h4>Encryption</h4>
 
@@ -51,8 +54,7 @@ has to be encrypted, it has to be read into the table first, and after the
 transposition, the table has to be read out into text again. Two methods are
 common: <b>row-wise and column-wise read in/out</b>.</p>
 
-<p><i>The column count is defined by the key
-length.</i><b> </b>Such, based
+<p><i>The number of columns is defined by the key length.</i> <b></b>Such, based
 on the text length, the dimensions of the table can be calculated. In the
 picture above, the text seems to be „ATTACKATMIDNIGHT“ (apparently read in
 row-wise) – we will use this example often in this article. This text is 16 characters
@@ -82,6 +84,7 @@ analogue, row- or column-wise. Blank cells are simply ignored here.</p>
 paths, using the already known text and key (just the read in/out-orders are
 variable). <img id="Grafik 3" src="bigPicture_transposition.png" alt="bigPicture_transposition.png" width="85%" /></p>
 
+
 <h4>Decryption</h4>
 
 <p>To every key k, there exists an inverse
@@ -104,6 +107,7 @@ and read-out-method: “row-wise”, has to be “encrypted” with i, read-in-o
 and read-out order “column-wise”, in order to decrypt the text. The most
 computer programs, like JCrypTool, do these inversion methods automatically,
 meaning, that the input at decryption should be the same as at encryption.</p>
+
 
 <h4>Advanced: Consideration of the table mask
 when no filling characters are used</h4>
@@ -146,6 +150,7 @@ into the table, the cells 3 and 6 in the last row cannot be filled with
 ciphertext characters. The table, that has really been the result of the
 encryption in the first place can be reconstructed now, and decrypted properly
 without loss of data.</p>
+
 
 <h3 id="furtherreading">Further reading</h3>
 <ul>

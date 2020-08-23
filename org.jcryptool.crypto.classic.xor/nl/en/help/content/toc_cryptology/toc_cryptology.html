@@ -1,41 +1,38 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-	  <title>XOR cipher</title>
+	  <title>XOR Cipher</title>
 </head>
 <body>
 
-<h1>XOR cipher</h1>
+
+<h1>XOR Cipher</h1>
 <p>
 	The XOR cipher executes exclusive conjunction (logic XOR) bitwise with the plaintext and the keyword. Another encryption with the same key results in the plaintext again, due to the symmetric nature of the XOR conjunction. XOR is one of the simplest bit ciphers, and is widely used in modern cryptographic block ciphers.
 </p>
+
 
 <h3 id="classification">Classification</h3>
 <p>
 	The XOR cipher is a polyalphabetic substitution cipher.
 </p>
 
+
 <h3 id="scheme">Input and output scheme</h3>
 <img src="in_out_scheme.png"  width="85%" />
+
+
 <h3 id="algorithm">The en- and decryption algorithm</h3>
-<h4>Verschlüsselung</h4>
 
-<p>The XOR algorithm encodes the characters of
-the plain text into binary, which are then bitwise XOR-combined, resulting in
-binary ciphertext characters. The encoding follows the enumeration of the alphabets
-– the first character is encoded with …0000, the next one with …0001 and so
-on).</p>
 
-<p>To guarantee, that every result of an XOR-combination
-has a correspondent character in the ciphertext alphabet, this alphabet has to
-be a length that is a power of two, and must have more or equal elements than
-the plain text alphabet.</p>
+<h4>Encryption</h4>
 
-<p>Be the plain text alphabet „ABCDEFGH“, and
-the cipher text alphabet he same, the encodings of the characters would be:</p>
+<p>The XOR algorithm encodes the characters of the plain text into binary, which are then bitwise XOR-combined, resulting in binary ciphertext characters. The encoding follows the enumeration of the alphabets – the first character is encoded with …0000, the next one with …0001 and so on).</p>
+
+<p>To guarantee, that every result of an XOR-combination has a correspondent character in the ciphertext alphabet, this alphabet has to be a length that is a power of two, and must have more or equal elements than the plain text alphabet.</p>
+
+<p>Be the plain text alphabet „ABCDEFGH“, and the cipher text alphabet he same, the encodings of the characters would be:</p>
 
 <p>A … 000<br>
 B … 001 <br>
@@ -51,10 +48,12 @@ H … 111</p>
 <img src="encryption_example.png"
 alt="encryption_example.png"></p>
 
+
 <h4>Decryption</h4>
 
-<p>The decryption is „encrypting“ the
-ciphertext with the key used for encryption again.</p>
+<p>The decryption is „encrypting“ the ciphertext with the key used for encryption again.</p>
+
+
 <h3 id="furtherreading">Further reading</h3>
 <ul>
   <li>

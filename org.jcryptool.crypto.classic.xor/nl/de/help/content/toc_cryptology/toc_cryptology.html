@@ -1,24 +1,32 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	  <title>XOR-Verschlüsselung</title>
 </head>
 <body>
 
+
 <h1>XOR-Verschlüsselung</h1>
 <p>
-	Das XOR-Verfahren f&#252;hrt eine logische XOR-Verkn&#252;pfung des Klartextes und des Schl&#252;ssels durch. Eine erneute Verschl&#252;sselung des Geheimtextes mit demselben Schl&#252;ssel f&#252;hrt zur Entschl&#252;sselung des Textes. XOR ist eines der einfachsten Verfahren und findet heute Anwendung in modernen Blockchiffren.
+	Das XOR-Verfahren führt eine logische XOR-Verknüpfung des Klartextes und des Schlüssels durch. Eine erneute Verschlüsselung des Geheimtextes mit demselben Schlüssel führt zur Entschlüsselung des Textes. XOR ist eines der einfachsten Verfahren und findet heute Anwendung in modernen Blockchiffren.
 </p>
+
 
 <h3 id="classification">Klassifikation</h3>
 <p>
 	Die XOR-Verschlüsselung ist eine polyalphabetische Substitutionschiffre.
 </p>
 
+
 <h3 id="scheme">Ein- und Ausgabeschema</h3>
 <img src="in_out_scheme.png" width="85%" />
+
+
+
 <h3 id="algorithm">Der Ver- und Entschlüsselungsalgorithmus</h3>
+
+
 <h4>Verschlüsselung</h4>
 
 <p>Das XOR-Verfahren codiert die Buchstaben des
@@ -30,9 +38,7 @@ zwei Buchstaben auch wieder einen Buchstaben aus dem Geheimtextalphabet
 hervorbringen kann, muss die Länge des Geheimtextalphabets eine Zweierpotenz
 und größer als die Länge des Klartextalphabets sein.</p>
 
-<p>Sei das Klartextalphabet „ABCDEFGH“, und das
-Geheimtextalphabet ebenso, so würden die Buchstaben die folgenden Codierungen
-erhalten:</p>
+<p>Sei das Klartextalphabet „ABCDEFGH“, und das Geheimtextalphabet ebenso, so würden die Buchstaben die folgenden Codierungen erhalten:</p>
 
 <p>A … 000<br>
 B … 001 <br>
@@ -48,11 +54,14 @@ würde ergeben:<br>
 <img src="encryption_example.png"
 alt="encryption_example.png"></p>
 
+
 <h4>Entschlüsselung</h4>
 
 <p>Die Entschlüsselung erfolgt wie die Verschlüsselung:
 XOR-Verknüpfung des Geheimtextes mit dem XOR-Bitstring, der auch zur
 Verschlüsselung genutzt wurde.</p>
+
+
 <h3 id="furtherreading">Weiterführende Lektüre</h3>
 <ul>
   <li>
