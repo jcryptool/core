@@ -687,23 +687,4 @@ public class ExtendedEuclid extends Composite {
 		}
 	}
 
-	/**
-	 * This method replaces exportToPdfAction
-	 */
-	public void exportToPdf() {
-		FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
-		dialog.setFilterPath(DirectoryService.getUserHomeDir());
-		dialog.setFileName(Messages.Euclid_SaveDialog + textP_2.getText() + "_" + textQ_2.getText() + ".pdf");
-		dialog.setFilterExtensions(new String[] { IConstants.PDF_FILTER_EXTENSION });
-		dialog.setFilterNames(new String[] { IConstants.PDF_FILTER_NAME });
-		dialog.setOverwrite(true);
-
-		String filename = dialog.open();
-
-		if (filename != null) {
-			FileExporter pdfExport = new FileExporter(exportArray(), filename);
-			pdfExport.exportToPDF();
-		}
-	}
-
 }

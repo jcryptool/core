@@ -811,4 +811,13 @@ public class CRTGroup extends Composite implements Constants {
 		equations.getEquationSet().elementAt(1).setTextfieldA("3"); //$NON-NLS-1$
 		equations.getEquationSet().elementAt(1).setTextfieldM("7"); //$NON-NLS-1$
 	}
+	
+	/**
+	 * If available, returns the result.</br>
+	 * Used for creating a default filename.
+	 * @return The result of the CRT.
+	 */
+	public BigInteger getResult() {
+		return result;
+	}
 }

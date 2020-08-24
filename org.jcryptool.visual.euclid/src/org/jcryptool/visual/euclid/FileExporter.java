@@ -16,14 +16,6 @@ import java.io.OutputStreamWriter;
 
 import org.jcryptool.core.logging.utils.LogUtil;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfWriter;
-
 /**
  * @author Oryal Inel
  * @version 1.0.0
@@ -33,75 +25,15 @@ public class FileExporter {
 	private static final String tab = "\t";
 	private static final String seperator = ";";
 
-	com.lowagie.text.Font fontValuesItalic = new com.lowagie.text.Font(com.lowagie.text.Font.HELVETICA,
-			com.lowagie.text.Font.DEFAULTSIZE, com.lowagie.text.Font.ITALIC);
-
-	private PdfPTable table;
-	private Document document;
 	private String file;
 
 	private String[] euclid;
 
 	public FileExporter(String[] array, String file) {
-		document = new Document();
 		this.file = file;
 		euclid = array;
 	}
 
-	public void exportToPDF() {
-		table = new PdfPTable(5);
-		try {
-			PdfWriter.getInstance(document, new FileOutputStream(file));
-			document.open();
-			PdfPCell cell = new PdfPCell();
-			cell.setColspan(5);
-			float[] width = { 1.2f, 3f, 3f, 3f, 3f };
-			table.setTotalWidth(width);
-			table.addCell("Index");
-			table.addCell("Quotient");
-			table.addCell("Remainder");
-			table.addCell("x");
-			table.addCell("y");
-			
-			int size = euclid.length;
-			String pValue = euclid[2];
-			String qValue = euclid[7];
-			String yValue = euclid[size-7];
-			String xValue = euclid[size-6];
-			String resultValue = euclid[size-8];
-			
-			for (int i=0; i<size; i++) {
-			    table.addCell(new Phrase(euclid[i]));
-			}
-
-			document.add(new Paragraph("Extended Euclidian"));
-			document.add(new Paragraph("gcd(" + pValue + "," + qValue + ")"));
-			document.add(new Paragraph("\n"));
-			document.add(table);
-			document.add(new Paragraph("\n"));
-
-			if (xValue.charAt(0) == '-') {
-				xValue = "( " + xValue + " )";
-			}
-			if (yValue.charAt(0) == '-') {
-				yValue = "( " + yValue + " )";
-			}
-			String tmpValue = " = " + pValue + " * " + yValue + " + " + qValue + " * " + xValue;
-			String resultValueString = tmpValue + " = " + resultValue;
-
-			document.add(new Paragraph("The Greatest Common Divisor of " + pValue + " and " + qValue + " is "
-					+ resultValue + "."));
-			document.add(new Paragraph("gcd(p,q) = p * x + q * y", fontValuesItalic));
-			document.add(new Paragraph("gcd(" + pValue + "," + qValue + ")" + resultValueString,
-					fontValuesItalic));
-			document.close();
-
-		} catch (FileNotFoundException e) {
-		    LogUtil.logError(e);
-		} catch (DocumentException e) {
-		    LogUtil.logError(e);
-		}
-	}
 
 	public void exportToCSV() {
         int size = euclid.length;
