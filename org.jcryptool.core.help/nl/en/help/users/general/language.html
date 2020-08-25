@@ -3,14 +3,13 @@
 <html>
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	  <title>Changing the language</title>
+	  <title>Changing the Language</title>
 </head>
 
 <body>
-	<h1>Changing the language</h1>
+	<h1>Changing the Language</h1>
 
-	<p>The initial JCrypTool language is based on your operating systems regional settings. An English Windows normally launches an English JCrypTool.
-	However it is still possible that some plug-ins are shown only in German. The reason for that is simple: the plug-in is not available in English.</p>
+	<p>The default JCrypTool language is based on your operating systems regional settings. An English OS normally launches an English JCrypTool.</p>
 
 	<p>In order to change the JCrypTool language, open the <a href="../general/preferences.html">Preferences</a> and switch to the
 	<strong>General</strong> page. Simply select the desired language. JCrypTool must be restarted in order for the changes to take effect.</p>
@@ -19,12 +18,21 @@
 		<img src="../general/images/preferences_general.png" width="619" height="537" alt="Preferences - General"/>
 	</div>
 
-	<p>It is possible that after a restart JCrypTool menus contain a mix of English and German entries. This might be because of plug-ins that are only available
-	in German, but normally indicates a problem with the JCrypTool cache. Please quit JCrypTool and switch to the <strong>@user.home/documents/.jcryptool</strong>
-	directory in your file manager. Delete the complete <strong>.metadata</strong> directory in this directory. This resets all plug-in settings but keeps your
-	crypto keys created in JCrypTool. You can delete the complete <strong>.jcryptool</strong> directory alternatively, but you will lose all your settings and
+	<p>It is possible that after a restart JCrypTool menus contain a mix of English and German entries. Please quit JCrypTool and switch to the <strong>@user.home/documents/.jcryptool</strong> directory in your file manager. Delete the complete <strong>.metadata</strong> directory in this directory. This resets all plug-in settings but keeps your crypto keys created in JCrypTool. You can delete the complete <strong>.jcryptool</strong> directory alternatively, but you will lose all your settings and
 	data this way.</p>
 
-	<h2>Updating JCrypTool</h2>
+
+    <p> </br> </p>
+ 	<p><strong>Remark:</strong></p>
+
+    <p>You can start JCrypTool with the parameter -nl <value> from the commandline (terminal) and so directly enforce a particular language.</p>
+
+    <p>Here is an example how the according commandline call looks like under Windows:<br>
+    F:\Downloads\jcryptool\JCrypTool.exe -nl en<br>
+    And here is a sample call under Linux:<br>
+    $ ./JCrypTool -nl en &
+    </p>
+
+
 </body>
 </html>

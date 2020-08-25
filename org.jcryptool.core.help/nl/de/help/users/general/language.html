@@ -9,22 +9,30 @@
 <body>
 	<h1>Wechseln der Sprache</h1>
 
-	<p>Die beim ersten Start von JCrypTool gewählte Sprache entspricht den im Betriebssystem festgelegten Regionaleinstellungen. Ein deutsches Windows
-	führt somit meistens zu einem deutschsprachigen JCrypTool. Manche Plug-ins können dennoch mit englischen Texten angezeigt werden, Ursache hierfür
-	sind fehlende deutsche Übersetzungen.</p>
+	<p>Die beim Start von JCrypTool gewählte Sprache entspricht den im Betriebssystem festgelegten Regionaleinstellungen. Ein deutsches Betriebssystem
+	führt somit meistens zu einem deutschsprachigen JCrypTool.</p>
 
-	<p>Zum Wechseln der JCrypTool Sprache öffnen Sie die <a href="../general/preferences.html">Benutzervorgaben</a> und wechseln auf die Seite
-	<strong>Allgemein</strong>. In der hier angezeigten Auswahlbox können Sie die Sprache festlegen. Damit die Einstellungen aktiv werden muss
-	JCrypTool neu gestartet werden.</p>
+	<p>Zum Wechseln der JCrypTool-Sprache öffnen Sie die <a href="../general/preferences.html">Benutzervorgaben</a> und wechseln auf die Seite
+	<strong>Allgemein</strong>. In der dort angezeigten Auswahlbox können Sie die Sprache festlegen. Damit die Einstellungen aktiv werden, muss JCrypTool neu gestartet werden.</p>
 
 	<div class="screenshot">
 		<img src="../general/images/preferences_general.png" width="619" height="537" alt="Benutzervorgaben - Allgemein"/>
 	</div>
 
-	<p>Nach dem Neustart kann es vorkommen, dass die Menüs einen Mix aus deutschen und englischen Einträgen anzeigen. Bei manchen Plug-ins ist es wie gesagt möglich,
-	dass nur eine englische Version zur Verfügung steht. Die meisten Plug-ins liegen jedoch zweisprachig vor. In diesem Fall beenden Sie JCrypTool und löschen im
-	Dateimanager das Verzeichnis <strong>.metadata</strong> im JCrypTool-Workspace-Verzeichnis <strong>@user.home/documents/.jcryptool</strong>. Damit setzen Sie alle
-	Plug-ins zurück, Ihre Schlüssel und andere JCrypTool-Dateien bleiben allerdings erhalten. Sie können auch das gesamte <strong>.jcryptool</strong> Verzeichnis löschen,
-	verlieren dann aber alle Einstellungen und Dateien.</p>
+	<p>Nach dem Neustart kann es vorkommen, dass die Menüs einen Mix aus deutschen und englischen Einträgen anzeigen. In diesem Fall beenden Sie JCrypTool und löschen im Dateimanager das Verzeichnis <strong>.metadata</strong> im JCrypTool-Workspace-Verzeichnis <strong>@user.home/documents/.jcryptool</strong>. Damit setzen Sie alle Plug-ins zurück, Ihre Schlüssel und andere JCrypTool-Dateien bleiben erhalten. Sie können auch das gesamte <strong>.jcryptool</strong> Verzeichnis löschen, verlieren dann aber alle Einstellungen und Dateien.</p>
+
+
+    <p> </br> </p>
+ 	<p><strong>Anmerkung:</strong></p>
+
+    <p>Sie können JCrypTool auf der Kommandozeile (Terminal) mit dem Parameter -nl <value> starten und so direkt eine bestimmte Sprache erzwingen.</p>
+
+    <p>Hier ist ein Beispiel, wie der Kommandozeilen-Aufruf  unter Windows aussieht:<br>
+    F:\Downloads\jcryptool\JCrypTool.exe -nl de<br>
+    Und hier ein Beispielaufruf unter Linux:<br>
+    $ ./JCrypTool -nl de & 
+    </p>
+
+	
 </body>
 </html>
