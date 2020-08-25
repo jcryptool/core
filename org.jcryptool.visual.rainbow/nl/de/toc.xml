@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Multivariate Kryptographie" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
-    <topic href="$nl$/help/content/index.html" label="Multivariate Kryptographie"/>
+<toc label="Multivariate Kryptografie" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
+    <topic href="$nl$/help/content/index.html" label="Multivariate Kryptografie"/>
 </toc>
