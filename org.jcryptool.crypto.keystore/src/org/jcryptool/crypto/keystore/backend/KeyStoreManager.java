@@ -182,12 +182,15 @@ public class KeyStoreManager {
     private void loadKeystore() {
         InputStream is = null;
         try {
+        	ProviderManager2.getInstance().setProviders__flexiPromoted();
+
             is = new BufferedInputStream(platformKeystore.openInputStream(EFS.NONE, null));
             keyStore.load(is, KEYSTORE_PASSWORD);
         } catch (Exception e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, e);
             createDefaultKeystore();
         } finally {
+        	ProviderManager2.getInstance().setProviders__sunPromoted();
             if (is != null) {
                 try {
                     is.close();
