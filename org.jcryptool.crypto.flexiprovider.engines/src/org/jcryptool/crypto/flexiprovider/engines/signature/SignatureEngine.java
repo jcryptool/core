@@ -12,6 +12,7 @@ package org.jcryptool.crypto.flexiprovider.engines.signature;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.ProviderMismatchException;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.Certificate;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.jcryptool.core.logging.dialogs.JCTMessageDialog;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.operations.providers.ProviderManager2;
 import org.jcryptool.crypto.flexiprovider.descriptors.IFlexiProviderOperation;
 import org.jcryptool.crypto.flexiprovider.engines.FlexiProviderEngine;
 import org.jcryptool.crypto.flexiprovider.engines.FlexiProviderEnginesPlugin;
@@ -50,6 +52,8 @@ public class SignatureEngine extends FlexiProviderEngine {
         char[] password = null;
         KeyObject usedKey = null;
         try {
+        	// this tries to 
+            ProviderManager2.getInstance().setProviders__flexiPromoted();
             signature = Registry.getSignature(operation.getAlgorithmDescriptor().getAlgorithmName());
             AlgorithmParameterSpec spec = operation.getAlgorithmDescriptor().getAlgorithmParameterSpec();
             if (spec != null) {
@@ -74,7 +78,9 @@ public class SignatureEngine extends FlexiProviderEngine {
                 operation.setPassword(password); // save in the operation if no exception occurred
             } else {
                 Certificate certificate = KeyStoreManager.getInstance().getCertificate(operation.getKeyStoreAlias());
+
                 Key publicKey = (Key) certificate.getPublicKey();
+
                 signature.initVerify((PublicKey) publicKey);
                 usedKey = new KeyObject(publicKey, password);
             }
@@ -97,6 +103,8 @@ public class SignatureEngine extends FlexiProviderEngine {
         } catch (Exception e) {
             LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID, "Exception while initializing a signature", e, true); //$NON-NLS-1$
             return null;
+        } finally {
+        	ProviderManager2.getInstance().setProviders__sunPromoted();
         }
         return usedKey;
     }
