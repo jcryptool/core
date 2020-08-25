@@ -18,7 +18,6 @@
   </issueManagement>
 
   <modules>
-    <module>com.lowagie.itext</module>
 	<module>com.thoughtworks.xstream</module>
 	<module>org.jcryptool.analysis</module>
 	<module>org.jcryptool.analysis.entropy</module>

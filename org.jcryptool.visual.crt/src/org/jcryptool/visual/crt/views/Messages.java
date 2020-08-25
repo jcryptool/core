@@ -25,7 +25,6 @@ public class Messages extends NLS {
 	public static String CRTConstants_EquationGroup;
 	public static String CRTConstants_ExportCSV;
 	public static String CRTConstants_ExportLATEX;
-	public static String CRTConstants_ExportPDF;
 	public static String CRTConstants_Inverse;
 	public static String CRTConstants_MoreSolution;
 	public static String CRTConstants_Next;

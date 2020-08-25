@@ -6,7 +6,6 @@ Bundle-Version: 1.0.0
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.help,
- com.lowagie.itext,
  org.jcryptool.core.operations,
  org.jcryptool.core.util,
  org.eclipse.swt

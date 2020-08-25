@@ -31,7 +31,6 @@ public class Messages extends NLS {
     public static String Euclid_PrevStep_Button;
     public static String Euclid_Description_1;
     public static String Euclid_Description_2;
-    public static String Euclid_Export_PDF;
     public static String Euclid_Export_CSV;
     public static String Euclid_Export_Tex;
     public static String Euclid_Restart;
