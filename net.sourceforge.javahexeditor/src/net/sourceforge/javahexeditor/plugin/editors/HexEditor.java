@@ -368,7 +368,7 @@ public final class HexEditor extends EditorPart implements ISelectionProvider {
 			try {
 				// throws IllegalAccessException, InstantiationException,
 				// ClassNotFoundException
-				result = (IContentOutlinePage) aBundle.loadClass(className).newInstance();
+				result = (IContentOutlinePage) aBundle.loadClass(className).getConstructor().newInstance();
 			} catch (Exception e) {
 				return null;
 			}

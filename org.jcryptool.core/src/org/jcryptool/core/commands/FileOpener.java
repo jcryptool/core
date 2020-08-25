@@ -27,7 +27,7 @@ import org.jcryptool.core.operations.util.PathEditorInput;
 public class FileOpener {
 
     private static final String TEXT_EDITOR = "org.jcryptool.editor.text.editor.JCTTextEditor"; //$NON-NLS-1$
-    private static final String HEX_EDITOR = "net.sourceforge.ehep.editors.HexEditor"; //$NON-NLS-1$
+    private static final String HEX_EDITOR = "org.jcryptool.editors.hex.HexEditor"; //$NON-NLS-1$
 
     private static String getEditorId(final String osString) {
         final IEditorDescriptor descriptor = PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(osString);
@@ -41,6 +41,7 @@ public class FileOpener {
     }
     
     public static void open(String filename) {
+
         final IPath path = new Path(filename);
         final String editorId = getEditorId(path.toOSString());
 
