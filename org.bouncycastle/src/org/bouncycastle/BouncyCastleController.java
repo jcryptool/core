@@ -42,4 +42,14 @@ public class BouncyCastleController extends AbstractProviderController {
 		return providers;
 	}
 
+	@Override
+	public void setProviders__sunPromoted() {
+// 		System.err.println("promoting sun security providers in BouncyCastleController (NOP)");
+	}
+
+	@Override
+	public void setProviders__flexiPromoted() {
+// 		System.err.println("promoting flexi security providers in BouncyCastleController (NOP)");
+	}
+
 }

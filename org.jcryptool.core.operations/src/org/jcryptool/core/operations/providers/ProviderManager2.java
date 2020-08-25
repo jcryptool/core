@@ -13,6 +13,7 @@ import java.security.Provider;
 import java.security.Security;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
@@ -33,6 +34,8 @@ public class ProviderManager2 {
 
     /*  */
     private List<String> availableProviders = new ArrayList<String>();
+
+	public List<AbstractProviderController> controllers = new LinkedList<>();
 
     private ProviderManager2() {
         loadProviders();
@@ -67,6 +70,7 @@ public class ProviderManager2 {
                     }
                     AbstractProviderController controller = (AbstractProviderController) configElements[j]
                             .createExecutableExtension("providerController"); //$NON-NLS-1$
+                    this.controllers.add(controller);
                     addProviders(controller.addProviders());
                 } catch (CoreException e) {
                     LogUtil.logError(OperationsPlugin.PLUGIN_ID, "CoreException while accessing a provider controller", //$NON-NLS-1$
@@ -100,5 +104,13 @@ public class ProviderManager2 {
     public Provider getFactoryDefaultProvider() {
         return Security.getProvider(factoryDefaultProvider);
     }
+
+	public void setProviders__flexiPromoted() {
+		this.controllers.forEach(c -> c.setProviders__flexiPromoted());
+	}
+
+	public void setProviders__sunPromoted() {
+		this.controllers.forEach(c -> c.setProviders__sunPromoted());
+	}
 
 }

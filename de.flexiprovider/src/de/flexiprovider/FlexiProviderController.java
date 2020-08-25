@@ -16,6 +16,7 @@ package de.flexiprovider;
 import java.security.Provider;
 import java.security.Security;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -35,12 +36,82 @@ import de.flexiprovider.pqc.FlexiPQCProvider;
  */
 public class FlexiProviderController extends AbstractProviderController {
 	
+	public static final FlexiNFProvider FLEXI_NF_PROVIDER = new FlexiNFProvider();
+	public static final FlexiPQCProvider FLEXI_PQC_PROVIDER = new FlexiPQCProvider();
+	public static final FlexiECProvider FLEXI_EC_PROVIDER = new FlexiECProvider();
+	public static final FlexiCoreProvider FLEXICORE_PROVIDER = new FlexiCoreProvider();
+	private static final Provider[] FLEXI_PROVIDERS = new Provider[] {FlexiProviderController.FLEXICORE_PROVIDER, FLEXI_EC_PROVIDER, FLEXI_PQC_PROVIDER, FLEXI_NF_PROVIDER};
+	
+	static {
+		FLEXICORE_PROVIDER.remove("SecureRandom.BBS");
+		FLEXICORE_PROVIDER.remove("SecureRandom.BBSRandom");
+		FLEXICORE_PROVIDER.remove("Alg.Alias.SecureRandom.BBSRandom");
+        FLEXI_EC_PROVIDER.remove("SecureRandom.ECPRNG");
+	}
+
 	/**
 	 * Empty no-args constructor.
 	 */
 	public FlexiProviderController() {
 	}
 
+	// these get cached before any of JCT's providers are set, so they can be repositioned (before or after) according to the current needs
+	private List<Provider> defaultProviders = null;
+	
+	private void cacheDefaultProviders() {
+		if (defaultProviders == null) {
+			defaultProviders = new LinkedList<>();
+			for (Provider p : Security.getProviders()) {
+				defaultProviders.add(p);
+			}
+		}
+	}
+
+
+	
+	@Override
+	public void setProviders__sunPromoted() {
+		System.err.println("promoting sun security providers in FlexiProviderController");
+		cacheDefaultProviders();
+		for(Provider p: Security.getProviders()) {
+			Security.removeProvider(p.getName());
+		}
+		if (Security.getProviders().length == 0) {
+			System.err.println("the providers have been cleared.");
+		}
+		// add the sun providers first
+		for (Provider provider: defaultProviders) {
+			System.err.println("adding Provider: " + provider.getName());
+			Security.addProvider(provider);
+		}
+		// add the Flexiproviders after
+		for (Provider provider : FLEXI_PROVIDERS) {
+			System.err.println("adding Provider: " + provider.getName());
+			Security.addProvider(provider);
+		}
+	}
+	@Override
+	public void setProviders__flexiPromoted() {
+		System.err.println("promoting flexi security providers in FlexiProviderController");
+		cacheDefaultProviders();
+		if (Security.getProviders().length == 0) {
+			System.err.println("the providers have been cleared.");
+		}
+		for(Provider p: Security.getProviders()) {
+			Security.removeProvider(p.getName());
+		}
+		// add the Flexiproviders first
+		for (Provider provider : FLEXI_PROVIDERS) {
+			System.err.println("adding Provider: " + provider.getName());
+			Security.addProvider(provider);
+		}
+		// add the sun providers after
+		for (Provider provider: defaultProviders) {
+			System.err.println("adding Provider: " + provider.getName());
+			Security.addProvider(provider);
+		}
+	}
+	
 	/**
 	 * Adds the four distinctive FlexiProvider cryptographic providers as the top priority providers for the platform.
 	 * 
@@ -50,31 +121,24 @@ public class FlexiProviderController extends AbstractProviderController {
 	public List<String> addProviders() {
 		List<String> providers = new ArrayList<String>(4);
 
-		Provider flexiCore = new FlexiCoreProvider();
-		flexiCore.remove("SecureRandom.BBS");
-		flexiCore.remove("SecureRandom.BBSRandom");
-		flexiCore.remove("Alg.Alias.SecureRandom.BBSRandom");
-		Security.addProvider(flexiCore);
-		providers.add(flexiCore.getName() + AbstractProviderController.SEPARATOR + flexiCore.getInfo());
-		LogUtil.logInfo("Security Provider '" + flexiCore.getName() + "' added.");
+		providers.add(FlexiProviderController.FLEXICORE_PROVIDER.getName() + AbstractProviderController.SEPARATOR + FlexiProviderController.FLEXICORE_PROVIDER.getInfo());
+		providers.add(FLEXI_EC_PROVIDER.getName() + AbstractProviderController.SEPARATOR + FLEXI_EC_PROVIDER.getInfo());
+		providers.add(FLEXI_PQC_PROVIDER.getName() + AbstractProviderController.SEPARATOR + FLEXI_PQC_PROVIDER.getInfo());
+		providers.add(FLEXI_NF_PROVIDER.getName() + AbstractProviderController.SEPARATOR + FLEXI_NF_PROVIDER.getInfo());
 
-		Provider flexiEC = new FlexiECProvider();
-        flexiEC.remove("SecureRandom.ECPRNG");
-        Security.addProvider(flexiEC);
-		providers.add(flexiEC.getName() + AbstractProviderController.SEPARATOR + flexiEC.getInfo());
-		LogUtil.logInfo("Security Provider '" + flexiEC.getName() + "' added.");
-
-		Provider flexiPQC = new FlexiPQCProvider();
-		Security.addProvider(flexiPQC);
-		providers.add(flexiPQC.getName() + AbstractProviderController.SEPARATOR + flexiPQC.getInfo());
-		LogUtil.logInfo("Security Provider '" + flexiPQC.getName() + "' added.");
-
-		Provider flexiNF = new FlexiNFProvider();
-		Security.addProvider(flexiNF);
-		providers.add(flexiNF.getName() + AbstractProviderController.SEPARATOR + flexiNF.getInfo());
-		LogUtil.logInfo("Security Provider '" + flexiNF.getName() + "' added.");
-		
+		setProviders__flexiPromoted();
+		System.err.println("CURRENT PROVIDERS: ----");
+		for (Provider p: Security.getProviders()) {
+			System.err.println("- " + p.getName());
+		}
+		System.err.println("END: CURRENT PROVIDERS: ----");
 		return providers;
+	}
+
+
+	public static void reset_crypto_providers_generic() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

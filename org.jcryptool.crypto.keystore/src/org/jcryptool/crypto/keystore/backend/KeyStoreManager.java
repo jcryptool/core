@@ -38,6 +38,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.operations.providers.AbstractProviderController;
 import org.jcryptool.core.operations.providers.ProviderManager2;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
@@ -45,6 +46,7 @@ import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.keystore.keys.KeyType;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 
+import de.flexiprovider.FlexiProviderController;
 import de.flexiprovider.api.keys.Key;
 
 /**
@@ -96,9 +98,13 @@ public class KeyStoreManager {
     private KeyStoreManager() {
         ProviderManager2.getInstance();
         try {
+//             keyStore = KeyStore.getInstance("JCEKS"); //$NON-NLS-1$
+        	ProviderManager2.getInstance().setProviders__flexiPromoted();
             keyStore = KeyStore.getInstance("JCEKS"); //$NON-NLS-1$
         } catch (KeyStoreException ex) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.KeyStoreManager_0, ex, true);
+        } finally {
+        	ProviderManager2.getInstance().setProviders__sunPromoted();
         }
 
         platformKeystore = EFS.getLocalFileSystem().fromLocalFile(new File(KEYSTORE_FILE));
@@ -141,6 +147,7 @@ public class KeyStoreManager {
         BufferedInputStream is = null;
 
         try {
+        	ProviderManager2.getInstance().setProviders__flexiPromoted();
             File flexiProvider = new File(DirectoryService.getWorkspaceDir(), FLEXIPROVIDER_FOLDER);
             if (!flexiProvider.exists()) {
                 flexiProvider.mkdir();
@@ -157,6 +164,7 @@ public class KeyStoreManager {
         } catch (Exception ex) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, ex);
         } finally {
+        	ProviderManager2.getInstance().setProviders__sunPromoted();
             if (is != null) {
                 try {
                     is.close();
@@ -197,11 +205,14 @@ public class KeyStoreManager {
     private void saveKeystore() {
         OutputStream os = null;
         try {
+        	ProviderManager2.getInstance().setProviders__flexiPromoted();
+
             os = new BufferedOutputStream(platformKeystore.openOutputStream(EFS.NONE, null));
             keyStore.store(os, KEYSTORE_PASSWORD);
         } catch (Exception ex) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.KeyStoreManager_1, ex, true);
         } finally {
+        	ProviderManager2.getInstance().setProviders__sunPromoted();
             if (os != null) {
                 try {
                     os.close();
@@ -214,6 +225,7 @@ public class KeyStoreManager {
     
     public void backupKeystore(String pathToFile) {
         try {
+        	ProviderManager2.getInstance().setProviders__flexiPromoted();
             File backupFile = new File(pathToFile);
             URI uri = backupFile.toURI();
             IFileStore backupKeystore = EFS.getLocalFileSystem().getStore(uri);
@@ -229,11 +241,14 @@ public class KeyStoreManager {
             }
         } catch (Exception ex) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, ex);
-        }    	
+        } finally {
+        	ProviderManager2.getInstance().setProviders__sunPromoted();
+        }
     }
     
     public void restoreKeystore(String pathToFile) {
         try {
+        	ProviderManager2.getInstance().setProviders__flexiPromoted();
             File flexiProvider = new File(DirectoryService.getWorkspaceDir(), FLEXIPROVIDER_FOLDER);
             if (!flexiProvider.exists()) {
                 flexiProvider.mkdir();
@@ -254,7 +269,9 @@ public class KeyStoreManager {
             }
         } catch (Exception ex) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, ex);
-        }    	
+        } finally {
+        	ProviderManager2.getInstance().setProviders__sunPromoted();
+        }
     }
 
     /**

@@ -9,6 +9,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.core.operations.providers;
 
+import java.security.Provider;
 import java.util.List;
 
 public abstract class AbstractProviderController {
@@ -16,5 +17,8 @@ public abstract class AbstractProviderController {
     public static final String SEPARATOR = ";"; //$NON-NLS-1$
 
     public abstract List<String> addProviders();
+    
+	public abstract void setProviders__sunPromoted();
+	public abstract void setProviders__flexiPromoted();
 
 }
