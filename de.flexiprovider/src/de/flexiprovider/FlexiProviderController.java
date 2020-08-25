@@ -76,17 +76,14 @@ public class FlexiProviderController extends AbstractProviderController {
 		for(Provider p: Security.getProviders()) {
 			Security.removeProvider(p.getName());
 		}
-		if (Security.getProviders().length == 0) {
-			System.err.println("the providers have been cleared.");
-		}
 		// add the sun providers first
 		for (Provider provider: defaultProviders) {
-			System.err.println("adding Provider: " + provider.getName());
+// 			System.err.println("adding Provider: " + provider.getName());
 			Security.addProvider(provider);
 		}
 		// add the Flexiproviders after
 		for (Provider provider : FLEXI_PROVIDERS) {
-			System.err.println("adding Provider: " + provider.getName());
+// 			System.err.println("adding Provider: " + provider.getName());
 			Security.addProvider(provider);
 		}
 	}
@@ -94,20 +91,17 @@ public class FlexiProviderController extends AbstractProviderController {
 	public void setProviders__flexiPromoted() {
 		System.err.println("promoting flexi security providers in FlexiProviderController");
 		cacheDefaultProviders();
-		if (Security.getProviders().length == 0) {
-			System.err.println("the providers have been cleared.");
-		}
 		for(Provider p: Security.getProviders()) {
 			Security.removeProvider(p.getName());
 		}
 		// add the Flexiproviders first
 		for (Provider provider : FLEXI_PROVIDERS) {
-			System.err.println("adding Provider: " + provider.getName());
+// 			System.err.println("adding Provider: " + provider.getName());
 			Security.addProvider(provider);
 		}
 		// add the sun providers after
 		for (Provider provider: defaultProviders) {
-			System.err.println("adding Provider: " + provider.getName());
+// 			System.err.println("adding Provider: " + provider.getName());
 			Security.addProvider(provider);
 		}
 	}
@@ -126,7 +120,7 @@ public class FlexiProviderController extends AbstractProviderController {
 		providers.add(FLEXI_PQC_PROVIDER.getName() + AbstractProviderController.SEPARATOR + FLEXI_PQC_PROVIDER.getInfo());
 		providers.add(FLEXI_NF_PROVIDER.getName() + AbstractProviderController.SEPARATOR + FLEXI_NF_PROVIDER.getInfo());
 
-		setProviders__flexiPromoted();
+		setProviders__sunPromoted();
 		System.err.println("CURRENT PROVIDERS: ----");
 		for (Provider p: Security.getProviders()) {
 			System.err.println("- " + p.getName());
