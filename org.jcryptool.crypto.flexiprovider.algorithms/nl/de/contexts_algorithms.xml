@@ -40,12 +40,12 @@ Im Gegensatz zu digitalen Signaturen verwenden Authentifizierungscode symmetrisc
 
 Kryptologische Hash-Funktionen müssen dabei bestimmte Sicherheitseigenschaften erfüllen. Zum einen muss es eine Einwegfunktion sein, das heißt, für einen gegeben Hashwert  muss es praktisch unmöglich sein, eine Eingabe zu finden die diesen Hashwert besitzt. Ebenfalls muss eine sichere Hash-Funktion kollisionsresistent sein: Es muss praktisch unmöglich sein, zwei verschiedene Eingabewerte zu finden, die denselben Hashwert besitzen.
 
-Hash-Funktionen haben in der Kryptographie viele Einsatzgebiete,  beispielsweise bei digitalen Signaturen, zur Integritätsprüfung von Dateien oder zur sicheren Abspeicherung von Passwörtern.
+Hash-Funktionen haben in der Kryptografie viele Einsatzgebiete,  beispielsweise bei digitalen Signaturen, zur Integritätsprüfung von Dateien oder zur sicheren Abspeicherung von Passwörtern.
    </description>
   </context>
 
   <context id="PRNG" title="Pseudo-Zufallszahlengeneratoren">
-   <description>Zufallsgeneratoren spielen in der Kryptographie eine wichtige Rolle und finden in fast jedem Kryptosystem Verwendung. Ein Einsatzgebiet ist beispielsweise das Erzeugen von Schlüsseln, beispielsweise bei hybriden Verfahren.
+   <description>Zufallsgeneratoren spielen in der Kryptografie eine wichtige Rolle und finden in fast jedem Kryptosystem Verwendung. Ein Einsatzgebiet ist beispielsweise das Erzeugen von Schlüsseln, beispielsweise bei hybriden Verfahren.
 
 Da ein herkömmlicher Computer nicht oder nur sehr schwer echte Zufallszahlen erzeugen kann, werden so genannte &lt;b&gt;Pseudo-Zufallsgeneratoren&lt;/b&gt; verwendet. Diese erzeugen eine Zahlenfolge, die zwar zufällig aussieht, aber in Wirklichkeit durch einen Algorithmus berechnet werden. Kryptographisch sichere Pseudo-Zufallsgeneratoren verwenden allerdings einen geheimen internen Zustand, um die nächste Zufallszahl zu berechnen. Ohne Kenntnis dieses internen Zustandes ist es faktisch unmöglich, die nächste Zufallszahl vorherzusagen.
 
@@ -60,7 +60,7 @@ Der Empfänger einer Nachricht mit einer digitalen Signatur ist in der Lage, die
 
 Bei einer digitalen Signatur wird der Text für gewöhnlich nicht verschlüsselt. Dies muss in einem separaten Schritt passieren.
 
-Im Gegensatz zu Authentifizierungscodes wird für digitale Signaturen asymmetrische Kryptographie verwendet. Das bedeutet, dass ein Schlüssel zum Signieren (privater Schlüssel) existiert, der geheim gehalten werden muss, und ein anderer Schlüssel zum Überprüfen der Signatur existiert (öffentlicher Schlüssel).
+Im Gegensatz zu Authentifizierungscodes wird für digitale Signaturen asymmetrische Kryptografie verwendet. Das bedeutet, dass ein Schlüssel zum Signieren (privater Schlüssel) existiert, der geheim gehalten werden muss, und ein anderer Schlüssel zum Überprüfen der Signatur existiert (öffentlicher Schlüssel).
    </description>
   </context>
 
