@@ -2,6 +2,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<title>Demonstration des Diffie-Hellman Schlüsselaustausch mittels elliptischen Kurven (ECDH)</title>
+	<script id="MathJax-script" async src="${JCTJS_HOST}/javascript/MathJax-master/es5/tex-mml-svg.js"></script>
 </head>
 
 <body>
@@ -12,49 +13,124 @@
 <p>Das Protokoll beruht auf mathematischen Funktionen, sowie multiplakativen Gruppen von ganzen Zahlen mod p oder elliptischen Kurven. In diesem Beispiel werden elliptische Kurven benutzt.</p>
 
 <h2>Erläuterung des Protokolls</h2>
-  <b>Schritt 1. Das Etablieren von öffentlichen Parametern</b><br>
-    Alice und Bob einigen sich auf eine elliptische Kurve und einen Generator <i>G</i>, welcher ein Punkt auf der Kurve ist.<br><br>
-  <b>Schritt 2. Das Erstellen von privaten Schlüsseln</b><br>
-  	Alice und Bob suchen sich beide einen privaten Schlüssel <i>d</i> aus, den sie geheim halten.<br><br>
-  <b>Schritt 3. Das Erstellen von öffentlichen Schlüsseln</b><br>
-    Alice und Bob multiplizieren jetzt <i>G</i> mit ihrem privaten Schlüssel (Skalarmultiplikation).<br><br>
-  <b>Schritt 4. Der Austausch der öffentlichen Schlüssel</b><br>
-    Alice und Bob teilen nun jeweils ihren öffentlichen Schlüssel miteinander.<br><br>
+  <p>
+    <b>Schritt 1. Das Etablieren von öffentlichen Parametern</b><br>
+    Alice und Bob einigen sich auf eine elliptische Kurve und einen Generator <i>G</i>, welcher ein Punkt auf der Kurve ist.
+  </p>
+  <p>
+    <b>Schritt 2. Das Erstellen von privaten Schlüsseln</b><br>
+  	Alice und Bob suchen sich beide einen privaten Schlüssel <i>d</i> aus, den sie geheim halten.
+  </p>
+  <p>
+    <b>Schritt 3. Das Erstellen von öffentlichen Schlüsseln</b><br>
+    Alice und Bob multiplizieren jetzt <i>G</i> mit ihrem privaten Schlüssel (Skalarmultiplikation).
+  </p>
+  <p>
+    <b>Schritt 4. Der Austausch der öffentlichen Schlüssel</b><br>
+    Alice und Bob teilen nun jeweils ihren öffentlichen Schlüssel miteinander.
+  </p>
+  <p>
   <b>Schritt 5. Das Erstellen eines Sitzungsschlüssels</b><br>
-    Alice und Bob multiplizieren nun jeweils den öffentlichen Schlüssel des Anderen mit ihrem eigenem geheimen Schlüssel. Der Sitzungsschlüssel ist der X-Wert des berechneten Schlüsselpunkts.
+    Alice und Bob multiplizieren nun jeweils den öffentlichen Schlüssel des Anderen mit ihrem eigenem geheimen Schlüssel.
+    Der Sitzungsschlüssel ist der X-Wert des berechneten Schlüsselpunkts.
+  </p>
 
 <h2>Voraussetzungen für elliptische Kurven in der Kryptographie</h2>
   <p>Für das sichere Anwenden elliptischer Kurven in der Kryptographie müssen bestimmte Vorrausetzungen gegeben sein.<br>
   In dieser Demonstration können auch kleine elliptische Kurven verwendet werden. Diese Form der Berechnung ist für den echten Schlüsselaustausch ungeeignet, 
   da kleine elliptische Kurven den Voraussetzungen nicht entsprechen. Die Voraussetzungen an elliptische Kurven können nachgeschlagen werden, 
   zum Beispiel in "SEC 1: Elliptic Curve Cryptography" from Certicom Research (<a target="_blank" href="http://www.secg.org/collateral/sec1_final.pdf">Hier herunterzuladen</a>).</p>
-  <h3>E(Fp):</h3>
-    <b>E(Fp):</b> die Kurve selbst.<br>
-    <b>t:</b> das gewünschte Sicherheitslevel in Bits. <i>t</i> kann einen der folgenden Werte halten {56, 64, 80, 96, 112, 128, 192, 256}<br>
-    <b>p:</b> ist eine Primzahl so das [log2(<i>p</i>)] = 2<i>t</i> wenn <i>t</i> != 256 und so das [log2(<i>p</i>)] = 521 wenn <i>t</i> = 256.<br>
-    <b>G:</b> ein Punkt auf der Kurve, welcher als Basis dient.<br>
-    <b>n:</b> eine Primzahl der Ordnung <i>G</i>.<br>
-    <b>h:</b> der Kofaktor. <i>h</i> = #<i>E(Fp)</i> / <i>n</i>.<br><br>
-    - #<i>E(Fp)</i> != <i>p</i><br>
-    - <i>p</i>^B != 1 mod(<i>n</i>) über alle 1 <= B < 20<br>
-    - <i>h</i> ist eine natürliche Zahl<br>
-    - <i>h</i> ist <= 4
-
-  <h3>E(F2^m):</h3>
-    <b>E(F2^m):</b> die Kurve selbst.<br>
-    <b>t:</b> das gewünschte Sicherheitslevel in Bits. <i>t</i> kann einen der folgenden Werte halten {56, 64, 80, 96, 112, 128, 192, 256}<br>
-    <b>'t:</b> die kleinste ganze Zahl in der Menge {64, 80, 96, 112, 128, 192, 256, 512} that is greater than <i>t</i><br>
-    <b>m:</b> eine ganze Zahl aus der Menge {113, 131, 163, 193, 233, 239, 283, 409, 571} so that 2<i>t</i> < m < 2<i>'t</i>.<br>
-    <b>f(x):</b> ein irreduzibles Polynom, welches als Generator für <i>F(2^m)</i> genutzt wird.<br>
-    <b>G:</b> der Basispunkt auf der Kurve.<br>
-    <b>n:</b> eine Primzahl der Ordnung <i>G</i>.<br>
-    <b>h:</b> der Kofactor. <i>h</i> = #<i>E(F2^m)</i> / <i>n</i>.<br><br>
-    - <i>b</i> ist nicht 0<br>
-    - #<i>E(F2^m)</i> != <i>2^m</i><br>
-    - <i>2^mB</i> != 1 mod(<i>n</i>) über alle 1 <= B < 20<br>
-    - <i>h</i> ist eine ganze Zahl<br>
-    - <i>h</i> ist <= 4
-
+   <h3>Für elliptische Kurven über Primkörper \(\mathbb{F} _{p}\)</h3>
+   <table>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(E(\mathbb{F} _{p})\)</td>
+    <td>die Kurve selbst. Eine elliptische Kurve ist eine mathematische Gruppe.</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(N\)</td>
+    <td>die Größe von \(E(\mathbb{F} _{p})\). Dieser Wert wird auch als Ordnung oder Kardinalität bezeichnet und so notiert: \(|E(\mathbb{F} _{p})|\).</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(t\)</td>
+    <td>das gewünschte Sicherheitslevel in Bits. \(t\) kann einer der folgenden Werte sein \(\{56, 64, 80, 96, 112, 128, 192, 256\} \).</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(p\)</td>
+    <td>ist eine Primzahl, sodass \(\log_2(p) = \begin{cases} 2t \quad & \textrm{wenn} \; t \neq 256 \\ 521 & \textrm{wenn} \; t = 256 \end{cases} \)</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(G\)</td>
+    <td>ein Punkt auf der Kurve, der als Basis dient. \(G\) muss so gewählt werden, dass seine Ordnung \(n\) eine Primzahl ist: \(\textrm{ord}\,(G) \in \mathbb{P}\).</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(n\)</td>
+    <td>die Ordnung von \(G\). Muss eine Primzahl sein.</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(h\)</td>
+    <td>der Kofaktor: \(h = \frac{N}{n}\) (order of group divided by order of \(G\)).</td>
+   </tr>
+   </table>
+   
+    <p>Für diese Parameter gibt es weitere Bedingungen</p>
+    <ul>
+      <li>\(N \neq p\)</li>
+      <li>\(p^B \neq 1 \mod{n} \quad \forall B \in \mathbb{N}, 1 \leq B < 20 \)</li>
+      <li>\(h \in \mathbb{N}\)</li>
+      <li>\(h \leq 4\)</li>
+    </ul>
+    
+    <hr>
+    
+    <h3>Für Kurven über binäre Körper \(\mathbb{F} _{2^m}\)</h3>
+    <table>
+   <tr> 
+    <td style="vertical-align: middle; text-align: right">\(E(\mathbb{F} _{2^m})\)</td>
+    <td>die Kurve selbst. Eine elliptische Kurve ist eine mathematische Gruppe.</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(N\)</td>
+    <td>die Größe von \(E(\mathbb{F} _{2^m})\). Dieser Wert wird auch als Ordnung oder Kardinalität bezeichnet und so notiert: \(|E(\mathbb{F} _{2^m})|\).</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(t\)</td>
+    <td>das gewünschte Sicherheitslevel in Bits. \(t\) kann einer der folgenden Werte sein \(\{56, 64, 80, 96, 112, 128, 192, 256\} \)</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(t'\)</td>
+    <td>die kleinste ganze Zahl in der Menge \(\{64, 80, 96, 112, 128, 192, 256, 512\}\) die größer als \(t\) ist.</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(m\)</td>
+    <td>eine ganze Zahl aus der Menge \(\{113, 131, 163, 193, 233, 239, 283, 409, 571\}\) sodass gilt \(2t < m < 2t'\)</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(f(x)\)</td>
+    <td>ein irreduzibles Polynom, welches als Generator für \(\mathbb{F} _{2^m}\) genutzt wird.</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(G\)</td>
+    <td>ein Punkt auf der Kurve, der als Basis dient. \(G\) muss so gewählt werden, dass seine Ordnung \(n\) eine Primzahl ist: \(\textrm{ord}\,(G) \in \mathbb{P}\).</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(n\)</td>
+    <td>die Ordnung von \(G\). Muss eine Primzahl sein.</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(h\)</td>
+    <td>der Kofaktor: \(h = \frac{N}{n}\) (order of group divided by order of \(G\)).</td>
+   </tr>
+   </table>
+   
+    <p>Für diese Parameter gibt es weitere Bedingungen</p>
+    <ul>
+       <li>\(b \neq 0\)</li>
+       <li>\(N \neq 2^m\)</li>
+       <li>\(p^mB \neq 1 \mod{n} \quad \forall B \in \mathbb{N}, 1 \leq B < 20 \)</li>
+       <li>\(h \in \mathbb{N}\)</li>
+       <li>\(h \leq 4\)</li>
+    </ul>
+   
 <h2>Die ECDH Visualisierung</h2>
 
 <p>Die Visualisierung (das Plugin) veranschaulicht den Austausch eines öffentlichen Schlüssels zwischen Alice und Bob durch den Diffie-Hellman Schlüsselaustausch über elliptische Kurven. Das Protokoll kann mit kleinen oder großen elliptischen Kurven ausgeführt werden.</p>
@@ -69,7 +145,7 @@
 
 <p>Nachdem ein Schritt des Schlüsselaustauschs abgeschlossen wurde, färbt sich die entsprechende Schaltfläche grün.</p>
 
-<p align=center><img src="greenButton.PNG" width="85%"/></p>
+<p align=center><img src="greenButton.PNG" style="width: 30%; min-width: 100pt"/></p>
 
 <p>Jetzt können die nächsten Schritte des Schlüsselaustauschs gemacht werden. Zunächst müssen Alice und Bob jeweils ein Geheimnis wählen. Dann berechnen sie die gemeinsamen Schlüssel <i>A</i> und <i>B</i>, welche anschließend auf einem öffentlichen (unsicheren) Kanal getauscht werden. Abschließend berechnen sie, wie in der <b>Erläuterung des Protokolls</b> beschrieben, ihren gemeinsamen Sitzungsschlüssel.</p>
 
@@ -79,7 +155,7 @@
 
 <p>Wenn alle Schritte abgeschlossen sind und Alice und Bob erfolgreich einen Sitzungsschlüssel etabliert haben, erscheint ein Schlüssel unten im Fenster.</p>
 
-<p align=center><img src="key.png" width="85%"/></p>
+<p align=center><img src="key.png" style="width: 20%; min-width: 75pt"/></p>
 
 <p>Nach Abschluss aller Schritte erscheinen unter dem Schlüssel die zwei Buttons "In Editor speichern" und "In Datei speichern". Der Button "In Editor speichern" öffnet einen neuen Editor und zeigt die Ergebnisse des Schlüsselaustauschs darin an. Der Button "In Datei speichern" erlaubt es, die Ergebnisse in einer Datei zu speichern. Dazu öffnet sich ein "Speichern unter" Dialog. Dort können Sie eine Datei auswählen, in der die Ergebnisse gespeichert werden sollen.</p> 
 

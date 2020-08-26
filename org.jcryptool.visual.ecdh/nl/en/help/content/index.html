@@ -1,7 +1,8 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	  <title>Demonstration of Diffie-Hellman key exchange over elliptic curves (ECDH)</title>
+	<title>Demonstration of Diffie-Hellman key exchange over elliptic curves (ECDH)</title>
+	<script id="MathJax-script" async src="${JCTJS_HOST}/javascript/MathJax-master/es5/tex-mml-svg.js"></script>
 </head>
 
 <body>
@@ -11,48 +12,123 @@
 <p>The Diffie-Hellman key exchange is a protocol that allows two parties to establish a shared secret key over an insecure communications channel.</p>
 <p>The protocol is possible over  mathematical functions, like the multiplicative group of integers mod p or over elliptic curves. Here we use elliptic curves.</p>
 <h2>Protocol explanation</h2>
-  <b>Step 1. Establish public parameters</b><br>
-    Alice and Bob agree on an elliptic curve and a generator <i>G</i> which is a point on the curve.<br><br>
-  <b>Step 2. Create secret keys</b><br>
-    Alice an Bob both choose a secret key <i>d</i> which they will keep to themselves.<br><br>
-  <b>Step 3. Create shared keys</b><br>
-    Alice and Bob will now multiply <i>G</i> by their own secret keys (scalar multiplication).<br><br>
-  <b>Step 4. Exchange shared keys</b><br>
-    Alice and Bob will exchange their shared keys.<br><br>
-  <b>Step 5. Create session key</b><br>
-    Alice and Bob will now both multiply each others shared key with their own secret key. The session key is the X-value of the calculated key-point.<br><br>
+  <p>
+    <b>Step 1. Establish public parameters</b><br>
+    Alice and Bob agree on an elliptic curve and a generator <i>G</i> which is a point on the curve.
+  </p>
+  <p>
+    <b>Step 2. Create secret keys</b><br>
+    Alice an Bob both choose a secret key <i>d</i> which they will keep to themselves.
+  </p>
+  <p>
+    <b>Step 3. Create shared keys</b><br>
+    Alice and Bob will now multiply <i>G</i> by their own secret keys (scalar multiplication).
+  </p>
+  <p>
+    <b>Step 4. Exchange shared keys</b><br>
+    Alice and Bob will exchange their shared keys.
+  </p>
+  <p>
+    <b>Step 5. Create session key</b><br>
+    Alice and Bob will now both multiply each others shared key with their own secret key.
+    The session key is the X-value of the calculated key-point.
+  </p>
 
 <h2>Curve demands for cryptography</h2>
   <p>In order to use elliptic curves for (safe) cryptography, the curve needs to meet some demands.<br>
   In the demonstration it's possible to perform the exchange using small elliptic curves. This form is not safe for the actual key exchange because small elliptic curves cannot meet these demands.<br>
   These demands are described in e.g. "SEC 1: Elliptic Curve Cryptography" from Certicom Research (<a target="_blank" href="http://www.secg.org/collateral/sec1_final.pdf">download here</a>).</p>
-  <h3>E(Fp):</h3>
-    <b>E(Fp):</b> the curve itself.<br>
-    <b>t:</b> the desired security level in bits. <i>t</i> can be {56, 64, 80, 96, 112, 128, 192, 256}<br>
-    <b>p:</b> is prime such that [log2(<i>p</i>)] = 2<i>t</i> if <i>t</i> != 256 and such that [log2(<i>p</i>)] = 521 if <i>t</i> = 256.<br>
-    <b>G:</b> a point on the curve used as base.<br>
-    <b>n:</b> a prime number which is the order of <i>G</i>.<br>
-    <b>h:</b> the cofactor. <i>h</i> = #<i>E(Fp)</i> / <i>n</i>.<br><br>
-    - #<i>E(Fp)</i> != <i>p</i><br>
-    - <i>p</i>^B != 1 mod(<i>n</i>) for any 1 <= B < 20<br>
-    - <i>h</i> is a whole number<br>
-    - <i>h</i> is <= 4
+  <h3>For curves over prime fields \(\mathbb{F} _{p}\)</h3>
+  <table>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(E(\mathbb{F} _{p})\)</td>
+    <td>the curve itself. An elliptic curve is a mathematical group.</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(N\)</td>
+    <td>the size of \(E(\mathbb{F} _{p})\). This is also referred to as order of the group and sometimes as cardinality. Denoted as \(\#E(\mathbb{F} _{p})\)</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(t\)</td>
+    <td>the desired security level in bits. \(t\) can be \(\{56, 64, 80, 96, 112, 128, 192, 256\} \)</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(p\)</td>
+    <td>is prime such that \(\log_2(p) = \begin{cases} 2t \quad & \textrm{if} \; t \neq 256 \\ 521 & \textrm{if} \; t = 256 \end{cases} \)</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(G\)</td>
+    <td>a point on the curve used as base. \(G\) must be chosen in a way that its order \(n\) is prime \(\textrm{ord}\,(G) \in \mathbb{P}\).</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(n\)</td>
+    <td>the order of \(G\). Must be prime.</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(h\)</td>
+    <td>called cofactor and is defined as \(h = \frac{N}{n}\) (order of group divided by order of \(G\)) </td>
+   </tr>
+  </table> 
+    
+    <p>For these parameters there are some additional requirements</p>
+    <ul>
+     <li>\(N \neq p\)</li>
+     <li>\(p^B \neq 1 \mod{n} \quad \forall B \in \mathbb{N}, 1 \leq B < 20 \)</li>
+     <li>\(h \in \mathbb{N}\)</li>
+     <li>\(h \leq 4\)</li>
+    </ul>
+    
+    <hr>
 
-  <h3>E(F2^m):</h3>
-    <b>E(F2^m):</b> the curve itself.<br>
-    <b>t:</b> the desired security level in bits. <i>t</i> can be {56, 64, 80, 96, 112, 128, 192, 256}<br>
-    <b>'t:</b> the smallest integer in the set {64, 80, 96, 112, 128, 192, 256, 512} that is greater than <i>t</i><br>
-    <b>m:</b> an integer in the set {113, 131, 163, 193, 233, 239, 283, 409, 571} so that 2<i>t</i> < m < 2<i>'t</i>.<br>
-    <b>f(x):</b> an irreducible polynomial to act as generator of <i>F(2^m)</i>.<br>
-    <b>G:</b> a base point on the curve.<br>
-    <b>n:</b> a prime number which is the order of <i>G</i>.<br>
-    <b>h:</b> the cofactor. <i>h</i> = #<i>E(F2^m)</i> / <i>n</i>.<br><br>
-    - <i>b</i> is not 0<br>
-    - #<i>E(F2^m)</i> != <i>2^m</i><br>
-    - <i>2^mB</i> != 1 mod(<i>n</i>) for any 1 <= B < 20<br>
-    - <i>h</i> is a whole number<br>
-    - <i>h</i> is <= 4
-
+  <h3>For curves over binary fields \(\mathbb{F} _{2^m}\)</h3>
+  <table>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(E(\mathbb{F} _{2^m})\)</td>
+    <td>the curve itself. An elliptic curve is a mathematical group.</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(N\)</td>
+    <td>the size of \(E(\mathbb{F} _{2^m})\). This is also referred to as order of the group and sometimes as cardinality. Denoted as \(\#E(\mathbb{F} _{2^m})\)</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(t\)</td>
+    <td>the desired security level in bits. \(t\) can be \(\{56, 64, 80, 96, 112, 128, 192, 256\} \)</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(t'\)</td>
+    <td>the smallest integer in the set \(\{64, 80, 96, 112, 128, 192, 256, 512\}\) that is greater than \(t\).</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(m\)</td>
+    <td>an integer in the set \(\{113, 131, 163, 193, 233, 239, 283, 409, 571\}\) so that \(2t < m < 2t'\) </td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(f(x)\)</td>
+    <td>an irreducible polynomial to act as generator of \(\mathbb{F} _{2^m}\).</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(G\)</td>
+    <td>a base point on the curve used as base. \(G\) must be chosen in a way that its order \(n\) is prime \(\textrm{ord}\,(G) \in \mathbb{P}\).</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(n\)</td>
+    <td>the order of \(G\). Must be prime.</td>
+   </tr>
+   <tr>
+    <td style="vertical-align: middle; text-align: right">\(h\)</td>
+    <td>called cofactor and is defined as \(h = \frac{N}{n}\) (order of group divided by order of \(G\)) </td>
+   </tr>
+  </table>
+  
+    <p>For these parameters there are some additional requirements</p>
+    <ul>
+     <li>\(b \neq 0\)</li>
+     <li>\(N \neq 2^m\)</li>
+     <li>\(p^mB \neq 1 \mod{n} \quad \forall B \in \mathbb{N}, 1 \leq B < 20 \)</li>
+     <li>\(h \in \mathbb{N}\)</li>
+     <li>\(h \leq 4\)</li>
+    </ul>
+    
 <h2>The ECDH visualization</h2>
 <p>The visualization (plugin) shows how Alice and Bob establish a shared key using the Diffie-Hellman key exchange protocol over elliptic curves.<br>
 It's possible to perform the protocol with small or large elliptic curves.</p>
@@ -67,7 +143,7 @@ It's possible to perform the protocol with small or large elliptic curves.</p>
 
 <p>After a step of the key exchange is completed, the corresponding button turns green.</p>
 
-<p align=center><img src="greenButton.PNG" width="85%"/></p>
+<p align=center><img src="greenButton.PNG" style="width: 30%; min-width: 100pt"/></p>
 
 <p>Now the next steps of the key exchange can be done. First Alice and Bob must each choose a secret. Then they calculate the common keys <i>A</i> and <i>B</i>, which are then exchanged on a public (insecure) channel. Finally, they calculate their shared session key, as described in the <b>protocol explanation</b>.
 
@@ -77,7 +153,7 @@ It's possible to perform the protocol with small or large elliptic curves.</p>
 
 <p>When all steps are completed and Alice and Bob have successfully established a session key, a key appears at the bottom of the window.</p>
 
-<p align=center><img src="key.png" width="85%"/></p>
+<p align=center><img src="key.png" style="width: 20%; min-width: 75pt"/></p>
 
 <p>When all steps have been completed, the two buttons "Save to Editor" and "Save to File" appear under the key. The button "Save in Editor" opens a new editor and displays the results of the key exchange in it. The button "Save to file" allows to save the results in a file. A "Save as" dialog opens. There you can select a file in which the results should be saved.</p>
 

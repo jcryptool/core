@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="ECDH" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins"> 
-    <topic label="ECDH" href="$nl$/help/content/index.html" /> 
+<toc label="Diffie-Hellman Schlüsselaustausch (EC)" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins"> 
+    <topic label="Diffie-Hellman Schlüsselaustausch (EC)" href="$nl$/help/content/index.html" /> 
 </toc>

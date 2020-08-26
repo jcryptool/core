@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Homomorphic Encryption" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
-    <topic label="Homomorphic Encryption" href="$nl$/help/content/index.html" /> 
+<toc label="Homomorphic Encryption (HE) " link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
+    <topic label="Homomorphic Encryption (HE)" href="$nl$/help/content/index.html" /> 
 </toc>

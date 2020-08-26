@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Fleißner-Analyse" link_to="../org.jcryptool.core.help/$nl$/toc.xml#analysisPlugins">
-    <topic label="Fleißner-Analyse" href="$nl$/index.html" />
+<toc label="Grille-Analyse" link_to="../org.jcryptool.core.help/$nl$/toc.xml#analysisPlugins">
+    <topic label="Grille-Analyse" href="$nl$/index.html" />
 </toc>

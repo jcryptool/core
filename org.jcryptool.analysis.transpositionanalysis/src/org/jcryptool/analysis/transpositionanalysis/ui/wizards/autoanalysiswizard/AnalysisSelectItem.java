@@ -11,6 +11,8 @@
 package org.jcryptool.analysis.transpositionanalysis.ui.wizards.autoanalysiswizard;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -20,9 +22,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.jcryptool.analysis.transpositionanalysis.calc.transpositionanalysis.model.TranspositionAnalysis;
 import org.jcryptool.core.logging.utils.LogUtil;
 
-import com.cloudgarden.resource.SWTResourceManager;
-
-public class AnalysisSelectItem extends org.eclipse.swt.widgets.Composite {
+public class AnalysisSelectItem extends Composite {
 
 	/**
 	 * Auto-generated main method to display this
@@ -81,7 +81,8 @@ public class AnalysisSelectItem extends org.eclipse.swt.widgets.Composite {
 					GridData analysisLinkLData = new GridData();
 					analysisLink.setLayoutData(analysisLinkLData);
 					analysisLink.setText(analysis.getAnalysisName());
-					analysisLink.setFont(SWTResourceManager.getFont("Segoe UI", 10, 0, false, false));
+					Font segeo = new Font(analysisLink.getDisplay(), new FontData("Segoe UI", 10, 0));
+					analysisLink.setFont(segeo);
 				}
 				{
 					analysis1description = new Composite(analysis1CompTextual, SWT.NONE);

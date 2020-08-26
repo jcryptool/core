@@ -15,8 +15,7 @@ Require-Bundle: org.eclipse.ui,
  org.jcryptool.crypto.classic.alphabets,
  org.jcryptool.crypto.ui
 Bundle-ActivationPolicy: lazy
-Export-Package: com.cloudgarden.resource,
- org.jcryptool.crypto.classic.transposition,
+Export-Package: org.jcryptool.crypto.classic.transposition,
  org.jcryptool.crypto.classic.transposition.algorithm,
  org.jcryptool.crypto.classic.transposition.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-11

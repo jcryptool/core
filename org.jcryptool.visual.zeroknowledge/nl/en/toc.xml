@@ -2,16 +2,12 @@
 <?NLS TYPE="org.eclipse.help.toc"?>
 
 <toc label="Zero Knowledge" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins"> 
-	<topic label="Zero Knowledge"  href="$nl$/help/content/index.html"> 
-
-   		<topic label="Magic Door"
-        	href="$nl$/help/content/magicdoor.html" />
-   		<topic label="Fiat Shamir Protocol"
-        	href="$nl$/help/content/fiatshamir.html" />
-   		<topic label="Feige Fiat Shamir Protocol"
-        	href="$nl$/help/content/feigefiatshamir.html" />
-   		<topic label="Graph Isomorphism"
-        	href="$nl$/help/content/graphenisomorphie.html" />
-
-	</topic>
+	   <topic label="Zero-Knowledge: Magic Door"
+		href="$nl$/help/content/magicdoor.html" />
+	   <topic label="Zero-Knowledge: Fiat Shamir"
+		href="$nl$/help/content/fiatshamir.html" />
+	   <topic label="Zero-Knowledge: Feige Fiat Shamir"
+		href="$nl$/help/content/feigefiatshamir.html" />
+	   <topic label="Zero-Knowledge: Graph Isomorphism"
+		href="$nl$/help/content/graphenisomorphie.html" />
 </toc>

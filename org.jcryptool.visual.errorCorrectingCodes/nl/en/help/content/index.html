@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+  
+<head>	  
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title>McEliece Cryptography System</title>
+</head>
+
+<body>
+
+<h1>McEliece Cryptosystem</h1>
+
+<strong>TODO: <a href=https://github.com/jcryptool/core/issues/215#issuecomment-655474799">Explanation of how to automatically generate a TOC for such pages as this</a></strong>
+
+<p>This document describes the algorithmic details of McEliece and the usage of the visualization plugin.</br>
+1) <a href="#general">The McEliece System</a></br>
+1.1) <a href="#algorithm">Algorithm Definition</a></br>
+1.2) <a href="#key">Key generation</a></br>
+1.3) <a href="#enc">Encryption</a></br>
+1.4) <a href="#dec">Decryption</a></br>
+1.5) <a href="#attacks">Attacks on McEliece</a></br>
+2) <a href="#usage">Usage of the plugin</br>
+2.1) <a href="#usage_mce">McEliece Cryptosystem</a></br>
+2.2) <a href="#usage_ham">Hamming Cryptosystem</a></br>
+2.3) <a href="#usage_ecc">Error Correcting codes</a></br>
+
+<h2 id="general">1) The McEliece System</h2>
+<p>The McEliece cryptosystem is an asymmetric encryption algorithm that uses linear algebraic codes. Robert J. McEliece developed the original proposal in 1978 (<a href="#ref_mceliece">1</a>) but because of disadvantages in regard to performance and key sizes compared to other schemes, it was not considered for mainstream cryptography for a long time. The general idea of the scheme is to use error-correcting codes and to introduce bit errors to an encoded message, which can be corrected with an efficient decoding algorithm. Since known attack algorithms have an exponential cost, even when using known quantum-computer algorithms, it gained interest in the cryptographic community as a candidate for Post-Quantum Cryptography. Bernstein et al. (<a href="ref_bern19">2</a>) submitted a variant of the McEliece encryption scheme to the NIST standardization process.</p> 
+<p>The security of the McEliece cryptosystem is based on the hardness of decoding an arbitrary linear code. The original proposal uses binary Goppa codes, which can be decoded, e.g., by use of Patterson's algorithm if the generator or parity check matrix are known. The biggest disadvantage of the cryptosystem is that the keys are much larger than keys of other asymmetric encryption schemes, like RSA for example. The parameters recommended for resilience against quantum computers result in private and public key sizes of 261.120 to 1.357.824 byte, while keys of RSA with 4096 bit security are only 512 bytes long. On the other hand, the encryption and decryption of McEliece are faster than most other schemes (see bench.cr.yp.to for comparisons). However, compared to RSA, the McEliece cryptosystem provides the benefit of being secure against attacks aided by quantum computers.</p>
+
+<h3 id="algorithm">1.1) Algorithm Definition</h3>
+<p>The following sections describe the key generation, encryption and decryption algorithms. The main parameters for the McEliece scheme with Goppa codes are the code length n, the code dimension k and the maximum of correctable errors t.  The codes are mathematically described by a polynomial over a finite Galois field GF(2^m), which can be described by a generator or parity check matrix. Recommended parameters for 256-bit security are n = 6960, k = 5413 and t = 119, which results in the large key size, as mentioned above, because the public key is the complete generator matrix. In the following example, Alice is the receiver and holds the private key, while Bob sends a message encrypted with the public key.</p>
+
+<h3 id="key">1.2) Key Generation</h3>
+<ol>
+<li>Alice selects a binary (n,k) Goppa code that can correct t errors and generates a k x n generator matrix G.</li>
+<li>Alice selects a random k x k binary matrix S, which has to be non-singular, i.e., invertible.</li>
+<li>Alice selects a random n x n permutation matrix P, i.e., every row and column only has a single one and zeros everywhere else.</li>
+<li>Alice computes the matrix G’ = SGP, a scrambled version of the generator matrix.</li>
+<li>The public key is (G’, t) and the private key consists of (S, G, P).</li>
+</ol>
+<h3 id="enc">1.3) Encryption</h3>
+<p> Bob encrypts his message by using the public key (G’, t) he got from Alice and performing the following steps:</p>
+<ol>
+<li>Bob encodes his message m as a binary string, separated into blocks of length k.</li>
+<li>Bob computes the vector c’ = mG’.</li>
+<li>Bob generates random bit vector e containing t ones.</li>
+<li>Bob computes the cipher text by adding e to c’ (c = mG’ + e).</li>
+</ol>
+<h3 id="dec">1.4) Decryption</h3>
+<p>Upon receiving, Alice has to perform these steps to decrypt the message:</p>
+<ol>
+<li>Alice computes the inverse of the matrix P.</li>
+<li>Alice computes c’ = cP^-1.</li>
+<li>Alice uses the decoding algorithm (i.e. Patterson) to decode c’ to m’.</li>
+<li>Finally Alice computes m = m’S-1 (inverse of matrix S).</li>
+</ol>
+<h3 id="attacks">1.5) Attacks on McEliece</h3>
+<p>Attempts to reduce the key sizes for the McEliece cryptosystem, e.g., by using “quasi-cyclic” codes lead to insecurities and breaks of the variants. Essentially the original algorithm using Goppa codes remains as the most conservative candidate. The fastest known attacks against the original system are based on information set decoding, which where, e.g., explored by Bernstein, Lange and Peters (<a href="#ref_bern08">3</a>). Their proposal improves the Stern algorithm, which attacks the problem of finding a low-weight codeword, by expanding the generator matrix of the public key and searching for the codeword (see the article for more details).</p>
+<p>As the optimized attack is “embarrassingly parallel”, i.e., no communication is needed when run on a cluster of multiple machines, the search can be sped up significantly by adding more computing power. Therefore, Bernstein et al. recommend increasing the code length of the original proposal and using a list-decoding algorithm to allow the sender to add more errors to the encoded message.</p>
+
+
+<h2 id="usage">2) Usage of the Plugin</h2>
+<p>The plugin consists of three separate visualizations, which are explained in the following sections.</p>
+
+<h3  id="usage_mce">2.1) McEliece Cryptosystem</h3>
+<img src="mceliece.PNG" width="800" alt"View of the McEliece Cryptosystem.">
+
+<p>In this tab, the user can experiment with different key parameters and messages. The dropdown menu gives a selection of usable exponents to construct the Galois Field for the Goppa code. Additionally, the number of errors can be entered in the text field below. The algorithm handles all other parameters, like code dimension and length, internally and they are only printed for reference. The actual size of the public and private keys are also shown. By clicking on “generate keys” the parameters are filled automatically. When the keys are generated, the user can enter any message to be encrypted and decrypted.</p>
+<p>Note: As the keys are random and not saved between application sessions, the decryption of a previously created cipher text will fail.</p>
+
+<h3  id="usage_ham">2.2) Hamming Cryptosystem</h3>
+<img src="hamming.PNG" width="800" alt"View of the examplary Hamming system.">
+
+<p>The second tab visualizes a simplified McEliece system using Hamming codes. This was inspired by lecture notes by Bill Cherowitzo, University of Colorado at Denver (<a href="#ref_cherwitzo">4</a>), and is supposed to make the algorithm easier understandable. The original algorithm with Goppa code cannot be visualized due to the code length, but when using the much shorter Hamming code with four data bits and three parity bits it is possible to display the matrices used to encrypt and decrypt the message.</p>
+<p>The user can enter values for S and P by clicking on the numbers, essentially flipping the bits from one to zero and vice versa. The public key and inverted matrices are shown after continuing to the next step. Clicking on reset sets every element to the initial state.</p>
+
+<h3  id="usage_ecc">2.3) Error Correcting Codes</h3>
+<img src="ecc.PNG" width="800" alt"View of error correcting code procedure.">
+
+<p>The error-correcting codes tab shows a short explanation of how Hamming code works in general. After entering a message input, press the “next step” button to advance. The Information textbox contains further details for each step of the process.</p>
+
+<h2 id="ref">References</h2>
+<ol>
+<li id="ref_mceliece">A Public-Key Cryptosystem Based On Algebraic Coding Theory. McEliece, Robert J. s.l. : The Deep Space Network Progress Report, 1978. Vol. January and February 1978, pp. 114-116. 1978DSNPR..44..114M.</li>
+<li id="ref_bern19">Bernstein, Daniel J., et al. Classic McEliece. [Online] [Cited: November 22, 2019.] https://classic.mceliece.org.</li>
+<li id="ref_bern08">Bernstein, Daniel J., Lange, Tanja and Peters, Christiane. Attacking and Defending the McEliece Cryptosystem. [ed.] Johannes Buchmann and Jintai Ding. Post-Quantum Cryptography. s.l. : Springer Berlin Heidelberg, 2008, pp. 31-46.</li>
+<li id="ref_cherwitzo">Cherowitzo, Bill. The McEliece Cryptosystem. [Online] University of Colorado at Denver. [Cited: November 22, 2019.] http://www-math.ucdenver.edu/~wcherowi/courses/m5410/ctcmcel.html.</li>
+</ol>
+</body>

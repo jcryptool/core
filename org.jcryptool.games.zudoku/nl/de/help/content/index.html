@@ -3,6 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Zudo-Ku</title>
+		<script id="MathJax-script" async src="${JCTJS_HOST}/javascript/MathJax-master/es5/tex-mml-svg.js"></script>
 	</head>
 	
 	<script type="text/javascript">
@@ -16,140 +17,168 @@
 	
 	</script>
 <body>
-	<h1>About Zudo-Ku</h1>
+	<h1>Zudo-Ku</h1>
 	
 	<p>
-	 	Der Rechner probiert dir zu beweisen, dass er ein <a href="http://de.wikipedia.org/wiki/Sudoku" target="_blank">Sudoku-Rätsel</a>
-	 	gelöst hat, ohne dir die Zahlen in den Kästchen zu zeigen, die er ausgefüllt hat.
-	 	Zudo-Ku ist ein Beispiel für ein <a href="http://en.wikipedia.org/wiki/Zero-knowledge_proof" target="_blank">Zero-Knowledge-Protokoll</a>.
+	 	Zudo-Ku ist ein einfaches Spiel zur Veranschaulichung eines <a href="https://de.wikipedia.org/wiki/Zero-Knowledge-Beweis" target="_blank">Zero-Knowledge-Protokolls</a>. Der Rechner probiert, dir zu beweisen, dass er ein \(4 \times 4\) <a href="http://de.wikipedia.org/wiki/Sudoku" target="_blank">Sudoku-Rätsel</a>
+	 	gelöst hat, ohne dir die Zahlen in den einzelnen Kästchen (Zellen, Feldern) zu zeigen, die er ausgefüllt hat.
 	</p>
+
+
+	<p align="center"> <img src="game_annotated.png" width="60%" style="min-width: 500px"/></p>
+
 	
-	<h1>Spielanleitung</h1>
-	Bei einem neuen Spiel wird ein Sudoku-Rätsel gestellt (Diese Zahlen kannst du auch sehen). Der Computer löst dieses
-	verdeckt. Wir denken uns wir spielen das Sudoku mit Spielkarten statt wie üblich mit Stift und Papier.
 	
-	<p align="center"> <img src="game_annotated.png" width="85%" style="min-width: 500px"/></p>
+	<p><br></p>
+	<h2>Spielanleitung</h2>
 	<p>
-		Klicke auf <b>Herausfordern</b> und wähle eine Reihe, Spalte oder einen Block aus.
+	Startet man das Spiel neu, wird ein neues \(4 \times 4\)-Sudoku-Rätsel erstellt (bestehend aus vier Blöcken der Größe \(2 \times 2\), was zusammen 16 Kästchen ergibt). Vier Zahlen sind  gegeben und werden auch gleich angezeigt &ndash; eine pro \(2 \times 2\)-Block. Der Computer löst das Sudoku dann verdeckt.
 	</p>
 	<p>
-		Die ausgewählten Karten werden gemischt und dir im Verifikationsbereich gezeigt. Wenn der Computer wirklich eine
-		korrekte Lösung hat, müssen diese die Zahlen 1 bis 4 beinhalten.
-		Überprüfe ob die Zahlen korrekt sind oder der Computer dich betrügen wollte! 
-		Nach einer Herausforderung legt der Computer die Karten wieder verdeckt an seine ursprüngliche Position.
-		Die Animationen verraten keine Information, sie dinenen nur zur Visualisierung. 
+	Wir denken uns, wir spielen das Sudoku mit Spielkarten statt wie üblich mit Stift und Papier.
+	</p>
+
+	<p>
+		1) Falls du neue Zahlen (also ein neues Sudoku-Rätsel) möchtest, klicke auf den linken Button <b>Neues Sudoku</b>.
+	</p>
+
+	<p>
+		2) Nach einem Klick auf den Button <b>Herausfordern</b> kannst du eine Reihe, Spalte oder einen Block auswählen, indem du auf die blauen Richtungspfeile im Spielfeld klickst.
+	</p>
+
+	<p align="center"> <img src="playing_field_challenge.png" width="40%" style="min-width: 250px"/></p>
+
+	<p>
+		Die ausgewählten Karten werden gemischt und dir oben im Verifikationsbereich gezeigt. Wenn der Computer wirklich eine korrekte Lösung hat, müssen in dieser Lösung die Zahlen 1 bis 4 jeweils genau einmal vorkommen.<br>
+		Überprüfe, ob das so ist oder ob der Computer dich betrügen wollte! 
+		Nach der Anzeige im Verifikationsbereich legt der Computer die Karten wieder verdeckt an seine ursprüngliche Position (selbstständig nach ca. 10 sec).
+		Die Animationen verraten keine Informationen zur Anordnung der Zahlen, sie dienen nur zur Visualisierung. 
+	</p>
+
+	<p>
+		3) Jedes Mal, wenn du auf <b>Lass den Computer schummeln</b> klickst, wird er versuchen, eine Zahl falsch auszufüllen. Da die Karten verdeckt sind, weißt du nicht, wo sich der Fehler befindet.
 	</p>
 	<p>
-		Jedes Mal wenn du auf <b>Lass den Computer schummeln</b> klickst, wird er versuchen eine Zahl falsch auszufüllen.
-		Da die Karten verdeckt sind, weißt du nicht wo sich der Fehler befindet.<br>
-		Die meisten Zero-Knowledge-Protokolle basieren auf wiederholbaren Schritten. Jedes Mal, wenn du den Computer
-		herausforderst, steigt die Wahrscheinlichkeit, dass die Wahrheit (richtig gelöst oder falsch gelöst) herauskommt.
+		Die meisten Zero-Knowledge-Protokolle basieren auf wiederholbaren Schritten. Jedes Mal, wenn du den Computer herausforderst, steigt die Wahrscheinlichkeit, dass die Wahrheit (richtig gelöst oder falsch gelöst) herauskommt.
 	</p>
 	 <ul>
   		<li>Fordere den Rechner erneut heraus. Nach wie vielen Herausforderungen glaubst du ihm, dass er tatsächlich das Sudoku gelöst hat?</li>
   		<li>Wie könnte der Computer dich betrügen?</li>
-  		<li>Welche Information hat der Computer preisegeben, um dich zu überzeugen?</li>
+  		<li>Welche Information hat der Computer preisgegeben, um dich zu überzeugen?</li>
   		<li>Welche Informationen hat der Computer dir nicht gegeben?</li>
 	</ul> 
 	<p>		
-		Versuche doch mal, aus seinen Antworten die Lösung zusammenzusetzen. Weiter unten gibt es noch mehr
-		Informationen. 
-	</p>
-	<p>
-		
+		Versuche doch mal, aus seinen Antworten die Lösung zusammenzusetzen. Weiter unten gibt es weitere Informationen zu den obigen Fragen. 
 	</p>
 
-	<h1>Hintergrund</h1>
 	<p>
-		Zero-Knowledge-Beweise und Protokolle sind ein Teilbereich der Kryptographie. Bei der zugrundeliegenden Idee
-		möchte eine Person beweisen, dass sie in Besitz einer gewissen Information ist, ohne diese preisgeben zu müssen
-		(<b>Beweiser</b>). Eine andere Person möchte sichergehen, bzw. prüfen, dass der Beweiser wirklich im Besitz
-		besagen Geheimnisses ist und nicht nur so tut (<b>Verifizierer</b>).<br>
-		Stelle dir vor, du möchtest ein Auto kaufen. Die Verkäuferin verlangt von dir im vorhinein zu beweisen, dass
-		du genug Geld auf dem Konto hast, um es zu bezahlen. Du möchtest aber nicht einfach jemandem Fremden deinen
-		Kontostand zeigen. Hier kann ein Zero-Knowledge-Beweis hilfreich sein um zu Beweisen, dass du genug Geld hast,
-		ohne die genaue Zahl preisgeben zu müssen. <br>
-		Die meisten dieser Protokolle benötigen mehrere Runden, genauso wie dieses Zudo-ku-Spiel. Mit jedem erfolgreich
-		verifizierten Schritt steigt die Chance, dass der Beweiser wirklich im Besitz des Geheimnisses ist.
-		<br><br>
-		Zero-Knowledge-Protokolle haben drei wichtige Eigenschaften:
+		4) Über <b>Karten aufdecken</b> wird die Lösung des Computers sichtbar gemacht. Benutze diese Funktion, falls du hinter die Kulissen blicken möchtest. Beachte, dass es in echten Zero-Knowledge-Protokollen nicht so einfach möglich ist, sich die echte Lösung anzuschauen.  
 	</p>
-	 <ul>
-  		<li><b>Vollständigkeit:</b> Wenn beide Teilnehmer des Protokolls ehrlich sind, kann der Verifizierer von der
-  		Richtigkeit der Aussage überzeugt werden (Computer hat Sudoku gelöst, Ich habe genug Geld am Konto)</li>
-  		<li><b>Zuverlässigkeit:</b> Ein schummelnder Beweiser kann nur sehr schwer einen ehrlichen Verifizierer von der
-  		Richtigkeit der Aussage überzeugen (da es sich oft um Wahrscheinlichkeiten handelt, kann man nicht zu 100% sicher sein.)</li>
-  		<li><b>Zero-knowledge-Eigenschaft:</b> Der Verifizierer kann über die Information/das Geheimnis durch den Prozess
-  		nichts lernen, außer ob die Behauptung des Beweisers wahr oder falsch ist.</li>
-	</ul> 
-	<h3 id="persona">Zudo-ku mit echten Karten</h3>
+
+
+	<p><br></p>
+	<h2>Hintergrund</h2>
 	<p>
-		Die Idee hinter diesem Spiel kann im echten Leben noch besser demonstriert werden!<br>
-		In der <b>einfachen Variante</b>: Nimm 81 Karten mit Zahlen 1-9 und suche ein Sudoku-Rätsel aus.
-		Die Ziffern zu Beginn werden offen mit den Karten aufgelegt.
-		Einer Person spielt den Beweiser und löst das Sudoku mit verkehrt hingelegten Karten. (Natürlich kann diese
-		Person auch versuchen zu betrügen und das Sudoku gar nicht wirklich richtig lösen.) 
-		Unabhängig davon probiert nun der Beweiser die andere Person von der Richtigkeit seiner Lösung zu überzeugen.
-		Die Verifizierin wählt entweder die Reihen, die Spalten oder die 3x3-Boxen aus. Wenn z. B. die Reihen ausgewählt
-		wurden, werden alle Karten reihenweise zu einem Pack zusammengenommen und gemischt. Die verifizierende Person
-		prüft nun, ob in jedem Pack karten die Ziffern 1-9 sind. Wenn nicht, wurde der Beweiser beim Schummeln erwischt.
-		Das Zurücklegen wie in der digitalen Variante ist nicht wirklich anwendbar. Deswegen können pro Spiel 
-		nur jeweils Reihen, Spalten oder Boxen geprüft werden und nicht alle drei.
-		Das führt zu einer Zuverlässigkeit (Wahrscheinlichkeit, dass ein schummelnder Beweiser ertappt wird)
-		von ≥ 1/3.<br>
-		In der <b>erweiterten Variante</b> nimmt man statt einer Karte pro Kästchen 3 Mal die Gleiche. Auf diesem Weg
-		kann die Verifiziererin Spalten, Reihen und Boxen gleichzeitig prüfen. Natürlich öffnet das auch eine neue
-		Möglichkeit zu schummeln. Der Beweiser könnte anstatt den erwarteten {3,3,3} auf einer Zelle z. B. {3,3,4} legen.
+		Zero-Knowledge-Beweise und -Protokolle sind ein Teilbereich der Kryptographie. Bei der zugrundeliegenden Idee möchte eine Person (<b>Beweiser</b>) beweisen, dass sie im Besitz einer gewissen Information ist, ohne diese preisgeben zu müssen. Eine andere Person möchte sichergehen bzw. prüfen, dass der Beweiser wirklich im Besitz
+		besagten Geheimnisses ist und nicht nur so tut (<b>Verifizierer</b>).
+	</p>
+	<p>
+		Stelle dir vor, du möchtest ein Auto kaufen. Die Verkäuferin verlangt von dir im vorhinein zu beweisen, dass du genug Geld auf dem Konto hast, um es zu bezahlen. Du möchtest aber nicht einfach jemandem Fremden deinen Kontostand zeigen. Hier kann ein Zero-Knowledge-Beweis helfen, um zu beweisen, dass du genug Geld hast, ohne die genaue Zahl preisgeben zu müssen.
+	</p>
+	<p>
+		Die meisten dieser Protokolle benötigen mehrere Runden, genauso wie dieses Zudo-Ku-Spiel. Mit jedem erfolgreich verifizierten Schritt steigt die Chance, dass der Beweiser wirklich im Besitz des Geheimnisses ist.
+	</p>
+	<p>
+		Zero-Knowledge-Protokolle haben drei wichtige Eigenschaften:
+	 <ul>
+  		<li><b>Vollständigkeit:</b> Wenn beide Teilnehmer des Protokolls ehrlich sind, kann der Verifizierer von der Richtigkeit der Aussage überzeugt werden (Computer hat Sudoku gelöst, du hast genug Geld auf dem Konto).</li>
+  		<li><b>Zuverlässigkeit:</b> Ein schummelnder Beweiser kann nur sehr schwer einen ehrlichen Verifizierer von der Richtigkeit der Aussage überzeugen (da es sich um Wahrscheinlichkeiten handelt, kann man nicht zu 100% sicher sein, aber sehr nahe dran).</li>
+  		<li><b>Zero-Knowledge-Eigenschaft:</b> Der Verifizierer kann über die Information/das Geheimnis durch den Prozess nichts lernen, außer ob die Behauptung des Beweisers wahr oder falsch ist.</li>
+	</ul> 
+	</p>
+
+
+	<h3>Zudo-ku mit echten Karten</h3>
+	<p>
+		Die Idee hinter diesem Spiel kann im echten Leben noch besser demonstriert werden.
+	</p>
+	<p>
+		In der <b>einfachen Variante</b>: Nimm 81 Karten mit den Zahlen 1-9 und suche ein Sudoku-Rätsel aus. Die gegebenen (bekannten) Ziffern werden offen mit den Karten aufgelegt.
+	</p>
+	<p>
+		Eine Person spielt den Beweiser und löst das Sudoku mit verkehrt hingelegten Karten. (Natürlich kann diese Person auch versuchen zu betrügen und das Sudoku gar nicht wirklich richtig lösen.) 
+	</p>
+	<p>
+		Unabhängig davon probiert nun der Beweiser, die andere Person von der Richtigkeit seiner Lösung zu überzeugen.
+		Die Verifizierin wählt entweder eine Reihe, eine Spalte oder einen 3x3-Block aus. Wenn z. B. eine Reihe ausgewählt wurde, werden alle Karten reihenweise zu einem Pack zusammengenommen und gemischt. Die Verifizierin prüft nun, ob in dem Pack Karten die Ziffern 1-9 sind. Wenn nicht, wurde der Beweiser beim Schummeln erwischt.
+	</p>
+	<p>
+		Das Zurücklegen wie in der digitalen Variante ist dagegen nicht machbar. Deswegen können pro Spiel nur jeweils Reihen, Spalten oder Boxen geprüft werden und nicht alle drei. Das führt zu einer Zuverlässigkeit (Wahrscheinlichkeit, dass ein schummelnder Beweiser ertappt wird) von ≥ 1/3.
+	</p>
+	<p>
+		In der <b>erweiterten Variante</b> liegen auf einem Kästchen statt einer Karte drei Mal die gleiche. Auf diesem Weg kann die Verifiziererin Spalten, Reihen und Boxen gleichzeitig prüfen. Natürlich öffnet das auch eine neue Möglichkeit zu schummeln. Der Beweiser könnte anstatt den erwarteten {3,3,3} auf einer Zelle z. B. {3,3,4} legen.
 		Man braucht hier mehr Karten, die Zuverlässigkeit steigt auf 8/9.
 	</p>
-	<h3>Ausführungen zu den oben gestellten Fragen</h3>
+
+
+	<h3>Antworten zu den oben gestellten Fragen</h3>
 	<p>
-		Für mehr Informationen sei hier noch einmal auf den wissenschaftlichen Artikel verwiesen, auf dem dieses Spiel
-		basiert. <a href="#1">[1]</a>
+		Für mehr Informationen sei hier noch einmal auf den wissenschaftlichen Artikel verwiesen, auf dem dieses Spiel basiert. <a href="#1">[1]</a>
 	</p>
 	
-	Nach wie vielen Herausforderungen glaubst du ihm, dass er tatsächlich das Sudoku gelöst hat?<br>
+	Nach wie vielen Herausforderungen glaubst du dem Computer, dass er tatsächlich das Sudoku gelöst hat?<br>
 	<button title="Click to show/hide content" type="button" onclick="toggleVisibility(spoiler0)">Anzeigen/Verbergen</button>
 	<div id="spoiler0" style="display:none">
-		Wenn der Beweiser und Verifizierer beide ehrlich sind, haben wir in Zudo-ku "Perfekte Vollständigkeit".<br>
-		Wenn der Verifizierer dem Beweiser nicht vertraut, muss die Zuverlässigkeit betrachtet werden - dabei wird es
-		komplizierter:
-		Du kannst nur prüfen ob der Computer ehrlich arbeitet (Karten nehmen, mischen, zeigen) indem du den Programm-Code
-		anschaust. Falls er ordentlich arbeitet, kannst du darauf vertrauen, wenn du alle Möglichkeiten prüfst.
+	 <ul>
+  		<li>Wenn Beweiser und Verifizierer beide ehrlich sind, haben wir in Zudo-ku "perfekte Vollständigkeit".</li>
+  		<li>Wenn der Verifizierer dem Beweiser nicht vertraut, muss die Zuverlässigkeit betrachtet werden &ndash; dabei wird es komplizierter:
+		Du kannst nur prüfen, ob der Computer ehrlich arbeitet (Karten nehmen, mischen, zeigen), indem du den Programm-Code anschaust. Falls der Code ordentlich arbeitet, kannst du darauf vertrauen.</li>
+  		<li>Es gibt auch Möglichkeiten, perfekte Zuverlässigkeit zu erreichen.</li>
+	</ul> 
 	</div>
 	<br>
+
 	<hr>
 	Wie könnte der Computer dich betrügen?<br>
 	<button title="Click to show/hide content" type="button" onclick="toggleVisibility(spoiler1)">Anzeigen/Verbergen</button>
 	<div id="spoiler1" style="display:none"> 
-		Der Computer könnte einfach eine Zahl falsch setzen, so wie wenn du auf <b>Lass den Computer betrügen</b> klickst.
-		Dabei kannst du ihn aber schnell ertappen.
-		Wäre der Computer cleverer, könnte er versuchen die Karten zu manipulieren, wenn er sie nimmt, mischt und wieder
-		zurücklegt.<br>
-		Wenn du mit echten Karten spielst können sich die Teilnehmer gegenseitig auf die Finger schauen.
-		In der weiterten Variante kann der Beweiser versuchen die Päckchen aus 3 Karten zu manipulieren.
+	 <ul>
+  		<li>Der Computer könnte einfach eine Zahl falsch setzen, so wie wenn du auf <b>Lass den Computer betrügen</b> klickst. Dabei kannst du ihn aber schnell ertappen.
+		Wäre der Computer cleverer, könnte er versuchen die Karten zu manipulieren, wenn er sie nimmt, mischt und wieder zurücklegt.</li>
+  		<li>Wenn du mit echten Karten spielst, können sich die Teilnehmer gegenseitig auf die Finger schauen.</li>
+  		<li>In der erweiterten Variante kann der Beweiser versuchen, die Päckchen aus 3 Karten zu manipulieren.</li>
+	</ul> 
 	</div>
 	<br>
+
 	<hr>
-	Welche Information hat der Computer preisegeben, um dich zu überzeugen - welche nicht?<br>
+	Welche Information hat der Computer preisgegeben, um dich zu überzeugen &ndash; welche nicht?<br>
 	<button title="Click to show/hide content" type="button" onclick="toggleVisibility(spoiler2)">Anzeigen/Verbergen</button>
 	<div id="spoiler2" style="display:none"> 
 		Der Computer legt immer nur einen Block an Information vor, der gegen die Sudoku-Regeln geprüft werden kann.
-		Es ist nicht möglich aus den gemischten Blöcken an Karten irgendwie die Lösung des Computers abzuleiten. 
+		Es ist nicht möglich, aus den gemischten Blöcken an Karten die Lösung des Computers abzuleiten. 
 	</div>
+
+
+
+	<p><br></p>
+	<h2>Technische Information</h2>
+	<p>
+		Dieses Plug-in weicht vom Aussehen und der Benutzerführung von anderen JCrypTool-Plug-ins ab. Das liegt daran, dass es mit dem Java-AWT-Framework erstellt wurde. Bei Problemen, Bugs oder Verbesserungsvorschlägen steht das JCrypTool-Team gerne zur Verfügung.
+<!-- 
+		<a href="mailto:esslinger@cryptool.org">Prof. Bernhard Esslinger - esslinger@cryptool.org</a>
+		 -->
+	</p>
 	
-	<h1>Referenzen und Quellen</h1>
+	
+	<p><br></p>
+	<h2>Referenzen und Quellen</h2>
 	<p id ="1">
-		Zudo-Ku ist eine für das <a href="http://www.kryptologikum.de/" target="_blank">Kryptologikum</a>
-		entworfene Implementierung der Ideen von Ronen Gradwohl, Moni Naor, Benny Pinkas und Guy Rothblum aus
+		Zudo-Ku ist eine für das <a href="http://www.kryptologikum.de/" target="_blank">Kryptologikum</a> entworfene Implementierung der Ideen von Ronen Gradwohl, Moni Naor, Benny Pinkas und Guy Rothblum aus
 		<a href="http://www.wisdom.weizmann.ac.il/~naor/PAPERS/sudoku_abs.html" target="_blank">"Cryptographic and Physical Zero-Knowledge Proof Systems for Solutions of Sudoku Puzzles"</a>.
 	</p>	
-	<h1>Technische Information</h1>
-	<p>
-		Dieses Plug-in weicht vom Aussehen und der Benutzerführung von anderen JCrypTool-Plug-ins ab.
-		Das liegt daran, dass es mit dem Java-AWT-Framework erstellt wurde.
-		Bei Problemen, Bugs oder Verbesserungsvorschlägen steht das JCrypTool-Team gerne zur Verfügung:
-		<a href="mailto:esslinger@cryptool.org">Prof. Bernhard Esslinger - esslinger@cryptool.org</a>
-	</p>
+
+
+<p><br></p>
 </body>
 </html>

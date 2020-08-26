@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Merkle Signatures (MSS, XMSS)" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
-    <topic href="$nl$/help/content/index.html" label="Merkle Signatures (MSS, XMSS)">
+<toc label="Merkle Signatures (XMSS^MT)" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
+    <topic href="$nl$/help/content/index.html" label="Merkle Signatures (XMSS^MT)">
     </topic>
 </toc>

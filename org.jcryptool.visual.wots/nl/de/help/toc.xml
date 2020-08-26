@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Wots/Wots+ Visualisierung" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
-	<topic href="$nl$/help/content/index.html" label="Wots/Wots+ Visualisierung">
+<toc label="Winternitz OT-Signature (WOTS / WOTS+)" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
+	<topic href="$nl$/help/content/index.html" label="Winternitz OT-Signature (WOTS / WOTS+)">
     </topic>
 </toc>

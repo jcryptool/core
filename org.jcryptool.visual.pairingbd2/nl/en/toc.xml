@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Multipartite Key Exchange" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
-    <topic href="$nl$/help/index.html" label="Multipartite Key Exchange"/>
+<toc label="Multipartite Key Exchange (BD II)" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
+    <topic href="$nl$/help/index.html" label="Multipartite Key Exchange (BD II)"/>
 </toc>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="ECC Demonstration" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins"> 
-    <topic label="ECC Demonstration" href="$nl$/help/content/index.html" /> 
+<toc label="Elliptic Curve Calculations" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins"> 
+    <topic label="Elliptic Curve Calculations" href="$nl$/help/content/index.html" /> 
 </toc>

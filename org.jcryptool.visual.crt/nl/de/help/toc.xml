@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Chinese Remainder Theorem" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
-	<topic href="$nl$/help/content/index.html" label="Chinese Remainder Theorem">
+<toc label="Chinesischer Restsatz (CRT)" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
+	<topic href="$nl$/help/content/index.html" label="Chinesischer Restsatz (CRT)">
     <topic href="$nl$/help/content/crtAlgorithm.html" label="Chinese Remainder Theorem Algorithmus">
     </topic>
  </topic>

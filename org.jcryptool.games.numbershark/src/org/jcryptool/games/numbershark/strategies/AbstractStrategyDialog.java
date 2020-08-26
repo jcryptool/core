@@ -81,10 +81,11 @@ public class AbstractStrategyDialog extends TitleAreaDialog {
         lblMaximalValue = new Label(groupSliders, SWT.NONE);
         lblMaximalValue.setText(Messages.OptStratDialog_4);
 
-        lblNumOfPlayingFields = new Label(groupSliders, SWT.NONE);
+        lblNumOfPlayingFields = new Label(groupSliders, SWT.LEFT);
         lblNumOfPlayingFields.setText(Messages.AbstStratDialog_0);
         
         lblNumOfPlayingFieldsNumber = new Label(groupSliders, SWT.CENTER);
+        lblNumOfPlayingFieldsNumber.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
         lblNumOfPlayingFieldsNumber.setText("\t" + String.valueOf(defaultSelection - 1));
         
         longRunningProcessWarning = new Label(parent, SWT.NONE);

@@ -3,6 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Zudo-Ku</title>
+		<script id="MathJax-script" async src="${JCTJS_HOST}/javascript/MathJax-master/es5/tex-mml-svg.js"></script>
 	</head>
 	
 	<script type="text/javascript">
@@ -16,141 +17,157 @@
 	
 	</script>
 <body>
-	<h1>About Zudo-Ku</h1>
+	<h1>Zudo-Ku</h1>
 	
 	<p>
-	 	The computer tries to convince you that it has solved a 2x2 <a href="http://en.wikipedia.org/wiki/Sudoku" target="_blank">Sudoku</a>
-	 	without showing you the actual numbers in the boxes. Zudo-Ku is a simple example of a
-	 	<a href="http://en.wikipedia.org/wiki/Zero-knowledge_proof" target="_blank">zero-knowledge protocol</a>.
+	 	Zudo-Ku is a simple game to illustrate a
+	 	<a href="http://en.wikipedia.org/wiki/Zero-knowledge_proof" target="_blank">zero-knowledge protocol</a>.  The computer tries to convince you that it solved a \(4 \times 4\) <a href="http://en.wikipedia.org/wiki/Sudoku" target="_blank">Sudoku</a> without showing you the actual numbers in the single boxes (cells).
 	</p>
-	
-	<h1>How to play</h1>
-	When starting a new game, the computer solves a Sudoku game. It shows you only one initial starting number per 2x2
-	subgrid. The rest is hidden from you.
-	
-	<p align="center"> <img src="game_annotated.png" width="85%" style="min-width: 500px"/></p>
-	<p>
-		Click on <b>Challenge</b> and pick a row, a column, or a block.
-	</p>
-	<p>
-		The cards of the respective row/colum/block will be shuffled face down and then exposed to you. If the computer
-		really has a correct solution, then those four cards must always include the numbers from 1 to 4 exactly once.
-		Check whether the numbers are correct or the computer cheated you! 
-		After checking, the computer covers the cards again, shuffles them, and returns them to the board as they were
-		before.
-		The animations don't reveal any information - they are just for visualisation purposes.
-	</p>
-	<p>
-		Every time you click on <b>Let the Computer Cheat</b> the computer will add a wrong number to the Sudoku.
-		Since the numbers are hidden, you do not know which one.
-		How many times do you have to challenge the computer until you bust it?
-	</p>
-	<p>
-		Most zero knowledge protocols are based on repeating steps. Every time you challenge the computer
-		the probability of revealing the truth (correctly solved vs incorrectly solved) increases.
 
-		Challenge the computer multiple times.
+	<p align="center"> <img src="game_annotated.png" width="60%" style="min-width: 500px"/></p>
+
+	<p><br></p>
+	<h2>How to play</h2>
+	<p>
+	When starting a new game, a new \(4 \times 4\) Sudoku riddle is created [consisting of four blocks (subgrids) of size \(2 \times 2\), which make up 16 boxes]. The four given numbers are shown at once &ndash; one per \(2 \times 2\) subgrid. The computer then covertly solves this Sudoku game.
+	</p>
+	<p>
+	We assume we play Sudoku with playing cards instead of the usual pen and paper.
+	</p>
+
+	<p>
+		1) If you want new numbers (i.e. a new Sudoku puzzle), click on the left button <b>New sudoku</b>.
+	</p>
+
+	<p>
+		2) After clicking the button <b>Challenge</b> you can select a row, a column, or a block by clicking on one of the blue arrow indicators.
+	</p>
+
+	<p align="center"> <img src="playing_field_challenge.png" width="40%" style="min-width: 250px"/></p>
+
+	<p>
+		The cards of the respective row/column/block will be shuffled face down and then exposed to you in the above verification area. If the computer really has a correct solution, then those four cards must always include the numbers from 1 to 4 exactly once.<br>
+		Check whether the numbers are correct or whether the computer cheated you! 
+		After checking, the computer covers the cards again, shuffles them, and returns them to the board as they were before. The animations don't reveal any information about the order of the numbers &ndash; they are just for visualization purposes.
+	</p>
+
+	<p>
+		3) Every time you click on <b>Let the computer cheat</b> the computer will add one more wrong number to the Sudoku. Since the numbers are hidden, you do not know which one.
+	</p>
+	<p>
+		Most zero-knowledge protocols are based on repeating steps. Every time you challenge the computer the probability of revealing the truth (correctly solved vs. incorrectly solved) increases.
 	</p>
 	 <ul>
-  		<li>How many challenges are necessary until you believe that it knows a correct solution of the Sudoku?</li>
+  		<li>Challenge the computer multiple times. How many challenges are necessary until you believe that it knows a correct solution of the Sudoku?</li>
   		<li>How could the computer fool you?</li>
   		<li>What information about the solution did the computer expose to you to convince you?</li>
   		<li>What information did the computer not expose to you?</li>
 	</ul> 
 	<p>		
-		  Try to find a solution yourself just by using the facts you learned while challenging the computer.
-		  You can also find some answers if you continue to read below. 
-	</p>
-	<p>
-		
+		  Try to find a solution yourself just by using the facts you learned while challenging the computer. Below you can find some answers to these questions. 
 	</p>
 
-	<h1>Background</h1>
 	<p>
-		Zero-Knowledge proofs and protocols are a special part of cryptography. The basic idea is that a party wants to
-		prove it has some information, without revealing it (<b>Prover</b>). Another party (<b>Verifier</b>) wants to make
-		sure you actually have that information, that it is correct and you are not only pretending to possess the piece
-		of information.<br>
-		Imagine you want to buy a car. The salesperson wants you to prove you have enough money to buy it. But you don't
-		want to reveal how much money is on your bank account to a complete stranger. As a smart cryptologist you know,
-		that you could use a zero-knowledge proof to show that you have enough money to buy the car, but not reveal how
-		much you actually have.<br>
-		Such protocols mostly rely on multiple iterations, just as the Zudo-ku game. With every correctly verified step
-		the chances increase, that the Prover is actually in possession of the relevant information.
-		
+		4) With the button <b>Expose cards</b> the solution of the computer will be revealed. Use it after you are satisfied with the result of the challenges to see what's actually on the board. Remember that in real-life zero-knowledge protocols this is not possible. 
+	</p>
+
+
+
+	<p><br></p>
+	<h2>Background</h2>
+	<p>
+		Zero-knowledge proofs and protocols are a special part of cryptography. The basic idea is that one party (<b>prover</b>) wants to prove it has some information (secret), without revealing it. Another party (<b>verifier</b>) wants to make sure that the prover actually has that correct information and is not only pretending to possess the information.
+	</p>
+	<p>
+		Imagine you want to buy a car. The salesperson wants you to prove you have enough money to buy it. But you don't want to reveal to a stranger how much money is on your bank account. As a smart cryptologist you know, that you could use a zero-knowledge proof to show that you have enough money to buy the car, but not reveal how much you actually have.
+	</p>
+	<p>
+		Such protocols mostly rely on multiple iterations, just as the Zudo-Ku game. With every correctly verified step the chances increase, that the prover is actually in possession of the relevant information.
+	</p>
+	<p>
 		There are 3 properties important for zero-knowledge protocols:
 	</p>
 	 <ul>
-  		<li><b>Completeness:</b> If both parties of the protocol are honest, a verifier can be convinced of the statement</li>
-  		<li><b>Soundness:</b> A cheating prover can hardly convince an honest prover of a false statement (since this often depends on probabilities, we cannot be certain)</li>
-  		<li><b>Zero-knowledge:</b> The verifier can learn nothing about the statement except that it is true or false</li>
+  		<li><b>Completeness:</b> If both parties of the protocol are honest, a verifier can be convinced of the statement.</li>
+  		<li><b>Soundness:</b> A cheating prover can hardly convince a honest verifier of a false statement (since this often depends on probabilities, we cannot be 100% certain, but very close).</li>
+  		<li><b>Zero-knowledge property:</b> The verifier can learn nothing about the statement except that it is true or false.</li>
 	</ul> 
-	<h3 id="persona">Playing in person</h3>
+
+
+	<h3>Playing with cards in person</h3>
 	<p>
-		The idea of this game can be applied even better in real life!<br>
-		In the <b>simple variant</b>: take 81 cards with Numbers from 1-9 or and take a Sudoku riddle.
-		The prover may or may not solve it but puts every card face down. 
-		Either way she tries to convince the other person that she does have a correct solution. The verifying person
-		selects exclusively rows, or columns or subgrids. She then takes the cards, shuffles them and looks at the
-		numbers. If they are 1-9 it is ok. Putting them back as in this game is in real life not really feasable.
-		This leads to a soundness (probability that the prover is caught cheating) with a probability of ≥ 1/3.<br>
-		In the <b>extended variant</b> you take packs of 3 cards for each cell. By doing it this way, the verifier can
-		check all rows, columns and subgrids. Note that thiss allows the prover to cheat with the 3 card packs for each cell. So
-		she could not place {3,3,3} on a cell as expected, but e.g. {3,3,4}. Nevertheless the soundness improves to 8/9.
+		The idea of this game can be applied even better in real life.
 	</p>
+	<p>
+		In the <b>simple variant</b>: Take 81 cards with the numbers from 1-9 and take a Sudoku riddle. The given (known) numbers are placed visible with the cards.
+	</p>
+	<p>
+		One person plays to be the prover, solves the Sudoku and puts every card face down. (The prover may or may not cheat and not really solve the Sudoku.) 
+	</p>
+	<p>
+		Either way, the prover tries to convince the other person that he does have a correct solution. The verifying person selects either a row, a column or a subgrid. Then the cards are shuffles. She then checks whether the pack of cards contains each number 1-9 exactly once. If not not she detected the prover to be cheating.
+	</p>
+	<p>
+		If you play in person  you could watch the other person shuffling. Putting the cards back as in this digital game is not feasable in real life. Using one set of cards and checking one topology exclusively leads to a soundness (probability that the prover is caught cheating) with a probability of ≥ 1/3.
+	</p>
+	<p>
+		In the <b>extended variant</b> you have packs of 3 cards for each cell. By doing it this way, the verifier can check all rows, columns and subgrids multiple times. Now the prover can only cheat by not using the same 3 cards for a unique cell (he might not place {3,3,3} on a cell as expected, but e.g. {3,3,4}). Nevertheless the soundness improves to 8/9.
+	</p>
+
+
 	<h3>Answers to the questions above</h3>
 	<p>
-		For more detailed explanations take a look at the underlying paper! <a href="#1">[1]</a>
+		For more detailed explanations take a look at the underlying paper. <a href="#1">[1]</a>
 	</p>
 	
-	How many challenges are necessary until you believe that the computer knows a correct solution of the Sudoku?<br>
+	How many challenges are necessary until you believe that the computer has a correct solution of the Sudoku?<br>
 	<button title="Click to show/hide content" type="button" onclick="toggleVisibility(spoiler0)">Show/hide</button>
 	<div id="spoiler0" style="display:none">
-		If the computer honestly shuffles packs and shows each card, and the verifier checks each possibility,
-		we have what we call Perfect completeness.<br>
-		If the verifier does not trust the prover we have to look at the soundness - here it gets more complicated:
-		In this example you can only verify that the computer shuffles, reveals and puts back the cards correctly by
-		looking at the program code.
-		If you play in person  you could watch the other person shuffling. You
-		cannot put the cards back after shuffling, so you either use 1 set of cards and check one topology exclusively.
-		So only rows, or only subgrids, or only columns.  <br>
-		Alternatively you use packs of 3 cards for each cell so you can check
-		multiple times. Now the prover can only cheat by not using the same 3 cards for a unique cell. This leads to a
-		soundness of 8/9.
-		There are also possibilities to achieve perfect soundness.
+	 <ul>
+  		<li>If the computer honestly shuffles packs and shows each card, and the verifier checks each possibility, we have what's called perfect completeness.</li>
+  		<li>If the verifier does not trust the prover we have to look at the soundness &ndash; here it gets more complicated:
+		In this example you can only verify that the computer shuffles, reveals and puts back the cards correctly by looking at the program code.</li>
+  		<li>There are also possibilities to achieve perfect soundness.</li>
+	</ul> 
 	</div>
 	<br>
+
 	<hr>
 	How could the computer fool you?<br>
 	<button title="Click to show/hide content" type="button" onclick="toggleVisibility(spoiler1)">Show/hide</button>
 	<div id="spoiler1" style="display:none"> 
-		The computer could just not have a correct solution as shown in this game. Then you can quite easily bust it.
-		If it was more clever, it could try to manipulate the way it takes and puts the cards from the table.<br>
-		If you play it in person, it depends if you play with one card per cell or with 3 cards per cell. If you played
-		with 3 cards the prover can also manipulate the stacks of cards.
+	 <ul>
+  		<li>The computer could just not have a correct solution as shown in this game. Then you can quite easily bust it.
+		If the computer was more clever, it could try to manipulate the way it takes and puts the cards from the table.</li>
+  		<li>If you play it in person, the players can look at each other.</li>
+  		<li>If you play with 3 cards the prover can also manipulate the stacks of cards.</li>
+	</ul> 
 	</div>
 	<br>
+
 	<hr>
-	What information about the solution did the computer expose to you to convince you - what did it not expose?<br>
+	What information about the solution does the computer expose to you to convince you &ndash; what does it not expose?<br>
 	<button title="Click to show/hide content" type="button" onclick="toggleVisibility(spoiler2)">Show/hide</button>
 	<div id="spoiler2" style="display:none"> 
-		The computer only ever reveals a block of numbers which are can be checked against the games rules.
-		Since those cards are randomly shuffled. One cannot find out the structure of the Sudoku by only looking at the
-		shuffled cards - therefore it's a zero-knowledge protocol.
+		The computer only ever reveals a block of numbers which can be checked against the games rules.
+		Since those cards are randomly shuffled, one cannot find out the solution of the Sudoku by only looking at the shuffled cards &ndash; therefore it's a zero-knowledge protocol.
 	</div>
 	
-	
-	
-	<h1>References</h1>
-	<p id ="1">
-		[1] Zudo-Ku was initially created for the <a href="http://www.kryptologikum.de/" target="_blank">Kryptologikum</a> and implements the ideas presented by Ronen Gradwohl, Moni Naor, Benny Pinkas and 
-		Guy Rothblum in <a href="http://www.wisdom.weizmann.ac.il/~naor/PAPERS/sudoku_abs.html" target="_blank">"Cryptographic and Physical Zero-Knowledge Proof Systems for Solutions of Sudoku Puzzles"</a>.
-	</p>
-	<h1>Technical information</h1>
+
+
+	<p><br></p>
+	<h2>Technical information</h2>
 	<p>
-		This plug-in was built with Java the Java-AWT framework. Therefore it may look and feel differently than other
-		JCrypTool plug-ins. Feel free to report any problems or bugs to the JCrypTool project lead
-		<a href="mailto:esslinger@cryptool.org">Prof. Bernhard Esslinger - esslinger@cryptool.org</a>
+		This plug-in was built with the Java-AWT framework. Therefore, it looks differently from other JCrypTool plug-ins. Feel free to report any problems or bugs to the JCrypTool project.
 	</p>
+	
+	
+	<p><br></p>
+	<h2>References</h2>
+	<p id ="1">
+		[1] Zudo-Ku was initially created for the <a href="http://www.kryptologikum.de/" target="_blank">Kryptologikum</a> and implements the ideas presented by Ronen Gradwohl, Moni Naor, Benny Pinkas and Guy Rothblum in <a href="http://www.wisdom.weizmann.ac.il/~naor/PAPERS/sudoku_abs.html" target="_blank">"Cryptographic and Physical Zero-Knowledge Proof Systems for Solutions of Sudoku Puzzles"</a>.
+	</p>
+
+<p><br></p>
 </body>
 </html>

@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
@@ -100,6 +101,8 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
     private Button btnCustomAlphabet;
 
     private AbstractAlphabet defaultAlphabet;
+
+	private String hintOnlyThisSelectable;
 
     /**
      * Overriding checkSubclass allows this class to extend org.eclipse.swt.widgets.Composite
@@ -234,6 +237,16 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
                 comboAlphas.setText(""); //$NON-NLS-1$
 
                 reloadAlphabetCombo();
+                
+                if (hintOnlyThisSelectable.length() > 0) {
+                	Label lblHint = new Label(this, SWT.WRAP);
+                	GridData layoutData = new GridData();
+					lblHint.setLayoutData(layoutData);
+					layoutData.grabExcessHorizontalSpace=true;
+					layoutData.horizontalAlignment=SWT.FILL;
+					layoutData.widthHint = 350;
+					lblHint.setText(hintOnlyThisSelectable);
+				}
 
                 if (mode.isWithCustomButton()) {
                     btnCustomAlphabet = new Button(this, SWT.RADIO);
@@ -376,6 +389,13 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
         }
 
         comboAlphas.setEnabled(comboAlphas.getItemCount() >= 2);
+
+        hintOnlyThisSelectable = ""; //$NON-NLS-1$
+        if (mode == Mode.COMBO_BOX_WITH_CUSTOM_ALPHABET_BUTTON || mode == Mode.SINGLE_COMBO_BOX_ONLY_EXISTING_ALPHABETS) {
+        	if(comboAlphas.getItemCount() < 2) {
+        		hintOnlyThisSelectable = Messages.getString("AlphabetSelectorComposite.3"); //$NON-NLS-1$
+        	}
+        }
         
         if (btnSelectAlphabet != null) {
             btnSelectAlphabet.setEnabled(!registeredAlphas.isEmpty());
@@ -393,7 +413,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 
     private String makeAlphaStringForBtn(AbstractAlphabet alpha) {
         return getCustomAlphabetLabel()
-                + Messages.getString("AlphabetSelectorComposite.current") + alpha.getName() + "; Zeichen: " + AbstractAlphabet.alphabetContentAsString(alpha.getCharacterSet()) + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+                + Messages.getString("AlphabetSelectorComposite.current") + alpha.getName() + "; Zeichen: " + AbstractAlphabet.alphabetContentAsString(alpha.getCharacterSet()) + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     private int getIndexForRegisteredAlphabet(AbstractAlphabet content) {
@@ -412,7 +432,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 
             @Override
             protected boolean canAutocorrect(InputVerificationResult result) {
-                if (result.getMessage().contains("cancelled")) {
+                if (result.getMessage().contains("cancelled")) { //$NON-NLS-1$
                     return true;
                 }
                 return super.canAutocorrect(result);
@@ -606,7 +626,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
     }
 
     private String generateAlphaContentTip(AbstractAlphabet content) {
-        return "Content" + ": " + AbstractAlphabet.alphabetContentAsString(content.getCharacterSet());
+        return Messages.getString("AlphabetSelectorComposite.6") + ": " + AbstractAlphabet.alphabetContentAsString(content.getCharacterSet()); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**

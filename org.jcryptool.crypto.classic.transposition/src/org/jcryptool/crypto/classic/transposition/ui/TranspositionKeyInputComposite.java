@@ -14,6 +14,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -24,6 +26,7 @@ import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.keys.KeyVerificator;
+import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.input.AbstractUIInput;
 import org.jcryptool.core.util.input.ButtonInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
@@ -32,8 +35,6 @@ import org.jcryptool.crypto.classic.model.ui.wizard.KeyInput;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionAlgorithm;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionKey;
 import org.jcryptool.crypto.ui.util.WidgetBubbleUIInputHandler;
-
-import com.cloudgarden.resource.SWTResourceManager;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -47,14 +48,8 @@ import com.cloudgarden.resource.SWTResourceManager;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class TranspositionKeyInputComposite extends org.eclipse.swt.widgets.Composite {
+public class TranspositionKeyInputComposite extends Composite {
 
-
-	{
-		//Register as a resource user - SWTResourceManager will
-		//handle the obtaining and disposing of resources
-		SWTResourceManager.registerResourceUser(this);
-	}
 
 	private Button checkEnabled;
 	private Label labelInOrder;
@@ -508,7 +503,8 @@ public class TranspositionKeyInputComposite extends org.eclipse.swt.widgets.Comp
 					labelTitleLData.grabExcessHorizontalSpace = true;
 					labelTitleLData.horizontalAlignment = GridData.FILL;
 					labelTitle.setLayoutData(labelTitleLData);
-					labelTitle.setFont(SWTResourceManager.getFont("Segoe UI", 9, 1, false, false)); //$NON-NLS-1$
+					Font segoe = new Font(labelTitle.getDisplay(), new FontData("Segoe UI", 9, 1));  //$NON-NLS-1$
+					labelTitle.setFont(segoe);
 					labelTitle.setText(""); //$NON-NLS-1$
 				}
 			}

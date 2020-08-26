@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Data Encryption Standard" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins"> 
-    <topic label="Data Encryption Standard" href="$nl$/help/content/index.html" /> 
+<toc label="Innere Zustände im Data Encryption Standard (DES)" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins"> 
+    <topic label="Innere Zustände im Data Encryption Standard (DES)" href="$nl$/help/content/index.html" /> 
 </toc>

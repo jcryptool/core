@@ -11,6 +11,8 @@
 package org.jcryptool.analysis.transpositionanalysis.ui.wizards.autoanalysiswizard;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -18,8 +20,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.analysis.transpositionanalysis.calc.transpositionanalysis.model.TranspositionAnalysis;
 import org.jcryptool.core.logging.utils.LogUtil;
-
-import com.cloudgarden.resource.SWTResourceManager;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -60,7 +60,8 @@ public class ConclusionItem extends org.eclipse.swt.widgets.Composite {
 				GridData labelAnalysisNameLData = new GridData();
 				labelAnalysisName.setLayoutData(labelAnalysisNameLData);
 				labelAnalysisName.setText(analysis.getAnalysisName());
-				labelAnalysisName.setFont(SWTResourceManager.getFont("Segoe UI", 10, 0, false, false));
+				Font segeo = new Font(labelAnalysisName.getDisplay(), new FontData("Segoe UI", 10, 0));
+				labelAnalysisName.setFont(segeo);
 			}
 			{
 				GridData areaConclusionLData = new GridData();

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Ant Colony Optimization" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
-  <topic href="$nl$/help/content/toc.html" label="Ant Colony Optimization">
+<toc label="Ant Colony Optimization (ACO)" link_to="../org.jcryptool.core.help/$nl$/toc.xml#visualizationPlugins">
+  <topic href="$nl$/help/content/toc.html" label="Ant Colony Optimization (ACO)">
     <topic href="$nl$/help/content/naturalreference.html" label="The native model">
   </topic>
     <topic href="$nl$/help/content/mathematicalabstraction.html" label="The mathematical abstraction">

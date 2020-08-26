@@ -6,31 +6,12 @@
     <title>RSA encryption</title>
 	<script id="MathJax-script" async src="${JCTJS_HOST}/javascript/MathJax-master/es5/tex-mml-svg.js"></script>
 	<script src="${JCTJS_HOST}/javascript/jquery.js"></script>
-
-	<!-- TOCbot: Table of Content generation, see https://github.com/tscanlin/tocbot -->
-	<script src="${JCTJS_HOST}/javascript/tocbot-4.11.2/dist/tocbot.min.js"></script>
-	<script>
-	// many more options available, see TOCbot documentation
-	$(document).ready(function() {
-		tocbot.init({
-		  tocSelector: '.TOC',			 // Where to render the table of contents.
-		  contentSelector: '.content',   // Where to grab the headings to build the table of contents.
-		  headingSelector: 'h2, h3', // Which headings to grab inside of the contentSelector element.
-		  hasInnerContainers: true,      // For headings inside relative or absolute positioned containers within content.
-		  listClass: 'toc-list',
-		  listItemClass: 'toc-list-item',
-		  isCollapsedClass: 'is-collapsed',
-		  collapsibleClass: 'is-collapsible',
-		  collapseDepth: 0,
-		  });
-	})
-	</script>
+	<script>TOC_generate_default("h2, h3")</script>
 	
-	<!-- TODO: stop! before copying this, integrate this into the central stylesheet (left to the reader as exercise, let's say')-->
-	<style>
+<!--	<style>
 		.toc-list-item {list-style-type: circle;}
 	</style>
-
+-->
 </head>
 
 <body>
@@ -48,12 +29,12 @@
 </p> -->
 
   <p>This help file describes two things:<br/>
-  1) <a href="#term">The RSA Scheme</a><br/>
-  2) <a href="#plugin">Handling Instructions: How to Use this Visualization</a></p>
+  <a href="#term">The RSA Scheme</a><br/>
+  <a href="#plugin">Handling Instructions: How to Use this Visualization</a></p>
   
   <p> <b>Please note</b> that in this visualization the operations are performed on each single character. In practice, the operations are performed on blocks or even the whole message. Normally, RSA is not used to encrypt large amounts of data. Mostly, it is used to encrypt a session key, which later is used to encrypt the data with a symmetric cryptosystem (e.g. AES or 3DES), or to sign the hash value of a message. </p>
 
-  <h2 id="term">1) The RSA Scheme</h2>
+  <h2 id="term">The RSA Scheme</h2>
 
   <p> The most well-known asymmetric cryptosystem, RSA, was developed in 1977 by Ronald Rivest, Adi Shamir, and Leonard Adleman. The private and public keys are constructed using two randomly selected big prime numbers p and q which the user can specify himself</p>
   
@@ -68,7 +49,7 @@
   <p>The security of the RSA scheme is based on two mathematical problems. First, it is hard to extract a root modulo N (RSA problem). Second, factorization of a number N = p*q is hard, if the factors are sufficiently large (RSA key problem).<br/></p>
 
   
-  <h3 id="KeyGen">a) RSA Key Generation</h3>
+  <h3 id="KeyGen">RSA Key Generation</h3>
   
   <p> A special characteristic of public key cryptosystems like RSA is that extensive calculations are necessary to generate the key before en-/decryption or signing can take place.</p>
   
@@ -81,19 +62,19 @@
   <p>After the RSA key generation, N and e can be published. Then, anyone could encrypt a message for the owner of the according secret RSA key d or check a digital signature  &nbsp;&ndash;  using only the public key. </p>
   
 
-  <h3 id="Enc">b) RSA Encryption / Decryption</h3>
+  <h3 id="Enc">RSA Encryption / Decryption</h3>
   <p> To <b>encrypt</b> data with the RSA scheme, the ciphertext is calculated using the public key e of the recipient and the plaintext. The encryption function is c = m^e mod N. This means that anyone can encrypt a message using the public key. But only the owner of the associated secret key d can then decrypt the message again. </p>
 
   <p> To <b>decrypt</b> a ciphertext with the RSA scheme, one needs to know the private key d. The decryption function, c^d = (m^e)^d = m^(e*d) = m mod N, yields the plaintext m. </p>
 
   
-  <h3 id="Sig">c) RSA Signing / Verifying</h3>
+  <h3 id="Sig">RSA Signing / Verifying</h3>
   <p> To <b>sign</b> a message m with the RSA scheme, you need to know the private key d. The signing function is applied to m or to a hash value of m: m^d = sign(m) or (hash(m))^d = sign(hash(m)). This yields the signature.</p>
 
   <p> You can <b>verify</b> a digital RSA signature using the signer's public key e by computing (sign(m))^e = m' or (sign(hash(m)))^e = hash(m)'. The result of the RSA exponentiation is m' or hash(m)' which has to be compared with the message m or the hash of the message hash(m) computed from the received (and decrypted) document. If both hash values are identical this is considered as a proof that the real owner of the corresponding private RSA key has signed the document.</p>
 
   
-  <h2 id="plugin">2) Handling Instructions: How to Use this Visualization</h2>
+  <h2 id="plugin">Handling Instructions: How to Use this Visualization</h2>
   
   <p> When the RSA visualization is started, you can select the desired operation, encrypt, decrypt, sign, or verify  &nbsp;&ndash;  by choosing the corresponding tab.</p>
   
