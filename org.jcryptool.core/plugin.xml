@@ -218,7 +218,7 @@
       <!-- Die vier Einstellungs-Seiten sind auskommentiert, da sie, Stand 2020, nicht benutzt wurde.
       	   Um Sie wieder zu verwenden einfach wieder einkommentieren. Die verlinkten Klassen sind 
       	   noch vorhanden -->
-      <!-- <page class="org.jcryptool.core.preferences.pages.EditorsPage" id="org.jcryptool.preferences.editors" name="%preference.page.editors"/> -->
+      <page class="org.jcryptool.core.preferences.pages.EditorsPage" id="org.jcryptool.preferences.editors" name="%preference.page.editors"/>
       <page class="org.jcryptool.core.preferences.pages.CryptoPage" id="org.jcryptool.preferences.crypto" name="%preference.page.crypto"/>
       <page class="org.jcryptool.core.preferences.pages.AlgorithmsPage" id="org.jcryptool.preferences.algorithms" name="%preference.page.algorithms"/>
       <!-- <page class="org.jcryptool.core.preferences.pages.AnalysisPage" id="org.jcryptool.preferences.analysis" name="%preference.page.analysis"/> -->
