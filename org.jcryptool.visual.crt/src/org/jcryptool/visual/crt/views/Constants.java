@@ -74,7 +74,6 @@ public interface Constants {
     /*
      * Export
      */
-    String MESSAGE_EXPORT_PDF = (Messages.CRTConstants_ExportPDF);
     String MESSAGE_EXPORT_LATEX = (Messages.CRTConstants_ExportLATEX);
     String MESSAGE_EXPORT_CSV = (Messages.CRTConstants_ExportCSV);
 

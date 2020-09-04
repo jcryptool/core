@@ -14,7 +14,7 @@ import org.eclipse.ui.ISources;
 public class CommandState extends AbstractSourceProvider {
 	
 	public enum Variable {
-		PDF, TEX, CSV
+		TEX, CSV
 	}
 	
 	public enum State {
@@ -33,11 +33,9 @@ public class CommandState extends AbstractSourceProvider {
 		Map<String, String> map = new HashMap<String, String>(1);
 		if (curState == State.DISABLED) {
 			map.put(variableVal(Variable.CSV), stateVal(State.DISABLED));
-			map.put(variableVal(Variable.PDF), stateVal(State.DISABLED));
 			map.put(variableVal(Variable.TEX), stateVal(State.DISABLED));
 		} else if (curState == State.ENABLED) {
 			map.put(variableVal(Variable.CSV), stateVal(State.ENABLED));
-			map.put(variableVal(Variable.PDF), stateVal(State.ENABLED));
 			map.put(variableVal(Variable.TEX), stateVal(State.ENABLED));
 		}
 		return map;
@@ -45,7 +43,7 @@ public class CommandState extends AbstractSourceProvider {
 
 	@Override
 	public String[] getProvidedSourceNames() {
-		return new String[] {variableVal(Variable.CSV), variableVal(Variable.PDF), variableVal(Variable.TEX)};
+		return new String[] {variableVal(Variable.CSV), variableVal(Variable.TEX)};
 	}
 	
 	public static String variableVal(Variable variable) {
@@ -53,9 +51,6 @@ public class CommandState extends AbstractSourceProvider {
 		switch (variable) {
 		case CSV:
 			str = "org.jcryptool.visual.euclid.commands.CsvState";
-			break;
-		case PDF:
-			str = "org.jcryptool.visual.euclid.commands.PdfState";
 			break;
 		case TEX:
 			str = "org.jcryptool.visual.euclid.commands.TexState";
@@ -85,20 +80,12 @@ public class CommandState extends AbstractSourceProvider {
 		fireSourceChanged(ISources.WORKBENCH, variableVal(Variable.CSV), stateVal(State.ENABLED));
 	}
 	
-	public void setPDFExportEnabled() {
-		fireSourceChanged(ISources.WORKBENCH, variableVal(Variable.PDF), stateVal(State.ENABLED));
-	}
-	
 	public void setTEXExportEnabled() {
 		fireSourceChanged(ISources.WORKBENCH, variableVal(Variable.TEX), stateVal(State.ENABLED));
 	}
 	
 	public void setCSVExportDisabled() {
 		fireSourceChanged(ISources.WORKBENCH, variableVal(Variable.CSV), stateVal(State.DISABLED));
-	}
-	
-	public void setPDFExportDisabled() {
-		fireSourceChanged(ISources.WORKBENCH, variableVal(Variable.PDF), stateVal(State.DISABLED));
 	}
 	
 	public void setTEXExportDisabled() {

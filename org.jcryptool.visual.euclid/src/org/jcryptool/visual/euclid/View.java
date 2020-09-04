@@ -108,13 +108,11 @@ public class View extends ViewPart {
 	
 	public void enableSafeButtons() {
 		csc.changeCommandState(Variable.CSV, State.ENABLED);
-		csc.changeCommandState(Variable.PDF, State.ENABLED);
 		csc.changeCommandState(Variable.TEX, State.ENABLED);
 	}
 	
 	public void disableSafeButtons() {
 		csc.changeCommandState(Variable.CSV, State.DISABLED);
-		csc.changeCommandState(Variable.PDF, State.DISABLED);
 		csc.changeCommandState(Variable.TEX, State.DISABLED);
 	}
 

@@ -59,7 +59,7 @@
 	<h3>Tap-Sequenzen mit maximaler Länge</h3>
 
 	<p>Die Wahl der zu verwendeten Taps bestimmt, wie viele Werte in einer Sequenz von Pseudozufallswerten  enthalten sind, bevor die Sequenz sich wiederholt. Bestimmte Tap-Einstellungen ergeben die maximale Folgen von 2^(m-1) Länge.</p>
-	<p>Die Länge einer LFSR-Sequenz vor der Wiederholung hängt von zwei Dingen ab: von den Feedback-Taps und vom Ausgangszustand. Ein LFSR einer beliebigen Größe m (Anzahl der Register) ist in der Lage, jeden möglichen Zustand während der Periodenlänge N = 2^(m-1) zu erzeugen, dies jedoch nur, wenn geeignete Feedback-Taps gewählt wurden (dies ist dann unabhängig vom Ausgangszustand). Eine solche Sequenz wird als Sequenz maximaler Länge (m-Sequenz) bezeichnet. In der Kryptographie werden m-Sequenzen als Pseudozufallsfolgen benutzt.</p>
+	<p>Die Länge einer LFSR-Sequenz vor der Wiederholung hängt von zwei Dingen ab: von den Feedback-Taps und vom Ausgangszustand. Ein LFSR einer beliebigen Größe m (Anzahl der Register) ist in der Lage, jeden möglichen Zustand während der Periodenlänge N = 2^(m-1) zu erzeugen, dies jedoch nur, wenn geeignete Feedback-Taps gewählt wurden (dies ist dann unabhängig vom Ausgangszustand). Eine solche Sequenz wird als Sequenz maximaler Länge (m-Sequenz) bezeichnet. In der Kryptografie werden m-Sequenzen als Pseudozufallsfolgen benutzt.</p>
 
 <p>Wenn die Feedback-Taps eines LFSR nicht maximal sind, hängt die Länge der erzeugten Sequenz auch vom Anfangszustand des LFSR ab. Ein nicht-maximaler Generator ist in der Lage, zwei oder mehr einzigartige Sequenzen (plus die triviale Null) zu erzeugen, wobei der Anfangszustand bestimmt, welche produziert wird. Jede dieser Sequenzen wird als Zustandsraum des Generators bezeichnet. Zusammengenommen berücksichtigen alle möglichen nicht-maximalen Sequenzen alle 2^m Zustände eines m-Bit-Zustandsregisters. </p>
 
@@ -69,7 +69,7 @@
 	<br>
 	<h2>Warum sind LFSRs nützlich? </h2>
 
-	<p>LFSRs werden seit langem als Pseudozufallszahlengeneratoren für den Einsatz im Strom-Chiffren verwendet (insbesondere in der militärischen Kryptographie) &ndash; aufgrund der leichten Konstruktion aus einfachen elektromechanischen oder elektronischen Schaltungen, ihren langen Perioden und dem sehr gleichmäßig verteilten Output. Ein LFSR ist jedoch ein lineares System, was zu einer relativ einfachen Kryptoanalyse führt. So kann beispielsweise &ndash; bei einem Abschnitt mit bekanntem Klartext und entsprechendem Geheimtext &ndash; ein Abschnitt der im vorstehend beschriebenen System verwendeten LFSR-Ausgabe wiederhergestellt werden, und aus der Ausgabesequenz kann man mit Hilfe des Berlekamp-Massey-Algorithmus einen LFSR von minimaler Größe konstruieren, der mit der bekannten Ausgabe dazu verwendet werden kann, wie der beabsichtigte Empfänger den verbliebenen Klartextes zu erhalten.</p>
+	<p>LFSRs werden seit langem als Pseudozufallszahlengeneratoren für den Einsatz im Strom-Chiffren verwendet (insbesondere in der militärischen Kryptografie) &ndash; aufgrund der leichten Konstruktion aus einfachen elektromechanischen oder elektronischen Schaltungen, ihren langen Perioden und dem sehr gleichmäßig verteilten Output. Ein LFSR ist jedoch ein lineares System, was zu einer relativ einfachen Kryptoanalyse führt. So kann beispielsweise &ndash; bei einem Abschnitt mit bekanntem Klartext und entsprechendem Geheimtext &ndash; ein Abschnitt der im vorstehend beschriebenen System verwendeten LFSR-Ausgabe wiederhergestellt werden, und aus der Ausgabesequenz kann man mit Hilfe des Berlekamp-Massey-Algorithmus einen LFSR von minimaler Größe konstruieren, der mit der bekannten Ausgabe dazu verwendet werden kann, wie der beabsichtigte Empfänger den verbliebenen Klartextes zu erhalten.</p>
 	<p> Wichtige LFSR-basierte Stream-Chiffren sind A5/1 und A5/2 (verwendet in GSM-Handys) und E0 (verwendet in Bluetooth). Die A5/2-Chiffre wurde gebrochen, und beide, A5/1 und E0, haben schwerwiegende Schwächen.</p>
 
 
@@ -111,7 +111,7 @@ Erwartete Ausgabe startet mit:
 		<li><a target="_blank" href="https://www.eetimes.com/document.asp?doc_id=1274550">[2] Tutorial: Linear Feedback Shift Registers (LFSRs)</a></li></li>
 		<li><a target="_blank" href="http://www.maxim-ic.com/appnotes.cfm?appnote_number=1743&CMP=WP-9">[3] Pseudo-Random Number Generation Routinee</a></li>
 		<li><a target="_blank" href="http://www.crypto-textbook.com/">[4] Christof Paar und Jan Pelzl: "Understanding Cryptography – A Textbook for Students and Practioners", 2010, Kapitel 2.3</a></li>		
-		<li><a target="_blank" href="https://www.amazon.de/Kryptographie-Entwurf-Einsatz-symmetrischer-Kryptosysteme/dp/3486222139">[5] W. Fumy und H.P. Riess: "Kryptographie", 1994, 2. Auflage, Kapitel 3.2 und 3.3</a></li>
+		<li><a target="_blank" href="https://www.amazon.de/Kryptografie-Entwurf-Einsatz-symmetrischer-Kryptosysteme/dp/3486222139">[5] W. Fumy und H.P. Riess: "Kryptografie", 1994, 2. Auflage, Kapitel 3.2 und 3.3</a></li>
 		<li><a target="_blank" href="https://www.rocq.inria.fr/secret/Anne.Canteaut/MPRI/chapter3.pdf">[6] Anne Canteaut: "LFSR-based Stream Ciphers"</a></li>		
 	</ul>
 <br>	

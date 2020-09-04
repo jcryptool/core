@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.visual.sphincsplus.EnvironmentParameters;
 import org.jcryptool.visual.sphincsplus.HashFunctionType;
 import org.jcryptool.visual.sphincsplus.SphincsPlus;
@@ -159,22 +160,10 @@ public class SphincsPlusParameterView extends Composite {
      * Creates the Head of the Tab, including Title and description.
      */
     private void createHead() {
-        final Composite headComposite = new Composite(this, SWT.NONE);
-        headComposite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-        headComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        headComposite.setLayout(new GridLayout(1, false));
-
-        headLabel = new Text(headComposite, SWT.READ_ONLY | SWT.CURSOR_ARROW);
-        headLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-        headLabel.setFont(FontService.getHeaderFont());
-        headLabel.setText(Messages.SphincsPlusParameterView_headLabel);
-
-        headDescription = new Text(headComposite, SWT.READ_ONLY | SWT.WRAP);
-        GridData gd_txtVerifiableSecretSharing = new GridData(SWT.FILL, SWT.FILL, true, false);
-        gd_txtVerifiableSecretSharing.widthHint = 1000;
-        headDescription.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-        headDescription.setText(Messages.SphincsPlusParameterView_headDescription);
-        headDescription.setLayoutData(gd_txtVerifiableSecretSharing);
+    	TitleAndDescriptionComposite tadComposite = new TitleAndDescriptionComposite(this);
+    	tadComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+    	tadComposite.setTitle(Messages.SphincsPlusParameterView_headLabel);
+    	tadComposite.setDescription(Messages.SphincsPlusParameterView_headDescription);
     }
 
     /**
@@ -732,6 +721,7 @@ public class SphincsPlusParameterView extends Composite {
 
         text_description = new StyledText(descriptionGroup, SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
         text_description.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+        text_description.setAlwaysShowScrollBars(false);
         GridData text_data = new GridData(SWT.FILL, SWT.FILL, true, true);
         text_data.heightHint = 400;
         text_description.setText(Messages.SphincsPlusParameterView_parameterDescription);

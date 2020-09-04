@@ -52,18 +52,6 @@
   		</activeWhen>
       </handler>
       <handler
-            class="org.jcryptool.visual.euclid.handler.ExportToPDFHandler"
-            commandId="org.jcryptool.visual.euclid.PDFexportCommand">
-        <activeWhen>
-  			<with
-  			variable="org.jcryptool.visual.euclid.commands.PdfState">
-      			<equals
-                	value="ENABLED">
-              	</equals>
-  			</with>
-  		</activeWhen>
-      </handler>
-      <handler
             class="org.jcryptool.visual.euclid.handler.ExportToTEXHandler"
             commandId="org.jcryptool.visual.euclid.TEXexportCommand">
         <activeWhen>
@@ -87,11 +75,7 @@
       		id="org.jcryptool.visual.euclid.CSVexportCommand"
       		name="%restart.command.csvexport">
       </command>
-            <command
-      		id="org.jcryptool.visual.euclid.PDFexportCommand"
-      		name="%restart.command.pdfexport">
-      </command>
-            <command
+      <command
       		id="org.jcryptool.visual.euclid.TEXexportCommand"
       		name="%restart.command.texexport">
       </command>
@@ -105,23 +89,22 @@
                commandId="org.jcryptool.visual.euclid.restartCommand"
                icon="platform:/plugin/org.jcryptool.core.util/icons/icon_reset.png"
                style="push">
-         </command>            
-      </menuContribution>
-            <menuContribution
+         </command>
+      </menuContribution>         
+      
+      <menuContribution
             locationURI="menu:org.jcryptool.visual.euclid.view">
          <command
                commandId="org.jcryptool.visual.euclid.CSVexportCommand"
-               style="push">
-         </command>
-         <command
-               commandId="org.jcryptool.visual.euclid.PDFexportCommand"
-               style="push">
+               style="push"
+               icon="platform:/plugin/org.jcryptool.visual.euclid/icons/csv.png">
          </command>
          <command
                commandId="org.jcryptool.visual.euclid.TEXexportCommand"
-               style="push">
+               style="push"
+               icon="platform:/plugin/org.jcryptool.visual.euclid/icons/tex.png">
          </command>
-      </menuContribution>                        
+      </menuContribution>             
    </extension>                        
 
    <extension
@@ -130,10 +113,6 @@
             provider="org.jcryptool.visual.euclid.handler.CommandState">
          <variable
                name="org.jcryptool.visual.euclid.commands.CsvState"
-               priorityLevel="workbench">
-         </variable>
-         <variable
-               name="org.jcryptool.visual.euclid.commands.PsvState"
                priorityLevel="workbench">
          </variable>
          <variable

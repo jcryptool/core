@@ -94,7 +94,7 @@ public class AbstractClassicTransformationPage extends WizardPage {
 		 * label2LData.verticalIndent = 10; infoLabel.setLayoutData(label2LData);
 		 * infoLabel.setText("You can change the standard transformations in:
 		 * Cryptography->Alphabets->Default transformations");
-		 * "Kryptographie->Alphabete->Standard-Transformationen"
+		 * "Kryptografie->Alphabete->Standard-Transformationen"
 		 * "Cryptography->Alphabets->Default transformations"
 		 **/
 

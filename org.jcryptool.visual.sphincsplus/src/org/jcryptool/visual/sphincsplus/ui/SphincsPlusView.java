@@ -83,10 +83,10 @@ public class SphincsPlusView extends ViewPart {
 		// SWT.V_SCROLL or SWT.H_SCROLL.
 		SmoothScroller.scrollSmooth(sc_signAndVerifyView);
 
-		boolean isLinux = false;
-		if(System.getProperty("os.name").toLowerCase().contains("linux")) {
-			isLinux = true;
-		}
+//		boolean isLinux = false;
+//		if(System.getProperty("os.name").toLowerCase().contains("linux")) {
+//			isLinux = true;
+//		}
 		
 		
 		// TODO: Tree view tabs are disabled under linux; see https://github.com/jcryptool/crypto/issues/300
