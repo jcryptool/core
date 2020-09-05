@@ -9,8 +9,10 @@
 
 <h1>Transposition Usage</h1>
 
-<p>This page is about using the user interface for the transposition cipher. For general information about this algorithm, see: <a href="toc_cryptology/toc_cryptology.html">Transposition cipher in the cryptology manual</a>.</p>
-<p>Below you will find explanation of what the different "groups" of options shown in the wizard mean, and what to fill in. In the Transposition wizard, you will hardly need all options to change. Just the "Key" and "Transposition" groups are mandatory to take care of in most cases.<br>This Transposition implementation allows to choose between one-fold and twofold transposition, by checking or unchecking the checkbox at the second key group.</p>
+<p>This page explains the user interface for the transposition cipher. For further information about the transposition algorithm itself, see the sub page: <a href="toc_cryptology/toc_cryptology.html">Transposition cipher</a>.</p>
+
+<p>Below, the different "groupings" for the options and parameters in the wizard are explained. In the Transposition wizard, the groupings "Key" and "Operation" are the most important ones.<br>This transposition implementation allows to choose between one-fold and twofold transpositions (single or double column transposition). A second transposition is enabled by adding a checkmark at the optional second transposition.</p>
+
 
 
 <h3>Operation &ndash; encryption or decryption</h3>
@@ -22,6 +24,7 @@
 
 <h3>Pre-operation text transformation</h3>
 <p>If you would like to change the input text before you apply the algorithm, you can check this box, and you will be able to select from a range of text-altering operations after completing this wizard page. For example, you can choose to delete all blanks for increased security.</p>
+
 <p>Pre-operation text transformation should only be used when encrypting a text. When used with decryption, there will be information loss or unreadable text in most cases.</p>
 
 
@@ -29,11 +32,11 @@
 <p>As mentioned, you can choose between single transposition, and two-fold transposition, where the last one executes two consecutive transposition steps. Each step needs the following input:</p>
 
 <p><i>Read-in/out-direction:</i> <br /><img src="readDir1.png" width="85%" ><img src="readDir2.png" width="85%" /><br />
-The transposition encryption puts the text into a so-called "transposition table", which is then transformed by reordering its columns. Now, it has to be entered how the text is put into the table, and how the transposed table will be converted into a text back again. For each, there are two choices: column-wise read-in / read-out and row-wise read-in / read-out. A more detailed description can be found in the transposition-cipher article in the cryptology manual.</p>
+The transposition encryption puts the text into a so-called "transposition table", which is then transformed by reordering its columns. Now, it has to be entered how the text is put into the table, and how the transposed table will be converted into a text back again. For each, there are two choices: column-wise read-in / read-out and row-wise read-in / read-out. A more detailed description can be found in the sub page: <a href="toc_cryptology/toc_cryptology.html">Transposition cipher</a>.</p>
 
-<p><i>Transposition key:</i><br ><img src="key.png" width="85%" /><br /> The transposition key can consist of any characters from the alphabet. Longer keys do transpose a text better in the average case.</p>
+<p><i>Transposition key:</i><br ><img src="key.png" width="85%" /><br /> The transposition key can consist of any characters from the alphabet. Longer keys normally do transpose a text better.</p>
 
-<p><br />Important is, that at the <b>decryption</b> of a cipher not only the keys have to be the same ones as at the encryption - the read-in/read-out orders have to match, too. You could assume (legitimately) that read-in and read-out order must be inverse to the orders at the encryption, but this is done automatically for you. <b>Note: Put exactly the same options at decryption as at encryption.</b></p>
+<p><br />Important is, that at the <b>decryption</b> of a cipher not only the keys have to be the same ones as at the encryption – the read-in/read-out orders have to match, too. You could assume (legitimately) that read-in and read-out order must be inverse to the orders at the encryption, but this is done automatically for you. <b>Note: Put exactly the same options at decryption as at encryption.</b></p>
 
 <p>After finishing the wizard, you should be able to see your en- or decrypted text in the newly opened editor.</p>
 

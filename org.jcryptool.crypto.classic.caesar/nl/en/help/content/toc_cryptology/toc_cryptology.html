@@ -25,48 +25,36 @@
 
 <h3 id="algorithm">The en- and decryption algorithm</h3>
 
+<h4>Encryption</h4>
 
-<h4>Encryption:</h4>
-
-<p>At the Caesar cipher, every character of
-the text is replaced by a character k positions far away in the alphabet. This
-“shift“ k is the key, which is often not written as a number, but as a
-character of the alphabet. The key k as a number is then the position of this
+<p>At the Caesar cipher, every character of the text is replaced by a character k positions far away in the alphabet. This “shift“ k is the key, which is often not written as a number, but as a character of the alphabet. The key k as a number is then the position of this
 character in the alphabet (1-relative).</p>
 
-<p>Since the Caesar cipher is a monoalphabetic
-substitution, it can also be described with a substitution alphabet. This
-substitution alphabet is of course just rotated by k. An example will describe
-it best - For k = 4 (and the standard Latin uppercase alphabet):</p>
+<p>Since the Caesar cipher is a monoalphabetic substitution, it can also be described with a substitution alphabet. This substitution alphabet is of course just rotated by k. An example will describe it best. For k = 4 (and the standard Latin uppercase alphabet):</p>
 
 <p><img width=647 height=80 id="Grafik 0"
 src="alphabet_transformation.png" alt="alphabet_transformation.png"></p>
 
-<p>Every character in the plain text is substituted
-by the character which is at the same position in the cipher text alphabet. </p>
+<p>Every character in the plain text is substituted by the character which is at the same position in the cipher text alphabet. </p>
 
 <p>Example of an encryption:</p>
 
-<p><i>Plain text:</i> “CHIFFRE”;
-key: “D” (means k=4)</p>
+<p><i>Plain text:</i> “CHIFFRE”; key: “D” (means k=4)</p>
 
-<p><i>Encryption result:</i> „GLMJJVI“ (C+4 = <b>G</b>, H+4 = <b>L</b>, …; substitution alphabet
-example from above fits, too)</p>
+<p><i>Encryption result:</i> „GLMJJVI“ (C+4 = <b>G</b>, H+4 = <b>L</b>, …; substitution alphabet example from above fits, too)</p>
 
 
-<h4>Decryption:</h4>
 
-<p>The decryption is done naturally by
-shifting the characters back up the alphabet by the amount k. Systematically, an
-inverse key i to k is created, with i = length(Alphabet) – k, and for
-decryption, the cipher text is “encrypted” with i.</p>
+<h4>Decryption</h4>
+
+<p>The decryption is done naturally by shifting the characters back up the alphabet by the amount k. Systematically, an inverse key i to k is created, with i = length(Alphabet) – k, and for decryption, the cipher text is “encrypted” with i.</p>
 
 
 <h3 id="furtherreading">Further reading</h3>
 <ul>
   <li>
   	<a class="external" target="_blank" href="http://en.wikipedia.org/w/index.php?title=Caesar_cipher">
-  		The Wikipedia article on the Caesar cipher
+  	Wikipedia article on the Caesar cipher
   	</a>
   </li>
 </ul>

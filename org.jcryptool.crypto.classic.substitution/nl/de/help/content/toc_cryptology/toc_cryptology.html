@@ -25,42 +25,25 @@
 <img src="in_out_scheme.png"  width="85%" />
 
 
-<h3 id="algorithm">Der Ver- und Entschlüsselungsalgorithmus</h3>
 
+<h3 id="algorithm">Der Ver- und Entschlüsselungsalgorithmus</h3>
 
 <h4>Verschlüsselung</h4>
 
-<p>Substitutionsverfahren im Allgemeinen ordnen jedem Buchstaben
-des Klartextes einen anderen Buchstaben des Alphabets zu, durch welchen dieser
-im Geheimtext ersetzt (substituiert) wird. Bei der monoalphabetischen
-Substitution wird ein Buchstabe a immer durch ein und denselben Buchstaben a‘
-ersetzt. Diese Abbildung von a auf a‘ ist eineindeutig, das heißt, dass jeder
-Buchstabe a‘ auch nur genau auf a abgebildet wird. Deshalb kann man
-monoalphabetische Substitutionen auch durch das Klartextalphabet, und ein
-Substitutionsalphabet darstellen, wobei das Substitutionsalphabet der Schlüssel
-des Verfahrens ist. Sei A das Klartextalphabet, und A‘ das
-Substitutionsalphabet und a[m] bzw. a‘[m] der m-te Buchstabe in A bzw. A‘, so
-wird jeder Buchstabe a[n] durch den Buchstaben a‘[n] substituiert.</p>
+<p>Substitutionsverfahren im Allgemeinen ordnen jedem Buchstaben des Klartextes einen anderen Buchstaben des Alphabets zu, durch welchen dieser im Geheimtext ersetzt (substituiert) wird. Bei der monoalphabetischen Substitution wird ein Buchstabe a immer durch ein und denselben Buchstaben a‘ ersetzt. Diese Abbildung von a auf a‘ ist eineindeutig, das heißt, dass jeder Buchstabe a‘ auch nur genau auf a abgebildet wird. Deshalb kann man monoalphabetische Substitutionen auch durch das Klartextalphabet, und ein Substitutionsalphabet darstellen, wobei das Substitutionsalphabet der Schlüssel
+des Verfahrens ist. Sei A das Klartextalphabet, und A‘ das Substitutionsalphabet und a[m] bzw. a‘[m] der m-te Buchstabe in A bzw. A‘, so wird jeder Buchstabe a[n] durch den Buchstaben a‘[n] substituiert.</p>
 
-<p>Da das Substitutionsalphabet der Schlüssel des Verfahrens
-ist, es aber unpraktisch ist, das ganze Substitutionsalphabet einzugeben, wird dieses
-Alphabet oft aus einem Schlüsselwort folgendermaßen generiert:</p>
+<p>Da das Substitutionsalphabet der Schlüssel des Verfahrens ist, es aber unpraktisch ist, das ganze Substitutionsalphabet einzugeben, wird dieses Alphabet oft aus einem Schlüsselwort folgendermaßen generiert:</p>
 
 <ul>
-<li>Das Schlüsselwort darf nur Buchstaben aus dem (Klartext-) Alphabet
-beinhalten</li>
+<li>Das Schlüsselwort darf nur Buchstaben aus dem (Klartext-) Alphabet beinhalten</li>
 
 <li>Doppeltes Auftreten von Buchstaben wird entfernt</li>
 
-<li>An das Schlüsselwort (Beispiel: „KEY“) werden die restlichen
-Alphabetbuchstaben in aufsteigender Reihenfolge angehängt, um so das Alphabet
-zu vervollständigen, und auf Klartextalphabetlänge zu bringen. Entstehen würde
-im Beispiel das Substitutionsalphabet „KEYABCDFGHIJLMNOPQRSTUVWXZ“.</li>
+<li>An das Schlüsselwort (Beispiel: „KEY“) werden die restlichen Alphabetbuchstaben in aufsteigender Reihenfolge angehängt, um so das Alphabet zu vervollständigen, und auf Klartextalphabetlänge zu bringen. Entstehen würde im Beispiel das Substitutionsalphabet „KEYABCDFGHIJLMNOPQRSTUVWXZ“.</li>
 </ul>
 
-<p>Um das Beispiel weiterzuführen, wird nun das Wort „SECRET“
-mit dem Substitutionsalphabet verschlüsselt. In der Tabelle sind
-Klartextalphabet und Geheimtextalphabet übereinander geschrieben aufgeführt.
+<p>Um das Beispiel weiterzuführen, wird nun das Wort „SECRET“ mit dem Substitutionsalphabet verschlüsselt. In der Tabelle sind Klartextalphabet und Geheimtextalphabet übereinander geschrieben aufgeführt.
 Wie erklärt, wird nun bei der Verschlüsselung jeder Buchstabe des Wortes durch
 den Buchstaben ersetzt, der in der Tabelle direkt darunter steht – a[n] -> a‘[n]:</p>
 
@@ -70,11 +53,10 @@ src="substitution_alphabet.png" alt="alphabet_transformation.png"></p>
 <p>Das verschlüsselte Wort ist damit „WIGVIX“.</p>
 
 
+
 <h4>Entschlüsselung</h4>
 
-<p>Bei der Entschlüsselung wird die ein-eindeutige Substitutionsabbildung
-umgekehrt. Man kann es so betrachten, dass das durch den Schlüssel erzeugte
-Alphabet zum „Klartextalphabet“ wird, das vorherige Klartextalphabet wird zum „Substitutionsalphabet“
+<p>Bei der Entschlüsselung wird die ein-eindeutige Substitutionsabbildung umgekehrt. Man kann es so betrachten, dass das durch den Schlüssel erzeugte Alphabet zum „Klartextalphabet“ wird, das vorherige Klartextalphabet wird zum „Substitutionsalphabet“
 (zum Schlüssel), und damit wird der Geheimtext zur Entschlüsselung „verschlüsselt“.</p>
 
 
@@ -82,7 +64,7 @@ Alphabet zum „Klartextalphabet“ wird, das vorherige Klartextalphabet wird zu
 <ul>
   <li>
   	<a class="external" target="_blank" href="http://de.wikipedia.org/w/index.php?title=Substitution_%28Kryptografie%29">
-  		Der Wikipedia-Artikel zur Substitutions-Verschlüsselung
+  	Wikipedia-Artikel zur Substitutions-Verschlüsselung
   	</a>
   </li>
 </ul>

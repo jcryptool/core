@@ -30,11 +30,9 @@
 <h4>Encryption</h4>
 
 <p>The ADFGVX cipher is a monoalphabetic substitution cipher in its first part (the other part is a simple transposition).
-The substitution alphabet contains all pairs of the letters “A, D, F, G, V, X”, thus contains exactly 36 elements. This means, that the plaintext alphabet cannot contain more than 36 elements, and, that every character from the plaintext
-will be replaced by two characters at the encryption.</p>
+The substitution alphabet contains all pairs of the letters “A, D, F, G, V, X”, thus contains exactly 36 elements. This means, that the plaintext alphabet cannot contain more than 36 elements, and, that every character from the plaintext will be replaced by two characters at the encryption.</p>
 
-<p>As in every substitution algorithm, the substitution alphabet is the key. To create the alphabet, the so-called ADFGVX matrix is filled with the content of the plaintext alphabet (or with a
-more or less short key word and then with the rest of the alphabet – in the example it is the keyword “KEY”):</p>
+<p>As in every substitution algorithm, the substitution alphabet is the key. To create the alphabet, the so-called ADFGVX matrix is filled with the content of the plaintext alphabet (or with a more or less short key word and then with the rest of the alphabet – in the example it is the keyword “KEY”):</p>
 
 <p><img id="Grafik 0"
 src="substitution_alphabet.png" alt="substitution_alphabet.png"></p>
@@ -47,15 +45,14 @@ with the keyword „KEY“ (see ADFGVX matrix / substitution table above)</p>
 <p><img id="Grafik 1"
 src="encryption_example.png" alt="encryption_example.png"></p>
 
-<p>After the substitution, a simple transposition step is applied using a separate key. See the article on the transposition cipher for this.</p>
+<p>After the substitution, a simple transposition step is applied using a separate key. See the article on the <a href="PLUGINS_ROOT/org.jcryptool.crypto.classic.transposition/$nl$/help/content/tutorial.html">transposition cipher</a> for this.</p>
 
 
 <h4>Decryption</h4>
 
 <p>If a transposition was performed in addition to the ADFGVX substitution, then this has be undone first.</p>
 
-<p>The substitution alphabet can be created from the key with the ADFGVX matrix again, and the ciphertext can be substituted
-back. This is done by splitting the text into blocks of two, and substituting each block of two (A/D/F/G/V/X pair) back to the former plaintext alphabet.</p>
+<p>The substitution alphabet can be created from the key with the ADFGVX matrix again, and the ciphertext can be substituted back. This is done by splitting the text into blocks of two, and substituting each block of two (A/D/F/G/V/X pair) back to the former plaintext alphabet.</p>
 
 
 <p><br class="newline"/></p>

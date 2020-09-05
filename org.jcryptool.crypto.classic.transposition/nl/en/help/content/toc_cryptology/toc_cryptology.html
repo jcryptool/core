@@ -37,30 +37,18 @@ The columns of the transposition table are transposed in the encryption progress
   <li>transposing the columns of the table</li>
   <li>reading out the content of the table into the ciphertext</li>
 </ol>
- </p>
+</p>
 
-<p>We begin with the second step – the <b>column
-transposition</b>: The key determines the new order of the columns. It consists
-of numbers, which describe this order. The reordering can be visualized by
-writing the transposition key over the table as seen in the following picture: </p>
+<p>We begin with the second step – the <b>column transposition</b>: The key determines the new order of the columns. It consists of numbers, which describe this order. The reordering can be visualized by writing the transposition key over the table as seen in the following picture:</p>
 
 <p><img src="simple_encryption.png"
 alt="simple_encryption.png"></p>
 
-<p>So, the reordering of the columns is done such
-that over every column the number is equal to the actual position of the column.</p>
+<p>So, the reordering of the columns is done such that over every column the number is equal to the actual position of the column.</p>
 
-<p>Now, the table is encrypted. When a text
-has to be encrypted, it has to be read into the table first, and after the
-transposition, the table has to be read out into text again. Two methods are
-common: <b>row-wise and column-wise read in/out</b>.</p>
+<p>Now, the table is encrypted. When a text has to be encrypted, it has to be read into the table first, and after the transposition, the table has to be read out into text again. Two methods are common: <b>row-wise and column-wise read in/out</b>.</p>
 
-<p><i>The number of columns is defined by the key length.</i> <b></b>Such, based
-on the text length, the dimensions of the table can be calculated. In the
-picture above, the text seems to be „ATTACKATMIDNIGHT“ (apparently read in
-row-wise) – we will use this example often in this article. This text is 16 characters
-long. The key is „5, 2, 1, 4, 3, 6“, 6 characters long. This means, the table
-will have 6 columns, thus 3 rows are necessary to contain the text. </p>
+<p><i>The number of columns is defined by the key length.</i> Such, based on the text length, the dimensions of the table can be calculated. In the picture above, the text seems to be „ATTACKATMIDNIGHT“ (apparently read in row-wise) – we will use this example often in this article. This text is 16 characters long. The key is „5, 2, 1, 4, 3, 6“, 6 characters long. This means, the table will have 6 columns, thus 3 rows are necessary to contain the text. </p>
 
 <p>When the text is read in <i>row-wise</i>,
 it turns into:</p>
@@ -74,25 +62,17 @@ it turns into:</p>
 <p><img id="Grafik 2"
 src="columnwise_read_in.png" alt="columnwise_read_in.png"></p>
 
-<p>At the column-wise-example it is clear that
-the free cells, that couldn’t be filled, must always be in the last row (at
-row-wise read-in, this happens automatically).</p>
+<p>At the column-wise-example it is clear that the free cells, that couldn’t be filled, must always be in the last row (at row-wise read-in, this happens automatically).</p>
 
-<p>The <b>read-out </b>of the table into text happens
-analogue, row- or column-wise. Blank cells are simply ignored here.</p>
+<p>The <b>read-out </b>of the table into text happens analogue, row- or column-wise. Blank cells are simply ignored here.</p>
 
-<p>Below: a picture of all possible encryption
-paths, using the already known text and key (just the read in/out-orders are
-variable). <img id="Grafik 3" src="bigPicture_transposition.png" alt="bigPicture_transposition.png" width="85%" /></p>
+<p>Below: a picture of all possible encryption paths, using the already known text and key (just the read in/out-orders are variable). <img id="Grafik 3" src="bigPicture_transposition.png" alt="bigPicture_transposition.png" width="85%" /></p>
 
 
 <h4>Decryption</h4>
 
-<p>To every key k, there exists an inverse
-key, i. Encrypting a table with k, and then with i, the result is the initial
-table again. This inverse key I can be created from k as follows: k is of
-length n. Take a sequence of numbers z = “1, 2, …, n”. Encrypt this sequence
-with k, and a sequence z’ = i is the result. For example:</p>
+<p>To every key k, there exists an inverse key, i. Encrypting a table with k, and then with i, the result is the initial table again. This inverse key I can be created from k as follows: k is of
+length n. Take a sequence of numbers z = “1, 2, …, n”. Encrypt this sequence with k, and a sequence z’ = i is the result. For example:</p>
 
 <p>k = „5, 2, 1, 4, 3, 6“<br>
 z = „1, 2, 3, 4, 5, 6“</p>
@@ -100,64 +80,43 @@ z = „1, 2, 3, 4, 5, 6“</p>
 <p>The encryption results in:  z‘ = i = „3, 2,
 5, 4, 1, 6“. The inverse key i to k thus is „3, 2, 5, 4, 1, 6“.</p>
 
-<p>To decrypt a text, which was encrypted with
-k, the inverse key i has to be calculated, and the ciphertext has to be “encrypted”
-with i. Of course, the knowledge of the read-in and read-out order at the
-encryption is important. A text, that has been encrypted with read-in method: “column-wise”
-and read-out-method: “row-wise”, has to be “encrypted” with i, read-in-order “row-wise”
-and read-out order “column-wise”, in order to decrypt the text. The most
-computer programs, like JCrypTool, do these inversion methods automatically,
+<p>To decrypt a text, which was encrypted with k, the inverse key i has to be calculated, and the ciphertext has to be “encrypted” with i. Of course, the knowledge of the read-in and read-out order at the encryption is important. A text, that has been encrypted with read-in method: “column-wise” and read-out-method: “row-wise”, has to be “encrypted” with i, read-in-order “row-wise” and read-out order “column-wise”, in order to decrypt the text. The most computer programs, like JCrypTool, do these inversion methods automatically,
 meaning, that the input at decryption should be the same as at encryption.</p>
 
 
-<h4>Advanced: Consideration of the table mask
-when no filling characters are used</h4>
+<h4>Advanced: Consideration of the table mask when no filling characters are used</h4>
 
-<p>The following problem occurs, when
-encrypting a text, which is not filling the transposition table completely:</p>
+<p>The following problem occurs, when encrypting a text, which is not filling the transposition table completely:</p>
 
 <p><img id="Grafik 0"
 src="simple_encryption.png" alt="simple_encryption.png"></p>
 
-<p>In the last row, blank cells occur. Many
-algorithms fill those with filling characters, like “X”, to avoid
-complications. This is not really necessary. An example:</p>
+<p>In the last row, blank cells occur. Many algorithms fill those with filling characters, like “X”, to avoid complications. This is not really necessary. An example:</p>
 
-<p>First, the encrypted text will be „TTCAAKMTDIANGHTI“(read
-out row-wise). If one wants to decrypt this text (in knowledge of the key), he
-would first read the text into a table row-wise:</p>
+<p>First, the encrypted text will be „TTCAAKMTDIANGHTI“ (read out row-wise). If one wants to decrypt this text (in knowledge of the key), he would first read the text into a table row-wise:</p>
 
 <p><img id="Grafik 6"
 src="mask_neglegected.png" alt="mask_neglegected.png"></p>
 
-<p>This table is different to the table that
-was really the result of the encryption, because the blank cells have been neglected.
-They have to be restored, in order to fill the text into the table right. This
-is possible, because the length of the text is known, and such, the dimensions
-of the table and the numbers of blank cells at the encryption. The way to restore
+<p>This table is different to the table that was really the result of the encryption, because the blank cells have been neglected. They have to be restored, in order to fill the text into the table right. This is possible, because the length of the text is known, and such, the dimensions of the table and the numbers of blank cells at the encryption. The way to restore
 the blank cells is, to simulate, where blank cells have been put at encryption.
 Example:</p>
 
-<p>Length of the text: 16; key length: 6 ->
-table with 6 columns and 3 rows -> two blank cells<br>
-Simulation of the encryption: () = blank cell, X = unimportant character
+<p>Length of the text: 16; key length: 6 -> table with 6 columns and 3 rows -> two blank cells<br> Simulation of the encryption: () = blank cell, X = unimportant character
 (interesting are only the blanks).</p>
 
 <p><img id="Grafik 7"
 src="mask_example_calculation.png" alt="mask_example_calculation.png"></p>
 
-<p>This means, that at re-reading the text
-into the table, the cells 3 and 6 in the last row cannot be filled with
-ciphertext characters. The table, that has really been the result of the
-encryption in the first place can be reconstructed now, and decrypted properly
-without loss of data.</p>
+<p>This means, that at re-reading the text into the table, the cells 3 and 6 in the last row cannot be filled with ciphertext characters. The table, that has really been the result of the
+encryption in the first place can be reconstructed now, and decrypted properly without loss of data.</p>
 
 
 <h3 id="furtherreading">Further reading</h3>
 <ul>
   <li>
   	<a class="external" target="_blank" href="http://en.wikipedia.org/w/index.php?title=Transposition_cipher">
-  		The Wikipedia article on the transposition cipher
+  	Wikipedia article on the transposition cipher
   	</a>
   </li>
 </ul>

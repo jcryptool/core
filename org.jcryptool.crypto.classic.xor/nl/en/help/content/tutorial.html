@@ -9,8 +9,9 @@
 
 <h1>XOR Usage</h1>
 
-<p>This page is about using the user interface for the XOR cipher. For general information about this algorithm, see: <a href="toc_cryptology/toc_cryptology.html">XOR cipher in the cryptology manual</a>.</p>
-<p>Below you will find explanation of what the different "groups" of options shown in the wizard mean, and what to fill in. In the XOR wizard, you will hardly need all options to change. Just the "Key" and "Operation" groups are mandatory to take care of in most cases.<br>The XOR algorithm allows the usage of a file instead of a key. Choose this option by checking the second radio button at the "Vernam operation" group.</p>
+<p>This page explains the user interface for the XOR cipher. For further information about the XOR algorithm itself, see the sub page: <a href="toc_cryptology/toc_cryptology.html">XOR Cipher</a>.</p>
+
+<p>Below, the different "groupings" for the options and parameters in the wizard are explained. In the XOR wizard, the groupings "Key" and "Operation" are the most important ones.<br>The XOR algorithm allows to use a file to enter the key. Choose this option by checking the second radio button in the "Key" group.</p>
 
 
 <h3>Operation &ndash; encryption or decryption</h3>
@@ -18,13 +19,14 @@
 
 
 <h3>Alphabet</h3>
-<p>The alphabet, over which a cryptographic operation (like en- or decryption) is executed, holds all the characters that this operation will accept and process. Use the "show alphabet" button to see, which characters the selected alphabet contains.</p>
+<p>The alphabet, over which a cryptographic operation (like en- or decryption) is executed, holds all the characters that this operation will accept and process. Use the "Show alphabet" button to see, which characters the selected alphabet contains.</p>
 
-<p>For example, if you choose an alphabet that holds only UPPERCASE characters (like "Upper Latin (A-Z)"), lowercase characters will not be encrypted. With the checkbox "filter non-alphabet characters", you can choose whether just to neglect (unchecked), or to completely delete those characters, which would be all lowercase characters in the example.
+<p>For example, if you choose an alphabet that holds only UPPERCASE characters (like "Upper Latin (A-Z)"), lowercase characters will not be encrypted. With the checkbox "Filter non-alphabet characters", you can choose whether just to neglect (unchecked), or to completely delete those characters, which would be all lowercase characters in the example.
 
 
 <h3>Pre-operation text transformation</h3>
 <p>If you would like to change the input text before you apply the algorithm, you can check this box, and you will be able to select from a range of text-altering operations after completing this wizard page. For example, you can choose to delete all blanks for increased security.</p>
+
 <p>Pre-operation text transformation should only be used when encrypting a text. When used with decryption, there will be information loss or unreadable text in most cases.</p>
 
 

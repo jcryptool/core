@@ -14,51 +14,37 @@
 </p>
 
 
+
 <h3 id="classification">Classification</h3>
 <p>
 	(Monoalphabetic) substitution itself is one of the basic cryptographic algorithm classes.
 </p>
 
 
-<h3 id="scheme">Input and output scheme</h3>
 
+<h3 id="scheme">Input and output scheme</h3>
 <img src="in_out_scheme.png"  width="85%" />
+
 
 
 <h3 id="algorithm">The en- and decryption algorithm</h3>
 
-
 <h4>Encryption</h4>
 
-<p>The monoalphabetic substitution replaces
-(substitutes) letters from the plain text, a, with letters from the cipher text
-alphabet, a‘. Every letter a has exactly one mapped a’, and every a’ is mapped
-to a letter a from the plain text alphabet at most once. Thus, it is a bijective
-mapping, and can be defined, based on the plain text alphabet, by specifying a
-substitution alphabet, which can have equal or more elements than the plain
-text alphabet. The character at index m of the plain text alphabet will always
-be mapped to the character at index m of the substitution alphabet. Such, the
-substitution alphabet is the key of the monoalphabetic substitution.</p>
+<p>The monoalphabetic substitution replaces (substitutes) letters from the plain text, a, with letters from the cipher text alphabet, a‘. Every letter a has exactly one mapped a’, and every a’ is mapped to a letter a from the plain text alphabet at most once. Thus, it is a bijective mapping, and can be defined, based on the plain text alphabet, by specifying a
+substitution alphabet, which can have equal or more elements than the plain text alphabet. The character at index m of the plain text alphabet will always be mapped to the character at index m of the substitution alphabet. Such, the substitution alphabet is the key of the monoalphabetic substitution.</p>
 
-<p>Writing down a whole alphabet is unhandy, so
-the substitution alphabet is generated from a key string in most cases:</p>
+<p>Writing down a whole alphabet is unhandy, so the substitution alphabet is generated from a key string in most cases:</p>
 
 <ul>
-<li>The keyword may only contain characters from the
-substitution alphabet</li>
+<li>The keyword may only contain characters from the substitution alphabet</li>
 
-<li>Multiple occurrences of characters are removed –
-each character may only occur once.</li>
+<li>Multiple occurrences of characters are removed – each character may only occur once.</li>
 
-<li>Fill up the key word with characters from the
-plaintext alphabet (append) until the necessary length (the length of the plain
-text alphabet) is reached.</li>
+<li>Fill up the key word with characters from the plaintext alphabet (append) until the necessary length (the length of the plaintext alphabet) is reached.</li>
 </ul>
 
-<p>Now an example: The word “SECRET” has to be
-encrypted with the keyword “KEY”. Below are the alphabets – in this notation it
-becomes clear how the substitution mapping works – replace each character from
-the first row with the one below it in the second row).</p>
+<p>Now an example: The word “SECRET” has to be encrypted with the keyword “KEY”. Below are the alphabets – in this notation it becomes clear how the substitution mapping works – replace each character from the first row with the one below it in the second row).</p>
 
 <p><img id="Grafik 0"
 src="substitution_alphabet.png" alt="alphabet_transformation.png"></p>
@@ -68,9 +54,7 @@ src="substitution_alphabet.png" alt="alphabet_transformation.png"></p>
 
 <h4>Decryption</h4>
 
-<p>At the decryption, the substitution mapping
-is inverted. It’s also possible to be defined as encryption with the former plaintext
-alphabet, taking the former substitution alphabet as actual plaintext alphabet.
+<p>At the decryption, the substitution mapping is inverted. It’s also possible to be defined as encryption with the former plaintext alphabet, taking the former substitution alphabet as actual plaintext alphabet.
 In the scheme above, all characters from the second row would be replaces with
 the ones above them (first row).</p>
 
@@ -79,7 +63,7 @@ the ones above them (first row).</p>
 <ul>
   <li>
   	<a class="external" target="_blank" href="http://en.wikipedia.org/w/index.php?title=Substitution_cipher">
-  	The Wikipedia article on the substitution cipher
+  	Wikipedia article on the substitution cipher
   	</a>
   </li>
 </ul>

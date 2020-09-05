@@ -38,32 +38,24 @@ alt="in_out_scheme.png"></p>
 </ol>
 </p>
 
-<p>Wir beginnen mit dem zweiten Schritt - der <b>Transposition
+<p>Wir beginnen mit dem zweiten Schritt – der <b>Transposition
 der Spalten</b>: Der Schlüssel bestimmt die Vertauschung der Spalten der
 Tabelle. Er besteht dabei aus Zahlen, die die gewünschte Ordnung beschreiben.
 Visuell kann man seine Bedeutung durch Niederschrift über der Transpositionstabelle
-erklären: </p>
+erklären:</p>
 
 <p><img src="simple_encryption.png"
 alt="simple_encryption.png"></p>
 
-<p>Die Umordnung der Spalten wird also so vorgenommen, dass die
-Position der Spalten nach der Verschlüsselung gleich der darüberstehenden
-Nummer ist.</p>
+<p>Die Umordnung der Spalten wird also so vorgenommen, dass die Position der Spalten nach der Verschlüsselung gleich der darüberstehenden Nummer ist.</p>
 
 <p>Nun haben wir die Tabelle verschlüsselt. Wenn wir aber einen
 Text verschlüsseln wollen, muss dieser erst in die Tabelle eingelesen werden
 (erster Schritt), und anschließend wieder ausgelesen werden (dritter Schritt).
 Bei der spaltenweisen Transposition sind zwei Methoden üblich, dies zu tun: <b>zeilenweises und spaltenweises Ein- und Auslesen</b>.</p>
 
-<p><i>Die Breite der Tabelle ist durch die Schlüssellänge
-festgelegt.</i> <b></b>Damit lässt sich aufgrund der Länge eines Textes sagen,
-wie hoch (oder: wie viele Zeilen) die Tabelle sein muss, damit der Text
-vollständig hineinpasst. Im Beispiel oben scheint der Klartext
-„ATTACKATMIDNIGHT“ (zeilenweise eingelesen) gewesen zu sein (dieses Beispiel
-werden wir weiterhin verwenden). Dieser Text ist 16 Zeichen lang. Der Schlüssel
-ist „5, 2, 1, 4, 3, 6“, also 6 Zeichen lang. Das bedeutet, die Tabelle wird 6
-Spalten haben, und muss deshalb 3 Zeilen hoch sein. </p>
+<p><i>Die Breite der Tabelle ist durch die Schlüssellänge festgelegt.</i> Damit lässt sich aufgrund der Länge eines Textes sagen, wie hoch (oder: wie viele Zeilen) die Tabelle sein muss, damit der Text vollständig hineinpasst. Im Beispiel oben scheint der Klartext
+„ATTACKATMIDNIGHT“ (zeilenweise eingelesen) gewesen zu sein (dieses Beispiel werden wir weiterhin verwenden). Dieser Text ist 16 Zeichen lang. Der Schlüssel ist „5, 2, 1, 4, 3, 6“, also 6 Zeichen lang. Das bedeutet, die Tabelle wird 6 Spalten haben, und muss deshalb 3 Zeilen hoch sein. </p>
 
 <p>Wird Text nun <i>zeilenweise eingelese</i>n, bekommen wir:</p>
 
@@ -75,17 +67,11 @@ src="rowwise_read_in.png" alt="rowwise_read_in.png"></p>
 <p><img id="Grafik 2"
 src="columnwise_read_in.png" alt="columnwise_read_in.png"></p>
 
-<p>Anhand des spaltenweisen Einlesens sieht man besonders gut,
-dass der freie Platz immer in der letzten Zeile gelassen werden muss (wie es
-natürlicherweise beim zeilenweisen Einlesen geschieht).</p>
+<p>Anhand des spaltenweisen Einlesens sieht man besonders gut, dass der freie Platz immer in der letzten Zeile gelassen werden muss (wie es natürlicherweise beim zeilenweisen Einlesen geschieht).</p>
 
-<p>Das <b>Auslesen einer Tabelle</b> (nach der Verschlüsselung)
-folgt analog zeilen- und spaltenweise. Leere Zellen der Tabelle werden dabei
-einfach ignoriert.</p>
+<p>Das <b>Auslesen einer Tabelle</b> (nach der Verschlüsselung) folgt analog zeilen- und spaltenweise. Leere Zellen der Tabelle werden dabei einfach ignoriert.</p>
 
-<p>Nachfolgend eine Abbildung der Verschlüsselungswege des
-Beispieltextes mit dem Beispielschlüssel, je nachdem, welche
-Einlese-/Ausleserichtung gewählt wird:</p>
+<p>Nachfolgend eine Abbildung der Verschlüsselungswege des Beispieltextes mit dem Beispielschlüssel, je nachdem, welche Einlese-/Ausleserichtung gewählt wird:</p>
 
 <p><img id="Grafik 3"
 src="bigPicture_transposition.png" alt="bigPicture_transposition.png" width="85%"></p>
@@ -119,8 +105,7 @@ nur die Konfiguration angegeben werden muss, die auch beim Verschlüsseln
 verwendet wurde.</p>
 
 
-<h4>Erweitert: Beachtung der Tabellenmaske bei Nichtverwendung
-von Füllzeichen</h4>
+<h4>Erweitert: Beachtung der Tabellenmaske bei Nichtverwendung von Füllzeichen</h4>
 
 <p>Folgendes Problem stellt sich, wenn ein Text verschlüsselt
 wird, der die Transpositionstabelle nicht vollständig ausfüllt:</p>
@@ -167,7 +152,7 @@ auch ohne Füllzeichen.</p>
 <ul>
   <li>
   	<a class="external" target="_blank" href="http://de.wikipedia.org/w/index.php?title=Transposition_%28Kryptografie%29">
-  		Der Wikipedia-Artikel zur Transpositions-Verschlüsselung
+  	Wikipedia-Artikel zur Transpositions-Verschlüsselung
   	</a>
   </li>
 </ul>

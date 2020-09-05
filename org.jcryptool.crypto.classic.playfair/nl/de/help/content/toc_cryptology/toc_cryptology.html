@@ -9,66 +9,53 @@
 
 <h1>Playfair-Verschlüsselung</h1>
 <p>
-	Die Playfair-Verschl&#252;sselung ist ein sehr bekanntes bigraphisches Substitutionsverfahren. Es wurde haupts&#228;chlich im ersten Weltkrieg vom britischen Milit&#228;r eingesetzt.
+	Die Playfair-Verschlüsselung ist ein sehr bekanntes bigraphisches Substitutionsverfahren. Es wurde hauptsächlich im ersten Weltkrieg vom britischen Militär eingesetzt.
 </p>
 
 
 <h3 id="classification">Klassifikation</h3>
 <p>
-	Das Playfair-Verfahren ist wohl das bekannteste bigraphische monoalphabetische Substitutionsverfahren.
+	Das Playfair-Verfahren ist das bekannteste bigraphische, monoalphabetische Substitutionsverfahren.
 </p>
-
 
 <h3 id="scheme">Ein- und Ausgabeschema</h3>
 <img src="in_out_scheme.png"  width="85%" />
 
 
+
 <h3 id="algorithm">Der Ver- und Entschlüsselungsalgorithmus</h3>
-<p>Eine 5x5-Matrix (Playfair-Matrix) wird mit dem Alphabet
-gefüllt, z.B. erst mit den verschiedenen Zeichen eines Schlüsselwortes,
-dann mit den restlichen Buchstaben des Alphabets. Der Klartext wird in Buchstabenpaare
-unterteilt: Diese Paare werden dann nach folgenden Regeln durch andere Paare
-ersetzt:</p>
+
+<h4>Verschlüsselung</h4>
+<p>Eine 5x5-Matrix (Playfair-Matrix) wird mit dem Alphabet gefüllt, z.B. erst mit den verschiedenen Zeichen eines Schlüsselwortes, dann mit den restlichen Buchstaben des Alphabets. Der Klartext wird in Buchstabenpaare unterteilt: Diese Paare werden dann nach folgenden Regeln durch andere Paare ersetzt:</p>
 
 <ul>
-<li>Befinden sich die Buchstaben in derselben Spalte, werden sie
-durch die Buchstaben ersetzt, die direkt darunter stehen.</li>
+<li>Befinden sich die Buchstaben in derselben Spalte, werden sie durch die Buchstaben ersetzt, die direkt darunter stehen.</li>
 
-<li>Befinden sich die Buchstaben in derselben Zeile, nimmt man
-jeweils den Buchstaben rechts vom Klartextzeichen.</li>
+<li>Befinden sich die Buchstaben in derselben Zeile, nimmt man jeweils den Buchstaben rechts vom Klartextzeichen.</li>
 
-<li>Befinden sich die Buchstaben in unterschiedlichen Spalten
-und Zeilen, nimmt man jeweils den Buchstaben, der zwar in derselben Zeile, aber
-in der Spalte des anderen Buchstabens steht.</li>
+<li>Befinden sich die Buchstaben in unterschiedlichen Spalten und Zeilen, nimmt man jeweils den Buchstaben, der zwar in derselben Zeile, aber in der Spalte des anderen Buchstabens steht.</li>
 
-<li>Falls ein Paar aus denselben zwei Buchstaben besteht, werden
-sie durch ein Trennzeichen getrennt.</li>
+<li>Falls ein Paar aus denselben zwei Buchstaben besteht, werden sie durch ein Trennzeichen getrennt.</li>
 </ul>
 
-<p>Als Beispiel wird der Text „SIMONIEX“ („X“ als Füller wegen
-der Aufteilung in Paare) mit dem Schlüsselwort „ZOELIBAT“ verschlüsselt. Die
-Playfair-Matrix sieht dann folgendermaßen aus:</p>
+<p>Als Beispiel wird der Text „SIMONIEX“ („X“ als Füller wegen der Aufteilung in Paare) mit dem Schlüsselwort „ZOELIBAT“ verschlüsselt. Die Playfair-Matrix sieht dann folgendermaßen aus:</p>
 
 <p><img src="square.png"
 alt=square.png></p>
 
-<p>Aus „SIMONIEX“ wird „SI &nbsp;MO &nbsp;NI &nbsp;EX“. Z. B.
-wird nun „SI“ nach der ersten Regel zu „YD“. Der komplette verschlüsselte Text
-ist dann „YD&nbsp; GI&nbsp; SZ&nbsp; LW“.</p>
+<p>Aus „SIMONIEX“ wird „SI &nbsp;MO &nbsp;NI &nbsp;EX“. Z. B. wird nun „SI“ nach der ersten Regel zu „YD“. Der komplette verschlüsselte Text ist dann „YD&nbsp; GI&nbsp; SZ&nbsp; LW“.</p>
 
 
 <h4>Entschlüsselung</h4>
 
-<p>Bei der Rücksubstitution der Buchstabenpaarsubstitutionen
-muss dieselbe Playfair-Matrix verwendet werden und die Regeln umgekehrt werden
-(trivial).</p>
+<p>Bei der Rücksubstitution der Buchstabenpaarsubstitutionen muss dieselbe Playfair-Matrix verwendet werden und die Regeln umgekehrt werden (trivial).</p>
 
 
 <h3 id="furtherreading">Weiterführende Lektüre</h3>
 <ul>
   <li>
   	<a class="external" target="_blank" href="http://de.wikipedia.org/w/index.php?title=Playfair">
-  		Der Wikipedia-Artikel zur Playfair-Verschlüsselung
+  	Wikipedia-Artikel zur Playfair-Verschlüsselung
   	</a>
   </li>
 </ul>

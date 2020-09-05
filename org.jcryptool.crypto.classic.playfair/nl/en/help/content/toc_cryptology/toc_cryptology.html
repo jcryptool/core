@@ -15,65 +15,49 @@
 
 <h3 id="classification">Classification</h3>
 <p>
-	The Playfair cipher is the most well-known digraph monoalphabetic substitution cipher.
+	The Playfair cipher is the most well-known digraph, monoalphabetic substitution cipher.
 </p>
-
 
 <h3 id="scheme">Input and output scheme</h3>
 <img src="in_out_scheme.png"  width="85%" />
 
 
+
 <h3 id="algorithm">The en- and decryption algorithm</h3>
-<p>A 5x5 matrix (Playfair-matrix) has to be
-filled with the plain text alphabet (which means that the plaintext alphabet
-must contain 25 characters), e. g. by a key word, which is first filled into
-the matrix, and then the other plain text alphabet characters. Then, the plain
-text will be split up in pairs, which are substituted with other pairs,
-following these rules:</p>
+
+<h4>Encryption</h4>
+
+<p>A 5x5 matrix (Playfair-matrix) has to be filled with the plaintext alphabet (which means that the plaintext alphabet must contain 25 characters), e.g. by a key word, which is first filled into the matrix, and then the other plain text alphabet characters. Then, the plain
+text will be split up in pairs, which are substituted with other pairs, following these rules:</p>
 
 <ul>
-<li>If both characters of the pair are in the
-same column of the Playfair matrix, replace each with the character below it in
-the matrix.</li>
+<li>If both characters of the pair are in the same column of the Playfair matrix, replace each with the character below it in the matrix.</li>
 
-<li>If both characters of the pair are in the
-same row of the Playfair matrix, replace each with the character right next to
-it it in the matrix.</li>
+<li>If both characters of the pair are in the same row of the Playfair matrix, replace each with the character right next to it it in the matrix.</li>
 
-<li>If both pair characters stand in different
-columns and rows in the matrix, replace each of it with the character that
-stands in the same row, but in the column of the other pair character. </li>
+<li>If both pair characters stand in different columns and rows in the matrix, replace each of it with the character that stands in the same row, but in the column of the other pair character. </li>
 
-<li>If a pair consists of similar characters,
-separate them with a filling character (“X”)</li>
+<li>If a pair consists of similar characters, separate them with a filling character (“X”)</li>
 </ul>
 
-<p>The text „SIMONIEX“ („X“ as filler to make
-the text length even) will be encrypted with the key word „ZOELIBAT“. The
-playfair matrix is then:</p>
+<p>The text „SIMONIEX“ („X“ as filler to make the text length even) will be encrypted with the key word „ZOELIBAT“. The Playfair matrix is then:</p>
 
 <p><img id="Grafik 0"
 src="square.png" alt=square.png></p>
 
-<p>First: splitting the plain text into pairs:
-“SI  MO  NI  EX“. Then, substitute, following the rules (see above). E. g., „SI“
-is substituted with „YD“, following the first rule. The complete ciphertext is „YD 
-GI  SZ  LW“.</p>
+<p>First: splitting the plain text into pairs: “SI  MO  NI  EX“. Then, substitute, following the rules (see above). For example, „SI“ is substituted with „YD“, following the first rule. The complete ciphertext is „YD GI  SZ  LW“.</p>
 
 
 <h4>Decryption</h4>
 
-<p>At the decryption, the same Playfair-matrix
-is used, but the substitution rules have to be reverted (which is trivial).
-Then the ciphertext has to be split up in pars, and substituted with the
-inverse rules.</p>
+<p>At the decryption, the same Playfair-matrix is used, but the substitution rules have to be reverted (which is trivial). Then the ciphertext has to be split up in pars, and substituted with the inverse rules.</p>
 
 
 <h3 id="furtherreading">Further reading</h3>
 <ul>
   <li>
   	<a class="external" target="_blank" href="http://en.wikipedia.org/w/index.php?title=Playfair_cipher">
-  		The Wikipedia article on the Playfair cipher
+  	Wikipedia article on the Playfair cipher
   	</a>
   </li>
 </ul>
