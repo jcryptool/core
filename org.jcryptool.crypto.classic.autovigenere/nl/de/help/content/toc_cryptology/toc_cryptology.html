@@ -8,8 +8,9 @@
 
 <h1>Autokey-Vigenère-Verschlüsselung</h1>
 <p>
-	Die Autokey-Vigenère-Verschlüsselung arbeitet wie die Vigenère-Verschlüsselung, hängt jedoch den Klartext an das Schlüsselwort an, anstatt es nur auf Klartextlänge zu vervielfachen (wie bei Vigenère).
+	Die Autokey-Vigenère-Verschlüsselung arbeitet wie die Vigenère-Verschlüsselung, hängt jedoch den Klartext an das Schlüsselwort an, anstatt das Schlüsselwort immer wieder zu verwenden (bis auf Klartextlänge) wie bei Vigenère.
 </p>
+
 
 <h3 id="classification">Klassifikation</h3>
 <p>
@@ -19,57 +20,43 @@
 	Der Unterschied zum reinen Vigenère-Verfahren besteht darin, dass der effektive "Schlüssel" sich nicht aus einer endlosen Aneinanderkettung des Schlüsselwortes ergibt, sondern aus dem Schlüssel und dem Klartext selbst. 
 </p>
 
+
 <h3 id="scheme">Ein- und Ausgabeschema</h3>
 <img src="in_out_scheme.png"  width="85%" />
+
+
 <h3 id="algorithm">Der Ver- und Entschlüsselungsalgorithmus</h3>
-<p>Das Autokey-Vigenère-Verfahren ist, wie der Name schon
-verrät, ein spezielles Vigenère-Verfahren, welches sich von der Standardversion
-dadurch unterscheidet, dass der Schlüssel, also die verschiedenen
-Verschlüsselungsalphabete, automatisch generiert werden. Hier wird der Klartext
-selbst zur Verschlüsselung genutzt. Da außer der Schlüsselerzeugung und der
-Entschlüsselungsmethodik der normale Vigenère-Algorithmus genutzt wird, wird
-hier auf den Artikel zur Vigenère-Verschlüsselung verwiesen.</p>
+
+<p>Das Autokey-Vigenère-Verfahren ist, wie der Name schon verrät, ein spezielles Vigenère-Verfahren, welches sich von der Standardversion dadurch unterscheidet, dass der Schlüssel, also die verschiedenen Verschlüsselungsalphabete, automatisch generiert werden. Hier wird der Klartext selbst zur Verschlüsselung genutzt. Außer der Schlüsselerzeugung gibt es keinen Unterschied zum normalen <a href="PLUGINS_ROOT/org.jcryptool.crypto.classic.vignere/$nl$/help/content/toc_cryptology/toc_cryptology.html">Vigenère-Algorithmus</a>. Deshalb werden hier nur die Schlüsselerzeugung und zwei Beispiele aufgeführt.
+</p>
+
 
 <h4>Verschlüsselung</h4>
 
-<p>Beim Vigenère-Verfahren wurden dieselben Caesar-Alphabete
-periodisch zur Verschlüsselung genutzt – der Schlüssel wurde sozusagen wiederholt
-an sich selbst angehängt, bis die Klartextlänge erreicht wurde. Dann wurde
-jeder Buchstabe aus dem Klartext mit dem Teilschlüssel an der zugehörigen
-Position im Schlüssel Caesar-verschlüsselt.</p>
+<p>Beim Vigenère-Verfahren werden dieselben Caesar-Alphabete periodisch zur Verschlüsselung genutzt – der Schlüssel wird sozusagen wiederholt an sich selbst angehängt, bis die Klartextlänge erreicht wird. Dann wird jeder Buchstabe aus dem Klartext mit dem Teilschlüssel an der zugehörigen Position im Schlüssel Caesar-verschlüsselt.</p>
 
-<p>Beim Autovigenère-verfahren wird der initiale Schlüssel
-nicht periodisch wiederholt, sondern der Klartext selbst wird an den Schlüssel
-angehängt – der Text verschlüsselt sich sozusagen, mit Verschiebung durch den
-Schlüssel, selbst. Ein Beispiel: der Text „ATTACKADMIDNIGHT“ soll mit dem
-Schlüssel „KEY“ Autovigenère-verschlüsselt werden:</p>
+<p>Beim Autokey-Vigenère-Verfahren wird der initiale Schlüssel nicht periodisch wiederholt, sondern der Klartext selbst wird an den Schlüssel angehängt – der Text verschlüsselt sich sozusagen mit Verschiebung durch den Schlüssel, selbst. Ein Beispiel: der Text „ATTACKADMIDNIGHT“ soll mit dem Schlüssel „KEY“ Autokey-Vigenère-verschlüsselt werden:</p>
 
 <p> <img id="Grafik 0"
 src="encryption_example.png" alt="encryption_example.png"></p>
 
+
 <h4>Entschlüsselung</h4>
 
-<p>Da Zu Beginn der Entschlüsselung ist der komplette
-Schlüssel, so wie er oben als Beispiel unter dem Klartext steht, nicht bekannt,
-da der Klartext (zu Beginn der Entschlüsselung) ebenfalls nicht bekannt ist. Da
-jedoch das Schlüsselwort (oben: „KEY“) bekannt ist, lassen sich die ersten
-Klartextteile schon entschlüsseln. Diese können nun wiederum an den Schlüssel
-angehängt werden, und damit können die nächsten Klartextteile entschlüsselt
-werden, bis schließlich der komplette Klartext entschlüsselt ist. Die ersten
-Schritte der Entschlüsselung des im Beispiel erzeugten Geheimtextes sind
-nachfolgend abgebildet:</p>
+<p>Zu Beginn der Entschlüsselung ist der komplette Schlüssel, so wie er oben als Beispiel unter dem Klartext steht, nicht bekannt, da der Klartext (zu Beginn der Entschlüsselung) ebenfalls nicht bekannt ist. Da jedoch das Schlüsselwort (oben: „KEY“) bekannt ist, lassen sich die ersten Klartextteile schon entschlüsseln. Diese können nun wiederum an den Schlüssel angehängt werden, und damit können die nächsten Klartextteile entschlüsselt
+werden, bis schließlich der komplette Klartext entschlüsselt ist. Die ersten Schritte der Entschlüsselung des im Beispiel erzeugten Geheimtextes sind nachfolgend abgebildet:</p>
 
 <p><img id="Grafik 1"
 src="decryption_example.png" alt="decryption_example.png"></p>
 
-<p>(Die Entschlüsselung, wenn der Schlüssel für diejenige
-Stelle bekannt ist, wird natürlich wieder genau wie bei der Vigenère-Verschlüsselung
-durchgeführt)</p>
+<p>Nachdem der Schlüssel bekannt ist, wird die Entschlüsselung wieder wie beim Vigenère-Verfahren durchgeführt.</p>
+
+
 <h3 id="furtherreading">Weiterführende Lektüre</h3>
 <ul>
   <li>
   	<a class="external" target="_blank" href="http://de.wikipedia.org/w/index.php?title=Polyalphabetische_Substitution#Autokey-Verschl.C3.BCsselung">
-  		Der Wikipedia-Artikel zur Autokey-Vigenère-Verschlüsselung
+  	Wikipedia-Artikel zur Autokey-Vigenère-Verschlüsselung
   	</a>
   </li>
 </ul>

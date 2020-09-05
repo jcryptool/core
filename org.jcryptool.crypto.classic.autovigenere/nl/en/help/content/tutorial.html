@@ -9,21 +9,34 @@
 <body>
 <h1>Autokey-Vigenère Usage</h1>
 
-<p>This page is about using the user interface for the Autokey-Vigenère cipher. For general information about this algorithm, see: <a href="toc_cryptology/toc_cryptology.html">Autokey-Vigenère cipher in the cryptology manual</a>.</p>
-<p>Below you will find explanation of what the different "groups" of options shown in the wizard mean, and what to fill in. In the Autokey-Vigenère wizard, you will hardly need all options to change. Just the "Key" and "Operation" groups are mandatory to take care of in most cases.</p>
-<h3>Operation - Encryption or decryption?</h3>
+<p>This page  explains the user interface for the Autokey-Vigenère cipher. For further information about the Autokey-Vigenère algorithm itself, see the sub page: <a href="toc_cryptology/toc_cryptology.html">Autokey-Vigenère Cipher</a>.</p>
+
+<p>Below, the different "groupings" for the options and parameters in the wizard are explained. In the Autokey-Vigenère wizard, the groupings "Key" and "Operation" are the most important ones.</p>
+
+
+
+<h3>Operation &ndash; Encryption or decryption</h3>
+
 <p>First, choose, whether you want to en- or decrypt the text in this dialog. As this is a symmetric cipher, a text encrypted with a certain key can be decrypted to the original text, using the same key.</p>
 
-<h3>Alphabet</h3>
-<p>The alphabet, over which a cryptographic operation (like en- or decryption) is executed, holds all the characters that this operation will accept and process. Use the "show alphabet" button to see, which characters the selected alphabet contains.</p>
 
-<p>For example, if you choose an alphabet that holds only UPPERCASE characters (like "Upper Latin (A-Z)"), lowercase characters will not be encrypted. With the checkbox "filter non-alphabet characters", you can choose whether just to neglect (unchecked), or to completely delete those characters, which would be all lowercase characters in the example.
+
+<h3>Alphabet</h3>
+
+<p>The alphabet, over which a cryptographic operation (like en- or decryption) is executed, holds all the characters that this operation will accept and process. Use the "Show alphabet" button to see, which characters the selected alphabet contains.</p>
+
+<p>For example, if you choose an alphabet that holds only UPPERCASE characters (like "Upper Latin (A-Z)"), lowercase characters will not be encrypted. With the checkbox "Filter non-alphabet characters", you can choose whether just to neglect (unchecked), or to completely delete those characters, which would be all lowercase characters in the example.
+
 
 <h3>Pre-operation text transformation</h3>
+
 <p>If you would like to change the input text before you apply the algorithm, you can check this box, and you will be able to select from a range of text-altering operations after completing this wizard page. For example, you can choose to delete all blanks for increased security.</p>
+
 <p>Pre-operation text transformation should only be used when encrypting a text. When used with decryption, there will be information loss or unreadable text in most cases.</p>
 
+
 <h3>Key</h3>
+
 <p>The key of the Autokey-Vigenère cipher is a word, where all characters must be contained in the alphabet selected above.</p>
 
 <p>After finishing the wizard, you should be able to see your en- or decrypted text in the newly opened editor.</p>
