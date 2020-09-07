@@ -9,17 +9,14 @@ import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.jcryptool.core.util.colors.ColorService;
@@ -63,14 +60,15 @@ public class TitleAndDescriptionComposite extends Composite {
 		GridLayout hLayout = new GridLayout(2, false);
 		hLayout.marginWidth = 0;
 		hLayout.marginHeight = 0;
+		helpArea.setBackground(ColorService.WHITE);
 		helpArea.setLayout(hLayout);
 
 		makeTitleAndDescriptionWidgets(tadArea);
 
 		if (this.helpAction.isPresent()) {
 			Label helpButton = new Label(helpArea, SWT.NONE);
-			helpButton.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
-			helpButton.setCursor(new org.eclipse.swt.graphics.Cursor(getDisplay(), SWT.CURSOR_HAND));
+			helpButton.setBackground(ColorService.WHITE);
+			helpButton.setCursor(new Cursor(getDisplay(), SWT.CURSOR_HAND));
 			helpButton.setImage(ImageService.getImage("org.jcryptool.core.util", "icons/tadHelpButton_72.png"));
 			GridData helpBtnLayoutData = new GridData(SWT.CENTER, SWT.CENTER, false, false);
 			helpBtnLayoutData.widthHint = 72;

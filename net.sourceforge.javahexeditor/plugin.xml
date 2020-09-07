@@ -28,7 +28,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            category="org.eclipse.ui.preferencePages.Editors"
+            category="org.jcryptool.preferences.editors"
             class="net.sourceforge.javahexeditor.plugin.editors.HexEditorPreferencesPage"
             id="net.sourceforge.javahexeditor.plugin.editors.PreferencesPage"
             name="%preferences-page.name"/>

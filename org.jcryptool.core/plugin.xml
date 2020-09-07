@@ -215,12 +215,15 @@
       <page category="org.jcryptool.preferences.general" class="org.eclipse.ui.ExtensionFactory:fileAssociationsPreferencePage" id="org.jcryptool.core.preferences.fileAssociations" name="%preference.page.file_associations"/>
       <page category="org.jcryptool.preferences.general" class="org.eclipse.ui.ExtensionFactory:keysPreferencePage" id="org.jcryptool.core.preferences.keys" name="%preference.page.keys"/>
       <page category="org.jcryptool.preferences.general" class="org.eclipse.ui.ExtensionFactory:colorsAndFontsPreferencePage" id="org.jcryptool.core.preferences.colorsAndFonts" name="%preference.page.colorsAndFonts"/>
+      <!-- Die vier Einstellungs-Seiten sind auskommentiert, da sie, Stand 2020, nicht benutzt wurde.
+      	   Um Sie wieder zu verwenden einfach wieder einkommentieren. Die verlinkten Klassen sind 
+      	   noch vorhanden -->
       <page class="org.jcryptool.core.preferences.pages.EditorsPage" id="org.jcryptool.preferences.editors" name="%preference.page.editors"/>
       <page class="org.jcryptool.core.preferences.pages.CryptoPage" id="org.jcryptool.preferences.crypto" name="%preference.page.crypto"/>
       <page class="org.jcryptool.core.preferences.pages.AlgorithmsPage" id="org.jcryptool.preferences.algorithms" name="%preference.page.algorithms"/>
-      <page class="org.jcryptool.core.preferences.pages.AnalysisPage" id="org.jcryptool.preferences.analysis" name="%preference.page.analysis"/>
-      <page class="org.jcryptool.core.preferences.pages.GamesPage" id="org.jcryptool.preferences.games" name="%preference.page.games"/>
-      <page class="org.jcryptool.core.preferences.pages.VisualsPage" id="org.jcryptool.preferences.visuals" name="%preference.page.visuals"/>
+      <!-- <page class="org.jcryptool.core.preferences.pages.AnalysisPage" id="org.jcryptool.preferences.analysis" name="%preference.page.analysis"/> -->
+      <!-- <page class="org.jcryptool.core.preferences.pages.GamesPage" id="org.jcryptool.preferences.games" name="%preference.page.games"/> -->
+      <!-- <page class="org.jcryptool.core.preferences.pages.VisualsPage" id="org.jcryptool.preferences.visuals" name="%preference.page.visuals"/> -->
    </extension>
 
 	<!-- Das sorgt eingentlich dafür, dass die Intro-Seite angezeigt wird.
