@@ -10,6 +10,8 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.crypto.ui.alphabets;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -676,12 +678,18 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
             if (acceptor.accept(AlphabetsManager.getInstance().getDefaultAlphabet())) {
                 return AlphabetsManager.getInstance().getDefaultAlphabet();
             } else {
-                return AlphabetsManager.getInstance().getAlphabets()[0];
+                return Arrays.asList(AlphabetsManager.getInstance().getAlphabets()).stream()
+                		.filter(alpha -> isAcceptable(alpha))
+                		.findFirst().orElse(AlphabetsManager.getInstance().getAlphabets()[0]);
             }
         }
     }
 
-    /**
+    private boolean isAcceptable(AbstractAlphabet alpha) {
+    	return acceptor.accept(alpha);
+	}
+
+	/**
      * @return whether in the combo, a registered alphabet is selected.
      */
     protected boolean isRegisteredAlphabetSetInCombo() {

@@ -173,15 +173,14 @@ public class AlphabetStore extends AbstractAlphabetStore {
                 LogUtil.logError(AlphabetsPlugin.PLUGIN_ID, "Exception while initializing the alphabets", e, false); //$NON-NLS-1$
             } catch (AlphaFileOutOfDateException e) {
             	LogUtil.logInfo(AlphabetsPlugin.PLUGIN_ID, e.getMessage());
-            	processAlphabetsCreation();
 			}
+        } else {
+        	ensureDefaultAlphabetIsSet();
         }
+		processAlphabetsCreation();
     }
 
-    private void processAlphabetsCreation() {
-        alphabets = new Vector<Alphabet>();
-        generateStandardAlphabets();
-        generateClassicAlphabets();
+    private void ensureDefaultAlphabetIsSet() {
         for (Alphabet alpha: alphabets) {
         	if (alpha.getName().equals(AlphabetsManager.FACTORY_DEFAULT_ALPHABET) || alpha.getName().equals(AlphabetsManager.FACTORY_DEFAULT_ALPHABET_DE)) {
         		alpha.setDefaultAlphabet(true);
@@ -191,6 +190,13 @@ public class AlphabetStore extends AbstractAlphabetStore {
         		alpha.setDefaultAlphabet(false);
         	}
         }
+	}
+
+	private void processAlphabetsCreation() {
+        alphabets = new Vector<Alphabet>();
+        generateStandardAlphabets();
+        generateClassicAlphabets();
+        ensureDefaultAlphabetIsSet();
         try {
             storeAlphabets();
         } catch (IOException e) {

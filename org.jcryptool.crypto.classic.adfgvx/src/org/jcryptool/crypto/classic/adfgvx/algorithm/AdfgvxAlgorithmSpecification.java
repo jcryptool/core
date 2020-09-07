@@ -10,6 +10,7 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.crypto.classic.adfgvx.algorithm;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,7 +27,9 @@ import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmSpecificatio
  */
 public class AdfgvxAlgorithmSpecification extends ClassicAlgorithmSpecification {
 	
-	private static final AbstractAlphabet adfgvxAlphabet = AlphabetsManager.getInstance().getAlphabetByName("ADFGVX Alphabet");
+	private static final AbstractAlphabet adfgvxAlphabet = Arrays.asList(AlphabetsManager.getInstance().getAlphabets()).stream()
+			.filter(alpha -> alpha.getName().toLowerCase().contains("adfg"))
+			.findFirst().get();
 	
 	@Override
 	public boolean isValidPlainTextAlphabet(AbstractAlphabet alpha) {
