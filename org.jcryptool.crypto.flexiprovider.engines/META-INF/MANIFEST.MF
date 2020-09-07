@@ -9,7 +9,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.filesystem,
  org.eclipse.ui,
  de.flexiprovider;bundle-version="1.7.0",
- org.jcryptool.crypto.keystore
+ org.jcryptool.crypto.keystore,
+ org.jcryptool.core.operations
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: org.jcryptool.actions.core.registry,
