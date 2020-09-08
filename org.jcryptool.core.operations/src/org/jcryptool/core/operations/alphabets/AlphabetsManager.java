@@ -41,7 +41,7 @@ public class AlphabetsManager {
 
     /** The name of the factory-default alphabet */
     public static final String FACTORY_DEFAULT_ALPHABET = "Upper Latin (A-Z)"; //$NON-NLS-1$
-    public static final String FACTORY_DEFAULT_ALPHABET_DE = "Upper Latin (A-Z)"; //$NON-NLS-1$
+    public static final String FACTORY_DEFAULT_ALPHABET_DE = "Großes lateinisches Alphabet (A-Z)"; //$NON-NLS-1$
 
     /**
      * Creates a new instance of AlphabetsManager and initializes the store.
@@ -86,6 +86,7 @@ public class AlphabetsManager {
                         try {
                             store = (AbstractAlphabetStore) configElements[j]
                                     .createExecutableExtension(IOperationsConstants.ATT_CLASS);
+                            // The default implementation is:org.jcryptool.crypto.classic.alphabets.tools.AlphabetStore
                         } catch (CoreException e) {
                             LogUtil.logError(OperationsPlugin.PLUGIN_ID,
                                     "Exception while loading the AlphabetStore", e, true); //$NON-NLS-1$
@@ -96,7 +97,22 @@ public class AlphabetsManager {
         }
     }
 
-    /**
+//    /**
+//     * After loading a store, check that the default alphabet is set. If not set, correct this.
+//     * @param store2
+//     */
+//    private static void makeAlphaStoreConsistent(AbstractAlphabetStore store) {
+//    	AbstractAlphabet[] alphas = store.getAlphabets();
+//
+//    	Optional<AbstractAlphabet> defaultAlpha = Optional.ofNullable(store.)
+//    	for(AbstractAlphabet alpha: alphas) {
+//
+//    		
+//    	}
+//    	
+//	}
+
+	/**
      * Returns the names of the custom alphabets.
      * 
      * @return The names of the custom alphabets
