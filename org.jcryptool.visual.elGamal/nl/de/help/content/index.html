@@ -4,6 +4,7 @@
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <title>Das ElGamal-Kryptosystem</title>
+	  <script id="MathJax-script" async src="${JCTJS_HOST}/javascript/MathJax-master/es5/tex-mml-svg.js"></script>
 </head>
 
 <body>
@@ -41,15 +42,15 @@
   
   <h3 id="Setup">a) ElGamal-Setup (Parameter-Generierung)</h3>
   
-  <p>Die ElGamal-Verschlüsselung kann über jeder zyklischen Gruppe G mit endlicher Ordnung definiert werden.</p>
+  <p>Die ElGamal-Verschlüsselung kann über jeder zyklischen Gruppe \(G\) mit endlicher Ordnung definiert werden.</p>
 
-  <p>Alice und Bob nutzen jeweils eine eigene zyklische (endliche) Gruppe G mit d Elementen (also hat die Gruppe die Ordnung d). Diese Gruppe wird von dem Generator g erzeugt, wobei g ebenfalls ein Element von G ist. d ist eine ganze Zahl der Länge n Bit (n-Bit-Zahl). Als Input für die Schlüsselerzeugung wird normalerweise der Sicherheitsparameter n benutzt. Alle diese Parameter werden veröffentlicht. Als G wird oft Z_d = { 0, … , d-1 } mit einer Primzahl d benutzt.</p>
+  <p>Alice und Bob nutzen jeweils eine eigene zyklische (endliche) Gruppe \(G\) mit \(d\) Elementen (also hat die Gruppe die Ordnung \(d\)). Diese Gruppe wird von dem Generator \(g\) erzeugt, wobei \(g\) ebenfalls ein Element von \(G\) ist. \(d\) ist eine ganze Zahl der Länge \(n\)-Bit (\(n\)-Bit-Zahl). Als Input für die Schlüsselerzeugung wird normalerweise der Sicherheitsparameter \(n\) benutzt. Alle diese Parameter werden veröffentlicht. Als \(G\) wird oft \(Z_d = \{ 0, … , d-1 \}\) mit einer Primzahl \(d\) benutzt.</p>
 
   <p><b>Anmerkung 1:</b> Das zufällig gewählte d sollte sehr groß sein und ungefähr dieselbe Größenordnung wie ein RSA-Modul haben (1024 - 4096 bit).</p>
   
-  <p><b>Anmerkung 2:</b> Der Generator g ist eine Zahl mit der besonderen Eigenschaft, dass er eine Primitivwurzel (primitives Element) von G sein muss.</p>
+  <p><b>Anmerkung 2:</b> Der Generator \(g\) ist eine Zahl mit der besonderen Eigenschaft, dass er eine Primitivwurzel (primitives Element) von \(G\) sein muss.</p>
   
-  <p><b>Anmerkung 3:</b> In diesem Plugin muss d > 256 gewählt werden. Der Grund dafür ist, dass Ihr Eingabetext als Extended ASCII gespeichert wird. Extended ASCII umfasst 256 Zeichen, die jeweils auf ein Element aus der Gruppe G gemappt werden müssen.
+  <p><b>Anmerkung 3:</b> In diesem Plugin muss \(d > 256\) gewählt werden. Der Grund dafür ist, dass Ihr Eingabetext als Extended ASCII gespeichert wird. Extended ASCII umfasst 256 Zeichen, die jeweils auf ein Element aus der Gruppe \(G\) gemappt werden müssen.
   
   <h3 id="SchemeKeyGen">b) ElGamal-Schlüsselerzeugung</h3>
 
@@ -57,19 +58,19 @@
 
   <p>Zur Verschlüsselung brauchen wir Bobs öffentlichen Schlüssel. Seine Schlüsselgenerierung funktioniert folgendermaßen:</p>
   <ul>
-  <li>Bob wählt b zufällig aus Z*_d = { 1, … , d-1 } mit 1 < b < d-2. Dieses b ist sein privater Schlüssel. Diesen muss er geheim halten.</li>
-  <li>Bob berechnet B = g^b. Dies ist ein Teil seines öffentlichen Schlüssels.</li>
-  <li>Bob veröffentlicht B, zusammen mit der Beschreibung von G, d und g, als seinen öffentlichen Schlüssel.</li>
+  <li>Bob wählt \(b\) zufällig aus \(Z^*_d = \{ 1, … , d-1 \}\) mit \(1 < b < d-2\). Dieses \(b\) ist sein privater Schlüssel. Diesen muss er geheim halten.</li>
+  <li>Bob berechnet \(B = g^b\). Dies ist ein Teil seines öffentlichen Schlüssels.</li>
+  <li>Bob veröffentlicht \(B\), zusammen mit der Beschreibung von \(G\), \(d\) und \(g\), als seinen öffentlichen Schlüssel.</li>
   </ul>
 
   <p>Für die Signatur von Alice brauchen wir Alice privaten Schlüssel. Ihre Schlüsselgenerierung funktioniert folgendermaßen:</p>
   <ul>
-  <li>Alice wählt a zufällig aus Z*_d = { 1, … , d-1 } mit 1 < a < d-2. Dieses a ist ihr privater Schlüssel. Diesen muss sie geheim halten.</li>
-  <li>Alice berechnet A = g^a. Dies ist ein Teil ihres öffentlichen Schlüssels.</li>
-  <li>Alice veröffentlicht A, zusammen mit der Beschreibung von G, d und g, als ihren öffentlichen Schlüssel.</li>
+  <li>Alice wählt \(a\) zufällig aus \(Z^*_d = \{ 1, … , d-1 \}\) mit \(1 < a < d-2\). Dieses \(a\) ist ihr privater Schlüssel. Diesen muss sie geheim halten.</li>
+  <li>Alice berechnet \(A = g^a\). Dies ist ein Teil ihres öffentlichen Schlüssels.</li>
+  <li>Alice veröffentlicht \(A\), zusammen mit der Beschreibung von \(G\), \(d\) und \(g\), als ihren öffentlichen Schlüssel.</li>
   </ul>
 
-  <p><b>Anmerkung:</b> Die Werte von d und g werden von Alice und Bob unabhängig voneinander bestimmt &nbsp;&ndash; der Einfachheit halber haben wir für diese Setup-Parameter die Indizes "A" und "B" weggelassen. Zur Verschlüsselung werden die Werte von Bob benötigt; zum Signieren werden die Werte von Alice benötigt.</p>
+  <p><b>Anmerkung:</b> Die Werte von \(d\) und \(g\) werden von Alice und Bob unabhängig voneinander bestimmt &#8212; der Einfachheit halber haben wir für diese Setup-Parameter die Indizes \(A\) und \(B\) weggelassen. Zur Verschlüsselung werden die Werte von Bob benötigt; zum Signieren werden die Werte von Alice benötigt.</p>
 
   
   <h3 id="SchemeEncDec">c) ElGamal-Verschlüsselung / -Entschlüsselung</h3>
@@ -79,36 +80,36 @@
   
   <h4 id="SchemeEnc">c1) ElGamal-Verschlüsselung</h3>
 
-  <p>Der Verschlüsselungs-Algorithmus funktioniert folgendermaßen: Um die Klartext-Nachricht für Bob zu verschlüsseln, benutzt Alice seinen öffentlichen Schlüssel ( G, d, g, B ), und dann:</p>
+  <p>Der Verschlüsselungs-Algorithmus funktioniert folgendermaßen: Um die Klartext-Nachricht für Bob zu verschlüsseln, benutzt Alice seinen öffentlichen Schlüssel \((G, d, g, B )\), und dann:</p>
   <ul>
-  <li>Alice wählt einen zufälligen geheimen Sessionkey k aus { 1, … , d-1 }.</li>
-  <li>Alice berechnet einen öffentlichen Sessionkey K = g^k.</li>
-  <li>Alice berechnet das gemeinsame Geheimnis S = B^k = g^(b*k).</li>
-  <li>Alice ordnet ihre Nachricht m einem Element m' aus G zu (Mapping).</li>
-  <li>Alice berechnet M = m' * S.</li>
-  <li>Alice sendet den Geheimtext (K, M) = ( g^k, m' * S) = (g^k, m' * g^(b*k)) an Bob.</li>
+  <li>Alice wählt einen zufälligen geheimen Sessionkey \(k\) aus \(\{ 1, … , d-1 \}\).</li>
+  <li>Alice berechnet einen öffentlichen Sessionkey \(K = g^k\).</li>
+  <li>Alice berechnet das gemeinsame Geheimnis \(S = B^k = g^{b \cdot k}\).</li>
+  <li>Alice ordnet ihre Nachricht \(m\) einem Element \(m'\) aus \(G\) zu (Mapping).</li>
+  <li>Alice berechnet \(M = m' \cdot S\).</li>
+  <li>Alice sendet den Geheimtext \((K, M) = (g^k, m' \cdot S) = (g^k, m' \cdot g^{b \cdot k})\) an Bob.</li>
   </ul>
 
-<p><b>Anmerkung 1:</b> Wenn man m' kennt, kann man leicht B^k finden. Deshalb wird für jede Nachricht ein neues k erzeugt, um die Sicherheit zu verbessern. Aus diesem Grund nennt man k auch einen kurzlebigen (ephemeral) Schlüssel oder Sessionkey.</p>
+<p><b>Anmerkung 1:</b> Wenn man \(m'\) kennt, kann man leicht \(B^k\) finden. Deshalb wird für jede Nachricht ein neues \(k\) erzeugt, um die Sicherheit zu verbessern. Aus diesem Grund nennt man \(k\) auch einen kurzlebigen (ephemeral) Schlüssel oder Sessionkey.</p>
 
-<p><b>Anmerkung 2:</b> Beim Diffie-Hellman-Schlüsselaustausch (DH) würde Alice A=g^a an Bob senden, damit er den gemeinsamen Sessionkey S = A^b erzeugen kann. Bei der ElGamal-Verschlüsselung braucht Alice statt ihres privaten Schlüssels a den ebenfalls zufälligen und geheimen Sessionkey k. Die weitere Logik ist die gleiche.</p>
+<p><b>Anmerkung 2:</b> Beim Diffie-Hellman-Schlüsselaustausch (DH) würde Alice \(A=g^a\) an Bob senden, damit er den gemeinsamen Sessionkey \(S = A^b\) erzeugen kann. Bei der ElGamal-Verschlüsselung braucht Alice statt ihres privaten Schlüssels \(a\) den ebenfalls zufälligen und geheimen Sessionkey \(k\). Die weitere Logik ist die gleiche.</p>
 
 <p><b>Anmerkung 3:</b> Bei der ElGamal-Verschlüsselung ist der Geheimtext doppelt so lang wie der Klartext (Nachrichtenausdehnung).</p>
 
-<p><b>Anmerkung 4:</b> Die ElGamal-Verschlüsselung ist eine probabilistische Verschlüsselung: Der Geheimtext hängt nicht nur vom öffentlichen Schlüssel des Empfängers ab, sondern auch von einem zufälligen k. Das führt dazu, dass wenn man denselben Klartext für denselben Empfänger nochmal verschlüsselt, dann sollte der erhaltene Geheimtext jeweils unterschiedlich sein.</p>
+<p><b>Anmerkung 4:</b> Die ElGamal-Verschlüsselung ist eine probabilistische Verschlüsselung: Der Geheimtext hängt nicht nur vom öffentlichen Schlüssel des Empfängers ab, sondern auch von einem zufälligen \(k\). Das führt dazu, dass wenn man denselben Klartext für denselben Empfänger nochmal verschlüsselt, dann sollte der erhaltene Geheimtext jeweils unterschiedlich sein.</p>
 
     
   <h4 id="SchemeEnc">c2) ElGamal-Entschlüsselung</h3>
 
-  <p>Der Entschlüsselungs-Algorithmus funktioniert folgendermaßen: Um die an Bob gesendete Geheimtext-Nachricht (K, M) zu entschlüsseln, benutzt er seinen privaten Schlüssel b, und dann:</p>
+  <p>Der Entschlüsselungs-Algorithmus funktioniert folgendermaßen: Um die an Bob gesendete Geheimtext-Nachricht \((K, M)\) zu entschlüsseln, benutzt er seinen privaten Schlüssel \(b\), und dann:</p>
   <ul>
-  <li>Bob berechnet das gemeinsame Geheimnis S = K^b = g^(k*b).</li>
-  <li>Bob berechnet S^(-1), also die Inverse von S in der Gruppe G.</li>
-  <li>Bob berechnet m' = M * S^(-1).</li>
-  <li>Bob konvertiert dann m' zurück in die Klartext-Nachricht m.</li>
+  <li>Bob berechnet das gemeinsame Geheimnis \(S = K^b = g^{k \cdot b}\).</li>
+  <li>Bob berechnet \(S^{-1}\), also die Inverse von \(S\) in der Gruppe \(G\).</li>
+  <li>Bob berechnet \(m' = M \cdot S^{-1}\).</li>
+  <li>Bob konvertiert dann \(m'\) zurück in die Klartext-Nachricht \(m\).</li>
   </ul>
 
-<p>Beachten Sie, dass der Entschlüsselungs-Algorithmus die gewünschte Nachricht erzeugt, weil M * S^(-1) = [m' * g^(b*k)] * (g^(b*k))^(-1) = m' * g^(bl) * g^(-bk) = m'.</p>
+<p>Beachten Sie, dass der Entschlüsselungs-Algorithmus die gewünschte Nachricht erzeugt, weil \(M \cdot S^{-1} = [m' \cdot g^{b \cdot k}] \cdot [g^{b \cdot k}]^{-1} = m' \cdot g^{b \cdot k} \cdot g^{-(b \cdot k)} = m'\).</p>
 
   
   
@@ -117,53 +118,56 @@
   <p>Wie jedes Signatur-Verfahren erlaubt es auch das ElGamal-Signatur-Verfahren einer dritten Instanz (third-party), die Authentizität einer Nachricht zu prüfen und zu bestätigen. Das ElGamal-Signatur-Verfahren besteht aus vier Teil-Schritten: der Parameter-Generierung (Setup), der Schlüsselerzeugung, der Signierung und der Verifikation. Die ersten zwei Schritte wurden oben beschrieben, die Umsetzung von Signierung und Verifikation folgt nun.</p>
 
   <p>Zusätzlich zu den Setup-Parametern wird eine Kollisions-resistente Hashfunktion H benötigt.</p>
-  <p> Da für G normalerweise Z*_d = { 1, … , d-1 } mit einer großen Primzahl d benutzt wird, ist die Berechnung des diskreten Logarithmus modulo d sehr kompliziert. </p>
+  <p> Da für \(G\) normalerweise \(Z^*_d = \{ 1, … , d-1 \}\) mit einer großen Primzahl \(d\) benutzt wird, ist die Berechnung des diskreten Logarithmus modulo \(d\) sehr kompliziert. </p>
   
   
   <h4 id="SchemeEnc">d1) ElGamal-Signierung</h3>
   <p>Wir nehmen an, dass Alice die Signierende ist.</p>
   
-  <p>Der Signierungs-Algorithmus funktioniert folgendermaßen: Um eine Nachricht m zu signieren, braucht Alice ihren privaten Schlüssel a, und dann:</p>
+  <p>Der Signierungs-Algorithmus funktioniert folgendermaßen: Um eine Nachricht \(m\) zu signieren, braucht Alice ihren privaten Schlüssel \(a\), und dann:</p>
   <ul>
-  <li>Alice wählt einen zufälligen, geheimen Sessionkey k aus { 2, … , d-2 } mit ggT(k, d-1) = 1.</li>
-  <li>Alice berechnet den öffentlichen Sessionkey K = g^k mod d.</li>
-  <li>Alice berechnet s = k^(-1) * ( H(m) - a*K )  mod d-1.</li>
-  <li>Ist s=0, muss sie von vorne beginnen (mit der Wahl von k).</li>
-  <li>Alice sendet das Paar (K, s), das die Signatur von m darstellt, an Bob.</li>
+  <li>Alice wählt einen zufälligen, geheimen Sessionkey \(k\) aus \(\{ 2, … , d-2 \}\) mit \(\textrm{ggT}(k, d-1) = 1\).</li>
+  <li>Alice berechnet den öffentlichen Sessionkey \(K = g^k \mod d\).</li>
+  <li>Alice berechnet \(s = k^{-1} \cdot ( H(m) - a \cdot K )  \mod d-1\).</li>
+  <li>Ist \(s=0\), muss sie von vorne beginnen (mit der Wahl von \(k\)).</li>
+  <li>Alice sendet das Paar \((K, s)\), das die Signatur von \(m\) darstellt, an Bob.</li>
   </ul>
 
     
   <h4 id="SchemeEnc">d2) ElGamal-Verifikation</h3>
   <p>We nehmen an, dass Bob die von Alice signierte Nachricht verifizieren will.</p>
 
-  <p>Der Verifizierungs-Algorithmus funktioniert folgendermaßen: Um eine Nachricht m von Alice zu verifizieren, benutzt er ihren öffentlichen Schlüssel ( G, d, g, A ), die erhaltene Signatur (K, s), und dann</p>
+  <p>Der Verifizierungs-Algorithmus funktioniert folgendermaßen: Um eine Nachricht \(m\) von Alice zu verifizieren, benutzt er ihren öffentlichen Schlüssel \((G, d, g, A)\), die erhaltene Signatur \((K, s)\), und dann</p>
   <ul>
-  <li>Bob prüft, dass 1 < K < d und dass 0 < s < p-1.</li>
-  <li>Bob berechnet u = g^(H(m))  mod d.</li>
-  <li>Bob berechnet v = A^K * K^s  mod d.</li>
-  <li>Ist u = v, dann ist die Signatur korrekt; andernfalls ist sie ungültig (d.h. sie passt nicht zu m oder ist nicht mit Alices privatem Schlüssel signiert).</li>
+  <li>Bob prüft, dass \(1 < K < d\) und dass \(0 < s < p-1\).</li>
+  <li>Bob berechnet \(u = g^{H(m)}  \mod d\).</li>
+  <li>Bob berechnet \(v = A^K \cdot K^s  \mod d\).</li>
+  <li>Ist \(u = v\), dann ist die Signatur korrekt; andernfalls ist sie ungültig (d.h. sie passt nicht zu m oder ist nicht mit Alices privatem Schlüssel signiert).</li>
   </ul>
 
 <p>Beachten Sie, dass der Verifizierungs-Algorithmus korrekt ist in dem Sinn, dass eine mit diesem Algorithmus erzeugte Signatur immer vom Verifizierer akzeptiert werden kann, weil aufgrund des Signatur-Verfahrens Folgendes gilt: 
-<br/>
-  s = k^(-1) * ( H(m) - a*K )  mod d-1 <br/>
-  H(m) = k*s + a*K  mod d-1 <br/>
-und dann aufgrund der kleinen Satzes von Fermat:<br/>
-  u <br/>
-  = g^(H(m))  mod d <br/>
-  = g^(k*s) * g^(a*K)  mod d <br/>
-  = (g^k)^s * (g^a)^K  mod d <br/>
-  = K^s * A^K  mod d <br/>
-  = v <br/></p>
 
+\begin{alignat}{1}
+  s &&= k^{-1} \cdot ( H(m) - a \cdot K ) && \mod d-1 \\
+  H(m) &&= k \cdot s + a \cdot K && \mod d-1
+\end{alignat}
+
+und dann aufgrund des kleinen Satzes von Fermat:<br/>
+
+\begin{alignat}{1}
+   u &= g^{H(m)}  &&\mod d \\
+   &= g^{(k \cdot s)} \cdot  g^{(a \cdot K)}  &&\mod d \\
+   &= (g^k)^s \cdot (g^a)^K && \mod d \\
+   &= K^s \cdot A^K  &&\mod d \\
+   u &= v
+\end{alignat}
 
   
-<p><br/></p>  
-  <h3 id="NotationElGamal">e) Für die ElGamal-Verschlüsselung/-Signierung benutzte Notation</h3>
+<h3 id="NotationElGamal">e) Für die ElGamal-Verschlüsselung/-Signierung benutzte Notation</h3>
 
-  <p>Wir benutzten a bzw. A für den privaten bzw. den öffentlichen Schlüssel von Alice (Sender), und b bzw. B für den privaten bzw. den öffentlichen Schlüssel von Bob (Empfänger), weil dies die übliche Art ist, wie der Diffie-Hellman-Schlüsselaustausch (DH) beschrieben wird. Dadurch haben wir keine Überlappungen mit den Variablennamen, wenn wir die ElGamal-Verschlüsselung und die ElGamal-Signierung hintereinander beschreiben. Großbuchstaben repräsentieren immer Potenzen zugehöriger, klein-geschriebener Exponenten (jeweils mit der Basis g).</p>
+  <p>Wir benutzten \(a\) bzw. \(A\) für den privaten bzw. den öffentlichen Schlüssel von Alice (Sender), und \(b\) bzw. \(B\) für den privaten bzw. den öffentlichen Schlüssel von Bob (Empfänger), weil dies die übliche Art ist, wie der Diffie-Hellman-Schlüsselaustausch (DH) beschrieben wird. Dadurch haben wir keine Überlappungen mit den Variablennamen, wenn wir die ElGamal-Verschlüsselung und die ElGamal-Signierung hintereinander beschreiben. Großbuchstaben repräsentieren immer Potenzen zugehöriger, klein-geschriebener Exponenten (jeweils mit der Basis \(g\)).</p>
 
-  <p>Andere Autoren oder die deutsche Wikipedia nutzen andere Notationen für die ElGamal-Verschlüsselung und die ElGamal-Signierung. Bei der Verschlüsselung wird der private Schlüssel a genannt und der zugehörige öffentliche Schlüssel A. Ein anderer Autor nutzt x als Name für die Nachricht, weil dies der variable Input der Verschlüsselungsfunktion ist.</p>
+  <p>Andere Autoren oder die deutsche Wikipedia nutzen andere Notationen für die ElGamal-Verschlüsselung und die ElGamal-Signierung. Bei der Verschlüsselung wird der private Schlüssel \(a\) genannt und der zugehörige öffentliche Schlüssel \(A\). Ein anderer Autor nutzt \(x\) als Name für die Nachricht, weil dies der variable Input der Verschlüsselungsfunktion ist.</p>
 
   <p>In der folgenden Tabelle werden unterschiedliche Notationen einander gegenüber gestellt: Spalte 1 orientiert sich am Diffie-Hellman-Schlüsselaustausch (DH) und diese Notation wird auch hier benutzt; Spalte 2 zeigt die Notation in der deutschen Wikipedia (Dezember 2017), die wiederum von der in der englischen Wikipedia abweicht.</p>
 
@@ -186,60 +190,60 @@ table, th, td {
     <th>Phase / Bedeutung</th>
   </tr>
   <tr>
-    <td>d</td>
-    <td>p</td>
-    <td>Setup: Anzahl der Elemente in G / große Primzahl</td>
+    <td>\(d\)</td>
+    <td>\(p\)</td>
+    <td>Setup: Anzahl der Elemente in \(G\) / große Primzahl</td>
   </tr>
   <tr>
-    <td>g</td>
-    <td>g</td>
-    <td>Setup: Generator von G</td>
+    <td>\(g\)</td>
+    <td>\(g\)</td>
+    <td>Setup: Generator von \(G\)</td>
   </tr>
 
   <tr>
-    <td>b</td>
-    <td>a</td>
+    <td>\(b\)</td>
+    <td>\(a\)</td>
     <td>Key Gen: Privater Schlüssel des Empfängers</td>
   </tr>
   <tr>
-    <td>B</td>
-    <td>A</td>
+    <td>\(B\)</td>
+    <td>\(A\)</td>
     <td>Key Gen: Öffentlicher Schlüssel des Empfängers</td>
   </tr>
 
   <tr>
-    <td>m</td>
-    <td>m</td>
-    <td>Verschlüsselung: Gegebener Klartext, bevor auf ein Element in G gemappt</td>
+    <td>\(m\)</td>
+    <td>\(m\)</td>
+    <td>Verschlüsselung: Gegebener Klartext, bevor auf ein Element in \(G\) gemappt</td>
   </tr>
   <tr>
-    <td>m'</td>
-    <td>m</td>
-    <td>Verschlüsselung: Klartext (Nachricht), schon gemappt auf ein Element in G</td>
+    <td>\(m'\)</td>
+    <td>\(m\)</td>
+    <td>Verschlüsselung: Klartext (Nachricht), schon gemappt auf ein Element in \(G\)</td>
   </tr>
   <tr>
-    <td>k</td>
-    <td>r (manchmal auch y)</td>
+    <td>\(k\)</td>
+    <td>\(r\) (manchmal auch \(y\))</td>
     <td>Verschlüsselung: Zufällige Zahl, die pro Nachricht zu erzeugen ist (geheimer Sessionkey)</td>
   </tr>
   <tr>
-    <td>K</td>
-    <td>R</td>
+    <td>\(K\)</td>
+    <td>\(R\)</td>
     <td>Verschlüsselung: Öffentlicher Sessionkey (neu pro Nachricht)</td>
   </tr>
   <tr>
-    <td>S</td>
+    <td>\(S\)</td>
     <td>-</td>
     <td>Verschlüsselung: Geheimer Shared Key (for one message)</td>
   </tr>
   <tr>
-    <td>M</td>
-    <td>c</td>
-    <td>Verschlüsselung: Verschlüsseltes m'</td>
+    <td>\(M\)</td>
+    <td>\(c\)</td>
+    <td>Verschlüsselung: Verschlüsseltes \(m'\)</td>
   </tr>
   <tr>
-    <td>(K,M)</td>
-    <td>(R, c)</td>
+    <td>\((K,M)\)</td>
+    <td>\((R, c)\)</td>
     <td>Verschlüsselung: Geheimtext</td>
   </tr>
 </table> 
@@ -255,45 +259,45 @@ table, th, td {
     <th>Phase / Bedeutung</th>
   </tr>
   <tr>
-    <td>a</td>
-    <td>a</td>
+    <td>\(a\)</td>
+    <td>\(a\)</td>
     <td>Key Gen: Privater Schlüssel des Signierenden</td>
   </tr>
   <tr>
-    <td>A</td>
-    <td>A</td>
+    <td>\(A\)</td>
+    <td>\(A\)</td>
     <td>Key Gen: Öffentlicher Schlüssel des Signierenden</td>
   </tr>
 
   <tr>
-    <td>m</td>
-    <td>m</td>
+    <td>\(m\)</td>
+    <td>\(m\)</td>
     <td>Signieren: Klartext</td>
   </tr>
   <tr>
-    <td>H(m)</td>
-    <td>H(m)</td>
+    <td>\(H(m)\)</td>
+    <td>\(H(m)\)</td>
     <td>Signieren: Hashwert des Klartexts</td>
   </tr>
   <tr>
-    <td>k</td>
-    <td>k</td>
+    <td>\(k\)</td>
+    <td>\(k\)</td>
     <td>Signieren: Zufällige Zahl, die pro Nachricht zu erzeugen ist (geheimer Sessionkey)</td>
   </tr>
   <tr>
-    <td>K</td>
-    <td>r</td>
+    <td>\(K\)</td>
+    <td>\(r\)</td>
     <td>Signieren: Öffentlicher Sessionkey (einer je Nachricht)</td>
   </tr>
   <tr>
-    <td>s</td>
-    <td>s</td>
+    <td>\(s\)</td>
+    <td>\(s\)</td>
     <td>Signieren: Zweiter Teil der Signatur</td>
   </tr>
   <tr>
-    <td>(K,s)</td>
-    <td>(r,s)</td>
-    <td>Signieren: Signatur von m'</td>
+    <td>\((K,s)\)</td>
+    <td>\((r,s)\)</td>
+    <td>Signieren: Signatur von \(m'\)</td>
   </tr>
 </table> 
 <p><br/></p>
