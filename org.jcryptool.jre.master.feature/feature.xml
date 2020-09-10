@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.jcryptool.jre.master.feature"
-      label="OpenJDK/JLink JRE"
+      label="OpenJDK/JLink JRE Feature"
       version="1.0.0">
 
    <description>
@@ -9,7 +9,7 @@
    </description>
 
    <copyright>
-      No copyright is assumend by JCrypTool nor its maintaines for the JRE. Please refer to the information provided with the individual jre features. 
+      No copyright is assumend by JCrypTool nor its maintaines for the JRE. Please refer to the information provided with the individual jre features.
    </copyright>
 
    <license>
