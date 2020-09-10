@@ -2,7 +2,8 @@
 <feature
       id="org.jcryptool.jre.master.feature"
       label="OpenJDK/JLink JRE Feature"
-      version="1.0.0">
+      version="1.0.0"
+      provider-name="jcryptool.org">
 
    <description>
       Aggregates the JRE features from org.jcryptool.thirdparty.jre
