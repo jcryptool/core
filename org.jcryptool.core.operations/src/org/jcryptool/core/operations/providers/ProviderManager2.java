@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -83,6 +85,25 @@ public class ProviderManager2 {
         while (it.hasNext()) {
             LogUtil.logInfo(it.next());
         }
+    }
+
+    public static <T> T withManagerWithFP(Function<ProviderManager2, T> fun) {
+    	try {
+    		getInstance().setProviders__flexiPromoted();
+			return fun.apply(getInstance());
+    	} finally {
+    		getInstance().setProviders__sunPromoted();
+    	}
+    }
+
+    
+    public static void onManagerWithFP(Consumer<ProviderManager2> action) {
+    	try {
+    		getInstance().setProviders__flexiPromoted();
+			action.accept(getInstance());
+    	} finally {
+    		getInstance().setProviders__sunPromoted();
+    	}
     }
 
     private void addProviders(List<String> providers) {

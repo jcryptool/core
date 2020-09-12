@@ -235,16 +235,28 @@ public class IntegratorWizardPage extends WizardPage {
     }
 
     public void calcAndSetPageCompletion() {
-        if (showKeyGroup == null || useCustomKey) {
-            setPageComplete(true);
-            return;
+        boolean signatureGroupCondition = true;
+        if (showSignatureGroup) {
+        	if (signature() == null) {
+				signatureGroupCondition = false;
+        	} else {
+				signatureGroupCondition = true;
+			}
         }
-        if (showKeyGroup != null && keyStoreAlias != null) {
-            setPageComplete(true);
-            return;
-        }
+        if (! signatureGroupCondition) {
+        	setPageComplete(false);
+        	return;
+		}
+        
+        // Anm. simlei: below is the original content of the method which fell mighty short to address the whole picture.
+        // the above is considered a hack, which couldn't be done better with sensible effort
         setPageComplete(false);
-        return;
+        if ((showKeyGroup == null || useCustomKey)) {
+            setPageComplete(true);
+        }
+        if ((showKeyGroup != null && keyStoreAlias != null)) {
+            setPageComplete(true);
+        }
     }
 
     /**
@@ -958,13 +970,14 @@ public class IntegratorWizardPage extends WizardPage {
 
                 String filename = dialog.open();
                 if (filename != null) {
-                    if ((new File(filename).exists()) && (!encrypt)) {
-                        MessageBox messageBox = new MessageBox(new Shell(), SWT.NONE);
-                        messageBox.setText(Messages.getString("DummyWizardPage.21")); //$NON-NLS-1$
-                        messageBox.setMessage(Messages.getString("DummyWizardPage.22")); //$NON-NLS-1$
-                        messageBox.open();
-                        return;
-                    } else if ((!new File(filename).exists()) && (encrypt)) {
+//                    if ((new File(filename).exists()) && (!encrypt)) {
+//                        MessageBox messageBox = new MessageBox(new Shell(), SWT.NONE);
+//                        messageBox.setText(Messages.getString("DummyWizardPage.21")); //$NON-NLS-1$
+//                        messageBox.setMessage(Messages.getString("DummyWizardPage.22")); //$NON-NLS-1$
+//                        messageBox.open();
+//                        return;
+//                    } else if ((!new File(filename).exists()) && (encrypt)) {
+                	if(((!new File(filename).exists()) && (encrypt))) {
                         MessageBox messageBox = new MessageBox(new Shell(), SWT.NONE);
                         messageBox.setText(Messages.getString("DummyWizardPage.21")); //$NON-NLS-1$
                         messageBox.setMessage(Messages.getString("DummyWizardPage.24")); //$NON-NLS-1$
@@ -974,7 +987,7 @@ public class IntegratorWizardPage extends WizardPage {
 
                     signatureText.setText(filename);
                     signature = filename;
-                    setPageComplete(true);
+                    calcAndSetPageCompletion();
                 }
             }
         });

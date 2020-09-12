@@ -106,8 +106,8 @@ public abstract class FlexiProviderEngine {
 
     protected OutputStream initOutput(String output) {
         if (output.equals("<Editor>")) { //$NON-NLS-1$
-            LogUtil.logInfo("outputURI: " + outputURI.toASCIIString()); //$NON-NLS-1$
             outputURI = getTempFileURI();
+            LogUtil.logInfo("outputURI: " + outputURI.toASCIIString()); //$NON-NLS-1$
         } else {
             outputURI = URIUtil.toURI(output);
             LogUtil.logInfo("outputURI: " + outputURI.toASCIIString()); //$NON-NLS-1$

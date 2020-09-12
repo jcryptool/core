@@ -36,6 +36,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.providers.AbstractProviderController;
@@ -263,7 +264,12 @@ public class KeyStoreManager {
             File backupFile = new File(pathToFile);
             URI uri = backupFile.toURI();
             IFileStore backupKeystore = EFS.getLocalFileSystem().getStore(uri);
-        	MessageBox mbox = new MessageBox(PlatformUI.getWorkbench().getDisplay().getActiveShell(),
+            System.out.println(PlatformUI.getWorkbench().getDisplay().getShells());
+            Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
+            if (shell == null) {
+            	shell = PlatformUI.getWorkbench().getDisplay().getShells()[0];
+			}
+        	MessageBox mbox = new MessageBox(shell,
             	SWT.ICON_QUESTION | SWT.YES | SWT.NO);
             mbox.setMessage(Messages.KeyStoreManager_10);
             if(mbox.open() == SWT.YES) {
@@ -290,28 +296,33 @@ public class KeyStoreManager {
      */
     public Key getKey(IKeyStoreAlias alias, char[] password) throws UnrecoverableEntryException,
             NoSuchAlgorithmException {
-        switch (alias.getKeyStoreEntryType()) {
-        case SECRETKEY:
-            return (Key) getSecretKey(alias, password);
-        case KEYPAIR_PRIVATE_KEY:
-            return (Key) getPrivateKey(alias, password);
-        case KEYPAIR_PUBLIC_KEY:
-            Certificate cert = getCertificate(alias);
-            if (cert == null) {
-                return null;
-            }
-            return (Key) cert.getPublicKey();
-        case PUBLICKEY:
-            cert = getCertificate(alias);
-            if (cert == null) {
-                return null;
-            }
-            return (Key) cert.getPublicKey();
-        default:
-            LogUtil.logError(KeyStorePlugin.PLUGIN_ID,
-                    NLS.bind(Messages.KeyStoreManager_2, alias.getKeyStoreEntryType()), null, true);
-            return null;
-        }
+    	try {
+    		ProviderManager2.getInstance().setProviders__flexiPromoted();
+			switch (alias.getKeyStoreEntryType()) {
+			case SECRETKEY:
+				return (Key) getSecretKey(alias, password);
+			case KEYPAIR_PRIVATE_KEY:
+				return (Key) getPrivateKey(alias, password);
+			case KEYPAIR_PUBLIC_KEY:
+				Certificate cert = getCertificate(alias);
+				if (cert == null) {
+					return null;
+				}
+				return (Key) cert.getPublicKey();
+			case PUBLICKEY:
+				cert = getCertificate(alias);
+				if (cert == null) {
+					return null;
+				}
+				return (Key) cert.getPublicKey();
+			default:
+				LogUtil.logError(KeyStorePlugin.PLUGIN_ID,
+						NLS.bind(Messages.KeyStoreManager_2, alias.getKeyStoreEntryType()), null, true);
+				return null;
+			}
+    	} finally {
+    		ProviderManager2.getInstance().setProviders__sunPromoted();
+    	}
     }
 
     /**
@@ -325,9 +336,12 @@ public class KeyStoreManager {
     public Certificate getCertificate(IKeyStoreAlias alias) throws UnrecoverableEntryException,
             NoSuchAlgorithmException {
         try {
+        	ProviderManager2.getInstance().setProviders__flexiPromoted();
             return keyStore.getCertificate(alias.getAliasString());
         } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, e);
+        } finally {
+        	ProviderManager2.getInstance().setProviders__sunPromoted();	
         }
 
         return null;
@@ -344,9 +358,14 @@ public class KeyStoreManager {
     public Certificate[] getCertificateChain(IKeyStoreAlias alias, char[] password) throws UnrecoverableEntryException,
             NoSuchAlgorithmException {
         try {
-            KeyStore.PrivateKeyEntry entry = (KeyStore.PrivateKeyEntry) keyStore.getEntry(alias.getAliasString(),
-                    new KeyStore.PasswordProtection(password));
-            return entry.getCertificateChain();
+        	try {
+				ProviderManager2.getInstance().setProviders__flexiPromoted();
+				KeyStore.PrivateKeyEntry entry = (KeyStore.PrivateKeyEntry) keyStore.getEntry(alias.getAliasString(),
+						new KeyStore.PasswordProtection(password));
+				return entry.getCertificateChain();
+			} finally {
+				ProviderManager2.getInstance().setProviders__sunPromoted();
+			}
         } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, e);
         }
@@ -366,9 +385,14 @@ public class KeyStoreManager {
     public PrivateKey getPrivateKey(IKeyStoreAlias alias, char[] password) throws UnrecoverableEntryException,
             NoSuchAlgorithmException {
         try {
-            KeyStore.PrivateKeyEntry entry = (KeyStore.PrivateKeyEntry) keyStore.getEntry(alias.getAliasString(),
-                    new KeyStore.PasswordProtection(password));
-            return entry.getPrivateKey();
+        	try {
+				ProviderManager2.getInstance().setProviders__flexiPromoted();
+				KeyStore.PrivateKeyEntry entry = (KeyStore.PrivateKeyEntry) keyStore.getEntry(alias.getAliasString(),
+						new KeyStore.PasswordProtection(password));
+				return entry.getPrivateKey();
+			} finally {
+				ProviderManager2.getInstance().setProviders__sunPromoted();
+			}
         } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, e);
         }
@@ -388,9 +412,14 @@ public class KeyStoreManager {
     public SecretKey getSecretKey(IKeyStoreAlias alias, char[] password) throws UnrecoverableEntryException,
             NoSuchAlgorithmException {
         try {
-            KeyStore.SecretKeyEntry entry = (KeyStore.SecretKeyEntry) keyStore.getEntry(alias.getAliasString(),
-                    new KeyStore.PasswordProtection(password));
-            return entry.getSecretKey();
+        	try {
+				ProviderManager2.getInstance().setProviders__flexiPromoted();
+				KeyStore.SecretKeyEntry entry = (KeyStore.SecretKeyEntry) keyStore.getEntry(alias.getAliasString(),
+						new KeyStore.PasswordProtection(password));
+				return entry.getSecretKey();
+			} finally {
+				ProviderManager2.getInstance().setProviders__sunPromoted();
+			}
         } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, e);
         }
@@ -406,22 +435,28 @@ public class KeyStoreManager {
      * @return The public keystore alias
      */
     public KeyStoreAlias getPublicForPrivate(IKeyStoreAlias privateAlias) {
-        if (privateAlias == null) {
-            return null;
-        }
+    	try {
+			ProviderManager2.getInstance().setProviders__flexiPromoted();
+			if (privateAlias == null) {
+				return null;
+			}
 
-        Enumeration<String> aliases = getAliases();
+			Enumeration<String> aliases = getAliases();
 
-        while (aliases != null && aliases.hasMoreElements()) {
-            KeyStoreAlias alias = new KeyStoreAlias(aliases.nextElement());
+			while (aliases != null && aliases.hasMoreElements()) {
+				KeyStoreAlias alias = new KeyStoreAlias(aliases.nextElement());
 
-            if (alias.getKeyStoreEntryType() == KeyType.KEYPAIR_PUBLIC_KEY
-                    && privateAlias.getHashValue().equalsIgnoreCase(alias.getHashValue())) {
-                return alias;
-            }
-        }
+				if (alias.getKeyStoreEntryType() == KeyType.KEYPAIR_PUBLIC_KEY
+						&& privateAlias.getHashValue().equalsIgnoreCase(alias.getHashValue())) {
+					return alias;
+				}
+			}
 
-        return null;
+			return null;
+			
+		} finally {
+			ProviderManager2.getInstance().setProviders__sunPromoted();
+		}
     }
 
     /**
@@ -432,22 +467,28 @@ public class KeyStoreManager {
      * @return The private keystore alias
      */
     public KeyStoreAlias getPrivateForPublic(IKeyStoreAlias publicAlias) {
-        if (publicAlias == null) {
-            return null;
-        }
+    	try {
+			ProviderManager2.getInstance().setProviders__flexiPromoted();
+			if (publicAlias == null) {
+				return null;
+			}
 
-        Enumeration<String> aliases = getAliases();
+			Enumeration<String> aliases = getAliases();
 
-        while (aliases != null && aliases.hasMoreElements()) {
-            KeyStoreAlias alias = new KeyStoreAlias(aliases.nextElement());
+			while (aliases != null && aliases.hasMoreElements()) {
+				KeyStoreAlias alias = new KeyStoreAlias(aliases.nextElement());
 
-            if (alias.getKeyStoreEntryType() == KeyType.KEYPAIR_PRIVATE_KEY
-                    && alias.getHashValue().equalsIgnoreCase(publicAlias.getHashValue())) {
-                return alias;
-            }
-        }
+				if (alias.getKeyStoreEntryType() == KeyType.KEYPAIR_PRIVATE_KEY
+						&& alias.getHashValue().equalsIgnoreCase(publicAlias.getHashValue())) {
+					return alias;
+				}
+			}
 
-        return null;
+			return null;
+			
+		} finally {
+			ProviderManager2.getInstance().setProviders__sunPromoted();
+		}
     }
 
     /**
@@ -456,24 +497,30 @@ public class KeyStoreManager {
      * @return All public keys available in the JCrypTool keystore.
      */
     public ArrayList<IKeyStoreAlias> getAllPublicKeys() {
-        ArrayList<IKeyStoreAlias> publicKeys = new ArrayList<IKeyStoreAlias>();
+    	try {
+			ProviderManager2.getInstance().setProviders__flexiPromoted();
+			ArrayList<IKeyStoreAlias> publicKeys = new ArrayList<IKeyStoreAlias>();
 
-        try {
-            Enumeration<String> aliases = keyStore.aliases();
+			try {
+				Enumeration<String> aliases = keyStore.aliases();
 
-            while (aliases.hasMoreElements()) {
-                KeyStoreAlias alias = new KeyStoreAlias(aliases.nextElement());
-                if (alias.getKeyStoreEntryType().getType().contains(KeyType.KEYPAIR.getType())) {
-                    if (alias.getKeyStoreEntryType().equals(KeyType.KEYPAIR_PUBLIC_KEY)) {
-                        publicKeys.add(alias);
-                    }
-                }
-            }
-        } catch (KeyStoreException e) {
-            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, e);
-        }
+				while (aliases.hasMoreElements()) {
+					KeyStoreAlias alias = new KeyStoreAlias(aliases.nextElement());
+					if (alias.getKeyStoreEntryType().getType().contains(KeyType.KEYPAIR.getType())) {
+						if (alias.getKeyStoreEntryType().equals(KeyType.KEYPAIR_PUBLIC_KEY)) {
+							publicKeys.add(alias);
+						}
+					}
+				}
+			} catch (KeyStoreException e) {
+				LogUtil.logError(KeyStorePlugin.PLUGIN_ID, e);
+			}
 
-        return publicKeys;
+			return publicKeys;
+			
+		} finally {
+			ProviderManager2.getInstance().setProviders__sunPromoted();
+		}
     }
 
     /**
@@ -482,24 +529,30 @@ public class KeyStoreManager {
      * @return All private keys available in the JCrypTool keystore.
      */
     public ArrayList<IKeyStoreAlias> getAllPrivateKeys() {
-        ArrayList<IKeyStoreAlias> privateKeys = new ArrayList<IKeyStoreAlias>();
+    	try {
+			ProviderManager2.getInstance().setProviders__flexiPromoted();
+			ArrayList<IKeyStoreAlias> privateKeys = new ArrayList<IKeyStoreAlias>();
 
-        try {
-            Enumeration<String> aliases = keyStore.aliases();
+			try {
+				Enumeration<String> aliases = keyStore.aliases();
 
-            while (aliases.hasMoreElements()) {
-                KeyStoreAlias alias = new KeyStoreAlias(aliases.nextElement());
-                if (alias.getKeyStoreEntryType().getType().contains(KeyType.KEYPAIR.getType())) {
-                    if (alias.getKeyStoreEntryType().equals(KeyType.KEYPAIR_PRIVATE_KEY)) {
-                        privateKeys.add(alias);
-                    }
-                }
-            }
-        } catch (KeyStoreException e) {
-            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, e);
-        }
+				while (aliases.hasMoreElements()) {
+					KeyStoreAlias alias = new KeyStoreAlias(aliases.nextElement());
+					if (alias.getKeyStoreEntryType().getType().contains(KeyType.KEYPAIR.getType())) {
+						if (alias.getKeyStoreEntryType().equals(KeyType.KEYPAIR_PRIVATE_KEY)) {
+							privateKeys.add(alias);
+						}
+					}
+				}
+			} catch (KeyStoreException e) {
+				LogUtil.logError(KeyStorePlugin.PLUGIN_ID, e);
+			}
 
-        return privateKeys;
+			return privateKeys;
+			
+		} finally {
+			ProviderManager2.getInstance().setProviders__sunPromoted();
+		}
     }
 
     /**
@@ -577,14 +630,20 @@ public class KeyStoreManager {
      * @param alias The certificate metadata
      */
     public void addCertificate(Certificate certificate, IKeyStoreAlias alias) {
-        try {
-            keyStore.setEntry(alias.getAliasString(), new KeyStore.TrustedCertificateEntry(certificate), null);
-            saveKeystore();
-            ContactManager.getInstance().addCertificate(alias);
-        } catch (KeyStoreException e) {
-            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, NLS.bind(Messages.KeyStoreManager_4, alias.getAliasString()), e,
-                    true);
-        }
+    	try {
+			ProviderManager2.getInstance().setProviders__flexiPromoted();
+			try {
+				keyStore.setEntry(alias.getAliasString(), new KeyStore.TrustedCertificateEntry(certificate), null);
+				saveKeystore();
+				ContactManager.getInstance().addCertificate(alias);
+			} catch (KeyStoreException e) {
+				LogUtil.logError(KeyStorePlugin.PLUGIN_ID, NLS.bind(Messages.KeyStoreManager_4, alias.getAliasString()), e,
+						true);
+			}
+			
+		} finally {
+			ProviderManager2.getInstance().setProviders__sunPromoted();
+		}
     }
 
     /**
@@ -617,18 +676,24 @@ public class KeyStoreManager {
      */
     public void addKeyPair(PrivateKey privateKey, Certificate publicKey, char[] password, IKeyStoreAlias privateAlias,
             IKeyStoreAlias publicAlias) {
-        Certificate[] certs = new Certificate[1];
-        certs[0] = publicKey;
-        try {
-            keyStore.setEntry(privateAlias.getAliasString(), new KeyStore.PrivateKeyEntry(privateKey, certs),
-                    new KeyStore.PasswordProtection(password));
-            keyStore.setEntry(publicAlias.getAliasString(), new KeyStore.TrustedCertificateEntry(publicKey), null);
-            saveKeystore();
-            ContactManager.getInstance().addKeyPair(privateAlias, publicAlias);
-        } catch (KeyStoreException e) {
-            LogUtil.logError(KeyStorePlugin.PLUGIN_ID,
-                    NLS.bind(Messages.KeyStoreManager_6, publicAlias.getAliasString()), e, true);
-        }
+    	try {
+			ProviderManager2.getInstance().setProviders__flexiPromoted();
+			Certificate[] certs = new Certificate[1];
+			certs[0] = publicKey;
+			try {
+				keyStore.setEntry(privateAlias.getAliasString(), new KeyStore.PrivateKeyEntry(privateKey, certs),
+						new KeyStore.PasswordProtection(password));
+				keyStore.setEntry(publicAlias.getAliasString(), new KeyStore.TrustedCertificateEntry(publicKey), null);
+				saveKeystore();
+				ContactManager.getInstance().addKeyPair(privateAlias, publicAlias);
+			} catch (KeyStoreException e) {
+				LogUtil.logError(KeyStorePlugin.PLUGIN_ID,
+						NLS.bind(Messages.KeyStoreManager_6, publicAlias.getAliasString()), e, true);
+			}
+			
+		} finally {
+			ProviderManager2.getInstance().setProviders__sunPromoted();
+		}
     }
 
     /**
@@ -643,26 +708,32 @@ public class KeyStoreManager {
      */
     public void updateKeyPair(PrivateKey privateKey, char[] password, IKeyStoreAlias alias)
             throws UnrecoverableEntryException, NoSuchAlgorithmException {
-        try {
-            getPrivateKey(alias, password);
-        } catch (Exception e) {
-            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, NLS.bind(Messages.KeyStoreManager_8, alias.getAliasString()), e,
-                    true);
-            return;
-        }
+    	try {
+			ProviderManager2.getInstance().setProviders__flexiPromoted();
+			try {
+				getPrivateKey(alias, password);
+			} catch (Exception e) {
+				LogUtil.logError(KeyStorePlugin.PLUGIN_ID, NLS.bind(Messages.KeyStoreManager_8, alias.getAliasString()), e,
+						true);
+				return;
+			}
 
-        try {
-            KeyStoreAlias publicAlias = getPublicForPrivate(alias);
-            Certificate publicKey = getCertificate(publicAlias);
-            Certificate[] certs = new Certificate[1];
-            certs[0] = publicKey;
+			try {
+				KeyStoreAlias publicAlias = getPublicForPrivate(alias);
+				Certificate publicKey = getCertificate(publicAlias);
+				Certificate[] certs = new Certificate[1];
+				certs[0] = publicKey;
 
-            keyStore.setEntry(alias.getAliasString(), new KeyStore.PrivateKeyEntry(privateKey, certs),
-                    new KeyStore.PasswordProtection(password));
-            saveKeystore();
-        } catch (KeyStoreException e) {
-            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, NLS.bind(Messages.KeyStoreManager_7, alias.getAliasString()), e,
-                    true);
-        }
+				keyStore.setEntry(alias.getAliasString(), new KeyStore.PrivateKeyEntry(privateKey, certs),
+						new KeyStore.PasswordProtection(password));
+				saveKeystore();
+			} catch (KeyStoreException e) {
+				LogUtil.logError(KeyStorePlugin.PLUGIN_ID, NLS.bind(Messages.KeyStoreManager_7, alias.getAliasString()), e,
+						true);
+			}
+			
+		} finally {
+			ProviderManager2.getInstance().setProviders__sunPromoted();
+		}
     }
 }

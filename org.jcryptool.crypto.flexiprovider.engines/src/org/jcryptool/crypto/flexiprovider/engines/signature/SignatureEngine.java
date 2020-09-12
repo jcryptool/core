@@ -53,7 +53,7 @@ public class SignatureEngine extends FlexiProviderEngine {
         KeyObject usedKey = null;
         try {
         	// this tries to 
-            ProviderManager2.getInstance().setProviders__flexiPromoted();
+//             ProviderManager2.getInstance().setProviders__flexiPromoted();
             signature = Registry.getSignature(operation.getAlgorithmDescriptor().getAlgorithmName());
             AlgorithmParameterSpec spec = operation.getAlgorithmDescriptor().getAlgorithmParameterSpec();
             if (spec != null) {
@@ -104,7 +104,7 @@ public class SignatureEngine extends FlexiProviderEngine {
             LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID, "Exception while initializing a signature", e, true); //$NON-NLS-1$
             return null;
         } finally {
-        	ProviderManager2.getInstance().setProviders__sunPromoted();
+//         	ProviderManager2.getInstance().setProviders__sunPromoted();
         }
         return usedKey;
     }
