@@ -3,11 +3,11 @@
 <target name="JCrypTool artifacts that patch the eclipse platform" sequenceNumber="42">
 	<locations>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<repository location="https://simlei.github.io/org.jcryptool.thirdparty/site/platformpatches"/>
+			<repository location="https://jcryptool.github.io/org.jcryptool.thirdparty/site/platformpatches"/>
 			<unit id="org.eclipse.help.ui" version="4.1.600.v20190814-0936"/>
 		</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
-		<repository location="https://simlei.github.io/org.jcryptool.thirdparty/site/m2bundle"/>
+		<repository location="https://jcryptool.github.io/org.jcryptool.thirdparty/site/m2bundle"/>
 		<unit id="org.jcryptool.thirdparty.m2bundle.jaxb" version="0.0.1"/>
 	</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
