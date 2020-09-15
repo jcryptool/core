@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Devtools
+Bundle-SymbolicName: org.jcryptool.devtools;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.jcryptool.devtools.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.jcryptool.core.operations,
+ org.jcryptool.core.logging
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Automatic-Module-Name: org.jcryptool.devtools
+Bundle-ActivationPolicy: lazy
