@@ -44,12 +44,12 @@ public class PerformOperationManager {
 
     public void firePerformOperation(IFlexiProviderOperation operation) {
     	try {
-     		ProviderManager2.getInstance().setProviders__flexiPromoted();
+     		ProviderManager2.getInstance().pushFlexiProviderPromotion();
 			for (IPerfomOperationListener listener : listeners) {
 				listener.performOperation(operation);
 			}
     	} finally {
-     		ProviderManager2.getInstance().setProviders__sunPromoted();
+     		ProviderManager2.getInstance().popCryptoProviderPromotion();
     	}
     }
 

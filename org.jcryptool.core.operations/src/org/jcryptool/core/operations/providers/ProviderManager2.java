@@ -89,20 +89,20 @@ public class ProviderManager2 {
 
     public static <T> T withManagerWithFP(Function<ProviderManager2, T> fun) {
     	try {
-    		getInstance().setProviders__flexiPromoted();
+    		getInstance().pushFlexiProviderPromotion();
 			return fun.apply(getInstance());
     	} finally {
-    		getInstance().setProviders__sunPromoted();
+    		getInstance().popCryptoProviderPromotion();
     	}
     }
 
     
     public static void onManagerWithFP(Consumer<ProviderManager2> action) {
     	try {
-    		getInstance().setProviders__flexiPromoted();
+    		getInstance().pushFlexiProviderPromotion();
 			action.accept(getInstance());
     	} finally {
-    		getInstance().setProviders__sunPromoted();
+    		getInstance().popCryptoProviderPromotion();
     	}
     }
 
@@ -126,12 +126,31 @@ public class ProviderManager2 {
         return Security.getProvider(factoryDefaultProvider);
     }
 
-	public void setProviders__flexiPromoted() {
+    /**
+     * this stack is for controlling whether to lift flexiprovider promotions in finally{ ... } blocks
+     * see also: {@link #pushFlexiProviderPromotion()}, {@link #popCryptoProviderPromotion()}
+     */
+    public List<String> providerStack = new LinkedList<String>();
+    
+	/**
+     * this is for controlling whether to lift flexiprovider promotions in finally{ ... } blocks
+     * see also: {@link #popCryptoProviderPromotion()}
+	 */
+	public void pushFlexiProviderPromotion() {
+		this.providerStack.add("flexiprovider");
 		this.controllers.forEach(c -> c.setProviders__flexiPromoted());
 	}
 
-	public void setProviders__sunPromoted() {
-		this.controllers.forEach(c -> c.setProviders__sunPromoted());
+	/**
+     * this is for controlling whether to lift flexiprovider promotions in finally{ ... } blocks
+     * see also: {@link #pushFlexiProviderPromotion()}
+	 */
+	public void popCryptoProviderPromotion() {
+		if (providerStack.size() == 0) {
+			this.controllers.forEach(c -> c.setProviders__sunPromoted());
+		} else {
+			this.providerStack.remove(providerStack.size()-1);
+		}
 	}
 
 }

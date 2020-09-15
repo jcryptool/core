@@ -100,12 +100,12 @@ public class KeyStoreManager {
         ProviderManager2.getInstance();
         try {
 //             keyStore = KeyStore.getInstance("JCEKS"); //$NON-NLS-1$
-        	ProviderManager2.getInstance().setProviders__flexiPromoted();
+        	ProviderManager2.getInstance().pushFlexiProviderPromotion();
             keyStore = KeyStore.getInstance("JCEKS"); //$NON-NLS-1$
         } catch (KeyStoreException ex) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.KeyStoreManager_0, ex, true);
         } finally {
-        	ProviderManager2.getInstance().setProviders__sunPromoted();
+        	ProviderManager2.getInstance().popCryptoProviderPromotion();
         }
 
         platformKeystore = EFS.getLocalFileSystem().fromLocalFile(new File(KEYSTORE_FILE));
@@ -148,7 +148,7 @@ public class KeyStoreManager {
         BufferedInputStream is = null;
 
         try {
-        	ProviderManager2.getInstance().setProviders__flexiPromoted();
+        	ProviderManager2.getInstance().pushFlexiProviderPromotion();
             File flexiProvider = new File(DirectoryService.getWorkspaceDir(), FLEXIPROVIDER_FOLDER);
             if (!flexiProvider.exists()) {
                 flexiProvider.mkdir();
@@ -165,7 +165,7 @@ public class KeyStoreManager {
         } catch (Exception ex) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, ex);
         } finally {
-        	ProviderManager2.getInstance().setProviders__sunPromoted();
+        	ProviderManager2.getInstance().popCryptoProviderPromotion();
             if (is != null) {
                 try {
                     is.close();
@@ -183,7 +183,7 @@ public class KeyStoreManager {
     private void loadKeystore() {
         InputStream is = null;
         try {
-        	ProviderManager2.getInstance().setProviders__flexiPromoted();
+        	ProviderManager2.getInstance().pushFlexiProviderPromotion();
 
             is = new BufferedInputStream(platformKeystore.openInputStream(EFS.NONE, null));
             keyStore.load(is, KEYSTORE_PASSWORD);
@@ -191,7 +191,7 @@ public class KeyStoreManager {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, e);
             createDefaultKeystore();
         } finally {
-        	ProviderManager2.getInstance().setProviders__sunPromoted();
+        	ProviderManager2.getInstance().popCryptoProviderPromotion();
             if (is != null) {
                 try {
                     is.close();
@@ -209,14 +209,14 @@ public class KeyStoreManager {
     private void saveKeystore() {
         OutputStream os = null;
         try {
-        	ProviderManager2.getInstance().setProviders__flexiPromoted();
+        	ProviderManager2.getInstance().pushFlexiProviderPromotion();
 
             os = new BufferedOutputStream(platformKeystore.openOutputStream(EFS.NONE, null));
             keyStore.store(os, KEYSTORE_PASSWORD);
         } catch (Exception ex) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.KeyStoreManager_1, ex, true);
         } finally {
-        	ProviderManager2.getInstance().setProviders__sunPromoted();
+        	ProviderManager2.getInstance().popCryptoProviderPromotion();
             if (os != null) {
                 try {
                     os.close();
@@ -229,7 +229,7 @@ public class KeyStoreManager {
     
     public void backupKeystore(String pathToFile) {
         try {
-        	ProviderManager2.getInstance().setProviders__flexiPromoted();
+        	ProviderManager2.getInstance().pushFlexiProviderPromotion();
             File backupFile = new File(pathToFile);
             URI uri = backupFile.toURI();
             IFileStore backupKeystore = EFS.getLocalFileSystem().getStore(uri);
@@ -246,13 +246,13 @@ public class KeyStoreManager {
         } catch (Exception ex) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, ex);
         } finally {
-        	ProviderManager2.getInstance().setProviders__sunPromoted();
+        	ProviderManager2.getInstance().popCryptoProviderPromotion();
         }
     }
     
     public void restoreKeystore(String pathToFile) {
         try {
-        	ProviderManager2.getInstance().setProviders__flexiPromoted();
+        	ProviderManager2.getInstance().pushFlexiProviderPromotion();
             File flexiProvider = new File(DirectoryService.getWorkspaceDir(), FLEXIPROVIDER_FOLDER);
             if (!flexiProvider.exists()) {
                 flexiProvider.mkdir();
@@ -279,7 +279,7 @@ public class KeyStoreManager {
         } catch (Exception ex) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, ex);
         } finally {
-        	ProviderManager2.getInstance().setProviders__sunPromoted();
+        	ProviderManager2.getInstance().popCryptoProviderPromotion();
         }
     }
 
@@ -297,7 +297,7 @@ public class KeyStoreManager {
     public Key getKey(IKeyStoreAlias alias, char[] password) throws UnrecoverableEntryException,
             NoSuchAlgorithmException {
     	try {
-    		ProviderManager2.getInstance().setProviders__flexiPromoted();
+    		ProviderManager2.getInstance().pushFlexiProviderPromotion();
 			switch (alias.getKeyStoreEntryType()) {
 			case SECRETKEY:
 				return (Key) getSecretKey(alias, password);
@@ -321,7 +321,7 @@ public class KeyStoreManager {
 				return null;
 			}
     	} finally {
-    		ProviderManager2.getInstance().setProviders__sunPromoted();
+    		ProviderManager2.getInstance().popCryptoProviderPromotion();
     	}
     }
 
@@ -336,12 +336,12 @@ public class KeyStoreManager {
     public Certificate getCertificate(IKeyStoreAlias alias) throws UnrecoverableEntryException,
             NoSuchAlgorithmException {
         try {
-        	ProviderManager2.getInstance().setProviders__flexiPromoted();
+        	ProviderManager2.getInstance().pushFlexiProviderPromotion();
             return keyStore.getCertificate(alias.getAliasString());
         } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, e);
         } finally {
-        	ProviderManager2.getInstance().setProviders__sunPromoted();	
+        	ProviderManager2.getInstance().popCryptoProviderPromotion();	
         }
 
         return null;
@@ -359,12 +359,12 @@ public class KeyStoreManager {
             NoSuchAlgorithmException {
         try {
         	try {
-				ProviderManager2.getInstance().setProviders__flexiPromoted();
+				ProviderManager2.getInstance().pushFlexiProviderPromotion();
 				KeyStore.PrivateKeyEntry entry = (KeyStore.PrivateKeyEntry) keyStore.getEntry(alias.getAliasString(),
 						new KeyStore.PasswordProtection(password));
 				return entry.getCertificateChain();
 			} finally {
-				ProviderManager2.getInstance().setProviders__sunPromoted();
+				ProviderManager2.getInstance().popCryptoProviderPromotion();
 			}
         } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, e);
@@ -386,12 +386,12 @@ public class KeyStoreManager {
             NoSuchAlgorithmException {
         try {
         	try {
-				ProviderManager2.getInstance().setProviders__flexiPromoted();
+				ProviderManager2.getInstance().pushFlexiProviderPromotion();
 				KeyStore.PrivateKeyEntry entry = (KeyStore.PrivateKeyEntry) keyStore.getEntry(alias.getAliasString(),
 						new KeyStore.PasswordProtection(password));
 				return entry.getPrivateKey();
 			} finally {
-				ProviderManager2.getInstance().setProviders__sunPromoted();
+				ProviderManager2.getInstance().popCryptoProviderPromotion();
 			}
         } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, e);
@@ -413,12 +413,12 @@ public class KeyStoreManager {
             NoSuchAlgorithmException {
         try {
         	try {
-				ProviderManager2.getInstance().setProviders__flexiPromoted();
+				ProviderManager2.getInstance().pushFlexiProviderPromotion();
 				KeyStore.SecretKeyEntry entry = (KeyStore.SecretKeyEntry) keyStore.getEntry(alias.getAliasString(),
 						new KeyStore.PasswordProtection(password));
 				return entry.getSecretKey();
 			} finally {
-				ProviderManager2.getInstance().setProviders__sunPromoted();
+				ProviderManager2.getInstance().popCryptoProviderPromotion();
 			}
         } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, e);
@@ -436,7 +436,7 @@ public class KeyStoreManager {
      */
     public KeyStoreAlias getPublicForPrivate(IKeyStoreAlias privateAlias) {
     	try {
-			ProviderManager2.getInstance().setProviders__flexiPromoted();
+			ProviderManager2.getInstance().pushFlexiProviderPromotion();
 			if (privateAlias == null) {
 				return null;
 			}
@@ -455,7 +455,7 @@ public class KeyStoreManager {
 			return null;
 			
 		} finally {
-			ProviderManager2.getInstance().setProviders__sunPromoted();
+			ProviderManager2.getInstance().popCryptoProviderPromotion();
 		}
     }
 
@@ -468,7 +468,7 @@ public class KeyStoreManager {
      */
     public KeyStoreAlias getPrivateForPublic(IKeyStoreAlias publicAlias) {
     	try {
-			ProviderManager2.getInstance().setProviders__flexiPromoted();
+			ProviderManager2.getInstance().pushFlexiProviderPromotion();
 			if (publicAlias == null) {
 				return null;
 			}
@@ -487,7 +487,7 @@ public class KeyStoreManager {
 			return null;
 			
 		} finally {
-			ProviderManager2.getInstance().setProviders__sunPromoted();
+			ProviderManager2.getInstance().popCryptoProviderPromotion();
 		}
     }
 
@@ -498,7 +498,7 @@ public class KeyStoreManager {
      */
     public ArrayList<IKeyStoreAlias> getAllPublicKeys() {
     	try {
-			ProviderManager2.getInstance().setProviders__flexiPromoted();
+			ProviderManager2.getInstance().pushFlexiProviderPromotion();
 			ArrayList<IKeyStoreAlias> publicKeys = new ArrayList<IKeyStoreAlias>();
 
 			try {
@@ -519,7 +519,7 @@ public class KeyStoreManager {
 			return publicKeys;
 			
 		} finally {
-			ProviderManager2.getInstance().setProviders__sunPromoted();
+			ProviderManager2.getInstance().popCryptoProviderPromotion();
 		}
     }
 
@@ -530,7 +530,7 @@ public class KeyStoreManager {
      */
     public ArrayList<IKeyStoreAlias> getAllPrivateKeys() {
     	try {
-			ProviderManager2.getInstance().setProviders__flexiPromoted();
+			ProviderManager2.getInstance().pushFlexiProviderPromotion();
 			ArrayList<IKeyStoreAlias> privateKeys = new ArrayList<IKeyStoreAlias>();
 
 			try {
@@ -551,7 +551,7 @@ public class KeyStoreManager {
 			return privateKeys;
 			
 		} finally {
-			ProviderManager2.getInstance().setProviders__sunPromoted();
+			ProviderManager2.getInstance().popCryptoProviderPromotion();
 		}
     }
 
@@ -631,7 +631,7 @@ public class KeyStoreManager {
      */
     public void addCertificate(Certificate certificate, IKeyStoreAlias alias) {
     	try {
-			ProviderManager2.getInstance().setProviders__flexiPromoted();
+			ProviderManager2.getInstance().pushFlexiProviderPromotion();
 			try {
 				keyStore.setEntry(alias.getAliasString(), new KeyStore.TrustedCertificateEntry(certificate), null);
 				saveKeystore();
@@ -642,7 +642,7 @@ public class KeyStoreManager {
 			}
 			
 		} finally {
-			ProviderManager2.getInstance().setProviders__sunPromoted();
+			ProviderManager2.getInstance().popCryptoProviderPromotion();
 		}
     }
 
@@ -677,7 +677,7 @@ public class KeyStoreManager {
     public void addKeyPair(PrivateKey privateKey, Certificate publicKey, char[] password, IKeyStoreAlias privateAlias,
             IKeyStoreAlias publicAlias) {
     	try {
-			ProviderManager2.getInstance().setProviders__flexiPromoted();
+			ProviderManager2.getInstance().pushFlexiProviderPromotion();
 			Certificate[] certs = new Certificate[1];
 			certs[0] = publicKey;
 			try {
@@ -692,7 +692,7 @@ public class KeyStoreManager {
 			}
 			
 		} finally {
-			ProviderManager2.getInstance().setProviders__sunPromoted();
+			ProviderManager2.getInstance().popCryptoProviderPromotion();
 		}
     }
 
@@ -709,7 +709,7 @@ public class KeyStoreManager {
     public void updateKeyPair(PrivateKey privateKey, char[] password, IKeyStoreAlias alias)
             throws UnrecoverableEntryException, NoSuchAlgorithmException {
     	try {
-			ProviderManager2.getInstance().setProviders__flexiPromoted();
+			ProviderManager2.getInstance().pushFlexiProviderPromotion();
 			try {
 				getPrivateKey(alias, password);
 			} catch (Exception e) {
@@ -733,7 +733,7 @@ public class KeyStoreManager {
 			}
 			
 		} finally {
-			ProviderManager2.getInstance().setProviders__sunPromoted();
+			ProviderManager2.getInstance().popCryptoProviderPromotion();
 		}
     }
 }
