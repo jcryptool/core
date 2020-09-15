@@ -69,13 +69,9 @@ public class HexEditorService extends AbstractEditorService {
     	ByteBuffer buf = ByteBuffer.allocate(bufferSize);
     	
     	try {
-			int readBytes = editor.getManager().getContent().get(buf, bufferSize);
-			System.out.println(readBytes + "\tof " + bufferSize);
-			if (readBytes == bufferSize) {
-				System.out.println("Alle Bytes gelesen.");
-			} else {
-				System.out.println("Somethign went wrong when reading data. Not all data has been read.");
-			}
+//			int readBytes = editor.getManager().getContent().get(buf, bufferSize);
+    		int readBytes = editor.getManager().getContent().get(buf, 0);
+			System.out.println("readBytes " + readBytes + " bufferSize " + bufferSize);
 		} catch (IOException e) {
 			LogUtil.logError(HexEditorConstants.EditorID, e);
 		}
@@ -109,17 +105,14 @@ public class HexEditorService extends AbstractEditorService {
     	ByteBuffer buf = ByteBuffer.allocate(bufferSize);
     	
     	try {
-			int readBytes = editor.getManager().getContent().get(buf, bufferSize);
+//			int readBytes = editor.getManager().getContent().get(buf, bufferSize);
+    		int readBytes = editor.getManager().getContent().get(buf, 0);
 			System.out.println("readBytes " + readBytes + " bufferSize " + bufferSize);
-			if (readBytes == bufferSize) {
-				System.out.println("Alle Bytes gelesen.");
-			} else {
-				System.out.println("Somethign went wrong when reading data. Not all data has been read.");
-			}
 		} catch (IOException e) {
 			LogUtil.logError(HexEditorConstants.EditorID, e);
 		}
     	
+    	System.out.println(buf.array().toString());
     	return buf.array();
     }
 
@@ -137,17 +130,22 @@ public class HexEditorService extends AbstractEditorService {
     @Override
 	public void setContentOfEditor(IEditorPart editorPart, String content) {
     	HexEditor editor = getHexEditor(editorPart);
-    	if(editor == null)
-    	{
+    	if(editor == null) {
     		LogUtil.logError(new IllegalArgumentException("cannot set content of undefined editor"));
     		return;
     	}
 
     	byte[] data = content.getBytes(StandardCharsets.UTF_8);
     	
-    	ByteBuffer buffer = ByteBuffer.wrap(data);
+    	ByteBuffer byteBuffer = ByteBuffer.wrap(data);
     	
-    	editor.getManager().getContent().insert(buffer, 0);
+    	byteBuffer.rewind();
+    	while (byteBuffer.hasRemaining()) {
+    		System.out.print(byteBuffer.get());
+    	}
+    	System.out.println();
+    	
+    	editor.getManager().getContent().insert(byteBuffer, 0);
     }
     
     @Override
@@ -157,23 +155,26 @@ public class HexEditorService extends AbstractEditorService {
     		LogUtil.logError(new IllegalArgumentException("cannot set content of undefined editor"));
     		return;
     	}
-    	
-    	int bufsize = 8092;
-    	byte[] buf = new byte[bufsize];
-    	byte[] data = new byte[0];
+
     	try {
-            int nrBytes;
-            
-            while ((nrBytes = is.read(buf)) != -1) {
-            	data = new byte[data.length + nrBytes];
-                System.arraycopy(buf, 0, data, 0, nrBytes);
-            }
-        } catch (Exception e) {
-        	LogUtil.logError(e);
-        }
+	    	ByteBuffer byteBuffer = ByteBuffer.allocate(is.available());
+	    	
+	    	while (is.available() > 0) {
+				byteBuffer.put((byte) is.read());
+			}
+	    	
+	    	byteBuffer.rewind();
+	    	while (byteBuffer.hasRemaining()) {
+	    		System.out.print(byteBuffer.get());
+	    	}
+	    	System.out.println();
+	 
+	    	// Set content to editor. Overwrite the complete existing content.
+	    	editor.getManager().getContent().insert(byteBuffer, 0);
+    	}
+    	catch(Exception e) {
+    		e.printStackTrace();
+    	}
     	
-    	ByteBuffer buffer = ByteBuffer.wrap(data);
-    	
-    	editor.getManager().getContent().insert(buffer, 0);
     }
 }
