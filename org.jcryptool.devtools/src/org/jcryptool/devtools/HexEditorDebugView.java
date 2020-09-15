@@ -33,6 +33,7 @@ public class HexEditorDebugView extends ViewPart {
 	private Text text_2;
 	private Text text_3;
 	private ViewState state;
+	private Label lblFilename;
 
 	public HexEditorDebugView() {
 		// TODO Auto-generated constructor stub
@@ -159,7 +160,7 @@ public class HexEditorDebugView extends ViewPart {
 					state.setByUtf8();
 					text_1.setText(HexEditorDebugLogic.bytesToString(state.bytes));
 				} catch (Exception ex) {
-					LogUtil.logError(ex);
+					LogUtil.logError("org.jcryptool.devtools", "Decoding text/UTF-8 input failed", ex, true);
 				}
 			}
 		});
@@ -189,7 +190,7 @@ public class HexEditorDebugView extends ViewPart {
 					state.setByBytes();
 					text_1.setText(HexEditorDebugLogic.bytesToString(state.bytes));
 				} catch (Exception ex) {
-					LogUtil.logError(ex);
+					LogUtil.logError("org.jcryptool.devtools", "Decoding hex input failed", ex, true);
 				}
 			}
 		});
@@ -234,7 +235,7 @@ public class HexEditorDebugView extends ViewPart {
 		btnNewButton_2.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				writeHexEditorContentIntoTextfield();
+				writeEditorIntoTextfield();
 			}
 		});
 		btnNewButton_2.setText("Read from Editor");
@@ -242,23 +243,28 @@ public class HexEditorDebugView extends ViewPart {
 		Group grpOutput = new Group(parent, SWT.NONE);
 		grpOutput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		grpOutput.setText("Output");
-		grpOutput.setLayout(new GridLayout(1, false));
+		grpOutput.setLayout(new GridLayout(2, false));
 		
 		Label lblNewLabel_1_1 = new Label(grpOutput, SWT.NONE);
 		lblNewLabel_1_1.setText("byte representation");
 		
+		lblFilename = new Label(grpOutput, SWT.NONE);
+		lblFilename.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
 		text_2 = new Text(grpOutput, SWT.BORDER | SWT.WRAP | SWT.MULTI);
-		GridData gd_text_2 = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+		text_2.setEditable(false);
+		GridData gd_text_2 = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
 		gd_text_2.heightHint = 49;
 		text_2.setLayoutData(gd_text_2);
 		// TODO Auto-generated method stub
 
 	}
 
-	protected void writeHexEditorContentIntoTextfield() {
+	protected void writeEditorIntoTextfield() {
 		byte[] content = EditorsManager.getInstance().getContentAsBytes(EditorsManager.getInstance().getActiveEditorReference().getEditor(false));
 		String collect = HexEditorDebugLogic.bytesToString(content);
 		text_2.setText(collect);
+		lblFilename.setText(EditorsManager.getInstance().getActiveEditorReference().getName());
 	}
 
 	protected void openHexEditor(List<Byte> bytes) {
@@ -272,7 +278,7 @@ public class HexEditorDebugView extends ViewPart {
 			IEditorInput outputfile = AbstractEditorService.createOutputFile(bytearr, ".bytes");
 			page.openEditor(outputfile, "org.jcryptool.editors.hex.HexEditor");
 		} catch (Exception e) {
-            LogUtil.logError(e);
+            LogUtil.logError(e, true);
 		}
 		
 	}
@@ -288,7 +294,7 @@ public class HexEditorDebugView extends ViewPart {
 			IEditorInput outputfile = AbstractEditorService.createOutputFile(bytearr, ".txt");
 			page.openEditor(outputfile, "org.jcryptool.editor.text.editor.JCTTextEditor");
 		} catch (Exception e) {
-            LogUtil.logError(e);
+            LogUtil.logError(e, true);
 		}
 		
 	}
