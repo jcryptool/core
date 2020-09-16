@@ -1,7 +1,39 @@
-<html>
+<!DOCTYPE html>
+<html lang="de">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	  <title>Demonstration der Punktaddition auf elliptischen Kurven (EC)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Demonstration der Punktaddition auf elliptischen Kurven (EC)</title>
+  <script id="MathJax-script" async src="${JCTJS_HOST}/javascript/MathJax-master/es5/tex-mml-svg.js"></script>
+  
+<style>
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+  padding: 5px;
+}
+
+.li{
+  margin-bottom: 13px;
+}
+
+.members td { font-family:"Courier New", Courier, monospace;}
+
+figure {
+  display: table;
+}
+
+figcaption {
+  text-align: center;
+  font-size: 1em;
+  font-family: Verdana, Geneva, serif;
+  line-height: 1.8em;
+  display: table-caption;
+  caption-side: bottom;
+}
+</style>
 </head>
 
 <body>
@@ -14,185 +46,647 @@
 <h2>Arten von Kurven</h2>
 <p>Die erste Auswahl ist die Kurvengröße: klein oder groß.</p>
 
-<p>a) Für eine pädagogische Visualisierung wählen Sie am besten <b>klein</b>. Hier wird ein Koordinatensystem angezeigt, in dem man die Punkte der Kurve mit der Maus auswählen kann. Dabei können Sie zwischen drei Arten von elliptischen Kurven wählen:</p>
+<p>a) Für eine verständliche Visualisierung wählen Sie am besten <b>klein</b>. Hier wird ein Koordinatensystem angezeigt, in dem man die Punkte der Kurve mit der Maus auswählen kann. Dabei können Sie zwischen drei Arten von elliptischen Kurven wählen:</p>
 <ol>
   <li><a href="#realNumbers">Kurven in der Ebene der reellen Zahlen</a></li>
-  <li><a href="#Fp">Kurven über dem Körper F(p)</a></li>
-  <li><a href="#F2m">Kurven über dem Körper F(2^m).</a></li>
+  <li><a href="#Fp">Kurven über dem Körper \(\mathbb{F}_p\)</a></li>
+  <li><a href="#F2m">Kurven über dem Körper \(\mathbb{F}_{2^m}\)</a></li>
 </ol>
-<img src="curveType.PNG" width="85%"/>
-</p>
+<img src="curveType.PNG" style="width:30%; min-width:200px" alt="Schaltfläche für die drei Modi im JCrypTool-Plugin. Es zeigt eine Option für reelle Zahlen, eine für Kurven über endliche Gruppen F_p und für Kurven über binäre Galois-Gruppen F_m^2."/>
 
-<p>b) Die Kurvengröße <b>groß</b> bietet Standard-Kurven (jede in verschiedenen Varianten) zur Auswahl an: ANSI X9.62, SEC 2, ECC Brainpool und CDC Group für den diskreten Kurventyp F(p); und ANSI X9.62 für den diskreten Kurventyp F(2^m).</br>
+<p>
+b) Die Kurvengröße <b>groß</b> bietet Standard-Kurven (jede in verschiedenen Varianten) zur Auswahl an: ANSI X9.62, SEC 2, ECC Brainpool und CDC Group für den diskreten Kurventyp \(\mathbb{F}_p\); und ANSI X9.62 für den diskreten Kurventyp \(\mathbb{F}_{2^m}\).<br>
 Solche großen elliptischen Kurven kommen in professionellen kryptographischen Anwendungen zum Einsatz. Wie im Fall der kleinen Größen können Sie Punkte addieren und Punkte mit einem Skalar multiplizieren.</p>
 
-<p align="center"><img src="EC-large-Fp-de.png" width="90%" alt="EC-Berechnungen für große Kurvengrößen"></p>
+<figure>
+  <img src="EC-large-Fp-de.png" style="width:90%;" alt="Screenshot aus dem JcrypTool-Plugin. EC-Berechnungen für große Kurvengrößen. Gewählt ist eine Große Kurve über einen endlichen Körper F(p). Die verwendete Kurve ist eine standardisierte Kurve ANSI X9.62 - prime192v1.">
+</figure>
 
 <p>Die Ergebnisse der Berechnungen (egal ob für große oder kleine Größe) können gespeichert werden und entweder im JCT-Editor angesehen oder in eine Datei abgelegt werden.</p>
 
 
-
-<p> </br> </p>
 <h2>Demonstration von Details bei kleinen Kurvengrößen</h2>
 <p>Die folgenden Absätze zeigen konkrete Beispiele für die drei Typen elliptischer Kurven.<br><br></p>
 
 <h3 id="realNumbers">1. Kurven in der Ebene der reellen Zahlen</h3>
 
-<h4>Überblick</h4>
+<h4>Punktaddition</h4>
 
-  <p>Elliptische Kurven in der Ebene von reellen Zahlen entsprechen der Gleichung <i>y^2 = x^3 + a*x + b</i>, wobei die Variablen <i>a</i>, <i>b</i>, <i>x</i> und <i>y</i> reelle Zahlen sind.</p>
-  <p>Auf der reellen Zahlenebene gibt es unendlich viele Punkte (<i>x</i>,<i>y</i>) auf der Kurve. Für jeden Punkt auf der Kurve gibt es einen negativen Wert, so das y = -y mit der Ausnahme y = 0.</p>
-  <p>Zwei Punkte auf der Kurve können einfach addiert werden. <i>R</i> ist das Ergebnis dieser Addition:</p>
+  <p>Elliptische Kurven in der Ebene von reellen Zahlen entsprechen der Gleichung \(y^2 = x^3 + a \cdot x + b\), wobei die Variablen \(a\), \(b\), \(x\) und \(y\) reelle Zahlen sind.</p>
+  <p>Auf der reellen Zahlenebene gibt es unendlich viele Punkte \((x,y)\) auf der Kurve. Für jeden Punkt auf der Kurve gibt es einen negativen Wert, so das \(y = -y\) mit der Ausnahme \(y = 0\).</p>
+  <p>Zwei Punkte auf der Kurve können <b>"addiert"</b> werden. Damit ist eine geometrische Operation gemeint, die uns zu zwei gegebenen Punkten einen dritten Punkt liefert.
+  Wir nennen das Ergebnis hier \(R\). Das Schema dieser "Addition" läuft folgendermaßen ab und ist in Abbildung a visuell dargestellt:</p>
   <ol>
-  <li>Wähle einen Punkt <i>P</i> und einen Punkt <i>Q</i>.</li>
-  <li>Zeichne eine Linie durch <i>P</i> und <i>Q</i>. Führe diese Linie fort, bis die Kurve ein drittes Mal geschnitten wird (P und Q sind die ersten zwei Male). Dieser Punkt ist <i>-R</i>.</li>
-  <li>Punkt <i>R</i> ist der Punkt <i>-R</i> mit invertierten y-Wert.</li>
+  <li>Wähle einen Punkt \(P\) und einen Punkt \(Q\).</li>
+  <li>Zeichne eine Linie durch \(P\) und \(Q\). Führe diese Linie fort, bis die Kurve ein drittes Mal geschnitten wird (\(P\) und \(Q\) sind die ersten zwei Male). Dieser Punkt ist \(-R\).</li>
+  <li>Punkt \(R\) ist der Punkt \(-R\) mit invertierten \(y\)-Wert (gespiegelt an der x-Achse).</li>
 </ol>
 
-<table cellpadding=0 cellspacing=0>
-	<tr><td><img src="EC.PNG" width="85%"/></td></tr>
-	<tr><td align="CENTER" bgcolor="#E0DFE3"><i>y² = x³ - 10x + 15</i></td></tr>
+<p>	
+  	<b>Beachte:</b> Es gibt eine Ausnahme: Wenn \(P = -Q\) kann die Gerade kein drittes Mal die elliptische Kurve schneiden, weil sie parallel zur y-Achse verläuft. In diesem Fall ist das Ergebnis der Addition der Fernpunkt \(O\) (auch \(\infty\)) (Abbildung b).
+</p>	
+ 
+ <div class="row">
+  <div class="column">
+  <figure>
+    <img src="EC.PNG" alt="Kartesisches Koordinatensystem; Addition auf einer elliptischen Kurve im reellen Zahlenraum. Durch zwei Punkte auf der Ellipse P (-3,55 / 2,4) und Q (0,59 / 3,05) ist eine gerade gelegt. Beim Schnittpunkt befindet sich eine weitere Koordinate -R (3,98, 3,42). Diese wird um die X-Achse nach unten gespiegelt. Dort liegt R mit den Koordinaten (3,98, 3,42)" style="width:100%;min-width:200px">
+    <figcaption><b>Abbildung a)</b> Die Operation \(P + Q\) führt zum Ergebnispunkt \(R\)</figcaption>
+  </figure>
+  </div>
+  <div class="column">
+  <figure>
+    <img src="EC_addition_infinity.png" alt="Kartesisches Koordinatensystem; eine elliptische Kurve im reellen Zahlenraum; die Punkte P und Q sind an der X-Achse gespiegelt. Eine Gerade die die beiden Punkte verbindet, läuft parallel der Y-Achse entlang." style="width:100%;min-width:200px">
+    <figcaption><b>Abbildung b)</b> Da \(P = -Q\) verläuft die Gerade parallel. Es gibt keinen 3. Schnittpunkt und das Ergebnis ist der unendliche Fernpunkt \(O\) (auch \(\infty\))</figcaption>
+  </figure>
+  </div>
+</div> 
+
+<h4>Punktaddition im Detail</h4>
+<p> Es gibt <b>drei einfache Formeln</b> zur Berechnung der Addition zweier Punkte. Diese lauten:
+  	\begin{alignat}{1}
+  	& k &= \frac{Q_y - Q_y}{Q_x - P_x}\\
+  	& R_x &= k^2 - P_x - Q_x\\
+  	& R_y &= − P_y + k(P_x − R_x)
+  	\end{alignat}
+</p>
+
+<p>	
+  	\(k\) ist die Steigung der Gerade durch \(P\), \(Q\) und unserem gesuchten Punkt \(R\).
+  	Die Formeln für \(R_x\) und \(R_y\) lassen sich herleiten, wenn man die Gerade mit der elliptischen Kurve schneidet.
+  	Dabei bekommt man eine kubische Gleichung.
+  	Da 2 der maximal 3 Schnittpunkte bekannt sind, lassen sich mit dem Satz von Vietá diese allgmeinen Gleichungen aufstellen.
+</p>
+
+<p><b>Zahlenbeispiel mit den Werten aus Abbildung a:</b><br>
+  Gegeben sind:
+  <ul>
+	  <li> die gewählte Kurve \(\epsilon: \quad y^2 = x^3 - 10x + 15\)</li>
+	  <li> Punkt \(P = (-3.55 / 2.40)\)</li>
+	  <li> Punkt \(Q = (0.59 / 3.05)\)</li>
+  </ul>
+  
+Wir suchen \(R\):
+
+ <ol>
+ <li>Berechne \(k\):<br> 
+  	\(k = \frac{Q_y - P_y}{Q_x - P_x} = \frac{2.40 - 3.05}{0.59 - (-3.55)} = 0.157\)</li>
+ <li>Berechne den x-Wert von \(R\):<br>
+  	\(R_x = k^2 - P_x - Q_x = 0.15^2 - 0.59 - (-3.55)  = 2.98\)</li>
+ <li>Berechne den y-Wert von \(R\):<br>
+  	\(R_y = − P_y + k(P_x − R_x) = -2.40 + 0.157(-3.55 - 2.98) = -3.42\)</li>
+</ol> 
+
+\(R = (3.98, -3.42)\)
+
+<p><br><b>Definition des Sonderfalls \(P = -Q\):</b> <br>
+	In diesem Fall ist das Ergebnis das Fernelement \(O\).
+	Das ist ein Punkt in der Unendlichkeit und wird auch als \(\infty\) notiert.
+
+<h4>Punktverdopplung bzw. -multiplikation im Detail</h4>
+<p>
+  Punkte lassen sich nicht nur addieren, sondern auch <b>multiplizieren</b>.
+  Dabei ist genauso wie im uns bekannten reellen Zahlenraum, die Multiplikation nichts anderes als
+  eine mehrmals durchgeführte Addition mit der selben Zahl. So ist zum Beispiel \(2 \cdot 3\) das Gleiche wie \(2 + 2 + 2\).
+</p>
+<p>
+  Wir können auch auf elliptischen Kurven Punkte auf diese Weise durch Addition multiplizieren. Aber dazu müssen wir in der Lage sein, einen Punkt mit sich selbst zu addieren.
+  Dabei ist die Berechnung etwas anders. In der normalen Addition konnten wir \(k\) einfach als Differenz zwischen zwei Punkten berechnen. Das würde beim gleichen Punkt aber zu einer Division durch null führen.
+  Stattdessen müssen wir eine Tangente an den Punkt anlegen (wir differenzieren also, ersichtlich in Abbildung c).
+
+$$k = \frac{3x^2 + a}{2y}$$
+
+Neben den Parametern des Punktes \(x\) und \(y\) wird auch der Parameter \(a\) der elliptischen Kurve benötigt.
+Mit dieser Geraden kann in die selben Gleichungen zur Berechnung von \(R\) eingesetzt werden, wie vorher.
+
+  	\begin{alignat}{1}
+  	& R_x &= k^2 - 2x\\
+  	& R_y &= − y + k(x − R_x)
+  	\end{alignat}
+</p>
+
+<div class="row">
+<div class="column">
+<p><b>Zahlenbeispiel mit den Werten aus Abbildung c:</b><br>
+  Gegeben sind:
+  <ul>
+	  <li> die gewählte Kurve \(\epsilon: \quad y^2 = x^3 - 10x + 15\)</li>
+	  <li> Punkt \(T = (-1.3 / 5.07)\)</li>
+  </ul>
+  
+Wir suchen \(R = 2 \cdot T\):
+
+ <ol>
+ <li> Berechne \(k\):<br> 
+  	\(k = \frac{3x^2 + a}{2y} = \frac{3 \cdot (-1.3)^2 + 10}{2 \cdot 5.07} = 0.486\)</li>
+ <li>Berechne den x-Wert von \(R\):<br>
+  	\(R_x = k^2 - 2x = 0.486^2 - 2 \cdot 5.07)  = 2.83\)</li>
+ <li>Berechne den y-Wert von \(R\):<br>
+  	\(R_y = − y + k(x − R_x) = -5.07 - 0.486 \cdot -1.3 + 0.486 \cdot 2.83 = -3.06\)</li>
+</ol> 
+
+\(R = (2.83, -3.06)\)
+
+
+</div>
+<div class="column">
+<figure>
+    <img src="EC_duplication.png" alt="Kartesisches Koordinatensystem; eine elliptische Kurve im reellen Zahlenraum; An den Punkt T (-1,3 / 5,07) ist eine Tangente angelegt, die leicht nach unten verläuft und die elliptische Kurve bei -R (2,83 / 3,06) schneidet. Diese Koordinate ist an der X-Achse gespiegelt und dort ist ein weiterer Punkt R eingezeichnet (2,82 / -3,06)" style="width:100%;min-width:200px">
+    <figcaption><b>Abbildung c)</b> Punkt \(T\) wird mit sich selbst addiert (verdoppelt)</figcaption>
+</figure>
+</div>
+</div>
+
+
+<h3 id="Fp">2. Kurven über den Körper \(\mathbb{F}_p\)</h3>
+
+   <p>Eine Kurve über dem diskreten Körper \(\mathbb{F}_p\) kann durch die Gleichung \(y^2 = x^3 + ax + b \quad(\textrm{mod}\, p)\) beschrieben werden (\(a\) und \(b\) sind wieder Parameter der elliptischen Kurve).</p>
+   
+   <p>Die Punkte \(x, y\) sind Elemente von \(\mathbb{F}_p\) und \(p\) ist eine Primzahl. Die Anzahl von Punkten im Körper \(\mathbb{F}_p\) ist begrenzt auf maximal \(p^2\) mögliche Koordinaten (endlicher Körper).
+   Dabei ist nicht automatisch jede Koordinate ein gültiger Punkt auf der Kurve.
+   Der Satz von Hasse gibt uns Aufschluss darüber. Kurz gesagt können wir davon ausgehen, dass die Anzahl der Punkte auf der Kurve der selben Größenordnung wie \(p\) entspricht.</p>
+
+<p>
+  Obwohl keine elliptische Kurve mehr zu erkennen ist, ist diese Form der modulo gerechneten Kurve für die Kryptografie viel interessanter.
+  Im reellen Zahlenraum kann aus zwei naheliegenden Punkten ein dritter leicht abgeschätzt werden.
+  Bei endlichen Körpern über eine Primzahl sagen benachbarte Punkte nichts mehr über einander aus. 
+</p> 
+
+<figure>
+  <img src="ECFp.PNG" style="width:100%" alt="Kartesisches Koordinatensystem; eine elliptische Kurve über einen endlichen Körper F(p). Die 36 Punkte scheinen zufällig angeordnet zu sein. Die Punkte P (18 / 3), Q (10 / 13) und R (8 / 28) sind farblich hervorgehoben."/>
+  <figcaption><b>Abbildung d)</b>Eine elliptische Kurve über \(\mathbb{F}_{29}\). Typisch für kryptografische Operationen
+  modulo einer Primzahl, sind die "springend" angeordneten Elemente.</figcaption>
+</figure> 
+
+<h4>Punktaddition im Detail</h4>
+<p> 
+  Die Berechnung von Punkten erfolgt sehr ähnlich wie bei reellen Kurven. Der Hauptunterschied ist, dass jedes Zwischenergebnis modulo \(p\) gerechnet wird. Dadurch ergibt sich auf ein zusätzlicher Rechenschritt bei der Berechnung von \(k\). Dort muss bei der Division das modulo-Inverse berechnet werden. Dazu ist ein erweiterter Euklid zur Berechnung notwendig.
+</p>
+
+\begin{alignat}{1}
+  	& k &= (Q_y - P_y) \cdot (Q_x - P_x)^{-1} &&\mod p\\
+  	& R_x &= k^2 - P_x - Q_x &&\mod p\\
+  	& R_y &= − P_y + k(P_x − R_x) &&\mod p
+\end{alignat}
+
+<p><br><b>Definition des Sonderfalls \(P = -Q\):</b> <br>
+	Auch wie bei reellen Kurven gilt in diesem Fall: das Ergebnis ist der Fernpunkt \(O\).
+	Das ist ein Punkt in der Unendlichkeit und wird auch als \(\infty\) notiert.
+
+<p><br><b>Zahlenbeispiel für Addition in einer diskreten Gruppe \(\mathbb{F}_p\):</b><br>
+Gegeben sind:
+  <ul>
+	  <li> die gewählte Kurve \(\epsilon: \quad y^2 = x^3 + 14x + 15\quad(\textrm{mod}\, 29)\)</li>
+	  <li> Punkt \(P = (18 / 3)\)</li>
+	  <li> Punkt \(Q = (10 / 13)\)</li>
+  </ul>
+  
+  <p>Dieses Beispiel ist auch in Abbildung d) ersichtlich. In dieser Gruppe \(\mathbb{F}_{29}\) gibt es 841 \(p^2\) mögliche Koordinaten, wovon 36 tatsächlich auf der Kurve liegen:</p>
+  
+  <table class="members">
+    <tr>
+    <td>\(O\)</td>
+    <td>( 8| 1)</td>
+    <td>(17| 2)</td>
+    <td>(22| 3)</td>
+    </tr>
+    <tr>
+    <td>( 1| 1)</td>
+    <td>( 8|28)</td>
+    <td>(17|27)</td>
+    <td>(22|26)</td>
+    </tr>
+    <tr>
+    <td>( 1|28)</td>
+    <td>( 9| 0)</td>
+    <td>(18| 3)</td>
+    <td>(23|11)</td>
+    </tr>
+    <tr>
+    <td>( 2|14)</td>
+    <td>(10|13)</td>
+    <td>(18|26)</td>
+    <td>(23|18)</td>
+    </tr>
+    <tr>
+    <td>( 2|15)</td>
+    <td>(10|16)</td>
+    <td>(19| 8)</td>
+    <td>(24| 9)</td>
+    </tr>
+    <tr>
+    <td>( 5| 6)</td>
+    <td>(13| 4)</td>
+    <td>(19|21)</td>
+    <td>(24|20)</td>
+    </tr>
+    <tr>
+    <td>( 5|23)</td>
+    <td>(13|25)</td>
+    <td>(20| 1)</td>
+    <td>(26| 2)</td>
+    </tr>
+    <tr>
+    <td>( 6| 5)</td>
+    <td>(15| 2)</td>
+    <td>(20|28)</td>
+    <td>(26|27)</td>
+    </tr>
+    <tr>
+    <td>( 6|24)</td>
+    <td>(15|27)</td>
+    <td>(21| 0)</td>
+    <td>(28| 0)</td>
+    </tr>
+  </table> 
+
+
+<p>Wir suchen \(R = P + Q\):</p> 
+
+ <ol>
+ <li> Berechne \(k\):<br> 
+\(
+ \style{text-align:right;}
+{
+\begin{alignat}{2}
+  	k &= \frac{Q_y - P_y}{Q_x - P_x} &&\mod p &&=\\[2pt]
+     &= \frac{13 - 3}{10 - 18} &&\mod 29 &&=\\[2pt]
+  	 &= 10 \cdot -8^{-1} &&\mod 29 &&= \qquad\qquad\textrm{// Anmerkung:}\,-8^{-1} \mod 29 = 18\\[5pt]
+  	 &= 10 \cdot 18 &&\mod 29 &&= 6\\[10pt]
+\end{alignat} 
+}
+\)</li>
+ <li>Berechne den x-Wert von \(R\):<br>
+ \( \style{text-align:right;}
+{
+\begin{alignat}{2}
+R_x &= k^2 - P_x - Q_x &&\mod p &&=\\
+    &= 6^2 - 18 - 10 &&\mod 29 &&= 8
+\end{alignat} 
+}
+\)
+</li>
+ <li>Berechne den y-Wert von \(R\):<br>
+  \( \style{text-align:right;}
+{
+\begin{alignat}{3}
+R_y &= − y_1 &&+ k(x_1 − x_3) &&\mod p &&= \\
+&= -3 &&+ 6 (18 - 8) &&\mod 29 &&= 28
+\end{alignat} 
+}
+\)</li>
+ </ol>
+ 
+
+<h4>Punktverdopplung im Detail</h4>
+
+<p>
+  Die konzepte des reellen Zahlenraumes lassen sich hier genauso anwenden.
+  Wir multiplizieren durch wiederholtes addieren. Wenn ich etwa \(3 \cdot P\) berrechnen möchte, lässt sich
+  das durch \(2 \cdot P + P\) bewerkstelligen.
+  Dazu wird wieder die Punktverdopplung, also eine Addition mit sich selbst benötigt. Diese unterscheidet
+  sich aus den gleichen Gründen wie im reellen Zahlenraum leicht von der Addition mit verscshiedenen
+  Punkten.
+  Zusätzlich muss auch hier wieder statt der Division das modulo-Inverse berechnet werden.
+  Die <b>drei Formeln</b> für die Punktverdopplung lauten:</p>
+
+  	\begin{alignat}{1}
+    & k &= (3x^2 + a) \cdot (2y)^{-1} &&\mod p\\
+  	& R_x &= k^2 - 2x &&\mod p\\
+  	& R_y &= − y + k(x − R_x) &&\mod p
+  	\end{alignat}
+
+<p><br><b>Zahlenbeispiel für Verdopplung in einer diskreten Gruppe \(\mathbb{F}_{29}\):</b><br>
+
+Gegeben sind:
+  <ul>
+	  <li> die gewählte Kurve \(\epsilon: \quad y^2 = x^3 + 14x + 15\quad(\textrm{mod}\, 29)\)</li>
+	  <li> Punkt \(P = (18 / 3)\)</li>
+  </ul>
+
+<p>Wir suchen \(R = 2 \cdot P\):</p> 
+
+ <ol>
+ <li> Berechne \(k\):<br> 
+\(
+ \style{text-align:right;}
+{
+\begin{alignat}{2}
+    k &= (3x^2 + a) \cdot (2y)^{-1} &&\mod p &&=\\[2pt]
+     &= (3 \cdot 18^2 + 14) \cdot (2 \cdot 3)^{-1} &&\mod 29 &&=\\[2pt]
+  	 &= 986 \cdot 6^{-1} &&\mod 29 &&= \qquad\qquad\textrm{// Anmerkung:}\,6^{-1} \mod 29 = 5\\[5pt]
+  	 &= 986 \cdot 5 &&\mod 29 &&= 0\\[10pt]
+\end{alignat} 
+}
+\)</li>
+ <li>Berechne den x-Wert von \(R\):<br>
+ \( \style{text-align:right;}
+{
+\begin{alignat}{2}
+R_x &= k^2 - 2x &&\mod p &&=\\
+    &= 0^2 - 2 \cdot 18 &&\mod 29 &&= 22
+\end{alignat} 
+}
+\)
+</li>
+ <li>Berechne den y-Wert von \(R\):<br>
+  \( \style{text-align:right;}
+{
+\begin{alignat}{3}
+R_y &= − y &&+ k(x − R_x) &&\mod p &&= \\
+&= -3 &&+ 0 (18 - 22) &&\mod 29 &&= 26
+\end{alignat} 
+}
+\)</li>
+ </ol>
+ 
+\(R = (22/26)\)
+
+<h3 id="F2m">3. Kurven über dem Körper \(\mathbb{F}_{2^m}\)</h3>
+
+  <p>
+  Elemente über Galois-Gruppen \(\mathbb{F}_{2^m}\) sind Polynome der Länge \(m\).
+  Da bei diesen Gruppen alle Koeffizienten modulo 2 gerechnet werden (\(also im Zahlenraum \mathbb{Z}_2\) sind), können Operationen von Computern deutlich schneller durchgeführt werden.
+  Das hat folgende Gründe.
+  Ein Beispiel-Polynom der Länge 8: \(x^8 + x^4 + x^3+x+1\) kann genauso also Vektor bzw. Bit-String notiert werden: \(10011011\).
+  Vorhandene Terme werden als 1 dargestellt, nicht vorhandene als 0.
+  Negative Werte oder Werte höher als 1 kann es im Modulo-Restklassensystem 2 nicht geben.
+  Daraus ergibt sich, dass sich eine Addition der Polynome durch bitweises XOR und eine Multiplikation durch Links-Verschiebungen (left shift) und XORs berechnen lässt.
+  Operationen die Computer sehr schnell durchführen können.
+  Berechnungen erfolgen nach den Regeln der Polynom-Arithmetik.
+</p>
+ 
+<p> 
+  Da wir mit Polynomen arbeiten, sieht die binäre Repräsentation einer elliptischen Kurve etwas anders aus \(y^2 + xy = x^3 + ax^2 + b\).</p>
+  
+<p>
+  Wir benötigen folgende weitere (öffentliche) Parameter:
+</p>
+
+<ul>
+  <li>Bitlänge \(m\)</li>
+  <li>\(a\) und \(b\) für die elliptische Kurve</li>
+  <li>Generator \(G\): ein irreduzibles primäres Polynom mit der Bitlänge \(m + 1\).
+  Irreduzible Polynome haben ähnliche Eigenschaften wie Primzahlen.
+  Sie lassen sich nicht durch andere Polynome teilen.
+  \(G\) dient dazu, Punkte auf der Kurve zu erzeugen.</li>
+  <li>Reduktionspolynom \(f(x)\): ein Polynom durch das modulo gerechnet wird.</li>
+</ul>
+  
+
+Es gelten folgende Definitionen:
+<ul>
+<li>Ist ein Punkt \(P = (x,y)\), dann sei das Negative \(-P(x, y) := (x, x + y)\).</li>
+<li>Es gibt ein neutrales Element \(O\) für das gilt: \(-O := O\), und für jeden Punkt P einer elliptischen Kurve sei \(P + O := O + P := P\).</li>
+</ul>
+  
+<figure>
+  <img src="ECFm.PNG" alt="Eine Grafik der Punkte einer elliptischen Kurve einer Galois-Gruppe. Zu sehen sind 32 Punkte, die scheinbar zufällig über die Koordinaten verteilt sind.">
+  <img src="ECFmElements.PNG" alt="Die 32 Elemente der elliptischen Kurve: 1 = 00001, g = 00010, g2 = 00100, g3 = 01000, g4 = 10000, g5 = 10111, g6 = 11001, g7 = 00101, g8 = 01010, g9 = 10100, g10 = 11111, g11 = 01001, g12 = 10010, g13 = 10011, g14 = 10001, g15 = 10101, g16=11101, g17 = 01101, g18 = 11010, g19 = 00011, g20 = 00110 g21 = 01100, g22 = 11000, g23 = 00111, g24 = 01110, g25 = 11100, g26 = 01111, g27 = 11110, g28 = 01011, g29 = 10110, g30 = 11011">
+  <figcaption><b>Abbildung e)</b> Eine elliptische Kurve über \(\mathbb{F}_{2^5}\) mit den Parametern: \(y^2 + xy = x^3 + g9 \cdot x^2 + g3\) und dem Generator \(G = 110111\)</figcaption>
+</figure>
+
+  <h4>Polynomberechnungen im Allgemeinen</h4>
+  
+<p>Um diese Berechnungen nachvollziehen zu können, sollen kurz die Rechenoperationen mit Polynomen
+	mit Koeffizienten modulo 2 (also \(\mathbb{Z}_2\)) anhand von Beispielen erklärt werden.</p>
+    
+<p><b>Addition</b> (simples XOR, auch "carryless addition" genannt)</p>
+    
+<table style="border-collapse: collapse">
+<tr>
+  <th></th>
+  <th>Polynom</th>
+  <th>Bitfolge</th>
+</tr>
+<tr>
+  <td>
+    \begin{alignat}{1}
+      p\\[3pt]
+      q
+    \end{alignat}
+  </td>
+  <td>
+    \begin{alignat}{1}
+      x^8 + &&x^4 + x^2 +& 1\\
+      &&x^4 + x +& 1
+    \end{alignat}
+  </td>
+  <td>
+    \begin{align*}
+      100010101\\[3pt]
+      000010011
+    \end{align*}
+  </td>
+</tr>
+ <tr style="border-bottom:1px solid black;">
+    <td colspan="3" style="margin: 0px 0px;padding: 0px 0px;"></td>
+</tr>
+<tr>
+<td>\(p + q\)</td>
+<td>\(x^8 + x^2 + x\)</td>
+<td>\(100000110\)</td>
+</tr>
 </table>
 
-  <p><br><b>Zahlenbeispiel mit der Kurve aus dem obigen Screenshot:</b><br>
-  Gewählte Kurve: y^2 = x^3 - 10,0x + 15,0<br>
-  mit P = (-3,55 / 2,43) und Q = (0,59 / 3,05)<br>
-  Addition:       R = P+Q = (2,98 / -3,41)<br>
-  Multiplikation: R =  2P = (39,70 / -249,36)<br><br></p>
-
-
-
-<h4>Berechnungen allgemein</h4>
-
-  <h5>1. Punktaddition (P + Q)</h5>
-  	<p>a) Wenn <i>P</i> = <i>-Q</i>, ist <i>R</i> = <i>O</i>, das Fernelement (Punkt in der Unendlichkeit).
-  	In diesem Fall durchschneidet die Linie, die durch <i>P</i> und <i>Q</i> führt, die Kurve nie ein drittes Mal.<br></p>
+<p>
+  <b>Subtraktion</b><br>
+  Die Subtraktion entspricht genau der gleichen Operation wie die Addition, also einem bitweisen XOR.
+</p>
 	
-    <p>b) Sonst (mit <i>P</i> != <i>Q</i>) ergibt sich <i>R</i> so:<br>
-    <i>s</i> = (<i>Yp</i> - <i>Yq</i>) / (<i>Xp</i> - <i>Xq</i>)<br>
-    <i>Xr</i> = <i>s</i>^2 - <i>Xp</i> - <i>Xq</i><br>
-    <i>Yr</i> = -<i>Yp</i> + <i>s</i>(<i>Xp</i> - <i>Xr</i>)<br><br></p>
+<p>
+  <b>Multiplikation</b><br>
+  Wir betrachten zunächst eine Multiplikation mit einem eingliedrigen Polynom (Monom) der Form \(x^k\).
+  Anhand der Beispiele ist ersichtlich, dass diese Form der Multiplikation mit \(x^k\) ein Linksshift um \(k\) Bits ist
+</p>
 
-  <h5>2. Punktmultiplikation (k * P)</h5>
-    <p>a) Wenn <i>Yp</i> = 0, dann ist <i>R</i> = <i>O</i>.<br></p>
-	
-	<p>b) Sonst (bspw. mit <i>k</i>=2) ergibt sich <i>R</i> so:<br>
-    2<i>P</i> = <i>P</i> + <i>P</i> = <i>R</i><br>
-    <i>s</i> = (3<i>Xp</i>^2 + <i>a</i>) / (2<i>Yp</i>)<br>
-    <i>Xr</i> = <i>s</i>^2 - 2<i>Xp</i><br>
-    <i>Yr</i> = -<i>Yp</i> + <i>s</i>(<i>Xp</i> - <i>Xr</i>)<br></p>
+<div class="row">
+<div class="column">
+<table style="border-collapse: collapse">
+<tr>
+  <th>Polynom</th>
+  <th>Bitfolge</th>
+</tr>
+<tr>
+  <td>
+      \((x^8 + x^4 + x^2 + 1) \cdot x\)
+  </td>
+  <td>
+      \(100010101 \cdot 10\)
+  </td>
+</tr>
+ <tr style="border-bottom:1px solid black;">
+    <td colspan="2" style="margin: 0px 0px;padding: 0px 0px;"></td>
+</tr>
+<tr>
+<td>\((x^9 + x^5 + x^3 + x)\)</td>
+<td>\(1000101010\)</td>
+</tr>
+</table>
+</div>
+<div class="column">
+<table style="border-collapse: collapse">
+<tr>
+  <th>Polynom</th>
+  <th>Bitfolge</th>
+</tr>
+<tr>
+  <td>
+      \((x^8 + x^4 + x^2 + 1) \cdot x^4\)
+  </td>
+  <td>
+      \(100010101 \cdot 10000\)
+  </td>
+</tr>
+ <tr style="border-bottom:1px solid black;">
+    <td colspan="2" style="margin: 0px 0px;padding: 0px 0px;"></td>
+</tr>
+<tr>
+<td>\((x^{12} + x^8 + x^6 + x^4)\)</td>
+<td>\(1000101010000\)</td>
+</tr>
+</table>
+</div>
+</div>
+
+<p>
+  Die Multiplikation mit Polynomen ergibt sich aus dem Distributivgesetz.
+  Das ist das aus der Schule bekannte Prinzip "jedes mit jedem" in der Form \((a + b) \cdot (x + y) = ax + ay + bx +by\).<br>
+  Man beachte, dass sich Terme mit geraden Koeffizienten kürzen, da gerade Zahlen modulo 2 null ergeben (\(4x^8 \mod 2 = 0x^8\)).<br>
+  Betrachtet man die Operation als Bitfolge, wird für jede 1 des Multiplikators der zu multiplizierende Term entsprechend nach links geshiftet und angeschrieben. Zum Schluss werden alle angeschriebenen Terme verXORt.
+</p>
+
+<table style="border-collapse: collapse">
+<tr>
+  <th>Polynom</th>
+  <th>Bitfolge</th>
+</tr>
+<tr>
+  <td>
+      \begin{alignat}{1}
+      (x^8 && + x^4 + x^2 + 1) \cdot (x^4 + x &+ 1) =\\
+      &&(x^8 + x^4 + x^2 + 1) \cdot x^4 &+ \\
+      &&(x^8 + x^4 + x^2 + 1) \cdot x &+ \\
+      &&(x^8 + x^4 + x^2 + 1) \cdot 1
+      \end{alignat}
+  </td>
+  <td>
+      \begin{alignat}{1}
+      100010101 \cdot 100&&11\\
+      \hline
+      100010101 \textcolor{gray}{0 0 0 0} &&\\
+      100010101 \textcolor{gray}{0}&&\\
+      100010101 &&\\
+      \hline 
+      1001001101111 &&
+      \end{alignat}
+  </td>
+</tr>
+ <tr style="border-bottom:1px solid black;">
+    <td colspan="2" style="margin: 0px 0px;padding: 0px 0px;"></td>
+</tr>
+<tr>
+<td>\((x^{12} + x^9 + x^6 + x^5 + x^3 + x^2 + x + 1)\)</td>
+<td>\(1001001101111\)</td>
+</tr>
+</table>
+
+<p>
+  <b>Division</b><br>
+  Die Division mit Rest ist eine normale Polynomdivision, wobei wiederum Terme mit geraden Koeffizienten wegfallen, weil diese modulo 2 null ergeben.<br>
+  Das läuft folgendermaßen ab:
+</p>
+  <ol>
+  <li> 
+    Man betrachte jeweils den ersten (höchsten) Term und bestimme wie oft multipliziert werden muss.
+    Bei \(\frac{x^8}{x^4}\) bedeutet das \(x^4\), weil \(x^4 \cdot x^4 = x^8\). Schreibe \(x^4\) beim Ergebnis an.
+  </li>
+  <li>
+    Nun muss der gerade ermittelte Term mit dem teilenden Polynom multipliziert werden.
+    Das Ergebnis wird unter das linke Polynom angeschrieben.
+  </li>
+  <li>
+  	Das gerade angeschriebene Polynom wird vom oben stehenden Polynom subtrahiert, und wie beim
+  	normalen dividieren der nächste Term \(x^2\) herabgeschrieben.
+  </li>
+  <li> 
+    Schritt 1 wiederholt sich: wir betrachten wieder den höchsten Term.
+    Bei \(\frac{x^5}{x^4}\) bedeutet das \(x\), weil \(x^4 \cdot x = x^5\). Schreibe \(x\) beim Ergebnis an.
+  </li>
+  <li>
+   Wir wiederholen Schritte 2 und 3 und stellen fest, dass der Grad von \(x + 1\) kleiner ist, als das teilende Polynom \((x^4 + x + 1)\).
+   Es ist damit nicht mehr teilbar und wir schreiben den Rest an.
+  </li>
+  </ol>
 
 
-<p> </br> </p>
-<h3 id="Fp">2. Kurven über dem Körper F(p)</h3>
+<table style="border-collapse: collapse">
+<tr>
+  <th>Polynom</th>
+  <th>Bitfolge</th>
+</tr>
+<tr>
+  <td>
+	\begin{alignat}{6}
+		& (&& x^8 && + && x^4 + && \, x^2 &&+ &&1)\:/\:(x^4 + x + 1) = x^4 + x \\
+		\hline
+		-& (&&\textcolor{gray}{x^8 +} && \textcolor{gray}{x^5 +}&&\textcolor{gray}{x^4})&& && &&\\
+		& && &&x^5 && + && x^2 && &&\\
+		& && -(&&\textcolor{gray}{x^5} && + && \textcolor{gray}{x^2 +} &&\textcolor{gray}{x})&&\\
+		& && && &&  && && x + && 1  \quad \textrm{Rest}\\
+	\end{alignat}
+  </td>
+  <td>
+	\begin{alignat}{1}
+		&100010101 / 10011 = 10010\\[3pt]
+		\hline
+		-(&\textcolor{gray}{10011})&&\\
+		&00010010&&\\
+		&-(\textcolor{gray}{10011})&&\\
+		& \quad\  \ 000011 \quad \textrm{Rest} 
+	\end{alignat}
+  </td>
+</tr>
+</table>
 
-<h4>Überblick</h4>
-
-   <p>Eine Kurve über dem diskreten Körper <i>F(p)</i> kann durch die Gleichung <i>(y^2) mod(p) = (x^3 + a*x + b) mod (p)</i> beschrieben werden (<i>a</i> und <i>b</i> sind Parameter).</p>
-   
-   <p>Die Punkte (<i>x</i>, <i>y</i>) sind Elemente von <i>F(p)</i> und <i>p</i> ist eine Primzahl. Die Anzahl von Punkten im Körper <i>F(p)</i> ist begrenzt auf p*p Punkte (endlicher Körper).</p>
-   
-   <table cellpadding=0 cellspacing=0>
-	<tr><td><img src="ECFp.PNG" width="85%"/></td></tr>
-	<tr><td align="CENTER" bgcolor="#E0DFE3"><i>y²</i> mod <i>29 = (x³ + 14x + 15)</i> mod <i>29</i></td></tr>
-   </table>
-   
-  <p><br><b>Zahlenbeispiel für die diskrete Gruppe F(p) aus dem obigen Screenshot:</b><br>
-  Gewählte Kurve: y^2 = x^3 + 14x + 15<br>
-  mit p = 29, P = (18/3) und Q = (10/13)<br>
-  Addition:       R = P+Q = (8/28)<br>
-  Multiplikation: R =  2P = (22/26)</p>
-
-  <p>Hier gibt es 36 Punkte: O, (1|1), (1|28), (2|14), (2|15), (5|6), (5|23), (6|5), (6|24), (8|1), (8|28), (9|0), (10|13), (10|16), (13|4), (13|25), (15|2), (15|27), (17|2), (17|27), (18|3), (18|26), (19|8), (19|21), (20|1), (20|28), (21|0), (22|3), (22|26), (23|11), (23|18), (24|9), (24|20), (26|2), (26|27), (28|0)<br><br></p>
-
-
-
-<h4>Berechnungen allgemein</h4>
-
-  <h5>1. Punktaddition</h5>
- 	<p>a) Wenn <i>P</i> = <i>-Q</i>, ist <i>R</i> = <i>O</i>, das Fernelement (Punkt in der Unendlichkeit).</p>
-
-    <p>b) Sonst (mit <i>P</i> != <i>Q</i>) ergibt sich <i>R</i> so:<br>
-     <i>s</i> = ((<i>Yp</i> - <i>Yq</i>) / (<i>Xp</i> - <i>Xq</i>)) mod <i>p</i><br>
-    <i>Xr</i> = (<i>s</i>^2 - <i>Xp</i> - <i>Xq</i>) mod <i>p</i><br>
-    <i>Yr</i> = (-<i>Yp</i> + <i>s</i>(<i>Xp</i> - <i>Xr</i>)) mod <i>p</i><br><br></p>
-
-  <h5>2. Punktmultiplikation</h5>
-    <p>a) Wenn <i>Yp</i> = 0, dann ist <i>R</i> = <i>O</i>.<br></p>
-	
-	<p>b) Sonst (bspw. mit k=2) ergibt sich <i>R</i> so:<br>
-    2<i>P</i> = <i>P</i> + <i>P</i> = <i>R</i><br>
-    <i>s</i> = ((3<i>Xp</i>^2 + <i>a</i>) / (2<i>Yp</i>)) mod <i>p</i><br>
-    <i>Xr</i> = (<i>s</i>^2 - 2<i>Xp</i>) mod <i>p</i><br>
-    <i>Yr</i> = (-<i>Yp</i> + <i>s</i>(<i>Xp</i> - <i>Xr</i>)) mod <i>p</i><br></p>
+<p>
+  <b>Größter gemeinsamer Teiler (ggT)</b><br>
+  Der größte gemeinsame Teiler lässt sich genau wie mit Zahlen mit dem euklidischen Algorithmus berechnen.
+  Das ist notwendig, um das modulo-Inverse bei der Division zu bestimmen.
+</p>
 
 
-<p> </br> </p>
-<h3 id="F2m">3. Kurven über dem Körper F(2^m)</h3>
+<h4>Punktaddition im Detail</h4>
+<p>
+  \(\mathbb{F}_{2^m}\) verhält sich beim Addieren von Punkten ähnlich wie über Primzahlen.
+  Anstatt einer Primzahl \(p\) wird mit einem Polynom \(f(x)\) modulo gerechnet.
+  Bei der Division muss mit dem modulo-Inversen Polynom multipliziert werden.
+  Folgend die <b>drei Formeln</b>:
+</p>
 
-<h4>Überblick</h4>
-  <p>Elemente über dem Körper <i>F(2^m)</i> sind <i>m</i>-Bit Strings. Berechnungen erfolgen nach den Regeln der Polynom-Arithmetik.</p>
-  <p>Da <i>F(2^m)</i> Operationen auf Bitfolgen ausführt, können die Berechnungen von Computern effizient berechnet werden.</p>
-  <p>Die binäre Repräsentation einer elliptischen Kurve kann durch die Gleichung <i>y^2 + xy = x^3 + ax^2 + b</i> beschrieben werden.</p>
-  <p>Der Körper <i>F(2^m)</i> wird mithilfe des Generators G definiert. G ist ein irreduzibles primäres Polynom mit der Bitlänge <i>m</i> + 1.</p>
-  <p>Das Negative von Punkt <i>P</i> = (<i>Xp</i>, <i>Yp</i>) ist <i>-P</i> = (<i>Xp</i>, <i>Xp</i> + <i>Yp</i>).</p>
+\begin{alignat}{1}
+  	& k &= (Q_y + P_y) \cdot (Q_x + P_x)^{-1} &&\mod f(x)\\
+  	& R_x &= k^2 + k + P_x + Q_x + a &&\mod f(x)\\
+  	& R_y &= k(P_x + R_y) + R_x + P_y &&\mod f(x)
+\end{alignat}
 
-<table cellpadding=0 cellspacing=0>
-	<tr><td><img src="ECFm.PNG"></td><td><img src="ECFmElements.PNG"></td></tr>
-	<tr><td align="CENTER" bgcolor="#E0DFE3"><i>y² + xy = x³ + g9*x² + g3</i> ; generator G = 110111 ; m = 5</td></tr>
-</table><br><br>
-
-
-<h4>Berechnungen allgemein</h4>
-
-  <h5>1. Polynomberechnungen</h5>
-  
-  	<p>Um Berechnungen über <i>F(2^m)</i> zu verstehen, muss man Berechnungen mit Polynomen verstehen.</p>
-    <p>In den folgenden Beispielen werden alle Polynome als Bitfolgen dargestellt (z.B. für m=5: x^4 + x^2 + x + 1 = 10111).</p>
-    <p><b>Addition (mithilfe XOR)</b><br>
-    1011 + 0101 = 1110<br><br>
-	
-    <b>Multiplikation</b><br>
-    1011 * 1 = 1011<br>
-    1011 * 10 = 10110<br>
-    1011 * 11 = 10110 + 1011 = 11101<br><br>
-	
-    <b>Division</b><br>
-    <img src="polyDivide.PNG" width="85%"/></p>
-
-  <h5>2. Punktaddition</h5>
- 	<p>a) Wenn <i>P</i> = <i>-Q</i>, ist <i>R</i> = <i>O</i>, das Fernelement (Punkt in der Unendlichkeit).</p>  
-
-    <p>b) Sonst (mit <i>P</i> != <i>Q</i>) ergibt sich <i>R</i> so:<br>
-    <i>s</i> = (<i>Yp</i> - <i>Yq</i>) / (<i>Xp</i> + <i>Xq</i>)<br>
-    <i>Xr</i> = <i>s</i>^2 + <i>s</i> + <i>Xp</i> + <i>Xq</i> + <i>a</i><br>
-    <i>Yr</i> = <i>s</i>(<i>Xp</i> + <i>Xr</i>) + <i>Xr</i> + <i>Yp</i><br></p>
-
-  <h5>3. Punktmultiplikation</h5>
-
-    <p>a) Wenn <i>Xp</i> = 0, dann ist <i>R</i> = <i>O</i>.<br></p>
-	
-	<p>b) Sonst (bspw. mit k=2) ergibt sich <i>R</i> so:<br>
-    2<i>P</i> = <i>P</i> + <i>P</i> = <i>R</i><br>
-    <i>s</i> = <i>Xp</i> + <i>Yp</i> / <i>Xp</i><br>
-    <i>Xr</i> = <i>s</i>^2 + <i>s</i> + <i>a</i><br>
-    <i>Yr</i> = <i>Xp</i>^2 + (<i>s</i> + 1) *<i>Xr</i></p>
+<h4>Punktverdopplung im Detail</h4>
+    
+\begin{alignat}{1}
+  	& k &= P_x + P_y &&\mod f(x)\\
+  	& R_x &= k^2 + k + a &&\mod f(x)\\
+  	& R_y &= P_x^2 + R_x \cdot (k + 1) &&\mod f(x)
+\end{alignat}
 
 
-
-<p>&nbsp;</p>
 <h2>Referenzen</h2>
 <p>Weitere Informationen über elliptische Kurven:</p>
 
-<p><b>[HMV04]</b></br>Hankerson, Darrel, Menezes, Alfred J., und Vanstone, Scott: Guide to Elliptic Curve Cryptography, Springer, 2004</p>
+<p><b>[HMV04]</b><br>Hankerson, Darrel, Menezes, Alfred J., und Vanstone, Scott: Guide to Elliptic Curve Cryptography, Springer, 2004</p>
 
-<p><b>[Wikipedia_EC]</b></br>Elliptische_Kurve, <a target="_blank" href="https://de.wikipedia.org/wiki/Elliptische_Kurve">https://de.wikipedia.org/wiki/Elliptische_Kurve</a></p>
+<p><b>[Wikipedia_EC]</b><br>Elliptische_Kurve, <a target="_blank" href="https://de.wikipedia.org/wiki/Elliptische_Kurve">https://de.wikipedia.org/wiki/Elliptische_Kurve</a></p>
 
-<p><b>[Wikipedia_ECC]</b></br>Elliptic Curve Cryptography, <a target="_blank" href="https://de.wikipedia.org/wiki/Elliptic_Curve_Cryptography">https://de.wikipedia.org/wiki/Elliptic_Curve_Cryptography</a></p>
+<p><b>[Wikipedia_ECC]</b><br>Elliptic Curve Cryptography, <a target="_blank" href="https://de.wikipedia.org/wiki/Elliptic_Curve_Cryptography">https://de.wikipedia.org/wiki/Elliptic_Curve_Cryptography</a></p>
 
 
-<p>&nbsp;</p>
 </body>
 </html>
-
-<i></i>

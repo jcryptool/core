@@ -1,7 +1,39 @@
+<!DOCTYPE html>
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Demonstration of Point Addition over Elliptic Curves (EC)</title>
+  <script id="MathJax-script" async src="${JCTJS_HOST}/javascript/MathJax-master/es5/tex-mml-svg.js"></script>
+
+<style>
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+  padding: 5px;
+}
+
+.li{
+  margin-bottom: 13px;
+}
+
+.members td { font-family:"Courier New", Courier, monospace;}
+
+figure {
+  display: table;
+}
+
+figcaption {
+  text-align: center;
+  font-size: 1em;
+  font-family: Verdana, Geneva, serif;
+  line-height: 1.8em;
+  display: table-caption;
+  caption-side: bottom;
+}
+</style>
 </head>
 
 <body>
@@ -17,191 +49,686 @@
 <p>a) For a first educational visualization choose <b>small</b>. Here a grid is displayed and you can choose the points on the curve with the mouse. There are three types of elliptic curves you can choose from:
 <ol>
   <li><a href="#realNumbers">Curves in the real number space</a></li>
-  <li><a href="#Fp">Curves in the field F(p)</a></li>
-  <li><a href="#F2m">Curves in the field F(2^m).</a></li>
+  <li><a href="#Fp">Curves in the field \(\mathbb{F}_p\)</a></li>
+  <li><a href="#F2m">Curves in the field \(\mathbb{F}_{2^m}\)</a></li>
 </ol>
-<img src="curveType.PNG" width="85%"/>
-</p>
+<img src="curveType.PNG" width="85%" alt="Radio button selection of the three modes in JCrypTool view. It shows an option for real numbers, curves over finite fields F_p and curves over Galois binary fields F_m^2.">
 
-<p>b) Choosing the curve size <b>large</b> offers different standard curves (each in different variants): ANSI X9.62, SEC 2, ECC Brainpool, and CDC Group for the discrete curve type F(p); and ANSI X9.62 for the discrete curve type F(2^m).</br>
+<p>b) Choosing the curve size <b>large</b> offers different standard curves (each in different variants): ANSI X9.62, SEC 2, ECC Brainpool, and CDC Group for the discrete curve type \(\mathbb{F}_p\); and ANSI X9.62 for the discrete curve type \(\mathbb{F}_{2^m}\).<br>
 Such large elliptic curves are used in professional cryptographic applications. Like in the case of the small size, you can add points and multiply points with a scalar.</p>
 
-<p align="center"><img src="EC-large-Fp-en.png" width="90%" alt="ECC Calculations for large size curves"></p>
+<p align="center"><img src="EC-large-Fp-en.png" width="90%" alt="Screenshot from the JcrypTool plugin. Exemplary calculation for large curves. A large curve over a finite field F(p) is selected. The curve itself is the standardised curve ANSI X0.62 - prime192v1"></p>
 
 <p>The results of the calculations (for both small and large sizes) can be saved and either looked at in the JCT editor or stored into a file.</p>
 
 
-
-<p> </br> </p>
 <h2>Demonstrating details for the curves of small size</h2>
 <p>The following sections show concrete samples for the three types of elliptic curves.<br><br></p>
 
 <h3 id="realNumbers">1. Curves in the real number space</h3>
 
 <h4>Overview</h4>
-  <p>An elliptic curve in real number space has the form of <i>y^2 = x^3 + a*x + b</i> where <i>a</i>, <i>b</i>, <i>x</i>, and <i>y</i> are real numbers.</p>
+  <p>An elliptic curve in real number space has the form of \(y^2 = x^3 + a \times x + b\) where \(a\), \(b\), \(x\), and \(y\) are real numbers.</p>
   
-  <p>In the real number space, there are infinitely many points on the curve. For every point on the curve there is a negative value where y = -y (except for y = 0).</p>
-  <p>Adding two points on the curve is simple. <i>R</i> is the result of this addition:</p>
-  <ol>
-  <li>Select a point <i>P</i> and a point <i>Q</i>.</li>
-  <li>Draw a line through <i>P</i> and <i>Q</i> and continue until you cross the curve for the third time (<i>P</i> and <i>Q</i> being the first two times). This point is <i>-R</i>.</li>
-  <li>Point <i>R</i> is the point <i>-R</i> with inverted y value. </li>
-  </ol>
+<p>
+  In the real number space, there are infinitely many points on the curve.
+  For every point on the curve there is a negative value where \(y = -y\) (except for \(y = 0\)).
+</p>
+<p>
+  Two points on a curve can be <b>"added up"</b>.
+  This is to be understood as a geometric operation quite differently from what we are used to with numbers.
+  Adding two points on an elliptic curve results in a third point.
+  We call this result \(R\).
+  The scheme of the "addition" looks like the following and is also depicted in figure a.
+</p>
+  
+<ol>
+  <li>Select a point \(P\) and a point \(Q\).</li>
+  <li>Draw a line through \(P\) and \(Q\) and continue until you cross the curve for the third time (\(P\) and \(Q\) being the first two times). This point is \(-R\).</li>
+  <li>Point \(R\) is the point \(-R\) with inverted \(y\) value (mirrored on the x axis). </li>
+</ol>
 
-<table cellpadding=0 cellspacing=0>
-	<tr><td><img src="EC.PNG" width="85%"/></td></tr>
-	<tr><td align="CENTER" bgcolor="#E0DFE3"><i>y² = x³ - 10x + 15</i></td></tr>
+<p>
+  <b>Note:</b> There is an exception: If \(P = -Q\) the line does not cross the curve a third time,
+  because it runs in parallel to the y axis.
+  In this case the result of the addition is a remote point called \(O\) (also denoted as "point in infinity" \(\infty\)).
+</p>
+
+ <div class="row">
+  <div class="column">
+  <figure>
+    <img src="EC.PNG" alt="Graph showing a cartesian coordinate system. Depicted is an elliptic curve addition for real numbers. A straight line is laid through two points on the ellipse P (-3,55 / 2,4) and Q (0,59 / 3,05). At the cross section is another point -R (3,98, 3,42). This one is mirrored on the x axis, and is denoted as R with the coordinates (3,98, 3,42)" style="width:100%;min-width:200px">
+    <figcaption><b>Figure a)</b> The addition of \(P + Q\) leads to the resulting point \(R\)</figcaption>
+  </figure>
+  </div>
+  <div class="column">
+  <figure>
+    <img src="EC_addition_infinity.png" alt="Graph showing a cartesian coordinate system. Depicted is an elliptic curve for real numbers; Point q is just the mirror of point p on the x axis. A straight line through the two points runs in parallel to the y axis. This shows why an addition of these two points ends up with the infinite point O" style="width:100%;min-width:200px">
+    <figcaption><b>Figure b)</b>The straight line between \(P\) and \(Q\) runs in parallel to the y axis, because \(P = -Q\).  There is no third intersection with the curve and the result is the point in infinity \(O\) (also denoted as \(\infty\))</figcaption>
+  </figure>
+  </div>
+</div> 
+
+<h4>Point addition in detail</h4>
+
+<p>
+  There are <b>three simple formulas</b> for point addition on elliptic curves. These are:
+  	\begin{alignat}{1}
+  	& m &= \frac{Q_y - Q_y}{Q_x - P_x}\\
+  	& R_x &= s^2 - P_x - Q_x\\
+  	& R_y &= − P_y + s(P_x − R_x)
+  	\end{alignat}
+</p>
+
+<p>
+  \(m\) is the slope of the straight line through \(P\), \(Q\) and point \(R\) which we are looking for.
+  The formulas can be deduced by intersecting the straight line with the elliptic curve.
+  This leads to a cubic equation.
+  Because 2 of the maximum 3 intersections are already known, the formulas can be deduced from Vieta's formulas.
+</p>
+
+<p>
+  <b>Example with the points from figure a:</b>
+  Given are:
+</p>
+  
+  <ul>
+	  <li> the chosen curve \(\epsilon: \quad y^2 = x^3 - 10x + 15\)</li>
+	  <li> Point \(P = (-3.55 / 2.40)\)</li>
+	  <li> Point \(Q = (0.59 / 3.05)\)</li>
+  </ul>
+  
+We seek \(R\):
+
+ <ol>
+ <li>Calculate \(m\):<br> 
+  	\(m = \frac{Q_y - P_y}{Q_x - P_x} = \frac{2.40 - 3.05}{0.59 - (-3.55)} = 0.157\)</li>
+ <li>Calculate the x value of \(R\):<br>
+  	\(R_x = m^2 - P_x - Q_x = 0.15^2 - 0.59 - (-3.55)  = 2.98\)</li>
+ <li>Calculate the y value of \(R\):<br>
+  	\(R_y = − P_y + k(P_x − R_x) = -2.40 + 0.157(-3.55 - 2.98) = -3.42\)</li>
+</ol> 
+
+\(R = (3.98, -3.42)\)
+
+<p><b>Definition of the exception \(P = -Q\):</b><br>
+	In this case the result is the point in infinity \(O\). It is sometimes also denoted as \(\infty\).
+</p>
+
+
+<h4>Point doubling and multiplication in detail</h4>
+
+<p>
+  Points can not only be added. There is also an operation equivalent to <b>multiplication</b>.
+  Just as with real numbers, multiplication is just repeated addition with the same number.
+  For example \(2 \times 3\) is the same as \(2 + 2 + 2\).
+</p>
+
+<p>
+  On elliptic curves we can multiply points by adding them up. For this to work we also need to
+  be able to add points with themselves (to double them).
+  For this operation the calculation is slightly different.
+  In the normal addition we could calculate \(m\) as simple difference between two points.
+  This would lead to a division by zero for a single point.
+  Instead we calculate a tangent for that point. (we differentiate, see also figure c).
+</p>
+	
+$$m = \frac{3x^2 + a}{2y}$$
+
+<p>	
+  Besides the point coordinates \(x\) and \(y\) the parameter \(a\) of the elliptic curve is needed. 
+  The tangent's intersection can be used in the same equations as the line from the normal addition.
+</p>
+
+  	\begin{alignat}{1}
+  	& R_x &= m^2 - 2x\\
+  	& R_y &= − y + m(x − R_x)
+  	\end{alignat}
+
+  	
+<div class="row">
+<div class="column">
+<p><b>Example with the points from figure c:</b><br>
+  Given are:
+  <ul>
+	  <li> the chosen curve \(\epsilon: \quad y^2 = x^3 - 10x + 15\)</li>
+	  <li> Point \(T = (-1.3 / 5.07)\)</li>
+  </ul>
+  
+We seek \(R = 2 \cdot T\):
+
+ <ol>
+ <li> Calculate \(m\):<br> 
+  	\(m = \frac{3x^2 + a}{2y} = \frac{3 \cdot (-1.3)^2 + 10}{2 \cdot 5.07} = 0.486\)</li>
+ <li>Calculate the x value of \(R\):<br>
+  	\(R_x = k^2 - 2x = 0.486^2 - 2 \cdot 5.07)  = 2.83\)</li>
+ <li>Calculate the y value \(R\):<br>
+  	\(R_y = − y + k(x − R_x) = -5.07 - 0.486 \cdot -1.3 + 0.486 \cdot 2.83 = -3.06\)</li>
+</ol> 
+
+\(R = (2.83, -3.06)\)
+
+</div>
+<div class="column">
+<figure>
+    <img src="EC_duplication.png" alt="Graph showing a cartesian coordinate system. Depicted is an elliptic curve for real numbers; At the given point T (-1,3 / 5,07) a tangent is drawn in. It has a slightly declining slope and intersects the elliptic curve at point -R (2,83 / 3,06). This point is mirrored at the x acis and where the result point R (2,82 / -3,06) lies." style="width:100%;min-width:200px">
+    <figcaption><b>Figure c)</b> Point \(T\) is added to itself (doubled)</figcaption>
+</figure>
+</div>
+</div>
+ 
+  	
+<h3 id="Fp">2. Curves over finite fields \(mathbb{F}_p\) </h3>
+
+<p>
+  A curve over the discrete field \(\mathbb{F}_p\) can be described through the equation \(y^2 = x^3 + ax + b \quad(\textrm{mod}\, p)\).
+  \(a\) and \(b\) are again real number parameters of the elliptic curve.
+</p>
+
+<p>
+  Each point \(x, y\) is element of the group of points in \(\mathbb{F}_p\) where \(p\) is a prime number.
+  The points in this field are finite. There are a maximum of \(p^2\) points on the curve.
+  But not every coordinate is a valid point on the curve equation.
+  Hasse's theorem on elliptic curves gives us insight on how many valid points we will find for such a curve.
+  In simplified terms there are always as many points on the curve as the magnitude of \(p\).
+</p>
+
+<p>
+  The form of the elliptic curve is not recognizeable anymore.
+  This type of modulo calculated curve is way more interesting for cryptography.
+  For real numbers a point can be easily estimated if there are known points nearby.
+  For finite fields points contain no information about their neighbours.
+</p>
+
+<figure>
+  <img src="ECFp.PNG" style="width:100%" alt="Graph showing a cartesian coordinate system. Depicted is an elliptic curve over a finite field F(p). The 36 points on the curve seem to be distributed randomly over the coordinates . The points P (18 / 3), Q (10 / 13) and R (8 / 28) are highlighted by a red color."/>
+  <figcaption><b>Figure d)</b>An elliptic curve over \(\mathbb{F}_{29}\). Characteristic for cryptographic operations
+  modulo a prime number are the seemingly random elements.</figcaption>
+</figure>
+
+<h4>Point addition in detail</h4>
+
+<p>
+  The calculation of points is very similar to curves with real numbers.
+  The main difference is, that each intermediate result has to be calculated modulo \(p\).
+  This leads to an additional step for the calculation of \(m\).
+  Because divisions are not allowed in modular arithmetic, we have to multiply with the modulo inverse instead.
+  The euclidean algorithm is needed to calculate the modulo inverse.
+</p>
+
+\begin{alignat}{1}
+  	& m &= (Q_y - P_y) \cdot (Q_x - P_x)^{-1} &&\mod p\\
+  	& R_x &= m^2 - P_x - Q_x &&\mod p\\
+  	& R_y &= − P_y + m(P_x − R_x) &&\mod p
+\end{alignat}
+
+<p>
+  <b>Definition of the exception \(P = -Q\):</b><br>
+  Just as for curves with real numbers: The result is the point in infinity \(O\) (also denoted as \(\infty\)).
+</p>
+
+<p><b>Example of point addition over a finite field \(\mathbb{F}_p\):</b><br>
+  <ul>
+	  <li> the chosen curve \(\epsilon: \quad y^2 = x^3 + 14x + 15\quad(\textrm{mod}\, 29)\)</li>
+	  <li> Point \(P = (18 / 3)\)</li>
+	  <li> Point \(Q = (10 / 13)\)</li>
+  </ul>
+
+<p>
+  This example is depicted in figure d). There are 841 \(p^2\) possible coordinates for \(\mathbb{F}_{29}\),
+  36 of these are actually valid coordinates:
+</p>
+  
+  <table class="members">
+    <tr>
+    <td>\(O\)</td>
+    <td>( 8| 1)</td>
+    <td>(17| 2)</td>
+    <td>(22| 3)</td>
+    </tr>
+    <tr>
+    <td>( 1| 1)</td>
+    <td>( 8|28)</td>
+    <td>(17|27)</td>
+    <td>(22|26)</td>
+    </tr>
+    <tr>
+    <td>( 1|28)</td>
+    <td>( 9| 0)</td>
+    <td>(18| 3)</td>
+    <td>(23|11)</td>
+    </tr>
+    <tr>
+    <td>( 2|14)</td>
+    <td>(10|13)</td>
+    <td>(18|26)</td>
+    <td>(23|18)</td>
+    </tr>
+    <tr>
+    <td>( 2|15)</td>
+    <td>(10|16)</td>
+    <td>(19| 8)</td>
+    <td>(24| 9)</td>
+    </tr>
+    <tr>
+    <td>( 5| 6)</td>
+    <td>(13| 4)</td>
+    <td>(19|21)</td>
+    <td>(24|20)</td>
+    </tr>
+    <tr>
+    <td>( 5|23)</td>
+    <td>(13|25)</td>
+    <td>(20| 1)</td>
+    <td>(26| 2)</td>
+    </tr>
+    <tr>
+    <td>( 6| 5)</td>
+    <td>(15| 2)</td>
+    <td>(20|28)</td>
+    <td>(26|27)</td>
+    </tr>
+    <tr>
+    <td>( 6|24)</td>
+    <td>(15|27)</td>
+    <td>(21| 0)</td>
+    <td>(28| 0)</td>
+    </tr>
+  </table> 
+
+<p>We seek \(R = P + Q\):</p> 
+
+ <ol>
+ <li> Calculate \(m\):<br> 
+\(
+ \style{text-align:right;}
+{
+\begin{alignat}{2}
+  	m &= \frac{Q_y - P_y}{Q_x - P_x} &&\mod p &&=\\[2pt]
+     &= \frac{13 - 3}{10 - 18} &&\mod 29 &&=\\[2pt]
+  	 &= 10 \cdot -8^{-1} &&\mod 29 &&= \qquad\qquad\textrm{// Note:}\,-8^{-1} \mod 29 = 18\\[5pt]
+  	 &= 10 \cdot 18 &&\mod 29 &&= 6\\[10pt]
+\end{alignat} 
+}
+\)</li>
+ <li>Calculate the x value of \(R\):<br>
+ \( \style{text-align:right;}
+{
+\begin{alignat}{2}
+R_x &= m^2 - P_x - Q_x &&\mod p &&=\\
+    &= 6^2 - 18 - 10 &&\mod 29 &&= 8
+\end{alignat} 
+}
+\)
+</li>
+ <li>Calculate the y value of \(R\):<br>
+  \( \style{text-align:right;}
+{
+\begin{alignat}{3}
+R_y &= − y_1 &&+ m(x_1 − x_3) &&\mod p &&= \\
+&= -3 &&+ 6 (18 - 8) &&\mod 29 &&= 28
+\end{alignat} 
+}
+\)</li>
+ </ol>
+
+<h4>Point doubling and multiplication in detail</h4>
+
+<p>
+  The concepts of the real numberes can be applied the same way. We multiply through repeated addition.
+  If one wants to calculate \(3 \times P\) this can be done by calculating \(2 \times P + P\).
+  For this to be possible we again have to define a point addition with itself - a point doubling.
+  As for the real numbers this formula is slightly different then the point addition with two different points.
+  Just as for the addition we have to calculate the modulo inverse instead of a plain division.
+  The <b>three formulas</b> for point doubling are:
+</p>
+
+  	\begin{alignat}{1}
+    & m &= (3x^2 + a) \cdot (2y)^{-1} &&\mod p\\
+  	& R_x &= m^2 - 2x &&\mod p\\
+  	& R_y &= − y + m(x − R_x) &&\mod p
+  	\end{alignat}
+  	
+ 
+<p><br><b>Example of point doubling over a finite field \(\mathbb{F}_{29}\):</b><br>
+
+Given are:
+  <ul>
+	  <li> the chosen curve \(\epsilon: \quad y^2 = x^3 + 14x + 15\quad(\textrm{mod}\, 29)\)</li>
+	  <li> Point \(P = (18 / 3)\)</li>
+  </ul>
+
+<p>We seek \(R = 2 \cdot P\):</p> 
+
+ <ol>
+ <li> Calculate \(m\):<br> 
+\(
+ \style{text-align:right;}
+{
+\begin{alignat}{2}
+   m &= (3x^2 + a) \cdot (2y)^{-1} &&\mod p &&=\\[2pt]
+     &= (3 \cdot 18^2 + 14) \cdot (2 \cdot 3)^{-1} &&\mod 29 &&=\\[2pt]
+  	 &= 986 \cdot 6^{-1} &&\mod 29 &&= \qquad\qquad\textrm{// Note:}\,6^{-1} \mod 29 = 5\\[5pt]
+  	 &= 986 \cdot 5 &&\mod 29 &&= 0\\[10pt]
+\end{alignat} 
+}
+\)</li>
+ <li>Calculate the x value of \(R\):<br>
+ \( \style{text-align:right;}
+{
+\begin{alignat}{2}
+R_x &= m^2 - 2x &&\mod p &&=\\
+    &= 0^2 - 2 \cdot 18 &&\mod 29 &&= 22
+\end{alignat} 
+}
+\)
+</li>
+ <li>Calculate the y value of \(R\):<br>
+  \( \style{text-align:right;}
+{
+\begin{alignat}{3}
+R_y &= − y &&+ m(x − R_x) &&\mod p &&= \\
+&= -3 &&+ 0 (18 - 22) &&\mod 29 &&= 26
+\end{alignat} 
+}
+\)</li>
+ </ol>
+ 
+\(R = (22/26)\)
+
+<h3 id="F2m">3. Curves in the field \(\mathbb{F}_{2^m}\)</h3>
+
+<p>
+  Elements of galois fields \(\mathbb{F}_{2^m}\) are polynomials of length \(m\).
+  For these groups all coefficients are calculated modulo 2 (living in the numbers \(\mathbb{Z}_2\)).
+  That allows very fast computation for the following reasons:
+  An exmample polynomial of length \(8\): \(x^8 + x^4 + x^3+x+1\) can also be written as vector respectively as simple bits: \(10011011\)
+  Present terms are noted as 1, the others as 0.
+  Negative values or values greater than 1 are not allowed in modulo 2.
+  This representation allows addition as well as subtraction to be simple bitwise XOR operations.
+  Multiplication can be done by only using multiple left shift and XOR operations.
+  All of these bit operators can be calculated very fast on computers.
+  The usual rules for working with polynomials apply.
+</p> 
+
+<p>
+  The elliptic curve looks sligthly different when working with polynomials \(y^2 + xy = x^3 + ax^2 + b\).
+</p>
+
+<p>
+  In addition the following (public) parameters are reqiured:
+</p> 
+
+<ul>
+  <li>Polynomial / bit length \(m\)</li>
+  <li>\(a\) and \(b\) for the elliptic curve</li>
+  <li>Generator \(G\): an irreducable primary polynomial with a length of \(m + 1\).
+  Irreducable polynomials have similar properties as prime numbers.
+  They cannot be divided by other polynomials.
+  \(G\) is used to generate points on the curve</li>
+  <li>Reduction polynomial \(f(x)\): a polynomial through which is divided for the modulo calculation</li>
+</ul>
+
+<p>  
+  Following rules and definitions apply:
+</p>
+<ul>
+<li>Given a point \(P = (x,y)\), its negative is \(-P(x, y) := (x, x + y)\).</li>
+<li>There exists a neutral element \(O\) for which applies: \(-O := O\), and for each point P of the elliptic curve applies \(P + O := O + P := P\).</li>
+</ul>
+
+<figure>
+  <img src="ECFm.PNG" alt="Eine Grafik der Punkte einer elliptischen Kurve einer Galois-Gruppe. Zu sehen sind 32 Punkte, die scheinbar zufällig über die Koordinaten verteilt sind.">
+  <img src="ECFmElements.PNG" alt="Die 32 Elemente der elliptischen Kurve: 1 = 00001, g = 00010, g2 = 00100, g3 = 01000, g4 = 10000, g5 = 10111, g6 = 11001, g7 = 00101, g8 = 01010, g9 = 10100, g10 = 11111, g11 = 01001, g12 = 10010, g13 = 10011, g14 = 10001, g15 = 10101, g16=11101, g17 = 01101, g18 = 11010, g19 = 00011, g20 = 00110 g21 = 01100, g22 = 11000, g23 = 00111, g24 = 01110, g25 = 11100, g26 = 01111, g27 = 11110, g28 = 01011, g29 = 10110, g30 = 11011">
+  <figcaption><b>Figure e)</b> An elliptic curve over \(\mathbb{F}_{2^5}\) with the parameters: \(y^2 + xy = x^3 + g9 \cdot x^2 + g3\) und dem Generator \(G = 110111\)</figcaption>
+</figure>
+
+<h4>Calculations for \(\mathbb{F}_{2^m}\) polynomials in general</h4>
+
+<p>
+  In order to understand calculations over \(\mathbb{F}_{2^m}\), the basic math operations shall be explained by examples.
+</p>
+
+<p><b>Addition</b> (simple bitwise XOR, also called "carryless addition")</p>
+    
+<table style="border-collapse: collapse">
+<tr>
+  <th></th>
+  <th>Polynomial</th>
+  <th>Bitstring</th>
+</tr>
+<tr>
+  <td>
+    \begin{alignat}{1}
+      p\\[3pt]
+      q
+    \end{alignat}
+  </td>
+  <td>
+    \begin{alignat}{1}
+      x^8 + &&x^4 + x^2 +& 1\\
+      &&x^4 + x +& 1
+    \end{alignat}
+  </td>
+  <td>
+    \begin{align*}
+      100010101\\[3pt]
+      000010011
+    \end{align*}
+  </td>
+</tr>
+ <tr style="border-bottom:1px solid black;">
+    <td colspan="3" style="margin: 0px 0px;padding: 0px 0px;"></td>
+</tr>
+<tr>
+<td>\(p + q\)</td>
+<td>\(x^8 + x^2 + x\)</td>
+<td>\(100000110\)</td>
+</tr>
 </table>
 
-  <p><br><b>Sample with the curve from the screenshot above:</b><br>
-  Selected curve: y^2 = x^3 - 10.0x + 15.0<br>
-  with P = (-3.55 / 2.43) and Q = (0.59 / 3.05)<br>
-  Addition:       R = P+Q = (2.98 / -3.41)<br>
-  Multiplication: R =  2P = (39.70 / -249.36)<br><br></p>
+<p>
+  <b>Subtraction</b><br>
+  Die Subtraction is exactly the same operation as the addition, a bitwise XOR.
+</p>
+
+<p>
+  <b>Multiplication</b><br>
+  At first we take a look at multiplication with single term polynomials (monom) of form \(x^k\).
+  By the example you can see, that this form of multiplication via \(x^k\) is a left shift of \(k\) bits.
+</p>
+
+<div class="row">
+<div class="column">
+<table style="border-collapse: collapse">
+<tr>
+  <th>Polynomial</th>
+  <th>Bitstring</th>
+</tr>
+<tr>
+  <td>
+      \((x^8 + x^4 + x^2 + 1) \cdot x\)
+  </td>
+  <td>
+      \(100010101 \cdot 10\)
+  </td>
+</tr>
+ <tr style="border-bottom:1px solid black;">
+    <td colspan="2" style="margin: 0px 0px;padding: 0px 0px;"></td>
+</tr>
+<tr>
+<td>\((x^9 + x^5 + x^3 + x)\)</td>
+<td>\(1000101010\)</td>
+</tr>
+</table>
+</div>
+<div class="column">
+<table style="border-collapse: collapse">
+<tr>
+  <th>Polynom</th>
+  <th>Bitfolge</th>
+</tr>
+<tr>
+  <td>
+      \((x^8 + x^4 + x^2 + 1) \cdot x^4\)
+  </td>
+  <td>
+      \(100010101 \cdot 10000\)
+  </td>
+</tr>
+ <tr style="border-bottom:1px solid black;">
+    <td colspan="2" style="margin: 0px 0px;padding: 0px 0px;"></td>
+</tr>
+<tr>
+<td>\((x^{12} + x^8 + x^6 + x^4)\)</td>
+<td>\(1000101010000\)</td>
+</tr>
+</table>
+</div>
+</div>
+
+<p>
+  The multiplication of two polynomials is a result of the distributive law.
+  This is the well-known principle from school, that every term must be multiplied with each other term.
+  This can look like  \((a + b) \cdot (x + y) = ax + ay + bx +by\).<br>
+  Note however, that terms with even coefficients are zero, because even numbers modulo 2 result in zero (\(4x^8 \mod 2 = 0x^8\)).<br>
+  If you look at the multiplication from a bit point of view: for each 1 in the multiplicative polynomial the other one is shifted left for the power of that term.
+  Each shift is written below, being shifted 1 to the right by default. 
+  In the end each term written below is XORed for the final result of the multiplication.
+</p>
+
+<table style="border-collapse: collapse">
+<tr>
+  <th>Polynomial</th>
+  <th>Bitstring</th>
+</tr>
+<tr>
+  <td>
+      \begin{alignat}{1}
+      (x^8 && + x^4 + x^2 + 1) \cdot (x^4 + x &+ 1) =\\
+      &&(x^8 + x^4 + x^2 + 1) \cdot x^4 &+ \\
+      &&(x^8 + x^4 + x^2 + 1) \cdot x &+ \\
+      &&(x^8 + x^4 + x^2 + 1) \cdot 1
+      \end{alignat}
+  </td>
+  <td>
+      \begin{alignat}{1}
+      100010101 \cdot 100&&11\\
+      \hline
+      100010101 \textcolor{gray}{0 0 0 0} &&\\
+      100010101 \textcolor{gray}{0}&&\\
+      100010101 &&\\
+      \hline 
+      1001001101111 &&
+      \end{alignat}
+  </td>
+</tr>
+ <tr style="border-bottom:1px solid black;">
+    <td colspan="2" style="margin: 0px 0px;padding: 0px 0px;"></td>
+</tr>
+<tr>
+<td>\((x^{12} + x^9 + x^6 + x^5 + x^3 + x^2 + x + 1)\)</td>
+<td>\(1001001101111\)</td>
+</tr>
+</table>
+
+<p>
+  <b>Division</b><br>
+  The Division with remainder is done by applying normal polynomial division rules.
+  Even terms are eliminated,because even numbers modulo 2 result in 0<br>
+  A division works as follows:
+</p>
+  <ol>
+  <li> 
+    Take a look at both first (hightest) terms and determine how often they must be multiplied with each other.
+    For \(\frac{x^8}{x^4}\) that results in \(x^4\), because \(x^4 \cdot x^4 = x^8\). Write down \(x^4\).
+  </li>
+  <li>
+  	Now the just found term must be multiplied with the dividing polynomial.
+  	The result is written below the left polynomial.
+  </li>
+  <li>
+  	This polynomial is subtracted from the above one.
+  	Just as for normal division, the next term \(x^2\) is also pulled down.
+  </li>
+  <li> 
+    Repeat step 1: take a look at the highest terms.
+    For \(\frac{x^5}{x^4}\) the result is \(x\), because \(x^4 \cdot x = x^5\). Add \(x\) to the result.
+  </li>
+  <li>
+   When repeating step 2 and 3 we see, that the power of \(x + 1\) is smaller, than the dividing polynomial \((x^4 + x + 1)\).
+   That means it cannot be divided anymore and the leftover part is written down as remainder.
+  </li>
+  </ol>
 
 
-<h4>Calculations in general</h4>
-
-  <h5>1. Point addition</h5>
-    <p>a) If <i>P</i> = <i>-Q</i>, then point <i>R</i> is <i>O</i> (the point of infinity). In this situation, the line through <i>P</i> and <i>Q</i> will never cross the curve for a third time.</p>
-	
-    <p>b) Else (with <i>P</i> != <i>Q</i>), <i>R</i> is given this way:<br>
-    <i>s</i> = (<i>Yp</i> - <i>Yq</i>) / (<i>Xp</i> - <i>Xq</i>)<br>
-    <i>Xr</i> = <i>s</i>^2 - <i>Xp</i> - <i>Xq</i><br>
-    <i>Yr</i> = -<i>Yp</i> + <i>s</i>(<i>Xp</i> - <i>Xr</i>)
-	<br><br></p>
-
-  <h5>2. Point multiplication</h5>
-    <p>a) If <i>Yp</i> = 0, then <i>R</i> = <i>O</i>.</p>
-	
-    <p>b) Else (e.g. with <i>k</i>=2), <i>R</i> is given this way:<br>
-    2<i>P</i> = <i>P</i> + <i>P</i> = <i>R</i><br>
-	<i>s</i> = (3<i>Xp</i>^2 + <i>a</i>) / (2<i>Yp</i>)<br>
-    <i>Xr</i> = <i>s</i>^2 - 2<i>Xp</i><br>
-    <i>Yr</i> = -<i>Yp</i> + <i>s</i>(<i>Xp</i> - <i>Xr</i>)
-	<br><br></p>
-
-
-<p> </br> </p>
-<h3 id="Fp">2. Curves in the field F(p)</h3>
-
-<h4>Overview</h4>
-  <p>When the curve is in the discrete field <i>F(p)</i> the curve is as follows: <i>(y^2) mod(p) = (x^3 + a*x + b) mod (p)</i></p>
-  
-  <p>The points (<i>x</i>, <i>y</i>) are elements of <i>F(p)</i> and <i>p</i> is prime. The number of points in <i>F(p)</i> is limited by at most <i>p*p</i> (finite field).</p>
-  
-  <table cellpadding=0 cellspacing=0>
-	<tr><td><img src="ECFp.PNG" width="85%"/></td></tr>
-	<tr><td align="CENTER" bgcolor="#E0DFE3"><i>y²</i> mod <i>29 = (x³ + 14x + 15)</i> mod <i>29</i></td></tr>
-  </table>
-
-  <p><br><b>Sample with the discrete group F(p) from the screenshot above:</b><br>
-  Selected curve: y^2 = x^3 + 14x + 15<br>
-  with p = 29, P = (18/3), and Q = (10/13)<br>
-  Addition:       R = P+Q = (8/28)<br>
-  Multiplication: R =  2P = (22/26)</p>
-
-  <p>There are 36 points: O, (1|1), (1|28), (2|14), (2|15), (5|6), (5|23), (6|5), (6|24), (8|1), (8|28), (9|0), (10|13), (10|16), (13|4), (13|25), (15|2), (15|27), (17|2), (17|27), (18|3), (18|26), (19|8), (19|21), (20|1), (20|28), (21|0), (22|3), (22|26), (23|11), (23|18), (24|9), (24|20), (26|2), (26|27), (28|0)<br><br></p>
+<table style="border-collapse: collapse">
+<tr>
+  <th>Polynomial</th>
+  <th>Bitstring</th>
+</tr>
+<tr>
+  <td>
+	\begin{alignat}{6}
+		& (&& x^8 && + && x^4 + && \, x^2 &&+ &&1)\:/\:(x^4 + x + 1) = x^4 + x \\
+		\hline
+		-& (&&\textcolor{gray}{x^8 +} && \textcolor{gray}{x^5 +}&&\textcolor{gray}{x^4})&& && &&\\
+		& && &&x^5 && + && x^2 && &&\\
+		& && -(&&\textcolor{gray}{x^5} && + && \textcolor{gray}{x^2 +} &&\textcolor{gray}{x})&&\\
+		& && && &&  && && x + && 1  \quad \textrm{Remainder}\\
+	\end{alignat}
+  </td>
+  <td>
+	\begin{alignat}{1}
+		&100010101 / 10011 = 10010\\[3pt]
+		\hline
+		-(&\textcolor{gray}{10011})&&\\
+		&00010010&&\\
+		&-(\textcolor{gray}{10011})&&\\
+		& \quad\  \ 000011 \quad \textrm{Remainder} 
+	\end{alignat}
+  </td>
+</tr>
+</table>
 
 
+<p>
+  <b>Greatest common divisor (gcd)</b><br>
+  The greatest common divisor can be calculated with the euclidean algorithm, just as for numbers.
+  This operation is required, when calculating the modulo inverse for division operations.
+</p>
 
-<h4>Calculations in general</h4>
+<h4>Point addition in detail</h4>
+<p>
+  When adding ponts for curves over \(\mathbb{F}_{2^m}\) it is similar to the other modes.
+  Instead of calculating modulo \(p\) you use the polynomial \(\f(x)).
+  We have to use the modulo inverse instead of a plain division.
+  The <b>three formulas</b> are:
+</p>
 
-  <h5>1. Point addition</h5>
-  
-    <p>a) If <i>P</i> = <i>-Q</i>, then point <i>R</i> is <i>O</i>.</p>
-	
-    <p>b) Else (with <i>P</i> != <i>Q</i>), <i>R</i> is given this way:<br>
-    <i>s</i> = ((<i>Yp</i> - <i>Yq</i>) / (<i>Xp</i> - <i>Xq</i>)) mod <i>p</i><br>
-    <i>Xr</i> = (<i>s</i>^2 - <i>Xp</i> - <i>Xq</i>) mod <i>p</i><br>
-    <i>Yr</i> = (-<i>Yp</i> + <i>s</i>(<i>Xp</i> - <i>Xr</i>)) mod <i>p</i>
-	<br><br></p>
-	
+\begin{alignat}{1}
+  	& m &= (Q_y + P_y) \cdot (Q_x + P_x)^{-1} &&\mod f(x)\\
+  	& R_x &= m^2 + k + P_x + Q_x + a &&\mod f(x)\\
+  	& R_y &= m(P_x + R_y) + R_x + P_y &&\mod f(x)
+\end{alignat}
 
-  <h5>2. Point multiplication</h5>
-
-    <p>a) If <i>Yp</i> = 0, then <i>R</i> = <i>O</i>.</p>
-	
-    <p>b) Else (e.g. with <i>k</i>=2), <i>R</i> is given this way:<br>
-    2<i>P</i> = <i>P</i> + <i>P</i> = <i>R</i><br>
-    <i>s</i> = ((3<i>Xp</i>^2 + <i>a</i>) / (2<i>Yp</i>)) mod <i>p</i><br>
-    <i>Xr</i> = (<i>s</i>^2 - 2<i>Xp</i>) mod <i>p</i><br>
-    <i>Yr</i> = (-<i>Yp</i> + <i>s</i>(<i>Xp</i> - <i>Xr</i>)) mod <i>p</i>
-	<br><br></p>
-
-
-
-<p> </br> </p>
-<h3 id="F2m">3. Curves in the field F(2^m)</h3>
-
-<h4>Overview</h4>
-
-  <p>Elements of the field <i>F(2^m)</i> are <i>m</i>-bit strings. Calculations can be performed by using the rules for polynomial arithmetic.</p>
-  <p>Since <i>F(2^m)</i> operates on bit-strings, computers can perform the calculations very efficiently.</p>
-  <p>The binary representation of an elliptic curve is <i>y^2 + xy = x^3 + ax^2 + b</i>.</p>
-  <p>The field <i>F(2^m)</i> is defined using a generator <i>G</i>. <i>G</i> is an irreducible primary polynomial of bit-length <i>m</i> + 1.</p>
-  <p>The negative of point <i>P</i> = (<i>Xp</i>, <i>Yp</i>) is <i>-P</i> = (<i>Xp</i>, <i>Xp</i> + <i>Yp</i>).</p>
-
-<table cellpadding=0 cellspacing=0>
-	<tr><td><img src="ECFm.PNG"></td><td><img src="ECFmElements.PNG"></td></tr>
-	<tr><td align="CENTER" bgcolor="#E0DFE3"><i>y² + xy = x³ + g9*x² + g3</i> ; generator G = 110111 ; m = 5</td></tr>
-</table><br><br>
+<h4>Point doubling in detail</h4>
+    
+\begin{alignat}{1}
+  	& m &= P_x + P_y &&\mod f(x)\\
+  	& R_x &= m^2 + m + a &&\mod f(x)\\
+  	& R_y &= P_x^2 + R_x \cdot (m + 1) &&\mod f(x)
+\end{alignat}
 
 
-<h4>Calculations in general</h4>
-
-  <h5>1. Polynomial calculations</h5>
-    <p>In order to understand calculations over <i>F(2^m)</i>, it's important to understand how to perform calculations with polynomials.</p>
-    <p>All polynomials will be represented as bit strings (e.g. for m=5 : x^4 + x^2 + x + 1 = 10111).</p>
-	
-    <p><b>Add (uses XOR)</b><br>
-    1011 + 0101 = 1110<br><br>
-	
-    <b>Multiply</b><br>
-    1011 * 1 = 1011<br>
-    1011 * 10 = 10110<br>
-    1011 * 11 = 10110 + 1011 = 11101<br><br>
-	
-    <b>Divide</b><br>
-    <img src="polyDivide.PNG" width="85%"/></p>
-
-
-  <h5>2. Point addition</h5>
-
-    <p>a) If <i>P</i> = <i>-Q</i>, then point <i>R</i> is <i>O</i>.</p>
-	
-    <p>b) Else (with <i>P</i> != <i>Q</i>), <i>R</i> is given this way:<br>
-    <i>s</i> = (<i>Yp</i> - <i>Yq</i>) / (<i>Xp</i> + <i>Xq</i>)<br>
-    <i>Xr</i> = <i>s</i>^2 + <i>s</i> + <i>Xp</i> + <i>Xq</i> + <i>a</i><br>
-    <i>Yr</i> = <i>s</i>(<i>Xp</i> + <i>Xr</i>) + <i>Xr</i> + <i>Yp</i>
-	<br><br></p>
-
-
-  <h5>3. Point multiplication</h5>
-
-    <p>a) If <i>Xp</i> = 0, then <i>R</i> = <i>O</i>.</p>
-	
-    <p>b) Else (e.g. with <i>k</i>=2), <i>R</i> is given this way:<br>
-    2<i>P</i> = <i>P</i> + <i>P</i> = <i>R</i><br>
-    <i>s</i> = <i>Xp</i> + <i>Yp</i> / <i>Xp</i><br>
-    <i>Xr</i> = <i>s</i>^2 + <i>s</i> + <i>a</i><br>
-    <i>Yr</i> = <i>Xp</i>^2 + (<i>s</i> + 1) *<i>Xr</i><br></p>
-
-
-<p>&nbsp;</p>
 <h2>References</h2>
 
 <p>For more information about elliptic curves see:</p>
-<p><b>[HMV04]</b></br>Hankerson, Darrel, Menezes, Alfred J., and Vanstone, Scott: Guide to Elliptic Curve Cryptography, Springer, 2004</p>
+<p><b>[HMV04]</b><br>Hankerson, Darrel, Menezes, Alfred J., and Vanstone, Scott: Guide to Elliptic Curve Cryptography, Springer, 2004</p>
 
-<p><b>[Wikipedia_EC]</b></br>Elliptic curves, <a target="_blank" href="http://en.wikipedia.org/wiki/Elliptic_curves">http://en.wikipedia.org/wiki/Elliptic_curves</a></p>
+<p><b>[Wikipedia_EC]</b><br>Elliptic curves, <a target="_blank" href="http://en.wikipedia.org/wiki/Elliptic_curves">http://en.wikipedia.org/wiki/Elliptic_curves</a></p>
 
-<p><b>[Wikipedia_ECC]</b></br>Elliptic-curve cryptography, <a target="_blank" href="https://en.wikipedia.org/wiki/Elliptic-curve_cryptography">https://en.wikipedia.org/wiki/Elliptic-curve_cryptography</a></p>
+<p><b>[Wikipedia_ECC]</b><br>Elliptic-curve cryptography, <a target="_blank" href="https://en.wikipedia.org/wiki/Elliptic-curve_cryptography">https://en.wikipedia.org/wiki/Elliptic-curve_cryptography</a></p>
 
-
-<p>&nbsp;</p>
 </body>
 </html>
-
-<i></i>
