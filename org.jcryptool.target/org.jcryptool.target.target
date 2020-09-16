@@ -19,11 +19,11 @@
 		<unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="4.14.0.v20200113020001"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
-		<repository location="https://jcryptool.github.io/org.jcryptool.thirdparty/site/m2bundle"/>
+		<repository location="https://cryptool.org/jct/thirdparty-p2/m2bundle"/>
 		<unit id="org.jcryptool.thirdparty.m2bundle.jaxb" version="0.0.1"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
-		<repository location="https://jcryptool.github.io/org.jcryptool.thirdparty/site/jre"/>
+		<repository location="https://cryptool.org/jct/thirdparty-p2/jre"/>
 		<unit id="org.jcryptool.thirdparty.jre.linux64.feature.feature.group" version="11.0.5.010"/>
 		<unit id="org.jcryptool.thirdparty.jre.macosx.feature.feature.group" version="11.0.5.010"/>
 		<unit id="org.jcryptool.thirdparty.jre.win64.feature.feature.group" version="11.0.5.010"/>
