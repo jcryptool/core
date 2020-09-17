@@ -327,12 +327,6 @@
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+O">
       </key>
-            <key
-            commandId="org.eclipse.ui.window.quickAccess"
-            contextId="org.eclipse.ui.contexts.window"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+3">
-      </key>
       
    </extension>
    <extension
