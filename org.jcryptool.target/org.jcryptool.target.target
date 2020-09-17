@@ -2,7 +2,7 @@
 <?pde version="3.8"?>
 <target name="JCrypTool RCP" sequenceNumber="41">
 <locations>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 		<repository location="http://download.eclipse.org/releases/2020-09"/>
 		<unit id="org.eclipse.equinox.core.sdk.feature.group" version="3.20.0.v20200828-1034"/>
 		<unit id="org.eclipse.equinox.executable.feature.group" version="3.8.900.v20200819-0940"/>
