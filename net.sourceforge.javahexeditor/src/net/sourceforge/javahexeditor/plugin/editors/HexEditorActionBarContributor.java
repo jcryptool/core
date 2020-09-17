@@ -35,7 +35,6 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorActionBarContributor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchActionConstants;
-import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.part.EditorActionBarContributor;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 
@@ -168,8 +167,20 @@ public final class HexEditorActionBarContributor extends EditorActionBarContribu
 		IMenuListener myMenuListener = new MyMenuListener();
 			
 		menu = menuManager.findMenuUsingPath(IWorkbenchActionConstants.M_FILE);
+		IContributionItem[] ici = menu.getItems();
+		for (IContributionItem ic : ici) {
+			System.out.println(ic.toString());
+		}
 		if (menu != null) {
-			menu.insertAfter(IWorkbenchCommandConstants.FILE_SAVE, new MyMenuContributionItem(MenuIds.SAVE_SELECTION_AS));
+			// This is the correct place to add the menu contribution 
+			// "Auswahl speichern unter" aber er findet die MenuID
+			// org.eclipse.ui.file.save aus unergründlichen Gründen nicht.
+			// Daher wird es am Ende der "Datei"-Menüs hinzugefügt.
+			// Das Problem ist mit der Migration auf Eclipse 2020-09 
+			// gekommen. In Eclipse 2019-09 funktionierte es noch.
+//			menu.insertAfter(IWorkbenchCommandConstants.FILE_SAVE, new MyMenuContributionItem(MenuIds.SAVE_SELECTION_AS));
+//			menu.addMenuListener(myMenuListener);
+			menu.add(new MyMenuContributionItem(MenuIds.SAVE_SELECTION_AS));
 			menu.addMenuListener(myMenuListener);
 		}
 
