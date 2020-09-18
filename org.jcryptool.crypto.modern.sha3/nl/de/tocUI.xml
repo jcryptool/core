@@ -5,11 +5,11 @@
     <topic href="$nl$/help/content/UI/TutorialUI.html" label="SHA-3">
        <topic href="$nl$/help/content/Tutorial.html" label="SHA-3 - Allgemeine Informationen">
        </topic>
-       <topic href="$nl$/help/content/ECHOTutorial.html" label="SHA-3 - ECHO">
+       <topic href="$nl$/help/content/ECHOTutorial.html" label="SHA-3 – ECHO">
        </topic>
-       <topic href="$nl$/help/content/JHTutorial.html" label="SHA-3 - JH">
+       <topic href="$nl$/help/content/JHTutorial.html" label="SHA-3 – JH">
        </topic>
-       <topic href="$nl$/help/content/SkeinTutorial.html" label="SHA-3 - Skein">
+       <topic href="$nl$/help/content/SkeinTutorial.html" label="SHA-3 – Skein">
        </topic>
     </topic> 
 </toc>

@@ -11,29 +11,28 @@
 
 		<h2>Hashwert erzeugen</h2>
 
-		<p>Der Hashwert wird immer vom aktuellen Editor berechnet. Starten Sie den SHA3 Wizard, welcher unter <b>Algorithmen -> Hash-> SHA-3-Kandidaten</b>
-		zu finden ist. Nun können Sie den gewünschten Algorithmus auswählen.</p>
+		<p>Der Hashwert wird immer vom aktuellen Editor berechnet. Starten Sie dazu den SHA3-Wizard, indem Sie auf den Menüpunkt <b>Algorithmen -> Hash-> SHA-3-Kandidaten</b> klicken. Nun können Sie den gewünschten Algorithmus und die Option <b>Hash erzeugen</b> auswählen.</p>
 
-		<p>Hierbei ist zu beachten, dass jeder Algorithmus unterschiedliche Hash-Bitlängen unterstützt,	daher sollte ein passender Algorithmus gewählt werden,
-		falls eine bestimmte Bitlänge benötig wird.<br>
-		Im Anschluss müssen Sie eine Bitlänge wählen (die angezeigten Werte sind auch die unterstützten Bitlängen). Nun wählen Sie
-		unter Optionen "Hash erzeugen".<br>
-		Damit Ihnen das Arbeiten mit dem erzeugten Hashwert leichter fällt, kann die Ausgabeform des Hashwertes frei gewählt werden.</p>
+		<p>Da jeder Algorithmus unterschiedliche Hashwert-Bitlängen unterstützt, müssen Sie eine passende Länge wählen.</p>
+		
+		<p>Damit Ihnen das Arbeiten mit dem erzeugten Hashwert leichter fällt, kann der Ausgabeort des Hashwertes frei gewählt werden.</p>
 		<ul>
 			<li><b>Hexeditor:</b> Gibt den Hashwert im Hexeditor aus.</li>
 			<li><b>Texteditor:</b> Gibt den Hashwert geblockt im Texteditor aus, was den Hash anschaulicher macht.</li>
-			<li><b>Hashstream:</b> gibt den Hashwert in einer Zeile ohne Abstand im Texteditor aus, wodurch das Verifizieren leichter fällt.</li>
+			<li><b>Hashstream:</b> Gibt den Hashwert in einer Zeile ohne Abstand im Texteditor aus, wodurch das Verifizieren leichter fällt.</li>
 		</ul>
 
-		<p>Durch klicken auf den "Finish" Button wird der Hash mit den ausgewählten Optionen erzeugt.</p>
+		<p>Durch Klicken auf den <b>Fertigstellen</b>-Button wird der Hashwert mit den ausgewählten Optionen erzeugt.</p>
+
 
 		<h2>Hashwert verifizieren</h2>
 
-		<p>Beim Verifizieren wird ebenfalls der Hashwert vom aktuellen Editor berechnet und anschließend mit einem anderen geprüft, ob es sich um
-		denselben handelt. Es werden jeweils beide Hashwerte ausgegeben und das Ergebnis dieser Überprüfung. Dazu müssen Sie ebenfalls den SHA3 - Wizard
-		öffnen und den Algorithmus sowie seine Bitlänge eingeben. Hierbei handelt es sich um den Algorithmus/Bitlänge des zu überprüfenden Hashwertes.
-		Unter Optionen wird nun "Hash verifizieren" gewählt, wodurch das darunter liegende Feld benutzbar wird. In diesem Feld kann man nun
-		den Hashwert eingeben. Mit dem <b>Finish</b> Button startet die Verifikation.
-		</p>
+		<p>Beim Verifizieren wird ein neuer Hashwert vom aktuellen Editorinhalt berechnet. Dieser neue Hashwert wird verglichen mit einem gegebenen Hashwert, den man im SHA-3-Wizard eingibt. Beide Hashwerte und das Ergebnis dieser Überprüfung werden in einem neuen Texteditor-Reiter ausgegeben. </p>
+		
+		<p>Auch hier ist im SHA-3-Wizard der entsprechende Algorithmus sowie die Bitlänge auszuwählen. Unter Optionen wird der Radiobutton <b>Hash verifizieren</b> gewählt, wodurch das darunter liegende Feld sichtbar und eingabebereit wird, um den gegebenen Hashwert einzugeben.</p>
+		
+		<p>Mit dem <b>Fertigstellen</b>-Button startet die Verifikation.</p>
+		
+		
 	</body>
 </html>
