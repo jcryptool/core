@@ -6,9 +6,11 @@
         href="$nl$/help/users/about/about.html" />
     <topic href="$nl$/help/users/about/tips.html" label="Tips and Tricks">
     </topic>
+
     <topic label="General Information"
         href="$nl$/help/users/general/toc.html" sort="true">
         <anchor id="general" />
+
         <topic href="$nl$/help/users/general/perspectives.html" label="Perspectives" sort="true">
            <anchor id="perspectives"/>
            <topic href="$nl$/help/users/general/perspective_default.html" label="Default">
@@ -16,6 +18,7 @@
            <topic href="$nl$/help/users/general/perspective_algorithm.html" label="Algorithm">
            </topic>
         </topic>
+
         <topic label="Views"
             href="$nl$/help/users/general/views.html" sort="true">
             <anchor id="views" />
@@ -24,6 +27,7 @@
             <topic href="$nl$/help/users/general/view_webbrowser.html" label="Web Browser">
             </topic>
         </topic>
+
         <topic label="Editors"
             href="$nl$/help/users/general/editors.html" sort="true">
             <anchor id="editors" />
@@ -33,11 +37,13 @@
                 href="$nl$/help/users/general/editor_text.html" />
             <topic href="nl/en/help/users/general/editor_hex_manual.html" label="Hexeditor Manual">
             </topic>
+
         </topic>
         <topic href="$nl$/help/users/general/preferences.html" label="Preferences" sort="true">
            <anchor id="preferences"/>
            <topic href="$nl$/help/users/general/preferences_provider.html" label="Crypto Provider">
            </topic>
+
         </topic>
         <topic href="$nl$/help/users/general/language.html" label="Changing the Language">
         </topic>
@@ -46,6 +52,7 @@
         <topic href="$nl$/help/users/general/updates.html" label="Updates">
         </topic>
     </topic>
+
     <topic href="$nl$/help/users/cryptology/toc.html" label="Cryptology">
 	    <topic label="Cryptographic Mechanisms"
 	        href="$nl$/help/users/cryptology/crypto_methods.html" />
@@ -55,6 +62,7 @@
 	        label="Time Table"
 	        href="$nl$/help/users/cryptology/crypto_timeline.html" />
 	</topic>
+
     <topic label="Algorithms"
         href="$nl$/help/users/algorithms/toc.html"
         sort="true">
