@@ -52,12 +52,12 @@ figcaption {
   <li><a href="#Fp">Curves in the field \(\mathbb{F}_p\)</a></li>
   <li><a href="#F2m">Curves in the field \(\mathbb{F}_{2^m}\)</a></li>
 </ol>
-<img src="curveType.PNG" width="85%" alt="Radio button selection of the three modes in JCrypTool view. It shows an option for real numbers, curves over finite fields F_p and curves over Galois binary fields F_m^2.">
+<img src="curveType.PNG" style="width:30%; min-width:200px" alt="Radio button selection of the three modes in JCrypTool view. It shows an option for real numbers, curves over finite fields F_p and curves over Galois binary fields F_m^2.">
 
 <p>b) Choosing the curve size <b>large</b> offers different standard curves (each in different variants): ANSI X9.62, SEC 2, ECC Brainpool, and CDC Group for the discrete curve type \(\mathbb{F}_p\); and ANSI X9.62 for the discrete curve type \(\mathbb{F}_{2^m}\).<br>
 Such large elliptic curves are used in professional cryptographic applications. Like in the case of the small size, you can add points and multiply points with a scalar.</p>
 
-<p align="center"><img src="EC-large-Fp-en.png" width="90%" alt="Screenshot from the JcrypTool plugin. Exemplary calculation for large curves. A large curve over a finite field F(p) is selected. The curve itself is the standardised curve ANSI X0.62 - prime192v1"></p>
+<p align="center"><img src="EC-large-Fp-en.png" style="width:90%" alt="Screenshot from the JcrypTool plugin. Exemplary calculation for large curves. A large curve over a finite field F(p) is selected. The curve itself is the standardised curve ANSI X0.62 - prime192v1"></p>
 
 <p>The results of the calculations (for both small and large sizes) can be saved and either looked at in the JCT editor or stored into a file.</p>
 
@@ -67,8 +67,7 @@ Such large elliptic curves are used in professional cryptographic applications. 
 
 <h3 id="realNumbers">1. Curves in the real number space</h3>
 
-<h4>Overview</h4>
-  <p>An elliptic curve in real number space has the form of \(y^2 = x^3 + a \times x + b\) where \(a\), \(b\), \(x\), and \(y\) are real numbers.</p>
+<p>An elliptic curve in real number space has the form of \(y^2 = x^3 + a \times x + b\) where \(a\), \(b\), \(x\), and \(y\) are real numbers.</p>
   
 <p>
   In the real number space, there are infinitely many points on the curve.
@@ -115,7 +114,7 @@ Such large elliptic curves are used in professional cryptographic applications. 
   There are <b>three simple formulas</b> for point addition on elliptic curves. These are:
   	\begin{alignat}{1}
   	& m &= \frac{Q_y - Q_y}{Q_x - P_x}\\
-  	& R_x &= s^2 - P_x - Q_x\\
+  	& R_x &= m^2 - P_x - Q_x\\
   	& R_y &= − P_y + s(P_x − R_x)
   	\end{alignat}
 </p>
@@ -146,7 +145,7 @@ We seek \(R\):
  <li>Calculate the x value of \(R\):<br>
   	\(R_x = m^2 - P_x - Q_x = 0.15^2 - 0.59 - (-3.55)  = 2.98\)</li>
  <li>Calculate the y value of \(R\):<br>
-  	\(R_y = − P_y + k(P_x − R_x) = -2.40 + 0.157(-3.55 - 2.98) = -3.42\)</li>
+  	\(R_y = − P_y + m(P_x − R_x) = -2.40 + 0.157(-3.55 - 2.98) = -3.42\)</li>
 </ol> 
 
 \(R = (3.98, -3.42)\)
@@ -195,15 +194,15 @@ $$m = \frac{3x^2 + a}{2y}$$
 	  <li> Point \(T = (-1.3 / 5.07)\)</li>
   </ul>
   
-We seek \(R = 2 \cdot T\):
+We seek \(R = 2 \times T\):
 
  <ol>
  <li> Calculate \(m\):<br> 
   	\(m = \frac{3x^2 + a}{2y} = \frac{3 \cdot (-1.3)^2 + 10}{2 \cdot 5.07} = 0.486\)</li>
  <li>Calculate the x value of \(R\):<br>
-  	\(R_x = k^2 - 2x = 0.486^2 - 2 \cdot 5.07)  = 2.83\)</li>
+  	\(R_x = m^2 - 2x = 0.486^2 - 2 \cdot 5.07)  = 2.83\)</li>
  <li>Calculate the y value \(R\):<br>
-  	\(R_y = − y + k(x − R_x) = -5.07 - 0.486 \cdot -1.3 + 0.486 \cdot 2.83 = -3.06\)</li>
+  	\(R_y = − y + m(x − R_x) = -5.07 - 0.486 \cdot -1.3 + 0.486 \cdot 2.83 = -3.06\)</li>
 </ol> 
 
 \(R = (2.83, -3.06)\)
@@ -216,9 +215,15 @@ We seek \(R = 2 \cdot T\):
 </figure>
 </div>
 </div>
+
+<p><b>Definition of the exception \(T_y = 0\):</b><br>
+	In this case the result is defined as the point in infinity \(O\), because a division by zero
+	would occur in the formula.
+	It is sometimes also denoted as \(\infty\).
+</p>
  
   	
-<h3 id="Fp">2. Curves over finite fields \(mathbb{F}_p\) </h3>
+<h3 id="Fp">2. Curves over finite fields \(\mathbb{F}_p\)</h3>
 
 <p>
   A curve over the discrete field \(\mathbb{F}_p\) can be described through the equation \(y^2 = x^3 + ax + b \quad(\textrm{mod}\, p)\).
@@ -398,7 +403,7 @@ Given are:
 	  <li> Point \(P = (18 / 3)\)</li>
   </ul>
 
-<p>We seek \(R = 2 \cdot P\):</p> 
+<p>We seek \(R = 2 \times P\):</p> 
 
  <ol>
  <li> Calculate \(m\):<br> 
@@ -436,13 +441,19 @@ R_y &= − y &&+ m(x − R_x) &&\mod p &&= \\
  
 \(R = (22/26)\)
 
+<p><b>Definition of the exception \(T_y = 0\):</b><br>
+	In this case the result is defined as the point in infinity \(O\), because a division by zero
+	would occur in the formula.
+	It is sometimes also denoted as \(\infty\).
+</p>
+
 <h3 id="F2m">3. Curves in the field \(\mathbb{F}_{2^m}\)</h3>
 
 <p>
   Elements of galois fields \(\mathbb{F}_{2^m}\) are polynomials of length \(m\).
   For these groups all coefficients are calculated modulo 2 (living in the numbers \(\mathbb{Z}_2\)).
   That allows very fast computation for the following reasons:
-  An exmample polynomial of length \(8\): \(x^8 + x^4 + x^3+x+1\) can also be written as vector respectively as simple bits: \(10011011\)
+  An exmample polynomial of length \(8\): \(x^8 + x^4 + x^3+x+1\) can also be written as vector respectively as simple bits: \(10011011\).
   Present terms are noted as 1, the others as 0.
   Negative values or values greater than 1 are not allowed in modulo 2.
   This representation allows addition as well as subtraction to be simple bitwise XOR operations.
@@ -534,7 +545,7 @@ R_y &= − y &&+ m(x − R_x) &&\mod p &&= \\
 
 <p>
   <b>Multiplication</b><br>
-  At first we take a look at multiplication with single term polynomials (monom) of form \(x^k\).
+  At first we take a look at multiplication with single term polynomials (monomial) of form \(x^k\).
   By the example you can see, that this form of multiplication via \(x^k\) is a left shift of \(k\) bits.
 </p>
 
@@ -588,11 +599,11 @@ R_y &= − y &&+ m(x − R_x) &&\mod p &&= \\
 </div>
 
 <p>
-  The multiplication of two polynomials is a result of the distributive law.
+  The multiplication of two polynomials results from the distributive law.
   This is the well-known principle from school, that every term must be multiplied with each other term.
   This can look like  \((a + b) \cdot (x + y) = ax + ay + bx +by\).<br>
   Note however, that terms with even coefficients are zero, because even numbers modulo 2 result in zero (\(4x^8 \mod 2 = 0x^8\)).<br>
-  If you look at the multiplication from a bit point of view: for each 1 in the multiplicative polynomial the other one is shifted left for the power of that term.
+  If you look at the multiplication from a bit point of view: for each 1 in the right factor polynomial the other one is shifted left for the power of that factor.
   Each shift is written below, being shifted 1 to the right by default. 
   In the end each term written below is XORed for the final result of the multiplication.
 </p>
@@ -635,7 +646,7 @@ R_y &= − y &&+ m(x − R_x) &&\mod p &&= \\
 <p>
   <b>Division</b><br>
   The Division with remainder is done by applying normal polynomial division rules.
-  Even terms are eliminated,because even numbers modulo 2 result in 0<br>
+  Even terms are eliminated,because even numbers modulo 2 result in 0.
   A division works as follows:
 </p>
   <ol>
@@ -701,14 +712,14 @@ R_y &= − y &&+ m(x − R_x) &&\mod p &&= \\
 <h4>Point addition in detail</h4>
 <p>
   When adding ponts for curves over \(\mathbb{F}_{2^m}\) it is similar to the other modes.
-  Instead of calculating modulo \(p\) you use the polynomial \(\f(x)).
+  Instead of calculating modulo \(p\) you use the polynomial \(f(x)\).
   We have to use the modulo inverse instead of a plain division.
   The <b>three formulas</b> are:
 </p>
 
 \begin{alignat}{1}
   	& m &= (Q_y + P_y) \cdot (Q_x + P_x)^{-1} &&\mod f(x)\\
-  	& R_x &= m^2 + k + P_x + Q_x + a &&\mod f(x)\\
+  	& R_x &= m^2 + m + P_x + Q_x + a &&\mod f(x)\\
   	& R_y &= m(P_x + R_y) + R_x + P_y &&\mod f(x)
 \end{alignat}
 
@@ -720,6 +731,11 @@ R_y &= − y &&+ m(x − R_x) &&\mod p &&= \\
   	& R_y &= P_x^2 + R_x \cdot (m + 1) &&\mod f(x)
 \end{alignat}
 
+<p><b>Definition of the exception \(T_y = 0\):</b><br>
+	In this case the result is defined as the point in infinity \(O\), because a division by zero
+	would occur in the formula.
+	It is sometimes also denoted as \(\infty\).
+</p>
 
 <h2>References</h2>
 

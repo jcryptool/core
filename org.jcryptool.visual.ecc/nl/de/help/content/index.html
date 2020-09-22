@@ -70,8 +70,6 @@ Solche großen elliptischen Kurven kommen in professionellen kryptographischen A
 
 <h3 id="realNumbers">1. Kurven in der Ebene der reellen Zahlen</h3>
 
-<h4>Punktaddition</h4>
-
   <p>Elliptische Kurven in der Ebene von reellen Zahlen entsprechen der Gleichung \(y^2 = x^3 + a \cdot x + b\), wobei die Variablen \(a\), \(b\), \(x\) und \(y\) reelle Zahlen sind.</p>
   <p>Auf der reellen Zahlenebene gibt es unendlich viele Punkte \((x,y)\) auf der Kurve. Für jeden Punkt auf der Kurve gibt es einen negativen Wert, so das \(y = -y\) mit der Ausnahme \(y = 0\).</p>
   <p>Zwei Punkte auf der Kurve können <b>"addiert"</b> werden. Damit ist eine geometrische Operation gemeint, die uns zu zwei gegebenen Punkten einen dritten Punkt liefert.
@@ -138,9 +136,10 @@ Wir suchen \(R\):
 
 \(R = (3.98, -3.42)\)
 
-<p><br><b>Definition des Sonderfalls \(P = -Q\):</b> <br>
+<p><b>Definition des Sonderfalls \(P = -Q\):</b> <br>
 	In diesem Fall ist das Ergebnis das Fernelement \(O\).
 	Das ist ein Punkt in der Unendlichkeit und wird auch als \(\infty\) notiert.
+</p>
 
 <h4>Punktverdopplung bzw. -multiplikation im Detail</h4>
 <p>
@@ -196,6 +195,11 @@ Wir suchen \(R = 2 \cdot T\):
 </div>
 </div>
 
+<p><b>Definition des Sonderfalls \(T_y = 0\):</b> <br>
+	In diesem Fall ist das Ergebnis definiert als das Fernelement \(O\),
+	weil sonst eine Division durch null passiern würde.
+	Das ist ein Punkt in der Unendlichkeit und wird auch als \(\infty\) notiert.
+</p>
 
 <h3 id="Fp">2. Kurven über den Körper \(\mathbb{F}_p\)</h3>
 
@@ -216,6 +220,13 @@ Wir suchen \(R = 2 \cdot T\):
   <figcaption><b>Abbildung d)</b>Eine elliptische Kurve über \(\mathbb{F}_{29}\). Typisch für kryptografische Operationen
   modulo einer Primzahl, sind die "springend" angeordneten Elemente.</figcaption>
 </figure> 
+
+
+<p><b>Definition des Sonderfalls \(T_y = 0\):</b> <br>
+	In diesem Fall ist das Ergebnis definiert als das Fernelement \(O\),
+	weil sonst eine Division durch null passiern würde.
+	Das ist ein Punkt in der Unendlichkeit und wird auch als \(\infty\) notiert.
+</p>
 
 <h4>Punktaddition im Detail</h4>
 <p> 
@@ -400,6 +411,12 @@ R_y &= − y &&+ k(x − R_x) &&\mod p &&= \\
  </ol>
  
 \(R = (22/26)\)
+
+<p><b>Definition des Sonderfalls \(T_y = 0\):</b> <br>
+	In diesem Fall ist das Ergebnis definiert als das Fernelement \(O\),
+	weil sonst eine Division durch null passiern würde.
+	Das ist ein Punkt in der Unendlichkeit und wird auch als \(\infty\) notiert.
+</p>
 
 <h3 id="F2m">3. Kurven über dem Körper \(\mathbb{F}_{2^m}\)</h3>
 
@@ -677,6 +694,12 @@ Es gelten folgende Definitionen:
   	& R_y &= P_x^2 + R_x \cdot (k + 1) &&\mod f(x)
 \end{alignat}
 
+
+<p><b>Definition des Sonderfalls \(P_y = 0\):</b> <br>
+	In diesem Fall ist das Ergebnis definiert als das Fernelement \(O\),
+	weil sonst eine Division durch null passiern würde.
+	Das ist ein Punkt in der Unendlichkeit und wird auch als \(\infty\) notiert.
+</p>
 
 <h2>Referenzen</h2>
 <p>Weitere Informationen über elliptische Kurven:</p>
