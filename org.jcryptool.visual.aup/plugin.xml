@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-
    <extension
          point="org.eclipse.ui.views">
       <view
@@ -31,16 +30,6 @@
                tooltip="%command.RestartTooltip">
          </command>
       </menuContribution>
-      <menuContribution
-            allPopups="false"
-            locationURI="toolbar:org.jcryptool.visual.aup.views.AndroidUnlockPattern">
-         <command
-               commandId="org.jcryptool.visual.aup.HelpCommand"
-               icon="platform:/plugin/org.eclipse.help.ui/icons/view16/help_view.gif"
-               style="push"
-               tooltip="%command.HelpTooltip">
-         </command>
-      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -58,10 +47,6 @@
       <handler
             class="org.jcryptool.visual.aup.handlers.RestartHandler"
             commandId="org.jcryptool.visual.aup.RestartCommand">
-      </handler>
-      <handler
-            class="org.jcryptool.visual.aup.handlers.HelpHandler"
-            commandId="org.jcryptool.visual.aup.HelpCommand">
       </handler>
    </extension>
    <extension
