@@ -271,7 +271,7 @@
          	minimized="false" 
          	ratio="0.5" 
          	relationship="bottom" 
-         	relative="org.jcryptool.actions.views.ActionView"/>
+         	relative="org.jcryptool.fileexplorer.views.FileExplorerView"/>
       </perspectiveExtension>
    </extension>
 
