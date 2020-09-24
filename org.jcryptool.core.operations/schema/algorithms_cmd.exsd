@@ -269,7 +269,7 @@ If there should be only one block length, there is no need for a trailing &apos;
          <meta.section type="copyright"/>
       </appInfo>
       <documentation>
-         (c) 2010 JCrypTool Core team
+         Copyright (c) 2010, 2020 JCrypTool Team and Contributors
       </documentation>
    </annotation>
 
