@@ -11,26 +11,28 @@
 
 		<h2>Generate hash</h2>
 
-		<p>The hash is generated out of the current active editor. Start the SHA-3 wizard. It can be found in <b>Algorithm -> Hash - > SHA3-Candidates</b><br>
-		Chose a algorithm you want to use. I would like to remind you that all candidates could support different hash bitlength.<br>
-		Then choose a compatibly hash bitlength. Last you have to click on the hash button.
-		<br>For better understanding you could choose the output form of the hash value.
+		<p>The hash is generated always out of the current active editor. Start the SHA-3 wizard. It can be found in <b>Algorithms -> Hash -> SHA-3-Candidates</b>. Chose an algorithm and the option <b>Create Hash</b>.</p>
+
+		<p>As all candidates support different bitlengths of the hash value, you have to choose one.</p>
+		
+		<p>For better understanding you could choose the output medium of the hash value.
 		<ul>
-		<li><b>Hexeditor:</b> displays hashcode in a hex editor.</li>
-		<li><b>Texteditor:</b> displays hashcode blocked in a text editor, so the generated hashcode is well-arranged.</li>
-		<li><b>Hashstream:</b> displays hashcode in a row of characters in text editor, so the verification is easier to use.</li>
+		<li><b>Hex editor:</b> Displays the hash value in a hex editor.</li>
+		<li><b>Text editor:</b> Displays the hash value blocked in a text editor, so the generated hash value is well-arranged.</li>
+		<li><b>Hash stream:</b> Displays the hash value in a row of characters in the text editor, so the verification is easier to use.</li>
 		</ul>
-		<p>By clicking on the "Finish" button the hash will be generated.</p>
-		<h1>Verify hash</h1>
-		<p>
-		If you want to verify a text, a hashcode will be generated out of the editor.
-		This hashcode will be compared with the original hashcode.
-		The original and the new generated hashcode and also the conclusion of the compare.
-		<br/>
-		For the verification you have also to use the SHA-3 wizard with the right algorithm and hash bitlength.
-		But now you have to choose the option "Hash verification". Now a new field will be available.
-		And in this field you have to insert the original hashcode.
-		By clicking on the <b>Finish</b> button the verification will be started.
-		</p>
+		
+		<p>By clicking on the <b>Finish</b> button the hash value will be generated.</p>
+
+
+		<h2>Verify hash</h2>
+		
+		<p>A new hash value is generated from the editor content. This new hash value is compared with a given hash value entered in the SHA-3 wizard. The given and the new hash value and also the result of the comparison are shown in an output text editor tab.</p>
+		
+		<p>For the verification you also have choose in the SHA-3 wizard the according algorithm and bitlength, but also the option <b>Verify Hash</b> via a radio button. When selecting this radio button, a new field is available to enter the given hash value.</p>
+		
+		<p>By clicking on the <b>Finish</b> button the verification will be started.</p>
+		
+		
 	</body>
 </html>

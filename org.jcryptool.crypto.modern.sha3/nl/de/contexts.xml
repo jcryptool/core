@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
 	<context id="wizardhelp" title="SHA3">
-    <description>SHA3 ist eine Hash - Funktion, die momentan noch entwickelt wird. Hier stehen Ihnen drei verschiedene Kandidaten der zweiten Runde zur Verfügung.</description>
-  <topic href="$nl$/help/content/ECHOTutorial.html" label="SHA3 - ECHO"/>
-  <topic href="$nl$/help/content/JHTutorial.html" label="SHA3 - JH"/>
-  <topic href="$nl$/help/content/SkeinTutorial.html" label="SHA3 - Skein"/>
+    <description>SHA3 (Keccak) ist eine aktuelle Hash-Funktion, die vom NIST als Nachfolger der SHA-1/2-Famile ausgewählt wurde. Hier stehen Ihnen drei andere Kandidaten der zweiten Runde zur Verfügung (außer dem Sieger Keccak).</description>
+  <topic href="$nl$/help/content/ECHOTutorial.html" label="SHA3-ECHO"/>
+  <topic href="$nl$/help/content/JHTutorial.html" label="SHA3-JH"/>
+  <topic href="$nl$/help/content/SkeinTutorial.html" label="SHA3-Skein"/>
 	</context>
 </contexts>
