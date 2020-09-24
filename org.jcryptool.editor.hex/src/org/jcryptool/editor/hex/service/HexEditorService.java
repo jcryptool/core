@@ -69,9 +69,8 @@ public class HexEditorService extends AbstractEditorService {
     	ByteBuffer buf = ByteBuffer.allocate(bufferSize);
     	
     	try {
-//			int readBytes = editor.getManager().getContent().get(buf, bufferSize);
     		int readBytes = editor.getManager().getContent().get(buf, 0);
-			System.out.println("readBytes " + readBytes + " bufferSize " + bufferSize);
+    		LogUtil.logWarning("Not all Bytes have been read: readBytes " + readBytes + " bufferSize " + bufferSize);
 		} catch (IOException e) {
 			LogUtil.logError(HexEditorConstants.EditorID, e);
 		}
@@ -105,9 +104,8 @@ public class HexEditorService extends AbstractEditorService {
     	ByteBuffer buf = ByteBuffer.allocate(bufferSize);
     	
     	try {
-//			int readBytes = editor.getManager().getContent().get(buf, bufferSize);
     		int readBytes = editor.getManager().getContent().get(buf, 0);
-			System.out.println("readBytes " + readBytes + " bufferSize " + bufferSize);
+    		LogUtil.logWarning("Not all Bytes have been read: readBytes " + readBytes + " bufferSize " + bufferSize);
 		} catch (IOException e) {
 			LogUtil.logError(HexEditorConstants.EditorID, e);
 		}
@@ -140,10 +138,10 @@ public class HexEditorService extends AbstractEditorService {
     	ByteBuffer byteBuffer = ByteBuffer.wrap(data);
     	
     	byteBuffer.rewind();
-    	while (byteBuffer.hasRemaining()) {
-    		System.out.print(byteBuffer.get());
-    	}
-    	System.out.println();
+//    	while (byteBuffer.hasRemaining()) {
+//    		System.out.print(byteBuffer.get());
+//    	}
+//    	System.out.println();
     	
     	editor.getManager().getContent().insert(byteBuffer, 0);
     }
@@ -164,16 +162,17 @@ public class HexEditorService extends AbstractEditorService {
 			}
 	    	
 	    	byteBuffer.rewind();
-	    	while (byteBuffer.hasRemaining()) {
-	    		System.out.print(byteBuffer.get());
-	    	}
-	    	System.out.println();
+//	    	while (byteBuffer.hasRemaining()) {
+//	    		System.out.print(byteBuffer.get());
+//	    	}
+//	    	System.out.println();
 	 
 	    	// Set content to editor. Overwrite the complete existing content.
 	    	editor.getManager().getContent().insert(byteBuffer, 0);
     	}
     	catch(Exception e) {
     		e.printStackTrace();
+    		LogUtil.logError(HexEditorConstants.EditorID, e);
     	}
     	
     }
