@@ -7,7 +7,7 @@
       <view
             category="org.eclipse.ui"
             class="org.jcryptool.core.introduction.views.AlgorithmInstruction"
-            icon="platform:/plugin/org.eclipse.ui.intro/icons/welcome16.gif"
+            icon="platform:/plugin/org.eclipse.ui.intro/icons/welcome16.png"
             id="org.jcryptool.core.introduction.views.AlgorithmInstruction"
             inject="true"
             name="%view.name">
