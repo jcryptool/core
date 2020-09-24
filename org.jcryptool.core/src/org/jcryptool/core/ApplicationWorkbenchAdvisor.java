@@ -9,8 +9,12 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.core;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
+import org.eclipse.core.runtime.preferences.IPreferencesService;
+import org.eclipse.jface.preference.IPreferenceNode;
+import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPage;
@@ -105,6 +109,16 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
                 OperationsPlugin.getDefault().getAlgorithmsManager().setCommandsEnabled(true);
             }
         }
+        
+        PreferenceManager pm = PlatformUI.getWorkbench().getPreferenceManager();
+        List<IPreferenceNode> pages = pm.getElements(PreferenceManager.PRE_ORDER);
+        for (IPreferenceNode page : pages) {
+        	page.getId();
+        	System.out.println(page.getId());
+        }
+        pm.remove("org.eclipse.equinox.security.ui.category");
+        pm.remove("org.eclipse.ui.net.NetPreferences");
+        
     }
 
     /**

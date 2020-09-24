@@ -6,7 +6,7 @@
 			name="%editor.name"
 			icon="icons/hex.png"
 			default="true"
-			extensions="*"
+			extensions="a,bin,cab,class,com,dat,data,drv,dll,exe,hex,iso,jar,lib,o,out,part,pdf,png,ram,res,rom,sys,zip"
 			contributorClass="net.sourceforge.javahexeditor.plugin.editors.HexEditorActionBarContributor"
 			class="net.sourceforge.javahexeditor.plugin.editors.HexEditor"
 			id="org.jcryptool.editors.hex.HexEditor">
@@ -125,12 +125,6 @@
           name="%emptyfile.label">
     </command>
     <command
-          description="%open.command.description"
-          helpContextId="org.jcryptool.core.help.javahexEditor"
-          id="org.jcryptool.editor.hex.openFile"
-          name="%open.command.name">
-    </command>
-    <command
           defaultHandler="org.jcryptool.editor.hex.commands.NewFile"
           id="org.jcryptool.editor.hex.templatefileCommand"
           name="%samplefile.label">
@@ -138,6 +132,12 @@
     <command
           id="org.jcryptool.editor.hex.command.openIn"
           name="%action.label.1">
+    </command>
+    <command
+          description="%open.command.description"
+          helpContextId="org.jcryptool.core.help.javahexEditor"
+          id="org.jcryptool.editor.hex.openFile"
+          name="%open.command.name">
     </command>
  </extension>
 </fragment>

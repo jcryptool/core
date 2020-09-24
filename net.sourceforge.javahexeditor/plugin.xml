@@ -10,22 +10,6 @@
       </contexts>
    </extension>
    <extension
-         id="javahexeditorIdentifier"
-         name="javahexeditorName"
-         point="org.eclipse.ui.editors">
-      <editor
-            class="net.sourceforge.javahexeditor.plugin.editors.HexEditor"
-            contributorClass="net.sourceforge.javahexeditor.plugin.editors.HexEditorActionBarContributor"
-            extensions="a,bin,cab,class,com,dat,data,drv,dll,exe,hex,iso,jar,lib,o,out,part,pdf,png,ram,res,rom,sys,txt,zip"
-            icon="icons/javahexeditor-16x16.png"
-            id="net.sourceforge.javahexeditor"
-            name="%editor.name">
-         <contentTypeBinding
-               contentTypeId="javahexeditor.binaryFile">
-         </contentTypeBinding>
-      </editor>
-   </extension>
-   <extension
          point="org.eclipse.ui.preferencePages">
       <page
             category="org.jcryptool.preferences.editors"

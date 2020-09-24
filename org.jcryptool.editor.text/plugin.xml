@@ -28,6 +28,12 @@
             id="org.jcryptool.editor.text.openIn"
             name="%action.switch.editor">
       </command>
+      <command
+            description="%open.command.description"
+            helpContextId="org.jcryptool.editor.text.textEditor"
+            id="org.jcryptool.editor.text.openFile"
+            name="%open.command.name">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -42,6 +48,31 @@
       <handler
             class="org.jcryptool.editor.text.commands.OpenInHex"
             commandId="org.jcryptool.editor.text.openIn">
+      </handler>
+      <handler
+            class="org.jcryptool.editor.text.commands.OpenEditorHandler"
+            commandId="org.jcryptool.editor.text.openFile"
+            helpContextId="org.jcryptool.editor.text.textEditor">
+         <activeWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <instanceof
+                        value="org.eclipse.core.filesystem.IFileStore">
+                  </instanceof>
+               </iterate>
+            </with>
+         </activeWhen>
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <count
+                     value="1">
+               </count>
+            </with>
+         </enabledWhen>
       </handler>
    </extension>
    <extension
@@ -98,6 +129,17 @@
             </visibleWhen>
          </command>
       </menuContribution>
+      <menuContribution
+            locationURI="popup:org.jcryptool.fileexplorer.popup.open">
+         <command
+               commandId="org.jcryptool.editor.text.openFile"
+               helpContextId="org.jcryptool.editor.text.textEditor"
+               icon="icons/text_edit.png"
+               label="%open.command.label"
+               style="push"
+               tooltip="%open.command.tooltip">
+         </command>
+      </menuContribution>
    </extension>
    <extension
          point="org.jcryptool.core.editorButton">
@@ -135,56 +177,5 @@
       <contexts
             file="$nl$/contexts.xml">
       </contexts>
-   </extension>
-   <extension
-         point="org.eclipse.ui.commands">
-      <command
-            description="%open.command.description"
-            helpContextId="org.jcryptool.editor.text.textEditor"
-            id="org.jcryptool.editor.text.openFile"
-            name="%open.command.name">
-      </command>
-   </extension>
-   <extension
-         point="org.eclipse.ui.handlers">
-      <handler
-            class="org.jcryptool.editor.text.commands.OpenEditorHandler"
-            commandId="org.jcryptool.editor.text.openFile"
-            helpContextId="org.jcryptool.editor.text.textEditor">
-         <activeWhen>
-            <with
-                  variable="selection">
-               <iterate
-                     ifEmpty="false"
-                     operator="or">
-                  <instanceof
-                        value="org.eclipse.core.filesystem.IFileStore">
-                  </instanceof>
-               </iterate>
-            </with>
-         </activeWhen>
-         <enabledWhen>
-            <with
-                  variable="selection">
-               <count
-                     value="1">
-               </count>
-            </with>
-         </enabledWhen>
-      </handler>
-   </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="popup:org.jcryptool.fileexplorer.popup.open">
-         <command
-               commandId="org.jcryptool.editor.text.openFile"
-               helpContextId="org.jcryptool.editor.text.textEditor"
-               icon="icons/text_edit.png"
-               label="%open.command.label"
-               style="push"
-               tooltip="%open.command.tooltip">
-         </command>
-      </menuContribution>
    </extension>
 </plugin>
