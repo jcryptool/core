@@ -4,8 +4,8 @@
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <title>ElGamal cryptosystem</title>
+	  <script id="MathJax-script" async src="${JCTJS_HOST}/javascript/MathJax-master/es5/tex-mml-svg.js"></script>
 </head>
-
 <body>
   <h1>ElGamal Cryptosystem (Encrypt, Decrypt, Sign, and Verify)</h1>
 
@@ -40,15 +40,15 @@
   
   <h3 id="Setup">a) ElGamal Setup (Parameter Generation)</h3>
   
-  <p> ElGamal encryption can be defined over any cyclic group G with a finite order.</p>
+  <p> ElGamal encryption can be defined over any cyclic group \(G\) with a finite order.</p>
 
-  <p>Alice and Bob both use their own cyclic (aka finite) group G with d elements (aka the group is of order d). This group is generated with the generator g where g is an element of G. d is an n-bit integer. The input for the generation process is normally the security parameter n. All of this data is made public. As G often Z_d = { 0, … , d-1 } is used with a prime d.</p>
+  <p>Alice and Bob both use their own cyclic (aka finite) group \(G\) with \(d\) elements (aka the group is of order \(d\)). This group is generated with the generator \(g\) where \(g\) is an element of \(G\). \(d\) is an \(n\)-bit integer. The input for the generation process is normally the security parameter \(n\). All of this data is made public. As \(G\) often \(Z_d = \{ 0, … , d-1 \}\) is used with a prime \(d\).</p>
 
-  <p><b>Note 1:</b> The randomly chosen d should be large and have a similar size as an RSA modulus (1024 - 4096 bit).</p>
+  <p><b>Note 1:</b> The randomly chosen \(d\) should be large and have a similar size as an RSA modulus (1024 - 4096 bit).</p>
   
-  <p><b>Note 2:</b> The generator g is a special number and must be a primitive root (aka primitive element) of G.</p>
+  <p><b>Note 2:</b> The generator \(g\) is a special number and must be a primitive root (aka primitive element) of \(G\).</p>
   
-  <p> <b> Note 3:</b> d > 256 must be selected in this plugin. The reason for this is that your input text is saved as Extended ASCII. Extended ASCII consists of 256 characters, each of which must be mapped to an element of the G group.
+  <p> <b> Note 3:</b> \(d > 256\) must be selected in this plugin. The reason for this is that your input text is saved as Extended ASCII. Extended ASCII consists of 256 characters, each of which must be mapped to an element of the \(G\) group.
   
   <h3 id="SchemeKeyGen">b) ElGamal Key Generation</h3>
 
@@ -56,19 +56,20 @@
 
   <p>For encryption we need Bob's public key. His key generation works like this:</p>
   <ul>
-  <li>Bob chooses b randomly from Z*_d = { 1, … , d-1 } with 1 < b < d-2. This b is his private key. He must keep his private key b secret.</li>
-  <li>Bob computes B = g^b. This is (part of) his public key.</li>
-  <li>Bob publishes B, along with the description of G, d, and g, as his public key.</li>
+  <li>Bob chooses \(b\) randomly from \(Z^*_d = \{ 1, … , d-1 \}\) with \(1 < b < d-2\). This \(b\) is his private key. He must keep his private key \(b\) secret.</li>
+  <li>Bob computes \(B = g^b\). This is (part of) his public key.</li>
+  <li>Bob publishes \(B\), along with the description of \(G\), \(d\), and \(g\), as his public key.</li>
   </ul>
 
   <p>For the signature of Alice we need Alice's private key. Her key generation works like this:</p>
   <ul>
-  <li>Alice chooses a randomly from Z*_d = { 1, … , d-1 } with 1 < a < d-2. This is her private key. She must keep her private key a secret.</li>
-  <li>Alice computes A = g^a. This is (part of) her public key.</li>
-  <li>Alice publishes A, along with the description of G, d, and g, as her public key.</li>
+  <li>Alice chooses \(a\) randomly from \(Z^*_d = \{ 1, … , d-1 \}\) with \(1 < a < d-2\). This is her private key. She must keep her private key \(a\) secret.</li>
+  <li>Alice computes \(A = g^a\). This is (part of) her public key.</li>
+  <li>Alice publishes A, along with the description of \(G\), \(d\), and \(g\), as her public key.</li>
   </ul>
 
-  <p><b>Note:</b> The values of d and g are determined independently by Alice and Bob &nbsp;&ndash; for simplicity reasons we omitted for these setup parameters the indices "A" and "B". For encryption, the values from Bob are needed; for signing the values from Alice are needed.</p>
+  <p><b>Note:</b> The values of \(d\) and \(g\) are determined independently by Alice and Bob &#8212; for simplicity reasons we omitted for these setup parameters the indices \(A\) and \(B\). For encryption, the values from Bob are needed; for signing the values from Alice are needed.</p>
+
 
   
   <h3 id="SchemeEncDec">c) ElGamal Encryption / Decryption</h3>
@@ -78,36 +79,36 @@
   
   <h4 id="SchemeEnc">c1) ElGamal Encryption</h3>
 
-  <p>The encryption algorithm works as follows: To encrypt a plaintext message m for Bob, Alice uses his public key ( G, d, g, B ), and</p>
+  <p>The encryption algorithm works as follows: To encrypt a plaintext message \(m\) for Bob, Alice uses his public key \(( G, d, g, B )\), and</p>
   <ul>
-  <li>Alice chooses a random secret session key k from { 1, … , d-1 }.</li>
-  <li>Alice calculates a public session key K = g^k.</li>
-  <li>Alice calculates the shared secret S = B^k = g^(b*k).</li>
-  <li>Alice maps her message m onto an element m' of G.</li>
-  <li>Alice calculates M = m' * S.</li>
-  <li>Alice sends the ciphertext (K, M) = ( g^k, m' * S) = (g^k, m' * g^(b*k)) to Bob.</li>
+  <li>Alice chooses a random secret session key \(k\) from \(\{ 1, … , d-1 \}\).</li>
+  <li>Alice calculates a public session key \(K\) = \(g^k\).</li>
+  <li>Alice calculates the shared secret \(S = B^k = g^{(b \cdot k)}\).</li>
+  <li>Alice maps her message \(m\) onto an element \(m'\) of \(G\).</li>
+  <li>Alice calculates \(M = m' \cdot S\).</li>
+  <li>Alice sends the ciphertext \((K, M) = ( g^k, m' \cdot S) = (g^k, m' \cdot g^{(b \cdot k)})\) to Bob.</li>
   </ul>
 
-<p><b>Note 1:</b> One can easily find B^k if one knows m'. Therefore, a new k is generated for every message to improve security. For this reason, k is also called an ephemeral (or session) key.</p>
+<p><b>Note 1:</b> One can easily find \(B^k\) if one knows \(m'\). Therefore, a new \(k\) is generated for every message to improve security. For this reason, \(k\) is also called an ephemeral (or session) key.</p>
 
-<p><b>Note 2:</b> With Diffie-Hellman key exchange (DH), Alice would send A=g^a to Bob, so he can create the shared session key as S = A^b. With ElGamal encryption, Alice doesn't use her private key a, but uses the secret session key k which is also random and secret. The remaining logic is the same.</p>
+<p><b>Note 2:</b> With Diffie-Hellman key exchange (DH), Alice would send \(A=g^a\) to Bob, so he can create the shared session key as \(S = A^b\). With ElGamal encryption, Alice doesn't use her private key \(a\), but uses the secret session key \(k\) which is also random and secret. The remaining logic is the same.</p>
 
 <p><b>Note 3:</b> With ElGamal encryption, the ciphertext is twice as long as the plaintext (message expansion).</p>
 
-<p><b>Note 4:</b> ElGamal encryption is a probabilistic encryption: The ciphertext not only depends on the public key of the receiver but also on a random k. So each time the same plaintext is encrypted using the same public key, the resulting ciphertext should be different.</p>
+<p><b>Note 4:</b> ElGamal encryption is a probabilistic encryption: The ciphertext not only depends on the public key of the receiver but also on a random \(k\). So each time the same plaintext is encrypted using the same public key, the resulting ciphertext should be different.</p>
 
     
   <h4 id="SchemeEnc">c2) ElGamal Decryption</h3>
 
-  <p>The decryption algorithm works as follows: To decrypt a ciphertext (K, M) sent to Bob he uses his private key b, and</p>
+  <p>The decryption algorithm works as follows: To decrypt a ciphertext \((K, M)\) sent to Bob he uses his private key \(b\), and</p>
   <ul>
-  <li>Bob calculates the shared secret S = K^b = g^(k*b).</li>
-  <li>Bob computes S^(-1) which is the inverse of S in the group G.</li>
-  <li>Bob computes m' = M * S^(-1).</li>
-  <li>Bob then converts m' back into the plaintext message m.</li>
+  <li>Bob calculates the shared secret \(S = K^b = g^{(b \cdot k)}\).</li>
+  <li>Bob computes \(S^{-1}\) which is the inverse of \(S\) in the group \(G\).</li>
+  <li>Bob computes \(m' = M \cdot S^{-1}\).</li>
+  <li>Bob then converts \(m'\) back into the plaintext message \(m\).</li>
   </ul>
 
-<p>Note that the decryption algorithm produces the intended message, since M * S^(-1) = [m' * g^(b*k)] * (g^(b*k))^(-1) = m' * g^(bl) * g^(-bk) = m'.</p>
+<p>Note that the decryption algorithm produces the intended message, since \(M \cdot S^{-1} = [m' \cdot g^{(b \cdot k)}] \cdot [g^{(b \cdot k)}]^{-1} = m' \cdot g^{(b \cdot k)} \cdot g^{-(b \cdot k)} = m'\).</p>
 
   
   
@@ -115,54 +116,60 @@
 
   <p>Like any signature scheme, the ElGamal signature scheme allows a third-party to confirm the authenticity of a message. The ElGamal signature scheme consists of four sub-steps: the parameter generation (setup), the key generation, the signing, and the verifying. The first two steps were described above, the actual signing and verification follow now.</p>
 
-  <p>In addition to the setup parameters above, a collision-resistant hash function H is needed.</p>
-  <p> As G, usually Z*_d = { 1, … , d-1 } is used with a large prime d, such that computing discrete logarithms modulo d is very difficult. </p>
+  <p>In addition to the setup parameters above, a collision-resistant hash function \(H\) is needed.</p>
+  <p> As \(G\), usually \(Z^*_d = { 1, … , d-1 }\) is used with a large prime \(d\), such that computing discrete logarithms modulo \(d\) is very difficult. </p>
   
   
   <h4 id="SchemeEnc">d1) ElGamal Signing</h3>
   <p>We assume Alice to be the signer.</p>
   
-  <p>The signing algorithm works as follows: To sign a message m Alice uses her private key a, and</p>
+  <p>The signing algorithm works as follows: To sign a message \(m\) Alice uses her private key \(a\), and</p>
   <ul>
-  <li>Alice chooses a random secret session key k from { 2, … , d-2 } with gcd(k, d-1) = 1.</li>
-  <li>Alice calculates the public session key K = g^k mod d.</li>
-  <li>Alice calculates s = k^(-1) * ( H(m) - a*K )  mod d-1.</li>
-  <li>If s=0 start again (with choosing k).</li>
-  <li>Alice sends the pair (K, s) which is the signature of m to Bob.</li>
+  <li>Alice chooses a random secret session key \(k\) from \(\{ 2, … , d-2 \}\) with \(\gcd(k, d-1) = 1\).</li>
+  <li>Alice calculates the public session key \(K = g^k \mod d\).</li>
+  <li>Alice calculates \(s = k^{-1} \cdot ( H(m) - a \cdot K )  \mod d-1\).</li>
+  <li>If \(s=0\) start again (with a newly chosen \(k\)).</li>
+  <li>Alice sends the pair \((K, s)\) which is the signature of \(m\) to Bob.</li>
   </ul>
 
     
   <h4 id="SchemeEnc">d2) ElGamal Verifying</h3>
   <p>We assume Bob to verify the message signed by Alice.</p>
 
-  <p>The verification algorithm works as follows: To verify a message m from Alice he uses her public key ( G, d, g, A ), the received signature (K, s), and</p>
+  <p>The verification algorithm works as follows: To verify a message \(m\) from Alice he uses her public key \(( G, d, g, A )\), the received signature \((K, s)\), and</p>
   <ul>
-  <li>Bob checks that 1 < K < d and 0 < s < p-1.</li>
-  <li>Bob computes u = g^(H(m))  mod d.</li>
-  <li>Bob computes v = A^K * K^s  mod d.</li>
-  <li>If u = v, then the signature is correct; else it is invalid (doesn't fit to m or is not signed with Alice's private key).</li>
+  <li>Bob checks that \(1 < K < d\) and \(0 < s < p-1\).</li>
+  <li>Bob computes \(u = g^{H(m)}  \mod d\).</li>
+  <li>Bob computes \(v = A^K \cdot K^s  \mod d\).</li>
+  <li>If \(u = v\), then the signature is correct; else it is invalid (doesn't fit to \(m\) or is not signed with Alice's private key).</li>
   </ul>
 
-<p>Note that the verification algorithm is correct in the sense that a signature generated with the signing algorithm will always be accepted by the verifier, since from the signature generation
+<p>Note that the verification algorithm is correct in the sense that a signature generated with the signing algorithm will always be accepted by the verifier, since from the signature generation:
 <br/>
-  s = k^(-1) * ( H(m) - a*K )  mod d-1 <br/>
-  H(m) = k*s + a*K  mod d-1 <br/>
+
+\begin{alignat}{1}
+  s &&= k^{-1} \cdot ( H(m) - a \cdot K ) && \mod d-1 \\
+  H(m) &&= k \cdot s + a \cdot K && \mod d-1
+\end{alignat}
+
 and then because of Fermat's little theorem:<br/>
-  u <br/>
-  = g^(H(m))  mod d <br/>
-  = g^(k*s) * g^(a*K)  mod d <br/>
-  = (g^k)^s * (g^a)^K  mod d <br/>
-  = K^s * A^K  mod d <br/>
-  = v <br/></p>
+\begin{alignat}{1}
+   u &= g^{H(m)}  &&\mod d \\
+   &= g^{(k \cdot s)} \cdot  g^{(a \cdot K)}  &&\mod d \\
+   &= (g^k)^s \cdot (g^a)^K && \mod d \\
+   &= K^s \cdot A^K  &&\mod d \\
+   u &= v
+\end{alignat}
+ 
 
 
   
 <p><br/></p>  
   <h3 id="NotationElGamal">e) Notation Used for ElGamal Encryption / Signing</h3>
 
-  <p>We used a and A for the private and the public key of the sender Alice, and b and B for the private and public key of the recipient Bob, as this is the usual way the scenario of Diffie-Hellman key exchange (DH) is described. And so we have no overlap in the variables' names when describing ElGamal encryption and ElGamal signing after each other. Capital letters represent always powers of exponents in lower-case (each with the base g).</p>
+  <p>We used \(a\) and \(A\) for the private and the public key of the sender Alice, and \(b\) and \(B\) for the private and public key of the recipient Bob, as this is the usual way the scenario of Diffie-Hellman key exchange (DH) is described. And so we have no overlap in the variables' names when describing ElGamal encryption and ElGamal signing after each other. Capital letters represent always powers of exponents in lower-case (each with the base \(g\)).</p>
 
-  <p>Other authors and the English Wikipedia use independent notations for ElGamal encryption and ElGamal signing. So in case of encryption the private key is called x and the according public key is y. And another author uses x as name for the message as this is the variable input for the encryption function.</p>
+  <p>Other authors and the English Wikipedia use independent notations for ElGamal encryption and ElGamal signing. So in case of encryption the private key is called \(x\) and the according public key is \(y\). And another author uses \(x\) as name for the message as this is the variable input for the encryption function.</p>
 
   <p>Here we present a table which maps different notations: Column 1 shows the notation oriented towards the Diffie-Hellman key exchange (DH) which is used here; column 2 shows the notation used in the English Wikipedia (December 2017), which again differs from the German Wikipedia.</p>
 
@@ -185,60 +192,60 @@ table, th, td {
     <th>Phase / Meaning</th>
   </tr>
   <tr>
-    <td>d</td>
-    <td>q (some call it p)</td>
-    <td>Setup: number of elements in G / large prime</td>
+    <td>\(d\)</td>
+    <td>\(q\) (some call it \(p\))</td>
+    <td>Setup: number of elements in \(G\) / large prime</td>
   </tr>
   <tr>
-    <td>g</td>
-    <td>g</td>
-    <td>Setup: generator of G</td>
+    <td>\(g\)</td>
+    <td>\(g\)</td>
+    <td>Setup: generator of \(G\)</td>
   </tr>
 
   <tr>
-    <td>b</td>
-    <td>x</td>
+    <td>\(b\)</td>
+    <td>\(x\)</td>
     <td>Key Gen: private key of recipient</td>
   </tr>
   <tr>
-    <td>B</td>
-    <td>h (some call it y)</td>
+    <td>\(B\)</td>
+    <td>\(h\) (some call it \(y\))</td>
     <td>Key Gen: public key of recipient</td>
   </tr>
 
   <tr>
-    <td>m</td>
-    <td>m</td>
-    <td>Encryption: plaintext before mapped to an element in G</td>
+    <td>\(m\)</td>
+    <td>\(m\)</td>
+    <td>Encryption: plaintext before mapped to an element in \(G\)</td>
   </tr>
   <tr>
-    <td>m'</td>
-    <td>m' (some call it P)</td>
-    <td>Encryption: plaintext after mapped to an element in G</td>
+    <td>\(m'\)</td>
+    <td>\(m'\) (some call it \(P\))</td>
+    <td>Encryption: plaintext after mapped to an element in \(G\)</td>
   </tr>
   <tr>
-    <td>k</td>
-    <td>y (some call it r)</td>
+    <td>\(k\)</td>
+    <td>\(y\) (some call it \(r\))</td>
     <td>Encryption: number randomly generated per message (secret session key)</td>
   </tr>
   <tr>
-    <td>K</td>
-    <td>c_1</td>
+    <td>\(K\)</td>
+    <td>\(c_1\)</td>
     <td>Encryption: public session key (for one message)</td>
   </tr>
   <tr>
-    <td>S</td>
-    <td>s</td>
+    <td>\(S\)</td>
+    <td>\(s\)</td>
     <td>Encryption: shared secret key (for one message)</td>
   </tr>
   <tr>
-    <td>M</td>
-    <td>c_2</td>
-    <td>Encryption: encrypted m'</td>
+    <td>\(M\)</td>
+    <td>\(c_2\)</td>
+    <td>Encryption: encrypted \(m'\)</td>
   </tr>
   <tr>
-    <td>(K,M)</td>
-    <td>(c_1, c_2)</td>
+    <td>\((K,M)\)</td>
+    <td>\((c_1, c_2)\)</td>
     <td>Encryption: ciphertext</td>
   </tr>
 </table> 
@@ -253,45 +260,45 @@ table, th, td {
     <th>Phase / Meaning</th>
   </tr>
   <tr>
-    <td>a</td>
-    <td>x</td>
+    <td>\(a\)</td>
+    <td>\(x\)</td>
     <td>Key Gen: private key of signer</td>
   </tr>
   <tr>
-    <td>A</td>
-    <td>y</td>
+    <td>\(A\)</td>
+    <td>\(y\)</td>
     <td>Key Gen: public key of signer</td>
   </tr>
 
   <tr>
-    <td>m</td>
-    <td>m</td>
+    <td>\(m\)</td>
+    <td>\(m\)</td>
     <td>Signing: plaintext</td>
   </tr>
   <tr>
-    <td>H(m)</td>
-    <td>H(m)</td>
+    <td>\(H(m)\)</td>
+    <td>\(H(m)\)</td>
     <td>Signing: hash value of plaintext</td>
   </tr>
   <tr>
-    <td>k</td>
-    <td>k</td>
+    <td>\(k\)</td>
+    <td>\(k\)</td>
     <td>Signing: number randomly generated per message (secret session key)</td>
   </tr>
   <tr>
-    <td>K</td>
-    <td>r</td>
+    <td>\(K\)</td>
+    <td>\(r\)</td>
     <td>Signing: public session key (for one message)</td>
   </tr>
   <tr>
-    <td>s</td>
-    <td>s</td>
+    <td>\(s\)</td>
+    <td>\(s\)</td>
     <td>Signing: 2nd part of the signature</td>
   </tr>
   <tr>
-    <td>(K,s)</td>
-    <td>(r,s)</td>
-    <td>Signing: Signature of m'</td>
+    <td>\((K,s)\)</td>
+    <td>\((r,s)\)</td>
+    <td>Signing: Signature of \(m'\)</td>
   </tr>
 </table> 
 <p><br/></p>
