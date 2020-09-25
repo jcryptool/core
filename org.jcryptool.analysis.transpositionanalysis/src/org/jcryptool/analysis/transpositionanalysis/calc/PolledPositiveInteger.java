@@ -25,14 +25,18 @@ public class PolledPositiveInteger extends PolledValue<Integer> {
 
 	@Override
 	public void addChoice(Integer choice, double initialPossibility) {
-		if (choice >= 0) super.addChoice(choice, initialPossibility);
-		else throw new IllegalArgumentException("only positive Integers allowed to be added."); //$NON-NLS-1$
+		if (choice >= 0)
+			super.addChoice(choice, initialPossibility);
+		else
+			throw new IllegalArgumentException("only positive Integers allowed to be added."); //$NON-NLS-1$
 	}
 
 	public boolean containsAllValuesInRange(int start, int end) {
-		if (start > end) throw new IllegalArgumentException("start must be less than or equal to end"); //$NON-NLS-1$
+		if (start > end)
+			throw new IllegalArgumentException("start must be less than or equal to end"); //$NON-NLS-1$
 		for (int i = start; i <= end; i++) {
-			if (!internalRepresentation.containsKey(i)) return false;
+			if (!internalRepresentation.containsKey(i))
+				return false;
 		}
 		return true;
 	}

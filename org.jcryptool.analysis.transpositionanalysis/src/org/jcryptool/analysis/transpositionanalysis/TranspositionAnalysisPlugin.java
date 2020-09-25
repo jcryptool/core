@@ -17,12 +17,12 @@ import org.jcryptool.core.util.images.ImageService;
  * The activator class controls the plug-in life cycle
  */
 public class TranspositionAnalysisPlugin extends AbstractUIPlugin {
-    /** The plug-in ID. */
-    public static final String PLUGIN_ID = "org.jcryptool.analysis.transpositionanalysis"; //$NON-NLS-1$
+	/** The plug-in ID. */
+	public static final String PLUGIN_ID = "org.jcryptool.analysis.transpositionanalysis"; //$NON-NLS-1$
 
-    @Override
-    protected void initializeImageRegistry(ImageRegistry reg) {
-        reg.put("keyboardInputIcon", ImageService.getImage(PLUGIN_ID, "icons/keys.png"));
-        reg.put("fileInputIcon", ImageService.ICON_FILE);
-    }
+	@Override
+	protected void initializeImageRegistry(ImageRegistry reg) {
+		reg.put("keyboardInputIcon", ImageService.getImage(PLUGIN_ID, "icons/keys.png"));
+		reg.put("fileInputIcon", ImageService.ICON_FILE);
+	}
 }

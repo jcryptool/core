@@ -31,10 +31,8 @@ public class PolledTranspositionKey {
 	/**
 	 * Creates a standard entry for a key position with given length
 	 * 
-	 * @param positionCount
-	 *            the number of positions in the key ("key length")
-	 * @return a PolledPositiveInteger of the specified length and standard
-	 *         values
+	 * @param positionCount the number of positions in the key ("key length")
+	 * @return a PolledPositiveInteger of the specified length and standard values
 	 */
 	private static final PolledPositiveInteger NOVALUE(int positionCount) {
 		PolledPositiveInteger result = new PolledPositiveInteger();
@@ -56,8 +54,7 @@ public class PolledTranspositionKey {
 	 * Creates a PolledTranspositionKey from an array. Format: see
 	 * {@link #fromArray(double[][])}
 	 * 
-	 * @param arrayRepresentation
-	 *            the array
+	 * @param arrayRepresentation the array
 	 */
 	public PolledTranspositionKey(double[][] arrayRepresentation) {
 		this();
@@ -72,23 +69,22 @@ public class PolledTranspositionKey {
 	}
 
 	/**
-	 * Specifies the possibility for a value at the given position of the key. <br />
-	 * Basically, if a value a is on the position b in the key, that means, that
-	 * in every column of a plaintext, the character at position b will be
-	 * placed in position a in the ciphertext. Specifying a high possibility for
-	 * a value at a given position means, that it is very likely that the polled
-	 * key will have this value on the said position in the end. <br />
+	 * Specifies the possibility for a value at the given position of the key.
 	 * <br />
-	 * If one of the parameters (position, or value) have a higher value than
-	 * the actual size of the key, the key will be resized to it.
+	 * Basically, if a value a is on the position b in the key, that means, that in
+	 * every column of a plaintext, the character at position b will be placed in
+	 * position a in the ciphertext. Specifying a high possibility for a value at a
+	 * given position means, that it is very likely that the polled key will have
+	 * this value on the said position in the end. <br />
+	 * <br />
+	 * If one of the parameters (position, or value) have a higher value than the
+	 * actual size of the key, the key will be resized to it.
 	 * 
-	 * @param position
-	 *            the position in the key
-	 * @param value
-	 *            the value that has to stand at this position.
-	 * @param possibility
-	 *            the possibility vot the value to be actually in the given
-	 *            position (use constants from {@link PolledValue} for example).
+	 * @param position    the position in the key
+	 * @param value       the value that has to stand at this position.
+	 * @param possibility the possibility vot the value to be actually in the given
+	 *                    position (use constants from {@link PolledValue} for
+	 *                    example).
 	 */
 	public void setPossibility(int position, int value, double possibility) {
 		setLength(Math.max(Math.max(position + 1, value + 1), getLength()));
@@ -97,19 +93,17 @@ public class PolledTranspositionKey {
 	}
 
 	/**
-	 * Combines the possibility for a value at the given position of the key
-	 * with a given one. <br />
+	 * Combines the possibility for a value at the given position of the key with a
+	 * given one. <br />
 	 * See also: {@link #setPossibility(int, int, double)}<br />
-	 * If one of the parameters (position, or value) have a higher value than
-	 * the actual size of the key, the key will be resized to it.
+	 * If one of the parameters (position, or value) have a higher value than the
+	 * actual size of the key, the key will be resized to it.
 	 * 
-	 * @param position
-	 *            the position in the key
-	 * @param value
-	 *            the value that has to stand at this position.
-	 * @param possibility
-	 *            the possibility the existing possibility will be combined with
-	 *            (you can use constants from {@link PolledValue} for example).
+	 * @param position    the position in the key
+	 * @param value       the value that has to stand at this position.
+	 * @param possibility the possibility the existing possibility will be combined
+	 *                    with (you can use constants from {@link PolledValue} for
+	 *                    example).
 	 */
 	public void combinePossibility(int position, int value, double possibility) {
 		setLength(Math.max(Math.max(position + 1, value + 1), getLength()));
@@ -119,12 +113,11 @@ public class PolledTranspositionKey {
 
 	/**
 	 * Sets the key to a specified length. All values in the key that are bigger
-	 * than this new length, will be removed. In the end, there will be n polls
-	 * for key positions, when n is the new length, and the method
-	 * {@link #toArray()} will return a n x n array.
+	 * than this new length, will be removed. In the end, there will be n polls for
+	 * key positions, when n is the new length, and the method {@link #toArray()}
+	 * will return a n x n array.
 	 * 
-	 * @param length
-	 *            the new length
+	 * @param length the new length
 	 */
 	public void setLength(int length) {
 
@@ -149,7 +142,8 @@ public class PolledTranspositionKey {
 			// than the length
 			removelist.clear();
 			for (Integer choice : internalRepresentation.get(i).getPollSubjects()) {
-				if (choice >= length) removelist.add(choice);
+				if (choice >= length)
+					removelist.add(choice);
 			}
 			for (Integer removeChoice : removelist) {
 				internalRepresentation.get(i).removeChoice(removeChoice);
@@ -196,10 +190,11 @@ public class PolledTranspositionKey {
 	}
 
 	private double[][] makeSubPollArray(int choiceIndexOfRowZero, double[][] pollArray) {
-		if (!(pollArray.length > 1 && pollArray[0].length > 1)) throw new IllegalArgumentException(
-			"Can't crate sub - Poll-array from 1-element-array.");
-		if (choiceIndexOfRowZero >= pollArray.length) throw new IllegalArgumentException(
-			"choiceIndex is greater than poll array dimensions. cannot create sub - poll-array.");
+		if (!(pollArray.length > 1 && pollArray[0].length > 1))
+			throw new IllegalArgumentException("Can't crate sub - Poll-array from 1-element-array.");
+		if (choiceIndexOfRowZero >= pollArray.length)
+			throw new IllegalArgumentException(
+					"choiceIndex is greater than poll array dimensions. cannot create sub - poll-array.");
 		double[][] result = new double[pollArray.length - 1][pollArray[0].length - 1];
 
 		for (int i = 1; i < pollArray.length; i++) {
@@ -212,9 +207,11 @@ public class PolledTranspositionKey {
 	}
 
 	private int[] getBestChoice(double[][] pollArray) {
-		if (pollArray.length < 1) throw new IllegalArgumentException("there is no best choice for a void array");
-		if (pollArray.length == 1) return new int[] { 0 }; // take the remaining
-															// piece
+		if (pollArray.length < 1)
+			throw new IllegalArgumentException("there is no best choice for a void array");
+		if (pollArray.length == 1)
+			return new int[] { 0 }; // take the remaining
+									// piece
 		// not-trivial cases
 		int[] bestChoice = null;
 		double bestChoiceValue = Double.MIN_VALUE;
@@ -248,16 +245,16 @@ public class PolledTranspositionKey {
 	}
 
 	/**
-	 * Calculates the best TranspositionKey that would match the given
-	 * possibility data.
+	 * Calculates the best TranspositionKey that would match the given possibility
+	 * data.
 	 * 
 	 * @return a TranspositionKey which is the best match for this
 	 *         PolledTranspositionKey.
 	 */
 	public TranspositionKey getBestChoice() {
 		double[][] array = toArray();
-		if (!(array.length > 0 && array[0].length > 0)) throw new IllegalArgumentException(
-			"polled key has no content - cannot calculate best choice");
+		if (!(array.length > 0 && array[0].length > 0))
+			throw new IllegalArgumentException("polled key has no content - cannot calculate best choice");
 
 		int[] bestChoice = getBestChoice(array);
 
@@ -282,19 +279,19 @@ public class PolledTranspositionKey {
 
 	/**
 	 * Read an array of integer values into the polled key, as follows:
-	 * <code>arrayRepresentation[2][4] = 6</code> means, that in the key on
-	 * position 2 (zero-relative), the value "4" has a possibility that is one
-	 * relatively high one*. Such, a polled key of length n is always
-	 * represented by a double array with dimensions n x n.<br />
+	 * <code>arrayRepresentation[2][4] = 6</code> means, that in the key on position
+	 * 2 (zero-relative), the value "4" has a possibility that is one relatively
+	 * high one*. Such, a polled key of length n is always represented by a double
+	 * array with dimensions n x n.<br />
 	 * <br />
 	 * 
 	 * * because a possibility of 1 means 50%, and 6 is normally a value that
 	 * specifies "Very high possibility". see possibility constants in
 	 * {@link PolledValue}, e. g. {@link PolledValue#POSSIBILITY_VERY_LIKELY}
 	 * 
-	 * @param arrayRepresentation
-	 *            a representation of the polled key that shall be loaded, as
-	 *            described above (length x length - array)
+	 * @param arrayRepresentation a representation of the polled key that shall be
+	 *                            loaded, as described above (length x length -
+	 *                            array)
 	 */
 	public void fromArray(double[][] arrayRepresentation) {
 		this.clear();
@@ -346,8 +343,7 @@ public class PolledTranspositionKey {
 	}
 
 	/**
-	 * Returns the length of the key (speaking: the number of positions in the
-	 * key).
+	 * Returns the length of the key (speaking: the number of positions in the key).
 	 * 
 	 * @return the length
 	 */

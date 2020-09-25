@@ -48,7 +48,6 @@ import org.jcryptool.crypto.ui.textsource.TextInputWithSourceDisplayer;
 import org.jcryptool.crypto.ui.textsource.TextInputWithSourceDisplayer.Style;
 import org.jcryptool.editor.text.JCTTextEditorPlugin;
 
-
 public class TranspAnalysisUI extends Composite implements Observer {
 
 	private TranspositionTableComposite transpTable;
@@ -118,7 +117,6 @@ public class TranspAnalysisUI extends Composite implements Observer {
 	// composites to enable scrolling
 	private ScrolledComposite scrolledComposite;
 	private Composite content;
-
 
 	private Label lblLoadA;
 
@@ -221,7 +219,7 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		content = new Composite(scrolledComposite, SWT.NONE);
 		content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		content.setLayout(new GridLayout(1, true));
-		
+
 		TitleAndDescriptionComposite td = new TitleAndDescriptionComposite(content);
 		td.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		td.setTitle(Messages.TranspAnalysisUI_view_title);
@@ -229,8 +227,8 @@ public class TranspAnalysisUI extends Composite implements Observer {
 
 		instrGroup = new Group(content, SWT.NONE);
 		instrGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		instrGroup.setLayout(new GridLayout(1, false));		
-		
+		instrGroup.setLayout(new GridLayout(1, false));
+
 		compLoadTextBtn = new Composite(instrGroup, SWT.NONE);
 		compLoadTextBtn.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
 		GridLayout compLoadTextBtnLayout = new GridLayout(2, false);
@@ -239,7 +237,7 @@ public class TranspAnalysisUI extends Composite implements Observer {
 
 		lblLoadA = new Label(compLoadTextBtn, SWT.PUSH);
 		lblLoadA.setText("1)"); //$NON-NLS-1$
-		
+
 		btnOpenTextWizard = new Button(compLoadTextBtn, SWT.PUSH);
 		btnOpenTextWizard.setLayoutData(new GridData(SWT.PUSH, SWT.CENTER, false, false, 1, 1));
 		btnOpenTextWizard.setText(Messages.TranspAnalysisUI_btnOpenTextWizard_text);
@@ -250,7 +248,7 @@ public class TranspAnalysisUI extends Composite implements Observer {
 			}
 		});
 
-		//This is the alternative composite that is shown when a text was loaded
+		// This is the alternative composite that is shown when a text was loaded
 		compTextSource = new Composite(instrGroup, SWT.NONE);
 		compTextSource.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
 		GridLayout compTextSourceLayout = new GridLayout(3, false);
@@ -269,7 +267,7 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		GridData sourceDisplayerLData = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		sourceDisplayerLData.horizontalIndent = 3;
 		sourceDisplayer.setLayoutData(sourceDisplayerLData); // $hide$
-		
+
 		new Label(compTextSource, SWT.None);
 
 		linkChooseText = new Link(compTextSource, SWT.PUSH);
@@ -470,7 +468,7 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		composite8Layout.numColumns = 4;
 		composite8Layout.marginWidth = 0;
 		composite8Layout.marginHeight = 0;
-		
+
 		GridData composite8LData = new GridData();
 		composite8LData.grabExcessHorizontalSpace = true;
 		composite8LData.horizontalAlignment = GridData.FILL;
@@ -536,8 +534,8 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		GridLayout composite7Layout = new GridLayout();
 		composite7Layout.marginHeight = 0;
 		composite7Layout.marginWidth = 0;
-		
-		GridData composite7LData = new GridData(SWT.FILL, SWT.FILL, true, false );
+
+		GridData composite7LData = new GridData(SWT.FILL, SWT.FILL, true, false);
 		composite7LData.verticalIndent = 12;
 		composite7.setLayoutData(composite7LData);
 		composite7.setLayout(composite7Layout);
@@ -571,7 +569,7 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		displaySolvableWarningLabel(false, false);
 		displayTextTransformBtn(false, false, new TransformData());
 		displayTextSource(null, false, false);
-		
+
 		scrolledComposite.setContent(content);
 
 	}
@@ -601,12 +599,13 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		} else {
 			setBlocklength(spinner.getSelection(), true);
 		}
-		
+
 		if (transpTable != null && !transpTable.isDisposed()) {
 			columnsReordered(transpTable.getColumnOrder());
 		}
-		
-		// Recalculate the size of the scrolled composite after the warning is displayed.
+
+		// Recalculate the size of the scrolled composite after the warning is
+		// displayed.
 		// This avoids text being cut of at the bottom of the plugin.
 		content.layout();
 		scrolledComposite.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -654,13 +653,12 @@ public class TranspAnalysisUI extends Composite implements Observer {
 			linkExport.setEnabled(true);
 			readoutDirChooser.setEnabled(true);
 			readinDirChooser.setEnabled(true);
-			
-			
-			//Recalc size after new line added
+
+			// Recalc size after new line added
 			content.layout();
 			scrolledComposite.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-			
-			// This makes the ScrolledComposite scrolling, when the mouse 
+
+			// This makes the ScrolledComposite scrolling, when the mouse
 			// is on a Text with one or more of the following tags: SWT.READ_ONLY,
 			// SWT.V_SCROLL or SWT-H_SCROLL.
 			SmoothScroller.scrollSmooth(scrolledComposite);
@@ -720,8 +718,8 @@ public class TranspAnalysisUI extends Composite implements Observer {
 
 	private String calcText() {
 		return Transform.transformText(text.getText(),
-				//applyTransformationInput.getContent() ? textTransformData : 
-					new TransformData());
+				// applyTransformationInput.getContent() ? textTransformData :
+				new TransformData());
 	}
 
 	private void refreshTable() {

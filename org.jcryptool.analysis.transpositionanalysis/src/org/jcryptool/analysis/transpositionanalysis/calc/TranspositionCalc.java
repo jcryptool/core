@@ -15,19 +15,18 @@ import java.util.Vector;
 public class TranspositionCalc {
 
 	/**
-	 * Returns possible blocklengths for the text by finding divisors. A lower
-	 * and higher margin for the results can be given.
+	 * Returns possible blocklengths for the text by finding divisors. A lower and
+	 * higher margin for the results can be given.
 	 * 
-	 * @param marginLow
-	 *            the lower margin for returned results (results can be >= lower
-	 *            margin)
-	 * @param marginHigh
-	 *            the higher margin for results (results can be <= margin), or
-	 *            -1 for no limitation
+	 * @param marginLow  the lower margin for returned results (results can be >=
+	 *                   lower margin)
+	 * @param marginHigh the higher margin for results (results can be <= margin),
+	 *                   or -1 for no limitation
 	 * @return
 	 */
 	public static Integer[] blocklengthsByTextlength(int textLength, int marginLow, int marginHigh) {
-		if (marginHigh < 0) marginHigh = 99999;
+		if (marginHigh < 0)
+			marginHigh = 99999;
 
 		Vector<Integer> results = new Vector<Integer>(0);
 

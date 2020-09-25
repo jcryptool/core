@@ -19,12 +19,12 @@ public class Messages extends NLS {
 	public static String KeyViewer_invertdescription;
 	public static String KeyViewer_invertone;
 	public static String KeyViewer_prettyversion;
-	
+
 	public static String ReadDirectionChooser_0;
 	public static String ReadDirectionChooser_1;
-	
+
 	public static String TranspAnalysisUI_view_title;
-	
+
 	public static String TranspAnalysisUI_decipher;
 	public static String TranspAnalysisUI_Export;
 	public static String TranspAnalysisUI_keyfound;

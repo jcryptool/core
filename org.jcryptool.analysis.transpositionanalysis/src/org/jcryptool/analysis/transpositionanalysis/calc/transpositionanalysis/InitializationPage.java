@@ -46,8 +46,8 @@ public class InitializationPage extends SingleAnalysisPage implements Transposit
 			labelExplanationLData.grabExcessHorizontalSpace = true;
 			labelExplanationLData.widthHint = 300;
 			labelExplanation.setLayoutData(labelExplanationLData);
-			labelExplanation
-				.setText("For the initialization, it is important to know, up to which block lengths (key lengths) the different analyses may search:");
+			labelExplanation.setText(
+					"For the initialization, it is important to know, up to which block lengths (key lengths) the different analyses may search:");
 		}
 		{
 			compMaxLengthSelect = new Group(parent, SWT.NONE);
@@ -88,8 +88,8 @@ public class InitializationPage extends SingleAnalysisPage implements Transposit
 			labelMaxlengthAdviceLData.grabExcessHorizontalSpace = true;
 			labelMaxlengthAdviceLData.widthHint = 300;
 			labelMaxlengthAdvice.setLayoutData(labelMaxlengthAdviceLData);
-			labelMaxlengthAdvice
-				.setText("Please keep in mind, that too big keylengths can lead to very time-consumptive algorithm behaviour.");
+			labelMaxlengthAdvice.setText(
+					"Please keep in mind, that too big keylengths can lead to very time-consumptive algorithm behaviour.");
 		}
 	}
 

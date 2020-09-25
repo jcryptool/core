@@ -129,7 +129,7 @@ public class AnalysisWizardIndexPage extends WizardPage {
 					columnCountGroupLData.grabExcessHorizontalSpace = true;
 					columnCountGroupLData.horizontalAlignment = GridData.FILL;
 					columnCountGroup.setLayoutData(columnCountGroupLData);
-					columnCountGroup.setText("");//Messages.AnalysisWizardIndexPage_columncount); //$NON-NLS-1$
+					columnCountGroup.setText("");// Messages.AnalysisWizardIndexPage_columncount); //$NON-NLS-1$
 					columnCountGroup.setEnabled(false);
 					{
 						columnCountMainWindow = new Composite(columnCountGroup, SWT.NONE);
@@ -194,7 +194,7 @@ public class AnalysisWizardIndexPage extends WizardPage {
 					columnCountGroupLData.grabExcessHorizontalSpace = true;
 					columnCountGroupLData.horizontalAlignment = GridData.FILL;
 					keyGroup.setLayoutData(columnCountGroupLData);
-					keyGroup.setText("");//Messages.AnalysisWizardIndexPage_key + ""); //$NON-NLS-1$
+					keyGroup.setText("");// Messages.AnalysisWizardIndexPage_key + ""); //$NON-NLS-1$
 					keyGroup.setEnabled(false);
 
 					{
@@ -300,7 +300,7 @@ public class AnalysisWizardIndexPage extends WizardPage {
 						analysis1descriptionlabel.setLayoutData(analysis1descriptionlabelLData);
 						analysis1descriptionlabelLData.widthHint = 300;
 						analysis1descriptionlabel
-							.setText(Messages.AnalysisWizardIndexPage_simpleColumnAnalysisDescription);
+								.setText(Messages.AnalysisWizardIndexPage_simpleColumnAnalysisDescription);
 					}
 				}
 			}

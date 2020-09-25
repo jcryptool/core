@@ -5,6 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -24,9 +27,11 @@ import org.jcryptool.analysis.viterbi.algorithm.BitwiseXOR;
 import org.jcryptool.analysis.viterbi.algorithm.Combination;
 import org.jcryptool.analysis.viterbi.algorithm.IO;
 import org.jcryptool.analysis.viterbi.algorithm.ModularAddition;
+import org.jcryptool.analysis.viterbi.views.XORComposite.XORCombinationBackgroundJob;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.crypto.ui.background.BackgroundJob;
 
 /**
  *
@@ -37,6 +42,12 @@ import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
  */
 public class XORComposite extends Composite {
 	/* set default values */
+
+	public abstract class XORCombinationBackgroundJob extends BackgroundJob {
+		
+		public String __result;
+
+	}
 
 	private static final int LOADBUTTONHEIGHT = 30;
 	private static final int LOADBUTTONWIDTH = 120;
@@ -433,16 +444,35 @@ public class XORComposite extends Composite {
 					combi = new ModularAddition();
 				}
 
-				cipherString = combi.add(plain1.getText(), plain2.getText());
-
-				if (text.getSelection()) {
-					cipher.setText(ViterbiComposite.replaceUnprintableChars(cipherString, "\ufffd")); //$NON-NLS-1$
-					// the ? is used for masking unprintable characters
-				} else {
-					cipher.setText(ViterbiComposite.stringToHex(cipherString));
-				}
-				
-				subjectChanged();
+				String plain1Text = plain1.getText();
+				String plain2Text = plain2.getText();
+				boolean textSelection = text.getSelection();
+				XORCombinationBackgroundJob calculateJob = new XORCombinationBackgroundJob() {
+					@Override
+					public IStatus computation(IProgressMonitor monitor) {
+						cipherString = combi.add(plain1Text, plain2Text);
+						if (textSelection) {
+							this.__result = ViterbiComposite.replaceUnprintableChars(cipherString, "\ufffd");
+						} else {
+							this.__result = ViterbiComposite.stringToHex(cipherString);
+						}
+						return Status.OK_STATUS;
+					}
+					public String name() {
+						return "Viterbi: plaintext combination";
+					};
+				};
+				calculateJob.finalizeListeners.add(status -> {
+					calculateJob.liftNoClickDisplaySynced(getDisplay());
+					if (status.isOK()) {
+						getDisplay().syncExec(() -> {
+							cipher.setText(calculateJob.__result); //$NON-NLS-1$
+							subjectChanged();
+						});
+					}
+				});
+				calculateJob.imposeNoClickDisplayCurrentShellSynced(getDisplay());
+				calculateJob.runInBackground();
 			}
 		});
 		cipher = new Text(parent, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);

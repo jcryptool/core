@@ -8,6 +8,9 @@
  * ****************************************************************************/
 package org.jcryptool.analysis.vigenere.ui;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -18,9 +21,9 @@ import org.eclipse.ui.IEditorReference;
 import org.jcryptool.analysis.vigenere.exceptions.IllegalInputException;
 import org.jcryptool.analysis.vigenere.exceptions.NoContentException;
 import org.jcryptool.analysis.vigenere.interfaces.DataProvider;
+import org.jcryptool.analysis.vigenere.ui.QuickDecryptGui.VigenereBackgroundJob;
 import org.jcryptool.analysis.vigenere.views.VigenereBreakerView;
-import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
-import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
+import org.jcryptool.crypto.ui.background.BackgroundJob;
 
 public class VigenereBreakerGui extends ContentDelegator {
 	protected static final String COURIER = "Courier New"; //$NON-NLS-1$
@@ -68,13 +71,6 @@ public class VigenereBreakerGui extends ContentDelegator {
 		this.layout(new Control[] { content });
 	}
 
-	private String filterChiffre(String chiff) {
-		TransformData filter = TransformData.fromString(TransformData.BLANKS_LABEL);
-		filter.setUnmodified();
-		filter.setAlphabetTransformationON(true);
-		return Transform.transformText(chiff, filter);
-	}
-
 	public VigenereBreakerView getVigenereBreakerView() {
 		return vigenereBreakerView;
 	}
@@ -112,14 +108,40 @@ public class VigenereBreakerGui extends ContentDelegator {
 		this.layout(new Control[] { content });
 	}
 
+	public static class FilterChiffreBackgroundJob extends BackgroundJob {
+		public String editorContent;
+		public String result__filtered;
+		
+		@Override
+		public String name() {
+			return "Filtering Input (Vigenere Breaker)";
+		}
+		
+		@Override
+		public IStatus computation(IProgressMonitor monitor) {
+			this.result__filtered = DataProvider.filterChiffre(this.editorContent);
+			return Status.OK_STATUS;
+		}
+
+	}
+	
 	@Override
 	protected void toFriedman(final IEditorReference selection) {
 		try {
-			chiffre = filterChiffre(DataProvider.getInstance().getEditorContent(selection));
 			edtitle = selection.getTitle();
-			content.dispose();
-			content = new FriedmanGui(this, chiffre, selection);
-			this.layout(new Control[] { content });
+			FilterChiffreBackgroundJob filterJob = new FilterChiffreBackgroundJob();
+			filterJob.editorContent = DataProvider.getInstance().getEditorContent(selection);
+			filterJob.finalizeListeners.add(status -> {
+				filterJob.liftNoClickDisplaySynced(getDisplay());
+				getDisplay().syncExec(() -> {
+					chiffre = filterJob.result__filtered;
+					content.dispose();
+					content = new FriedmanGui(this, chiffre, selection);
+					VigenereBreakerGui.this.layout(new Control[] { content });
+				});
+			});
+			filterJob.imposeNoClickDisplayCurrentShellSynced(getDisplay());
+			filterJob.runInBackground();
 		} catch (IllegalInputException iiEx) {
 			MessageBox box = new MessageBox(getShell(), SWT.ICON_ERROR);
 			String message = Messages.VigenereBreakerGui_mbox_open;
@@ -139,10 +161,24 @@ public class VigenereBreakerGui extends ContentDelegator {
 	protected void toQuick(final IEditorReference selection) {
 		try {
 			edtitle = selection.getTitle();
-			chiffre = filterChiffre(DataProvider.getInstance().getEditorContent(selection));
-			content.dispose();
-			content = new QuickDecryptGui(this, chiffre, selection);
-			this.layout(new Control[] { content });
+			String editorContent = DataProvider.getInstance().getEditorContent(selection);
+
+			VigenereBackgroundJob initBackgroundJob = new QuickDecryptGui.VigenereBackgroundJob();
+			initBackgroundJob.editorContent = editorContent;
+			initBackgroundJob.parent = this;
+			initBackgroundJob.finalizeListeners.add(status -> {
+				initBackgroundJob.liftNoClickDisplaySynced(getDisplay());
+				if (status.isOK()) {
+					getDisplay().syncExec(() -> {
+						content.dispose();
+						this.chiffre = initBackgroundJob.chiffre;
+						content = new QuickDecryptGui(VigenereBreakerGui.this, initBackgroundJob, selection);
+						this.layout(new Control[] { content });
+					});
+				}
+			});
+			initBackgroundJob.imposeNoClickDisplayCurrentShellSynced(getDisplay());
+			initBackgroundJob.runInBackground();
 		} catch (IllegalInputException iiEx) {
 			MessageBox box = new MessageBox(getShell(), SWT.ICON_ERROR);
 			String message = Messages.VigenereBreakerGui_mbox_open;

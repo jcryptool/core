@@ -35,7 +35,7 @@ public class TranspositionAnalysisResumee extends TranspositionAnalysis {
 		TranspositionKey bestKey = out.getKeyPolls().get(bestLength).getBestChoice();
 
 		buffer.append("Based on all executed analysis methods, the first key to try would be: "
-			+ TranspositionAnalysisConclusion.PLACEHOLDER + ".");
+				+ TranspositionAnalysisConclusion.PLACEHOLDER + ".");
 		atoms.add(new TranspositionAnalysisResultAtom(bestKey, false));
 
 		conclusion = new TranspositionAnalysisConclusion(buffer.toString(), atoms);

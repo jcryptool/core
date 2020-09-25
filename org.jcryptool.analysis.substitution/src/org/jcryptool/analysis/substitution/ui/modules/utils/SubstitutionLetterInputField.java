@@ -458,7 +458,7 @@ public class SubstitutionLetterInputField extends Composite {
         } else if ((int) (c) == 32) {
             return Messages.SubstitutionLetterInputField_4;
         } else {
-            return String.format("%s (%s)", String.valueOf(c), AbstractAlphabet.getPrintableCharRepresentation(c)); //$NON-NLS-1$ //$NON-NLS-2$
+            return String.format("%s (%s)", String.valueOf(c), AbstractAlphabet.getPrintableCharRepresentation(c)); //$NON-NLS-1$ 
         }
     }
 

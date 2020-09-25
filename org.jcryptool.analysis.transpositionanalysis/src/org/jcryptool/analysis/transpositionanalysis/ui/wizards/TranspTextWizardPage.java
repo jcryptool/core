@@ -214,8 +214,8 @@ public class TranspTextWizardPage extends WizardPage {
 	private Label lblyouCanChange;
 	private Button buttonTransformText;
 
-	private TransformData lastTransform = null; 
-	private TransformData transformation = null; 
+	private TransformData lastTransform = null;
+	private TransformData transformation = null;
 
 	/**
 	 * Creates a new instance of TranspTextWizardPage.
@@ -350,7 +350,7 @@ public class TranspTextWizardPage extends WizardPage {
 
 		txtInputText = new Text(textfieldComp, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
 		GridData text1LData = new GridData(SWT.FILL, SWT.FILL, true, true);
-		
+
 		buttonTransformText = new Button(grpText, SWT.CHECK);
 		buttonTransformText.setText("Filter text...");
 		buttonTransformText.addSelectionListener(new SelectionAdapter() {
@@ -359,14 +359,15 @@ public class TranspTextWizardPage extends WizardPage {
 			public void widgetSelected(SelectionEvent e) {
 				ModifyWizard transformSelectionWizard = new ModifyWizard();
 				TransformData preTfData = new TransformData();
-				
+
 				TransformData newTransform = null;
 				if (buttonTransformText.getSelection()) {
-					if (lastTransform != null ) {
+					if (lastTransform != null) {
 						preTfData = lastTransform;
 					}
 					transformSelectionWizard.setPredefinedData(preTfData);
-					WizardDialog dialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), transformSelectionWizard);
+					WizardDialog dialog = new WizardDialog(
+							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), transformSelectionWizard);
 					int result = dialog.open();
 
 					if (result == 0) {
@@ -375,8 +376,7 @@ public class TranspTextWizardPage extends WizardPage {
 						lastTransform = newTransform;
 						transformation = newTransform;
 						textInput.synchronizeWithUserSide();
-						
-						
+
 					} else {
 						transformation = null;
 						buttonTransformText.setSelection(false);

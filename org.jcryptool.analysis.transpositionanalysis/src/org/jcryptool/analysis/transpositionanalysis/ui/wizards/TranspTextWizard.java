@@ -29,12 +29,10 @@ public class TranspTextWizard extends Wizard {
 	/**
 	 * Creates a new instance of CaesarWizard.
 	 * 
-	 * @param alphabets
-	 *            the alphabets to be displayed in the alphabet box
-	 * @param defaultAlphabet
-	 *            the name of the default alphabet (the selected entry in the
-	 *            alphabet combo box) - if the alphabet is not found, the first
-	 *            Alphabet is used
+	 * @param alphabets       the alphabets to be displayed in the alphabet box
+	 * @param defaultAlphabet the name of the default alphabet (the selected entry
+	 *                        in the alphabet combo box) - if the alphabet is not
+	 *                        found, the first Alphabet is used
 	 */
 	public TranspTextWizard() {
 		setWindowTitle(Messages.TranspTextWizard_textwizard);
@@ -50,8 +48,10 @@ public class TranspTextWizard extends Wizard {
 	}
 
 	public TranspTextWizardPage.PageConfiguration getTextPageConfig() {
-		if (!finished) return firstPage.getPageConfiguration();
-		else return textPageConfig;
+		if (!finished)
+			return firstPage.getPageConfiguration();
+		else
+			return textPageConfig;
 	}
 
 	private void saveResults() {

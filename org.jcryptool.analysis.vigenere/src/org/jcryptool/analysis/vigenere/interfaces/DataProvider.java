@@ -8,6 +8,7 @@ package org.jcryptool.analysis.vigenere.interfaces;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -34,6 +35,8 @@ import org.jcryptool.analysis.vigenere.ui.OptionsDialogGui;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.algorithm.AbstractAlgorithm;
 import org.jcryptool.core.operations.algorithm.classic.AbstractClassicAlgorithm;
+import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
+import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.core.operations.dataobject.IDataObject;
@@ -143,6 +146,22 @@ public class DataProvider {
         output = myStrBuf.toString();
         return output;
     }
+    
+    private String InputStreamToString2(InputStream in) {
+    	ByteArrayOutputStream result = new ByteArrayOutputStream();
+    	byte[] buffer = new byte[1024];
+    	int length;
+    	try {
+			while ((length = in.read(buffer)) != -1) {
+			    result.write(buffer, 0, length);
+			}
+			return result.toString("UTF-8");	
+		} catch (IOException e) {
+			LogUtil.logError(e);
+			return "";
+		}
+    	// StandardCharsets.UTF_8.name() > JDK 7
+    }
 
     /**
      * Requests content of the referenced editor from the editor manager of JCrypTool core plug-in. Also converts the
@@ -161,14 +180,11 @@ public class DataProvider {
             throw new IllegalInputException("Could not find input stream.");
         }
 
-        String converted = InputStreamToString(content);
+        String converted = InputStreamToString2(content);
 
         if ("".equals(converted)) { // throw exception if string is empty
             throw new NoContentException("Editor contains no characters!");
         }
-
-        // quick fix: no spaces allowed.
-        converted = replaceWhitespaces(converted);
 
         return converted;
     }
@@ -242,15 +258,17 @@ public class DataProvider {
      * @return the text with all whitespaces removed.
      */
     private String replaceWhitespaces(final String with) {
-        Pattern pattern = Pattern.compile("\\SX*?");
-        Matcher matcher = pattern.matcher(with);
-        String without = "";
-
-        while (matcher.find()) {
-            without = without.concat(matcher.group());
-        }
-
-        return without;
+    	return with.replaceAll("\\s*", "");
+    	
+//        Pattern pattern = Pattern.compile("\\SX*?");
+//        Matcher matcher = pattern.matcher(with);
+//        String without = "";
+//
+//        while (matcher.find()) {
+//            without = without.concat(matcher.group());
+//        }
+//
+//        return without;
     }
 
     /**
@@ -563,4 +581,13 @@ public class DataProvider {
     private void logError(final Exception ex) {
         LogUtil.logError(ex);
     }
+
+	public static String filterChiffre(String chiff) {
+		TransformData filter = new TransformData();
+		filter.setUnmodified();
+		filter.setUppercaseTransformationOn(true);
+		filter.setLeerTransformationON(true);
+		filter.setAlphabetTransformationON(false);
+		return Transform.transformText(chiff, filter);
+	}
 }

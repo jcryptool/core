@@ -60,15 +60,15 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 	 */
 	private String[] columns;
 	/**
-	 * The column width in which a text is arranged in this table 0 means, the
-	 * text will be arranged in one single row (no "line break" after column
-	 * width is reached)
+	 * The column width in which a text is arranged in this table 0 means, the text
+	 * will be arranged in one single row (no "line break" after column width is
+	 * reached)
 	 */
 	private int columnCount = 9;
 	/**
-	 * decides, if the whole text set should be displayed or if only a part of
-	 * it (first singleLineDisplayCount characters). As soon as columnCount is
-	 * set to a value greater than zero, the full text will be displayed
+	 * decides, if the whole text set should be displayed or if only a part of it
+	 * (first singleLineDisplayCount characters). As soon as columnCount is set to a
+	 * value greater than zero, the full text will be displayed
 	 */
 	private boolean displayEverything = true;
 	/**
@@ -115,19 +115,23 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 	}
 
 	private String unchangedToDisplayText(String text) {
-		if (!displayEverything) return text.substring(0, Math.min(displayCount, text.length()));
-		else return text;
+		if (!displayEverything)
+			return text.substring(0, Math.min(displayCount, text.length()));
+		else
+			return text;
 	}
 
 	private int charArrayLengthWithoutEMPTY(Character[] array) {
 		int result = 0;
 		for (int i = 0; i < array.length; i++)
-			if (!array[i].equals(TranspositionTable.EMPTY)) result++;
+			if (!array[i].equals(TranspositionTable.EMPTY))
+				result++;
 		return result;
 	}
 
 	private void calculateArrays() {
-		if (displayedText == null) displayedText = ""; //$NON-NLS-1$
+		if (displayedText == null)
+			displayedText = ""; //$NON-NLS-1$
 		int w = 0;
 		int h = 0;
 		int textL = displayedText.length();
@@ -138,15 +142,18 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 			w = columnCount;
 		}
 
-		if (w == 0) w = 1;
+		if (w == 0)
+			w = 1;
 
 		TranspositionTable virtualTable = new TranspositionTable(w);
 		virtualTable.fillCharsIntoTable(displayedText.toCharArray(), readInOrder);
 
 		Character[][] virtualTableContent = virtualTable.getContent();
 		w = virtualTableContent.length;
-		if (w > 0) h = virtualTableContent[0].length;
-		else h = 0;
+		if (w > 0)
+			h = virtualTableContent[0].length;
+		else
+			h = 0;
 
 		// Cells
 		cells = new char[w][];
@@ -203,7 +210,7 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 				disposableColumns[i].setMoveable(true);
 				disposableColumns[i].setAlignment(SWT.CENTER);
 				disposableColumns[i].addControlListener(this);
-				
+
 			}
 			for (int i = 0; i < rows.length; i++) {
 				TableItem myItem = new TableItem(transpTable, SWT.NONE);
@@ -214,31 +221,28 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 				myItem.setText(myRow);
 				myItem.setFont(FontService.getNormalBoldFont());
 			}
-			
+
 			transpTable.layout();
 		}
 	}
 
 	/**
-	 * Set a text to be displayed in the table rows. The text will be arranged
-	 * in given columns, if a column width is set.
+	 * Set a text to be displayed in the table rows. The text will be arranged in
+	 * given columns, if a column width is set.
 	 * 
-	 * @param text
-	 *            the text to be displayed
+	 * @param text the text to be displayed
 	 */
 	public void setText(String text) {
 		setText(text, columnCount, true);
 	}
 
 	/**
-	 * set a text to display; this method only calls setcolumnCount and setText
-	 * in this order; read there for more information.
+	 * set a text to display; this method only calls setcolumnCount and setText in
+	 * this order; read there for more information.
 	 * 
-	 * @param text
-	 *            the text to display
-	 * @param columnCount
-	 *            number of columns, in which the text should be arranged. Zero
-	 *            = no arrangement, but single line display.
+	 * @param text        the text to display
+	 * @param columnCount number of columns, in which the text should be arranged.
+	 *                    Zero = no arrangement, but single line display.
 	 */
 	public void setText(String text, int columnCount) {
 		setText(text, columnCount, true); // not calling inner method because
@@ -249,52 +253,40 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 	/**
 	 * set a text to display
 	 * 
-	 * @param text
-	 *            the text
-	 * @param columnCount
-	 *            the column count
-	 * @param refresh
-	 *            redraw/calculation, or not
+	 * @param text        the text
+	 * @param columnCount the column count
+	 * @param refresh     redraw/calculation, or not
 	 */
 	private void setText(String text, int columnCount, boolean refresh) {
-		setText(text, columnCount, this.displayEverything, this.displayCount, TranspTextWizardPage.makeStdColumnOrder(columnCount), refresh);
+		setText(text, columnCount, this.displayEverything, this.displayCount,
+				TranspTextWizardPage.makeStdColumnOrder(columnCount), refresh);
 	}
 
 	/**
-	 * inner setText procedure. Methods in this class should call this method
-	 * only if they want to control whether a redraw/recalculate should occur or
-	 * not.
+	 * inner setText procedure. Methods in this class should call this method only
+	 * if they want to control whether a redraw/recalculate should occur or not.
 	 * 
-	 * @param text
-	 *            the text
-	 * @param columnCount
-	 *            the column count
-	 * @param fulltext
-	 *            should the text be displayed full or cropped
-	 * @param croplength
-	 *            the length where the text could be cropped (see above).
+	 * @param text        the text
+	 * @param columnCount the column count
+	 * @param fulltext    should the text be displayed full or cropped
+	 * @param croplength  the length where the text could be cropped (see above).
 	 */
 	public void setText(String text, int columnCount, boolean fulltext, int croplength) {
 		setText(text, columnCount, fulltext, croplength, TranspTextWizardPage.makeStdColumnOrder(columnCount), true);
 	}
 
 	/**
-	 * inner setText procedure. Methods in this class should call this method
-	 * only if they want to control whether a redraw/recalculate should occur or
-	 * not.
+	 * inner setText procedure. Methods in this class should call this method only
+	 * if they want to control whether a redraw/recalculate should occur or not.
 	 * 
-	 * @param text
-	 *            the text
-	 * @param columnCount
-	 *            the column count
-	 * @param fulltext
-	 *            should the text be displayed full or cropped
-	 * @param croplength
-	 *            the length where the text could be cropped (see above).
-	 * @param refresh
-	 *            redraw/calculation, or not
+	 * @param text        the text
+	 * @param columnCount the column count
+	 * @param fulltext    should the text be displayed full or cropped
+	 * @param croplength  the length where the text could be cropped (see above).
+	 * @param refresh     redraw/calculation, or not
 	 */
-	public void setText(String text, int columnCount, boolean fulltext, int croplength, int[] columnOrder, boolean refresh) {
+	public void setText(String text, int columnCount, boolean fulltext, int croplength, int[] columnOrder,
+			boolean refresh) {
 		this.setDisplayEverything(fulltext);
 		this.setDisplayCount(croplength);
 		unchangedText = text;
@@ -316,26 +308,26 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 	}
 
 	/**
-	 * @param columnCount
-	 *            the column Width to set in which the text is displayed. <br />
-	 *            zero: no colum-arrangement (singleline)
+	 * @param columnCount the column Width to set in which the text is displayed.
+	 *                    <br />
+	 *                    zero: no colum-arrangement (singleline)
 	 */
 	public void setColumnCount(int columnCount) {
 		setColumnCount(columnCount, true);
 	}
 
 	/**
-	 * inner columnCount procedure. methods in this class should call this if
-	 * they want to control whether a redraw/recalculate should occur or not.
+	 * inner columnCount procedure. methods in this class should call this if they
+	 * want to control whether a redraw/recalculate should occur or not.
 	 * 
-	 * @param columnCount
-	 *            the column width
-	 * @param refresh
-	 *            redraw/calculation, or not
+	 * @param columnCount the column width
+	 * @param refresh     redraw/calculation, or not
 	 */
 	private void setColumnCount(int columnCount, boolean refresh) {
-		if (columnCount <= 0) this.columnCount = 0;
-		else this.columnCount = columnCount;
+		if (columnCount <= 0)
+			this.columnCount = 0;
+		else
+			this.columnCount = columnCount;
 		displayedText = unchangedToDisplayText(unchangedText);
 
 		if (refresh) {
@@ -364,8 +356,7 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 	}
 
 	/**
-	 * @param displayEverything
-	 *            the displayEverythingSingleline to set
+	 * @param displayEverything the displayEverythingSingleline to set
 	 */
 	public void setDisplayEverything(boolean displayEverything) {
 		this.displayEverything = displayEverything;
@@ -430,16 +421,14 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 	}
 
 	/**
-	 * @param singleLineDisplayCount
-	 *            the singleLineDisplayCount to set
+	 * @param singleLineDisplayCount the singleLineDisplayCount to set
 	 */
 	public void setDisplayCount(int singleLineDisplayCount) {
 		this.displayCount = singleLineDisplayCount;
 	}
 
 	/**
-	 * @param columnCount
-	 *            the columnCount to set
+	 * @param columnCount the columnCount to set
 	 */
 	public void setColumnWidth(int columnWidth) {
 		this.columnWidth = columnWidth;
@@ -452,14 +441,13 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 	public int[] getColumnOrder() {
 		return transpTable.getColumnOrder();
 	}
-	
+
 	public void setColumnOrder(int[] order) {
 		transpTable.setColumnOrder(order);
 	}
 
 	/**
-	 * @param colReorderObserver
-	 *            the colReorderObserver to set
+	 * @param colReorderObserver the colReorderObserver to set
 	 */
 	public void setColReorderObserver(Observer colReorderObserver) {
 		this.colReorderObserver = colReorderObserver;
@@ -473,7 +461,8 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 	public void setReadInOrder(boolean textDisplayOrder) {
 		boolean changed = !(textDisplayOrder == this.readInOrder);
 		this.readInOrder = textDisplayOrder;
-		if (changed) refresh();
+		if (changed)
+			refresh();
 	}
 
 	/**
@@ -484,14 +473,16 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 	public void setReadInOrder(boolean textDisplayOrder, boolean refresh) {
 		boolean changed = !(textDisplayOrder == this.readInOrder);
 		this.readInOrder = textDisplayOrder;
-		if (changed && refresh) refresh();
+		if (changed && refresh)
+			refresh();
 	}
 
 	@Override
 	public void controlMoved(ControlEvent e) {
 
 		if (Math.abs(e.time - colMovedTime) > 200) {
-			if (colReorderObserver != null) colReorderObserver.update(null, transpTable.getColumnOrder());
+			if (colReorderObserver != null)
+				colReorderObserver.update(null, transpTable.getColumnOrder());
 		}
 		colMovedTime = e.time;
 

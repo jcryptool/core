@@ -41,12 +41,11 @@ public class AnalysisWizard extends Wizard implements TranspositionAnalysisInput
 	private boolean firstAnalysis = false;
 
 	/**
-	 * @param ciphertext
-	 *            the ciphertext to analyze.
-	 * @param dataobject
-	 *            , if there is analysis data that should be displayed as first
-	 *            page, before starting a new analysis. null for not showing a
-	 *            cinclusion first, but starting a new analysis straightaway.
+	 * @param ciphertext the ciphertext to analyze.
+	 * @param dataobject , if there is analysis data that should be displayed as
+	 *                   first page, before starting a new analysis. null for not
+	 *                   showing a cinclusion first, but starting a new analysis
+	 *                   straightaway.
 	 */
 	public AnalysisWizard(String ciphertext, TranspositionAnalysisDataobject dataobject) {
 		if (dataobject == null) {
@@ -90,7 +89,8 @@ public class AnalysisWizard extends Wizard implements TranspositionAnalysisInput
 
 	private TranspositionAnalysis getAnalysisForPage(SingleAnalysisPage page) {
 		for (TranspositionAnalysis analysis : analysisPageMap.keySet()) {
-			if (page == analysisPageMap.get(analysis)) return analysis;
+			if (page == analysisPageMap.get(analysis))
+				return analysis;
 		}
 		return null;
 	}

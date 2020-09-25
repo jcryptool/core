@@ -30,9 +30,11 @@ public class ConclusionPage extends WizardPage {
 		super("Conclusion");
 		this.setTitle("Conclusion");
 		if (!justStoredPageAtBeginning) {
-			this.setDescription("This page shows the results of all analysis combined, and the results of each single analysis.");
+			this.setDescription(
+					"This page shows the results of all analysis combined, and the results of each single analysis.");
 		} else {
-			this.setDescription("This page shows the results of the last analysis. Go to the next page to start a fresh new analysis.");
+			this.setDescription(
+					"This page shows the results of the last analysis. Go to the next page to start a fresh new analysis.");
 		}
 		this.dataobject = dataobject;
 	}
@@ -89,7 +91,7 @@ public class ConclusionPage extends WizardPage {
 				for (TranspositionAnalysis analysis : dataobject.getListOfAnalyses()) { // other
 																						// analysis
 					if (analysis != dataobject.iniAnalysis && analysis != dataobject.resumeeAnalysis
-						&& analysis.getConclusion() != null) {
+							&& analysis.getConclusion() != null) {
 						ConclusionItem analysisConclusionItem = new ConclusionItem(pageComposite, analysis);
 						GridData analysisConclusionItemLData = new GridData();
 						analysisConclusionItemLData.horizontalAlignment = SWT.FILL;

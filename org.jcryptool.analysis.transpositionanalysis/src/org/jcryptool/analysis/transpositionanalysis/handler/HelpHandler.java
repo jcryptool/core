@@ -27,7 +27,7 @@ public class HelpHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		PlatformUI.getWorkbench().getHelpSystem()
-			.displayHelp(TranspositionAnalysisPlugin.PLUGIN_ID + ".transpositionanalysis");
+				.displayHelp(TranspositionAnalysisPlugin.PLUGIN_ID + ".transpositionanalysis");
 		return null;
 	}
 }

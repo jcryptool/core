@@ -56,8 +56,7 @@ public class PolledValue<T> {
 	/**
 	 * Looks up whether a given choice is contained in the poll
 	 * 
-	 * @param choice
-	 *            the choice
+	 * @param choice the choice
 	 */
 	public boolean hasChoice(T choice) {
 		return internalRepresentation.containsKey(choice);
@@ -67,8 +66,7 @@ public class PolledValue<T> {
 	 * Add a choice to poll from, with default possibility. <br />
 	 * If the choice already exists, it will be overwritten.
 	 * 
-	 * @param choice
-	 *            the integer
+	 * @param choice the integer
 	 */
 	public void addChoice(T choice) {
 		this.addChoice(choice, POSSIBILITY_DEFAULT);
@@ -77,8 +75,7 @@ public class PolledValue<T> {
 	/**
 	 * Removes a choice from the poll
 	 * 
-	 * @param choice
-	 *            the choice to remove
+	 * @param choice the choice to remove
 	 */
 	public void removeChoice(T choice) {
 		internalRepresentation.remove(choice);
@@ -88,8 +85,7 @@ public class PolledValue<T> {
 	 * Add a choice to poll from. <br />
 	 * If the choice already exists, it will be overwritten.
 	 * 
-	 * @param choice
-	 *            the integer
+	 * @param choice             the integer
 	 * @param initialPossibility
 	 */
 	public void addChoice(T choice, double initialPossibility) {
@@ -108,12 +104,13 @@ public class PolledValue<T> {
 	/**
 	 * returns the possibility that a given integer has.
 	 * 
-	 * @param choice
-	 *            the integer
+	 * @param choice the integer
 	 * @return the possibility for this integer
 	 */
 	public double getPossibility(T choice) {
-		if (internalRepresentation.containsKey(choice)) { return internalRepresentation.get(choice); }
+		if (internalRepresentation.containsKey(choice)) {
+			return internalRepresentation.get(choice);
+		}
 
 		return POSSIBILITY_IMPOSSIBLE;
 	}
@@ -126,8 +123,8 @@ public class PolledValue<T> {
 	}
 
 	/**
-	 * combines the possibilities of two polledIntegers into one. This Instance
-	 * of PolledInteger will be altered, but will also return itself.
+	 * combines the possibilities of two polledIntegers into one. This Instance of
+	 * PolledInteger will be altered, but will also return itself.
 	 * 
 	 * @param combineSubject
 	 * @return
@@ -158,10 +155,8 @@ public class PolledValue<T> {
 	 * combines a current possibility with another one, by multiplying the
 	 * possibilities.
 	 * 
-	 * @param choice
-	 *            the choice (integer)
-	 * @param possibility
-	 *            the possibility itself
+	 * @param choice      the choice (integer)
+	 * @param possibility the possibility itself
 	 */
 	public void combinePossibility(T choice, double possibility) {
 		double combinedPossibility = possibility * this.getPossibility(choice);
@@ -179,8 +174,10 @@ public class PolledValue<T> {
 		Comparator<Entry<T, Double>> entryComparator = new Comparator<Entry<T, Double>>() {
 			@Override
 			public int compare(Entry<T, Double> o1, Entry<T, Double> o2) {
-				if (o1.getValue() > o2.getValue()) return -1;
-				if (o2.getValue() > o1.getValue()) return 1;
+				if (o1.getValue() > o2.getValue())
+					return -1;
+				if (o2.getValue() > o1.getValue())
+					return 1;
 				return 0;
 			}
 		};
@@ -196,13 +193,13 @@ public class PolledValue<T> {
 	public T getBestValue() {
 		List<Entry<T, Double>> sortedEntries = getSortedEntries();
 
-		if (sortedEntries.size() > 0) return sortedEntries.get(0).getKey();
+		if (sortedEntries.size() > 0)
+			return sortedEntries.get(0).getKey();
 		return null;
 	}
 
 	/**
-	 * Returns the values that were polled, ordered by possibility (highest
-	 * first).
+	 * Returns the values that were polled, ordered by possibility (highest first).
 	 */
 	public List<T> getValuesSortedByPossibility() {
 		List<T> result = new LinkedList<T>();

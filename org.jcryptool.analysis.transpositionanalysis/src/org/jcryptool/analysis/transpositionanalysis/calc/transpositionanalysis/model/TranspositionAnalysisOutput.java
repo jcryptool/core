@@ -35,9 +35,8 @@ public interface TranspositionAnalysisOutput extends AnalysisOutput {
 	/**
 	 * Set the map of keylengths->polled keys.
 	 * 
-	 * @param keys
-	 *            A map, that maps possible keylengths to
-	 *            PolledTranspositionKeys (of that length each!)
+	 * @param keys A map, that maps possible keylengths to PolledTranspositionKeys
+	 *             (of that length each!)
 	 */
 	public void setKeyPolls(Map<Integer, PolledTranspositionKey> keys);
 
@@ -47,8 +46,7 @@ public interface TranspositionAnalysisOutput extends AnalysisOutput {
 	public PolledPositiveInteger getKeylengthPoll();
 
 	/**
-	 * @param keylength
-	 *            sets the poll about the keylength
+	 * @param keylength sets the poll about the keylength
 	 */
 	public void setKeylengthPoll(PolledPositiveInteger keylength);
 

@@ -45,22 +45,22 @@ public class TranspAnalysisView extends ViewPart {
 	public void setFocus() {
 		myUI.setFocus();
 	}
-	
+
 	/**
 	 * Resets the Plug-in.
 	 */
 	public void resetClick() {
-		if (MessageDialog.openQuestion(Display.getCurrent().getActiveShell(), Messages.TranspAnalysisView_resetDialogTitle, Messages.TranspAnalysisView_resetDialogQuestion)) {
+		if (MessageDialog.openQuestion(Display.getCurrent().getActiveShell(),
+				Messages.TranspAnalysisView_resetDialogTitle, Messages.TranspAnalysisView_resetDialogQuestion)) {
 			for (Control ctr : parent.getChildren()) {
 				ctr.dispose();
 			}
 			myUI = new TranspAnalysisUI(parent, SWT.NONE);
 			parent.layout();
 		} else {
-			//Do nothing if the user chooses cancel.
+			// Do nothing if the user chooses cancel.
 		}
 
-		
 	}
 
 	private void hookActionBar() {
@@ -74,8 +74,8 @@ public class TranspAnalysisView extends ViewPart {
 		this.parent = parent;
 		myUI = new TranspAnalysisUI(parent, SWT.NONE);
 
-		PlatformUI.getWorkbench().getHelpSystem()
-			.setHelp(parent, TranspositionAnalysisPlugin.PLUGIN_ID + ".transpositionanalysis"); //$NON-NLS-1$
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
+				TranspositionAnalysisPlugin.PLUGIN_ID + ".transpositionanalysis"); //$NON-NLS-1$
 
 		hookActionBar();
 	}

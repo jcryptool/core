@@ -56,9 +56,9 @@ public class PaddingAnalysisPage extends SingleAnalysisPage implements Transposi
 			labelTestLData.grabExcessHorizontalSpace = true;
 			labelTestLData.widthHint = 350;
 			labelTest.setLayoutData(labelTestLData);
-			labelTest
-				.setText("The padding of a cipher is a filling at the end of the text, used for fitting the blocklength. A padding often consists of just easily-distinguishable character, like '#', '0'."
-					+ "\nPlease try to find the padding characters in the end of the cipher. Example: In 'biu##dl#', mark the last five characters.");
+			labelTest.setText(
+					"The padding of a cipher is a filling at the end of the text, used for fitting the blocklength. A padding often consists of just easily-distinguishable character, like '#', '0'."
+							+ "\nPlease try to find the padding characters in the end of the cipher. Example: In 'biu##dl#', mark the last five characters.");
 		}
 		{
 			compPaddingSelect = new Group(parent, SWT.NONE);
@@ -87,7 +87,7 @@ public class PaddingAnalysisPage extends SingleAnalysisPage implements Transposi
 				text1LData.horizontalIndent = 5;
 				textPaddingSelector.setLayoutData(text1LData);
 				textPaddingSelector.setText(TranspositionAnalysisPadding.getPaddingExcerpt(
-					((AnalysisWizard) getWizard()).getInitializationInput().getMaxKeylength(), getCiphertext()));
+						((AnalysisWizard) getWizard()).getInitializationInput().getMaxKeylength(), getCiphertext()));
 			}
 			{
 				separatorAutoExplanation = new Label(compPaddingSelect, SWT.SEPARATOR | SWT.VERTICAL);
@@ -102,8 +102,8 @@ public class PaddingAnalysisPage extends SingleAnalysisPage implements Transposi
 				labelAutoDescriptionLData.grabExcessHorizontalSpace = true;
 				labelAutoDescriptionLData.widthHint = 200;
 				labelAutoDescription.setLayoutData(labelAutoDescriptionLData);
-				labelAutoDescription
-					.setText("The automatical detection of the padding is just a rough approach and is often not correct.");
+				labelAutoDescription.setText(
+						"The automatical detection of the padding is just a rough approach and is often not correct.");
 			}
 			{
 				buttonAutoDetect = new Button(compPaddingSelect, SWT.PUSH | SWT.CENTER);
@@ -114,10 +114,9 @@ public class PaddingAnalysisPage extends SingleAnalysisPage implements Transposi
 					@Override
 					public void widgetSelected(SelectionEvent evt) {
 						textPaddingSelector.setSelection(
-							textPaddingSelector.getText().length()
-								- TranspositionAnalysisPadding
-									.guessPaddingDistanceFromEndOfSampletext(textPaddingSelector.getText()),
-							textPaddingSelector.getText().length());
+								textPaddingSelector.getText().length() - TranspositionAnalysisPadding
+										.guessPaddingDistanceFromEndOfSampletext(textPaddingSelector.getText()),
+								textPaddingSelector.getText().length());
 						hideObject(buttonAutoDetect, true);
 						hideObject(labelAutoDescription, false);
 					}
@@ -130,8 +129,9 @@ public class PaddingAnalysisPage extends SingleAnalysisPage implements Transposi
 
 	@Override
 	public int getSelectedPaddingLengthFromEnd() {
-		if (textPaddingSelector.getSelection().y != textPaddingSelector.getSelection().x) return textPaddingSelector
-			.getText().length() - Math.min(textPaddingSelector.getSelection().x, textPaddingSelector.getSelection().y);
+		if (textPaddingSelector.getSelection().y != textPaddingSelector.getSelection().x)
+			return textPaddingSelector.getText().length()
+					- Math.min(textPaddingSelector.getSelection().x, textPaddingSelector.getSelection().y);
 		return 0;
 	}
 

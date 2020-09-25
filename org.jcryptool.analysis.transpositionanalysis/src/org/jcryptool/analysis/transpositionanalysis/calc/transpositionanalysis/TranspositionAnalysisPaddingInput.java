@@ -15,12 +15,12 @@ import org.jcryptool.analysis.transpositionanalysis.calc.transpositionanalysis.m
 public interface TranspositionAnalysisPaddingInput extends TranspositionAnalysisInput {
 
 	/**
-	 * A recognition system (e. g. the user) recognizes a padding at the end of
-	 * a given sample text (usually this sample text should be retrieved by
-	 * using {@link TranspositionAnalysisPadding#getPaddingExcerpt()}).
+	 * A recognition system (e. g. the user) recognizes a padding at the end of a
+	 * given sample text (usually this sample text should be retrieved by using
+	 * {@link TranspositionAnalysisPadding#getPaddingExcerpt()}).
 	 * 
-	 * @return the distance from the beginning of the recognized padding, to the
-	 *         end of the sample text.
+	 * @return the distance from the beginning of the recognized padding, to the end
+	 *         of the sample text.
 	 */
 	public int getSelectedPaddingLengthFromEnd();
 

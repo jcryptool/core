@@ -24,7 +24,7 @@ import org.jcryptool.analysis.vigenere.interfaces.FriedmanGraphAdapter;
 public class FriedmanContainer {
     private String chiffre;
     private FriedmanGraphAdapter graph;
-    private Composite parent;
+    public Composite parent;
 
     public FriedmanContainer(final Composite parent, final String chiffre) {
         this.chiffre = chiffre;

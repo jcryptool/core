@@ -12,6 +12,9 @@ package org.jcryptool.analysis.friedman.ui;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -26,6 +29,7 @@ import org.jcryptool.analysis.friedman.IFriedmanAccess;
 import org.jcryptool.analysis.friedman.calc.FriedmanCalc;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.crypto.ui.background.BackgroundJob;
 import org.jcryptool.crypto.ui.textloader.ui.wizard.TextLoadController;
 
 /**
@@ -187,6 +191,7 @@ public class FriedmanGraphUI extends Composite implements IFriedmanAccess {
 
 	private FriedmanCalc myAnalysis;
 	private TextViewer myDialog;
+	public FriedmanCalc __return_myAnalysis;
 
 	@Override
 	public final void execute(final boolean executeCalc) {
@@ -195,13 +200,41 @@ public class FriedmanGraphUI extends Composite implements IFriedmanAccess {
 		}
 	}
 
+	public class FriedmanAnalysisJob extends BackgroundJob {
+
+		public String goodCiphertext;
+		
+		@Override
+		public String name() {
+			return "Frequency Analysis";
+		}
+
+		@Override
+		public IStatus computation(IProgressMonitor monitor) {
+			FriedmanGraphUI.this.__return_myAnalysis = new FriedmanCalc(this.goodCiphertext, Math.min(this.goodCiphertext.length(), 2000));
+			return Status.OK_STATUS;
+		}
+
+	}
 	/**
 	 * main friedman analysis procedure
 	 */
 	private void analyze() {
-		myAnalysis = new FriedmanCalc(goodCiphertext, Math.min(goodCiphertext.length(), 2000));
-		myGraph.setAnalysis(myAnalysis);
-		myGraph.redraw();
+		FriedmanAnalysisJob backgroundJob = new FriedmanAnalysisJob();
+		backgroundJob.goodCiphertext = goodCiphertext;
+
+		backgroundJob.finalizeListeners.add(status -> {
+			getDisplay().syncExec(() -> {
+				backgroundJob.liftNoClickDisplaySynced(getDisplay());
+				if (status == Status.OK_STATUS) {
+					myAnalysis = __return_myAnalysis;
+					myGraph.setAnalysis(myAnalysis);
+					myGraph.redraw();
+				}
+			});
+		});
+		backgroundJob.imposeNoClickDisplayCurrentShellSynced(getDisplay());
+		backgroundJob.runInBackground();
 	}
 
 	// /**

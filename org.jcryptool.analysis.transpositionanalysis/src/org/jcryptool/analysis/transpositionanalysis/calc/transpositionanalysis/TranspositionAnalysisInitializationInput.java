@@ -15,8 +15,8 @@ import org.jcryptool.analysis.transpositionanalysis.calc.transpositionanalysis.m
 public interface TranspositionAnalysisInitializationInput extends TranspositionAnalysisInput {
 
 	/**
-	 * @return the maximum keylength that the output has to be initialized with.
-	 *         The standard value is -1 (preset length)
+	 * @return the maximum keylength that the output has to be initialized with. The
+	 *         standard value is -1 (preset length)
 	 */
 	public int getMaxKeylength();
 

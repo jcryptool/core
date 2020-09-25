@@ -19,6 +19,9 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Vector;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.MessageDialog;
 //import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -50,6 +53,7 @@ import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 //import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.ui.SingleVanishTooltipLauncher;
+import org.jcryptool.crypto.ui.background.BackgroundJob;
 
 //import java.io.BufferedReader;
 
@@ -100,6 +104,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 	private SingleVanishTooltipLauncher tipLauncher;
 	private boolean appropriateAlphabetToBeDetected = false;
 	private TextLoadController textloader;
+	public FreqAnalysisCalc return__freqanalysis;
 
 	/**
 	 * Contains reference texts for overlays
@@ -560,14 +565,46 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 		layout(myArray);
 	}
 
+	public class FreqAnalysisJob extends BackgroundJob {
+
+		private String text;
+		private int myLength;
+		private int myOffset;
+		
+		@Override
+		public String name() {
+			return "Frequency analysis";
+		}
+
+		@Override
+		public IStatus computation(IProgressMonitor monitor) {
+			FullAnalysisUI.this.return__freqanalysis = new FreqAnalysisCalc(this.text, this.myLength, this.myOffset, null, myOverlayAlphabet);
+			return Status.OK_STATUS;
+		}
+
+	}
 	@Override
 	protected void analyze() {
-		myAnalysis = new FreqAnalysisCalc(text, myLength, myOffset, null);
-		myLimitedAnalysis = new FreqAnalysisCalc(text, myLength, myOffset, null, myOverlayAlphabet);
-		if (btnReferenceTools.getSelection())
-			myGraph.setAnalysis(myLimitedAnalysis);
-		else
-			myGraph.setAnalysis(myAnalysis);
+		FreqAnalysisJob job = new FreqAnalysisJob();
+		job.text =  text;
+		job.myLength = myLength;
+		job.myOffset = myOffset;
+		
+		job.finalizeListeners.add(status -> {
+			getDisplay().syncExec(() -> {
+				job.liftNoClickDisplaySynced(getDisplay()); // TODO: mechanism to not let the user start other things in the background
+				if (status == Status.OK_STATUS) {
+					myAnalysis = return__freqanalysis;
+					myLimitedAnalysis = new FreqAnalysisCalc(text, myLength, myOffset, null, myOverlayAlphabet);
+					if (btnReferenceTools.getSelection())
+						myGraph.setAnalysis(myLimitedAnalysis);
+					else
+						myGraph.setAnalysis(myAnalysis);
+				}
+			});
+		});
+		job.imposeNoClickDisplayCurrentShellSynced(getDisplay()); // TODO: mechanism to not let the user start other things in the background
+		job.runInBackground();
 	}
 
 	/**

@@ -297,11 +297,13 @@ public class SummaryGui extends Content {
 	}
 
 	private void start() {
+		refreshEditors();
 		ContentDelegator del = (ContentDelegator) getParent();
 		del.toFriedman(selectedEditor);
 	}
 
 	private void quickanalysis() {
+		refreshEditors();
 		ContentDelegator del = (ContentDelegator) getParent();
 		del.toQuick(selectedEditor);
 	}

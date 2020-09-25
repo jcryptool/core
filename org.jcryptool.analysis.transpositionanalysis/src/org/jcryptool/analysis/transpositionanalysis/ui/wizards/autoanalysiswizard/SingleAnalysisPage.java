@@ -78,7 +78,8 @@ public abstract class SingleAnalysisPage extends WizardPage implements Transposi
 			}
 
 			{
-				if (analysis.allowUserEstimatedRating()) createDefineOwnWeightControl(pageComposite);
+				if (analysis.allowUserEstimatedRating())
+					createDefineOwnWeightControl(pageComposite);
 			}
 		}
 		calcPageComplete();
@@ -116,8 +117,8 @@ public abstract class SingleAnalysisPage extends WizardPage implements Transposi
 				labelDefineOwnWeightLData.grabExcessHorizontalSpace = true;
 				labelDefineOwnWeightLData.widthHint = 350;
 				labelDefineOwnWeight.setLayoutData(labelDefineOwnWeightLData);
-				labelDefineOwnWeight
-					.setText("If you have the feeling that this analysis should be weighted less or more than normal (e. g. you are not very sure about the correctness of your input), specify a multiplier here:");
+				labelDefineOwnWeight.setText(
+						"If you have the feeling that this analysis should be weighted less or more than normal (e. g. you are not very sure about the correctness of your input), specify a multiplier here:");
 			}
 			{
 				comboDefineOwnWeight = new Combo(grpUserEstimatedRating, SWT.NONE);
@@ -153,7 +154,8 @@ public abstract class SingleAnalysisPage extends WizardPage implements Transposi
 	@Override
 	public IWizardPage getNextPage() {
 		IWizardPage nextPage = ((AnalysisWizard) getWizard()).nextPageFrom(this);
-		if (nextPage != null) return nextPage;
+		if (nextPage != null)
+			return nextPage;
 
 		return ((AnalysisWizard) getWizard()).getCalcPage();
 	}

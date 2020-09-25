@@ -25,8 +25,8 @@ import org.jcryptool.core.logging.utils.LogUtil;
 public class AnalysisSelectItem extends Composite {
 
 	/**
-	 * Auto-generated main method to display this
-	 * org.eclipse.swt.widgets.Composite inside a new Shell.
+	 * Auto-generated main method to display this org.eclipse.swt.widgets.Composite
+	 * inside a new Shell.
 	 */
 
 	private Button analysis1check;

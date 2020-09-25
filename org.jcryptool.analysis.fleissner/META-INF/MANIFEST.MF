@@ -8,7 +8,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.help,
  org.jcryptool.core.util,
- org.eclipse.swt
+ org.eclipse.swt,
+ org.jcryptool.crypto.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Automatic-Module-Name: org.jcryptool.analysis.fleissner
 Bundle-ActivationPolicy: lazy

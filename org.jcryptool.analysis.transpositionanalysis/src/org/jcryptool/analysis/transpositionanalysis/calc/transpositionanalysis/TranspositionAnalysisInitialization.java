@@ -39,8 +39,9 @@ public class TranspositionAnalysisInitialization extends TranspositionAnalysis {
 
 	private void calcConclusion() {
 		conclusion = new TranspositionAnalysisConclusion(
-			"The analysis was initialized with the search range for keys with" + "a length between " + beginLength
-				+ " and " + endLength + ".", new LinkedList<TranspositionAnalysisResultAtom>());
+				"The analysis was initialized with the search range for keys with" + "a length between " + beginLength
+						+ " and " + endLength + ".",
+				new LinkedList<TranspositionAnalysisResultAtom>());
 	}
 
 	@Override

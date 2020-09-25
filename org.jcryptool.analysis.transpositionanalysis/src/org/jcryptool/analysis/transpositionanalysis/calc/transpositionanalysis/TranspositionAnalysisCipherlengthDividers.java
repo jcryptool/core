@@ -53,13 +53,14 @@ public class TranspositionAnalysisCipherlengthDividers extends TranspositionAnal
 		final double STANDARD_POSSILITY = PolledValue.POSSIBILITY_DEFAULT;
 		final double STRETCH_FUNCTION_MULTIPLICATOR = 20;
 
-		double oneToZeroDist = 1 / (Math.abs(x - bestChoiceWouldNormallyBe) / STRETCH_FUNCTION_MULTIPLICATOR + STANDARD_POSSILITY);// *((POSSIBILITY_SINGLE_OCCURENCE
-																																	// -
-																																	// STANDARD_POSSILITY)/numberOfHits)
-																																	// -
-																																	// STANDARD_POSSILITY;
+		double oneToZeroDist = 1
+				/ (Math.abs(x - bestChoiceWouldNormallyBe) / STRETCH_FUNCTION_MULTIPLICATOR + STANDARD_POSSILITY);// *((POSSIBILITY_SINGLE_OCCURENCE
+																													// -
+																													// STANDARD_POSSILITY)/numberOfHits)
+																													// -
+																													// STANDARD_POSSILITY;
 		double basicFunction = STANDARD_POSSILITY
-			+ ((POSSIBILITY_SINGLE_OCCURENCE - STANDARD_POSSILITY) / numberOfHits) * oneToZeroDist;
+				+ ((POSSIBILITY_SINGLE_OCCURENCE - STANDARD_POSSILITY) / numberOfHits) * oneToZeroDist;
 
 		return smallValueFunction(x) * basicFunction;
 	}
@@ -70,14 +71,15 @@ public class TranspositionAnalysisCipherlengthDividers extends TranspositionAnal
 		for (Integer divider : dividers) {
 			sum += divider;
 			counter++;
-			if (counter >= 4) break;
+			if (counter >= 4)
+				break;
 		}
 
 		return sum / counter;
 	}
 
 	private PolledPositiveInteger calculatePossibilitiesIntoOutputFromLengthAndDividers(List<Integer> dividers,
-		int length, TranspositionAnalysisOutput out, Set<Integer> possibleLengths) {
+			int length, TranspositionAnalysisOutput out, Set<Integer> possibleLengths) {
 		final double POSSIBILITY_NO_DIVIDER = PolledValue.POSSIBILITY_UNLIKELY;
 		double peakPossibilityLength = calcPeakPossibilityLength(dividers);
 		PolledPositiveInteger dividerPoll = new PolledPositiveInteger();
@@ -86,7 +88,8 @@ public class TranspositionAnalysisCipherlengthDividers extends TranspositionAnal
 			dividerPoll.addChoice(i, possibilityFunction(i, dividers.size(), peakPossibilityLength));
 		}
 		for (int i : possibleLengths) {
-			if (!dividers.contains(i)) dividerPoll.addChoice(i, POSSIBILITY_NO_DIVIDER);
+			if (!dividers.contains(i))
+				dividerPoll.addChoice(i, POSSIBILITY_NO_DIVIDER);
 		}
 
 		return dividerPoll;
@@ -94,14 +97,14 @@ public class TranspositionAnalysisCipherlengthDividers extends TranspositionAnal
 
 	private TranspositionAnalysisConclusion calculateConclusion(PolledPositiveInteger result, int cipherlength) {
 		/**
-		 * Fälle: * -1- Primzahl * 0 - keine Ergebnisse * 4 - nur 1 Ergebnis! *
-		 * 1 - klares Ergebnis: nur 2-3 Ergebnisse * 2 - eher unklares Ergebnis:
-		 * 4-oo Ergebnisse
+		 * Fälle: * -1- Primzahl * 0 - keine Ergebnisse * 4 - nur 1 Ergebnis! * 1 -
+		 * klares Ergebnis: nur 2-3 Ergebnisse * 2 - eher unklares Ergebnis: 4-oo
+		 * Ergebnisse
 		 *
 		 *
 		 * Text: * Eigentlich alle Längen gleich wahrscheinlich, jedoch: hohe
-		 * Schlüssellängen unsicher, niedrige Schlüssellängen ebenfalls. Längen
-		 * von 1-10 immer aufzählen. Grundsätzlich möglich sind ebenfalls: <alle
+		 * Schlüssellängen unsicher, niedrige Schlüssellängen ebenfalls. Längen von 1-10
+		 * immer aufzählen. Grundsätzlich möglich sind ebenfalls: <alle
 		 * in @alsoStarring>
 		 *
 		 */
@@ -113,42 +116,51 @@ public class TranspositionAnalysisCipherlengthDividers extends TranspositionAnal
 		Set<Integer> removeSet = new HashSet<Integer>();
 		// remove lengths that have "unlikely" possibility
 		for (Integer i : resultOnlyLikely.getPollSubjects()) {
-			if (resultOnlyLikely.getPossibility(i) < PolledValue.POSSIBILITY_DEFAULT) removeSet.add(i);
+			if (resultOnlyLikely.getPossibility(i) < PolledValue.POSSIBILITY_DEFAULT)
+				removeSet.add(i);
 		}
 		for (Integer i : removeSet)
 			resultOnlyLikely.removeChoice(i);
 
 		int conclusionCase = -1;
 
-		if (isPrime(cipherlength)) conclusionCase = -1;
-		else if (resultOnlyLikely.getPollSubjects().size() < 1) conclusionCase = 0;
-		else if (resultOnlyLikely.getPollSubjects().size() == 1) conclusionCase = 4;
-		else if (resultOnlyLikely.getPollSubjects().size() < 4) conclusionCase = 1;
-		else if (true) conclusionCase = 2;
+		if (isPrime(cipherlength))
+			conclusionCase = -1;
+		else if (resultOnlyLikely.getPollSubjects().size() < 1)
+			conclusionCase = 0;
+		else if (resultOnlyLikely.getPollSubjects().size() == 1)
+			conclusionCase = 4;
+		else if (resultOnlyLikely.getPollSubjects().size() < 4)
+			conclusionCase = 1;
+		else if (true)
+			conclusionCase = 2;
 
 		if (conclusionCase == -1) { // case -1
-			text.append("The length of the ciphertext is a prime number. This means in general, that the encipherment included changes of the text length which make this analysis futile.");
+			text.append(
+					"The length of the ciphertext is a prime number. This means in general, that the encipherment included changes of the text length which make this analysis futile.");
 		} else if (conclusionCase == 0) { // case 0
-			text.append("No dividers of the ciphertext length were found in the given range. Try to widen the search range the next time.");
+			text.append(
+					"No dividers of the ciphertext length were found in the given range. Try to widen the search range the next time.");
 		} else if (conclusionCase == 4) { // case 0
-			text.append("Only one block length comes into question: " + TranspositionAnalysisConclusion.PLACEHOLDER
-				+ ".");
+			text.append(
+					"Only one block length comes into question: " + TranspositionAnalysisConclusion.PLACEHOLDER + ".");
 			atoms.add(new TranspositionAnalysisResultAtom(
-				new TranspositionKey(new int[resultOnlyLikely.getBestValue()]), true));
+					new TranspositionKey(new int[resultOnlyLikely.getBestValue()]), true));
 		} else if (conclusionCase == 1) { // case 1
-			text.append("Only a few dividers were found, "
-				+ "making the pool of block lengths in question not too big. " + "The length to try first would be ");
+			text.append(
+					"Only a few dividers were found, " + "making the pool of block lengths in question not too big. "
+							+ "The length to try first would be ");
 			text.append(TranspositionAnalysisConclusion.PLACEHOLDER);
 			// put the first best value's atom
 			atoms.add(new TranspositionAnalysisResultAtom(
-				new TranspositionKey(new int[resultOnlyLikely.getBestValue()]), true));
+					new TranspositionKey(new int[resultOnlyLikely.getBestValue()]), true));
 			text.append(".");
 			// if there are just 2 choices, don't make much wind around it.
 			if (resultOnlyLikely.getPollSubjects().size() == 2) {
 				text.append(" The next best length to try would be ");
 				text.append(TranspositionAnalysisConclusion.PLACEHOLDER);
-				atoms.add(new TranspositionAnalysisResultAtom(new TranspositionKey(new int[resultOnlyLikely
-					.getValuesSortedByPossibility().get(1)]), true));
+				atoms.add(new TranspositionAnalysisResultAtom(
+						new TranspositionKey(new int[resultOnlyLikely.getValuesSortedByPossibility().get(1)]), true));
 				text.append(".");
 			} else { // else count them up.
 				text.append(" The next best lengths to try would be:");
@@ -181,13 +193,14 @@ public class TranspositionAnalysisCipherlengthDividers extends TranspositionAnal
 			// groups, following the specified parameters
 			int counter = 0;
 			for (Integer length : sortedLengths) {
-				if (counter < MAX_ELEMENTS_NEAR_EQUAL_BEST
-					&& (resultOnlyLikely.getPossibility(length) / highestNearEqualBest) > (1 - MAX_DIFF_NEAR_EQUAL_BEST)) {
+				if (counter < MAX_ELEMENTS_NEAR_EQUAL_BEST && (resultOnlyLikely.getPossibility(length)
+						/ highestNearEqualBest) > (1 - MAX_DIFF_NEAR_EQUAL_BEST)) {
 					nearEqualBest.add(length);
 				} else if (counter < MAX_ELEMENTS_NEAR_EQUAL_BEST + MAX_ELEMENTS_ALSO_STARRING
-					&& (resultOnlyLikely.getPossibility(length) / highestAlsoStarring) > (1 - MAX_DIFF_ALSO_STARRING)) {
-					if (highestAlsoStarring == Double.MIN_VALUE) highestAlsoStarring = resultOnlyLikely
-						.getPossibility(length);
+						&& (resultOnlyLikely.getPossibility(length) / highestAlsoStarring) > (1
+								- MAX_DIFF_ALSO_STARRING)) {
+					if (highestAlsoStarring == Double.MIN_VALUE)
+						highestAlsoStarring = resultOnlyLikely.getPossibility(length);
 					alsoStarring.add(length);
 				}
 
@@ -196,7 +209,7 @@ public class TranspositionAnalysisCipherlengthDividers extends TranspositionAnal
 
 			boolean first = true;
 			text.append("Many possibilities for the blocklength were found. " + "The following dividers of "
-				+ "the text length should be considered as blocklengths first:");
+					+ "the text length should be considered as blocklengths first:");
 			for (Integer length : nearEqualBest) {
 				atoms.add(new TranspositionAnalysisResultAtom(new TranspositionKey(new int[length]), true));
 				text.append((first ? " " : ", ") + TranspositionAnalysisConclusion.PLACEHOLDER);
@@ -222,7 +235,9 @@ public class TranspositionAnalysisCipherlengthDividers extends TranspositionAnal
 
 	public boolean isPrime(int number) {
 		for (int i = 2; i < number; i++) {
-			if ((number % i) == 0) { return false; }
+			if ((number % i) == 0) {
+				return false;
+			}
 		}
 		return true;
 	}
@@ -238,11 +253,12 @@ public class TranspositionAnalysisCipherlengthDividers extends TranspositionAnal
 		// calculate dividers
 		List<Integer> dividers = new LinkedList<Integer>();
 		for (int i : possibleLengths) {
-			if (in.getCiphertext().length() % i == 0 && out.getKeylengthPoll().hasChoice(i)) dividers.add(i);
+			if (in.getCiphertext().length() % i == 0 && out.getKeylengthPoll().hasChoice(i))
+				dividers.add(i);
 		}
 
 		pureResult = calculatePossibilitiesIntoOutputFromLengthAndDividers(dividers, in.getCiphertext().length(), out,
-			possibleLengths);
+				possibleLengths);
 		calculateConclusion(pureResult, in.getCiphertext().length());
 	}
 

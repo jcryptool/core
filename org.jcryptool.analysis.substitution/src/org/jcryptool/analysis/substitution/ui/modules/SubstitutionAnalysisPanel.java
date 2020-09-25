@@ -68,7 +68,6 @@ public class SubstitutionAnalysisPanel extends Composite {
 		this.cipherStatistic = new TextStatistic(text);
 		
 		initGUI();
-
 	}
 
 	private void initGUI() {

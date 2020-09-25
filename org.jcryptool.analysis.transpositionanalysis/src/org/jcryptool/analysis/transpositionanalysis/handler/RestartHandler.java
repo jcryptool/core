@@ -22,12 +22,13 @@ import org.jcryptool.analysis.transpositionanalysis.views.TranspAnalysisView;
  * @version 0.9.5
  */
 public class RestartHandler extends AbstractHandler {
-    public Object execute(ExecutionEvent event) throws ExecutionException {
-        if (HandlerUtil.getActivePart(event) instanceof TranspAnalysisView) {
-        	TranspAnalysisView view = ((TranspAnalysisView) HandlerUtil.getActivePart(event));
-                view.resetClick();
-        }
+	@Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
+		if (HandlerUtil.getActivePart(event) instanceof TranspAnalysisView) {
+			TranspAnalysisView view = ((TranspAnalysisView) HandlerUtil.getActivePart(event));
+			view.resetClick();
+		}
 
-        return null;
-    }
+		return null;
+	}
 }

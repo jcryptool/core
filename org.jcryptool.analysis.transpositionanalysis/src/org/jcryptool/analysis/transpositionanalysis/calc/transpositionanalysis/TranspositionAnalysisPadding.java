@@ -24,7 +24,7 @@ public class TranspositionAnalysisPadding extends TranspositionAnalysis {
 	private int resultMinBlocklength = 0;
 	private TranspositionAnalysisConclusion conclusion;
 	private static final double POSSIBILITY_LESS_THAN_MINLENGTH = PolledValue.POSSIBILITY_VERY_UNLIKELY
-		* PolledValue.POSSIBILITY_SLIGHTLY_UNDER_DEFAULT;
+			* PolledValue.POSSIBILITY_SLIGHTLY_UNDER_DEFAULT;
 
 	@Override
 	public void analyze() {
@@ -35,14 +35,15 @@ public class TranspositionAnalysisPadding extends TranspositionAnalysis {
 	private void calcConclusion() {
 		if (resultMinBlocklength > 1) {
 			conclusion = new TranspositionAnalysisConclusion(
-				"Following the user evaluation of the padding at the end of " + "the ciphertext, keylengths less than "
-					+ resultMinBlocklength + " are considered not very likely.",
-				new LinkedList<TranspositionAnalysisResultAtom>());
+					"Following the user evaluation of the padding at the end of "
+							+ "the ciphertext, keylengths less than " + resultMinBlocklength
+							+ " are considered not very likely.",
+					new LinkedList<TranspositionAnalysisResultAtom>());
 		} else {
 			conclusion = new TranspositionAnalysisConclusion(
-				"Because no big enough padding was detected, this analysis was not able "
-					+ "to make meaningful statements about the block length.",
-				new LinkedList<TranspositionAnalysisResultAtom>());
+					"Because no big enough padding was detected, this analysis was not able "
+							+ "to make meaningful statements about the block length.",
+					new LinkedList<TranspositionAnalysisResultAtom>());
 		}
 
 	}
@@ -51,7 +52,8 @@ public class TranspositionAnalysisPadding extends TranspositionAnalysis {
 	public void combineResultsWithOutput() {
 		PolledPositiveInteger lengthPoll = out.getKeylengthPoll();
 		for (int length : lengthPoll.getPollSubjects()) {
-			if (length < resultMinBlocklength) lengthPoll.combinePossibility(length, POSSIBILITY_LESS_THAN_MINLENGTH);
+			if (length < resultMinBlocklength)
+				lengthPoll.combinePossibility(length, POSSIBILITY_LESS_THAN_MINLENGTH);
 		}
 	}
 
@@ -70,9 +72,8 @@ public class TranspositionAnalysisPadding extends TranspositionAnalysis {
 	 * This only a rough estimation, and should not be taken directly into an
 	 * autmatic analysis.
 	 * 
-	 * @param sampletext
-	 *            a sample text where a sampletext occurs. Should be made as
-	 *            short as possible.
+	 * @param sampletext a sample text where a sampletext occurs. Should be made as
+	 *                   short as possible.
 	 * @return
 	 */
 	public static int guessPaddingDistanceFromEndOfSampletext(String sampletext) {
@@ -102,16 +103,17 @@ public class TranspositionAnalysisPadding extends TranspositionAnalysis {
 
 		// Return the distance from the first padding symbol to the end.
 		Character finalPaddingChar = paddingSymbol.getBestValue();
-		if (finalPaddingChar != null) return sampletext.length() - sampletext.indexOf(finalPaddingChar);
+		if (finalPaddingChar != null)
+			return sampletext.length() - sampletext.indexOf(finalPaddingChar);
 		return 0;
 	}
 
 	/**
-	 * Function for pre-computing a piece from the ciphertext where the padding
-	 * can be found (usually this comes from the very end of the text and is
-	 * 1-40 letters long) <br />
-	 * Should have set the output set before for autmatic detection of the
-	 * possible keylengths.
+	 * Function for pre-computing a piece from the ciphertext where the padding can
+	 * be found (usually this comes from the very end of the text and is 1-40
+	 * letters long) <br />
+	 * Should have set the output set before for autmatic detection of the possible
+	 * keylengths.
 	 * 
 	 * @return a piece of the ciphertext
 	 */

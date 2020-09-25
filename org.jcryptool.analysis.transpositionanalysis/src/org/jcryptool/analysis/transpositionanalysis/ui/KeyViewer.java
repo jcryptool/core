@@ -101,7 +101,7 @@ public class KeyViewer extends org.eclipse.swt.widgets.Dialog {
 	public final void open() {
 		try {
 			Shell parent = getParent();
-			
+
 			dialogShell = new Shell(parent, SWT.DIALOG_TRIM);
 			dialogShell.setLayout(new GridLayout());
 			dialogShell.setText(title);
@@ -135,10 +135,9 @@ public class KeyViewer extends org.eclipse.swt.widgets.Dialog {
 			composite3 = new Composite(dialogShell, SWT.BORDER);
 			composite3.setLayout(new GridLayout());
 			composite3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-			
 
 			label3 = new Label(composite3, SWT.WRAP);
-			GridData label3LData = new GridData(SWT.FILL,SWT.FILL, true, false);
+			GridData label3LData = new GridData(SWT.FILL, SWT.FILL, true, false);
 			label3LData.widthHint = 400;
 			label3.setLayoutData(label3LData);
 			label3.setText(Messages.KeyViewer_invertdescription);
@@ -154,7 +153,7 @@ public class KeyViewer extends org.eclipse.swt.widgets.Dialog {
 				}
 			});
 			button1.setText(Messages.KeyViewer_invertone);
-			
+
 			// Enforce the shell to go to its minimum size.
 			dialogShell.pack();
 

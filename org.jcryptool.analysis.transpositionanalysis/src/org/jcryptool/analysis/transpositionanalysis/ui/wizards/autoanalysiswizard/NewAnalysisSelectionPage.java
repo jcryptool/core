@@ -102,7 +102,9 @@ public class NewAnalysisSelectionPage extends WizardPage implements Listener {
 				found = true;
 				continue;
 			}
-			if (found && analyses.containsKey(analysis) && analyses.get(analysis).getSelection()) { return analysis; }
+			if (found && analyses.containsKey(analysis) && analyses.get(analysis).getSelection()) {
+				return analysis;
+			}
 		}
 		return null;
 	}
@@ -115,7 +117,8 @@ public class NewAnalysisSelectionPage extends WizardPage implements Listener {
 	@Override
 	public IWizardPage getNextPage() {
 		IWizardPage nextPage = ((AnalysisWizard) getWizard()).nextPageFrom(null);
-		if (nextPage != null) return nextPage;
+		if (nextPage != null)
+			return nextPage;
 
 		return null;
 		// return super.getNextPage();
@@ -123,7 +126,8 @@ public class NewAnalysisSelectionPage extends WizardPage implements Listener {
 
 	public boolean isAnalysisSelected(TranspositionAnalysis analysis) {
 		for (TranspositionAnalysis analysisInPage : analyses.keySet()) {
-			if (analysisInPage.getClass().equals(analysis.getClass()) && analyses.get(analysisInPage).getSelection()) return true;
+			if (analysisInPage.getClass().equals(analysis.getClass()) && analyses.get(analysisInPage).getSelection())
+				return true;
 		}
 		return false;
 	}
@@ -131,7 +135,8 @@ public class NewAnalysisSelectionPage extends WizardPage implements Listener {
 	public int getSelectionCount() {
 		int counter = 0;
 		for (Entry<TranspositionAnalysis, AnalysisSelectItem> entry : analyses.entrySet()) {
-			if (entry.getValue().getSelection()) counter++;
+			if (entry.getValue().getSelection())
+				counter++;
 		}
 		return counter;
 	}
@@ -143,8 +148,10 @@ public class NewAnalysisSelectionPage extends WizardPage implements Listener {
 		boolean oneSelected = false;
 		boolean onePlusIniSelected = false;
 		for (Entry<TranspositionAnalysis, AnalysisSelectItem> entry : analyses.entrySet()) {
-			if (entry.getValue().getSelection()) oneSelected = true;
-			if (!(entry.getKey() instanceof TranspositionAnalysisInitialization) && entry.getValue().getSelection()) onePlusIniSelected = true;
+			if (entry.getValue().getSelection())
+				oneSelected = true;
+			if (!(entry.getKey() instanceof TranspositionAnalysisInitialization) && entry.getValue().getSelection())
+				onePlusIniSelected = true;
 		}
 
 		if (!onePlusIniSelected) {

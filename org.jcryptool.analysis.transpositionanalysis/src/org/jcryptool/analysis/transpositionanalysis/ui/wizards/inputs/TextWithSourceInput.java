@@ -52,13 +52,13 @@ public abstract class TextWithSourceInput extends AbstractUIInput<TextInputWithS
 			@Override
 			public void mouseUp(MouseEvent e) {
 				monitorSelectionPercentageAndTextLength(getTextFieldForTextInput().getSelection(),
-					getTextFieldForTextInput().getText().length());
+						getTextFieldForTextInput().getText().length());
 			}
 
 			@Override
 			public void mouseDown(MouseEvent e) {
 				monitorSelectionPercentageAndTextLength(getTextFieldForTextInput().getSelection(),
-					getTextFieldForTextInput().getText().length());
+						getTextFieldForTextInput().getText().length());
 			}
 
 			@Override
@@ -69,13 +69,13 @@ public abstract class TextWithSourceInput extends AbstractUIInput<TextInputWithS
 			@Override
 			public void keyReleased(KeyEvent e) {
 				monitorSelectionPercentageAndTextLength(getTextFieldForTextInput().getSelection(),
-					getTextFieldForTextInput().getText().length());
+						getTextFieldForTextInput().getText().length());
 			}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
 				monitorSelectionPercentageAndTextLength(getTextFieldForTextInput().getSelection(),
-					getTextFieldForTextInput().getText().length());
+						getTextFieldForTextInput().getText().length());
 			}
 		});
 
@@ -87,22 +87,22 @@ public abstract class TextWithSourceInput extends AbstractUIInput<TextInputWithS
 		if (getFileRadioButton().getSelection() && getSelectedFile() == null) {
 			// msg not meant to be displayed
 			return InputVerificationResult.generateIVR(false, "no file was selected", MessageType.INFORMATION, false, //$NON-NLS-1$
-				NOBALLOON_RESULTTYPE);
+					NOBALLOON_RESULTTYPE);
 		}
 		if (getFileRadioButton().getSelection() && !getSelectedFile().exists()) {
 			// msg not meant to be displayed
 			return InputVerificationResult.generateIVR(false, "input file does not exist", MessageType.INFORMATION, //$NON-NLS-1$
-				false);
+					false);
 		}
 		if (getBtnJctEditorOption().getSelection() && getEditorsNotNecessarilyFresh().size() == 0) {
 			// msg not meant to be displayed
 			return InputVerificationResult.generateIVR(false, "no editors are available", MessageType.INFORMATION, //$NON-NLS-1$
-				false, NOBALLOON_RESULTTYPE);
+					false, NOBALLOON_RESULTTYPE);
 		}
 		if (getBtnJctEditorOption().getSelection() && getComboEditors().getSelectionIndex() < 0) {
 			// should never appear
 			return InputVerificationResult.generateIVR(true, "no editor selected", MessageType.INFORMATION, false, //$NON-NLS-1$
-				NOBALLOON_RESULTTYPE);
+					NOBALLOON_RESULTTYPE);
 		}
 		return InputVerificationResult.DEFAULT_RESULT_EVERYTHING_OK;
 	}
@@ -135,7 +135,7 @@ public abstract class TextWithSourceInput extends AbstractUIInput<TextInputWithS
 			} else {
 				IEditorReference currentlySelectedEditor = getSelectedEditor();
 				return new TextInputWithSource(EditorUtils.retrieveTextForEditor(currentlySelectedEditor),
-					currentlySelectedEditor);
+						currentlySelectedEditor);
 			}
 		} else {
 			throw new RuntimeException("Not all input method cases covered at reading input text!"); //$NON-NLS-1$
@@ -240,23 +240,24 @@ public abstract class TextWithSourceInput extends AbstractUIInput<TextInputWithS
 			lastTextLength = textLength;
 		}
 
-		double percentageOfTextSelected = textLength == 0 ? -1 : Double.valueOf(((double) Math.abs(selection.x
-			- selection.y) / (double) textLength));
+		double percentageOfTextSelected = textLength == 0 ? -1
+				: Double.valueOf(((double) Math.abs(selection.x - selection.y) / (double) textLength));
 		double percentageOfLastTextLengthStillAvailable = Double
-			.valueOf(((double) textLength / (double) lastTextLength));
+				.valueOf(((double) textLength / (double) lastTextLength));
 		if (percentageOfTextSelected == -1) {
 			// special case: text length is now zero.
 			markDisconnectFromPreviousText();
 		} else {
 			if (lastPercentageOfTextSelected > THRESHHOLD_DELETE_DISCONNECT_TEXT_PERCENTILE) {
-				if (percentageOfTextSelected < 0.05
-					&& percentageOfLastTextLengthStillAvailable <= (1 - (THRESHHOLD_DELETE_DISCONNECT_TEXT_PERCENTILE - 0.05))) {
+				if (percentageOfTextSelected < 0.05 && percentageOfLastTextLengthStillAvailable <= (1
+						- (THRESHHOLD_DELETE_DISCONNECT_TEXT_PERCENTILE - 0.05))) {
 					// seems like the big selected text got deleted --
 					// disconnect
 					markDisconnectFromPreviousText();
-				} else if(Math.abs(selection.y-selection.x)==0 && (lastTextLength!=textLength)) {
-					//paste detected
-					//TODO: length comparison of texts should not be indicator of text change (could be accidentally the same length but still text replacement)
+				} else if (Math.abs(selection.y - selection.x) == 0 && (lastTextLength != textLength)) {
+					// paste detected
+					// TODO: length comparison of texts should not be indicator of text change
+					// (could be accidentally the same length but still text replacement)
 					markDisconnectFromPreviousText();
 				}
 			}

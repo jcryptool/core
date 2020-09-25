@@ -15,6 +15,9 @@ package org.jcryptool.analysis.freqanalysis.ui;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.MessageDialog;
 //import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
@@ -39,6 +42,7 @@ import org.eclipse.swt.widgets.Text;
 //import org.eclipse.ui.PlatformUI;
 import org.jcryptool.analysis.freqanalysis.calc.FreqAnalysisCalc;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
+import org.jcryptool.crypto.ui.background.BackgroundJob;
 //import java.io.BufferedReader;
 import org.jcryptool.crypto.ui.textloader.ui.wizard.TextLoadController;
 //import org.jcryptool.core.operations.editors.EditorsManager;
@@ -77,6 +81,7 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 	private FreqAnalysisCalc myAnalysis;
 	TransformData myModifySettings;
 	private TextLoadController textloader;
+	public FreqAnalysisCalc return__freqanalysis;
 
 	public SimpleAnalysisUI(final Composite parent, final int style) {
 		super(parent, style);
@@ -378,13 +383,47 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 //
 //	}
 
+	public class FreqAnalysisJob extends BackgroundJob {
+
+		private String text;
+		private int myLength;
+		private int myOffset;
+		private String myOverlayAlphabet;
+		public TransformData myModifySettings;
+		
+		@Override
+		public String name() {
+			return "Frequency Analysis";
+		}
+
+		@Override
+		public IStatus computation(IProgressMonitor monitor) {
+			SimpleAnalysisUI.this.return__freqanalysis = new FreqAnalysisCalc(this.text, this.myLength, this.myOffset, this.myModifySettings);
+			return Status.OK_STATUS;
+		}
+
+	}
 	/**
 	 * frequency analysis main procedure
 	 */
 	@Override
 	protected void analyze() {
-		myAnalysis = new FreqAnalysisCalc(text, myLength, myOffset, myModifySettings);
-		myGraph.setAnalysis(myAnalysis);
+		FreqAnalysisJob job = new FreqAnalysisJob();
+		job.text = text;
+		job.myLength = myLength;
+		job.myOffset = myOffset;
+		job.myModifySettings = myModifySettings;
+		job.finalizeListeners.add(status -> {
+			getDisplay().syncExec(() -> {
+				job.liftNoClickDisplaySynced(getDisplay());
+				if (status == Status.OK_STATUS) {
+					myAnalysis = return__freqanalysis;
+					myGraph.setAnalysis(myAnalysis);
+				}
+			});
+		});
+		job.imposeNoClickDisplayCurrentShellSynced(getDisplay());
+		job.runInBackground();
 	}
 
 	/**

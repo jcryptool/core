@@ -37,19 +37,18 @@ public abstract class TranspositionAnalysis extends Analysis {
 	public abstract void analyze();
 
 	/**
-	 * Set the Transposition analysis output (e. g. for combining multiple
-	 * analysis methods)
+	 * Set the Transposition analysis output (e. g. for combining multiple analysis
+	 * methods)
 	 * 
-	 * @param out
-	 *            the output object
+	 * @param out the output object
 	 */
 	public void setOutput(TranspositionAnalysisOutput out) {
 		this.out = out;
 	}
 
 	/**
-	 * Combines the analysis results with the set output, and returns it (also,
-	 * the output can be retrieved by {@link #getOutput()}).
+	 * Combines the analysis results with the set output, and returns it (also, the
+	 * output can be retrieved by {@link #getOutput()}).
 	 */
 	public abstract void combineResultsWithOutput();
 
@@ -61,9 +60,9 @@ public abstract class TranspositionAnalysis extends Analysis {
 	}
 
 	/**
-	 * @return a conclusion object, which contains a concise descriptive
-	 *         conclusion of the single analysis step, normally inclusive the
-	 *         best candidates for the solution.
+	 * @return a conclusion object, which contains a concise descriptive conclusion
+	 *         of the single analysis step, normally inclusive the best candidates
+	 *         for the solution.
 	 */
 	public abstract TranspositionAnalysisConclusion getConclusion();
 

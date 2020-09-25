@@ -17,12 +17,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -58,15 +55,14 @@ import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.crypto.ui.background.BackgroundJob;
+
 import java.util.Objects;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.core.runtime.jobs.IJobChangeEvent;
-import org.eclipse.core.runtime.jobs.IJobChangeListener;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.core.runtime.jobs.ProgressProvider;
 import org.eclipse.swt.SWT;
@@ -1281,82 +1277,6 @@ public class FleissnerWindow extends Composite {
 //    		        }
 //    		        return Status.OK_STATUS;
 
-	public static abstract class BackgroundJob {
-
-//     	public List<Consumer<Double>> progressListeners = new LinkedList<>(); 
-		public List<Consumer<IStatus>> finalizeListeners = new LinkedList<>();
-
-		public String name() {
-			return "Grille Background Job"; // TODO: internationalize
-		}
-
-		/**
-		 * Implement this method to update the progress monitor. return e.g. IStatus.OK.
-		 * add a finalizeListener to be notified when the algorithm returns.
-		 * 
-		 * @param monitor
-		 * @return
-		 */
-		public abstract IStatus computation(IProgressMonitor monitor);
-
-		/**
-		 * starts the computation in the background. Be sure to subscribe to
-		 * {@link #finalizeListeners} to be notified of the result.
-		 */
-		public void runInBackground() {
-			Job job = new Job(name()) {
-				@Override
-				protected IStatus run(IProgressMonitor monitor) {
-					return BackgroundJob.this.computation(monitor);
-				}
-
-			};
-			job.schedule();
-//     		PlatformUI.getWorkbench().getProgressService().busyCursorWhile();
-			job.addJobChangeListener(new IJobChangeListener() {
-
-				private boolean isDone;
-
-				@Override
-				public void sleeping(IJobChangeEvent event) {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public void scheduled(IJobChangeEvent event) {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public void running(IJobChangeEvent event) {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public void done(IJobChangeEvent event) {
-					this.isDone = true;
-					finalizeListeners.forEach(listener -> listener.accept(event.getResult()));
-
-				}
-
-				@Override
-				public void awake(IJobChangeEvent event) {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public void aboutToRun(IJobChangeEvent event) {
-					// TODO Auto-generated method stub
-
-				}
-			});
-		}
-	}
-
 	public class FleissnerMethodJob extends BackgroundJob {
 
 		private ParameterSettings ps;
@@ -1394,7 +1314,6 @@ public class FleissnerWindow extends Composite {
 				switch (argMethod) {
 
 				case "analyze": //$NON-NLS-1$
-					monitor.beginTask("Grille: Analyze", IProgressMonitor.UNKNOWN);
 // 					monitor.worked(1);
 					userText = true;
 					getDisplay().syncExec(() -> analysisOutput.setText(Messages.FleissnerWindow_output_progress));
@@ -1443,7 +1362,6 @@ public class FleissnerWindow extends Composite {
 					break;
 
 				case "encrypt": //$NON-NLS-1$
-					monitor.beginTask("Grille: Encrypt", IProgressMonitor.UNKNOWN); // TODO: internationalize
 // 					monitor.worked(1);
 					// if 'encrypt' is not selected this method will only be called in random
 					// encryption and userText stays false
@@ -1465,7 +1383,6 @@ public class FleissnerWindow extends Composite {
 					break;
 
 				case "decrypt": //$NON-NLS-1$
-					monitor.beginTask("Grille: Decrypt", IProgressMonitor.UNKNOWN); // TODO: internationalize
 // 					monitor.worked(1);
 
 					userText = true;

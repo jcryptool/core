@@ -14,8 +14,12 @@ import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
+import org.jcryptool.crypto.ui.background.BackgroundJob;
 
 /**
  * @author SLeischnig Class for Frequency Analysis

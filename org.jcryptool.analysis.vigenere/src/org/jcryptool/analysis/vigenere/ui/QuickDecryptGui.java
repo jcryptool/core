@@ -6,6 +6,9 @@
  */
 package org.jcryptool.analysis.vigenere.ui;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -23,12 +26,16 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorReference;
+import org.jcryptool.analysis.vigenere.VigenereBreakerPlugin;
 import org.jcryptool.analysis.vigenere.exceptions.IllegalActionException;
 import org.jcryptool.analysis.vigenere.exceptions.IllegalInputException;
 import org.jcryptool.analysis.vigenere.exceptions.NoContentException;
 import org.jcryptool.analysis.vigenere.interfaces.DataProvider;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
+import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.crypto.ui.background.BackgroundJob;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -43,7 +50,7 @@ import org.jcryptool.core.util.fonts.FontService;
 public class QuickDecryptGui extends Content {
 	private FriedmanContainer friedcon;
 	private FrequencyContainer freqcon;
-	private String chiffre;
+	public String chiffre;
 	private int length;
 	private String plain;
 	private String phrase;
@@ -73,19 +80,25 @@ public class QuickDecryptGui extends Content {
 	private Button buttonEnd;
 	private Composite buttonsComposite;
 	private Composite textComposite;
+	private VigenereBackgroundJob initBackgroundJob;
 
-	public QuickDecryptGui(final ContentDelegator parent, final String chiffre, final String title) {
+	public QuickDecryptGui(final ContentDelegator parent, final VigenereBackgroundJob computed, final String title) {
 		super(parent, SWT.NONE);
 		this.edtitle = title;
-		prepare(chiffre);
+		this.initBackgroundJob = computed;
+		this.initBackgroundJob.friedcon.parent = this;
+
+		phrase = initBackgroundJob.phrase;
+		QuickDecryptGui.this.chiffre = initBackgroundJob.chiffre;
+		length = initBackgroundJob.length;
+		friedcon = initBackgroundJob.friedcon;
+		freqcon = initBackgroundJob.freqcon;
+		plain = initBackgroundJob.plain;
 		initGUI();
 	}
 
-	public QuickDecryptGui(final ContentDelegator parent, final String chiffre, final IEditorReference edRef) {
-		super(parent, SWT.NONE);
-		this.edtitle = edRef.getTitle();
-		prepare(chiffre);
-		initGUI();
+	public QuickDecryptGui(final ContentDelegator parent, final VigenereBackgroundJob computed, final IEditorReference edRef) {
+		this(parent, computed, edRef.getTitle());
 	}
 
 	private static String removeRecurrences(String password) {
@@ -106,41 +119,60 @@ public class QuickDecryptGui extends Content {
 		return password;
 	}
 
-	private void prepare(final String chiffre) {
-		try {
-			this.chiffre = chiffre;
-			// get length and password.
-			friedcon = new FriedmanContainer(this, chiffre);
-			length = friedcon.findKeyLength(chiffre);
-			freqcon = new FrequencyContainer(chiffre, length);
-			phrase = removeRecurrences(freqcon.guessPass());
-			length = phrase.length();
-			// decrypt.
-			plain = freqcon.decryptAll(phrase);
+	public static class VigenereBackgroundJob extends BackgroundJob {
+		
+		private static final int TRUNCATE_LENGTH = 20000;
 
-			if (565 < chiffre.length()) {
-				this.chiffre = chiffre.substring(0, 564);
-			}
+		public String editorContent;
 
-			if (565 < plain.length()) {
-				this.plain = plain.substring(0, 564);
-			}
-		} catch (NoContentException ncEx) {
-			String message = Messages.FrequencyGui_mbox_missing;
-			MessageBox box = new MessageBox(null, SWT.ICON_WARNING);
-			box.setText(Messages.VigenereGlobal_mbox_warning);
-			box.setMessage(message);
-			box.open();
-		} catch (IllegalInputException iiEx) {
-			String message = Messages.FrequencyGui_mbox_incomplete;
-			MessageBox box = new MessageBox(getShell(), SWT.ICON_INFORMATION);
-			box.setText(Messages.VigenereGlobal_mbox_info);
-			box.setMessage(message);
-			box.open();
+		public Composite parent;
+		public String phrase;
+		public String chiffre;
+		public int length;
+		public FriedmanContainer friedcon;
+		public FrequencyContainer freqcon;
+		public String plain;
+		
+		@Override
+		public String name() {
+			return "Automated Vigenere Breaker Analysis";
 		}
+		
+		@Override
+		public IStatus computation(IProgressMonitor monitor) {
+			try {
+				monitor.setTaskName(name() + " - filtering the input");
+				this.chiffre = DataProvider.filterChiffre(editorContent);
+				monitor.setTaskName(name() + " - computation");
+				this.friedcon = new FriedmanContainer(null, chiffre);
+				this.length = friedcon.findKeyLength(chiffre);
+				this.freqcon = new FrequencyContainer(chiffre, length);
+				this.phrase = removeRecurrences(freqcon.guessPass());
+				this.length = phrase.length();
+				// decrypt.
+				this.plain = freqcon.decryptAll(phrase);
+				if (TRUNCATE_LENGTH < chiffre.length()) {
+					chiffre = chiffre.substring(0, TRUNCATE_LENGTH-1);
+				}
 
+				if (TRUNCATE_LENGTH < plain.length()) {
+					plain = plain.substring(0, TRUNCATE_LENGTH-1);
+				}
+				return Status.OK_STATUS;
+			} catch (NoContentException ncEx) {
+				parent.getDisplay().syncExec(() -> {
+					LogUtil.logError(VigenereBreakerPlugin.PLUGIN_ID, Messages.FrequencyGui_mbox_missing, ncEx, true);
+				});
+				return Status.CANCEL_STATUS;
+			} catch (IllegalInputException iiEx) {
+				parent.getDisplay().syncExec(() -> {
+					LogUtil.logError(VigenereBreakerPlugin.PLUGIN_ID, Messages.FrequencyGui_mbox_incomplete, iiEx, true);
+				});
+				return Status.CANCEL_STATUS;
+			}
+		}
 	}
-
+	
 	private void initGUI() {
 		try {
             FontData coudat = new FontData(VigenereBreakerGui.COURIER, 10, SWT.NORMAL);
