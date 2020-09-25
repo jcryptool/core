@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="SHA-3 - Guide" link_to="../org.jcryptool.core.help/$nl$/toc.xml#hashPlugins"> 
-    <topic href="$nl$/help/content/UI/TutorialUI.html" label="SHA-3">
-       <topic href="$nl$/help/content/Tutorial.html" label="SHA-3 - General Information">
-       </topic>
+<toc label="SHA-3 – Guide" link_to="../org.jcryptool.core.help/$nl$/toc.xml#hashPlugins"> 
+    <topic href="$nl$/help/content/Tutorial.html" label="SHA-3">
        <topic href="$nl$/help/content/ECHOTutorial.html" label="SHA-3 – ECHO">
        </topic>
        <topic href="$nl$/help/content/JHTutorial.html" label="SHA-3 – JH">
