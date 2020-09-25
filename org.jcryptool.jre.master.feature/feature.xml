@@ -33,12 +33,14 @@
          ws="win32"
          arch="x86_64"/>
 
+<!--
    <includes
-         id="org.jcryptool.thirdparty.jre.macosx.feature"
+         id="org.jcryptool.thirdparty.jre.macosx__TEST__.feature"
          version="11.0.5.010"
          optional="true"
          os="macosx"
          ws="cocoa"
          arch="x86_64"/>
+-->
 
 </feature>
