@@ -120,7 +120,7 @@ public class SHA3WizardPage extends WizardPage implements Listener {
         GridData OptionGroupGridData = new GridData();
         OptionGroupGridData.horizontalAlignment = GridData.FILL;
         OptionGroupGridData.grabExcessHorizontalSpace = true;
-        OptionGroupGridData.grabExcessVerticalSpace = true;
+        OptionGroupGridData.grabExcessVerticalSpace = false;
         OptionGroupGridData.verticalAlignment = GridData.FILL;
 
         OptionGroup = new Group(parent, SWT.NONE);
@@ -130,8 +130,8 @@ public class SHA3WizardPage extends WizardPage implements Listener {
 
         GridData CreateHashButton = new GridData();
         CreateHashButton.horizontalAlignment = GridData.FILL;
-        CreateHashButton.grabExcessHorizontalSpace = true;
-        CreateHashButton.grabExcessVerticalSpace = true;
+        CreateHashButton.grabExcessHorizontalSpace = false;
+        CreateHashButton.grabExcessVerticalSpace = false;
         CreateHashButton.verticalAlignment = GridData.CENTER;
 
         CreateHash = new Button(OptionGroup, SWT.RADIO);
@@ -141,8 +141,8 @@ public class SHA3WizardPage extends WizardPage implements Listener {
 
         GridData VerifyHashButton = new GridData();
         VerifyHashButton.horizontalAlignment = GridData.FILL;
-        VerifyHashButton.grabExcessHorizontalSpace = true;
-        VerifyHashButton.grabExcessVerticalSpace = true;
+        VerifyHashButton.grabExcessHorizontalSpace = false;
+        VerifyHashButton.grabExcessVerticalSpace = false;
         VerifyHashButton.verticalAlignment = GridData.CENTER;
 
         VerifyHash = new Button(OptionGroup, SWT.RADIO);
@@ -152,8 +152,8 @@ public class SHA3WizardPage extends WizardPage implements Listener {
 
         GridData SaltGridData = new GridData();
         SaltGridData.horizontalAlignment = GridData.FILL;
-        SaltGridData.grabExcessHorizontalSpace = true;
-        SaltGridData.grabExcessVerticalSpace = true;
+        SaltGridData.grabExcessHorizontalSpace = false;
+        SaltGridData.grabExcessVerticalSpace = false;
         SaltGridData.verticalAlignment = GridData.CENTER;
 
         Salt = new Button(OptionGroup, SWT.CHECK);
@@ -164,14 +164,14 @@ public class SHA3WizardPage extends WizardPage implements Listener {
         GridData HashLabelGridData = new GridData();
         HashLabelGridData.horizontalSpan = 2;
         HashLabelGridData.horizontalAlignment = GridData.BEGINNING;
-        HashLabelGridData.grabExcessHorizontalSpace = true;
+        HashLabelGridData.grabExcessHorizontalSpace = false;
         HashLabelGridData.grabExcessVerticalSpace = false;
         HashLabelGridData.verticalAlignment = GridData.CENTER;
 
         GridData HashValueGridData = new GridData();
         HashValueGridData.horizontalSpan = 2;
         HashValueGridData.verticalAlignment = GridData.CENTER;
-        HashValueGridData.grabExcessHorizontalSpace = true;
+        HashValueGridData.grabExcessHorizontalSpace = false;
         HashValueGridData.horizontalAlignment = GridData.FILL;
 
         HashValue = new Text(OptionGroup, SWT.BORDER | SWT.MULTI);
@@ -210,7 +210,7 @@ public class SHA3WizardPage extends WizardPage implements Listener {
         GridData SaltGroupGridData = new GridData();
         SaltGroupGridData.horizontalAlignment = GridData.FILL;
         SaltGroupGridData.grabExcessHorizontalSpace = true;
-        SaltGroupGridData.grabExcessVerticalSpace = true;
+        SaltGroupGridData.grabExcessVerticalSpace = false;
         SaltGroupGridData.verticalAlignment = GridData.FILL;
 
         SaltGroup = new Group(parent, SWT.NONE);
@@ -255,12 +255,12 @@ public class SHA3WizardPage extends WizardPage implements Listener {
      */
     private void createHashOutputGroup(Composite parent) {
         GridLayout HashOutputGroupGridLayout = new GridLayout();
-        HashOutputGroupGridLayout.numColumns = 3;
+        HashOutputGroupGridLayout.numColumns = 2;
 
         GridData HashOutputGroupGridData = new GridData();
         HashOutputGroupGridData.horizontalAlignment = GridData.FILL;
         HashOutputGroupGridData.grabExcessHorizontalSpace = true;
-        HashOutputGroupGridData.grabExcessVerticalSpace = true;
+        HashOutputGroupGridData.grabExcessVerticalSpace = false;
         HashOutputGroupGridData.verticalAlignment = GridData.FILL;
 
         HashOutputGroup = new Group(parent, SWT.NONE);
@@ -270,8 +270,8 @@ public class SHA3WizardPage extends WizardPage implements Listener {
 
         GridData HashHexEditorButton = new GridData();
         HashHexEditorButton.horizontalAlignment = GridData.FILL;
-        HashHexEditorButton.grabExcessHorizontalSpace = true;
-        HashHexEditorButton.grabExcessVerticalSpace = true;
+        HashHexEditorButton.grabExcessHorizontalSpace = false;
+        HashHexEditorButton.grabExcessVerticalSpace = false;
         HashHexEditorButton.verticalAlignment = GridData.CENTER;
 
         HashHexEditor = new Button(HashOutputGroup, SWT.RADIO);
@@ -281,8 +281,8 @@ public class SHA3WizardPage extends WizardPage implements Listener {
 
         GridData HashFormattedButton = new GridData();
         HashFormattedButton.horizontalAlignment = GridData.FILL;
-        HashFormattedButton.grabExcessHorizontalSpace = true;
-        HashFormattedButton.grabExcessVerticalSpace = true;
+        HashFormattedButton.grabExcessHorizontalSpace = false;
+        HashFormattedButton.grabExcessVerticalSpace = false;
         HashFormattedButton.verticalAlignment = GridData.CENTER;
 
         HashFormatted = new Button(HashOutputGroup, SWT.RADIO);
@@ -290,16 +290,16 @@ public class SHA3WizardPage extends WizardPage implements Listener {
         HashFormatted.setLayoutData(HashFormattedButton);
         HashFormatted.addListener(SWT.Selection, this);
 
-        GridData HashStreamButton = new GridData();
-        HashStreamButton.horizontalAlignment = GridData.FILL;
-        HashStreamButton.grabExcessHorizontalSpace = true;
-        HashStreamButton.grabExcessVerticalSpace = true;
-        HashStreamButton.verticalAlignment = GridData.CENTER;
-
-        HashStream = new Button(HashOutputGroup, SWT.RADIO);
-        HashStream.setText(Messages.WizardMessage8);
-        HashStream.setLayoutData(HashStreamButton);
-        HashStream.addListener(SWT.Selection, this);
+//        GridData HashStreamButton = new GridData();
+//        HashStreamButton.horizontalAlignment = GridData.FILL;
+//        HashStreamButton.grabExcessHorizontalSpace = true;
+//        HashStreamButton.grabExcessVerticalSpace = true;
+//        HashStreamButton.verticalAlignment = GridData.CENTER;
+//
+//        HashStream = new Button(HashOutputGroup, SWT.RADIO);
+//        HashStream.setText(Messages.WizardMessage8);
+//        HashStream.setLayoutData(HashStreamButton);
+//        HashStream.addListener(SWT.Selection, this);
     }
 
     /**
@@ -336,7 +336,7 @@ public class SHA3WizardPage extends WizardPage implements Listener {
         GridData AlgorithmComboGridData = new GridData();
         AlgorithmComboGridData.horizontalAlignment = GridData.FILL;
         AlgorithmComboGridData.grabExcessHorizontalSpace = false;
-        AlgorithmComboGridData.grabExcessVerticalSpace = true;
+        AlgorithmComboGridData.grabExcessVerticalSpace = false;
         AlgorithmComboGridData.verticalAlignment = GridData.CENTER;
 
         AlgorithmCombo.setLayoutData(AlgorithmComboGridData);
