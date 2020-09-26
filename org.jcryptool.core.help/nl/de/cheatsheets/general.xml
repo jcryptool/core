@@ -2,12 +2,12 @@
 <cheatsheet title="Erste Schritte mit JCrypTool">
    <intro>
       <description>
-         Dieser Spickzettel zeigt Ihnen die allgemeine Verwendung von JCrypTool und soll Ihnen die ersten Schritte mit der erweiterbaren Kryptografie e-learning Software erleichtern.
+         Dieser Spickzettel zeigt Ihnen die allgemeine Verwendung von JCrypTool und soll Ihnen die ersten Schritte mit der erweiterbaren Kryptografie E-Learning-Software erleichtern.
       </description>
    </intro>
    <item title="Zwischen Perspektiven wechseln" dialog="true" skip="false" href="/org.jcryptool.core.help/$nl$/help/users/general/perspectives.html">
       <description>
-         JCrypTool besitzt zwei Perspektiven: <b>Standard</b> und <b>Algorithmen</b>. Zwischen diesen Perspektiven kann auf zwei Arten gewechselt werden: Über das <b>Fenster - Perspektive öffnen</b> Menü oder über die Icons rechts oben im Fenster. Es kann immer nur eine Perspektive aktiv sein (welche das ist erkennen Sie am aktiven Icon).
+         JCrypTool besitzt zwei Perspektiven: <b>Standard</b> und <b>Algorithmen</b>. Zwischen diesen Perspektiven kann auf zwei Arten gewechselt werden: Über das Menü <b>Fenster → Perspektive öffnen</b> oder über die Icons rechts oben im Fenster. Es kann immer nur eine Perspektive aktiv sein (welche das ist erkennen Sie am aktiven Icon).
       </description>
       <subitem
             label="Aktivieren Sie die Algorithmen Perspektive, indem Sie sie im Menü Fenster - Perspektive anzeigen auswählen.">
@@ -24,7 +24,7 @@
    </item>
    <item title="Öffnen einer Sicht" dialog="true" skip="false" href="/org.jcryptool.core.help/$nl$/help/users/general/views.html">
       <description>
-      	JCrypTool besitzt unzählige Sichten (Views). Am einfachsten können Sie eine bestimmte Sicht über das Menü <b>Fenster - Sicht anzeigen</b> aufrufen.
+      	JCrypTool besitzt unzählige Sichten (Views). Am einfachsten können Sie eine bestimmte Sicht über das Menü <b>Fenster → Sicht anzeigen</b> aufrufen.
       </description>
       <subitem
             label="Öffnen Sie die Web Browser Sicht über das Menü Fenster - Sicht anzeigen.">

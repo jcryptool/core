@@ -7,7 +7,7 @@
    </intro>
    <item title="Switching between perspectives" dialog="true" skip="false" href="/org.jcryptool.core.help/$nl$/help/users/general/perspectives.html">
       <description>
-         JCrypTool comes with two perspectives: <b>Default</b> and <b>Algorithm</b>. You can switch between those two perspectives in two different ways: By using the <b>Window - Open Perspective</b> menu entry or by using the icons in the upper right of the window. Only one perspective can be active at a time (you can recognize the active one by the selected icon).
+         JCrypTool comes with two perspectives: <b>Default</b> and <b>Algorithm</b>. You can switch between those two perspectives in two different ways: By using the menu entry <b>Window → Open Perspective</b>  or by using the icons in the upper right of the window. Only one perspective can be active at a time (you can recognize the active one by the selected icon).
       </description>
       <subitem
             label="Activate the Algorithm Perspective by selecting the menu Window - Open Perspective.">
@@ -24,7 +24,7 @@
    </item>
    <item title="Opening a view" dialog="true" skip="false" href="/org.jcryptool.core.help/$nl$/help/users/general/views.html">
       <description>
-         JCrypTool contains an almost countless number of views. The easiest way to open one is to use the menu <b>Window - Show View</b>. You can use both editors to create new files and you can open arbitrary files with them.
+         JCrypTool contains an almost countless number of views. The easiest way to open one is to use the menu <b>Window → Show View</b>. You can use both editors to create new files and you can open arbitrary files with them.
       </description>
       <subitem
             label="Open the Web Browser view by using the menu Window - Show View.">
