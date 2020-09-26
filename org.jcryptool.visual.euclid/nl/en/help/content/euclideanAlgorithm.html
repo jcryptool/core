@@ -1,93 +1,137 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+﻿<!DOCTYPE html>
 <html>
 <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	  <title>Theory for the Extended Euclidean Algorithm</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Theory for the Extended Euclidean Algorithm</title>
+  <script id="MathJax-script" async src="${JCTJS_HOST}/javascript/MathJax-master/es5/tex-mml-svg.js"></script>
+  \(
+    \definecolor{softorange}{RGB}{239,138,98}
+    \definecolor{moderateblue}{RGB}{103,169,207}
+  \)
 </head>
 <body>
 	<h1>Theory for the Extended Euclidean Algorithm</h1>
 
 	<p>
-		The <b>Extended Euclidean Algorithm</b> computes the greatest common divisor (<i>gcd</i>) of two positive integers <i>p</i> and <i>q</i>. 
-		In addition, the algorithm returns two integers <i>x</i> and <i>y</i>, so that <i>gcd(p, q) = xp + yq</i>.
+		The <b>Extended Euclidean Algorithm</b> computes the greatest common divisor (\(\gcd\)) of two positive integers \(p\) and \(q\). 
+		In addition, the algorithm returns two integers \(x\) and \(y\), so that \(\gcd(p, q) = xp + yq\).
 		The <b>Extended Euclidean Algorithm</b> is one of the most fundamental algorithms of the cryptography and is used for many other algorithms including the RSA-encryption.
 		Further fields of application are the Chinese Remainder Theorem, key generation, prime number generators and prime number tests.
 	</p>
 	
 	<b>Theorem 1</b>
-	<ol><i>
-		<li>If  q = 0, then the gcd(p, q) is p.</li>
-		<li>If  q &#x2260; 0, then the gcd(p, q) = gcd(q, p mod q).</li>
-	</i></ol>
+	<ol>
+		<li>If  \(q = 0\), then \(\gcd(p, q) = p\).</li>
+		<li>If  \(q \neq 0\), then the \(\gcd(p, q) = \gcd(q, p \mod q)\).</li>
+	</ol>
 	
 	<p>
-		Example: The calculation of the <i>gcd(44, 18)</i>. According to theorem 1 these equations are obtained: </br><i>gcd(44, 18) = gcd(18, 44 mod 18) = gcd(18, 8) = gcd(8, 18 mod 8) = gcd(8, 2) = gcd(2, 8 mod 2) = gcd(2, 0) = 2</i>. 
+		Example: The calculation of the \(\gcd(44, 18)\). According to theorem 1 these equations are obtained:
 	</p>
+
+\( \style{text-align:right;} {
+		\begin{alignat}{4}
+		&\gcd(44, 18) &&= \gcd(18,&& 44 && \mod  18 &&) =\\
+		&\gcd(18, 8) &&= \gcd(8, && 18 && \mod 8 &&) =\\
+		&\gcd(8, 2) &&= \gcd(2, && 8 && \mod 2 &&) =\\
+		&\gcd(2, 0) &&= 2
+		\end{alignat}
+} \)
 	
 	<p>
 		First of all, check which of the numbers is the larger one.
 		The larger number is declared as parameter one, the smaller one as parameter two. 
-		If both numbers are equal the <i>gcd(p, p) = p</i> is determined already. 
-		Otherwise, <i>p</i> is divided by <i>p</i> modulo <i>q</i>, until <i>q</i> is zero. 
-		In the every new iteration, the new <i>p</i> is the former <i>q</i> and the new <i>q</i> is the modulo remainder <i>(q<sub>new</sub> = p mod q)</i>. 
-		Since q is always the remainder of this modulo calculation and this eventually will be zero, it is ensured that the algorithm terminates. 
+		If both numbers are equal the \(\gcd(p, p) = p\) is determined already. 
+		Otherwise, \(p\) is divided by \(p\) modulo \(q\), until \(q\) is zero. 
+		In the every new iteration, the new \(p\) is the former \(q\) and the new \(q\) is the modulo remainder \(q_{\textrm{new}} = p \mod q\). 
+		Since \(q\) is always the remainder of this modulo calculation and this eventually will be zero, it is ensured that the algorithm terminates. 
 		It is possible to write this calculation down in table format:
 	</p>
 	
+	p	
 	<table border=1 style="border-collapse: collapse; text-align: center">
 		<tr>
-			<th>Index</th>
+			<th>Schritt</th>
 			<th>Quotient</th>
-			<th>Remainder</th>
+			<th>Rest</th>
+			<th>Anmerkung zum Rechenschritt</th>
 		</tr>
 		<tr>
 			<td>0</td>
+			<td>-</td>
+			<td><span style="color: #ef8a62">44</span></td>
 			<td></td>
-			<td>44</td>
 		</tr>
 		<tr>
 			<td>1</td>
-			<td>2</td>
-			<td>18</td>
+			<td><span style="color: #67a9cf">2</span></td>
+			<td><span style="color: #ef8a62">18</span></td>
+			<td style="text-align:left">
+			\(\frac{\textcolor{softorange}{44}}{18} =
+			  \textcolor{moderateblue}{2} \times \textcolor{softorange}{18}  + \textcolor{softorange}{8}\)
+			 </td>
 		</tr>
 		<tr>
 			<td>2</td>
-			<td>2</td>
-			<td>8</td>
+			<td><span style="color: #67a9cf">2</span></td>
+			<td><span style="color: #ef8a62">8</span></td>
+			<td style="text-align:left">
+			\(\frac{18}{8} = \textcolor{moderateblue}{2} \times \textcolor{softorange}{8}  + \textcolor{softorange}{2}\)
+			 </td>
 		</tr>
 		<tr>
 			<td>3</td>
-			<td>4</td>
-			<td>2</td>
+			<td><span style="color: #67a9cf">4</span></td>
+			<td><span style="color: #ef8a62">2</span></td>
+			<td style="text-align:left">
+			\(\frac{18}{8} = \textcolor{moderateblue}{2} \times \textcolor{softorange}{4}  + {0}\)
+			 </td>
 		</tr>
 		<tr>
 			<td>4</td>
-			<td></td>
+			<td>-</td>
 			<td>0</td>
+			<td style="text-align:left">Remainder is 0 - calculation finished</td>
 		</tr>
 	</table>
 	
 	<p>
 		To calculate the values for <i>x</i> and <i>y</i>, it is necessary to initialize the first two iterations in the following way:
 	</p>
+<table style="border: 0">
+<tr style="background-color:transparent">
+<td>
+	\begin{align}
+		x_0 = 0\\
+		x_1 = 1
+	\end{align}
+</td>
+<td style="vertical-align:middle">and</td>
+<td>
+	\begin{align}
+		y_0 = 0\\
+		y_1 = 1
+	\end{align}
+</td>
+</tr>
+</table>
 
 	<p>
-		<i>x<sub>0</sub> = 0, x<sub>1</sub> = 1</i> and <i>y<sub>0</sub> = 1, y<sub>1</sub> = 0</i> 
+		The sequence of remainders is specified with \(r_0,...,r_{n+1}\) and the sequence of quotients, that are received while using the <b>Extended Euclidean</b>, with \(q_1,...,q_n\). 
+		The calculation rules for the sequences (\(x_k\)) and (\(y_k\)) are the following ones:
 	</p>
+\( \style{text-align:right;} {
+	\begin{align*}
+			\begin{array}{}
+			 	x_{k+1} = x_{k-1} - q_k \times x_k\\
+				y_{k+1} = y_{k-1} - q_k \times y_k
+			\end{array}
+			\quad \textrm{with} \ 1 \leq k \leq n
+	\end{align*}
+} \)
 
 	<p>
-		The sequence of remainders is specified with <i>r<sub>0</sub>,…,r<sub>n+1</sub></i> and the sequence of quotients, that are received while using the <b>Extended Euclidean</b>, with <i>q<sub>1</sub>,…,q<sub>n</sub></i>. 
-		The calculation rules for the sequences <i>(x<sub>k</sub>)</i> and <i>(y<sub>k</sub>)</i> are the following ones:
-	</p>
-
-	<p><i>
-		x<sub>k+1</sub> = x<sub>k-1</sub> - q<sub>k</sub>x<sub>k</sub></br>
-		y<sub>k+1</sub> = y<sub>k-1</sub> - q<sub>k</sub>y<sub>k</sub></br>
-		with 1 &le; k &le; n
-	</i></p>
-
-	<p>
-		Now it is possible to calculate x and y for the example <i>gcd(44, 18)</i> and to insert the results in the table from above. 
+		Now it is possible to calculate \(x\) and \(y\) for the example \(\gcd(44, 18)\) and to insert the results in the table from above. 
 	</p>
 	
 	<table border=1 style="border-collapse: collapse; text-align: center">
@@ -95,8 +139,8 @@
 			<th>Index</th>
 			<th>Quotient</th>
 			<th>Remainder</th>
-			<th> x </th>
-			<th> y </th>
+			<th style="text-align: center">\(x\) </th>
+			<th style="text-align: center"> \(y\) </th>
 		</tr>
 		<tr>
 			<td>0</td>
@@ -136,7 +180,7 @@
 	</table>
 	
 	<p>
-		Thus every received remainder can be displayed as a linear combination of <i>p</i> and <i>q</i>:
+		Thus every received remainder can be displayed as a linear combination of \(p\) and \(q\):
 	</p>
 	
 	<table border=1 style="border-collapse: collapse; text-align: center">
@@ -148,27 +192,27 @@
 		<tr>
 			<td>0</td>
 			<td>44</td>
-			<td>1*44 + 0*18</td>
+			<td>\(1 \times 44 + 0 \times 18\)</td>
 		</tr>
 		<tr>
 			<td>1</td>
 			<td>18</td>
-			<td>0*44 + 1*18</td>
+			<td>\(0 \times 44 + 1 \times 18\)</td>
 		</tr>
 		<tr>
 			<td>2</td>
 			<td>8</td>
-			<td>1*44 + (-2)*18</td>
+			<td>\(1 \times 44 + (-2)\times 18\)</td>
 		</tr>
 		<tr>
 			<td>3</td>
 			<td>2</td>
-			<td>(-2)*44 + 5*18</td>
+			<td>\((-2) \times 44 + 5 \times 18\)</td>
 		</tr>
 		<tr>
 			<td>4</td>
 			<td>0</td>
-			<td>9*44 + (-22)*18</td>
+			<td>\(9 \times 44 + (-22) \times18 \)</td>
 		</tr>
 	</table>
 	
@@ -176,9 +220,7 @@
 		So for the example this takes effect:
 	</p>
 	
-	<p>
-		<i>gcd(44, 18) = (-2)*44 + 5*18 = 2</i>
-	</p>
+		\(\gcd(44, 18) = (-2) \times 44 + 5 \times 18 = 2\)
 	
 	<br>
 	
