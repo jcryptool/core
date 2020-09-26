@@ -2,24 +2,28 @@
 
 <html>
 <head>
-
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-	  <title>SHA 3 - Skein</title>
+	  <title>SHA-3 – Skein</title>
 </head>
 
 <body>
-	<h1>SHA 3 - Skein</h1>
+	<h1>SHA-3 – Skein</h1>
 
-	<p>
-	Skein ist ein einfach strukturiertes und schnelles Hashverfahren das auf die
-	Blockchiffre Threefish aufbaut. Zusätzlich enthält es einen UBI(Unique Block Interaction) mit Tweak.
-	<br>
-	Threefish ist eine n-bit Blockchiffre mit einem 128-bit Tweak, daher ergibt sich für n: 256, 512, 1024 bit.
-	<br>
-	Skein verwendet einfache Operationen(add, rotate, xor) und arbeitet mit
-	64-bit Worten. Die Blockchiffre beinhaltet Zusatzinformationen (Tweak), welche
-	ein Byte Zähler(der bereits verarbeiteten) und ein Typ Feld beinhalten.
+
+    <h2>Beschreibung</h2>
+	
+	<p>Skein ist ein einfach strukturiertes und schnelles Hashverfahren das auf die
+	Blockchiffre Threefish aufbaut. Zusätzlich enthält es einen UBI (Unique Block Interaction) mit Tweak.</p>
+
+	<p>Threefish ist eine n-bit Blockchiffre mit einem 128-bit Tweak, daher ergibt sich für n: 256, 512 und 1024 bit.</p>
+
+	<p>Skein verwendet einfache Operationen (add, rotate, xor) und arbeitet mit
+	64-bit-Worten. Die Blockchiffre beinhaltet als Zusatzinformationen (tweak):
+	einen Zähler der bereits verarbeiteten Bytes und ein Feld für den benutzten Typ.</p>
+	
+	<p>Skein wird neben weiteren Hashfunktionen im JCT-Plugin <strong><a href="PLUGINS_ROOT/org.jcryptool.visual.hashing/$nl$/help/content/index.html">Visualisierungen → Hash-Sensitivität</a></strong> genutzt.</p>
+
+	
 	<ul>
 	<li>Der UBI Modus für "Tweakable" Blockchiffren</li>
 	<li>Berechnen eines internen Hashwertes</li>
@@ -31,13 +35,13 @@
 	<img src="Skeinfigure2.png" alt="eigentlicher Hash" width="85%"/><br/>
 	<ul><li>Threefish beinhaltet:</li>
 	<li>MIX - Operation</li>
-	<li>Rundenstruktur (7280 Runden, alle 4 Runden wird ein Rundenschlüssel addiert)</li>
-	<li>der Key Schedule (aus n-bit Schlüssel und 128-bit Tweak werden 1921 n-bit Rundenschlüssel generiert)</li><br>
+	<li>Rundenstruktur (72-80 Runden, alle 4 Runden wird ein Rundenschlüssel addiert)</li>
+	<li>der Key Schedule (aus n-bit Schlüssel und 128-bit Tweak werden 19-21 n-bit Rundenschlüssel generiert)</li><br>
 	<br/>
 	<ul>
-	<li>Die MIX - Operation</li>
+	<li>Die MIX-Operation</li>
 	</ul>
-	<img src="Skeinfigure3.png" alt="MIX Operation" width="85%"/>
+	<img src="Skeinfigure3.png" alt="MIX-Operation" width="85%"/>
 	<ul>
 	<li>Rechnet auf 64-bit Worten</li>
 	<li>amortisiert 1 Taktzyklus auf Referenzplattform</li>
@@ -47,6 +51,8 @@
 
 	<ul><li>4 Runden von Threefish-512</li></ul>
 	<img src="Skeinfigure4.png" alt="4 Runden von Threefish-512" width="85%"/><br/>
+
+
 </body>
 </html>
 

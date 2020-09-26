@@ -3,11 +3,11 @@
 
 <toc label="SHA-3 – Guide" link_to="../org.jcryptool.core.help/$nl$/toc.xml#hashPlugins"> 
     <topic href="$nl$/help/content/Tutorial.html" label="SHA-3">
-       <topic href="$nl$/help/content/ECHOTutorial.html" label="SHA-3 – ECHO">
+       <topic href="$nl$/help/content/ECHOTutorial.html" label="ECHO">
        </topic>
-       <topic href="$nl$/help/content/JHTutorial.html" label="SHA-3 – JH">
+       <topic href="$nl$/help/content/JHTutorial.html" label="JH">
        </topic>
-       <topic href="$nl$/help/content/SkeinTutorial.html" label="SHA-3 – Skein">
+       <topic href="$nl$/help/content/SkeinTutorial.html" label="Skein">
        </topic>
     </topic> 
 </toc>

@@ -2,9 +2,7 @@
 
 <html>
 <head>
-
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
 	  <title>SHA-3-Kandidaten</title>
 </head>
 
@@ -18,70 +16,64 @@
     <tbody>
 
         <tr>
-          <td><a href="./../../../../single/MD5.html">MD5</a></td>
-          <td>MD5</td>
+          <td><a href="./JHTutorial.html">JH</a></td>
+          <td>JH</td>
         </tr>
 
         <tr>
-          <td><a href="./../../../../single/SHA256.html">SHA-256</a></td>
-          <td>SHA-256</td>
+          <td><a href="./ECHOTutorial.html">ECHO</a></td>
+          <td>ECHO</td>
         </tr>
 
         <tr>
-          <td><a href="PLUGINS_ROOT/org.jcryptool.crypto.modern.sha3/$nl$/help/content/UI/TutorialUI.html">SHA-3-Kandidaten</a></td>
-          <td>SHA-3-Kandidaten</td>
+          <td><a href="./SkeinTutorial.html">Skein</a></td>
+          <td>Skein</td>
         </tr>
 
     </tbody>
 </table>
-cccccccccccccccccccccccccc
 
 
+
+	<h2>SHA-3</h2>
 	
+	<p>Der Begriff secure hash algorithm (engl. für sicherer Hash-Algorithmus), kurz SHA, bezeichnet eine Gruppe vom NIST standardisierter kryptografischer Hashfunktionen (siehe <a target="_blank" href="http://de.wikipedia.org/wiki/Secure_Hash_Algorithm">Wikipedia</a>). Die Hash-Funktion Keccak wurde vom NIST als SHA-3 zum Nachfolger der SHA-1/2-Familie ernannt.</p>
 	
-	
-	<p>Der Begriff secure hash algorithm (engl. für sicherer Hash-Algorithmus), kurz SHA, bezeichnet eine Gruppe standardisierter kryptologischer Hashfunktionen (siehe <a target="_blank" href="http://de.wikipedia.org/wiki/Secure_Hash_Algorithm">Wikipedia</a>). Die Hash-Funktion Keccak wurde vom NIST als SHA-3 zum Nachfolger der SHA-1/2-Familie ernannt.</p>
-	
-	<p>Beim Auswahlverfahren haben es mehrere Kandidaten in die zweite Runde geschafft. In JCrypTool sind folgende SHA-3-Kandidaten implementiert:
-	<ul>
-	<li><a href="ECHOTutorial.html">ECHO</a></li>
-	<li><a href="JHTutorial.html">JH</a></li>
-	<li><a href="SkeinTutorial.html">Skein</a></li>
-	</ul>
-	<p>Auf den Unterseiten finden Sie nähere Informationen zu den einzelnen Kandidaten.</p>
-	
-	
+	<p>In JCrypTool sind drei Kandidaten implementiert, die es beim SH-3-Auswahlverfahren in die zweite Runde schafften.
 
-xxxxxxxxxxxxxxxxxxxxxx
+	<p>Auf den Unterseiten finden Sie nähere Informationen zu diesen Algorithmen.</p>
 
 
-		<h2>Hashwert erzeugen</h2>
 
-		<p>Der Hashwert wird immer vom aktuellen Editor berechnet. Starten Sie dazu den SHA3-Wizard, indem Sie auf den Menüpunkt <b>Algorithmen -> Hash-> SHA-3-Kandidaten</b> klicken. Nun können Sie den gewünschten Algorithmus und die Option <b>Hash erzeugen</b> auswählen.</p>
 
-		<p>Da jeder Algorithmus unterschiedliche Hashwert-Bitlängen unterstützt, müssen Sie eine passende Länge wählen.</p>
+	<h2>Bedienung der Dialoge</h2>
+	
+	<p>Während die Dialoge für MD5 und SHA-256 keine weitere Eingabe benötigen und ihre Ausgabe direkt in den Hexeditor in JCT schreiben, bietet der Dialog für die SHA-3-Kandidaten mehr Optionen.</p>
+	
+	<p>Nach der Wahl des Algorithmus und der gewünschten Bitlänge im Dialog für die SHA-3-Kandidaten, können Sie festlegen, ob Sie einen Hashwert erzeugen wollen oder einen Hashwert verifizieren. Falls Sie einen Hashwert erzeugen wollen, haben Sie 2 Wege, wohin die Ausgabe erfolgen soll. Das Hashverfahren ECHO hat die zusätzliche Option, einen Salzwert  (Salt) in Form von 32 Hexzeichen anzugeben.</p>
+
+
+		<h3>Hashwert erzeugen</h3>
+
+		<p>Der Hashwert wird immer vom Inhalt des aktuellen Editors berechnet.</p>
 		
-		<p>Damit Ihnen das Arbeiten mit dem erzeugten Hashwert leichter fällt, kann der Ausgabeort des Hashwertes frei gewählt werden.</p>
+		<p>Die Ausgabe des Hashwertes erfolgt an eine der beiden folgenden Stellen:</p>
 		<ul>
 			<li><b>Hexeditor:</b> Gibt den Hashwert im Hexeditor aus.</li>
-			<li><b>Texteditor:</b> Gibt den Hashwert geblockt im Texteditor aus, was den Hash anschaulicher macht.</li>
-			<li><b>Hashstream:</b> Gibt den Hashwert in einer Zeile ohne Abstand im Texteditor aus, wodurch das Verifizieren leichter fällt.</li>
+			<li><b>Texteditor:</b> Gibt den Hashwert in Hexadezimal-Zeichen im Texteditor aus (geblockt in 2er-Gruppen).</li>
 		</ul>
 
 		<p>Durch Klicken auf den <b>Fertigstellen</b>-Button wird der Hashwert mit den ausgewählten Optionen erzeugt.</p>
 
 
-		<h2>Hashwert verifizieren</h2>
 
-		<p>Beim Verifizieren wird ein neuer Hashwert vom aktuellen Editorinhalt berechnet. Dieser neue Hashwert wird verglichen mit einem gegebenen Hashwert, den man im SHA-3-Wizard eingibt. Beide Hashwerte und das Ergebnis dieser Überprüfung werden in einem neuen Texteditor-Reiter ausgegeben. </p>
+		<h3>Hashwert verifizieren</h3>
+
+		<p>Ein neuer Hashwert vom aktuellen Editorinhalt berechnet. Dieser neue Hashwert wird verglichen mit einem gegebenen Hashwert, den man im SHA-3-Dialog eingibt. Beide Hashwerte und das Ergebnis dieser Überprüfung werden in einem neuen Texteditor-Reiter ausgegeben. </p>
 		
-		<p>Auch hier ist im SHA-3-Wizard der entsprechende Algorithmus sowie die Bitlänge auszuwählen. Unter Optionen wird der Radiobutton <b>Hash verifizieren</b> gewählt, wodurch das darunter liegende Feld sichtbar und eingabebereit wird, um den gegebenen Hashwert einzugeben.</p>
+		<p>Wählt man unter Optionen <b>Hash verifizieren</b>, wird darunter ein Feld sichtbar und eingabebereit, um den gegebenen Hashwert einzugeben.</p>
 		
 		<p>Mit dem <b>Fertigstellen</b>-Button startet die Verifikation.</p>
-		
-
-	
-	
 
 	
 	

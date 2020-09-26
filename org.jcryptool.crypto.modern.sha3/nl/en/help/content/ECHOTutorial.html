@@ -2,38 +2,32 @@
 
 <html>
 <head>
-
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-	  <title>SHA 3 - ECHO</title>
+	<title>SHA-3 – ECHO</title>
 </head>
 
 <body>
-	<h1>SHA 3 - ECHO</h1>
+	<h1>SHA-3 – ECHO</h1>
 
-	<p>The hash function ECHO takes a message and salt as input. The salt is 128 bits long and if for some reason it is
-		unneeded or left unspecified, then it takes the all-zero value by default.The output from ECHO can be of any length from
-		128 to 512 bits, but NIST only claimed 4 different bitlengths. Basically ECHO is built on the known encryption algorithm AES.
-		ECHO uses 2 different compression methods, depending on the output length.
-	</p>
 
-	<b>The following bitlength are supported:</b>
+    <h2>Description</h2>
+	
+	<p>The hash function ECHO takes a message and salt as input. The salt is 128 bits long and if for some reason it is unneeded or left unspecified, then it takes the all-zero value by default. The output from ECHO can be of any length from 128 to 512 bits, but NIST only claimed 4 different bitlengths. Basically, ECHO is built on the known encryption algorithm AES. ECHO uses 2 different compression methods, depending on the output length.	</p>
+
+	<p>The following bitlengths are supported:</p>
 	<ul>
 		<li>224 Bit</li>
 		<li>256 Bit</li>
 		<li>384 Bit</li>
 		<li>512 Bit</li>
 	</ul>
-	<br/>
-	<p><b>How ECHO works:</b></p>
 
 
-	<p>At first the 12 input words are connected with the last 4 chaining words and then the AES rounds follow.
-		After that the output is linked to the input per XOR and the first column is used as chaining variable. If the hashlength is between
-		128 and 256 the chainingvariable has a length of 512 byte.
-		The first bit of the last chaining variable are use as hashvalue.
+	<h2>How ECHO works</h2>
+
+	<p>First, the 12 input words are connected with the last 4 chaining words and then the AES rounds follow. Then the output is linked to the input per XOR and the first column is used as chaining variable. If the hashlength is between 128 and 256 the chaining variable has a length of 512 byte. The first bits of the last chaining variable are used as hash value.
 	</p>
-		<img src="ECHOfigure1.png" alt="Funktionsweise" width="85%"/>
+		<img src="ECHOfigure1.png" alt="ECHO Functioning" width="85%"/>
 		<br/>
 
 </body>

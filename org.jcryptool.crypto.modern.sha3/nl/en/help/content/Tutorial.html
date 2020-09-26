@@ -36,7 +36,7 @@
 
 	<h2>About SHA-3</h2>
 
-	<p>The Secure Hash Algorithm is a family of cryptographic hash functions published by the National Institute of Standards and Technology (NIST) as a U.S. Federal Information Processing Standard (FIPS) (siehe <a target="_blank" href="http://en.wikipedia.org/wiki/Secure_Hash_Algorithm">Wikipedia</a>). 
+	<p>The Secure Hash Algorithm is a family of cryptographic hash functions published by the National Institute of Standards and Technology (NIST) as a U.S. Federal Information Processing Standard (FIPS) (see <a target="_blank" href="http://en.wikipedia.org/wiki/Secure_Hash_Algorithm">Wikipedia</a>). 
 	The NIST has chosen the hash function Keccak as SHA-3 and thus successor of the SHA-1/2 family.</p>
 	
 	<p>JCrypTool implemented three of candidates that achieved the second round of the SHA-3 selection process.</p>
@@ -50,30 +50,31 @@
 	
 	<p>While the dialogs for MD5 and SHA-256 don't need any input and just write their output to the hexeditor within JCT, the dialog for the SHA-3 candidates has more options.</p>
 	
-	<p>After choosing the algorithm and the wished bitlength in the dialog for the SHA-3 candidates, you can choose whether you want to create a hash value or verify a hash value. In case you create a hash value there are three ways where to place the output. ECHO has the additional option to salt the algorithm (with a string of 32 hex characters).</p>
+	<p>After choosing the algorithm and the wished bitlength in the dialog for the SHA-3 candidates, you can determine whether you want to create a hash value or verify a hash value. In case you create a hash value there are two ways where to place the output. ECHO has the additional option to salt the algorithm (with 32 hex characters).</p>
 
 
 		<h3>Generate hash</h3>
 
-		<p>The hash is generated always out of the current active editor.</p>
+		<p>The hash is generated always out of the content of the active editor.</p>
 		
-		<p>The output is placed in one the following three mediums.</p>
+		<p>The output is placed in one the following two mediums:</p>
 		<ul>
-		<li><b>Hex editor:</b> Displays the hash value in a hex editor.</li>
-		<li><b>Text editor (blocked):</b> Displays the hash value as hex values blocked in a text editor, so the generated hash value is well-arranged.</li>
-		<li><b>Text editor (streamed):</b> Displays the hash value in a row of characters in the text editor, so the verification is easier to use.</li>
+		<li><b>Hexeditor:</b> Displays the hash value in a hex editor.</li>
+		<li><b>Texteditor:</b> Displays the hash value as hex values in a text editor (blocked in groups of 2).</li>
 		</ul>
 		
 		<p>By clicking on the <b>Finish</b> button the hash value will be generated.</p>
 
 
+
 		<h3>Verify hash</h3>
 		
-		<p>A new hash value is generated from the editor content. This new hash value is compared with a given hash value to be entered in the SHA-3 dialog. The given  hash value, the generated hash value, and also the result of the comparison are shown as output in a new text editor tab.</p>
+		<p>A new hash value is generated from the editor content. This new hash value is compared with a given hash value to be entered in the SHA-3 dialog. Both hash values (the given and the generated one) and also the result of the comparison are shown as output in a new text editor tab.</p>
 		
 		<p>When selecting the option <b>Verify Hash</b>, a new field is available to enter the given hash value.</p>
 		
 		<p>By clicking on the <b>Finish</b> button the verification will be started.</p>
+
 		
 	
 </body>

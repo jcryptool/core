@@ -2,54 +2,68 @@
 
 <html>
 <head>
-
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-	  <title>SHA 3 - Skein</title>
+	  <title>SHA-3 – Skein</title>
 </head>
 
 <body>
-	<h1>SHA 3 - Skein</h1>
+	<h1>SHA-3 – Skein</h1>
 
-	<p>
-	Skein is a fast hash algorithm with a simple design built on Threefish.
-	Additionally Skein includes UBI (Unique Block Interaction) with Tweak.
-	<br>
-	Threefish is a n-bit block cipher with a Tweak of 128-bit. And so there are 3 possible hashbitlength: 256, 512 and 1024 bit.
-	<br>
-	Skein uses simple operations (add, rotate, xor). It also uses 64-bit words.
-	Additional information (Tweak) is also included in the block cipher. A counter for already used bytes and a field for the used type.
+
+    <h2>Description</h2>
+	
+	<p>Skein is a fast hash algorithm with a simple design built on Threefish.
+	Additionally, Skein includes UBI (unique block interaction) with tweak.</p>
+	
+	<p>Threefish is a n-bit block cipher with a tweak of 128-bit. And there are 3 possible output bitlength: 256, 512, and 1024 bit.</p>
+	
+	<p>Skein uses simple operations (add, rotate, xor). It also uses 64-bit words.
+	Additional information (tweak) is also included in the block cipher: a counter for already used bytes and a field for the used type.</p>
 
 	<ul>
 	<li>The UBI mode for "Tweakable" block cipher</li>
 	<li>Calculating a Sub - Hash</li>
 	</ul>
+
 	<img src="Skeinfigure1.png" alt="sub hash" width="85%"/><br>
+
 	<ul>
 	<li>Calculating an Output - Hash</li>
 	</ul>
+
 	<img src="Skeinfigure2.png" alt="output hash" width="85%"/><br>
+
 	<ul>
 	<li>Threefish a block cipher with "Tweak"</li>
 	<li>Threefish includes</li>
-	<li>MIX - Operations</li>
+	<li>MIX operations</li>
 	<li>Roundfunctions (72-80 rounds, after every forth round, a new round key will be added)</li>
-	<li>The Key Schedule (out of the n-bit key and the 128-bit Tweak will be generated a 19-21 n-bit round key)</li>
+	<li>The key schedule (out of the n-bit key and the 128-bit tweak will be generated a 19-21 n-bit round key)</li>
 	</ul>
+
 	<br>
+
 	<ul>
-	<li>The MIX - Operation</li>
+	<li>The MIX oOperation</li>
 	</ul>
+
 	<br>
+
 	<br><img src="Skeinfigure3.png" alt="MIX Operation" width="85%"/>
+
 	<ul><li>Calculation the offset to 64-bit words</li>
 	<li>Amortizes one clock cycle on the reference platform</li>
 	<li>Rotating a data independent value (1 to 63)</li>
 	</ul>
+
 	<br>
+
 	<ul>
 	<li>4 rounds of Threefish-512</li>
 	</ul>
+
 	<br><img src="Skeinfigure4.png" alt="Threefish-512 4 rounds" width="85%"/><br/>
+
+
 </body>
 </html>
