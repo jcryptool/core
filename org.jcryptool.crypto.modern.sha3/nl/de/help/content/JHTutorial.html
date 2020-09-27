@@ -3,36 +3,50 @@
 <html>
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	  <title>SHA-3 – JH</title>
+	  <title>SHA-3-Kandidat – JH</title>
 </head>
 
 <body>
-	<h1>SHA-3 – JH</h1>
+	<h1>SHA-3-Kandidat – JH</h1>
 
 
     <h2>Beschreibung</h2>
 	
 	<p>JH ist ein effizienter Algorithmus, der auf einfachen Rundenfunktionen aufbaut.
-	Es wird ein Komprimierungsfunktion verwendet die ihre Daten aus einer großen Permutation (bijektive Funktion) erhält.
-	Im Allgemeinen ist JH an das verallgemeinerte AES-Design SPN (Subsitution-Permutation-Network) und MDS (Maximum Distance Separable) angelehnt.
-	Im Gegensatz zum AES-Design verwendet JH ein 8 dimensionales Array. Dieses Design der Permutation verbindet die besten Eigenschaften von AES (SPN + MDS) und Serpent (SPN + bitslice).</p>
+	Es wird eine Komprimierungsfunktion verwendet, die ihre Daten aus einer großen Permutation (bijektive Funktion) erhält. 	JH ist an das verallgemeinerte AES-Design SPN (Subsitution-Permutation-Network) und MDS (Maximum Distance Separable) angelehnt.
+	Im Gegensatz zum AES-Design verwendet JH ein 8-dimensionales Array. Dieses Design der Permutation verbindet die besten Eigenschaften von AES (SPN + MDS) und Serpent (SPN + bitslice).</p>
 	
 	<b>Folgende Bitlängen werden unterstützt:</b>
 	<ul>
-		<li>224 Bit</li>
-		<li>256 Bit</li>
-		<li>384 Bit</li>
-		<li>512 Bit</li>
+		<li>224 bit</li>
+		<li>256 bit</li>
+		<li>384 bit</li>
+		<li>512 bit</li>
 	</ul>
 
 	<br/>
-	<p><b>JH Compressions Function:</b></p>
-		<img src="JHfigure1.png" alt="compression function" width="85%"/>
-		<br/>
-	<p><b>Bijektive Funktion E (EDP):</b></p>
-		<p><img src="JHfigure2.png" alt="bijective function" width="85%"></p>
-		<br/>
-	<p><b>Truncate:</b></p>
-	Als letzter Schritt wird der finale Hash auf 224, 256, 384 oder 512 Bit gekürzt.
+	<p><b>JH Compressions Function</b></p>
+	<img src="JHfigure1.png" alt="compression function" width="85%"/>
+
+	<br/>
+	<p><b>Bijektive Funktion E (EDP)</b></p>
+	<p><img src="JHfigure2.png" alt="bijective function" width="85%"></p>
+
+	<br/>
+	<p><b>Truncate</b></p>
+	<p>Als letzter Schritt wird der finale Hash auf 224, 256, 384 oder 512 Bit gekürzt.</p>
+
+
+
+
+	<h2>Quellen</h2>
+
+	<ul>
+		<li>
+        	<a target="_blank" href="https://de.wikipedia.org/wiki/JH_(Hashfunktion)" >https://de.wikipedia.org/wiki/JH_(Hashfunktion)</a> Wikipedia JH (Hashfunktion)
+    	</li>
+	</ul>	
+
+
 </body>
 </html>

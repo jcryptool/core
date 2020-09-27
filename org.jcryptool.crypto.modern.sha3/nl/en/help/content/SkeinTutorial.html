@@ -3,11 +3,11 @@
 <html>
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	  <title>SHA-3 – Skein</title>
+	  <title>SHA-3 Candidate – Skein</title>
 </head>
 
 <body>
-	<h1>SHA-3 – Skein</h1>
+	<h1>SHA-3 Candidate – Skein</h1>
 
 
     <h2>Description</h2>
@@ -15,54 +15,48 @@
 	<p>Skein is a fast hash algorithm with a simple design built on Threefish.
 	Additionally, Skein includes UBI (unique block interaction) with tweak.</p>
 	
-	<p>Threefish is a n-bit block cipher with a tweak of 128-bit. And there are 3 possible output bitlength: 256, 512, and 1024 bit.</p>
+	<p>Threefish is a n-bit block cipher with a tweak of 128 bit. So Skein has 3 possible output bitlengths (with n = 256, 512, and 1024 bit).</p>
 	
-	<p>Skein uses simple operations (add, rotate, xor). It also uses 64-bit words.
-	Additional information (tweak) is also included in the block cipher: a counter for already used bytes and a field for the used type.</p>
+	<p>Skein uses simple operations (add, rotate, xor) and 64-bit words. Additional information (tweak) is also included in the block cipher: a counter for already used bytes and a field for the used type.</p>
+
+
+	<p>The Unique Block Iteration (UBI) chaining mode for "Tweakable" block cipher calculates an internal sub-hash value.</p>
+	<img src="Skeinfigure1.png" alt="sub hash" width="85%"/>
+
+
+	<p>Then the actual output (hash value) is calculated:</p>
+	<img src="Skeinfigure2.png" alt="output hash" width="85%"/>
+
+
+
+	<p>Components of Threefish:</p>
+	<ul>
+		<li>MIX operations</li>
+		<li>Round functions (72-80 rounds; after every forth round a new round key is added)</li>
+		<li>Key schedule (out of the n-bit key and the 128-bit tweak 19-21 n-bit round key are generated)</li>
+	</ul>
+
+
+	<p>The MIX Operation calculates on 64-bit words and rotates by value (1 to 63) independent form the data.</p>
+<!-- This small picture didn't look good when expanded to 85% and it didn't contain much info.
+	<img src="Skeinfigure3.png" alt="MIX Operation" width="85%"/>
+-->
+
+	
+	
+	<p>4 rounds of Threefish-512:</p>
+	<br><img src="Skeinfigure4.png" alt="Threefish-512 4 rounds" width="85%"/>
+
+
+
+
+	<h2>References</h2>
 
 	<ul>
-	<li>The UBI mode for "Tweakable" block cipher</li>
-	<li>Calculating a Sub - Hash</li>
+		<li>
+        <a target="_blank" href="https://en.wikipedia.org/wiki/Skein_(hash_function)" >https://en.wikipedia.org/wiki/Skein_(hash_function)</a> Wikipedia Skein (hash function)
+    	</li>
 	</ul>
-
-	<img src="Skeinfigure1.png" alt="sub hash" width="85%"/><br>
-
-	<ul>
-	<li>Calculating an Output - Hash</li>
-	</ul>
-
-	<img src="Skeinfigure2.png" alt="output hash" width="85%"/><br>
-
-	<ul>
-	<li>Threefish a block cipher with "Tweak"</li>
-	<li>Threefish includes</li>
-	<li>MIX operations</li>
-	<li>Roundfunctions (72-80 rounds, after every forth round, a new round key will be added)</li>
-	<li>The key schedule (out of the n-bit key and the 128-bit tweak will be generated a 19-21 n-bit round key)</li>
-	</ul>
-
-	<br>
-
-	<ul>
-	<li>The MIX oOperation</li>
-	</ul>
-
-	<br>
-
-	<br><img src="Skeinfigure3.png" alt="MIX Operation" width="85%"/>
-
-	<ul><li>Calculation the offset to 64-bit words</li>
-	<li>Amortizes one clock cycle on the reference platform</li>
-	<li>Rotating a data independent value (1 to 63)</li>
-	</ul>
-
-	<br>
-
-	<ul>
-	<li>4 rounds of Threefish-512</li>
-	</ul>
-
-	<br><img src="Skeinfigure4.png" alt="Threefish-512 4 rounds" width="85%"/><br/>
 
 
 </body>

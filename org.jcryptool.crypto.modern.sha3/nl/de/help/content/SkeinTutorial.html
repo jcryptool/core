@@ -3,54 +3,67 @@
 <html>
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	  <title>SHA-3 – Skein</title>
+	  <title>SHA-3-Kandidat – Skein</title>
 </head>
 
 <body>
-	<h1>SHA-3 – Skein</h1>
+	<h1>SHA-3-Kandidat – Skein</h1>
 
 
     <h2>Beschreibung</h2>
 	
-	<p>Skein ist ein einfach strukturiertes und schnelles Hashverfahren das auf die
+	<p>Skein ist ein einfach strukturiertes und schnelles Hashverfahren, das auf der
 	Blockchiffre Threefish aufbaut. Zusätzlich enthält es einen UBI (Unique Block Interaction) mit Tweak.</p>
 
-	<p>Threefish ist eine n-bit Blockchiffre mit einem 128-bit Tweak, daher ergibt sich für n: 256, 512 und 1024 bit.</p>
+	<p>Threefish ist eine n-bit Blockchiffre mit einem 128-bit Tweak. Somit hat Skein drei verschiedene Output-Bitlängen (für n = 256, 512 und 1024 bit).</p>
 
 	<p>Skein verwendet einfache Operationen (add, rotate, xor) und arbeitet mit
-	64-bit-Worten. Die Blockchiffre beinhaltet als Zusatzinformationen (tweak):
-	einen Zähler der bereits verarbeiteten Bytes und ein Feld für den benutzten Typ.</p>
+	64-bit-Worten. Die Blockchiffre nutzt als Zusatzinformationen (tweak) einen Zähler der bereits verarbeiteten Bytes und ein Feld für den benutzten Typ.</p>
 	
 	<p>Skein wird neben weiteren Hashfunktionen im JCT-Plugin <strong><a href="PLUGINS_ROOT/org.jcryptool.visual.hashing/$nl$/help/content/index.html">Visualisierungen → Hash-Sensitivität</a></strong> genutzt.</p>
 
 	
-	<ul>
-	<li>Der UBI Modus für "Tweakable" Blockchiffren</li>
-	<li>Berechnen eines internen Hashwertes</li>
-	</ul>
-	<img src="Skeinfigure1.png" alt="interner Hash" width="85%"/><br/>
-	<ul>
-	<li>Berechnen des eigentlichen Hashwertes</li>
-	</ul>
-	<img src="Skeinfigure2.png" alt="eigentlicher Hash" width="85%"/><br/>
-	<ul><li>Threefish beinhaltet:</li>
-	<li>MIX - Operation</li>
-	<li>Rundenstruktur (72-80 Runden, alle 4 Runden wird ein Rundenschlüssel addiert)</li>
-	<li>der Key Schedule (aus n-bit Schlüssel und 128-bit Tweak werden 19-21 n-bit Rundenschlüssel generiert)</li><br>
-	<br/>
-	<ul>
-	<li>Die MIX-Operation</li>
-	</ul>
-	<img src="Skeinfigure3.png" alt="MIX-Operation" width="85%"/>
-	<ul>
-	<li>Rechnet auf 64-bit Worten</li>
-	<li>amortisiert 1 Taktzyklus auf Referenzplattform</li>
-	<li>Rotation um einen von den Daten unabhängigen Wert (1 bis 63)</li>
-	</ul>
-	<br/>
+	<p>Die Konstruktionsmethode Unique Block Iteration (UBI) für "tweakable" Blockchiffren berechnet einen internen Hashwert:</p>
+	<img src="Skeinfigure1.png" alt="interner Hash" width="85%"/>
 
-	<ul><li>4 Runden von Threefish-512</li></ul>
-	<img src="Skeinfigure4.png" alt="4 Runden von Threefish-512" width="85%"/><br/>
+
+	<br>
+	<p>Dann wird der eigentliche Hashwert berechnet:</p>
+	<img src="Skeinfigure2.png" alt="eigentlicher Hash" width="85%"/>
+
+
+	<br>
+	<p>Komponenten von Threefish:</p>
+	<ul>
+		<li>MIX-Operation</li>
+		<li>Rundenstruktur (72-80 Runden, wobei alle 4 Runden ein Rundenschlüssel addiert wird)</li>
+		<li>Key-Schedule (aus dem n-bit Schlüssel und dem 128-bit Tweak werden 19-21 n-bit Rundenschlüssel generiert)</li>
+	</ul>
+
+
+	<br>
+	<p>Die MIX-Operation rechnet auf 64-bit Worten und rotiert um einen von den Daten unabhängigen Wert (1 bis 63).</p>
+<!-- This small picture didn't look good when expanded to 85% and it didn't contain much info.
+	<img src="Skeinfigure3.png" alt="MIX-Operation" width="85%"/>
+-->
+
+
+
+	<br>
+	<p>4 Runden von Threefish-512:</p>
+	<img src="Skeinfigure4.png" alt="4 Runden von Threefish-512" width="85%"/>
+
+
+
+
+	<br/>
+	<h2>Quellen</h2>
+
+	<ul>
+		<li>
+        	<a target="_blank" href="https://de.wikipedia.org/wiki/Skein" >https://de.wikipedia.org/wiki/Skein</a> Wikipedia Skein
+    	</li>
+	</ul>	
 
 
 </body>

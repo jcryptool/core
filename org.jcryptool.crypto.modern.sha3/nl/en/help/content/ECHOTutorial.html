@@ -3,11 +3,11 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>SHA-3 – ECHO</title>
+	<title>SHA-3 Candidate – ECHO</title>
 </head>
 
 <body>
-	<h1>SHA-3 – ECHO</h1>
+	<h1>SHA-3 Candidate – ECHO</h1>
 
 
     <h2>Description</h2>
@@ -16,19 +16,30 @@
 
 	<p>The following bitlengths are supported:</p>
 	<ul>
-		<li>224 Bit</li>
-		<li>256 Bit</li>
-		<li>384 Bit</li>
-		<li>512 Bit</li>
+		<li>224 bit</li>
+		<li>256 bit</li>
+		<li>384 bit</li>
+		<li>512 bit</li>
 	</ul>
 
 
 	<h2>How ECHO works</h2>
 
-	<p>First, the 12 input words are connected with the last 4 chaining words and then the AES rounds follow. Then the output is linked to the input per XOR and the first column is used as chaining variable. If the hashlength is between 128 and 256 the chaining variable has a length of 512 byte. The first bits of the last chaining variable are used as hash value.
-	</p>
-		<img src="ECHOfigure1.png" alt="ECHO Functioning" width="85%"/>
-		<br/>
+	<p>First, the 12 input words are connected with the last 4 chaining words and then the AES rounds follow. Then the output is linked to the input per XOR and the first column is used as chaining variable. If the hashlength is between 128 and 256 the chaining variable has a length of 512 bit. The first bits of the last chaining variable are used as hash value.</p>
+	
+	<img src="ECHOfigure1.png" alt="ECHO Functioning" width="85%"/>
+
+
+
+
+	<h2>References</h2>
+
+	<ul>
+		<li>
+        <a target="_blank" href="https://ehash.iaik.tugraz.at/wiki/ECHO" >https://ehash.iaik.tugraz.at/wiki/ECHO</a> ECHO
+    	</li>
+	</ul>
+
 
 </body>
 </html>

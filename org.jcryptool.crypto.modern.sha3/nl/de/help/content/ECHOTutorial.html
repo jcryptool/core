@@ -3,35 +3,42 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>SHA-3 – ECHO</title>
+	<title>SHA-3-Kandidat – ECHO</title>
 </head>
 
 <body>
-	<h1>SHA-3 – ECHO</h1>
+	<h1>SHA-3-Kandidat – ECHO</h1>
 
 
     <h2>Beschreibung</h2>
 		
 		<p>Der Hashalgorithmus ECHO nimmt eine Nachricht und einen Salt als Eingabe. Der Salt ist 128 Bit lang. Wird dieser nicht angegeben oder benötigt, dann ist der Defaultwert 0. Die Ausgabe kann jede Bitlänge zwischen 128 und 512 sein, wobei vom NIST nur 4 Bitlängen gefordert sind. Grundsätzlich baut ECHO auf den bekannten Verschlüsselungsalgorithmus AES auf. Je nachdem, wie lang der Hashwert am Schluss sein soll, wird auf 2 unterschiedliche Kompressionsmethoden zurückgegriffen.</p>
 		
-	<p>Folgende Bitlängen werden unterstützt:</p>
+	<p>Folgende Bitlängen werden unterstützt:
 	<ul>
-		<li>224 Bit</li>
-		<li>256 Bit</li>
-		<li>384 Bit</li>
-		<li>512 Bit</li>
-	</ul>
+		<li>224 bit</li>
+		<li>256 bit</li>
+		<li>384 bit</li>
+		<li>512 bit</li>
+	</ul></p>
 
 
 	<h2>ECHO-Funktionsweise</h2>
 
-	<p>Zuerst werden die 12 Words mit den letzten 4 Chaining-Words verknüpft, danach folgen die an AES angelehnten Runden.
-		Zum Schluss wird die Ausgabe per XOR mit der Eingabe verknüpft und die erste Spalte als Chaining-Variable
-		weiter verwendet. Bei einem Hashwert von 128 bis 256 ist die Chaining-Variable 512 Bit lang.
-		Als Hashwert werden die ersten Bits in der Länge des Hashwertes genommen.
-	</p>
-		<img src="ECHOfigure1.png" alt="ECHO-Funktionsweise" width="85%"/>
-		<br/>
+	<p>Zuerst werden die 12 Words mit den letzten 4 Chaining-Words verknüpft, danach folgen die an AES angelehnten Runden. Zum Schluss wird die Ausgabe per XOR mit der Eingabe verknüpft und die erste Spalte als Chaining-Variable weiter verwendet. Bei einem Hashwert von 128 bis 256 ist die Chaining-Variable 512 bit lang. Als Hashwert werden die ersten Bits in der Länge des Hashwertes genommen.</p>
+	
+	<img src="ECHOfigure1.png" alt="ECHO-Funktionsweise" width="85%"/>
+
+
+
+	<h2>Quellen</h2>
+
+	<ul>
+		<li>
+        <a target="_blank" href="https://ehash.iaik.tugraz.at/wiki/ECHO" >https://ehash.iaik.tugraz.at/wiki/ECHO</a> ECHO
+    	</li>
+	</ul>	
+
 
 </body>
 </html>
