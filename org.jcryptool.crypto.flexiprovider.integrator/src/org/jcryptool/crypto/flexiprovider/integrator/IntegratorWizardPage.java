@@ -896,7 +896,7 @@ public class IntegratorWizardPage extends WizardPage {
         keylengthCombo.addListener(SWT.Selection, new Listener() {
             public void handleEvent(Event event) {
                 String keyLen = keylengthCombo.getItem(keylengthCombo.getSelectionIndex());
-                int numBytes = (new Integer(keyLen)) / 8;
+                int numBytes = Integer.valueOf(keyLen) / 8;
                 customKeyTextbox.setNumBytes(numBytes);
             }
         });
