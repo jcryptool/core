@@ -7,7 +7,6 @@ Bundle-Activator: org.jcryptool.visual.PairingBDII.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.flexiprovider;bundle-version="1.7.0",
- org.jcryptool.webbrowser,
  org.eclipse.swt,
  org.eclipse.help,
  org.jcryptool.core.util
