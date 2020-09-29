@@ -135,7 +135,7 @@ public class DragonAlgorithmHandler extends AbstractAlgorithmHandler{
      * @param wizard used to retrieve the number of bytes of keystream to generate
      */
     private void outputKeyStream(byte[] keyArray, byte[] ivArray, DragonWizard wizard) {
-        int keyStreamByteCount = new Integer(wizard.getKeystreamLengthValue()).intValue();
+        int keyStreamByteCount = Integer.valueOf(wizard.getKeystreamLengthValue());
 
         // check if key and IV are same length
         if (keyArray.length != ivArray.length)

@@ -190,7 +190,7 @@ public class LfsrAlgorithmHandler extends AbstractAlgorithmHandler {
 	 *                    generate
 	 */
 	private void outputKeyStream(boolean[] seed, boolean[] tapSettings, LfsrWizard wizard) {
-		int keyStreamByteCount = new Integer(wizard.getKeystreamLengthValue()).intValue();
+		int keyStreamByteCount = Integer.valueOf(wizard.getKeystreamLengthValue());
 
 		LfsrKeyStreamGenerator keyStreamGenerator = new LfsrKeyStreamGenerator(seed, tapSettings);
 

@@ -89,7 +89,7 @@ public class Functions {
 			String temp3 = Integer.toBinaryString(temp2[i]);
 			int[] temp4 = new int[temp3.length()];
 			for (int j = 0; j < temp4.length; j++) {
-				temp4[j] = new Integer(Character.toString(temp3.charAt(j)));
+				temp4[j] = Integer.valueOf(Character.toString(temp3.charAt(j)));
 			}
 			temp1[i] = temp4;
 		}

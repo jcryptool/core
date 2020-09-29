@@ -214,7 +214,7 @@ public class ZahlenhaiBestwerte {
         for (int i = 1; i <= g; i++) {
             pp[i] = (L) pp[i - 1].clone();
             if (i % 2 == 0)
-                pp[i].remove(new Integer(i / 2));
+                pp[i].remove(i / 2);
             L t = tmOhne1uN(i); // Teilermenge von N ohne 1 und ohne N
             if (t.size() == 1) {
                 int p = t.get(0);

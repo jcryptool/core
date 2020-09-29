@@ -3022,7 +3022,7 @@ public class KillerPuzzle extends Composite {
 		if (subsetSize == subset.length) {
 			Integer[] temp = new Integer[subset.length];
 			for (int i = 0; i < subset.length; i++)
-				temp[i] = new Integer(subset[i]);
+				temp[i] = subset[i];
 			subsets.add(temp);
 		} else {
 			for (int j = nextIndex; j < set.length; j++) {
@@ -3036,7 +3036,7 @@ public class KillerPuzzle extends Composite {
 		if (subsetSize == subset.length) {
 			Integer[] temp = new Integer[subset.length];
 			for (int i = 0; i < subset.length; i++)
-				temp[i] = new Integer(subset[i]);
+				temp[i] = subset[i];
 			subsets.add(temp);
 		} else {
 			for (int j = nextIndex; j < set.length; j++) {

@@ -676,7 +676,7 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 	 * @return The cycle length depending on the lfsr Length.
 	 */
 	private void setDefaultKeystreamLength() {
-		int result = new Double(Math.pow(2, lfsrLength) - 1).intValue();
+		int result = (int) Math.pow(2, lfsrLength) - 1;
 		CLEARING_FLAG = true;
 		keystreamLengthText.setText(Integer.toString(result)); // $NON-NLS-1$
 		CLEARING_FLAG = false;
