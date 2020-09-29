@@ -24,8 +24,8 @@
       <description>This is the FlexiProvider implementation of the HMacMD5 message digest. The Algorithm Perspective does provide even more configuration possibilities for this algorithm.</description>
   		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html" label="Algorithm Perspective"/>
    </context>
-   <context id="SHA1Wizard" title="SHA1 random number generator">
-      <description>This is the FlexiProvider implementation of the SHA1 random number generator. The Algorithm Perspective does provide even more configuration possibilities for this algorithm.</description>
+   <context id="SHA1Wizard" title="SHA-1 random number generator">
+      <description>This is the FlexiProvider implementation of the SHA-1 random number generator. The Algorithm Perspective does provide even more configuration possibilities for this algorithm.</description>
   		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html" label="Algorithm Perspective"/>
    </context>
    <context id="DSAWizard" title="DSA signature">

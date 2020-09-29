@@ -126,7 +126,7 @@
             handlerClass="org.jcryptool.crypto.flexiprovider.integrator.prng.sha1.Sha1Handler"
             id="org.jcryptool.crypto.flexiprovider.integrator.prng.sha1"
             isFlexiProviderAlgorithm="true"
-            name="SHA1"
+            name="SHA-1"
             type="prng">
       </algorithm_cmd>
    </extension>
