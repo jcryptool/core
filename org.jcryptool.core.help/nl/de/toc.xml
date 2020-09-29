@@ -22,8 +22,6 @@
             <anchor id="views" />
             <topic label="Krypto-Explorer"
                 href="$nl$/help/users/general/view_algorithms.html" />
-            <topic href="$nl$/help/users/general/view_webbrowser.html" label="Web Browser">
-            </topic>
         </topic>
 
         <topic label="Editoren" sort="true"

@@ -27,13 +27,7 @@
       	JCrypTool besitzt unzählige Sichten (Views). Am einfachsten können Sie eine bestimmte Sicht über das Menü <b>Fenster → Sicht anzeigen</b> aufrufen.
       </description>
       <subitem
-            label="Öffnen Sie die Web Browser Sicht über das Menü Fenster - Sicht anzeigen.">
-        <command
-           required="false"
-           serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.jcryptool.webbrowser.browser)"/>
-      </subitem>
-      <subitem
-            label="Zeigen Sie die Häufigkeitsanalyse an. Alle Analysen, Visualisierungen und Spiele sind Sichten. Klicken Sie dazu auf das Menüitem &quot;Analysen&quot; und wählen Sie den Eintrag &quot;Häufigkeitsanalyse&quot; aus.">
+            label="Zeigen Sie die Häufigkeitsanalyse an. Alle Analysen, Visualisierungen und Spiele sind Sichten. Klicken Sie dazu auf das Menü &quot;Analysen&quot; und wählen Sie den Eintrag &quot;Häufigkeitsanalyse&quot; aus.">
          <command
                required="false"
                serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.jcryptool.analysis.freqanalysis.views.FreqAnalysisView)"/>

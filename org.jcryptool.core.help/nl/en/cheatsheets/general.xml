@@ -27,12 +27,6 @@
          JCrypTool contains an almost countless number of views. The easiest way to open one is to use the menu <b>Window → Show View</b>. You can use both editors to create new files and you can open arbitrary files with them.
       </description>
       <subitem
-            label="Open the Web Browser view by using the menu Window - Show View.">
-        <command
-           required="false"
-           serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.jcryptool.webbrowser.browser)"/>
-      </subitem>
-      <subitem
             label="Open the frequency analysis. All analysis, visuals and games are views. To do this click on the menu item &quot;Analysis&quot; and select the entry &quot;Frequency Analysis&quot;">
          <command
                required="false"

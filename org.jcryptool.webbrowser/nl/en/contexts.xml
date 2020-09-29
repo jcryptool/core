@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<contexts>
-   <context id="webBrowserView" title="Web Browser View">
-      <description>The <b>Web Browser</b> view offers the ability to view web pages just like your normal browser.</description>
-      <topic href="../org.jcryptool.core.help/$nl$/help/users/general/view_webbrowser.html" label="Web Browser View" />
-   </context>
-
-</contexts>
