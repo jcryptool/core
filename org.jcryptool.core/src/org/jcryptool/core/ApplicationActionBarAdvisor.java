@@ -500,7 +500,10 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         perspectiveMenu.add(ContributionItemFactory.PERSPECTIVES_SHORTLIST.create(window));
 
         // create actions for "open view" menu
-        showViewMenu = new MenuManager(Messages.applicationActionBarAdvisor_Menu_Show_View, "showView"); //$NON-NLS-1$
+        image = createIconFromURL("platform:/plugin/org.eclipse.ui.views/icons/full/elcl16/new.png");
+        showViewMenu = new MenuManager(Messages.applicationActionBarAdvisor_Menu_Show_View,
+        		image,
+        		"showView"); //$NON-NLS-1$
         showViewMenu.add(ContributionItemFactory.VIEWS_SHORTLIST.create(window));
 
         menu.add(perspectiveMenu);
