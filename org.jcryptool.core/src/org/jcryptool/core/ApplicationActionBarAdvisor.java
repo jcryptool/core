@@ -34,6 +34,7 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.ToolBarContributionItem;
 import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchCommandConstants;
@@ -51,6 +52,8 @@ import org.jcryptool.core.commands.ShowPluginViewHandler;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.CommandInfo;
 import org.jcryptool.core.operations.OperationsPlugin;
+import org.jcryptool.core.operations.algorithm.ShadowAlgorithmHandler;
+import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.keystore.commands.OpenKeystoreHandler;
 
 /**
@@ -112,9 +115,9 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         IToolBarManager fileToolBar = new ToolBarManager(coolBar.getStyle());
         IServiceLocator serviceLocator = PlatformUI.getWorkbench();
         fileToolBar.add(new GroupMarker(IWorkbenchActionConstants.FILE_START));
-        fileToolBar.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_SAVE));
-        fileToolBar.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_SAVE_ALL));
-        fileToolBar.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_PRINT));
+        fileToolBar.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_SAVE, null));
+        fileToolBar.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_SAVE_ALL, null));
+        fileToolBar.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_PRINT, null));
         fileToolBar.add(new GroupMarker(IWorkbenchActionConstants.FILE_END));
         fileToolBar.add(new Separator());
         fileToolBar.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
@@ -130,9 +133,9 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         MenuManager coolBarContextMenuManager = new MenuManager(null, CorePlugin.PLUGIN_ID + ".contextMenu"); //$NON-NLS-1$
         coolBar.setContextMenuManager(coolBarContextMenuManager);
         coolBarContextMenuManager
-                .add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.WINDOW_LOCK_TOOLBAR));
+                .add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.WINDOW_LOCK_TOOLBAR, null));
         coolBarContextMenuManager.add(
-                createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.WINDOW_CUSTOMIZE_PERSPECTIVE));
+                createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.WINDOW_CUSTOMIZE_PERSPECTIVE, null));
         coolBarContextMenuManager.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
     }
 
@@ -200,7 +203,16 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
             if (contextHelpId != null) {
                 commandService.setHelpContextId(handler, contextHelpId);
             }
-            menu.add(createContributionItem(PlatformUI.getWorkbench(), null, commandId));
+            
+            IContributionItem menuItem;
+            String icon = element.getAttribute("icon");
+            if (icon != null) {
+            	ImageDescriptor id = createIconFromURL(icon);
+            	menuItem = createContributionItem(PlatformUI.getWorkbench(), null, commandId, id);
+            } else {
+            	menuItem = createContributionItem(PlatformUI.getWorkbench(), null, commandId, null);
+            }
+            menu.add(menuItem);
         }
 
         menu.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
@@ -208,11 +220,46 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         return menu;
     }
 
+
     private static IContributionItem createContributionItem(IServiceLocator locator, Object contribSource,
-            String commandId) {
-        CommandContributionItemParameter contributionItemParameter = new CommandContributionItemParameter(locator, null,
+    String commandId, ImageDescriptor image) {
+    	CommandContributionItemParameter contributionItemParameter = new CommandContributionItemParameter(locator, null,
                 commandId, SWT.PUSH);
-        return new CommandContributionItem(contributionItemParameter);
+    	
+        // This adds an icon to the menu entry, if it
+        // is specifically entered.
+        if (image != null) {
+			contributionItemParameter.icon = image;
+        }
+    	
+    	return new CommandContributionItem(contributionItemParameter);
+    }
+    
+    
+    /**
+     * This method parses the icon path (like:</br>
+     * <code>platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png<code></br>
+     * into this <code>org.eclipse.ui</code> and <code>/icons/full/eview16/defaultview_misc.png</code></br>
+     * and returns an ImageDescriptor based on this.
+     * @param icon the path to the icon: Has the following style: <code>platform:/plugin/PLUGIN_ID/PATH</code>
+     * @return ImageDescriptor of this Image.
+     */
+    private static ImageDescriptor createIconFromURL(String icon) { 	
+    	icon = icon.replace("platform:/plugin/", "");
+    	String[] paths = icon.split("/", 2);
+    	ImageDescriptor id;
+    	// This code checks if the icon from the plugin.xml
+    	// of the plugin exists. If yes, it creates an image 
+    	// descriptor of the image. If not, it adds a
+    	// red square to the menu entry.
+    	try {
+    		id = ImageService.getImageDescriptor(paths[0], paths[1]);
+    	} catch (NullPointerException e) {
+    		LogUtil.logError(CorePlugin.PLUGIN_ID, e);
+    		id = ImageService.IMAGEDESCRIPTOR_NOTFOUND;
+    	}
+    	
+    	return id;
     }
 
     private boolean extensionsAvailable(String type) {
@@ -254,7 +301,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         if (OS_MAC_OS_X.equalsIgnoreCase(OS)) {
             // hide the about action, Mac OS X adds this automatically
             hiddenMenu.add(
-                    createContributionItem(PlatformUI.getWorkbench(), null, IWorkbenchCommandConstants.HELP_ABOUT));
+                    createContributionItem(PlatformUI.getWorkbench(), null, IWorkbenchCommandConstants.HELP_ABOUT, null));
         }
 
         register(ActionFactory.HELP_SEARCH.create(window));
@@ -272,18 +319,18 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         menu.add(new MenuManager(Messages.applicationActionBarAdvisor_Menu_New_File, "newfile")); //$NON-NLS-1$
         menu.add(new GroupMarker(IWorkbenchActionConstants.FILE_START));
         menu.add(new Separator());
-        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_CLOSE));
-        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_CLOSE_ALL));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_CLOSE, null));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_CLOSE_ALL, null));
         menu.add(new Separator());
-        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_SAVE));
-        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_SAVE_AS));
-        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_SAVE_ALL));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_SAVE, null));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_SAVE_AS, null));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_SAVE_ALL, null));
         menu.add(new Separator());
-        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_PRINT));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_PRINT, null));
         menu.add(ContributionItemFactory.REOPEN_EDITORS.create(window));
         menu.add(new GroupMarker(IWorkbenchActionConstants.MRU));
         menu.add(new Separator());
-        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_EXIT));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_EXIT, null));
         menu.add(new GroupMarker(IWorkbenchActionConstants.FILE_END));
         menu.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 
@@ -298,25 +345,25 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         IServiceLocator serviceLocator = PlatformUI.getWorkbench();
 
         // undo, redo
-        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_UNDO));
-        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_REDO));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_UNDO, null));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_REDO, null));
         menu.add(new GroupMarker(IWorkbenchActionConstants.UNDO_EXT));
         menu.add(new Separator());
 
         // cut, copy, paste
-        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_CUT));
-        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_COPY));
-        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_PASTE));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_CUT, null));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_COPY, null));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_PASTE, null));
         menu.add(new GroupMarker(IWorkbenchActionConstants.CUT_EXT));
         menu.add(new Separator());
 
         // delete, select all
-        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_DELETE));
-        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_SELECT_ALL));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_DELETE, null));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_SELECT_ALL, null));
         menu.add(new Separator());
 
         // find
-        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_FIND_AND_REPLACE));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_FIND_AND_REPLACE, null));
         menu.add(new GroupMarker(IWorkbenchActionConstants.FIND_EXT));
         menu.add(new GroupMarker(IWorkbenchActionConstants.ADD_EXT));
 
@@ -397,8 +444,19 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
                 cmd.define(commandInfo.getText(), null,
                         commandService.getCategory(CommandManager.AUTOGENERATED_CATEGORY_ID));
                 cmd.setHandler(commandInfo.getHandler());
-
-                subMenu.add(createContributionItem(PlatformUI.getWorkbench(), null, commandInfo.getCommandId()));
+                
+                // This code adds the icons to the menu contributions in the 
+                // algorithm menu.
+                ImageDescriptor image = null;
+                if (cmd.getHandler() instanceof ShadowAlgorithmHandler) {
+                	if (((ShadowAlgorithmHandler) cmd.getHandler()).isFlexiProviderAlgorithm()) {
+                		image = ImageService.getImageDescriptor("org.jcryptool.core.views", "icons/algorithm_item_flexi.png");
+                	} else {
+                		image = ImageService.getImageDescriptor("org.jcryptool.core.views", "icons/algorithm_item_jct.png");
+                	}
+                }
+                
+                subMenu.add(createContributionItem(PlatformUI.getWorkbench(), null, commandInfo.getCommandId(), image));
             }
         }
 
@@ -422,6 +480,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         	}
 
 		};
+		openKeystoreAction.setImageDescriptor(ImageService.getImageDescriptor("org.jcryptool.crypto.keystore", "/icons/16x16/kgpg_info.png"));
 		menu.add(openKeystoreAction);
         return menu;
     }
@@ -433,8 +492,11 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         IServiceLocator serviceLocator = PlatformUI.getWorkbench();
 
         // create actions for "open perspective" menu
-        perspectiveMenu = new MenuManager(Messages.applicationActionBarAdvisor_Menu_Open_Perspective,
-                "openPerspective"); //$NON-NLS-1$
+        ImageDescriptor image = createIconFromURL("platform:/plugin/org.eclipse.ui/icons/full/eview16/new_persp.png");
+        perspectiveMenu = new MenuManager(
+        		Messages.applicationActionBarAdvisor_Menu_Open_Perspective,
+        		image,
+        		"openPerspective");
         perspectiveMenu.add(ContributionItemFactory.PERSPECTIVES_SHORTLIST.create(window));
 
         // create actions for "open view" menu
@@ -444,15 +506,15 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         menu.add(perspectiveMenu);
         menu.add(showViewMenu);
         menu.add(new Separator());
-        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.WINDOW_CUSTOMIZE_PERSPECTIVE));
-        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.WINDOW_RESET_PERSPECTIVE));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.WINDOW_CUSTOMIZE_PERSPECTIVE, null));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.WINDOW_RESET_PERSPECTIVE, null));
 
         if (OS_MAC_OS_X.equalsIgnoreCase(OS)) {
             // hide the preferences action, Mac OS X adds this automatically
-            hiddenMenu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.WINDOW_PREFERENCES));
+            hiddenMenu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.WINDOW_PREFERENCES, null));
         } else {
             menu.add(new Separator());
-            menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.WINDOW_PREFERENCES));
+            menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.WINDOW_PREFERENCES, null));
         }
 
         menu.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));

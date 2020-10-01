@@ -2,9 +2,9 @@
 <!-- Schema file written by PDE -->
 <schema targetNamespace="org.jcryptool.core.operations" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
-      <appInfo>
+      <appinfo>
          <meta.schema plugin="org.jcryptool.core.operations" id="visuals" name="Visualizations extension point"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          This is one of the most important extension points available in JCrypTool. It is used to add new visualizations plug-ins to JCrypTool. This extension point must be consumed by every analysis plug-in that wants to contribute to the JCrypTool Visuals menu or the Algorithms view on the Visuals tab.
       </documentation>
@@ -12,9 +12,9 @@
 
    <element name="extension">
       <annotation>
-         <appInfo>
+         <appinfo>
             <meta.element />
-         </appInfo>
+         </appinfo>
       </annotation>
       <complexType>
          <sequence minOccurs="1" maxOccurs="unbounded">
@@ -39,9 +39,9 @@
                <documentation>
                   
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute translatable="true"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>
@@ -54,9 +54,9 @@
                <documentation>
                   The internationalized name of the view.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute translatable="true"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="viewId" type="string" use="required">
@@ -73,22 +73,29 @@
                </documentation>
             </annotation>
          </attribute>
+         <attribute name="icon" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Icon of this view. It is shown in the &quot;visuals&quot; menu.
+               </documentation>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="since"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          JCrypTool 1.0.0 Milestone 6 (0.6.0)
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="examples"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          The following is an example of a &lt;b&gt;visuals&lt;/b&gt; extension definition:
 
@@ -107,27 +114,27 @@
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="apiinfo"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          [Enter API information here.]
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="implementation"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          JCrypTool visualization plug-ins add several visualizations to the platform. Visualizations registered through this extension will be added according to their category information.
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="copyright"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          Copyright (c) 2010, 2020 JCrypTool Team and Contributors
       </documentation>

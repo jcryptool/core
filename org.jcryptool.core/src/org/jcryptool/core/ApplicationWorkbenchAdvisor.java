@@ -12,7 +12,6 @@ package org.jcryptool.core;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import org.eclipse.core.runtime.preferences.IPreferencesService;
 import org.eclipse.jface.preference.IPreferenceNode;
 import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.ui.IEditorReference;

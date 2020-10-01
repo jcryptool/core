@@ -137,6 +137,14 @@ public class ImageService {
 	 */
 	public static final ImageDescriptor IMAGEDESCRIPTOR_ANALYSIS;
 	
+	/**
+	 * An icon of a red square. Indicates a missing item.</br>
+	 * The icon can be found in: platform:/plugin/org.jcryptool.core.util/icons/analysis_icon.png
+	 */
+	public static final Image ICON_NOTFOUND;
+	
+	public static final ImageDescriptor IMAGEDESCRIPTOR_NOTFOUND;
+	
 		
 	static {
 		ICON_INFO = ImageService.getImage("org.eclipse.jface", "icons/full/message_info.png");
@@ -171,6 +179,9 @@ public class ImageService {
 		
 		ICON_FILE = ImageService.getImage("org.jcryptool.core.util", "icons/fileType_filter.png");	
 		IMAGEDESCRIPTOR_FILE = ImageService.getImageDescriptor("org.jcryptool.core.util", "icons/fileType_filter.png");
+	
+		ICON_NOTFOUND = ImageService.getImage("org.jcryptool.core.util", "icons/red_square.png");
+		IMAGEDESCRIPTOR_NOTFOUND = ImageService.getImageDescriptor("org.jcryptool.core.util", "icons/red_square.png");
 	}
 	
 
