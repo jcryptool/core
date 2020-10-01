@@ -178,8 +178,8 @@ public class ViewProviderPaletteViewer extends PaletteViewer implements ISearcha
                 	paletteEntry.setSmallIcon(ImageService.createIconFromURL(icon));
                 	paletteEntry.setLargeIcon(ImageService.createIconFromURL(icon));
                 } else {
-                    paletteEntry.setSmallIcon(ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, TreeView.ICON_ITEM_JCT));
-                    paletteEntry.setLargeIcon(ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, TreeView.ICON_ITEM_JCT));
+                    paletteEntry.setSmallIcon(ImageService.IMAGEDESCRIPTOR_PERSPECTIVE_STANDARD);
+                    paletteEntry.setLargeIcon(ImageService.IMAGEDESCRIPTOR_PERSPECTIVE_STANDARD);
 
                 }
                 paletteEntry.setUserModificationPermission(PaletteEntry.PERMISSION_NO_MODIFICATION);

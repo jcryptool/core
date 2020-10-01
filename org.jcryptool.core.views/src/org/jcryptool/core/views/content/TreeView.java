@@ -33,9 +33,6 @@ import org.jcryptool.core.views.content.tree.ViewProviderTreeViewer;
  */
 public class TreeView {
     public static final String ICON_FOLDER = "icons/algorithm_folder.png"; //$NON-NLS-1$
-    public static final String ICON_ITEM_JCT = "icons/algorithm_item_jct.png"; //$NON-NLS-1$
-    public static final String ICON_ITEM_FLEXI = "icons/algorithm_item_flexi.png"; //$NON-NLS-1$
-
     private HashMap<String, TreeViewer> viewers;
     private HashMap<String, CTabItem> items;
     private CTabFolder folder;

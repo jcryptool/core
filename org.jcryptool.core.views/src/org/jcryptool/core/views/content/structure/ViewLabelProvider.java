@@ -42,9 +42,9 @@ public class ViewLabelProvider extends LabelProvider {
 
         // leaf from JCrypTool
         if (((TreeObject) obj).isFlexiProviderAlgorithm()) {
-            return ImageService.getImage(ViewsPlugin.PLUGIN_ID, TreeView.ICON_ITEM_FLEXI);
+            return ImageService.ICON_PERSPECTIVE_ALGORITHM;
         }
         // leaf from FlexiProvider
-        return ImageService.getImage(ViewsPlugin.PLUGIN_ID, TreeView.ICON_ITEM_JCT);
+        return ImageService.ICON_PERSPECTIVE_STANDARD;
     }
 }

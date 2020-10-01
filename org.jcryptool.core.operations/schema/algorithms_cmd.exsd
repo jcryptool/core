@@ -2,9 +2,9 @@
 <!-- Schema file written by PDE -->
 <schema targetNamespace="org.jcryptool.core.operations" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
-      <appInfo>
+      <appinfo>
          <meta.schema plugin="org.jcryptool.core.operations" id="algorithms_cmd" name="Algorithms extension point (symmetric, asymmetric, etc.) using Commands"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          This is one of the most important extension points available in JCrypTool. It is used to add a new algorithm (classic, symmetric, asymmetric, hybrid and any other type) to JCrypTool. This extension point must be consumed by every algorithm plug-in that wants to contribute to the JCrypTool Algorithm menu or the Crypto Explorer view on the Algorithms tab.
       </documentation>
@@ -12,9 +12,9 @@
 
    <element name="extension">
       <annotation>
-         <appInfo>
+         <appinfo>
             <meta.element />
-         </appInfo>
+         </appinfo>
       </annotation>
       <complexType>
          <sequence>
@@ -39,9 +39,9 @@
                <documentation>
                   an optional name of the extension instance
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute translatable="true"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>
@@ -61,9 +61,9 @@
                <documentation>
                   A translatable name that will be used in the UI for this algorithm.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute translatable="true"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="type" use="required">
@@ -104,9 +104,9 @@
                <documentation>
                   A user defined category. This category is only created if the type attribute is set to USER_DEFINED. Try to stick to the default categories provided since too many categories will polute the JCrypTool GUI.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute translatable="true"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="class" type="string" use="required">
@@ -114,9 +114,9 @@
                <documentation>
                   The class that implements &lt;samp&gt;org.jcryptool.core.algorithms.AbstractAlgorithm&lt;/samp&gt;. Providing  a useful value (that is a short name for the algorithm) for the &lt;samp&gt;getAlgorithmName&lt;/samp&gt; method is required for every plug-in that wants to contribute its actions to the Actions view.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="java" basedOn="org.jcryptool.core.operations.algorithm.AbstractAlgorithm"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="handlerClass" type="string" use="required">
@@ -124,9 +124,9 @@
                <documentation>
                   The class that implements &lt;samp&gt;org.jcryptool.core.algorithms.AbstractAlgorithmHandler&lt;/samp&gt;.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="java" basedOn="org.jcryptool.core.operations.algorithm.AbstractAlgorithmHandler"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="engineClass" type="string">
@@ -134,9 +134,9 @@
                <documentation>
                   This class should only be provided by extensions which represent a classic algorithm.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="java" basedOn="org.jcryptool.core.operations.algorithm.IClassicAlgorithmEngine"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="keylengths" type="string">
@@ -162,9 +162,9 @@ If there should be only one block length, there is no need for a trailing &apos;
                <documentation>
                   The tooltip text that will be displayed when the mouse hovers above the action in the menu or view. You are strongly encouraged to provide a short tooltip.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute translatable="true"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="contextHelpId" type="string">
@@ -179,9 +179,9 @@ If there should be only one block length, there is no need for a trailing &apos;
                <documentation>
                   The default icon.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="resource"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="disabledIcon" type="string">
@@ -189,9 +189,9 @@ If there should be only one block length, there is no need for a trailing &apos;
                <documentation>
                   The disabled icon.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="resource"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="hoverIcon" type="string">
@@ -199,9 +199,9 @@ If there should be only one block length, there is no need for a trailing &apos;
                <documentation>
                   The hover icon.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="resource"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="isFlexiProviderAlgorithm" type="boolean">
@@ -215,27 +215,18 @@ If there should be only one block length, there is no need for a trailing &apos;
    </element>
 
    <annotation>
-      <appInfo>
-         <meta.section type="apiInfo"/>
-      </appInfo>
-      <documentation>
-         [Enter API information here.]
-      </documentation>
-   </annotation>
-
-   <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="since"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          JCrypTool 1.0.0 Milestone 5 (0.5.0)
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="examples"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          The following is an example of an &lt;b&gt;alphabets&lt;/b&gt; extension definition:
 
@@ -256,18 +247,27 @@ If there should be only one block length, there is no need for a trailing &apos;
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
+         <meta.section type="apiInfo"/>
+      </appinfo>
+      <documentation>
+         [Enter API information here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
          <meta.section type="implementation"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          JCrypTool algorithm plug-ins (classic and modern) add several algorithms to the platform. Algorithms registered through this extension will be added according to their category information.
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="copyright"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          Copyright (c) 2010, 2020 JCrypTool Team and Contributors
       </documentation>

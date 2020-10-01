@@ -143,8 +143,30 @@ public class ImageService {
 	 * The icon can be found in: platform:/plugin/org.jcryptool.core.util/icons/analysis_icon.png
 	 */
 	public static final Image ICON_NOTFOUND;
-	
+	/**
+	 * ImageDescriptor of {@link org.jcryptool.core.util.images.ImageService#ICON_NOTFOUND}.
+	 */
 	public static final ImageDescriptor IMAGEDESCRIPTOR_NOTFOUND;
+	
+	/**
+	 * "JCT" icon of the standard perspective</br>
+	 * The icon can be found in: platform:/plugin/org.jcryptool.core.util/icons/Perpective_Standard.png
+	 */
+	public static final Image ICON_PERSPECTIVE_STANDARD;
+	/**
+	 * ImageDescriptor of {@link org.jcryptool.core.util.images.ImageService#ICON_PERSPECTIVE_STANDARD}.
+	 */
+	public static final ImageDescriptor IMAGEDESCRIPTOR_PERSPECTIVE_STANDARD;
+	
+	/**
+	 * Icon of the algorithm perspective</br>
+	 * The icon can be found in: platform:/plugin/org.jcryptool.core.util/icons/Perpective_Standard.png
+	 */
+	public static final Image ICON_PERSPECTIVE_ALGORITHM;
+	/**
+	 * ImageDescriptor of {@link org.jcryptool.core.util.images.ImageService#ICON_PERSPECTIVE_ALGORITHM}.
+	 */
+	public static final ImageDescriptor IMAGEDESCRIPTOR_PERSPECTIVE_ALGORITHM;
 	
 		
 	static {
@@ -183,6 +205,12 @@ public class ImageService {
 	
 		ICON_NOTFOUND = ImageService.getImage("org.jcryptool.core.util", "icons/red_square.png");
 		IMAGEDESCRIPTOR_NOTFOUND = ImageService.getImageDescriptor("org.jcryptool.core.util", "icons/red_square.png");
+	
+		ICON_PERSPECTIVE_STANDARD = ImageService.getImage("org.jcryptool.core.util", "icons/Perspective_Standard.png");
+		IMAGEDESCRIPTOR_PERSPECTIVE_STANDARD = ImageService.getImageDescriptor("org.jcryptool.core.util", "icons/Perspective_Standard.png");
+
+		ICON_PERSPECTIVE_ALGORITHM = ImageService.getImage("org.jcryptool.core.util", "icons/Perspective_Algorithm.png");
+		IMAGEDESCRIPTOR_PERSPECTIVE_ALGORITHM = ImageService.getImageDescriptor("org.jcryptool.core.util", "icons/Perspective_Algorithm.png");
 	}
 	
 

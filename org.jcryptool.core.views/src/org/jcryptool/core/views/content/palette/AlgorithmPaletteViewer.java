@@ -26,6 +26,7 @@ import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.palette.SelectionToolEntry;
 import org.eclipse.gef.ui.palette.PaletteViewer;
 import org.eclipse.gef.ui.palette.editparts.PaletteEditPart;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.util.TransferDragSourceListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.dnd.DragSourceEvent;
@@ -187,11 +188,11 @@ public class AlgorithmPaletteViewer extends PaletteViewer implements ISearchable
 				SelectionToolEntry paletteEntry = new SelectionToolEntry(
 						text, toolTipText);
 				if (isFlexiProviderAlgorithm) { // FlexiProvider item
-					paletteEntry.setSmallIcon(ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, TreeView.ICON_ITEM_FLEXI));
-					paletteEntry.setLargeIcon(ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, TreeView.ICON_ITEM_FLEXI));
+					paletteEntry.setSmallIcon(ImageService.IMAGEDESCRIPTOR_PERSPECTIVE_ALGORITHM);
+					paletteEntry.setLargeIcon(ImageService.IMAGEDESCRIPTOR_PERSPECTIVE_ALGORITHM);
 				} else { // JCrypTool item
-					paletteEntry.setSmallIcon(ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, TreeView.ICON_ITEM_JCT));
-					paletteEntry.setLargeIcon(ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, TreeView.ICON_ITEM_JCT));
+					paletteEntry.setSmallIcon(ImageService.IMAGEDESCRIPTOR_PERSPECTIVE_STANDARD);
+					paletteEntry.setLargeIcon(ImageService.IMAGEDESCRIPTOR_PERSPECTIVE_STANDARD);
 				}
 				paletteEntry
 						.setUserModificationPermission(PaletteEntry.PERMISSION_NO_MODIFICATION);
