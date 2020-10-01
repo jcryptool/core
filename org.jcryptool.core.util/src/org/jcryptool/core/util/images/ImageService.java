@@ -160,13 +160,23 @@ public class ImageService {
 	
 	/**
 	 * Icon of the algorithm perspective</br>
-	 * The icon can be found in: platform:/plugin/org.jcryptool.core.util/icons/Perpective_Standard.png
+	 * The icon can be found in: platform:/plugin/org.jcryptool.core.util/icons/Perpective_Algorithm.png
 	 */
 	public static final Image ICON_PERSPECTIVE_ALGORITHM;
 	/**
 	 * ImageDescriptor of {@link org.jcryptool.core.util.images.ImageService#ICON_PERSPECTIVE_ALGORITHM}.
 	 */
 	public static final ImageDescriptor IMAGEDESCRIPTOR_PERSPECTIVE_ALGORITHM;
+	
+	/**
+	 * Icon for games.</br>
+	 * The icon can be found in: platform:/plugin/org.jcryptool.core.util/icons/games.png
+	 */
+	public static final Image ICON_GAMES;
+	/**
+	 * ImageDescriptor of {@link org.jcryptool.core.util.images.ImageService#GAMES}.
+	 */
+	public static final ImageDescriptor IMAGEDESCRIPTOR_GAMES;
 	
 		
 	static {
@@ -211,6 +221,9 @@ public class ImageService {
 
 		ICON_PERSPECTIVE_ALGORITHM = ImageService.getImage("org.jcryptool.core.util", "icons/Perspective_Algorithm.png");
 		IMAGEDESCRIPTOR_PERSPECTIVE_ALGORITHM = ImageService.getImageDescriptor("org.jcryptool.core.util", "icons/Perspective_Algorithm.png");
+		
+		ICON_GAMES = ImageService.getImage("org.jcryptool.core.util", "icons/games.png");
+		IMAGEDESCRIPTOR_GAMES = ImageService.getImageDescriptor("org.jcryptool.core.util", "icons/games.png");
 	}
 	
 
