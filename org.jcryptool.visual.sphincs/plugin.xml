@@ -14,7 +14,8 @@
 		<Visual
 			contextHelpId="org.jcryptool.visual.sphincs.view"
 			name="%visual.name"
-			viewId="org.jcryptool.visual.sphincs.view">
+			viewId="org.jcryptool.visual.sphincs.view"
+			icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
 		</Visual>
 	</extension>
 	<extension point="org.eclipse.help.toc">

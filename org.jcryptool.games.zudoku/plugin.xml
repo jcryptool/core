@@ -23,7 +23,8 @@
       <Game
             contextHelpId="org.jcryptool.games.zudoku.zudokuview"
             name="%Game.name"
-            viewId="org.jcryptool.games.zudoku.views.ZudokuView">
+            viewId="org.jcryptool.games.zudoku.views.ZudokuView"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/obj16/elements_obj.png">
       </Game>
    </extension>
    <extension

@@ -17,7 +17,8 @@
       <analysis
             contextHelpId="org.jcryptool.analysis.freqanalysis.freqanalysis"
             name="%analysis.name.0"
-            viewId="org.jcryptool.analysis.freqanalysis.views.FreqAnalysisView">
+            viewId="org.jcryptool.analysis.freqanalysis.views.FreqAnalysisView"
+            icon="platform:/plugin/org.jcryptool.core.util/icons/analysis_icon.gif">
       </analysis>
    </extension>
    <extension

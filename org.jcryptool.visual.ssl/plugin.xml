@@ -25,7 +25,8 @@
       <Visual
             contextHelpId="org.jcryptool.visual.ssl.view"
             name="%Visual.name.0"
-            viewId="org.jcryptool.visual.ssl.views.SslView">
+            viewId="org.jcryptool.visual.ssl.views.SslView"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
       </Visual>
    </extension>
    

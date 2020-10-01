@@ -75,7 +75,9 @@
          point="org.jcryptool.core.operations.visuals">
       <Visual
             name="%Visual.name"
-            viewId="org.jcryptool.visual.wots.WotsView">
+            contextHelpId="org.jcryptool.visual.wots.kontextHilfe"
+            viewId="org.jcryptool.visual.wots.WotsView"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
       </Visual>
    </extension> 
    

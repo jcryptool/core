@@ -16,7 +16,9 @@
          point="org.jcryptool.core.operations.analysis">
       <analysis
             name="%analysis.name"
-            viewId="org.jcryptool.analysis.vigenere.views.VigenereBreakerView">
+            contextHelpId="org.jcryptool.analysis.vigenere.vigenerebreaker"
+            viewId="org.jcryptool.analysis.vigenere.views.VigenereBreakerView"
+            icon="platform:/plugin/org.jcryptool.core.util/icons/analysis_icon.gif">
       </analysis>
    </extension>
    <extension

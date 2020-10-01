@@ -22,7 +22,8 @@
       <Visual
             name="%Visual.name"
             viewId="org.jcryptool.visual.sig.view"
-            contextHelpId="org.jcryptool.visual.sig.view">
+            contextHelpId="org.jcryptool.visual.sig.view"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
       </Visual>
    </extension>
    <extension

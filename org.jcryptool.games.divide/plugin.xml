@@ -15,7 +15,8 @@
          point="org.jcryptool.core.operations.games">
       <Game
             name="%Game.name"
-            viewId="org.jcryptool.games.divide.views.DivideView">
+            viewId="org.jcryptool.games.divide.views.DivideView"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/obj16/elements_obj.png">
       </Game>
    </extension>
    <extension

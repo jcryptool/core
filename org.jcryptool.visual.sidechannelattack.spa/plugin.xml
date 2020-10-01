@@ -29,7 +29,8 @@
       <Visual
             contextHelpId="org.jcryptool.visual.sidechannelattack.spa.view"
             name="%view.name"
-            viewId="org.jcryptool.visual.sidechannelattack.spaview">
+            viewId="org.jcryptool.visual.sidechannelattack.spaview"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
       </Visual>
    </extension>
 		

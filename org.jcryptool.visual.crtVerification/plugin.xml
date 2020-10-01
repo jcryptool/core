@@ -18,7 +18,8 @@
       <Visual
             name="%Visual.name"
             viewId="org.jcryptool.visual.crtverification.views.CrtVerView"
-            contextHelpId="org.jcryptool.visual.crtVerification.view">
+            contextHelpId="org.jcryptool.visual.crtVerification.view"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
       </Visual>
    </extension>
    <extension

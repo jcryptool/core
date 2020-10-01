@@ -16,7 +16,8 @@
       <Visual
             contextHelpId="org.jcryptool.visual.jctca.JCTCA_Visual"
             name="%Visual.name"
-            viewId="org.jcryptool.visual.jctca.JCTCA_Visual">
+            viewId="org.jcryptool.visual.jctca.JCTCA_Visual"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
       </Visual>
    </extension>
    <extension

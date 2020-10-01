@@ -17,7 +17,8 @@
       <analysis
             contextHelpId="org.jcryptool.analysis.entropy.view"
             name="%analysis.name"
-            viewId="org.jcryptool.analysis.entropy.views.EntropyAnalysisView">
+            viewId="org.jcryptool.analysis.entropy.views.EntropyAnalysisView"
+            icon="platform:/plugin/org.jcryptool.core.util/icons/analysis_icon.gif">
       </analysis>
    </extension>
    <extension

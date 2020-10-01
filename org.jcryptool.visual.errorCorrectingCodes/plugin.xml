@@ -18,7 +18,8 @@
       <Visual
       		contextHelpId="org.jcryptool.visual.errorcorrectingcodes.mcElieceHelp"
             name="%Visual.name"
-            viewId="org.jcryptool.visual.errorcorrectingcodes.ui">
+            viewId="org.jcryptool.visual.errorcorrectingcodes.ui"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
       </Visual>
    </extension>
    <extension

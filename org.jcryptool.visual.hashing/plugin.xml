@@ -28,9 +28,10 @@
    <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
-          contextHelpId="org.jcryptool.visual.hashing.view"
-            name="%Visual.name.0"
-            viewId="org.jcryptool.visual.hashing.views.HashingView">
+          	contextHelpId="org.jcryptool.visual.hashing.view"
+          	name="%Visual.name.0"
+            viewId="org.jcryptool.visual.hashing.views.HashingView"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
       </Visual>
    </extension>
    <extension

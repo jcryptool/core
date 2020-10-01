@@ -24,7 +24,8 @@
       <analysis
             contextHelpId="org.jcryptool.analysis.viterbi.view"
             name="%visual.name.0"
-            viewId="org.jcryptool.analysis.viterbi.views.ViterbiView">
+            viewId="org.jcryptool.analysis.viterbi.views.ViterbiView"
+            icon="platform:/plugin/org.jcryptool.core.util/icons/analysis_icon.gif">
       </analysis>
    </extension>
    <extension

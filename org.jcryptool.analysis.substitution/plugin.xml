@@ -17,7 +17,8 @@
       <analysis
             name="%analysis.name2"
             viewId="org.jcryptool.analysis.substitution.views.View"
-            contextHelpId="org.jcryptool.analysis.substitution.substitutionHelpID">
+            contextHelpId="org.jcryptool.analysis.substitution.substitutionHelpID"
+            icon="platform:/plugin/org.jcryptool.core.util/icons/analysis_icon.gif">
       </analysis>
    </extension>
       <extension

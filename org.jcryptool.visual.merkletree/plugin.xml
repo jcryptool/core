@@ -14,7 +14,8 @@
 		<Visual
 			contextHelpId="org.jcryptool.visual.merkletree.view"
 			name="%visual.name"
-			viewId="org.jcryptool.visual.merkletree.view">
+			viewId="org.jcryptool.visual.merkletree.view"
+			icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
 		</Visual>
 	</extension>
 	<extension point="org.eclipse.help.toc">

@@ -7,7 +7,8 @@
       <analysis
             contextHelpId="org.jcryptool.analysis.ngram.view"
             name="%analysis.name"
-            viewId="org.jcryptool.analysis.ngram.views.NgramView">
+            viewId="org.jcryptool.analysis.ngram.views.NgramView"
+            icon="platform:/plugin/org.jcryptool.core.util/icons/analysis_icon.gif">
       </analysis>
    </extension>
 

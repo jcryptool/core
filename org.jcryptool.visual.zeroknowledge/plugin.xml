@@ -45,22 +45,26 @@
       <Visual
             name="%view.name.0"
             viewId="org.jcryptool.visual.zeroknowledge.views.MagicDoorView"
-            contextHelpId="org.jcryptool.visual.zeroknowledge.magicdoorViewHelp">
+            contextHelpId="org.jcryptool.visual.zeroknowledge.magicdoorViewHelp"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
       </Visual>
       <Visual
             name="%view.name.1"
             viewId="org.jcryptool.visual.zeroknowledge.views.FiatShamirView"
-            contextHelpId="org.jcryptool.visual.zeroknowledge.fiatshamirContextHelpID">
+            contextHelpId="org.jcryptool.visual.zeroknowledge.fiatshamirContextHelpID"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
       </Visual>
       <Visual
             name="%view.name.2"
             viewId="org.jcryptool.visual.zeroknowledge.views.FeigeFiatShamirView"
-            contextHelpId="org.jcryptool.visual.zeroknowledge.feigefiatshamirContextHelp">
+            contextHelpId="org.jcryptool.visual.zeroknowledge.feigefiatshamirContextHelp"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
       </Visual>
       <Visual
             name="%view.name.3"
             viewId="org.jcryptool.visual.zeroknowledge.views.GraphenisomorphieView"
-            contextHelpId="org.jcryptool.visual.zeroknowledge.graphisomorpismHelpID">
+            contextHelpId="org.jcryptool.visual.zeroknowledge.graphisomorpismHelpID"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
       </Visual>
    </extension>
    <extension point="org.eclipse.help.contexts">

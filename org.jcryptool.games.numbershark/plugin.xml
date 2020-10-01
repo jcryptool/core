@@ -23,7 +23,8 @@
       <Game
             name="%Game.Name.0"
             viewId="org.jcryptool.games.numbershark.NumberSharkView"
-            contextHelpId="org.jcryptool.games.numbershark.view">
+            contextHelpId="org.jcryptool.games.numbershark.view"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/obj16/elements_obj.png">
       </Game>
    </extension>
    <extension point="org.eclipse.help.contexts">

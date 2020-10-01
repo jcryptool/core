@@ -17,7 +17,8 @@
       <Visual
             contextHelpId="org.jcryptool.visual.secretsharing.view"
             name="%Visual.name.0"
-            viewId="org.jcryptool.visual.secretsharing.views.SecretSharingView">
+            viewId="org.jcryptool.visual.secretsharing.views.SecretSharingView"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
       </Visual>
    </extension>
    <extension

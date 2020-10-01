@@ -17,7 +17,8 @@
       <Visual
             contextHelpId="org.jcryptool.visual.extendedrsa.view"
             name="%Visual.name"
-            viewId="org.jcryptool.visual.extendedrsa.ExtendedRSAView">
+            viewId="org.jcryptool.visual.extendedrsa.ExtendedRSAView"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
       </Visual>
    </extension>
    <extension

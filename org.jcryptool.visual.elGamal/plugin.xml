@@ -16,7 +16,8 @@
       <Visual
       		contextHelpId="org.jcryptool.visual.elGamal.view"
             name="%Visual.name"
-            viewId="org.jcryptool.visual.elGamal.view">
+            viewId="org.jcryptool.visual.elGamal.view"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
       </Visual>
    </extension>
 

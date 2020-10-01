@@ -17,7 +17,8 @@
     <Visual
           name="%view.name"
           viewId="org.jcryptool.visual.ecbd2"
-          contextHelpId="org.jcryptool.visual.pairingbd2.view">
+          contextHelpId="org.jcryptool.visual.pairingbd2.view"
+          icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
     </Visual>
  </extension>
  <!-- Extension of the online help -->

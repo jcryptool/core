@@ -16,7 +16,8 @@
       <Visual
             contextHelpId="org.jcryptool.visual.kleptography.kleptoview"
             name="%Visual.name"
-            viewId="org.jcryptool.visual.kleptography.view">
+            viewId="org.jcryptool.visual.kleptography.view"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png">
       </Visual>
    </extension>
    <extension

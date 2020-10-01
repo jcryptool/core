@@ -17,7 +17,8 @@
       <analysis
             contextHelpId="org.jcryptool.analysis.friedman.friedman"
             name="%extOperationsName"
-            viewId="org.jcryptool.analysis.friedman.views.FriedmanView">
+            viewId="org.jcryptool.analysis.friedman.views.FriedmanView"
+            icon="platform:/plugin/org.jcryptool.core.util/icons/analysis_icon.gif">
       </analysis>
    </extension>
    <extension

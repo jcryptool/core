@@ -16,7 +16,9 @@
          point="org.jcryptool.core.operations.analysis">
       <analysis
             name="%analysis.name"
-            viewId="org.jcryptool.analysis.fleissner.FleissnerView">
+            contextHelpId="org.jcryptool.analysis.fleissner.helpContextId"
+            viewId="org.jcryptool.analysis.fleissner.FleissnerView"
+            icon="platform:/plugin/org.jcryptool.core.util/icons/analysis_icon.gif">
       </analysis>
    </extension>
    
