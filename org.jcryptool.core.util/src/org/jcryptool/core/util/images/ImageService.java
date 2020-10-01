@@ -16,6 +16,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.osgi.framework.Bundle;
 
 /**
@@ -222,5 +223,31 @@ public class ImageService {
 		ImageDescriptor imageDesc = ImageDescriptor.createFromURL(fullPathString);
 		return imageDesc;
 	}
+	
+    /**
+     * This method parses an icon path (like:</br>
+     * <code>platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png<code></br>
+     * into this <code>org.eclipse.ui</code> and <code>/icons/full/eview16/defaultview_misc.png</code></br>
+     * and returns an ImageDescriptor based on this.
+     * @param icon the path to the icon: Has the following style: <code>platform:/plugin/PLUGIN_ID/PATH</code>
+     * @return ImageDescriptor of this Image.
+     */
+    public static ImageDescriptor createIconFromURL(String icon) { 	
+    	icon = icon.replace("platform:/plugin/", "");
+    	String[] paths = icon.split("/", 2);
+    	ImageDescriptor id;
+    	// This code checks if the icon from the plugin.xml
+    	// of the plugin exists. If yes, it creates an image 
+    	// descriptor of the image. If not, it adds a
+    	// red square to the menu entry.
+    	try {
+    		id = ImageService.getImageDescriptor(paths[0], paths[1]);
+    	} catch (NullPointerException e) {
+    		LogUtil.logError("org.jcryptool.core", e);
+    		id = ImageService.IMAGEDESCRIPTOR_NOTFOUND;
+    	}
+    	
+    	return id;
+    }
 
 }

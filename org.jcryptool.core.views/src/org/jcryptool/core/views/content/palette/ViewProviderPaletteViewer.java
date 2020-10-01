@@ -172,8 +172,16 @@ public class ViewProviderPaletteViewer extends PaletteViewer implements ISearcha
             if (show) {
                 SelectionToolEntry paletteEntry = new SelectionToolEntry(element
                         .getAttribute("name"), ""); //$NON-NLS-1$ //$NON-NLS-2$
-                paletteEntry.setSmallIcon(ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, TreeView.ICON_ITEM_JCT));
-                paletteEntry.setLargeIcon(ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, TreeView.ICON_ITEM_JCT));
+                // Get the icon of the view from the extension point.
+                if (element.getAttribute("icon") != null) {
+                	String icon = element.getAttribute("icon");
+                	paletteEntry.setSmallIcon(ImageService.createIconFromURL(icon));
+                	paletteEntry.setLargeIcon(ImageService.createIconFromURL(icon));
+                } else {
+                    paletteEntry.setSmallIcon(ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, TreeView.ICON_ITEM_JCT));
+                    paletteEntry.setLargeIcon(ImageService.getImageDescriptor(ViewsPlugin.PLUGIN_ID, TreeView.ICON_ITEM_JCT));
+
+                }
                 paletteEntry.setUserModificationPermission(PaletteEntry.PERMISSION_NO_MODIFICATION);
                 paletteEntry.setType(""); //$NON-NLS-1$
 

@@ -31,6 +31,7 @@ public class ViewLabelProvider extends LabelProvider {
     }
 
     /**
+     * FIXME: Does not return the correct image.
      * returns the icon for the given object
      */
     public Image getImage(Object obj) {

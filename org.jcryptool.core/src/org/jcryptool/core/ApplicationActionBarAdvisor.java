@@ -207,7 +207,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
             IContributionItem menuItem;
             String icon = element.getAttribute("icon");
             if (icon != null) {
-            	ImageDescriptor id = createIconFromURL(icon);
+            	ImageDescriptor id = ImageService.createIconFromURL(icon);
             	menuItem = createContributionItem(PlatformUI.getWorkbench(), null, commandId, id);
             } else {
             	menuItem = createContributionItem(PlatformUI.getWorkbench(), null, commandId, null);
@@ -235,32 +235,6 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
     	return new CommandContributionItem(contributionItemParameter);
     }
     
-    
-    /**
-     * This method parses the icon path (like:</br>
-     * <code>platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png<code></br>
-     * into this <code>org.eclipse.ui</code> and <code>/icons/full/eview16/defaultview_misc.png</code></br>
-     * and returns an ImageDescriptor based on this.
-     * @param icon the path to the icon: Has the following style: <code>platform:/plugin/PLUGIN_ID/PATH</code>
-     * @return ImageDescriptor of this Image.
-     */
-    private static ImageDescriptor createIconFromURL(String icon) { 	
-    	icon = icon.replace("platform:/plugin/", "");
-    	String[] paths = icon.split("/", 2);
-    	ImageDescriptor id;
-    	// This code checks if the icon from the plugin.xml
-    	// of the plugin exists. If yes, it creates an image 
-    	// descriptor of the image. If not, it adds a
-    	// red square to the menu entry.
-    	try {
-    		id = ImageService.getImageDescriptor(paths[0], paths[1]);
-    	} catch (NullPointerException e) {
-    		LogUtil.logError(CorePlugin.PLUGIN_ID, e);
-    		id = ImageService.IMAGEDESCRIPTOR_NOTFOUND;
-    	}
-    	
-    	return id;
-    }
 
     private boolean extensionsAvailable(String type) {
         IExtensionPoint extensions = Platform.getExtensionRegistry()
@@ -492,7 +466,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         IServiceLocator serviceLocator = PlatformUI.getWorkbench();
 
         // create actions for "open perspective" menu
-        ImageDescriptor image = createIconFromURL("platform:/plugin/org.eclipse.ui/icons/full/eview16/new_persp.png");
+        ImageDescriptor image = ImageService.createIconFromURL("platform:/plugin/org.eclipse.ui/icons/full/eview16/new_persp.png");
         perspectiveMenu = new MenuManager(
         		Messages.applicationActionBarAdvisor_Menu_Open_Perspective,
         		image,
@@ -500,7 +474,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         perspectiveMenu.add(ContributionItemFactory.PERSPECTIVES_SHORTLIST.create(window));
 
         // create actions for "open view" menu
-        image = createIconFromURL("platform:/plugin/org.eclipse.ui.views/icons/full/elcl16/new.png");
+        image = ImageService.createIconFromURL("platform:/plugin/org.eclipse.ui.views/icons/full/elcl16/new.png");
         showViewMenu = new MenuManager(Messages.applicationActionBarAdvisor_Menu_Show_View,
         		image,
         		"showView"); //$NON-NLS-1$
