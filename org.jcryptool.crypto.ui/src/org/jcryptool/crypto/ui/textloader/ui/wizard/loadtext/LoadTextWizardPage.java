@@ -20,6 +20,8 @@ import java.util.Observer;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.GC;
@@ -79,6 +81,10 @@ public class LoadTextWizardPage extends WizardPage {
 	private UIInputTextWithSource textInput;
 	private ControlHatcher beforeWizardTextParasiteLabel;
 	private ControlHatcher afterWizardTextParasiteLabel;
+	private GridData text1lData;
+	private Composite compTextshortened;
+	private String lastDisplayedText;
+	private String lastDisplayedFullText;
 
 	/**
 	 * Create the wizard.
@@ -227,21 +233,34 @@ public class LoadTextWizardPage extends WizardPage {
 					textfieldComp.setLayout(composite2Layout);
 					{
 						txtInputText = new Text(textfieldComp, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
-						GridData text1LData = new GridData();
-						text1LData.grabExcessVerticalSpace = true;
-						text1LData.verticalAlignment = SWT.FILL;
-						text1LData.grabExcessHorizontalSpace = true;
-						text1LData.horizontalAlignment = GridData.FILL;
+						text1lData = new GridData();
+						text1lData.grabExcessVerticalSpace = true;
+						text1lData.verticalAlignment = SWT.FILL;
+						text1lData.grabExcessHorizontalSpace = true;
+						text1lData.horizontalAlignment = GridData.FILL;
+						
+						compTextshortened = new Composite(textfieldComp, SWT.NONE);
+						compTextshortened.setLayout(new GridLayout());
+						compTextshortened.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+						
+						Link lblTextshortened = new Link(compTextshortened, SWT.NONE);
+						lblTextshortened.setText("The current text is too big to display in this text field. Click <a>here</a> to try loading it in full length anyways.");
+						lblTextshortened.addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseDown(MouseEvent e) {
+								displayText(lastDisplayedFullText, false);
+							}
+						});
 
 						GC temp = new GC(txtInputText);
 						int lines = 4;
 						int charHeight = temp.getFontMetrics().getAscent() + 2 * temp.getFontMetrics().getLeading();
 						int height = lines * charHeight;
 						temp.dispose();
-						text1LData.widthHint = 200;
-						text1LData.heightHint = height;
+						text1lData.widthHint = 200;
+						text1lData.heightHint = height;
 
-						txtInputText.setLayoutData(text1LData);
+						txtInputText.setLayoutData(text1lData);
 
 					}
 				}
@@ -522,10 +541,10 @@ public class LoadTextWizardPage extends WizardPage {
 		btnZwischenablageeigeneEingabe.setSelection(sourceType.equals(TextSourceType.USERINPUT));
 		if (writeText) {
 			if (textInput != null) {
-				textOnlyInput.writeContent(textString);
+				displayText(textString);
 				textOnlyInput.synchronizeWithUserSide();
 			} else {
-				txtInputText.setText(textString);
+				displayText(textString);
 			}
 		}
 	
@@ -545,6 +564,32 @@ public class LoadTextWizardPage extends WizardPage {
 	
 		txtInputText.setEditable(sourceType.equals(TextSourceType.USERINPUT));
 	}
+
+	private void displayText(String textString, boolean shortenIfNecessary) {
+		// TODO Auto-generated method stub
+		boolean makePreview = shortenIfNecessary && textString.length() > 50000;
+		String previewText = textString;
+		if (makePreview) {
+			previewText = textString.subSequence(0, Math.min(textString.length(), 50000)).toString();
+		}
+		lastDisplayedText = previewText;
+		lastDisplayedFullText = textString;
+		txtInputText.setText(previewText);
+		toggleTextshortenedDisplay(lastDisplayedText.length() < lastDisplayedFullText.length(), textString);
+	}
+	
+	private void displayText(String textString) {
+		displayText(textString, true);
+	}
+
+
+	private void toggleTextshortenedDisplay(boolean b, String textString) {
+			GridData ldata = (GridData) compTextshortened.getLayoutData();
+			ldata.exclude = !b;
+			compFileInputDetails.setVisible(b);
+			container.layout(new Control[] { compTextshortened });
+	}
+
 
 	/**
 	 * Opens a modal dialogue to select a file from the file system. If the file
