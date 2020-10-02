@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup:Configuration
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:git="http://www.eclipse.org/oomph/setup/git/1.0"
+    xmlns:pde="http://www.eclipse.org/oomph/setup/pde/1.0"
+    xmlns:projects="http://www.eclipse.org/oomph/setup/projects/1.0"
+    xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
+    xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/pde/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/PDE.ecore http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore"
+    label="JCTIDE">
+  <installation
+      name="jctide.installation"
+      label="JCTIDE Installation">
+    <productVersion
+        href="index:/org.eclipse.setup#//@productCatalogs[name='org.eclipse.products']/@products[name='epp.package.rcp']/@versions[name='latest']"/>
+    <description>The JCTIDE installation provides cool stuff.</description>
+  </installation>
+  <workspace
+      name="jctide.workspace"
+      label="JCTIDE Workspace">
+    <setupTask
+        xsi:type="setup:PreferenceTask"
+        key="/instance/org.eclipse.core.resources/encoding"
+        value="UTF-8"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        id="jctgit"
+        type="FOLDER"
+        name="JCT_GIT_ROOT_DIRECTORY"
+        defaultValue="${install.root}/git"
+        label="JCT git root directory">
+      <description>This is the location where the &quot;./core&quot; and &quot;./crypto&quot; repositories are cloned from github</description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup.p2:P2Task">
+      <requirement
+          name="org.sonatype.tycho.m2e.feature.feature.group"
+          versionRange="[0.9.0,1.0.0)"/>
+      <requirement
+          name="org.jboss.tools.maven.apt.feature.feature.group"
+          versionRange="[1.5.3,2.0.0)"/>
+      <repository
+          url="https://repo1.maven.org/maven2/.m2e/connectors/m2eclipse-tycho/0.9.0/N/LATEST/"/>
+      <repository
+          url="https://download.jboss.org/jbosstools/updates/m2e-extensions/m2e-apt/1.5.3-2019-11-08_11-04-22-H22/"/>
+    </setupTask>
+    <setupTask
+        xsi:type="git:GitCloneTask"
+        id="git.jct.core"
+        location="${JCT_GIT_ROOT_DIRECTORY}/core"
+        remoteURI="https://github.com/jcryptool/core"
+        checkoutBranch="develop">
+      <description>The JCT core repository</description>
+    </setupTask>
+    <setupTask
+        xsi:type="git:GitCloneTask"
+        id="git.jct.crypto"
+        location="${JCT_GIT_ROOT_DIRECTORY}/crypto"
+        remoteURI="https://github.com/jcryptool/crypto"
+        checkoutBranch="develop">
+      <description>The JCT core repository</description>
+    </setupTask>
+    <setupTask
+        xsi:type="projects:ProjectsImportTask">
+      <sourceLocator
+          rootFolder="${JCT_GIT_ROOT_DIRECTORY}/core"
+          locateNestedProjects="true"/>
+      <sourceLocator
+          rootFolder="${JCT_GIT_ROOT_DIRECTORY}/crypto"
+          locateNestedProjects="true"/>
+    </setupTask>
+    <setupTask
+        xsi:type="pde:TargetPlatformTask"
+        id="jct-main-target"
+        name="JCrypTool RCP">
+      <description>The main target platform of JCT</description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:PreferenceTask"
+        key="/instance/org.eclipse.oomph.setup.ui/skip.startup.tasks"
+        value="true"/>
+    <description>The JCTIDE workspace provides cool stuff.</description>
+  </workspace>
+  <description>The JCTIDE configuration provides cool stuff.</description>
+</setup:Configuration>

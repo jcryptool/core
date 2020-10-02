@@ -64,5 +64,6 @@
     <module>org.jcryptool.platformpatches.target</module>
     <module>org.jcryptool.views.feature</module>
     <module>org.jcryptool.functionlistgen</module>
+    <module>org.jcryptool.core.splitpackages</module>
   </modules>
 </project>
