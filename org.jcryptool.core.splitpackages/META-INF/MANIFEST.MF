@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Splitpackages
+Bundle-SymbolicName: org.jcryptool.core.splitpackages
+Bundle-Version: 1.0.0
+Automatic-Module-Name: org.jcryptool.core.splitpackages
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-ClassPath: .,
+ jsr305/jsr305-3.0.2.jar
+Export-Package: javax.annotation,
+ javax.annotation.concurrent,
+ javax.annotation.meta

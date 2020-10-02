@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup:Product
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
+    xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
+    name="my.product.23"
+    label="My Product 23">
+  <annotation
+      source="http://www.eclipse.org/oomph/setup/BrandingInfo">
+    <detail
+        key="folderName">
+      <value>eclipse</value>
+    </detail>
+    <detail
+        key="folderName.macosx">
+      <value>Eclipse</value>
+    </detail>
+  </annotation>
+  <version name="2020-06"
+      label="2020-06"
+      requiredJavaVersion="1.8">
+    <setupTask
+        xsi:type="setup.p2:P2Task"
+        label="${scope.product.label} (${scope.product.version.label})">
+      <requirement
+          name="org.eclipse.platform.ide"/>
+      <requirement
+          name="org.eclipse.platform.feature.group"/>
+      <requirement
+          name="org.eclipse.rcp.feature.group"/>
+      <requirement
+          name="my.product.23.feature.group"/>
+      <repository
+          url="http://download.eclipse.org/releases/2020-06"/>
+    </setupTask>
+    <description>My Product 23 for 2020-06.</description>
+  </version>
+  <description>My Product 23 provides cool stuff.</description>
+</setup:Product>
