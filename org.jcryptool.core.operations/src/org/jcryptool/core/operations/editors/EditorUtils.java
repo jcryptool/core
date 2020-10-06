@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
 
 import org.eclipse.ui.IEditorReference;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -30,25 +32,12 @@ public class EditorUtils {
      * @param in the input stream
      */
     public static String inputStreamToString(InputStream in) {
-        BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new InputStreamReader(in, IConstants.UTF8_ENCODING));
-        } catch (UnsupportedEncodingException e1) {
-            LogUtil.logError(OperationsPlugin.PLUGIN_ID, e1);
-        }
-
-        StringBuffer myStrBuf = new StringBuffer();
-        int charOut = 0;
-        String output = ""; //$NON-NLS-1$
-        try {
-            while ((charOut = reader.read()) != -1) {
-                myStrBuf.append(String.valueOf((char) charOut));
-            }
-        } catch (IOException e) {
-            LogUtil.logError(OperationsPlugin.PLUGIN_ID, e);
-        }
-        output = myStrBuf.toString();
-        return output;
+			return new String(in.readAllBytes(), Charset.forName("UTF-8"));
+		} catch (IOException e) {
+			LogUtil.logError(e);
+		}
+		return "";
     }
 
     public static String retrieveTextForEditor(IEditorReference bestEditor) {
