@@ -7,7 +7,7 @@
       <view
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.aco.view.AntColView"
-            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_msc.png"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png"
             id="org.jcryptool.visual.aco.view.ViewID"
             name="%viewName">
       </view>
