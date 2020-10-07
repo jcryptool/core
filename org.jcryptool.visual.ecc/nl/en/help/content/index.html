@@ -47,17 +47,30 @@ figcaption {
 <p>The first choice is the curve size: small or large.</p>
 
 <p>a) For a first educational visualization choose <b>small</b>. Here a grid is displayed and you can choose the points on the curve with the mouse. There are three types of elliptic curves you can choose from:
-<ol>
-  <li><a href="#realNumbers">Curves in the real number space</a></li>
-  <li><a href="#Fp">Curves in the field \(\mathbb{F}_p\)</a></li>
-  <li><a href="#F2m">Curves in the field \(\mathbb{F}_{2^m}\)</a></li>
-</ol>
-<img src="curveType.PNG" style="width:30%; min-width:200px" alt="Radio button selection of the three modes in JCrypTool view. It shows an option for real numbers, curves over finite fields F_p and curves over Galois binary fields F_m^2.">
+
+<div class="row">
+  <div class="column">
+    <ol style="min-width:300px">
+      <li><a href="#realNumbers">Curves in the real number space</a></li>
+      <li><a href="#Fp">Curves in the field \(\mathbb{F}_p\)</a></li>
+      <li><a href="#F2m">Curves in the field \(\mathbb{F}_{2^m}\)</a></li>
+    </ol>
+  </div>
+  <div class="column">
+    <figure>
+      <img src="curveType.PNG" style="min-width:200px" alt="Radio button selection of the three modes in JCrypTool view. It shows an option for real numbers, curves over finite fields F_p and curves over Galois binary fields F_m^2.">
+      <figcaption><b>Figure 1:</b> Buttons to select the type of elliptic curve.</figcaption>
+    </figure>
+  </div>
+</div>
 
 <p>b) Choosing the curve size <b>large</b> offers different standard curves (each in different variants): ANSI X9.62, SEC 2, ECC Brainpool, and CDC Group for the discrete curve type \(\mathbb{F}_p\); and ANSI X9.62 for the discrete curve type \(\mathbb{F}_{2^m}\).<br>
 Such large elliptic curves are used in professional cryptographic applications. Like in the case of the small size, you can add points and multiply points with a scalar.</p>
 
-<p align="center"><img src="EC-large-Fp-en.png" style="width:90%" alt="Screenshot from the JcrypTool plugin. Exemplary calculation for large curves. A large curve over a finite field F(p) is selected. The curve itself is the standardised curve ANSI X0.62 - prime192v1"></p>
+<figure>
+  <p align="center"><img src="EC-large-Fp-en.png" style="width:90%" alt="Screenshot from the JcrypTool plugin. Exemplary calculation for large curves. A large curve over a finite field F(p) is selected. The curve itself is the standardised curve ANSI X0.62 - prime192v1"></p>
+  <figcaption><b>Figure 2:</b> The plugin with a large curve selected.</figcaption>
+</figure>
 
 <p>The results of the calculations (for both small and large sizes) can be saved and either looked at in the JCT editor or stored into a file.</p>
 
@@ -78,7 +91,7 @@ Such large elliptic curves are used in professional cryptographic applications. 
   This is to be understood as a geometric operation quite differently from what we are used to with numbers.
   Adding two points on an elliptic curve results in a third point.
   We call this result \(R\).
-  The scheme of the "addition" looks like the following and is also depicted in figure a.
+  The scheme of the "addition" looks like the following and is also depicted in figure 3.
 </p>
   
 <ol>
@@ -90,20 +103,20 @@ Such large elliptic curves are used in professional cryptographic applications. 
 <p>
   <b>Note:</b> There is an exception: If \(P = -Q\) the line does not cross the curve a third time,
   because it runs in parallel to the y axis.
-  In this case the result of the addition is a remote point called \(O\) (also denoted as "point in infinity" \(\infty\)).
+  In this case the result of the addition is a remote point called \(O\) (also denoted as "point in infinity" \(\infty\)) (see figure 4).
 </p>
 
  <div class="row">
   <div class="column">
   <figure>
     <img src="EC.PNG" alt="Graph showing a cartesian coordinate system. Depicted is an elliptic curve addition for real numbers. A straight line is laid through two points on the ellipse P (-3,55 / 2,4) and Q (0,59 / 3,05). At the cross section is another point -R (3,98, 3,42). This one is mirrored on the x axis, and is denoted as R with the coordinates (3,98, 3,42)" style="width:100%;min-width:200px">
-    <figcaption><b>Figure a)</b> The addition of \(P + Q\) leads to the resulting point \(R\)</figcaption>
+    <figcaption><b>Figure 3:</b> The addition of \(P + Q\) leads to the resulting point \(R\)</figcaption>
   </figure>
   </div>
   <div class="column">
   <figure>
     <img src="EC_addition_infinity.png" alt="Graph showing a cartesian coordinate system. Depicted is an elliptic curve for real numbers; Point q is just the mirror of point p on the x axis. A straight line through the two points runs in parallel to the y axis. This shows why an addition of these two points ends up with the infinite point O" style="width:100%;min-width:200px">
-    <figcaption><b>Figure b)</b>The straight line between \(P\) and \(Q\) runs in parallel to the y axis, because \(P = -Q\).  There is no third intersection with the curve and the result is the point in infinity \(O\) (also denoted as \(\infty\))</figcaption>
+    <figcaption><b>Figure 4:</b>The straight line between \(P\) and \(Q\) runs in parallel to the y axis, because \(P = -Q\).  There is no third intersection with the curve and the result is the point in infinity \(O\) (also denoted as \(\infty\))</figcaption>
   </figure>
   </div>
 </div> 
@@ -127,7 +140,7 @@ Such large elliptic curves are used in professional cryptographic applications. 
 </p>
 
 <p>
-  <b>Example with the points from figure a:</b>
+  <b>Example with the points from figure 3:</b>
   Given are:
 </p>
   
@@ -169,7 +182,7 @@ We seek \(R\):
   For this operation the calculation is slightly different.
   In the normal addition we could calculate \(m\) as simple difference between two points.
   This would lead to a division by zero for a single point.
-  Instead we calculate a tangent for that point. (we differentiate, see also figure c).
+  Instead we calculate a tangent for that point. (we differentiate, see also figure 5).
 </p>
 	
 $$m = \frac{3x^2 + a}{2y}$$
@@ -187,7 +200,7 @@ $$m = \frac{3x^2 + a}{2y}$$
   	
 <div class="row">
 <div class="column">
-<p><b>Example with the points from figure c:</b><br>
+<p><b>Example with the points from figure 5:</b><br>
   Given are:
   <ul>
 	  <li> the chosen curve \(\epsilon: \quad y^2 = x^3 - 10x + 15\)</li>
@@ -211,7 +224,7 @@ We seek \(R = 2 \times T\):
 <div class="column">
 <figure>
     <img src="EC_duplication.png" alt="Graph showing a cartesian coordinate system. Depicted is an elliptic curve for real numbers; At the given point T (-1,3 / 5,07) a tangent is drawn in. It has a slightly declining slope and intersects the elliptic curve at point -R (2,83 / 3,06). This point is mirrored at the x acis and where the result point R (2,82 / -3,06) lies." style="width:100%;min-width:200px">
-    <figcaption><b>Figure c)</b> Point \(T\) is added to itself (doubled)</figcaption>
+    <figcaption><b>Figure 5)</b> Point \(T\) is added to itself (doubled)</figcaption>
 </figure>
 </div>
 </div>
@@ -239,15 +252,15 @@ We seek \(R = 2 \times T\):
 </p>
 
 <p>
-  The form of the elliptic curve is not recognizeable anymore.
+  The form of the elliptic curve is not recognizable anymore.
   This type of modulo calculated curve is way more interesting for cryptography.
   For real numbers a point can be easily estimated if there are known points nearby.
-  For finite fields points contain no information about their neighbours.
+  For finite fields points contain no information about their neighbors.
 </p>
 
 <figure>
   <img src="ECFp.PNG" style="width:100%" alt="Graph showing a cartesian coordinate system. Depicted is an elliptic curve over a finite field F(p). The 36 points on the curve seem to be distributed randomly over the coordinates . The points P (18 / 3), Q (10 / 13) and R (8 / 28) are highlighted by a red color."/>
-  <figcaption><b>Figure d)</b>An elliptic curve over \(\mathbb{F}_{29}\). Characteristic for cryptographic operations
+  <figcaption><b>Figure 6)</b>An elliptic curve over \(\mathbb{F}_{29}\). Characteristic for cryptographic operations
   modulo a prime number are the seemingly random elements.</figcaption>
 </figure>
 
@@ -280,7 +293,7 @@ We seek \(R = 2 \times T\):
   </ul>
 
 <p>
-  This example is depicted in figure d). There are 841 \(p^2\) possible coordinates for \(\mathbb{F}_{29}\),
+  This example is depicted in figure 6. There are \(p^2 = 841\) possible coordinates for \(\mathbb{F}_{29}\),
   36 of these are actually valid coordinates:
 </p>
   
@@ -351,7 +364,7 @@ We seek \(R = 2 \times T\):
 \begin{alignat}{2}
   	m &= \frac{Q_y - P_y}{Q_x - P_x} &&\mod p &&=\\[2pt]
      &= \frac{13 - 3}{10 - 18} &&\mod 29 &&=\\[2pt]
-  	 &= 10 \cdot -8^{-1} &&\mod 29 &&= \qquad\qquad\textrm{// Note:}\,-8^{-1} \mod 29 = 18\\[5pt]
+  	 &= 10 \cdot -8^{-1} &&\mod 29 &&= \qquad\qquad\textrm{// Note:}\,-8^{-1} \ \textrm{mod} \ 29 = 18\\[5pt]
   	 &= 10 \cdot 18 &&\mod 29 &&= 6\\[10pt]
 \end{alignat} 
 }
@@ -380,9 +393,9 @@ R_y &= − y_1 &&+ m(x_1 − x_3) &&\mod p &&= \\
 <h4>Point doubling and multiplication in detail</h4>
 
 <p>
-  The concepts of the real numberes can be applied the same way. We multiply through repeated addition.
+  The concepts of the real numbers can be applied the same way. We multiply through repeated addition.
   If one wants to calculate \(3 \times P\) this can be done by calculating \(2 \times P + P\).
-  For this to be possible we again have to define a point addition with itself - a point doubling.
+  For this to be possible we again have to define a point addition with itself&mdash;a point doubling.
   As for the real numbers this formula is slightly different then the point addition with two different points.
   Just as for the addition we have to calculate the modulo inverse instead of a plain division.
   The <b>three formulas</b> for point doubling are:
@@ -413,7 +426,7 @@ Given are:
 \begin{alignat}{2}
    m &= (3x^2 + a) \cdot (2y)^{-1} &&\mod p &&=\\[2pt]
      &= (3 \cdot 18^2 + 14) \cdot (2 \cdot 3)^{-1} &&\mod 29 &&=\\[2pt]
-  	 &= 986 \cdot 6^{-1} &&\mod 29 &&= \qquad\qquad\textrm{// Note:}\,6^{-1} \mod 29 = 5\\[5pt]
+  	 &= 986 \cdot 6^{-1} &&\mod 29 &&= \qquad\qquad\textrm{// Note:}\,6^{-1} \ \textrm{mod} \ 29 = 5\\[5pt]
   	 &= 986 \cdot 5 &&\mod 29 &&= 0\\[10pt]
 \end{alignat} 
 }
@@ -450,7 +463,7 @@ R_y &= − y &&+ m(x − R_x) &&\mod p &&= \\
 <h3 id="F2m">3. Curves in the field \(\mathbb{F}_{2^m}\)</h3>
 
 <p>
-  Elements of galois fields \(\mathbb{F}_{2^m}\) are polynomials of length \(m\).
+  Elements of Galois fields \(\mathbb{F}_{2^m}\) are polynomials of length \(m\).
   For these groups all coefficients are calculated modulo 2 (living in the numbers \(\mathbb{Z}_2\)).
   That allows very fast computation for the following reasons:
   An exmample polynomial of length \(8\): \(x^8 + x^4 + x^3+x+1\) can also be written as vector respectively as simple bits: \(10011011\).
@@ -463,18 +476,18 @@ R_y &= − y &&+ m(x − R_x) &&\mod p &&= \\
 </p> 
 
 <p>
-  The elliptic curve looks sligthly different when working with polynomials \(y^2 + xy = x^3 + ax^2 + b\).
+  The elliptic curve looks slightly different when working with polynomials \(y^2 + xy = x^3 + ax^2 + b\).
 </p>
 
 <p>
-  In addition the following (public) parameters are reqiured:
+  In addition the following (public) parameters are required:
 </p> 
 
 <ul>
   <li>Polynomial / bit length \(m\)</li>
   <li>\(a\) and \(b\) for the elliptic curve</li>
-  <li>Generator \(G\): an irreducable primary polynomial with a length of \(m + 1\).
-  Irreducable polynomials have similar properties as prime numbers.
+  <li>Generator \(G\): an irreducible primary polynomial with a length of \(m + 1\).
+  Irreducible polynomials have similar properties as prime numbers.
   They cannot be divided by other polynomials.
   \(G\) is used to generate points on the curve</li>
   <li>Reduction polynomial \(f(x)\): a polynomial through which is divided for the modulo calculation</li>
@@ -489,9 +502,9 @@ R_y &= − y &&+ m(x − R_x) &&\mod p &&= \\
 </ul>
 
 <figure>
-  <img src="ECFm.PNG" alt="Eine Grafik der Punkte einer elliptischen Kurve einer Galois-Gruppe. Zu sehen sind 32 Punkte, die scheinbar zufällig über die Koordinaten verteilt sind.">
-  <img src="ECFmElements.PNG" alt="Die 32 Elemente der elliptischen Kurve: 1 = 00001, g = 00010, g2 = 00100, g3 = 01000, g4 = 10000, g5 = 10111, g6 = 11001, g7 = 00101, g8 = 01010, g9 = 10100, g10 = 11111, g11 = 01001, g12 = 10010, g13 = 10011, g14 = 10001, g15 = 10101, g16=11101, g17 = 01101, g18 = 11010, g19 = 00011, g20 = 00110 g21 = 01100, g22 = 11000, g23 = 00111, g24 = 01110, g25 = 11100, g26 = 01111, g27 = 11110, g28 = 01011, g29 = 10110, g30 = 11011">
-  <figcaption><b>Figure e)</b> An elliptic curve over \(\mathbb{F}_{2^5}\) with the parameters: \(y^2 + xy = x^3 + g9 \cdot x^2 + g3\) und dem Generator \(G = 110111\)</figcaption>
+  <img src="ECFm.PNG" alt="Cartesian coordinate system of points over an elliptic curve over a Galois field. There are 32 points labelled 0, 1 and g to g30, which are scattered seemingly random across the plot.">
+  <img src="ECFmElements.PNG" alt="The 32 elements of the elliptic curve are: 1 = 00001, g = 00010, g2 = 00100, g3 = 01000, g4 = 10000, g5 = 10111, g6 = 11001, g7 = 00101, g8 = 01010, g9 = 10100, g10 = 11111, g11 = 01001, g12 = 10010, g13 = 10011, g14 = 10001, g15 = 10101, g16=11101, g17 = 01101, g18 = 11010, g19 = 00011, g20 = 00110 g21 = 01100, g22 = 11000, g23 = 00111, g24 = 01110, g25 = 11100, g26 = 01111, g27 = 11110, g28 = 01011, g29 = 10110, g30 = 11011">
+  <figcaption><b>Figure 7)</b> An elliptic curve over \(\mathbb{F}_{2^5}\) with the parameters: \(y^2 + xy = x^3 + g9 \cdot x^2 + g3\) and the generator \(G = 110111\)</figcaption>
 </figure>
 
 <h4>Calculations for \(\mathbb{F}_{2^m}\) polynomials in general</h4>
@@ -576,8 +589,8 @@ R_y &= − y &&+ m(x − R_x) &&\mod p &&= \\
 <div class="column">
 <table style="border-collapse: collapse">
 <tr>
-  <th>Polynom</th>
-  <th>Bitfolge</th>
+  <th>Polynomial</th>
+  <th>Bitstring</th>
 </tr>
 <tr>
   <td>
@@ -651,7 +664,7 @@ R_y &= − y &&+ m(x − R_x) &&\mod p &&= \\
 </p>
   <ol>
   <li> 
-    Take a look at both first (hightest) terms and determine how often they must be multiplied with each other.
+    Take a look at both first (highest) terms and determine how often they must be multiplied with each other.
     For \(\frac{x^8}{x^4}\) that results in \(x^4\), because \(x^4 \cdot x^4 = x^8\). Write down \(x^4\).
   </li>
   <li>
@@ -711,7 +724,7 @@ R_y &= − y &&+ m(x − R_x) &&\mod p &&= \\
 
 <h4>Point addition in detail</h4>
 <p>
-  When adding ponts for curves over \(\mathbb{F}_{2^m}\) it is similar to the other modes.
+  When adding points for curves over \(\mathbb{F}_{2^m}\) it is similar to the other modes.
   Instead of calculating modulo \(p\) you use the polynomial \(f(x)\).
   We have to use the modulo inverse instead of a plain division.
   The <b>three formulas</b> are:
