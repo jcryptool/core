@@ -47,12 +47,23 @@ figcaption {
 <p>Die erste Auswahl ist die Kurvengröße: klein oder groß.</p>
 
 <p>a) Für eine verständliche Visualisierung wählen Sie am besten <b>klein</b>. Hier wird ein Koordinatensystem angezeigt, in dem man die Punkte der Kurve mit der Maus auswählen kann. Dabei können Sie zwischen drei Arten von elliptischen Kurven wählen:</p>
-<ol>
-  <li><a href="#realNumbers">Kurven in der Ebene der reellen Zahlen</a></li>
-  <li><a href="#Fp">Kurven über dem Körper \(\mathbb{F}_p\)</a></li>
-  <li><a href="#F2m">Kurven über dem Körper \(\mathbb{F}_{2^m}\)</a></li>
-</ol>
-<img src="curveType.PNG" style="width:30%; min-width:200px" alt="Schaltfläche für die drei Modi im JCrypTool-Plugin. Es zeigt eine Option für reelle Zahlen, eine für Kurven über endliche Gruppen F_p und für Kurven über binäre Galois-Gruppen F_m^2."/>
+
+
+<div class="row">
+  <div class="column">
+    <ol style="min-width:300px">
+      <li><a href="#realNumbers">Kurven in der Ebene der reellen Zahlen</a></li>
+      <li><a href="#Fp">Kurven über dem Körper \(\mathbb{F}_p\)</a></li>
+      <li><a href="#F2m">Kurven über dem Körper \(\mathbb{F}_{2^m}\)</a></li>
+    </ol>
+  </div>
+  <div class="column">
+    <figure>
+	  <img src="curveType.PNG" style="min-width:200px" alt="Schaltfläche für die drei Modi im JCrypTool-Plugin. Es zeigt eine Option für reelle Zahlen, eine für Kurven über endliche Gruppen F_p und für Kurven über binäre Galois-Gruppen F_m^2."/>
+      <figcaption><b>Abbildung 1:</b> Schalftfläche zum Auswählen des Kurventyps.</figcaption>
+    </figure>
+  </div>
+</div>
 
 <p>
 b) Die Kurvengröße <b>groß</b> bietet Standard-Kurven (jede in verschiedenen Varianten) zur Auswahl an: ANSI X9.62, SEC 2, ECC Brainpool und CDC Group für den diskreten Kurventyp \(\mathbb{F}_p\); und ANSI X9.62 für den diskreten Kurventyp \(\mathbb{F}_{2^m}\).<br>
@@ -60,6 +71,7 @@ Solche großen elliptischen Kurven kommen in professionellen kryptographischen A
 
 <figure>
   <img src="EC-large-Fp-de.png" style="width:90%;" alt="Screenshot aus dem JcrypTool-Plugin. EC-Berechnungen für große Kurvengrößen. Gewählt ist eine Große Kurve über einen endlichen Körper F(p). Die verwendete Kurve ist eine standardisierte Kurve ANSI X9.62 - prime192v1.">
+  <figcaption><b>Abbildung 2:</b> Plug-in mit einer großen Kurve.</figcaption>
 </figure>
 
 <p>Die Ergebnisse der Berechnungen (egal ob für große oder kleine Größe) können gespeichert werden und entweder im JCT-Editor angesehen oder in eine Datei abgelegt werden.</p>
@@ -73,7 +85,7 @@ Solche großen elliptischen Kurven kommen in professionellen kryptographischen A
   <p>Elliptische Kurven in der Ebene von reellen Zahlen entsprechen der Gleichung \(y^2 = x^3 + a \cdot x + b\), wobei die Variablen \(a\), \(b\), \(x\) und \(y\) reelle Zahlen sind.</p>
   <p>Auf der reellen Zahlenebene gibt es unendlich viele Punkte \((x,y)\) auf der Kurve. Für jeden Punkt auf der Kurve gibt es einen negativen Wert, so das \(y = -y\) mit der Ausnahme \(y = 0\).</p>
   <p>Zwei Punkte auf der Kurve können <b>"addiert"</b> werden. Damit ist eine geometrische Operation gemeint, die uns zu zwei gegebenen Punkten einen dritten Punkt liefert.
-  Wir nennen das Ergebnis hier \(R\). Das Schema dieser "Addition" läuft folgendermaßen ab und ist in Abbildung a visuell dargestellt:</p>
+  Wir nennen das Ergebnis hier \(R\). Das Schema dieser "Addition" läuft folgendermaßen ab und ist in Abbildung 3 visuell dargestellt:</p>
   <ol>
   <li>Wähle einen Punkt \(P\) und einen Punkt \(Q\).</li>
   <li>Zeichne eine Linie durch \(P\) und \(Q\). Führe diese Linie fort, bis die Kurve ein drittes Mal geschnitten wird (\(P\) und \(Q\) sind die ersten zwei Male). Dieser Punkt ist \(-R\).</li>
@@ -81,20 +93,20 @@ Solche großen elliptischen Kurven kommen in professionellen kryptographischen A
 </ol>
 
 <p>	
-  	<b>Beachte:</b> Es gibt eine Ausnahme: Wenn \(P = -Q\) kann die Gerade kein drittes Mal die elliptische Kurve schneiden, weil sie parallel zur y-Achse verläuft. In diesem Fall ist das Ergebnis der Addition der Fernpunkt \(O\) (auch \(\infty\)) (Abbildung b).
+  	<b>Beachte:</b> Es gibt eine Ausnahme: Wenn \(P = -Q\) kann die Gerade kein drittes Mal die elliptische Kurve schneiden, weil sie parallel zur y-Achse verläuft. In diesem Fall ist das Ergebnis der Addition der Fernpunkt \(O\) (auch \(\infty\)) (Abbildung 4).
 </p>	
  
  <div class="row">
   <div class="column">
   <figure>
     <img src="EC.PNG" alt="Kartesisches Koordinatensystem; Addition auf einer elliptischen Kurve im reellen Zahlenraum. Durch zwei Punkte auf der Ellipse P (-3,55 / 2,4) und Q (0,59 / 3,05) ist eine gerade gelegt. Beim Schnittpunkt befindet sich eine weitere Koordinate -R (3,98, 3,42). Diese wird um die X-Achse nach unten gespiegelt. Dort liegt R mit den Koordinaten (3,98, 3,42)" style="width:100%;min-width:200px">
-    <figcaption><b>Abbildung a)</b> Die Operation \(P + Q\) führt zum Ergebnispunkt \(R\)</figcaption>
+    <figcaption><b>Abbildung 3:</b> Die Operation \(P + Q\) führt zum Ergebnispunkt \(R\)</figcaption>
   </figure>
   </div>
   <div class="column">
   <figure>
     <img src="EC_addition_infinity.png" alt="Kartesisches Koordinatensystem; eine elliptische Kurve im reellen Zahlenraum; die Punkte P und Q sind an der X-Achse gespiegelt. Eine Gerade die die beiden Punkte verbindet, läuft parallel der Y-Achse entlang." style="width:100%;min-width:200px">
-    <figcaption><b>Abbildung b)</b> Da \(P = -Q\) verläuft die Gerade parallel. Es gibt keinen 3. Schnittpunkt und das Ergebnis ist der unendliche Fernpunkt \(O\) (auch \(\infty\))</figcaption>
+    <figcaption><b>Abbildung 4:</b> Da \(P = -Q\) verläuft die Gerade parallel. Es gibt keinen 3. Schnittpunkt und das Ergebnis ist der unendliche Fernpunkt \(O\) (auch \(\infty\))</figcaption>
   </figure>
   </div>
 </div> 
@@ -112,10 +124,10 @@ Solche großen elliptischen Kurven kommen in professionellen kryptographischen A
   	\(k\) ist die Steigung der Gerade durch \(P\), \(Q\) und unserem gesuchten Punkt \(R\).
   	Die Formeln für \(R_x\) und \(R_y\) lassen sich herleiten, wenn man die Gerade mit der elliptischen Kurve schneidet.
   	Dabei bekommt man eine kubische Gleichung.
-  	Da 2 der maximal 3 Schnittpunkte bekannt sind, lassen sich mit dem Satz von Vietá diese allgmeinen Gleichungen aufstellen.
+  	Da 2 der maximal 3 Schnittpunkte bekannt sind, lassen sich mit dem Satz von Vietá diese allgemeinen Gleichungen aufstellen.
 </p>
 
-<p><b>Zahlenbeispiel mit den Werten aus Abbildung a:</b><br>
+<p><b>Zahlenbeispiel mit den Werten aus Abbildung 3:</b><br>
   Gegeben sind:
   <ul>
 	  <li> die gewählte Kurve \(\epsilon: \quad y^2 = x^3 - 10x + 15\)</li>
@@ -150,7 +162,7 @@ Wir suchen \(R\):
 <p>
   Wir können auch auf elliptischen Kurven Punkte auf diese Weise durch Addition multiplizieren. Aber dazu müssen wir in der Lage sein, einen Punkt mit sich selbst zu addieren.
   Dabei ist die Berechnung etwas anders. In der normalen Addition konnten wir \(k\) einfach als Differenz zwischen zwei Punkten berechnen. Das würde beim gleichen Punkt aber zu einer Division durch null führen.
-  Stattdessen müssen wir eine Tangente an den Punkt anlegen (wir differenzieren also, ersichtlich in Abbildung c).
+  Stattdessen müssen wir eine Tangente an den Punkt anlegen (wir differenzieren also, ersichtlich in Abbildung 5).
 
 $$k = \frac{3x^2 + a}{2y}$$
 
@@ -165,7 +177,7 @@ Mit dieser Geraden kann in die selben Gleichungen zur Berechnung von \(R\) einge
 
 <div class="row">
 <div class="column">
-<p><b>Zahlenbeispiel mit den Werten aus Abbildung c:</b><br>
+<p><b>Zahlenbeispiel mit den Werten aus Abbildung 5:</b><br>
   Gegeben sind:
   <ul>
 	  <li> die gewählte Kurve \(\epsilon: \quad y^2 = x^3 - 10x + 15\)</li>
@@ -190,7 +202,7 @@ Wir suchen \(R = 2 \cdot T\):
 <div class="column">
 <figure>
     <img src="EC_duplication.png" alt="Kartesisches Koordinatensystem; eine elliptische Kurve im reellen Zahlenraum; An den Punkt T (-1,3 / 5,07) ist eine Tangente angelegt, die leicht nach unten verläuft und die elliptische Kurve bei -R (2,83 / 3,06) schneidet. Diese Koordinate ist an der X-Achse gespiegelt und dort ist ein weiterer Punkt R eingezeichnet (2,82 / -3,06)" style="width:100%;min-width:200px">
-    <figcaption><b>Abbildung c)</b> Punkt \(T\) wird mit sich selbst addiert (verdoppelt)</figcaption>
+    <figcaption><b>Abbildung 5)</b> Punkt \(T\) wird mit sich selbst addiert (verdoppelt)</figcaption>
 </figure>
 </div>
 </div>
@@ -217,7 +229,7 @@ Wir suchen \(R = 2 \cdot T\):
 
 <figure>
   <img src="ECFp.PNG" style="width:100%" alt="Kartesisches Koordinatensystem; eine elliptische Kurve über einen endlichen Körper F(p). Die 36 Punkte scheinen zufällig angeordnet zu sein. Die Punkte P (18 / 3), Q (10 / 13) und R (8 / 28) sind farblich hervorgehoben."/>
-  <figcaption><b>Abbildung d)</b>Eine elliptische Kurve über \(\mathbb{F}_{29}\). Typisch für kryptografische Operationen
+  <figcaption><b>Abbildung 6)</b>Eine elliptische Kurve über \(\mathbb{F}_{29}\). Typisch für kryptografische Operationen
   modulo einer Primzahl, sind die "springend" angeordneten Elemente.</figcaption>
 </figure> 
 
@@ -251,7 +263,7 @@ Gegeben sind:
 	  <li> Punkt \(Q = (10 / 13)\)</li>
   </ul>
   
-  <p>Dieses Beispiel ist auch in Abbildung d) ersichtlich. In dieser Gruppe \(\mathbb{F}_{29}\) gibt es 841 \(p^2\) mögliche Koordinaten, wovon 36 tatsächlich auf der Kurve liegen:</p>
+  <p>Dieses Beispiel ist auch in Abbildung 6) ersichtlich. In dieser Gruppe \(\mathbb{F}_{29}\) gibt es 841 \(p^2\) mögliche Koordinaten, wovon 36 tatsächlich auf der Kurve liegen:</p>
   
   <table class="members">
     <tr>
@@ -321,7 +333,7 @@ Gegeben sind:
 \begin{alignat}{2}
   	k &= \frac{Q_y - P_y}{Q_x - P_x} &&\mod p &&=\\[2pt]
      &= \frac{13 - 3}{10 - 18} &&\mod 29 &&=\\[2pt]
-  	 &= 10 \cdot -8^{-1} &&\mod 29 &&= \qquad\qquad\textrm{// Anmerkung:}\,-8^{-1} \mod 29 = 18\\[5pt]
+  	 &= 10 \cdot -8^{-1} &&\mod 29 &&= \qquad\qquad\textrm{// Anmerkung:}\,-8^{-1} \ \textrm{mod} \ 29 = 18\\[5pt]
   	 &= 10 \cdot 18 &&\mod 29 &&= 6\\[10pt]
 \end{alignat} 
 }
@@ -351,8 +363,8 @@ R_y &= − y_1 &&+ k(x_1 − x_3) &&\mod p &&= \\
 <h4>Punktverdopplung im Detail</h4>
 
 <p>
-  Die konzepte des reellen Zahlenraumes lassen sich hier genauso anwenden.
-  Wir multiplizieren durch wiederholtes addieren. Wenn ich etwa \(3 \cdot P\) berrechnen möchte, lässt sich
+  Die Konzepte des reellen Zahlenraumes lassen sich hier genauso anwenden.
+  Wir multiplizieren durch wiederholtes addieren. Wenn ich etwa \(3 \cdot P\) berechnen möchte, lässt sich
   das durch \(2 \cdot P + P\) bewerkstelligen.
   Dazu wird wieder die Punktverdopplung, also eine Addition mit sich selbst benötigt. Diese unterscheidet
   sich aus den gleichen Gründen wie im reellen Zahlenraum leicht von der Addition mit verscshiedenen
@@ -384,7 +396,7 @@ Gegeben sind:
 \begin{alignat}{2}
     k &= (3x^2 + a) \cdot (2y)^{-1} &&\mod p &&=\\[2pt]
      &= (3 \cdot 18^2 + 14) \cdot (2 \cdot 3)^{-1} &&\mod 29 &&=\\[2pt]
-  	 &= 986 \cdot 6^{-1} &&\mod 29 &&= \qquad\qquad\textrm{// Anmerkung:}\,6^{-1} \mod 29 = 5\\[5pt]
+  	 &= 986 \cdot 6^{-1} &&\mod 29 &&= \qquad\qquad\textrm{// Anmerkung:}\,6^{-1} \ \textrm{mod} \ 29 = 5\\[5pt]
   	 &= 986 \cdot 5 &&\mod 29 &&= 0\\[10pt]
 \end{alignat} 
 }
@@ -414,7 +426,7 @@ R_y &= − y &&+ k(x − R_x) &&\mod p &&= \\
 
 <p><b>Definition des Sonderfalls \(T_y = 0\):</b> <br>
 	In diesem Fall ist das Ergebnis definiert als das Fernelement \(O\),
-	weil sonst eine Division durch null passiern würde.
+	weil sonst eine Division durch null passieren würde.
 	Das ist ein Punkt in der Unendlichkeit und wird auch als \(\infty\) notiert.
 </p>
 
@@ -459,7 +471,7 @@ Es gelten folgende Definitionen:
 <figure>
   <img src="ECFm.PNG" alt="Eine Grafik der Punkte einer elliptischen Kurve einer Galois-Gruppe. Zu sehen sind 32 Punkte, die scheinbar zufällig über die Koordinaten verteilt sind.">
   <img src="ECFmElements.PNG" alt="Die 32 Elemente der elliptischen Kurve: 1 = 00001, g = 00010, g2 = 00100, g3 = 01000, g4 = 10000, g5 = 10111, g6 = 11001, g7 = 00101, g8 = 01010, g9 = 10100, g10 = 11111, g11 = 01001, g12 = 10010, g13 = 10011, g14 = 10001, g15 = 10101, g16=11101, g17 = 01101, g18 = 11010, g19 = 00011, g20 = 00110 g21 = 01100, g22 = 11000, g23 = 00111, g24 = 01110, g25 = 11100, g26 = 01111, g27 = 11110, g28 = 01011, g29 = 10110, g30 = 11011">
-  <figcaption><b>Abbildung e)</b> Eine elliptische Kurve über \(\mathbb{F}_{2^5}\) mit den Parametern: \(y^2 + xy = x^3 + g9 \cdot x^2 + g3\) und dem Generator \(G = 110111\)</figcaption>
+  <figcaption><b>Abbildung 7)</b> Eine elliptische Kurve über \(\mathbb{F}_{2^5}\) mit den Parametern: \(y^2 + xy = x^3 + g9 \cdot x^2 + g3\) und dem Generator \(G = 110111\)</figcaption>
 </figure>
 
   <h4>Polynomberechnungen im Allgemeinen</h4>
