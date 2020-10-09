@@ -3,7 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: JCrypTool Hex Editor Extensions
 Bundle-SymbolicName: org.jcryptool.editor.hex;singleton:=true
 Bundle-Version: 1.0.0
-Fragment-Host: net.sourceforge.javahexeditor;bundle-version="0.5.2"
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: org.eclipse.core.filesystem,
  org.jcryptool.core.logging.utils,
@@ -15,3 +14,8 @@ Export-Package: org.jcryptool.editor.hex,
  org.jcryptool.editor.hex.service
 Bundle-Vendor: jcryptool.org
 Automatic-Module-Name: org.jcryptool.editor.hex
+Require-Bundle: org.eclipse.core.commands,
+ org.eclipse.ui.workbench,
+ org.eclipse.core.runtime,
+ org.eclipse.jface, 
+ net.sourceforge.javahexeditor
