@@ -490,7 +490,24 @@ litigation.
           install-size="0"
           version="0.0.0"/>
 
-
 -->
+
+<plugin id="org.eclipse.ecf.ssl" download-size="0" install-size="0" version="0.0.0"/>
+<plugin id="org.eclipse.equinox.region" download-size="0" install-size="0" version="0.0.0"/>
+<plugin id="org.eclipse.core.net.linux.x86_64" download-size="0" install-size="0" version="0.0.0"/>
+<plugin id="org.eclipse.ecf.provider.filetransfer.ssl" download-size="0" install-size="0" version="0.0.0"/>
+<plugin id="org.eclipse.ui.views" download-size="0" install-size="0" version="0.0.0"/>
+<plugin id="org.eclipse.ui.ide" download-size="0" install-size="0" version="0.0.0"/>
+<plugin id="org.eclipse.ant.core" download-size="0" install-size="0" version="0.0.0"/>
+<plugin id="org.eclipse.ui.navigator" download-size="0" install-size="0" version="0.0.0"/>
+<plugin id="org.eclipse.equinox.transforms.hook" download-size="0" install-size="0" version="0.0.0"/>
+<plugin id="org.eclipse.team.core" download-size="0" install-size="0" version="0.0.0"/>
+<plugin id="org.eclipse.equinox.weaving.hook" download-size="0" install-size="0" version="0.0.0"/>
+<plugin id="org.eclipse.e4.ui.ide" download-size="0" install-size="0" version="0.0.0"/>
+<plugin id="org.eclipse.core.filesystem.linux.x86_64" download-size="0" install-size="0" version="0.0.0"/>
+<plugin id="org.eclipse.debug.core" download-size="0" install-size="0" version="0.0.0"/>
+<plugin id="org.eclipse.ui.editors" download-size="0" install-size="0" version="0.0.0"/>
+<plugin id="org.eclipse.core.filebuffers" download-size="0" install-size="0" version="0.0.0"/>
+
 
 </feature>
