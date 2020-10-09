@@ -504,7 +504,6 @@ litigation.
 <plugin id="org.eclipse.team.core" download-size="0" install-size="0" version="0.0.0"/>
 <plugin id="org.eclipse.equinox.weaving.hook" download-size="0" install-size="0" version="0.0.0"/>
 <plugin id="org.eclipse.e4.ui.ide" download-size="0" install-size="0" version="0.0.0"/>
-<plugin id="org.eclipse.core.filesystem.linux.x86_64" download-size="0" install-size="0" version="0.0.0"/>
 <plugin id="org.eclipse.debug.core" download-size="0" install-size="0" version="0.0.0"/>
 <plugin id="org.eclipse.ui.editors" download-size="0" install-size="0" version="0.0.0"/>
 <plugin id="org.eclipse.core.filebuffers" download-size="0" install-size="0" version="0.0.0"/>
