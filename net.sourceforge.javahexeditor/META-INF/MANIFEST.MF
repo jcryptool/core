@@ -18,3 +18,8 @@ Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Jordi Bergenthal, Peter Dell, Andrey Loskutov
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Automatic-Module-Name: net.sourceforge.javahexeditor
+Export-Package: net.sourceforge.javahexeditor,
+ net.sourceforge.javahexeditor.common,
+ net.sourceforge.javahexeditor.plugin,
+ net.sourceforge.javahexeditor.plugin.actions,
+ net.sourceforge.javahexeditor.plugin.editors
