@@ -494,7 +494,6 @@ litigation.
 
 <plugin id="org.eclipse.ecf.ssl" download-size="0" install-size="0" version="0.0.0"/>
 <plugin id="org.eclipse.equinox.region" download-size="0" install-size="0" version="0.0.0"/>
-<plugin id="org.eclipse.core.net.linux.x86_64" download-size="0" install-size="0" version="0.0.0"/>
 <plugin id="org.eclipse.ecf.provider.filetransfer.ssl" download-size="0" install-size="0" version="0.0.0"/>
 <plugin id="org.eclipse.ui.views" download-size="0" install-size="0" version="0.0.0"/>
 <plugin id="org.eclipse.ui.ide" download-size="0" install-size="0" version="0.0.0"/>
