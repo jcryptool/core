@@ -13,6 +13,7 @@ package org.jcryptool.editor.hex.commands;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.editors.AbstractEditorService;
@@ -26,7 +27,11 @@ public class NewEmptyFile extends AbstractHandler {
 	public Object execute(ExecutionEvent event) {
 		try {
 			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-			page.openEditor(AbstractEditorService.createTemporaryEmptyFile(), HexEditorConstants.EditorID);
+			try {
+				page.openEditor(AbstractEditorService.createTemporaryEmptyFile(), HexEditorConstants.EditorID);
+			} catch (PartInitException e) {
+				e.printStackTrace();
+			}
 		} catch (Exception e) {
             LogUtil.logError(e);
 		}
