@@ -167,10 +167,7 @@ public final class HexEditorActionBarContributor extends EditorActionBarContribu
 		IMenuListener myMenuListener = new MyMenuListener();
 			
 		menu = menuManager.findMenuUsingPath(IWorkbenchActionConstants.M_FILE);
-		IContributionItem[] ici = menu.getItems();
-		for (IContributionItem ic : ici) {
-			System.out.println(ic.toString());
-		}
+
 		if (menu != null) {
 			// This is the correct place to add the menu contribution 
 			// "Auswahl speichern unter" aber er findet die MenuID
