@@ -662,7 +662,7 @@ of "DESede_CBC", "AES128_CBC", "AES192_CBC", or
     </Mac>
     <Mac class="de.flexiprovider.core.mac.CBCMac$Misty1">
       <Names>CBCmacMisty1</Names>
-      <BlockCipherReference name="Mysti1" mode="CBC" />
+      <BlockCipherReference name="Misty1" mode="CBC" />
     </Mac>
     <Mac class="de.flexiprovider.core.mac.CBCMac$RC2">
       <Names>CBCmacRC2</Names>
@@ -678,11 +678,11 @@ of "DESede_CBC", "AES128_CBC", "AES192_CBC", or
     </Mac>
     <Mac class="de.flexiprovider.core.mac.CBCMac$SAFERPlus">
       <Names>CBCmacSAFER+</Names>
-      <BlockCipherReference name="SAFERPlus" mode="CBC" />
+      <BlockCipherReference name="SAFER+" mode="CBC" />
     </Mac>
     <Mac class="de.flexiprovider.core.mac.CBCMac$SAFERPlusPlus">
       <Names>CBCmacSAFER++</Names>
-      <BlockCipherReference name="SAFERPlusPlus" mode="CBC" />
+      <BlockCipherReference name="SAFER++" mode="CBC" />
     </Mac>
     <Mac class="de.flexiprovider.core.mac.CBCMac$Serpent">
       <Names>CBCmacSerpent</Names>
