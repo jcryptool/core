@@ -25,29 +25,17 @@
 </table>
 	
 
-	<h2>xxxAbout MACs</h2>
+	<h2>Random number generation</h2>
 
-	<p>xxxIn cryptography, a message authentication code (MAC) is a short piece of information used to authenticate a message—in other words, to confirm that the message came from the stated sender (its authenticity) and has not been changed (its integrity). Verifiers (who also possess the secret key) can detect any changes to the message content.</p>
+	<p>Random number generation (RNG) is a process which generates a sequence of numbers or symbols that cannot be reasonably predicted better than by a random chance. Random number generators can be either true hardware random-number generators (HRNGs), which generate random numbers as a function of current values of some physical environment attribute that is constantly changing in a manner that is practically impossible to model, or pseudo-random number generators (PRNGs), which generate numbers that look random, but are actually deterministic, and can be reproduced if the state of the PRNG is known.</p>
 
-	<p>xxxWhile MAC functions are similar to cryptographic hash functions, they possess different security requirements and the so called signing function doesn't use only the message but also a symmetric key as input. MACs also differ from digital signatures as MAC values are both generated and verified using the same shared secret key, while digital signatures use the private key of the sender for signing and the public key of the sender for verification.</p>
+	<p>Several computational methods for pseudo-random number generation exist. The generation of pseudo-random numbers is an important and common task in computer programming. The design of cryptographically secure pseudorandom number generators (CSPRNG) or cryptographic pseudorandom number generators (CPRNG) can be based on cryptographic primitives such as ciphers and cryptographic hashes (e.g. <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/single/SHA1.html">SHA-1</a>, SHA-2, SHA-3).</p>
 	
 	<p>Further Random Number Generators can be found in the <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html">Algorithm Perspective</a> of JCT. See also the page <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/toc.html">General Information</a>.</p>
 
-	<p>More information about the single algorithm is available on the according sub site.</p>
+	<p>More information about the single algorithm used as computational method is available on the according sub site.</p>
 
 
-
-
-
-
-	<h2>xxxAbout MICs and message digests</h2>
-
-	<p>xxThis is just a remark about similar terms sometimes are mistaken.</p>
-
-	<p>xxxThe term message integrity code (MIC) is frequently substituted for the term MAC, especially in communications, in order to distinguish it from the use of MAC meaning MAC address (for media access control address). So MAC and MIC are used interchangeably.</p>
-
-	<p>xxxHowever, sometimes MIC is used to refer to a message digest, which is different from a MAC because a message digest does not use a secret key.</p>
-	
 	
 	
 
@@ -56,6 +44,14 @@
 	<ul>
 		<li>
         <a target="_blank" href="https://en.wikipedia.org/wiki/Random_number_generation" >https://en.wikipedia.org/wiki/Random_number_generation</a> Wikipedia Random number generation
+    	</li>
+
+		<li>
+        <a target="_blank" href="https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator" >https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator</a> Wikipedia Cryptographically secure pseudorandom number generator
+    	</li>
+
+		<li>
+        <a target="_blank" href="https://en.wikipedia.org/wiki/Pseudorandom_number_generator" >https://en.wikipedia.org/wiki/Pseudorandom_number_generator</a> Wikipedia Pseudorandom number generator
     	</li>
 	</ul>
 	
