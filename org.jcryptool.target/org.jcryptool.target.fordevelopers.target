@@ -29,7 +29,7 @@
 		<unit id="org.jcryptool.thirdparty.jre.win64.feature.feature.group" version="11.0.5.010"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="http://localhost:8080/site/libraries"/>
+		<repository location="https://www.cryptool.org/jct/thirdparty-p2/libraries"/>
 		<unit id="com.diffplug.durian.collect" version="1.2.0"/>
 		<unit id="com.diffplug.durian.collect.source" version="1.2.0"/>
 		<unit id="com.diffplug.durian.concurrent" version="1.2.0"/>
