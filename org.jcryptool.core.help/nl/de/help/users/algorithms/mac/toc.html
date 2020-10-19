@@ -3,12 +3,71 @@
 <html>
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	  <title>macOS</title>
+	  <title>Message Authentication Code (MAC)</title>
 </head>
-
 <body>
-	<h1>macOS</h1>
 
-	<p>Auf den Unterseiten finden Sie Informationen rund um die in JCrypTool enthaltenen <strong>macOS-Plug-ins</strong>.</p>
+<!-- This file is in the directory                            \core\org.jcryptool.core.help\nl\de\help\users\algorithms\mac
+       The file HMACMD5.html is in the directory  \core\org.jcryptool.core.help\nl\de\single
+ -->
+
+
+	<h1>Message Authentication Code (MAC)</h1>
+	
+	<p>Das JCT-Menü <strong><a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/algorithms/toc.html">Algorithmen</a> → MAC</strong> in der  <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_default.html">Default-Perspektive</a> von JCrypTool hat den folgenden Eintrag:</p>
+
+<table>
+    <tbody>
+
+        <tr>
+          <td><a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/HMACMD5.html">HMacMD5</a></td>
+          <td>HMacMD5</td>
+        </tr>
+
+    </tbody>
+</table>
+	
+
+	<h2>Über MACs</h2>
+
+	<p>In der Kryptographie ist ein Message Authentication Code (MAC) eine kurze Information, die zur Authentifizierung einer Nachricht verwendet wird – mit anderen Worten, um zu bestätigen, dass die Nachricht vom angegebenen Absender stammt (ihre Authentizität) und dass sie nicht verändert wurde (ihre Integrität). Verifizierer (die auch im Besitz des geheimen Schlüssels sind) können jegliche Änderung des Nachrichteninhalts erkennen.</p>
+
+	<p>MAC-Funktionen ähneln zwar kryptographischen Hash-Funktionen, besitzen jedoch andere Sicherheitsanforderungen, und die so genannte Signierfunktion verwendet nicht nur die Nachricht, sondern auch einen symmetrischen Schlüssel als Eingabe. MACs unterscheiden sich auch von digitalen Signaturen, da MAC-Werte sowohl generiert als auch verifiziert werden, indem derselbe gemeinsame geheime Schlüssel verwendet wird, während digitale Signaturen den privaten Schlüssel des Absenders zum Signieren und den öffentlichen Schlüssel des Absenders zur Verifizierung verwenden.</p>
+	
+	<p>Weitere MAC-Algorithmen finden Sie in der <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html">Algorithmen-Perspektive</a> von JCT. Siehe auch die Seite <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/toc.html">Allgemeine Informationen</a>.</p>
+
+	<p>Weitere Informationen zu dem einzelnen Algorithmus finden Sie auf der entsprechenden Unterseite.</p>
+
+
+
+
+
+
+	<h2>Über MICs und Message Digests</h2>
+
+	<p>Dies ist nur eine Anmerkung über ähnliche Begriffe, die manchmal falsch verwendet werden.</p>
+
+	<p>Der Begriff Message Integrity Code (MIC) wird häufig anstelle des Begriffs MAC verwendet, insbesondere in der Kommunikationstechnologie, um ihn von der Verwendung des MAC zu unterscheiden, d.h. der MAC-Adresse (für Media Access Control Address). MAC und MIC werden also austauschbar verwendet.</p>
+
+	<p> Manchmal wird jedoch MIC verwendet, um auf einen Message Digest zu verweisen, der sich von einem MAC unterscheidet, denn ein Message Digest verwendet keinen geheimen Schlüssel.</p>
+
+
+
+	
+	
+
+	<h2>Quellen</h2>
+	<!-- Im Deutschen ist bewusst der Link zur englischen UND zur deutschen Wikipedia angegeben. -->
+	<ul>
+		<li>
+        <a target="_blank" href="https://de.wikipedia.org/wiki/Message_Authentication_Code" >https://de.wikipedia.org/wiki/Message_Authentication_Code</a> Wikipedia Message Authentication Code
+    	</li>
+
+		<li>
+        <a target="_blank" href="https://en.wikipedia.org/wiki/Message_authentication_code" >https://en.wikipedia.org/wiki/Message_authentication_code</a> Wikipedia Message authentication code
+    	</li>
+	</ul>
+	
+	
 </body>
 </html>

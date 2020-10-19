@@ -71,37 +71,37 @@ public class FlexiProviderController extends AbstractProviderController {
 	
 	@Override
 	public void setProviders__sunPromoted() {
-		System.err.println("promoting sun security providers in FlexiProviderController");
+		LogUtil.logInfo(FlexiProviderPlugin.PLUGIN_ID, "promoting sun security providers in FlexiProviderController");
 		cacheDefaultProviders();
 		for(Provider p: Security.getProviders()) {
 			Security.removeProvider(p.getName());
 		}
 		// add the sun providers first
 		for (Provider provider: defaultProviders) {
-// 			System.err.println("adding Provider: " + provider.getName());
+//			LogUtil.logInfo(FlexiProviderPlugin.PLUGIN_ID, "adding Provider: " + provider.getName());
 			Security.addProvider(provider);
 		}
 		// add the Flexiproviders after
 		for (Provider provider : FLEXI_PROVIDERS) {
-// 			System.err.println("adding Provider: " + provider.getName());
+//			LogUtil.logInfo(FlexiProviderPlugin.PLUGIN_ID, "adding Provider: " + provider.getName());
 			Security.addProvider(provider);
 		}
 	}
 	@Override
 	public void setProviders__flexiPromoted() {
-		System.err.println("promoting flexi security providers in FlexiProviderController");
+		LogUtil.logInfo(FlexiProviderPlugin.PLUGIN_ID, "promoting flexi security providers in FlexiProviderController");
 		cacheDefaultProviders();
 		for(Provider p: Security.getProviders()) {
 			Security.removeProvider(p.getName());
 		}
 		// add the Flexiproviders first
 		for (Provider provider : FLEXI_PROVIDERS) {
-// 			System.err.println("adding Provider: " + provider.getName());
+//			LogUtil.logInfo(FlexiProviderPlugin.PLUGIN_ID, "adding Provider: " + provider.getName());
 			Security.addProvider(provider);
 		}
 		// add the sun providers after
 		for (Provider provider: defaultProviders) {
-// 			System.err.println("adding Provider: " + provider.getName());
+//			LogUtil.logInfo(FlexiProviderPlugin.PLUGIN_ID, "adding Provider: " + provider.getName());
 			Security.addProvider(provider);
 		}
 	}
@@ -121,11 +121,11 @@ public class FlexiProviderController extends AbstractProviderController {
 		providers.add(FLEXI_NF_PROVIDER.getName() + AbstractProviderController.SEPARATOR + FLEXI_NF_PROVIDER.getInfo());
 
 		setProviders__sunPromoted();
-		System.err.println("CURRENT PROVIDERS: ----");
+		LogUtil.logInfo(FlexiProviderPlugin.PLUGIN_ID, "CURRENT PROVIDERS: ----");
 		for (Provider p: Security.getProviders()) {
-			System.err.println("- " + p.getName());
+			LogUtil.logInfo(FlexiProviderPlugin.PLUGIN_ID, "- " + p.getName());
 		}
-		System.err.println("END: CURRENT PROVIDERS: ----");
+		LogUtil.logInfo(FlexiProviderPlugin.PLUGIN_ID, "END: CURRENT PROVIDERS: ----");
 		return providers;
 	}
 
