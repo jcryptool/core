@@ -307,7 +307,6 @@ public final class Manager {
 			return;
 		}
 
-//		hexTexts.get
 		hexTexts.copy();
 	}
 
