@@ -108,7 +108,8 @@ public final class HexEditorActionBarContributor extends EditorActionBarContribu
 			boolean lengthModifiable = textSelected && !activeEditor.getManager().isOverwriteMode();
 			boolean filled = activeEditor.getManager().isFilled();
 
-			MenuItem menuItem = getMenuItem(IWorkbenchActionConstants.M_FILE, MenuIds.SAVE_SELECTION_AS);
+//			MenuItem menuItem = getMenuItem(IWorkbenchActionConstants.M_FILE, MenuIds.SAVE_SELECTION_AS);
+			MenuItem menuItem = getMenuItem(IWorkbenchActionConstants.M_EDIT, MenuIds.SAVE_SELECTION_AS);
 			if (menuItem != null) {
 				menuItem.setEnabled(textSelected);
 			}
@@ -166,7 +167,8 @@ public final class HexEditorActionBarContributor extends EditorActionBarContribu
 		IMenuManager menu;
 		IMenuListener myMenuListener = new MyMenuListener();
 			
-		menu = menuManager.findMenuUsingPath(IWorkbenchActionConstants.M_FILE);
+//		menu = menuManager.findMenuUsingPath(IWorkbenchActionConstants.M_FILE);
+		menu = menuManager.findMenuUsingPath(IWorkbenchActionConstants.M_EDIT);
 
 		if (menu != null) {
 			// This is the correct place to add the menu contribution 

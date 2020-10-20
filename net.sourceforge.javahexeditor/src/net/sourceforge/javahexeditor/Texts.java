@@ -33,6 +33,11 @@ public final class Texts extends NLS {
 	// ByteArrayUtility
 	public static String BYTE_ARRAY_UTILITY_INVALID_HEX_STRING;
 
+	// Copy Dialog 
+	public static String CopyDialog_hex_or_text;
+	public static String CopyDialog_title;
+	public static String CopyDialog_to_long_for_clipboard;
+
 	public static String DIALOG_ERROR_NOT_A_NUMBER_MESSAGE;
 	public static String DIALOG_ERROR_LOCATION_OUT_OF_RANGE_MESSAGE;
 	public static String DIALOG_ERROR_END_SMALLER_THAN_OR_EQUAL_TO_START_MESSAGE;

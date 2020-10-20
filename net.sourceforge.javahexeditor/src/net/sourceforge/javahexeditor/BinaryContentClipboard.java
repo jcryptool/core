@@ -179,7 +179,7 @@ final class BinaryContentClipboard {
 	private final File clipboardFile;
 
 	// 4 Megs for byte[], 4 Megs for text
-	private static final long maxClipboardDataInMemory = 4 * 1024 * 1024;
+	public static final long maxClipboardDataInMemory = 4 * 1024 * 1024;
 	private Clipboard myClipboard;
 	private Map<File, Integer> myFilesReferencesCounter;
 
@@ -316,7 +316,7 @@ final class BinaryContentClipboard {
 	}
 
 	/**
-	 * Set the clipboard contents with a BinaryContent
+	 * Copie text representation to clipboard
 	 *
 	 * @param content
 	 * @param start
@@ -336,10 +336,6 @@ final class BinaryContentClipboard {
 				String textData = new String(byteArrayData);
 				transfers = new Transfer[] { MemoryByteArrayTransfer.getInstance(), TextTransfer.getInstance() };
 				data = new Object[] { byteArrayData, textData };
-			} else {
-				content.get(clipboardFile, start, length);
-				transfers = new Transfer[] { FileByteArrayTransfer.getInstance() };
-				data = new Object[] { clipboardFile };
 			}
 		} catch (IOException e) {
 			myClipboard.setContents(new Object[] { new byte[1] },
@@ -348,6 +344,54 @@ final class BinaryContentClipboard {
 			emptyClipboardFile();
 			return; // copy nothing then
 		}
+		myClipboard.setContents(data, transfers);
+	}
+
+	/**
+	 * Copies selected hex values from the editor to the clipboard
+	 * @param content
+	 * @param start
+	 * @param length
+	 */
+	public void setContentsHex(BinaryContent content, long start, long length) {
+		if (length < 1L) {
+			return;
+		}
+
+		Object[] data = null;
+		Transfer[] transfers = null;
+		try {
+			// Content fits into the Clipboard (content < 4MB)
+			// The check here is not becessary anymore
+			if (length <= maxClipboardDataInMemory) {
+				byte[] byteArrayData = new byte[(int) length];
+				content.get(ByteBuffer.wrap(byteArrayData), start);
+				StringBuilder sb = new StringBuilder();
+				
+
+				int tempByteValue;
+				for (Byte b : byteArrayData) {
+					// Sometimes the integer representation of the hex values are negative
+					// due to javas signed ints. This causes problems when using Integer.toHexString.
+					// There I exlicitly convert them to an unsigned int. 
+					tempByteValue = Byte.toUnsignedInt(b);
+					// This adds a preceding '0' when the hex value is less than F.
+					if (tempByteValue <= 16) {
+						sb.append(0);
+					}
+					sb.append(Integer.toHexString(tempByteValue).toUpperCase());
+				}
+				transfers = new Transfer[] { MemoryByteArrayTransfer.getInstance(), TextTransfer.getInstance() };
+				data = new Object[] { byteArrayData, sb.toString() };
+			}
+		} catch (IOException e) {
+			myClipboard.setContents(new Object[] { new byte[1] },
+					new Transfer[] { MemoryByteArrayTransfer.getInstance() });
+			myClipboard.clearContents();
+			emptyClipboardFile();
+			return; // copy nothing then
+		}
+
 		myClipboard.setContents(data, transfers);
 	}
 

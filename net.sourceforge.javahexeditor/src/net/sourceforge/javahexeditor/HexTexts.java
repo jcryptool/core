@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
@@ -906,7 +907,29 @@ public final class HexTexts extends Composite {
 			return;
 		}
 
-		myClipboard.setContents(myContent, myStart, myEnd - myStart);
+
+		long length = myEnd - myStart;
+		boolean toBigforClipboard = false;
+		if (length > (4 * 1024 * 1024)) {
+			toBigforClipboard = true;
+		}
+
+		// Create the "copy hex or text" dialog 
+		Dialog d = new CopyDialog(Display.getCurrent().getActiveShell(), toBigforClipboard);
+		int returnValue = d.open();
+
+		if (returnValue == 1) {
+			// 1 is returned if the user closed the dialog 
+			// Do nothing
+		} else if (returnValue == 2) {
+			// The user pressed "hex"
+			// Copy the hex values to the clipboard
+			myClipboard.setContentsHex(myContent, myStart, length);
+		} else  if (returnValue == 3) {
+			// The user pressed "utf8"
+			// copy the text representation to the clipboard.
+			myClipboard.setContents(myContent, myStart, length);
+		}
 	}
 
 	private StringBuilder cookAddresses(long address, int limit) {
