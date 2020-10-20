@@ -1097,7 +1097,7 @@ public class IntegratorWizardPage extends WizardPage {
         final Text randomText = new Text(randomGroup, SWT.BORDER);
         randomText.setLayoutData(gridData);
         // random_text.setOrientation(SWT.RIGHT_TO_LEFT);
-        randomText.setText("128"); //$NON-NLS-1$
+        randomText.setText("100"); //$NON-NLS-1$
         randomText.addKeyListener(new KeyListener() {
             public void keyPressed(KeyEvent e) {
                 if ((Character.getType(e.character) != Character.DECIMAL_DIGIT_NUMBER) && (e.keyCode != SWT.ARROW_LEFT)

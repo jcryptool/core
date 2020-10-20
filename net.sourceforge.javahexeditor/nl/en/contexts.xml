@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
    <context id="hexEditor" title="Hexeditor">
-      <description>The <b>Hexeditor</b> can be used to create, edit and view all types of files.</description>
+      <description>The <b>hexeditor</b> can be used to create, edit and view all types of files.</description>
       <topic href="../org.jcryptool.core.help/$nl$/help/users/general/editor_hex.html" label="Hexeditor"/>
       <topic href="../org.jcryptool.core.help/$nl$/help/users/general/editor_text.html" label="Texteditor"/>
    </context>
