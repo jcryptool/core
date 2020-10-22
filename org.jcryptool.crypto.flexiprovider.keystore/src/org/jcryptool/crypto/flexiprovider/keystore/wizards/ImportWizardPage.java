@@ -361,9 +361,9 @@ public class ImportWizardPage extends WizardPage implements Listener {
         passwordGroup.setText(Messages.ImportWizardPage_12);
         passwordGroup.setLayout(gridLayout2);
         passwordGroup.setLayoutData(gridData2);
-        passwordDescriptionLabel = new Label(passwordGroup, SWT.NONE);
-        passwordDescriptionLabel.setText(Messages.ImportWizardPage_13);
-        passwordDescriptionLabel.setLayoutData(gridData9);
+//        passwordDescriptionLabel = new Label(passwordGroup, SWT.NONE);
+//        passwordDescriptionLabel.setText(Messages.ImportWizardPage_13);
+//        passwordDescriptionLabel.setLayoutData(gridData9);
         enterPasswordLabel = new Label(passwordGroup, SWT.NONE);
         enterPasswordLabel.setText(Messages.ImportWizardPage_14);
         enterPasswordLabel.setLayoutData(gridData15);
