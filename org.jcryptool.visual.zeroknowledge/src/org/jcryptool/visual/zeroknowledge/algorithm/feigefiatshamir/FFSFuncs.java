@@ -28,6 +28,8 @@ public class FFSFuncs implements Funcs {
     private FFSCarol carol;
 
     private boolean secretKnown;
+    
+    private int length;
 
     /**
      * Konstruktor, der ein Alice-Objekt und ein Modell erhält
@@ -37,7 +39,7 @@ public class FFSFuncs implements Funcs {
      */
     public FFSFuncs(FFSAlice alice2, Modell m) {
         secretKnown = true;
-        int length = alice2.getSecret().length;
+        length = alice2.getSecret().length;
         alice = new FFSAlice(length);
         alice.setN(m.getP(), m.getQ());
         alice.generateSecret();
@@ -97,5 +99,14 @@ public class FFSFuncs implements Funcs {
      */
     public void setSecretKnown(boolean isAlice) {
         this.secretKnown = isAlice;
+    }
+   
+    /**
+     * Return the length of the secret vector (between 1 and 4)
+     * 
+     * @return length as integer
+     */
+    public int getVectorLength() {
+    	return length;
     }
 }

@@ -39,6 +39,7 @@ public class Buttons {
     private Protocol protocol;
     private Button reset;
     private Button repeatedly;
+    private FFSAlice _alice;
 
     /**
      * Konstruktor, der die graphische Komponente erstellt
@@ -48,6 +49,7 @@ public class Buttons {
      */
     public Buttons(Protocol pro, final Composite parent, final Object par, final FFSAlice alice) {
         this.protocol = pro;
+        this._alice = alice;
 
         group = new Group(parent, SWT.NONE);
         group.setLayout(new GridLayout(3, true));
@@ -104,9 +106,9 @@ public class Buttons {
              * öffnet ein M_Repeat-Dialog, der das Protokoll mehrmals durchführen kann.
              */
             public void widgetSelected(SelectionEvent ev) {
-                if (alice != null) {
+                if (_alice != null) {
                     // When FeigeFiatShamir
-                    new Repeat(parent.getShell(), new FFSFuncs(alice, (Modell) par), "FFS."); //$NON-NLS-1$
+                    new Repeat(parent.getShell(), new FFSFuncs(_alice, (Modell) par), "FFS."); //$NON-NLS-1$
                 } else {
                     if (par == null) { // Graph
                         new Repeat(parent.getShell(), new GFuncs(), ""); //$NON-NLS-1$
@@ -143,5 +145,9 @@ public class Buttons {
      */
     public Group getGroup() {
         return group;
+    }
+    
+    public void setAlgorithmData(FFSAlice alice) {
+    	this._alice = alice;
     }
 }

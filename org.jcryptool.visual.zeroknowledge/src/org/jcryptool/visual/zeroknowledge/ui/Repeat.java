@@ -9,6 +9,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.zeroknowledge.ui;
 
+import java.util.HashMap;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -22,6 +23,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Shell;
 import org.jcryptool.visual.zeroknowledge.algorithm.Funcs;
+import org.jcryptool.visual.zeroknowledge.algorithm.feigefiatshamir.FFSFuncs;
 
 /**
  * Diese Klasse ist ein Dialog, der ein Protokoll mehrmals durchgeführt werden kann. Dazu muss das
@@ -43,9 +45,7 @@ public class Repeat extends Dialog {
     private Label info;
     private Button start;
     private Composite main;
-    // This is the percentage how likely it is for carol to guess the right answer
-    // in one single round
-    private Double algoPercentage;
+    private HashMap<Integer, Double> attackChances;
 
     /**
      * Konstruktor für die graphische Oberfläche
@@ -60,10 +60,10 @@ public class Repeat extends Dialog {
         this.funcs = funcs;
         // Sets Carols chance to guess right for the different functions
         // All except FiatFeigeShamir have a probability of 50%
-        if (funcs.getClass().getSimpleName().equals("FFS_Funcs")) { //$NON-NLS-1$
-            algoPercentage = 0.0625;
+        if (string == "FFS.") { 
+            attackChances = calculateAttackChances(((FFSFuncs) funcs).getVectorLength());
         } else {
-            algoPercentage = 0.5;
+            attackChances = calculateAttackChances(1);
         }
 
         Shell shell = new Shell(parent, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
@@ -71,21 +71,16 @@ public class Repeat extends Dialog {
         createGui(shell);
         shell.pack();
         shell.open();
-        Display display = parent.getDisplay();
-        while (!shell.isDisposed()) {
-            if (!display.readAndDispatch())
-                display.sleep();
-        }
     }
 
     private void createGui(Shell s) {
-    	
-    	main = new Composite(s, SWT.NONE);
-    	GridLayout gl_main = new GridLayout(3, false);
-    	gl_main.marginWidth = 50;
-    	gl_main.marginHeight = 20;
-    	main.setLayout(gl_main);
-    	
+
+        main = new Composite(s, SWT.NONE);
+        GridLayout gl_main = new GridLayout(3, false);
+        gl_main.marginWidth = 50;
+        gl_main.marginHeight = 20;
+        main.setLayout(gl_main);
+
         aliceButton = new Button(main, SWT.RADIO | SWT.WRAP);
         aliceButton.setText(Messages.Repeat_2);
         aliceButton.addSelectionListener(
@@ -97,7 +92,7 @@ public class Repeat extends Dialog {
              * "nicht ausgewählt" gesetzt
              */
             @Override
-			public void widgetSelected(SelectionEvent e) {
+            public void widgetSelected(SelectionEvent e) {
                 aliceButton.setSelection(true);
                 carolButton.setSelection(false);
                 carolPercent.setVisible(false);
@@ -119,7 +114,7 @@ public class Repeat extends Dialog {
              * "nicht ausgewählt" gesetzt
              */
             @Override
-			public void widgetSelected(SelectionEvent e) {
+            public void widgetSelected(SelectionEvent e) {
                 aliceButton.setSelection(false);
                 carolButton.setSelection(true);
                 carolPercent.setVisible(true);
@@ -127,9 +122,8 @@ public class Repeat extends Dialog {
             }
         });
         GridData gd_carolButton = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
-        gd_carolButton.heightHint = 50;
         carolButton.setLayoutData(gd_carolButton);
-                
+
         info = new Label(main, SWT.NONE);
         info.setText(Messages.Repeat_4);
         GridData gd_info = new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1);
@@ -143,8 +137,8 @@ public class Repeat extends Dialog {
         
         amountAnzeige = new Label(main, SWT.NONE);
         amountAnzeige.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-    	
-    	amount = new Scale(main, SWT.NONE);
+
+        amount = new Scale(main, SWT.NONE);
         amount.setPageIncrement(2);
         amount.setMinimum(1);
         amount.setMaximum(20);
@@ -157,21 +151,22 @@ public class Repeat extends Dialog {
              * Label, das die Anzahl der Durchläufe angibt
              */
             @Override
-			public void widgetSelected(SelectionEvent arg0) {
-                amountAnzeige.setText(amount.getSelection() + ""); //$NON-NLS-1$
+            public void widgetSelected(SelectionEvent arg0) {
+                var selectedRounds = amount.getSelection();
+                amountAnzeige.setText(Integer.toString(selectedRounds)); //$NON-NLS-1$
                 // If Carol:
                 // Calculate how likely it is for the specified amount of iterations
                 // to deceive Bob
-                Double chance = getChance(algoPercentage, Double.valueOf(amount.getSelection()));
+                var chance = attackChances.get(selectedRounds);
                 if (chance < 0.01) {
-                    carolPercent.setText(" <0.01" + Messages.Repeat_1); //$NON-NLS-1$
+                    carolPercent.setText(String.format(" %6.2e", chance) + Messages.Repeat_1);
                 } else {
-                    carolPercent.setText(" " + Double.toString(chance) + Messages.Repeat_1); //$NON-NLS-1$
+                    carolPercent.setText(" " + Double.toString(chance) + Messages.Repeat_1);
                 }
             }
         });
         amount.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        
+
         start = new Button(main, SWT.PUSH);
         start.setText(Messages.Repeat_9);
         start.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
@@ -184,7 +179,7 @@ public class Repeat extends Dialog {
              * aus.
              */
             @Override
-			public void widgetSelected(SelectionEvent e) {
+            public void widgetSelected(SelectionEvent e) {
                 int amount_int = amount.getSelection();
                 int result = funcs.protokoll(amount_int);
                 String s = result + Messages.Repeat_5;
@@ -203,25 +198,40 @@ public class Repeat extends Dialog {
             }
         });
         start.setToolTipText(Messages.Repeat_8);
-       
+
         ergebnis = new Label(main, SWT.NONE);
         ergebnis.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
-        
-        amountAnzeige.setText(amount.getSelection() + ""); //$NON-NLS-1$
+
+        var defaultScalerSelect = amount.getSelection();
+        amountAnzeige.setText(Integer.toString(defaultScalerSelect));
 
         // Set initial chance to deceive Bob when "Carol"
-        String tmp =
-                Double.toString(getChance(algoPercentage, Double.valueOf(amount.getSelection())));
-        if (tmp.equals("0.0"))tmp = "<0.01"; //$NON-NLS-1$ //$NON-NLS-2$
-        carolPercent.setText(" " + tmp + Messages.Repeat_1); //$NON-NLS-1$
-        
+        var chance = attackChances.get(defaultScalerSelect);
+
+        if (chance < 0.01) {
+            carolPercent.setText(String.format(" %6.2e", chance) + Messages.Repeat_1);
+        } else {
+            carolPercent.setText(" " + Double.toString(chance) + Messages.Repeat_1);
+        } 
         
         main.pack();
     }
 
-    // Computes (percentage^runs) in percentage (xx.yy%)
-    private Double getChance(Double percentage, Double runs) {
-        Double tmp = 10000 * Math.pow(percentage, runs);
-        return Double.valueOf(Long.toString(Math.round(tmp))) / 100;
+    /**
+     * Calculate a map of (round: chance of successful attack) for 20 rounds.
+     * 
+     * The attack chance for Feige-Fiat-Shamir is 0.5^(k*t), where k is the used
+     * secret vector length and t is the number of rounds in the protocol. 
+     * 
+     * @param vectorSize Length of secret vector used in the protocol variant.
+     * @return A HashMap with key=round, value=chance
+     * 
+     */
+    private HashMap<Integer, Double> calculateAttackChances(int vectorSize) {
+        var map = new HashMap<Integer, Double>();
+        for (int i = 1; i <= 21; ++i) {
+            map.put(i, Math.pow(0.5, i * vectorSize));
+        }
+        return map;
     }
 }

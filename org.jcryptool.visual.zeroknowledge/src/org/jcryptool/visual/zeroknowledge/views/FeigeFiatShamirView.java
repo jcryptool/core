@@ -181,7 +181,9 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
                     paramsCarol.getGroup().dispose();
                     paramsCarol = new FFSParamsAliceCarol(carol, info);
                 }
-
+                
+                // Update the new data in the Buttons object (sigh)
+                buttons.setAlgorithmData(alice);
                 // do a new lay-out because size of the boxes may have changed
                 info.layout(true);
             }
