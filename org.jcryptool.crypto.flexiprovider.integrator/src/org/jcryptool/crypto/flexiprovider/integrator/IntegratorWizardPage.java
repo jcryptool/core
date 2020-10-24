@@ -420,6 +420,7 @@ public class IntegratorWizardPage extends WizardPage {
     private Composite showcaseKeyFromKeystoreComposite;
     private KeyStoreAlias createdKeyPairAlias;
     private String buttonTextBeforeJobrunningMsg;
+	private Button fillerBtn;
 
     /**
      * This method initializes the 'Key from keystore'-group
@@ -1173,9 +1174,10 @@ public class IntegratorWizardPage extends WizardPage {
         });
 
         gridData = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        label = new Label(alphabetGroup, SWT.LEFT);
-        label.setLayoutData(gridData);
-        label.setText(""); //$NON-NLS-1$
+        fillerBtn = new Button(alphabetGroup, SWT.RADIO);
+        fillerBtn.setVisible(false);
+        fillerBtn.setLayoutData(gridData);
+        fillerBtn.setText(""); //$NON-NLS-1$
 
         gridData = new GridData(SWT.FILL, SWT.CENTER, true, false, 6, 1);
         alphabet_text = new Text(alphabetGroup, SWT.BORDER);
