@@ -147,7 +147,6 @@ public class ExtendedRSA_Visual extends ViewPart {
 		comp_center.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		tabFolder = new ExtendedTabFolder(comp_center, SWT.V_SCROLL);
-		tabFolder.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN));
 		GridData gd_tabFolder = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		tabFolder.setLayoutData(gd_tabFolder);
 
