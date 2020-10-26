@@ -17,6 +17,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
@@ -263,12 +265,27 @@ public class AlgorithmInstruction extends ViewPart {
 					// After the countdown has finished switch to the next image.
 					// After 15 seconds it switches to the next image.
 					Thread.sleep(15000);
-
+					
 					Display.getDefault().asyncExec(new Runnable() {
 
 						@Override
 						public void run() {
-							slideToNextImage();
+							IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+							IViewPart part = page.findView("org.jcryptool.core.introduction.views.AlgorithmInstruction");
+							// The slideshow plugin is open, but maybe not visible
+							if (part != null) {
+								// The slideshow plugin is visible, thus maybe not active.
+								if (page.isPartVisible(part)) {
+									// Slide to the next image
+									slideToNextImage();
+								} else {
+									//trigger this method in 15 seconds
+									resetTimer();
+								}
+							} else {
+								//trigger this method in 15 seconds
+								resetTimer();
+							}
 						}
 					});
 
