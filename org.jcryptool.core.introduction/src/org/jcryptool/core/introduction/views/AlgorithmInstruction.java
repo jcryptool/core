@@ -30,10 +30,6 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.core.util.ui.auto.SmoothScroller;
-
-//import java.util.concurrent.ExecutorService;
-//import java.util.concurrent.Executors;
-
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.nebula.effects.stw.ImageTransitionable;
@@ -563,6 +559,8 @@ public class AlgorithmInstruction extends ViewPart {
 		slideTransition.start(scaled_imgs[curImage], curImage, scaled_imgs[nextImage], nextImage, cnvs,
 				SlideTransition.DIR_LEFT);
 		curImage = nextImage;
+		cnvs.redraw();
+		cnvs.update();
 		resetTimer();
 	}
 
