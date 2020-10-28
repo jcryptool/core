@@ -146,10 +146,11 @@ public class ProviderManager2 {
      * see also: {@link #pushFlexiProviderPromotion()}
 	 */
 	public void popCryptoProviderPromotion() {
+		if (providerStack.size() > 0) {
+			this.providerStack.remove(providerStack.size()-1);
+		}
 		if (providerStack.size() == 0) {
 			this.controllers.forEach(c -> c.setProviders__sunPromoted());
-		} else {
-			this.providerStack.remove(providerStack.size()-1);
 		}
 	}
 
