@@ -1,4 +1,4 @@
-In the JCrypTool console, you can use cryptographic algorithms from the command line. 
+In the JCrypTool console, you can use classical cryptographic algorithms from the built-in command line.
 Enter 'help -l' to view the list of the console commands (in alphabetical order).
 The help command helps you with the syntax of commands and can give you examples of calling commands:
  
