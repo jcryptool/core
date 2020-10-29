@@ -1,4 +1,4 @@
-In der JCrypTool-Konsole können Sie die kryptografischen Algorithmen von der Kommandozeile aufrufen.
+In der JCrypTool-Konsole können Sie die klassischen, kryptografischen Algorithmen von der eingebauten Kommandozeile aus aufrufen.
 Geben Sie 'help -l' ein, um eine vollständige (alphabetisch geordnete) Liste der Algorithmen zu erhalten.
 Zu jedem Befehl liefert die Hilfe sowohl die Befehlssyntax als auch Aufrufbeispiele:
 
