@@ -575,6 +575,8 @@ public class AlgorithmInstruction extends ViewPart {
 		slideTransition.start(scaled_imgs[curImage], curImage, scaled_imgs[previousImage], previousImage, cnvs,
 				SlideTransition.DIR_RIGHT);
 		curImage = previousImage;
+		cnvs.redraw();
+		cnvs.update();
 		resetTimer();
 	}
 
@@ -601,6 +603,8 @@ public class AlgorithmInstruction extends ViewPart {
 			slideTransition.start(scaled_imgs[curImage], curImage, scaled_imgs[imageNr], imageNr, cnvs, direction);
 			curImage = imageNr;
 			
+			cnvs.redraw();
+			cnvs.update();
 			
 			resetTimer();
 		}
