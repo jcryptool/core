@@ -24,7 +24,7 @@
       <description>Dies ist die FlexiProvider Implementierung des HMacMD5 Hashes. In der Algorithmen-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
   		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html" label="Algorithmen-Perspektive"/>
    </context>
-   <context id="SHA1Wizard" title="SHA-1 Zufallszahlengenerators">
+   <context id="SHA-1Wizard" title="SHA-1 Zufallszahlengenerators">
       <description>Dies ist die FlexiProvider Implementierung des SHA-1 Zufallszahlengenerators. In der Algorithmen-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
   		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html" label="Algorithmen-Perspektive"/>
    </context>
@@ -36,7 +36,7 @@
       <description>Dies ist die FlexiProvider Implementierung des MD5 Hashes. In der Algorithmen-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
   		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html" label="Algorithmen-Perspektive"/>
    </context>
-   <context id="SHAWizard" title="SHA-256 Hash">
+   <context id="SHA-256Wizard" title="SHA-256 Hash">
       <description>Dies ist die FlexiProvider Implementierung des SHA-256 Hashes. In der Algorithmen-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
   		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html" label="Algorithmen-Perspektive"/>
    </context>

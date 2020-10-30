@@ -44,7 +44,7 @@
          point="org.jcryptool.core.operations.algorithms_cmd">
       <algorithm_cmd
             class="org.jcryptool.crypto.flexiprovider.integrator.messagedigest.sha.Sha"
-            contextHelpId="org.jcryptool.crypto.flexiprovider.integrator.SHAWizard"
+            contextHelpId="org.jcryptool.crypto.flexiprovider.integrator.SHA-256Wizard"
             handlerClass="org.jcryptool.crypto.flexiprovider.integrator.messagedigest.sha.ShaHandler"
             id="org.jcryptool.crypto.flexiprovider.integrator.messagedigest.sha"
             isFlexiProviderAlgorithm="true"
@@ -122,7 +122,7 @@
          point="org.jcryptool.core.operations.algorithms_cmd">
       <algorithm_cmd
             class="org.jcryptool.crypto.flexiprovider.integrator.prng.sha1.Sha1"
-            contextHelpId="org.jcryptool.crypto.flexiprovider.integrator.SHA1Wizard"
+            contextHelpId="org.jcryptool.crypto.flexiprovider.integrator.SHA-1Wizard"
             handlerClass="org.jcryptool.crypto.flexiprovider.integrator.prng.sha1.Sha1Handler"
             id="org.jcryptool.crypto.flexiprovider.integrator.prng.sha1"
             isFlexiProviderAlgorithm="true"
