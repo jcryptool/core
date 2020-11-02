@@ -110,7 +110,7 @@ public class VigenereBreakerView extends ViewPart {
     private void maximizeView() {
         // checks whether view got focus before or not.
         // if first focus continue; otherwise do nothing (through return)
-        if (!first) {
+        if (first) {
             return;
         }
 
