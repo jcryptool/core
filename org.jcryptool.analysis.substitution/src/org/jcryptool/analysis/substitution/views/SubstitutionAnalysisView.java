@@ -18,6 +18,7 @@ import java.util.Observer;
 import java.util.Set;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -30,6 +31,7 @@ import org.jcryptool.analysis.substitution.ui.modules.SubstitutionAnalysisConfig
 import org.jcryptool.analysis.substitution.ui.modules.SubstitutionAnalysisPanel;
 import org.jcryptool.analysis.substitution.views.SubstitutionAnalysisView.State.Step;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
+import org.jcryptool.core.util.ui.auto.SmoothScroller;
 
 
 /**
@@ -59,6 +61,8 @@ public class SubstitutionAnalysisView extends ViewPart {
 	private Composite mainPanel;
 
 	private SubstitutionAnalysisConfigPanel configPanel;
+	
+	private ScrolledComposite scrolledComposite;
 
 	/*
 	 * The content provider class is responsible for
@@ -97,17 +101,35 @@ public class SubstitutionAnalysisView extends ViewPart {
 	private Composite getMainComposite() {
 		return mainComposite;
 	}
+	
+	private ScrolledComposite getScrolledComposite() {
+		return scrolledComposite;
+	}
 
 
 	@Override
 	public void createPartControl(Composite parent) {
-		mainComposite = new Composite(parent, SWT.NONE);
+		
+		scrolledComposite = new ScrolledComposite(parent, SWT.V_SCROLL);
+		//scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		scrolledComposite.setExpandHorizontal(false);
+		scrolledComposite.setExpandVertical(true);
+		
+		// This makes the ScrolledComposite scrolling, when the mouse 
+		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
+		// SWT.V_SCROLL or SWT-H_SCROLL.
+		
+		//FIXME: TODO
+		
+		mainComposite = new Composite(scrolledComposite, SWT.NONE);
 		mainComposite.setLayout(new GridLayout());
-
+		mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		scrolledComposite.setContent(mainComposite);
 		createAppropriatePanel(state);
 
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, Activator.PLUGIN_ID + ".substitutionHelpID"); //$NON-NLS-1$
-
+		SmoothScroller.scrollSmooth(scrolledComposite);
 	}
 
 	private void createAppropriatePanel(State state) {
@@ -115,10 +137,20 @@ public class SubstitutionAnalysisView extends ViewPart {
 			mainPanel.dispose();
 		}
 		if(state.getStep() == Step.CONFIG) {
+			
+			
+			//scrolledComposite = new ScrolledComposite(mainComposite, SWT.H_SCROLL | SWT.V_SCROLL);
+			//scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+			//scrolledComposite.setExpandHorizontal(true);
+			//scrolledComposite.setExpandVertical(true);
+			
+			
 			SubstitutionAnalysisConfigPanel panel = createConfigPanel(mainComposite);
 			setMainPanel(panel);
-			this.configPanel = panel;
+			this.configPanel = panel;	
+			//scrolledComposite.setContent(panel);
 		} else if(state.getStep() == Step.ANALYSIS) {
+			//scrolledComposite.dispose();
 			SubstitutionAnalysisConfigPanel.State data = this.configPanel.getState();
 			SubstitutionAnalysisPanel panel = createAnalysisPanel(mainComposite, data.getTextForAnalysis(), data.getAlphabet(), data.getStatistics());
 			setMainPanel(panel);

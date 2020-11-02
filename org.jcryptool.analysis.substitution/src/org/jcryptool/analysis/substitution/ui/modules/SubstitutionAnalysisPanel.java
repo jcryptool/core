@@ -20,6 +20,7 @@ import java.util.Observer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
@@ -29,6 +30,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.jcryptool.analysis.substitution.calc.TextStatistic;
 import org.jcryptool.analysis.substitution.ui.modules.utils.StatisticsDisplayer;
 import org.jcryptool.analysis.substitution.ui.modules.utils.StatisticsWizard;
@@ -75,7 +77,9 @@ public class SubstitutionAnalysisPanel extends Composite {
 		gridLayout.marginHeight = 0;
 		gridLayout.marginWidth = 0;
 		setLayout(gridLayout);
-	
+
+		
+		
 		TitleAndDescriptionComposite td = new TitleAndDescriptionComposite(this);
 		GridData gdTitle = new GridData(SWT.FILL, SWT.FILL, true, false);
 		gdTitle.minimumWidth = MAIN_LBL_WIDTH_HINT;
@@ -88,6 +92,7 @@ public class SubstitutionAnalysisPanel extends Composite {
 		grpLetterFrequencyStatistics.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 3));
 		grpLetterFrequencyStatistics.setText(Messages.SubstitutionAnalysisPanel_1);
 		grpLetterFrequencyStatistics.setLayout(new GridLayout(1, false));
+
 		
 		initLetterFreqGroup(grpLetterFrequencyStatistics);
 		
@@ -104,6 +109,7 @@ public class SubstitutionAnalysisPanel extends Composite {
 		grpPreviewOfThe.setLayout(new GridLayout(1, false));
 		
 		initPreviewGroup(grpPreviewOfThe);
+		
 	}
 
 	private void initPreviewGroup(Group grpPreviewOfThe) {
