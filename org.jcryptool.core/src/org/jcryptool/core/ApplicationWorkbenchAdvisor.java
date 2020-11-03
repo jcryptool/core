@@ -12,9 +12,6 @@ package org.jcryptool.core;
 import java.util.regex.Pattern;
 
 import org.eclipse.ui.IEditorReference;
-import org.eclipse.ui.IPartListener;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.application.IWorkbenchConfigurer;
@@ -23,7 +20,6 @@ import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.OperationsPlugin;
-import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.constants.IConstants;
 
 /**
@@ -62,59 +58,15 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
     /**
      * Performs arbitrary actions after the workbench windows have been opened (or restored), but before the main event
      * loop is run.
-     *
-     * Specifically a part listener is added to the workbench page. The algorithm actions will be enabled if at least
-     * the text or hex editor is active. Otherwise the will be disabled.
      */
     @Override
 	public void postStartup() {
         super.postStartup();
-
         if (OperationsPlugin.getDefault().getAlgorithmsManager() != null) {
-            IWorkbenchPage activePage = getWorkbenchConfigurer().getWorkbench().getActiveWorkbenchWindow()
-                    .getActivePage();
-
-            activePage.addPartListener(new IPartListener() {
-                @Override
-				public void partActivated(IWorkbenchPart part) {
-                    setAlgorithmActionStatus(part);
-                }
-
-                @Override
-				public void partBroughtToTop(IWorkbenchPart part) {
-                	setAlgorithmActionStatus(part);
-                }
-
-                @Override
-				public void partClosed(IWorkbenchPart part) {
-                	setAlgorithmActionStatus(part);
-                }
-
-                @Override
-				public void partDeactivated(IWorkbenchPart part) {
-                    setAlgorithmActionStatus(part);
-                }
-
-                @Override
-				public void partOpened(IWorkbenchPart part) {
-                	setAlgorithmActionStatus(part);
-                }
-            });
-
             if (getWorkbenchConfigurer().getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor() != null) {
                 OperationsPlugin.getDefault().getAlgorithmsManager().setCommandsEnabled(true);
             }
         }
-        
-//        PreferenceManager pm = PlatformUI.getWorkbench().getPreferenceManager();
-//        List<IPreferenceNode> pages = pm.getElements(PreferenceManager.PRE_ORDER);
-//        for (IPreferenceNode page : pages) {
-//        	page.getId();
-//        	System.out.println(page.getId());
-//        }
-//        pm.remove("org.eclipse.equinox.security.ui.category");
-//        pm.remove("org.eclipse.ui.net.NetPreferences");
-        
     }
 
     /**
@@ -142,26 +94,6 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
         return true;
     }
 
-    /**
-     * Enables or disables the algorithm actions based on the active workbench part: an active editor enables the
-     * algorithm actions, every other active workbench part disables all algorithm actions.
-     *
-     * @param part The workbench part
-     */
-    private void setAlgorithmActionStatus(IWorkbenchPart part) {
-        try {
-        	// First condition: An editor must be open.
-        	// Second condition: The open editor must contain some content.
-        	if (EditorsManager.getInstance().isEditorOpen() &&
-        			EditorsManager.getInstance().getActiveEditorContentInputStream().available() > 0) {	
-        		OperationsPlugin.getDefault().getAlgorithmsManager().setCommandsEnabled(true);
-            } else {
-                OperationsPlugin.getDefault().getAlgorithmsManager().setCommandsEnabled(false);
-            }
-        } catch (Exception ex) {
-            OperationsPlugin.getDefault().getAlgorithmsManager().setCommandsEnabled(false);
-        }
-    }
 
     /**
      * Initializes the JCrypTool workbench. Saves the state of the workbench when closing (like position, size). All

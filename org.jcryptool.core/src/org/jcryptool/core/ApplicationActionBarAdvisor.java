@@ -28,6 +28,7 @@ import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.ICoolBarManager;
+import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
@@ -53,6 +54,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.CommandInfo;
 import org.jcryptool.core.operations.OperationsPlugin;
 import org.jcryptool.core.operations.algorithm.ShadowAlgorithmHandler;
+import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.keystore.commands.OpenKeystoreHandler;
 
@@ -361,6 +363,31 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         ICommandService commandService = PlatformUI.getWorkbench().getService(ICommandService.class);
         MenuManager menu = new MenuManager(Messages.applicationActionBarAdvisor_Menu_Algorithms,
                 CorePlugin.PLUGIN_ID + ".algorithms"); //$NON-NLS-1$
+        
+        /**
+         * Dieser Listener prüft beim Öffnen des Algorithmen Menüs, ob
+         * ein Editor geöffnet ist und ob dieser Inhalt enthält. Nur wenn 
+         * beides der Fall ist sind die Algorithmen anklickbar. Andernfalls
+         * sind sie deaktiviert.
+         */
+        menu.addMenuListener(new IMenuListener() {
+			
+			@Override
+			public void menuAboutToShow(IMenuManager manager) {
+		        try {
+		        	// First condition: An editor must be open.
+		        	// Second condition: The open editor must contain some content.
+		        	if (EditorsManager.getInstance().isEditorOpen() &&
+		        			EditorsManager.getInstance().getActiveEditorContentInputStream().available() > 0) {	
+		        		OperationsPlugin.getDefault().getAlgorithmsManager().setCommandsEnabled(true);
+		            } else {
+		                OperationsPlugin.getDefault().getAlgorithmsManager().setCommandsEnabled(false);
+		            }
+		        } catch (Exception ex) {
+		            OperationsPlugin.getDefault().getAlgorithmsManager().setCommandsEnabled(false);
+		        }
+			}
+		});
 
         // id->compare-relevant-name map
         final Map<String, String> idNameMap = new HashMap<String, String>();
