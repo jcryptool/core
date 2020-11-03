@@ -17,3 +17,4 @@ Require-Bundle: org.eclipse.help.webapp,
  org.eclipse.ui
 Bundle-Activator: org.jcryptool.core.help.HelpPlugin
 Bundle-ActivationPolicy: lazy
+Export-Package: org.jcryptool.core.help
