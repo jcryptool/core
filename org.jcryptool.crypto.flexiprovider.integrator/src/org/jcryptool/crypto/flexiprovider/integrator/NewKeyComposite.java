@@ -134,13 +134,13 @@ public class NewKeyComposite extends org.eclipse.swt.widgets.Composite {
 			}
 			{
 				GridData buttonDeleteLData = new GridData();
-				buttonDeleteLData.widthHint = 24;
-				buttonDeleteLData.heightHint = 24;
-				buttonDeleteLData.grabExcessVerticalSpace = true;
+				buttonDeleteLData.widthHint = 48;
+				buttonDeleteLData.heightHint = 48;
+				buttonDeleteLData.grabExcessVerticalSpace = false;
 				buttonDeleteLData.verticalAlignment = SWT.FILL;
 				buttonDelete = new Button(this, SWT.PUSH | SWT.CENTER);
 				buttonDelete.setLayoutData(buttonDeleteLData);
-				buttonDelete.setImage(ImageService.getImage(KeyStorePlugin.PLUGIN_ID, "icons/16x16/cancel.png"));
+				buttonDelete.setImage(ImageService.getImage(KeyStorePlugin.PLUGIN_ID, "icons/16x16/trash-icon.png"));
 				buttonDelete.setToolTipText(Messages.getString("NewKeyComposite.removeKeypairBtn")); //$NON-NLS-1$
 				buttonDelete.addSelectionListener(new SelectionAdapter() {
 					@Override
