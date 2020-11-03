@@ -8,14 +8,33 @@
 
 <h1>HMacMD5</h1>
 
-	<p>In cryptography, an HMAC (sometimes expanded as either keyed-hash message authentication code or hash-based message authentication code) is a specific type of message authentication code (<a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/algorithms/mac/toc.html">MAC</a>) involving a cryptographic hash function (like SHA or MD5) and a secret cryptographic key.</p>
+	<p>In cryptography, an HMAC (sometimes expanded as either keyed-hash message authentication code or hash-based message authentication code) is a <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/algorithms/mac/toc.html">MAC</a> involving a cryptographic hash function (like SHA or MD5) and a secret cryptographic key.</p>
 
 	<p>HMacMD5 is a MAC function using the hash function <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/MD5.html">MD5</a>. MD5 produces a hash value (digest) of 128 bits (16 bytes) length. MD5 is outdated and used here just as an example. Modern hash functions (like SHA2 and SHA3) have output sizes of 256 bits (32 bytes) and 512 bits (64 bytes).</p>
 
-	<!-- <img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/HMacMD5_screenshot1.png" width="85%"/> TODO: Screenshot erstellen  -->
 
 	<!-- Remark: There is no visualization in JCT about HMacMD5. So no reference to a Visuals menu item.  -->
 
+
+
+	<h2>Operation of the dialog</h2>
+	
+	<p>You have the choice to enter the key directly (manually) or to get it from the keystore.</p>
+	
+	<p>1) If you select the radio button <b>Custom key</b>, you can use one of 4 key lengths. The key field will be filled with the appropriate number of zeros. Instead of this default value you can also enter your own hex value for the key. After clicking on the button <b>Finish</b> the corresponding HMAC is then output in a new hex editor window in the middle of JCT.</p>
+
+    <p>The output (HMAC) is always a hash value of the length of the used hash procedure (here MD5 with 128 bit = 16 byte), e.g. F6 5B 71 96 D6 56 AD BA 1F 45 0B 1B 28 D7 16 75.
+	By clicking into the hex editor window and pressing Ctrl-A, Ctrl-C you can copy out the entire hash value. When copying it out, you will be asked in which representation you want to copy it to the clipboard &ndash; here you select <b>Hex</b>.</p>
+
+	<p> <img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/HMacMD5_Customkey.png"  width="85%"  alt="Dialog creating an HMAC with MD5 and a key entered manually"> </p>
+
+
+    <p>2) Alternatively, you can select the radio button <b>Key from keystore</b>: Then JCT tries to find a matching symmetric key in the keystore. If JCT does not find a matching key, you can create a matching key in the keystore yourself in a new dialog called "New symmetric key" (e.g. for the user "Alice Whitehead" or better for your own user name). You will be asked with which password this new key should be protected. After clicking on <b>Finish</b> you will return to the "HMacMD5" dialog. If you now click on <b>Finish</b> here too, another dialog appears in which you must enter the password you have just set for the key. Since the new key is now entered in the keystore, you can use it again later (without having to create a new key first).</p>
+	
+	<p> <img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/HMacMD5_Key-from-KeyStore.png" width="85%" alt="Dialog creating an HMAC with MD5 and a key from the keystore"> </p>
+
+
+    <!-- <p>.</p> -->
 
 
 

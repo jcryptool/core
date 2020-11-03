@@ -18,23 +18,17 @@
 	
 	<p>Sie haben die Wahl, ob Sie den Schlüssel direkt (manuell) eingeben wollen oder ob Sie ihn aus dem Schlüsselspeicher (Keystore) holen wollen.</p>
 	
-	<p>Falls Sie den Radiobutton <b>Manuelle Schlüsseleingabe</b> wählen, können Sie eine von 4 Schlüssellängen nutzen. Passend dazu wird das Schlüsselfeld mit entsprechend vielen Nullen gefüllt. Statt dieses Standardwertes können Sie auch einen eigenen Hexwert für den Schlüssel eingeben. Nach einem Klick auf den Button <b>Fertigstellen</b> wird der entsprechende HMAC dann in einem neuen Hexeditor-Fenster in der Mitte von JCT ausgegeben.</p>
+	<p>1) Falls Sie den Radiobutton <b>Manuelle Schlüsseleingabe</b> wählen, können Sie eine von 4 Schlüssellängen nutzen. Passend dazu wird das Schlüsselfeld mit entsprechend vielen Nullen gefüllt. Statt dieses Standardwertes können Sie auch einen eigenen Hexwert für den Schlüssel eingeben. Nach einem Klick auf den Button <b>Fertigstellen</b> wird der entsprechende HMAC dann in einem neuen Hexeditor-Fenster in der Mitte von JCT ausgegeben.</p>
 
     <p>Der Output (HMAC) ist immer ein Hashwert der Länge des verwendeten Hashverfahrens (hier MD5 mit 128 bit = 16 byte), also bspw. F6 5B 71 96 D6 56 AD BA  1F 45 0B 1B 28 D7 16 75.
-	Per Klick in das Hexeditor-Fenster und Drücken von Strg-A können Sie den gesamten Hashwert herauskopieren. Beim Herauskopieren werden Sie gefragt, in welcher Repräsentation Sie es ins Clipboard übernehmen wollen &ndash; hier wählen Sie <b>Hex</b> aus.</p>
+	Per Klick in das Hexeditor-Fenster und Drücken von Strg-A, Strg-C können Sie den gesamten Hashwert herauskopieren. Beim Herauskopieren werden Sie gefragt, in welcher Repräsentation Sie es ins Clipboard übernehmen wollen &ndash; hier wählen Sie <b>Hex</b> aus.</p>
 
 	<p> <img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/HMacMD5_Customkey.png"  width="85%"  alt="Dialog zur Erstellung eines HMAC mit MD5 und einem selbst eingegebenen Schlüssel"> </p>
 
 
+    <p>2) Alternativ können Sie den Radiobutton <b>Schlüsselspeicher</b> wählen: Dann versucht JCT einen passenden symmetrischen Schlüssel im Keystore zu finden. Findet JCT keinen passenden Schlüssel, können Sie in einem neuen Dialog namens "Neuer symmetrischer Schlüssel" selbst einen passenden Schlüssel im Keystore anlegen (bspw. für den User "Alice Whitehead" oder besser für einen eigenen Benutzernamen). Dazu werden Sie gefragt, mit welchem Passwort dieser neue Schlüssel geschützt werden soll. Nach Klick auf <b>Fertigstellen</b> landen Sie wieder im Dialog "HMacMD5". Klicken Sie hier nun auch auf <b>Fertigstellen</b>, kommt ein weiterer Dialog, in dem Sie das gerade gesetzte Passwort für den Schlüssel eingeben müssen. Da der neue Schlüssel nun im Keystore eingetragen ist, können Sie ihn später wieder verwenden (ohne erst nochmal einen entsprechenden Schlüssel anlegen zu müssen).</p>
 
-
-    <p>Alternativ können Sie den Radiobutton <b>Schlüsselspeicher</b> wählen: Dann versucht JCT einen passenden symmetrischen Schlüssel im Keystore zu finden. Findet JCT keinen passenden Schlüssel, können Sie in einem neuen Dialog namens "Neuer symmetrischer Schlüssel" selbst einen passenden Schlüssel im Keystore anlegen (bspw. für den User "Alice Whitehead" oder besser für einen eigenen Benutzernamen). Dazu werden Sie gefragt, mit welchem Passwort dieser neue Schlüssel geschützt werden soll. Nach Klick auf <b>Fertigstellen</b> landen Sie wieder im Dialog "HMacMD5". Klicken Sie hier nun auch auf <b>Fertigstellen</b>, kommt ein weiterer Dialog, in dem Sie das gerade gesetzte Passwort für den Schlüssel eingeben müssen. Da der neue Schlüssel nun im Keystore eingetragen ist, können Sie ihn später wieder verwenden (ohne erst nochmal einen entsprechenden Schlüssel anlegen zu müssen).</p>
-	
 	<p> <img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/HMacMD5_Key-from-KeyStore.png" width="85%" alt="Dialog zur Erstellung eines HMAC mit MD5 und einem Schlüssel aus dem Keystore"> </p>
-
-
-<p>xxxxxxxxxxxxxxxx CHECK: Link zu den Screenshots ok?  TODO: Analog in der englischen HMAC-Hilfe und für PRNG.</p>
-
 
 
     <!-- <p>.</p> -->
@@ -50,8 +44,6 @@
         <a target="_blank" href="https://en.wikipedia.org/wiki/HMAC" >https://en.wikipedia.org/wiki/HMAC</a> HMAC
 		</li>
 	</ul>
-
-
 
 
 </body>
