@@ -26,7 +26,7 @@
    </context>
    <context id="generalPreferences" title="General">
       <description>
-         This page lets you choose general JCrypTool settings as well as the JCrypTool language. The language is automatically based on the regional settings of your operating system, but can be changed here. You have to restart JCrypTool after switching to another language.&lt;br&gt;Be aware that not all plug-ins (dialogs, help, ...) may be available in the selected language. This page lets you choose general JCrypTool settings as well as the JCrypTool language. The language is automatically based on the regional settings of your operating system, but can be changed here. You have to restart JCrypTool after switching to another language.&lt;br&gt;Be aware that not all plug-ins (dialogs, help, ...) may be available in the selected language.</description>
+         This page lets you choose general JCrypTool settings as well as the JCrypTool language. The language is automatically based on the regional settings of your operating system, but can be changed here. You have to restart JCrypTool after switching to another language.&lt;br&gt;Be aware that not all plug-ins (dialogs, help, ...) may be available in the selected language. This page lets you choose general JCrypTool settings as well as the JCrypTool language. The language is automatically based on the regional settings of your operating system, but can be changed here. You have to restart JCrypTool after switching to another language.</description>
       <topic href="../org.jcryptool.core.help/$nl$/help/users/about/tips.html" label="Tips and Tricks"/>
    </context>
 </contexts>
