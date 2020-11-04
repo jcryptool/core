@@ -100,7 +100,9 @@ public final class HexTexts extends Composite {
 	private final Color colorLightShadow = Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_LIGHT_SHADOW);
 	private final Color colorNormalShadow = Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_NORMAL_SHADOW);
 	private final Color black = Display.getCurrent().getSystemColor(SWT.COLOR_BLACK);
-
+	private final Color colorCaretLine = new Color(Display.getCurrent(), 232, 242, 254); // very light blue
+	private final Color colorHighlight = new Color(Display.getCurrent(), 255, 248, 147); // mellow / yellow
+	
 	private static final byte[] HEX_TO_NIBBLE = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, -1, -1, -1, -1, -1, 10, 11, 12,
 			13, 14, 15, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
 			-1, -1, 10, 11, 12, 13, 14, 15 };
@@ -159,8 +161,6 @@ public final class HexTexts extends Composite {
 	private int verticalBarFactor = 0;
 
 	// visual components
-	private Color colorCaretLine;
-	private Color colorHighlight;
 	private Font fontCurrent; // disposed externally
 	private Font fontDefault; // disposed internally
 
@@ -402,21 +402,12 @@ public final class HexTexts extends Composite {
 
 		@Override
 		public void paintControl(PaintEvent event) {
-			event.gc.setForeground(colorLightShadow);
-
-			int lineWidth = (int) fontCharWidth;
-			int charLen = 3;
-			int rightHalfWidth = (lineWidth + 1) / 2; // line spans to both
-
+			event.gc.setBackground(colorLightShadow);
+			int xPos;
 			for (int block = 8; block <= myBytesPerLine; block += 8) {
-				int width = lineWidth;
-				int xPos = (int) (charLen * block * fontCharWidth);
-					xPos = xPos - rightHalfWidth;
-				event.gc.setLineWidth(width);
-				event.gc.drawLine(xPos, event.y, xPos, event.y + event.height);
+				 xPos = (int) (3 * block * fontCharWidth);
+				event.gc.fillRectangle((int) (xPos - fontCharWidth), event.y, (int) fontCharWidth, event.y + event.height);
 			}
-			event.gc.setLineWidth(0);
-
 		}
 	}
 
@@ -560,11 +551,6 @@ public final class HexTexts extends Composite {
 	public HexTexts(final Composite parent, int style) {
 		super(parent, style | SWT.BORDER | SWT.V_SCROLL);
 
-		colorCaretLine = new Color(Display.getCurrent(), 232, 242, 254); // very
-		// light
-		// blue
-		colorHighlight = new Color(Display.getCurrent(), 255, 248, 147); // mellow
-		// yellow
 		highlightRangesInScreen = new ArrayList<Integer>();
 
 		composeByteToHexMap();
@@ -660,7 +646,7 @@ public final class HexTexts extends Composite {
 		column0 = new Composite(this, SWT.NONE);
 		GridLayout column0Layout = new GridLayout();
 		column0Layout.marginHeight = 0;
-		column0Layout.verticalSpacing = 1;
+		column0Layout.verticalSpacing = 0;
 		column0Layout.horizontalSpacing = 0;
 		column0Layout.marginWidth = 0;
 		column0.setLayout(column0Layout);
@@ -695,7 +681,7 @@ public final class HexTexts extends Composite {
 		column1 = new Composite(this, SWT.NONE);
 		GridLayout column1Layout = new GridLayout();
 		column1Layout.marginHeight = 0;
-		column1Layout.verticalSpacing = 1;
+		column1Layout.verticalSpacing = 0;
 		column1Layout.horizontalSpacing = 0;
 		column1Layout.marginWidth = 0;
 		column1.setLayout(column1Layout);
@@ -706,7 +692,7 @@ public final class HexTexts extends Composite {
 
 		header1Text = new StyledText(column1, SWT.SINGLE | SWT.READ_ONLY);
 		GridData gridData_header1Text = new GridData();
-		gridData_header1Text.horizontalIndent = 1; // because of small line left
+		gridData_header1Text.horizontalIndent = 0; // because of small line left
 		header1Text.setLayoutData(gridData_header1Text);
 		header1Text.setEditable(false);
 		header1Text.setEnabled(false);
@@ -719,11 +705,7 @@ public final class HexTexts extends Composite {
 		styledText1.setFont(fontCurrent);
 		styledText1GC = new GC(styledText1);
 
-		styledText1GridData = new GridData();
-		styledText1GridData.horizontalIndent = 1;
-		styledText1GridData.verticalAlignment = SWT.FILL;
-
-		styledText1GridData.grabExcessVerticalSpace = true;
+		styledText1GridData = new GridData(SWT.DEFAULT, SWT.FILL, false, true);
 		styledText1.setLayoutData(styledText1GridData);
 		styledText1.addKeyListener(myKeyAdapter);
 		FocusListener myFocusAdapter = new FocusAdapter() {
@@ -761,7 +743,7 @@ public final class HexTexts extends Composite {
 		column2 = new Composite(this, SWT.NONE);
 		GridLayout column2Layout = new GridLayout();
 		column2Layout.marginHeight = 0;
-		column2Layout.verticalSpacing = 1;
+		column2Layout.verticalSpacing = 0;
 		column2Layout.horizontalSpacing = 0;
 		column2Layout.marginWidth = 0;
 		column2.setLayout(column2Layout);
@@ -769,21 +751,15 @@ public final class HexTexts extends Composite {
 		GridData gridDataColumn2 = new GridData(SWT.FILL, SWT.FILL, true, true);
 		column2.setLayoutData(gridDataColumn2);
 
-		GridData gridDataTextSeparator2 = new GridData();
-		gridDataTextSeparator2.horizontalAlignment = SWT.FILL;
-		gridDataTextSeparator2.verticalAlignment = SWT.FILL;
-		gridDataTextSeparator2.grabExcessHorizontalSpace = true;
 		textSeparator2 = new Text(column2, SWT.SEPARATOR);
 		textSeparator2.setEnabled(false);
 		textSeparator2.setBackground(colorLightShadow);
-		textSeparator2.setLayoutData(gridDataTextSeparator2);
+		textSeparator2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		makeFirstRowSameHeight();
 
 		styledText2 = new StyledText(column2, SWT.MULTI);
 		styledText2.setFont(fontCurrent);
-		styledText2GridData = new GridData();
-		styledText2GridData.verticalAlignment = SWT.FILL;
-		styledText2GridData.grabExcessVerticalSpace = true;
+		styledText2GridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		styledText2.setLayoutData(styledText2GridData);
 		styledText2.addKeyListener(myKeyAdapter);
 		styledText2.addFocusListener(myFocusAdapter);
