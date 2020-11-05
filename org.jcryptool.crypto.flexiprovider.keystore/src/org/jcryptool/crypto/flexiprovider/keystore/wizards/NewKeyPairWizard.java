@@ -34,6 +34,7 @@ public class NewKeyPairWizard extends Wizard implements INewKeyWizard {
 	public NewKeyPairWizard(String keyType) {
 		this.keyType = keyType;
 		setWindowTitle(Messages.NewKeyPairWizard_0);
+		setHelpAvailable(false);
 	}
 
 	public void addPages() {

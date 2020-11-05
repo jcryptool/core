@@ -34,6 +34,7 @@ public class NewSymmetricKeyWizard extends Wizard implements INewKeyWizard {
 	public NewSymmetricKeyWizard(String keyType) {
 		setWindowTitle(Messages.NewSymmetricKeyWizard_0);
 		this.keyType = keyType;
+		setHelpAvailable(false);
 	}
 
 	public void addPages() {
