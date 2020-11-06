@@ -3,12 +3,83 @@
 <html>
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	  <title>Signature</title>
+	  <title>Digital Signature</title>
 </head>
 
 <body>
-	<h1>Signature</h1>
+	<h1>Digital Signature</h1>
 
-	<p>The following pages contain information about the <strong>Signature Plug-ins</strong> available in JCrypTool.</p>
+
+	<p>The menu <strong><a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/algorithms/toc.html">Algorithms</a> → Signature</strong> in the  <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_default.html">Default Perspective</a> of JCrypTool has the following entry:<p>
+
+<table>
+    <tbody>
+
+        <tr>
+          <td><a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/DSA.html">DSA</a></td>
+          <td>DSA</td>
+        </tr>
+
+    </tbody>
+</table>
+	
+
+	<h2>About signatures</h2>
+
+	<p>A digital signature is a mathematical scheme for verifying the authenticity of digital messages or documents. A valid digital signature gives a recipient very strong reason to believe that the message was created by a known sender (authentication), and that the message was not altered in transit (integrity). Being marked as invalid may just mean, that a used certificate is outdated, but authenticity and integrity are still fulfilled.</p>
+
+	<p>Digital signatures are a standard element of most cryptographic protocol suites, and are commonly used for software distribution, financial transactions, contract management software, and in other cases where it is important to detect forgery or tampering.
+	<b>Digital</b> signatures are often used to implement <b>electronic</b> signatures.</p>
+
+	<p>Some typical digital signature algorithms are RSA, DSA, and ECDSA.</p>
+
+	<p>As an example, here DSA is used. 
+	<ul>
+		<li>For <b>signing</b> you need a private key. Our implementation here always signs the file in the active JCT editor. The resulting signature is stored in another file for which you can set its name and path.</li>
+		<li>For <b>verification</b> you need to select the file which contains the signature and you need a public key. Then the implementation detects whether this signature fits to the file in your active JCT editor.</li>
+	</ul>
+	</p>
+
+	<p>More information about the single algorithm used is available on the according sub site.</p>
+
+	<p>Further signature algorithms can be found
+	<ul>
+		<li>in the <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html">Algorithm Perspective</a> of JCT. See also the page <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/toc.html">General Information</a>, and</li>
+		<li>within the following visual plugins of the <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_default.html">Default Perspective</a> of JCT: </li>
+		<ul>
+			<li><a href="PLUGINS_ROOT/org.jcryptool.visual.sig/$nl$/help/content/index.html">Signature Demonstration</a>
+        	</li>
+
+			<li><a href="PLUGINS_ROOT/org.jcryptool.visual.sigVerification/$nl$/help/content/index.html">Signature Verification</a>
+        	</li>
+
+			<li><a href="PLUGINS_ROOT/org.jcryptool.visual.crtVerification/$nl$/help/content/index.html">Certificate Verification</a>
+        	</li>
+		</ul>
+	</ul>
+<!-- xxx  Certificate Verification Gültigkeitsmodelle, Signature Demonstration, Signature Verification, -->
+	</p>
+
+
+
+	<h2>References</h2>
+
+<!-- xxxx
+https://de.wikipedia.org/wiki/Digitale_Signatur   den technischen/kryptographischen Begriff digitale Signatur.
+
+https://de.wikipedia.org/wiki/Elektronische_Signatur   den rechtlichen Begriff elektronische Signatur
+-->
+
+	<ul>
+		<li>
+        <a target="_blank" href="https://en.wikipedia.org/wiki/Electronic_signature" >https://en.wikipedia.org/wiki/Electronic_signature</a> Wikipedia Electronic signature (a legal concept)
+    	</li>
+
+		<li>
+        <a target="_blank" href="https://en.wikipedia.org/wiki/Digital_signature" >https://en.wikipedia.org/wiki/Digital_signature</a> Wikipedia Digital signature (a cryptographic mechanism often used to implement electronic signatures)
+    	</li>
+	</ul>
+
+
 </body>
 </html>
