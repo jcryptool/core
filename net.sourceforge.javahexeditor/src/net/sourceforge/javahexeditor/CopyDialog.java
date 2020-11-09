@@ -26,7 +26,6 @@ public class CopyDialog extends Dialog {
 	 */
 	protected CopyDialog(Shell parentShell, boolean toBigForClipboard) {
 		super(parentShell);
-//		this.getShell().setText("Kopieroptionen");
 		this.toBigForClipboard = toBigForClipboard;
 		
 	}
@@ -63,6 +62,8 @@ public class CopyDialog extends Dialog {
 			// Creates the "ok" Button
 			createButton(parent, 1, "Ok", true); //$NON-NLS-1$
 		} else {
+			// Creates the cancel button.
+			createButton(parent, 1, Texts.CopyDialog_cancel, false);
 			// Creates the "Hex" Button
 			createButton(parent, 2, "Hex", false); //$NON-NLS-1$
 			// Creates the "Text" Button.

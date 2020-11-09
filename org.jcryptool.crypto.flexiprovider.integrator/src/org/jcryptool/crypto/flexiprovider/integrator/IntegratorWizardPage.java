@@ -165,9 +165,8 @@ public class IntegratorWizardPage extends WizardPage {
     /**
      * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
      */
-    public void createControl(Composite parent) {
-//         parent.setLayout(new GridLayout());
-
+    @Override
+	public void createControl(Composite parent) {
         masterComp = new Composite(parent, SWT.NONE);
         masterComp.setLayout(new GridLayout(1, true));
         GridData masterLData = new GridData(SWT.FILL, SWT.FILL, true, true);
@@ -203,23 +202,29 @@ public class IntegratorWizardPage extends WizardPage {
         if (showKeySourceGroup) {
             setKeySource(false);
         }
+        
 
+        // Is required for correct function for the context help.
+        masterComp.setFocus();
         setControl(masterComp);
         setOperationMode(true);
         calcAndSetPageCompletion();
-
+        
+        String helpId = IntegratorPlugin.PLUGIN_ID + "." + getTitle() + "Wizard";
         PlatformUI.getWorkbench().getHelpSystem()
-                .setHelp(getControl(), IntegratorPlugin.PLUGIN_ID + "." + getTitle() + "Wizard"); //$NON-NLS-1$ //$NON-NLS-2$
+                .setHelp(masterComp, helpId); 
     }
 
-    private void createMessageDigestHintGroup(Composite masterComp) {
-        Label labelDigestHint = new Label(masterComp, SWT.WRAP);
+    private void createMessageDigestHintGroup(Composite parent) {
+        Label labelDigestHint = new Label(parent, SWT.WRAP);
         GridData labelDigestHintLData = new GridData(SWT.CENTER, SWT.BEGINNING, true, false);
         labelDigestHintLData.verticalIndent = 40;
         labelDigestHint.setLayoutData(labelDigestHintLData);
         labelDigestHint.setText(Messages.getString("IntegratorWizardPage.noFurtherInputNeeded")); //$NON-NLS-1$
         labelDigestHint.setAlignment(SWT.CENTER);
     }
+    
+    
 
     private int calculateHeightHintForPage() {
         return 300;
@@ -269,17 +274,15 @@ public class IntegratorWizardPage extends WizardPage {
         keystoreButtonGridData.grabExcessHorizontalSpace = true;
         keystoreButtonGridData.verticalAlignment = GridData.CENTER;
 
-        GridLayout keySelectionGridLayout = new GridLayout();
-        keySelectionGridLayout.numColumns = 2;
-
         Group keySelectionGroup = new Group(parent, SWT.NONE);
         keySelectionGroup.setLayoutData(keystoreButtonGridData);
-        keySelectionGroup.setLayout(keySelectionGridLayout);
+        keySelectionGroup.setLayout(new GridLayout(2, false));
         keySelectionGroup.setText(Messages.getString("KeySelectionGroup.KeySource")); //$NON-NLS-1$
 
         Listener sourceBtnListener = new Listener() {
             // @Override
-            public void handleEvent(Event event) {
+            @Override
+			public void handleEvent(Event event) {
                 setKeySource(event.widget == useCustomKeyButton);
             }
         };
@@ -385,7 +388,8 @@ public class IntegratorWizardPage extends WizardPage {
             encryptButton.setText(Messages.getString("IntegratorWizardPage.0")); //$NON-NLS-1$
         encryptButton.setLayoutData(encryptButtonGridData);
         encryptButton.addListener(SWT.Selection, new Listener() {
-            public void handleEvent(Event event) {
+            @Override
+			public void handleEvent(Event event) {
                 if ((((Button) event.widget).getSelection()) && (!encrypt)) {
                     setOperationMode(true);
                 }
@@ -402,7 +406,8 @@ public class IntegratorWizardPage extends WizardPage {
 
         decryptButton.setLayoutData(decryptButtonGridData);
         decryptButton.addListener(SWT.Selection, new Listener() {
-            public void handleEvent(Event event) {
+            @Override
+			public void handleEvent(Event event) {
                 if (((Button) event.widget).getSelection() && (encrypt)) {
                     setOperationMode(false);
                 }
@@ -459,7 +464,8 @@ public class IntegratorWizardPage extends WizardPage {
         keyCombo = new Combo(normalKeyFromKeystoreComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
         keyCombo.setLayoutData(gridData);
         keyCombo.addListener(SWT.Selection, new Listener() {
-            public void handleEvent(Event event) {
+            @Override
+			public void handleEvent(Event event) {
                 if (comboKeyMap.isEmpty())
                     return;
                 keyStoreAlias = comboKeyMap.get(keyCombo.getSelectionIndex());
@@ -491,7 +497,7 @@ public class IntegratorWizardPage extends WizardPage {
                 Messages.getString("IntegratorWizardPage.newSymmetricKeyButtontip"); //$NON-NLS-1$
         createNewKeyButton = new Button(createNewKeyComposite, SWT.NONE);
         createNewKeyButton.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 1, 1));
-        createNewKeyButton.setImage(btnImg); //$NON-NLS-1$
+        createNewKeyButton.setImage(btnImg); 
         createNewKeyButton.setText(newKeyBtnLabel);
         createNewKeyButton.setToolTipText(newKeyBtnTooltip);
         createNewKeyButton.addSelectionListener(new SelectionAdapter() {
@@ -571,10 +577,12 @@ public class IntegratorWizardPage extends WizardPage {
         Job[] preJobs = Job.getJobManager().find(KeyStoreHelper.KEYSTOREHELPER_FAMILY);
         int preJobCount = preJobs.length;
         KeyStoreHelper.makeSymmetricKeyByWizard(showKeyGroup).addObserver(new Observer() {
-            public void update(Observable o, final Object arg) {
+            @Override
+			public void update(Observable o, final Object arg) {
                 if (arg != null) {
                     keyFromKeystoreGroup.getDisplay().syncExec(new Runnable() {
-                        public void run() {
+                        @Override
+						public void run() {
                             KeyStoreAlias ref = (KeyStoreAlias) arg;
                             setKeyForShowcase(ref);
                         }
@@ -586,7 +594,8 @@ public class IntegratorWizardPage extends WizardPage {
         Job[] jobs = Job.getJobManager().find(KeyStoreHelper.KEYSTOREHELPER_FAMILY);
         if (jobs.length > preJobCount) {
             createNewKeyButton.getDisplay().syncExec(new Runnable() {
-                public void run() {
+                @Override
+				public void run() {
                     buttonTextBeforeJobrunningMsg = createNewKeyButton.getText();
                     createNewKeyButton.setText(Messages.getString("IntegratorWizardPage.generatingButtonHint")); //$NON-NLS-1$
                     disableControls();
@@ -595,28 +604,35 @@ public class IntegratorWizardPage extends WizardPage {
             });
             Job job = jobs[jobs.length - 1];
             IJobChangeListener listener = new IJobChangeListener() {
-                public void sleeping(IJobChangeEvent event) {
+                @Override
+				public void sleeping(IJobChangeEvent event) {
                 }
 
-                public void done(IJobChangeEvent event) {
+                @Override
+				public void done(IJobChangeEvent event) {
                     createNewKeyButton.getDisplay().syncExec(new Runnable() {
-                        public void run() {
+                        @Override
+						public void run() {
                             createNewKeyButton.setText(buttonTextBeforeJobrunningMsg);
                             enableControls();
                         }
                     });
                 }
 
-                public void awake(IJobChangeEvent event) {
+                @Override
+				public void awake(IJobChangeEvent event) {
                 }
 
-                public void aboutToRun(IJobChangeEvent event) {
+                @Override
+				public void aboutToRun(IJobChangeEvent event) {
                 }
 
-                public void running(IJobChangeEvent event) {
+                @Override
+				public void running(IJobChangeEvent event) {
                 }
 
-                public void scheduled(IJobChangeEvent event) {
+                @Override
+				public void scheduled(IJobChangeEvent event) {
                 }
             };
             if (job.getState() != Job.NONE)
@@ -631,10 +647,12 @@ public class IntegratorWizardPage extends WizardPage {
         Job[] preJobs = Job.getJobManager().find(KeyStoreHelper.KEYSTOREHELPER_FAMILY);
         int preJobCount = preJobs.length;
         KeyStoreHelper.makeKeyPairByWizard(showKeyGroup).addObserver(new Observer() {
-            public void update(Observable o, final Object arg) {
+            @Override
+			public void update(Observable o, final Object arg) {
                 if (arg != null) {
                     keyFromKeystoreGroup.getDisplay().syncExec(new Runnable() {
-                        public void run() {
+                        @Override
+						public void run() {
                             KeyStoreAlias ref = (KeyStoreAlias) arg;
                             setKeyForShowcase(ref);
                         }
@@ -646,7 +664,8 @@ public class IntegratorWizardPage extends WizardPage {
         Job[] jobs = Job.getJobManager().find(KeyStoreHelper.KEYSTOREHELPER_FAMILY);
         if (jobs.length > preJobCount) {
             createNewKeyButton.getDisplay().syncExec(new Runnable() {
-                public void run() {
+                @Override
+				public void run() {
                     buttonTextBeforeJobrunningMsg = createNewKeyButton.getText();
                     createNewKeyButton.setText(Messages.getString("IntegratorWizardPage.generatingButtonHint")); //$NON-NLS-1$
                     disableControls();
@@ -654,28 +673,35 @@ public class IntegratorWizardPage extends WizardPage {
             });
             Job job = jobs[jobs.length - 1];
             IJobChangeListener listener = new IJobChangeListener() {
-                public void sleeping(IJobChangeEvent event) {
+                @Override
+				public void sleeping(IJobChangeEvent event) {
                 }
 
-                public void done(IJobChangeEvent event) {
+                @Override
+				public void done(IJobChangeEvent event) {
                     createNewKeyButton.getDisplay().syncExec(new Runnable() {
-                        public void run() {
+                        @Override
+						public void run() {
                             createNewKeyButton.setText(buttonTextBeforeJobrunningMsg);
                             enableControls();
                         }
                     });
                 }
 
-                public void awake(IJobChangeEvent event) {
+                @Override
+				public void awake(IJobChangeEvent event) {
                 }
 
-                public void aboutToRun(IJobChangeEvent event) {
+                @Override
+				public void aboutToRun(IJobChangeEvent event) {
                 }
 
-                public void running(IJobChangeEvent event) {
+                @Override
+				public void running(IJobChangeEvent event) {
                 }
 
-                public void scheduled(IJobChangeEvent event) {
+                @Override
+				public void scheduled(IJobChangeEvent event) {
                 }
             };
             if (job.getState() != Job.NONE)
@@ -714,9 +740,11 @@ public class IntegratorWizardPage extends WizardPage {
 
             createdKeyViewer.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 2, 1));
             createdKeyViewer.getRemoveObserver().addObserver(new Observer() {
-                public void update(Observable o, Object arg) {
+                @Override
+				public void update(Observable o, Object arg) {
                     keyFromKeystoreGroup.getDisplay().syncExec(new Runnable() {
-                        public void run() {
+                        @Override
+						public void run() {
                             setKeyForShowcase(null);
                         }
                     });
@@ -794,7 +822,7 @@ public class IntegratorWizardPage extends WizardPage {
             while (aliases.hasMoreElements()) {
                 localKeyStoreAlias = new KeyStoreAlias(aliases.nextElement());
                 // String op = localKeyStoreAlias.getOperation();
-                if (localKeyStoreAlias.isOperationMatchingKeyId(showKeyGroup)) { //$NON-NLS-1$
+                if (localKeyStoreAlias.isOperationMatchingKeyId(showKeyGroup)) { 
                     if (localKeyStoreAlias.getKeyStoreEntryType().getType().contains(KeyType.KEYPAIR.getType())) { // asymmetric
                         if (localKeyStoreAlias.getKeyStoreEntryType().equals(KeyType.KEYPAIR_PUBLIC_KEY)) {
                             publicKeyMap.add(localKeyStoreAlias);
@@ -895,7 +923,8 @@ public class IntegratorWizardPage extends WizardPage {
         customKeyTextbox.setLayoutData(keyByHandGroup.getLayoutData());
 
         keylengthCombo.addListener(SWT.Selection, new Listener() {
-            public void handleEvent(Event event) {
+            @Override
+			public void handleEvent(Event event) {
                 String keyLen = keylengthCombo.getItem(keylengthCombo.getSelectionIndex());
                 int numBytes = Integer.valueOf(keyLen) / 8;
                 customKeyTextbox.setNumBytes(numBytes);
@@ -918,14 +947,16 @@ public class IntegratorWizardPage extends WizardPage {
         messageDigest_text.setEnabled(false);
         messageDigest_text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         messageDigest_text.addVerifyListener(new VerifyListener() {
-            public void verifyText(VerifyEvent e) {
+            @Override
+			public void verifyText(VerifyEvent e) {
                 if (!e.text.matches("[0-9abcdefABCDEF]*")) //$NON-NLS-1$
                     e.doit = false;
             }
         });
         messageDigest_text.setTextLimit(showMessageDigestGroup * 2);
         messageDigest_text.addModifyListener(new ModifyListener() {
-            public void modifyText(ModifyEvent e) {
+            @Override
+			public void modifyText(ModifyEvent e) {
                 expectedChecksum = messageDigest_text.getText();
             }
         });
@@ -962,7 +993,8 @@ public class IntegratorWizardPage extends WizardPage {
         chooseFile.setLayoutData(gridData2);
         chooseFile.setText(Messages.getString("DummyWizardPage.20")); //$NON-NLS-1$
         chooseFile.addListener(SWT.Selection, new Listener() {
-            public void handleEvent(Event event) {
+            @Override
+			public void handleEvent(Event event) {
                 FileDialog dialog = new FileDialog(new Shell(), openFile ? SWT.OPEN : SWT.SAVE);
                 dialog.setFilterExtensions(new String[] {IConstants.ALL_FILTER_EXTENSION});
                 dialog.setFilterNames(new String[] {IConstants.ALL_FILTER_NAME});
@@ -1030,7 +1062,8 @@ public class IntegratorWizardPage extends WizardPage {
         modeCombo = new Combo(paddingGroup, SWT.READ_ONLY);
         modeCombo.setLayoutData(gridData);
         modeCombo.addListener(SWT.Selection, new Listener() {
-            public void handleEvent(Event event) {
+            @Override
+			public void handleEvent(Event event) {
                 mode = modeMap.get(modeCombo.getSelectionIndex());
             }
         });
@@ -1056,7 +1089,8 @@ public class IntegratorWizardPage extends WizardPage {
         paddingCombo = new Combo(paddingGroup, SWT.READ_ONLY);
         paddingCombo.setLayoutData(gridData);
         paddingCombo.addListener(SWT.Selection, new Listener() {
-            public void handleEvent(Event event) {
+            @Override
+			public void handleEvent(Event event) {
                 padding = paddingMap.get(paddingCombo.getSelectionIndex());
             }
         });
@@ -1100,13 +1134,15 @@ public class IntegratorWizardPage extends WizardPage {
         // random_text.setOrientation(SWT.RIGHT_TO_LEFT);
         randomText.setText("100"); //$NON-NLS-1$
         randomText.addKeyListener(new KeyListener() {
-            public void keyPressed(KeyEvent e) {
+            @Override
+			public void keyPressed(KeyEvent e) {
                 if ((Character.getType(e.character) != Character.DECIMAL_DIGIT_NUMBER) && (e.keyCode != SWT.ARROW_LEFT)
                         && (e.keyCode != SWT.ARROW_RIGHT) && (e.character != SWT.DEL) && (e.character != SWT.BS))
                     e.doit = false;
             }
 
-            public void keyReleased(KeyEvent e) {
+            @Override
+			public void keyReleased(KeyEvent e) {
                 random = Integer.parseInt(randomText.getText());
             }
         });
@@ -1135,11 +1171,13 @@ public class IntegratorWizardPage extends WizardPage {
         alphabet_button.setLayoutData(gridData);
         alphabet_button.setSelection(true);
         alphabet_button.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 alphabet_text.setEnabled(alphabet_text_button.getSelection());
                 alphabet_range_1.setEnabled(alphabet_range_button.getSelection());
                 alphabet_range_2.setEnabled(alphabet_range_button.getSelection());
@@ -1158,11 +1196,13 @@ public class IntegratorWizardPage extends WizardPage {
         alphabet_text_button.setLayoutData(gridData);
         alphabet_text_button.setSelection(false);
         alphabet_text_button.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 alphabet_text.setEnabled(alphabet_text_button.getSelection());
                 alphabet_range_1.setEnabled(alphabet_range_button.getSelection());
                 alphabet_range_2.setEnabled(alphabet_range_button.getSelection());
@@ -1185,12 +1225,14 @@ public class IntegratorWizardPage extends WizardPage {
         alphabet_text.setText("0123456789ABCDEF"); //$NON-NLS-1$
         alphabet_text.setEnabled(false);
         alphabet_text.addKeyListener(new KeyListener() {
-            public void keyPressed(KeyEvent e) {
+            @Override
+			public void keyPressed(KeyEvent e) {
                 if (alphabet_text.getText().contains("" + e.character)) //$NON-NLS-1$
                     e.doit = false;
             }
 
-            public void keyReleased(KeyEvent e) {
+            @Override
+			public void keyReleased(KeyEvent e) {
                 alphabet = parseAlphabet();
             }
         });
@@ -1202,11 +1244,13 @@ public class IntegratorWizardPage extends WizardPage {
         alphabet_range_button.setLayoutData(gridData);
         alphabet_range_button.setSelection(false);
         alphabet_range_button.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 alphabet_text.setEnabled(alphabet_text_button.getSelection());
                 alphabet_range_1.setEnabled(alphabet_range_button.getSelection());
                 alphabet_range_2.setEnabled(alphabet_range_button.getSelection());
@@ -1229,7 +1273,8 @@ public class IntegratorWizardPage extends WizardPage {
         alphabet_range_1.setText("0"); //$NON-NLS-1$
         alphabet_range_1.setEnabled(false);
         alphabet_range_1.addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent e) {
+            @Override
+			public void keyReleased(KeyEvent e) {
                 alphabet = parseAlphabet();
             }
         });
@@ -1247,7 +1292,8 @@ public class IntegratorWizardPage extends WizardPage {
         alphabet_range_2.setText("9"); //$NON-NLS-1$
         alphabet_range_2.setEnabled(false);
         alphabet_range_2.addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent e) {
+            @Override
+			public void keyReleased(KeyEvent e) {
                 alphabet = parseAlphabet();
             }
         });
@@ -1266,11 +1312,13 @@ public class IntegratorWizardPage extends WizardPage {
         alphabet_padding_button.setSelection(false);
         alphabet_padding_button.setEnabled(false);
         alphabet_padding_button.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
+            @Override
+			public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 alphabet = parseAlphabet();
             }
         });
@@ -1337,17 +1385,17 @@ public class IntegratorWizardPage extends WizardPage {
         if (encrypt) {
             if (publicKeyMap.isEmpty() || privateKeyMap.isEmpty())
                 if (showPaddingGroup) {
-                    return new String[0];// {Messages.getString("DummyWizardPage.15")}; //$NON-NLS-1$
+                    return new String[0];// {Messages.getString("DummyWizardPage.15")}; 
                 } else {
-                    return new String[0];// {Messages.getString("DummyWizardPage.25")}; //$NON-NLS-1$
+                    return new String[0];// {Messages.getString("DummyWizardPage.25")}; 
                 }
             map = publicKeyMap;
         } else {
             if (publicKeyMap.isEmpty() || privateKeyMap.isEmpty())
                 if (showPaddingGroup) {
-                    return new String[0];// {Messages.getString("DummyWizardPage.15")}; //$NON-NLS-1$
+                    return new String[0];// {Messages.getString("DummyWizardPage.15")}; 
                 } else {
-                    return new String[0];// {Messages.getString("DummyWizardPage.26")}; //$NON-NLS-1$
+                    return new String[0];// {Messages.getString("DummyWizardPage.26")}; 
                 }
             map = privateKeyMap;
         }

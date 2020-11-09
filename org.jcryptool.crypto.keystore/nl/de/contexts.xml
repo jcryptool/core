@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
    <context id="KeystoreView" title="Schlüsselspeicher">
-      <description>Im <b>Schlüsselspeicher</b> werden die verschiedenen in JCrypTool vorhandenen Schlüssel, sowohl öffentliche und private Schlüsselpaare (asymmetrisch), geheime Schlüssel (symmetrisch) als auch Zertifikate, abgespeichert. Diese Schlüssel können von jedem JCrypTool-Crypto-Plug-in verwendet werden. Um unbefugten Zugriff zu verhindern, werden die sensitiven Daten in einem geschützten Format abgespeichert. Alle mitgelieferten Standard-JCrypTool-Schlüssel sind mit dem Passwort <b>1234</b> gesichert.
+      <description>Im <b>Schlüsselspeicher</b> werden die verschiedenen in JCrypTool vorhandenen Schlüssel, sowohl öffentliche und private Schlüsselpaare (asymmetrisch), geheime Schlüssel (symmetrisch) als auch Zertifikate, abgespeichert. Diese Schlüssel werden zur Benutzung für Plug-ins in JCT bereitsgestellt. Um unbefugten Zugriff zu verhindern, werden die sensitiven Daten in einem geschützten Format abgespeichert. Alle mitgelieferten Standard-JCrypTool-Schlüssel sind mit dem Passwort <b>1234</b> gesichert.
 
-JCrypTool interne Schlüssel beginnen normalerweise mit <b>JCT</b>. Diese Schlüssel werden automatisch von Krypto-Plug-ins angelegt und sollten nur bei Bedarf von Ihnen gelöscht werden, z.B. wenn Sie Probleme bei der Verwendung haben. Das jeweilige Krypto-Plug-in legt diesen Schlüssel bei der nächsten Verwendung automatisch wieder an.
+JCrypTool interne Schlüssel beginnen normalerweise mit <b>JCT</b>. Diese Schlüssel werden automatisch von Krypto-Plug-ins angelegt und sollten nur im Notfall von Ihnen gelöscht werden. Manche Plug-ins erzeugen benötigte Schlüssel bei Bedarf auch automatisch neu.
 
-Über die Toolbar und das Menü der Sicht können neue Schlüssel angelegt, vorhandene gelöscht sowie im- und exportiert werden. 
+Über die Toolbar der Schlüsselspeicher-Sicht können neue Schlüssel angelegt, vorhandene gelöscht sowie Schlüssel im- und exportiert werden.
       </description>
    </context>
 </contexts>

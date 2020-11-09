@@ -233,7 +233,7 @@ of "DESede_CBC", "AES128_CBC", "AES192_CBC", or
       <KeyStrengths default="128">64,128,192,256</KeyStrengths>
     </SecretKeyGenerator>
     <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$SHA1" oid="1.3.6.1.5.5.8.1.2">
-      <Names>Hmac,HmacSHA1</Names>
+      <Names>HmacSHA1</Names>
       <KeyStrengths default="128">128,192,256</KeyStrengths>
     </SecretKeyGenerator>
     <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$Tiger" oid="1.3.6.1.5.5.8.1.3">
@@ -621,7 +621,7 @@ of "DESede_CBC", "AES128_CBC", "AES192_CBC", or
       <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$MD5" />
     </Mac>
     <Mac class="de.flexiprovider.core.mac.HMac$SHA1" oid="1.3.6.1.5.5.8.1.2">
-      <Names>Hmac,HmacSHA1</Names>
+      <Names>HmacSHA1</Names>
       <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$SHA1" />
     </Mac>
     <Mac class="de.flexiprovider.core.mac.HMac$Tiger" oid="1.3.6.1.5.5.8.1.3">

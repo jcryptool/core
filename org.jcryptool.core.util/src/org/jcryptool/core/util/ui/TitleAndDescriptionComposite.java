@@ -98,21 +98,19 @@ public class TitleAndDescriptionComposite extends Composite {
 		styledText = new StyledText(parent, SWT.READ_ONLY | SWT.WRAP);
 
 		styledTextGridData = new GridData(SWT.FILL, SWT.FILL, true, false);
-		styledTextGridData.widthHint = parent.getClientArea().width - 10;
+ 		styledTextGridData.widthHint = computeWidthHint(parent);
 		
 		styledText.setLayoutData(styledTextGridData);	
 		styledText.addListener(SWT.Resize, event -> {
 
-			if (styledTextGridData.heightHint != styledText.computeSize(parent.getClientArea().width - 10, SWT.DEFAULT).y) {
-				styledTextGridData.heightHint = styledText.computeSize(parent.getClientArea().width - 10, SWT.DEFAULT).y;
-				styledText.requestLayout();
+			styledTextGridData.widthHint = computeWidthHint(parent);
+			styledTextGridData.heightHint = computeHeightHint(parent);
+			styledText.requestLayout();
+			
+			if (sc != null) {
+				ScrolledComposite scrolledComp = (ScrolledComposite) sc;
+				scrolledComp.notifyListeners(SWT.Resize, new Event());
 				
-				
-				if (sc != null) {
-					ScrolledComposite scrolledComp = (ScrolledComposite) sc;
-					scrolledComp.notifyListeners(SWT.Resize, new Event());
-					
-				}
 			}
 		} );
 		
@@ -169,6 +167,21 @@ public class TitleAndDescriptionComposite extends Composite {
 		}
 	}
 	
+	private int computeHeightHint(Composite parent) {
+		if (parent.getClientArea().width != 0) {
+			return styledText.computeSize(parent.getClientArea().width - 10, SWT.DEFAULT).y;
+		}
+		return SWT.DEFAULT;
+	}
+
+	private int computeWidthHint(Composite parent) {
+		if (parent.getClientArea().width != 0) {
+			return parent.getClientArea().width - 10;
+		}
+		return 600;
+	}
+
+
 	private void getScrolledCompositeParent(Composite current) {
 		sc = current;
 		if (current.getParent() != null) {

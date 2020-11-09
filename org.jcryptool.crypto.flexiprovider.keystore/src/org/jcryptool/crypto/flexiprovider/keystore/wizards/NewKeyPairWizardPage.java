@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.flexiprovider.descriptors.meta.interfaces.IMetaKeyGenerator;
@@ -216,6 +217,7 @@ public class NewKeyPairWizardPage extends WizardPage implements Listener {
 
         pageComposite.setSize(350, 350);
         setControl(pageComposite);
+
     }
 
     private List<IMetaKeyGenerator> keyPairGenerators;

@@ -37,6 +37,7 @@ public final class Texts extends NLS {
 	public static String CopyDialog_hex_or_text;
 	public static String CopyDialog_title;
 	public static String CopyDialog_to_long_for_clipboard;
+	public static String CopyDialog_cancel;
 
 	public static String DIALOG_ERROR_NOT_A_NUMBER_MESSAGE;
 	public static String DIALOG_ERROR_LOCATION_OUT_OF_RANGE_MESSAGE;

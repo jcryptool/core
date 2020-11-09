@@ -52,5 +52,10 @@ public class NewKeyPairWizard extends Wizard implements INewKeyWizard {
 	public INewEntryDescriptor getNewEntryDescriptor() {
 		return keyDescriptor;
 	}
+	
+	@Override
+	public boolean isHelpAvailable() {
+		return false;
+	}
 
 }
