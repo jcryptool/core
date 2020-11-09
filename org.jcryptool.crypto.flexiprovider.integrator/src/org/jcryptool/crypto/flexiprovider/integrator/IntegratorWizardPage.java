@@ -102,7 +102,7 @@ public class IntegratorWizardPage extends WizardPage {
     private Button decryptButton;
 
     private Button chooseFile;
-    private Text signatureText;
+    private Label signatureText;
     private IMetaPaddingScheme padding;
     private IMetaMode mode;
     private String signature;
@@ -982,7 +982,7 @@ public class IntegratorWizardPage extends WizardPage {
         GridData gridData = new GridData();
         gridData.grabExcessHorizontalSpace = true;
         gridData.horizontalAlignment = GridData.FILL;
-        signatureText = new Text(signatureGroup, SWT.READ_ONLY | SWT.BORDER);
+        signatureText = new Label(signatureGroup, SWT.NONE);
         signatureText.setText(CHOOSE_SIGNATURE_FILE_LABEL);
         signatureText.setLayoutData(gridData);
         GridData gridData2 = new GridData();
