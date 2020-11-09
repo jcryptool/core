@@ -38,6 +38,7 @@ import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.core.util.input.ButtonInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
+import org.jcryptool.core.util.ui.auto.LayoutAdvisor;
 import org.jcryptool.core.util.ui.auto.SmoothScroller;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionKey;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionTable;
@@ -205,7 +206,7 @@ public class TranspAnalysisUI extends Composite implements Observer {
 	}
 
 	private void initGUI() {
-
+		
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.marginHeight = 0;
 		gridLayout.marginWidth = 0;
@@ -217,9 +218,9 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		scrolledComposite.setExpandVertical(true);
 
 		content = new Composite(scrolledComposite, SWT.NONE);
-		content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,1,1));
 		content.setLayout(new GridLayout(1, true));
-
+		
 		TitleAndDescriptionComposite td = new TitleAndDescriptionComposite(content);
 		td.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		td.setTitle(Messages.TranspAnalysisUI_view_title);
@@ -446,7 +447,7 @@ public class TranspAnalysisUI extends Composite implements Observer {
 
 		previewGroup = new Group(compResults, SWT.NONE);
 		previewGroup.setLayout(new GridLayout());
-		previewGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		previewGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		previewGroup.setText(Messages.TranspAnalysisUI_Results);
 		previewGroup.setFont(FontService.getLargeFont());
 
@@ -544,7 +545,7 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		textpreviewDescription.setText(Messages.TranspAnalysisUI_preview);
 
 		previewText = new Text(previewGroup, SWT.WRAP | SWT.BORDER | SWT.V_SCROLL);
-		GridData previewTextLData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		GridData previewTextLData = new GridData(SWT.FILL, SWT.FILL, true, false);
 		previewTextLData.minimumHeight = 100;
 		previewTextLData.heightHint = 220;
 		previewTextLData.widthHint = previewGroup.getClientArea().x - 10;
@@ -571,6 +572,8 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		displayTextSource(null, false, false);
 
 		scrolledComposite.setContent(content);
+		
+		scrolledComposite.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 	}
 
@@ -642,6 +645,7 @@ public class TranspAnalysisUI extends Composite implements Observer {
 
 			transpTable.setReadInOrder(readInMode, false);
 			transpTable.setText(calcText(), blocklength, !crop, croplength);
+			
 
 			setColumnOrder(textPageConfiguration.getColumnOrder());
 			columnsReordered(transpTable.getColumnOrder());
@@ -776,7 +780,7 @@ public class TranspAnalysisUI extends Composite implements Observer {
 				lastPreviewedText = String.valueOf(table.readOutContent(readoutDirChooser.getInput().getContent()));
 				previewText.setText(lastPreviewedText);
 				btnDecipher.setEnabled(true);
-
+				
 				String maskParams = Messages.TranspAnalysisUI_lbl_params_mask;
 				String paramsLblText = Messages.TranspAnalysisUI_lblNewLabel_1_text + String.format(maskParams,
 						TranspositionTable.readDirectionToString(readoutDirChooser.getInput().getContent()),
