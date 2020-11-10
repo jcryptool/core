@@ -33,7 +33,7 @@ public class KeyPairNode extends TreeNode {
     public KeyPairNode(IKeyStoreAlias privateAlias, IKeyStoreAlias publicAlias) {
         super(
                 getOperation(privateAlias, publicAlias)
-                        + Messages.getString("Label.KeyPair") + " (" + Messages.getString("Label.KeyStrength") + ": " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                        + " (" + Messages.getString("Label.KeyStrength") + ": " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                         + ((getKeyLength(privateAlias, publicAlias) > 0) ? getKeyLength(privateAlias, publicAlias)
                                 : "n/a") + ")"/* + (addCounter==0?"":" ("+addCounter+")") */); //$NON-NLS-1$ //$NON-NLS-2$
 

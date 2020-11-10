@@ -53,4 +53,8 @@ public class NewSymmetricKeyWizard extends Wizard implements INewKeyWizard {
 		return keyDescriptor;
 	}
 
+	@Override
+	public boolean isHelpAvailable() {
+		return false;
+	}
 }

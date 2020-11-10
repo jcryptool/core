@@ -14,25 +14,37 @@
 
 	<p>SHA-1 was designed by the United States National Security Agency, and is a U.S. Federal Information Processing Standard. NIST formally deprecated the use of SHA-1 in 2011 and disallowed its use for digital signatures in 2013.</p>
 
-	<p>xxxx Like other hash functions, SHA-1 can also be used to build a random number generator.</p>
+	<p>Like other hash functions, SHA-1 can also be used to build a random number generator.</p>
 
-	<!-- <img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/SHA1_screenshot1.png" width="85%"/> --><strong>TODO: Screenshot</strong>
-
-	<p>Besides other hash functions, SHA-1 is offered in the JCT plugin <a href="PLUGINS_ROOT/org.jcryptool.visual.hashing/$nl$/help/content/index.html">Visuals → Hash Sensitivity</a>.</p>
+	<p>Remark: Besides other hash functions, SHA-1 is offered in the JCT plugin <a href="PLUGINS_ROOT/org.jcryptool.visual.hashing/$nl$/help/content/index.html">Visuals → Hash Sensitivity</a>.</p>
 
 
 
+<h2>Operation of the dialog</h2>
 
+	<p>In this dialog you can specify how long the random number sequence to be generated is (output size) and in which format the output should be (filter).</p>
 
-	<h2>xxxUsage of the dialog</h2>
+	<img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/SHA-1_NumberGenerator.png" width="85%" alt="Dialog creating a random number sequence using SHA-1" />
 
-	<p>xxx.</p>
+	<p>You can set the output format with three radio buttons:
+	<ul>
+	<li>Binary output</li>
+	<li>Characters from an adjustable alphabet (default are hex characters)</li>
+	<li>Numbers in an adjustable value range (you can optionally still apply padding).</li>
+	</ul>
+	</p>
 
-	<p>xxx.</p>
-
-	<p>xxx.</p>
+	<p>Example for an output in the number range 0 to 99 with padding (filling with zeros):<br>
+65 , 80 , 92 , 92 , 32 , 53 , 40 , 22 , 83 , 95 , 67 , 43 , 32 , 55 , 43 , 23 , 72 , 38 , 12 , 49 , 
+46 , 18 , 97 , 14 , 04 , 74 , 45 , 	</p>
+	<p>Example for an output in the number range 0 to 99 without padding:<br>
+25 , 19 , 58 , 2 , 71 , 64 , 70 , 96 , 80 , 40 , 22 , 59 , 0 , 51 , 24 , 27 , 13 , 17 , 12 , 2 , 
+45 , 85 , 4 , 19 , 38 , 57 , 20 ,</p>
 	
+	<p> If you click on the question mark in the lower left corner, the context menu &ndash; docked to the right edge of the dialog &ndash; is displayed.</p>
 
+	<img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/SHA-1_NumberGenerator_Context.png" width="85%" alt="Dialog creating a random number sequence using SHA-1 and showing the context help" />
+	
 
 
 

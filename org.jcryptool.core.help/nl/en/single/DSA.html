@@ -3,24 +3,58 @@
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	  <title>DSA</title>
 </head>
-
 <body>
-	<h1>DSA</h1>
-<p>
-<strong>TODO: Description</strong>
-</p>
 
-<!-- <img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/DSA_screenshot1.png" width="85%"/> --><strong>TODO: Screenshot</strong>
+<h1>DSA</h1>
 
-<p>
-DSA finden Sie ausführlich erklärt unter den Visualisierungen in JCT: 
-<!-- <a href="PLUGINS_ROOT/org.jcryptool.visual.elGamal/$nl$/help/content/index.html">Visualisierungen → DSA-Kryptosystem</a> --><strong>TODO: Link to help page of visualization if exists</strong>
-</p>
 
-<h2>References:</h2>
+<h2>Description</h2>
 
-<ul><li>
-        <!-- <a target="_blank" href="https://de.wikipedia.org/wiki/Elgamal-Verschl%C3%BCsselungsverfahren" >https://de.wikipedia.org/wiki/Elgamal-Verschl%C3%BCsselungsverfahren</a> --><strong>TODO: Link to Wikipedia</strong>
-    </li></ul>
+	<p><b>DSA</b> (Digital Signature Algorithm) is a US Federal Information Processing Standard (FIPS) for digital signatures, based on the mathematical concept of modular exponentiation and the discrete logarithm problem. DSA is a variant of the Schnorr and ElGamal signature scheme.</p>
+
+	<p>NIST (National Institute of Standards and Technology) proposed DSA for use in their Digital Signature Standard (DSS) in 1991, and adopted it as FIPS 186. The current specification is FIPS 186-4 from July 2013. Besides DSA, DSS also contains the signature schemes RSA und ECDSA.</p>
+
+	<p>FIPS 186-4 specifies to choose an approved cryptographic hash function <b>H</b> like <b>SHA-2</b>, and to choose for the modulus <b>N</b> one of the values 1024, 2048, 2048, or 3072. <!-- TODO_(make sure): A DSA signature has the length of twice N bit. --> </p>
+<!--	Der DSS enthält neben dem DSA (ursprünglich der einzige im DSS definierte Algorithmus) als weitere Algorithmen die RSA-Signatur und ECDSA. -->
+	
+	<p>Remark: Besides other hash functions, SHA-2 is offered in the JCT plugin <a href="PLUGINS_ROOT/org.jcryptool.visual.hashing/$nl$/help/content/index.html">Visuals → Hash Sensitivity</a>.</p>
+
+
+
+<h2>Operation of the dialog</h2>
+	
+	TODO_1: update screenshot
+	<p> <img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/DSA_sign_Alice-key.png" width="85%" alt="Dialog creating a DSA signature using Alice's private key from the keystore"> </p>
+	
+	<p>You have the choice to either create a DSA signature (sign) or to verify a DSA signature. Both, the signing and the verifying process here always uses the content of the current active editor as data (message).</p>
+	
+	<p>If you select the radio button <b>Sign</b>, the private key of the signer is used and you have to specify the filename and path where to save the file with the signature. 
+	After these preparation steps click on the button <b>Finish</b>. Then you are asked for the password of the private key (the password is "1234" when using Alice's key from the keystore), and the corresponding signature is stored in a file.<br>
+	Remark: In the opposite to the behavior with HMAC, the output is not stored in a new hex editor window in the middle of JCT but in a file.</p>
+	
+	<p>If you select the radio button <b>Verify</b>, the public key of the signer is used and you have to specify the filename and path where to load the signature from.
+	After these preparation steps click on the button <b>Finish</b>. Then a validation dialog pops up which shows the result of the verification (valid or invalid).</p>
+
+    <p>The signer's keys are always taken from the keystore. For verification an existing key from the keystore has to be chosen. For signing you can either select an existing asymmetric key (JCT always suggests a matching key from Alice if it exists) or you can first create a new one, store it in the keystore, and then select the newly generated key.
+	TODO_2: xxxx Creating a matching key for DSA in the keystore yourself in a new dialog called "xxxxNew symmetric key" (e.g. for the user "Alice Whitehead" or better for your own user name). You will be asked with which password this new key should be protected. After clicking on <b>Finish</b> you will return to the "DSA" dialog. If you now click on <b>Finish</b> here too, another dialog appears in which you must enter the password you have just set for the key. Since the new key is now entered in the keystore, you can use it again later (without having to create a new key first). xxxxxxxxxxxxxxxxx</p>
+
+
+    <!-- <p>xxxxxxxxxxxx The output (DSA signature) has a length xxxxxxxxxx is always a hash value of the length of the used hash procedure (here MD5 with 128 bit = 16 byte), e.g. F6 5B 71 96 D6 56 AD BA 1F 45 0B 1B 28 D7 16 75.</p>  -->
+    <!-- <p>.</p> -->
+
+
+
+
+<h2>Sources / References</h2>
+
+<ul>
+	<li>
+        <a target="_blank" href="https://en.wikipedia.org/wiki/Digital_Signature_Algorithm" >https://en.wikipedia.org/wiki/Digital_Signature_Algorithm</a>
+        Wikipedia DSA
+    </li>
+</ul>
+
+
+
 </body>
 </html>
