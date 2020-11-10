@@ -292,7 +292,7 @@ public class SummaryGui extends Content {
 				}
 			}
 		} else {
-			throw new UnsupportedOperationException("Can't select an item in an empty combo box"); //$NON-NLS-1$
+//			throw new UnsupportedOperationException("Can't select an item in an empty combo box"); //$NON-NLS-1$
 		}
 	}
 

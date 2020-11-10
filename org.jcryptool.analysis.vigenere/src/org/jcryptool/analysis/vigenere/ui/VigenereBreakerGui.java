@@ -8,6 +8,8 @@
  * ****************************************************************************/
 package org.jcryptool.analysis.vigenere.ui;
 
+import java.util.function.Consumer;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -33,9 +35,11 @@ public class VigenereBreakerGui extends ContentDelegator {
 	private int passlength;
 	private String phrase;
 	private VigenereBreakerView vigenereBreakerView;
+	public Consumer<Control[]> onContentChanged;
 
-	public VigenereBreakerGui(Composite parent, int style) {
-		super(parent, style);
+	public VigenereBreakerGui(Composite parent, Consumer<Control[]> onContentChanged) {
+		super(parent, SWT.NONE);
+		this.onContentChanged = onContentChanged;
 		initGUI();
 	}
 
@@ -44,7 +48,7 @@ public class VigenereBreakerGui extends ContentDelegator {
 		content.dispose();
 		content = new FrequencyGui(this, chiffre, passlength, edtitle);
 		((FrequencyGui) content).showCompletePass(phrase);
-		this.layout(new Control[] { content });
+		onContentChanged.accept(new Control[] { content });
 	}
 
 	@Override
@@ -53,7 +57,7 @@ public class VigenereBreakerGui extends ContentDelegator {
 		content.dispose();
 		content = new FrequencyGui(this, chiff, length, edtitle);
 		((FrequencyGui) content).showCompletePass(phrase);
-		this.layout(new Control[] { content });
+		onContentChanged.accept(new Control[] { content });
 	}
 
 	@Override
@@ -61,14 +65,14 @@ public class VigenereBreakerGui extends ContentDelegator {
 		content.dispose();
 		content = new FriedmanGui(this, chiffre, edtitle);
 		((FriedmanGui) content).reset(length);
-		this.layout(new Control[] { content });
+		onContentChanged.accept(new Control[] { content });
 	}
 
 	@Override
 	protected void backSummary() {
 		content.dispose();
 		content = new SummaryGui(this, SWT.NONE);
-		this.layout(new Control[] { content });
+		onContentChanged.accept(new Control[] { content });
 	}
 
 	public VigenereBreakerView getVigenereBreakerView() {
@@ -85,7 +89,7 @@ public class VigenereBreakerGui extends ContentDelegator {
 		this.setLayout(gridLayout);
 		this.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		content = new SummaryGui(this, SWT.NONE);
-		this.layout(new Control[] { content });
+		onContentChanged.accept(new Control[] { content });
 	}
 
 	public void setView(VigenereBreakerView vigenereBreakerView) {
@@ -97,7 +101,7 @@ public class VigenereBreakerGui extends ContentDelegator {
 		phrase = password;
 		content.dispose();
 		content = new DecryptionGui(this, plain, chiffre, password, passlength, edtitle);
-		this.layout(new Control[] { content });
+		onContentChanged.accept(new Control[] { content });
 	}
 
 	@Override
@@ -105,7 +109,7 @@ public class VigenereBreakerGui extends ContentDelegator {
 		passlength = length;
 		content.dispose();
 		content = new FrequencyGui(this, chiffre, length, edtitle);
-		this.layout(new Control[] { content });
+		onContentChanged.accept(new Control[] { content, ((FrequencyGui)content).cgraph });
 	}
 
 	public static class FilterChiffreBackgroundJob extends BackgroundJob {
@@ -137,7 +141,7 @@ public class VigenereBreakerGui extends ContentDelegator {
 					chiffre = filterJob.result__filtered;
 					content.dispose();
 					content = new FriedmanGui(this, chiffre, selection);
-					VigenereBreakerGui.this.layout(new Control[] { content });
+					onContentChanged.accept(new Control[] { content });
 				});
 			});
 			filterJob.imposeNoClickDisplayCurrentShellSynced(getDisplay());
@@ -173,7 +177,7 @@ public class VigenereBreakerGui extends ContentDelegator {
 						content.dispose();
 						this.chiffre = initBackgroundJob.chiffre;
 						content = new QuickDecryptGui(VigenereBreakerGui.this, initBackgroundJob, selection);
-						this.layout(new Control[] { content });
+						onContentChanged.accept(new Control[] { content });
 					});
 				}
 			});
