@@ -136,6 +136,13 @@ public class NewKeyPairWizardPage extends WizardPage implements Listener {
                 keyStrengthCombo.setEditable(false);
             }
         }
+        else
+        {
+        	keyStrengthCombo.add("default");
+        	keyStrengthCombo.setEditable(false);
+        	keyStrengthCombo.setEnabled(true);
+        	keyStrengthCombo.setText("default");
+        }
     }
 
     private void keyStrengthCheckBoxClicked() {
@@ -290,8 +297,12 @@ public class NewKeyPairWizardPage extends WizardPage implements Listener {
         String algoName = getName(algorithmCombo.getText());
         int length = -1;
         try {
-            int value = Integer.valueOf(keyStrengthCombo.getText());
-            length = value;
+        	if (keyStrengthCombo.getText() == "default") {
+        		length = -1;
+			} else {
+				int value = Integer.valueOf(keyStrengthCombo.getText());
+				length = value;
+			}
         } catch (NumberFormatException e) {
         }
         return new NewEntryDescriptor(contactNameCombo.getText(), algoName, algorithmCombo.getText(), length,

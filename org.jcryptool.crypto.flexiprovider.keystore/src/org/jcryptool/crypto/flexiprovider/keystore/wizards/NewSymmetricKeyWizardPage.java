@@ -227,6 +227,13 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
                 keyStrengthCCombo.setEditable(false);
             }
         }
+        else
+        {
+        	keyStrengthCCombo.add("default");
+        	keyStrengthCCombo.setEditable(false);
+        	keyStrengthCCombo.setEnabled(true);
+        	keyStrengthCCombo.setText("default");
+        }
     }
 
     private void keyStrengthCheckBoxClicked() {
@@ -244,8 +251,12 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
         String algoName = getName(algorithmCombo.getText());
         int length = -1;
         try {
-            int value = Integer.valueOf(keyStrengthCCombo.getText());
-            length = value;
+        	if (keyStrengthCCombo.getText() == "default") {
+        		length = -1;
+			} else {
+				int value = Integer.valueOf(keyStrengthCCombo.getText());
+				length = value;
+			}
         } catch (NumberFormatException e) {
         }
         return new NewEntryDescriptor(contactNameCombo.getText(), algoName, algorithmCombo.getText(), length,

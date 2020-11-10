@@ -80,6 +80,7 @@ public class KeyStoreHelper {
 		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 		Wizard wizard = new NewKeyPairWizard(keyType);
 		WizardDialog dialog = new WizardDialog(shell, wizard);
+		dialog.setHelpAvailable(false);
 		dialog.setMinimumPageSize(300, 350);
 
 		final KeyStoreAliasNotifier resultAlias = new KeyStoreAliasNotifier();
@@ -175,6 +176,7 @@ public class KeyStoreHelper {
 		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 		Wizard wizard = new NewSymmetricKeyWizard(keyType);
 		WizardDialog dialog = new WizardDialog(shell, wizard);
+		dialog.setHelpAvailable(false);
 		dialog.setMinimumPageSize(300, 350);
 
 		final KeyStoreAliasNotifier resultAlias = new KeyStoreAliasNotifier();

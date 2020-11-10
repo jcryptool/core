@@ -102,7 +102,7 @@ public class IntegratorWizardPage extends WizardPage {
     private Button decryptButton;
 
     private Button chooseFile;
-    private Text signatureText;
+    private Label signatureText;
     private IMetaPaddingScheme padding;
     private IMetaMode mode;
     private String signature;
@@ -207,7 +207,14 @@ public class IntegratorWizardPage extends WizardPage {
         // Is required for correct function for the context help.
         masterComp.setFocus();
         setControl(masterComp);
-        setOperationMode(true);
+
+        if (showSignatureGroup) {
+			decryptButton.setSelection(true);
+			setOperationMode(false);
+        } else {
+			encryptButton.setSelection(true);
+			setOperationMode(true);
+        }
         calcAndSetPageCompletion();
         
         String helpId = IntegratorPlugin.PLUGIN_ID + "." + getTitle() + "Wizard";
@@ -395,7 +402,6 @@ public class IntegratorWizardPage extends WizardPage {
                 }
             }
         });
-        encryptButton.setSelection(true);
 
         decryptButton = new Button(operationGroup, SWT.RADIO);
         decryptButton.setText(Messages.getString("DummyWizardPage.8")); //$NON-NLS-1$
@@ -413,6 +419,7 @@ public class IntegratorWizardPage extends WizardPage {
                 }
             }
         });
+
     }
 
     String keyFromKeystoreMode = KEY_FROM_KEYSTORE_MODE_SELECT; // other possible values:
@@ -982,7 +989,7 @@ public class IntegratorWizardPage extends WizardPage {
         GridData gridData = new GridData();
         gridData.grabExcessHorizontalSpace = true;
         gridData.horizontalAlignment = GridData.FILL;
-        signatureText = new Text(signatureGroup, SWT.READ_ONLY | SWT.BORDER);
+        signatureText = new Label(signatureGroup, SWT.NONE);
         signatureText.setText(CHOOSE_SIGNATURE_FILE_LABEL);
         signatureText.setLayoutData(gridData);
         GridData gridData2 = new GridData();

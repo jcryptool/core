@@ -954,10 +954,10 @@ of "DESede_CBC", "AES128_CBC", "AES192_CBC", or
       <Names>Niederreiter</Names>
       <ParameterSpec class="de.flexiprovider.pqc.ecc.ECCKeyGenParameterSpec" />
     </KeyPairGenerator>
-    <KeyPairGenerator class="de.flexiprovider.core.mersa.MeRSAKeyPairGenerator">
-      <Names>MeRSA</Names>
-      <KeyStrengths default="1024" />
-    </KeyPairGenerator>
+<!--     <KeyPairGenerator class="de.flexiprovider.core.mersa.MeRSAKeyPairGenerator"> -->
+<!--       <Names>MeRSA</Names> -->
+<!--       <KeyStrengths default="1024" /> -->
+<!--     </KeyPairGenerator> -->
     <KeyPairGenerator class="de.flexiprovider.core.mprsa.MpRSAKeyPairGenerator">
       <Names>MpRSA</Names>
       <KeyStrengths default="1024" />
@@ -1169,10 +1169,10 @@ of "DESede_CBC", "AES128_CBC", "AES192_CBC", or
     <Signature class="de.flexiprovider.core.rsa.RSASignaturePKCS1v15$RawMD5">
       <Names>MD5/RSA/RAW</Names>
     </Signature>
-    <Signature class="de.flexiprovider.core.mersa.MeRSASignaturePSS">
-      <Names>MeRSA</Names>
-      <KeyPairGenerator class="de.flexiprovider.core.mersa.MeRSAKeyPairGenerator" />
-    </Signature>
+<!--     <Signature class="de.flexiprovider.core.mersa.MeRSASignaturePSS"> -->
+<!--       <Names>MeRSA</Names> -->
+<!--       <KeyPairGenerator class="de.flexiprovider.core.mersa.MeRSAKeyPairGenerator" /> -->
+<!--     </Signature> -->
     <Signature class="de.flexiprovider.core.mprsa.MpRSASignaturePSS">
       <Names>MpRSA,RprimeRSA</Names>
       <KeyPairGenerator class="de.flexiprovider.core.rprimersa.RprimeRSAKeyPairGenerator" />
@@ -1231,10 +1231,10 @@ of "DESede_CBC", "AES128_CBC", "AES192_CBC", or
       <Names>McEliece,McEliecePKCS</Names>
       <KeyPairGenerator class="de.flexiprovider.pqc.ecc.mceliece.McElieceKeyPairGenerator" />
     </AsymmetricBlockCipher>
-    <AsymmetricBlockCipher class="de.flexiprovider.core.mersa.MeRSA">
-      <Names>MeRSA</Names>
-      <KeyPairGenerator class="de.flexiprovider.core.mersa.MeRSAKeyPairGenerator" />
-    </AsymmetricBlockCipher>
+<!--     <AsymmetricBlockCipher class="de.flexiprovider.core.mersa.MeRSA"> -->
+<!--       <Names>MeRSA</Names> -->
+<!--       <KeyPairGenerator class="de.flexiprovider.core.mersa.MeRSAKeyPairGenerator" /> -->
+<!--     </AsymmetricBlockCipher> -->
     <AsymmetricBlockCipher class="de.flexiprovider.core.mprsa.MpRSA">
       <Names>MpRSA,RprimeRSA</Names>
       <KeyPairGenerator class="de.flexiprovider.core.rprimersa.RprimeRSAKeyPairGenerator" />
@@ -1248,10 +1248,6 @@ of "DESede_CBC", "AES128_CBC", "AES192_CBC", or
   <AsymmetricHybridCiphers>
     <AsymmetricHybridCipher class="de.flexiprovider.pqc.ecc.mceliece.McElieceFujisakiCipher" oid="1.3.6.1.4.1.8301.3.1.3.4.2.1">
       <Names>McElieceFujisakiCipher</Names>
-      <ParameterSpec class="de.flexiprovider.pqc.ecc.mceliece.McElieceCCA2ParameterSpec" />
-    </AsymmetricHybridCipher>
-    <AsymmetricHybridCipher class="de.flexiprovider.pqc.ecc.mceliece.McEliecePointchevalCipher" oid="1.3.6.1.4.1.8301.3.1.3.4.2.2">
-      <Names>McEliecePointchevalCipher</Names>
       <ParameterSpec class="de.flexiprovider.pqc.ecc.mceliece.McElieceCCA2ParameterSpec" />
     </AsymmetricHybridCipher>
     <AsymmetricHybridCipher class="de.flexiprovider.pqc.ecc.mceliece.McElieceKobaraImaiCipher" oid="1.3.6.1.4.1.8301.3.1.3.4.2.3">
