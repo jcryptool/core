@@ -212,7 +212,9 @@ public class IntegratorWizardPage extends WizardPage {
 			decryptButton.setSelection(true);
 			setOperationMode(false);
         } else {
-			encryptButton.setSelection(true);
+        	if (encryptButton != null) {
+				encryptButton.setSelection(true);
+			}
 			setOperationMode(true);
         }
         calcAndSetPageCompletion();
