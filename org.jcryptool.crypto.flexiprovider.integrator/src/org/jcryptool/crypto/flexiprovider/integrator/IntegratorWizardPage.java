@@ -512,7 +512,9 @@ public class IntegratorWizardPage extends WizardPage {
             public void widgetSelected(SelectionEvent e) {
                 // preAddContacts = KeyStoreManager.getInstance().
                 if (algorithmType == IntegratorHandler.TYPE_ASYMMETRIC_BLOCK
-                        || algorithmType == IntegratorHandler.TYPE_ASYMMETRIC_HYBRID) {
+                        || algorithmType == IntegratorHandler.TYPE_ASYMMETRIC_HYBRID
+						|| algorithmType == IntegratorHandler.TYPE_SIGNATURE
+                        ) {
                     makeNewKeypair();
                 } else if (algorithmType == IntegratorHandler.TYPE_CIPHER
                         || algorithmType == IntegratorHandler.TYPE_CIPHER_BLOCK
