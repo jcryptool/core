@@ -371,16 +371,16 @@ public class TranspTextWizardPage extends WizardPage {
 		compTextshortened.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		
 		Link lblTextshortened = new Link(compTextshortened, SWT.NONE);
-		lblTextshortened.setText("The current text is too big to display in this text field. Click <a>here</a> to try loading it in full length anyways.");
+		lblTextshortened.setText(Messages.TranspTextWizardPage_0);
 		lblTextshortened.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent e) {
-				displayText(lastDisplayedFullText, false);
+				displayText(lastDisplayedFullText, true);
 			}
 		});
 
 		buttonTransformText = new Button(grpText, SWT.CHECK);
-		buttonTransformText.setText("Filter text...");
+		buttonTransformText.setText("Filter text..."); //$NON-NLS-1$
 		buttonTransformText.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -930,7 +930,7 @@ public class TranspTextWizardPage extends WizardPage {
 		transpositionTable1.setText(makeShortenedTextForTablePreview(text,true), pageConfig.getColumnCount(), !pageConfig.isCrop(),
 				pageConfig.getCropLength(), pageConfig.getColumnOrder(), true);
 	
-		txtInputText.setText(text);
+		txtInputText.setText(makeShortenedTextForTablePreview(text,true));
 		//pageConfig.getText().setText(makeShortenedTextForTablePreview(text, true));
 		
 		lastPreviewedPageConfig = pageConfig;

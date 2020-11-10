@@ -545,10 +545,10 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		textpreviewDescription.setText(Messages.TranspAnalysisUI_preview);
 
 		previewText = new Text(previewGroup, SWT.WRAP | SWT.BORDER | SWT.V_SCROLL);
-		GridData previewTextLData = new GridData(SWT.FILL, SWT.FILL, true, false);
+		GridData previewTextLData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		previewTextLData.minimumHeight = 100;
-		previewTextLData.heightHint = 220;
-		previewTextLData.widthHint = previewGroup.getClientArea().x - 10;
+		//previewTextLData.heightHint = 220;
+		previewTextLData.widthHint = 600;
 		previewText.setLayoutData(previewTextLData);
 		previewText.setEditable(false);
 
@@ -572,9 +572,10 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		displayTextSource(null, false, false);
 
 		scrolledComposite.setContent(content);
-		
 		scrolledComposite.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-
+        SmoothScroller.scrollSmooth(scrolledComposite);
+        LayoutAdvisor.addPreLayoutRootComposite(content);
+		
 	}
 
 	protected TranspositionKey getKeyUsedToEncrypt() {
@@ -610,8 +611,8 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		// Recalculate the size of the scrolled composite after the warning is
 		// displayed.
 		// This avoids text being cut of at the bottom of the plugin.
-		content.layout();
 		scrolledComposite.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		content.layout();
 
 	}
 
@@ -630,22 +631,25 @@ public class TranspAnalysisUI extends Composite implements Observer {
 		int result = dialog.open();
 
 		if (result == Window.OK) {
-			textPageConfiguration = textWizard.getTextPageConfig();
+			
+			textPageConfiguration = textWizard.getTextPageConfig();	
+			textPageConfiguration.getText().setText(makeShortenedTextForTablePreview(textPageConfiguration.getText().getText(), true));
 			setText(textPageConfiguration.getText(), false);
 			setReadInMode(textPageConfiguration.getReadInDirection(), false);
 			readinDirChooser.setDirection(textPageConfiguration.getReadInDirection());
 			setCrop(textPageConfiguration.isCrop(), false);
 			setCroplength(textPageConfiguration.getCropLength(), false);
 			setBlocklength(textPageConfiguration.getColumnCount(), false);
+			
 			displayTextTransformBtn(false, true, new TransformData());
 			applyTransformationInput.writeContent(false);
+			
 			applyTransformationInput.synchronizeWithUserSide();
 
 			doAutoCrop = (blocklength > 0 && !crop || blocklength == 0 && crop);
 
 			transpTable.setReadInOrder(readInMode, false);
 			transpTable.setText(calcText(), blocklength, !crop, croplength);
-			
 
 			setColumnOrder(textPageConfiguration.getColumnOrder());
 			columnsReordered(transpTable.getColumnOrder());
@@ -659,16 +663,32 @@ public class TranspAnalysisUI extends Composite implements Observer {
 			readinDirChooser.setEnabled(true);
 
 			// Recalc size after new line added
-			content.layout();
-			scrolledComposite.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+			
+			
+			//scrolledComposite.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 			// This makes the ScrolledComposite scrolling, when the mouse
 			// is on a Text with one or more of the following tags: SWT.READ_ONLY,
 			// SWT.V_SCROLL or SWT-H_SCROLL.
-			SmoothScroller.scrollSmooth(scrolledComposite);
+			// SmoothScroller.scrollSmooth(scrolledComposite);
+			// LayoutAdvisor.addPreLayoutRootComposite(scrolledComposite);
+			scrolledComposite.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+			content.layout();
 
 		}
 	}
+	
+	private String makeShortenedTextForTablePreview(String textString, boolean shortenIfNecessary) {
+		// TODO Auto-generated method stub
+		boolean makePreview = shortenIfNecessary && textString.length() > 30000;
+		String previewText = textString;
+		if (makePreview) {
+			previewText = textString.subSequence(0, Math.min(textString.length(), 30000)).toString();
+			return previewText;
+		}
+		return previewText;
+	}
+	
 
 	/**
 	 * switch load text / show text source composites.
