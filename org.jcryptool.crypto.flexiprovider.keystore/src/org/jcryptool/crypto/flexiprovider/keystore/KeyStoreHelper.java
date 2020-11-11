@@ -75,7 +75,16 @@ public class KeyStoreHelper {
 		}
 	}
 
+	public static KeyStoreAliasNotifier makeKeyPairByWizard_Private(String keyType) {
+		return makeKeyPairByWizard(keyType, false);
+	}
+	public static KeyStoreAliasNotifier makeKeyPairByWizard_Public(String keyType) {
+		return makeKeyPairByWizard(keyType, true);
+	}
 	public static KeyStoreAliasNotifier makeKeyPairByWizard(String keyType) {
+		return makeKeyPairByWizard_Public(keyType);
+	}
+	public static KeyStoreAliasNotifier makeKeyPairByWizard(String keyType, boolean publicComponent) {
 		LogUtil.logInfo("NewKeyPairAction"); //$NON-NLS-1$
 		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 		Wizard wizard = new NewKeyPairWizard(keyType);
@@ -129,7 +138,8 @@ public class KeyStoreHelper {
 							PrivateKey priv = keyPair.getPrivate();
 							PublicKey pub = keyPair.getPublic();
 							NewKeyPairDescriptor descriptor = new NewKeyPairDescriptor(nkd, priv, pub);
-							resultAlias.notifyAboutAlias(AbstractKeyStoreHandler.addKeyPairStatic(descriptor, ((NewKeyPairDescriptor)descriptor).getPrivateKey(), ((NewKeyPairDescriptor)descriptor).getPublicKey()));
+							KeyStoreAlias[] result = AbstractKeyStoreHandler.addKeyPairStatic_GetBoth(descriptor, ((NewKeyPairDescriptor)descriptor).getPrivateKey(), ((NewKeyPairDescriptor)descriptor).getPublicKey());
+							resultAlias.notifyAboutAlias(publicComponent ? result[0] : result[1]);
 						} catch (NoSuchAlgorithmException e) {
 							LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, "NoSuchAlgorithmException while generating a key pair", e, true);
 						} catch (InvalidAlgorithmParameterException e) {

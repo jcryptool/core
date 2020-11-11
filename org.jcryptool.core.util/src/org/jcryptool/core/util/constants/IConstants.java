@@ -43,7 +43,7 @@ public interface IConstants {
     /** Constant filter extension for <b>xml</b> files (value is {@value} ). Use in file dialogs. */
     String XML_FILTER_EXTENSION = "*.xml"; //$NON-NLS-1$
     /** Constant filter extension for <b>all</b> files (value is {@value} ). Use in file dialogs. */
-    String ALL_FILTER_EXTENSION = "*"; //$NON-NLS-1$
+    String ALL_FILTER_EXTENSION = "*.*;*"; //$NON-NLS-1$
     /** Constant internationalized filter name for <b>bin</b> files. Use in file dialogs. */
     String BIN_FILTER_NAME = Messages.IConstants_0;
     /** Constant internationalized filter name for <b>csv</b> files. Use in file dialogs. */

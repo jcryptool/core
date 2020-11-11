@@ -25,6 +25,7 @@ import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -50,6 +51,7 @@ public class CommonPropertyDialog extends TitleAreaDialog {
         super(parentShell);
         setShellStyle(SWT.RESIZE | SWT.TITLE);
         this.treeNode = treeNode;
+        this.setHelpAvailable(false);
     }
 
     public IStructuredContentProvider getContentProvider() {
@@ -68,9 +70,11 @@ public class CommonPropertyDialog extends TitleAreaDialog {
     protected Control createDialogArea(Composite parent) {
 
         Composite area = (Composite) super.createDialogArea(parent);
+        this.setMessage(Messages.getString("CommonPropertyDialog.0")); //$NON-NLS-1$
 
         Composite composite = new Composite(area, SWT.NONE);
-        TableColumnLayout tclComposite = new TableColumnLayout();
+//        TableColumnLayout tclComposite = new TableColumnLayout(true);
+        TableColumnLayout tclComposite = new TableColumnLayout(true);
         composite.setLayout(tclComposite);
 
         TableViewer tableViewer = new TableViewer(composite, SWT.BORDER | SWT.FULL_SELECTION | SWT.H_SCROLL);
@@ -96,7 +100,7 @@ public class CommonPropertyDialog extends TitleAreaDialog {
             @Override
             public String getText(Object element) {
                 TableEntry entry = (TableEntry) element;
-                return entry == null ? "" : entry.getName();
+                return entry == null ? "" : entry.getName(); //$NON-NLS-1$
             }
         });
         TableColumn tblclmnNameColumn = tableViewerNameColumn.getColumn();
@@ -113,7 +117,7 @@ public class CommonPropertyDialog extends TitleAreaDialog {
             @Override
             public String getText(Object element) {
                 TableEntry entry = (TableEntry) element;
-                return entry == null ? "" : entry.getValue();
+                return entry == null ? "" : entry.getValue(); //$NON-NLS-1$
             }
         });
         TableColumn tblclmnValueColumn = tableViewerValueColumn.getColumn();
@@ -149,5 +153,20 @@ public class CommonPropertyDialog extends TitleAreaDialog {
     protected void createButtonsForButtonBar(Composite parent) {
         createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CLOSE_LABEL, true);
     }
+    
+//    @Override
+//    protected Point getInitialSize() {
+//    	// TODO Auto-generated method stub
+//    	return super.getInitialSize();
+//    }
+//    
+//    @Override
+//    protected void initializeBounds() {
+//    	super.initializeBounds();
+//		Point size = getInitialSize();
+//		Point location = getInitialLocation(size);
+//		shell.setBounds(getConstrainedShellBounds(new Rectangle(location.x,
+//				location.y, size.x, size.y)));
+//    }
 
 }

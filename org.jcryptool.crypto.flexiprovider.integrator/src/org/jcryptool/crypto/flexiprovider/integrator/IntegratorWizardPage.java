@@ -16,6 +16,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Vector;
 
+import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
@@ -400,6 +401,9 @@ public class IntegratorWizardPage extends WizardPage {
             @Override
 			public void handleEvent(Event event) {
                 if ((((Button) event.widget).getSelection()) && (!encrypt)) {
+        			if (createdKeyViewer != null && createdKeyViewer.isVisible()) {
+        				createdKeyViewer.removeObserver.notifyObservers(null);
+					}
                     setOperationMode(true);
                 }
             }
@@ -517,7 +521,7 @@ public class IntegratorWizardPage extends WizardPage {
                         || algorithmType == IntegratorHandler.TYPE_ASYMMETRIC_HYBRID
 						|| algorithmType == IntegratorHandler.TYPE_SIGNATURE
                         ) {
-                    makeNewKeypair();
+                    makeNewKeypair(algorithmType != IntegratorHandler.TYPE_SIGNATURE);
                 } else if (algorithmType == IntegratorHandler.TYPE_CIPHER
                         || algorithmType == IntegratorHandler.TYPE_CIPHER_BLOCK
                         || algorithmType == IntegratorHandler.TYPE_MESSAGE_AUTHTIFICATION_CODE) {
@@ -654,10 +658,10 @@ public class IntegratorWizardPage extends WizardPage {
         }
     }
 
-    protected void makeNewKeypair() {
+    protected void makeNewKeypair(boolean getPublic) {
         Job[] preJobs = Job.getJobManager().find(KeyStoreHelper.KEYSTOREHELPER_FAMILY);
         int preJobCount = preJobs.length;
-        KeyStoreHelper.makeKeyPairByWizard(showKeyGroup).addObserver(new Observer() {
+        KeyStoreHelper.makeKeyPairByWizard(showKeyGroup, getPublic).addObserver(new Observer() {
             @Override
 			public void update(Observable o, final Object arg) {
                 if (arg != null) {
@@ -757,6 +761,7 @@ public class IntegratorWizardPage extends WizardPage {
                         @Override
 						public void run() {
                             setKeyForShowcase(null);
+                            refreshKeysFromKeystore();
                         }
                     });
                 }
@@ -779,6 +784,11 @@ public class IntegratorWizardPage extends WizardPage {
             // }
         }
         setAliasFromKeyPairAndCombo();
+        if (this.getControl() != null && this.getControl().getShell() != null) {
+			showcaseKeyFromKeystoreComposite.requestLayout();
+			masterComp.layout();
+			this.getControl().getShell().pack();
+		}
         calcAndSetPageCompletion();
     }
 
@@ -823,6 +833,9 @@ public class IntegratorWizardPage extends WizardPage {
         masterComp.getShell().layout();
     }
 
+    private void refreshKeysFromKeystore() {
+    	refreshKeysFromKeystore(null);
+    }
     private void refreshKeysFromKeystore(KeyStoreAlias previousSelection) {
         publicKeyMap.clear();
         privateKeyMap.clear();

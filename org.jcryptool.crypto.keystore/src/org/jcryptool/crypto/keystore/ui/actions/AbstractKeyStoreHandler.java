@@ -27,6 +27,7 @@ import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.crypto.keystore.certificates.CertificateFactory;
+import org.jcryptool.crypto.keystore.descriptors.NewKeyPairDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.INewEntryDescriptor;
 import org.jcryptool.crypto.keystore.keys.KeyType;
 
@@ -62,8 +63,8 @@ public abstract class AbstractKeyStoreHandler extends AbstractHandler {
         return addSecretKeyStatic(descriptor, key);
     }
 
-    public static KeyStoreAlias addKeyPairStatic(INewEntryDescriptor descriptor, PrivateKey privateKey,
-            PublicKey publicKey) {
+	public static KeyStoreAlias[] addKeyPairStatic_GetBoth(INewEntryDescriptor descriptor, PrivateKey privateKey,
+			PublicKey publicKey) {
         KeyStoreAlias privateAlias = new KeyStoreAlias(descriptor.getContactName(), KeyType.KEYPAIR_PRIVATE_KEY,
                 descriptor.getDisplayedName(), descriptor.getKeyLength(),
                 ByteArrayUtils.toHexString(getHashValue(descriptor)), privateKey.getClass().getName());
@@ -77,7 +78,11 @@ public abstract class AbstractKeyStoreHandler extends AbstractHandler {
         KeyStoreManager.getInstance().addKeyPair(privateKey, jctCertificate, descriptor.getPassword().toCharArray(),
                 privateAlias, publicAlias);
 
-        return publicAlias;
+        return new KeyStoreAlias[] {publicAlias, privateAlias};
+	}
+    public static KeyStoreAlias addKeyPairStatic(INewEntryDescriptor descriptor, PrivateKey privateKey,
+			PublicKey publicKey) {
+    	return addKeyPairStatic_GetBoth(descriptor, privateKey, publicKey)[0];
     }
 
     protected KeyStoreAlias addKeyPair(INewEntryDescriptor descriptor, PrivateKey privateKey, PublicKey publicKey) {
@@ -99,5 +104,6 @@ public abstract class AbstractKeyStoreHandler extends AbstractHandler {
         }
         return new byte[] { 0 };
     }
+
 
 }

@@ -330,6 +330,13 @@ public abstract class IntegratorHandler extends AbstractAlgorithmHandler {
                                     new Object[] { checksum.toLowerCase(), expectedChecksum.toLowerCase() }));
                             messageBox.open();
                         }
+
+						if (operation.getOperation() == OperationType.SIGN) {
+							MessageBox messageBox = new MessageBox(getActiveWorkbenchWindow().getShell(), SWT.NONE);
+							messageBox.setText(Messages.getString("DummyAction.13")); //$NON-NLS-1$
+							messageBox.setMessage(Messages.getString("DummyAction.14") + wizard.signature()); //$NON-NLS-1$
+							messageBox.open();
+						}
                     } catch (NoSuchAlgorithmException e) {
                         LogUtil.logError(IntegratorPlugin.PLUGIN_ID,
                                 "NoSuchAlgorithmException while initializing a message digest", e, true); //$NON-NLS-1$
@@ -338,12 +345,6 @@ public abstract class IntegratorHandler extends AbstractAlgorithmHandler {
                     PerformOperationManager.getInstance().firePerformOperation(operation);
                 }
 
-                if (operation.getOperation() == OperationType.SIGN) {
-                    MessageBox messageBox = new MessageBox(getActiveWorkbenchWindow().getShell(), SWT.NONE);
-                    messageBox.setText(Messages.getString("DummyAction.13")); //$NON-NLS-1$
-                    messageBox.setMessage(Messages.getString("DummyAction.14") + wizard.signature()); //$NON-NLS-1$
-                    messageBox.open();
-                }
             } catch (IOException ex) {
                 LogUtil.logError(ex);
             }
