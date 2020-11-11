@@ -343,6 +343,12 @@ public abstract class IntegratorHandler extends AbstractAlgorithmHandler {
                     }
                 } else {
                     PerformOperationManager.getInstance().firePerformOperation(operation);
+					if (operation.getOperation() == OperationType.SIGN) {
+						MessageBox messageBox = new MessageBox(getActiveWorkbenchWindow().getShell(), SWT.NONE);
+						messageBox.setText(Messages.getString("DummyAction.13")); //$NON-NLS-1$
+						messageBox.setMessage(Messages.getString("DummyAction.14") + wizard.signature()); //$NON-NLS-1$
+						messageBox.open();
+					}
                 }
 
             } catch (IOException ex) {
