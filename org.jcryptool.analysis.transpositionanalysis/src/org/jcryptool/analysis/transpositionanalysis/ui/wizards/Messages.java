@@ -29,6 +29,7 @@ public class Messages extends NLS {
 	public static String AnalysisWizardIndexPage_simpleColumnAnalysisDescription;
 	public static String TranspTextModifyPage_textmodifydescription;
 	public static String TranspTextWizard_textwizard;
+	public static String TranspTextWizardPage_0;
 	public static String TranspTextWizardPage_columns;
 	public static String TranspTextWizardPage_pagedescription;
 	public static String TranspTextWizardPage_pagetitle;
