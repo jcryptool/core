@@ -53,7 +53,7 @@ public class NewKeyComposite extends org.eclipse.swt.widgets.Composite {
 	private Label labelInfo1;
 	private Composite infoComposite;
 	private KeyStoreAlias publicKeyAlias;
-	private Observable removeObserver;
+	public Observable removeObserver;
 
 	/**
 	* Overriding checkSubclass allows this class to extend org.eclipse.swt.widgets.Composite

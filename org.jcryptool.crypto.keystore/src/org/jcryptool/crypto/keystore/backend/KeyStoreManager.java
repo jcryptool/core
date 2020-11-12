@@ -76,7 +76,7 @@ public class KeyStoreManager {
     /** Hard-coded default password for the keys. */
     public static final char[] KEY_PASSWORD = { '1', '2', '3', '4' };
     /** JCrypTool keystore name, value is {@value} . */
-    public static final String KEYSTORE_NAME = "JCrypTool Keystore"; //$NON-NLS-1$
+    public static final String KEYSTORE_NAME = Messages.KeyStoreManager_11;
     /** FlexiProvider workspace settings folder, value is {@value} . */
     private static final String FLEXIPROVIDER_FOLDER = "flexiprovider"; //$NON-NLS-1$
     /** JCrypTool keystore file name, value is {@value} . */
@@ -258,7 +258,7 @@ public class KeyStoreManager {
                 flexiProvider.mkdir();
             }
 
-            File autoBackupFile = new File(flexiProvider, "autobackup.ksf");
+            File autoBackupFile = new File(flexiProvider, "autobackup.ksf"); //$NON-NLS-1$
             backupKeystore(autoBackupFile.getAbsolutePath());
             
             File backupFile = new File(pathToFile);

@@ -24,6 +24,7 @@ public class Messages extends NLS {
     public static String KeyStoreManager_8;
     public static String KeyStoreManager_9;
     public static String KeyStoreManager_10;
+	public static String KeyStoreManager_11;
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

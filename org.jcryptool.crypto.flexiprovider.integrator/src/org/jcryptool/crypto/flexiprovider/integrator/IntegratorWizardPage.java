@@ -16,6 +16,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Vector;
 
+import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
@@ -102,7 +103,7 @@ public class IntegratorWizardPage extends WizardPage {
     private Button decryptButton;
 
     private Button chooseFile;
-    private Text signatureText;
+    private Label signatureText;
     private IMetaPaddingScheme padding;
     private IMetaMode mode;
     private String signature;
@@ -207,7 +208,16 @@ public class IntegratorWizardPage extends WizardPage {
         // Is required for correct function for the context help.
         masterComp.setFocus();
         setControl(masterComp);
-        setOperationMode(true);
+
+        if (showSignatureGroup) {
+			decryptButton.setSelection(true);
+			setOperationMode(false);
+        } else {
+        	if (encryptButton != null) {
+				encryptButton.setSelection(true);
+			}
+			setOperationMode(true);
+        }
         calcAndSetPageCompletion();
         
         String helpId = IntegratorPlugin.PLUGIN_ID + "." + getTitle() + "Wizard";
@@ -391,11 +401,13 @@ public class IntegratorWizardPage extends WizardPage {
             @Override
 			public void handleEvent(Event event) {
                 if ((((Button) event.widget).getSelection()) && (!encrypt)) {
+        			if (createdKeyViewer != null && createdKeyViewer.isVisible()) {
+        				createdKeyViewer.removeObserver.notifyObservers(null);
+					}
                     setOperationMode(true);
                 }
             }
         });
-        encryptButton.setSelection(true);
 
         decryptButton = new Button(operationGroup, SWT.RADIO);
         decryptButton.setText(Messages.getString("DummyWizardPage.8")); //$NON-NLS-1$
@@ -413,6 +425,7 @@ public class IntegratorWizardPage extends WizardPage {
                 }
             }
         });
+
     }
 
     String keyFromKeystoreMode = KEY_FROM_KEYSTORE_MODE_SELECT; // other possible values:
@@ -505,8 +518,10 @@ public class IntegratorWizardPage extends WizardPage {
             public void widgetSelected(SelectionEvent e) {
                 // preAddContacts = KeyStoreManager.getInstance().
                 if (algorithmType == IntegratorHandler.TYPE_ASYMMETRIC_BLOCK
-                        || algorithmType == IntegratorHandler.TYPE_ASYMMETRIC_HYBRID) {
-                    makeNewKeypair();
+                        || algorithmType == IntegratorHandler.TYPE_ASYMMETRIC_HYBRID
+						|| algorithmType == IntegratorHandler.TYPE_SIGNATURE
+                        ) {
+                    makeNewKeypair(algorithmType != IntegratorHandler.TYPE_SIGNATURE);
                 } else if (algorithmType == IntegratorHandler.TYPE_CIPHER
                         || algorithmType == IntegratorHandler.TYPE_CIPHER_BLOCK
                         || algorithmType == IntegratorHandler.TYPE_MESSAGE_AUTHTIFICATION_CODE) {
@@ -643,10 +658,10 @@ public class IntegratorWizardPage extends WizardPage {
         }
     }
 
-    protected void makeNewKeypair() {
+    protected void makeNewKeypair(boolean getPublic) {
         Job[] preJobs = Job.getJobManager().find(KeyStoreHelper.KEYSTOREHELPER_FAMILY);
         int preJobCount = preJobs.length;
-        KeyStoreHelper.makeKeyPairByWizard(showKeyGroup).addObserver(new Observer() {
+        KeyStoreHelper.makeKeyPairByWizard(showKeyGroup, getPublic).addObserver(new Observer() {
             @Override
 			public void update(Observable o, final Object arg) {
                 if (arg != null) {
@@ -746,6 +761,7 @@ public class IntegratorWizardPage extends WizardPage {
                         @Override
 						public void run() {
                             setKeyForShowcase(null);
+                            refreshKeysFromKeystore();
                         }
                     });
                 }
@@ -768,6 +784,11 @@ public class IntegratorWizardPage extends WizardPage {
             // }
         }
         setAliasFromKeyPairAndCombo();
+        if (this.getControl() != null && this.getControl().getShell() != null) {
+			showcaseKeyFromKeystoreComposite.requestLayout();
+			masterComp.layout();
+			this.getControl().getShell().pack();
+		}
         calcAndSetPageCompletion();
     }
 
@@ -812,6 +833,9 @@ public class IntegratorWizardPage extends WizardPage {
         masterComp.getShell().layout();
     }
 
+    private void refreshKeysFromKeystore() {
+    	refreshKeysFromKeystore(null);
+    }
     private void refreshKeysFromKeystore(KeyStoreAlias previousSelection) {
         publicKeyMap.clear();
         privateKeyMap.clear();
@@ -982,7 +1006,7 @@ public class IntegratorWizardPage extends WizardPage {
         GridData gridData = new GridData();
         gridData.grabExcessHorizontalSpace = true;
         gridData.horizontalAlignment = GridData.FILL;
-        signatureText = new Text(signatureGroup, SWT.READ_ONLY | SWT.BORDER);
+        signatureText = new Label(signatureGroup, SWT.NONE);
         signatureText.setText(CHOOSE_SIGNATURE_FILE_LABEL);
         signatureText.setLayoutData(gridData);
         GridData gridData2 = new GridData();

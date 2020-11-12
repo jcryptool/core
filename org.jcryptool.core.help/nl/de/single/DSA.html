@@ -23,7 +23,6 @@
 
 <h2>Bedienung des Dialogs</h2>
 	
-	TODO_1: Bildschirmfoto aktualisieren
 	<p> <img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/DSA_sign_Alice-key.png" width="85%" alt="Dialog zum Erstellen einer DSA-Signatur unter Verwendung von Alices privatem Schlüssel aus dem Schlüsselspeicher"> </p>
 	
 	<p>Sie haben die Wahl, entweder eine DSA-Signatur zu erstellen (signieren) oder eine DSA-Signatur zu prüfen (verifizieren). Sowohl der Signier- als auch der Verifizierungsprozess verwendet hier immer den Inhalt des aktuell aktiven Editors als Daten (Nachricht).</p>
@@ -35,9 +34,19 @@
 	<p>Wenn Sie den Auswahlknopf <b>Verifizieren</b> wählen, wird der öffentliche Schlüssel des Unterzeichners verwendet, und Sie müssen den Dateinamen und den Pfad angeben, aus dem die Signatur geladen werden soll.
 	Nach diesen Vorbereitungsschritten klicken Sie auf die Schaltfläche <b>Fertigstellen</b>. Dann erscheint ein Validierungsdialog, der das Ergebnis der Überprüfung (gültig oder ungültig) anzeigt.</p>
 
-    <p>Die Schlüssel des Unterzeichners werden immer aus dem Schlüsselspeicher entnommen. Zur Verifizierung muss ein vorhandener Schlüssel aus dem Keystore ausgewählt werden. Zum Signieren kann entweder ein vorhandener asymmetrischer Schlüssel ausgewählt werden (JCT schlägt immer einen passenden Schlüssel von Alice vor, wenn er existiert), oder es kann zunächst ein neuer Schlüssel erzeugt und im Keystore gespeichert werden, und dann der neu erzeugte Schlüssel ausgewählt werden.
-	TODO_2: xxxx Erzeugen eines passenden Schlüssels für DSA im Schlüsselspeicher selbst in einem neuen Dialog mit dem Namen "xxxxNeuer symmetrischer Schlüssel" (z.B. für den Benutzer "Alice Whitehead" oder besser für Ihren eigenen Benutzernamen). Sie werden gefragt, mit welchem Passwort dieser neue Schlüssel geschützt werden soll. Nach einem Klick auf <b>xxBeenden</b> kehren Sie zum "DSA"-Dialog zurück. Wenn Sie nun auch hier auf <b>xxBeenden</b> klicken, erscheint ein weiterer Dialog, in dem Sie das Passwort eingeben müssen, das Sie gerade für den Schlüssel festgelegt haben. Da der neue Schlüssel jetzt im Schlüsselspeicher eingetragen ist, können Sie ihn später wieder verwenden (ohne dass Sie vorher einen neuen Schlüssel erstellen müssen). xxxxxxxxxxxxxxxxxxxxxxx</p>
 
+    <p>Die Schlüssel des Unterzeichners werden immer aus dem Schlüsselspeicher entnommen. Zur Verifizierung muss ein vorhandener Schlüssel aus dem Keystore ausgewählt werden. Zum Signieren kann entweder ein vorhandener asymmetrischer Schlüssel ausgewählt werden (JCT schlägt immer einen passenden Schlüssel von Alice vor, wenn er existiert)  &ndash; oder es kann zunächst ein neuer Schlüssel erzeugt und im Keystore gespeichert werden, und dann der neu erzeugte Schlüssel ausgewählt werden.</p>
+
+
+<h3>Vor dem Signieren einen neuen Schlüssel anlegen</h3>
+
+   <p>Drücken Sie den langgestreckten Button <b>Einen neuen Schlüssel (für DSA) im Schlüsselspeicher erzeugen</b>, öffnet sich ein Dialog mit dem Namen "Neues Schlüsselpaar".  Einen neuen Schlüssel können Sie z.B. für den existierenden Benutzer "Alice Whitehead" oder besser für einen neuen Benutzer wie Sie selbst anlegen, indem Sie einfach einen Benutzernamen in das Benutzerfeld eintragen und "Alice" überschreiben. Sie werden gefragt, mit welchem Passwort dieser neue Schlüssel geschützt werden soll. Wenn der neue Schlüssel im Schlüsselspeicher eingetragen ist, können Sie ihn später wieder verwenden (ohne vorher einen neuen Schlüssel zu erstellen).</p>
+
+    <p>Nachdem Sie auf <b>Fertigstellen</b> geklickt haben, kehren Sie zum Dialog "DSA &mdash; Signatur" zurück, der nun den neu erzeugten Schlüssel in der Gruppierung "Schlüsselspeicher" auflistet.</p>
+
+    <p>Da die Unterzeichnerin und ihr Schlüssel ausgewählt wurden, müssen Sie wiederum den Namen und den Ort der Datei wählen, wo die Signatur gespeichert werden soll.</p>
+
+    <p>Wenn Sie auch hier auf <b>Fertigstellen</b> klicken, erscheint ein weiterer Dialog ("Passwort eingeben"), in dem Sie das Passwort eingeben müssen, das Sie soeben für den neuen Schlüssel festgelegt haben. Dann wird die Signatur erzeugt und ein Meldungsfenster bestätigt, wo die Signatur gespeichert worden ist.</p>
 
     <!-- <p>xxxxxxxxxxxxxxxx Die Ausgabe (DSA-Signatur) hat eine Länge xxxxxxxxxxxx ist immer ein Hash-Wert der Länge des verwendeten Hash-Verfahrens (hier MD5 mit 128 Bit = 16 Byte), z.B. F6 5B 71 96 D6 56 AD BA 1F 45 0B 1B 28 D7 16 75.</p> -->
     <!-- <p>.</p> -->

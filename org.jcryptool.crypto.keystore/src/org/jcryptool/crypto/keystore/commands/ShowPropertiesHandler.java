@@ -52,6 +52,7 @@ public class ShowPropertiesHandler extends AbstractHandler {
         }
 
         keyDialog.create();
+        keyDialog.getShell().setMinimumSize(400, 600);
         keyDialog.open();
 
         return null;
