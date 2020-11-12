@@ -325,8 +325,10 @@ public class IntegratorWizardPage extends WizardPage {
         if (createNewKeyButton != null) {
             if (algorithmType != IntegratorHandler.TYPE_SIGNATURE) {
                 createNewKeyButton.setEnabled(encryptMode);
+				createNewKeyLabel.setEnabled(encryptMode);
             } else {
                 createNewKeyButton.setEnabled(!encryptMode);
+				createNewKeyLabel.setEnabled(!encryptMode);
             }
         }
 
@@ -439,6 +441,7 @@ public class IntegratorWizardPage extends WizardPage {
     private KeyStoreAlias createdKeyPairAlias;
     private String buttonTextBeforeJobrunningMsg;
 	private Button fillerBtn;
+	private Label createNewKeyLabel;
 
     /**
      * This method initializes the 'Key from keystore'-group
@@ -488,7 +491,7 @@ public class IntegratorWizardPage extends WizardPage {
 
         refreshKeysFromKeystore(null);
 
-        Label createNewKeyLabel = new Label(normalKeyFromKeystoreComposite, SWT.NONE);
+        createNewKeyLabel = new Label(normalKeyFromKeystoreComposite, SWT.NONE);
         createNewKeyLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false, 1, 1));
         createNewKeyLabel.setText(Messages.getString("IntegratorWizardPage.or")); //$NON-NLS-1$
 
@@ -562,6 +565,7 @@ public class IntegratorWizardPage extends WizardPage {
     private void enableControls() {
         if (createNewKeyButton != null)
             createNewKeyButton.setEnabled(true);
+			createNewKeyLabel.setEnabled(true);
         if (keyCombo != null)
             keyCombo.setEnabled(true);
         if (encryptButton != null)
@@ -573,6 +577,7 @@ public class IntegratorWizardPage extends WizardPage {
     private void disableControls() {
         if (createNewKeyButton != null)
             createNewKeyButton.setEnabled(false);
+			createNewKeyLabel.setEnabled(false);
         if (keyCombo != null)
             keyCombo.setEnabled(false);
         if (encrypt && encryptButton != null) {
@@ -992,7 +997,7 @@ public class IntegratorWizardPage extends WizardPage {
      */
     private void createSignatureGroup(Composite parent) {
         GridLayout signatureGroupGridLayout = new GridLayout();
-        signatureGroupGridLayout.numColumns = 3;
+        signatureGroupGridLayout.numColumns = 2;
         GridData signatureGroupGridData = new GridData();
         signatureGroupGridData.horizontalAlignment = GridData.FILL;
         signatureGroupGridData.grabExcessHorizontalSpace = true;
@@ -1001,8 +1006,6 @@ public class IntegratorWizardPage extends WizardPage {
         signatureGroup.setLayoutData(signatureGroupGridData);
         signatureGroup.setLayout(signatureGroupGridLayout);
         signatureGroup.setText(Messages.getString("DummyWizardPage.18")); //$NON-NLS-1$
-        Label label = new Label(signatureGroup, SWT.LEFT);
-        label.setText(Messages.getString("DummyWizardPage.19")); //$NON-NLS-1$
         GridData gridData = new GridData();
         gridData.grabExcessHorizontalSpace = true;
         gridData.horizontalAlignment = GridData.FILL;
