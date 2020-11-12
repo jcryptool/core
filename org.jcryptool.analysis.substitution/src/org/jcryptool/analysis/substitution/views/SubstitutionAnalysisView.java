@@ -31,8 +31,7 @@ import org.jcryptool.analysis.substitution.ui.modules.SubstitutionAnalysisConfig
 import org.jcryptool.analysis.substitution.ui.modules.SubstitutionAnalysisPanel;
 import org.jcryptool.analysis.substitution.views.SubstitutionAnalysisView.State.Step;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
-import org.jcryptool.core.util.ui.auto.LayoutAdvisor;
-import org.jcryptool.core.util.ui.auto.SmoothScroller;
+import org.jcryptool.core.util.colors.ColorService;
 
 
 /**
@@ -109,36 +108,16 @@ public class SubstitutionAnalysisView extends ViewPart {
 
 
 	@Override
-	public void createPartControl(Composite parent) {
-		
-		scrolledComposite = new ScrolledComposite(parent,SWT.H_SCROLL | SWT.V_SCROLL);
-		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
-		scrolledComposite.setExpandHorizontal(true);
-		scrolledComposite.setExpandVertical(true);
-		
-		
+	public void createPartControl(Composite parent) {	
 		//FIXME: TODO
 		
-		mainComposite = new Composite(scrolledComposite, SWT.NONE);
+		
+		mainComposite = new Composite(parent, SWT.NONE);
+		mainComposite.setBackground(ColorService.YELLOW);
 		mainComposite.setLayout(new GridLayout());
-		mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
-		scrolledComposite.setContent(mainComposite);
-		
-		createAppropriatePanel(state);		
-		
-		
-		// Set size of composite, 
-		// because if not the composite will be fully extended
-		scrolledComposite.setMinSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		LayoutAdvisor.addPreLayoutRootComposite(scrolledComposite);
-		
-		
-		// This makes the ScrolledComposite scrolling, when the mouse 
-		// is on a Text with one or more of the following tags: SWT.READ_ONLY,
-		// SWT.V_SCROLL or SWT-H_SCROLL.
-				
-		SmoothScroller.scrollSmooth(scrolledComposite);
+		createAppropriatePanel(state);	
+
 		
 		
 		// Register the context help
@@ -149,6 +128,7 @@ public class SubstitutionAnalysisView extends ViewPart {
 	private void createAppropriatePanel(State state) {
 		if(mainPanel != null && !mainPanel.isDisposed()) {
 			mainPanel.dispose();
+			
 		}
 		if(state.getStep() == Step.CONFIG) {
 			SubstitutionAnalysisConfigPanel panel = createConfigPanel(mainComposite);
