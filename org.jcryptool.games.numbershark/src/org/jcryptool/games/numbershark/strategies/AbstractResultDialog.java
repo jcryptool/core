@@ -150,8 +150,8 @@ public abstract class AbstractResultDialog extends TitleAreaDialog {
 
                 FileDialog saveDialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
                 saveDialog.setFilterPath(DirectoryService.getUserHomeDir());
-                saveDialog.setFilterNames(new String[] { "CSV-File", "All Files (*.*)" });
-                saveDialog.setFilterExtensions(new String[] { "*.csv", "*.*" });
+                saveDialog.setFilterNames(new String[] { "CSV-File", "All Files" });
+                saveDialog.setFilterExtensions(new String[] { "*.csv", "*" });
                 saveDialog.setFileName("log_numberShark_" + min + "-" + max + ".csv");
                 saveDialog.setOverwrite(true);
 

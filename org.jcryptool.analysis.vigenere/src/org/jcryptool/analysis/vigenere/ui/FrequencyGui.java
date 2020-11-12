@@ -39,7 +39,7 @@ import org.jcryptool.core.util.fonts.FontService;
 public class FrequencyGui extends Content {
 	// graphical elements.
 	private Composite cselection;
-	private Composite cgraph;
+	Composite cgraph;
 	private Composite cphrase;
 	private Label lpreview;
 

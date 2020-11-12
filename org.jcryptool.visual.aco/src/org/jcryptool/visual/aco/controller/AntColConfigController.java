@@ -53,7 +53,7 @@ public class AntColConfigController implements AntColEvents {
 			FileDialog fd = new FileDialog(configComp.getShell(), SWT.OPEN);
 			// fd.setText(Messages.TranspTextWizardPage_windowsfiledialogtitle);
 			fd.setFilterPath(null);
-			String[] filterExt = { "*.*" }; //$NON-NLS-1$
+			String[] filterExt = { "*" }; //$NON-NLS-1$
 			fd.setFilterExtensions(filterExt);
 			String selected = fd.open();
 			if (selected != null) {

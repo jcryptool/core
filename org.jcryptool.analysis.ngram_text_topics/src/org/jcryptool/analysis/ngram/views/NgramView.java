@@ -255,7 +255,7 @@ public class NgramView extends ViewPart {
 					Shell dialogShell = new Shell(display, SWT.APPLICATION_MODAL);
 					FileDialog fd_ChooseFile = new FileDialog(dialogShell, SWT.OPEN);
 					fd_ChooseFile.setFilterPath("\\"); //$NON-NLS-1$
-					fd_ChooseFile.setFilterExtensions(new String[] { "*.*" }); //$NON-NLS-1$
+					fd_ChooseFile.setFilterExtensions(new String[] { "*" }); //$NON-NLS-1$
 					File file_LoadReferenceText = new File(fd_ChooseFile.open());
 					FileInputStream fis = new FileInputStream(file_LoadReferenceText);
 					byte[] content = new byte[fis.available()];
