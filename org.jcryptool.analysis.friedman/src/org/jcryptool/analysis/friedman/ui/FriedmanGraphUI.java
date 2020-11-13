@@ -103,15 +103,13 @@ public class FriedmanGraphUI extends Composite implements IFriedmanAccess {
 						if (textSelector.getText().getText() != null) {
 							if(textSelector.getText().getText().length() < friedman_max_text_length){
 							message = textSelector.getText().getText();
-							System.out.println(message.length());
 							lastSuccessfullLoadedText = textSelector.getText();
 							}
 							else{
-								Shell shell2 = new Shell();
-								boolean result = MessageDialog.openQuestion(shell2, Messages.FriedmanGraphUI_warning, Messages.FriedmanGraphUI_warning_text);
+								
+								boolean result = MessageDialog.openQuestion(FriedmanGraphUI.this.getDisplay().getActiveShell(), Messages.FriedmanGraphUI_warning, Messages.FriedmanGraphUI_warning_text);
 								if(result) {
 									message = textSelector.getText().getText();
-									System.out.println(message.length());
 								}
 								else {
 									textSelector.setTextData(lastSuccessfullLoadedText, null, true);
