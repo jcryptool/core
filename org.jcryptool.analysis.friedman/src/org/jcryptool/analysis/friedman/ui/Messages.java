@@ -22,6 +22,8 @@ public class Messages extends NLS {
 	public static String FriedmanGraphUI_openandselect;
 	public static String FriedmanGraphUI_showastable;
 	public static String FriedmanGraphUI_start;
+	public static String FriedmanGraphUI_warning;
+	public static String FriedmanGraphUI_warning_text;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
