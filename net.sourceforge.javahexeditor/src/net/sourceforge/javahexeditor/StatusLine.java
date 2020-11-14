@@ -63,6 +63,7 @@ final class StatusLine extends Composite {
 		GridLayout gridLayout_composite_left = new GridLayout();
 		gridLayout_composite_left.numColumns = withSeparator ? 2 : 1;
 		gridLayout_composite_left.marginHeight = 0;
+		gridLayout_composite_left.marginWidth = 0;
 		composite_left.setLayout(gridLayout_composite_left);
 
 		if (withSeparator) {
@@ -76,6 +77,7 @@ final class StatusLine extends Composite {
 		composite_center.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		GridLayout gridLayout_composite_center = new GridLayout(2,  false);
 		gridLayout_composite_center.marginHeight = 0;
+		gridLayout_composite_center.marginWidth = 0;
 		composite_center.setLayout(gridLayout_composite_center);
 
 		new Label(composite_center, SWT.SEPARATOR);
@@ -87,6 +89,7 @@ final class StatusLine extends Composite {
 		composite_right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		GridLayout gridLayout_composite_right = new GridLayout(2,  false);
 		gridLayout_composite_right.marginHeight = 0;
+		gridLayout_composite_right.marginWidth = 0;
 		composite_right.setLayout(gridLayout_composite_right);
 
 		new Label(composite_right, SWT.SEPARATOR);
@@ -95,7 +98,7 @@ final class StatusLine extends Composite {
 		GC gc = new GC(sizeLabel);
 		double fontCharWidth = gc.getFontMetrics().getAverageCharacterWidth();
 		GridData gridData_sizeLabel = new GridData(SWT.FILL, SWT.FILL, true, true);
-		// Allocate 25 Chars of space. In combination with the equal coulmn sizes, all 
+		// Allocate 25 Chars of space. In combination with the equal column sizes, all 
 		// columns are 25 Characters wide.
 		gridData_sizeLabel.widthHint = (int) (25 * fontCharWidth);
 		sizeLabel.setLayoutData(gridData_sizeLabel);
