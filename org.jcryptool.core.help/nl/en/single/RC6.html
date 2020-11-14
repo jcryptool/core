@@ -3,24 +3,50 @@
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	  <title>RC6</title>
 </head>
-
 <body>
-	<h1>RC6</h1>
-<p>
-<strong>TODO: Description</strong>
+
+<h1>RC6</h1>
+
+
+<h2>Description</h2>
+
+<p>RC6 is a symmetric encryption algorithm which operates on blocks of length 128 bits (= 16 bytes), and has a variable key length of 128, 192, and 256 bit.</p>
+
+<p>RC6 was one of the five final candidates for AES, where NIST searched in a multi-year effort the  successor of DES.</p>
+
+<img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/RC6_screenshot1.png" width="85%"/>
+
+
+
+<h2>Operation of the dialog</h2>
+
+<p>You can just start encrypting the content of the active editor by clicking the button <b>Finish</b> (so you use the default settings). You are then asked for the key protection password, which is "1234" for the pre-selected user "Alice". The result is written in a new hexeditor window of JCT.</p>
+
+<p>In JCT, the key length is determined by the selected key. The dialog in JCT offers the following parameters:
+	<ul>
+	<li>for block-chaining: the five modes ECB, CBC, OFB, CFB, and CTR</li>
+	<li>for padding: the three schemes PKCS#5, 01-00 padding, and no padding.</li>
+	</ul>
 </p>
 
-<!-- <img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/RC6_screenshot1.png" width="85%"/> --><strong>TODO: Screenshot</strong>
+<p>Pressing the long button <b>Create a new (RC6) key in the keystore</b>, opens a dialog called "New symmetric key". You can create a new key either for an existing user like "Alice Whitehead", or better for a new user like yourself (by just entering a user name in the user field and overwriting "Alice"). You will be asked with which password this new key should be protected. After the new key is stored in the keystore, you can use it again later (without having to create a new key first).</p>
 
-<p>
-RC6 finden Sie ausführlich erklärt unter den Visualisierungen in JCT: 
-<!-- <a href="PLUGINS_ROOT/org.jcryptool.visual.elGamal/$nl$/help/content/index.html">Visualisierungen → RC6-Kryptosystem</a> --><strong>TODO: Link to help page of visualization if exists</strong>
-</p>
+ <p>After clicking on <b>Finish</b> you will return to the "RC6 &mdash; encryption" dialog, which now lists the newly created key in the "Keystore" grouping. Here you also have to click the button <b>Finish</b> to write the result in a new hexeditor window.</p>
 
-<h2>References:</h2>
 
-<ul><li>
-        <!-- <a target="_blank" href="https://de.wikipedia.org/wiki/Elgamal-Verschl%C3%BCsselungsverfahren" >https://de.wikipedia.org/wiki/Elgamal-Verschl%C3%BCsselungsverfahren</a> --><strong>TODO: Link to Wikipedia</strong>
-    </li></ul>
+
+
+<h2>References</h2>
+
+<ul>
+    <li>
+        <a target="_blank" href="https://en.wikipedia.org/wiki/RC6" >https://en.wikipedia.org/wiki/RC6</a> Wikipedia RC6
+    </li>
+</ul>
+
+<br>
+
+
+
 </body>
 </html>
