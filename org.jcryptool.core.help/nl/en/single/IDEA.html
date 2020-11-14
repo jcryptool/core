@@ -13,14 +13,24 @@
 
 <p>IDEA was used in PGP (Pretty Good Privacy) and discussed as a successor of DES.</p>
 
-
-<!-- <img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/IDEA_screenshot1.png" width="85%"/> --><strong>TODO: Screenshot</strong>
+<img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/IDEA_screenshot1.png" width="85%"/>
 
 
 
 <h2>Operation of the dialog</h2>
 
-TODO
+<p>You can just start encrypting the content of the active editor by clicking the button <b>Finish</b> (so you use the default settings). You are then asked for the key protection password, which is "1234" for the pre-selected user "Alice". The result is written in a new hexeditor window of JCT.</p>
+
+<p>In JCT, the key length is determined by the selected key. The dialog in JCT offers the following parameters:
+	<ul>
+	<li>for block-chaining: the five modes ECB, CBC, OFB, CFB, and CTR</li>
+	<li>for padding: the three schemes PKCS#5, 01-00 padding, and no padding.</li>
+	</ul>
+</p>
+
+<p>Pressing the long button <b>Create a new (IDEA) key in the keystore</b>, opens a dialog called "New symmetric key". You can create a new key either for an existing user like "Alice Whitehead", or better for a new user like yourself (by just entering a user name in the user field and overwriting "Alice"). You will be asked with which password this new key should be protected. After the new key is stored in the keystore, you can use it again later (without having to create a new key first).</p>
+
+ <p>After clicking on <b>Finish</b> you will return to the "IDEA &mdash; encryption" dialog, which now lists the newly created key in the "Keystore" grouping. Here you also have to click the button <b>Finish</b> to write the result in a new hexeditor window.</p>
 
 
 
