@@ -119,45 +119,11 @@ public final class SWTUtility {
 	 * @return The average character width, a positive integer.
 	 */
 	public static double getAverageCharacterWidth(GC gc) {
-		final String GET_AVERAGE_CHARACTER_WIDTH = "getAverageCharacterWidth";
-		final String GET_AVERAGE_CHAR_WIDTH = "getAverageCharWidth";
-
-		if (gc == null) {
-			throw new IllegalArgumentException();
-		}
+//		if (gc == null) {
+//			throw new IllegalArgumentException();
+//		}
 		FontMetrics fm = gc.getFontMetrics();
-		Method method = getMethod(FontMetrics.class, GET_AVERAGE_CHARACTER_WIDTH);
-		if (method != null) {
-
-			Double result = null;
-			try {
-				result = (Double) method.invoke(fm);
-			} catch (IllegalAccessException e) {
-				throw new RuntimeException(e);
-			} catch (IllegalArgumentException e) {
-				throw new RuntimeException(e);
-			} catch (InvocationTargetException e) {
-				throw new RuntimeException(e);
-			}
-			return result.doubleValue();
-		}
-
-		method = getMethod(FontMetrics.class, GET_AVERAGE_CHAR_WIDTH);
-		if (method != null) {
-			Integer result = null;
-			try {
-				result = (Integer) method.invoke(fm);
-			} catch (IllegalAccessException e) {
-				throw new RuntimeException(e);
-			} catch (IllegalArgumentException e) {
-				throw new RuntimeException(e);
-			} catch (InvocationTargetException e) {
-				throw new RuntimeException(e);
-			}
-			return result.doubleValue();
-		}
-		throw new RuntimeException("None of the required methods '" + GET_AVERAGE_CHARACTER_WIDTH + "' or '"
-				+ GET_AVERAGE_CHAR_WIDTH + "' found");
+		return fm.getAverageCharacterWidth();
 	}
 
 	/**
@@ -170,43 +136,48 @@ public final class SWTUtility {
 	 * @return The offset at location point.
 	 */
 	public static int getOffsetAtPoint(StyledText styledText, Point point) {
-		final String GET_OFFSET_AT_POINT = "getOffsetAtPoint";
-		final String GET_OFFSET_AT_LOCATION = "getOffsetAtLocation";
-
-		if (styledText == null) {
-			throw new IllegalArgumentException();
-		}
-		Method method = getMethod(StyledText.class, GET_OFFSET_AT_POINT, Point.class);
-		if (method == null) {
-			method = getMethod(StyledText.class, GET_OFFSET_AT_LOCATION, Point.class);
-		}
-		if (method == null) {
-			throw new RuntimeException("None of the required methods '" + GET_OFFSET_AT_POINT + "' or '"
-					+ GET_OFFSET_AT_LOCATION + "' found");
-		}
-		Integer result = null;
-		try {
-			result = (Integer) method.invoke(styledText, point);
-		} catch (IllegalAccessException ex) {
-			throw new RuntimeException(ex);
-		} catch (IllegalArgumentException ex) {
-			throw new RuntimeException(ex);
-		} catch (InvocationTargetException ex) {
-			if (ex.getCause() instanceof IllegalArgumentException) {
-				throw (IllegalArgumentException) ex.getCause();
-			}
-			throw new RuntimeException(ex);
-		}
-		return result.intValue();
+//		final String GET_OFFSET_AT_POINT = "getOffsetAtPoint";
+//		final String GET_OFFSET_AT_LOCATION = "getOffsetAtLocation";
+//		if (styledText == null || point == null) {
+//			throw new IllegalArgumentException();
+//		}
+		
+		return styledText.getOffsetAtPoint(point);
+		
+//		if (styledText == null) {
+//			throw new IllegalArgumentException();
+//		}
+//		Method method = getMethod(StyledText.class, GET_OFFSET_AT_POINT, Point.class);
+//		if (method == null) {
+//			method = getMethod(StyledText.class, GET_OFFSET_AT_LOCATION, Point.class);
+//		}
+//		if (method == null) {
+//			throw new RuntimeException("None of the required methods '" + GET_OFFSET_AT_POINT + "' or '"
+//					+ GET_OFFSET_AT_LOCATION + "' found");
+//		}
+//		Integer result = null;
+//		try {
+//			result = (Integer) method.invoke(styledText, point);
+//		} catch (IllegalAccessException ex) {
+//			throw new RuntimeException(ex);
+//		} catch (IllegalArgumentException ex) {
+//			throw new RuntimeException(ex);
+//		} catch (InvocationTargetException ex) {
+//			if (ex.getCause() instanceof IllegalArgumentException) {
+//				throw (IllegalArgumentException) ex.getCause();
+//			}
+//			throw new RuntimeException(ex);
+//		}
+//		return result.intValue();
 	}
 
-	private static Method getMethod(Class<?> clazz, String methodName, Class<?>... parameterTypes) {
-		Method method = null;
-		try {
-			method = clazz.getMethod(methodName, parameterTypes);
-		} catch (NoSuchMethodException ex1) {
-			method = null;
-		}
-		return method;
-	}
+//	private static Method getMethod(Class<?> clazz, String methodName, Class<?>... parameterTypes) {
+//		Method method = null;
+//		try {
+//			method = clazz.getMethod(methodName, parameterTypes);
+//		} catch (NoSuchMethodException ex1) {
+//			method = null;
+//		}
+//		return method;
+//	}
 }
