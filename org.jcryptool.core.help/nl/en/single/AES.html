@@ -10,17 +10,15 @@
 
 <h2>Description</h2>
 
-<p>The AES encryption algorithm works with a block length of 128 bit, and a variable key length of 128, 192, and 256 bits.  AES is the standardized subset of the underlying Rijndael algorithm, which offers a variable length blocksize and more different keylengths.</p>
+<p>The AES encryption algorithm works with a block length of 128 bit, and a variable key length of 128, 192, and 256 bits.  AES is the standardized subset of the underlying Rijndael algorithm (Rijndael offers a variable length blocksize and more different keylengths).</p>
 
 <p>For a 128 bit key there are approximately 340,000,000,000,000,000,000,000,000,000,000,000,000 = 34*10^37 possible keys. Rijndael was developed by the Belgian cryptographers Joan Daemen and Vincent Rijmen.</p>
 
 <!-- CrypTool contains a brute-force attack on the Rijndael encryption algorithm. -->
 
+<p>AES is the patent-free standard for modern block ciphers used to protect long-term data. It was established as a FIPS standard by NIST in 2001 and became the successor of the antiquated Data Encryption Standard (DES) which was introduced in 1977.</p>
 
-<p>AES is the patent free standard for modern block ciphers used to protect long-term data. It was established as a FIPS standard by NIST in 2001 and became the successor of the antiquated Data Encryption Standard (DES) which was introduced in 1977.</p>
-
-<p>Remark: To understand the algorithm, a good starting point is Wikipedia which refers the relevant literature. In addition, there are good animations of the inner workings by Zabala and there is a famous cartoon called "A Stick Figure Guide to the Advanced Encryption Standard (AES)" by Jeff Moser, published in September 2009, which explains the AES algorithm in 4 acts.
-</p>
+<p>Remark: To understand the algorithm, a good starting point is Wikipedia which refers the relevant literature. In addition, there are good animations of the inner workings of AES by Zabala (see CrypTool 1) and there is a famous cartoon called "A Stick Figure Guide to the Advanced Encryption Standard (AES)" by Jeff Moser, published in September 2009, which explains the AES algorithm in 4 acts.</p>
 
 <img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/AES_screenshot1.png" width="85%"/>TODO: Screenshot
 
@@ -28,7 +26,7 @@
 
 <h2>Operation of the dialog</h2>
 
-<p>You can just start encrypting the content of the active editor by clicking the button <b>Finish</b> (so you use the default settings). You are asked for the key protection password, which is "1234" for the pre-selected user "Alice". The result is written in a new hexeditor window of JCT.</p>
+<p>You can just start encrypting the content of the active editor by clicking the button <b>Finish</b> (so you use the default settings). You are then asked for the key protection password, which is "1234" for the pre-selected user "Alice". The result is written in a new hexeditor window of JCT.</p>
 
 <p>In JCT, the key length is determined by the selected key. The dialog in JCT offers the following parameters:
 	<ul>
@@ -37,7 +35,7 @@
 	</ul>
 </p>
 
-<p>Pressing the long button <b>Create a new (AES) key in the keystore</b>, opens a dialog called "New symmetric key". You can create a new key either for an existing user like "Alice Whitehead", or better for a new user like yourself (by just entering a user name in the user field and overwriting "Alice"). You will be asked with which password this new key should be protected. After the new key is entered in the keystore, you can use it again later (without having to create a new key first).</p>
+<p>Pressing the long button <b>Create a new (AES) key in the keystore</b>, opens a dialog called "New symmetric key". You can create a new key either for an existing user like "Alice Whitehead", or better for a new user like yourself (by just entering a user name in the user field and overwriting "Alice"). You will be asked with which password this new key should be protected. After the new key is stored in the keystore, you can use it again later (without having to create a new key first).</p>
 
  <p>After clicking on <b>Finish</b> you will return to the "AES &mdash; encryption" dialog, which now lists the newly created key in the "Keystore" grouping.</p>
 

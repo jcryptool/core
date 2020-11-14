@@ -11,14 +11,35 @@
 
 <h2>Beschreibung</h2>
 
-<!-- <img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/AES_screenshot1.png" width="85%"/> --><strong>TODO: Screenshot</strong>
+<p>Der AES-Verschlüsselungsalgorithmus arbeitet mit einer Blocklänge von 128 Bit und einer variablen Schlüssellänge von 128, 192 und 256 Bit.  AES ist die standardisierte Untermenge des zugrundeliegenden Rijndael-Algorithmus (Rijndael bietet eine Blockgröße mit variabler Länge und mehr verschiedene Schlüssellängen).</p>
 
+<p>Für einen 128-Bit-Schlüssel gibt es ungefähr 340.000.000.000.000.000.000.000.000.000.000.000.000.000 = 34*10^37 mögliche Schlüssel. Rijndael wurde von den belgischen Kryptographen Joan Daemen und Vincent Rijmen entwickelt.</p>
 
+<!-- CrypTool enthält einen Brute-Force-Angriff auf den Rijndael-Verschlüsselungsalgorithmus. -->
+
+<p>AES ist der patentfreie Standard für moderne Blockverschlüsselungen zum Schutz von Langzeitdaten. Er wurde 2001 vom NIST als FIPS-Standard festgelegt und wurde zum Nachfolger des 1977 eingeführten, veralteten Data Encryption Standard (DES) ernannt.</p>
+
+<p>Anmerkung: Um den Algorithmus zu verstehen, ist Wikipedia ein guter Ausgangspunkt, der auf die einschlägige Literatur verweist. Darüber hinaus gibt es gute Animationen des AES-Innenlebens von Zabala (siehe CrypTool 1) und einen berühmten Cartoon mit dem Titel "A Stick Figure Guide to the Advanced Encryption Standard (AES)" von Jeff Moser, der im September 2009 veröffentlicht wurde und den AES-Algorithmus in 4 Akten erklärt.</p>
+
+<img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/AES_screenshot1.png" width="85%"/>TODO: Bildschirmfoto
 
 
 
 <h2>Bedienung des Dialogs</h2>
-	
+
+<p>Sie können den Inhalts des aktiven Editors direkt verschlüsseln, indem Sie auf die Schaltfläche <b>Fertigstellen</b> klicken &ndash; damit verwenden Sie die Standardeinstellungen. Sie werden dann nach dem Passwort zum Schutz des Schlüssels gefragt, das für den vorgewählten Benutzer "Alice" "1234" lautet. Das Ergebnis wird in ein neues Hexeditor-Fenster von JCT geschrieben.</p>
+
+<p>Bei JCT wird die Schlüssellänge durch den gewählten Schlüssel bestimmt. Der Dialog in JCT bietet die folgenden Parameter an:
+	<ul>
+	<li>für die Blockverkettung: die fünf Modi EZB, CBC, OFB, CFB und CTR</li>
+	<li>für das Padding: die drei Schemata PKCS#5, 01-00 Padding und kein Padding.</li>
+	</ul>
+</p>
+
+<p>Drücken der langen Taste <b>Einen neuen (AES-)Schlüssel im Keystore rzeugen</b>, öffnet ein Dialogfeld namens "Neuer symmetrischer Schlüssel". Sie können einen neuen Schlüssel entweder für einen bestehenden Benutzer wie "Alice Whitehead" oder besser für einen neuen Benutzer wie Sie selbst erzeugen (indem Sie einfach einen Benutzernamen in das Benutzerfeld eingeben und "Alice" überschreiben). Sie werden gefragt, mit welchem Passwort dieser neue Schlüssel geschützt werden soll. Nachdem der neue Schlüssel in den Schlüsselspeicher gespeichert wurde, können Sie ihn später wieder verwenden (ohne vorher einen neuen Schlüssel erstellen zu müssen).</p>
+
+ <p>Nach dem Klicken auf <b>Fertigstellen</b> kehren Sie zum Dialog "AES &mdash; Verschlüsselung" zurück, der nun den neu erzeugten Schlüssel in der Gruppierung "Schlüsselspeicher" auflistet.</p>
+
 
 
 <h2>Quellen</h2>
