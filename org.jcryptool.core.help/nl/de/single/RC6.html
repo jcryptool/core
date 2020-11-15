@@ -3,24 +3,46 @@
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	  <title>RC6</title>
 </head>
-
 <body>
-	<h1>RC6</h1>
-<p>
-<strong>TODO: Description</strong>
+
+<h1>RC6</h1>
+
+
+<h2>Beschreibung</h2>
+
+<p>RC6 ist ein symmetrischer Verschlüsselungs-Algorithmus, der auf Blöcken mit einer Länge von 128 Bit (= 16 Bytes) arbeitet und eine variable Schlüssellänge von 128, 192 und 256 Bit hat.</p>
+
+<p>RC6 war einer der fünf Endkandidaten für AES, wo das NIST in einem mehrjährigen Verfahren den Nachfolger von DES suchte.</p>
+
+<img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/RC6.png" width="85%"/>
+
+
+
+<h2>Bedienung des Dialogs</h2>
+
+<p>Sie können den Inhalts des aktiven Editors direkt verschlüsseln, indem Sie auf die Schaltfläche <b>Fertigstellen</b> klicken &ndash; damit verwenden Sie die Standardeinstellungen. Sie werden dann nach dem Passwort zum Schutz des Schlüssels gefragt: Für den voreingestellten Benutzer "Alice" ist das "1234". Das Ergebnis wird in ein neues Hexeditor-Fenster von JCT geschrieben.</p>
+
+<p>Bei JCT wird die Schlüssellänge durch den gewählten Schlüssel bestimmt. Der Dialog in JCT bietet die folgenden Parameter an:
+	<ul>
+	<li>für die Blockverkettung: die fünf Modi EZB, CBC, OFB, CFB und CTR</li>
+	<li>für das Padding: die drei Schemata PKCS#5, 01-00 Padding und kein Padding.</li>
+	</ul>
 </p>
 
-<!-- <img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/RC6_screenshot1.png" width="85%"/> --><strong>TODO: Screenshot</strong>
+<p>Drücken der langen Taste <b>Einen neuen (RC6-)Schlüssel im Schlüsselspeicher erzeugen</b>, öffnet eine Dialogbox namens "Neuer symmetrischer Schlüssel". Sie können einen neuen Schlüssel entweder für einen bestehenden Benutzer wie "Alice Whitehead" oder besser für einen neuen Benutzer wie Sie selbst erzeugen (indem Sie einfach einen Benutzernamen in das Benutzerfeld eingeben und "Alice" überschreiben). Sie werden gefragt, mit welchem Passwort dieser neue Schlüssel geschützt werden soll. Nachdem der neue Schlüssel in den Schlüsselspeicher gespeichert wurde, können Sie ihn später wieder verwenden (ohne vorher einen neuen Schlüssel erstellen zu müssen).</p>
 
-<p>
-RC6 finden Sie ausführlich erklärt unter den Visualisierungen in JCT: 
-<!-- <a href="PLUGINS_ROOT/org.jcryptool.visual.elGamal/$nl$/help/content/index.html">Visualisierungen → RC6-Kryptosystem</a> --><strong>TODO: Link to help page of visualization if exists</strong>
-</p>
+ <p>Nach dem Klicken auf <b>Fertigstellen</b> kehren Sie zum Dialog "RC6 &mdash; Verschlüsselung" zurück, der nun den neu erzeugten Schlüssel in der Gruppierung "Schlüsselspeicher" auflistet. Hier müssen Sie dann auch noch auf <b>Fertigstellen</b> klicken, damit das Ergebnis in ein neues Hexeditor-Fenster geschrieben wird.</p>
 
-<h2>Quellen:</h2>
+
+
+<h2>Quellen</h2>
 
 <ul><li>
-        <!-- <a target="_blank" href="https://de.wikipedia.org/wiki/Elgamal-Verschl%C3%BCsselungsverfahren" >https://de.wikipedia.org/wiki/Elgamal-Verschl%C3%BCsselungsverfahren</a> --><strong>TODO: Link to Wikipedia</strong>
-    </li></ul>
+        <a target="_blank" href="https://de.wikipedia.org/wiki/RC6" >https://de.wikipedia.org/wiki/RC6</a> Wikipedia RC6
+</li></ul>
+
+<br>
+
+
 </body>
 </html>
