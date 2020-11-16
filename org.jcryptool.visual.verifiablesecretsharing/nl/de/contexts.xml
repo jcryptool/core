@@ -1,6 +1,6 @@
 <contexts>
 	<context id="view" title="Verifiable Secret Sharing">
-		<description>Verifiable Secret Sharing ist ein Secret Sharing Algorithmus, um ein Geheimnis zu verteilen. Das Geheimnis wird so verteilt, dass jede Person seinen eigenen eindeutigen Teil bekommt. Einige dieser Teile werden benötigt, um das Geheimnis zu rekonstruieren. Das Geheimnis wird mit Hilfe der Lagrange Interpolation berechnet. Im Unterschied zu Shamir&apos;s Secret Sharing kann jedoch überprüft werden, ob jeder Teilnehmer bei der Rekonstruktion, einen korrekten Teil liefert.</description>
+		<description>Verifiable Secret Sharing ist ein Secret Sharing-Algorithmus, um ein Geheimnis zu verteilen. Das Geheimnis wird so verteilt, dass jede Person ihren eigenen eindeutigen Teil bekommt. Einige dieser Teile werden benötigt, um das Geheimnis zu rekonstruieren. Das Geheimnis wird mit Hilfe der Lagrange-Interpolation berechnet. Im Unterschied zu Shamir&apos;s Secret Sharing kann jedoch überprüft werden, ob jeder Teilnehmer bei der Rekonstruktion einen korrekten Teil liefert.</description>
 		<topic href="$nl$/help/content/index.html" label="Verifiable Secret Sharing" />
 	</context>
 </contexts>

@@ -7,7 +7,15 @@
 </head>
 <body>
 
+
 <h1>Explanation of the Dragon Cipher</h1>
+
+<p>Dragon is a stream cipher developed at the <a target="_blank" href="https://en.wikipedia.org/wiki/Queensland_University_of_Technology" >Australian Queensland University of Technology (QUT)</a>.
+
+<!-- https://de.wikipedia.org/wiki/Queensland_University_of_Technology -->
+
+Dragon was a candidate for the <a target="_blank" href="https://www.ecrypt.eu.org/stream/dragonp3.html" >eSTREAM project</a>. The version selected for eSTREAM phase 3 is Dragon-128. Dragon is not patented.</p>
+
 
 <p><b>What is the Dragon Cipher?</b><br>
 Dragon was developed by Queensland University of Technology's Information Security<br>
@@ -15,7 +23,14 @@ Institute, in Brisbane Australia, for the eSTREAM project. It is a word-based st
 based on a nonlinear feedback shift register and a nonlinear filter function with memory. It
 takes a key and IV, each of 128 or 256 bits, and produces 64 bits of keystream per'round'
 - rounds can be performed repeatedly to generate an infinite stream of pseudorandom
-data.<br><br>
+data.
+
+xxx
+The design of the cipher incorporates a single word-based non-linear feedback shift register and a non-linear filter function with memory. This state is initialized with 128- or 256-bit key-IV pairs. Each clock of the stream cipher produces 64 bits of keystream, using simple operations on 32-bit words.
+xxx
+<br><br>
+
+
 <b>How does the Dragon Cipher work?</b><br>
 Operation of Dragon is in two distinct phases. The initialization stage takes the keying
 material (128-bit or 256-bit key and IV) and translates it into a complete internal state for
@@ -49,14 +64,48 @@ capable of calculating 23Gbps of keystream per second.<br>
 <br>
 <b>Where can I go to find out more?</b><br>
 'Dragon: A Fast Word Based Stream Cipher' by several members of Queensland Universiy
-of Technology's Information Security Institute. All ideas and figures for this document were
+of Technology's Information Security Institute (ISI). All ideas and figures for this document were
 taken from this publication. It is available online at http://www.ecrypt.eu.org/stream/ciphers/
 dragon/dragon.pdf<br>
 A complete implementation of the cipher, in C, as well as further information regarding
-Dragon, can be obtained from the ISI's website at http://www.isi.qut.edu.au/resources/dragon/
-
-TODO: Referenz zu Wikipedia etc bzgl. Dragon Cipher
+Dragon, can be obtained from the <a target="_blank" href="https://www.ecrypt.eu.org/stream/dragonp3.html" >eSTREAM Phase 3</a> website. The former 
+ISI website at http://www.isi.qut.edu.au/resources/dragon/ is no more accessible.
 
 </p>
+
+
+
+
+<h2>References</h2>
+
+<ul>
+<li>
+    <a target="_blank" href="https://en.wikipedia.org/wiki/Dragon_(cipher)" >https://en.wikipedia.org/wiki/Dragon_(cipher)</a> Wikipedia Dragon (cipher) 
+</li>
+
+<li>
+    <a target="_blank" href="https://www.ecrypt.eu.org/stream/p3ciphers/dragon/dragon_p3.pdf" >https://www.ecrypt.eu.org/stream/p3ciphers/dragon/dragon_p3.pdf</a> Dragon: A Fast Word Based Stream Cipher (including test vectors), 2005
+</li>
+
+<li>
+    <a target="_blank" href="https://eprints.qut.edu.au/10107/1/Dragon-A_Fast_Word_Based_Stream_Cipher.pdf" >https://eprints.qut.edu.au/10107/1/Dragon-A_Fast_Word_Based_Stream_Cipher.pdf</a> Dragon: A Fast Word Based Stream Cipher (including test vectors), 2005
+</li>
+
+<li>
+    <a target="_blank" href="https://eprints.qut.edu.au/24788/1/Ensuring_Fast_Implementations_of_Symmetric_Ciphers_on_the_Intel_Pentium_4_and_Beyond.pdf" >https://eprints.qut.edu.au/24788/1/Ensuring_Fast_Implementations_of_Symmetric_Ciphers_on_the_Intel_Pentium_4_and_Beyond.pdf</a> Ensuring Fast Implementations of Symmetric Ciphers on the Intel Pentium4 and Beyond, 2006
+</li>
+
+<li>
+    <a target="_blank" href="https://eprints.qut.edu.au/16055/" >https://eprints.qut.edu.au/16055/</a>Henricksen, Matthew (2005): Design, Implementation and Cryptanalysis of Modern Symmetric Ciphers, PhD thesis
+</li>
+
+<li>
+    <a target="_blank" href="https://eprints.qut.edu.au/66721/1/Ali%20Abdulaziz%20H_Al%20Hamdan_Thesis.pdf" >https://eprints.qut.edu.au/66721/1/Ali%20Abdulaziz%20H_Al%20Hamdan_Thesis.pdf</a> Ali Abdulaziz Alhamdan (2014): Secure Stream Cipher InitialisationProcesses
+</li>
+</ul>
+
+<br>
+
+
 </body>
 </html>
