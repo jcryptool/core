@@ -10,6 +10,7 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.analysis.freqanalysis.ui;
 
+import java.math.BigInteger;
 //import java.io.File;
 //import java.io.FileReader;
 import java.util.Observable;
@@ -19,6 +20,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.TitleAreaDialog;
 //import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
@@ -34,6 +36,7 @@ import org.eclipse.swt.widgets.Control;
 //import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 //import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.TabFolder;
@@ -82,6 +85,9 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 	TransformData myModifySettings;
 	private TextLoadController textloader;
 	public FreqAnalysisCalc return__freqanalysis;
+	
+	private static final int simpleFreqAnalysis_text_max_length = 999999; 
+	private TextInputWithSource lastSuccessfullLoadedText;
 
 	public SimpleAnalysisUI(final Composite parent, final int style) {
 		super(parent, style);
@@ -107,8 +113,24 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 				if (textloader.getText() != null) {
 					myGraph.getFrequencyGraph().setInstruction(Messages.FreqAnalysisGraph_graph1);
 					myGraph.redraw();
+					if(textloader.getText().getText().length() < simpleFreqAnalysis_text_max_length) {
 					text = textloader.getText().getText();
+					
+					lastSuccessfullLoadedText = textloader.getText();
 					source = textloader.getText();
+					}else{
+						
+						boolean result = MessageDialog.openQuestion(SimpleAnalysisUI.this.getShell(), Messages.SimpleAnalysisUI_warning, Messages.SimpleAnalysisUI_warning_text);
+						if(result) {
+							text = textloader.getText().getText();
+							source = textloader.getText();
+						}
+						else {
+							textloader.setTextData(lastSuccessfullLoadedText, null, true);
+							source = lastSuccessfullLoadedText;
+							return;
+						}
+					}
 // 					button1.setEnabled(true);
 					recalcSourceInfo();
 					

@@ -92,6 +92,8 @@ public class Messages extends NLS {
     public static String VigenereGlobal_navi_decryption;
     public static String VigenereGlobal_navi_frequency;
     public static String VigenereGlobal_navi_friedman;
+    public static String Vigenere_warning;
+    public static String Vigenere_warning_text;
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

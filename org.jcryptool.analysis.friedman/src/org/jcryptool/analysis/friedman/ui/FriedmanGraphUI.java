@@ -107,7 +107,7 @@ public class FriedmanGraphUI extends Composite implements IFriedmanAccess {
 							}
 							else{
 								
-								boolean result = MessageDialog.openQuestion(FriedmanGraphUI.this.getDisplay().getActiveShell(), Messages.FriedmanGraphUI_warning, Messages.FriedmanGraphUI_warning_text);
+								boolean result = MessageDialog.openQuestion(FriedmanGraphUI.this.getShell(), Messages.FriedmanGraphUI_warning, Messages.FriedmanGraphUI_warning_text);
 								if(result) {
 									message = textSelector.getText().getText();
 								}

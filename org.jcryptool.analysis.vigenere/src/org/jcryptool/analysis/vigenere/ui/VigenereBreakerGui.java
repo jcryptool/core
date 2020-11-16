@@ -11,6 +11,7 @@ package org.jcryptool.analysis.vigenere.ui;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -33,6 +34,9 @@ public class VigenereBreakerGui extends ContentDelegator {
 	private int passlength;
 	private String phrase;
 	private VigenereBreakerView vigenereBreakerView;
+	
+	private static final int vigenere_quick_max_length = 2000000;
+	private static final int vigenere_max_length = 2000000;
 
 	public VigenereBreakerGui(Composite parent, int style) {
 		super(parent, style);
@@ -131,6 +135,17 @@ public class VigenereBreakerGui extends ContentDelegator {
 			edtitle = selection.getTitle();
 			FilterChiffreBackgroundJob filterJob = new FilterChiffreBackgroundJob();
 			filterJob.editorContent = DataProvider.getInstance().getEditorContent(selection);
+			
+			if(filterJob.editorContent.length() > vigenere_max_length) {
+				
+				boolean result = MessageDialog.openQuestion(VigenereBreakerGui.this.getShell(), Messages.Vigenere_warning, Messages.Vigenere_warning_text);
+				
+				if(result==false) {
+					return;
+				}
+				
+			}
+			
 			filterJob.finalizeListeners.add(status -> {
 				filterJob.liftNoClickDisplaySynced(getDisplay());
 				getDisplay().syncExec(() -> {
@@ -162,7 +177,17 @@ public class VigenereBreakerGui extends ContentDelegator {
 		try {
 			edtitle = selection.getTitle();
 			String editorContent = DataProvider.getInstance().getEditorContent(selection);
-
+			
+			if(editorContent.length() > vigenere_quick_max_length) {
+				
+				boolean result = MessageDialog.openQuestion(VigenereBreakerGui.this.getShell(), Messages.Vigenere_warning, Messages.Vigenere_warning_text);
+				
+				if(result==false) {
+					return;
+				}
+				
+			}
+			
 			VigenereBackgroundJob initBackgroundJob = new QuickDecryptGui.VigenereBackgroundJob();
 			initBackgroundJob.editorContent = editorContent;
 			initBackgroundJob.parent = this;
