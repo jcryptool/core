@@ -3,56 +3,13 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Explanation of the Dragon Cipher</title>
+    <title>Erläuterungen zur Dragon-Verschlüsselung</title>
 </head>
-
 <body>
-<h1>Explanation of the Dragon Cipher</h1>
-<p><b>What is the Dragon Cipher?</b><br>
-Dragon was developed by Queensland University of Technology's Information Security<br>
-Institute, in Brisbane Australia, for the eSTREAM project. It is a word-based stream cipher,
-based on a nonlinear feedback shift register and a nonlinear filter function with memory. It
-takes a key and IV, each of 128 or 256 bits, and produces 64 bits of keystream per'round'
-- rounds can be performed repeatedly to generate an infinite stream of pseudorandom
-data.<br><br>
-<b>How does the Dragon Cipher work?</b><br>
-Operation of Dragon is in two distinct phases. The initialization stage takes the keying
-material (128-bit or 256-bit key and IV) and translates it into a complete internal state for
-the cipher instance (1024 bits, plus 64 bits of memory/counter). The keystream generation
-stage produces 64 bits of pseudorandom keystream per round of operation.<br>
-Both stages utilize the 'update function' F, which uses three 'G' functions (G1, G2 and G3)
-and three 'H' functions (H1, H2 and H3). Each of the G and H functions index into two
-carefully-selected 8x32-bit S-boxes. The sequential operation of F is depicted as follows:<br>
-<br><img src="figure1.png" width="85%"/><br><br>
-The initialization stage is performed at the initial keying of the cipher, and on every
-rekeying of the cipher. It is recommended that the key be replaced, and the cipher be
-rekeyed and reinitialized after every 2^64 bits of generated keystream, for security
-reasons. Initialization consists of particular concatenation of the key and IV to produce the
-initial 1024-bit state (As well as the 64-bit memory/counter value), followed by sixteen
-iterations of the F function. The full initialization procedure is as follows:<br>
-<br><img src="figure2.png" width="85%"/><br><br>
-Once the cipher has been initialized, keystream generation translates the non-linear
-feedback shift register (NLFSR), as well as the memory/counter value, into 64 bits of
-keystream and some 'feedback' information that mutates the NLFSR state. The 1024-bit
-NLFSR is split into thirty two 32-bit words, labelled B0 through B31. This keystream
-generation process is as follows:<br>
-<br><img src="figure3.png" width="85%"/><br><br>
-<br><img src="figure4.png" width="85%"/><br><br>
-<b>Why is the Dragon Cipher useful?</b><br>
-The Dragon Cipher has not yet been proven to be insecure (Some attacks, such as a
-Distinguishing Attack, have been raised and subsequently dismissed), and so can
-arguably be considered to be secure enough to protect sensitive data. It is fast in both
-hardware and software, with a 3.2GHz Pentium 4 processor capable of calculating
-3.8Gbps of keystream per second, and a hardware implementation using a Samsung ASIC
-capable of calculating 23Gbps of keystream per second.<br>
-<br>
-<b>Where can I go to find out more?</b><br>
-'Dragon: A Fast Word Based Stream Cipher' by several members of Queensland Universiy
-of Technology's Information Security Institute. All ideas and figures for this document were
-taken from this publication. It is available online at http://www.ecrypt.eu.org/stream/ciphers/
-dragon/dragon.pdf<br>
-A complete implementation of the cipher, in C, as well as further information regarding
-Dragon, can be obtained from the ISI's website at http://www.isi.qut.edu.au/resources/dragon/
-</p>
+
+
+
+
+
 </body>
 </html>

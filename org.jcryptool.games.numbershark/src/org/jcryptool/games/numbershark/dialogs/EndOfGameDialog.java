@@ -78,8 +78,8 @@ public class EndOfGameDialog {
         if (answer == SWT.YES) {
             FileDialog saveDialog = new FileDialog(mb.getParent(), SWT.SAVE);
             saveDialog.setFilterPath(DirectoryService.getUserHomeDir());
-            saveDialog.setFilterNames(new String[] { "CSV-File", "All Files (*.*)" });
-            saveDialog.setFilterExtensions(new String[] { "*.csv", "*.*" });
+            saveDialog.setFilterNames(new String[] { "CSV-File", "All Files" });
+            saveDialog.setFilterExtensions(new String[] { "*.csv", "*" });
             saveDialog
                     .setFileName("log_numberShark_" + view.getNumberOfFields() + "-" + view.getPlayerScore() + ".csv");
             saveDialog.setOverwrite(true);

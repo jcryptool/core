@@ -28,7 +28,6 @@ import org.jcryptool.analysis.viterbi.algorithm.BitwiseXOR;
 import org.jcryptool.analysis.viterbi.algorithm.Combination;
 import org.jcryptool.analysis.viterbi.algorithm.IO;
 import org.jcryptool.analysis.viterbi.algorithm.ModularAddition;
-import org.jcryptool.analysis.viterbi.views.XORComposite.XORCombinationBackgroundJob;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
@@ -44,11 +43,6 @@ import org.jcryptool.crypto.ui.background.BackgroundJob;
 public class XORComposite extends Composite {
 	/* set default values */
 
-	public abstract class XORCombinationBackgroundJob extends BackgroundJob {
-		
-		public String __result;
-
-	}
 
 	private static final int LOADBUTTONHEIGHT = 30;
 	private static final int LOADBUTTONWIDTH = 120;
@@ -272,7 +266,7 @@ public class XORComposite extends Composite {
 		loadPlain2.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
-				FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.OPEN);
+				FileDialog dialog = new FileDialog(getDisplay().getActiveShell(), SWT.OPEN);
 				dialog.setFilterNames(new String[] { IConstants.TXT_FILTER_NAME, IConstants.ALL_FILTER_NAME });
 				dialog.setFilterExtensions(
 						new String[] { IConstants.TXT_FILTER_EXTENSION, IConstants.ALL_FILTER_EXTENSION });
@@ -370,6 +364,16 @@ public class XORComposite extends Composite {
 	 * Creates radio buttons. This is used for determining the combination mode.
 	 */
 	private void createCombinationArea(final Composite parent) {
+
+	}
+
+	public abstract class ViterbiAnalysisJob extends BackgroundJob {
+		public String __result;
+
+		@Override
+		public String name() {
+			return "Viterbi Analysis";
+		}
 
 	}
 
@@ -498,31 +502,32 @@ public class XORComposite extends Composite {
 				String plain1Text = plain1.getText();
 				String plain2Text = plain2.getText();
 				boolean textSelection = text.getSelection();
-				XORCombinationBackgroundJob calculateJob = new XORCombinationBackgroundJob() {
+				ViterbiAnalysisJob calculateJob = new ViterbiAnalysisJob() {
 					@Override
 					public IStatus computation(IProgressMonitor monitor) {
+						monitor.worked(1);
 						cipherString = combi.add(plain1Text, plain2Text);
+						monitor.worked(2);
 						if (textSelection) {
 							this.__result = ViterbiComposite.replaceUnprintableChars(cipherString, "\ufffd");
 						} else {
 							this.__result = ViterbiComposite.stringToHex(cipherString);
 						}
+						monitor.worked(3);
 						return Status.OK_STATUS;
 					}
-					public String name() {
-						return "Viterbi: plaintext combination";
-					};
 				};
+				Display display = getDisplay();
 				calculateJob.finalizeListeners.add(status -> {
-					calculateJob.liftNoClickDisplaySynced(getDisplay());
+					calculateJob.liftNoClickDisplaySynced(display);
 					if (status.isOK()) {
-						getDisplay().syncExec(() -> {
+						display.syncExec(() -> {
 							cipher.setText(calculateJob.__result); //$NON-NLS-1$
 							subjectChanged();
 						});
 					}
 				});
-				calculateJob.imposeNoClickDisplayCurrentShellSynced(getDisplay());
+				calculateJob.imposeNoClickDisplayCurrentShellSynced(display);
 				calculateJob.runInBackground();
 			}
 		});

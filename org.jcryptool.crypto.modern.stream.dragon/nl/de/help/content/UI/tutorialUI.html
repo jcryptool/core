@@ -2,49 +2,84 @@
 
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Tutorial for the Dragon cipher</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Tutorial zur Dragon-Verschlüsselung</title>
 </head>
-
 <body>
-<h1>Tutorial for the Dragon cipher</h1>
-<p>This tutorial will guide you through an encryption and a decryption with a modern stream cipher,
-the Dragon cipher, which is provided by the org.jcryptool.crypto.modern.stream.dragon plug-in.<br>
-Note: As with all algorithms, you can only perform the following steps when you have an opened
-editor window.<br>
-<br><img src="overview.png" width="85%"/><br><br>
-Clicking on the Dragon menu item in the Misc sub-menu of the Algorithms menu will bring up the
-wizard for the Dragon cipher. This will be applied to the active editor content (unsaved001.txt in the
-screenshot above).<br>
-<br><img src="figure1.png" width="85%"/><br><br>
-Select the size of the key and IV you wish to input; 128 bit or 256 bit. You then have to enter a key
-and an IV. The key and IV have to be input in the selected format. In our example, we use 128 bits
-as our key/IV size and hexadecimal as the input format for both inputs. Our key has the value of a
-128 bit binary number with all one (1) values and our IV has the value of 1 (i.e. 127 leading zero bits
-and a 1 bit). Clicking on the Finish button will start the encryption/ decryption process.<br>
-<br><img src="figure2.png" width="85%"/><br><br>
-The resulting ciphertext (in output001.bin) can be decrypted, by selecting an identical Key/ IV size
-and values in the same wizard that was used for encryption. (Note: The output is opened in a hex
-editor rather than a text editor. This is because modern algorithms are based on bytes, not
-characters; as such, opening a text editor would be inappropriate.)<br>
-<br><img src="figure3.png" width="85%"/><br><br>
-Clicking on the Finish button will now start the decryption of the ciphertext and yield the correct
-plaintext which will be displayed in a new editor (output002.bin in the screenshot below).<br>
-<br><img src="figure4.png" width="85%"/><br><br>
-<b>Outputting the keystream</b><br>
-Selecting the Display output file with keystream in a separate hex editor radio button will open a
-second file containing the generated keystream from that encryption/ decryption process. A
-comparison of the keystream from the encryption process to that of the decryption process will
-show that given identical inputs, an identical keystream is produced.<br>
-<br><img src="figure5.png" width="85%"/><br><br>
-The keystream is displayed in a new editor (output004.bin above), with the plaintext being
-displayed as usual (output003.bin).
-Selecting the Display keystream only (of specified number of bytes): radio button will open a file
-containing a specified number of bytes of generated keystream. The number of bytes of keystream
-to generate is specified in a textbox which is enabled when the Display keystream only button is
-selected.<br>
-<br><img src="figure6.png" width="85%"/><br><br>
-Our example shows the keystream generated, given the same Key and IV inputs as earlier, up to 100
-bytes.</p>
+
+
+<h1>Tutorial zur Dragon-Verschlüsselung</h1>
+
+
+<p>Dieses Tutorial führt Sie durch den Prozess einer Ver- und einer Entschlüsselung mit der modernen Strom-Verschlüsselung der Dragon-Chiffre.<br>
+Hinweis: Wie bei allen Algorithmen hier können Sie die folgenden Schritte nur ausführen, wenn Sie ein aktives Editor-Fenster haben.</p>
+
+
+
+<h2>Dragon aus dem Menü oder aus dem Crypto-Explorer auswählen</h2>
+
+<img src="overview.png" width="85%"/>
+
+<p>Durch Auswahl des Menüpunktes <b>Dragon</b> im Menüpfad <stark><a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/algorithms/toc.html">Algorithmen</a> → Symmetrisch</strong> wird der Wizard (Assistent) für die Dragon-Verschlüsselung aufgerufen. Dieser wird auf den aktiven Editor-Inhalt angewendet (unbenannt001.txt im obigen Screenshot).</p>
+
+<p>Weitere Details über den Algorithmus selbst finden sich auf <strong><a href="./../tutorial.html">Erläuterungen zur Dragon-Verschlüsselung</a></strong>.</p>
+
+
+
+
+<h2>Einstellen der Parameter im Dragon-Dialog für die Verschlüsselung</h2>
+
+<img src="figure1.png" breite="85%"/>
+
+<p>Wählen Sie die Größe von Schlüssels und IV: 128 bit oder 256 bit. Geben Sie dann die entsprechenden Werte für Schlüssel und IV im gewählten Format (hex oder binär) ein. In unserem Beispiel verwenden wir 128 bit als Schlüssel- / IV-Größe und hexadezimal als Eingabeformat für beide Eingaben. Unser Schlüssel hat alle 128 bit auf "1" gesetzt, und unser IV hat den Wert 1 (d.h. 127 führende "0"-Bits und ein "1"-Bit). Durch Klicken auf die Schaltfläche <b>Fertigstellen</b> wird der Verschlüsselungsprozess gestartet.<br>
+Hinweis: Moderne Chiffren arbeiten mit Bits / Bytes, aber nicht mit Zeichen. Daher wird ihre Ausgabe immer in einem Hex-Editor und nicht in einem Texteditor angezeigt.</p>
+
+<img src="figure2.png" breite="85%"/>
+
+
+
+<h2>Durchführen der Entschlüsselung</h2>
+
+<p>Der resultierende Geheimtext (in Ausgabe001.bin) kann entschlüsselt werden, indem genau dieselben Parameter wie bei der Verschlüsselung gewählt werden (da es sich um eine symmetrische Stromchiffrierung handelt): identischer Größe von Schlüssel / IV und entsprechende Werte in demselben Assistenten, der für die Verschlüsselung verwendet wurde.</p>
+
+<img src="figure3.png" breite="85%"/>
+
+<p>Klicken auf die Schaltfläche <b>Fertigstellen</b> startet nun die Entschlüsselung des Geheimtextes und der korrekte Klartext wird in einem neuen Hex-Editor angezeigt (out002.bin im Screenshot unten).</p>
+
+<img src="figure4.png" breite="85%"/>
+
+
+
+<h2>Ausgabe des Schlüsselstroms</h2>
+
+<p>Verwenden Sie &ndash; in der Gruppierung "Ausgabeoptionen"&ndash; das zweite Optionsfeld <b>Ausgabedatei und Schlüsselstrom jeweils in separatem Editor anzeigen</b>, werden 2 neue Hexeditor-Registerkarten erstellt: Eines enthält den generierten Schlüsselstrom aus diesem Ver-/Entschlüsselungsvorgang, das andere enthält entweder den verschlüsselten Klartext oder den entschlüsselten Geheimtext. Ein Vergleich des Schlüsselstroms aus dem Verschlüsselungsvorgang mit dem des Entschlüsselungsvorgangs zeigt, dass &ndash; bei identischen Eingabeparametern &ndash; ein identischer Schlüsselstrom erzeugt wird.</p>
+
+<img src="figure5.png" breite="85%"/>
+
+<p>Der Schlüsselstrom wird in einem neuen Editor angezeigt (out004.bin oben), wobei der Klartext
+wie gewohnt angezeigt (out003.bin) wird.</p>
+
+<p>Selektieren Sie den Radiobuttons <b>Nur Schlüsselstrom anzeigen</b>, wird die angegebene Anzahl Bytes des erzeugten Schlüsselstroms in einer weiteren Hexeditor-Registerkarte angezeigt. Der Eingabebereich für die Anzahl der zu generierenden Bytes des Schlüsselstroms ist nur aktiviert, wenn der Radiobutton <b>Nur Schlüsselstrom anzeigen</b> ausgewählt ist.</p>
+
+<img src="figure6.png" breite="85%"/>
+
+<p>Unser Beispiel zeigt die ersten 100 Bytes des Schlüsselstroms unter Verwendung des gleichen Schlüssels und des gleichen IV wie zuvor.</p>
+
+
+
+<h2>Quellen</h2>
+
+<ul>
+<li>
+    <a target="_blank" href="https://en.wikipedia.org/wiki/Dragon_(cipher)" >https://en.wikipedia.org/wiki/Dragon_(cipher)</a> Wikipedia Dragon (cipher) 
+</li>
+
+<li>
+    <a target="_blank" href="https://www.ecrypt.eu.org/stream/dragonp3.html" >https://www.ecrypt.eu.org/stream/dragonp3.html</a> eSTREAM Phase 3
+</li>
+</ul>
+
+<br>
+
 </body>
 </html>

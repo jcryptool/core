@@ -488,7 +488,7 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 		tapSettings01StringText.setBackground(ColorService.LIGHTGRAY);
 		tapSettings01StringText.setForeground(ColorService.GRAY);
 		tapSettings01StringText.setEditable(false);
-		tapSettings01StringText.setText(Messages.LfsrWizardPage_tapAs01string + "0000000000000000000000001"); //$NON-NLS-1$
+		tapSettings01StringText.setText(Messages.LfsrWizardPage_tapAs01string + "000000000000001"); //$NON-NLS-1$
 
 	}
 
@@ -552,7 +552,7 @@ public class LfsrWizardPage extends WizardPage implements Listener {
 		seedValue01StringText.setBackground(ColorService.LIGHTGRAY);
 		seedValue01StringText.setForeground(ColorService.GRAY);
 		seedValue01StringText.setEditable(false);
-		seedValue01StringText.setText(Messages.LfsrWizardPage_seedValueAs01String + "1000000000000000000000000"); //$NON-NLS-1$
+		seedValue01StringText.setText(Messages.LfsrWizardPage_seedValueAs01String + "100000000000000"); //$NON-NLS-1$
 
 	}
 

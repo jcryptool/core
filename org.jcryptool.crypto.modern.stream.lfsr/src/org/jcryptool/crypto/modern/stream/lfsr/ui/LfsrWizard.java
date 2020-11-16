@@ -24,7 +24,7 @@ public class LfsrWizard extends Wizard {
 	/** The wizard page for the LFSR cipher */
 	private LfsrWizardPage page;
 
-	public static final int MAX_LFSR_LENGTH = 25;
+	public static final int MAX_LFSR_LENGTH = 15;
 
 	/**
 	 * Creates a new instance of LfsrWizard.
