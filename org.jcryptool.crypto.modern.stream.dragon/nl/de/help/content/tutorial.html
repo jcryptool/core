@@ -8,7 +8,89 @@
 <body>
 
 
+<h1>Erläuterung zur Dragon-Verschlüsselung</h1>
 
+
+<p>Dragon ist eine Strom-Chiffre, die an der <a target="_blank" href="https://de.wikipedia.org/wiki/Queensland_University_of_Technology" >Australischen Queensland University of Technology (QUT)</a> entwickelt wurde.
+
+Dragon war ein Kandidat für das <a target="_blank" href="https://www.ecrypt.eu.org/stream/dragonp3.html" >eSTREAM-Projekt</a>. Die für die eSTREAM-Phase 3 ausgewählte Version ist Dragon-128. Dragon ist nicht patentiert.</p>
+
+
+
+<h2>Was ist die Dragon-Chiffre?</h2>
+
+<p>Dragon wurde vom Institut für Informationssicherheit (ISI) an der QUT in Brisbane, Australien, entwickelt. Es handelt sich um eine Stromverschlüsselung, die auf einem Schieberegister mit nichtlinearer Rückkopplung und einer nichtlinearen Filterfunktion mit Speicher basiert. Dieser Zustand wird mit 128- oder 256-bit-langen Schlüssel-IV-Paaren initialisiert. Jeder Takt ("Runde") erzeugt 64 bit des Schlüsselstroms, wobei einfache Operationen mit 32-Bit-Wörtern verwendet werden. Runden können wiederholt ausgeführt werden, um einen unendlichen Strom pseudozufälliger Daten zu erzeugen.</p>
+
+
+
+<h2>Wie funktioniert die Dragon-Chiffre?</h2>
+
+<p>Dragon operiert in zwei verschiedenen Phasen (Stufen). Die Initialisierungs-Phase nimmt das Schlüssel-Material (128- oder 256-bit lange Schlüssel und IV) und übersetzt es in einen vollständigen internen Zustand (1024 bit, plus 64 bit Speicher/Zähler). Die Schlüsselstromerzeugungs-Phase
+erzeugt 64 bit des Schlüsselstroms pro Operationsrunde.<br>
+Beide Stufen verwenden die "Aktualisierungsfunktion" F, die aus drei "G"-Funktionen (G1, G2 und G3) und drei "H"-Funktionen (H1, H2 und H3) besteht. Jede der G- und H-Funktionen indiziert in zwei
+ausgewählte 8x32-bit S-Boxen. Der sequentielle Betrieb von F ist im folgenden Bild dargestellt:</p>
+
+<img src="figure1.png" width="85%"/>
+
+<p>Die Initialisierungsphase wird beim ersten Schlüsselinput der Chiffre und bei jedem neuen Schlüsselinput ("Rekeying") durchgeführt. Aus Sicherheitsgründen wird empfohlen, den Schlüssel und den Rekey zu ersetzen und die Chiffre neu zu initialisieren, nachdem jeweils 2^64 bit Schlüsselstrom erzeugt wurden. Die Initialisierung besteht aus einer bestimmten Verkettung des Schlüssels und IV, um den anfänglichen 1024-bit-Zustand (sowie den 64-bit-Speicher/Zählerwert) zu erzeugen, gefolgt von 16 Iterationen der F-Funktion. Die vollständige Initialisierungsprozedur ist im folgenden Pseudocode zu sehen:</p>
+
+<img src="figure2.png" width="85%"/>
+
+<p>Nachdem die Chiffre initialisiert wurde, erzeugt die Schlüsselstrom-Generierung mit Hilfe des nichtlinear rückgekoppelten Schieberegisters (NLFSR) sowie dem Speicher-/Zählerwert 64 bit des Schlüsselstroms und einige "Feedback"-Informationen, die den Zustand des NLFSR verändern. Das 1024-bit NLFSR ist in zweiunddreißig 32-Bit-Wörter aufgeteilt, die mit B0 bis B31 bezeichnet werden. Dieser Schlüsselstrom-Generierungsprozess sieht wie folgt aus:</p>
+
+<img src="figure3.png" width="85%"/>
+<img src="figure4.png" width="85%"/>
+
+
+<h2>Warum ist die Dragon-Chiffre nützlich?</h2>
+
+<p>Die Dragon-Chiffre hat sich bisher nicht als unsicher erwiesen. Einige Angriffe, wie zum Beispiel ein
+"distinguishing"-Angriff, wurden aufgebracht und anschließend zurückgewiesen. Man kann also davon ausgehen, dass Dragon sicher genug ist, um sensible Daten zu schützen. Er ist sowohl hardware- als auch softwareseitig schnell: Ein 3,2-GHz Pentium-4-Prozessor kann 3,8 Gbps Schlüsselstrom berechnen, und eine Hardware-Implementierung mit einem Samsung-ASIC lieferte 23 Gbps Schlüsselstrom.</p>
+
+
+<h2>Wo kann ich mehr herausfinden?</h2>
+
+<p>Das Entwurfspapier <span class="cite">[<a href="#XJeSTChen">1</a>]</span>, das von mehreren Mitgliedern des ISI verfasst wurde, ist Grundlage für die in diesem Dokument verwendeten Ideen und Zahlen.
+Eine vollständige Umsetzung der Chiffre in C sowie weitere Informationen zu Dragon sind auf der Website <a target="_blank" href="https://www.ecrypt.eu.org/stream/dragonp3.html" >eSTREAM Phase 3</a> zu finden. Die frühere ISI-Website unter http://www.isi.qut.edu.au/resources/dragon/ ist nicht mehr zugänglich. Neuere Veröffentlichungen finden sich in den Referenzen.</p>
+
+
+
+
+<h2>Referenzen</h2>
+
+<ul>
+<li>
+	[1]&#x00A0;&#x00A0;&#x00A0;<a id="XJWikipDragon"></a>
+    <a target="_blank" href="https://en.wikipedia.org/wiki/Dragon_(cipher)" >https://en.wikipedia.org/wiki/Dragon_(cipher)</a> Wikipedia Dragon (cipher) 
+</li>
+
+<li>
+	[2]&#x00A0;&#x00A0;&#x00A0;<a id="XJeSTChen"></a>
+    <a target="_blank" href="https://www.ecrypt.eu.org/stream/p3ciphers/dragon/dragon_p3.pdf" >https://www.ecrypt.eu.org/stream/p3ciphers/dragon/dragon_p3.pdf</a> Dragon: A Fast Word Based Stream Cipher (incl. Test-Vektoren), 2005
+</li>
+
+<li>
+	[3]&#x00A0;&#x00A0;&#x00A0;<a id="XJQUTChen"></a>
+    <a target="_blank" href="https://eprints.qut.edu.au/10107/1/Dragon-A_Fast_Word_Based_Stream_Cipher.pdf" >https://eprints.qut.edu.au/10107/1/Dragon-A_Fast_Word_Based_Stream_Cipher.pdf</a> Dragon: A Fast Word Based Stream Cipher (incl. Test-Vektoren), 2005
+</li>
+
+<li>
+	[4]&#x00A0;&#x00A0;&#x00A0;<a id="XJFastImpl"></a>
+    <a target="_blank" href="https://eprints.qut.edu.au/24788/1/Ensuring_Fast_Implementations_of_Symmetric_Ciphers_on_the_Intel_Pentium_4_and_Beyond.pdf" >https://eprints.qut.edu.au/24788/1/Ensuring_Fast_Implementations_of_Symmetric_Ciphers_on_the_Intel_Pentium_4_and_Beyond.pdf</a> Ensuring Fast Implementations of Symmetric Ciphers on the Intel Pentium4 and Beyond, 2006
+</li>
+
+<li>
+	[5]&#x00A0;&#x00A0;&#x00A0;<a id="XJHenr_PhD"></a>
+    <a target="_blank" href="https://eprints.qut.edu.au/16055/" >https://eprints.qut.edu.au/16055/</a> Henricksen, Matthew (2005): Design, Implementation and Cryptanalysis of Modern Symmetric Ciphers, PhD thesis
+</li>
+
+<li>
+	[6]&#x00A0;&#x00A0;&#x00A0;<a id="XJHamd_PhD"></a>
+    <a target="_blank" href="https://eprints.qut.edu.au/66721/1/Ali%20Abdulaziz%20H_Al%20Hamdan_Thesis.pdf" >https://eprints.qut.edu.au/66721/1/Ali%20Abdulaziz%20H_Al%20Hamdan_Thesis.pdf</a> Ali Abdulaziz Alhamdan (2014): Secure Stream Cipher Initialisation Processes
+</li>
+</ul>
+
+<br>
 
 
 </body>
