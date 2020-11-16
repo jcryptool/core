@@ -3,48 +3,64 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Tutorial for the Dragon cipher</title>
+    <title>Tutorial for the Dragon Cipher</title>
 </head>
-
 <body>
+
 <h1>Tutorial for the Dragon cipher</h1>
-<p>This tutorial will guide you through an encryption and a decryption with a modern stream cipher,
-the Dragon cipher, which is provided by the org.jcryptool.crypto.modern.stream.dragon plug-in.<br>
-Note: As with all algorithms, you can only perform the following steps when you have an opened
-editor window.<br>
-<br><img src="overview.png" width="85%"/><br><br>
-Clicking on the Dragon menu item in the Misc sub-menu of the Algorithms menu will bring up the
-wizard for the Dragon cipher. This will be applied to the active editor content (unsaved001.txt in the
-screenshot above).<br>
-<br><img src="figure1.png" width="85%"/><br><br>
-Select the size of the key and IV you wish to input; 128 bit or 256 bit. You then have to enter a key
-and an IV. The key and IV have to be input in the selected format. In our example, we use 128 bits
-as our key/IV size and hexadecimal as the input format for both inputs. Our key has the value of a
-128 bit binary number with all one (1) values and our IV has the value of 1 (ie 127 leading zero bits
-and a 1 bit). Clicking on the Finish button will start the encryption/ decryption process.<br>
-<br><img src="figure2.png" width="85%"/><br><br>
-The resulting ciphertext (in output001.bin) can be decrypted, by selecting an identical Key/ IV size
-and values in the same wizard that was used for encryption. (Note: The output is opened in a hex
-editor rather than a text editor. This is because modern algorithms are based on bytes, not
-characters; as such, opening a text editor would be inappropriate.)<br>
-<br><img src="figure3.png" width="85%"/><br><br>
-Clicking on the Finish button will now start the decryption of the ciphertext and yield the correct
-plaintext which will be displayed in a new editor (output002.bin in the screenshot below).<br>
-<br><img src="figure4.png" width="85%"/><br><br>
-<b>Outputting the keystream</b><br>
-Selecting the Display output file with keystream in a separate hex editor radio button will open a
-second file containing the generated keystream from that encryption/ decryption process. A
-comparison of the keystream from the encryption process to that of the decryption process will
-show that given identical inputs, an identical keystream is produced.<br>
-<br><img src="figure5.png" width="85%"/><br><br>
-The keystream is displayed in a new editor (output004.bin above), with the plaintext being
-displayed as usual (output003.bin).
-Selecting the Display keystream only (of specified number of bytes): radio button will open a file
-containing a specified number of bytes of generated keystream. The number of bytes of keystream
-to generate is specified in a textbox which is enabled when the Display keystream only button is
-selected.<br>
-<br><img src="figure6.png" width="85%"/><br><br>
-Our example shows the keystream generated, given the same Key and IV inputs as earlier, up to 100
-bytes.</p>
+
+<p>This tutorial will guide you through the process of an encryption and a decryption with a modern stream cipher, the Dragon cipher.<br>
+Note: As with all algorithms here, you can only perform the following steps when you have an active
+editor window.</p>
+
+
+
+<h2>Selecting Dragon from the menu or from the Crypto Explorer</h2>
+
+<img src="overview.png" width="85%"/>
+
+<p>Selecting the menu item <b>Dragon</b> in the menu path <strong><a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/algorithms/toc.html">Algorithms</a> → Symmetric</strong> will bring up the wizard for the Dragon cipher. This will be applied to the active editor content (unsaved001.txt in the screenshot above).</p>
+
+
+
+<h2>Setting the parameters in the Dragon dialog for encryption</h2>
+
+<img src="figure1.png" width="85%"/>
+
+<p>Select the size of key and IV: 128 bit or 256 bit. Then enter the according values for key and IV. The key and the IV have to be input in the selected format (hex or binary). In our example, we use 128 bit as our key/IV size and hexadecimal as the input format for both inputs. Our key has all 128 bit set to "1", and our IV has the value of 1 (i.e. 127 leading "0" bit and one "1" bit). Clicking on the <b>Finish</b> button will start the encryption process.<br>
+Note: Modern ciphers work on bits / bytes, but not on characters. So their output is always displayed in a hex editor rather than a text editor.</p>
+
+<img src="figure2.png" width="85%"/>
+
+
+
+<h2>Performing the decryption</h2>
+
+<p>The resulting ciphertext (in output001.bin) can be decrypted, by selecting exactly the same parameters as for encryption (as it is a symmetric stream cipher): identical key / IV size and according values in the same wizard that was used for encryption.</p>
+
+<img src="figure3.png" width="85%"/>
+
+<p>Clicking on the <b>Finish</b> button will now start the decryption of the ciphertext and the correct plaintext is displayed in a new hex editor (output002.bin in the screenshot below).</p>
+
+<img src="figure4.png" width="85%"/>
+
+
+
+<h2>Outputting the keystream</h2>
+
+<p>If you use &ndash; in the grouping "Output options"&ndash; the second radio button <b>Display output file and keystream in separate editors</b>  then 2 new hex editor tabs are created: One contains the generated keystream from that encryption / decryption process, the other one contains either the encrypted plaintext or the decrypted ciphertext. A comparison of the keystream from the encryption process to that of the decryption process shows that &ndash; given identical input parameters &ndash; an identical keystream is produced.</p>
+
+<img src="figure5.png" width="85%"/>
+
+<p>The keystream is displayed in a new editor (output004.bin above), with the plaintext being
+displayed as usual (output003.bin).</p>
+
+<p>Selecting the radio button <b>Display keystream only</b>, the specified number of bytes of the generated keystream is shown in another hex editor tab. The input area for the number of keystream bytes  to be generated is only enabled if the radio button <b>Display keystream only</b>  is selected.</p>
+
+<img src="figure6.png" width="85%"/>
+
+<p>Our example shows the first 100 bytes of the keystream using the same key and IV as before.</p>
+
+
 </body>
 </html>
