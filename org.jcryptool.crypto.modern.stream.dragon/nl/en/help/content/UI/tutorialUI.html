@@ -7,11 +7,12 @@
 </head>
 <body>
 
+
 <h1>Tutorial for the Dragon cipher</h1>
 
+
 <p>This tutorial will guide you through the process of an encryption and a decryption with a modern stream cipher, the Dragon cipher.<br>
-Note: As with all algorithms here, you can only perform the following steps when you have an active
-editor window.</p>
+Note: As with all algorithms here, you can only perform the following steps when you have an active editor window.</p>
 
 
 
@@ -27,7 +28,7 @@ editor window.</p>
 
 <img src="figure1.png" width="85%"/>
 
-<p>Select the size of key and IV: 128 bit or 256 bit. Then enter the according values for key and IV. The key and the IV have to be input in the selected format (hex or binary). In our example, we use 128 bit as our key/IV size and hexadecimal as the input format for both inputs. Our key has all 128 bit set to "1", and our IV has the value of 1 (i.e. 127 leading "0" bit and one "1" bit). Clicking on the <b>Finish</b> button will start the encryption process.<br>
+<p>Select the size of key and IV: 128 bit or 256 bit. Then enter the according values for key and IV in the selected format (hex or binary). In our example, we use 128 bit as our key/IV size and hexadecimal as the input format for both inputs. Our key has all 128 bit set to "1", and our IV has the value of 1 (i.e. 127 leading "0" bit and one "1" bit). Clicking on the <b>Finish</b> button will start the encryption process.<br>
 Note: Modern ciphers work on bits / bytes, but not on characters. So their output is always displayed in a hex editor rather than a text editor.</p>
 
 <img src="figure2.png" width="85%"/>
@@ -36,11 +37,11 @@ Note: Modern ciphers work on bits / bytes, but not on characters. So their outpu
 
 <h2>Performing the decryption</h2>
 
-<p>The resulting ciphertext (in output001.bin) can be decrypted, by selecting exactly the same parameters as for encryption (as it is a symmetric stream cipher): identical key / IV size and according values in the same wizard that was used for encryption.</p>
+<p>The resulting ciphertext (in output001.bin) can be decrypted, by selecting exactly the same parameters as for encryption (as it is a symmetric stream cipher): identical size of key / IV and according values in the same wizard that was used for encryption.</p>
 
 <img src="figure3.png" width="85%"/>
 
-<p>Clicking on the <b>Finish</b> button will now start the decryption of the ciphertext and the correct plaintext is displayed in a new hex editor (output002.bin in the screenshot below).</p>
+<p>Clicking on the <b>Finish</b> button will now start the decryption of the ciphertext and the correct plaintext is displayed in a new hex editor (out002.bin in the screenshot below).</p>
 
 <img src="figure4.png" width="85%"/>
 
@@ -52,8 +53,8 @@ Note: Modern ciphers work on bits / bytes, but not on characters. So their outpu
 
 <img src="figure5.png" width="85%"/>
 
-<p>The keystream is displayed in a new editor (output004.bin above), with the plaintext being
-displayed as usual (output003.bin).</p>
+<p>The keystream is displayed in a new editor (out004.bin above), with the plaintext being
+displayed as usual (out003.bin).</p>
 
 <p>Selecting the radio button <b>Display keystream only</b>, the specified number of bytes of the generated keystream is shown in another hex editor tab. The input area for the number of keystream bytes  to be generated is only enabled if the radio button <b>Display keystream only</b>  is selected.</p>
 
@@ -61,6 +62,7 @@ displayed as usual (output003.bin).</p>
 
 <p>Our example shows the first 100 bytes of the keystream using the same key and IV as before.</p>
 
+TODO: Referenz zu Explanation of the Dragon Cipher
 
 </body>
 </html>
