@@ -72,4 +72,6 @@ public class Messages extends NLS {
 	public static String SimpleAnalysisUI_properties;
 	public static String SimpleAnalysisUI_startanalysis;
 	public static String SimpleAnalysisUI_vigeneresettings;
+	public static String SimpleAnalysisUI_warning;
+	public static String SimpleAnalysisUI_warning_text;
 }

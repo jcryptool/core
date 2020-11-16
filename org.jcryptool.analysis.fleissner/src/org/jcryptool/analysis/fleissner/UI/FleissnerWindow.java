@@ -145,6 +145,10 @@ public class FleissnerWindow extends Composite {
 	private OutputDialog dialog;
 //    private String dialogOutput;
 	private ArrayList<String> outputInput;
+	private String lastSuccessfulLoadedTextName;
+	private String lastSuccessfulLoadedText;
+	
+	private static final int fleissner_max_text_length = 1000000;
 
 	/**
 	 * Constructor creates header and main, sets new default grille
@@ -817,7 +821,8 @@ public class FleissnerWindow extends Composite {
 					argText = loadNormal(filename);
 					userText = true;
 					// display fileName to user
-					loadedTextName.setText(a[a.length - 1]);
+					loadedTextName.setText(lastSuccessfulLoadedTextName);
+					//loadedTextName.setText(a[a.length - 1]);
 
 					if (argMethod.equals(Messages.FleissnerWindow_method_analyze)) {
 						analysisOutput.setText(Messages.FleissnerWindow_output_progress);
@@ -1050,18 +1055,43 @@ public class FleissnerWindow extends Composite {
 
 		BufferedReader reader = null;
 		String text = Messages.FleissnerWindow_empty;
+		String text_buffer = Messages.FleissnerWindow_empty;
 
 		try {
+//			InputStream inputStream = new FileInputStream(fileName);
+//			String nimm_diesen = inputStreamToString(inputStream);
 			reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), IConstants.UTF8_ENCODING));
 			String line = reader.readLine();
-
+			
 			int count = 1;
 			while (line != null) {
-				text += line;
+				
+				text_buffer += line;
 				LogUtil.logInfo(count + Messages.FleissnerWindow_infoMessage_read + text);
 				count++;
 				line = reader.readLine();
 			}
+			System.out.println(text_buffer.length());
+			if(text_buffer.length() < fleissner_max_text_length) {
+				
+				text = text_buffer;
+				lastSuccessfulLoadedText = text_buffer;
+				lastSuccessfulLoadedTextName = fileName;
+				
+			}else {
+				boolean result = MessageDialog.openQuestion(FleissnerWindow.this.getShell(), Messages.FleissnerWindow_warning, Messages.FleissnerWindow_warning_text);
+				if(result) {
+					text = text_buffer;
+					lastSuccessfulLoadedText = text_buffer;
+					lastSuccessfulLoadedTextName = fileName;
+				}
+				else {
+					text = lastSuccessfulLoadedText;
+					
+				}
+			}
+			
+			
 		} catch (NumberFormatException nfe) {
 			LogUtil.logError(Activator.PLUGIN_ID, nfe);
 			MessageBox brokenFile = new MessageBox(getDisplay().getActiveShell(), SWT.OK);

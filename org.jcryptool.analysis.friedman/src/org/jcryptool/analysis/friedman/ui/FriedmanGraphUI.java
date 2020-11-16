@@ -15,6 +15,8 @@ import java.util.Observer;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -24,6 +26,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.jcryptool.analysis.friedman.FriedmanPlugin;
 import org.jcryptool.analysis.friedman.IFriedmanAccess;
 import org.jcryptool.analysis.friedman.calc.FriedmanCalc;
@@ -31,6 +34,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.crypto.ui.background.BackgroundJob;
 import org.jcryptool.crypto.ui.textloader.ui.wizard.TextLoadController;
+import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
 
 /**
  * @author SLeischnig
@@ -41,6 +45,9 @@ public class FriedmanGraphUI extends Composite implements IFriedmanAccess {
 	private Button btnShowTable;
 	private Button btnResetGraph;
 	private String message;
+	private TextInputWithSource lastSuccessfullLoadedText;
+	
+	private static final int friedman_max_text_length = 550000;
 
 	public FriedmanGraphUI(final Composite parent, final int style) {
 		super(parent, style);
@@ -94,7 +101,21 @@ public class FriedmanGraphUI extends Composite implements IFriedmanAccess {
 				public void update(Observable o, Object arg) {
 					if (textSelector.getText() != null) {
 						if (textSelector.getText().getText() != null) {
+							if(textSelector.getText().getText().length() < friedman_max_text_length){
 							message = textSelector.getText().getText();
+							lastSuccessfullLoadedText = textSelector.getText();
+							}
+							else{
+								
+								boolean result = MessageDialog.openQuestion(FriedmanGraphUI.this.getShell(), Messages.FriedmanGraphUI_warning, Messages.FriedmanGraphUI_warning_text);
+								if(result) {
+									message = textSelector.getText().getText();
+								}
+								else {
+									textSelector.setTextData(lastSuccessfullLoadedText, null, true);
+									return;
+								}
+							}
 						}
 					}
 

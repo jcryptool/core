@@ -101,6 +101,8 @@ public class Messages extends NLS {
     public static String FleissnerWindow_languageSelect_english;
     public static String FleissnerWindow_languageSelect_german;
     public static String FleissnerWindow_output_progress;
+    public static String FleissnerWindow_warning;
+    public static String FleissnerWindow_warning_text;
     public static String OutputDialog_save;
     public static String OutputDialog_detailOutput;
     public static String LoadFiles_empty;

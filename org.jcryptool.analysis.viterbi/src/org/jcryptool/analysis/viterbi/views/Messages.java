@@ -84,6 +84,9 @@ public class Messages extends NLS {
 	public static String XORComposite_next;
 	public static String XORComposite_encodingmod_header;
 	public static String XORComposite_cipher;
+	
+	public static String XORComposite_warning;
+	public static String XORComposite_warning_text;
 
 	public static String ViterbiComposite_00ShowAnalysis;
 

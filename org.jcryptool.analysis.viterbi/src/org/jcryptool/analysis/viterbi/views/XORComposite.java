@@ -8,6 +8,7 @@ import java.util.function.BiConsumer;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -59,6 +60,13 @@ public class XORComposite extends Composite {
 	/* default value for the combination is xor */
 	private Combination combi = new BitwiseXOR();
 	private Composite g;
+	
+	private static final int viterbi_max_text_length = 2000000;
+	
+	private String lastSuccessfullLoadedText1;
+	private String lastSuccessfullLoadedTextName1;
+	private String lastSuccessfullLoadedText2;
+	private String lastSuccessfullLoadedTextName2;
 
 	/**
 	 * @param the
@@ -185,7 +193,29 @@ public class XORComposite extends Composite {
 				String filename = dialog.open();
 				if (filename != null) {
 					String text = new IO().read(filename, "\r\n"); //$NON-NLS-1$
-					plain1.setText(text); // printing text into textfield
+					if(text.length() < viterbi_max_text_length) {
+						plain1.setText(text); // printing text into textfield
+						lastSuccessfullLoadedText1 = text;
+						lastSuccessfullLoadedTextName1 = filename;
+					}else {
+						
+						boolean result = MessageDialog.openQuestion(XORComposite.this.getShell(), Messages.XORComposite_warning, Messages.XORComposite_warning_text);
+						
+						if(result) {
+							
+						plain1.setText(text); // printing text into textfield
+						lastSuccessfullLoadedText1 = text;
+						lastSuccessfullLoadedTextName1 = filename;
+							
+						}else {
+							if(lastSuccessfullLoadedText1!=null){
+								plain1.setText(lastSuccessfullLoadedText1);
+							}else {
+								plain1.setText("");
+							}
+						}
+					}
+					
 				}
 			}
 		});
@@ -245,7 +275,28 @@ public class XORComposite extends Composite {
 				String filename = dialog.open();
 				if (filename != null) {
 					String text = new IO().read(filename, "\r\n"); //$NON-NLS-1$
-					plain2.setText(text); // printing text into textfield
+					if(text.length() < viterbi_max_text_length) {
+						plain2.setText(text); // printing text into textfield
+						lastSuccessfullLoadedText2 = text;
+						lastSuccessfullLoadedTextName2 = filename;
+					}else {
+						
+						boolean result = MessageDialog.openQuestion(XORComposite.this.getShell(), Messages.XORComposite_warning, Messages.XORComposite_warning_text);
+						
+						if(result) {
+							
+						plain2.setText(text); // printing text into textfield
+						lastSuccessfullLoadedText2 = text;
+						lastSuccessfullLoadedTextName2 = filename;
+							
+						}else {
+							if(lastSuccessfullLoadedText2!=null){
+								plain2.setText(lastSuccessfullLoadedText2);
+							}else {
+								plain2.setText("");
+							}
+						}
+					}
 				}
 			}
 		});
