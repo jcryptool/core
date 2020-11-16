@@ -34,7 +34,6 @@ deploy:
       - "org.jcryptool.product/target/products/JCrypTool-1.0.0-Linux-64bit.tar.gz"
       - "org.jcryptool.product/target/products/JCrypTool-1.0.0-macOS-64bit.tar.gz"
       - "org.jcryptool.product/target/products/JCrypTool-1.0.0-Windows-64bit.zip"  
-    skip_cleanup: true
     on:
       repo: jcryptool/core
       branch: develop
@@ -53,7 +52,6 @@ deploy:
       - "org.jcryptool.product/target/products/JCrypTool-1.0.0-Windows-64bit.zip" 
       - "org.jcryptool.product/target/products/JCrypTool-1.0.0-Windows-64bit.zip.md5"
       - "org.jcryptool.product/target/products/JCrypTool-1.0.0-Windows-64bit.zip.sha1"
-    skip_cleanup: true
     on:
       repo: jcryptool/core
       branch: master
