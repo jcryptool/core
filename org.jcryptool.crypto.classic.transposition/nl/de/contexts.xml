@@ -9,7 +9,7 @@ Die <b>Schlüssel</b> der Transpositionsschritte dürfen nur Buchstaben des ausg
 	</context>
 	<context id="algorithm" title="Transposition">
     <description>Die Transpositions-Verschl&#252;sselung ver&#228;ndert die Reihenfolge der Buchstaben des Klartextes auf Grundlage des Schl&#252;ssels.
-&lt;br&gt;Die Transposition ist eines der &#228;ltesten kryptographischen Verfahren. Ein bekanntes Beispiel ist die Skytale, die zuerst im Pelleponesischen Krieg (431 v. Chr.) dokumentiert wurde.
+&lt;br&gt;Die Transposition ist eines der &#228;ltesten kryptografischen Verfahren. Ein bekanntes Beispiel ist die Skytale, die zuerst im Pelleponesischen Krieg (431 v. Chr.) dokumentiert wurde.
     </description>
     <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="Die Transpositionsverschlüsselung (Kryptologie-Handbuch)"/>
 	</context>
