@@ -62,22 +62,16 @@
 	</topic>
 
     <topic label="Algorithms"
-        href="$nl$/help/users/algorithms/toc.html"
-        sort="true">
-		<topic label="Classic"
-			href="$nl$/help/users/algorithms/encryption/classic/toc.html"
-			sort="true">
-			<anchor id="classicAlgorithmPlugins" />
-		</topic>
+        href="$nl$/help/users/algorithms/toc.html">
 		<topic label="Asymmetric"
 			href="$nl$/help/users/algorithms/encryption/asymmetric/toc.html"
 			sort="true">
 			<anchor id="asymmetricAlgorithmPlugins" />
 		</topic>
-		<topic label="Symmetric"
-			href="$nl$/help/users/algorithms/encryption/symmetric/toc.html"
+		<topic label="Classic"
+			href="$nl$/help/users/algorithms/encryption/classic/toc.html"
 			sort="true">
-			<anchor id="symmetricAlgorithmPlugins" />
+			<anchor id="classicAlgorithmPlugins" />
 		</topic>
         <topic label="Hash"
             href="$nl$/help/users/algorithms/hash/toc.html"
@@ -95,7 +89,13 @@
             sort="true">
             <anchor id="signaturePlugins" />
         </topic>
+		<topic label="Symmetric"
+			href="$nl$/help/users/algorithms/encryption/symmetric/toc.html"
+			sort="true">
+			<anchor id="symmetricAlgorithmPlugins" />
+		</topic>
         <anchor id="algorithmPlugins" />
+        <topic href="$nl$/help/users/algorithms/keystore/toc.html" label="Keystore"> </topic>
     </topic>
     <topic href="$nl$/help/users/analysis/toc.html" label="Analysis"
     	sort="true">

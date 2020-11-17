@@ -178,7 +178,7 @@ public class TitleAndDescriptionComposite extends Composite {
 		if (parent.getClientArea().width != 0) {
 			return parent.getClientArea().width - 10;
 		}
-		return 600;
+		return 400;
 	}
 
 
