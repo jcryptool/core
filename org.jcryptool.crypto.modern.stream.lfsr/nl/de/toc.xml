@@ -2,5 +2,5 @@
 <?NLS TYPE="org.eclipse.help.toc"?>
 
 <toc label="LFSR" link_to="../org.jcryptool.core.help/$nl$/toc_cryptology.xml#symmetricEncryptionAlgorithms"> 
-    <topic label="LFSR Verschlüsselung" href="$nl$/help/content/tutorial.html" /> 
+    <topic label="LFSR-Verschlüsselung" href="$nl$/help/content/tutorial.html" /> 
 </toc>

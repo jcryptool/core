@@ -95,15 +95,19 @@ public abstract class BackgroundJob {
 		
 		public void liftNoClickDisplaySynced(Display display) {
 			display.syncExec(() -> {
-				imposedNoClickShell.setCursor(display.getSystemCursor(SWT.CURSOR_ARROW));
-				imposedNoClickShell = null;
+				if (BackgroundJob.this.imposedNoClickShell != null) {
+					imposedNoClickShell.setCursor(display.getSystemCursor(SWT.CURSOR_ARROW));
+					imposedNoClickShell = null;
+				}
 			});
 		}
 
 		public void imposeNoClickDisplayCurrentShellSynced(Display display) {
 			display.syncExec(() -> {
 				BackgroundJob.this.imposedNoClickShell = display.getActiveShell();
-				imposedNoClickShell.setCursor(imposedNoClickShell.getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
+				if (BackgroundJob.this.imposedNoClickShell != null) {
+					imposedNoClickShell.setCursor(imposedNoClickShell.getDisplay().getSystemCursor(SWT.CURSOR_WAIT));
+				}
 			});
 		}
 

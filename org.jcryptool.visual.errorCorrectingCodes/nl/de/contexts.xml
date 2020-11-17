@@ -2,7 +2,7 @@
 <contexts>
    <context id="mcElieceHelp" title="McEliece-Kryptosystem">
       <description>Diese Visualisierung demonstriert Fehlerkorrektur Codes, 
-      welche in Kryptographischen Systemen nach McEliece oder Niederreiter verwendet werden.</description>
+      welche in Kryptografischen Systemen nach McEliece oder Niederreiter verwendet werden.</description>
       <topic href="$nl$/help/content/index.html" label="McEliece-Kryptosystem"/>
    </context>
 </contexts>

@@ -113,7 +113,6 @@ public class SubstitutionAnalysisView extends ViewPart {
 		
 		
 		mainComposite = new Composite(parent, SWT.NONE);
-		mainComposite.setBackground(ColorService.YELLOW);
 		mainComposite.setLayout(new GridLayout());
 		
 		createAppropriatePanel(state);	
