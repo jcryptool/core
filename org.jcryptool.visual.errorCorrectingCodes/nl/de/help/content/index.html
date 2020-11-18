@@ -10,9 +10,8 @@
 
 <h1>McEliece Cryptosystem</h1>
 
-<strong>TODO: Nach Deutsch übersetzen, Bilder in Deutsch einfügen</strong>
-<br />
-<strong>TODO: <a href=https://github.com/jcryptool/core/issues/215#issuecomment-655474799">Explanation of how to automatically generate a TOC for such pages as this</a></strong>
+<strong>Diese Hilfedatei wurde noch nicht ins Deutsche übersetzt.</strong>
+<!--<strong>TODO: Übersetzen nach Deutsch.</strong>-->
 
 <p>This document describes the algorithmic details of McEliece and the usage of the visualization plugin.</br>
 1) <a href="#general">The McEliece System</a></br>
@@ -66,19 +65,19 @@
 <p>The plugin consists of three separate visualizations, which are explained in the following sections.</p>
 
 <h3  id="usage_mce">2.1) McEliece Cryptosystem</h3>
-<img src="mceliece.PNG" width="800" alt"View of the McEliece Cryptosystem.">
+<img src="McEliece1.png" width="800" alt"View of the McEliece Cryptosystem.">
 
 <p>In this tab, the user can experiment with different key parameters and messages. The dropdown menu gives a selection of usable exponents to construct the Galois Field for the Goppa code. Additionally, the number of errors can be entered in the text field below. The algorithm handles all other parameters, like code dimension and length, internally and they are only printed for reference. The actual size of the public and private keys are also shown. By clicking on “generate keys” the parameters are filled automatically. When the keys are generated, the user can enter any message to be encrypted and decrypted.</p>
 <p>Note: As the keys are random and not saved between application sessions, the decryption of a previously created cipher text will fail.</p>
 
 <h3  id="usage_ham">2.2) Hamming Cryptosystem</h3>
-<img src="hamming.PNG" width="800" alt"View of the examplary Hamming system.">
+<img src="McEliece2.png" width="800" alt"View of the examplary Hamming system.">
 
 <p>The second tab visualizes a simplified McEliece system using Hamming codes. This was inspired by lecture notes by Bill Cherowitzo, University of Colorado at Denver (<a href="#ref_cherwitzo">4</a>), and is supposed to make the algorithm easier understandable. The original algorithm with Goppa code cannot be visualized due to the code length, but when using the much shorter Hamming code with four data bits and three parity bits it is possible to display the matrices used to encrypt and decrypt the message.</p>
 <p>The user can enter values for S and P by clicking on the numbers, essentially flipping the bits from one to zero and vice versa. The public key and inverted matrices are shown after continuing to the next step. Clicking on reset sets every element to the initial state.</p>
 
 <h3  id="usage_ecc">2.3) Error Correcting Codes</h3>
-<img src="ecc.PNG" width="800" alt"View of error correcting code procedure.">
+<img src="McEliece3.png" width="800" alt"View of error correcting code procedure.">
 
 <p>The error-correcting codes tab shows a short explanation of how Hamming code works in general. After entering a message input, press the “next step” button to advance. The Information textbox contains further details for each step of the process.</p>
 
