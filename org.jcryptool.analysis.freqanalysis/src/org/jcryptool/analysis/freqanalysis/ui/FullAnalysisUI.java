@@ -105,6 +105,9 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 	private boolean appropriateAlphabetToBeDetected = false;
 	private TextLoadController textloader;
 	public FreqAnalysisCalc return__freqanalysis;
+	
+	private static final int fullFreqAnalysis_text_max_length = 15000000;
+	private TextInputWithSource lastSuccessfullLoadedText;
 
 	/**
 	 * Contains reference texts for overlays
@@ -153,8 +156,27 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 				if (textloader.getText() != null) {
 					myGraph.getFrequencyGraph().setInstruction(Messages.FreqAnalysisGraph_graph1);
 					myGraph.redraw();
-					text = textloader.getText().getText();
-					source = textloader.getText();
+					
+					if(textloader.getText().getText().length() < fullFreqAnalysis_text_max_length) {
+						text = textloader.getText().getText();
+						
+						lastSuccessfullLoadedText = textloader.getText();
+						source = textloader.getText();
+						}else{
+							
+							boolean result = MessageDialog.openQuestion(FullAnalysisUI.this.getShell(), Messages.SimpleAnalysisUI_warning, Messages.SimpleAnalysisUI_warning_text);
+							if(result) {
+								text = textloader.getText().getText();
+								source = textloader.getText();
+								System.out.println(text.length());
+							}
+							else {
+								textloader.setTextData(lastSuccessfullLoadedText, null, true);
+								source = lastSuccessfullLoadedText;
+								return;
+							}
+						}
+					
 					recalcSourceInfo();	
 					
 					myGraph.getFrequencyGraph().setInstruction(Messages.FreqAnalysisGraph_shiftgraph0);
