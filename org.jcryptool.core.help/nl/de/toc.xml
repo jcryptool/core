@@ -49,7 +49,7 @@
     </topic>
 
     <topic href="$nl$/help/users/cryptology/toc.html" label="Kryptologie">
-		<topic label="Kryptographische Verfahren"
+		<topic label="Kryptografische Verfahren"
 	        href="$nl$/help/users/cryptology/crypto_methods.html" />
 	    <topic label="Überblick"
 	        href="$nl$/help/users/cryptology/cryptology.html" />
@@ -59,8 +59,12 @@
 	</topic>
 
     <topic label="Algorithmen"
-        href="$nl$/help/users/algorithms/toc.html"
-        sort="true">
+        href="$nl$/help/users/algorithms/toc.html">
+		<topic label="Asymmetrisch"
+			href="$nl$/help/users/algorithms/encryption/asymmetric/toc.html"
+			sort="true">
+			<anchor id="asymmetricAlgorithmPlugins" />
+		</topic>
         <topic label="Hash"
             href="$nl$/help/users/algorithms/hash/toc.html"
             sort="true">
@@ -69,21 +73,16 @@
         <topic href="$nl$/help/users/algorithms/mac/toc.html" label="MAC" sort="true">
            <anchor id="macPlugins"/>
         </topic>
-        <topic label="Signatur"
-            href="$nl$/help/users/algorithms/signature/toc.html"
-            sort="true">
-            <anchor id="signaturePlugins" />
-        </topic>
 		<topic label="Klassisch"
 			href="$nl$/help/users/algorithms/encryption/classic/toc.html"
 			sort="true">
 			<anchor id="classicAlgorithmPlugins" />
 		</topic>
-		<topic label="Asymmetrisch"
-			href="$nl$/help/users/algorithms/encryption/asymmetric/toc.html"
-			sort="true">
-			<anchor id="asymmetricAlgorithmPlugins" />
-		</topic>
+        <topic label="Signatur"
+            href="$nl$/help/users/algorithms/signature/toc.html"
+            sort="true">
+            <anchor id="signaturePlugins" />
+        </topic>
 		<topic label="Symmetrisch"
 			href="$nl$/help/users/algorithms/encryption/symmetric/toc.html"
 			sort="true">
@@ -93,6 +92,7 @@
            <anchor id="randomNumberPlugins"/>
         </topic>
         <anchor id="algorithmPlugins" />
+        <topic href="$nl$/help/users/algorithms/keystore/toc.html" label="Schlüsselspeicher"> </topic>
     </topic>
     <topic href="$nl$/help/users/analysis/toc.html" label="Analyse" sort="true">
        <anchor id="analysisPlugins"/>

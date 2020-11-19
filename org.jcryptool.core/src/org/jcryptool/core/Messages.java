@@ -49,6 +49,7 @@ public class Messages extends NLS {
     public static String applicationActionBarAdvisor_Menu_Algorithms_Signature;
     public static String applicationActionBarAdvisor_Menu_Algorithms_PRNG;
     public static String applicationActionBarAdvisor_Menu_Algorithms_XML_Security;
+    public static String applicationActionBarAdvisor_algorithmPerspective;
 
     static {
         // initialize resource bundle

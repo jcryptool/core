@@ -10,13 +10,13 @@
          JCrypTool besitzt zwei Perspektiven: <b>Standard</b> und <b>Algorithmen</b>. Zwischen diesen Perspektiven kann auf zwei Arten gewechselt werden: Über das Menü <b>Fenster → Perspektive öffnen</b> oder über die Icons rechts oben im Fenster. Es kann immer nur eine Perspektive aktiv sein (welche das ist erkennen Sie am aktiven Icon).
       </description>
       <subitem
-            label="Aktivieren Sie die Algorithmen Perspektive, indem Sie sie im Menü Fenster - Perspektive anzeigen auswählen.">
+            label="Aktivieren Sie die Algorithmen-Perspektive, indem Sie sie im Menü Fenster - Perspektive anzeigen auswählen.">
          <command
                required="false"
                serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=org.jcryptool.crypto.flexiprovider.ui.perspective.FlexiProviderPerspective)"/>
       </subitem>
       <subitem
-            label="Aktivieren Sie wieder die Standard Perspektive, indem Sie sie über das Icon Standard in der rechten oberen Ecke des Fensters aufrufen.">
+            label="Aktivieren Sie wieder die Standard-Perspektive, indem Sie sie über das Icon Standard in der rechten oberen Ecke des Fensters aufrufen.">
          <command
                required="false"
                serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=org.jcryptool.core.perspective)"/>

@@ -33,10 +33,18 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.providers.AbstractProviderController;
@@ -373,6 +381,58 @@ public class KeyStoreManager {
         return null;
     }
 
+    public static class PasswordDialog extends Dialog {
+        private Text passwordField;
+        private String passwordString;
+
+        public PasswordDialog(Shell parentShell) {
+            super(parentShell);
+        }
+
+        @Override
+        protected void configureShell(Shell newShell)
+        {
+            super.configureShell(newShell);
+            newShell.setText(Messages.KeyStoreManager_12);
+        }
+
+        @Override
+        protected Control createDialogArea(Composite parent) {
+            Composite comp = (Composite) super.createDialogArea(parent);
+
+            GridLayout layout = (GridLayout) comp.getLayout();
+            layout.numColumns = 2;
+
+            Label passwordLabel = new Label(comp, SWT.RIGHT);
+            passwordLabel.setText(Messages.KeyStoreManager_13);
+            passwordField = new Text(comp, SWT.SINGLE | SWT.BORDER | SWT.PASSWORD);
+
+            GridData data = new GridData(SWT.FILL, SWT.CENTER, true, false);
+            passwordField.setLayoutData(data);
+
+            return comp;
+        }
+
+        @Override
+        protected void okPressed()
+        {
+            passwordString = passwordField.getText();
+            super.okPressed();
+        }
+
+        @Override
+        protected void cancelPressed()
+        {
+            passwordField.setText(""); //$NON-NLS-1$
+            super.cancelPressed();
+        }
+
+        public String getPassword()
+        {
+            return passwordString;
+        }
+    } 
+    
     /**
      * Returns the private key for the given keystore alias.
      * 
@@ -387,8 +447,21 @@ public class KeyStoreManager {
         try {
         	try {
 				ProviderManager2.getInstance().pushFlexiProviderPromotion();
-				KeyStore.PrivateKeyEntry entry = (KeyStore.PrivateKeyEntry) keyStore.getEntry(alias.getAliasString(),
-						new KeyStore.PasswordProtection(password));
+				KeyStore.PrivateKeyEntry entry;
+				try {
+					entry = (KeyStore.PrivateKeyEntry) keyStore.getEntry(alias.getAliasString(),
+							new KeyStore.PasswordProtection(password));
+				} catch (UnrecoverableEntryException e) {
+					PasswordDialog dialog = new PasswordDialog(Display.getCurrent().getActiveShell());
+					int result = dialog.open();
+					if (result == Dialog.OK) {
+						char[] pwchararr = dialog.getPassword().toCharArray();
+						entry = (KeyStore.PrivateKeyEntry) keyStore.getEntry(alias.getAliasString(),
+								new KeyStore.PasswordProtection(pwchararr));
+					} else {
+						throw e;
+					}
+				}
 				return entry.getPrivateKey();
 			} finally {
 				ProviderManager2.getInstance().popCryptoProviderPromotion();

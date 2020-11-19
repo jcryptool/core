@@ -24,8 +24,6 @@ import org.jcryptool.crypto.flexiprovider.descriptors.reflect.interfaces.IMetaPa
 import org.jcryptool.crypto.flexiprovider.descriptors.reflect.interfaces.IMetaSpec;
 import org.jcryptool.crypto.flexiprovider.xml.AlgorithmsXMLManager;
 
-import com.sun.net.httpserver.Authenticator.Result;
-
 import de.flexiprovider.api.Registry;
 import de.flexiprovider.api.exceptions.InvalidAlgorithmParameterException;
 import de.flexiprovider.api.exceptions.NoSuchAlgorithmException;

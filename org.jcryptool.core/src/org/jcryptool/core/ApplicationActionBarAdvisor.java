@@ -41,6 +41,7 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ContributionItemFactory;
 import org.eclipse.ui.application.ActionBarAdvisor;
@@ -484,6 +485,29 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		};
 		openKeystoreAction.setImageDescriptor(ImageService.getImageDescriptor("org.jcryptool.crypto.keystore", "/icons/16x16/kgpg_info.png"));
 		menu.add(openKeystoreAction);
+		
+		 //This is the Algorithmn Perspective entry in the algorithm drop down menu
+		IAction switchToAlgorithmPerspective = new Action() {
+			
+			@Override
+			public void run() {
+				try {
+					PlatformUI.getWorkbench().showPerspective("org.jcryptool.crypto.flexiprovider.ui.perspective.FlexiProviderPerspective",
+							PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+				} catch (WorkbenchException e) {
+					LogUtil.logError(CorePlugin.PLUGIN_ID, e);
+				}
+				super.run();
+			}
+			
+			@Override
+			public String getText() {
+				return Messages.applicationActionBarAdvisor_algorithmPerspective;
+			}
+		};
+		switchToAlgorithmPerspective.setImageDescriptor(ImageService.IMAGEDESCRIPTOR_PERSPECTIVE_ALGORITHM);
+		menu.add(switchToAlgorithmPerspective);
+
         return menu;
     }
 
