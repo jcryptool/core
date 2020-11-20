@@ -143,8 +143,9 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 			<!-- default build creates the weekly build, to create a release use: mvn clean package -P release -->
 			<id>release</id>
 			<properties>
-				<timestamp>${maven.build.timestamp} (stable)</timestamp>
-			</properties>
+			<!--  by adding something between <timestamp> and </timestamp> you can adjust the name of the JCrypTool -->
+				<timestamp></timestamp>
+			</properties> 
 		</profile>
 
 		<profile>
