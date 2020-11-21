@@ -12,12 +12,12 @@
             <link label="Overview"
                 url="http://org.eclipse.ui.intro/showPage?id=overview&amp;standby=false"
                 id="overview">
-                <text>JCrypTool at a Glance.</text>
+                <text>JCrypTool at a glance</text>
             </link>
             <link label="Tutorials"
                 url="http://org.eclipse.ui.intro/showPage?id=tutorials&amp;standby=false"
                 id="tutorials">
-                <text>Step by step instructions.</text>
+                <text>Step-by-step instructions</text>
             </link>
             <anchor id="endAnchor" />
         </group>
