@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
@@ -266,21 +267,24 @@ public class AlgorithmInstruction extends ViewPart {
 
 						@Override
 						public void run() {
-							IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-							IViewPart part = page.findView("org.jcryptool.core.introduction.views.AlgorithmInstruction");
-							// The slideshow plugin is open, but maybe not visible
-							if (part != null) {
-								// The slideshow plugin is visible, thus maybe not active.
-								if (page.isPartVisible(part)) {
-									// Slide to the next image
-									slideToNextImage();
+							IWorkbenchWindow iw = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+							if (iw != null) {
+								IWorkbenchPage page = iw.getActivePage();
+								IViewPart part = page.findView("org.jcryptool.core.introduction.views.AlgorithmInstruction");
+								// The slideshow plugin is open, but maybe not visible
+								if (part != null) {
+									// The slideshow plugin is visible, thus maybe not active.
+									if (page.isPartVisible(part)) {
+										// Slide to the next image
+										slideToNextImage();
+									} else {
+										//trigger this method in 15 seconds
+										resetTimer();
+									}
 								} else {
 									//trigger this method in 15 seconds
 									resetTimer();
 								}
-							} else {
-								//trigger this method in 15 seconds
-								resetTimer();
 							}
 						}
 					});
