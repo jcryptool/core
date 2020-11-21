@@ -25,7 +25,6 @@ import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -49,7 +48,6 @@ public class CommonPropertyDialog extends TitleAreaDialog {
 
     public CommonPropertyDialog(Shell parentShell, TreeNode treeNode) {
         super(parentShell);
-        setShellStyle(SWT.RESIZE | SWT.TITLE);
         this.treeNode = treeNode;
         this.setHelpAvailable(false);
     }
@@ -73,13 +71,14 @@ public class CommonPropertyDialog extends TitleAreaDialog {
         this.setMessage(Messages.getString("CommonPropertyDialog.0")); //$NON-NLS-1$
 
         Composite composite = new Composite(area, SWT.NONE);
-//        TableColumnLayout tclComposite = new TableColumnLayout(true);
         TableColumnLayout tclComposite = new TableColumnLayout(true);
         composite.setLayout(tclComposite);
 
         TableViewer tableViewer = new TableViewer(composite, SWT.BORDER | SWT.FULL_SELECTION | SWT.H_SCROLL);
+        // Copy values automatical to the clipboard
         tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-            public void selectionChanged(SelectionChangedEvent event) {
+            @Override
+			public void selectionChanged(SelectionChangedEvent event) {
                 StructuredSelection selection = (StructuredSelection) event.getSelectionProvider().getSelection();
                 TableEntry tableEntry = (TableEntry) selection.getFirstElement();
                 final Clipboard cb = new Clipboard(Display.getCurrent());
@@ -92,10 +91,6 @@ public class CommonPropertyDialog extends TitleAreaDialog {
 
         TableViewerColumn tableViewerNameColumn = new TableViewerColumn(tableViewer, SWT.NONE);
         tableViewerNameColumn.setLabelProvider(new ColumnLabelProvider() {
-            @Override
-            public Image getImage(Object element) {
-                return null;
-            }
 
             @Override
             public String getText(Object element) {
@@ -143,6 +138,7 @@ public class CommonPropertyDialog extends TitleAreaDialog {
 
         return area;
     }
+    
 
     /**
      * Create contents of the button bar.
@@ -154,19 +150,9 @@ public class CommonPropertyDialog extends TitleAreaDialog {
         createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CLOSE_LABEL, true);
     }
     
-//    @Override
-//    protected Point getInitialSize() {
-//    	// TODO Auto-generated method stub
-//    	return super.getInitialSize();
-//    }
-//    
-//    @Override
-//    protected void initializeBounds() {
-//    	super.initializeBounds();
-//		Point size = getInitialSize();
-//		Point location = getInitialLocation(size);
-//		shell.setBounds(getConstrainedShellBounds(new Rectangle(location.x,
-//				location.y, size.x, size.y)));
-//    }
+    @Override
+    protected boolean isResizable() {
+    	return true;
+    }
 
 }

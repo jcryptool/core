@@ -22,16 +22,21 @@ import org.jcryptool.crypto.keystore.ui.views.nodes.keys.SecretKeyNode;
  * 
  */
 public class ShowSecretKeyDialog extends CommonPropertyDialog {
+	
+	private SecretKeyNode skn = null;
+	private PrivateKeyNode pkn = null;
 
     /**
      * @wbp.parser.constructor
      */
     public ShowSecretKeyDialog(Shell parentShell, SecretKeyNode secretKeyNode) {
         super(parentShell, secretKeyNode);
+        skn = secretKeyNode;
     }
 
     public ShowSecretKeyDialog(Shell parentShell, PrivateKeyNode privateKeyNode) {
         super(parentShell, privateKeyNode);
+        pkn = privateKeyNode;
     }
 
     /**
@@ -41,9 +46,31 @@ public class ShowSecretKeyDialog extends CommonPropertyDialog {
      */
     @Override
     protected Control createDialogArea(Composite parent) {
-        setTitle(Messages.getString("secretkey.dialog.title") + "\n" + treeNode.getName()); //$NON-NLS-1$
+    	
+
+    	
+    	// Only print the first 100 Chars to avoid the 
+    	// dialog from taking too much horizontal space
+    	String alias = "";
+    	String topic = "";
+    	if (skn != null) {
+    		alias = skn.getName();
+    		topic = Messages.getString("secretkey.dialog.title");
+    	} else if (pkn != null) {
+    		alias = pkn.getAlias().toString();
+    		topic = Messages.getString("secretkey.dialog.privateKey");
+    	}
+    	
+    	if (alias.length() > 100) {
+    		alias = alias.substring(0, 100) + "...";
+    	}
+    	
+    	Composite container = (Composite) super.createDialogArea(parent);
+    	
+        setTitle(topic + "\n" + alias); //$NON-NLS-1$
         setTitleImage(ImageService.getImage(KeyStorePlugin.PLUGIN_ID, "icons/48x48/kgpg_key1.png"));
-        Composite container = (Composite) super.createDialogArea(parent);
+        
+        getShell().setText(Messages.getString("CommonPropertyDialog.keyTitle"));
 
         return container;
     }
