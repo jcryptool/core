@@ -154,9 +154,6 @@
             <command commandId="org.jcryptool.core.commands.showHelp" icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.png" style="push"/>
             <command commandId="org.eclipse.ui.help.helpSearch" icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_search.png" style="push"/>
             <command commandId="org.eclipse.ui.help.dynamicHelp" style="push" label="%command.contexthelp"/>
-            <separator name="org.jcryptool.core.help.separator.2" visible="true"/>
-            <!-- Command for the Spickzettel -->
-            <command commandId="org.eclipse.ui.cheatsheets.openCheatSheet" style="push"/>
             <separator name="org.jcryptool.core.help.separator.3" visible="true"/>
             <command commandId="org.eclipse.equinox.p2.ui.sdk.update" icon="icons/iu_update_obj.png" style="push"/>
             <command commandId="org.eclipse.equinox.p2.ui.sdk.install" icon="icons/iu_obj.png" style="push"/>

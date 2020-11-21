@@ -6,7 +6,6 @@ Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.core.CorePlugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
- org.eclipse.ui.cheatsheets,
  org.eclipse.ui.intro,
  org.eclipse.equinox.p2.ui.sdk,
  org.eclipse.help,

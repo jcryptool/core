@@ -56,20 +56,6 @@
       </index>
    </extension>
    <extension
-         point="org.eclipse.ui.cheatsheets.cheatSheetContent">
-      <category
-            id="org.jcryptool.core.cheatsheets.general"
-            name="%cheatsheet.category.general">
-      </category>
-      <cheatsheet
-            category="org.jcryptool.core.cheatsheets.general"
-            contentFile="$nl$/cheatsheets/general.xml"
-            id="org.jcryptool.core.cheatsheets.general.cheatsheet"
-            name="%cheatsheet.general.name">
-            <description>%cheatsheet.general.description</description>
-      </cheatsheet>
-   </extension>
-   <extension
          point="org.eclipse.help.webapp.contentFilter">
       <filter
             class="org.jcryptool.core.help.JCTJSInjectionFilter"
