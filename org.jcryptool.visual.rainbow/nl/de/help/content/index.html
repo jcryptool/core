@@ -10,7 +10,8 @@
 
 <h1>Multivariate Cryptography</h1>
 
-<strong>TODO: Übersetzen nach Deutsch.</strong>
+<strong>Diese Hilfedatei wurde noch nicht ins Deutsche übersetzt.</strong>
+<!--<strong>TODO: Übersetzen nach Deutsch.</strong>-->
 
 <p>Solving systems of multivariate polynomial equations is proven to be NP-hard even for quadratic equations (degree two) over small finite fields (GF(2)) and therefore sparked the interest of researchers. Multivariate Cryptography is a generic term for asymmetric primitives that are based on this mathematical problem. The general idea is to introduce a secret trapdoor to the equation system to make it solvable with few computing resources. In post-quantum cryptography, this is mainly used for digital signatures. In fact, there are four such schemes in Round 2 of NIST’s Post-Quantum Cryptography standardization process – GeMSS, LUOV, MQDSS and Rainbow.</p>
 <p>Tsutomu Matsumoto and Hideki Imai first presented the C* signature scheme in 1988 (1) at the Eurocrypt conference. Although it has been broken by Jacques Patarin, the principle inspired more improved proposals. After some iterations of rather impractical and insecure schemes, Patarin published “Unbalanced Oil and Vinegar” in corporation with Aviad Kipnis and Louis Goubin (2). The name stems from the fact that the variables of the equation system are never fully mixed, like oil and vinegar. Furthermore, the number of oil and vinegar variables is not equal to eliminate a cryptanalysis attack presented by Kipnis and Shamir (3). The Rainbow scheme by Jintai Ding and Dieter Schmidt (4), used for this visualization, constructs several layers of equation systems to improve its efficiency in terms of signature length and computational efficiency. According to the authors, it is a generalization of Unbalanced Oil and Vinegar, because the latter can be interpreted as a single layer Rainbow scheme.</p>
@@ -20,6 +21,9 @@
 <p>The private or signing key consists of two affine transformations, S and T, and a polynomial vector P, which represent the trapdoor needed to solve the equation system. The public key contains a modified version of the whole equation system, or more specifically the star product of the private key components, which is used to verify the signature. For an attacker it is not feasible to compute the solution (i.e., a signature) without knowledge of the trapdoor and he can gain no knowledge about it from the verification key.</p> 
 
 <h2>Visualization</h2>
+
+<img src="Rainbow1.png" width="800" alt"Rainbow Verschlüsselung Visualisierung">
+
 <p>The Multivariate cryptography visualization is a black box view of the Rainbow signature scheme. You may select the number of layers and Vinegar variables per layer, but the systems keeps the actual equations hidden. You can select the number of layers between one and seven and enter the number of Vinegar variables per layer below. Note that the vis have to be entered in ascending order for the algorithm to accept it. On the right hand side, you can see an abbreviated listing of the coefficients and their “rainbow”-like distribution.</p>
 
 <h2>References</h2>

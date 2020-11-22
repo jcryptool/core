@@ -279,7 +279,7 @@ public class DragonWizardPage extends WizardPage implements Listener {
 
 		});
 
-		keyDigitCountLabel = new Label(keyValueGroup, SWT.None);
+		keyDigitCountLabel = new Label(keyValueGroup, SWT.NONE);
 		keyDigitCountLabel.setLayoutData(keyDigitCountLabelGridData);
 		keyDigitCountLabel.setText(NLS.bind(Messages.DragonWizardPage_11, "32   "));  //$NON-NLS-2$ //$NON-NLS-1$
 	}
@@ -456,7 +456,7 @@ public class DragonWizardPage extends WizardPage implements Listener {
 
 		keystreamLengthText = new Text(displayOptionsGroup, SWT.BORDER | SWT.SINGLE);
 		keystreamLengthText.setLayoutData(keystreamLengthTextGridData);
-		keystreamLengthText.setText(""); //$NON-NLS-1$
+		keystreamLengthText.setText("100"); //$NON-NLS-1$
 		keystreamLengthText.addListener(SWT.Modify, this);
 		keystreamLengthText.addVerifyListener(new VerifyListener() {
 
@@ -523,19 +523,19 @@ public class DragonWizardPage extends WizardPage implements Listener {
 			keyValue = keyText.getText();
 
 			if (keyFormatIsHexadecimal)
-				keyDigitCountLabel.setText(Messages.DragonWizardPage_26 + keyValue.length() + "\n" +  //$NON-NLS-1$
+				keyDigitCountLabel.setText(Messages.DragonWizardPage_26 + keyValue.length() + " / " + (is128Bit ? "32" : "64") + "\n" +  //$NON-NLS-1$
 					Messages.DragonWizardPage_27 + (is128Bit ? "32" : "64"));  //$NON-NLS-1$ //$NON-NLS-2$
 			else
-				keyDigitCountLabel.setText(Messages.DragonWizardPage_26 + keyValue.length() + "\n" +   //$NON-NLS-1$
+				keyDigitCountLabel.setText(Messages.DragonWizardPage_26 + keyValue.length() + " / " + (is128Bit ? "128" : "256") + "\n" +   //$NON-NLS-1$
 			        Messages.DragonWizardPage_27 + (is128Bit ? "128" : "256"));   //$NON-NLS-1$ //$NON-NLS-2$
 		} else if (event.widget == ivText) {
 			ivValue = ivText.getText();
 
 			if (ivFormatIsHexadecimal)
-				ivDigitCountLabel.setText(Messages.DragonWizardPage_26 + ivValue.length() + "\n" +   //$NON-NLS-1$
+				ivDigitCountLabel.setText(Messages.DragonWizardPage_26 + ivValue.length() + " / " + (is128Bit ? "32" : "64") + "\n" +   //$NON-NLS-1$
 			        Messages.DragonWizardPage_27 + (is128Bit ? "32" : "64"));   //$NON-NLS-1$ //$NON-NLS-2$
 			else
-				ivDigitCountLabel.setText(Messages.DragonWizardPage_26 + ivValue.length() + "\n" +   //$NON-NLS-1$
+				ivDigitCountLabel.setText(Messages.DragonWizardPage_26 + ivValue.length() + " / " + (is128Bit ? "128" : "256") + "\n" +   //$NON-NLS-1$
 			        Messages.DragonWizardPage_27 + (is128Bit ? "128" : "256"));   //$NON-NLS-1$ //$NON-NLS-2$
 		} else if (event.widget == displayOutputOnlyButton) {
 			displayOption = DisplayOption.OUTPUT_ONLY;
@@ -604,9 +604,9 @@ public class DragonWizardPage extends WizardPage implements Listener {
 
 	private void clearKeystreamLength() {
 		CLEARING_FLAG = true;
-		keystreamLengthText.setText(""); //$NON-NLS-1$
+		keystreamLengthText.setText("100"); //$NON-NLS-1$
 		CLEARING_FLAG = false;
-		keystreamLengthValue = ""; //$NON-NLS-1$
+		keystreamLengthValue = "100"; //$NON-NLS-1$
 	}
 
 	public boolean getIs128Bit() {

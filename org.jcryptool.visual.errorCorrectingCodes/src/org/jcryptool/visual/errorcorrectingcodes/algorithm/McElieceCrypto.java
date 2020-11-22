@@ -106,7 +106,7 @@ public class McElieceCrypto {
 
             for (int i = 0; i < segments; i++) {
                 upper += encryptionCipher.maxPlainTextSize;
-                encrypted.add(encryptionCipher.messageEncrypt(Arrays.copyOfRange(message, lower, upper)));
+                encrypted.add(encryptionCipher.messageEncrypt(Arrays.copyOfRange(message, lower, upper-1)));
                 lower = upper;
             }
 

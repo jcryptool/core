@@ -3,7 +3,7 @@
 
 <toc label="LFSR" link_to="../org.jcryptool.core.help/$nl$/toc.xml#symmetricAlgorithmPlugins"> 
     <topic href="$nl$/help/content/UI/tutorialUI.html" label="LFSR">
-       <topic href="$nl$/help/content/tutorial.html" label="LFSR Verschlüsselung">
+       <topic href="$nl$/help/content/tutorial.html" label="LFSR-Verschlüsselung">
        </topic>
     </topic> 
 </toc>

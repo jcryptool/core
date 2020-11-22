@@ -286,12 +286,14 @@ litigation.
          version="0.0.0"
          unpack="false"/>
 
+<!--
    <plugin
          id="org.jcryptool.visual.elGamal"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+-->
 
    <plugin
          id="org.jcryptool.visual.kleptography"
@@ -307,12 +309,14 @@ litigation.
          version="0.0.0"
          unpack="false"/>
 
+<!--
    <plugin
          id="org.jcryptool.visual.rsa"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+-->
 
    <plugin
          id="org.jcryptool.visual.sidechannelattack.spa"
