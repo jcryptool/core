@@ -17,23 +17,16 @@
 		<li><a href="#example">Example</a></li>
 		<li><a href="#literature">Further references and literature</a></li>
 	</ul>
-	<p>Of course, you don't have to read these chapters to use the plug-in. If you aren't interested in the history of 
-	RC4, its algorithm itself or the security aspects, feel free to directly jump to the user instructions.</p>
+	<p>Of course, you don't have to read these chapters to use the plug-in. If you aren't interested in the history of RC4, its algorithm itself or the security aspects, feel free to directly jump to the user instructions.</p>
 
 	<h2 id="func">Description of the algorithm</h2>
 	
 	<p>
-	RC4 and ARC4 respectively are cryptographic stream ciphers. RC4 became well known and widespread mainly because of its usage in standards 
-	like HTTPS, SSH1 or WEP/WPA. RC4 has been developed by Ronald L. Rivest in the year 1987 as a trademark of RSA Security Inc., today a
- 	subsidiary of EMC Corporation. Therefore, RC4 is not a freely accessible crypto algorithm. Alleged RC4 (ARC4) is based on an anonymous 
-	publication of source code (1994) and is now open-source and therefore it's freely usable.
+	RC4 and ARC4 respectively are cryptographic stream ciphers. RC4 became well known and widespread mainly because of its usage in standards like HTTPS, SSH1 or WEP/WPA. RC4 has been developed by Ronald L. Rivest in the year 1987 as a trademark of RSA Security Inc., today a subsidiary of EMC Corporation. Therefore, RC4 is not a freely accessible crypto algorithm. Alleged RC4 (ARC4) is based on an anonymous publication of source code (1994) and is now open-source and therefore it's freely usable.
 	</p>
 	<p>
-	RC4 generates a (pseudo-)random bitstream which is then used as keystream to encrypt the plaintext through an exclusive disjunction
- 	(XOR). The result of this operation is the ciphertext. The basis of this generation in RC4 is a so called s-box. This s-box is a byte-vector with 256 elements initially assigned with the consecutive values from 0 to 255. Afterwards these values will be permutated using the key. 
-	After this initialization the algorithm generates the random bitstream with well defined calculation rules. Every single step of the 
-	generation concludes with the swapping of two values inside the s-box. The calculation for the RC4 algorithm uses very simple operations, 
-	therefore it is easy to implement the algorithm in hardware and software. The execution of the algorithm itself is pretty fast in comparison
+	RC4 generates a (pseudo-)random bitstream which is then used as keystream to encrypt the plaintext through an exclusive disjunction (XOR). The result of this operation is the ciphertext. The basis of this generation in RC4 is a so called s-box. This s-box is a byte-vector with 256 elements initially assigned with the consecutive values from 0 to 255. Afterwards these values will be permutated using the key. 
+	After this initialization the algorithm generates the random bitstream with well defined calculation rules. Every single step of the generation concludes with the swapping of two values inside the s-box. The calculation for the RC4 algorithm uses very simple operations, therefore it is easy to implement the algorithm in hardware and software. The execution of the algorithm itself is pretty fast in comparison
  	to other stream ciphers.
 	</p>
 	<p>The algorithm looks like the following. First of all the byte-vector (called s-box) will be filled with initial values:</p>

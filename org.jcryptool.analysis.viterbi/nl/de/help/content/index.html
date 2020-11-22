@@ -24,7 +24,7 @@
 
 		<p>Die Running-Key-Verschlüsselung kombiniert die Einzelzeichen von zwei Klartexten mittels XOR oder modularer Addition.</p>
 
-		<p>Man kann -- wie bei einer Buchchiffre -- den einen Klartext als Schlüsselstrom (hergeleitet aus dem Passwort) betrachten, und den anderen Klartext als zu verschlüsselnde Nachricht. Das Passwort sollte mindestens so lang sein wie die Nachricht (ansonsten wird es zyklisch wiederholt). Wenn die Nachricht \(n\) Zeichen lang ist, hat die Running-Key-Verschlüsselung \(2 \cdot n\) Zeichen als Input (Nachricht und Schlüssel). Als Output erhält man ein Chiffrat der Länge \(n\).</p>
+		<p>Man kann &ndash; wie bei einer Buchchiffre &ndash; den einen Klartext als Schlüsselstrom (hergeleitet aus dem Passwort) betrachten, und den anderen Klartext als zu verschlüsselnde Nachricht. Das Passwort sollte mindestens so lang sein wie die Nachricht (ansonsten wird es zyklisch wiederholt). Wenn die Nachricht \(n\) Zeichen lang ist, hat die Running-Key-Verschlüsselung \(2 \cdot n\) Zeichen als Input (Nachricht und Schlüssel). Als Output erhält man ein Chiffrat der Länge \(n\).</p>
 
 		<p>Wenn einer der beiden Klartexte bekannt ist, kann man den anderen ganz leicht und direkt finden. In dem Szenario hier ist jedoch nur der Geheimtext bekannt, und die Viterbi-Analyse generiert die doppelte Menge Klartext (Nachricht und Schlüssel) mit erstaunlicher Treffsicherheit (aber nur, wenn der Schlüsselstrom nicht zufällig, sondern eben normaler Text ist). Der Viterbi-Algorithmus basiert auf der Annahme, dass die Klartexte ähnliche Muster wie normale Bücher aufweisen. Das zugrunde liegende <a target="_blank" href="https://de.wikipedia.org/wiki/Hidden_Markov_Model">Hidden-Markov-Modell</a> [2] nutzt die Häufigkeitsanalyse von Zeichenfolgen. Die Implementierung basiert auf der Arbeit von <a target="_blank" href="http://www.csc.kth.se/utbildning/kth/kurser/DD2449/krypto09/pdf/rapport_vernam080309.pdf">M. Eker&aring; und B. Terelius</a> [3].</p>
 		
@@ -129,7 +129,7 @@
       
       	<p>Dazu kann man sich über den anderen Radiobutton oben ("2" statt "1") ein Bild machen (der Einfachheit halber schauen wir uns das hier erst einmal nicht an).</p>
 	
-	 	<p>Um zu schließen, vergleichen wir diese "Kontrahenten", Pfad "11-i" (korrekt) versus Pfad "11-s" in Hinsicht auf ihren weiteren Werdegang. Es folgen die "Nachfolger" dieser "11-i" und "11-s" mit kurzen Erläuterungen. Diese Listen erhält man, indem man die jeweiligen Kandidaten links auswählt und rechts per Button markiert. Nach einer Berechnung, die länger dauern kann, werden die Geschwister dieser 11.-Schritt-Kandidaten angezeigt -- also Vorgänger und alle möglichen Nachfolger. Wir wissen bereits, dass "11-e" als Nachfolger den "Gewinnerpfad" hat: </p>
+	 	<p>Um zu schließen, vergleichen wir diese "Kontrahenten", Pfad "11-i" (korrekt) versus Pfad "11-s" in Hinsicht auf ihren weiteren Werdegang. Es folgen die "Nachfolger" dieser "11-i" und "11-s" mit kurzen Erläuterungen. Diese Listen erhält man, indem man die jeweiligen Kandidaten links auswählt und rechts per Button markiert. Nach einer Berechnung, die länger dauern kann, werden die Geschwister dieser 11.-Schritt-Kandidaten angezeigt &ndash; also Vorgänger und alle möglichen Nachfolger. Wir wissen bereits, dass "11-e" als Nachfolger den "Gewinnerpfad" hat: </p>
 	
 		<p align=center><img src="images/11s.png" width="70%"><br clear="all"></p>
 
@@ -188,11 +188,13 @@
 
 	<h2>Referenzen</h2>
 		<p>
-  			<b>[1]</b> Running-Key-Verschlüsselung bei Wikipedia:  <a target="_blank" href="http://en.wikipedia.org/wiki/Running_key_cipher">http://en.wikipedia.org/wiki/Running_key_cipher</a> <br />
-  			<b>[2]</b> Hidden-Markov-Modell bei Wikipedia: <a target="_blank" href="https://de.wikipedia.org/wiki/Hidden_Markov_Model">https://de.wikipedia.org/wiki/Hidden_Markov_Model</a> <br />
-  			<b>[3]</b> M. Eker&aring; und B. Terelius. "Automatic solution in depth of one time pads". Royal Institute of Technology, Stockholm, Sweden. März 2008. <a target="_blank" href="http://www.csc.kth.se/utbildning/kth/kurser/DD2449/krypto09/pdf/rapport_vernam080309.pdf">http://www.csc.kth.se/utbildning/kth/kurser/DD2449/krypto09/pdf/rapport_vernam080309.pdf</a>. <br />
-  			<b>[4]</b> Sravana Reddy und Kevin Knight. <a target="_blank" href="http://dl.acm.org/citation.cfm?id=2390686">Decoding running key ciphers</a>. ACL '12 Proceedings of the 50th Annual Meeting of the Association for Computational Linguistics: Short Papers -- Volume 2. 2012. <br />
+  			<b>[1]</b> Running-Key-Verschlüsselung bei Wikipedia (englisch):  <a target="_blank" href="http://en.wikipedia.org/wiki/Running_key_cipher">http://en.wikipedia.org/wiki/Running_key_cipher</a> <br />
 
+  			<b>[2]</b> Hidden-Markov-Modell bei Wikipedia: <a target="_blank" href="https://de.wikipedia.org/wiki/Hidden_Markov_Model">https://de.wikipedia.org/wiki/Hidden_Markov_Model</a> <br />
+
+  			<b>[3]</b> M. Eker&aring; und B. Terelius. "Automatic solution in depth of one time pads". Royal Institute of Technology, Stockholm, Sweden. März 2008. <a target="_blank" href="http://www.csc.kth.se/utbildning/kth/kurser/DD2449/krypto09/pdf/rapport_vernam080309.pdf">http://www.csc.kth.se/utbildning/kth/kurser/DD2449/krypto09/pdf/rapport_vernam080309.pdf</a>. <br />
+
+  			<b>[4]</b> Sravana Reddy und Kevin Knight. <a target="_blank" href="http://dl.acm.org/citation.cfm?id=2390686">Decoding running key ciphers</a>. ACL '12 Proceedings of the 50th Annual Meeting of the Association for Computational Linguistics: Short Papers &ndash; Volume 2. 2012. <br />
 		</p>
 		<br>
 
