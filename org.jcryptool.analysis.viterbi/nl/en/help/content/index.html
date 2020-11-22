@@ -37,7 +37,7 @@
 	<h1 id="2">Explanation of the User Interface</h1>
 	
 
-	<h2>Running-Key Encryption</h2>
+	<h2>Running-key encryption</h2>
 	
 		<p align=center><img src="images/rk_enc_tab.png" width="90%"></p>
 				
@@ -57,7 +57,7 @@
 		
 		
 		
-	<h2>Viterbi Analysis</h2>
+	<h2>Viterbi analysis</h2>
 		<p align=center><img src="images/viterbi_analysis_tab.png" width="90%"></p>
 				
 		<p>The second tab focuses on the actual attack against the ciphertext. If the ciphertext was generated using the first tab, it was loaded automatically into this tab. Alternatively, you can load here the ciphertext to be analyzed from a text file.</p>
@@ -70,7 +70,7 @@
 
 
 
-	<h2>Analysis Details</h2>
+	<h2>Analysis details</h2>
 	
 		<p align=center><img src="images/viterbi3.png" width="90%"></p>
 		
@@ -80,12 +80,12 @@
 		<br>
 		
 		
-	<h1 id="3">Example step-by-step</h1>
+	<h1 id="3">Example Step-by-Step</h1>
 	
 		<p>As an example, we take as text 1<br>"the kitten is in the basket fuzzy ball go"<br>and as text 2 <br>"this is a codebook message that is unique".</p>
 
 
-	<h2>Running-Key Encryption</h2>
+	<h2>Running-key encryption</h2>
 	
 		<p>We use the XOR scheme.</p>
 		
@@ -99,7 +99,7 @@
  		<br>
  		
  		
-	<h2>Viterbi Analysis</h2>
+	<h2>Viterbi analysis</h2>
 	
 		<p>We go into the analysis tab, choose the best possible parameters, and click the button "Start analysis".</p>
 	
@@ -110,7 +110,7 @@
 		<p>As mentioned before, the exodus of the winning path can be traced using the analysis details tab. Let's enter it using the button ""Show analysis details, which gets available after the analysis has finished.</p>
 
 
-	<h2>Analysis Details</h2>
+	<h2>Analysis details</h2>
 	
 		<p>By setting the "winner" path (last step, rank 1) as highlighted straight away, we can see its predecessors in the right list. Right off the bat, we can observe that by no means the predecessors of the "winner" were all top-ranked. The following screenshot shows how the program looks like after selecting the winner path (button "Highlight selected path and its relatives" on the right side):</p>
 
@@ -131,7 +131,7 @@
 		<p align=center><img src="images/11i.png" width="70%"></p>
 
 		
-		<p>It appears, no other combination than "icebook" could convince the algorithm (at last, only three ranks short of the "winner"). It is not a given that a candidate successor has to appear in the last step though -- it could also have been cut off by the "search depth" setting which defines the height of the table on the left for every step, everything below is unavailable for the following steps.</p>
+		<p>It appears, no other combination than "icebook" could convince the algorithm (at last, only three ranks short of the "winner"). It is not a given that a candidate successor has to appear in the last step though &ndash; it could also have been cut off by the "search depth" setting which defines the height of the table on the left for every step, everything below is unavailable for the following steps.</p>
 	
 		<p>Tracing all the stacks for what happened in steps after "11-i" is left to the enthusiastic reader. It is often helpful to look what the other plaintext reads when facing a counterintuitive decision by the analysis. Cutting off is necessary for performance reasons.</p>
 	
@@ -140,7 +140,7 @@
 
 
 
-	<h1 id="4">FAQ and remarks</h1>
+	<h1 id="4">FAQ and Remarks</h1>
 
     
     <h3>Why are plaintexts 1 and 2 swapped in the analysis output?</h3>
@@ -181,9 +181,12 @@
 	<h2>References</h2>
 		<p>
 			<b>[1]</b> Running-key cipher at Wikipedia: <a target="_blank" href="http://en.wikipedia.org/wiki/Running_key_cipher">http://en.wikipedia.org/wiki/Running_key_cipher</a> <br />
+
 		  	<b>[2]</b> Hidden Markov model at Wikipedia: <a target="_blank" href="http://en.wikipedia.org/wiki/Hidden_Markov_model">http://en.wikipedia.org/wiki/Hidden_Markov_model</a> <br />
+
 		  	<b>[3]</b> M. Eker&aring; and B. Terelius. "Automatic solution in depth of one time pads". Royal Institute of Technology, Stockholm, Sweden. March 2008. <a target="_blank" href="http://www.csc.kth.se/utbildning/kth/kurser/DD2449/krypto09/pdf/rapport_vernam080309.pdf">http://www.csc.kth.se/utbildning/kth/kurser/DD2449/krypto09/pdf/rapport_vernam080309.pdf</a>. <br />
-		  	<b>[4]</b> Sravana Reddy and Kevin Knight. <a target="_blank" href="http://dl.acm.org/citation.cfm?id=2390686">Decoding running key ciphers</a>. ACL '12 Proceedings of the 50th Annual Meeting of the Association for Computational Linguistics: Short Papers -- Volume 2. 2012.
+
+		  	<b>[4]</b> Sravana Reddy and Kevin Knight. <a target="_blank" href="http://dl.acm.org/citation.cfm?id=2390686">Decoding running key ciphers</a>. ACL '12 Proceedings of the 50th Annual Meeting of the Association for Computational Linguistics: Short Papers  &ndash; Volume 2. 2012.
 		</p>
 		<br>
 

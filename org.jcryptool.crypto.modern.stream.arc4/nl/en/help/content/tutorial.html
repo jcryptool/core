@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 
 <html>
-
 <head>
 	<meta charset="UTF-8">
 	<title>ARC4 Algorithm</title>
 </head>
-
 <body>
+
 	<h1 style="text-align: center">Visualization of the ARC4 Algorithm</h1>
 
 	<p>Welcome to the online help of the visualization of the <b>ARC4/Spritz</b> algorithm. This help depicts the following aspects:</p>
@@ -17,25 +16,17 @@
 		<li><a href="#example">Example</a></li>
 		<li><a href="#literature">Further references and literature</a></li>
 	</ul>
-	<p>Of course, you don't have to read these chapters to use the plug-in. If you aren't interested in the history of 
-	RC4, its algorithm itself or the security aspects, feel free to directly jump to the user instructions.</p>
+	<p>Of course, you don't have to read these chapters to use the plug-in. If you aren't interested in the history of RC4, its algorithm itself or the security aspects, feel free to directly jump to the user instructions.</p>
+
 
 	<h2 id="func">Description of the algorithm</h2>
 	
-	<p>
-	RC4 and ARC4 respectively are cryptographic stream ciphers. RC4 became well known and widespread mainly because of its usage in standards 
-	like HTTPS, SSH1 or WEP/WPA. RC4 has been developed by Ronald L. Rivest in the year 1987 as a trademark of RSA Security Inc., today a
- 	subsidiary of EMC Corporation. Therefore, RC4 is not a freely accessible crypto algorithm. Alleged RC4 (ARC4) is based on an anonymous 
-	publication of source code (1994) and is now open-source and therefore it's freely usable.
-	</p>
-	<p>
-	RC4 generates a (pseudo-)random bitstream which is then used as keystream to encrypt the plaintext through an exclusive disjunction
- 	(XOR). The result of this operation is the ciphertext. The basis of this generation in RC4 is a so called s-box. This s-box is a byte-vector with 256 elements initially assigned with the consecutive values from 0 to 255. Afterwards these values will be permutated using the key. 
-	After this initialization the algorithm generates the random bitstream with well defined calculation rules. Every single step of the 
-	generation concludes with the swapping of two values inside the s-box. The calculation for the RC4 algorithm uses very simple operations, 
-	therefore it is easy to implement the algorithm in hardware and software. The execution of the algorithm itself is pretty fast in comparison
- 	to other stream ciphers.
-	</p>
+	<p>RC4 and ARC4 respectively are cryptographic stream ciphers. RC4 became well known and widespread mainly because of its usage in standards like HTTPS, SSH1 or WEP/WPA. RC4 has been developed by Ronald L. Rivest in the year 1987 as a trademark of RSA Security Inc., today a subsidiary of EMC Corporation. Therefore, RC4 is not a freely accessible crypto algorithm. Alleged RC4 (ARC4) is based on an anonymous publication of source code (1994) and is now open-source and therefore it's freely usable.</p>
+	
+	<p>RC4 generates a (pseudo-)random bitstream which is then used as keystream to encrypt the plaintext through an exclusive disjunction (XOR). The result of this operation is the ciphertext. The basis of this generation in RC4 is a so called s-box. This s-box is a byte-vector with 256 elements initially assigned with the consecutive values from 0 to 255. Afterwards these values will be permutated using the key. 
+	After this initialization the algorithm generates the random bitstream with well defined calculation rules. Every single step of the generation concludes with the swapping of two values inside the s-box. The calculation for the RC4 algorithm uses very simple operations, therefore it is easy to implement the algorithm in hardware and software. The execution of the algorithm itself is pretty fast in comparison
+ 	to other stream ciphers.</p>
+	
 	<p>The algorithm looks like the following. First of all the byte-vector (called s-box) will be filled with initial values:</p>
 
 	<pre>
@@ -51,9 +42,7 @@
 			swap s[i] and s[j]
 	</pre>
 
-	<p>
-	The generation of the pseudo-random bitstream for the encryption looks like this:
-	</p>
+	<p>	The generation of the pseudo-random bitstream for the encryption looks like this:</p>
 
 	<pre>
 		plain[]  := plaintext of length X
@@ -69,104 +58,58 @@
 			cipher[n] = rand XOR plain[n]
 	</pre>
 
-	<p>
-	On October 27th, 2014, Ronald Rivest and Jacob Schuldt released an improved version of RC4 under the name "Spritz". Both, RC4 
-	and Spritz, are using a very similar algorithm, but in Spritz a few calculations and rules have been changed a bit. 
-	Additionally a new parameter <i>w</i> has been added, which can have any odd value between 1 and 255. 
-	More detailed information on Spritz can be 
-	found in the references listed below (especially in the article written by Bruce Schneier).
-	</p>
+	<p>On October 27th, 2014, Ronald Rivest and Jacob Schuldt released an improved version of RC4 under the name "Spritz". Both, RC4 and Spritz, are using a very similar algorithm, but in Spritz a few calculations and rules have been changed a bit. Additionally a new parameter <i>w</i> has been added, which can have any odd value between 1 and 255. More detailed information on Spritz can be 
+	found in the references listed below (especially in the article written by Bruce Schneier).</p>
+
 
 	<h2 id="sec">Security of (A)RC4</h2>
 
-	<p>
-	Stream ciphers can only be secure if the random bitstream generated by the algorithm is never the same as a bitstream generated 
-	by the algorithm before, which means there is no way of predict the output of the generator with a better success chance than 1/2 (the 
-	chance of success when just guessing). To achieve this, it is necessary to keep the key for the algorithm secret and to use the key only 
-	once.
-	</p>
-	<p>
-	A few weaknesses of the RC4 algorithm (some of them being really serious) are shown in <i>Weaknesses in the Key Scheduling Algorithm of 
-	RC4</i> by Scott Fluhrer, Itsik Mantin, and Adi Shamir. The weaknesses shown in this paper are mainly based on the derivation of the 
-	initial state of RC4 using the key, but they also have consequences for the generation of the bitstream. In the mentioned 
-	paper, which is verbalized in a very mathematical way, the authors create an algorithm derived from RC4. Based on this altered RC4 they 
-	show that certain patterns in the key are correlating with certain patterns in the internal state of RC4 and as a result the key or parts 
-	of it may be calculated with the initial state, where the effort to this is based on the length of the key. Afterwards the authors 
-	prove that this weakness is present in the standard RC4 algorithm, too. On top of this, there is a strong correlation of the input key 
-	and the output of the random generator, when a key out of a relatively large class of weak keys is used. Because of this it is possible 
-	to develop efficient algorithms capable of breaking RC4's security. Such an algorithm created by Shamir and Mantin is able to detect the 
-	difference between the generator's output and real random numbers only with the second word of the output. As a result they recommend to 
-	ignore the first and the second word and not to use them for encryption. Later they realized that one can calculate parts of the key 
-	out of the output although dumping the first 2 words with an effort of 2<sup>21</sup> (an effort of 2<sup>80</sup> or more is 
-	required today for secure techniques in cryptography). 
-	</p>
-	<p>
-	Another severe weakness works like this: The key <i>K</i> for the algorithm consists of a secret part <i>sec</i> and a so-called initialization vector <i>IV</i> which is known to the public (and so it is to the attacker), and therefore <i>K = sec + IV</i>. 
-	Under the precondition that the user uses the secret part of the key not only once, an attacker may be capable to calculate the secret 
-	key with the help of the output and the (known) <i>IV</i> with relatively low effort (the effort depends on the length of the key and the 
-	<i>IV</i>, of course). In reality it is often possible to guess the first words of the plaintext (for example if the first words are 
-	timestamps or the identity of a client in some protocols), which makes a ciphertext-only attack possible. In such an attack the attacker 
-	can break the encryption using only the ciphertext. Additionally, Fluhrer, Mantin and Shamir show the possibility of practically using these weaknesses to attack certain crypto systems and techniques like the old, but wide-spread wireless security 
-	standard WEP.</p>
-	<p>
-	In his paper <i>Attacks in the RC4 stream cipher</i> Andreas Klein describes another attack, which is mainly based on the attack already 
-	shown by Fluhrer, Mantin and Shamir (which is also called <i>FMS attack</i>). In this method Klein observed the operations and states of 
-	the algorithm in the stage of generating the key and the output of the algorithm. With this procedure Klein was able to calculate a 
-	previous state of the algorithm with high efficiency. To make things worse he also exposed the fact that his new attack works with 
-	the first 256 bytes discarded, too. This is why he recommends users to dump the outputs of at least the first 12 rounds of the algorithm 
-	in order to make an attack impossible or at least very hard (where one round equals 256 bytes of output). In March 2013, AlFardan, Bernstein, Paterson, Poettering, and Schuldt described one of the latest attack scenarios on RC4. In this scenario an attacker can read a few messages encrypted with RC4 and then 
-	sent over TLS connections. Here it is necessary that the same plaintext is encrypted and sent over more than just one connection. The 
-	authors are using statistical biases in the key generation of RC4 which allow to differentiate between the output and really 
-	random bits and therefore enable an attacker to break the security of RC4. They recommend not to use RC4 anymore 
-	and to use secure cipher suites instead (like the fast and secure AES in GCM mode).
-	</p>
-	<p>
-	The German website <i>golem.de</i> (which is a webpage for news in the field of information technology) published an article on 
-	January 20th, 2015. According to this article two groups of scientists announced the publication of some new attacks on ARC4 in the 
-	near future, but they did not yet release any details on the upcoming attacks. The whole article can be read 
-	<a target="_blank" href="http://www.golem.de/news/verschluesselung-neue-angriffe-auf-rc4-1501-111805.html">here</a> (in German).
-	</p>
-	<p>
-	To sum things up, all relevant organizations and authorities like the <i>European Network and Information Security Agency (ENISA)</i> or the German 
-	<i>Federal Office for Information Security</i> (in German: <i>Bundesamt f?r Sicherheit in der Informationstechnik (BSI)</i>) recommend 
-	not to use RC4 any longer. Instead, one should use secure standards like the stream ciphers <i>Rabbit</i> or <i>Snow 3G</i>, or the 
-	block cipher <i>Advanced Encryption Standard (AES)</i>, which is probably the most popular encryption standard today.
+	<p>Stream ciphers can only be secure if the random bitstream generated by the algorithm is never the same as a bitstream generated by the algorithm before, which means there is no way of predict the output of the generator with a better success chance than 1/2 (the chance of success when just guessing). To achieve this, it is necessary to keep the key for the algorithm secret and to use the key only once.</p>
+	
+	<p>A few weaknesses of the RC4 algorithm (some of them being really serious) are shown in <i>Weaknesses in the Key Scheduling Algorithm of RC4</i> by Scott Fluhrer, Itsik Mantin, and Adi Shamir. The weaknesses shown in this paper are mainly based on the derivation of the initial state of RC4 using the key, but they also have consequences for the generation of the bitstream. In the mentioned paper, which is verbalized in a very mathematical way, the authors create an algorithm derived from RC4. Based on this altered RC4 they show that certain patterns in the key are correlating with certain patterns in the internal state of RC4 and as a result the key or parts of it may be calculated with the initial state, where the effort to this is based on the length of the key. Afterwards the authors 
+	prove that this weakness is present in the standard RC4 algorithm, too. On top of this, there is a strong correlation of the input key and the output of the random generator, when a key out of a relatively large class of weak keys is used. Because of this it is possible to develop efficient algorithms capable of breaking RC4's security. Such an algorithm created by Shamir and Mantin is able to detect the 
+	difference between the generator's output and real random numbers only with the second word of the output. As a result they recommend to ignore the first and the second word and not to use them for encryption. Later they realized that one can calculate parts of the key out of the output although dumping the first 2 words with an effort of 2<sup>21</sup> (an effort of 2<sup>80</sup> or more is 
+	required today for secure techniques in cryptography).</p>
+	
+	<p>Another severe weakness works like this: The key <i>K</i> for the algorithm consists of a secret part <i>sec</i> and a so-called initialization vector <i>IV</i> which is known to the public (and so it is to the attacker), and therefore <i>K = sec + IV</i>. 
+	Under the precondition that the user uses the secret part of the key not only once, an attacker may be capable to calculate the secret key with the help of the output and the (known) <i>IV</i> with relatively low effort (the effort depends on the length of the key and the <i>IV</i>, of course). In reality it is often possible to guess the first words of the plaintext (for example if the first words are timestamps or the identity of a client in some protocols), which makes a ciphertext-only attack possible. In such an attack the attacker can break the encryption using only the ciphertext. Additionally, Fluhrer, Mantin and Shamir show the possibility of practically using these weaknesses to attack certain crypto systems and techniques like the old, but wide-spread wireless security standard WEP.</p>
+	
+	<p>In his paper <i>Attacks in the RC4 stream cipher</i> Andreas Klein describes another attack, which is mainly based on the attack already shown by Fluhrer, Mantin and Shamir (which is also called <i>FMS attack</i>). In this method Klein observed the operations and states of the algorithm in the stage of generating the key and the output of the algorithm. With this procedure Klein was able to calculate a 
+	previous state of the algorithm with high efficiency. To make things worse he also exposed the fact that his new attack works with the first 256 bytes discarded, too. This is why he recommends users to dump the outputs of at least the first 12 rounds of the algorithm in order to make an attack impossible or at least very hard (where one round equals 256 bytes of output). In March 2013, AlFardan, Bernstein, Paterson, Poettering, and Schuldt described one of the latest attack scenarios on RC4. In this scenario an attacker can read a few messages encrypted with RC4 and then sent over TLS connections. Here it is necessary that the same plaintext is encrypted and sent over more than just one connection. The 
+	authors are using statistical biases in the key generation of RC4 which allow to differentiate between the output and really random bits and therefore enable an attacker to break the security of RC4. They recommend not to use RC4 anymore and to use secure cipher suites instead (like the fast and secure AES in GCM mode).</p>
+	
+	<p>The German website <i>golem.de</i> (which is a webpage for news in the field of information technology) published an article on January 20th, 2015. According to this article two groups of scientists announced the publication of some new attacks on ARC4 in the near future, but they did not yet release any details on the upcoming attacks. The whole article can be read <a target="_blank" href="http://www.golem.de/news/verschluesselung-neue-angriffe-auf-rc4-1501-111805.html">here</a> (in German).</p>
+	
+	<p>To sum things up, all relevant organizations and authorities like the <i>European Network and Information Security Agency (ENISA)</i> or the German <i>Federal Office for Information Security</i> (in German: <i>Bundesamt für Sicherheit in der Informationstechnik (BSI)</i>) recommend not to use RC4 any longer. Instead, one should use secure standards like the stream ciphers <i>Rabbit</i> or <i>Snow 3G</i>, or the block cipher <i>Advanced Encryption Standard (AES)</i>, which is probably the most popular encryption standard today.<br>
+	The IETF decided with its publication of RFC 7465 in February 2015 that using RC4 in TLS is prohibited.</p>
 
-	The IETF decided with its publication of RFC 7465 in February 2015 that using RC4 in TLS is prohibited.
-	</p>
 
 	<h2 id="example">Example</h2>
 
 	<p>As a last point of this help text we show a little example of how to encrypt a text with both ARC plug-ins in JCT, the <b>visualization plug-in</b> and the <b>crypto plug-in</b>.</p>
 
-	<p>
-	First an example plaintext has to be chosen. The visualization limits the length of the plaintext to exactly 16 bytes, therefore we 
-	only have 16 bytes for our text. In this example we will use this:</p>
+	<p>First an example plaintext has to be chosen. The visualization limits the length of the plaintext to exactly 16 bytes, therefore we only have 16 bytes for our text. In this example we will use this:</p>
 	<p><b>AA BB CC DD EE FF 00 11 22 33 44 55 66 77 88 99</b></p>
 
-	<p>
-	In the <b>visualization</b> this can be achieved by simply opening the plug-in and then clicking the <i>Choose</i> button for plaintext. In the wizard simply enter the text above (without the spaces, of course). Afterwards simply click on <i>Finish</i>.<br>
+	<p>In the <b>visualization</b> this can be achieved by simply opening the plug-in and then clicking the <i>Choose</i> button for plaintext. In the wizard simply enter the text above (without the spaces, of course). Afterwards simply click on <i>Finish</i>.<br>
 	In the <b>crypto plug-in</b> you have to open up an empty file first. To do this, simply click on <i>File->New->Empty File in Hexeditor</i>. 
-	In the empty file click with the right button of your mouse and then choose <i>Append</i> in the context menu. For the value 
-	<i>Amount of data to append</i> you may enter a value of 16. The unit is <i>B</i> (for Byte). Afterwards click on <i>OK</i>. A new 
-	line should appear inside the file. Now you can enter the plaintext by clicking on each cell of the line and then entering two values 
-	with the keyboard.</p>
-	<p>
-	In addition to the plaintext a key is needed for encryption. In this example we will use:</p>
+	In the empty file click with the right button of your mouse and then choose <i>Append</i> in the context menu. For the value <i>Amount of data to append</i> you may enter a value of 16. The unit is <i>B</i> (for Byte). Afterwards click on <i>OK</i>. A new line should appear inside the file. Now you can enter the plaintext by clicking on each cell of the line and then entering two values with the keyboard.</p>
+	
+	<p>In addition to the plaintext a key is needed for encryption. In this example we will use:</p>
+	
 	<p><b>00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF</b></p>
 
 	<p>In the <b>visualization</b> you can enter this key by clicking on the appropriate button next to the key vector and then typing the key in 
 	the wizard.<br>
 	In the <b>crypto plug-in</b> just enter the key into the text field of the GUI.</p>
-	<p>
-	To encrypt the text you may click on <i>Encrypt all</i> in the <b>visualization</b> (or you may watch the process step by step). In the 
-	<b>crypto plug-in</b> make sure you chose the options <i>Encrypt</i> and <i>ARC4</i> and then click <i>Finish</i>.</p>
+	
+	<p>To encrypt the text you may click on <i>Encrypt all</i> in the <b>visualization</b> (or you may watch the process step by step). In the <b>crypto plug-in</b> make sure you chose the options <i>Encrypt</i> and <i>ARC4</i> and then click <i>Finish</i>.</p>
 
-	<p>
-	In the <b>visualization</b> the result is displayed at the bottom in the vector for the ciphertext. When using the 
-	<b>crypto plug-in</b> a new hex editor window should be opened with the ciphertext.
+	<p>In the <b>visualization</b> the result is displayed at the bottom in the vector for the ciphertext. When using the <b>crypto plug-in</b> a new hex editor window should be opened with the ciphertext.
 	The resulting text in both cases should look like this:</p>
+	
 	<p><b>2F E0 60 8A 7C D8 61 94 DA 6A FD 6E F3 32 F5 0D</b></p>
+
 
 	<h2 id="literature">Further references and literature</h2>
 
@@ -179,5 +122,7 @@
 		<li><a target="_blank" href="https://www.schneier.com/blog/archives/2014/10/spritz_a_new_rc.html">Bruce Schneier about Spritz</a></li>
 	</ul>
 <br>
+
+
 </body>
 </html>
