@@ -37,8 +37,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -556,12 +560,35 @@ public class FlexiProviderOperationsView extends ViewPart implements Listener, I
 	}
 
 	public void showBubble(String string) {
-		Control control = viewer.getControl();
-		Shell shell = viewer.getControl().getShell();
-		final ToolTip tip = new ToolTip(shell, SWT.BALLOON);
-		tip.setMessage(string);
-		tip.setVisible(true);
-		tip.setLocation(control.toDisplay(control.getSize().x, 0));
-		tip.setAutoHide(true);
+		if (! viewer.getControl().isVisible()) {
+			
+			Control control = viewer.getControl();
+			Shell shell = viewer.getControl().getShell();
+			final ToolTip tip = new ToolTip(shell, SWT.BALLOON);
+			tip.setMessage(string);
+			tip.setVisible(true);
+			tip.setLocation(control.toDisplay(control.getSize().x, 0));
+			tip.setAutoHide(true);
+		} else {
+			viewer.getControl().addPaintListener(new PaintListener() {
+				private boolean doneThis = false;
+				@Override
+				public void paintControl(PaintEvent e) {
+					if (doneThis) {
+						return;
+					} else {
+						doneThis = true;
+					}
+					Control control = viewer.getControl();
+					Shell shell = viewer.getControl().getShell();
+					final ToolTip tip = new ToolTip(shell, SWT.BALLOON);
+					tip.setMessage(string);
+					tip.setVisible(true);
+					tip.setLocation(control.toDisplay(control.getSize().x, 0));
+					tip.setAutoHide(true);
+					
+				}
+			});
+		}
 	}
 }
