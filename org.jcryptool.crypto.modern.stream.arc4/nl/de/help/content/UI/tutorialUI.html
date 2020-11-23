@@ -5,51 +5,79 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>ARC4-Bedienung</title>
 </head>
-
 <body>
-<h1 style="text-align: center">Bedienung des Eingabedialogs von ARC4/Spritz</h1>
 
-<p>Diese Hilfeseite erklärt die Bedienung des Eingabedialogs der ARC4-Verschlüsselung(ARC4-Krypto-Plug-in). Allgemeine Informationen zu ARC4 und Spritz finden Sie in der Onlinehilfe zum <a href="PLUGINS_ROOT/org.jcryptool.visual.arc4/$nl$/help/content/index.html">Visualisierungs-Plug-in</a>.</p>
+<h1 style="text-align: center">Bedienung des Dialogs von ARC4/Spritz</h1>
 
-<p>Im Folgenden werden die drei Optionengruppen des Eingabedialogs vorgestellt.</p>
+<p>Diese Hilfeseite erklärt die Bedienung des <strong>Dialogs</strong> der ARC4-Verschlüsselung aus dem JCT-Menü <strong><a href="./../toc.html">Algorithmen</a> → Symmetrisch</strong>.  Detailliertere Informationen zu den Algorithmen ARC4 und Spritz finden Sie in der Onlinehilfe zum <a href="PLUGINS_ROOT/org.jcryptool.visual.arc4/$nl$/help/content/index.html">Visualisierungs-Plug-in</a>.</p>
+
+
+<h2>Eingabe-Parameter des Dialogs</h2>
+<p>Im Folgenden werden die drei Optionen-Gruppen des Eingabedialogs vorgestellt.</p>
+
 
 <h3>Operation &mdash; Verschlüsseln  oder Entschlüsseln</h3>
-<p>Da ARC4 eine Stromchiffre ist, haben die Buttons &bdquo;<i>Verschlüsseln</i>&ldquo; und &bdquo;<i>Entschlüsseln</i>&ldquo; keine Auswirkung auf den Algorithmus selbst: Zufallsbitfolge XOR Klartext ergibt Chiffrat, und Chiffrat XOR Zufallsbitfolge  ergibt wieder den Klartext.</p>
+
+<p>Da ARC4 eine Stromchiffre ist, haben die Buttons &bdquo;<i>Verschlüsseln</i>&ldquo; und &bdquo;<i>Entschlüsseln</i>&ldquo; keine Auswirkung auf den Algorithmus selbst: Zufallsbitfolge XOR Klartext ergibt Chiffrat, und Chiffrat XOR Zufallsbitfolge ergibt wieder den Klartext.</p>
+
+
 <h3>Varianten von ARC4</h3>
-<table width="100%" border="0">
-  <tr>
-<td>Da  ARC4 nicht nur in einer Variante existiert, gibt es hier die Möglichkeit,  zwischen zweien davon zu wählen. Bei Spritz hat man zusätzlich die Möglichkeit, den Parameter  <i>w</i> zu setzen. Für genauere Informationen wie Spritz funktioniert, siehe die Onlinehilfe zum <a href="PLUGINS_ROOT/org.jcryptool.visual.arc4/$nl$/help/content/index.html">ARC4-Visualisierungs-Plug-in</a>.<td>
-<td><img src="arc4-spritz.PNG" width="85%" alt="hex-binaer" align="middle"/></td>
+
+<table width="85%" border="0">
+<tr>
+<td>Da  ARC4 nicht nur in einer Variante existiert, gibt es hier die Möglichkeit,  zwischen zweien davon zu wählen. Bei Spritz hat man zusätzlich die Möglichkeit, den Parameter  <i>w</i> zu setzen. Für genauere Informationen, wie Spritz funktioniert, siehe die Onlinehilfe zum <a href="PLUGINS_ROOT/org.jcryptool.visual.arc4/$nl$/help/content/index.html">ARC4-Visualisierungs-Plug-in</a>.<td>
+<td><img src="arc4-spritz.PNG" width="150%" alt="hex-binaer" align="middle"/></td>
 </tr>
 </table>
 
+
 <h3>Schlüsselwahl</h3>
 
-<table width="100%" border="0">
+<table width="85%" border="0">
   <tr>
-    <td>Sie  haben die Möglichkeit, zwischen hexadezimaler und binärer Schlüsseldarstellung  zu wählen. Wenn Sie den Schlüssel zuerst hexadezimal eingeben, sich dann umentscheiden und <i>Binär</i> eingeben, wird er automatisch umgewandelt.<br><br></td>
+    <td>Sie haben die Möglichkeit, zwischen hexadezimaler und binärer Schlüsseldarstellung zu wählen. Wenn Sie den Schlüssel zuerst hexadezimal eingeben, sich dann umentscheiden und <i>Binär</i> wählen, wird der Schlüssel automatisch anders dargestelllt.<br><br></td>
     <td><img src="hex-binaer.PNG" width="99" height="45" alt="hex-binaer" align="middle"/></td>
-  </tr>
-  </table>
-  <table width="100%" border="0">
-  <tr>
-    <td>Für  ein schnelles Ausprobieren des Algorithmus hat man die Möglichkeit, sich  zufällige Schlüssel oder einen Schlüssel mit nur 0-Bits zu generieren. Achtung: Falls man seine Eingabe wieder entschlüsseln möchte und sich einen zufälligen Schlüssel generieren lässt, sollte man ihn vorher kopieren.<p></p></td>
-    <td><img src="generieren.PNG" width="85%" alt="generieren" align="middle"/></td>
-  </tr>
-  <tr>
-    <td colspan="2">Der "<i>Fertig</i>"-Button wird immer nur aktiv bei ganzen Byte-Eingaben, d.h. bei einer geraden Anzahl eingegebener Hexzeichen. Nibble sind also nicht erlaubt. Bemerkung: Hier gelten die Begrenzungen, die der  Algorithmus für Schlüssel vorgibt: mindestens 5 Byte und  maximal 256 Byte.</td>
   </tr>
 </table>
 
-<h3>Beispiel</h3>
-  <p>In diesem Beispiel wurden dieselben Daten wie im Beispiel am  Ende der Onlinehilfe zum <a href="PLUGINS_ROOT/org.jcryptool.visual.arc4/$nl$/help/content/index.html">ARC4-Visualisierungs-Plug-in</a> benutzt.</p>
-<p>Klartext:  <strong>AA BB CC DD EE FF 00 11 22 33 44 55 66 77 88 99</strong><br />
-<img src="ARC4-Beispiel_Plaintext-im-Editor-4-Crypto_de.png" alt="pic1" width="85%" /></p>
+<table width="85%" border="0">
+  <tr>
+    <td>Um das Verfahren schnell auszuprobieren hat man die Möglichkeit, sich zufällige Schlüssel oder einen Schlüssel mit nur 0-Bits zu generieren. Achtung: Falls man sich einen zufälligen Schlüssel generieren ließ und seine Eingabe wieder entschlüsseln möchte, sollte man den Schlüssel vorher kopieren.<p></p></td>
+    <td><img src="generieren.PNG" width="150%" alt="generieren" align="middle"/></td>
+  </tr>
+  <tr>
+    <td colspan="2">Der "<i>Fertigstellen</i>"-Button wird immer nur aktiv bei ganzen Byte-Eingaben, d.h. bei einer geraden Anzahl eingegebener Hexzeichen. Nibble sind also nicht erlaubt.<br>Bemerkung: Hier gelten die Begrenzungen, die der  Algorithmus für Schlüssel vorgibt: mindestens 5 Byte und  maximal 256 Byte. Mit dem Dropdown-Button "Generiere Schlüssel mit" können Sie Standardschlüssel-Längen von 128, 192 und 256 Byte vorgeben.</td>
+  </tr>
+</table>
+
+
+
+<p><br></p>
+<h2>Beispiel</h2>
+
+<p>Der Inhalt des aktiven Editors dient als Input für diesen Dialog. In diesem Beispiel wurde als Input Klartext genutzt, so dass man im Dialog als Operation "Verschlüsseln" angibt. Weiterhin ist im Dialog der Schlüssel einzugeben und festzulegen, welche ARC4-Variante benutzt werden soll. Spritz ist die verbesserte Version von ARC4. Der Output wird dann in einen neuen Editor-Reiter geschrieben.</p>
+
+<p>Klartext:  <strong>AA BB CC DD EE FF 00 11 22 33 44 55 66 77 88 99</strong></p>
+
+<img src="ARC4-Beispiel_Plaintext-im-Editor-4-Crypto_de.png" alt="pic1" width="85%" />
+
+
 <p>Schlüssel:  <strong>00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF</strong><br />
-<img src="ARC4-Beispiel_Gesamt-Crypto-Dialog_de.png" alt="pic2" width="85%" /></p>
-<p>Output: Berechneter Geheimtext: <strong>2F E0 60 8A 7C  D8 61 94 DA 6A FD 6E F3 32 F5 0D</strong> <br />
-  <img src="ARC4-Beispiel_Output-Ciphertext-im-Editor-4-Crypto_de.png" alt="pic3" width="85%" /></p>
-<p>Bemerkung: Die Operationen Ver- und Entschlüsseln liefern  jeweils dasselbe Ergebnis.</p>
+Der eigentliche ARC4-Algorithmus beschreibt, wie der Schlüsselstrom aus dem Schlüssel generiert wird.</p>
+
+<img src="ARC4-Beispiel_Gesamt-Crypto-Dialog_de.png" alt="pic2" width="85%" />
+
+
+<p>Output: Berechneter Geheimtext: <strong>2F E0 60 8A 7C  D8 61 94 DA 6A FD 6E F3 32 F5 0D</strong> </p>
+
+<img src="ARC4-Beispiel_Output-Ciphertext-im-Editor-4-Crypto_de.png" alt="pic3" width="85%" />
+
+
+
+<p>Bemerkung: Die Operationen Ver- und Entschlüsseln liefern jeweils dasselbe Ergebnis, denn immer wird der Input mit dem erzeugten Schlüsselstrom verXORed.</p>
+
+<p>Das Beispiel hier nutzt dieselben Daten wie das Beispiel am Ende der Onlinehilfe zum <a href="PLUGINS_ROOT/org.jcryptool.visual.arc4/$nl$/help/content/index.html">ARC4-Visualisierungs-Plug-in</a>.</p>
+
 
 </body>
 </html>

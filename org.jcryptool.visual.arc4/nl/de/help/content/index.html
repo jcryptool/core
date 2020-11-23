@@ -13,12 +13,12 @@
 	<ol>
 		<li><a href="#func">Funktionsweise von ARC4</a></li>
 		<li><a href="#sec">Sicherheit von ARC4</a></li>
-		<li><a href="#user_instruct">Benutzerinstruktionen</a></li>
+		<li><a href="#user_instruct">Benutzerinstruktionen (Bedienungsanleitung)</a></li>
 		<li><a href="#example">Beispiel</a></li>
 		<li><a href="#literature">Weiterführende Verweise</a></li>
 	</ol>
 	<p>Natürlich müssen Sie nicht alle Kapitel lesen, um das Plug-in bedienen zu können. Wenn Sie nicht an der Geschichte von 
-	RC4, seinem Algorithmus oder seinen Sicherheitsaspekten interessiert sind, können Sie auch direkt zu den Nutzerinstruktionen springen.</p>
+	RC4, seinem Algorithmus oder seinen Sicherheitsaspekten interessiert sind, können Sie auch direkt zu den Benutzerinstruktionen springen.</p>
 	
 	<h2 id="func">Funktionsweise von ARC4</h2>
 	
@@ -89,8 +89,8 @@
 	Für die Sicherheit von RC4 gilt grundsätzlich dasselbe wie für alle Stromchiffren. Diese sind nur dann sicher, wenn sich 
 	der zufällige Bitstrom nicht wiederholt bzw. nicht vorhersagbar ist. Hierzu ist es notwendig, dass der Schlüssel, der zur 
 	Initialisierung benutzt wird, nur einmal verwendet wird und geheim bleibt.
-	Wie bei allen Stromchiffren bietet auch RC4 keinerlei Integritätsschutz. Eine änderung eines Bits im Geheimtext führt 
-	direkt zur änderung des entsprechenden Bits im Klartext.
+	Wie bei allen Stromchiffren bietet auch RC4 keinerlei Integritätsschutz. Eine Änderung eines Bits im Geheimtext führt 
+	direkt zur Änderung des entsprechenden Bits im Klartext.
 	</p>
 	
 	<p>
@@ -168,7 +168,8 @@
 	Seit Februar 2015 hat die IETF die Benutzung von RC4 in TLS mit dem RFC 7465 untersagt 
 	(vergleiche <a target="_blank" href="http://www.heise.de/newsticker/meldung/IETF-verbietet-RC4-Verschluesselung-in-TLS-2556520.html">die Heise-Meldung vom 20.02.2015</a>).
 	</p>
-	
+
+
 	<h2 id="user_instruct">Benutzerinstruktionen (Bedienungsanleitung)</h2>
 
 	<p>Starten Sie die Visualisierung von ARC4, indem Sie im Menüpunkt <i>Visualisierungen</i> den Punkt <i>ARC4 / Spritz</i> anklicken.
@@ -187,7 +188,7 @@
 	Hier sehen Sie die internen Variablenwerte <i>i</i> und <i>j</i>, sowie die Anzahl der bereits ausgeführten 
 	Schritte des Algorithmus. Alle drei Werte sind zu Beginn mit 0 vorbelegt und werden sowohl in dezimaler als auch in hexadezimaler 
 	Schreibweise dargestellt.</p>
-	<img src="screenshot_variables.png" alt="Variablen" width="85%"/>
+	<p align=center><img src="screenshot_variables.png" alt="Variablen" width="85%"/>
 	
 	<p>Unter diesem Gruppierungs-Kasten finden Sie einen weiteren, mit dem Sie den 
 	Ablauf des Algorithmus steuern können. In das Feld <i>Zahl der Schritte</i> kann eine positive Zahl eingetragen werden. Mit einem 
@@ -196,23 +197,23 @@
 	Klartext-Bytes Schritte 
 	hat. 256 davon werden zur Initialisierung der S-Box benötigt. In den übrigen Schritten werden dann für den
 	Klartext Zufalls-Bytes zur Verschlüsselung generiert und XOR-verknüpft.</p>	
-	<img src="screenshot_control.png" alt="ScreenshotControl" width="85%"/>
+	<p align=center><img src="screenshot_control.png" alt="ScreenshotControl" width="85%"/>
 
 	<p>Im Gruppierungs-Kasten darunter (<i>Auswahl des Algorithmus</i>) kann man den gewünschten Algorithmus wählen. Hierbei stehen der 
 	standardmäßige ARC4 und die neuere Version Spritz zur Verfügung. Bei der Auswahl von Spritz wird noch ein weiterer 
 	Parameter <i>w</i> benötigt. Dieser lässt sich über die Dropdown-Box einstellen, die aktiv wird, sobald man Spritz 
 	auswählt. Zulässige Werte für <i>w</i> sind dabei alle ungeraden Zahlen zwischen 1 und 255 (inklusive der Randwerte 1 und 
 	255). Man kann die Auswahl des Algorithmus nur ändern, solange der Algorithmus noch nicht gestartet wurde.</p>
-	<img src="screenshot_choose.png" alt="Auswahl" width="85%"/>
+	<p align=center><img src="screenshot_choose.png" alt="Auswahl" width="85%"/>
 	
 	<p>Darunter befindet sich ein weiterer Gruppierungs-Kasten namens <i>Diverse Einstellungen</i>. Hier können Sie mit den Radio-Buttons 
-	<i>änderungen hervorheben</i> und <i>änderungen nicht hervorheben</i> bestimmen, ob die letzte änderung
+	<i>Änderungen hervorheben</i> und <i>Änderungen nicht hervorheben</i> bestimmen, ob die letzte Änderung
 	(d.h. die am letzten Tausch beteiligten Elemente) in der S-Box farbig 
 	dargestellt werden soll. Mit dem Button <i>Zähler auf Null</i> setzen Sie den Algorithmus auf Schritt 0 zurück, d.h. dass 
 	alle Operationen rückgängig gemacht werden (Klartext und Schlüssel bleiben aber unverändert). Mit dem Button 
 	<i>Randomisieren</i> können Sie das Plug-in dazu bewegen, Schlüssel und Klartext zufällig neu zu generieren. Das 
 	funktioniert natürlich nur, solange der Algorithmus noch nicht gestartet wurde.</p>
-	<img src="screenshot_misc.png" alt="Diverses" width="85%"/>
+	<p align=center><img src="screenshot_misc.png" alt="Diverses" width="85%"/>
 	
 	<p>
 	Unter der S-Box befinden sich 4 Vektoren, die den Schlüssel, den Klartext, die generierten Zufallszahlen und den resultierenden 
@@ -224,8 +225,8 @@
 	sind nach dem Aufruf der Visualisierung bereits mit (pseudo-)zufälligen Werten vorbelegt. Sie können aber auch diese beiden Werte 
 	selbst festlegen. Hierzu klicken Sie auf den Button <i>Auswählen</i> des jeweiligen Vektors.
 	</p>
-	<img src="screenshot_button_choose_key.png" alt="ChooseKey" width="85%"/>
-	<img src="screenshot_button_clipboard.png" alt="Copy to clipboard" width="85%"/>
+	<p align=center><img src="screenshot_button_choose_key.png" alt="ChooseKey" width="85%"/>
+	<p align=center><img src="screenshot_button_clipboard.png" alt="Copy to clipboard" width="85%"/>
 	
 	<p>
 	In beiden Fällen öffnet sich ein 
@@ -243,7 +244,7 @@
 	Bemerkung: Im ARC4-Visualisierungs-Plug-in muss der Schlüssel zwischen einem und 16 Bytes lang sein; im ARC4-Krypto-Plug-in kann die
 	Schlüssellänge zwischen 5 und 256 Bytes liegen (entsprechend der Spezifikation des Algorithmus).
 	</p>
-	<img src="screenshot_wizard_key.png" width="80%" alt="Wizard Key">
+	<p align=center><img src="screenshot_wizard_key.png" width="80%" alt="Wizard Key">
 	
 	<p>
 	Haben Sie den Algorithmus vollständig durchgearbeitet, ist der Verschlüsselungsvorgang abgeschlossen und der 
@@ -252,8 +253,10 @@
 	Visualisierung ein weiteres Mal zu starten und von Neuem zu beginnen, können Sie auf den kleinen Button <i>Neustart</i> klicken, 
 	rechts oben im Fenster, direkt links von den Buttons <i>Minimieren</i> und <i>Wiederherstellen</i>.
 	<p>
-	<img src="screenshot_button_restart.png" alt="RestartButton">
-	
+	<p align=center><img src="screenshot_button_restart.png" alt="RestartButton">
+
+
+
 	<h2 id="example">Beispiel</h2>
 
 	<p>
@@ -321,15 +324,26 @@
 	
 	<p align=center><img src="screenshot_complete.png" width="90%" alt="beispiel komplett"></p>
 
+
+
+<p><br></p>
 	<h2 id="literature">Weiterführende Verweise</h2>
 
 	<p>Weitere Informationen zum Thema Kryptografie und (A)RC4 finden Sie beispielsweise unter:</p>
 	<ul>
+
 		<li>
 			<a target="_blank" href="https://de.wikipedia.org/wiki/RC4">
-				(A)RC4 in der deutschen Wikipedia
+				(A)RC4 in der Wikipedia
 			</a>
 		</li>
+
+		<li>
+			<a target="_blank" href="https://en.wikipedia.org/wiki/RC4">
+				(A)RC4 in der englischen Wikipedia
+			</a>
+		</li>
+		
 		<li><a target="_blank" href="https://www.cryptool.org/images/ctp/documents/CT-Book-de.pdf">Das CrypTool-Buch</a></li>
 		<li>
 			Fluhrer, Mantin, Shamir:
@@ -363,6 +377,7 @@
 				</a>
 			</i>
 		</li>
+
 		<li>
 			Christina Garman, Kenneth G. Paterson, Thyla van der Merwe:
 			<i>
@@ -379,7 +394,7 @@
 	</ul>
 	
 	<p>
-	Online-Hilfe erstellt am 29.03.2015.<br>
+	Online-Hilfe erstellt am 29.03.2015. Update 2020.<br>
 	Visualisierungs-Plug-in zu ARC4/Spritz erstellt bis März 2015 in einem Projekt der FH-Hagenberg.
 	</p>
 	

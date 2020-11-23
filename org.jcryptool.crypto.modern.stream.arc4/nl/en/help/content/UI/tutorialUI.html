@@ -5,50 +5,79 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>ARC4 usage</title>
 </head>
-
 <body>
-<h1 style="text-align: center">Usage of the entry dialog for ARC4/Spritz</h1>
 
-<p>This help page explains how to use the dialog for the ARC4 cipher in the ARC4 crypto plug-in. For general information about ARC4 see the help for the <a href="PLUGINS_ROOT/org.jcryptool.visual.arc4/$nl$/help/content/index.html">ARC4 visualization plug-in</a>.<br>
-The following three paragraphs describe the options in this dialog.</p>
-<h3>Operations - Encrypt and Decrypt</h3>
-<p>
-ARC4 is a stream cipher that means that the encryption and the decryption process do the same. It's always an XOR between plaintext or encrypted text on the one hand and the random number sequence on the other hand.</p>
+<h1 style="text-align: center">Usage of the dialog for ARC4/Spritz</h1>
+
+<p>This help page explains how to use the <strong>dialog</strong> for the ARC4 cipher from the JCT menu <strong><a href="./../toc.html">Algorithm</a> → Symmetric</strong>. More detailed information about the algorithms ARC4 and Spritz can be found in the help for the <a href="PLUGINS_ROOT/org.jcryptool.visual.arc4/$nl$/help/content/index.html">ARC4 visualization plug-in</a>.</p>
+
+
+<h2>Input parameters of the dialog</h2>
+
+<p>The following three paragraphs describe the options in this dialog.</p>
+
+
+<h3>Operations &mdash; Encrypt and Decrypt</h3>
+
+<p>ARC4 is a stream cipher that means that the encryption and the decryption process do the same. It's always an XOR between plaintext or encrypted text on the one hand and the random number sequence on the other hand.</p>
+
 
 <h3>Variants of ARC4</h3>
-<table width="100%" border="0">
-  <tr>
+
+<table width="85%" border="0">
+<tr>
 <td>There are many different implementations of ARC4, we have implemented two: Spritz and ARC4. At the implementation of Spritz you can choose a variable called <i>w</i>. For more information see the help for the <a href="PLUGINS_ROOT/org.jcryptool.visual.arc4/$nl$/help/content/index.html">ARC4 visualization plug-in</a>.</td>
-<td><img src="arc4-spritz.PNG" width="85%" height="31" alt="hex-binaer" align="middle"/></td>
+<td><img src="arc4-spritz.PNG" width="150%" height="31" alt="hex-binaer" align="middle"/></td>
 </tr>
 </table>
+
+
 <h3>Key</h3>
 
-<table width="100%" border="0">
+<table width="85%" border="0">
   <tr>
-    <td>You have the possibility to choose between hex and binary representation. If you start writing your key in hex and then select <i>Binary</i> the already written characters will be transformed to binary (it also works the other way round).<br><br></td>
+    <td>You have the possibility to choose between hex and binary representation. If you start writing your key in hex and then select <i>Binary</i> the already displayed characters will be transformed to binary (it also works the other way round).<br><br></td>
     <td><img src="hex-binary.PNG" width="90" height="42" alt="hex-binary" align="middle"/></td>
-  </tr></table>
-  <table width="100%" border="0">
+  </tr>
+</table>
+
+<table width="85%" border="0">
   <tr>
-    <td>For giving the algorithm a short try, you can use the random or the 0-bit key generator. Attention: If you plan to decrypt your  message again and you chose random generator you should copy your key beforehand.<p></p></td>
+    <td>For giving the algorithm a short try, you can use the random or the 0-bit key generator. Attention: If you chose the random generator and plan to decrypt your message again, please copy your key beforehand.<p></p></td>
     <td><img src="generate.PNG" width="260" height="48" alt="generate" align="middle"/></td>
   </tr>
   <tr>
-    <td colspan="2">The "<i>Finish</i>" button only becomes active when you have entered a complete byte (which is an even number of hex characters). Nibbles aren't accepted. Remark: Here, the keylength restrictions of the algorithm are active (length: 5 - 256 byte).</td>
+    <td colspan="2">The "<i>Finish</i>" button only becomes active when you have entered a complete byte (which is an even number of hex characters). Nibbles aren't accepted.<br>Remark: Here, the keylength restrictions of the algorithm are active: length between 5 and 256 byte. Using the dropdown button "Generate key with" you can set the three default key lengths 128, 192, and 256 byte.</td>
   </tr>
 </table>
 
 
-<h3>Example</h3>
-  <p>This example uses  the same data as the example at the end of the online help for the <a href="PLUGINS_ROOT/org.jcryptool.visual.arc4/$nl$/help/content/index.html">ARC4 visualization plug-in</a>.<br /><br> </br>
-  Plaintext: <strong>AA BB CC DD EE FF 00 11 22 33 44 55 66 77 88 99 </strong><br />
-  <img src="ARC4-Beispiel_Plaintext-im-Editor-4-Crypto_en.png" alt="pic1" width="85%" /></p>
+
+<p><br></p>
+<h2>Example</h2>
+
+<p>The content of the active editor serves as input for this dialog. In this example, plaintext was used as input, so that "Encrypt" is specified as operation in the dialog. Furthermore, the key must be entered in the dialog and the ARC4 variant that is to be used must be specified. Spritz is the improved version of ARC4. The output is then written to a new editor tab.</p>
+
+<p>Plaintext: <strong>AA BB CC DD EE FF 00 11 22 33 44 55 66 77 88 99 </strong></p>
+
+<img src="ARC4-Beispiel_Plaintext-im-Editor-4-Crypto_en.png" alt="pic1" width="85%" />
+
+
 <p>Key: <strong>00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF</strong><br />
-<img src="ARC4-Beispiel_Gesamt-Crypto-Dialog_en.png" alt="pic2" width="85%" /></p>
+The actual ARC4 algorithm describes how the keystream is generated from the key.</p>
+
+<img src="ARC4-Beispiel_Gesamt-Crypto-Dialog_en.png" alt="pic2" width="85%" />
+
+
 <p>Output: Calculated  ciphertext: <strong>2F E0 60 8A  7C D8 61 94 DA 6A FD 6E F3 32 F5 0D</strong></p>
-<p><img src="ARC4-Beispiel_Output-Ciphertext-im-Editor-4-Crypto_en.png" alt="pic3" width="85%" /></p>
-<p>Remark: The  operations Decrypt and Encrypt both create the same result.</p>
+
+<img src="ARC4-Beispiel_Output-Ciphertext-im-Editor-4-Crypto_en.png" alt="pic3" width="85%" />
+
+
+
+<p>Comment: The operations Encrypt and Decrypt both give the same result, because the input is always XORed with the generated keystream.</p>
+
+<p>The example here uses the same data as the example at the end of the online help for the <a href="PLUGINS_ROOT/org.jcryptool.visual.arc4/$nl$/help/content/index.html">ARC4 visualization plug-in</a>.</p>
 
 
 </body>
