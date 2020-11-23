@@ -56,7 +56,7 @@
         	href="$nl$/help/users/cryptology/crypto_timeline.html" />
 	</topic>
 
-    <topic label="Algorithmen"
+    <topic label="Algorithmen (Standard-Perspektive)"
         href="$nl$/help/users/algorithms/toc.html">
 		<topic label="Asymmetrisch"
 			href="$nl$/help/users/algorithms/encryption/asymmetric/toc.html"
@@ -92,17 +92,17 @@
         <anchor id="algorithmPlugins" />
         <topic href="$nl$/help/users/algorithms/keystore/toc.html" label="Schlüsselspeicher"> </topic>
     </topic>
-    <topic href="$nl$/help/users/analysis/toc.html" label="Analyse" sort="true">
+    <topic href="$nl$/help/users/analysis/toc.html" label="Analyse (Standard-Perspektive)" sort="true">
        <anchor id="analysisPlugins"/>
     </topic>
 
-    <topic label="Spiele"
+    <topic label="Spiele (Standard-Perspektive)"
         href="$nl$/help/users/games/toc.html"
         sort="true">
         <anchor id="gamePlugins" />
     </topic>
 
-    <topic label="Visualisierungen"
+    <topic label="Visualisierungen (Standard-Perspektive)"
         href="$nl$/help/users/visualizations/toc.html"
         sort="true">
         <anchor id="visualizationPlugins" />
