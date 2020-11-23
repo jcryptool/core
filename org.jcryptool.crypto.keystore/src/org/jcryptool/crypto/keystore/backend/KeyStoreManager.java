@@ -227,6 +227,7 @@ public class KeyStoreManager {
         	ProviderManager2.getInstance().popCryptoProviderPromotion();
             if (os != null) {
                 try {
+                	os.flush();
                     os.close();
                 } catch (IOException e) {
                     LogUtil.logError(KeyStorePlugin.PLUGIN_ID, e);
