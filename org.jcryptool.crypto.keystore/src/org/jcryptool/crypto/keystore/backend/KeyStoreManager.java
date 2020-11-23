@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
 import java.security.KeyStore;
+import java.security.KeyStore.PrivateKeyEntry;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -491,6 +492,17 @@ public class KeyStoreManager {
 				KeyStore.SecretKeyEntry entry = (KeyStore.SecretKeyEntry) keyStore.getEntry(alias.getAliasString(),
 						new KeyStore.PasswordProtection(password));
 				return entry.getSecretKey();
+			} catch (UnrecoverableEntryException e) {
+				PasswordDialog dialog = new PasswordDialog(Display.getCurrent().getActiveShell());
+				int result = dialog.open();
+				if (result == Dialog.OK) {
+					char[] pwchararr = dialog.getPassword().toCharArray();
+					KeyStore.SecretKeyEntry entry2 = (KeyStore.SecretKeyEntry) keyStore.getEntry(alias.getAliasString(),
+							new KeyStore.PasswordProtection(pwchararr));
+					return entry2.getSecretKey();
+				} else {
+					throw e;
+				}
 			} finally {
 				ProviderManager2.getInstance().popCryptoProviderPromotion();
 			}
