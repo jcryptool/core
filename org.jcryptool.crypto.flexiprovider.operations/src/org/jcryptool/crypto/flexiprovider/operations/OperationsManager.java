@@ -188,7 +188,7 @@ public class OperationsManager {
         newOperations.put(timestamp, new EntryNode("no name", timestamp, operation)); //$NON-NLS-1$
         Iterator<IOperationChangedListener> it = listeners.iterator();
         while (it.hasNext()) {
-            it.next().addOperation();
+            it.next().addOperation(operation);
         }
         LogUtil.logInfo("operation 2.0 added"); //$NON-NLS-1$
     }

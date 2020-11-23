@@ -10,14 +10,22 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.flexiprovider.operations.ui.views.providers;
 
+import java.util.LinkedList;
+import java.util.Optional;
+
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.TreePath;
+import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.crypto.flexiprovider.descriptors.algorithms.AlgorithmDescriptor;
 import org.jcryptool.crypto.flexiprovider.operations.OperationsManager;
 import org.jcryptool.crypto.flexiprovider.operations.ui.listeners.IOperationChangedListener;
+import org.jcryptool.crypto.flexiprovider.operations.ui.views.FlexiProviderOperationsView;
+import org.jcryptool.crypto.flexiprovider.operations.ui.views.nodes.EntryNode;
 import org.jcryptool.crypto.flexiprovider.ui.nodes.ITreeNode;
 import org.jcryptool.crypto.flexiprovider.ui.nodes.TreeNode;
 
@@ -26,11 +34,13 @@ public class FlexiProviderOperationsViewContentProvider implements IStructuredCo
     private ITreeNode invisibleRoot;
     private ViewPart viewPart;
     private TreeViewer viewer;
+	private FlexiProviderOperationsView view;
 
     public FlexiProviderOperationsViewContentProvider(ViewPart viewPart, TreeViewer viewer) {
         this.viewPart = viewPart;
         this.viewer = viewer;
-        OperationsManager.getInstance().addOperationChangedListener(this);
+        this.view = (FlexiProviderOperationsView) viewPart;
+//          OperationsManager.getInstance().addOperationChangedListener(this);
     }
 
     private void initialize() {
@@ -74,6 +84,9 @@ public class FlexiProviderOperationsViewContentProvider implements IStructuredCo
         }
         return getChildren(object);
     }
+    public ITreeNode getInvisibleRoot() {
+		return invisibleRoot;
+	}
 
     public Object[] getChildren(Object object) {
         if (object instanceof TreeNode) {
