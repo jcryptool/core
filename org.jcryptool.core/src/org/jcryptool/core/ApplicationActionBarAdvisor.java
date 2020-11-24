@@ -188,7 +188,11 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         SortedMap<String, IConfigurationElement> sortedElements = new TreeMap<String, IConfigurationElement>(
                 menuStringsComparator);
         for (IConfigurationElement element : elements) {
-            sortedElements.put(element.getAttribute("name"), element); //$NON-NLS-1$
+        	// Das sortiert das AndroidUnlock Pattern Plugin unter Linux aus,
+        	// da es dort nicht funktioniert.
+        	if (!(element.getAttribute("viewId").equals("org.jcryptool.visual.aup.views.AndroidUnlockPattern") && OS.equals("linux"))) {
+        		sortedElements.put(element.getAttribute("name"), element); //$NON-NLS-1$
+        	}
         }
 
         IConfigurationElement element;
