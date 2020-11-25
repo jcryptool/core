@@ -3,35 +3,114 @@
   
 <head>	  
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <title>Multivariate Cryptography</title>
+      <title>Multivariate Kryptografie</title>
+      <script id="MathJax-script" async src="${JCTJS_HOST}/javascript/MathJax-master/es5/tex-mml-svg.js"></script>
 </head>
 
 <body>
 
-<h1>Multivariate Cryptography</h1>
+<h1>Multivariate Kryptografie</h1>
 
-<strong>Diese Hilfedatei wurde noch nicht ins Deutsche übersetzt.</strong>
-<!--<strong>TODO: Übersetzen nach Deutsch.</strong>-->
+<p>
+    Das Lösen multivariater Gleichungen mit Polynomen ist ein bekannted
+    NP-hartes problem, sogar bereits bei quadratischen Gleichungen (d.h. Grad
+    Zwei) über einen kleinen endlichen Körper \(\text{GF}(2)\).
+    Im Bereich der "Multivariaten Kryptografie" findet es deshalb Anklang in
+    der Forschungsgemeinschaft, wo es als sichere Grundlage für asymmetrischen
+    kryptografischen Primitiven genutzt wird.
+    Die grundlegende Idee hinter solchen Verfahren ist die Konstruktion einer
+    Einwegfunktion mit Falltür (engl. Trapdoor One-Way Function).
+    Dabei wird ein entsprechendes Gleichungssystem erstellt, welches mit
+    bestimmten Zusatzfinformationen einfach lösbar ist, jedoch nur schwer lösbar
+    durch Dritte.
+    Solche Verfahren verbrauchen deutlich mehr Resourcen als klassische
+    Verfahren wie etwa RSA, es gibt bisher jedoch keine bekannten Angriffe durch
+    Quantencomputer.
+    Aktuell finden multivariate Verfahren daher Einsatz in der Post-Quanten
+    Kryptografie, wo im Rahmen eines Standardisierungsverfahrens der NIST
+    zurzeit das Rainbow und das GeMSS Signaturverfahren in Betracht gezogen
+    werden.
+</p>
 
-<p>Solving systems of multivariate polynomial equations is proven to be NP-hard even for quadratic equations (degree two) over small finite fields (GF(2)) and therefore sparked the interest of researchers. Multivariate Cryptography is a generic term for asymmetric primitives that are based on this mathematical problem. The general idea is to introduce a secret trapdoor to the equation system to make it solvable with few computing resources. In post-quantum cryptography, this is mainly used for digital signatures. In fact, there are four such schemes in Round 2 of NIST’s Post-Quantum Cryptography standardization process – GeMSS, LUOV, MQDSS and Rainbow.</p>
-<p>Tsutomu Matsumoto and Hideki Imai first presented the C* signature scheme in 1988 (1) at the Eurocrypt conference. Although it has been broken by Jacques Patarin, the principle inspired more improved proposals. After some iterations of rather impractical and insecure schemes, Patarin published “Unbalanced Oil and Vinegar” in corporation with Aviad Kipnis and Louis Goubin (2). The name stems from the fact that the variables of the equation system are never fully mixed, like oil and vinegar. Furthermore, the number of oil and vinegar variables is not equal to eliminate a cryptanalysis attack presented by Kipnis and Shamir (3). The Rainbow scheme by Jintai Ding and Dieter Schmidt (4), used for this visualization, constructs several layers of equation systems to improve its efficiency in terms of signature length and computational efficiency. According to the authors, it is a generalization of Unbalanced Oil and Vinegar, because the latter can be interpreted as a single layer Rainbow scheme.</p>
+<p>
+    Im Jahr 1988 wurde zuerst das \(C\ast\) Signaturvefahren durch Tsutomu
+    Matsumoto and Hideki Imai <a href="ref_cast">(1)</a> vorgestellt.
+    Das Verfahren wurde zwar im weiteren Verlauf gebrochen, inspirierte aber
+    verbesserte Vorschläge in mehreren Iterationen, welches schließlich zu
+    "Unbalanced Oil and Vinegar" von Aviad Kipnis and Louis Goubin
+    <a href="ref_oilvin">(2)</a> führte.
+    Der Name rührt von der Konstruktion, welche die Variablen des
+    Gleichungssystems nie vollständig Vermischt, ähnlich wie es bei einer Öl-
+    und Essigmischung wäre.
+    Durch eine Kryptanalyse von Kipnis and Shamir <a href="ref_oilvinca">(3)</a>
+    wurde das Verfahren weiter angepasst und verbessert.
+    Das Rainbow Verfahren von Jintai Ding and Dieter Schmidt
+    <a href="ref_rainbow">(4)</a>, welches in diesem Plugin visualisiert wird,
+    veralgemeinert diesen Ansatz und konstruiert mehrere Schichten von
+    Gleichungssystemen um die Effizienz des Verfahrens zu erhöhen und kleinere
+    Signaturen zu erzeugen.
+</p>
 
-<h2>Signature scheme</h2>
-<p>The signature creation itself is relatively easy to compute and requires only basic addition and multiplication operations with “small” numbers. The equation system has randomly chosen oil and vinegar variables, which compute a solution to the system. In case of Rainbow, the variables of one layer are plugged into the equation system of the next layer and so on.  A documents signature consists of the complete solution to the system, which can easily be verified by the receiver.</p>
-<p>The private or signing key consists of two affine transformations, S and T, and a polynomial vector P, which represent the trapdoor needed to solve the equation system. The public key contains a modified version of the whole equation system, or more specifically the star product of the private key components, which is used to verify the signature. For an attacker it is not feasible to compute the solution (i.e., a signature) without knowledge of the trapdoor and he can gain no knowledge about it from the verification key.</p> 
+<h2>Signaturverfahren</h2>
+<p>
+    Die Signaturerzeugung ist verhältnissmäßig Einfach zu berechnen, da es sich
+    lediglich um einfache Addition und Multiplikation mit kleinen Zahlen
+    handelt.
+    Das Gleichungssystem hat zufällige "Oil" und "Vinegar" Variablen, welche
+    benutzt werden, um die Lösung für ein Gleichungssystem zu berechnen.
+    Im Fall von Rainbow wird hier in mehreren Schichten vogegangen, wobei die
+    Variablen der vorherigen Schicht in die der nächsten eingebracht werden.
+    Eine Signatur besteht dabei aus der Lösung für ein Gleichungssystem, welche
+    vom Verifizierer sehr einfach geprüft werden kann.
+</p>
 
-<h2>Visualization</h2>
+<p>
+    Der private Schlüssel besteht aus zwei affinen Transformationen,
+    \(\mathcal{S}\) und \(\mathcal{T}\), sowie einem System \(\mathcal{F}\) von
+    \(m\) quadratischen Polynomen mit \(n\) Variablen, welches im prinzip eine
+    einfache zu invertierbare Abbilding
+    \(\mathcal{F}:\mathbb{F}^m\rightarrow\mathbb{F}^n\) darstellt.
+    Diese drei getrennten Elemente bilden die Falltür für Einwegfunktion dar.
+    Der öffentliche Schlüssel \(\mathcal{P}\) besteht hingegen aus der
+    Kombination dieser drei Abbildungen \(P=\mathcal{S}\mathcal{F}\mathcal{T}\).
+    Die Berechnung einer Signatur besteht nun lediglich darin, die Nachricht
+    \(m\) mit einer Hashfunktion \(\mathcal{H}\) zu \(w=\mathcal{H}(m)\)
+    komprimieren, und die inverse Abbildung
+    \(z=\mathcal{P}^{-1}(w)=\mathcal{T}^{-1}(\mathcal{F}^{-1}(\mathcal{S}^{-1}(w)))\)
+    zu berechnen.
+    Durch die Kenntniss von \(\mathcal{S}\), \(\mathcal{F}\) und \(\mathcal{T}\)
+    ist dies für den Besitzer des privaten Schlüssels sehr einfach ermöglich,
+    nur unter Kenntnis von \(\mathcal{P}\) jedoch nur unter enormen
+    Rechenaufwand.
+    Die verifikation des Signatur \(z\) ist hingegen sehr einfach, indem geprüft
+    wird ob \(\mathcal{P}(z)\) mit dem Hash der zugehörigen Nachricht
+    \(\mathcal{H}(m)\) übereinstimmt.
+</p>
+
+<h2>Visualisierung</h2>
 
 <img src="Rainbow1.png" width="800" alt"Rainbow Verschlüsselung Visualisierung">
 
-<p>The Multivariate cryptography visualization is a black box view of the Rainbow signature scheme. You may select the number of layers and Vinegar variables per layer, but the systems keeps the actual equations hidden. You can select the number of layers between one and seven and enter the number of Vinegar variables per layer below. Note that the vis have to be entered in ascending order for the algorithm to accept it. On the right hand side, you can see an abbreviated listing of the coefficients and their “rainbow”-like distribution.</p>
+<p>
+    Die visualisierung der Multivariaten Kryptografie ist eine "Black Box"
+    Ansicht des Rainbow Signaturverfahrens.
+    Wählbar sind hier die Anzahl der Schichten und Anzahl der Vinegar variablen
+    pro Schicht.
+    Die dadurch entstehenden Gleichungssysteme werden aufgrund der größe nicht
+    dargestellt.
+    Ein bis sieben Schichten können hierbei gewählt werden, die Anzahl der
+    Variablen werden darunter in aufsteigender Reihenfolge eingegeben (oder
+    automatisch generiert).
+    Auf der rechten Seite werden in abgekürzter Form die Koeffizienten
+    aufgelistet in ihrer Verteilung in "Regenbogen" Form.
+</p>
 
-<h2>References</h2>
+<h2>Referenzen</h2>
 <ol>
-<li>Public Quadratic Polynomial-Tuples for Efficient Signature-Verification and Message-Encryption. Matsumoto, Tsutomu and Imai, Hideki. [ed.] D. Barstow, et al. Berlin : Springer Berlin Heidelberg, 1988. Advances in Cryptology --- EUROCRYPT '88. pp. 419-453. ISBN: 978-3-540-45961-3.</li>
-<li>Unbalanced Oil and Vinegar Signature Schemes. Kipnis, Aviad, Patarin, Jacques and Goubin, Louis. [ed.] Jacques Stern. Berlin : Springer Berlin Heidelberg, 1999. Advances in Cryptology --- EUROCRYPT '99. pp. 206-222. ISBN: 978-3-540-48910-8.</li>
-<li>Cryptanalysis of the oil and vinegar signature scheme. Kipnis, Aviad and Shamir, Adi. [ed.] Hugo Krawczyk. Berlin : Springer Berlin Heidelberg, 1998. Advances in Cryptology --- CRYPTO '98. pp. 257-266. ISBN: 978-3-540-68462-6.</li>
-<li>Rainbow, a New Multivariable Polynomial Signature Scheme. Ding, Jintai and Schmidt, Dieter. [ed.] John Ioannidis, Angelos Keromytis and Moti Yung. Berlin : Springer Berlin Heidelberg, 2005. Applied Cryptography and Network Security. pp. 164-175. ISBN: 978-3-540-31542-1.</li>
+<li id="ref_cast">Public Quadratic Polynomial-Tuples for Efficient Signature-Verification and Message-Encryption. Matsumoto, Tsutomu and Imai, Hideki. [ed.] D. Barstow, et al. Berlin : Springer Berlin Heidelberg, 1988. Advances in Cryptology --- EUROCRYPT '88. pp. 419-453. ISBN: 978-3-540-45961-3.</li>
+<li id="ref_oilvin">Unbalanced Oil and Vinegar Signature Schemes. Kipnis, Aviad, Patarin, Jacques and Goubin, Louis. [ed.] Jacques Stern. Berlin : Springer Berlin Heidelberg, 1999. Advances in Cryptology --- EUROCRYPT '99. pp. 206-222. ISBN: 978-3-540-48910-8.</li>
+<li id="ref_oilvinca">Cryptanalysis of the oil and vinegar signature scheme. Kipnis, Aviad and Shamir, Adi. [ed.] Hugo Krawczyk. Berlin : Springer Berlin Heidelberg, 1998. Advances in Cryptology --- CRYPTO '98. pp. 257-266. ISBN: 978-3-540-68462-6.</li>
+<li id="ref_rainbow">Rainbow, a New Multivariable Polynomial Signature Scheme. Ding, Jintai and Schmidt, Dieter. [ed.] John Ioannidis, Angelos Keromytis and Moti Yung. Berlin : Springer Berlin Heidelberg, 2005. Applied Cryptography and Network Security. pp. 164-175. ISBN: 978-3-540-31542-1.</li>
 <li>Buchanan, Prof Bill. In a Post Quantum Computing World: For Robust Cooking — You Need a Bit of Oil and Vinegar. 8 2018.</li>
 </ol>
 </body>
