@@ -13,6 +13,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.TrayDialog;
 import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchPreferenceConstants;
 import org.eclipse.ui.PlatformUI;
@@ -58,10 +59,13 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     	
     	// This Code tries to get the optimal initial size of the 
     	// JCT based on the screen resolution and the sdisplay zoom
+    	
+    	Rectangle clientArea = null;
     	int monitorWidth = 0;
     	int zoom = 0;
     	try {
     		// try-catch-block just as a precaution
+    		clientArea = Display.getCurrent().getPrimaryMonitor().getClientArea();
     		monitorWidth = Display.getCurrent().getPrimaryMonitor().getBounds().width;
     		zoom = Display.getCurrent().getPrimaryMonitor().getZoom();
     	} catch (Exception e) {
@@ -104,6 +108,21 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     			configurer.setInitialSize(new Point(2000, 1200));
     		} else {
     			configurer.getWindow().getShell().setMaximized(true);
+    		}
+    	}
+    	
+    	// Check if the initial size is bigger than the monitor 
+    	// This can happen on odd monitors like 4000x1500
+    	if (clientArea != null) {
+    		int initialWidth = configurer.getInitialSize().x;
+    		int initialHeight = configurer.getInitialSize().y;
+    		if (initialWidth >= clientArea.width &&
+    				initialHeight >= clientArea.height) {
+    			configurer.getWindow().getShell().setMaximized(true);
+    		} else if (initialWidth > clientArea.width) {
+    			configurer.setInitialSize(new Point(clientArea.width, initialHeight));
+    		} else if (initialHeight > clientArea.height) {
+    			configurer.setInitialSize(new Point(initialWidth, clientArea.height));
     		}
     	}
     	
