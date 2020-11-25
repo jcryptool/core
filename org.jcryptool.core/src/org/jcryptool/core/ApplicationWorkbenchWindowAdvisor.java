@@ -79,25 +79,25 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     		if (zoom <= 100) {
     			configurer.setInitialSize(new Point(1050, 600));
     		} else if (zoom <= 125) {
-    			configurer.setInitialSize(new Point(1350, 700));
+    			configurer.setInitialSize(new Point(1350, 750));
     		} else {
     			configurer.getWindow().getShell().setMaximized(true);
     		}
     	} else if (monitorWidth < 2600) {
     		// For monitors like 1920x1080 or 2560x1440
     		if (zoom <= 100) {
-    			configurer.setInitialSize(new Point(1200, 600));
+    			configurer.setInitialSize(new Point(1200, 700));
     		} else if (zoom <= 125 ) {
-    			configurer.setInitialSize(new Point(1450, 750));
+    			configurer.setInitialSize(new Point(1450, 825));
     		} else if (zoom <= 150 ) {
-    			configurer.setInitialSize(new Point(1700, 900));
+    			configurer.setInitialSize(new Point(1700, 950));
     		} else {
     			configurer.getWindow().getShell().setMaximized(true);
     		}
     	} else {
     		// Monitors like 4k or above
     		if (zoom <= 100) {
-    			configurer.setInitialSize(new Point(1500, 800));
+    			configurer.setInitialSize(new Point(1500, 850));
     		} else if (zoom <= 125 ) {
     			configurer.setInitialSize(new Point(1750, 1000));
     		} else if (zoom <= 150 ) {
