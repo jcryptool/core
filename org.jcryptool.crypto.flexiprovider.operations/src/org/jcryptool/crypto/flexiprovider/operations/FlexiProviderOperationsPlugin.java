@@ -59,7 +59,7 @@ public class FlexiProviderOperationsPlugin extends AbstractUIPlugin {
 
 				IWorkbenchWindow wbwin = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 				try {
-					wbwin.getActivePage().showView("org.jcryptool.crypto.flexiprovider.operations.OperationsView");
+					wbwin.getActivePage().showView("org.jcryptool.crypto.flexiprovider.operations.OperationsView"); //$NON-NLS-1$
 				} catch (PartInitException e) {
 					e.printStackTrace();
 				}
@@ -69,7 +69,7 @@ public class FlexiProviderOperationsPlugin extends AbstractUIPlugin {
 				if (lastOperationsView != null) {
 					lastOperationsView.selectThis(descriptor);
 					if(! bubbleWasShown) {
-						lastOperationsView.showBubble("The newly created algorithm instance is displayed here. You can inspect or change the algorithm details by expanding this entry, and execute it with the play button. Click this balloon to close it.");
+						lastOperationsView.showBubble(Messages.FlexiProviderOperationsPlugin_1);
 						bubbleWasShown = true;
 					}
 				}
