@@ -13,12 +13,14 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.TrayDialog;
 import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchPreferenceConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
+import org.jcryptool.core.logging.utils.LogUtil;
 
 /**
  * The ApplicationWorkbenchWindowAdvisor class configures the workbench window.
@@ -51,8 +53,61 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
     @Override
     public void preWindowOpen() {
-        IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
-        configurer.setInitialSize(new Point(1350, 750));
+    	
+    	IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
+    	
+    	// This Code tries to get the optimal initial size of the 
+    	// JCT based on the screen resolution and the sdisplay zoom
+    	int monitorWidth = 0;
+    	int zoom = 0;
+    	try {
+    		// try-catch-block just as a precaution
+    		monitorWidth = Display.getCurrent().getPrimaryMonitor().getBounds().width;
+    		zoom = Display.getCurrent().getPrimaryMonitor().getZoom();
+    	} catch (Exception e) {
+    		LogUtil.logError(CorePlugin.PLUGIN_ID, e);
+    	}
+    	
+    	if (monitorWidth < 1200) {
+    		// For monitors like 1024 x 768
+    		configurer.getWindow().getShell().setMaximized(true);
+    	} else if (monitorWidth < 1400) {
+    		// For monitors like 1280x720 or 1366x768
+    		configurer.setInitialSize(new Point(1100, 600));
+    	} else if (monitorWidth < 1800) {
+    		// For monitors like 1440x900 or 1600x900
+    		if (zoom <= 100) {
+    			configurer.setInitialSize(new Point(1050, 600));
+    		} else if (zoom <= 125) {
+    			configurer.setInitialSize(new Point(1350, 700));
+    		} else {
+    			configurer.getWindow().getShell().setMaximized(true);
+    		}
+    	} else if (monitorWidth < 2600) {
+    		// For monitors like 1920x1080 or 2560x1440
+    		if (zoom <= 100) {
+    			configurer.setInitialSize(new Point(1200, 600));
+    		} else if (zoom <= 125 ) {
+    			configurer.setInitialSize(new Point(1450, 750));
+    		} else if (zoom <= 150 ) {
+    			configurer.setInitialSize(new Point(1700, 900));
+    		} else {
+    			configurer.getWindow().getShell().setMaximized(true);
+    		}
+    	} else {
+    		// Monitors like 4k or above
+    		if (zoom <= 100) {
+    			configurer.setInitialSize(new Point(1500, 800));
+    		} else if (zoom <= 125 ) {
+    			configurer.setInitialSize(new Point(1750, 1000));
+    		} else if (zoom <= 150 ) {
+    			configurer.setInitialSize(new Point(2000, 1200));
+    		} else {
+    			configurer.getWindow().getShell().setMaximized(true);
+    		}
+    	}
+    	
+
         configurer.setShowCoolBar(true);
         configurer.setShowMenuBar(true);
         configurer.setShowPerspectiveBar(true);
