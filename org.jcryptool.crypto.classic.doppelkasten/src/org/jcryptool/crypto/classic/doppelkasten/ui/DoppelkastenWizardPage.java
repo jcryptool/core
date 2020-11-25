@@ -105,9 +105,9 @@ public class DoppelkastenWizardPage extends AbstractClassicCryptoPage {
 	}
 
 
-
+	
 	private void createSecondKeyInput() {
-		key2Input = new TextfieldInput<String>() {
+		key2Input = new KeyInput<String>() {
 			@Override
 			public Text getTextfield() {
 				return key2Text;
@@ -141,6 +141,10 @@ public class DoppelkastenWizardPage extends AbstractClassicCryptoPage {
 
 				setTextfieldTextExternal(stringBuilder.toString());
 				reread(inputWhichCausedThis);
+			}
+			@Override
+			public AbstractAlphabet getAlphabet() {
+				return getAlphabetInput().getContent();
 			}
 
 		};
