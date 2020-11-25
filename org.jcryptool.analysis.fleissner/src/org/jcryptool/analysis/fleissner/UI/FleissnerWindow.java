@@ -56,8 +56,13 @@ import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.core.util.ui.TitleAndDescriptionComposite;
 import org.jcryptool.crypto.ui.background.BackgroundJob;
+import org.jcryptool.crypto.ui.textloader.ui.wizard.TextLoadController;
+import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
 
 import java.util.Objects;
+import java.util.Observable;
+import java.util.Observer;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -147,6 +152,12 @@ public class FleissnerWindow extends Composite {
 	private ArrayList<String> outputInput;
 	private String lastSuccessfulLoadedTextName;
 	private String lastSuccessfulLoadedText;
+	private TextInputWithSource lastSuccessfulLoadedTextSource;
+	
+	private Composite composite0;
+	private TextLoadController textloader;
+	private TextInputWithSource source;
+	private String text;
 	
 	private static final int fleissner_max_text_length = 1000000;
 
@@ -680,11 +691,12 @@ public class FleissnerWindow extends Composite {
 
 				if (exampleText.getSelection()) {
 					if (textInputState != 0) {
-						loadedTextName.setText(Messages.FleissnerWindow_empty);
+						//loadedTextName.setText(Messages.FleissnerWindow_empty);
 						userText = false;
 						textSelection(true, false, false, false);
 						refreshExampleText();
 						textInputState = 0;
+						//textloader.setEnabled(false);
 					}
 					reset();
 				}
@@ -709,7 +721,7 @@ public class FleissnerWindow extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
+				
 				if (textState != chooseExample.getSelectionIndex()) {
 					userText = false;
 					refreshExampleText();
@@ -729,6 +741,7 @@ public class FleissnerWindow extends Composite {
 
 					textState = chooseExample.getSelectionIndex();
 					reset();
+				
 				}
 			}
 		});
@@ -746,9 +759,9 @@ public class FleissnerWindow extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 
 				if (writeText.getSelection()) {
-
+					
 //                    sets plaintext or ciphertext editable for encryption respectively analysis or decryption
-					loadedTextName.setText(Messages.FleissnerWindow_empty);
+					//loadedTextName.setText(Messages.FleissnerWindow_empty);
 					boolean editPlaintext = false;
 					boolean editCiphertext = false;
 					userText = true;
@@ -769,10 +782,12 @@ public class FleissnerWindow extends Composite {
 					textSelection(false, false, editPlaintext, editCiphertext);
 					reset();
 					textInputState = 2;
+					//textloader.setEnabled(false);
 				}
 			}
 		});
-
+		
+		
 		loadOwntext = new Button(thirdGroup, SWT.RADIO);
 		loadOwntext.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		loadOwntext.setText(Messages.FleissnerWindow_label_loadOwnTextCipher);
@@ -796,11 +811,56 @@ public class FleissnerWindow extends Composite {
 						textSelection(false, true, false, false);
 						textInputState = 1;
 						reset();
+						//textloader.setEnabled(true);
 					}
 				}
 			}
 		});
+		
+		
 
+		textloader = new TextLoadController(thirdGroup, this, SWT.PUSH, true, false);
+		textloader.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
+		textloader.setEnabled(false);
+		
+		textloader.addObserver(new Observer() {
+			@Override
+			public void update(Observable o, Object arg) {
+				
+				if (textloader.getText() != null) {
+					
+					if(textloader.getText().getText().length() < fleissner_max_text_length) {
+					argText = textloader.getText().getText();
+					userText = true;
+					lastSuccessfulLoadedTextSource = textloader.getText();
+					source = textloader.getText();
+					}else{
+						
+						boolean result = MessageDialog.openQuestion(FleissnerWindow.this.getShell(), Messages.FleissnerWindow_warning, Messages.FleissnerWindow_warning_text);
+						if(result) {
+							argText = textloader.getText().getText();
+							userText = true;
+							source = textloader.getText();
+						}
+						else {
+							
+							source = lastSuccessfulLoadedTextSource;
+							return;
+						}
+					}	
+					
+					if (argMethod.equals(Messages.FleissnerWindow_method_analyze)) {
+						analysisOutput.setText(Messages.FleissnerWindow_output_progress);
+					}
+
+					refreshInOutTexts();
+					reset();
+				}
+			}
+		});
+		
+		/*
+		
 		loadText = new Button(thirdGroup, SWT.PUSH);
 		loadText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
 		loadText.setText(Messages.FleissnerWindow_label_loadText);
@@ -839,6 +899,8 @@ public class FleissnerWindow extends Composite {
 				widgetSelected(e);
 			}
 		});
+		
+		
 
 		textNameIdentifier = new Label(thirdGroup, SWT.NONE);
 		textNameIdentifier.setText(Messages.FleissnerWindow_label_uploadedText);
@@ -847,6 +909,7 @@ public class FleissnerWindow extends Composite {
 		loadedTextName = new Text(thirdGroup, SWT.NONE);
 		loadedTextName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		loadedTextName.setBackground(ColorService.LIGHTGRAY);
+		*/
 	}
 
 	/**
@@ -1738,7 +1801,8 @@ public class FleissnerWindow extends Composite {
 			boolean editCiphertext) {
 
 		chooseExample.setEnabled(enableChooseExample);
-		loadText.setEnabled(enableLoadText);
+		//loadText.setEnabled(enableLoadText);
+		textloader.setEnabled(enableLoadText);
 		plaintext.setEditable(editPlaintext);
 		ciphertext.setEditable(editCiphertext);
 

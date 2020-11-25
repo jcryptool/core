@@ -58,6 +58,14 @@ public class TextLoadController extends Composite {
 		return transformData;
 	}
 	
+	public void setEnabled(boolean b) {
+		if(this.btnLoadText != null && ! this.btnLoadText.isDisposed()) {
+			this.btnLoadText.setEnabled(b);
+			this.transformDisplay.setEnabled(b);
+			this.loadTextLink.setEnabled(b);
+		}
+		
+	}
 	
 	/**
 	 * Creates the text loading controller (a button with maybe additional displays/controls; see below)

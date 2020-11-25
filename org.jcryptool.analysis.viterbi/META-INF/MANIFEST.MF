@@ -16,6 +16,7 @@ Export-Package: org.jcryptool.analysis.viterbi,
  org.jcryptool.analysis.viterbi.handlers,
  org.jcryptool.analysis.viterbi.views
 Import-Package: org.jcryptool.core.logging.utils,
+ org.jcryptool.core.operations.algorithm.classic.textmodify,
  org.jcryptool.core.util.constants,
  org.jcryptool.core.util.directories,
  org.jcryptool.core.util.fonts
