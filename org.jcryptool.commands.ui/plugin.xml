@@ -19,6 +19,18 @@
          <viewShortcut
                id="org.eclipse.ui.console.ConsoleView">
          </viewShortcut>
+         <hiddenToolBarItem
+               id="org.eclipse.ui.edit.text.gotoLastEditPosition">
+         </hiddenToolBarItem>
+         <hiddenToolBarItem
+               id="org.eclipse.ui.edit.text.gotoNextEditPosition">
+         </hiddenToolBarItem>
+         <hiddenToolBarItem
+               id="org.eclipse.ui.navigate.previous">
+         </hiddenToolBarItem>
+         <hiddenToolBarItem
+               id="org.eclipse.ui.navigate.next">
+         </hiddenToolBarItem>
       </perspectiveExtension>
    </extension>
    <extension
