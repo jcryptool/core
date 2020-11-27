@@ -49,6 +49,7 @@ import org.eclipse.swt.widgets.Text;
 import org.jcryptool.analysis.freqanalysis.FreqAnalysisPlugin;
 import org.jcryptool.analysis.freqanalysis.calc.FreqAnalysisCalc;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 //import org.jcryptool.core.operations.editors.EditorsManager;
@@ -96,6 +97,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 	private TextInputWithSource source;
 
 	private FreqAnalysisCalc myAnalysis;
+	TransformData myModifySettings;
 	private FreqAnalysisCalc overlayAnalysis;
 	private String myOverlayAlphabet = ""; //$NON-NLS-1$
 	private String reftext;
@@ -105,6 +107,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 	private boolean appropriateAlphabetToBeDetected = false;
 	private TextLoadController textloader;
 	public FreqAnalysisCalc return__freqanalysis;
+	private boolean hasUpperCase;
 	
 	private static final int fullFreqAnalysis_text_max_length = 15000000;
 	private TextInputWithSource lastSuccessfullLoadedText;
@@ -177,6 +180,19 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 							}
 						}
 					
+					boolean cap = false;
+					
+					for(int i = 0; i< text.length();i++) {
+						if(Character.isUpperCase(text.charAt(i))) {
+							cap = true;
+							break;
+						}
+					}
+					
+					if(!cap) {
+						MessageDialog.openWarning(FullAnalysisUI.this.getShell(), Messages.SimpleAnalysisUI_warning, Messages.FreqAnalysis_capLetterWarning);
+					}
+					
 					recalcSourceInfo();	
 					
 					myGraph.getFrequencyGraph().setInstruction(Messages.FreqAnalysisGraph_shiftgraph0);
@@ -192,8 +208,9 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 						} else {
 							appropriateAlphabetToBeDetected = true;
 						}
+						
 						recalcGraph();
-						recalcSourceInfo();
+						
 					}				
 					
 				}
@@ -491,6 +508,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 				// combo2.setText(alphas[i].getName());
 				combo2.select(i);
 				myOverlayAlphabet = String.valueOf(alphas[i].getCharacterSet());
+				
 			}
 		}
 
@@ -611,6 +629,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 		job.text =  text;
 		job.myLength = myLength;
 		job.myOffset = myOffset;
+		
 		
 		job.finalizeListeners.add(status -> {
 			getDisplay().syncExec(() -> {
