@@ -11,6 +11,7 @@ package org.jcryptool.core;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.TrayDialog;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -31,6 +32,8 @@ import org.jcryptool.core.logging.utils.LogUtil;
  */
 public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
+	private boolean maximize = false;
+	
     /**
      * Creates a new workbench window advisor for configuring a workbench window via the given workbench window
      * configurer.
@@ -58,11 +61,12 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     	IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
     	
     	// This Code tries to get the optimal initial size of the 
-    	// JCT based on the screen resolution and the sdisplay zoom
+    	// JCT based on the screen resolution and the display zoom
     	
     	Rectangle clientArea = null;
     	int monitorWidth = 0;
     	int zoom = 0;
+    	Point prefferredSize = null;
     	try {
     		// try-catch-block just as a precaution
     		clientArea = Display.getCurrent().getPrimaryMonitor().getClientArea();
@@ -74,64 +78,77 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     	
     	if (monitorWidth < 1200) {
     		// For monitors like 1024 x 768
-    		configurer.getWindow().getShell().setMaximized(true);
+    		// Maximize
+    		maximize = true;
     	} else if (monitorWidth < 1400) {
     		// For monitors like 1280x720 or 1366x768
-    		configurer.setInitialSize(new Point(1100, 600));
+    		if (zoom <= 100) {
+    			prefferredSize = new Point(1100, 700);
+    		} else {
+    			maximize = true;
+    		}
     	} else if (monitorWidth < 1800) {
     		// For monitors like 1440x900 or 1600x900
     		if (zoom <= 100) {
-    			configurer.setInitialSize(new Point(1050, 600));
+    			prefferredSize = new Point(1100, 700);
     		} else if (zoom <= 125) {
-    			configurer.setInitialSize(new Point(1350, 750));
+    			prefferredSize = new Point(1350, 750);
     		} else {
-    			configurer.getWindow().getShell().setMaximized(true);
+    			maximize = true;
     		}
     	} else if (monitorWidth < 2600) {
     		// For monitors like 1920x1080 or 2560x1440
     		if (zoom <= 100) {
-    			configurer.setInitialSize(new Point(1200, 700));
+    			prefferredSize = new Point(1200, 700);
     		} else if (zoom <= 125 ) {
-    			configurer.setInitialSize(new Point(1450, 825));
+    			prefferredSize = new Point(1450, 825);
     		} else if (zoom <= 150 ) {
-    			configurer.setInitialSize(new Point(1700, 950));
+    			prefferredSize = new Point(1700, 950);
     		} else {
-    			configurer.getWindow().getShell().setMaximized(true);
+    			maximize = true;
     		}
     	} else {
     		// Monitors like 4k or above
     		if (zoom <= 100) {
-    			configurer.setInitialSize(new Point(1500, 850));
+    			prefferredSize = new Point(1500, 850);
     		} else if (zoom <= 125 ) {
-    			configurer.setInitialSize(new Point(1750, 1000));
+    			prefferredSize = new Point(1750, 1000);
     		} else if (zoom <= 150 ) {
-    			configurer.setInitialSize(new Point(2000, 1200));
+    			prefferredSize = new Point(2000, 1200);
     		} else {
-    			configurer.getWindow().getShell().setMaximized(true);
+    			maximize = true;
     		}
     	}
     	
-    	// Check if the initial size is bigger than the monitor 
-    	// This can happen on odd monitors like 4000x1500
-    	if (clientArea != null) {
-    		int initialWidth = configurer.getInitialSize().x;
-    		int initialHeight = configurer.getInitialSize().y;
-    		if (initialWidth >= clientArea.width &&
-    				initialHeight >= clientArea.height) {
-    			configurer.getWindow().getShell().setMaximized(true);
-    		} else if (initialWidth > clientArea.width) {
-    			configurer.setInitialSize(new Point(clientArea.width, initialHeight));
-    		} else if (initialHeight > clientArea.height) {
-    			configurer.setInitialSize(new Point(initialWidth, clientArea.height));
+		if (clientArea != null && prefferredSize != null) {
+			if (prefferredSize.x >= clientArea.width &&
+    				prefferredSize.y >= clientArea.height) {
+    			maximize = true;
+    		} else if (prefferredSize.x > clientArea.width) {
+    			//shell.setSize(new Point(clientArea.width, prefferredSize.y));
+    			prefferredSize.x = clientArea.width;
+    		} else if (prefferredSize.y > clientArea.height) {
+    			prefferredSize.y = clientArea.height;
     		}
+		}
+		
+    	if (maximize) {
+    		// This does not work, because the shell is not creted yet.
+    		// It is created in postWindowStartup.
+//    		configurer.getWindow().getShell().setMaximized(true);
+    		// Do nothing. The maximize event is handled in postWindowStartup
+    	} else {
+    		// If the JCT does not start maximized, apply the initial size.
+    		configurer.setInitialSize(prefferredSize);
     	}
-    	
 
         configurer.setShowCoolBar(true);
         configurer.setShowMenuBar(true);
         configurer.setShowPerspectiveBar(true);
         configurer.setShowProgressIndicator(true);
         configurer.setShowStatusLine(true);
+        
+        configurer.setShellStyle(SWT.MAX);
 
     	configurer.addEditorAreaTransfer(FileTransfer.getInstance());
     	configurer.configureEditorAreaDropListener(new EditorAreaDropTargetListener());
@@ -148,9 +165,14 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
                 + ", org.jcryptool.crypto.flexiprovider.ui.perspective.FlexiProviderPerspective"); //$NON-NLS-1$
     }
 
+
     @Override
     public void postWindowOpen() {
         TrayDialog.setDialogHelpAvailable(true);
+        
+        if (maximize) {
+        	getWindowConfigurer().getWindow().getShell().setMaximized(true);
+        }  
 
         super.postWindowOpen();
     }
