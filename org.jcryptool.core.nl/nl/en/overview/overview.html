@@ -62,7 +62,18 @@
 					<p>JCrypTool (JCT) is written in Java and based on the Eclipse Rich Client Platform (RCP) and can therefore be extended at almost any place. In order to provide consistent and easy-to-use access to all functionality, JCT offers different extension points which must be used by all cryptographic plug-ins. This way, cryptography plug-ins can offer encryption algorithms, digital signatures, cryptanalysis or visualizations, which then appear at once in a common way like the ones in the 
                     <a href="https://org.eclipse.ui.intro/showHelpTopic?id=/org.jcryptool.core.help/$nl$/help/users/algorithm/toc.html">Algorithm view</a>.<br/>
 					More information on developing plug-ins is available in the 
-					<a href="https://github.com/jcryptool/core/wiki" target="_blank">JCT Wiki on GitHub</a>.</p>
+					<a href="http://org.eclipse.ui.intro/openBrowser?url=https://github.com/jcryptool/core/wiki">JCT Wiki on GitHub</a>.</p>
+					
+<!-- 
+kref=...openBrowser explanation:
+WelcomePage has an own URL handler. It apparently supports a range of applications, e.g. run a command, embed a url, standby of the view, etc.
+Those can be found in the source code of the handler:	
+- constant defintion: https://github.com/eclipse/eclipse.platform.ua/blob/d76a4acff64e0804c1ef6a861b9106495aefd77e/org.eclipse.ui.intro/src/org/eclipse/ui/internal/intro/impl/model/url/IntroURL.java#L82
+- handling:           https://github.com/eclipse/eclipse.platform.ua/blob/d76a4acff64e0804c1ef6a861b9106495aefd77e/org.eclipse.ui.intro/src/org/eclipse/ui/internal/intro/impl/model/url/IntroURL.java#L82
+
+openBrowser fits target="_blank" best. its argument is "url"
+-->
+					
 				</div>
 			</div>
 			<img class="icon" alt="GUI-with-legends" src="../graphics/welcome_highlights_with-text.png"  width="90%" />
