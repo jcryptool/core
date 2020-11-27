@@ -143,7 +143,9 @@ public class FriedmanContainer {
         List<FriedmanData> peaks = new ArrayList<FriedmanData>();
 
         for (int i = 0; i < perc; i++) {
+        	if(i< data.size()) {
             peaks.add(data.get(i));
+        	}
         }
 
         Collections.sort(peaks, new Comparator<FriedmanData>() {
