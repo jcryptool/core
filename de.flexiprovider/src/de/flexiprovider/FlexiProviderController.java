@@ -86,7 +86,7 @@ public class FlexiProviderController extends AbstractProviderController {
 //			LogUtil.logInfo(FlexiProviderPlugin.PLUGIN_ID, "adding Provider: " + provider.getName());
 			Security.addProvider(provider);
 		}
-		System.out.println("Sun cryptoprovider prioritized");
+//		System.out.println("Sun cryptoprovider prioritized");
 	}
 	@Override
 	public void setProviders__flexiPromoted() {
