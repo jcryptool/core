@@ -137,10 +137,10 @@ public class ProviderManager2 {
      * see also: {@link #popCryptoProviderPromotion()}
 	 */
 	public void pushFlexiProviderPromotion() {
-		synchronized (instance) {
+//		synchronized (instance) {
 			this.providerStack.add("flexiprovider");
 			this.controllers.forEach(c -> c.setProviders__flexiPromoted());
-		}
+//		}
 	}
 
 	/**
@@ -148,14 +148,14 @@ public class ProviderManager2 {
      * see also: {@link #pushFlexiProviderPromotion()}
 	 */
 	public void popCryptoProviderPromotion() {
-		synchronized (instance) {
+//		synchronized (instance) {
 			if (providerStack.size() > 0) {
 				this.providerStack.remove(providerStack.size()-1);
 			}
 			if (providerStack.size() == 0) {
 				this.controllers.forEach(c -> c.setProviders__sunPromoted());
 			}
-		}
+//		}
 	}
 
 }
