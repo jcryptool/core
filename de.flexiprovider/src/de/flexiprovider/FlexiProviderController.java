@@ -63,6 +63,7 @@ public class FlexiProviderController extends AbstractProviderController {
 			defaultProviders = new LinkedList<>();
 			for (Provider p : Security.getProviders()) {
 				defaultProviders.add(p);
+				System.out.println("cached sun crypto providers: " + p.getName());
 			}
 		}
 	}
@@ -86,6 +87,7 @@ public class FlexiProviderController extends AbstractProviderController {
 //			LogUtil.logInfo(FlexiProviderPlugin.PLUGIN_ID, "adding Provider: " + provider.getName());
 			Security.addProvider(provider);
 		}
+		System.out.println("Sun cryptoprovider prioritized");
 	}
 	@Override
 	public void setProviders__flexiPromoted() {
@@ -99,11 +101,14 @@ public class FlexiProviderController extends AbstractProviderController {
 //			LogUtil.logInfo(FlexiProviderPlugin.PLUGIN_ID, "adding Provider: " + provider.getName());
 			Security.addProvider(provider);
 		}
+
+		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 		// add the sun providers after
 		for (Provider provider: defaultProviders) {
 //			LogUtil.logInfo(FlexiProviderPlugin.PLUGIN_ID, "adding Provider: " + provider.getName());
 			Security.addProvider(provider);
 		}
+		System.out.println("FlexiProvider cryptoprovider prioritized");
 	}
 	
 	/**

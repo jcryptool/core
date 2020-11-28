@@ -767,6 +767,7 @@ public class KeyStoreManager {
 			Certificate[] certs = new Certificate[1];
 			certs[0] = publicKey;
 			try {
+				System.out.println("-----" + keyStore.getProvider());
 				keyStore.setEntry(privateAlias.getAliasString(), new KeyStore.PrivateKeyEntry(privateKey, certs),
 						new KeyStore.PasswordProtection(password));
 				keyStore.setEntry(publicAlias.getAliasString(), new KeyStore.TrustedCertificateEntry(publicKey), null);

@@ -94,7 +94,7 @@ public abstract class AbstractKeyStoreHandler extends AbstractHandler {
         MessageDigest sha1;
 
         try {
-            sha1 = MessageDigest.getInstance("SHA-1"); //$NON-NLS-1$
+            sha1 = MessageDigest.getInstance("SHA1"); //$NON-NLS-1$
             sha1.update(descriptor.getContactName().getBytes());
             sha1.update(descriptor.getAlgorithmName().getBytes());
             sha1.update(descriptor.getProvider().getBytes());
