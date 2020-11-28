@@ -63,7 +63,6 @@ public class FlexiProviderController extends AbstractProviderController {
 			defaultProviders = new LinkedList<>();
 			for (Provider p : Security.getProviders()) {
 				defaultProviders.add(p);
-				System.out.println("cached sun crypto providers: " + p.getName());
 			}
 		}
 	}
@@ -91,7 +90,7 @@ public class FlexiProviderController extends AbstractProviderController {
 	}
 	@Override
 	public void setProviders__flexiPromoted() {
-		LogUtil.logInfo(FlexiProviderPlugin.PLUGIN_ID, "promoting flexi security providers in FlexiProviderController");
+//		LogUtil.logInfo(FlexiProviderPlugin.PLUGIN_ID, "promoting flexi security providers in FlexiProviderController");
 		cacheDefaultProviders();
 		for(Provider p: Security.getProviders()) {
 			Security.removeProvider(p.getName());
@@ -108,7 +107,7 @@ public class FlexiProviderController extends AbstractProviderController {
 //			LogUtil.logInfo(FlexiProviderPlugin.PLUGIN_ID, "adding Provider: " + provider.getName());
 			Security.addProvider(provider);
 		}
-		System.out.println("FlexiProvider cryptoprovider prioritized");
+//		System.out.println("FlexiProvider cryptoprovider prioritized");
 	}
 	
 	/**
