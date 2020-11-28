@@ -7,6 +7,25 @@
   <link rel="stylesheet" href="../css/shared.css" type="text/css" />
   </head>
 
+<!-- 
+How to make links open in an external browser window in the welcome page?
+=========================================================================
+Model example: <a href="http://org.eclipse.ui.intro/openBrowser?url=https://github.com/jcryptool/core/wiki">JCT Wiki on GitHub</a>
+Note:
+- http vs https
+	- DO         use <a href="http://org.eclipse.ui.intro/..."...
+		- do NOT use <a href="https://org.eclipse.ui.intro/..."...
+- target=_blank (breaks links!)
+	- DO         use <a href="http://org.eclipse.ui.intro/openBrowser?url=...">...</a>
+		- do NOT use <a href="http://org.eclipse.ui.intro/openBrowser?url=..." target="_blank">...</a>
+
+href=...openBrowser explanation:
+WelcomePage has an own URL handler. It apparently supports a range of applications, e.g. run a command, embed a url, standby of the view, etc.
+Those can be found in the source code of the handler:	
+- constant defintion: https://github.com/eclipse/eclipse.platform.ua/blob/d76a4acff64e0804c1ef6a861b9106495aefd77e/org.eclipse.ui.intro/src/org/eclipse/ui/internal/intro/impl/model/url/IntroURL.java#L82
+- handling:           https://github.com/eclipse/eclipse.platform.ua/blob/d76a4acff64e0804c1ef6a861b9106495aefd77e/org.eclipse.ui.intro/src/org/eclipse/ui/internal/intro/impl/model/url/IntroURL.java#L82
+openBrowser fits target="_blank" best. its argument is "url"
+-->
   <body>
 	<div id="centered-zone">
 		<div class="page-style">
@@ -63,16 +82,6 @@
                     <a href="https://org.eclipse.ui.intro/showHelpTopic?id=/org.jcryptool.core.help/$nl$/help/users/algorithm/toc.html">Algorithm view</a>.<br/>
 					More information on developing plug-ins is available in the 
 					<a href="http://org.eclipse.ui.intro/openBrowser?url=https://github.com/jcryptool/core/wiki">JCT Wiki on GitHub</a>.</p>
-					
-<!-- 
-kref=...openBrowser explanation:
-WelcomePage has an own URL handler. It apparently supports a range of applications, e.g. run a command, embed a url, standby of the view, etc.
-Those can be found in the source code of the handler:	
-- constant defintion: https://github.com/eclipse/eclipse.platform.ua/blob/d76a4acff64e0804c1ef6a861b9106495aefd77e/org.eclipse.ui.intro/src/org/eclipse/ui/internal/intro/impl/model/url/IntroURL.java#L82
-- handling:           https://github.com/eclipse/eclipse.platform.ua/blob/d76a4acff64e0804c1ef6a861b9106495aefd77e/org.eclipse.ui.intro/src/org/eclipse/ui/internal/intro/impl/model/url/IntroURL.java#L82
-
-openBrowser fits target="_blank" best. its argument is "url"
--->
 					
 				</div>
 			</div>
