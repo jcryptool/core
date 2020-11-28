@@ -12,6 +12,7 @@ package org.jcryptool.visual.extendedrsa;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
 import java.security.PrivateKey;
+import java.security.Security;
 import java.security.UnrecoverableEntryException;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -28,6 +29,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.operations.providers.ProviderManager2;
 import org.jcryptool.crypto.flexiprovider.descriptors.meta.interfaces.IMetaKeyGenerator;
 import org.jcryptool.crypto.flexiprovider.keystore.FlexiProviderKeystorePlugin;
 import org.jcryptool.crypto.flexiprovider.reflect.Reflector;
@@ -126,6 +128,8 @@ public class IdentityManager extends AbstractNewKeyStoreEntryHandler {
             protected IStatus run(IProgressMonitor monitor) {
                 monitor.beginTask("New KeyPair Task", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
                 try {
+                	ProviderManager2.getInstance().pushFlexiProviderPromotion();
+
                     IMetaKeyGenerator gen = AlgorithmsXMLManager.getInstance().getKeyPairGenerator(algorithm);
 
                     if (gen != null && name != null && password != null && keyLength > 0) {
@@ -172,6 +176,8 @@ public class IdentityManager extends AbstractNewKeyStoreEntryHandler {
                 } catch (InvocationTargetException e) {
                     LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_10, e, true);
                 } finally {
+
+                	ProviderManager2.getInstance().popFlexiProviderPromotion();
                     monitor.done();
                 }
                 return Status.OK_STATUS;
