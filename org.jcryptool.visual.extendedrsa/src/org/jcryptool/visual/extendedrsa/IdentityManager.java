@@ -129,6 +129,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryHandler {
                 monitor.beginTask("New KeyPair Task", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
                 try {
                 	ProviderManager2.getInstance().pushFlexiProviderPromotion();
+					Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 
                     IMetaKeyGenerator gen = AlgorithmsXMLManager.getInstance().getKeyPairGenerator(algorithm);
 
@@ -177,7 +178,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryHandler {
                     LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_10, e, true);
                 } finally {
 
-                	ProviderManager2.getInstance().popFlexiProviderPromotion();
+                	ProviderManager2.getInstance().pushFlexiProviderPromotion();
                     monitor.done();
                 }
                 return Status.OK_STATUS;
