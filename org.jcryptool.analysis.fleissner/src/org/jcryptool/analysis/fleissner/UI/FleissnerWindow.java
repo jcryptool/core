@@ -1227,6 +1227,7 @@ public class FleissnerWindow extends Composite {
 //        descriptionText.setText(Messages.FleissnerWindow_subtitle);
 	}
 
+	
 	/**
 	 * installs settings for 'analyze' is chosen as the active method
 	 */
@@ -1238,6 +1239,7 @@ public class FleissnerWindow extends Composite {
 		setArgText();
 		deleteHoles();
 
+		
 //        text settings
 		plaintext.setEnabled(false);
 		plaintext.setForeground(null);
@@ -1585,6 +1587,17 @@ public class FleissnerWindow extends Composite {
 
 	}
 
+	private String canAnalyze() {
+		int grillesize = keySize.getSelection();
+		int squared = grillesize * grillesize;
+		int textsize = argText.length();
+		if (textsize % squared != 0) {
+			return String.format("The size of the grille for analysis is %s and its square (characters in it) is %s. However, the text you entered has %s characters. It must be divisible by %s.", grillesize, squared, textsize, squared);
+		} else {
+			return "";
+		}
+	}
+
 	/**
 	 * sets the arguments for chosen method and starts method 'startApplication'
 	 * that execudes method
@@ -1592,6 +1605,17 @@ public class FleissnerWindow extends Composite {
 	 * @throws IllegalArgumentException
 	 */
 	public void startMethod() throws IllegalArgumentException {
+
+		if (argMethod.equals("analyze")) {
+			String message = canAnalyze();
+			if (message.length() != 0) {
+				MessageBox box = new MessageBox(getShell(), SWT.OK);
+				box.setText("Grille");
+				box.setMessage(message);
+				box.open();
+				return;
+			}
+		}
 		FleissnerMethodJob job = new FleissnerMethodJob();
 		job.finalizeListeners.add(status -> {
 			getDisplay().syncExec(() -> {
