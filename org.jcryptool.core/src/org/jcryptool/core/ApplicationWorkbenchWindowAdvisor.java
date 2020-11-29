@@ -98,11 +98,11 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     	} else if (monitorWidth < 2600) {
     		// For monitors like 1920x1080 or 2560x1440
     		if (zoom <= 100) {
-    			prefferredSize = new Point(1200, 750);
+    			prefferredSize = new Point(1200, 700);
     		} else if (zoom <= 125 ) {
-    			prefferredSize = new Point(1450, 900);
+    			prefferredSize = new Point(1450, 825);
     		} else if (zoom <= 150 ) {
-    			prefferredSize = new Point(1700, 1000);
+    			prefferredSize = new Point(1700, 950);
     		} else {
     			maximize = true;
     		}
