@@ -642,7 +642,7 @@ public class FleissnerWindow extends Composite {
 		language.setItems(langItems);
 
 //        default language
-		if (Locale.getDefault().toString().equals("de")) {
+		if (Locale.getDefault().toString().equals("de")) { //$NON-NLS-1$
 			language.select(0);
 			argLanguage = Messages.FleissnerWindow_language_german;
 		} else {
@@ -707,7 +707,7 @@ public class FleissnerWindow extends Composite {
 		chooseExample = new Combo(thirdGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
 		chooseExample.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		chooseExample.setItems(items);
-		if (Locale.getDefault().toString().equals("de")) {
+		if (Locale.getDefault().toString().equals("de")) { //$NON-NLS-1$
 			chooseExample.select(0);
 		} else {
 			chooseExample.select(2);
@@ -950,7 +950,7 @@ public class FleissnerWindow extends Composite {
 		selectStatistic = new Combo(thirdGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
 		selectStatistic.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		selectStatistic.setItems(items);
-		if (Locale.getDefault().toString().equals("de")) {
+		if (Locale.getDefault().toString().equals("de")) { //$NON-NLS-1$
 			selectStatistic.select(0);
 		} else {
 			selectStatistic.select(1);
@@ -1522,13 +1522,13 @@ public class FleissnerWindow extends Composite {
 //				MessageDialog.openError(Display.getCurrent().getActiveShell(),
 //						Messages.FleissnerWindow_error_fileNotFound,
 //						ex.getMessage());
-				LogUtil.logError(Activator.PLUGIN_ID, "File not found!", ex, true);
+				LogUtil.logError(Activator.PLUGIN_ID, "File not found!", ex, true); //$NON-NLS-1$
 
 				return Status.CANCEL_STATUS;
 			}
 
 			switch (argMethod) {
-			case "analyze":
+			case "analyze": //$NON-NLS-1$
 				getDisplay().syncExec(() -> {
 					this.checkedArgs = checkArgs();
 					analysisOutput.append(Messages.FleissnerWindow_parameter_enlistment_analysisOut + checkedArgs); // $NON-NLS-1$
@@ -1592,9 +1592,9 @@ public class FleissnerWindow extends Composite {
 		int squared = grillesize * grillesize;
 		int textsize = argText.length();
 		if (textsize % squared != 0) {
-			return String.format("The size of the grille for analysis is %s and its square (characters in it) is %s. However, the text you entered has %s characters. It must be divisible by %s.", grillesize, squared, textsize, squared);
+			return String.format(Messages.FleissnerWindow_5, grillesize, squared, textsize, squared);
 		} else {
-			return "";
+			return ""; //$NON-NLS-1$
 		}
 	}
 
@@ -1606,11 +1606,11 @@ public class FleissnerWindow extends Composite {
 	 */
 	public void startMethod() throws IllegalArgumentException {
 
-		if (argMethod.equals("analyze")) {
+		if (argMethod.equals("analyze")) { //$NON-NLS-1$
 			String message = canAnalyze();
 			if (message.length() != 0) {
 				MessageBox box = new MessageBox(getShell(), SWT.OK);
-				box.setText("Grille");
+				box.setText("Grille"); //$NON-NLS-1$
 				box.setMessage(message);
 				box.open();
 				return;
@@ -2053,13 +2053,13 @@ public class FleissnerWindow extends Composite {
 			for (int k = 0; k < model.getKey().getSize(); k++) {
 				if (model.getKey().get(j, k) == '1') {
 					sb.append(counter);
-					sb.append(" ");
+					sb.append(" "); //$NON-NLS-1$
 				}
 				counter++;
 			}
 		}
 
-		keyText.setText(Messages.FleissnerWindow_label_key + ": " + sb.toString().trim());
+		keyText.setText(Messages.FleissnerWindow_label_key + ": " + sb.toString().trim()); //$NON-NLS-1$
 		updateCiphertext();
 	}
 
