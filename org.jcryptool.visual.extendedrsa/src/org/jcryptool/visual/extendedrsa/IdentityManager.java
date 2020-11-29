@@ -123,71 +123,79 @@ public class IdentityManager extends AbstractNewKeyStoreEntryHandler {
         final Integer[] argument = new Integer[1];
         argument[0] = keyLength;
         LogUtil.logInfo(Messages.IdentityManager_1);
-        Job job = new Job("New Key Pair Job") { //$NON-NLS-1$
-            @Override
-            protected IStatus run(IProgressMonitor monitor) {
-                monitor.beginTask("New KeyPair Task", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
-                try {
-                	ProviderManager2.getInstance().pushFlexiProviderPromotion();
-					Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-
-                    IMetaKeyGenerator gen = AlgorithmsXMLManager.getInstance().getKeyPairGenerator(algorithm);
-
-                    if (gen != null && name != null && password != null && keyLength > 0) {
-                        AlgorithmParameterSpec spec = null;
-                        if (keyLength != -1) {
-                            if (gen.getParameterSpecClassName() != null) {
-                                spec = Reflector.getInstance().instantiateParameterSpec(
-                                        gen.getParameterSpecClassName(), argument);
-                            }
-                        }
-                        KeyPairGenerator generator = Registry.getKeyPairGenerator(nkd.getAlgorithmName());
-                        if (spec != null) {
-                            generator.initialize(spec, FlexiProviderKeystorePlugin.getSecureRandom());
-                        } else if (keyLength != -1) {
-                            generator.initialize(keyLength, FlexiProviderKeystorePlugin.getSecureRandom());
-                        }
-                        KeyPair keyPair = generator.genKeyPair();
-
-                        PrivateKey priv = keyPair.getPrivate();
-
-                        PublicKey pub = keyPair.getPublic();
-                        performNewKeyAction(new NewKeyPairDescriptor(nkd, priv, pub));
-                    } else {
-                        LogUtil.logInfo("Attention: One of the given parameters is wrong! Identity name: '" + name
-                                + "', algorithm name: '" + algorithm + "', password: '" + password
-                                + "' and key length: '" + keyLength + "'. Key creation failed!");
-                    }
-                } catch (NoSuchAlgorithmException e) {
-                    LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_2, e, true);
-                } catch (InvalidAlgorithmParameterException e) {
-                    LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_3, e, true);
-                } catch (SecurityException e) {
-                    LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_4, e, true);
-                } catch (IllegalArgumentException e) {
-                    LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_5, e, true);
-                } catch (ClassNotFoundException e) {
-                    LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_6, e, true);
-                } catch (NoSuchMethodException e) {
-                    LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_7, e, true);
-                } catch (InstantiationException e) {
-                    LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_8, e, true);
-                } catch (IllegalAccessException e) {
-                    LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_9, e, true);
-                } catch (InvocationTargetException e) {
-                    LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_10, e, true);
-                } finally {
-
-                	ProviderManager2.getInstance().pushFlexiProviderPromotion();
-                    monitor.done();
-                }
-                return Status.OK_STATUS;
-            }
-        };
-        job.setPriority(Job.LONG);
-        job.schedule();
+//        Job job = new Job("New Key Pair Job") { //$NON-NLS-1$
+//            @Override
+//            protected IStatus run(IProgressMonitor monitor) {
+//            	return staticImpl(monitor, name, algorithm, password, keyLength, argument, nkd);
+//            }
+//        };
+//        job.setPriority(Job.LONG);
+//        job.schedule();
+		staticImpl(null, name, algorithm, password, keyLength, argument, nkd);
 
     }
+
+	public IStatus staticImpl(IProgressMonitor monitor, String name, String algorithm, String password, int keyLength, Integer[] argument, INewEntryDescriptor nkd) {
+		if(monitor != null) {
+			monitor.beginTask("New KeyPair Task", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
+		}
+		try {
+			ProviderManager2.getInstance().pushFlexiProviderPromotion();
+
+			IMetaKeyGenerator gen = AlgorithmsXMLManager.getInstance().getKeyPairGenerator(algorithm);
+
+			if (gen != null && name != null && password != null && keyLength > 0) {
+				AlgorithmParameterSpec spec = null;
+				if (keyLength != -1) {
+					if (gen.getParameterSpecClassName() != null) {
+						spec = Reflector.getInstance().instantiateParameterSpec(
+								gen.getParameterSpecClassName(), argument);
+					}
+				}
+				KeyPairGenerator generator = Registry.getKeyPairGenerator(nkd.getAlgorithmName());
+				if (spec != null) {
+					generator.initialize(spec, FlexiProviderKeystorePlugin.getSecureRandom());
+				} else if (keyLength != -1) {
+					generator.initialize(keyLength, FlexiProviderKeystorePlugin.getSecureRandom());
+				}
+				KeyPair keyPair = generator.genKeyPair();
+
+				PrivateKey priv = keyPair.getPrivate();
+
+				PublicKey pub = keyPair.getPublic();
+				performNewKeyAction(new NewKeyPairDescriptor(nkd, priv, pub));
+			} else {
+				LogUtil.logInfo("Attention: One of the given parameters is wrong! Identity name: '" + name
+						+ "', algorithm name: '" + algorithm + "', password: '" + password
+						+ "' and key length: '" + keyLength + "'. Key creation failed!");
+			}
+		} catch (NoSuchAlgorithmException e) {
+			LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_2, e, true);
+		} catch (InvalidAlgorithmParameterException e) {
+			LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_3, e, true);
+		} catch (SecurityException e) {
+			LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_4, e, true);
+		} catch (IllegalArgumentException e) {
+			LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_5, e, true);
+		} catch (ClassNotFoundException e) {
+			LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_6, e, true);
+		} catch (NoSuchMethodException e) {
+			LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_7, e, true);
+		} catch (InstantiationException e) {
+			LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_8, e, true);
+		} catch (IllegalAccessException e) {
+			LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_9, e, true);
+		} catch (InvocationTargetException e) {
+			LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_10, e, true);
+		} finally {
+			ProviderManager2.getInstance().popCryptoProviderPromotion();
+			if (monitor != null) {
+				monitor.done();
+			}
+		}
+		return Status.OK_STATUS;
+		
+	}
 
     /**
      * method to create a "big" new multi-prime RSA key with GENERATED parameters
@@ -208,11 +216,74 @@ public class IdentityManager extends AbstractNewKeyStoreEntryHandler {
         argument[1] = 65537;
         argument[2] = numberOfPrimes;
         LogUtil.logInfo(Messages.IdentityManager_1);
-        Job job = new Job("New Key Pair Job") { //$NON-NLS-1$
-            @Override
-            protected IStatus run(IProgressMonitor monitor) {
-                monitor.beginTask("New KeyPair Task", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
+//        Job job = new Job("New Key Pair Job") { //$NON-NLS-1$
+//            @Override
+//            protected IStatus run(IProgressMonitor monitor) {
+//                monitor.beginTask("New KeyPair Task", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
+//                try {
+//                	ProviderManager2.getInstance().pushFlexiProviderPromotion();
+//
+//                    IMetaKeyGenerator gen = AlgorithmsXMLManager.getInstance().getKeyPairGenerator(algorithm);
+//                    if (gen != null && numberOfPrimes > 2 && numberOfPrimes < 6 && name != null && password != null
+//                            && keyLength > 0) {
+//
+//                        final String e = "65537";
+//                        FlexiBigInt exponent = new FlexiBigInt(e);
+//
+//                        AlgorithmParameterSpec spec = new MpRSAKeyGenParameterSpec(keyLength, exponent, numberOfPrimes);
+//                        if (keyLength != -1) {
+//                            if (gen.getParameterSpecClassName() != null) {
+//                                spec = Reflector.getInstance().instantiateParameterSpec(
+//                                        gen.getParameterSpecClassName(), argument);
+//                                spec = new MpRSAKeyGenParameterSpec(keyLength, exponent, numberOfPrimes);
+//                            }
+//                        }
+//                        KeyPairGenerator generator = Registry.getKeyPairGenerator(nkd.getAlgorithmName());
+//                        if (spec != null) {
+//                            generator.initialize(spec, FlexiProviderKeystorePlugin.getSecureRandom());
+//                        }
+//
+//                        KeyPair keyPair = generator.genKeyPair();
+//
+//                        PrivateKey priv = keyPair.getPrivate();
+//
+//                        PublicKey pub = keyPair.getPublic();
+//                        performNewKeyAction(new NewKeyPairDescriptor(nkd, priv, pub));
+//                    } else {
+//                        LogUtil.logInfo("Attention: One of the given parameters is wrong! Identity name: '" + name
+//                                + "', number of primes: '" + numberOfPrimes + "', password: '" + password
+//                                + "' and key length: '" + keyLength + "'. Key creation failed!");
+//                    }
+//                } catch (NoSuchAlgorithmException e) {
+//                    LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_2, e, true);
+//                } catch (InvalidAlgorithmParameterException e) {
+//                    LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_3, e, true);
+//                } catch (SecurityException e) {
+//                    LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_4, e, true);
+//                } catch (IllegalArgumentException e) {
+//                    LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_5, e, true);
+//                } catch (ClassNotFoundException e) {
+//                    LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_6, e, true);
+//                } catch (NoSuchMethodException e) {
+//                    LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_7, e, true);
+//                } catch (InstantiationException e) {
+//                    LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_8, e, true);
+//                } catch (IllegalAccessException e) {
+//                    LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_9, e, true);
+//                } catch (InvocationTargetException e) {
+//                    LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_10, e, true);
+//                } finally {
+//                	ProviderManager2.getInstance().popCryptoProviderPromotion();
+//                    monitor.done();
+//                }
+//                return Status.OK_STATUS;
+//            }
+//        };
+//        job.setPriority(Job.LONG);
+//        job.schedule();
                 try {
+                	ProviderManager2.getInstance().pushFlexiProviderPromotion();
+
                     IMetaKeyGenerator gen = AlgorithmsXMLManager.getInstance().getKeyPairGenerator(algorithm);
                     if (gen != null && numberOfPrimes > 2 && numberOfPrimes < 6 && name != null && password != null
                             && keyLength > 0) {
@@ -263,13 +334,8 @@ public class IdentityManager extends AbstractNewKeyStoreEntryHandler {
                 } catch (InvocationTargetException e) {
                     LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_10, e, true);
                 } finally {
-                    monitor.done();
+                	ProviderManager2.getInstance().popCryptoProviderPromotion();
                 }
-                return Status.OK_STATUS;
-            }
-        };
-        job.setPriority(Job.LONG);
-        job.schedule();
     }
 
     /**
@@ -780,6 +846,8 @@ public class IdentityManager extends AbstractNewKeyStoreEntryHandler {
         Vector<BigInteger> parameters = new Vector<BigInteger>();
 
         try {
+
+			ProviderManager2.getInstance().pushFlexiProviderPromotion();
             RSAPublicKey pubkey = (RSAPublicKey) KeyStoreManager.getInstance().getCertificate(alias).getPublicKey();
             parameters.add(pubkey.getModulus());
             parameters.add(pubkey.getPublicExponent());
@@ -787,6 +855,8 @@ public class IdentityManager extends AbstractNewKeyStoreEntryHandler {
             LogUtil.logError(Activator.PLUGIN_ID, e);
         } catch (java.security.NoSuchAlgorithmException e) {
             LogUtil.logError(Activator.PLUGIN_ID, e);
+        } finally {
+			ProviderManager2.getInstance().popCryptoProviderPromotion();
         }
 
         return parameters;
