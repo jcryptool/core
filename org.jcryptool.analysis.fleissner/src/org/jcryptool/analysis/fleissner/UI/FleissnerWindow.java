@@ -1867,7 +1867,7 @@ public class FleissnerWindow extends Composite {
 		}
 
 		if (textInputState != 1 || tempArgText.equals(Messages.FleissnerWindow_empty))
-			loadedTextName.setText(Messages.FleissnerWindow_empty);
+//			loadedTextName.setText(Messages.FleissnerWindow_empty);
 
 		if (textInputState == 2) {
 			plaintext.setEditable(edit);
