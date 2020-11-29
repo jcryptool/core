@@ -10,7 +10,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.equinox.p2.ui.sdk,
  org.eclipse.help,
  org.jcryptool.core.operations,
- org.jcryptool.core.util
+ org.jcryptool.core.util,
+ org.eclipse.ui.workbench
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %bundleProvider
 Bundle-RequiredExecutionEnvironment: JavaSE-11
