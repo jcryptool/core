@@ -576,6 +576,35 @@ public class KeyStoreManager {
 			ProviderManager2.getInstance().popCryptoProviderPromotion();
 		}
     }
+    /**
+     * Returns all public keys available in the JCrypTool keystore.
+     * 
+     * @return All public keys available in the JCrypTool keystore.
+     */
+    public ArrayList<IKeyStoreAlias> getAllSecretKeys() {
+    	try {
+			ProviderManager2.getInstance().pushFlexiProviderPromotion();
+			ArrayList<IKeyStoreAlias> publicKeys = new ArrayList<IKeyStoreAlias>();
+
+			try {
+				Enumeration<String> aliases = keyStore.aliases();
+
+				while (aliases.hasMoreElements()) {
+					KeyStoreAlias alias = new KeyStoreAlias(aliases.nextElement());
+					if (alias.getKeyStoreEntryType().getType().contains(KeyType.SECRETKEY.getType())) {
+						publicKeys.add(alias);
+					}
+				}
+			} catch (KeyStoreException e) {
+				LogUtil.logError(KeyStorePlugin.PLUGIN_ID, e);
+			}
+
+			return publicKeys;
+			
+		} finally {
+			ProviderManager2.getInstance().popCryptoProviderPromotion();
+		}
+    }
 
     /**
      * Returns all public keys available in the JCrypTool keystore.
