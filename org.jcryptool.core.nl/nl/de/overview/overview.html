@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="../css/shared.css" type="text/css" />
   </head>
 
-<!-- 
+<!--
 How to make links open in an external browser window in the welcome page?
 =========================================================================
 Model example: <a href="http://org.eclipse.ui.intro/openBrowser?url=https://github.com/jcryptool/core/wiki">JCT Wiki on GitHub</a>
@@ -21,7 +21,7 @@ Note:
 
 href=...openBrowser explanation:
 WelcomePage has an own URL handler. It apparently supports a range of applications, e.g. run a command, embed a url, standby of the view, etc.
-Those can be found in the source code of the handler:	
+Those can be found in the source code of the handler:
 - constant defintion: https://github.com/eclipse/eclipse.platform.ua/blob/d76a4acff64e0804c1ef6a861b9106495aefd77e/org.eclipse.ui.intro/src/org/eclipse/ui/internal/intro/impl/model/url/IntroURL.java#L82
 - handling:           https://github.com/eclipse/eclipse.platform.ua/blob/d76a4acff64e0804c1ef6a861b9106495aefd77e/org.eclipse.ui.intro/src/org/eclipse/ui/internal/intro/impl/model/url/IntroURL.java#L82
 openBrowser fits target="_blank" best. its argument is "url"
@@ -73,14 +73,14 @@ openBrowser fits target="_blank" best. its argument is "url"
 					<h3>Was ist JCrypTool?</h3>
 					<p>JCrypTool (JCT) ist eine E-Learning-Plattform für Kryptografie, die im Open-Source-Projekt <a href="http://org.eclipse.ui.intro/openBrowser?url=https://www.cryptool.org">CrypTool</a> entwickelt wird. Sie läuft unter Linux, Windows und macOS und steht kostenfrei zur Verfügung. Ziel von JCT ist es, Menschen für Kryptografie zu interessieren und ihnen ein einfach zu bedienendes, modernes und didaktisches Tool zur Verfügung zu stellen.<br/>
 					JCT ermöglicht das spielerische Ausprobieren und Anwenden von kryptografischen Verfahren auf beliebigen Daten. Anwender werden dabei meist Schritt-für-Schritt durch den Prozess geführt. Die Online-Hilfe enthält u.a. Hintergrund-Informationen zur Geschichte oder zur Funktionsweise eines Algorithmus oder zu seiner Kryptoanalyse.<br/>
-					Weitere Informationen zu den Möglichkeiten und zur Anwendung von JCT finden sich in der Online-Hilfe im 
-                    <a href="http://org.eclipse.ui.intro/showHelpTopic?id=/org.jcryptool.core.help/$nl$/help/users/toc.html" target=>Anwenderhandbuch</a>.</p><br/>
-					
+					Weitere Informationen zu den Möglichkeiten und zur Anwendung von JCT finden sich in der Online-Hilfe im
+                    <a href="http://org.eclipse.ui.intro/showHelpTopic?id=/org.jcryptool.core.help/$nl$/help/users/toc.html">Anwenderhandbuch</a>.</p><br/>
+
 
                     <h3>Wie kann ich JCrypTool mit einem eigenen Kryptografie-Plug-in erweitern?</h3>
-					<p>JCrypTool (JCT) ist in Java geschrieben und basiert auf der Eclipse Rich Client Platform (RCP) und ist damit an nahezu allen Stellen erweiterbar. Um den Anwendern einen möglichst einheitlichen und einfachen Zugang zu den kryptografischen Funktionen zu ermöglichen, bietet JCT verschiedene, vorgegebene Erweiterungspunkte (extension points) an. Hiermit können Kryptografie-Plug-ins dann Verschlüsselungs-Algorithmen, Verfahren zur digitalen Signatur, Analyse-Verfahren oder Visualisierungen anbieten, die an den vorgesehenen Punkten (wie z.B. in der  
+					<p>JCrypTool (JCT) ist in Java geschrieben und basiert auf der Eclipse Rich Client Platform (RCP) und ist damit an nahezu allen Stellen erweiterbar. Um den Anwendern einen möglichst einheitlichen und einfachen Zugang zu den kryptografischen Funktionen zu ermöglichen, bietet JCT verschiedene, vorgegebene Erweiterungspunkte (extension points) an. Hiermit können Kryptografie-Plug-ins dann Verschlüsselungs-Algorithmen, Verfahren zur digitalen Signatur, Analyse-Verfahren oder Visualisierungen anbieten, die an den vorgesehenen Punkten (wie z.B. in der
                     <a href="http://org.eclipse.ui.intro/showHelpTopic?id=/org.jcryptool.core.help/$nl$/help/users/algorithm/toc.html">Algorithmen-Sicht</a>) sofort angezeigt werden.<br/>
-					Weitere Informationen hierzu finden sich im 
+					Weitere Informationen hierzu finden sich im
 					<a href="http://org.eclipse.ui.intro/openBrowser?url=http://github.com/jcryptool/core/wiki">JCT Wiki auf GitHub</a>.</p>
 				</div>
 			</div>
