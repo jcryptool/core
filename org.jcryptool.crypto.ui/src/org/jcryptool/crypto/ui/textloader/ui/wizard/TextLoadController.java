@@ -114,7 +114,10 @@ public class TextLoadController extends Composite {
 	
 	private void createDisplayerCtrls() {
 		compDisplayer = new Composite(this, SWT.NONE);
-		compDisplayer.setLayout(new GridLayout(3-(showFrontLabel?0:1)+(oneRow?1:0), false));
+		GridLayout layout = new GridLayout(3-(showFrontLabel?0:1)+(oneRow?1:0), false);
+		layout.marginWidth = 0;
+		layout.marginHeight = 1;
+		compDisplayer.setLayout(layout);
 		compDisplayer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		if(showFrontLabel) {
@@ -123,7 +126,7 @@ public class TextLoadController extends Composite {
 		}
 		
 		displayer = new TextInputWithSourceDisplayer(compDisplayer, this, new TextInputWithSource(""), new TextInputWithSourceDisplayer.Style(true, false)); //$NON-NLS-1$
-		displayer.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
+		displayer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		
 		createTransformDisplays(compDisplayer);
 		
