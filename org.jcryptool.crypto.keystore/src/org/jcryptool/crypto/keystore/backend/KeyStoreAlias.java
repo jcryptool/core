@@ -30,7 +30,6 @@ public class KeyStoreAlias implements IKeyStoreAlias {
     private boolean valid = false;
     private String hashValue;
     private String className;
-
     public KeyStoreAlias(String contactName, KeyType keyType, String opName, int keyLength, String hashValue,
             String className) {
         this.encodedContactName = encode(contactName);

@@ -7,6 +7,25 @@
   <link rel="stylesheet" href="../css/shared.css" type="text/css" />
   </head>
 
+<!-- 
+How to make links open in an external browser window in the welcome page?
+=========================================================================
+Model example: <a href="http://org.eclipse.ui.intro/openBrowser?url=https://github.com/jcryptool/core/wiki">JCT Wiki on GitHub</a>
+Note:
+- http vs https
+	- DO         use <a href="http://org.eclipse.ui.intro/..."...
+		- do NOT use <a href="https://org.eclipse.ui.intro/..."...
+- target=_blank (breaks links!)
+	- DO         use <a href="http://org.eclipse.ui.intro/openBrowser?url=...">...</a>
+		- do NOT use <a href="http://org.eclipse.ui.intro/openBrowser?url=..." target="_blank">...</a>
+
+href=...openBrowser explanation:
+WelcomePage has an own URL handler. It apparently supports a range of applications, e.g. run a command, embed a url, standby of the view, etc.
+Those can be found in the source code of the handler:	
+- constant defintion: https://github.com/eclipse/eclipse.platform.ua/blob/d76a4acff64e0804c1ef6a861b9106495aefd77e/org.eclipse.ui.intro/src/org/eclipse/ui/internal/intro/impl/model/url/IntroURL.java#L82
+- handling:           https://github.com/eclipse/eclipse.platform.ua/blob/d76a4acff64e0804c1ef6a861b9106495aefd77e/org.eclipse.ui.intro/src/org/eclipse/ui/internal/intro/impl/model/url/IntroURL.java#L82
+openBrowser fits target="_blank" best. its argument is "url"
+-->
   <body>
 	<div id="centered-zone">
 		<div class="page-style">
@@ -52,17 +71,18 @@
 				<div class="column-2">
 
 					<h3>What is JCrypTool?</h3>
-					<p>JCrypTool (JCT) is a cryptography e-learning platform developed by the open-source project <a href="https://www.cryptool.org" target="_blank">CrypTool</a>. JCT is available at no costs, and runs under Linux, Windows and macOS. JCT's aim to interest people for cryptography and to offer them an easy-to-use and modern didactic tool.<br/>
+				<p>JCrypTool (JCT) is a cryptography e-learning platform developed by the open-source project <a href="http://org.eclipse.ui.intro/openBrowser?url=https://www.cryptool.org">CrypTool</a>. JCT is available at no costs, and runs under Linux, Windows and macOS. JCT's aim to interest people for cryptography and to offer them an easy-to-use and modern didactic tool.<br/>
 					JCT enables playful experiments with various cryptographic functions on arbitrary files. Users are mostly guided step-by-step through every process. The online help contains background information about the history or the technical details of algorithms and of their cryptanalysis.<br/>
 					More information on JCT's possibilities and their usage is available in the online help in the 
-                    <a href="http://org.eclipse.ui.intro/showHelpTopic?id=/org.jcryptool.core.help/$nl$/help/users/toc.html">User Guide</a>.</p><br/>
+                    <a href="https://org.eclipse.ui.intro/showHelpTopic?id=/org.jcryptool.core.help/$nl$/help/users/toc.html">User Guide</a>.</p><br/>
 					
 
 					<h3>How can I extend JCrypTool with my own cryptographic plug-in?</h3>
 					<p>JCrypTool (JCT) is written in Java and based on the Eclipse Rich Client Platform (RCP) and can therefore be extended at almost any place. In order to provide consistent and easy-to-use access to all functionality, JCT offers different extension points which must be used by all cryptographic plug-ins. This way, cryptography plug-ins can offer encryption algorithms, digital signatures, cryptanalysis or visualizations, which then appear at once in a common way like the ones in the 
-                    <a href="http://org.eclipse.ui.intro/showHelpTopic?id=/org.jcryptool.core.help/$nl$/help/users/algorithm/toc.html">Algorithm view</a>.<br/>
+                    <a href="https://org.eclipse.ui.intro/showHelpTopic?id=/org.jcryptool.core.help/$nl$/help/users/algorithm/toc.html">Algorithm view</a>.<br/>
 					More information on developing plug-ins is available in the 
-					<a href="https://github.com/jcryptool/core/wiki" target="_blank">JCT Wiki on GitHub</a>.</p>
+					<a href="http://org.eclipse.ui.intro/openBrowser?url=https://github.com/jcryptool/core/wiki">JCT Wiki on GitHub</a>.</p>
+					
 				</div>
 			</div>
 			<img class="icon" alt="GUI-with-legends" src="../graphics/welcome_highlights_with-text.png"  width="90%" />
