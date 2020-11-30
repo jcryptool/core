@@ -172,6 +172,9 @@ public class ARC4Composite extends Composite {
     	td.setLayoutData(new GridData(SWT.FILL, SWT.UP, true, false, ARC4Con.H_SPAN_MAIN, ARC4Con.DESC_HEIGHT));
     	td.setTitle(Messages.PluginDescriptionCaption);
     	td.setDescription(Messages.PluginDescription);
+    	// Disable autp resizing of the TaD.
+    	td.setResize(false);
+    	
     }
     
     private void initAlgoSec() {
