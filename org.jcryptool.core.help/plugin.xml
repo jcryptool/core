@@ -68,13 +68,5 @@
             class="org.jcryptool.core.help.ServerStartup">
       </startup>
    </extension>
-   <extension
-         point="org.eclipse.ui.installationPages">
-      <page
-            class="org.jcryptool.core.help.InstallationPage2"
-            id="org.jcryptool.core.help.page2"
-            name="Custom About Page">
-      </page>
-   </extension>
 
 </plugin>
