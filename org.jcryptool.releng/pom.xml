@@ -39,11 +39,13 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 		<product.id>jcryptool</product.id>
 		<product.version>1.0.0</product.version>
 		<timestamp>${maven.build.timestamp}</timestamp>
+		<jct.isStableRelease>false</jct.isStableRelease>
 		<maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
 	</properties>
 
 	<build>
 		<defaultGoal>clean verify</defaultGoal>
+
 		<plugins>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
@@ -136,6 +138,7 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 			</activation>
 			<properties>
 				<timestamp>${maven.build.timestamp} (weekly)</timestamp>
+				<jct.isStableRelease>false</jct.isStableRelease>
 			</properties>
 		</profile>
 
@@ -144,7 +147,8 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 			<id>release</id>
 			<properties>
 			<!--  by adding something between <timestamp> and </timestamp> you can adjust the name of the JCrypTool -->
-				<timestamp></timestamp>
+				<timestamp>${maven.build.timestamp} (stable)</timestamp>
+				<jct.isStableRelease>true</jct.isStableRelease>
 			</properties> 
 		</profile>
 
