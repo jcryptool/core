@@ -151,11 +151,25 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     	
     	//Add to the title you enter in the jcryptool.product file the Version of the JCT (that is also
     	//entered in the jcryptool.product file) and the maven build timestamp.
-    	configurer.setTitle(Platform.getProduct().getName()
+    	// for definition site of these maven constants, see o.j.releng/pom.xml and /org.jcryptool.core/plugin.xml
+//    	configurer.setTitle(Platform.getProduct().getName()
+//    			+ " "
+//    			+ Platform.getProduct().getDefiningBundle().getVersion()
+//    			+ " "
+//    			+ Platform.getProduct().getProperty("mavenBuildTimestamp"));
+    	System.out.println(String.format("mBISR: %s||", Platform.getProduct().getProperty("mavenBuildIsStableRelease")));
+    	if (Platform.getProduct().getProperty("mavenBuildIsStableRelease").equals("true")) {
+			configurer.setTitle(Platform.getProduct().getName()
+    			+ " "
+    			+ Platform.getProduct().getDefiningBundle().getVersion());
+		} else {
+			configurer.setTitle(Platform.getProduct().getName()
     			+ " "
     			+ Platform.getProduct().getDefiningBundle().getVersion()
     			+ " "
     			+ Platform.getProduct().getProperty("mavenBuildTimestamp"));
+		}
+
         
         PlatformUI.getPreferenceStore().setValue(IWorkbenchPreferenceConstants.PERSPECTIVE_BAR_EXTRAS, Perspective.PERSPECTIVE_ID
                 + ", org.jcryptool.crypto.flexiprovider.ui.perspective.FlexiProviderPerspective"); //$NON-NLS-1$
