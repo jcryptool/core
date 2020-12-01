@@ -7,7 +7,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.jcryptool.core.util,
  org.eclipse.help,
- org.eclipse.ui.workbench
+ org.eclipse.ui.workbench,
+ org.jcryptool.core.views
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: org.jcryptool.core,
  org.jcryptool.core.commands,
