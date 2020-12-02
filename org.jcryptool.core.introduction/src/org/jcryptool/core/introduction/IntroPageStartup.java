@@ -45,12 +45,13 @@ public class IntroPageStartup implements IStartup {
 				String id = "org.jcryptool.core.views.AlgorithmView"; //$NON-NLS-1$
 				
 				if (partRef.getId().equals(id)) {
-					if (getPreferenceString("HAS_SEEN_CRYPTOEXPLORER_HINT").orElse("no").equals("no")) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					int times_shown = getPreferenceString("HAS_SEEN_CRYPTOEXPLORER_HINT").map(s -> Integer.parseInt(s)).orElse(0);
+					if (times_shown < 3) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						setPreferenceString("HAS_SEEN_CRYPTOEXPLORER_HINT", ""+(times_shown+1)); //$NON-NLS-1$ //$NON-NLS-2$
 						AlgorithmView view = AlgorithmView.instance;
 						if (view != null) {
 							view.showBubble(Messages.IntroPageStartup_0);
 						}
-						setPreferenceString("HAS_SEEN_CRYPTOEXPLORER_HINT", "yes"); //$NON-NLS-1$ //$NON-NLS-2$
 					}
 				}
 			}
