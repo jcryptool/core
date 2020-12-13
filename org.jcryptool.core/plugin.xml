@@ -304,15 +304,15 @@
          <property name="startupMessageRect" value="7,238,445,20"/>
          <property name="startupProgressRect" value="5,275,445,15"/>
          <property name="mavenBuildTimestamp" value="%maven.timestamp"/>
-         <property name="mavenBuildIsStableRelease" value="%jct.releasebuild"/> 
-         		<!-- this comes from the OSGI-INF/l10n/bundle.properties, which in turn are filtered on maven build 
-         		     (resources->filtering=true). The mechanism behind it is simple string substitution which is maven's task. 
-         		     The file is substituted already in the product. 
-         		-->
+         <property name="mavenBuildIsStableRelease" value="%jct.releasebuild"/>
          <property
                name="preferenceCustomization"
                value="plugin_customization.ini">
          </property>
+         		<!-- this comes from the OSGI-INF/l10n/bundle.properties, which in turn are filtered on maven build 
+         		     (resources->filtering=true). The mechanism behind it is simple string substitution which is maven's task. 
+         		     The file is substituted already in the product. 
+         		-->
 
       </product>
    </extension>
