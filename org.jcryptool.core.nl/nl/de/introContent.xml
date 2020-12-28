@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <introContent>
-    <page id="root" content="root.xhtml" />
-    <page id="whatsnew" content="whatsnew/whatsnew.xhtml" />
-    <page id="overview" content="overview/overview.xhtml" />
-    <page id="firststeps" content="firststeps/firststeps.xhtml" />
-    <page id="tutorials" content="tutorials/tutorials.xhtml" />
+    <page id="root" content="root.html" />
+    <page id="whatsnew" content="whatsnew/whatsnew.html" />
+    <page id="overview" content="overview/overview.html" />
+    <page id="firststeps" content="firststeps/firststeps.html" />
+    <page id="tutorials" content="tutorials/tutorials.html" />
     <!-- STANDBY PAGE  -->
     <page style="css/standby.css" id="standby">
         <group id="page-links-standby">
@@ -12,12 +12,12 @@
             <link label="Überblick"
                 url="http://org.eclipse.ui.intro/showPage?id=overview&amp;standby=false"
                 id="overview">
-                <text>Das Wichtigste auf einen Blick.</text>
+                <text>Das Wichtigste auf einen Blick</text>
             </link>
             <link label="Tutorials"
                 url="http://org.eclipse.ui.intro/showPage?id=tutorials&amp;standby=false"
                 id="tutorials">
-                <text>Schritt-für-Schritt Anleitungen.</text>
+                <text>Schritt-für-Schritt Anleitungen</text>
             </link>
             <anchor id="endAnchor" />
         </group>

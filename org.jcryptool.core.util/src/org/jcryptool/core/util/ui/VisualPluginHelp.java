@@ -13,10 +13,15 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.NotHandledException;
 import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
 
 public class VisualPluginHelp {
+
 
 	/**
 	 * 
@@ -39,8 +44,24 @@ public class VisualPluginHelp {
 	}
 	
 	public static void runContextHelpAction() throws ExecutionException, NotHandledException {
-		Command cmd = getCommand("org.eclipse.ui.help.dynamicHelp");
-		cmd.execute(new ExecutionEvent());
+		org.eclipse.ui.IWorkbenchWindow wbwin = PlatformUI.getWorkbench().getWorkbenchWindows()[0];
+		IWorkbenchPage page = wbwin.getActivePage();
+		IViewPart helpview = page.findView("org.eclipse.help.ui.HelpView");
+		if (helpview != null) {
+			if(StartupPartTracker.parttracker.isContextHelpVisible) {
+//				System.out.println("helpview is open and visible");
+				page.hideView(helpview);
+			} else {
+//				System.out.println("helpview is open but not visible");
+				Command cmd = getCommand("org.eclipse.ui.help.dynamicHelp");
+				cmd.execute(new ExecutionEvent());
+			}
+			
+		} else {
+//			System.out.println("helpview is closed!");
+			Command cmd = getCommand("org.eclipse.ui.help.dynamicHelp");
+			cmd.execute(new ExecutionEvent());
+		}
 	}
 
 	private static Command getCommand(String id) {

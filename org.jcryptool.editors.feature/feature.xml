@@ -2,7 +2,7 @@
 <feature
       id="org.jcryptool.editors.feature"
       label="JCrypTool Editors Feature"
-      version="1.0.0"
+      version="1.0.2"
       provider-name="jcryptool.org"
       plugin="org.jcryptool.core">
 

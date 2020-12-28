@@ -28,6 +28,7 @@ import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.ICoolBarManager;
+import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
@@ -40,6 +41,7 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ContributionItemFactory;
 import org.eclipse.ui.application.ActionBarAdvisor;
@@ -53,6 +55,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.CommandInfo;
 import org.jcryptool.core.operations.OperationsPlugin;
 import org.jcryptool.core.operations.algorithm.ShadowAlgorithmHandler;
+import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.keystore.commands.OpenKeystoreHandler;
 
@@ -185,7 +188,11 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         SortedMap<String, IConfigurationElement> sortedElements = new TreeMap<String, IConfigurationElement>(
                 menuStringsComparator);
         for (IConfigurationElement element : elements) {
-            sortedElements.put(element.getAttribute("name"), element); //$NON-NLS-1$
+        	// Das sortiert das AndroidUnlock Pattern Plugin unter Linux aus,
+        	// da es dort nicht funktioniert.
+        	if (!(element.getAttribute("viewId").equals("org.jcryptool.visual.aup.views.AndroidUnlockPattern") && OS.equals("linux"))) {
+        		sortedElements.put(element.getAttribute("name"), element); //$NON-NLS-1$
+        	}
         }
 
         IConfigurationElement element;
@@ -361,6 +368,31 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         ICommandService commandService = PlatformUI.getWorkbench().getService(ICommandService.class);
         MenuManager menu = new MenuManager(Messages.applicationActionBarAdvisor_Menu_Algorithms,
                 CorePlugin.PLUGIN_ID + ".algorithms"); //$NON-NLS-1$
+        
+        /**
+         * Dieser Listener prüft beim Öffnen des Algorithmen Menüs, ob
+         * ein Editor geöffnet ist und ob dieser Inhalt enthält. Nur wenn 
+         * beides der Fall ist sind die Algorithmen anklickbar. Andernfalls
+         * sind sie deaktiviert.
+         */
+        menu.addMenuListener(new IMenuListener() {
+			
+			@Override
+			public void menuAboutToShow(IMenuManager manager) {
+		        try {
+		        	// First condition: An editor must be open.
+		        	// Second condition: The open editor must contain some content.
+		        	if (EditorsManager.getInstance().isEditorOpen() &&
+		        			EditorsManager.getInstance().getActiveEditorContentInputStream().available() > 0) {	
+		        		OperationsPlugin.getDefault().getAlgorithmsManager().setCommandsEnabled(true);
+		            } else {
+		                OperationsPlugin.getDefault().getAlgorithmsManager().setCommandsEnabled(false);
+		            }
+		        } catch (Exception ex) {
+		            OperationsPlugin.getDefault().getAlgorithmsManager().setCommandsEnabled(false);
+		        }
+			}
+		});
 
         // id->compare-relevant-name map
         final Map<String, String> idNameMap = new HashMap<String, String>();
@@ -457,6 +489,29 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		};
 		openKeystoreAction.setImageDescriptor(ImageService.getImageDescriptor("org.jcryptool.crypto.keystore", "/icons/16x16/kgpg_info.png"));
 		menu.add(openKeystoreAction);
+		
+		 //This is the Algorithmn Perspective entry in the algorithm drop down menu
+		IAction switchToAlgorithmPerspective = new Action() {
+			
+			@Override
+			public void run() {
+				try {
+					PlatformUI.getWorkbench().showPerspective("org.jcryptool.crypto.flexiprovider.ui.perspective.FlexiProviderPerspective",
+							PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+				} catch (WorkbenchException e) {
+					LogUtil.logError(CorePlugin.PLUGIN_ID, e);
+				}
+				super.run();
+			}
+			
+			@Override
+			public String getText() {
+				return Messages.applicationActionBarAdvisor_algorithmPerspective;
+			}
+		};
+		switchToAlgorithmPerspective.setImageDescriptor(ImageService.IMAGEDESCRIPTOR_PERSPECTIVE_ALGORITHM);
+		menu.add(switchToAlgorithmPerspective);
+
         return menu;
     }
 

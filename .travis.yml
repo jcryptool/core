@@ -16,25 +16,24 @@ before_deploy:
 - git tag "Weekly-Build--$(date +'%Y-%m-%d')"
 after_success:
 # Rename files for better readability
-- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-linux.gtk.x86_64.tar.gz" "org.jcryptool.product/target/products/JCrypTool-1.0.0-Linux-64bit.tar.gz"
-- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-linux.gtk.x86_64.tar.gz.md5" "org.jcryptool.product/target/products/JCrypTool-1.0.0-Linux-64bit.tar.gz.md5"
-- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-linux.gtk.x86_64.tar.gz.sha1" "org.jcryptool.product/target/products/JCrypTool-1.0.0-Linux-64bit.tar.gz.sha1"
-- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-macosx.cocoa.x86_64.tar.gz" "org.jcryptool.product/target/products/JCrypTool-1.0.0-macOS-64bit.tar.gz"
-- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-macosx.cocoa.x86_64.tar.gz.md5" "org.jcryptool.product/target/products/JCrypTool-1.0.0-macOS-64bit.tar.gz.md5"
-- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-macosx.cocoa.x86_64.tar.gz.sha1" "org.jcryptool.product/target/products/JCrypTool-1.0.0-macOS-64bit.tar.gz.sha1"
-- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-win32.win32.x86_64.zip" "org.jcryptool.product/target/products/JCrypTool-1.0.0-Windows-64bit.zip" 
-- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-win32.win32.x86_64.zip.md5" "org.jcryptool.product/target/products/JCrypTool-1.0.0-Windows-64bit.zip.md5"
-- mv "org.jcryptool.product/target/products/jcryptool-1.0.0-win32.win32.x86_64.zip.sha1" "org.jcryptool.product/target/products/JCrypTool-1.0.0-Windows-64bit.zip.sha1"
+- mv "org.jcryptool.product/target/products/jcryptool-1.0.2-linux.gtk.x86_64.tar.gz" "org.jcryptool.product/target/products/JCrypTool-1.0.2-Linux-64bit.tar.gz"
+- mv "org.jcryptool.product/target/products/jcryptool-1.0.2-linux.gtk.x86_64.tar.gz.md5" "org.jcryptool.product/target/products/JCrypTool-1.0.2-Linux-64bit.tar.gz.md5"
+- mv "org.jcryptool.product/target/products/jcryptool-1.0.2-linux.gtk.x86_64.tar.gz.sha1" "org.jcryptool.product/target/products/JCrypTool-1.0.2-Linux-64bit.tar.gz.sha1"
+- mv "org.jcryptool.product/target/products/jcryptool-1.0.2-macosx.cocoa.x86_64.tar.gz" "org.jcryptool.product/target/products/JCrypTool-1.0.2-macOS-64bit.tar.gz"
+- mv "org.jcryptool.product/target/products/jcryptool-1.0.2-macosx.cocoa.x86_64.tar.gz.md5" "org.jcryptool.product/target/products/JCrypTool-1.0.2-macOS-64bit.tar.gz.md5"
+- mv "org.jcryptool.product/target/products/jcryptool-1.0.2-macosx.cocoa.x86_64.tar.gz.sha1" "org.jcryptool.product/target/products/JCrypTool-1.0.2-macOS-64bit.tar.gz.sha1"
+- mv "org.jcryptool.product/target/products/jcryptool-1.0.2-win32.win32.x86_64.zip" "org.jcryptool.product/target/products/JCrypTool-1.0.2-Windows-64bit.zip"
+- mv "org.jcryptool.product/target/products/jcryptool-1.0.2-win32.win32.x86_64.zip.md5" "org.jcryptool.product/target/products/JCrypTool-1.0.2-Windows-64bit.zip.md5"
+- mv "org.jcryptool.product/target/products/jcryptool-1.0.2-win32.win32.x86_64.zip.sha1" "org.jcryptool.product/target/products/JCrypTool-1.0.2-Windows-64bit.zip.sha1"
 deploy:
   - provider: releases
     prerelease: true
     token:
       secure: R/UG294tu6IY7TosmU34/4s2xzSdcUJduZJyQwUC+aGRIm+gSiUniO69MR4KOpStN5EO72RVmEJzFDMe0dpUN8DEoYfSl3ovTWmKF7OTOX/5cCuciR13CT2D8jUU72jws7BIuZbrjggzJWJ79G6zUGo8EyE6xnMoT4ODscT0Emw=
     file:
-      - "org.jcryptool.product/target/products/JCrypTool-1.0.0-Linux-64bit.tar.gz"
-      - "org.jcryptool.product/target/products/JCrypTool-1.0.0-macOS-64bit.tar.gz"
-      - "org.jcryptool.product/target/products/JCrypTool-1.0.0-Windows-64bit.zip"  
-    skip_cleanup: true
+      - "org.jcryptool.product/target/products/JCrypTool-1.0.2-Linux-64bit.tar.gz"
+      - "org.jcryptool.product/target/products/JCrypTool-1.0.2-macOS-64bit.tar.gz"
+      - "org.jcryptool.product/target/products/JCrypTool-1.0.2-Windows-64bit.zip"
     on:
       repo: jcryptool/core
       branch: develop
@@ -44,16 +43,15 @@ deploy:
     token:
       secure: R/UG294tu6IY7TosmU34/4s2xzSdcUJduZJyQwUC+aGRIm+gSiUniO69MR4KOpStN5EO72RVmEJzFDMe0dpUN8DEoYfSl3ovTWmKF7OTOX/5cCuciR13CT2D8jUU72jws7BIuZbrjggzJWJ79G6zUGo8EyE6xnMoT4ODscT0Emw=
     file:
-      - "org.jcryptool.product/target/products/JCrypTool-1.0.0-Linux-64bit.tar.gz"
-      - "org.jcryptool.product/target/products/JCrypTool-1.0.0-Linux-64bit.tar.gz.md5"
-      - "org.jcryptool.product/target/products/JCrypTool-1.0.0-Linux-64bit.tar.gz.sha1"
-      - "org.jcryptool.product/target/products/JCrypTool-1.0.0-macOS-64bit.tar.gz"
-      - "org.jcryptool.product/target/products/JCrypTool-1.0.0-macOS-64bit.tar.gz.md5"
-      - "org.jcryptool.product/target/products/JCrypTool-1.0.0-macOS-64bit.tar.gz.sha1"
-      - "org.jcryptool.product/target/products/JCrypTool-1.0.0-Windows-64bit.zip" 
-      - "org.jcryptool.product/target/products/JCrypTool-1.0.0-Windows-64bit.zip.md5"
-      - "org.jcryptool.product/target/products/JCrypTool-1.0.0-Windows-64bit.zip.sha1"
-    skip_cleanup: true
+      - "org.jcryptool.product/target/products/JCrypTool-1.0.2-Linux-64bit.tar.gz"
+      - "org.jcryptool.product/target/products/JCrypTool-1.0.2-Linux-64bit.tar.gz.md5"
+      - "org.jcryptool.product/target/products/JCrypTool-1.0.2-Linux-64bit.tar.gz.sha1"
+      - "org.jcryptool.product/target/products/JCrypTool-1.0.2-macOS-64bit.tar.gz"
+      - "org.jcryptool.product/target/products/JCrypTool-1.0.2-macOS-64bit.tar.gz.md5"
+      - "org.jcryptool.product/target/products/JCrypTool-1.0.2-macOS-64bit.tar.gz.sha1"
+      - "org.jcryptool.product/target/products/JCrypTool-1.0.2-Windows-64bit.zip"
+      - "org.jcryptool.product/target/products/JCrypTool-1.0.2-Windows-64bit.zip.md5"
+      - "org.jcryptool.product/target/products/JCrypTool-1.0.2-Windows-64bit.zip.sha1"
     on:
       repo: jcryptool/core
       branch: master

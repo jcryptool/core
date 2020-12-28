@@ -46,8 +46,8 @@ public class OpenFileHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
         FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.OPEN);
-        dialog.setFilterExtensions(new String[] {IConstants.TXT_FILTER_EXTENSION, IConstants.ALL_FILTER_EXTENSION});
-        dialog.setFilterNames(new String[] {IConstants.TXT_FILTER_NAME, IConstants.ALL_FILTER_NAME});
+        dialog.setFilterExtensions(new String[] {IConstants.ALL_FILTER_EXTENSION, IConstants.TXT_FILTER_EXTENSION});
+        dialog.setFilterNames(new String[] {IConstants.ALL_FILTER_NAME, IConstants.TXT_FILTER_NAME});
         dialog.setFilterPath(DirectoryService.getUserHomeDir());
 
         final String filename = dialog.open();

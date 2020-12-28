@@ -16,7 +16,6 @@ public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.jcryptool.crypto.flexiprovider.algorithms.ui.wizards.blockcipher.messages"; //$NON-NLS-1$
     public static String BlockCipherIntroductionPage_0;
     public static String BlockCipherIntroductionPage_1;
-    public static String BlockCipherIntroductionPage_2;
     public static String BlockCipherIntroductionPage_3;
     public static String BlockCipherIntroductionPage_4;
     public static String BlockCipherIntroductionPage_5;

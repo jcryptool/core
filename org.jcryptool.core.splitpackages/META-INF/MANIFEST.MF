@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Splitpackages
 Bundle-SymbolicName: org.jcryptool.core.splitpackages
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.2
 Automatic-Module-Name: org.jcryptool.core.splitpackages
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ClassPath: .,

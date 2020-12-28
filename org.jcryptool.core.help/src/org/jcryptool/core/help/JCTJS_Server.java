@@ -103,9 +103,9 @@ public class JCTJS_Server {
 
 		URL rootResource = getRootURL();
 
- 		System.out.println("Server root resource: " + rootResource);
- 		System.out.println("Server root resource: classloader: " + HelpPlugin.getInstance().getClass().getClassLoader());
- 		System.out.println("Server root resource: classloader type: " + HelpPlugin.getInstance().getClass().getClassLoader().getClass().toString());
+// 		System.out.println("Server root resource: " + rootResource);
+// 		System.out.println("Server root resource: classloader: " + HelpPlugin.getInstance().getClass().getClassLoader());
+// 		System.out.println("Server root resource: classloader type: " + HelpPlugin.getInstance().getClass().getClassLoader().getClass().toString());
 		Resource baseResource = Resource.newResource(rootResource);
 		Server server = new Server(port);
 

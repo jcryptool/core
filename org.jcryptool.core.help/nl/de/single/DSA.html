@@ -3,24 +3,67 @@
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	  <title>DSA</title>
 </head>
-
 <body>
-	<h1>DSA</h1>
-<p>
-<strong>TODO: Description</strong>
-</p>
 
-<!-- <img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/DSA_screenshot1.png" width="85%"/> --><strong>TODO: Screenshot</strong>
+<h1>DSA</h1>
 
-<p>
-DSA finden Sie ausführlich erklärt unter den Visualisierungen in JCT: 
-<!-- <a href="PLUGINS_ROOT/org.jcryptool.visual.elGamal/$nl$/help/content/index.html">Visualisierungen → DSA-Kryptosystem</a> --><strong>TODO: Link to help page of visualization if exists</strong>
-</p>
 
-<h2>Quellen:</h2>
+<h2>Beschreibung</h2>
 
-<ul><li>
-        <!-- <a target="_blank" href="https://de.wikipedia.org/wiki/Elgamal-Verschl%C3%BCsselungsverfahren" >https://de.wikipedia.org/wiki/Elgamal-Verschl%C3%BCsselungsverfahren</a> --><strong>TODO: Link to Wikipedia</strong>
-    </li></ul>
+	<p><b>DSA</b> (Digital Signature Algorithm) ist ein US Federal Information Processing Standard (FIPS) für digitale Signaturen, der auf dem mathematischen Konzept der modularen Potenzierung und dem Problem des diskreten Logarithmus basiert. DSA ist eine Variante des Schnorr- und ElGamal-Signaturverfahrens.</p>
+
+	<p>Das NIST (National Institute of Standards and Technology) schlug 1991 DSA zur Verwendung in ihrem Digital Signature Standard (DSS) vor und übernahm ihn als FIPS 186. Die aktuelle Spezifikation ist FIPS 186-4 (Juli 2013). Neben DSA enthält DSS auch die Signaturverfahren RSA und ECDSA.</p>
+
+	<p>FIPS 186-4 legt fest, eine zugelassene kryptografische Hash-Funktion <b>H</b> wie <b>SHA-2</b> zu wählen und für den Modulus <b>N</b> einen der Werte 1024, 2048, 2048 oder 3072 zu wählen. <!-- TODO_(make sure): Eine DSA-Signatur hat die Länge von zweimal N Bit. --> </p>
+<!-- Der DSS enthält neben dem DSA (ursprünglich der einzige im DSS definierte Algorithmus) auch weitere Algorithmen die RSA-Signatur und ECDSA. -->
+	
+	<p>Anmerkung: Neben anderen Hash-Funktionen wird SHA-2 im JCT-Plugin <a href="PLUGINS_ROOT/org.jcryptool.visual.hashing/$nl$/help/content/index.html">Visualisierungen → Hash-Sensitivität</a>.</p> angeboten.
+
+
+
+<h2>Bedienung des Dialogs</h2>
+	
+	<p> <img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/DSA_sign_Alice-key.png" width="85%" alt="Dialog zum Erstellen einer DSA-Signatur unter Verwendung von Alices privatem Schlüssel aus dem Schlüsselspeicher"> </p>
+	
+	<p>Sie haben die Wahl, entweder eine DSA-Signatur zu erstellen (signieren) oder eine DSA-Signatur zu prüfen (verifizieren). Sowohl der Signier- als auch der Verifizierungsprozess verwendet hier immer den Inhalt des aktuell aktiven Editors als Daten (Nachricht).</p>
+	
+	<p>Wenn Sie den Auswahlknopf <b>Signieren</b> wählen, wird der private Schlüssel des Unterzeichners verwendet und Sie müssen den Dateinamen und den Pfad angeben, wohin die Datei mit der Signatur gespeichert werden soll. 
+	Nach diesen Vorbereitungsschritten klicken Sie auf die Schaltfläche <b>Fertigstellen</b>. Dann werden Sie nach dem Passwort des privaten Schlüssels gefragt (bei Verwendung des Schlüssels von Alice aus dem Keystore ist das Passwort "1234"), und die entsprechende Signatur wird in einer Datei gespeichert.<br>
+	Bemerkung: Im Gegensatz zum Verhalten mit HMAC wird die Ausgabe nicht in einem neuen Hex-Editor-Fenster in der Mitte von JCT gespeichert, sondern in einer Datei.</p>
+	
+	<p>Wenn Sie den Auswahlknopf <b>Verifizieren</b> wählen, wird der öffentliche Schlüssel des Unterzeichners verwendet, und Sie müssen den Dateinamen und den Pfad angeben, aus dem die Signatur geladen werden soll.
+	Nach diesen Vorbereitungsschritten klicken Sie auf die Schaltfläche <b>Fertigstellen</b>. Dann erscheint ein Validierungsdialog, der das Ergebnis der Überprüfung (gültig oder ungültig) anzeigt.</p>
+
+
+    <p>Die Schlüssel des Unterzeichners werden immer aus dem Schlüsselspeicher entnommen. Zur Verifizierung muss ein vorhandener Schlüssel aus dem Keystore ausgewählt werden. Zum Signieren kann entweder ein vorhandener asymmetrischer Schlüssel ausgewählt werden (JCT schlägt immer einen passenden Schlüssel von Alice vor, wenn er existiert)  &ndash; oder es kann zunächst ein neuer Schlüssel erzeugt und im Keystore gespeichert werden, und dann der neu erzeugte Schlüssel ausgewählt werden.</p>
+
+
+<h3>Vor dem Signieren einen neuen Schlüssel anlegen</h3>
+
+   <p>Drücken Sie den langgestreckten Button <b>Einen neuen Schlüssel (für DSA) im Schlüsselspeicher erzeugen</b>, öffnet sich ein Dialog mit dem Namen "Neues Schlüsselpaar".  Einen neuen Schlüssel können Sie entweder für den existierenden Benutzer "Alice Whitehead" anlegen, oder besser für einen neuen Benutzer wie Sie selbst (indem Sie einfach einen Benutzernamen in das Benutzerfeld eintragen und "Alice" überschreiben). Sie werden gefragt, mit welchem Passwort dieser neue Schlüssel geschützt werden soll. Wenn der neue Schlüssel im Schlüsselspeicher eingetragen ist, können Sie ihn später wieder verwenden (ohne vorher einen neuen Schlüssel zu erstellen).</p>
+
+    <p>Nachdem Sie auf <b>Fertigstellen</b> geklickt haben, kehren Sie zum Dialog "DSA &mdash; Signatur" zurück, der nun den neu erzeugten Schlüssel in der Gruppierung "Schlüsselspeicher" auflistet.</p>
+
+    <p>Da die Unterzeichnerin und ihr Schlüssel ausgewählt wurden, müssen Sie wiederum den Namen und den Ort der Datei wählen, wo die Signatur gespeichert werden soll.</p>
+
+    <p>Wenn Sie auch hier auf <b>Fertigstellen</b> klicken, erscheint ein weiterer Dialog ("Passwort eingeben"), in dem Sie das Passwort eingeben müssen, das Sie soeben für den neuen Schlüssel festgelegt haben. Dann wird die Signatur erzeugt und ein Meldungsfenster bestätigt, wo die Signatur gespeichert worden ist.</p>
+
+    <!-- <p>xxxxxxxxxxxxxxxx Die Ausgabe (DSA-Signatur) hat eine Länge xxxxxxxxxxxx ist immer ein Hash-Wert der Länge des verwendeten Hash-Verfahrens (hier MD5 mit 128 Bit = 16 Byte), z.B. F6 5B 71 96 D6 56 AD BA 1F 45 0B 1B 28 D7 16 75.</p> -->
+    <!-- <p>.</p> -->
+
+
+
+
+<h2>Quellen / Literaturhinweise</h2>
+
+<ul>
+	<li>
+        <a target="_blank" href="https://de.wikipedia.org/wiki/Digital_Signature_Algorithm" >https://de.wikipedia.org/wiki/Digital_Signature_Algorithm</a>
+        Wikipedia DSA
+    </li>
+</ul>
+
+
+
 </body>
 </html>

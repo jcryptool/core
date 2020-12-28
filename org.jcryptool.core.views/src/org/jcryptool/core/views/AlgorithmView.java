@@ -37,7 +37,10 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.menus.CommandContributionItem;
@@ -83,6 +86,7 @@ public class AlgorithmView extends ViewPart implements IOperationsConstants {
     private static final Color COLOR_FILTER_INITIAL = ColorService.getColor(SWT.COLOR_GRAY); // gray
 
     private static ArrayList<ShadowAlgorithmHandler> algorithmTypes = new ArrayList<ShadowAlgorithmHandler>();
+	public static AlgorithmView instance;
 
     final static String showPaletteCommandId = ViewsPlugin.PLUGIN_ID + ".commands.showPalette";
     final static String showTreeCommandId = ViewsPlugin.PLUGIN_ID + ".commands.showTree";
@@ -103,6 +107,7 @@ public class AlgorithmView extends ViewPart implements IOperationsConstants {
     public AlgorithmView() {
         PlatformUI.getPreferenceStore().setDefault("showView", VIEW_PALETTE); //$NON-NLS-1$
         loadAlgorithms();
+        AlgorithmView.instance = this;
     }
 
     /**
@@ -124,6 +129,41 @@ public class AlgorithmView extends ViewPart implements IOperationsConstants {
 
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, ViewsPlugin.PLUGIN_ID + ".algorithmsView"); //$NON-NLS-1$
     }
+    
+    
+	public static void showBubble(String string) {
+		PaletteView viewer = paletteView;
+		if (! viewer.getControl().isVisible()) {
+			
+			Control control = viewer.getControl();
+			Shell shell = viewer.getControl().getShell();
+			final ToolTip tip = new ToolTip(shell, SWT.BALLOON);
+			tip.setMessage(string);
+			tip.setVisible(true);
+			tip.setLocation(control.toDisplay(control.getSize().x, 0));
+			tip.setAutoHide(true);
+		} else {
+			viewer.getControl().addPaintListener(new PaintListener() {
+				private boolean doneThis = false;
+				@Override
+				public void paintControl(PaintEvent e) {
+					if (doneThis) {
+						return;
+					} else {
+						doneThis = true;
+					}
+					Control control = viewer.getControl();
+					Shell shell = viewer.getControl().getShell();
+					final ToolTip tip = new ToolTip(shell, SWT.BALLOON);
+					tip.setMessage(string);
+					tip.setVisible(true);
+					tip.setLocation(control.toDisplay(control.getSize().x, 0));
+					tip.setAutoHide(true);
+					
+				}
+			});
+		}
+	}
 
     private void defineCommand(final String commandId, final String name, AbstractHandler handler) {
     	Command command = commandService.getCommand(commandId);

@@ -3,32 +3,55 @@
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	  <title>RSA</title>
 </head>
-
 <body>
-	<h1>RSA</h1>
-<p>
-RSA ist ein sehr weit verbreitetes, asymmetrisches kryptographisches
-Verfahren, das sowohl zum Verschlüsseln als auch zum digitalen Signieren
-verwendet werden kann.
-</p>
 
-<p>
-Dieser Dialog dient zum Ver- und Entschlüsseln mit RSA unter Nutzung eines Schlüssels aus dem JCT-Schlüsselspeicher.
+<h1>RSA</h1>
+
+<p> RSA (Rivest-Shamir-Adleman) ist ein sehr weit verbreitetes, asymmetrisches Kryptografie-Verfahren, das sowohl zum Verschlüsseln als auch zum digitalen Signieren verwendet werden kann. Einen guten allgemeinen Überblick finden Sie in der Wikipedia [1] und im Kapitel 4 des CrypTool-Buchs [2].</p>
+
+<p>Dieser Dialog dient zum Ver- und Entschlüsseln mit RSA unter Nutzung eines Schlüssels aus dem JCT-Schlüsselspeicher (hier erstellte Schlüssel werden mit der Kryptobibliothek FlexiProvider erstellt, die nur große, praxisnahe Schlüssellängen erlaubt).
 </p>
 
 <img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/RSA_screenshot1.png" width="85%" alt="[[[RSA-Dialog]]]"/>
 
 
-<p>
-In JCT gibt es auch eine Visualisierung zu RSA, wo dieses Verfahren ausführlich erklärt ist: 
-	<a href="PLUGINS_ROOT/org.jcryptool.visual.rsa/$nl$/help/content/index.html">Visualisierungen → RSA-Kryptosystem</a>
-</p>
+<p>RSA wird auch an weiteren Stellen in JCT behandelt:</p>
+<ul>
+    <li>In the <strong>Standard-Perspektive</strong> gibt es dazu die folgenden zwei <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/visualizations/toc.html">Visualisierungen</a>:
+	<ul>
+        <li><a href="PLUGINS_ROOT/org.jcryptool.visual.rsa/$nl$/help/content/index.html">Visualisierungen → RSA-Kryptosystem</a> erklärt das RSA-Verfahren im Detail und erlaubt auch kleinere Schlüssellängen für didaktische Zwecke,</li>
+		<li><a href="PLUGINS_ROOT/org.jcryptool.visual.extendedrsa/$nl$/help/content/rsaHelp.html">Visualisierungen → Erweitertes RSA-Kryptosystem</a> zeigt RSA in einem breiteren Kontext: Jeder Kommunikationspartner (Identität) braucht ein Schlüsselpaar, der öffentliche Schlüssel muss ausgetauscht werden, zum Verschlüsseln (Sender) und zum Entschlüsseln (Empfänger) werden unterschiedliche Schlüssel verwendet. Zusätzlich kann die RSA-Variante "multi-prime RSA" auch mit kleinen Primzahlen angewandt werden.</li>
+	</ul>
+	</li>
+    <li>In der <strong><a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html">Algorithmen-Perspektive</a></strong> im Reiter "Algorithmen":<br>
+	Unter "Asymmetrische Blockchiffren" finden Sie die drei RSA-Varianten: RSA, RbRSA und RprimeRSA (sie verwenden alle große Schlüssellängen).<br>
+	Ähnlich gibt es RSA-Varianten unter "Signaturen".</li>
+</ul>
+
+
+<p> <br> </p>
+<p><strong>Anmerkung</strong></p>
+<p>Es gibt verschiedene RSA-Varianten. Einige davon werden in der <strong>Algorithmen-Perspektive</strong> angeboten:</p>
+	<ul>
+		<li>RprimeRSA bedeutet rebalanced multi-prime RSA.</li>
+        <li>RbRSA ist ist eine weitere rebalanced RSA-Variante.</li>
+        <li>MeRSA bedeutet multi-exponent RSA und wird in dem Signaturverfahren von Mihir Bellare und Phillip Rogaway verwendet.</li>
+		<li>MpRSA bedeutet multi-prime RSA und wird für OAEP (optimal asymmetric encryption padding) benutzt.</li>
+	</ul>
+<p>Weitere Details finden Sie beispielsweise in [3] and [4].</p>
 
 
 
-<h2>Quellen:</h2>
+<p> <br> </p>
+<h2>Quellen</h2>
 
-<ul><li><a target="_blank" href="https://de.wikipedia.org/wiki/RSA-Kryptosystem" >https://de.wikipedia.org/wiki/RSA-Kryptosystem</a></li></ul>
+<ul>
+	<li><a target="_blank" href="https://de.wikipedia.org/wiki/RSA-Kryptosystem" >[1] Wikipedia: RSA-Kryptosystem</a></li>
+	<li><a target="_blank" href="https://www.cryptool.org/assets/img/ctp/documents/CT-Book-en.pdf" >[2] Das CrypTool-Buch</a></li>
+	<li><a target="_blank" href="https://eprint.iacr.org/2003/159.pdf" >[3] Paixao: "An efficient variant of the RSA cryptosystem", eprint paper, 2003</a> </li>
+	<li><a target="_blank" href="https://hovav.net/ucsd/dist/survey.pdf" >[4] Boneh and Shacham: "Fast Variants of RSA", 2002</a></li>
+	<li><a target="_blank" href="https://de.wikipedia.org/wiki/Optimal_Asymmetric_Encryption_Padding" >[5] Wikipedia: Optimal Asymmetric Encryption Padding</a></li>
+</ul>
 
 
 </body>

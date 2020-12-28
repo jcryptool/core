@@ -2,16 +2,16 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jcryptool.core;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.2
 Bundle-Activator: org.jcryptool.core.CorePlugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
- org.eclipse.ui.cheatsheets,
  org.eclipse.ui.intro,
  org.eclipse.equinox.p2.ui.sdk,
  org.eclipse.help,
  org.jcryptool.core.operations,
- org.jcryptool.core.util
+ org.jcryptool.core.util,
+ org.eclipse.ui.workbench
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %bundleProvider
 Bundle-RequiredExecutionEnvironment: JavaSE-11

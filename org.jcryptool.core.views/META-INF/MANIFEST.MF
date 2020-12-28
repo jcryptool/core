@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jcryptool.core.views;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.2
 Bundle-Activator: org.jcryptool.core.views.ViewsPlugin
 Bundle-Vendor: %bundleProvider
 Require-Bundle: org.eclipse.core.runtime,

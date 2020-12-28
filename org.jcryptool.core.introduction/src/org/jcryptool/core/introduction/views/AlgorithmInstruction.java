@@ -17,6 +17,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
@@ -28,10 +31,6 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.core.util.ui.auto.SmoothScroller;
-
-//import java.util.concurrent.ExecutorService;
-//import java.util.concurrent.Executors;
-
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.nebula.effects.stw.ImageTransitionable;
@@ -263,12 +262,30 @@ public class AlgorithmInstruction extends ViewPart {
 					// After the countdown has finished switch to the next image.
 					// After 15 seconds it switches to the next image.
 					Thread.sleep(15000);
-
+					
 					Display.getDefault().asyncExec(new Runnable() {
 
 						@Override
 						public void run() {
-							slideToNextImage();
+							IWorkbenchWindow iw = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+							if (iw != null) {
+								IWorkbenchPage page = iw.getActivePage();
+								IViewPart part = page.findView("org.jcryptool.core.introduction.views.AlgorithmInstruction");
+								// The slideshow plugin is open, but maybe not visible
+								if (part != null) {
+									// The slideshow plugin is visible, thus maybe not active.
+									if (page.isPartVisible(part)) {
+										// Slide to the next image
+										slideToNextImage();
+									} else {
+										//trigger this method in 15 seconds
+										resetTimer();
+									}
+								} else {
+									//trigger this method in 15 seconds
+									resetTimer();
+								}
+							}
 						}
 					});
 
@@ -546,6 +563,8 @@ public class AlgorithmInstruction extends ViewPart {
 		slideTransition.start(scaled_imgs[curImage], curImage, scaled_imgs[nextImage], nextImage, cnvs,
 				SlideTransition.DIR_LEFT);
 		curImage = nextImage;
+		cnvs.redraw();
+		cnvs.update();
 		resetTimer();
 	}
 
@@ -560,6 +579,8 @@ public class AlgorithmInstruction extends ViewPart {
 		slideTransition.start(scaled_imgs[curImage], curImage, scaled_imgs[previousImage], previousImage, cnvs,
 				SlideTransition.DIR_RIGHT);
 		curImage = previousImage;
+		cnvs.redraw();
+		cnvs.update();
 		resetTimer();
 	}
 
@@ -586,6 +607,8 @@ public class AlgorithmInstruction extends ViewPart {
 			slideTransition.start(scaled_imgs[curImage], curImage, scaled_imgs[imageNr], imageNr, cnvs, direction);
 			curImage = imageNr;
 			
+			cnvs.redraw();
+			cnvs.update();
 			
 			resetTimer();
 		}

@@ -3,31 +3,55 @@
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	  <title>RSA</title>
 </head>
-
 <body>
-	<h1>RSA</h1>
-<p>
-RSA (Rivest-Shamir-Adleman) is one of the first public-key cryptosystems
-and is widely used for encryption and signing.
-</p>
 
-<p>
-This dialog allows to encrypt and decrypt with RSA using a key from the JCT keystore.
-</p>
+<h1>RSA</h1>
+
+<p>RSA (Rivest-Shamir-Adleman) is one of the first public-key cryptosystems
+and it is widely used for encryption and signing. A good general overview can be found in Wikipedia [1] and in chapter 4 of the CrypTool Book [2].</p>
+
+<p>This dialog allows to encrypt and decrypt with RSA using a key from the JCT keystore (keys created here are built with the crypto library FlexiProvider, which only supports big key lengths in order to achieve practical relevance).</p>
 
 <img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/RSA_screenshot1.png" width="85%" alt="[[[RSA Dialog]]]"/>
 
 
-<p>
-In JCT there are also visualizations about RSA, where this method is explained exhaustively: 
-	<a href="PLUGINS_ROOT/org.jcryptool.visual.rsa/$nl$/help/content/index.html">Visuals → RSA Cryptosystem</a>
-</p>
+<p>In JCT there are further places dealing with RSA:</p>
+<ul>
+    <li>In the <strong>Default Perspective</strong> there are the following two <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/visualizations/toc.html">Visualizations</a>:
+	<ul>
+        <li><a href="PLUGINS_ROOT/org.jcryptool.visual.rsa/$nl$/help/content/index.html">Visuals → RSA Cryptosystem</a>, which explains the RSA method in detail and also allows smaller key sizes for didactical purposes,</li>
+		<li><a href="PLUGINS_ROOT/org.jcryptool.visual.extendedrsa/$nl$/help/content/rsaHelp.html">Visuals → Extended RSA Cryptosystem</a>, which shows RSA in a broader context: Each communication partner (identity) needs a key pair, the public key has to be exchanged, different keys are used to encrypt (sender) and to decrypt (receiver) messages. In addition the RSA variant "multi-prime RSA" can be applied with small primes.</li>
+	</ul>
+	</li>
+    <li>In the <strong><a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html">Algorithm Perspective</a></strong> in the "Algorithms" tab:<br>
+	Below "Asymmetric Block Ciphers" you can find three RSA variants: RSA, RbRSA, and RprimeRSA (they all use big key lengths).<br>
+	Similarily, there are RSA variants below "Signatures".</li>
+</ul>
+
+
+<p> <br> </p>
+<p><strong>Remark</strong></p>
+<p>There are several RSA variants, some of them are offered in the <strong>Algorithm Perspective</strong>:</p>
+	<ul>
+		<li>RprimeRSA means rebalanced multi-prime RSA.</li>
+        <li>RbRSA is another rebalanced RSA variant.</li>
+        <li>MeRSA means multi-exponent RSA used for a special signature scheme by Mihir Bellare and Phillip Rogaway.</li>
+		<li>MpRSA means multi-prime RSA used in the OAEP (optimal asymmetric encryption padding).</li>
+	</ul>
+<p>More details can be found e.g. in [3] and [4].</p>
 
 
 
-<h2>References:</h2>
+<p> <br> </p>
+<h2>References</h2>
 
-<ul><li><a target="_blank" href="https://en.wikipedia.org/wiki/RSA_(cryptosystem)" >https://en.wikipedia.org/wiki/RSA_(cryptosystem)</a></li></ul>
+<ul>
+	<li><a target="_blank" href="https://en.wikipedia.org/wiki/RSA_(cryptosystem)" >[1] Wikipedia: RSA (cryptosystem)</a></li>
+	<li><a target="_blank" href="https://www.cryptool.org/assets/img/ctp/documents/CT-Book-de.pdf" >[2] The CrypTool Book</a></li>
+	<li><a target="_blank" href="https://eprint.iacr.org/2003/159.pdf" >[3] Paixao: "An efficient variant of the RSA cryptosystem", eprint paper, 2003</a> </li>
+	<li><a target="_blank" href="https://hovav.net/ucsd/dist/survey.pdf" >[4] Boneh and Shacham: "Fast Variants of RSA", 2002</a></li>
+	<li><a target="_blank" href="https://en.wikipedia.org/wiki/Optimal_asymmetric_encryption_padding" >[5] Wikipedia: Optimal asymmetric encryption padding (OAEP)</a></li>
+</ul>
 
 
 </body>

@@ -9,20 +9,14 @@
 <body>
     <h1>Crypto Provider</h1>
 
-    <p>This page contains an overview about all available crypto provider and their version in JCrypTool. With the <strong>Up</strong> and
-    <strong>Down</strong> buttons on the right side it is possible to select their order. The first crypto provider automatically becomes
-    the default crypto provider.</p>
+    <p>The preferences dialog contains an overview about all in JCrypTool available crypto providers and their versions. With the <strong>Up</strong> and <strong>Down</strong> buttons (on the right side) it is possible to select their order. The first crypto provider automatically becomes the default crypto provider.</p>
 
     <div class="screenshot">
     	<img src="images/crypto_provider.png" width="640" height="532" alt="Crypto Provider"/>
     </div>
 
-    <p>When selecting a certain algorithm in one of the crypto plug-ins, JCrypTool tries to find an implementation for it. All installed crypto
-    provider are searched in the defined order, as long as a crypto provider provides support for this algorithm. So in case more than one provider
-    offers support for a certain algorithm you can select the one to use by changing the crypto provider order. In case none of the installed providers
-    offers support for an algorithm an error is shown.</p>
+    <p>When selecting a certain algorithm in one of the crypto plug-ins, JCrypTool tries to find an implementation for it. The installed crypto providers are searched through whether they provide this algorithm. The provider found first is used. In case none of the installed providers offers support for an algorithm an error is shown.</p>
 
-    <p>The default crypto provider in JCrypTool is <strong>FlexiProvider</strong>. Additionally <strong>BouncyCastle</strong> is included in every
-    installation.</p>
+    <p>Currently the default crypto provider in JCrypTool is <strong>FlexiProvider</strong>. Additionally <strong>BouncyCastle</strong> is included in every installation. BouncyCastle will become the default crypto provider in one of the next versions of JCT.</p>
 </body>
 </html>

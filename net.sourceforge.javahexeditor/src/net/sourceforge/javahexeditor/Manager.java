@@ -692,24 +692,20 @@ public final class Manager {
 			statusLine.updateInsertMode(hexTexts == null ? true : !hexTexts.isOverwriteMode());
 			if (hexTexts != null && hexTexts.getContent() != null) {
 				long size = hexTexts.getContent().length();
-				statusLine.updatePositionWidth(size);
-				statusLine.updateSizeWidth(size);
 				if (hexTexts.isSelected()) {
-					statusLine.updateSelection(hexTexts.getSelection());
+					statusLine.updateSelectionAndSize(hexTexts.getSelection());
 				} else {
-					statusLine.updatePosition(hexTexts.getCaretPos());
+					statusLine.updatePoitionAndSize(hexTexts.getCaretPos(), size);
 				}
 				statusLine.updateValue(hexTexts.getActualValue());
-				statusLine.updateSize(size);
+				
 
 			} else {
-				statusLine.updatePositionWidth(0);
-				statusLine.updateSizeWidth(0);
-				statusLine.clearPosition();
 				statusLine.clearValue();
 				statusLine.clearSize();
 			}
 		}
+		
 	}
 
 	public void setSelection(RangeSelection selection) {

@@ -10,10 +10,12 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.crypto.flexiprovider.operations.ui.listeners;
 
+import org.jcryptool.crypto.flexiprovider.descriptors.algorithms.AlgorithmDescriptor;
 import org.jcryptool.crypto.flexiprovider.ui.nodes.TreeNode;
 
 public interface IOperationChangedListener {
 
+	public default void addOperation(AlgorithmDescriptor descriptor) { this.addOperation(); };
 	public void update(TreeNode updated);
 	public void addOperation();
 	public void removeOperation();

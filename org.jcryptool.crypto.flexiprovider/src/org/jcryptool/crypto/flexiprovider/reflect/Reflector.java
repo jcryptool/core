@@ -10,8 +10,11 @@
 package org.jcryptool.crypto.flexiprovider.reflect;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.flexiprovider.FlexiProviderPlugin;
@@ -206,7 +209,56 @@ public class Reflector {
         return null;
     }
 
-    @SuppressWarnings("rawtypes")
+    private boolean setPrivateField(String name, Object value, Object object) {
+    	Class<? extends Object> clazz = object.getClass();
+    	List<Class<? extends Object>> clazzParents = getHierarchy(clazz);
+    	for( Class<? extends Object> superclazz: clazzParents ) {
+    		try {
+				Field field = superclazz.getDeclaredField(name);
+				field.setAccessible(true);
+				field.set(object, value);
+				return true;
+			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+				nop();
+			}
+    	}
+    	return false;
+    }
+    private Optional<Object> getPrivateField(String name, Object object) {
+    	Class<? extends Object> clazz = object.getClass();
+    	List<Class<? extends Object>> clazzParents = getHierarchy(clazz);
+    	Optional<Object> fieldValue = Optional.empty();
+    	for( Class<? extends Object> superclazz: clazzParents ) {
+    		try {
+				Field field = superclazz.getDeclaredField(name);
+				field.setAccessible(true);
+				Object value = field.get(object);
+				fieldValue = Optional.of(value);
+				return fieldValue;
+			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+				nop();
+			}
+    	}
+    	return fieldValue;
+    }
+    
+    private void nop() { }
+
+	private List<Class<? extends Object>> getHierarchy(Class<? extends Object> clazz) {
+    	if (clazz.getSuperclass() == null) {
+    		LinkedList<Class<? extends Object>> result = new LinkedList<Class<? extends Object>>();
+    		result.add(clazz);
+    		return result;
+    	} else {
+    		List<Class<? extends Object>> parents = getHierarchy(clazz.getSuperclass());
+    		LinkedList<Class<? extends Object>> result = new LinkedList<Class<? extends Object>>();
+    		result.add(clazz);
+    		result.addAll(parents);
+    		return result;
+		}
+	}
+
+	@SuppressWarnings("rawtypes")
 	public AlgorithmParameterSpec instantiateParameterSpec(final String specClassName, final Object[] parameters)
             throws ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException,
             InstantiationException, IllegalAccessException, InvocationTargetException {
@@ -226,7 +278,24 @@ public class Reflector {
             final Constructor<?> constructor = clazz.getConstructor(parameterTypes);
             return (AlgorithmParameterSpec) constructor.newInstance(parameters);
         } else {
-            return (AlgorithmParameterSpec) clazz.newInstance();
+            AlgorithmParameterSpec newInstance = (AlgorithmParameterSpec) clazz.newInstance();
+            Class<? extends AlgorithmParameterSpec> createdClazz = newInstance.getClass();
+            Field[] fields = createdClazz.getFields();
+
+            // this is for patching bad defaults
+            // patch byte[] "salt" fields that are empty -- for PbeWithSHAAnd3_KeyTripleDES_CBC
+            Optional<Object> saltField = getPrivateField("salt", newInstance);
+            if (saltField.isPresent()) {
+            	Class<? extends Object> classOfSaltField = saltField.get().getClass();
+				if (classOfSaltField.equals(byte[].class)) {
+            		byte[] defaultSalt = (byte[]) saltField.get();
+            		if(defaultSalt.length == 0) {
+						setPrivateField("salt", new byte[] {0}, newInstance);
+            		}
+				}
+			}
+
+			return newInstance;
         }
     }
 

@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
 import java.security.KeyStore;
+import java.security.KeyStore.PrivateKeyEntry;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -33,10 +34,18 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.providers.AbstractProviderController;
@@ -76,7 +85,7 @@ public class KeyStoreManager {
     /** Hard-coded default password for the keys. */
     public static final char[] KEY_PASSWORD = { '1', '2', '3', '4' };
     /** JCrypTool keystore name, value is {@value} . */
-    public static final String KEYSTORE_NAME = "JCrypTool Keystore"; //$NON-NLS-1$
+    public static final String KEYSTORE_NAME = Messages.KeyStoreManager_11;
     /** FlexiProvider workspace settings folder, value is {@value} . */
     private static final String FLEXIPROVIDER_FOLDER = "flexiprovider"; //$NON-NLS-1$
     /** JCrypTool keystore file name, value is {@value} . */
@@ -219,6 +228,7 @@ public class KeyStoreManager {
         	ProviderManager2.getInstance().popCryptoProviderPromotion();
             if (os != null) {
                 try {
+                	os.flush();
                     os.close();
                 } catch (IOException e) {
                     LogUtil.logError(KeyStorePlugin.PLUGIN_ID, e);
@@ -258,7 +268,7 @@ public class KeyStoreManager {
                 flexiProvider.mkdir();
             }
 
-            File autoBackupFile = new File(flexiProvider, "autobackup.ksf");
+            File autoBackupFile = new File(flexiProvider, "autobackup.ksf"); //$NON-NLS-1$
             backupKeystore(autoBackupFile.getAbsolutePath());
             
             File backupFile = new File(pathToFile);
@@ -373,6 +383,58 @@ public class KeyStoreManager {
         return null;
     }
 
+    public static class PasswordDialog extends Dialog {
+        private Text passwordField;
+        private String passwordString;
+
+        public PasswordDialog(Shell parentShell) {
+            super(parentShell);
+        }
+
+        @Override
+        protected void configureShell(Shell newShell)
+        {
+            super.configureShell(newShell);
+            newShell.setText(Messages.KeyStoreManager_12);
+        }
+
+        @Override
+        protected Control createDialogArea(Composite parent) {
+            Composite comp = (Composite) super.createDialogArea(parent);
+
+            GridLayout layout = (GridLayout) comp.getLayout();
+            layout.numColumns = 2;
+
+            Label passwordLabel = new Label(comp, SWT.RIGHT);
+            passwordLabel.setText(Messages.KeyStoreManager_13);
+            passwordField = new Text(comp, SWT.SINGLE | SWT.BORDER | SWT.PASSWORD);
+
+            GridData data = new GridData(SWT.FILL, SWT.CENTER, true, false);
+            passwordField.setLayoutData(data);
+
+            return comp;
+        }
+
+        @Override
+        protected void okPressed()
+        {
+            passwordString = passwordField.getText();
+            super.okPressed();
+        }
+
+        @Override
+        protected void cancelPressed()
+        {
+            passwordField.setText(""); //$NON-NLS-1$
+            super.cancelPressed();
+        }
+
+        public String getPassword()
+        {
+            return passwordString;
+        }
+    } 
+    
     /**
      * Returns the private key for the given keystore alias.
      * 
@@ -387,8 +449,21 @@ public class KeyStoreManager {
         try {
         	try {
 				ProviderManager2.getInstance().pushFlexiProviderPromotion();
-				KeyStore.PrivateKeyEntry entry = (KeyStore.PrivateKeyEntry) keyStore.getEntry(alias.getAliasString(),
-						new KeyStore.PasswordProtection(password));
+				KeyStore.PrivateKeyEntry entry;
+				try {
+					entry = (KeyStore.PrivateKeyEntry) keyStore.getEntry(alias.getAliasString(),
+							new KeyStore.PasswordProtection(password));
+				} catch (UnrecoverableEntryException e) {
+					PasswordDialog dialog = new PasswordDialog(Display.getCurrent().getActiveShell());
+					int result = dialog.open();
+					if (result == Dialog.OK) {
+						char[] pwchararr = dialog.getPassword().toCharArray();
+						entry = (KeyStore.PrivateKeyEntry) keyStore.getEntry(alias.getAliasString(),
+								new KeyStore.PasswordProtection(pwchararr));
+					} else {
+						throw e;
+					}
+				}
 				return entry.getPrivateKey();
 			} finally {
 				ProviderManager2.getInstance().popCryptoProviderPromotion();
@@ -417,6 +492,17 @@ public class KeyStoreManager {
 				KeyStore.SecretKeyEntry entry = (KeyStore.SecretKeyEntry) keyStore.getEntry(alias.getAliasString(),
 						new KeyStore.PasswordProtection(password));
 				return entry.getSecretKey();
+			} catch (UnrecoverableEntryException e) {
+				PasswordDialog dialog = new PasswordDialog(Display.getCurrent().getActiveShell());
+				int result = dialog.open();
+				if (result == Dialog.OK) {
+					char[] pwchararr = dialog.getPassword().toCharArray();
+					KeyStore.SecretKeyEntry entry2 = (KeyStore.SecretKeyEntry) keyStore.getEntry(alias.getAliasString(),
+							new KeyStore.PasswordProtection(pwchararr));
+					return entry2.getSecretKey();
+				} else {
+					throw e;
+				}
 			} finally {
 				ProviderManager2.getInstance().popCryptoProviderPromotion();
 			}
@@ -485,6 +571,35 @@ public class KeyStoreManager {
 			}
 
 			return null;
+			
+		} finally {
+			ProviderManager2.getInstance().popCryptoProviderPromotion();
+		}
+    }
+    /**
+     * Returns all public keys available in the JCrypTool keystore.
+     * 
+     * @return All public keys available in the JCrypTool keystore.
+     */
+    public ArrayList<IKeyStoreAlias> getAllSecretKeys() {
+    	try {
+			ProviderManager2.getInstance().pushFlexiProviderPromotion();
+			ArrayList<IKeyStoreAlias> publicKeys = new ArrayList<IKeyStoreAlias>();
+
+			try {
+				Enumeration<String> aliases = keyStore.aliases();
+
+				while (aliases.hasMoreElements()) {
+					KeyStoreAlias alias = new KeyStoreAlias(aliases.nextElement());
+					if (alias.getKeyStoreEntryType().getType().contains(KeyType.SECRETKEY.getType())) {
+						publicKeys.add(alias);
+					}
+				}
+			} catch (KeyStoreException e) {
+				LogUtil.logError(KeyStorePlugin.PLUGIN_ID, e);
+			}
+
+			return publicKeys;
 			
 		} finally {
 			ProviderManager2.getInstance().popCryptoProviderPromotion();

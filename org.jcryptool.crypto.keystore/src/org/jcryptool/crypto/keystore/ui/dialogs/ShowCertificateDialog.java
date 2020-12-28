@@ -36,10 +36,21 @@ public class ShowCertificateDialog extends CommonPropertyDialog {
      */
     @Override
     protected Control createDialogArea(Composite parent) {
-        setTitle(Messages.getString("certificate.dialog.title") + "\n" + certificateNode.getAlias()); //$NON-NLS-1$
+    	
+    	// Only print the first 100 Chars to avoid the 
+    	// dialog from taking too much horizontal space
+    	String alias = certificateNode.getAlias().toString();
+    	if (alias.length() > 100) {
+    		alias = alias.substring(0, 100) + "...";
+    	}
+    	
+        setTitle(Messages.getString("certificate.dialog.title") + "\n" + alias); //$NON-NLS-1$
         setTitleImage(ImageService.getImage(KeyStorePlugin.PLUGIN_ID, "icons/48x48/kgpg_identity.png"));
         Composite container = (Composite) super.createDialogArea(parent);
 
+        // Set the title of the shell
+        getShell().setText(Messages.getString("CommonPropertyDialog.certificateTitle"));
+        
         return container;
     }
 

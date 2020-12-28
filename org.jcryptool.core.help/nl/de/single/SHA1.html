@@ -10,27 +10,41 @@
 
 <h2>Beschreibung</h2>
 
-	<p>SHA-1 (Secure Hash Algorithm 1) ist eine kryptographische Hash-Funktion, die eine Eingabe (Nachricht) entgegennimmt und einen 160-Bit-Hashwert (20 Byte) erzeugt (der Hashwert wird auch als Message Digest bezeichnet). Die Ausgabe wird typischerweise als hexadezimale Zahl mit 40 Stellen Länge ausgegeben.</p>
+	<p>SHA-1 (Secure Hash Algorithm 1) ist eine kryptografische Hash-Funktion, die eine Eingabe (Nachricht) entgegennimmt und einen 160-Bit-Hashwert (20 Byte) erzeugt (der Hashwert wird auch als Message Digest bezeichnet). Die Ausgabe wird typischerweise als hexadezimale Zahl mit 40 Stellen Länge ausgegeben.</p>
 
-	<p>SHA-1 wurde von der Nationalen Sicherheitsbehörde (NSA) der Vereinigten Staaten entwickelt und ist ein US-Bundesstandard für die Informationsverarbeitung. Das NIST hat die Verwendung von SHA-1 im Jahr 2011 formell als abgelaufen abgelehnt und seine Verwendung für digitale Signaturen im Jahr 2013 verboten.</p>
+	<p>SHA-1 wurde von der Nationalen Sicherheitsbehörde (NSA) der Vereinigten Staaten entwickelt und ist ein US-Bundesstandard für die Informationsverarbeitung. Das NIST hat die Verwendung von SHA-1 im Jahr 2011 formell als abgelaufen erklärt und seine Verwendung für digitale Signaturen im Jahr 2013 verboten.</p>
 
-	<p>xxxx Wie alle Hash-Funktionen kann man SHA-1 auch dazu benutzen, um einen Zufallszahlen-Generator zu bauen.</p>
+	<p>Wie alle Hash-Funktionen kann man auch SHA-1 dazu benutzen, um einen Zufallszahlen-Generator zu bauen.</p>
 
-	<!-- <img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/SHA1_screenshot1.png" width="85%"/> --><strong>TODO: Screenshot</strong>
-
-	<p>SHA-1 wird neben weiteren Hashfunktionen im JCT-Plugin <a href="PLUGINS_ROOT/org.jcryptool.visual.hashing/$nl$/help/content/index.html">Visualisierungen → Hash-Sensitivität</a> angeboten.</p>
+	<p>Verweis: SHA-1 wird neben weiteren Hashfunktionen im JCT-Plugin <a href="PLUGINS_ROOT/org.jcryptool.visual.hashing/$nl$/help/content/index.html">Visualisierungen → Hash-Sensitivität</a> angeboten.</p>
 
 
 
+<h2>Bedienung des Dialogs</h2>
 
-<h2>xxxBedienung des Dialogs</h2>
+	<p>In dem Dialog können Sie festlegen, wie lang die zu generierende Zufallszahlenfolge ist (Ausgabemenge) und in welchem Format die Ausgabe erfolgen soll.</p>
 
-	<p>xxx.</p>
+	<img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/SHA-1_NumberGenerator.png" width="85%" alt="Dialog zur Erstellung einer Zufallszahlenfolge m.H. von SHA-1">
 
-	<p>xxx.</p>
+	<p>Das Ausgabeformat können Sie mit drei Radiobuttons festlegen:
+	<ul>
+	<li>Binäre Zeichen</li>
+	<li>Zeichen aus einem einstellbaren Alphabet (Standard sind Hexzeichen)</li>
+	<li>Zahlen in einem einstellbaren Wertebereich (kann man optional noch padden).</li>
+	</ul>
+	</p>
 
-	<p>xxx.</p>
+	<p>Beispiel für eine Ausgabe im Zahlenbereich 0 bis 99 mit Padding (Auffüllen mit Nullen):<br>
+65 , 80 , 92 , 92 , 32 , 53 , 40 , 22 , 83 , 95 , 67 , 43 , 32 , 55 , 43 , 23 , 72 , 38 , 12 , 49 , 
+46 , 18 , 97 , 14 , 04 , 74 , 45,	</p>
+	<p>Beispiel für eine Ausgabe im Zahlenbereich 0 bis 99 ohne Padding:<br>
+25 , 19 , 58 , 2 , 71 , 64 , 70 , 96 , 80 , 40 , 22 , 59 , 0 , 51 , 24 , 27 , 13 , 17 , 12 , 2 , 
+45 , 85 , 4 , 19 , 38 , 57 , 20 ,</p>
 	
+	<p>Wenn Sie auf das Fragezeichen in der linken unteren Ecke klicken, wird das Kontextmenü &ndash; angedockt an den rechten Dialog-Rand &ndash; angezeigt.</p>
+
+	<img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/SHA-1_NumberGenerator_Context.png" width="85%" alt="Dialog zur Erstellung einer Zufallszahlenfolge m.H. von SHA-1 incl. Kontexthilfe">
+
 
 
 

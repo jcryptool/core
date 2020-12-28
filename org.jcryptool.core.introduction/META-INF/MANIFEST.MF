@@ -2,11 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundle.name
 Bundle-SymbolicName: org.jcryptool.core.introduction;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.2
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.jcryptool.core.util,
- org.eclipse.help
+ org.eclipse.help,
+ org.eclipse.ui.workbench,
+ org.jcryptool.core.views
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: org.jcryptool.core,
  org.jcryptool.core.commands,

@@ -3,12 +3,82 @@
 <html>
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	  <title>Signatur</title>
+	  <title>Digitale Signatur</title>
 </head>
-
 <body>
-	<h1>Signatur</h1>
 
-	<p>Auf den Unterseiten finden Sie Informationen rund um die in JCrypTool enthaltenen <strong>Signatur Plug-ins</strong>.</p>
+	<h1>Digitale Signatur</h1>
+
+
+	<p>Das JCT-Menü <strong><a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/algorithms/toc.html">Algorithmen</a> → Signatur</strong> in der <a href="PLUGINS_ROOT/org. jcryptool.core.help/$nl$/help/users/general/perspective_default.html">Standard-Perspektive</a> von JCrypTool hat den folgenden Eintrag:<p>
+
+	<table>
+    <tbody>
+        <tr>
+          <td><a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/DSA.html">DSA</a></td>
+          <td>DSA</td>
+        </tr>
+    </tbody>
+	</table>
+
+	
+
+	<h2>Über Signaturen</h2>
+
+	<p>Eine digitale Signatur ist ein mathematisches Konzept zur Verifizierung der Authentizität von digitalen Nachrichten oder Dokumenten. Eine gültige digitale Signatur gibt dem Empfänger einen sehr starken Grund zur Annahme, dass die Nachricht von einem bekannten Absender erstellt wurde (Authentifizierung) und dass die Nachricht während der Übertragung nicht verändert wurde (Integrität). Als ungültig markiert, kann einfach bedeuten, dass ein verwendetes Zertifikat veraltet ist, aber Authentizität und Integrität immer noch erfüllt sind.</p>
+
+	<p>Digitale Signaturen sind eine Standardkomponente der meisten kryptografischen Protokoll-Suiten. Sie werden häufig für Software-Verteilung, Finanztransaktionen, Vertragsverwaltungssoftware und in weiteren Fällen verwendet, in denen es wichtig ist, Fälschungen oder Manipulationen zu erkennen.
+	<b>Digitale</b> Signaturen werden oft verwendet, um <b>elektronische</b> Signaturen zu implementieren.</p>
+
+	</p>Das folgende Bild zeigt eine visuelle Darstellung des Signier- und Verifizierungsprozesses (<a href="https://commons.wikimedia.org/wiki/File:Digital_Signature_diagram_de.svg">Diagramm Digitale Signatur</a> von Acdx, lizenziert unter <a href="https://creativecommons.org/choose/zero/">CC0</a>).</p>
+
+	<img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/1500px-DSA-diagram.png" width="85%" alt="Visuelle Darstellung des Signier- und Verifizierungsprozesses" />
+
+
+
+	<p>Einige typische Algorithmen für digitale Signaturen sind RSA, DSA und ECDSA.</p>
+
+	<p>Als Beispiel wird hier <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/DSA.html">DSA</a> verwendet. 
+	<ul>
+		<li>Zum <b>Signieren</b> benötigen Sie einen privaten Schlüssel. Unsere Implementierung hier signiert immer die Datei im gerade aktiven JCT-Editor. Die resultierende Signatur wird in einer anderen Datei gespeichert, für die Sie Namen und Pfad festlegen können.</li>
+		<li>Zum <b>Verifizieren</b> müssen Sie die Datei auswählen, die die Signatur enthält, und Sie benötigen einen öffentlichen Schlüssel. Dann stellt die Implementierung fest, ob diese Signatur zu der Datei in Ihrem aktiven JCT-Editor passt.</li>
+	</ul>
+	</p>
+
+	<p>Weitere Informationen über den verwendeten Einzel-Algorithmus (DSA) finden Sie auf der entsprechenden Unterseite.</p>
+
+	<p>Weitere Signatur-Algorithmen finden Sie
+	<ul>
+		<li>in der <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html">Algorithmen-Perspektive</a> von JCT (siehe die Seite <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/toc.html">Allgemeine Informationen</a>) und</li>
+		<li>innerhalb der folgenden Visualisierungs-Plugins der <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_default.html">Standard-Perspektive</a> von JCT: </li>
+		<ul>
+			<li><a href="PLUGINS_ROOT/org.jcryptool.visual.sig/$nl$/help/content/index.html">Signatur-Demonstration</a>
+        	</li>
+
+			<li><a href="PLUGINS_ROOT/org.jcryptool.visual.sigÜberprüfung/$nl$/help/content/index.html">Signatur-Verifikation</a>
+        	</li>
+
+			<li><a href="PLUGINS_ROOT/org.jcryptool.visual.crtÜberprüfung/$nl$/help/content/index.html">Zertifikat-Verifikation (Gültigkeitsmodelle)</a>
+        	</li>
+		</ul>
+	</ul>
+	</p>
+
+
+
+	<h2>Quellen / Referenzen</h2>
+
+	<ul>
+		<li>
+        <a target="_blank" href="https://de.wikipedia.org/wiki/Elektronische_Signatur" >https://de.wikipedia.org/wiki/Elektronische_Signatur</a> Wikipedia Elektronische Signatur (ein Rechtsbegriff)
+    	</li>
+
+		<li>
+        <a target="_blank" href="https://de.wikipedia.org/wiki/Digitale_Signatur" >https://de.wikipedia.org/wiki/Digitale_Signatur</a> Wikipedia Digitale Signatur (ein technischer/kryptografischer Mechanismus, der oft zur Implementierung elektronischer Signaturen verwendet wird)
+    	</li>
+	</ul>
+
+
+
 </body>
 </html>

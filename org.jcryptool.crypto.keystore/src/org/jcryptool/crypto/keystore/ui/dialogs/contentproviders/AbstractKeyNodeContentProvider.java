@@ -12,7 +12,9 @@ package org.jcryptool.crypto.keystore.ui.dialogs.contentproviders;
 import java.security.UnrecoverableEntryException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
@@ -100,10 +102,13 @@ public class AbstractKeyNodeContentProvider extends CommonContentProvider {
 
         list.add(new TableEntry(Messages.AbstractKeyNodeContentProvider_Algorithm, key.getAlgorithm()));
         list.add(new TableEntry(Messages.AbstractKeyNodeContentProvider_Format, key.getFormat()));
-        list.add(new TableEntry(Messages.AbstractKeyNodeContentProvider_Encoded, Arrays.toString(key.getEncoded())));
+        String bytesToString = bytesToString(key.getEncoded());
+		list.add(new TableEntry(Messages.AbstractKeyNodeContentProvider_Encoded, bytesToString));
+
 
         return list;
     }
+
 
     private List<TableEntry> getCipherElements(Object inputElement) {
 
@@ -163,4 +168,32 @@ public class AbstractKeyNodeContentProvider extends CommonContentProvider {
 
         return null;
     }
+
+	public static byte[] listToArr(List<Byte> bytes) {
+		byte[] result = new byte[bytes.size()];
+		for (int i = 0; i < bytes.size(); i++) {
+			byte b = bytes.get(i);
+			result[i] = b;
+		}
+		return result;
+	}
+
+	private static String byteToString(byte b) {
+		String hexString = Integer.toString(Byte.toUnsignedInt(b), 16);
+		return hexString.length() == 1 ? "0"+hexString : hexString;
+	}
+
+	public static String bytesToString(List<Byte> content) {
+		return bytesToString(listToArr(content));
+	}
+
+	public static String bytesToString(byte[] content) {
+		LinkedList<String> result = new LinkedList<String>();
+		for (byte b : content) {
+			String byteToString = byteToString(b);
+			result.add(byteToString);
+		}
+		String collect = result.stream().collect(Collectors.joining(" "));
+		return collect;
+	}
 }

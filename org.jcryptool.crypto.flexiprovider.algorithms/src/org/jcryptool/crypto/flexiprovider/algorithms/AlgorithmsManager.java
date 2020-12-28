@@ -83,6 +83,10 @@ public class AlgorithmsManager {
         }
     }
 
+    /**
+     * Diese Methode wird aufgerufen, wenn ein Message Authentication Code erzeugt werden soll.
+     * @param algorithm
+     */
     private static void performMacCalled(IMetaAlgorithm algorithm) {
         if (algorithm.getBlockCipherName() != null) {
             IMetaAlgorithm bc = null;
@@ -91,8 +95,11 @@ public class AlgorithmsManager {
                 LogUtil.logInfo("BC oid: " + algorithm.getBlockCipherOID()); //$NON-NLS-1$
                 bc = AlgorithmsXMLManager.getInstance().getBlockCipher(algorithm.getBlockCipherOID());
             } else {
-                bc = AlgorithmsXMLManager.getInstance().getBlockCipher(algorithm.getBlockCipherName());
+            	LogUtil.logInfo("BC name: " + algorithm.getBlockCipherName()); //$NON-NLS-1$
+            	AlgorithmsXMLManager manager = AlgorithmsXMLManager.getInstance();
+                bc = manager.getBlockCipher(algorithm.getBlockCipherName());
             }
+            
             LogUtil.logInfo("BC mode: " + algorithm.getBlockCipherMode()); //$NON-NLS-1$
             if (bc != null) {
                 blockCipherWizard = new BlockCipherWizard(bc, algorithm.getBlockCipherMode());
@@ -107,8 +114,11 @@ public class AlgorithmsManager {
                     NewOperationManager.getInstance().fireNewOperation(macDescriptor);
                     return;
                 }
+            } else {
+            	LogUtil.logError(FlexiProviderAlgorithmsPlugin.PLUGIN_ID, "Algorithm not found! " + algorithm.getBlockCipherName());
             }
         }
+
         if (algorithm.getParameterSpecClassName() != null && !algorithm.isParameterSpecDisabled()) {
             algorithmWizard = new AlgorithmWizard(algorithm);
             dialog = new WizardDialog(shell, algorithmWizard);
@@ -130,6 +140,10 @@ public class AlgorithmsManager {
                             new AlgorithmDescriptor(algorithm.getName(), RegistryType.MAC, null));
                 }
             }
+        } else {
+        	LogUtil.logInfo("adding cipher w/o parameter spec"); //$NON-NLS-1$
+        	 NewOperationManager.getInstance().fireNewOperation(
+        			 new AlgorithmDescriptor(algorithm.getName(), RegistryType.MAC, null));
         }
     }
 

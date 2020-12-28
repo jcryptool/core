@@ -45,8 +45,6 @@
         </topic>
         <topic href="$nl$/help/users/general/language.html" label="Changing the Language">
         </topic>
-        <topic href="$nl$/help/users/general/cheatsheets.html" label="Cheat Sheets">
-        </topic>
         <topic href="$nl$/help/users/general/updates.html" label="Updates">
         </topic>
     </topic>
@@ -61,23 +59,17 @@
 	        href="$nl$/help/users/cryptology/crypto_timeline.html" />
 	</topic>
 
-    <topic label="Algorithms"
-        href="$nl$/help/users/algorithms/toc.html"
-        sort="true">
-		<topic label="Classic"
-			href="$nl$/help/users/algorithms/encryption/classic/toc.html"
-			sort="true">
-			<anchor id="classicAlgorithmPlugins" />
-		</topic>
+    <topic label="Algorithms (Default Perspective)"
+        href="$nl$/help/users/algorithms/toc.html">
 		<topic label="Asymmetric"
 			href="$nl$/help/users/algorithms/encryption/asymmetric/toc.html"
 			sort="true">
 			<anchor id="asymmetricAlgorithmPlugins" />
 		</topic>
-		<topic label="Symmetric"
-			href="$nl$/help/users/algorithms/encryption/symmetric/toc.html"
+		<topic label="Classic"
+			href="$nl$/help/users/algorithms/encryption/classic/toc.html"
 			sort="true">
-			<anchor id="symmetricAlgorithmPlugins" />
+			<anchor id="classicAlgorithmPlugins" />
 		</topic>
         <topic label="Hash"
             href="$nl$/help/users/algorithms/hash/toc.html"
@@ -95,20 +87,26 @@
             sort="true">
             <anchor id="signaturePlugins" />
         </topic>
+		<topic label="Symmetric"
+			href="$nl$/help/users/algorithms/encryption/symmetric/toc.html"
+			sort="true">
+			<anchor id="symmetricAlgorithmPlugins" />
+		</topic>
         <anchor id="algorithmPlugins" />
+        <topic href="$nl$/help/users/algorithms/keystore/toc.html" label="Keystore"> </topic>
     </topic>
-    <topic href="$nl$/help/users/analysis/toc.html" label="Analysis"
+    <topic href="$nl$/help/users/analysis/toc.html" label="Analysis (Default Perspective)"
     	sort="true">
        <anchor id="analysisPlugins"/>
     </topic>
 
-    <topic label="Games"
+    <topic label="Games (Default Perspective)"
         href="$nl$/help/users/games/toc.html"
         sort="true">
         <anchor id="gamePlugins" />
     </topic>
 
-    <topic label="Visuals"
+    <topic label="Visuals (Default Perspective)"
         href="$nl$/help/users/visualizations/toc.html"
         sort="true">
         <anchor id="visualizationPlugins" />

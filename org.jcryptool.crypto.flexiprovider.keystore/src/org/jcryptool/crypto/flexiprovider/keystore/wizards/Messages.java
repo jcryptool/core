@@ -53,6 +53,8 @@ public class Messages extends NLS {
     public static String NewSymmetricKeyWizardPage_11;
     public static String NewSymmetricKeyWizardPage_12;
     public static String NewSymmetricKeyWizardPage_13;
+	public static String NewSymmetricKeyWizardPage_16;
+	public static String NewSymmetricKeyWizardPage_17;
     public static String NewSymmetricKeyWizardPage_2;
     public static String NewSymmetricKeyWizardPage_3;
     public static String NewSymmetricKeyWizardPage_4;

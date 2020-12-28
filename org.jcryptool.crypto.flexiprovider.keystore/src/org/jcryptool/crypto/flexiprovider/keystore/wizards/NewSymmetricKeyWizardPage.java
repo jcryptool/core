@@ -12,13 +12,17 @@ package org.jcryptool.crypto.flexiprovider.keystore.wizards;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -29,14 +33,17 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.images.ImageService;
 import org.jcryptool.crypto.flexiprovider.descriptors.meta.interfaces.IMetaKeyGenerator;
 import org.jcryptool.crypto.flexiprovider.xml.AlgorithmsXMLManager;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.crypto.keystore.descriptors.NewEntryDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.INewEntryDescriptor;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.keystore.keys.KeyType;
 import org.jcryptool.crypto.keystore.ui.views.nodes.Contact;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
@@ -49,14 +56,14 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
     private Group contactGroup = null;
     private Group algorithmGroup = null;
     private Group passwordGroup = null;
-    private Label contactDescriptionLabel = null;
+//    private Label contactDescriptionLabel = null;
     private Label contactNameLabel = null;
     private Combo contactNameCombo = null;
-    private Label algorithmDescriptionLabel = null;
+//    private Label algorithmDescriptionLabel = null;
     private Label algorithmLabel = null;
     private Combo algorithmCombo = null;
     private Button keyStrengthCheckBox = null;
-    private Label passwordDescriptionLabel = null;
+//     private Label passwordDescriptionLabel = null;
     private Label enterPasswordLabel = null;
     private Text enterPasswordText = null;
     private Label confirmPasswordLabel = null;
@@ -70,12 +77,13 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
     }
 
     public NewSymmetricKeyWizardPage(String keyType) {
-        super("1", Messages.NewSymmetricKeyWizardPage_0, 
-        		ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, "icons/48x48/kgpg_key1.png"));
+        super("1", Messages.NewSymmetricKeyWizardPage_0,  //$NON-NLS-1$
+        		ImageService.getImageDescriptor(KeyStorePlugin.PLUGIN_ID, "icons/48x48/kgpg_key1.png")); //$NON-NLS-1$
         setDescription(Messages.NewSymmetricKeyWizardPage_1);
         setPageComplete(false);
         this.keyType = keyType;
     }
+    
 
     /**
      * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
@@ -98,8 +106,8 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
         createPasswordGroup(pageComposite);
 
         // inititializing the composite
-        initContactCombo();
         initAlgorithmsCombo();
+        initContactCombo();
         initKeyStrength();
 
         // register listeners
@@ -128,25 +136,63 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
 
     private void initContactCombo() {
         int size = ContactManager.getInstance().getContactSize();
+        String previousContactSelection = contactNameCombo.getText();
         if (size > 0) {
             List<String> contactNames = new ArrayList<String>();
             Iterator<Contact> it = ContactManager.getInstance().getContacts();
             Contact contact;
             while (it.hasNext()) {
                 contact = it.next();
+
+                String operation = ""; //$NON-NLS-1$
+                if (algorithmCombo != null && algorithmCombo.getText().length() > 0) {
+					operation = getName(algorithmCombo.getText());
+				}
+                String hasKey = contactHasKey(contact.getName(), algorithmCombo.getText());
+                if (hasKey.length() > 0) {
+                	continue;
+				}
                 contactNames.add(contact.getName());
             }
 
             String[] contactNamesArray = (String[]) contactNames.toArray(new String[] {});
             Arrays.sort(contactNamesArray);
+            if (contactNamesArray.length == 0) {
+				int contactnameCounter = 1;
+				String contactname = Messages.NewSymmetricKeyWizardPage_17;
+				String contactnameWithCounter = contactname + " " + contactnameCounter; //$NON-NLS-1$
+				while (contactExists(contactnameWithCounter)) {
+					contactnameCounter++;
+					contactnameWithCounter = contactname + " " + contactnameCounter; //$NON-NLS-1$
+				}
+            	contactNamesArray = new String[] {contactnameWithCounter};
+			}
             contactNameCombo.setItems(contactNamesArray);
             contactNameCombo.select(0);
+            for (int i = 0; i < contactNamesArray.length; i++) {
+				String cname = contactNamesArray[i];
+				if (cname.equals(previousContactSelection)) {
+            		contactNameCombo.select(i);
+				}
+			}
         } else {
             LogUtil.logInfo("No Contact"); //$NON-NLS-1$
         }
     }
 
-    private List<IMetaKeyGenerator> secretKeyGenerators;
+    private boolean contactExists(String contactnameWithCounter) {
+    	Iterator<Contact> contacts = ContactManager.getInstance().getContacts();
+    	while (contacts.hasNext()) {
+			Contact contact = contacts.next();
+			if (contact.getName().equals(contactnameWithCounter)) {
+				return true;
+			}
+		}
+    	
+    	return false;
+	}
+
+	private List<IMetaKeyGenerator> secretKeyGenerators;
 
     private void initAlgorithmsCombo() {
         secretKeyGenerators = AlgorithmsXMLManager.getInstance().getSecretKeyGenerators();
@@ -174,6 +220,12 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
         algorithmCombo.setItems(generators.toArray(new String[0]));
         algorithmCombo.select(0);
         algorithmCombo.setVisibleItemCount(10);
+        algorithmCombo.addSelectionListener(new SelectionAdapter() {
+        	@Override
+        	public void widgetSelected(SelectionEvent e) {
+        		initContactCombo();
+        	}
+		});
     }
 
     private void registerListeners() {
@@ -183,6 +235,7 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
         confirmPasswordText.addListener(SWT.Modify, this);
     }
 
+    Optional<String> lastValidMessage = Optional.of(""); //$NON-NLS-1$
     /**
      * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
      */
@@ -197,6 +250,41 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
             showLengths(tmp);
         }
         setPageComplete(isComplete());
+    }
+    
+    private String contactHasKey(String contactname, String algorithmName) {
+    	ArrayList<IKeyStoreAlias> privkeys = KeyStoreManager.getInstance().getAllPrivateKeys();
+    	ArrayList<IKeyStoreAlias> pubkeys = KeyStoreManager.getInstance().getAllPublicKeys();
+    	ArrayList<IKeyStoreAlias> secretkeys = KeyStoreManager.getInstance().getAllSecretKeys();
+    	
+    	for(IKeyStoreAlias key : secretkeys) {
+    		if (! key.getContactName().equals(contactname)) {
+				continue;
+			}
+    		String name = key.getOperation();
+    		if (name.equals(algorithmName)) {
+    			return "The selected contact already has a key of this type. Please select another contact."; //$NON-NLS-1$
+			}
+    	}
+    	for(IKeyStoreAlias key : privkeys) {
+    		if (! key.getContactName().equals(contactname)) {
+				continue;
+			}
+    		String name = key.getOperation();
+    		if (name.equals(algorithmName)) {
+    			return "The selected contact already has a key of this type. Please select another contact."; //$NON-NLS-1$
+			}
+    	}
+    	for(IKeyStoreAlias key : pubkeys) {
+    		if (! key.getContactName().equals(contactname)) {
+				continue;
+			}
+    		String name = key.getOperation();
+    		if (name.equals(algorithmName)) {
+    			return "The selected contact already has a key of this type. Please select another contact."; //$NON-NLS-1$
+			}
+    	}
+    	return ""; //$NON-NLS-1$
     }
 
     private void showLengths(String name) {
@@ -225,6 +313,13 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
                 keyStrengthCCombo.setEditable(false);
             }
         }
+        else
+        {
+        	keyStrengthCCombo.add("default"); //$NON-NLS-1$
+        	keyStrengthCCombo.setEditable(false);
+        	keyStrengthCCombo.setEnabled(true);
+        	keyStrengthCCombo.setText("default"); //$NON-NLS-1$
+        }
     }
 
     private void keyStrengthCheckBoxClicked() {
@@ -242,8 +337,12 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
         String algoName = getName(algorithmCombo.getText());
         int length = -1;
         try {
-            int value = Integer.valueOf(keyStrengthCCombo.getText());
-            length = value;
+        	if (keyStrengthCCombo.getText() == "default") { //$NON-NLS-1$
+        		length = -1;
+			} else {
+				int value = Integer.valueOf(keyStrengthCCombo.getText());
+				length = value;
+			}
         } catch (NumberFormatException e) {
         }
         return new NewEntryDescriptor(contactNameCombo.getText(), algoName, algorithmCombo.getText(), length,
@@ -297,7 +396,7 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
         GridData gridData4 = new GridData();
         gridData4.horizontalAlignment = GridData.END;
         gridData4.grabExcessVerticalSpace = true;
-        gridData4.widthHint = 200;
+        gridData4.widthHint = 300;
         gridData4.verticalAlignment = GridData.CENTER;
         GridData gridData3 = new GridData();
         gridData3.grabExcessHorizontalSpace = true;
@@ -314,13 +413,19 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
         contactGroup.setText(Messages.NewSymmetricKeyWizardPage_2);
         contactGroup.setLayout(gridLayout);
         contactGroup.setLayoutData(gridData);
-        contactDescriptionLabel = new Label(contactGroup, SWT.NONE);
-        contactDescriptionLabel.setText(Messages.NewSymmetricKeyWizardPage_3);
-        contactDescriptionLabel.setLayoutData(gridData3);
+//        contactDescriptionLabel = new Label(contactGroup, SWT.NONE);
+//        contactDescriptionLabel.setText(Messages.NewSymmetricKeyWizardPage_3);
+//        contactDescriptionLabel.setLayoutData(gridData3);
         contactNameLabel = new Label(contactGroup, SWT.NONE);
         contactNameLabel.setText(Messages.NewSymmetricKeyWizardPage_4);
         contactNameLabel.setLayoutData(gridData5);
         contactNameCombo = new Combo(contactGroup, SWT.BORDER);
+        
+        Label contactNameComboHint = new Label(contactGroup, SWT.WRAP);
+        GridData ldata = new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1);
+//        ldata.widthHint = 200;
+		contactNameComboHint.setLayoutData(ldata);
+        contactNameComboHint.setText(Messages.NewSymmetricKeyWizardPage_16);
 
         contactNameCombo.setLayoutData(gridData4);
     }
@@ -362,9 +467,9 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
         algorithmGroup.setText(Messages.NewSymmetricKeyWizardPage_5);
         algorithmGroup.setLayout(gridLayout1);
         algorithmGroup.setLayoutData(gridData1);
-        algorithmDescriptionLabel = new Label(algorithmGroup, SWT.NONE);
-        algorithmDescriptionLabel.setText(Messages.NewSymmetricKeyWizardPage_6);
-        algorithmDescriptionLabel.setLayoutData(gridData6);
+//        algorithmDescriptionLabel = new Label(algorithmGroup, SWT.NONE);
+//        algorithmDescriptionLabel.setText(Messages.NewSymmetricKeyWizardPage_6);
+//        algorithmDescriptionLabel.setLayoutData(gridData6);
         algorithmLabel = new Label(algorithmGroup, SWT.NONE);
         algorithmLabel.setText(Messages.NewSymmetricKeyWizardPage_7);
         algorithmLabel.setLayoutData(gridData13);
@@ -414,9 +519,9 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
         passwordGroup.setText(Messages.NewSymmetricKeyWizardPage_10);
         passwordGroup.setLayout(gridLayout2);
         passwordGroup.setLayoutData(gridData2);
-        passwordDescriptionLabel = new Label(passwordGroup, SWT.NONE);
-        passwordDescriptionLabel.setText(Messages.NewSymmetricKeyWizardPage_11);
-        passwordDescriptionLabel.setLayoutData(gridData9);
+//        passwordDescriptionLabel = new Label(passwordGroup, SWT.NONE);
+//        passwordDescriptionLabel.setText(Messages.NewSymmetricKeyWizardPage_11);
+//        passwordDescriptionLabel.setLayoutData(gridData9);
         enterPasswordLabel = new Label(passwordGroup, SWT.NONE);
         enterPasswordLabel.setText(Messages.NewSymmetricKeyWizardPage_12);
         enterPasswordLabel.setLayoutData(gridData15);

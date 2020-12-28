@@ -3,25 +3,58 @@
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	  <title>AES</title>
 </head>
-
 <body>
-	<h1>AES</h1>
-<p>
-<strong>TODO: Description</strong>
+
+<h1>AES</h1>
+
+
+<h2>Description</h2>
+
+<p>The AES encryption algorithm works with a block length of 128 bit, and a variable key length of 128, 192, and 256 bits.  AES is the standardized subset of the underlying Rijndael algorithm (Rijndael offers a variable length blocksize and more different keylengths).</p>
+
+<p>For a 128 bit key there are approximately 340,000,000,000,000,000,000,000,000,000,000,000,000 = 34*10^37 possible keys. Rijndael was developed by the Belgian cryptographers Joan Daemen and Vincent Rijmen.</p>
+
+<!-- CrypTool contains a brute-force attack on the Rijndael encryption algorithm. -->
+
+<p>AES is the patent-free standard for modern block ciphers used to protect long-term data. It was established as a FIPS standard by NIST in 2001 and became the successor of the antiquated Data Encryption Standard (DES) which was introduced in 1977.</p>
+
+<p>Remark: To understand the algorithm, a good starting point is Wikipedia which refers the relevant literature. In addition, there are good animations of the inner workings of AES by Zabala (see CrypTool 1) and there is a famous cartoon called "A Stick Figure Guide to the Advanced Encryption Standard (AES)" by Jeff Moser, published in September 2009, which explains the AES algorithm in 4 acts.</p>
+
+<img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/AES.png" width="85%"/>
+
+
+
+<h2>Operation of the dialog</h2>
+
+<p>You can just start encrypting the content of the active editor by clicking the button <b>Finish</b> (so you use the default settings). You are then asked for the key protection password, which is "1234" for the pre-selected user "Alice". The result is written in a new hexeditor window of JCT.</p>
+
+<p>In JCT, the key length is determined by the selected key. The dialog in JCT offers the following parameters:
+	<ul>
+	<li>for block-chaining: the five modes ECB, CBC, OFB, CFB, and CTR</li>
+	<li>for padding: the three schemes PKCS#5, 01-00 padding, and no padding.</li>
+	</ul>
 </p>
 
-<!-- <img src="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/single/img/AES_screenshot1.png" width="85%"/> --><strong>TODO: Screenshot</strong>
+<p>Pressing the long button <b>Create a new (AES) key in the keystore</b>, opens a dialog called "New symmetric key". You can create a new key either for an existing user like "Alice Whitehead", or better for a new user like yourself (by just entering a user name in the user field and overwriting "Alice"). You will be asked with which password this new key should be protected. After the new key is stored in the keystore, you can use it again later (without having to create a new key first).</p>
 
-<p>
-AES finden Sie ausführlich erklärt unter den Visualisierungen in JCT: 
-<!-- <a href="PLUGINS_ROOT/org.jcryptool.visual.elGamal/$nl$/help/content/index.html">Visualisierungen → AES-Kryptosystem</a> --><strong>TODO: Link to help page of visualization if exists</strong>
-</p>
+ <p>After clicking on <b>Finish</b> you will return to the "AES &mdash; encryption" dialog, which now lists the newly created key in the "Keystore" grouping. Here you also have to click the button <b>Finish</b> to write the result in a new hexeditor window.</p>
 
-<h2>References:</h2>
 
-<ul><li>
-        <!-- <a target="_blank" href="https://de.wikipedia.org/wiki/Elgamal-Verschl%C3%BCsselungsverfahren" >https://de.wikipedia.org/wiki/Elgamal-Verschl%C3%BCsselungsverfahren</a> --><strong>TODO: Link to Wikipedia</strong>
-    </li></ul>
+
+<h2>References</h2>
+
+<ul>
+<li>
+    <a target="_blank" href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard" >https://en.wikipedia.org/wiki/Advanced_Encryption_Standard</a> Wikipedia Advanced Encryption Standard 
+</li>
+
+<li>
+    <a target="_blank" href="http://www.moserware.com/2009/09/stick-figure-guide-to-advanced.html" >http://www.moserware.com/2009/09/stick-figure-guide-to-advanced.html</a> AES cartoon by  Jeff Moser
+</li>
+</ul>
+
+<br>
+
 </body>
 </html>
 

@@ -39,6 +39,7 @@ public class ShowPropertiesHandler extends AbstractHandler {
         Object selectedNode = ((IStructuredSelection) selection).getFirstElement();
 
         CommonPropertyDialog keyDialog = null;
+        
 
         if (selectedNode instanceof SecretKeyNode) {
             keyDialog = new ShowSecretKeyDialog(HandlerUtil.getActiveShell(event), (SecretKeyNode) selectedNode);
@@ -50,8 +51,8 @@ public class ShowPropertiesHandler extends AbstractHandler {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "unsupported key node type");
             return null;
         }
-
         keyDialog.create();
+        keyDialog.getShell().setMinimumSize(400, 600);
         keyDialog.open();
 
         return null;

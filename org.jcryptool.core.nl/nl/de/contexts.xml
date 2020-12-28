@@ -25,7 +25,7 @@
       <topic href="../org.jcryptool.core.help/$nl$/help/users/visualizations/toc.html" label="Visualisierungen"/>
    </context>
    <context id="generalPreferences" title="Allgemein">
-      <description>In diesem Bereich können Sie allgemeine JCrypTool Einstellungen festlegen und auch die JCrypTool Sprache einstellen. Die Sprache wird ohne weitere Eingabe den Regionaleinstellungen Ihres Betriebssystems angepasst, kann aber auch von Ihnen explizit festgelegt werden. Nach dem Sprachwechsel werden Sie zum Neustart von JCrypTool aufgefordert.&lt;br&gt;Beachten Sie, dass unter Umständen nicht jedes Plug-in (jeder Dialog, Hilfe, ...) in der von Ihnen gewählten Sprache verfügbar ist.</description>
+      <description>In diesem Bereich können Sie allgemeine JCrypTool Einstellungen festlegen und auch die JCrypTool-Sprache einstellen. Die Sprache wird ohne weitere Eingabe den Regionaleinstellungen Ihres Betriebssystems angepasst, kann aber auch von Ihnen explizit festgelegt werden. Nach dem Sprachwechsel werden Sie zum Neustart von JCrypTool aufgefordert.</description>
       <topic href="../org.jcryptool.core.help/$nl$/help/users/about/tips.html" label="Tipps und Tricks"/>
    </context>
 </contexts>

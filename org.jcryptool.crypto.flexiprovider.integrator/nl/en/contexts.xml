@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
    <context id="ElGamalWizard" title="ElGamal cipher">
-      <description>This is the FlexiProvider implementation of the ElGamal cipher. The Algorithm Perspective does provide even more configuration possibilities for this algorithm.</description>
+      <description>This is the CryptoProvider implementation of the ElGamal cipher. The Algorithm Perspective does provide further configuration possibilities for this algorithm.</description>
   		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html" label="Algorithm Perspective"/>
    </context>
    <context id="RSAWizard" title="RSA cipher">
-      <description>This is the FlexiProvider implementation of the RSA cipher. The Algorithm Perspective does provide even more configuration possibilities for this algorithm.</description>
+      <description>This is the CryptoProvider implementation of the RSA cipher. The Algorithm Perspective does provide further configuration possibilities for this algorithm.</description>
   		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html" label="Algorithm Perspective"/>
    </context>
    <context id="AESWizard" title="AES cipher">
-      <description>This is the FlexiProvider implementation of the AES cipher. The Algorithm Perspective does provide even more configuration possibilities for this algorithm.</description>
+      <description>This is the CryptoProvider implementation of the AES cipher. The Algorithm Perspective does provide further configuration possibilities for this algorithm.</description>
   		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html" label="Algorithm Perspective"/>
    </context>
    <context id="IDEAWizard" title="IDEA cipher">
-      <description>This is the FlexiProvider implementation of the IDEA cipher. The Algorithm Perspective does provide even more configuration possibilities for this algorithm.</description>
+      <description>This is the CryptoProvider implementation of the IDEA cipher. The Algorithm Perspective does provide further configuration possibilities for this algorithm.</description>
   		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html" label="Algorithm Perspective"/>
    </context>
    <context id="RC6Wizard" title="RC6 cipher">
-      <description>This is the FlexiProvider implementation of the RC6 cipher. The Algorithm Perspective does provide even more configuration possibilities for this algorithm.</description>
+      <description>This is the CryptoProvider implementation of the RC6 cipher. The Algorithm Perspective does provide further configuration possibilities for this algorithm.</description>
   		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html" label="Algorithm Perspective"/>
    </context>
    <context id="HMacMD5Wizard" title="HMacMD5 message digest">
-      <description>This is the FlexiProvider implementation of the HMacMD5 message digest. The Algorithm Perspective does provide even more configuration possibilities for this algorithm.</description>
+      <description>This is the CryptoProvider implementation of the HMacMD5 message digest. The Algorithm Perspective does provide further configuration possibilities for this algorithm.</description>
   		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html" label="Algorithm Perspective"/>
    </context>
-   <context id="SHA1Wizard" title="SHA-1 random number generator">
-      <description>This is the FlexiProvider implementation of the SHA-1 random number generator. The Algorithm Perspective does provide even more configuration possibilities for this algorithm.</description>
+   <context id="SHA-1Wizard" title="SHA-1 random number generator">
+      <description>This is the CryptoProvider implementation of the SHA-1 random number generator. The Algorithm Perspective does provide further configuration possibilities for this algorithm.</description>
   		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html" label="Algorithm Perspective"/>
    </context>
    <context id="DSAWizard" title="DSA signature">
-      <description>This is the FlexiProvider implementation of the DSA signature. The Algorithm Perspective does provide even more configuration possibilities for this algorithm.</description>
+      <description>This is the CryptoProvider implementation of the DSA signature. The Algorithm Perspective does provide further configuration possibilities for this algorithm.</description>
   		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html" label="Algorithm Perspective"/>
    </context>
    <context id="MD5Wizard" title="MD5 hash">
-      <description>This is the FlexiProvider implementation of the MD5 hash. The Algorithm Perspective does provide even more configuration possibilities for this algorithm.</description>
+      <description>This is the CryptoProvider implementation of the MD5 hash. The Algorithm Perspective does provide further configuration possibilities for this algorithm.</description>
   		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html" label="Algorithm Perspective"/>
    </context>
-   <context id="SHAWizard" title="SHA-256 hash">
-      <description>This is the FlexiProvider implementation of the SHA-256 hash. The Algorithm Perspective does provide even more configuration possibilities for this algorithm.</description>
+   <context id="SHA-256Wizard" title="SHA-256 hash">
+      <description>This is the CryptoProvider implementation of the SHA-256 hash. The Algorithm Perspective does provide further configuration possibilities for this algorithm.</description>
   		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_algorithm.html" label="Algorithm Perspective"/>
    </context>
 </contexts>
