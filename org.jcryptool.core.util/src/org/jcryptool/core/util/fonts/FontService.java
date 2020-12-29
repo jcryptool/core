@@ -9,6 +9,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.core.util.fonts;
 
+import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
@@ -102,11 +103,7 @@ public class FontService {
      * @return The normal default font
      */
     public static Font getNormalFont() {
-        if (normalFont == null || normalFont.isDisposed()) {
-            normalFont = new Font(Display.getDefault(), SYSTEM_FONT_NAME, 10, SWT.NORMAL);
-        }
-
-        return normalFont;
+        return Display.getCurrent().getSystemFont();
     }
 
     /**
@@ -182,11 +179,10 @@ public class FontService {
      * @return The normal default font
      */
     public static Font getNormalBoldFont() {
-        if (normalBoldFont == null || normalBoldFont.isDisposed()) {
-            normalBoldFont = new Font(Display.getDefault(), SYSTEM_FONT_NAME, 10, SWT.BOLD);
-        }
-
-        return normalBoldFont;
+        Font systemFont = Display.getCurrent().getSystemFont();
+        FontDescriptor systemFontDesriptor = FontDescriptor.createFrom(systemFont).setStyle(SWT.BOLD);
+        Font boldFont = systemFontDesriptor.createFont(Display.getDefault());
+        return boldFont;
     }
 
     /**
