@@ -14,7 +14,7 @@ Have a look at our [wiki](https://github.com/jcryptool/core/wiki) for more infor
 General information on the CrypTool and JCrypTool projects is available in the [CrypTool](http://www.cryptool.org) portal.
 
 ## Downloads
-JCrypTool downloads are available as [weekly builds](https://github.com/jcryptool/core/releases) (unstable, built automatically based on the **develop** branch) and as [release builds](https://www.cryptool.org/de/jct-downloads/stable) (stable).
+JCrypTool downloads are available as [weekly builds](https://github.com/jcryptool/core/releases) (containing the newest features, may are unstable, built automatically based on the **develop** branch) and as [release builds](https://github.com/jcryptool/core/releases/latest) (stable).
 
 ## Meta
 [![Build Status](https://img.shields.io/travis/jcryptool/core/develop.svg?label=Core+Build)](https://travis-ci.org/jcryptool/core)
