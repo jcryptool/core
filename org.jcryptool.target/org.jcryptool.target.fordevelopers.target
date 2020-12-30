@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?>
-<target name="JCrypTool RCP" sequenceNumber="41">
+<target name="JCrypTool RCP for development" sequenceNumber="41">
 <locations>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="http://download.eclipse.org/releases/2020-09"/>
