@@ -289,7 +289,8 @@ litigation.
    <plugin id="org.jcryptool.thirdparty.m2bundle.durian-swt-os" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    <plugin id="org.jcryptool.thirdparty.m2bundle.durian-swt" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    <plugin id="org.reactivestreams.reactive-streams" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-
+   
+   <plugin id="org.jcryptool.visual.rsaelgamal" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
 	<!-- seems the run config likes these plugins, but by test they are not really necessary
 	<plugin id="org.eclipse.equinox.region" download-size="0" install-size="0" version="0.0.0"/>
