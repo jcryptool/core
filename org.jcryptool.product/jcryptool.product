@@ -15,7 +15,7 @@
 
    <launcherArgs>
       <vmArgs>-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.SimpleLog
---add-modules=ALL-SYSTEM -Djceks.key.serialFilter=*
+--add-modules=ALL-SYSTEM -Djceks.key.serialFilter=* -Dorg.bouncycastle.rsa.allow_unsafe_mod=true
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>
