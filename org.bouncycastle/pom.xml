@@ -10,6 +10,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.bouncycastle</groupId>
 	<artifactId>org.bouncycastle</artifactId>
-	<version>1.65.0</version>
+	<version>1.68.0</version>
 	<packaging>eclipse-plugin</packaging>
 </project>
