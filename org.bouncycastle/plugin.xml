@@ -15,7 +15,7 @@
             cipherModes="CBC|ECB|OFB"
             class="org.bouncycastle.jce.provider.BouncyCastleProvider"
             paddings="PKCS5Padding"
-            providerInfo="BouncyCastle Security Provider 1.65.0"
+            providerInfo="BouncyCastle Security Provider 1.68.0"
             providerName="BC">
       </provider>
    </extension>

@@ -9,7 +9,7 @@ Require-Bundle: org.eclipse.core.runtime
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ClassPath: .,
- libs/bcprov-jdk15on-165.jar
+ libs/bcprov-jdk15on-168.jar
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.providers
 Automatic-Module-Name: org.bouncycastle
