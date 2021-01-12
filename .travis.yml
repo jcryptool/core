@@ -1,7 +1,5 @@
 env:
-  - JCT_VERSION=1.0.2
-  - BUILD_TIMESTAMP=$(date +'%Y%m%d')
-  - GIT_TIMESTAMP=$(date +'%Y-%m-%d')
+  - JCT_VERSION=1.0.2 BUILD_TIMESTAMP=$(date +'%Y%m%d') GIT_TIMESTAMP=$(date +'%Y-%m-%d')
 language: java
 jdk:
 - openjdk11
