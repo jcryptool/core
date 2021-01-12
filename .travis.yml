@@ -1,5 +1,5 @@
 env:
-  - JCT_VERSION=1.0.2 BUILD_TIMESTAMP=$(date+'%Y%m%d') GIT_TIMESTAMP=$(date+'%Y-%m-%d')
+  - JCT_VERSION=1.0.2 BUILD_TIMESTAMP=$(date +'%Y%m%d')
 language: java
 jdk:
 - openjdk11
@@ -15,7 +15,7 @@ script:
 before_deploy:
 - git config --local user.name "Dominik Schadow"
 - git config --local user.email "dominikschadow@gmail.com"
-- git tag "Weekly-Build--$GIT_TIMESTAMP"
+- git tag "Weekly-Build--$(date+ '%Y-%m-%d')
 after_success:
 # Rename files for release builds
 - cp "org.jcryptool.product/target/products/jcryptool-$JCT_VERSION-linux.gtk.x86_64.tar.gz" "org.jcryptool.product/target/products/JCrypTool-$JCT_VERSION-Linux-64bit.tar.gz"
