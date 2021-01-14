@@ -13,14 +13,14 @@
 
 	<build>
 		<plugins>
-				<plugin>
-					<groupId>org.eclipse.tycho</groupId>
-					<artifactId>tycho-p2-repository-plugin</artifactId>
-					<version>${tycho.version}</version>
-					<configuration>
-						<includeAllDependencies>true</includeAllDependencies>
-					</configuration>
-				</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-p2-repository-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+					<includeAllDependencies>true</includeAllDependencies>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-director-plugin</artifactId>
@@ -58,30 +58,33 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.8</version>
+				<groupId>com.coderplus.maven.plugins</groupId>
+				<artifactId>copy-rename-maven-plugin</artifactId>
+				<version>1.0</version>
 				<executions>
-					<!-- rename the generated files -->
+				<!-- rename the files for better readability -->
 					<execution>
-						<id>update-artifacts</id>
+						<id>rename-file</id>
 						<phase>package</phase>
-						<configuration>
-							<target>
-								<move verbose="true"
-									todir="${project.build.directory}/products">
-									<mapper type="regexp" from="^(jcryptool-)(.*)$$"
-										to="${product.id}-${product.version}-\2" />
-
-									<fileset dir="${project.build.directory}/products">
-										<include name="*.zip" />
-										<include name="*.tar.gz" />
-									</fileset>
-								</move>
-							</target>
-						</configuration>
 						<goals>
-							<goal>run</goal>
+							<goal>rename</goal>
 						</goals>
+						<configuration>
+							<fileSets>
+								<fileSet>
+									<sourceFile>${project.build.directory}/products/${product.id}-linux.gtk.x86_64.tar.gz</sourceFile>
+									<destinationFile>${project.build.directory}/products/JCrypTool-${product.version}-Linux-64bit.tar.gz</destinationFile>
+								</fileSet>
+								<fileSet>
+									<sourceFile>${project.build.directory}/products/${product.id}-macosx.cocoa.x86_64.tar.gz</sourceFile>
+									<destinationFile>${project.build.directory}/products/JCrypTool-${product.version}-macOS-64bit.tar.gz</destinationFile>
+								</fileSet>
+								<fileSet>
+									<sourceFile>${project.build.directory}/products/${product.id}-win32.win32.x86_64.zip</sourceFile>
+									<destinationFile>${project.build.directory}/products/JCrypTool-${product.version}-Windows-64bit.zip</destinationFile>
+								</fileSet>
+							</fileSets>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
