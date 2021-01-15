@@ -9,6 +9,8 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.core.util.directories;
 
+import java.io.File;
+
 import org.eclipse.core.resources.ResourcesPlugin;
 
 /**
@@ -19,7 +21,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
  * @version 0.9.5
  */
 public class DirectoryService {
-    private static final String TEMP_DIR = System.getProperty("java.io.tmpdir"); //$NON-NLS-1$
     private static String userHome = System.getProperty("user.home"); //$NON-NLS-1$
     private static final String WORKSPACE_DIR = ResourcesPlugin.getWorkspace().getRoot().getLocation().toString();
 
@@ -29,7 +30,12 @@ public class DirectoryService {
      * @return The complete path to the temp directory
      */
     public static String getTempDir() {
-        return TEMP_DIR;
+        String string = getWorkspaceDir() + "/" + "temp_data";
+        File file = new File(string);
+        if (! file.exists()) {
+			file.mkdirs();
+		}
+		return string;
     }
 
     /**
