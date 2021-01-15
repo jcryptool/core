@@ -46,7 +46,7 @@ public class IntroPageStartup implements IStartup {
 				
 				if (partRef.getId().equals(id)) {
 					int times_shown = getPreferenceString("HAS_SEEN_CRYPTOEXPLORER_HINT").map(s -> Integer.parseInt(s)).orElse(0);
-					if (times_shown < 3) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					if (times_shown < 1) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						setPreferenceString("HAS_SEEN_CRYPTOEXPLORER_HINT", ""+(times_shown+1)); //$NON-NLS-1$ //$NON-NLS-2$
 						AlgorithmView view = AlgorithmView.instance;
 						if (view != null) {
