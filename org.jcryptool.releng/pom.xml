@@ -41,6 +41,7 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<jct.isStableRelease>false</jct.isStableRelease>
 		<maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
+		<product.file.name></product.file.name>
 	</properties>
 
 	<build>
@@ -139,6 +140,7 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 			<properties>
 				<timestamp>${maven.build.timestamp} (weekly)</timestamp>
 				<jct.isStableRelease>false</jct.isStableRelease>
+				<product.file.name>${maven.build.timestamp}</product.file.name>
 			</properties>
 		</profile>
 
@@ -149,6 +151,7 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 			<!--  by adding something between <timestamp> and </timestamp> you can adjust the name of the JCrypTool -->
 				<timestamp>${maven.build.timestamp} (stable)</timestamp>
 				<jct.isStableRelease>true</jct.isStableRelease>
+				<product.file.name>${product.version}</product.file.name>
 			</properties> 
 		</profile>
 
