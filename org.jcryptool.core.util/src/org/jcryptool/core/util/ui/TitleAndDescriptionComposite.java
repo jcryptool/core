@@ -31,8 +31,6 @@ public class TitleAndDescriptionComposite extends Composite {
 	private String description = "";
 	private Composite sc;
 	private Composite firstChildOfsc;
-	private boolean resize = true;
-	
 	
 	/**
 	 * If this option is present, display a help button that, on click, consumes this widget and is intended to show help. The class VisualPluginHelp contains some useful consumers for visual plugins.
@@ -104,15 +102,15 @@ public class TitleAndDescriptionComposite extends Composite {
 		styledText.setLayoutData(styledTextGridData);	
 		styledText.addListener(SWT.Resize, event -> {
 
-			styledTextGridData.widthHint = computeWidthHint(parent);
+//			styledTextGridData.widthHint = computeWidthHint(parent); // not needed! (bad effects)
 			styledTextGridData.heightHint = computeHeightHint(parent);
 			styledText.requestLayout();
 			
 			if (sc != null) {
 				ScrolledComposite scrolledComp = (ScrolledComposite) sc;
-				if (resize) {
+//				if (resize) {
 					scrolledComp.notifyListeners(SWT.Resize, new Event());
-				}
+//				}
 				
 				
 			}
@@ -248,27 +246,6 @@ public class TitleAndDescriptionComposite extends Composite {
 		
 
 	}
-
-	/**
-	 * True, if auto resize is enabled.
-	 * @return
-	 */
-	public boolean getResize() {
-		return resize;
-	}
-
-	/**
-	 * Set wether the TaD should resize or not.
-	 * Only used by ARC4 Plugin becazuse of layout problems.
-	 * Other plugins should not need it.
-	 * @param resize
-	 */
-	public void setResize(boolean resize) {
-		this.resize = resize;
-	}
-
-	
-	
 
 
 }
