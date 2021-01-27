@@ -41,6 +41,7 @@ public class Application implements IApplication {
               System.setProperty("osgi.nl", "en"); // fixes Platform.getNL()
               Locale.setDefault(Locale.ENGLISH);
         	}
+        	System.setProperty("file.encoding", "UTF-8");
         } catch (Exception e) {
             LogUtil.logError(CorePlugin.PLUGIN_ID, e);
         }
