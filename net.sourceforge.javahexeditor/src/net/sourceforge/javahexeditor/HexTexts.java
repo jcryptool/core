@@ -66,6 +66,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.core.util.constants.IConstants;
 
 import net.sourceforge.javahexeditor.BinaryContent.RangeSelection;
 import net.sourceforge.javahexeditor.BinaryContentFinder.Match;
@@ -245,13 +246,9 @@ public final class HexTexts extends Composite {
 		return charset;
 	}
 
-	private String getSystemCharset() {
-		return System.getProperty("file.encoding", "utf-8");
-	}
-
 	public void setCharset(String name) {
 		if ((name == null) || (name.length() == 0)) {
-			name = getSystemCharset();
+			name = IConstants.UTF8_ENCODING;
 		}
 		charset = name;
 		composeByteToCharMap();

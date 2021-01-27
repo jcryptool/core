@@ -101,7 +101,8 @@ public class SimpleDocumentProvider extends AbstractDocumentProvider {
      * @throws IOException if reading fails
      */
     private void setDocumentContent(IDocument document, FileInputStream reader) throws IOException {
-        InputStreamReader isr = new InputStreamReader(reader, System.getProperty("file.encoding", IConstants.UTF8_ENCODING)); //$NON-NLS-1$
+    	
+		InputStreamReader isr = new InputStreamReader(reader,  IConstants.UTF8_ENCODING); //$NON-NLS-1$
         Reader in = new BufferedReader(isr);
         StringBuffer buffer = new StringBuffer();
 
