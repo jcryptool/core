@@ -165,8 +165,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		} else {
 			configurer.setTitle(Platform.getProduct().getName()
     			+ " "
-    			+ Platform.getProduct().getDefiningBundle().getVersion()
-    			+ " "
+//    			+ Platform.getProduct().getDefiningBundle().getVersion()
+//    			+ " "
     			+ Platform.getProduct().getProperty("mavenBuildTimestamp"));
 		}
 
