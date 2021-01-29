@@ -1,4 +1,4 @@
-Dies ist die JCrypTool Beispieldatei.
+﻿Dies ist die JCrypTool Beispieldatei.
 
 Sie können diese Datei für einen schnellen Start mit JCrypTool
 nutzen, indem Sie die Datei z.B. über das Menü "Algorithmen"

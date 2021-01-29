@@ -264,8 +264,9 @@ public abstract class AbstractEditorService {
             byte[] buffer = new byte[1024];
             int read = 0;
             while ((read = fis.read(buffer)) > -1) {
-                s = Charset.forName(IConstants.UTF8_ENCODING).decode(ByteBuffer.wrap(buffer, 0, read)).toString();
-                fos.write(s.getBytes());
+//                s = Charset.forName(IConstants.UTF8_ENCODING).decode(ByteBuffer.wrap(buffer, 0, read)).toString();
+//                fos.write(s.getBytes());
+                fos.write(buffer, 0, read);
             }
         } catch (IOException e) {
             LogUtil.logError(OperationsPlugin.PLUGIN_ID, "Exception while writing to an output stream", e, false); //$NON-NLS-1$
