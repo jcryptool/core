@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="JCrypTool" uid="jcryptool" id="org.jcryptool.core.product" application="org.jcryptool.core.application" version="1.0.2" useFeatures="true" includeLaunchers="true">
+<product name="JCrypTool" uid="jcryptool" id="org.jcryptool.core.product" application="org.jcryptool.core.application" version="1.0.3" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/org.jcryptool.core/icons/about_dialog.gif"/>
