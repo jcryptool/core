@@ -318,7 +318,7 @@ public class UnitsService {
      * @see BASE2_ABBREVIATED
      */
     public static ByteFormatter BASE10_ABBREVIATED =
-    		new DefaultByteFormatter.Builder().abbreviateUnit(false).build();
+    		new DefaultByteFormatter.Builder().abbreviateUnit(true).build();
     /**
      * A basic byte formatter which uses written-out base2 (Kibibyte, Mebibyte) IEC units.
      * It automatically adapts to the locale (English, German).
@@ -372,7 +372,7 @@ public class UnitsService {
      * @see BASE2
      */
     public static ByteFormatter BASE2_ABBREVIATED =
-    		new DefaultByteFormatter.Builder().abbreviateUnit(false).asBase(BaseUnit.BASE_2).build();
+    		new DefaultByteFormatter.Builder().abbreviateUnit(true).asBase(BaseUnit.BASE_2).build();
     
 
     /**
