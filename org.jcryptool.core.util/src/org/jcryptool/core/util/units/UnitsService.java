@@ -425,7 +425,11 @@ public class UnitsService {
      * 
      * @return byte count including units as string
      * 
-     * @deprecated Will soon be replaced by
+     * @deprecated Will soon be replaced by {@link UnitsService#format(long)} see also the new
+     * UnitsService functionality at {@link UnitsService#get()}
+     * 
+     * @see UnitsService#DEFAULT
+     * @see DefaultByteFormatter
      */
     public static String humanReadableByteCount(long bytes, boolean si) {
         int unit = si ? 1000 : 1024;
