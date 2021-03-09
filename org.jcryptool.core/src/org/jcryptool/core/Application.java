@@ -40,6 +40,7 @@ import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.FrameworkUtil;
 
 
 
@@ -76,6 +77,14 @@ public class Application implements IApplication {
     @Override
 	public Object start(IApplicationContext context) throws Exception {
     	this.applicationContext = context;
+    	Properties props = System.getProperties();
+    	System.out.println("0:" + props.entrySet().stream().map(e -> String.format("%s->%s", e.getKey(), e.getValue())).collect(Collectors.joining("\n")));
+    	System.out.println("1: " + System.getProperty("vmargs"));
+    	System.out.println("2eclipse.vm=: " + System.getProperty("eclipse.vm"));
+    	System.out.println("2eclipse.vmargs=: " + System.getProperty("eclipse.vmargs"));
+    	System.out.println("2eclipse.commands=: " + System.getProperty("eclipse.commands"));
+    	String[] bla = (String[]) context.getArguments().get(IApplicationContext.APPLICATION_ARGS);
+    	System.out.println("3: " + Arrays.asList(bla));
         try {
         	// Set English as default language if the operating system language is neither German, English
         	System.setProperty("file.encoding", "UTF-8");
@@ -117,6 +126,7 @@ public class Application implements IApplication {
     }
 
 	private BundleContext getBundleContext() {
+//		return getOtherBundleContext(); // this seems to be another way to get it
 		return this.applicationContext.getBrandingBundle().getBundleContext();
 	}
     
@@ -316,7 +326,13 @@ public class Application implements IApplication {
 
 	private String[] getFrameworkArguments(BundleContext bc) {
 		EnvironmentInfo envInfo = getEnvironmentInfo(bc);
-		return (envInfo.getFrameworkArgs());
+		var a1 = envInfo.getCommandLineArgs();
+		var a2 = envInfo.getFrameworkArgs();
+		var a3 = envInfo.getNonFrameworkArgs();
+		System.out.println(String.format("getCommandLineArgs: %s", Arrays.asList(a1)));
+		System.out.println(String.format("getFrameworkArgs: %s", Arrays.asList(a2)));
+		System.out.println(String.format("getNonFrameworkArgs: %s", Arrays.asList(a3)));
+		return a1;
 	}
 
 	private static EnvironmentInfo getEnvironmentInfo(BundleContext bc) {
@@ -330,6 +346,12 @@ public class Application implements IApplication {
 		}
 		bc.ungetService(infoRef);
 		return envInfo;
+	}
+
+
+	public BundleContext getOtherBundleContext() {
+		BundleContext bundleContext = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+		return bundleContext;
 	}
 
 }
