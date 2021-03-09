@@ -19,10 +19,9 @@ file or open any of your own files wherever one is required.
 The original file remains untouched all the time, every
 cryptographic operation creates its own working file.
 
-The filter field on top of the 'Crypto Explorer' view can help you
-searching a particular algorithm (as well as an analysis,
-visualization or game). Using this field filters the currently
-active tab on matching results.
+The quick search helps with finding a particular algorithm 
+(as well as an analysis, visualization or game). Open it with 
+the magnifying glass icon in the toolbar, or by pressing "Ctrl+3".
 
 More information on learning, using and extending JCrypTool is
 available in the extensive online help, which can be accessed
