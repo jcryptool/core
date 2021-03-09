@@ -38,6 +38,8 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 
 
@@ -65,6 +67,7 @@ public class Application implements IApplication {
 	 * be present, we can't throw out every command line parameter — hence this filtering approach.
 	 */
     private static Function<List<String>, List<String>> restart_cmdlinefilter = null;
+	private IApplicationContext applicationContext;
 
 	/*
      * (non-Javadoc)
@@ -72,6 +75,7 @@ public class Application implements IApplication {
      */
     @Override
 	public Object start(IApplicationContext context) throws Exception {
+    	this.applicationContext = context;
         try {
         	// Set English as default language if the operating system language is neither German, English
         	System.setProperty("file.encoding", "UTF-8");
@@ -101,7 +105,7 @@ public class Application implements IApplication {
 
 				// this filters the cmdline arguments so that they don't change the language back
 				Function<List<String>, List<String>> cmdlineFilter = createCmdlineRewriteRemoveLanguagespecFilter();
-				filterCommandlineArgsForRelaunch(context, cmdlineFilter);
+				this.filterCommandlineArgsForRelaunch(context, cmdlineFilter);
 				// this is a low-level restart (can't use workbench here)
 				return IApplication.EXIT_RELAUNCH;
         	}
@@ -111,6 +115,10 @@ public class Application implements IApplication {
         
         return startApplication(context);
     }
+
+	private BundleContext getBundleContext() {
+		return this.applicationContext.getBrandingBundle().getBundleContext();
+	}
     
 	/*
      * (non-Javadoc)
@@ -168,9 +176,12 @@ public class Application implements IApplication {
      * @param filter the filter to use on the commandline args
      * @return
      */
-    private static void filterCommandlineArgsForRelaunch(IApplicationContext context, Function<List<String>, List<String>> filter) {
+    private void filterCommandlineArgsForRelaunch(IApplicationContext context, Function<List<String>, List<String>> filter) {
     	// TODO: these do not include the launcher or the equinox runnables!! Find `EnvironmentInfo` seems the way to proceed.
-    	List<String> args = Arrays.asList(Platform.getCommandLineArgs());
+    	String[] startargs = getFrameworkArguments(getBundleContext());
+
+    	List<String> args = Arrays.asList(startargs);
+//    	List<String> args = Arrays.asList(Platform.getCommandLineArgs());
     	List<String> filteredArgs = filter.apply(args);
 
 		// TODO: escape whitespace? e.g. for -data ... paths?
@@ -301,6 +312,24 @@ public class Application implements IApplication {
 		Function<List<String>, List<String>> inifileFilter = createLanguageRewriteInifileFilter(language);
 		applyFilterToInifile(inifileFilter);
 		restartAppWithCommandlinefilter(ask, cmdlineFilter);
+	}
+
+	private String[] getFrameworkArguments(BundleContext bc) {
+		EnvironmentInfo envInfo = getEnvironmentInfo(bc);
+		return (envInfo.getFrameworkArgs());
+	}
+
+	private static EnvironmentInfo getEnvironmentInfo(BundleContext bc) {
+		ServiceReference infoRef = bc.getServiceReference(EnvironmentInfo.class.getName());
+		if (infoRef == null)
+			return null;
+		EnvironmentInfo envInfo = (EnvironmentInfo) bc.getService(infoRef);
+		if (envInfo == null) {
+			LogUtil.logError("Could not get environment info");
+			return null;
+		}
+		bc.ungetService(infoRef);
+		return envInfo;
 	}
 
 }
