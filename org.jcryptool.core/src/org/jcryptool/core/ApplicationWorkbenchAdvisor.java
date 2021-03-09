@@ -68,6 +68,13 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
             }
         }
     }
+    
+    @Override
+    public void preStartup() {
+    	// TODO Auto-generated method stub
+    	System.out.println("HELLO");
+    	super.preStartup();
+    }
 
     /**
      * @see org.eclipse.ui.application.WorkbenchAdvisor#preShutdown()
