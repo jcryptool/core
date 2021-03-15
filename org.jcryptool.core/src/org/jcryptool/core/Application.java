@@ -18,9 +18,12 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -42,8 +45,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.FrameworkUtil;
 
-
-
 /**
  * This class controls all aspects of the application's execution.
  * 
@@ -61,156 +62,179 @@ import org.osgi.framework.FrameworkUtil;
 public class Application implements IApplication {
 
 	/**
-	 * If this field is set to something else than null, the application will consider 
-	 * the exit code {@link IApplication#EXIT_RESTART} as {@link IApplication#EXIT_RELAUNCH}
-	 * and set the exitdata property accordingly. This is e.g. used to filter out language 
-	 * switches a.k.a. `-nl {language}`. Since other important switches like `-data {workspace}` may
-	 * be present, we can't throw out every command line parameter — hence this filtering approach.
+	 * If this field is set to something else than null, the application will
+	 * consider the exit code {@link IApplication#EXIT_RESTART} as
+	 * {@link IApplication#EXIT_RELAUNCH} and set the exitdata property accordingly.
+	 * This is e.g. used to filter out language switches a.k.a. `-nl {language}`.
+	 * Since other important switches like `-data {workspace}` may be present, we
+	 * can't throw out every command line parameter — hence this filtering approach.
 	 */
-    private static Function<List<String>, List<String>> restart_cmdlinefilter = null;
+	private static Function<List<String>, List<String>> restart_cmdlinefilter = null;
 	private IApplicationContext applicationContext;
 
 	/*
-     * (non-Javadoc)
-     * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.IApplicationContext)
-     */
-    @Override
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.
+	 * IApplicationContext)
+	 */
+	@Override
 	public Object start(IApplicationContext context) throws Exception {
-    	this.applicationContext = context;
-    	Properties props = System.getProperties();
-    	System.out.println("0:" + props.entrySet().stream().map(e -> String.format("%s->%s", e.getKey(), e.getValue())).collect(Collectors.joining("\n")));
-    	System.out.println("1: " + System.getProperty("vmargs"));
-    	System.out.println("2eclipse.vm=: " + System.getProperty("eclipse.vm"));
-    	System.out.println("2eclipse.vmargs=: " + System.getProperty("eclipse.vmargs"));
-    	System.out.println("2eclipse.commands=: " + System.getProperty("eclipse.commands"));
-    	String[] bla = (String[]) context.getArguments().get(IApplicationContext.APPLICATION_ARGS);
-    	System.out.println("3: " + Arrays.asList(bla));
-        try {
-        	// Set English as default language if the operating system language is neither German, English
-        	System.setProperty("file.encoding", "UTF-8");
-        	if (!Locale.getDefault().getLanguage().equals("de") &&
-        			!Locale.getDefault().getLanguage().equals("en")) {
+		this.applicationContext = context;
+
+		try {
+			// Set English as default language if the operating system language is neither
+			// German, English
+			System.setProperty("file.encoding", "UTF-8");
+			if (!Locale.getDefault().getLanguage().equals("de") && !Locale.getDefault().getLanguage().equals("en")) {
 
 				Shell shell = null;
-        		try {
-        			IWorkbench wb = PlatformUI.getWorkbench();
+				try {
+					IWorkbench wb = PlatformUI.getWorkbench();
 					if (wb != null) {
 						var windows = wb.getWorkbenchWindows();
 						if (windows.length > 0) {
 							shell = windows[0].getShell();
 						}
 					}
-        		} catch (Exception e) {
+				} catch (Exception e) {
 					// do nothing, this is expected...
 				}
 				if (shell == null) {
 					shell = new Shell();
 				}
 				LanguageChooser chooser = new LanguageChooser(shell);
-				int retcode = chooser.open(); // actually, we have to restart, so we ignore the return code. Also, there is no cancel button.
+				int retcode = chooser.open(); // actually, we have to restart, so we ignore the return code. Also, there
+												// is no cancel button.
 
 				Function<List<String>, List<String>> inifileFilter = createLanguageRewriteInifileFilter(chooser.nl);
 				applyFilterToInifile(inifileFilter);
 
-				// this filters the cmdline arguments so that they don't change the language back
+				// this filters the cmdline arguments so that they don't change the language
+				// back
 				Function<List<String>, List<String>> cmdlineFilter = createCmdlineRewriteRemoveLanguagespecFilter();
 				this.filterCommandlineArgsForRelaunch(context, cmdlineFilter);
 				// this is a low-level restart (can't use workbench here)
 				return IApplication.EXIT_RELAUNCH;
-        	}
-        } catch (Exception e) {
-            LogUtil.logError(CorePlugin.PLUGIN_ID, e);
-        }
-        
-        return startApplication(context);
-    }
+			}
+		} catch (Exception e) {
+			LogUtil.logError(CorePlugin.PLUGIN_ID, e);
+		}
+
+		return startApplication(context);
+	}
 
 	private BundleContext getBundleContext() {
 //		return getOtherBundleContext(); // this seems to be another way to get it
 		return this.applicationContext.getBrandingBundle().getBundleContext();
 	}
-    
+
 	/*
-     * (non-Javadoc)
-     * @see org.eclipse.equinox.app.IApplication#stop()
-     */
-    @Override
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.equinox.app.IApplication#stop()
+	 */
+	@Override
 	public void stop() {
-        final IWorkbench workbench = PlatformUI.getWorkbench();
-        if (workbench == null) {
-            return;
-        }
-        final Display display = workbench.getDisplay();
-        display.syncExec(new Runnable() {
-            @Override
+		final IWorkbench workbench = PlatformUI.getWorkbench();
+		if (workbench == null) {
+			return;
+		}
+		final Display display = workbench.getDisplay();
+		display.syncExec(new Runnable() {
+			@Override
 			public void run() {
-                if (!display.isDisposed()) {
-                    workbench.close();
-                }
-            }
-        });
-    }
+				if (!display.isDisposed()) {
+					workbench.close();
+				}
+			}
+		});
+	}
 
-
-
-    /**
-     * Starts the GUI and controls the application's return code behavior.
-     * @param context 
-     * @return the exit code; see e.g. {@link IApplication#EXIT_RELAUNCH}
-     */
-    private Object startApplication(IApplicationContext context) {
-        Display display = PlatformUI.createDisplay();
-        // the application return code behavior
-        try {
-            int returnCode = PlatformUI.createAndRunWorkbench(display, new ApplicationWorkbenchAdvisor());
-            if (returnCode == PlatformUI.RETURN_RESTART) {
-            	if (restart_cmdlinefilter != null) {
-            		filterCommandlineArgsForRelaunch(context, restart_cmdlinefilter);
-            		return IApplication.EXIT_RELAUNCH;
+	/**
+	 * Starts the GUI and controls the application's return code behavior.
+	 * 
+	 * @param context
+	 * @return the exit code; see e.g. {@link IApplication#EXIT_RELAUNCH}
+	 */
+	private Object startApplication(IApplicationContext context) {
+		Display display = PlatformUI.createDisplay();
+		// the application return code behavior
+		try {
+			int returnCode = PlatformUI.createAndRunWorkbench(display, new ApplicationWorkbenchAdvisor());
+			if (returnCode == PlatformUI.RETURN_RESTART) {
+				if (restart_cmdlinefilter != null) {
+					filterCommandlineArgsForRelaunch(context, restart_cmdlinefilter);
+					return IApplication.EXIT_RELAUNCH;
 				} else {
 					return IApplication.EXIT_RESTART;
 				}
-            } else {
-                return IApplication.EXIT_OK;
-            }
-        } finally {
-            display.dispose();
-        }
+			} else {
+				return IApplication.EXIT_OK;
+			}
+		} finally {
+			display.dispose();
+		}
 	}
 
-    /**
-     * Filters commandlineargs for a relaunch. Only applicable within the {@link #start(IApplicationContext)} or {@link #startApplication(IApplicationContext)} functions.
-     * If this behavior is desired elsewhere, see {@link Application#restart_cmdlinefilter} and use Workbench.restart().
-     * 
-     * @param context the application context
-     * @param filter the filter to use on the commandline args
-     * @return
-     */
-    private void filterCommandlineArgsForRelaunch(IApplicationContext context, Function<List<String>, List<String>> filter) {
-    	// TODO: these do not include the launcher or the equinox runnables!! Find `EnvironmentInfo` seems the way to proceed.
-    	String[] startargs = getFrameworkArguments(getBundleContext());
-
-    	List<String> args = Arrays.asList(startargs);
-//    	List<String> args = Arrays.asList(Platform.getCommandLineArgs());
-    	List<String> filteredArgs = filter.apply(args);
-
-		// TODO: escape whitespace? e.g. for -data ... paths?
-    	String resultargs = filteredArgs.stream().collect(Collectors.joining(" "));
-		// TODO: test if that actually has the desired effect
-    	System.setProperty("eclipse.exitdata", resultargs);
+	private static List<String> getCommandLinePartFromString(String linedelimitedArgs) {
+		if (linedelimitedArgs == null) {
+			return new LinkedList<String>();
+		}
+		return linedelimitedArgs.lines().filter(line -> !line.isEmpty()).collect(Collectors.toList());
 	}
 
-    /**
-     * This restarts the application. May only be called when the workbench has been started yet! Else, 
-     * see the code pertaining to {@link Application#restart_cmdlinefilter} and {@link #startApplication(IApplicationContext)}
-     * 
-     * @param ask whether a dialog box should be opened that asks whether the action should be performed.
-     * @param cmdlineFilter a filter that is applied to the commandline arguments
-     */
-	private static void restartAppWithCommandlinefilter(boolean ask, Function<List<String>, List<String>> cmdlineFilter) {
+	/**
+	 * Filters commandlineargs for a relaunch. Only applicable within the
+	 * {@link #start(IApplicationContext)} or
+	 * {@link #startApplication(IApplicationContext)} functions. If this behavior is
+	 * desired elsewhere, see {@link Application#restart_cmdlinefilter} and use
+	 * Workbench.restart().
+	 * 
+	 * @param context the application context
+	 * @param filter  the filter to use on the commandline args
+	 * @return
+	 */
+	private void filterCommandlineArgsForRelaunch(IApplicationContext context,
+			Function<List<String>, List<String>> filter) {
+		// TODO: these do not include the launcher or the equinox runnables!! Find
+		// `EnvironmentInfo` seems the way to proceed.
+		List<String> vmArg = getCommandLinePartFromString(System.getProperty("eclipse.vm"));
+		if (vmArg.isEmpty()) {
+			System.err.println(
+					"could not set eclipse.exitdata properly; eclipse.vm is not set. This is expected when the application is run in developer mode; relaunch manually.");
+			return;
+		}
+		List<String> vmArgsArg = getCommandLinePartFromString(System.getProperty("eclipse.vmargs"));
+		List<String> commandArgs = getCommandLinePartFromString(System.getProperty("eclipse.commands"));
+		List<String> reconstructedCmdline = new LinkedList<>();
+		reconstructedCmdline.addAll(vmArg);
+		reconstructedCmdline.addAll(vmArgsArg);
+		reconstructedCmdline.addAll(commandArgs);
+		List<String> filteredCommandline = filter.apply(reconstructedCmdline);
+		String resultargs = filteredCommandline.stream().collect(Collectors.joining("\n"));
+		System.err.println(String.format(
+				"Restarting the application with filtered commandline, now stored in eclipse.exitdata: %s",
+				resultargs));
+		System.setProperty("eclipse.exitdata", resultargs);
+	}
+
+	/**
+	 * This restarts the application. May only be called when the workbench has been
+	 * started yet! Else, see the code pertaining to
+	 * {@link Application#restart_cmdlinefilter} and
+	 * {@link #startApplication(IApplicationContext)}
+	 * 
+	 * @param ask           whether a dialog box should be opened that asks whether
+	 *                      the action should be performed.
+	 * @param cmdlineFilter a filter that is applied to the commandline arguments
+	 */
+	private static void restartAppWithCommandlinefilter(boolean ask,
+			Function<List<String>, List<String>> cmdlineFilter) {
 		boolean doRestart = false;
 		if (ask) {
-			MessageBox mbox = new MessageBox(Display.getDefault().getActiveShell(), SWT.ICON_QUESTION | SWT.YES | SWT.NO);
+			MessageBox mbox = new MessageBox(Display.getDefault().getActiveShell(),
+					SWT.ICON_QUESTION | SWT.YES | SWT.NO);
 			mbox.setText(org.jcryptool.core.preferences.pages.Messages.MessageTitleRestart);
 			mbox.setMessage(org.jcryptool.core.preferences.pages.Messages.MessageRestart);
 			if (mbox.open() == SWT.YES) {
@@ -220,50 +244,62 @@ public class Application implements IApplication {
 		} else {
 			doRestart = true;
 		}
-		
+
 		if (doRestart) {
-			// this instructs the application to filter commandline arguments and relaunching instead of restarting
+			// this instructs the application to filter commandline arguments and
+			// relaunching instead of restarting
 			Application.restart_cmdlinefilter = cmdlineFilter;
 			PlatformUI.getWorkbench().restart();
 		}
-    }
-    
+	}
+
+	/**
+	 * This takes a filter that turns one commandline, or .ini-file content, into
+	 * another. Applies it to the JCrypTool inifile. Backs the inifile up before.
+	 * 
+	 * Older inifile backups are deleted without asking.
+	 * 
+	 * @throws IOException when something goes wrong with the .ini-file rewrite or
+	 *                     the backup process
+	 */
 	private static void applyFilterToInifile(Function<List<String>, List<String>> filter) throws IOException {
-        String path = Platform.getInstallLocation().getURL().toExternalForm();
-        String fileNameOrg = Platform.getProduct().getName() + ".ini"; //$NON-NLS-1$
-        String fileNameBak = fileNameOrg + ".bak"; //$NON-NLS-1$
+		String path = Platform.getInstallLocation().getURL().toExternalForm();
+		String fileNameOrg = Platform.getProduct().getName() + ".ini"; //$NON-NLS-1$
+		String fileNameBak = fileNameOrg + ".bak"; //$NON-NLS-1$
 
-        if ("macosx".equalsIgnoreCase(Platform.getOS())) { //$NON-NLS-1$
-            path += "JCrypTool.app/Contents/MacOS/"; //$NON-NLS-1$
-        }
-        File fileOrg = new File(new URL(path + fileNameOrg).getFile());
-        File fileBak = new File(new URL(path + fileNameBak).getFile());
-        if (fileBak.exists()) {
-            fileBak.delete();
-        }
-        // solve the problem that if the .ini file doesn't exist yet, it can't be created
-        if(!fileOrg.exists()) {
-        	fileOrg.createNewFile();
-        }
-        fileOrg.renameTo(fileBak);
-        BufferedReader in = new BufferedReader(new FileReader(fileBak));
-        BufferedWriter out = new BufferedWriter(new FileWriter(fileOrg));
+		if ("macosx".equalsIgnoreCase(Platform.getOS())) { //$NON-NLS-1$
+			path += "JCrypTool.app/Contents/MacOS/"; //$NON-NLS-1$
+		}
+		File fileOrg = new File(new URL(path + fileNameOrg).getFile());
+		File fileBak = new File(new URL(path + fileNameBak).getFile());
+		if (fileBak.exists()) {
+			fileBak.delete();
+		}
+		// solve the problem that if the .ini file doesn't exist yet, it can't be
+		// created
+		if (!fileOrg.exists()) {
+			fileOrg.createNewFile();
+		}
+		fileOrg.renameTo(fileBak);
+		BufferedReader in = new BufferedReader(new FileReader(fileBak));
+		BufferedWriter out = new BufferedWriter(new FileWriter(fileOrg));
 
-        // the filtering step
-        List<String> lines = in.lines().collect(Collectors.toList());
+		// the filtering step
+		List<String> lines = in.lines().collect(Collectors.toList());
 		var linesOut = filter.apply(lines);
 
-		for(String outLine : linesOut) {
-        	out.write(outLine + "\n");
-        }
+		for (String outLine : linesOut) {
+			out.write(outLine + "\n");
+		}
 
 		out.flush();
 		out.close();
-        in.close();
+		in.close();
 	}
-	
+
 	/**
 	 * rewrites a commandline so that it does not include -nl flags
+	 * 
 	 * @param newLanguage the new language (e.g. "en")
 	 * @return the new commandline as list
 	 */
@@ -271,10 +307,10 @@ public class Application implements IApplication {
 		return (List<String> in) -> {
 			var linesOut = new LinkedList<String>();
 			boolean previousWasNLFlag = false;
-			for(String line: in) {
+			for (String line : in) {
 				boolean isNlFlag = line.trim().equals("-nl");
 				// first, keep all lines that don't have to do with language
-				if (! (isNlFlag || previousWasNLFlag)) {
+				if (!(isNlFlag || previousWasNLFlag)) {
 					linesOut.add(line);
 				}
 				// keep track of state
@@ -300,10 +336,10 @@ public class Application implements IApplication {
 		return (List<String> in) -> {
 			var linesOut = new LinkedList<String>();
 			boolean previousWasNLFlag = false;
-			for(String line: in) {
+			for (String line : in) {
 				boolean isNlFlag = line.trim().equals("-nl");
 				// first, keep all lines that don't have to do with language
-				if (! (isNlFlag || previousWasNLFlag)) {
+				if (!(isNlFlag || previousWasNLFlag)) {
 					linesOut.add(line);
 				}
 				// keep track of state
@@ -316,26 +352,40 @@ public class Application implements IApplication {
 			return linesOut;
 		};
 	}
-	
+
+	/**
+	 * Tries to restart JCT with changed language. Makes that change permanent by
+	 * rewriting the .ini file. Additionally to the .ini rewrite, the application is
+	 * relaunched using EXIT_RELAUNCH and filtered commandline parameters.
+	 * 
+	 * @param language
+	 * @param ask
+	 * @throws IOException
+	 */
 	public static void restartWithChangedLanguage(String language, boolean ask) throws IOException {
-		Function<List<String>, List<String>> cmdlineFilter = createCmdlineRewriteRemoveLanguagespecFilter();
+//		Function<List<String>, List<String>> cmdlineFilter = createCmdlineRewriteRemoveLanguagespecFilter(); // this would not specify a language on the command line; seems to not work on Linux/Ubuntu20.04
+		Function<List<String>, List<String>> cmdlineFilter = createLanguageRewriteInifileFilter(language); // this uses
+																											// the same
+																											// mechanism
+																											// as for
+																											// the ini
+																											// file
 		Function<List<String>, List<String>> inifileFilter = createLanguageRewriteInifileFilter(language);
 		applyFilterToInifile(inifileFilter);
 		restartAppWithCommandlinefilter(ask, cmdlineFilter);
 	}
 
-	private String[] getFrameworkArguments(BundleContext bc) {
-		EnvironmentInfo envInfo = getEnvironmentInfo(bc);
-		var a1 = envInfo.getCommandLineArgs();
-		var a2 = envInfo.getFrameworkArgs();
-		var a3 = envInfo.getNonFrameworkArgs();
-		System.out.println(String.format("getCommandLineArgs: %s", Arrays.asList(a1)));
-		System.out.println(String.format("getFrameworkArgs: %s", Arrays.asList(a2)));
-		System.out.println(String.format("getNonFrameworkArgs: %s", Arrays.asList(a3)));
-		return a1;
+	private EnvironmentInfo getEnvironmentInfo() {
+		return getEnvironmentInfo(getBundleContext());
 	}
 
-	private static EnvironmentInfo getEnvironmentInfo(BundleContext bc) {
+	/**
+	 * returns the Environment info of a bundlecontext
+	 * 
+	 * @param bc the context object
+	 * @return the EnvironmentInfo
+	 */
+	public static EnvironmentInfo getEnvironmentInfo(BundleContext bc) {
 		ServiceReference infoRef = bc.getServiceReference(EnvironmentInfo.class.getName());
 		if (infoRef == null)
 			return null;
@@ -348,7 +398,11 @@ public class Application implements IApplication {
 		return envInfo;
 	}
 
-
+	/**
+	 * just an alternative way of getting the BundleContext
+	 * 
+	 * @return
+	 */
 	public BundleContext getOtherBundleContext() {
 		BundleContext bundleContext = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
 		return bundleContext;
