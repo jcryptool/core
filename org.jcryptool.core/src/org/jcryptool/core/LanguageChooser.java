@@ -37,7 +37,7 @@ public class LanguageChooser extends Dialog {
 	protected Control createDialogArea(Composite parent) {
 		Composite container = (Composite) super.createDialogArea(parent);
 		container.setLayout(new GridLayout(1, false));
-		getShell().setText("Choose your Language");
+		getShell().setText("Choose your language");
 		
 		lblNewLabel = new Label(container, SWT.WRAP);
 		lblNewLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
