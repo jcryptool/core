@@ -202,7 +202,7 @@ public class Application implements IApplication {
 		List<String> vmArg = getCommandLinePartFromString(System.getProperty("eclipse.vm"));
 		if (vmArg.isEmpty()) {
 			System.err.println(
-					"could not set eclipse.exitdata properly; eclipse.vm is not set. This is expected when the application is run in developer mode; relaunch manually.");
+					"When restarting the application, could not set eclipse.exitdata properly; eclipse.vm is not set. This is expected when the application is run in developer mode. Please relaunch manually.");
 			return;
 		}
 		List<String> vmArgsArg = getCommandLinePartFromString(System.getProperty("eclipse.vmargs"));
