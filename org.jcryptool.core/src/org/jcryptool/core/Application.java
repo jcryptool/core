@@ -109,11 +109,7 @@ public class Application implements IApplication {
 
 				Function<List<String>, List<String>> inifileFilter = createLanguageRewriteInifileFilter(chooser.nl);
 				applyFilterToInifile(inifileFilter);
-
-				// this filters the cmdline arguments so that they don't change the language
-				// back
-				Function<List<String>, List<String>> cmdlineFilter = createCmdlineRewriteRemoveLanguagespecFilter();
-				this.filterCommandlineArgsForRelaunch(context, cmdlineFilter);
+				this.filterCommandlineArgsForRelaunch(context, inifileFilter);
 				// this is a low-level restart (can't use workbench here)
 				return IApplication.EXIT_RELAUNCH;
 			}
@@ -197,8 +193,6 @@ public class Application implements IApplication {
 	 */
 	private void filterCommandlineArgsForRelaunch(IApplicationContext context,
 			Function<List<String>, List<String>> filter) {
-		// TODO: these do not include the launcher or the equinox runnables!! Find
-		// `EnvironmentInfo` seems the way to proceed.
 		List<String> vmArg = getCommandLinePartFromString(System.getProperty("eclipse.vm"));
 		if (vmArg.isEmpty()) {
 			System.err.println(
@@ -211,7 +205,9 @@ public class Application implements IApplication {
 		reconstructedCmdline.addAll(vmArg);
 		reconstructedCmdline.addAll(vmArgsArg);
 		reconstructedCmdline.addAll(commandArgs);
-		List<String> filteredCommandline = filter.apply(reconstructedCmdline);
+		List<String> filteredCommandline = filter.apply(reconstructedCmdline); // filtering is necessary _exactly_ here, not after next two lines. TODO maybe: leave out vmargs out of filtering process (less power, but less errorprone also)
+		filteredCommandline.add("-vmargs"); // this is somehow necessary to tell the next instance what the VM arguments were...
+		filteredCommandline.addAll(vmArgsArg); // see above line
 		String resultargs = filteredCommandline.stream().collect(Collectors.joining("\n"));
 		System.err.println(String.format(
 				"Restarting the application with filtered commandline, now stored in eclipse.exitdata: %s",
