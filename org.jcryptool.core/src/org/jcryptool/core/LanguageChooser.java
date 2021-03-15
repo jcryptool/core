@@ -41,7 +41,7 @@ public class LanguageChooser extends Dialog {
 		
 		lblNewLabel = new Label(container, SWT.WRAP);
 		lblNewLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		lblNewLabel.setText("JCrypTool is available only in English and German. Which language do you prefer?\nYou may change the Language later in 'Window -> Settings -> JCT General'.");
+		lblNewLabel.setText("JCrypTool is available only in English and German. Which language do you prefer?\nYou may change the language later in 'Window -> Settings -> JCT General'.");
 
 		lblNewLabel2 = new Label(container, SWT.WRAP);
 		lblNewLabel2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
