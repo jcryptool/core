@@ -298,32 +298,18 @@ public class Application implements IApplication {
 	}
 
 	/**
-	 * rewrites a commandline so that it does not include -nl flags
+	 * rewrites a commandline so that it does not include -nl flags. Then, `-nl`, `{newLanguage}` are appended to effectively overwrite the language.
 	 * 
 	 * @param newLanguage the new language (e.g. "en")
 	 * @return the new commandline as list
 	 */
 	private static Function<List<String>, List<String>> createLanguageRewriteInifileFilter(String newLanguage) {
 		return (List<String> in) -> {
-			var linesOut = new LinkedList<String>();
-			boolean previousWasNLFlag = false;
-			for (String line : in) {
-				boolean isNlFlag = line.trim().equals("-nl");
-				// first, keep all lines that don't have to do with language
-				if (!(isNlFlag || previousWasNLFlag)) {
-					linesOut.add(line);
-				}
-				// keep track of state
-				if (isNlFlag) {
-					previousWasNLFlag = true;
-				} else {
-					previousWasNLFlag = false;
-				}
-			}
-			// add the new language flags at the end
-			linesOut.add("-nl");
-			linesOut.add(newLanguage);
-			return linesOut;
+			return createCmdlineRewriteRemoveLanguagespecFilter().andThen(linesAfter -> {
+				linesAfter.add("-nl");
+				linesAfter.add(newLanguage);
+				return linesAfter;
+			}).apply(in);
 		};
 	}
 
