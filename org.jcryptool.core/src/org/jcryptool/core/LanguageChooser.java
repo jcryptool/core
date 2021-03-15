@@ -19,6 +19,7 @@ public class LanguageChooser extends Dialog {
 	public Button btnEnglish;
 	public Button btnGerman;
 	protected String nl = "en";
+	private Label lblNewLabel2;
 
 	/**
 	 * Create the dialog.
@@ -36,11 +37,16 @@ public class LanguageChooser extends Dialog {
 	protected Control createDialogArea(Composite parent) {
 		Composite container = (Composite) super.createDialogArea(parent);
 		container.setLayout(new GridLayout(1, false));
+		getShell().setText("Choose your Language");
 		
+		lblNewLabel = new Label(container, SWT.WRAP);
+		lblNewLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		lblNewLabel.setText("JCrypTool is available only in English and German. Which language do you prefer?\nYou may change the Language later in 'Window -> Settings -> JCT General'.");
+
+		lblNewLabel2 = new Label(container, SWT.WRAP);
+		lblNewLabel2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		lblNewLabel2.setText("JCrypTool ist nur auf Englisch und Deutsch verfügbar. Welche Sprache möchten Sie nutzen? \nSie können die Sprache später ändern im Menü 'Fenster -> Preferences -> JCT Allgemein'.");
 		
-		lblNewLabel = new Label(container, SWT.NONE);
-		lblNewLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
-		lblNewLabel.setText("JCrypTool is only available in English and German; which language do you prefer?");
 		
 		btnEnglish = new Button(container, SWT.RADIO);
 		btnEnglish.addSelectionListener(new SelectionAdapter() {
@@ -51,7 +57,7 @@ public class LanguageChooser extends Dialog {
 			}
 		});
 		btnEnglish.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		btnEnglish.setText("Restart JCrypTool in English");
+		btnEnglish.setText("Start JCrypTool in English");
 		btnEnglish.setSelection(true);
 		
 		btnGerman = new Button(container, SWT.RADIO);
@@ -82,12 +88,12 @@ public class LanguageChooser extends Dialog {
 //		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
 	}
 
-	/**
-	 * Return the initial size of the dialog.
-	 */
-	@Override
-	protected Point getInitialSize() {
-		return new Point(600, 300);
-	}
-
+//	/**
+//	 * Return the initial size of the dialog.
+//	 */
+//	@Override
+//	protected Point getInitialSize() {
+//		return new Point(600, 300);
+//	}
+	
 }
