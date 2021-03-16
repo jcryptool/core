@@ -341,13 +341,8 @@ public class Application implements IApplication {
 	 * @throws IOException
 	 */
 	public static void restartWithChangedLanguage(String language, boolean ask) throws IOException {
-//		Function<List<String>, List<String>> cmdlineFilter = createCmdlineRewriteRemoveLanguagespecFilter(); // this would not specify a language on the command line; seems to not work on Linux/Ubuntu20.04
-		Function<List<String>, List<String>> cmdlineFilter = createLanguageRewriteInifileFilter(language); // this uses
-																											// the same
-																											// mechanism
-																											// as for
-																											// the ini
-																											// file
+//		Function<List<String>, List<String>> cmdlineFilter = createCmdlineRewriteRemoveLanguagespecFilter(); // this would not specify a language on the command line; seems to not work on Linux/Ubuntu20.04 as the ini file is not automatically re-read on restart there.
+		Function<List<String>, List<String>> cmdlineFilter = createLanguageRewriteInifileFilter(language);   // this uses  the same  mechanism  as for  the ini  file
 		Function<List<String>, List<String>> inifileFilter = createLanguageRewriteInifileFilter(language);
 		applyFilterToInifile(inifileFilter);
 		restartAppWithCommandlinefilter(ask, cmdlineFilter);
