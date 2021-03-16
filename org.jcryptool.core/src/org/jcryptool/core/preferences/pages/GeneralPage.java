@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.PlatformUI;
+import org.jcryptool.core.Application;
 import org.jcryptool.core.CorePlugin;
 import org.jcryptool.core.logging.utils.LogUtil;
 
@@ -130,11 +131,11 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
     public boolean performOk() {
         try {
             if (!nl[listLanguage.getSelectionIndex()].equals(currentLanguage)) {
-                setLanguage(nl[listLanguage.getSelectionIndex()]);
-                restartApp();
+                String language = nl[listLanguage.getSelectionIndex()];
+            	Application.restartWithChangedLanguage(language, true);
             }
         } catch (Exception ex) {
-            LogUtil.logError("It is not possible to change the language.", ex); //$NON-NLS-1$
+            LogUtil.logError("org.jcryptool.core", ex); //$NON-NLS-1$
             setErrorMessage(Messages.MessageError);
         }
         return super.performOk();
@@ -159,96 +160,6 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
 	public void init(IWorkbench workbench) {
     }
 
-    /**
-     * Sets the language in the <b>JCrypTool.ini</b>. This file is located in a different folder on Mac OS X.
-     * 
-     * @param language
-     * @throws Exception
-     */
-    private void setLanguage(String language) throws Exception {
-        String path = Platform.getInstallLocation().getURL().toExternalForm();
-        String fileNameOrg = Platform.getProduct().getName() + ".ini"; //$NON-NLS-1$
-        String fileNameBak = fileNameOrg + ".bak"; //$NON-NLS-1$
-
-        if ("macosx".equalsIgnoreCase(Platform.getOS())) { //$NON-NLS-1$
-            path += "JCrypTool.app/Contents/MacOS/"; //$NON-NLS-1$
-        }
-
-        File fileOrg = new File(new URL(path + fileNameOrg).getFile());
-        File fileBak = new File(new URL(path + fileNameBak).getFile());
-
-        if (fileBak.exists()) {
-            fileBak.delete();
-        }
-
-        // solve the problem that if the .ini file doesn't exist yet, it can't be created
-        if(!fileOrg.exists()) {
-        	fileOrg.createNewFile();
-        }
-
-        fileOrg.renameTo(fileBak);
-
-        BufferedReader in = new BufferedReader(new FileReader(fileBak));
-        BufferedWriter out = new BufferedWriter(new FileWriter(fileOrg));
-
-        try {
-            String line = in.readLine();
-            if (line != null && line.equals("-nl")) { //$NON-NLS-1$
-                out.write(line);
-                out.newLine();
-                line = in.readLine();
-
-                out.write(language);
-                out.newLine();
-                for (int i = 0; i < nl.length; i++) {
-                    if (line.equals(nl[i])) {
-                        line = in.readLine();
-                    }
-                }
-
-            } else {
-                out.write("-nl"); //$NON-NLS-1$
-                out.newLine();
-                out.write(language);
-                out.newLine();
-            }
-            while (line != null) {
-                if (line.equals("-nl")) { //$NON-NLS-1$
-                    line = in.readLine();
-                    for (int i = 0; i < nl.length; i++) {
-                        if (line.equals(nl[i])) {
-                            line = in.readLine();
-                        }
-                    }
-                } else {
-                    out.write(line);
-                    out.newLine();
-                }
-
-                line = in.readLine();
-            }
-            out.flush();
-        } catch (IOException ieo) {
-            throw (ieo);
-        } finally {
-            try {
-                in.close();
-                out.close();
-            } catch (IOException ioe) {
-                LogUtil.logError(ioe);
-            }
-        }
-    }
-
-    private void restartApp() {
-        MessageBox mbox = new MessageBox(Display.getDefault().getActiveShell(), SWT.ICON_QUESTION | SWT.YES | SWT.NO);
-        mbox.setText(Messages.MessageTitleRestart);
-        mbox.setMessage(Messages.MessageRestart);
-        if (mbox.open() == SWT.YES) {
-            LogUtil.logInfo(Messages.MessageLogRestart);
-            PlatformUI.getWorkbench().restart();
-        }
-    }
 
     @Override
     protected void createFieldEditors() {

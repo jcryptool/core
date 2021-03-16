@@ -68,6 +68,11 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
             }
         }
     }
+    
+    @Override
+    public void preStartup() {
+    	super.preStartup();
+    }
 
     /**
      * @see org.eclipse.ui.application.WorkbenchAdvisor#preShutdown()

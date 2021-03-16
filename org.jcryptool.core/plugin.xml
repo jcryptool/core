@@ -280,9 +280,6 @@
    <extension point="org.jcryptool.core.platformLanguage">
       <language languageCode="de_DE" languageDescription="%language.languageGerman"/>
    </extension>
-   <extension point="org.jcryptool.core.platformLanguage">
-      <language languageCode="fr_FR" languageDescription="%language.languageFrench"/>
-   </extension>
 
    <extension point="org.eclipse.e4.ui.css.swt.theme">
       <theme basestylesheeturi="css/jcryptool.css" id="org.jcryptool.themes.default" label="Default Theme"/>
