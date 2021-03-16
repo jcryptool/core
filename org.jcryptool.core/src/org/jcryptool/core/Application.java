@@ -314,7 +314,7 @@ public class Application implements IApplication {
 			partNonVmargs.addAll(lines);
 		} else {
 			partNonVmargs.addAll(lines.subList(0, posVmargs));
-			partNonVmargs.addAll(lines.subList(posVmargs, lines.size()));
+			partVmargs.addAll(lines.subList(posVmargs, lines.size()));
 		}
 	}
 
