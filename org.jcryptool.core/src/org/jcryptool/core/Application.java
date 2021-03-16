@@ -65,6 +65,7 @@ public class Application implements IApplication {
 	private static Function<List<String>, List<String>> restart_cmdlinefilter = null;
 	private IApplicationContext applicationContext;
 
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -278,7 +279,17 @@ public class Application implements IApplication {
 
 		// the filtering step
 		List<String> lines = in.lines().collect(Collectors.toList());
-		var linesOut = filter.apply(lines);
+		
+		// have to guarantee that -vmargs is always the last part of the commandline, therefore the "filter" is only applied to the part that goes before it
+		// TODO: introduce possibility to also filter vmargs
+		List<String> partVmargs = new LinkedList<String>();
+		List<String> partNonVmargs = new LinkedList<String>();
+		splitVMArgsFromCmdline(lines, partVmargs, partNonVmargs);
+		partNonVmargs = filter.apply(partNonVmargs);
+		List<String> linesOut = new LinkedList<>();
+
+		linesOut.addAll(partNonVmargs);
+		linesOut.addAll(partVmargs);
 
 		for (String outLine : linesOut) {
 			out.write(outLine + "\n");
@@ -290,6 +301,24 @@ public class Application implements IApplication {
 	}
 
 	/**
+	 * splits "lines" so that everything before "-vmargs" goes into partVmargs, everything else including "vmargs" goes into partNonVmargs
+	 * 
+	 * @param lines
+	 * @param partVmargs
+	 * @param partNonVmargs
+	 */
+	private static void splitVMArgsFromCmdline(List<String> lines, List<String> partVmargs,
+			List<String> partNonVmargs) {
+		int posVmargs = lines.indexOf("-vmargs");
+		if (posVmargs == -1) {
+			partNonVmargs.addAll(lines);
+		} else {
+			partNonVmargs.addAll(lines.subList(0, posVmargs));
+			partNonVmargs.addAll(lines.subList(posVmargs, lines.size()));
+		}
+	}
+
+	/**
 	 * rewrites a commandline so that it does not include -nl flags. Then, `-nl`, `{newLanguage}` are appended to effectively overwrite the language.
 	 * 
 	 * @param newLanguage the new language (e.g. "en")
@@ -298,9 +327,11 @@ public class Application implements IApplication {
 	private static Function<List<String>, List<String>> createLanguageRewriteInifileFilter(String newLanguage) {
 		return (List<String> in) -> {
 			return createCmdlineRewriteRemoveLanguagespecFilter().andThen(linesAfter -> {
-				linesAfter.add("-nl");
-				linesAfter.add(newLanguage);
-				return linesAfter;
+				List<String> result = new LinkedList<>();
+				result.addAll(linesAfter);
+				result.add("-nl");
+				result.add(newLanguage);
+				return result;
 			}).apply(in);
 		};
 	}
@@ -341,7 +372,6 @@ public class Application implements IApplication {
 	 * @throws IOException
 	 */
 	public static void restartWithChangedLanguage(String language, boolean ask) throws IOException {
-//		Function<List<String>, List<String>> cmdlineFilter = createCmdlineRewriteRemoveLanguagespecFilter(); // this would not specify a language on the command line; seems to not work on Linux/Ubuntu20.04 as the ini file is not automatically re-read on restart there.
 		Function<List<String>, List<String>> cmdlineFilter = createLanguageRewriteInifileFilter(language);   // this uses  the same  mechanism  as for  the ini  file
 		Function<List<String>, List<String>> inifileFilter = createLanguageRewriteInifileFilter(language);
 		applyFilterToInifile(inifileFilter);
