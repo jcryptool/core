@@ -71,7 +71,6 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
     
     @Override
     public void preStartup() {
-    	// TODO Auto-generated method stub
     	super.preStartup();
     }
 

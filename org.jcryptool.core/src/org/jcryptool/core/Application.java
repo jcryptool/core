@@ -49,15 +49,8 @@ import org.osgi.framework.FrameworkUtil;
  * This class controls all aspects of the application's execution.
  * 
  * @author Dominik Schadow
- * @version 1.0.0
- */
-/**
- * @author snuc
- *
- */
-/**
- * @author snuc
- *
+ * @author Simon Leischnig
+ * @version 1.0.3.qualifier
  */
 public class Application implements IApplication {
 
@@ -105,7 +98,7 @@ public class Application implements IApplication {
 				}
 				LanguageChooser chooser = new LanguageChooser(shell);
 				int retcode = chooser.open(); // actually, we have to restart, so we ignore the return code. Also, there
-												// is no cancel button.
+							    			  // is no cancel button.
 
 				Function<List<String>, List<String>> inifileFilter = createLanguageRewriteInifileFilter(chooser.nl);
 				applyFilterToInifile(inifileFilter);
@@ -173,11 +166,11 @@ public class Application implements IApplication {
 		}
 	}
 
-	private static List<String> getCommandLinePartFromString(String linedelimitedArgs) {
-		if (linedelimitedArgs == null) {
+	private static List<String> getCommandLinePartFromString(String lineDelimitedArgs) {
+		if (lineDelimitedArgs == null) {
 			return new LinkedList<String>();
 		}
-		return linedelimitedArgs.lines().filter(line -> !line.isEmpty()).collect(Collectors.toList());
+		return lineDelimitedArgs.lines().filter(line -> !line.isEmpty()).collect(Collectors.toList());
 	}
 
 	/**
@@ -195,8 +188,8 @@ public class Application implements IApplication {
 			Function<List<String>, List<String>> filter) {
 		List<String> vmArg = getCommandLinePartFromString(System.getProperty("eclipse.vm"));
 		if (vmArg.isEmpty()) {
-			System.err.println(
-					"When restarting the application, could not set eclipse.exitdata properly; eclipse.vm is not set. This is expected when the application is run in developer mode. Please relaunch manually.");
+			LogUtil.logError("When restarting the application, could not set eclipse.exitdata properly; eclipse.vm is not set. "
+					+ "This is expected when the application is run in developer mode. Please relaunch manually.");
 			return;
 		}
 		List<String> vmArgsArg = getCommandLinePartFromString(System.getProperty("eclipse.vmargs"));
@@ -205,11 +198,14 @@ public class Application implements IApplication {
 		reconstructedCmdline.addAll(vmArg);
 		reconstructedCmdline.addAll(vmArgsArg);
 		reconstructedCmdline.addAll(commandArgs);
-		List<String> filteredCommandline = filter.apply(reconstructedCmdline); // filtering is necessary _exactly_ here, not after next two lines. TODO maybe: leave out vmargs out of filtering process (less power, but less errorprone also)
-		filteredCommandline.add("-vmargs"); // this is somehow necessary to tell the next instance what the VM arguments were...
-		filteredCommandline.addAll(vmArgsArg); // see above line
+
+		List<String> filteredCommandline = filter.apply(reconstructedCmdline); 	// filtering is necessary _exactly_ here, not after next two lines. 
+																				// TODO maybe: leave out vmargs out of filtering process (less power, but less errorprone also)
+		filteredCommandline.add("-vmargs"); 									// this is somehow necessary to tell the next instance what the VM arguments were...
+		filteredCommandline.addAll(vmArgsArg); 									// see above line
+
 		String resultargs = filteredCommandline.stream().collect(Collectors.joining("\n"));
-		System.err.println(String.format(
+		LogUtil.logInfo(String.format(
 				"Restarting the application with filtered commandline, now stored in eclipse.exitdata: %s",
 				resultargs));
 		System.setProperty("eclipse.exitdata", resultargs);

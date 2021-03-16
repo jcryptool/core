@@ -52,8 +52,7 @@ public class LanguageChooser extends Dialog {
 		btnEnglish.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				LanguageChooser.this.nl="en";
-				LanguageChooser.this.updateDialog();
+				LanguageChooser.this.nl = "en";
 			}
 		});
 		btnEnglish.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -66,16 +65,11 @@ public class LanguageChooser extends Dialog {
 		btnGerman.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				LanguageChooser.this.nl="de";
-				LanguageChooser.this.updateDialog();
+				LanguageChooser.this.nl = "de";
 			}
 		});
 
 		return container;
-	}
-
-	protected void updateDialog() {
-		// nothing to do for now; any state is valid...
 	}
 
 	/**
@@ -85,15 +79,8 @@ public class LanguageChooser extends Dialog {
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
-//		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+//      createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false); // disable CANCEL button
 	}
 
-//	/**
-//	 * Return the initial size of the dialog.
-//	 */
-//	@Override
-//	protected Point getInitialSize() {
-//		return new Point(600, 300);
-//	}
 	
 }
