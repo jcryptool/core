@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jcryptool.editor.text;singleton:=true
-Bundle-Version: 1.0.3
+Bundle-Version: 1.0.4
 Bundle-Activator: org.jcryptool.editor.text.JCTTextEditorPlugin
 Bundle-Vendor: %bundleVendor
 Require-Bundle: org.eclipse.ui,

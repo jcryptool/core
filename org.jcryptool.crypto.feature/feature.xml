@@ -2,7 +2,7 @@
 <feature
       id="org.jcryptool.crypto.feature"
       label="JCrypTool Crypto Feature"
-      version="1.0.3"
+      version="1.0.4"
       provider-name="jcryptool.org"
       plugin="org.jcryptool.core">
 

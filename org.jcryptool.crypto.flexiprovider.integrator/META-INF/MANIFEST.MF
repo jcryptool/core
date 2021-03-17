@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jcryptool.crypto.flexiprovider.integrator;singleton:=true
-Bundle-Version: 1.0.3
+Bundle-Version: 1.0.4
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  de.flexiprovider;bundle-version="1.7.0",
