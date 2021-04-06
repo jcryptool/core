@@ -24,6 +24,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 
+import org.jcryptool.core.logging.utils.LogUtil;
+
 /**
  * Utility class to access resources in the class path.
  *
@@ -61,7 +63,7 @@ public final class ResourceUtility {
 			reader.close();
 
 		} catch (IOException ex) {
-			Log.logError("Cannot load resource '{0}'.", new Object[] { path }, ex);
+			LogUtil.logError("Cannot load resource " + path , ex);
 		} finally {
 
 			try {
@@ -96,7 +98,7 @@ public final class ResourceUtility {
 				result = url.openStream();
 			}
 		} catch (IOException ex) {
-			Log.logError("Cannot get input stream for path '{0}'", new Object[] { path }, ex);
+			LogUtil.logError("Cannot get input stream for path " + path, ex);
 		}
 		return result;
 	}

@@ -26,8 +26,9 @@ import org.eclipse.swt.custom.StyledTextContent;
 import org.eclipse.swt.custom.TextChangeListener;
 import org.eclipse.swt.custom.TextChangedEvent;
 import org.eclipse.swt.custom.TextChangingEvent;
+import org.jcryptool.core.logging.utils.LogUtil;
 
-import net.sourceforge.javahexeditor.common.Log;
+import net.sourceforge.javahexeditor.plugin.editors.HexEditor;
 
 /**
  * StyledTextContent customized for content that fills up to one page of the
@@ -184,8 +185,7 @@ final class DisplayedContent implements StyledTextContent {
 			listener.textChanging(event);
 		}
 		myData.insert(event.start, text);
-		Log.trace(this, "Event 1: start={0}, newCharCount={1}, newLineCount={2}", event.start, event.newCharCount,
-				event.newLineCount);
+		LogUtil.logInfo(HexEditor.ID, "Event 1: start=" + event.start + ", newCharCount=" + event.newCharCount + ", newLineCount=" + event.newLineCount);
 
 		TextChangedEvent changedEvent = new TextChangedEvent(this);
 		for (TextChangeListener listener : myTextListeners) {
@@ -209,8 +209,8 @@ final class DisplayedContent implements StyledTextContent {
 		} else {
 			myData.delete(0, event.replaceCharCount);
 		}
-		Log.trace(this, "Event 2: start={0}, newCharCount={1}, newLineCount={2}", event.start, event.newCharCount,
-				event.newLineCount);
+//		Log.trace(this, );
+		LogUtil.logInfo(HexEditor.ID, "Event 2: start=" + event.start + ", newCharCount=" + event.newCharCount + ", newLineCount=" +event.newLineCount);
 
 		changedEvent = new TextChangedEvent(this);
 		for (TextChangeListener listener : myTextListeners) {

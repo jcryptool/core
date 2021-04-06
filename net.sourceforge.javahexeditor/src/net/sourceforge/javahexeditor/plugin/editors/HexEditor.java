@@ -70,6 +70,7 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.editors.text.ILocationProvider;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.constants.IConstants;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleException;
@@ -81,7 +82,6 @@ import net.sourceforge.javahexeditor.HexTexts;
 import net.sourceforge.javahexeditor.Manager;
 import net.sourceforge.javahexeditor.Preferences;
 import net.sourceforge.javahexeditor.Texts;
-import net.sourceforge.javahexeditor.common.Log;
 import net.sourceforge.javahexeditor.common.TextUtility;
 import net.sourceforge.javahexeditor.plugin.HexEditorPlugin;
 
@@ -248,7 +248,8 @@ public final class HexEditor extends EditorPart implements ISelectionProvider {
 		manager.addLongSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Log.trace(this, "Long selection: {0}", e); //$NON-NLS-1$
+//				Log.trace(this, "Long selection: {0}", e); //$NON-NLS-1$
+				LogUtil.logInfo(HexEditor.ID, "Long selection: " + e.toString());
 				if (selectionListeners == null) {
 					return;
 				}
@@ -385,8 +386,8 @@ public final class HexEditor extends EditorPart implements ISelectionProvider {
 
 	@Override
 	public void init(IEditorSite site, final IEditorInput input) throws PartInitException {
-		Log.trace(this, "init starts with selection provider {0}", site.getSelectionProvider()); //$NON-NLS-1$
-
+		LogUtil.logInfo(HexEditor.ID, "init starts with selection provider " + site.getSelectionProvider());
+		
 		setSite(site);
 		if (!(input instanceof IPathEditorInput) && !(input instanceof ILocationProvider)
 				&& (!(input instanceof IURIEditorInput)) && (!(input instanceof IStorageEditorInput))) {

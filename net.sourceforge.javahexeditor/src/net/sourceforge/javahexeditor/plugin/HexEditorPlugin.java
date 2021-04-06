@@ -19,18 +19,15 @@
  */
 package net.sourceforge.javahexeditor.plugin;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import net.sourceforge.javahexeditor.FindReplaceHistory;
-import net.sourceforge.javahexeditor.common.Log;
 
 /**
  * The main plugin class to be used in the desktop.
  */
-public final class HexEditorPlugin extends AbstractUIPlugin implements Log.Delegate {
+public final class HexEditorPlugin extends AbstractUIPlugin {
 
 	public static final String ID = "net.sourceforge.javahexeditor";
 
@@ -62,7 +59,6 @@ public final class HexEditorPlugin extends AbstractUIPlugin implements Log.Deleg
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-		Log.setDelegate(this);
 	}
 
 	/**
@@ -83,18 +79,4 @@ public final class HexEditorPlugin extends AbstractUIPlugin implements Log.Deleg
 		return findReplaceHistory;
 	}
 
-	public void log(String message, Throwable th) {
-		if (message == null) {
-			message = th.getMessage();
-			if (message == null) {
-				message = th.toString();
-			}
-		}
-		getDefault().getLog().log(new Status(IStatus.ERROR, ID, IStatus.OK, message, th));
-	}
-
-	@Override
-	public boolean isTraceActive() {
-		return isDebugging();
-	}
 }

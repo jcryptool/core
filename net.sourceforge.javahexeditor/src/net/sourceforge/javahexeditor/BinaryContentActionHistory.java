@@ -26,8 +26,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.jcryptool.core.logging.utils.LogUtil;
+
 import net.sourceforge.javahexeditor.BinaryContent.Range;
-import net.sourceforge.javahexeditor.common.Log;
 
 /**
  * Keeps track of actions performed on a BinaryContent so they can be undone and
@@ -315,8 +316,7 @@ final class BinaryContentActionHistory {
 				try {
 					randomAccessFile.close();
 				} catch (IOException ex) {
-					Log.logError("Cannot close random access file '{0}'", new Object[] { range.file.getAbsolutePath() },
-							ex);
+					LogUtil.logError("Cannot close random access file " +  range.file.getAbsolutePath(), ex);
 				}
 			}
 		}

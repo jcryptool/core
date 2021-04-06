@@ -24,3 +24,4 @@ Export-Package: net.sourceforge.javahexeditor,
  net.sourceforge.javahexeditor.plugin,
  net.sourceforge.javahexeditor.plugin.actions,
  net.sourceforge.javahexeditor.plugin.editors
+Import-Package: org.jcryptool.core.logging.utils
