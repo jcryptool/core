@@ -120,7 +120,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         fileToolBar.add(new GroupMarker(IWorkbenchActionConstants.FILE_START));
         fileToolBar.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_SAVE, null));
         fileToolBar.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_SAVE_ALL, null));
-        fileToolBar.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_PRINT, null));
+//        IContributionItem printContribution = createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_PRINT, null);
         fileToolBar.add(new GroupMarker(IWorkbenchActionConstants.FILE_END));
         fileToolBar.add(new Separator());
         fileToolBar.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
