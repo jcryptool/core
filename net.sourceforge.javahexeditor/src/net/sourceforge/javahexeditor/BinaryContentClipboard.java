@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,8 +38,10 @@ import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.dnd.TransferData;
 import org.eclipse.swt.widgets.Display;
+import org.jcryptool.core.logging.utils.LogUtil;
 
 import net.sourceforge.javahexeditor.common.TextUtility;
+import net.sourceforge.javahexeditor.plugin.editors.HexEditor;
 
 /**
  * A clipboard for binary content. Data up to 4 Mbytes is made available as text
@@ -272,13 +275,16 @@ final class BinaryContentClipboard {
 	 * @param insert
 	 * @return
 	 */
-	public long getContents(BinaryContent content, long start, boolean insert) {
+	public long getContents(BinaryContent content, long start, boolean insert, boolean hex) {
+		
+		// Used if a file is pasted to the editor
 		long total = tryGettingFiles(content, start, insert);
 		if (total >= 0L) {
 			return total;
 		}
 
-		total = tryGettingMemoryByteArray(content, start, insert);
+		// Used if content from the clipboard is pasted to the editor
+		total = tryGettingMemoryByteArray(content, start, insert, hex);
 		if (total >= 0L) {
 			return total;
 		}
@@ -473,12 +479,12 @@ final class BinaryContentClipboard {
 		}
 		total = 0L;
 		for (int i = files.length - 1; i >= 0; --i) { // for some reason they
-			// are given in reverse
-			// order
+			// are given in reverse order
 			File file = new File(files[i]);
 			try {
 				file = file.getCanonicalFile();
 			} catch (IOException e) {
+				LogUtil.logError(HexEditor.ID, e);
 			} // use non-canonical one then
 			boolean success = true;
 			try {
@@ -488,6 +494,7 @@ final class BinaryContentClipboard {
 					content.overwrite(file, start);
 				}
 			} catch (IOException e) {
+				LogUtil.logError(HexEditor.ID, e);
 				success = false;
 			}
 			if (success) {
@@ -499,12 +506,40 @@ final class BinaryContentClipboard {
 		return total;
 	}
 
-	private long tryGettingMemoryByteArray(BinaryContent content, long start, boolean insert) {
+	private long tryGettingMemoryByteArray(BinaryContent content, long start, boolean insert, boolean hex) {
+		// Seems to be used for copying data from one 
+		// javahexeditor instance to another
 		byte[] byteArray = (byte[]) myClipboard.getContents(MemoryByteArrayTransfer.getInstance());
+		
+		// Seems to be used to copy data from the "real" clipboard
+		// to javahexeditor.
 		if (byteArray == null) {
 			String text = (String) myClipboard.getContents(TextTransfer.getInstance());
 			if (text != null) {
-				byteArray = text.getBytes();
+				if (hex) {
+					// Paste the hex values to the editor
+					
+					// Remove all non hex chars from the string.
+					String onlyHexChars = text.replaceAll("[^a-eA-E0-9]", "");
+
+					// ungerade anzahl an hex Zeichen -> kein komplettes letztes Byte.
+					// Zum Beispiel 5 Hex zeichen = 2,5 Byte.
+					// Pad a trailing 0 to the hex chars to fill the last byte.
+					if (onlyHexChars.length() % 2 == 1) {
+						onlyHexChars = onlyHexChars + "0";
+					}
+					
+					int len = onlyHexChars.length();
+					byteArray = new byte[len / 2];
+					for (int j = 0; j < len; j += 2) {
+						byteArray[j / 2] = (byte) ((Character.digit(onlyHexChars.charAt(j), 16) << 4)
+		                         + Character.digit(onlyHexChars.charAt(j+1), 16));
+					}
+				} else {
+					// Paste the text representation to the editor.
+					byteArray = text.getBytes(Charset.forName("UTF-8"));
+				}
+				
 			}
 		}
 		if (byteArray == null) {

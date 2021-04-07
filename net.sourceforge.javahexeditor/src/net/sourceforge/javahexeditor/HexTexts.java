@@ -890,8 +890,10 @@ public final class HexTexts extends Composite {
 		// Create the "copy hex or text" dialog 
 		Dialog d = new CopyDialog(Display.getCurrent().getActiveShell(), toBigforClipboard);
 		int returnValue = d.open();
+		
+		System.out.println(returnValue);
 
-		if (returnValue == 1) {
+		if (returnValue == 0 || returnValue == 1) {
 			// 1 is returned if the user closed the dialog 
 			// Do nothing
 		} else if (returnValue == 2) {
@@ -1568,13 +1570,34 @@ public final class HexTexts extends Composite {
 	 * pasting would overflow the content length, in which case does nothing.
 	 */
 	public void paste() {
+		
+		//TODO Add option to paste hex values
+		
 		if (!myClipboard.hasContents()) {
 			return;
+		}
+		
+		Dialog d = new PasteDialog(Display.getCurrent().getActiveShell());
+		int returnValue = d.open();
+		
+		boolean hex = true;
+		
+		if (returnValue == 0 || returnValue == 1) {
+			// 1 is returned if the user closed the dialog 
+			// Do nothing
+			return;
+		} else if (returnValue == 2) {
+			// The user pressed "hex"
+			hex = true;
+		} else  if (returnValue == 3) {
+			// The user pressed "utf8"
+			hex = false;
 		}
 
 		handleSelectedPreModify();
 		long caretPos = getCaretPos();
-		long total = myClipboard.getContents(myContent, caretPos, myInserting);
+		// Anzahl an BYTES die eingefuegt werden sollen
+		long total = myClipboard.getContents(myContent, caretPos, myInserting, hex);
 		setStartAndEnd(caretPos, caretPos + total);
 		myCaretStickToStart = false;
 		redrawTextAreas(true);
