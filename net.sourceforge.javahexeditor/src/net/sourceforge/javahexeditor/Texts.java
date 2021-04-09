@@ -110,6 +110,12 @@ public final class Texts extends NLS {
 	public static String MANAGER_SAVE_MESSAGE_CANNOT_OVERWRITE_FILE_IN_USE;
 	public static String MANAGER_SAVE_MESSAGE_CANNOT_CREATE_TEMP_FILE_WITH_UNIQUE_NAME;
 
+	// Paste Dialog
+	public static String PasteDialog_cancel;
+	public static String PasteDialog_hexOrText;
+	public static String PasteDialog_Information;
+	public static String PasteDialog_title;
+
 	// Preferences Manager
 	public static String PREFERENCES_MANAGER_DIALOG_TITLE;
 

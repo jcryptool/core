@@ -66,13 +66,13 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Text;
+
 import org.jcryptool.core.util.constants.IConstants;
 
 import net.sourceforge.javahexeditor.BinaryContent.RangeSelection;
 import net.sourceforge.javahexeditor.BinaryContentFinder.Match;
 import net.sourceforge.javahexeditor.common.ByteArrayUtility;
 import net.sourceforge.javahexeditor.common.SWTUtility;
-import net.sourceforge.javahexeditor.common.TextUtility;
 
 /**
  * A binary file editor, composed of two synchronized displays: an hexadecimal
@@ -133,7 +133,7 @@ public final class HexTexts extends Composite {
 	private int mergeRangesPosition = -1;
 	int myBytesPerLine = 16;
 	boolean myCaretStickToStart = false; // stick to end
-	BinaryContentClipboard myClipboard;
+//	BinaryContentClipboard myClipboard;
 	BinaryContent myContent;
 	BinaryContentFinder myFinder;
 	boolean myInserting = false;
@@ -553,7 +553,7 @@ public final class HexTexts extends Composite {
 		composeByteToHexMap();
 		composeHeaderRow();
 
-		myClipboard = new BinaryContentClipboard(parent.getDisplay());
+//		myClipboard = new BinaryContentClipboard(parent.getDisplay());
 		myLongSelectionListeners = new ArrayList<SelectionListener>();
 		addDisposeListener(new DisposeListener() {
 			@Override
@@ -563,16 +563,16 @@ public final class HexTexts extends Composite {
 				if (fontDefault != null && !fontDefault.isDisposed()) {
 					fontDefault.dispose();
 				}
-				try {
-					myClipboard.dispose();
-				} catch (IOException ex) {
-					SWTUtility.showMessage(parent.getShell(), SWT.ICON_WARNING | SWT.OK,
-							Texts.HEX_TEXTS_TITLE_INCONSISTENT_CLIPBOARD_FILES,
-							Texts.HEX_TEXTS_MESSAGE_INCONSISTENT_CLIPBOARD_FILES,
-							BinaryContentClipboard.CLIPBOARD_FOLDER_PATH, BinaryContentClipboard.CLIPBOARD_FILE_NAME,
-							TextUtility.format(BinaryContentClipboard.CLIPBOARD_FILE_NAME_PASTED, "..."));
-
-				}
+//				try {
+//					myClipboard.dispose();
+//				} catch (IOException ex) {
+//					SWTUtility.showMessage(parent.getShell(), SWT.ICON_WARNING | SWT.OK,
+//							Texts.HEX_TEXTS_TITLE_INCONSISTENT_CLIPBOARD_FILES,
+//							Texts.HEX_TEXTS_MESSAGE_INCONSISTENT_CLIPBOARD_FILES,
+//							BinaryContentClipboard.CLIPBOARD_FOLDER_PATH, BinaryContentClipboard.CLIPBOARD_FILE_NAME,
+//							TextUtility.format(BinaryContentClipboard.CLIPBOARD_FILE_NAME_PASTED, "..."));
+//
+//				}
 			}
 		});
 		initialize();
@@ -891,17 +891,17 @@ public final class HexTexts extends Composite {
 		Dialog d = new CopyDialog(Display.getCurrent().getActiveShell(), toBigforClipboard);
 		int returnValue = d.open();
 
-		if (returnValue == 1) {
+		if (returnValue == 0 || returnValue == 1) {
 			// 1 is returned if the user closed the dialog 
 			// Do nothing
 		} else if (returnValue == 2) {
 			// The user pressed "hex"
 			// Copy the hex values to the clipboard
-			myClipboard.setContentsHex(myContent, myStart, length);
+			ClipboardHelper.setHexContentToClipboard(myContent, myStart, length);
 		} else  if (returnValue == 3) {
 			// The user pressed "utf8"
 			// copy the text representation to the clipboard.
-			myClipboard.setContents(myContent, myStart, length);
+			ClipboardHelper.setContentsText(myContent, myStart, length);
 		}
 	}
 
@@ -1557,7 +1557,8 @@ public final class HexTexts extends Composite {
 	}
 
 	public boolean canPaste() {
-		return myClipboard.hasContents();
+//		return myClipboard.hasContents();
+		return ClipboardHelper.hasContents();
 	}
 
 	/**
@@ -1568,13 +1569,43 @@ public final class HexTexts extends Composite {
 	 * pasting would overflow the content length, in which case does nothing.
 	 */
 	public void paste() {
-		if (!myClipboard.hasContents()) {
+		
+		//TODO Add option to paste hex values
+		
+		if (!ClipboardHelper.hasContents()) {
 			return;
 		}
-
+		
 		handleSelectedPreModify();
+		
+		//TODO Check which type of content is in the clipboard.
+		// Dann entscheiden, ob hex / Text dialog angezeigt wird oder nicht.
+		// Bei Dateien wird er nicht angezeigt.
+		
+		Dialog d = new PasteDialog(Display.getCurrent().getActiveShell());
+		int returnValue = d.open();
+		
+		
 		long caretPos = getCaretPos();
-		long total = myClipboard.getContents(myContent, caretPos, myInserting);
+		
+		// Anzahl an BYTES die eingefuegt werden sollen
+		long total = 0;
+		
+//		total = ClipboardHelper.tryGettingFiles(myContent, caretPos, myInserting);
+		
+		if (returnValue == 0 || returnValue == 1) {
+			// 1 is returned if the user closed the dialog 
+			// Do nothing
+			return;
+		} else if (returnValue == 2) {
+			// The user pressed "hex"
+			total = ClipboardHelper.tryGettingHex(myContent, caretPos, myInserting);
+		} else  if (returnValue == 3) {
+			// The user pressed "utf8"
+			total = ClipboardHelper.tryGettingText(myContent, caretPos, myInserting);
+		}
+
+		
 		setStartAndEnd(caretPos, caretPos + total);
 		myCaretStickToStart = false;
 		redrawTextAreas(true);
