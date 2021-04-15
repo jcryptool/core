@@ -134,7 +134,7 @@ public final class ClipboardHelper {
 					// Paste the hex values to the editor
 					
 					// Remove all non hex chars from the string.
-					String onlyHexChars = text.replaceAll("[^a-eA-E0-9]", "");
+					String onlyHexChars = text.replaceAll("[^a-fA-F0-9]", "");
 
 					// ungerade anzahl an hex Zeichen -> kein komplettes letztes Byte.
 					// Zum Beispiel 5 Hex zeichen = 2,5 Byte.
