@@ -129,7 +129,7 @@ public final class ClipboardHelper {
 		// to javahexeditor.
 		byte[] byteArray = null;
 			String text = (String) clipboard.getContents(TextTransfer.getInstance());
-			System.out.println("Text from clipboard: " + text);
+//			System.out.println("Text from clipboard: " + text);
 			if (text != null) {
 					// Paste the hex values to the editor
 					
