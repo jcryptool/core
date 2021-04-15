@@ -120,6 +120,10 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         fileToolBar.add(new GroupMarker(IWorkbenchActionConstants.FILE_START));
         fileToolBar.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_SAVE, null));
         fileToolBar.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_SAVE_ALL, null));
+        // Auskommentiert, da die GUI aufgeräumt werden sollte. 
+        // Das Drucken-Icon ist eines der wenig benutzen Icons.
+        // Daher wurde es enternt.
+        // Die Menu Contribution funktionert.
 //        IContributionItem printContribution = createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_PRINT, null);
         fileToolBar.add(new GroupMarker(IWorkbenchActionConstants.FILE_END));
         fileToolBar.add(new Separator());
