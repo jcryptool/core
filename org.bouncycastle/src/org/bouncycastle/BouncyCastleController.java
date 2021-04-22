@@ -28,7 +28,8 @@ public class BouncyCastleController extends AbstractProviderController {
 	public BouncyCastleController() {}
 
 	/**
-	 * @see org.jcryptool.core.operations.providers.AbstractProviderController#addProviders()
+	 * @see org.jcryptool.core.operations.providers.AbstractProviderController#addProviders()</br>
+	 * This method adds the bouncycastle as crypto provider to the list of available crypto providers.
 	 */
 	@Override
 	public List<String> addProviders() {
@@ -44,12 +45,14 @@ public class BouncyCastleController extends AbstractProviderController {
 
 	@Override
 	public void setProviders__sunPromoted() {
-// 		System.err.println("promoting sun security providers in BouncyCastleController (NOP)");
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void setProviders__flexiPromoted() {
-// 		System.err.println("promoting flexi security providers in BouncyCastleController (NOP)");
+		// TODO Auto-generated method stub
+		
 	}
 
 }
