@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jcryptool</groupId>
 	<artifactId>org.jcryptool.releng</artifactId>
-	<version>1.0.4</version>
+	<version>1.0.5</version>
 	<packaging>pom</packaging>
 	<name>JCrypTool</name>
 	<url>https://github.com/jcryptool</url>
@@ -37,7 +37,7 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>11</java.version>
 		<product.id>jcryptool</product.id>
-		<product.version>1.0.4</product.version>
+		<product.version>1.0.5</product.version>
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<jct.isStableRelease>false</jct.isStableRelease>
 		<maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>

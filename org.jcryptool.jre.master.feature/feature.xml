@@ -2,7 +2,7 @@
 <feature
       id="org.jcryptool.jre.master.feature"
       label="OpenJDK/JLink JRE Feature"
-      version="1.0.4"
+      version="1.0.5"
       provider-name="jcryptool.org">
 
    <description>

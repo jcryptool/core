@@ -24,6 +24,6 @@ Export-Package: net.sourceforge.javahexeditor,
  net.sourceforge.javahexeditor.plugin,
  net.sourceforge.javahexeditor.plugin.actions,
  net.sourceforge.javahexeditor.plugin.editors
-Import-Package: org.apache.commons.codec;version="1.13.0",
- org.apache.commons.codec.binary;version="1.13.0",
+Import-Package: org.apache.commons.codec,
+ org.apache.commons.codec.binary,
  org.jcryptool.core.logging.utils
