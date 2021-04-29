@@ -15,7 +15,7 @@ import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.keystore.keys.KeyType;
 
 /**
- * <EncodedContactName>;<KeyStoreEntryType>;<Operation>;<KeyLength>;<Provider>;< HashValue>
+ * EncodedContactName;KeyStoreEntryType;Operation;KeyLength;Provider;HashValue
  * 
  * @author tkern
  * 
@@ -30,6 +30,17 @@ public class KeyStoreAlias implements IKeyStoreAlias {
     private boolean valid = false;
     private String hashValue;
     private String className;
+    
+    
+    /**
+     * 
+     * @param contactName
+     * @param keyType
+     * @param opName
+     * @param keyLength
+     * @param hashValue
+     * @param className
+     */
     public KeyStoreAlias(String contactName, KeyType keyType, String opName, int keyLength, String hashValue,
             String className) {
         this.encodedContactName = encode(contactName);
