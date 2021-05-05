@@ -125,6 +125,7 @@
             locationURI="menu:showin">
          <command
                commandId="org.jcryptool.editor.text.openIn"
+               icon="platform:/plugin/org.jcryptool.editor.hex/icons/hex.png"
                style="push">
             <visibleWhen
                   checkEnabled="true">
@@ -153,6 +154,7 @@
             locationURI="popup:#AbstractTextEditorContext?after=additions">
          <command
                commandId="org.jcryptool.editor.text.openInHexeditor"
+               icon="platform:/plugin/org.jcryptool.editor.hex/icons/hex.png"
                style="push">
          </command>
       </menuContribution>
