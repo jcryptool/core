@@ -33,6 +33,14 @@ public final class Texts extends NLS {
 	// ByteArrayUtility
 	public static String BYTE_ARRAY_UTILITY_INVALID_HEX_STRING;
 
+	// Context Menu
+	public static String ContextMenu_copy;
+	public static String ContextMenu_cut;
+	public static String ContextMenu_openin;
+	public static String ContextMenu_paste;
+	public static String ContextMenu_redo;
+	public static String ContextMenu_undo;
+
 	// Copy Dialog 
 	public static String CopyDialog_hex_or_text;
 	public static String CopyDialog_title;
@@ -109,6 +117,12 @@ public final class Texts extends NLS {
 	public static String MANAGER_SAVE_MESSAGE_CANNOT_OVERWRITE_FILE;
 	public static String MANAGER_SAVE_MESSAGE_CANNOT_OVERWRITE_FILE_IN_USE;
 	public static String MANAGER_SAVE_MESSAGE_CANNOT_CREATE_TEMP_FILE_WITH_UNIQUE_NAME;
+
+	// Open in handler
+	public static String OpenInTexteditor_error_Message;
+	public static String OpenInTexteditor_error_title;
+	public static String OpenInTexteditor_warning_message;
+	public static String OpenInTexteditor_warning_title;
 
 	// Paste Dialog
 	public static String PasteDialog_cancel;

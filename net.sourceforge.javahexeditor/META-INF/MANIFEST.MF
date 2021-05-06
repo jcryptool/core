@@ -14,7 +14,9 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.ide,
  org.eclipse.core.filesystem,
  org.jcryptool.core.util,
- org.eclipse.swt
+ org.eclipse.swt,
+ org.jcryptool.editor.text,
+ org.jcryptool.core.operations
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Jordi Bergenthal, Peter Dell, Andrey Loskutov
 Bundle-RequiredExecutionEnvironment: JavaSE-11

@@ -133,7 +133,6 @@ public final class HexTexts extends Composite {
 	private int mergeRangesPosition = -1;
 	int myBytesPerLine = 16;
 	boolean myCaretStickToStart = false; // stick to end
-//	BinaryContentClipboard myClipboard;
 	BinaryContent myContent;
 	BinaryContentFinder myFinder;
 	boolean myInserting = false;
@@ -182,9 +181,18 @@ public final class HexTexts extends Composite {
 	private GC styledText2GC;
 
 	/**
+	 * Manager of the current Editor page.</br>
+	 * Used by the ContextMenu to enable/disable the 
+	 * commands in the context menu (right click menu).
+	 */
+	private Manager manager;
+	
+
+	/**
 	 * compose byte-to-hex map
 	 */
 	private void composeByteToHexMap() {
+		
 		for (int i = 0; i < 256; ++i) {
 			byteToHex[i] = Character.toString(NIBBLE_TO_HEX[i >>> 4]) + NIBBLE_TO_HEX[i & 0x0f];
 		}
@@ -545,15 +553,16 @@ public final class HexTexts extends Composite {
 	 * @param style
 	 *            not used for the moment
 	 */
-	public HexTexts(final Composite parent, int style) {
+	public HexTexts(final Composite parent, int style, Manager mngr) {
 		super(parent, style | SWT.BORDER | SWT.V_SCROLL);
+		
+		manager = mngr;
 
 		highlightRangesInScreen = new ArrayList<Integer>();
 
 		composeByteToHexMap();
 		composeHeaderRow();
 
-//		myClipboard = new BinaryContentClipboard(parent.getDisplay());
 		myLongSelectionListeners = new ArrayList<SelectionListener>();
 		addDisposeListener(new DisposeListener() {
 			@Override
@@ -563,16 +572,6 @@ public final class HexTexts extends Composite {
 				if (fontDefault != null && !fontDefault.isDisposed()) {
 					fontDefault.dispose();
 				}
-//				try {
-//					myClipboard.dispose();
-//				} catch (IOException ex) {
-//					SWTUtility.showMessage(parent.getShell(), SWT.ICON_WARNING | SWT.OK,
-//							Texts.HEX_TEXTS_TITLE_INCONSISTENT_CLIPBOARD_FILES,
-//							Texts.HEX_TEXTS_MESSAGE_INCONSISTENT_CLIPBOARD_FILES,
-//							BinaryContentClipboard.CLIPBOARD_FOLDER_PATH, BinaryContentClipboard.CLIPBOARD_FILE_NAME,
-//							TextUtility.format(BinaryContentClipboard.CLIPBOARD_FILE_NAME_PASTED, "..."));
-//
-//				}
 			}
 		});
 		initialize();
@@ -736,6 +735,36 @@ public final class HexTexts extends Composite {
 		Caret nonDefaultCaret = new Caret(defaultCaret.getParent(), defaultCaret.getStyle());
 		nonDefaultCaret.setBounds(defaultCaret.getBounds());
 		styledText1.setCaret(nonDefaultCaret);
+		
+		// This creates the context menu on the hex area.
+		// TODO here I work.
+//		styledText1.setMenu(new ContextMenu(styledText1, manager));
+		
+		ContextMenu.createMenuForText(styledText1, manager);
+		
+//		Menu contextMenu = new Menu(styledText1);
+//		contextMenu.addMenuListener(new MenuListener() {
+//			
+//			@Override
+//			public void menuShown(MenuEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			@Override
+//			public void menuHidden(MenuEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
+		
+//		styledText1.setMenu(contextMenu);
+//		styledText1
+		
+//		MenuItem mi1 = new MenuItem(contextMenu, SWT.None);
+//		mi1.setText("Rechtsklick9");
+//		mi1.setMenu(contextMenu);
+//		mi1.
 
 		column2 = new Composite(this, SWT.NONE);
 		GridLayout column2Layout = new GridLayout();
@@ -776,6 +805,8 @@ public final class HexTexts extends Composite {
 		styledText2.setCaret(nonDefaultCaret);
 		styledText2GC = new GC(styledText2);
 		setCharset(null);
+		
+		ContextMenu.createMenuForText(styledText2, manager);
 		
 		// TODO: For debugging layout issues
 		// styledText2.setBackground(colorBlue);
