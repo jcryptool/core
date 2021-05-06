@@ -26,7 +26,11 @@
       </command>
       <command
             id="org.jcryptool.editor.text.openIn"
-            name="%action.switch.editor">
+            name="%action.switch.editor1">
+      </command>
+      <command
+            id="org.jcryptool.editor.text.openInHexeditor"
+            name="%action.switch.editor2">
       </command>
       <command
             description="%open.command.description"
@@ -48,6 +52,10 @@
       <handler
             class="org.jcryptool.editor.text.commands.OpenInHex"
             commandId="org.jcryptool.editor.text.openIn">
+      </handler>
+      <handler
+            class="org.jcryptool.editor.text.commands.OpenInHex"
+            commandId="org.jcryptool.editor.text.openInHexeditor">
       </handler>
       <handler
             class="org.jcryptool.editor.text.commands.OpenEditorHandler"
@@ -117,6 +125,7 @@
             locationURI="menu:showin">
          <command
                commandId="org.jcryptool.editor.text.openIn"
+               icon="platform:/plugin/org.jcryptool.editor.hex/icons/hex.png"
                style="push">
             <visibleWhen
                   checkEnabled="true">
@@ -138,6 +147,15 @@
                label="%open.command.label"
                style="push"
                tooltip="%open.command.tooltip">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:#AbstractTextEditorContext?after=additions">
+         <command
+               commandId="org.jcryptool.editor.text.openInHexeditor"
+               icon="platform:/plugin/org.jcryptool.editor.hex/icons/hex.png"
+               style="push">
          </command>
       </menuContribution>
    </extension>

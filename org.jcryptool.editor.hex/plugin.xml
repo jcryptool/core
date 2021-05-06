@@ -103,6 +103,7 @@
           locationURI="menu:showin">
        <command
              commandId="org.jcryptool.editor.hex.command.openIn"
+             icon="platform:/plugin/org.jcryptool.editor.text/icons/text_edit.png"
              style="push">
           <visibleWhen
                 checkEnabled="true">
