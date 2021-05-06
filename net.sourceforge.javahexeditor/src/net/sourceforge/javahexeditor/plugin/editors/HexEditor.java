@@ -199,7 +199,8 @@ public final class HexEditor extends EditorPart implements ISelectionProvider {
 			hexEditorInput.open(getEditorInput());
 			manager.openFile(hexEditorInput.getContentFile(), hexEditorInput.getCharset());
 		} catch (CoreException ex) {
-			HexEditorPlugin.getDefault().getLog().log(ex.getStatus());
+			LogUtil.logError(HexEditor.ID, ex);
+//			HexEditorPlugin.getDefault().getLog().log(ex.getStatus());
 			statusLineManager.setErrorMessage(ex.getMessage());
 		}
 
@@ -248,7 +249,6 @@ public final class HexEditor extends EditorPart implements ISelectionProvider {
 		manager.addLongSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-//				Log.trace(this, "Long selection: {0}", e); //$NON-NLS-1$
 				LogUtil.logInfo(HexEditor.ID, "Long selection: " + e.toString());
 				if (selectionListeners == null) {
 					return;
@@ -310,7 +310,7 @@ public final class HexEditor extends EditorPart implements ISelectionProvider {
 		saveToFile(false);
 	}
 
-	@SuppressWarnings("unchecked")
+
 	@Override
 	public <T> T getAdapter(Class<T> required) {
 		Object result = null;
