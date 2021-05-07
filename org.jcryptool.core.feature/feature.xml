@@ -228,6 +228,8 @@ litigation.
     fragment="true"
     />
 
+    <plugin id="bcprov" download-size="0" install-size="0" version="0.0.0"/>
+
    <plugin id="org.jcryptool.core.help" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    <plugin id="org.jcryptool.core.logging" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    <plugin id="org.jcryptool.core.operations" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
