@@ -194,6 +194,8 @@ public class KeyStoreManager {
         try {
         	ProviderManager2.getInstance().pushFlexiProviderPromotion();
 
+            createDefaultKeystore();
+
             is = new BufferedInputStream(platformKeystore.openInputStream(EFS.NONE, null));
             keyStore.load(is, KEYSTORE_PASSWORD);
         } catch (Exception e) {
@@ -216,6 +218,7 @@ public class KeyStoreManager {
      * keystores content.
      */
     private void saveKeystore() {
+    	if(1 == 1) return; // disabled since loading the keystore does not work. Removed as of 2021-05-21 by simlei. original implementation below.
         OutputStream os = null;
         try {
         	ProviderManager2.getInstance().pushFlexiProviderPromotion();
