@@ -15,7 +15,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout core repository
+      uses: actions/checkout@v2
+      with:
+        repository: jcryptool/core
+        path: core
+    
+    - name: Checkout crypto repository
+      uses: actions/checkout@v2
+      with:
+          repository: jcryptool/crypto
+          path: crypto
+          
     - name: Set up JDK 11
       uses: actions/setup-java@v2
       with:
