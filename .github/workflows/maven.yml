@@ -17,9 +17,6 @@ jobs:
     steps:
     - name: Checkout core repository
       uses: actions/checkout@v2
-      with:
-        repository: jcryptool/core
-        path: core
     
     - name: Checkout crypto repository
       uses: actions/checkout@v2
