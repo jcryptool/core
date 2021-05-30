@@ -17,6 +17,9 @@ jobs:
     steps:
     - name: Checkout core repository
       uses: actions/checkout@v2
+      with:
+          repository: jcryptool/core
+          path: core
     
     - name: Checkout crypto repository
       uses: actions/checkout@v2
@@ -30,4 +33,4 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
     - name: Build with Maven
-      run: mvn clean package --file org.jcryptool.releng/pom.xml
+      run: mvn clean package --file $GITHUB_WORKSPACE/core/org.jcryptool.releng/pom.xml
