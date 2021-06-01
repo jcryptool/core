@@ -167,8 +167,9 @@ public class KeyStoreManager {
                     FileLocator.find(Platform.getBundle(KeyStorePlugin.PLUGIN_ID),
                             new Path("keystore/jctKeystore.ksf"), null)).getPath(); //$NON-NLS-1$
             IFileStore originalKeystore = EFS.getLocalFileSystem().fromLocalFile(new File(url));
-            originalKeystore.copy(platformKeystore, 0, null);
-
+            if (! new File(KEYSTORE_FILE).exists()) {
+				originalKeystore.copy(platformKeystore, 0, null);
+			}
             is = new BufferedInputStream(platformKeystore.openInputStream(EFS.NONE, null));
             keyStore.load(is, KEYSTORE_PASSWORD);
         } catch (Exception ex) {
