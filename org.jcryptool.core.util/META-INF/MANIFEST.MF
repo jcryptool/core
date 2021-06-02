@@ -22,5 +22,6 @@ Export-Package: org.jcryptool.core.util,
  org.jcryptool.core.util.numbers,
  org.jcryptool.core.util.ui,
  org.jcryptool.core.util.ui.auto,
+ org.jcryptool.core.util.ui.layout,
  org.jcryptool.core.util.units
 Automatic-Module-Name: org.jcryptool.core.util
