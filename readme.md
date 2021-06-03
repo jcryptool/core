@@ -17,7 +17,7 @@ General information on the CrypTool and JCrypTool projects is available in the [
 JCrypTool downloads are available as [weekly builds](https://github.com/jcryptool/core/releases) (containing the newest features, may are unstable, built automatically based on the **develop** branch) and as [release builds](https://github.com/jcryptool/core/releases/latest) (stable).
 
 ## Meta
-[![Build Status](https://img.shields.io/travis/jcryptool/core/develop.svg?label=Core+Build)](https://travis-ci.org/jcryptool/core)
-[![Build Status](https://img.shields.io/travis/jcryptool/crypto/develop.svg?label=Crypto+Build)](https://travis-ci.org/jcryptool/crypto)
+![Core Build](https://github.com/jcryptool/core/actions/workflows/maven.yml/badge.svg)
+![Crypto Build](https://github.com/jcryptool/crypto/actions/workflows/maven.yml/badge.svg)
 [![Gitter](http://img.shields.io/badge/gitter-join%20chat-1dce73.svg)](https://gitter.im/dschadow/jcryptool)
 [![License](https://img.shields.io/badge/License-EPL%201.0-red.svg)](https://opensource.org/licenses/EPL-1.0)
