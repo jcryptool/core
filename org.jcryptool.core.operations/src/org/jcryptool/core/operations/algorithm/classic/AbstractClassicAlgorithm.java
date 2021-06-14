@@ -13,12 +13,9 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -368,15 +365,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
         char[] charInput;
         char[] cipherInput = null;
         char[] cipherOutput = null;
-        OutputStream bout = null;
-        bout = new ByteArrayOutputStream();
-        PrintStream p = null;
-        try {
-            p = new PrintStream(bout, false, "UTF-8"); //$NON-NLS-1$
-        } catch (UnsupportedEncodingException ex) {
-            LogUtil.logError(OperationsPlugin.PLUGIN_ID, ex);
-        }
-        // this.dataObject.setOutputStream(bout);
+
         inputString = InputStreamToString(is);
 
         charInput = inputString.toCharArray();
@@ -403,14 +392,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
         }
 
         filter = true; 
-        p.print(String.valueOf(cipherOutput));
         this.dataObject.setOutput(cipherOutput);
-//        if (filter) {
-//        } else {
-//            char[] finalOutput = mergeToFinalOutput(charInput, cipherOutput);
-//            p.print(String.valueOf(finalOutput));
-//            this.dataObject.setOutput(finalOutput);
-//        }
 
         return dataObject;
     }
