@@ -55,7 +55,6 @@ public class CreditsPage extends InstallationPage {
     }
 	private static String slurpFile(String relPath) throws FileNotFoundException {
 		File bundleFile = getBundleFile(relPath);
-		System.out.println("BUNDLEFILE: " + bundleFile); //$NON-NLS-1$
 		FileInputStream fis = null;
 		var content = new byte[0];
 		try {
