@@ -1,0 +1,125 @@
+JCrypTool v1.0.6 is proudly presented by the core developer team:
+-----------------------------------------------------------------
+
+- Prof. Bernhard Esslinger 
+- Simon Leischnig (current project lead)
+- Thorben Groos
+- Michael Altenhuber
+
+We thank our contributors:
+-----------------------------------------------------------------
+
+- Dominik Schadow (retired project lead)
+
+- Charlotte Magister
+- Tobias Forneberg
+- Eduard Scherf
+- Elias Schmittel
+
+- Ahmed Mahran
+- Albert Veli
+- Amro Al-Akkad
+- Anatoli Barski
+- Andreas Gruener
+- Andre Bossert
+- Biqiang Jiang
+- Bruno Vernay
+- Christoph Dulghier
+- Christoph Schnepf
+- Christoph Sonnberger
+- Clemens Elst
+- Coen Ramaekers
+- Cornelia Gierlinger
+- Daniela
+- Daniel Dwyer
+- Daniel Hofmann
+- Daniel Loeffler
+- Daniel Löffler
+- Dan Rubel
+- David
+- Dennis Walter
+- Dinah Tecle
+- Fabian Mayer
+- Felix Eckardt
+- Felix Tenne
+- Ferit Dogan
+- Florentina Grebe
+- Florian Böhl
+- Florian Stehrer
+- Geert-Jan Smulders
+- Georg Chalupar
+- Gideon Knocke
+- Hannes Sochor
+- Holger Friedrich
+- Huber
+- Johannes Spaeth
+- Jordi Bergenthal
+- Kerstin Reisinger
+- Kevin Muehlboeck
+- Klaus Kaiser
+- Lena Heimberger
+- Luca Rupp
+- Lukas Stelzer
+- Maarten Bodewes
+- Marco Macala
+- Mareike Paul
+- Matthias Mensch
+- Matthias Walthart
+- Maximilian Lindpointner
+- Merlin Seebach
+- Michael Gaber
+- Michael Gilleland
+- Michael Rupp
+- Michael Schäfer
+- Michael Starzer
+- Miray Inel
+- Moritz Horsch
+- Niederwieser Martin
+- Nils Reimers
+- Oryal Inel
+- Patricia
+- Patrick Vacek
+- Patrick Zillner
+- Peter Dell
+- Peter Maurer
+- Philipp Blohm
+- Philipp Guggenberger
+- Raphael
+- Richard Petri
+- Robin Welsch
+- Rodrigo Cantu Polo
+- Ronny Wolf
+- Ruben Niederhagen
+- Sebastian Ranftl
+- Sebastian Roland
+- Simon Hornbachner
+- Simon Scheuchenpflug
+- Simon Wilfing
+- Stefan Kraus
+- Stefan Tiefenbacher
+- Stefan Zuck
+- Tahir Kacak
+- Thomas Wiese
+- T. Krück
+- Tobias Kern
+- Tom Beiler
+- Wagner Thomas
+- cfwramaekers
+- Denk Gandalf
+- farndt
+- Felck
+- Fingfing
+- greas
+- Grebe
+- Kapfer
+- kschoenberger
+- lehrbaumm
+- M1S
+- mmacala
+- Nelwidio
+- paw
+- rohb
+- scheglov_ke
+- sho
+- The sib git
+- zacki1

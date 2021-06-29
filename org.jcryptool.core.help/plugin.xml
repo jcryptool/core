@@ -68,5 +68,13 @@
             class="org.jcryptool.core.help.ServerStartup">
       </startup>
    </extension>
+   <extension
+         point="org.eclipse.ui.installationPages">
+      <page
+            class="org.jcryptool.core.help.CreditsPage"
+            id="org.jcryptool.core.help.page3"
+            name="%aboutpagename">
+      </page>
+   </extension>
 
 </plugin>
