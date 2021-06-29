@@ -2,7 +2,7 @@ JCrypTool v1.0.6 wird Ihnen präsentiert von Kernentwicklungsteam:
 ------------------------------------------------------------------
 
 - Prof. Bernhard Esslinger
-- Simon Leischnig
+- Simon Leischnig (Projektleiter, aktuell)
 - Thorben Groos
 - Michael Altenhuber
 
