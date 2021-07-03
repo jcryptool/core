@@ -319,3 +319,34 @@ body{
         }
   }
   
+
+   /************* BOXES (Info, Alert, Warn, etc.)  ***********************/
+   
+  div.base-box {
+    padding: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 0 2px #000000;
+  }
+  
+  div.base-box span {
+    font-weight: bold;
+    margin-right: 6px;
+  }
+   
+  div.base-box.info {
+      background-color: #bbdefb; /* Blue */
+      color: #1565C0;
+  }
+  div.base-box.alert {
+      background-color: #ffcdd2; /* Red */
+      color: #b71c1c;
+  }
+  div.base-box.warn {
+      background-color: #ffecb3; /* Yellow */
+      color: #795548;
+  }
+.icon {
+        width: 2em;
+        display: inline;
+        vertical-align: middle;
+}
