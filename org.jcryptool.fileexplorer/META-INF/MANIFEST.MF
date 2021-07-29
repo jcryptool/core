@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jcryptool.fileexplorer;singleton:=true
-Bundle-Version: 1.0.6
+Bundle-Version: 1.0.7
 Bundle-Vendor: %bundleProvider
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,

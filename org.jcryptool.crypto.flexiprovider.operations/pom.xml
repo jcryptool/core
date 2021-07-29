@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.jcryptool</groupId>
 		<artifactId>org.jcryptool.core.parent</artifactId>
-		<version>1.0.6</version>
+		<version>1.0.7</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>org.jcryptool.crypto.flexiprovider.operations</artifactId>

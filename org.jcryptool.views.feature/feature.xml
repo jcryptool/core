@@ -2,7 +2,7 @@
 <feature
       id="org.jcryptool.views.feature"
       label="JCrypTool Views Feature"
-      version="1.0.6"
+      version="1.0.7"
       provider-name="jcryptool.org"
       plugin="org.jcryptool.core">
 
