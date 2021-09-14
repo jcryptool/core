@@ -400,6 +400,7 @@ litigation.
 	<plugin id="org.eclipse.ecf.ssl" download-size="0" install-size="0" version="0.0.0"/>
 	<plugin id="org.eclipse.equinox.transforms.hook" download-size="0" install-size="0" version="0.0.0"/>
 	<plugin id="org.eclipse.equinox.weaving.hook" download-size="0" install-size="0" version="0.0.0"/>
-	<plugin id="org.eclipse.core.filesystem.linux.x86_64" download-size="0" install-size="0" version="0.0.0"/>
+    <plugin id="org.eclipse.core.filesystem.linux.x86_64" download-size="0" install-size="0" version="0.0.0"/> 
+    -->
 
 </feature>
