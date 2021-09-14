@@ -371,4 +371,35 @@ litigation.
          version="0.0.0"
          unpack="false"/>
 
+   <plugin id="com.diffplug.durian.collect" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="com.diffplug.durian.concurrent" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="com.diffplug.durian.core" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="com.diffplug.durian.io" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="com.diffplug.durian.reflect" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="com.diffplug.durian.rx" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="com.diffplug.durian.swt" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="com.google.gson" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="com.google.guava" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="com.google.j2objc.annotations" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="com.sun.activation.jakarta.activation" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="io.reactivex.rxjava2.rxjava" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.checkerframework.checker-qual" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.codehaus.mojo.animal-sniffer-annotations" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.functionaljava" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.immutables.value" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.jcryptool.thirdparty.m2bundle.durian-swt-os" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.jcryptool.thirdparty.m2bundle.durian-swt" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.reactivestreams.reactive-streams" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   
+   <!-- <plugin id="org.jcryptool.visual.rsaelgamal" download-size="0" install-size="0" version="0.0.0" unpack="false"/> -->
+
+	<!-- seems the run config likes these plugins, but by test they are not really necessary
+	<plugin id="org.eclipse.equinox.region" download-size="0" install-size="0" version="0.0.0"/>
+	<plugin id="org.eclipse.core.net.linux.x86_64" download-size="0" install-size="0" version="0.0.0"/>
+	<plugin id="org.eclipse.ecf.provider.filetransfer.ssl" download-size="0" install-size="0" version="0.0.0"/>
+	<plugin id="org.eclipse.ecf.ssl" download-size="0" install-size="0" version="0.0.0"/>
+	<plugin id="org.eclipse.equinox.transforms.hook" download-size="0" install-size="0" version="0.0.0"/>
+	<plugin id="org.eclipse.equinox.weaving.hook" download-size="0" install-size="0" version="0.0.0"/>
+	<plugin id="org.eclipse.core.filesystem.linux.x86_64" download-size="0" install-size="0" version="0.0.0"/>
+
 </feature>
