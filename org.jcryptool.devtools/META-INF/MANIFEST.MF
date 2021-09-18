@@ -7,7 +7,8 @@ Bundle-Activator: org.jcryptool.devtools.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.jcryptool.core.operations,
- org.jcryptool.core.logging
+ org.jcryptool.core.logging,
+ org.jcryptool.core.util
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Automatic-Module-Name: org.jcryptool.devtools
 Bundle-ActivationPolicy: lazy

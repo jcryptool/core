@@ -10,5 +10,11 @@
             restorable="true">
       </view>
    </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="org.jcryptool.devtools.EditorAPIStartup">
+      </startup>
+   </extension>
 
 </plugin>
