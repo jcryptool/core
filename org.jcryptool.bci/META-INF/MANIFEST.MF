@@ -34,9 +34,7 @@ Require-Bundle: org.eclipse.ui,
  org.jcryptool.thirdparty.m2bundle.durian-swt-os,
  org.jcryptool.thirdparty.m2bundle.jaxb,
  org.reactivestreams.reactive-streams,
- org.jcryptool.crypto.ui;bundle-version="1.0.7",
- bci.model;bundle-version="0.0.1",
- bci.view;bundle-version="0.0.1"
+ org.jcryptool.crypto.ui;bundle-version="1.0.7"
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Automatic-Module-Name: org.jcryptool.bci
 Import-Package: javax.inject

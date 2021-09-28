@@ -153,8 +153,8 @@ public class OperationView extends ViewPart {
 		btnNewButton.setSelection(true);
 		
 		textloader = new TextLoadController(grpInput, composite, SWT.NONE, false, true);
-		textloader.buttonLoadText.setText("Choose a text or another editor...");
-		textloader.buttonLoadText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		textloader.btnLoadText.setText("Choose a text or another editor...");
+		textloader.btnLoadText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		
 		grpOutput = new Group(compositeLeft, SWT.NONE);
 		grpOutput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
