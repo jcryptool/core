@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Bouncycastle"
+            id="org.jcryptool.bci">
+      </category>
+      <view
+            id="org.jcryptool.bci.views.OperationView"
+            name="Bouncycastle — Operation"
+            icon="icons/sample.png"
+            class="org.jcryptool.bci.views.OperationView"
+            category="org.jcryptool.bci"
+            inject="true">
+      </view>
+   </extension>
+
+</plugin>
