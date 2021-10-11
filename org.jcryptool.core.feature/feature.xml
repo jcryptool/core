@@ -371,8 +371,11 @@ litigation.
          version="0.0.0"
          unpack="false"/>
 
+   <plugin id="org.jcryptool.bci" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
    <plugin id="org.jcryptool.core.splitpackages" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 	
+
 
    <plugin id="com.diffplug.durian.collect" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    <plugin id="com.diffplug.durian.concurrent" download-size="0" install-size="0" version="0.0.0" unpack="false"/>

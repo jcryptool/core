@@ -18,6 +18,7 @@
   </issueManagement>
 
   <modules>
+    <module>org.jcryptool.bci</module>
     <module>com.thoughtworks.qdox</module>
     <module>de.flexiprovider</module>
     <module>net.sourceforge.codec</module>
