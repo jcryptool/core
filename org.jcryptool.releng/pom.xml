@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jcryptool</groupId>
 	<artifactId>org.jcryptool.releng</artifactId>
-	<version>1.0.7</version>
+  <version>1.0.7</version> <!-- version:this -->
 	<packaging>pom</packaging>
 	<name>JCrypTool</name>
 	<url>https://github.com/jcryptool</url>
