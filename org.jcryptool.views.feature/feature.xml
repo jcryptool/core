@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feature
-      id="org.jcryptool.views.feature"
-      label="JCrypTool Views Feature"
-      version="1.0.7"
-      provider-name="jcryptool.org"
-      plugin="org.jcryptool.core">
-
-   <description url="https://github.com/jcryptool/core">
+<feature id="org.jcryptool.views.feature" label="JCrypTool Views Feature" version="1.0.7" provider-name="jcryptool.org" plugin="org.jcryptool.core"> <description url="https://github.com/jcryptool/core"> <!-- keep this in one line --> <!-- version:this -->
       The JCrypTool Views Feature contains additional view plug-ins for JCrypTool.
    </description>
 
