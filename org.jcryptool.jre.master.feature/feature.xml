@@ -15,6 +15,6 @@
 
    <includes id="org.jcryptool.thirdparty.jre.win64.feature" version="11.0.5.010" optional="true" os="win32" ws="win32" arch="x86_64"/> <!-- version:jre:windows -->
 
-   <includes id="org.jcryptool.thirdparty.jre.macosx.feature" version="11.0.5.010" optional="true" os="macosx" ws="cocoa" arch="x86_64"/> <!-- version:jre:osx -->
+       <!-- <includes id="org.jcryptool.thirdparty.jre.macosx.feature" version="11.0.5.010" optional="true" os="macosx" ws="cocoa" arch="x86_64"/> --> <!-- version:jre:osx -->
 
 </feature>
