@@ -1,4 +1,4 @@
-﻿Bedienung und Überblick
+Bedienung und Überblick
 =======================
 
 Diese Beispieldatei dient für einen schnellen Start mit JCrypTool, 
