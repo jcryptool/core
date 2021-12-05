@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feature id="org.jcryptool.core.dependencies.nl_de.feature" label="JCrypTool Core Dependencies Feature (German)" version="1.0.7" provider-name="jcryptool.org" plugin="org.jcryptool.core"> <description url="https://github.com/jcryptool/core"> <!-- keep this in one line --> <!-- version:this -->
+<feature id="org.jcryptool.core.dependencies.nl_de.feature" label="JCrypTool Core Dependencies Feature (German)" version="1.0.8" provider-name="jcryptool.org" plugin="org.jcryptool.core"> <description url="https://github.com/jcryptool/core"> <!-- keep this in one line --> <!-- version:this -->
       The JCrypTool Core Dependencies Feature (German) contains all German language packs for all dependency
 plug-ins required for JCrypTool.
    </description>

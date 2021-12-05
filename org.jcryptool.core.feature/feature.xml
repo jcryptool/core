@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feature id="org.jcryptool.core.feature" label="JCrypTool Core Feature" version="1.0.7" provider-name="jcryptool.org" plugin="org.jcryptool.core"> <!-- keep this in one line --> <!-- version:this -->
+<feature id="org.jcryptool.core.feature" label="JCrypTool Core Feature" version="1.0.8" provider-name="jcryptool.org" plugin="org.jcryptool.core"> <!-- keep this in one line --> <!-- version:this -->
 
    <description url="https://github.com/jcryptool/core">
       The JCrypTool Core Feature contains the core platform plug-ins (the runtime) of JCrypTool.

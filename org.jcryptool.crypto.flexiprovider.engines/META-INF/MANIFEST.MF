@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jcryptool.crypto.flexiprovider.engines;singleton:=true
-Bundle-Version: 1.0.7
+Bundle-Version: 1.0.8
 Bundle-Activator: org.jcryptool.crypto.flexiprovider.engines.FlexiProviderEnginesPlugin
 Bundle-Vendor: %bundleProvider
 Require-Bundle: org.eclipse.core.runtime,
