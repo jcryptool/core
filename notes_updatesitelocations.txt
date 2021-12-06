@@ -1,0 +1,14 @@
+org.jcryptool.product/jcryptool.p2.inf|7| org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(type:0,location:https${#58}//www.cryptool.org/jct/update,name:JCrypTool);\
+
+    org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(type:0,location:https${#58}//www.cryptool.org/jct/update,name:JCrypTool);\
+    org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(type:1,location:https${#58}//www.cryptool.org/jct/update,name:JCrypTool);
+    -> replace encoded (${#<charnum>}) in "addRepository(type:\d*,location:<location>,name:<name>)"
+    ?  what does type mean?
+
+in feature.xmls:
+  <update label="JCrypTool.org" url="https://www.cryptool.org/jct/update"/> <!-- url_update:plugins --> <!-- do not remove comment -->
+  -> replace url attribute
+
+
+TODO: ssh transport to update site does not work yet; "repository" inside
+
