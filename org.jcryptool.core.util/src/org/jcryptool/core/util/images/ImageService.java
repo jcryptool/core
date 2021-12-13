@@ -28,40 +28,6 @@ import org.osgi.framework.Bundle;
  */
 public class ImageService {
 	
-	
-	// singleton instance
-	public static ImageService instance;
-	private static boolean is_in_standalone_mode;
-	
-	public static ImageService getInstance() {
-		
-		if (instance == null) {
-			instance = ImageService.makeDefaultInstance();
-		}
-		return instance;
-		
-	}
-	
-	private static ImageService makeDefaultInstance() {
-		return new ImageService();
-	}
-	private static ImageService makeMuteInstance() {
-		return new ImageService() {
-			@Override
-			public ImageDescriptor createIconFromURLDefault(String icon) {
-				return null;
-			}
-			@Override
-			public Image getImageDefault(String PLUGIN_ID, String filepath) {
-				return null;
-			}
-			@Override
-			public ImageDescriptor getImageDescriptorDefault(String PLUGIN_ID, String filepath) {
-				return null;
-			}
-		};
-	}
-
 	/**
 	 * Icon showing a blue "i" in a circle on a white background.</br>
 	 * The icon can be found in: platform:/plugin/org.eclipse.jface/icons/full/message_info.png
@@ -214,63 +180,53 @@ public class ImageService {
 	
 		
 	static {
-		is_in_standalone_mode = false;
-		try {
-			ImageService.getImage("org.eclipse.jface", "icons/full/message_info.png");
-			is_in_standalone_mode = false;
-			instance = makeDefaultInstance();
-		} catch (Throwable e) {
-			is_in_standalone_mode = true;
-			instance = makeMuteInstance();
-		}
+		ICON_INFO = ImageService.getImage("org.eclipse.jface", "icons/full/message_info.png");
+		IMAGEDESCRIPTOR_INFO = ImageService.getImageDescriptor("org.eclipse.jface", "icons/full/message_info.png");
 		
-		ICON_INFO = ImageService.instance.getImageDefault("org.eclipse.jface", "icons/full/message_info.png");
-		IMAGEDESCRIPTOR_INFO = ImageService.instance.getImageDescriptorDefault("org.eclipse.jface", "icons/full/message_info.png");
+		ICON_WARNING = ImageService.getImage("org.eclipse.ui", "icons/full/obj16/warn_tsk.png");
+		IMAGEDESCRIPTOR_WARNING = ImageService.getImageDescriptor("org.eclipse.ui", "icons/full/obj16/warn_tsk.png");
 		
-		ICON_WARNING = ImageService.instance.getImageDefault("org.eclipse.ui", "icons/full/obj16/warn_tsk.png");
-		IMAGEDESCRIPTOR_WARNING = ImageService.instance.getImageDescriptorDefault("org.eclipse.ui", "icons/full/obj16/warn_tsk.png");
+		ICON_ERROR = ImageService.getImage("org.eclipse.ui", "icons/full/obj16/error_tsk.png");
+		IMAGEDESCRIPTOR_ERROR = ImageService.getImageDescriptor("org.eclipse.ui", "icons/full/obj16/error_tsk.png");
 		
-		ICON_ERROR = ImageService.instance.getImageDefault("org.eclipse.ui", "icons/full/obj16/error_tsk.png");
-		IMAGEDESCRIPTOR_ERROR = ImageService.instance.getImageDescriptorDefault("org.eclipse.ui", "icons/full/obj16/error_tsk.png");
+		ICON_HELP = ImageService.getImage("org.eclipse.ui", "icons/full/etool16/help_contents.png");
+		IMAGEDESCRIPTOR_HELP = ImageService.getImageDescriptor("org.eclipse.ui", "icons/full/etool16/help_contents.png");
 		
-		ICON_HELP = ImageService.instance.getImageDefault("org.eclipse.ui", "icons/full/etool16/help_contents.png");
-		IMAGEDESCRIPTOR_HELP = ImageService.instance.getImageDescriptorDefault("org.eclipse.ui", "icons/full/etool16/help_contents.png");
-		
-		ICON_RESET = ImageService.instance.getImageDefault("org.jcryptool.core.util", "icons/icon_reset.png");
-		IMAGEDESCRIPTOR_RESET = ImageService.instance.getImageDescriptorDefault("org.jcryptool.core.util", "icons/icon_reset.png");
+		ICON_RESET = ImageService.getImage("org.jcryptool.core.util", "icons/icon_reset.png");
+		IMAGEDESCRIPTOR_RESET = ImageService.getImageDescriptor("org.jcryptool.core.util", "icons/icon_reset.png");
 
-		ICON_VISUALIZATIONS = ImageService.instance.getImageDefault("org.eclipse.ui", "icons/full/eview16/defaultview_misc.png");
-		IMAGEDESCRIPTOR_VISUALIZATIONS = ImageService.instance.getImageDescriptorDefault("org.eclipse.ui", "icons/full/eview16/defaultview_misc.png");
+		ICON_VISUALIZATIONS = ImageService.getImage("org.eclipse.ui", "icons/full/eview16/defaultview_misc.png");
+		IMAGEDESCRIPTOR_VISUALIZATIONS = ImageService.getImageDescriptor("org.eclipse.ui", "icons/full/eview16/defaultview_misc.png");
 		
-		ICON_ANALYSIS = ImageService.instance.getImageDefault("org.jcryptool.core.util", "icons/analysis_icon.gif");
-		IMAGEDESCRIPTOR_ANALYSIS = ImageService.instance.getImageDescriptorDefault("org.jcryptool.core.util", "icons/analysis_icon.gif");
+		ICON_ANALYSIS = ImageService.getImage("org.jcryptool.core.util", "icons/analysis_icon.gif");
+		IMAGEDESCRIPTOR_ANALYSIS = ImageService.getImageDescriptor("org.jcryptool.core.util", "icons/analysis_icon.gif");
 		
-		ICON_CHECKBOX = ImageService.instance.getImageDefault("org.jcryptool.core.util", "icons/check.png");
-		IMAGEDESCRIPTOR_CHECKBOX = ImageService.instance.getImageDescriptorDefault("org.jcryptool.core.util", "icons/check.png");
+		ICON_CHECKBOX = ImageService.getImage("org.jcryptool.core.util", "icons/check.png");
+		IMAGEDESCRIPTOR_CHECKBOX = ImageService.getImageDescriptor("org.jcryptool.core.util", "icons/check.png");
 		
-		ICON_SEARCH = ImageService.instance.getImageDefault("org.eclipse.ui", "icons/full/etool16/search.png");
-		IMAGEDESCRIPTOR_SEARCH = ImageService.instance.getImageDescriptorDefault("org.eclipse.ui", "icons/full/etool16/search.png");
+		ICON_SEARCH = ImageService.getImage("org.eclipse.ui", "icons/full/etool16/search.png");
+		IMAGEDESCRIPTOR_SEARCH = ImageService.getImageDescriptor("org.eclipse.ui", "icons/full/etool16/search.png");
 		
-		ICON_RUN = ImageService.instance.getImageDefault("org.jcryptool.core.util", "icons/run_exc.png");
-		IMAGEDESCRIPTOR_RUN = ImageService.instance.getImageDescriptorDefault("org.jcryptool.core.util", "icons/run_exc.png");
+		ICON_RUN = ImageService.getImage("org.jcryptool.core.util", "icons/run_exc.png");
+		IMAGEDESCRIPTOR_RUN = ImageService.getImageDescriptor("org.jcryptool.core.util", "icons/run_exc.png");
 		
-		ICON_FILE = ImageService.instance.getImageDefault("org.jcryptool.core.util", "icons/fileType_filter.png");	
-		IMAGEDESCRIPTOR_FILE = ImageService.instance.getImageDescriptorDefault("org.jcryptool.core.util", "icons/fileType_filter.png");
+		ICON_FILE = ImageService.getImage("org.jcryptool.core.util", "icons/fileType_filter.png");	
+		IMAGEDESCRIPTOR_FILE = ImageService.getImageDescriptor("org.jcryptool.core.util", "icons/fileType_filter.png");
 	
-		ICON_NOTFOUND = ImageService.instance.getImageDefault("org.jcryptool.core.util", "icons/red_square.png");
-		IMAGEDESCRIPTOR_NOTFOUND = ImageService.instance.getImageDescriptorDefault("org.jcryptool.core.util", "icons/red_square.png");
+		ICON_NOTFOUND = ImageService.getImage("org.jcryptool.core.util", "icons/red_square.png");
+		IMAGEDESCRIPTOR_NOTFOUND = ImageService.getImageDescriptor("org.jcryptool.core.util", "icons/red_square.png");
 	
-		ICON_PERSPECTIVE_STANDARD = ImageService.instance.getImageDefault("org.jcryptool.core.util", "icons/Perspective_Standard.png");
-		IMAGEDESCRIPTOR_PERSPECTIVE_STANDARD = ImageService.instance.getImageDescriptorDefault("org.jcryptool.core.util", "icons/Perspective_Standard.png");
+		ICON_PERSPECTIVE_STANDARD = ImageService.getImage("org.jcryptool.core.util", "icons/Perspective_Standard.png");
+		IMAGEDESCRIPTOR_PERSPECTIVE_STANDARD = ImageService.getImageDescriptor("org.jcryptool.core.util", "icons/Perspective_Standard.png");
 
-		ICON_PERSPECTIVE_ALGORITHM = ImageService.instance.getImageDefault("org.jcryptool.core.util", "icons/Perspective_Algorithm.png");
-		IMAGEDESCRIPTOR_PERSPECTIVE_ALGORITHM = ImageService.instance.getImageDescriptorDefault("org.jcryptool.core.util", "icons/Perspective_Algorithm.png");
+		ICON_PERSPECTIVE_ALGORITHM = ImageService.getImage("org.jcryptool.core.util", "icons/Perspective_Algorithm.png");
+		IMAGEDESCRIPTOR_PERSPECTIVE_ALGORITHM = ImageService.getImageDescriptor("org.jcryptool.core.util", "icons/Perspective_Algorithm.png");
 		
-		ICON_GAMES = ImageService.instance.getImageDefault("org.jcryptool.core.util", "icons/games.png");
-		IMAGEDESCRIPTOR_GAMES = ImageService.instance.getImageDescriptorDefault("org.jcryptool.core.util", "icons/games.png");
-		
+		ICON_GAMES = ImageService.getImage("org.jcryptool.core.util", "icons/games.png");
+		IMAGEDESCRIPTOR_GAMES = ImageService.getImageDescriptor("org.jcryptool.core.util", "icons/games.png");
 	}
 	
+
 	/**
 	 * Loads an image from the plug-in and filepath you specified. </br></br>
 	 * You can display that image in the GUI of your plug-in. </br></br>
@@ -282,7 +238,7 @@ public class ImageService {
 	 * @param filepath The relative path to the image (e.g. images/saveIcon.png).
 	 * @return An Image that you can display in your Plugins GUI.
 	 */
-	public Image getImageDefault(String PLUGIN_ID, String filepath) {
+	public static Image getImage(String PLUGIN_ID, String filepath) {
 		// Get the bundle ID of the callers plugin.
 		Bundle bundle = Platform.getBundle(PLUGIN_ID);
 		Path path = new Path(filepath);
@@ -300,7 +256,7 @@ public class ImageService {
 	 * @param filepath The relative path to the image (e.g. images/saveIcon.png).
 	 * @return
 	 */
-	public ImageDescriptor getImageDescriptorDefault(String PLUGIN_ID, String filepath) {
+	public static ImageDescriptor getImageDescriptor(String PLUGIN_ID, String filepath) {
 		// Get the bundle ID of the callers plugin.
 		Bundle bundle = Platform.getBundle(PLUGIN_ID);
 		Path path = new Path(filepath);
@@ -317,7 +273,7 @@ public class ImageService {
      * @param icon the path to the icon: Has the following style: <code>platform:/plugin/PLUGIN_ID/PATH</code>
      * @return ImageDescriptor of this Image.
      */
-    public ImageDescriptor createIconFromURLDefault(String icon) { 	
+    public static ImageDescriptor createIconFromURL(String icon) { 	
     	icon = icon.replace("platform:/plugin/", "");
     	String[] paths = icon.split("/", 2);
     	ImageDescriptor id;
@@ -335,43 +291,4 @@ public class ImageService {
     	return id;
     }
 
-	/**
-	 * Loads an image from the plug-in and filepath you specified. </br></br>
-	 * You can display that image in the GUI of your plug-in. </br></br>
-	 * This is an example how you can use this method: </br></br>
-	 * {@code label.setImage(ImageService.getImage("org.jcryptool.visual.secretsharing"; "images/saveIcon.png");} </br></br>+
-	 * 
-	 * @param PLUGIN_ID The ID of your PLugin (e.g. org.jcryptool.visual.secretsharing). You will 
-	 * most likely find it in the class of your plugin that extends {@link org.eclipse.ui.plugin.AbstractUIPlugin}.
-	 * @param filepath The relative path to the image (e.g. images/saveIcon.png).
-	 * @return An Image that you can display in your Plugins GUI.
-	 */
-	public static Image getImage(String PLUGIN_ID, String filepath) {
-		return getInstance().getImageDefault(PLUGIN_ID, filepath);
-	}
-	
-	/**
-	 * Loads the image descriptor of the image specified in FilePath.</br></br>
-	 * The imageDescitpor can be transformed into an image via: {@code mage image = imageDesc.createImage();}.
-	 * @param PLUGIN_ID The ID of your PLugin (e.g. org.jcryptool.visual.secretsharing). You will 
-	 * most likely find it in the class of your plugin that extends {@link org.eclipse.ui.plugin.AbstractUIPlugin}.
-	 * @param filepath The relative path to the image (e.g. images/saveIcon.png).
-	 * @return
-	 */
-	public static ImageDescriptor getImageDescriptor(String PLUGIN_ID, String filepath) {
-		return getInstance().getImageDescriptorDefault(PLUGIN_ID, filepath);
-	}
-	
-    /**
-     * This method parses an icon path (like:</br>
-     * <code>platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png<code></br>
-     * into this <code>org.eclipse.ui</code> and <code>/icons/full/eview16/defaultview_misc.png</code></br>
-     * and returns an ImageDescriptor based on this.
-     * @param icon the path to the icon: Has the following style: <code>platform:/plugin/PLUGIN_ID/PATH</code>
-     * @return ImageDescriptor of this Image.
-     */
-    public static ImageDescriptor createIconFromURL(String icon) { 	
-    	return getInstance().createIconFromURLDefault(icon);
-    }
-    
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feature id="org.jcryptool.editors.feature" label="JCrypTool Editors Feature" version="1.0.7" provider-name="jcryptool.org" plugin="org.jcryptool.core"> <description url="https://github.com/jcryptool/core"> <!-- keep this in one line --> <!-- version:this -->
+<feature id="org.jcryptool.editors.feature" label="JCrypTool Editors Feature" version="1.0.8" provider-name="jcryptool.org" plugin="org.jcryptool.core"> <description url="https://github.com/jcryptool/core"> <!-- keep this in one line --> <!-- version:this -->
       The JCrypTool Editors Feature contains all available editors (hex and text) of JCrypTool.
    </description>
 
@@ -213,7 +213,7 @@ litigation.
    </license>
 
    <url>
-      <update label="JCrypTool.org" url="https://www.cryptool.org/jct/update"/>
+      <update label="JCrypTool.org" url="https://www.cryptool.org/jct/update"/> <!-- url_update:plugins --> <!-- do not remove comment -->
    </url>
 
    <plugin

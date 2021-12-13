@@ -4,7 +4,7 @@
   <parent>
   	<groupId>org.jcryptool</groupId>
   	<artifactId>org.jcryptool.releng</artifactId>
-    <version>1.0.7</version> <!-- version:parent -->
+    <version>1.0.8</version> <!-- version:parent -->
 	  <relativePath>org.jcryptool.releng</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -66,5 +66,6 @@
     <module>org.jcryptool.views.feature</module>
     <module>org.jcryptool.functionlistgen</module>
     <module>org.jcryptool.core.splitpackages</module>
+    <module>org.jcryptool.bci</module>
   </modules>
 </project>

@@ -2,11 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Bci
 Bundle-SymbolicName: org.jcryptool.bci;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.0.8.qualifier
 Bundle-Activator: org.jcryptool.bci.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.jcryptool.visual.rsa_elgamal.textbook,
  org.eclipse.core.databinding,
  org.eclipse.core.databinding.observable,
  org.eclipse.jface.databinding,

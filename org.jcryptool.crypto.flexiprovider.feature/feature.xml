@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feature id="org.jcryptool.crypto.flexiprovider.feature" label="JCrypTool Flexiprovider Feature" version="1.0.7" provider-name="Technische Universitaet Darmstadt" plugin="org.jcryptool.crypto.flexiprovider"> <description url="https://github.com/jcryptool/core"> <!-- keep this in one line --> <!-- version:this -->
+<feature id="org.jcryptool.crypto.flexiprovider.feature" label="JCrypTool Flexiprovider Feature" version="1.0.8" provider-name="Technische Universitaet Darmstadt" plugin="org.jcryptool.crypto.flexiprovider"> <description url="https://github.com/jcryptool/core"> <!-- keep this in one line --> <!-- version:this -->
       The JCrypTool FlexiProvider Feature contains all FlexiProvider plug-ins of JCrypTool.
    </description>
 
@@ -213,7 +213,7 @@ litigation.
    </license>
 
    <url>
-      <update label="JCrypTool.org" url="https://www.cryptool.org/jct/update"/>
+      <update label="JCrypTool.org" url="https://www.cryptool.org/jct/update"/> <!-- url_update:plugins --> <!-- do not remove comment -->
    </url>
 
    <plugin

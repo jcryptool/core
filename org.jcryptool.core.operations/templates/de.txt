@@ -1,31 +1,30 @@
-﻿Dies ist die JCrypTool Beispieldatei.
+Bedienung und Überblick
+=======================
 
-Sie können diese Datei für einen schnellen Start mit JCrypTool
-nutzen, indem Sie die Datei z.B. über das Menü "Algorithmen"
-verschlüsseln oder digital signieren, oder im Menü "Analyse" 
-verschiedene Analysen auf eine verschlüsselte Datei anwenden.
+Diese Beispieldatei dient für einen schnellen Start mit JCrypTool, 
+der E-Learning-Plattform für alle Betriebssysteme.
 
-Noch einfacher gelangen Sie zu sämtlichen kryptografischen
-Operationen über den "Krypto-Explorer" (auf der rechten Seite).
-Nach einem Doppelklick auf den gewünschten Eintrag auf den
-"Algorithmen"-Tab am unteren Rand öffnet sich ein Assistent und 
-führt Sie Schritt für Schritt durch den Verschlüsselungsprozess. 
-Das Entschlüsseln erfolgt später auf dieselbe Art und Weise.
+Zum Beispiel, 
+- verschlüsseln oder signieren Sie diesen Text über das "Algorithmen"-Menü.
+- wenden Sie eine der Analysen aus dem "Analysen"-Menü darauf an.
 
-Alle angebotenen Algorithmen und auch die Analysen
-benötigen immer eine geöffnete Datei in einem der JCrypTool-
-Editoren. Visualisierungen und Spiele sind dagegen in der Regel
-unabhängig von einer geöffneten Datei. Wo auch immer eine Datei
-benötigt wird, können Sie diese Beispieldatei verwenden oder
-eine beliebige eigene Datei öffnen. Ihre Originaldatei bleibt
-dabei stets unangetastet erhalten, jede kryptografische
-Operation generiert eine neue Arbeitsdatei.
+Mithilfe der "Aktionen finden"-Suche können schnell einzelne Algorithmen, Analysen, 
+Visualisierungen und Spiele gefunden werden. Sie können diese mit dem Lupe-Symbol 
+in der Toolbar öffnen, oder über die Tastenkombination "Strg+3".
 
-Bei der Suche nach einem bestimmten Algorithmus oder Assistenten
-hilft ihnen die Schnellsuche. Diese können Sie mit der Lupen-Ikone
-in der Menüleiste, oder einfach durch Drücken von "Strg+3" erreichen.
+Details
+=======
 
-Weitere Informationen zum Lernen, Anwenden und Erweitern von
-JCrypTool finden Sie in der umfangreichen Online-Hilfe, die Sie
-über das Menü "Hilfe" → "Inhaltsverzeichnis der Hilfetexte"
-aufrufen können.
+- Der "Crypto Explorer" auf der rechten Seite zeigt alle Einträge aus den Menüs 
+  "Algorithmen", "Analysen", "Visualisierungen" und "Spiele".
+
+- Im "Algorithmen"-Tab führt ein Doppelklick zu einem Dialog, welcher Sie durch 
+  den Prozess schrittweise führt.
+- Die meisten Algorithmen erwarten einen geöffneten Editor, welcher als Eingabe 
+  genommen wird.
+- Visualisierungen und Spiele sind normalerweise unabhängig von offenen Editoren.
+- Der Inhalt eines Editors bleibt unberührt, das Ergebnis wird in einem neuen Tab 
+  geöffnet.
+- Weitere Informationen, wie man JCrypTool bedient, damit lernt und es erweitert, 
+  finden Sie im Menü: 'Hilfe' --> 'Inhaltsverzeichnis der Hilfetexte'; dies öffnet
+  die umfangreiche Onlinehilfe im Browser. 
