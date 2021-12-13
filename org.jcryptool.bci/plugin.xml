@@ -16,6 +16,23 @@
             category="org.jcryptool.bci"
             inject="true">
       </view>
+      <view
+            category="org.jcryptool.visual"
+            class="org.jcryptool.rsaelgamal.view.RSAView"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png"
+            id="org.jcryptool.rsaelgamal.view.RSAView"
+            inject="true"
+            name="Textbook RSA">
+      </view>
+   </extension>
+   <extension
+         point="org.jcryptool.core.operations.visuals">
+      <Visual
+            name="%visualName"
+            viewId="org.jcryptool.rsaelgamal.view.RSAView"
+            icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png"
+            contextHelpId="org.jcryptool.rsaelgamal.RSAView.help">
+      </Visual>
    </extension>
 
 </plugin>
