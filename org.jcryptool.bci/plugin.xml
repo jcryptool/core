@@ -18,7 +18,7 @@
       </view>
       <view
             category="org.jcryptool.visual"
-            class="org.jcryptool.rsaelgamal.view.RSAView"
+            class="rsaelgamal.rcp.RSAViewPartHook"
             icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png"
             id="org.jcryptool.rsaelgamal.view.RSAView"
             inject="true"
@@ -31,7 +31,7 @@
             name="%visualName"
             viewId="org.jcryptool.rsaelgamal.view.RSAView"
             icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png"
-            contextHelpId="org.jcryptool.rsaelgamal.RSAView.help">
+            contextHelpId="org.jcryptool.rsaelgamal.view.RSAView.help">
       </Visual>
    </extension>
 
