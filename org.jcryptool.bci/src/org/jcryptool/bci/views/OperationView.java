@@ -10,6 +10,8 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.*;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+
 import javax.inject.Inject;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Table;
@@ -17,8 +19,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.crypto.ui.textloader.ui.wizard.TextLoadController;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.*;
 
 
 /**
@@ -41,6 +42,9 @@ import org.eclipse.swt.widgets.Button;
 
 public class OperationView extends ViewPart {
 	public OperationView() {
+ 		new Text(null, SWT.NONE).addSelectionListener(new SelectionAdapter() {
+ 			
+		});
 	}
 
 	/**
