@@ -1,0 +1,4 @@
+# Some weird error with the servers DH key
+https://secg.org/sec1-v2.pdf                         dh key too small
+# Not queryable by script.
+https://www.eetimes.com/document.asp?doc_id=1274550  timed out
