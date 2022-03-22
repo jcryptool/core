@@ -20,9 +20,9 @@
       -->
       <view
             category="org.jcryptool.visual"
-            class="rsaelgamal.rcp.RSAViewPartHook"
+            class="rsaelgamal.rcpImpl.RSAMainView"
             icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png"
-            id="org.jcryptool.rsaelgamal.view.RSAView"
+            id="rsaelgamal.RSAMainView"
             inject="true"
             name="Textbook RSA">
       </view>

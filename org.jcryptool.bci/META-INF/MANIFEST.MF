@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Bci
 Bundle-SymbolicName: org.jcryptool.bci;singleton:=true
 Bundle-Version: 1.0.8
-Bundle-Activator: org.jcryptool.bci.Activator
+Bundle-Activator: rsaelgamal.rcpImpl.RSAActivator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.databinding,
