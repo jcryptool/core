@@ -9,11 +9,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.eclipse.help.webapp.IFilter;
+import org.jcryptool.core.help.HelpInjectionService.HelpInjector;
+
 
 public class JCTJSInjectionFilter implements IFilter {
 
@@ -116,6 +119,73 @@ public class JCTJSInjectionFilter implements IFilter {
 		}
 
 	}
+
+	public static class ReplacementLazyOutputStream extends OutputStream {
+		
+		private LinkedList<Integer> buffer;
+		private OutputStream outStream;
+		private Charset charset = StandardCharsets.UTF_8;
+		private String replace;
+		private Supplier<String> with;
+
+		public ReplacementLazyOutputStream(OutputStream outStream, String replace, Supplier<String> with) {
+			this.outStream = outStream;
+			this.replace = replace;
+			this.with = with;
+			this.buffer = new LinkedList<Integer>();
+		}
+		
+		public String getBufferTail(int maxChars) {
+			List<Byte> bytelist = buffer.stream().map(i -> i.byteValue()).collect(Collectors.toList());
+			byte[] bytearray = new byte[bytelist.size()];
+			for (int i = 0; i < bytelist.size(); i++) {
+				byte b = bytelist.get(i);
+				bytearray[i] = b;
+			}
+			String bufferstring = new String(bytearray, this.charset);
+			return bufferstring.subSequence(Math.max(bufferstring.length()-maxChars, 0), bufferstring.length()).toString();
+		}
+		public void popFirstIn() throws IOException {
+			if (this.buffer.size() > 0) {
+				this.outStream.write(this.buffer.removeFirst());
+			}
+		}
+		public void popAll() throws IOException {
+			while(this.buffer.size() > 0) {
+				this.popFirstIn();
+			}
+		}
+		
+		@Override
+		public void write(int arrivedByte) throws IOException {
+			String tailToCompare = getBufferTail(replace.length());
+			if (tailToCompare.equals(this.replace)) {
+				// now, after emitting the buffer and continuing, emit the specified sequence of this injector.
+				this.buffer.clear(); // TODO: assuming the buffer contains exactly the content to be replaced which might be inaccurate when the buffer length changes
+				OutputStreamWriter outputStreamWriter = new OutputStreamWriter(this.outStream, this.charset);
+				outputStreamWriter.write(this.with.get());
+				outputStreamWriter.flush();
+			}
+			this.buffer.add(arrivedByte);
+			if (this.buffer.size() > this.replace.getBytes(this.charset).length) {
+				try {
+					this.popFirstIn();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		public void flush() throws IOException {
+			this.popAll();
+			this.outStream.flush();
+		}
+		public void close() throws IOException {
+			this.flush();
+			this.outStream.close();
+		}
+
+	}
+
 	public static class InjectionOutputStream extends OutputStream {
 		
 		private LinkedList<Integer> buffer;
@@ -182,6 +252,8 @@ public class JCTJSInjectionFilter implements IFilter {
 
 	}
 	
+
+	
 	@Override
 	public OutputStream filter(HttpServletRequest req, OutputStream out) {
 
@@ -202,8 +274,12 @@ public class JCTJSInjectionFilter implements IFilter {
 
 		OutputStream replacedPortStream = new ReplacementOutputStream(out, "${JCTJS_HOST}", "http://127.0.0.1:"+JCTJSPort);
  		OutputStream transformedStream = new InjectionOutputStream(replacedPortStream, "<head>", injectionPayload);
+ 		OutputStream byService = transformedStream;
+ 		for (HelpInjector tf: HelpInjectionService.injectors) {
+ 			byService = new ReplacementLazyOutputStream(byService, tf.toR, tf.rW);
+ 		}
 
-		return transformedStream;
+		return byService;
 	}
 
 }

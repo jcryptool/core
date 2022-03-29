@@ -60,17 +60,17 @@ public class ServerStartup implements IStartup {
 	@Override
 	public void earlyStartup() {
 		StartupParsed helpAtStartupParsed = StartupParsed.parse();
-		final IWorkbenchHelpSystem helpSystem = PlatformUI.getWorkbench().getHelpSystem();
 
 		if (helpAtStartupParsed.activated) {
 			Display display = PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell().getDisplay();
 			display.syncExec(new Runnable() {
 				@Override
 				public void run() {
+ 					final IWorkbenchHelpSystem helpSystem = PlatformUI.getWorkbench().getHelpSystem();
 					if (helpAtStartupParsed.startupAddress.isPresent()) {
-						helpSystem.displayHelpResource(helpAtStartupParsed.startupAddress.get());
+  						helpSystem.displayHelpResource(helpAtStartupParsed.startupAddress.get());
 					} else {
-						helpSystem.displayHelp();
+ 						helpSystem.displayHelp();
 					}
 				}
 			});
@@ -79,10 +79,10 @@ public class ServerStartup implements IStartup {
 		}
 
 //		Display display = PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell().getDisplay();
-		oldStartup();
+// 		oldStartup();
 	}
 
-	private void oldStartup() {
+	private void oldStartup() { // how to find and execute a command by string, butBAAAAAAD :D
 		try {
 			Display display = PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell().getDisplay();
 			display.syncExec(new Runnable() {
