@@ -29,6 +29,7 @@ import org.eclipse.ui.internal.Workbench;
 import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.directories.DirectoryService;
 
+// THIS IS DEACTIVED for performance reasons. reactivate in plugin.xml
 public class EditorAPIStartup implements IStartup {
 
 	public class EditorListener implements Observer {
@@ -125,6 +126,7 @@ public class EditorAPIStartup implements IStartup {
 		}
 // 		System.out.println("run finished; processed dirs: " + processed);
 	}
+	
 	
 	@Override
 	public void earlyStartup() {
