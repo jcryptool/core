@@ -1,4 +1,4 @@
-JCrypTool v1.0.6 is proudly presented by the core developer team:
+JCrypTool v1.0.8 is proudly presented by the core developer team:
 -----------------------------------------------------------------
 
 - Prof. Bernhard Esslinger 
