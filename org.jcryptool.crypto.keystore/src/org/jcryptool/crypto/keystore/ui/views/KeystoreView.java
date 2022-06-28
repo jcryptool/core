@@ -29,6 +29,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
@@ -117,11 +118,13 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
     	return viewer;
     }
     
+    public Shell lastShell = null;
     /**
      * This is a callback that will allow us to create the viewer and initialize it.
      */
     @Override
     public void createPartControl(Composite parent) {
+    	this.lastShell = parent.getShell();
         keyStoreNameLabel = new Label(parent, SWT.NULL);
         keyStoreNameLabel.setText(KeyStoreManager.KEYSTORE_NAME);
         keyStorePersistenceHint = new Label(parent, SWT.WRAP);

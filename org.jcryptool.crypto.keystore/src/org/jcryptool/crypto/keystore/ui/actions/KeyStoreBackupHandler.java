@@ -52,14 +52,14 @@ public class KeyStoreBackupHandler extends AbstractHandler {
 	}
 
 	public void backup(ExecutionEvent event) {
-		FileDialog dlgFile = new FileDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell(), SWT.SAVE);
+		FileDialog dlgFile = new FileDialog(view.lastShell, SWT.SAVE);
 		String pathToFile = dlgFile.open();
 		if(pathToFile != null)
 			KeyStoreManager.getInstance().backupKeystore(pathToFile);
 	}
 
 	public void restore(ExecutionEvent event) {
-		FileDialog dlg = new FileDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell(), SWT.OPEN);
+		FileDialog dlg = new FileDialog(view.lastShell, SWT.OPEN);
 		String pathToFile = dlg.open();
 		if(pathToFile != null) {
 			KeyStoreManager.getInstance().restoreKeystore(pathToFile);
