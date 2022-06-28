@@ -14,3 +14,4 @@ Thumbs.db
 org.jcryptool.product/plugin_customization.ini
 .settings/
 .java-version
+**/.tycho-consumer-pom.xml
