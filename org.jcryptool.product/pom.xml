@@ -13,26 +13,58 @@
 
 	<build>
 		<plugins>
+            <!-- this plugin seems to be a dependency of another plugin and gets run even if this <plugin> tag is removed -->
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-repository-plugin</artifactId>
 				<version>${tycho.version}</version>
-				<configuration>
-					<includeAllDependencies>true</includeAllDependencies>
-				</configuration>
+                        <configuration>
+                            <includeAllDependencies>true</includeAllDependencies>
+                        </configuration>
+                <executions>
+                    <execution>
+                        <id>create-p2</id>
+                        <goals><goal>assemble-maven-repository</goal></goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <includeReactor>true</includeReactor>
+                            <includeTransitiveDependencies>true</includeTransitiveDependencies>
+                            <destination>${project.build.directory}/m2repo</destination>
+                        </configuration>
+                    </execution>
+                    <!-- <execution> -->
+                    <!--     <id>create-p2</id> -->
+                    <!--     <goals><goal>assemble-repository</goal></goals> -->
+                    <!--     <phase>${jctbuild.makeP2Phase}</phase> -->
+                    <!--     <configuration> -->
+                    <!--         <includeAllDependencies>true</includeAllDependencies> -->
+                    <!--     </configuration> -->
+                    <!-- </execution> -->
+                    <!-- <execution> -->
+                    <!--     <id>archive-p2</id> -->
+                    <!--     <goals><goal>archive-repository</goal></goals> -->
+                    <!--     <phase>${jctbuild.archiveP2Phase}</phase> -->
+                    <!--     <configuration> -->
+                    <!--         <includeAllDependencies>true</includeAllDependencies> -->
+                    <!--     </configuration> -->
+                    <!-- </execution> -->
+                </executions>
 			</plugin>
+
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-director-plugin</artifactId>
 				<version>${tycho.version}</version>
 				<executions>
 					<execution>
+                        <phase>${jctbuild.makeProductsPhase}</phase>
 						<id>materialize-products</id>
 						<goals>
 							<goal>materialize-products</goal>
 						</goals>
 					</execution>
 					<execution>
+                        <phase>${jctbuild.archiveProductsPhase}</phase>
 						<id>archive-products</id>
 						<goals>
 							<goal>archive-products</goal>
@@ -65,7 +97,7 @@
 				<!-- rename the files for better readability -->
 					<execution>
 						<id>rename-file</id>
-						<phase>package</phase>
+                        <phase>${jctbuild.renameFileAfterPackagePhase}</phase>
 						<goals>
 							<goal>rename</goal>
 						</goals>
@@ -96,7 +128,7 @@
 					<!-- calculate the hashes of the generated files -->
 					<execution>
 						<id>generate-hashes</id>
-						<phase>package</phase>
+						<phase>none</phase>
 						<goals>
 							<goal>files</goal>
 						</goals>

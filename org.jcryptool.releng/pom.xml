@@ -42,12 +42,79 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 		<jct.isStableRelease>false</jct.isStableRelease>
 		<maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
 		<product.file.name></product.file.name>
+        <relengtarget>${project.basedir}/target</relengtarget>
 	</properties>
+
 
 	<build>
 		<defaultGoal>clean verify</defaultGoal>
 
+        <!-- <pluginManagement> -->
+        <!--   <plugins> -->
+        <!--   </plugins> -->
+        <!-- </pluginManagement> -->
+        <pluginManagement>
+        <plugins>
+        </plugins>
+        </pluginManagement>
+
 		<plugins>
+
+            <plugin>
+              <groupId>org.eclipse.tycho</groupId>
+              <artifactId>tycho-source-plugin</artifactId>
+              <version>${tycho.version}</version>
+                <executions>
+                  <execution>
+                    <id>gen-sources</id>
+                    <goals> <goal>plugin-source</goal> </goals>
+                    <phase>${jctbuild.makeSourceJarsPhase}</phase>
+                    <configuration>
+                        <outputDirectory>${productDir}/target/pluginSourceJars/</outputDirectory>
+                    </configuration>
+                  </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+              <groupId>org.commonjava.maven.plugins</groupId>
+              <artifactId>directory-maven-plugin</artifactId>
+              <version>0.1</version>
+              <executions>
+                <execution>
+                  <id>directory-releng</id>
+                  <goals>
+                    <!-- <goal>execution-root</goal> -->
+                    <goal>directory-of</goal>
+                  </goals>
+                  <phase>initialize</phase>
+                  <configuration>
+                    <property>relengDir</property>
+                    <project>
+                      <groupId>org.jcryptool</groupId>
+                      <artifactId>org.jcryptool.releng</artifactId>
+                    </project>
+                  </configuration>
+                </execution>
+                <execution>
+                  <id>directory-product</id>
+                  <goals>
+                    <!-- <goal>execution-root</goal> -->
+                    <goal>directory-of</goal>
+                  </goals>
+                  <phase>initialize</phase>
+                  <configuration>
+                    <property>productDir</property>
+                    <project>
+                      <groupId>org.jcryptool</groupId>
+                      <artifactId>org.jcryptool.product</artifactId>
+                    </project>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
+
+
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
@@ -68,44 +135,17 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 				<version>${tycho.version}</version>
 				<configuration>
 					<target>
-						<!-- <artifact> -->
-						<!-- 	<groupId>org.jcryptool</groupId> -->
-						<!-- 	<artifactId>org.jcryptool.platformpatches.target</artifactId> -->
-						<!-- 	<version>${product.version}</version> -->
-						<!-- </artifact> -->
 						<artifact>
 							<groupId>org.jcryptool</groupId>
 							<artifactId>org.jcryptool.target</artifactId>
 							<version>${product.version}</version>
 						</artifact>
 					</target>
-                    <!-- This is for patching in very specific versions of bundle via -->
-                    <!-- - dropin folder (temporary solution) -->
-                    <!-- - second target artifact (for patched versions of eclipse platform mostly) -->
-                    <!-- versions that get patched are excluded here via filters. This does not apply to the PDE build -->
-                    <filters>
-                        <!-- <filter> -->
-                        <!--    <type>eclipse-plugin</type> -->
-                        <!--    <id>org.eclipse.help.ui</id> -->
-                        <!--    <removeAll /> -->
-                        <!-- </filter> -->
-                    </filters>
+                    <!-- <filters> <filter> <type>eclipse-plugin</type> <id>org.eclipse.help.ui</id> <removeAll /> </filter> </filters> -->
 					<environments>
-						<environment>
-							<os>linux</os>
-							<ws>gtk</ws>
-							<arch>x86_64</arch>
-						</environment>
-						<environment>
-							<os>win32</os>
-							<ws>win32</ws>
-							<arch>x86_64</arch>
-						</environment>
-						<environment>
-							<os>macosx</os>
-							<ws>cocoa</ws>
-							<arch>x86_64</arch>
-						</environment>
+						<environment> <os>linux</os> <ws>gtk</ws> <arch>x86_64</arch> </environment>
+						<environment> <os>win32</os> <ws>win32</ws> <arch>x86_64</arch> </environment>
+						<environment> <os>macosx</os> <ws>cocoa</ws> <arch>x86_64</arch> </environment>
 					</environments>
 				</configuration>
 			</plugin>
@@ -131,7 +171,23 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 		</plugins>
 	</build>
 
-	<profiles>
+    <profiles>
+
+		<profile>
+			<id>dev-minimal</id>
+			<properties>
+				<timestamp>${maven.build.timestamp} (weekly)</timestamp>
+				<jct.isStableRelease>false</jct.isStableRelease>
+				<product.file.name>${maven.build.timestamp}</product.file.name>
+                <jctbuild.makeSourceJarsPhase>package</jctbuild.makeSourceJarsPhase>
+                <!-- <jctbuild.makeP2Phase>package</jctbuild.makeP2Phase> -->
+                <!-- <jctbuild.archiveP2Phase>none</jctbuild.archiveP2Phase> -->
+                <jctbuild.makeProductsPhase>none</jctbuild.makeProductsPhase>
+                <jctbuild.archiveProductsPhase>none</jctbuild.archiveProductsPhase>
+                <jctbuild.renameFileAfterPackagePhase>none</jctbuild.renameFileAfterPackagePhase>
+			</properties>
+		</profile>
+
 		<profile>
 			<id>weekly</id>
 			<activation>
@@ -141,6 +197,12 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 				<timestamp>${maven.build.timestamp} (weekly)</timestamp>
 				<jct.isStableRelease>false</jct.isStableRelease>
 				<product.file.name>${maven.build.timestamp}</product.file.name>
+                <jctbuild.makeSourceJarsPhase>package</jctbuild.makeSourceJarsPhase>
+                <!-- <jctbuild.makeP2Phase>package</jctbuild.makeP2Phase> -->
+                <!-- <jctbuild.archiveP2Phase>package</jctbuild.archiveP2Phase> -->
+                <jctbuild.makeProductsPhase>package</jctbuild.makeProductsPhase>
+                <jctbuild.archiveProductsPhase>package</jctbuild.archiveProductsPhase>
+                <jctbuild.renameFileAfterPackagePhase>package</jctbuild.renameFileAfterPackagePhase>
 			</properties>
 		</profile>
 
@@ -152,6 +214,12 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 				<timestamp>${maven.build.timestamp} (stable)</timestamp>
 				<jct.isStableRelease>true</jct.isStableRelease>
 				<product.file.name>${product.version}</product.file.name>
+                <jctbuild.makeSourceJarsPhase>package</jctbuild.makeSourceJarsPhase>
+                <!-- <jctbuild.makeP2Phase>package</jctbuild.makeP2Phase> -->
+                <!-- <jctbuild.archiveP2Phase>package</jctbuild.archiveP2Phase> -->
+                <jctbuild.makeProductsPhase>package</jctbuild.makeProductsPhase>
+                <jctbuild.archiveProductsPhase>package</jctbuild.archiveProductsPhase>
+                <jctbuild.renameFileAfterPackagePhase>package</jctbuild.renameFileAfterPackagePhase>
 			</properties> 
 		</profile>
 
@@ -223,3 +291,25 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 		<developerConnection>scm:git:git@github.com:jcryptool/core.git</developerConnection>
 	</scm>
 </project>
+
+<!-- how to echo something -->
+
+            <!-- <plugin> -->
+            <!--   <artifactId>maven-antrun-plugin</artifactId> -->
+            <!--   <version>1.7</version> -->
+            <!--   <executions> -->
+            <!--     <execution> -->
+            <!--       <id>echo</id> -->
+            <!--       <phase>initialize</phase> -->
+            <!--       <goals> -->
+            <!--         <goal>run</goal> -->
+            <!--       </goals> -->
+            <!--       <configuration> -->
+            <!--         <target> -->
+            <!--           <echo>TEEEST: ${relengDir}</echo> -->
+            <!--         </target> -->
+            <!--       </configuration> -->
+            <!--     </execution> -->
+            <!--   </executions> -->
+            <!-- </plugin> -->
+

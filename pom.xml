@@ -68,14 +68,5 @@
     <!-- <module>org.jcryptool.bci</module> -->
   </modules>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.eclipse.tycho</groupId>
-        <artifactId>tycho-source-plugin</artifactId>
-        <version>${tycho.version}</version>
-      </plugin>
-    </plugins>
-  </build>
 
 </project>
