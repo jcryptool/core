@@ -1,30 +1,31 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<parent>
-		<groupId>org.jcryptool</groupId>
-		<artifactId>org.jcryptool.core.parent</artifactId>
-    <version>1.0.8</version> <!-- version:parent -->
-	</parent>
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>org.jcryptool.product</artifactId>
-	<packaging>eclipse-repository</packaging>
-
-	<build>
-		<plugins>
+<project 
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <version>1.0.8</version>
+    <parent>
+        <groupId>org.jcryptool</groupId>
+        <artifactId>org.jcryptool.core.parent</artifactId>
+        <version>1.0.8</version>
+        <!-- version:parent -->
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>org.jcryptool.product</artifactId>
+    <packaging>eclipse-repository</packaging>
+    <build>
+        <plugins>
             <!-- this plugin seems to be a dependency of another plugin and gets run even if this <plugin> tag is removed -->
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-p2-repository-plugin</artifactId>
-				<version>${tycho.version}</version>
-                        <configuration>
-                            <includeAllDependencies>true</includeAllDependencies>
-                        </configuration>
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-p2-repository-plugin</artifactId>
+                <version>${tycho.version}</version>
+                <configuration>
+                    <includeAllDependencies>true</includeAllDependencies>
+                </configuration>
                 <executions>
                     <execution>
                         <id>create-p2</id>
-                        <goals><goal>assemble-maven-repository</goal></goals>
+                        <goals>
+                            <goal>assemble-maven-repository</goal>
+                        </goals>
                         <phase>package</phase>
                         <configuration>
                             <includeReactor>true</includeReactor>
@@ -49,77 +50,80 @@
                     <!--     </configuration> -->
                     <!-- </execution> -->
                 </executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-p2-director-plugin</artifactId>
-				<version>${tycho.version}</version>
-				<executions>
-					<execution>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-p2-director-plugin</artifactId>
+                <version>${tycho.version}</version>
+                <executions>
+                    <execution>
                         <phase>${jctbuild.makeProductsPhase}</phase>
-						<id>materialize-products</id>
-						<goals>
-							<goal>materialize-products</goal>
-						</goals>
-					</execution>
-					<execution>
+                        <id>materialize-products</id>
+                        <goals>
+                            <goal>materialize-products</goal>
+                        </goals>
+                    </execution>
+                    <execution>
                         <phase>${jctbuild.archiveProductsPhase}</phase>
-						<id>archive-products</id>
-						<goals>
-							<goal>archive-products</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<formats>
-						<linux>tar.gz</linux>
-						<macosx>tar.gz</macosx>
-						<win32>zip</win32>
-					</formats>
-					<products>
-						<product>
-							<id>${product.id}</id>
-							<rootFolders>
-								<linux>${product.id}</linux>
-								<macosx>${product.id}</macosx>
-								<win32>${product.id}</win32>
-							</rootFolders>
-						</product>
-					</products>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>com.coderplus.maven.plugins</groupId>
-				<artifactId>copy-rename-maven-plugin</artifactId>
-				<version>1.0</version>
-				<executions>
-				<!-- rename the files for better readability -->
-					<execution>
-						<id>rename-file</id>
+                        <id>archive-products</id>
+                        <goals>
+                            <goal>archive-products</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <formats>
+                        <linux>tar.gz</linux>
+                        <macosx>tar.gz</macosx>
+                        <win32>zip</win32>
+                    </formats>
+                    <products>
+                        <product>
+                            <id>${product.id}</id>
+                            <rootFolders>
+                                <linux>${product.id}</linux>
+                                <macosx>${product.id}</macosx>
+                                <win32>${product.id}</win32>
+                            </rootFolders>
+                        </product>
+                    </products>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.coderplus.maven.plugins</groupId>
+                <artifactId>copy-rename-maven-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <!-- rename the files for better readability -->
+                    <execution>
+                        <id>rename-file</id>
                         <phase>${jctbuild.renameFileAfterPackagePhase}</phase>
-						<goals>
-							<goal>rename</goal>
-						</goals>
-						<configuration>
-							<fileSets>
-								<fileSet>
-									<sourceFile>${project.build.directory}/products/${product.id}-linux.gtk.x86_64.tar.gz</sourceFile>
-									<destinationFile>${project.build.directory}/products/JCrypTool-${product.file.name}-Linux-64bit.tar.gz</destinationFile>
-								</fileSet>
-								<fileSet>
-									<sourceFile>${project.build.directory}/products/${product.id}-macosx.cocoa.x86_64.tar.gz</sourceFile>
-									<destinationFile>${project.build.directory}/products/JCrypTool-${product.file.name}-macOS-64bit.tar.gz</destinationFile>
-								</fileSet>
-								<fileSet>
-									<sourceFile>${project.build.directory}/products/${product.id}-win32.win32.x86_64.zip</sourceFile>
-									<destinationFile>${project.build.directory}/products/JCrypTool-${product.file.name}-Windows-64bit.zip</destinationFile>
-								</fileSet>
-							</fileSets>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+                        <goals>
+                            <goal>rename</goal>
+                        </goals>
+                        <configuration>
+                            <fileSets>
+                                <fileSet>
+                                    <sourceFile>${project.build.directory}/products/${product.id}-linux.gtk.x86_64.tar.gz</sourceFile>
+                                    <destinationFile>
+                                        ${project.build.directory}/products/JCrypTool-${product.file.name}-Linux-64bit.tar.gz
+                                    </destinationFile>
+                                </fileSet>
+                                <fileSet>
+                                    <sourceFile>${project.build.directory}/products/${product.id}-macosx.cocoa.x86_64.tar.gz</sourceFile>
+                                    <destinationFile>
+                                        ${project.build.directory}/products/JCrypTool-${product.file.name}-macOS-64bit.tar.gz
+                                    </destinationFile>
+                                </fileSet>
+                                <fileSet>
+                                    <sourceFile>${project.build.directory}/products/${product.id}-win32.win32.x86_64.zip</sourceFile>
+                                    <destinationFile>${project.build.directory}/products/JCrypTool-${product.file.name}-Windows-64bit.zip</destinationFile>
+                                </fileSet>
+                            </fileSets>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
