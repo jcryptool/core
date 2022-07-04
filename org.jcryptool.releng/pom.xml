@@ -61,6 +61,9 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 		<plugins>
 
             <plugin>
+                <!-- <activation> -->
+                <!--     <property>jct.pluginSourceJarsDir</property> -->
+                <!-- </activation> -->
               <groupId>org.eclipse.tycho</groupId>
               <artifactId>tycho-source-plugin</artifactId>
               <version>${tycho.version}</version>
@@ -70,7 +73,7 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
                     <goals> <goal>plugin-source</goal> </goals>
                     <phase>${jctbuild.makeSourceJarsPhase}</phase>
                     <configuration>
-                        <outputDirectory>${productDir}/target/pluginSourceJars/</outputDirectory>
+                        <outputDirectory>${relengDir}/target/pluginSourceJars/</outputDirectory>
                     </configuration>
                   </execution>
                 </executions>
@@ -179,7 +182,7 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 				<timestamp>${maven.build.timestamp} (weekly)</timestamp>
 				<jct.isStableRelease>false</jct.isStableRelease>
 				<product.file.name>${maven.build.timestamp}</product.file.name>
-                <jctbuild.makeSourceJarsPhase>package</jctbuild.makeSourceJarsPhase>
+                <jctbuild.makeSourceJarsPhase>prepare-package</jctbuild.makeSourceJarsPhase>
                 <!-- <jctbuild.makeP2Phase>package</jctbuild.makeP2Phase> -->
                 <!-- <jctbuild.archiveP2Phase>none</jctbuild.archiveP2Phase> -->
                 <jctbuild.makeProductsPhase>none</jctbuild.makeProductsPhase>
@@ -197,7 +200,7 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 				<timestamp>${maven.build.timestamp} (weekly)</timestamp>
 				<jct.isStableRelease>false</jct.isStableRelease>
 				<product.file.name>${maven.build.timestamp}</product.file.name>
-                <jctbuild.makeSourceJarsPhase>package</jctbuild.makeSourceJarsPhase>
+                <jctbuild.makeSourceJarsPhase>none</jctbuild.makeSourceJarsPhase>
                 <!-- <jctbuild.makeP2Phase>package</jctbuild.makeP2Phase> -->
                 <!-- <jctbuild.archiveP2Phase>package</jctbuild.archiveP2Phase> -->
                 <jctbuild.makeProductsPhase>package</jctbuild.makeProductsPhase>
@@ -214,7 +217,7 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 				<timestamp>${maven.build.timestamp} (stable)</timestamp>
 				<jct.isStableRelease>true</jct.isStableRelease>
 				<product.file.name>${product.version}</product.file.name>
-                <jctbuild.makeSourceJarsPhase>package</jctbuild.makeSourceJarsPhase>
+                <jctbuild.makeSourceJarsPhase>none</jctbuild.makeSourceJarsPhase>
                 <!-- <jctbuild.makeP2Phase>package</jctbuild.makeP2Phase> -->
                 <!-- <jctbuild.archiveP2Phase>package</jctbuild.archiveP2Phase> -->
                 <jctbuild.makeProductsPhase>package</jctbuild.makeProductsPhase>
