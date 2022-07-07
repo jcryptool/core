@@ -9,9 +9,12 @@
 		<unit id="org.eclipse.equinox.p2.sdk.feature.group" version="3.11.900.v20200828-0839"/>
 		<unit id="org.eclipse.gef.feature.group" version="3.11.0.201606061308"/>
 		<unit id="org.eclipse.platform.feature.group" version="4.17.0.v20200902-1800"/>
+		<unit id="org.eclipse.platform.source.feature.group" version="4.17.0.v20200902-1800"/>
 		<unit id="org.eclipse.rcp.feature.group" version="4.17.0.v20200902-1800"/>
+		<unit id="org.eclipse.rcp.source.feature.group" version="4.17.0.v20200902-1800"/>
 		<unit id="org.eclipse.rcp.sdk.id" version="4.17.0.I20200902-1800"/>
 		<unit id="org.eclipse.zest.sdk.feature.group" version="1.7.0.201606061308"/>
+		<!-- <unit id="org.eclipse.zest.source.feature.group" version="1.7.0.201606061308"/> -->
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="https://cryptool.org/jct/thirdparty-p2/m2bundle"/>

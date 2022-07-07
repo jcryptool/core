@@ -73,7 +73,7 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
                     <goals> <goal>plugin-source</goal> </goals>
                     <phase>${jctbuild.makeSourceJarsPhase}</phase>
                     <configuration>
-                        <outputDirectory>${relengDir}/target/pluginSourceJars/</outputDirectory>
+                       <outputDirectory>${jctbuild.makeSourceJarsDir}</outputDirectory>
                     </configuration>
                   </execution>
                 </executions>
@@ -174,7 +174,37 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 		</plugins>
 	</build>
 
-    <profiles>
+  <profiles>
+
+		<profile>
+			<id>makeStrictTargetP2</id>
+      <activation>
+        <property><name>jctbuild.makeStrictTargetP2Dir</name></property>
+      </activation>
+			<properties>
+        <jctbuild.makeStrictTargetP2Phase>package</jctbuild.makeStrictTargetP2Phase>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>makeTargetP2</id>
+      <activation>
+        <property><name>jctbuild.makeTargetP2Dir</name></property>
+      </activation>
+			<properties>
+        <jctbuild.makeTargetP2Phase>package</jctbuild.makeTargetP2Phase>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>makeSourceJars</id>
+      <activation>
+        <property><name>jctbuild.makeSourceJarsDir</name></property>
+      </activation>
+			<properties>
+        <jctbuild.makeSourceJarsPhase>package</jctbuild.makeSourceJarsPhase>
+			</properties>
+		</profile>
 
 		<profile>
 			<id>dev-minimal</id>
@@ -182,7 +212,6 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 				<timestamp>${maven.build.timestamp} (weekly)</timestamp>
 				<jct.isStableRelease>false</jct.isStableRelease>
 				<product.file.name>${maven.build.timestamp}</product.file.name>
-                <jctbuild.makeSourceJarsPhase>prepare-package</jctbuild.makeSourceJarsPhase>
                 <!-- <jctbuild.makeP2Phase>package</jctbuild.makeP2Phase> -->
                 <!-- <jctbuild.archiveP2Phase>none</jctbuild.archiveP2Phase> -->
                 <jctbuild.makeProductsPhase>none</jctbuild.makeProductsPhase>
@@ -268,6 +297,7 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 				</plugins>
 			</build>
 		</profile>
+
 	</profiles>
 
 	<reporting>
