@@ -233,8 +233,8 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
                 <!-- <jctbuild.makeP2Phase>package</jctbuild.makeP2Phase> -->
                 <!-- <jctbuild.archiveP2Phase>package</jctbuild.archiveP2Phase> -->
                 <jctbuild.makeProductsPhase>package</jctbuild.makeProductsPhase>
-                <jctbuild.archiveProductsPhase>none</jctbuild.archiveProductsPhase>
-                <jctbuild.renameFileAfterPackagePhase>none</jctbuild.renameFileAfterPackagePhase>
+                <jctbuild.archiveProductsPhase>package</jctbuild.archiveProductsPhase>
+                <jctbuild.renameFileAfterPackagePhase>package</jctbuild.renameFileAfterPackagePhase>
 			</properties>
 		</profile>
 
