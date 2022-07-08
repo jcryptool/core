@@ -213,9 +213,9 @@ Each party waives its rights to a jury trial in any resulting
 litigation.
    </license>
 
-   <url>
-      <update label="JCrypTool.org" url="https://www.cryptool.org/jct/update"/> <!-- url_update:plugins --> <!-- do not remove comment -->
-   </url>
+   <!-- <url> -->
+   <!--    <update label="JCrypTool.org" url="https://www.cryptool.org/jct/update"/> -->
+   <!-- </url> -->
 
    <requires>
       <import feature="org.jcryptool.core.dependencies.feature" />
