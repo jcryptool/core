@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Build info"
+            id="org.jcryptool.buildinfo">
+      </category>
+      <view
+            id="org.jcryptool.buildinfo.views.OperationView"
+            name="Build info"
+            icon="icons/sample.png"
+            class="org.jcryptool.buildinfo.views.OperationView"
+            category="org.jcryptool.buildinfo"
+            inject="true">
+      </view>
+      <!-- <view -->
+      <!--       category="org.jcryptool.visual" -->
+      <!--       class="rsaelgamal.rcpImpl.RSAMainView" -->
+      <!--       icon="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png" -->
+      <!--       id="rsaelgamal.RSAMainView" -->
+      <!--       inject="true" -->
+      <!--       name="Textbook RSA"> -->
+      <!-- </view> -->
+   </extension>
+</plugin>

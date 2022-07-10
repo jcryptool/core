@@ -65,6 +65,7 @@
     <module>org.jcryptool.views.feature</module>
     <module>org.jcryptool.functionlistgen</module>
     <module>org.jcryptool.core.splitpackages</module>
+    <module>org.jcryptool.buildinfo</module>
     <!-- <module>org.jcryptool.bci</module> -->
   </modules>
 
