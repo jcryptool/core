@@ -79,43 +79,41 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
                 </executions>
             </plugin>
 
-            <plugin>
-              <groupId>org.commonjava.maven.plugins</groupId>
-              <artifactId>directory-maven-plugin</artifactId>
-              <version>0.1</version>
-              <executions>
-                <execution>
-                  <id>directory-releng</id>
-                  <goals>
-                    <!-- <goal>execution-root</goal> -->
-                    <goal>directory-of</goal>
-                  </goals>
-                  <phase>initialize</phase>
-                  <configuration>
-                    <property>relengDir</property>
-                    <project>
-                      <groupId>org.jcryptool</groupId>
-                      <artifactId>org.jcryptool.releng</artifactId>
-                    </project>
-                  </configuration>
-                </execution>
-                <execution>
-                  <id>directory-product</id>
-                  <goals>
-                    <!-- <goal>execution-root</goal> -->
-                    <goal>directory-of</goal>
-                  </goals>
-                  <phase>initialize</phase>
-                  <configuration>
-                    <property>productDir</property>
-                    <project>
-                      <groupId>org.jcryptool</groupId>
-                      <artifactId>org.jcryptool.product</artifactId>
-                    </project>
-                  </configuration>
-                </execution>
-              </executions>
-            </plugin>
+            <!-- <plugin> -->
+            <!--   <groupId>org.commonjava.maven.plugins</groupId> -->
+            <!--   <artifactId>directory-maven-plugin</artifactId> -->
+            <!--   <version>0.1</version> -->
+            <!--   <executions> -->
+            <!--     <execution> -->
+            <!--       <id>directory-releng</id> -->
+            <!--       <goals> -->
+            <!--         <goal>directory-of</goal> -->
+            <!--       </goals> -->
+            <!--       <phase>initialize</phase> -->
+            <!--       <configuration> -->
+            <!--         <property>relengDir</property> -->
+            <!--         <project> -->
+            <!--           <groupId>org.jcryptool</groupId> -->
+            <!--           <artifactId>org.jcryptool.releng</artifactId> -->
+            <!--         </project> -->
+            <!--       </configuration> -->
+            <!--     </execution> -->
+            <!--     <execution> -->
+            <!--       <id>directory-product</id> -->
+            <!--       <goals> -->
+            <!--         <goal>directory-of</goal> -->
+            <!--       </goals> -->
+            <!--       <phase>initialize</phase> -->
+            <!--       <configuration> -->
+            <!--         <property>productDir</property> -->
+            <!--         <project> -->
+            <!--           <groupId>org.jcryptool</groupId> -->
+            <!--           <artifactId>org.jcryptool.product</artifactId> -->
+            <!--         </project> -->
+            <!--       </configuration> -->
+            <!--     </execution> -->
+            <!--   </executions> -->
+            <!-- </plugin> -->
 
 
 			<plugin>
