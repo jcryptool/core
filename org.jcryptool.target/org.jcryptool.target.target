@@ -17,10 +17,6 @@
 		<!-- <unit id="org.eclipse.zest.source.feature.group" version="1.7.0.201606061308"/> -->
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="https://cryptool.org/jct/thirdparty-p2/m2bundle"/>
-		<unit id="org.jcryptool.thirdparty.m2bundle.jaxb" version="0.0.1"/>
-	</location>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="https://cryptool.org/jct/thirdparty-p2/jre"/>
 		<unit id="org.jcryptool.thirdparty.jre.linux64.feature.feature.group" version="11.0.5.010"/>
 		<!--<unit id="org.jcryptool.thirdparty.jre.macosx.feature.feature.group" version="11.0.5.010"/>-->
@@ -38,6 +34,8 @@
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
         <repository location="https://cryptool.org/jct/thirdparty-p2/m2bundle/"/>
+		<unit id="org.jcryptool.thirdparty.m2bundle.jaxb" version="0.0.1"/>
+
 		<unit id="com.diffplug.durian.collect" version="1.2.0"/>
 		<unit id="com.diffplug.durian.collect.source" version="1.2.0"/>
 		<unit id="com.diffplug.durian.concurrent" version="1.2.0"/>
