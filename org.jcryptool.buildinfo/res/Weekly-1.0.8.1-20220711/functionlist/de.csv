@@ -1,0 +1,726 @@
+ElGamal;[n.a.];
+;[A];Asymmetrische Blockchiffren \ ElGamal
+
+RprimeRSA;[n.a.];
+;[A];Asymmetrische Blockchiffren \ RprimeRSA
+
+McEliecePKCS;[n.a.];
+;[A];Asymmetrische Blockchiffren \ McEliecePKCS
+
+Niederreiter;[n.a.];
+;[A];Asymmetrische Blockchiffren \ Niederreiter
+
+RSA;[n.a.];
+;[A];Asymmetrische Blockchiffren \ RSA
+
+RbRSA;[n.a.];
+;[A];Asymmetrische Blockchiffren \ RbRSA
+
+RC2_CBC;[n.a.];
+;[A];Blockchiffren \ RC2 \ RC2_CBC
+
+Camellia256_CBC;[n.a.];
+;[A];Blockchiffren \ Camellia \ Camellia256_CBC
+
+Camellia192_CBC;[n.a.];
+;[A];Blockchiffren \ Camellia \ Camellia192_CBC
+
+Camellia128_CBC;[n.a.];
+;[A];Blockchiffren \ Camellia \ Camellia128_CBC
+
+RC6;[n.a.];
+;[A];Blockchiffren \ RC6
+
+RC5;[n.a.];
+;[A];Blockchiffren \ RC5
+
+DESede_CBC;[n.a.];
+;[A];Blockchiffren \ DESede \ DESede_CBC
+
+IDEA_CFB;[n.a.];
+;[A];Blockchiffren \ IDEA \ IDEA_CFB
+
+IDEA_ECB;[n.a.];
+;[A];Blockchiffren \ IDEA \ IDEA_ECB
+
+IDEA_OFB;[n.a.];
+;[A];Blockchiffren \ IDEA \ IDEA_OFB
+
+IDEA_CBC;[n.a.];
+;[A];Blockchiffren \ IDEA \ IDEA_CBC
+
+Shacal;[n.a.];
+;[A];Blockchiffren \ Shacal
+
+Twofish;[n.a.];
+;[A];Blockchiffren \ Twofish
+
+SAFER++;[n.a.];
+;[A];Blockchiffren \ SAFER++
+
+SAFER+;[n.a.];
+;[A];Blockchiffren \ SAFER+
+
+AES128_ECB;[n.a.];
+;[A];Blockchiffren \ Rijndael \ AES \ AES128_ECB
+
+AES256_CFB;[n.a.];
+;[A];Blockchiffren \ Rijndael \ AES \ AES256_CFB
+
+AES192_ECB;[n.a.];
+;[A];Blockchiffren \ Rijndael \ AES \ AES192_ECB
+
+AES256_CBC;[n.a.];
+;[A];Blockchiffren \ Rijndael \ AES \ AES256_CBC
+
+AES128_CBC;[n.a.];
+;[A];Blockchiffren \ Rijndael \ AES \ AES128_CBC
+
+AES128_CFB;[n.a.];
+;[A];Blockchiffren \ Rijndael \ AES \ AES128_CFB
+
+AES192_OFB;[n.a.];
+;[A];Blockchiffren \ Rijndael \ AES \ AES192_OFB
+
+AES192_CFB;[n.a.];
+;[A];Blockchiffren \ Rijndael \ AES \ AES192_CFB
+
+AES256_OFB;[n.a.];
+;[A];Blockchiffren \ Rijndael \ AES \ AES256_OFB
+
+AES128_OFB;[n.a.];
+;[A];Blockchiffren \ Rijndael \ AES \ AES128_OFB
+
+AES256_ECB;[n.a.];
+;[A];Blockchiffren \ Rijndael \ AES \ AES256_ECB
+
+AES192_CBC;[n.a.];
+;[A];Blockchiffren \ Rijndael \ AES \ AES192_CBC
+
+Shacal2;[n.a.];
+;[A];Blockchiffren \ Shacal2
+
+Serpent192_CBC;[n.a.];
+;[A];Blockchiffren \ Serpent \ Serpent192_CBC
+
+Serpent192_CFB;[n.a.];
+;[A];Blockchiffren \ Serpent \ Serpent192_CFB
+
+Serpent128_OFB;[n.a.];
+;[A];Blockchiffren \ Serpent \ Serpent128_OFB
+
+Serpent256_ECB;[n.a.];
+;[A];Blockchiffren \ Serpent \ Serpent256_ECB
+
+Serpent256_OFB;[n.a.];
+;[A];Blockchiffren \ Serpent \ Serpent256_OFB
+
+Serpent256_CFB;[n.a.];
+;[A];Blockchiffren \ Serpent \ Serpent256_CFB
+
+Serpent128_ECB;[n.a.];
+;[A];Blockchiffren \ Serpent \ Serpent128_ECB
+
+Serpent192_OFB;[n.a.];
+;[A];Blockchiffren \ Serpent \ Serpent192_OFB
+
+Serpent192_ECB;[n.a.];
+;[A];Blockchiffren \ Serpent \ Serpent192_ECB
+
+Serpent128_CBC;[n.a.];
+;[A];Blockchiffren \ Serpent \ Serpent128_CBC
+
+Serpent128_CFB;[n.a.];
+;[A];Blockchiffren \ Serpent \ Serpent128_CFB
+
+Serpent256_CBC;[n.a.];
+;[A];Blockchiffren \ Serpent \ Serpent256_CBC
+
+MARS;[n.a.];
+;[A];Blockchiffren \ MARS
+
+Misty1;[n.a.];
+;[A];Blockchiffren \ Misty1
+
+ECIES;[n.a.];
+;[A];Hybride Verschlüsselung \ ECIES
+
+McElieceFujisakiCipher;[n.a.];
+;[A];Hybride Verschlüsselung \ McElieceFujisakiCipher
+
+McElieceKobaraImaiCipher;[n.a.];
+;[A];Hybride Verschlüsselung \ McElieceKobaraImaiCipher
+
+CmacAES128;[n.a.];
+;[A];Authentifizierungscodes \ CMac \ CmacAES128
+
+CmacAES192;[n.a.];
+;[A];Authentifizierungscodes \ CMac \ CmacAES192
+
+CmacDESede;[n.a.];
+;[A];Authentifizierungscodes \ CMac \ CmacDESede
+
+CmacAES256;[n.a.];
+;[A];Authentifizierungscodes \ CMac \ CmacAES256
+
+HmacTiger;[n.a.];
+;[A];Authentifizierungscodes \ HMac \ HmacTiger
+
+HmacMD5;[n.a.];
+;[A];Authentifizierungscodes \ HMac \ HmacMD5
+
+HmacFORK256;[n.a.];
+;[A];Authentifizierungscodes \ HMac \ HmacFORK256
+
+HmacSHA512;[n.a.];
+;[A];Authentifizierungscodes \ HMac \ HmacSHA512
+
+HmacSHA1;[n.a.];
+;[A];Authentifizierungscodes \ HMac \ HmacSHA1
+
+HmacSHA224;[n.a.];
+;[A];Authentifizierungscodes \ HMac \ HmacSHA224
+
+HmacMD4;[n.a.];
+;[A];Authentifizierungscodes \ HMac \ HmacMD4
+
+HmacRIPEMD256;[n.a.];
+;[A];Authentifizierungscodes \ HMac \ HmacRIPEMD256
+
+HmacSHA256;[n.a.];
+;[A];Authentifizierungscodes \ HMac \ HmacSHA256
+
+HmacRIPEMD128;[n.a.];
+;[A];Authentifizierungscodes \ HMac \ HmacRIPEMD128
+
+HmacSHA384;[n.a.];
+;[A];Authentifizierungscodes \ HMac \ HmacSHA384
+
+HmacRIPEMD160;[n.a.];
+;[A];Authentifizierungscodes \ HMac \ HmacRIPEMD160
+
+HmacDHA256;[n.a.];
+;[A];Authentifizierungscodes \ HMac \ HmacDHA256
+
+HmacRIPEMD320;[n.a.];
+;[A];Authentifizierungscodes \ HMac \ HmacRIPEMD320
+
+CBCmacSerpent;[n.a.];
+;[A];Authentifizierungscodes \ CBCMac \ CBCmacSerpent
+
+CBCmacRC5;[n.a.];
+;[A];Authentifizierungscodes \ CBCMac \ CBCmacRC5
+
+CBCmacAES256;[n.a.];
+;[A];Authentifizierungscodes \ CBCMac \ CBCmacAES256
+
+CBCmacRC6;[n.a.];
+;[A];Authentifizierungscodes \ CBCMac \ CBCmacRC6
+
+CBCmacRC2;[n.a.];
+;[A];Authentifizierungscodes \ CBCMac \ CBCmacRC2
+
+CBCmacIDEA;[n.a.];
+;[A];Authentifizierungscodes \ CBCMac \ CBCmacIDEA
+
+CBCmacMisty1;[n.a.];
+;[A];Authentifizierungscodes \ CBCMac \ CBCmacMisty1
+
+CBCmacAES192;[n.a.];
+;[A];Authentifizierungscodes \ CBCMac \ CBCmacAES192
+
+CBCmacMARS;[n.a.];
+;[A];Authentifizierungscodes \ CBCMac \ CBCmacMARS
+
+CBCmacCamellia;[n.a.];
+;[A];Authentifizierungscodes \ CBCMac \ CBCmacCamellia
+
+CBCmacSAFER+;[n.a.];
+;[A];Authentifizierungscodes \ CBCMac \ CBCmacSAFER+
+
+CBCmacDESede;[n.a.];
+;[A];Authentifizierungscodes \ CBCMac \ CBCmacDESede
+
+CBCmacTwofish;[n.a.];
+;[A];Authentifizierungscodes \ CBCMac \ CBCmacTwofish
+
+CBCmacShacal;[n.a.];
+;[A];Authentifizierungscodes \ CBCMac \ CBCmacShacal
+
+CBCmacShacal2;[n.a.];
+;[A];Authentifizierungscodes \ CBCMac \ CBCmacShacal2
+
+CBCmacAES128;[n.a.];
+;[A];Authentifizierungscodes \ CBCMac \ CBCmacAES128
+
+CBCmacSAFER++;[n.a.];
+;[A];Authentifizierungscodes \ CBCMac \ CBCmacSAFER++
+
+TwoTrackMac160;[n.a.];
+;[A];Authentifizierungscodes \ TwoTrackMac \ TwoTrackMac160
+
+TwoTrackMac64;[n.a.];
+;[A];Authentifizierungscodes \ TwoTrackMac \ TwoTrackMac64
+
+TwoTrackMac32;[n.a.];
+;[A];Authentifizierungscodes \ TwoTrackMac \ TwoTrackMac32
+
+TwoTrackMac96;[n.a.];
+;[A];Authentifizierungscodes \ TwoTrackMac \ TwoTrackMac96
+
+TTmac128;[n.a.];
+;[A];Authentifizierungscodes \ TwoTrackMac \ TTmac128
+
+RIPEMD320;[n.a.];
+;[A];Hash-Funktionen \ RIPEMD320
+
+SHA384;[n.a.];
+;[A];Hash-Funktionen \ SHA384
+
+DHA256;[n.a.];
+;[A];Hash-Funktionen \ DHA256
+
+RIPEMD128;[n.a.];
+;[A];Hash-Funktionen \ RIPEMD128
+
+VSH;[n.a.];
+;[A];Hash-Funktionen \ VSH
+
+MD5;[n.a.];
+;[A];Hash-Funktionen \ MD5
+
+SHA224;[n.a.];
+;[A];Hash-Funktionen \ SHA224
+
+SHA1;[n.a.];
+;[A];Hash-Funktionen \ SHA1
+
+RIPEMD160;[n.a.];
+;[A];Hash-Funktionen \ RIPEMD160
+
+SHA256;[n.a.];
+;[A];Hash-Funktionen \ SHA256
+
+FORK256;[n.a.];
+;[A];Hash-Funktionen \ FORK256
+
+Tiger;[n.a.];
+;[A];Hash-Funktionen \ Tiger
+
+MD4;[n.a.];
+;[A];Hash-Funktionen \ MD4
+
+SHA512;[n.a.];
+;[A];Hash-Funktionen \ SHA512
+
+RIPEMD256;[n.a.];
+;[A];Hash-Funktionen \ RIPEMD256
+
+PbeWithSHAAnd40BitRC2_CBC;[n.a.];
+;[A];Passwortbasierte Chiffren \ PbeWithSHAAnd40BitRC2_CBC
+
+PBES2;[n.a.];
+;[A];Passwortbasierte Chiffren \ PBES2
+
+PbeWithSHAAnd3_KeyTripleDES_CBC;[n.a.];
+;[A];Passwortbasierte Chiffren \ PbeWithSHAAnd3_KeyTripleDES_CBC
+
+PbeWithSHA1AndDES_CBC;[n.a.];
+;[A];Passwortbasierte Chiffren \ PbeWithSHA1AndDES_CBC
+
+PbeWithMD5AndDES_CBC;[n.a.];
+;[A];Passwortbasierte Chiffren \ PbeWithMD5AndDES_CBC
+
+SHA1PRNG;[n.a.];
+;[A];Pseudo-Zufallszahlengeneratoren \ SHA1PRNG
+
+BBSRandom;[n.a.];
+;[A];Pseudo-Zufallszahlengeneratoren \ BBSRandom
+
+ECPRNG;[n.a.];
+;[A];Pseudo-Zufallszahlengeneratoren \ ECPRNG
+
+SHA1/ECNR;[n.a.];
+;[A];Signaturen \ SHA1/ECNR
+
+RprimeRSA;[n.a.];
+;[A];Signaturen \ RprimeRSA
+
+RIPEMD160/RSA;[n.a.];
+;[A];Signaturen \ RSASignaturePKCS1v15 \ RIPEMD160/RSA
+
+SHA384withRSA;[n.a.];
+;[A];Signaturen \ RSASignaturePKCS1v15 \ SHA384withRSA
+
+SHA1/RSA/RAW;[n.a.];
+;[A];Signaturen \ RSASignaturePKCS1v15 \ SHA1/RSA/RAW
+
+SHA512withRSA;[n.a.];
+;[A];Signaturen \ RSASignaturePKCS1v15 \ SHA512withRSA
+
+SHA384/RSA/RAW;[n.a.];
+;[A];Signaturen \ RSASignaturePKCS1v15 \ SHA384/RSA/RAW
+
+MD5withRSA;[n.a.];
+;[A];Signaturen \ RSASignaturePKCS1v15 \ MD5withRSA
+
+SHA224/RSA;[n.a.];
+;[A];Signaturen \ RSASignaturePKCS1v15 \ SHA224/RSA
+
+SHA256withRSA;[n.a.];
+;[A];Signaturen \ RSASignaturePKCS1v15 \ SHA256withRSA
+
+SHA1/RSA;[n.a.];
+;[A];Signaturen \ RSASignaturePKCS1v15 \ SHA1/RSA
+
+MD5/RSA/RAW;[n.a.];
+;[A];Signaturen \ RSASignaturePKCS1v15 \ MD5/RSA/RAW
+
+SHA512/RSA/RAW;[n.a.];
+;[A];Signaturen \ RSASignaturePKCS1v15 \ SHA512/RSA/RAW
+
+SHA224/RSA/RAW;[n.a.];
+;[A];Signaturen \ RSASignaturePKCS1v15 \ SHA224/RSA/RAW
+
+RIPEMD160/RSA/RAW;[n.a.];
+;[A];Signaturen \ RSASignaturePKCS1v15 \ RIPEMD160/RSA/RAW
+
+SHA256/RSA/RAW;[n.a.];
+;[A];Signaturen \ RSASignaturePKCS1v15 \ SHA256/RSA/RAW
+
+IQGQ;[n.a.];
+;[A];Signaturen \ IQGQSignature \ IQGQ
+
+RIPEMD160withIQGQ;[n.a.];
+;[A];Signaturen \ IQGQSignature \ RIPEMD160withIQGQ
+
+RAW/DSA;[n.a.];
+;[A];Signaturen \ DSASignature \ RAW/DSA
+
+SHAwithDSA;[n.a.];
+;[A];Signaturen \ DSASignature \ SHAwithDSA
+
+IQDSA;[n.a.];
+;[A];Signaturen \ IQDSASignature \ IQDSA
+
+RIPEMD160withIQDSA;[n.a.];
+;[A];Signaturen \ IQDSASignature \ RIPEMD160withIQDSA
+
+CMSSwithSHA512andWinternitzOTS_1;[n.a.];
+;[A];Signaturen \ CMSSSignature \ CMSSwithSHA512andWinternitzOTS_1
+
+CMSSwithSHA512andWinternitzOTS_3;[n.a.];
+;[A];Signaturen \ CMSSSignature \ CMSSwithSHA512andWinternitzOTS_3
+
+CMSSwithSHA256andWinternitzOTS_4;[n.a.];
+;[A];Signaturen \ CMSSSignature \ CMSSwithSHA256andWinternitzOTS_4
+
+CMSSwithSHA1andWinternitzOTS_1;[n.a.];
+;[A];Signaturen \ CMSSSignature \ CMSSwithSHA1andWinternitzOTS_1
+
+CMSSwithSHA512andWinternitzOTS_2;[n.a.];
+;[A];Signaturen \ CMSSSignature \ CMSSwithSHA512andWinternitzOTS_2
+
+CMSSwithSHA256andWinternitzOTS_3;[n.a.];
+;[A];Signaturen \ CMSSSignature \ CMSSwithSHA256andWinternitzOTS_3
+
+CMSSwithSHA384andWinternitzOTS_3;[n.a.];
+;[A];Signaturen \ CMSSSignature \ CMSSwithSHA384andWinternitzOTS_3
+
+CMSSwithSHA384andWinternitzOTS_4;[n.a.];
+;[A];Signaturen \ CMSSSignature \ CMSSwithSHA384andWinternitzOTS_4
+
+CMSSwithSHA384andWinternitzOTS_2;[n.a.];
+;[A];Signaturen \ CMSSSignature \ CMSSwithSHA384andWinternitzOTS_2
+
+CMSSwithSHA384andWinternitzOTS_1;[n.a.];
+;[A];Signaturen \ CMSSSignature \ CMSSwithSHA384andWinternitzOTS_1
+
+CMSSwithSHA256andWinternitzOTS_1;[n.a.];
+;[A];Signaturen \ CMSSSignature \ CMSSwithSHA256andWinternitzOTS_1
+
+CMSSwithSHA1andWinternitzOTS_4;[n.a.];
+;[A];Signaturen \ CMSSSignature \ CMSSwithSHA1andWinternitzOTS_4
+
+CMSSwithSHA1andWinternitzOTS_2;[n.a.];
+;[A];Signaturen \ CMSSSignature \ CMSSwithSHA1andWinternitzOTS_2
+
+CMSSwithSHA512andWinternitzOTS_4;[n.a.];
+;[A];Signaturen \ CMSSSignature \ CMSSwithSHA512andWinternitzOTS_4
+
+CMSSwithSHA1andWinternitzOTS_3;[n.a.];
+;[A];Signaturen \ CMSSSignature \ CMSSwithSHA1andWinternitzOTS_3
+
+CMSS;[n.a.];
+;[A];Signaturen \ CMSSSignature \ CMSS
+
+IQRDSA;[n.a.];
+;[A];Signaturen \ IQRDSASignature \ IQRDSA
+
+RIPEMD160withIQRDSA;[n.a.];
+;[A];Signaturen \ IQRDSASignature \ RIPEMD160withIQRDSA
+
+RbRSA;[n.a.];
+;[A];Signaturen \ RbRSA
+
+NiederreiterCFS;[n.a.];
+;[A];Signaturen \ NiederreiterCFS
+
+GMSSwithSHA512;[n.a.];
+;[A];Signaturen \ GMSSSignature \ GMSSwithSHA512
+
+GMSSwithSHA1;[n.a.];
+;[A];Signaturen \ GMSSSignature \ GMSSwithSHA1
+
+GMSSwithSHA224;[n.a.];
+;[A];Signaturen \ GMSSSignature \ GMSSwithSHA224
+
+GMSSwithSHA256;[n.a.];
+;[A];Signaturen \ GMSSSignature \ GMSSwithSHA256
+
+GMSSwithSHA384;[n.a.];
+;[A];Signaturen \ GMSSSignature \ GMSSwithSHA384
+
+SHA1/ECDSA;[n.a.];
+;[A];Signaturen \ ECDSASignature \ SHA1/ECDSA
+
+SHA512/ECDSA;[n.a.];
+;[A];Signaturen \ ECDSASignature \ SHA512/ECDSA
+
+RawECDSA;[n.a.];
+;[A];Signaturen \ ECDSASignature \ RawECDSA
+
+SHA224/ECDSA;[n.a.];
+;[A];Signaturen \ ECDSASignature \ SHA224/ECDSA
+
+SHA256/ECDSA;[n.a.];
+;[A];Signaturen \ ECDSASignature \ SHA256/ECDSA
+
+SHA384/ECDSA;[n.a.];
+;[A];Signaturen \ ECDSASignature \ SHA384/ECDSA
+
+SSL_MD5andSHA1withRSA;[n.a.];
+;[A];Signaturen \ SSL_MD5andSHA1withRSA
+
+MerkleOTSwithSHA512;[n.a.];
+;[A];Signaturen \ MerkleOTSSignature \ MerkleOTSwithSHA512
+
+MerkleOTSwithSHA384;[n.a.];
+;[A];Signaturen \ MerkleOTSSignature \ MerkleOTSwithSHA384
+
+MerkleOTSwithSHA1;[n.a.];
+;[A];Signaturen \ MerkleOTSSignature \ MerkleOTSwithSHA1
+
+MerkleOTSwithSHA256;[n.a.];
+;[A];Signaturen \ MerkleOTSSignature \ MerkleOTSwithSHA256
+
+ADFGVX;[n.a.];
+;[D];Algorithmen \ Klassisch \ ADFGVX
+
+Autokey-Vigenère;[n.a.];
+;[D];Algorithmen \ Klassisch \ Autokey-Vigenère
+
+Caesar;[n.a.];
+;[D];Algorithmen \ Klassisch \ Caesar
+
+Bifid;[n.a.];
+;[D];Algorithmen \ Klassisch \ Bifid
+
+Doppelkasten;[n.a.];
+;[D];Algorithmen \ Klassisch \ Doppelkasten
+
+Playfair;[n.a.];
+;[D];Algorithmen \ Klassisch \ Playfair
+
+Substitution;[n.a.];
+;[D];Algorithmen \ Klassisch \ Substitution
+
+Transposition;[n.a.];
+;[D];Algorithmen \ Klassisch \ Transposition
+
+Vigenère;[n.a.];
+;[D];Algorithmen \ Klassisch \ Vigenère
+
+XOR;[n.a.];
+;[D];Algorithmen \ Klassisch \ XOR
+
+RSA;[n.a.];
+;[D];Algorithmen \ Asymmetrisch \ RSA
+
+MD5;[n.a.];
+;[D];Algorithmen \ Hash \ MD5
+
+AES;[n.a.];
+;[D];Algorithmen \ Symmetrisch \ AES
+
+SHA-256;[n.a.];
+;[D];Algorithmen \ Hash \ SHA-256
+
+RC6;[n.a.];
+;[D];Algorithmen \ Symmetrisch \ RC6
+
+IDEA;[n.a.];
+;[D];Algorithmen \ Symmetrisch \ IDEA
+
+DSA;[n.a.];
+;[D];Algorithmen \ Signatur \ DSA
+
+ElGamal;[n.a.];
+;[D];Algorithmen \ Asymmetrisch \ ElGamal
+
+HMacMD5;[n.a.];
+;[D];Algorithmen \ MAC \ HMacMD5
+
+SHA-1;[n.a.];
+;[D];Algorithmen \ Zufallszahlengenerator \ SHA-1
+
+SHA-3-Kandidaten;[n.a.];
+;[D];Algorithmen \ Hash \ SHA-3-Kandidaten
+
+ARC4/Spritz;[n.a.];
+;[D];Algorithmen \ Symmetrisch \ ARC4/Spritz
+
+Dragon;[n.a.];
+;[D];Algorithmen \ Symmetrisch \ Dragon
+
+LFSR;[n.a.];
+;[D];Algorithmen \ Symmetrisch \ LFSR
+
+Entropie-Analyse;[n.a.];
+;[D];Analysen \ Entropie-Analyse
+
+Fleißner-Grille-Analyse;[n.a.];
+;[D];Analysen \ Fleißner-Grille-Analyse
+
+Häufigkeits-Analyse;[n.a.];
+;[D];Analysen \ Häufigkeits-Analyse
+
+Friedman-Test;[n.a.];
+;[D];Analysen \ Friedman-Test
+
+Substitutions-Analyse;[n.a.];
+;[D];Analysen \ Substitutions-Analyse
+
+Transpositions-Analyse;[n.a.];
+;[D];Analysen \ Transpositions-Analyse
+
+Vigenère-Breaker;[n.a.];
+;[D];Analysen \ Vigenère-Breaker
+
+Viterbi-Analyse;[n.a.];
+;[D];Analysen \ Viterbi-Analyse
+
+Teilerspiel;[n.a.];
+;[D];Spiele \ Teilerspiel
+
+Zahlenhai;[n.a.];
+;[D];Spiele \ Zahlenhai
+
+Zudo-Ku;[n.a.];
+;[D];Spiele \ Zudo-Ku
+
+Mehrparteien-Schlüsselaustausch (BD II);[n.a.];
+;[D];Visualisierungen \ Mehrparteien-Schlüsselaustausch (BD II)
+
+Ameisenkolonie-Optimierung (ACO);[n.a.];
+;[D];Visualisierungen \ Ameisenkolonie-Optimierung (ACO)
+
+ARC4 / Spritz;[n.a.];
+;[D];Visualisierungen \ ARC4 / Spritz
+
+Android-Mustersperre (AUP);[n.a.];
+;[D];Visualisierungen \ Android-Mustersperre (AUP)
+
+Shanks Babystep-Giantstep;[n.a.];
+;[D];Visualisierungen \ Shanks Babystep-Giantstep
+
+Chinesischer Restsatz (CRT);[n.a.];
+;[D];Visualisierungen \ Chinesischer Restsatz (CRT)
+
+Zertifikat-Verifikation;[n.a.];
+;[D];Visualisierungen \ Zertifikat-Verifikation
+
+Innere Zustände im Data Encryption Standard (DES);[n.a.];
+;[D];Visualisierungen \ Innere Zustände im Data Encryption Standard (DES)
+
+Elliptische-Kurven-Berechnungen;[n.a.];
+;[D];Visualisierungen \ Elliptische-Kurven-Berechnungen
+
+Diffie-Hellman Schlüsselaustausch (EC);[n.a.];
+;[D];Visualisierungen \ Diffie-Hellman Schlüsselaustausch (EC)
+
+McEliece-Kryptosystem;[n.a.];
+;[D];Visualisierungen \ McEliece-Kryptosystem
+
+Erweiterter Euklid / Wechselwegnahme;[n.a.];
+;[D];Visualisierungen \ Erweiterter Euklid / Wechselwegnahme
+
+Erweitertes RSA-Kryptosystem;[n.a.];
+;[D];Visualisierungen \ Erweitertes RSA-Kryptosystem
+
+Hash-Sensitivität;[n.a.];
+;[D];Visualisierungen \ Hash-Sensitivität
+
+Homomorphe Verschlüsselung (HE);[n.a.];
+;[D];Visualisierungen \ Homomorphe Verschlüsselung (HE)
+
+Huffman-Kodierung;[n.a.];
+;[D];Visualisierungen \ Huffman-Kodierung
+
+Public-Key-Infrastruktur;[n.a.];
+;[D];Visualisierungen \ Public-Key-Infrastruktur
+
+Kleptographie;[n.a.];
+;[D];Visualisierungen \ Kleptographie
+
+Merkle-Hellman Rucksack-Verschlüsselung;[n.a.];
+;[D];Visualisierungen \ Merkle-Hellman Rucksack-Verschlüsselung
+
+Merkle-Signaturen (XMSS^MT);[n.a.];
+;[D];Visualisierungen \ Merkle-Signaturen (XMSS^MT)
+
+Multivariate Kryptografie;[n.a.];
+;[D];Visualisierungen \ Multivariate Kryptografie
+
+Redactable Signature Schemes (RSS);[n.a.];
+;[D];Visualisierungen \ Redactable Signature Schemes (RSS)
+
+Shamirs Secret Sharing;[n.a.];
+;[D];Visualisierungen \ Shamirs Secret Sharing
+
+Simple Power Analysis / Square and Multiply;[n.a.];
+;[D];Visualisierungen \ Simple Power Analysis / Square and Multiply
+
+Signatur-Demo;[n.a.];
+;[D];Visualisierungen \ Signatur-Demo
+
+Signatur-Verifikation;[n.a.];
+;[D];Visualisierungen \ Signatur-Verifikation
+
+SPHINCS-Signatur;[n.a.];
+;[D];Visualisierungen \ SPHINCS-Signatur
+
+SPHINCS+-Signatur;[n.a.];
+;[D];Visualisierungen \ SPHINCS+-Signatur
+
+SSL/TLS-Handshake;[n.a.];
+;[D];Visualisierungen \ SSL/TLS-Handshake
+
+Verifiable-Secret-Sharing;[n.a.];
+;[D];Visualisierungen \ Verifiable-Secret-Sharing
+
+Winternitz Einmal-Signatur (WOTS / WOTS+);[n.a.];
+;[D];Visualisierungen \ Winternitz Einmal-Signatur (WOTS / WOTS+)
+
+Zero-Knowledge: Magische Tür;[n.a.];
+;[D];Visualisierungen \ Zero-Knowledge: Magische Tür
+
+Zero-Knowledge: Fiat-Shamir;[n.a.];
+;[D];Visualisierungen \ Zero-Knowledge: Fiat-Shamir
+
+Zero-Knowledge: Feige-Fiat-Shamir;[n.a.];
+;[D];Visualisierungen \ Zero-Knowledge: Feige-Fiat-Shamir
+
+Zero-Knowledge: Graphenisomorphie;[n.a.];
+;[D];Visualisierungen \ Zero-Knowledge: Graphenisomorphie
+
