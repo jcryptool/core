@@ -139,7 +139,7 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
 						<artifact>
 							<groupId>org.jcryptool</groupId>
 							<artifactId>org.jcryptool.target</artifactId>
-							<version>${product.version}</version>
+							<version>1.0.8</version>
 						</artifact>
 					</target>
                     <!-- <filters> <filter> <type>eclipse-plugin</type> <id>org.eclipse.help.ui</id> <removeAll /> </filter> </filters> -->
