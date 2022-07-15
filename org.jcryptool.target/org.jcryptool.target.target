@@ -19,7 +19,7 @@
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="https://cryptool.org/jct/thirdparty-p2/jre"/>
 		<unit id="org.jcryptool.thirdparty.jre.linux64.feature.feature.group" version="11.0.5.010"/>
-		<!--<unit id="org.jcryptool.thirdparty.jre.macosx.feature.feature.group" version="11.0.5.010"/>-->
+		<unit id="org.jcryptool.thirdparty.jre.macosx.feature.feature.group" version="11.0.5.010"/>
 		<unit id="org.jcryptool.thirdparty.jre.win64.feature.feature.group" version="11.0.5.010"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
