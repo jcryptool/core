@@ -1,84 +1,79 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jcryptool</groupId>
-	<artifactId>org.jcryptool.releng</artifactId>
-  <version>1.0.8</version> <!-- version:this -->
-	<packaging>pom</packaging>
-	<name>JCrypTool</name>
-	<url>https://github.com/jcryptool</url>
-	<description>This is the main (parent) pom file for the JCrypTool product. Execute &quot;mvn clean verify&quot; to generate the JCrypTool release for all supported platforms. Execute the same command with keystore parameters to sign the release.
+<project 
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.jcryptool</groupId>
+    <artifactId>org.jcryptool.releng</artifactId>
+    <version>1.0.8</version>
+    <!-- version:this -->
+    <packaging>pom</packaging>
+    <name>JCrypTool</name>
+    <url>https://github.com/jcryptool</url>
+    <description>
+        This is the main (parent) pom file for the JCrypTool product. Execute &quot;mvn clean verify&quot; to generate the JCrypTool release for all supported platforms. Execute the same command with keystore parameters to sign the release.
 
 Generated artifacts are stored in the &quot;core/org.jcryptool.product/target/products&quot; directory. The categorized p2 repository is generated in &quot;org.jcryptool.product/target/repository&quot;.
 
-Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/core/wiki/Creating-a-new-Release for more information.</description>
-
-	<organization>
-		<name>CrypTool</name>
-		<url>https://www.cryptool.org</url>
-	</organization>
-
-	<licenses>
-		<license>
-			<name>Eclipse Public License (EPL) 1.0</name>
-			<url>http://www.eclipse.org/legal/epl-v10.html</url>
-		</license>
-	</licenses>
-
-	<modules>
-		<module>../../core</module>
-		<module>../../crypto</module>
-	</modules>
-
-	<properties>
-		<tycho.version>2.7.0</tycho.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>11</java.version>
-		<product.id>jcryptool</product.id>
-    <product.version>1.0.8</product.version> <!-- keep this comment--> <!-- version:this -->
-		<timestamp>${maven.build.timestamp}</timestamp>
-		<jct.isStableRelease>false</jct.isStableRelease>
-		<maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
-		<product.file.name></product.file.name>
+Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/core/wiki/Creating-a-new-Release for more information.
+    </description>
+    <organization>
+        <name>CrypTool</name>
+        <url>https://www.cryptool.org</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>Eclipse Public License (EPL) 1.0</name>
+            <url>http://www.eclipse.org/legal/epl-v10.html</url>
+        </license>
+    </licenses>
+    <modules>
+        <module>../../core</module>
+        <module>../../crypto</module>
+    </modules>
+    <properties>
+        <tycho.version>2.7.0</tycho.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>11</java.version>
+        <product.id>jcryptool</product.id>
+        <product.version>1.0.8.1-20220718</product.version>
+        <!-- keep this comment-->
+        <!-- version:this -->
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <jct.isStableRelease>false</jct.isStableRelease>
+        <maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
+        <product.file.name/>
         <relengtarget>${project.basedir}/target</relengtarget>
-	</properties>
-
-
-	<build>
-		<defaultGoal>clean verify</defaultGoal>
-
+    </properties>
+    <build>
+        <defaultGoal>clean verify</defaultGoal>
         <!-- <pluginManagement> -->
         <!--   <plugins> -->
         <!--   </plugins> -->
         <!-- </pluginManagement> -->
         <pluginManagement>
-        <plugins>
-        </plugins>
+            <plugins> </plugins>
         </pluginManagement>
-
-		<plugins>
-
+        <plugins>
             <plugin>
                 <!-- <activation> -->
                 <!--     <property>jct.pluginSourceJarsDir</property> -->
                 <!-- </activation> -->
-              <groupId>org.eclipse.tycho</groupId>
-              <artifactId>tycho-source-plugin</artifactId>
-              <version>${tycho.version}</version>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-source-plugin</artifactId>
+                <version>${tycho.version}</version>
                 <executions>
-                  <execution>
-                    <id>gen-sources</id>
-                    <goals> <goal>plugin-source</goal> </goals>
-                    <phase>${jctbuild.makeSourceJarsPhase}</phase>
-                    <configuration>
-                       <outputDirectory>${jctbuild.makeSourceJarsDir}</outputDirectory>
-                    </configuration>
-                  </execution>
+                    <execution>
+                        <id>gen-sources</id>
+                        <goals>
+                            <goal>plugin-source</goal>
+                        </goals>
+                        <phase>${jctbuild.makeSourceJarsPhase}</phase>
+                        <configuration>
+                            <outputDirectory>${jctbuild.makeSourceJarsDir}</outputDirectory>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
-
             <!-- <plugin> -->
             <!--   <groupId>org.commonjava.maven.plugins</groupId> -->
             <!--   <artifactId>directory-maven-plugin</artifactId> -->
@@ -114,233 +109,217 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
             <!--     </execution> -->
             <!--   </executions> -->
             <!-- </plugin> -->
-
-
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-maven-plugin</artifactId>
-				<version>${tycho.version}</version>
-				<extensions>true</extensions>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-compiler-plugin</artifactId>
-				<version>${tycho.version}</version>
-				<configuration>
-					<useProjectSettings>false</useProjectSettings>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>target-platform-configuration</artifactId>
-				<version>${tycho.version}</version>
-				<configuration>
-					<target>
-						<artifact>
-							<groupId>org.jcryptool</groupId>
-							<artifactId>org.jcryptool.target</artifactId>
-							<version>1.0.8</version>
-						</artifact>
-					</target>
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-maven-plugin</artifactId>
+                <version>${tycho.version}</version>
+                <extensions>true</extensions>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-compiler-plugin</artifactId>
+                <version>${tycho.version}</version>
+                <configuration>
+                    <useProjectSettings>false</useProjectSettings>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>target-platform-configuration</artifactId>
+                <version>${tycho.version}</version>
+                <configuration>
+                    <target>
+                        <artifact>
+                            <groupId>org.jcryptool</groupId>
+                            <artifactId>org.jcryptool.target</artifactId>
+                            <version>1.0.8.1-20220718</version>
+                        </artifact>
+                    </target>
                     <!-- <filters> <filter> <type>eclipse-plugin</type> <id>org.eclipse.help.ui</id> <removeAll /> </filter> </filters> -->
-					<environments>
-						<environment> <os>linux</os> <ws>gtk</ws> <arch>x86_64</arch> </environment>
-						<environment> <os>win32</os> <ws>win32</ws> <arch>x86_64</arch> </environment>
-						<environment> <os>macosx</os> <ws>cocoa</ws> <arch>x86_64</arch> </environment>
-					</environments>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>3.2.0</version>
-				<executions>
-					<execution>
-						<id>timestamp-property</id>
-						<goals>
-							<goal>timestamp-property</goal>
-						</goals>
-						<phase>validate</phase>
-						<configuration>
-							<name>current.year</name>
-							<pattern>yyyy</pattern>
-							<locale>en_EN</locale>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
-
-  <profiles>
-
-		<profile>
-			<id>makeStrictTargetP2</id>
-      <activation>
-        <property><name>jctbuild.makeStrictTargetP2Dir</name></property>
-      </activation>
-			<properties>
-        <jctbuild.makeStrictTargetP2Phase>package</jctbuild.makeStrictTargetP2Phase>
-			</properties>
-		</profile>
-
-		<profile>
-			<id>makeTargetP2</id>
-      <activation>
-        <property><name>jctbuild.makeTargetP2Dir</name></property>
-      </activation>
-			<properties>
-        <jctbuild.makeTargetP2Phase>package</jctbuild.makeTargetP2Phase>
-			</properties>
-		</profile>
-
-		<profile>
-			<id>makeSourceJars</id>
-      <activation>
-        <property><name>jctbuild.makeSourceJarsDir</name></property>
-      </activation>
-			<properties>
-        <jctbuild.makeSourceJarsPhase>package</jctbuild.makeSourceJarsPhase>
-			</properties>
-		</profile>
-
-		<profile>
-			<id>dev-minimal</id>
-			<properties>
-				<timestamp>${maven.build.timestamp} (weekly)</timestamp>
-				<jct.isStableRelease>false</jct.isStableRelease>
-				<product.file.name>${maven.build.timestamp}</product.file.name>
+                    <environments>
+                        <environment>
+                            <os>linux</os>
+                            <ws>gtk</ws>
+                            <arch>x86_64</arch>
+                        </environment>
+                        <environment>
+                            <os>win32</os>
+                            <ws>win32</ws>
+                            <arch>x86_64</arch>
+                        </environment>
+                        <environment>
+                            <os>macosx</os>
+                            <ws>cocoa</ws>
+                            <arch>x86_64</arch>
+                        </environment>
+                    </environments>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>timestamp-property</id>
+                        <goals>
+                            <goal>timestamp-property</goal>
+                        </goals>
+                        <phase>validate</phase>
+                        <configuration>
+                            <name>current.year</name>
+                            <pattern>yyyy</pattern>
+                            <locale>en_EN</locale>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>makeStrictTargetP2</id>
+            <activation>
+                <property>
+                    <name>jctbuild.makeStrictTargetP2Dir</name>
+                </property>
+            </activation>
+            <properties>
+                <jctbuild.makeStrictTargetP2Phase>package</jctbuild.makeStrictTargetP2Phase>
+            </properties>
+        </profile>
+        <profile>
+            <id>makeTargetP2</id>
+            <activation>
+                <property>
+                    <name>jctbuild.makeTargetP2Dir</name>
+                </property>
+            </activation>
+            <properties>
+                <jctbuild.makeTargetP2Phase>package</jctbuild.makeTargetP2Phase>
+            </properties>
+        </profile>
+        <profile>
+            <id>makeSourceJars</id>
+            <activation>
+                <property>
+                    <name>jctbuild.makeSourceJarsDir</name>
+                </property>
+            </activation>
+            <properties>
+                <jctbuild.makeSourceJarsPhase>package</jctbuild.makeSourceJarsPhase>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev-minimal</id>
+            <properties>
+                <timestamp>${maven.build.timestamp} (weekly)</timestamp>
+                <jct.isStableRelease>false</jct.isStableRelease>
+                <product.file.name>${maven.build.timestamp}</product.file.name>
                 <!-- <jctbuild.makeP2Phase>package</jctbuild.makeP2Phase> -->
                 <!-- <jctbuild.archiveP2Phase>none</jctbuild.archiveP2Phase> -->
                 <jctbuild.makeProductsPhase>none</jctbuild.makeProductsPhase>
                 <jctbuild.archiveProductsPhase>none</jctbuild.archiveProductsPhase>
                 <jctbuild.renameFileAfterPackagePhase>none</jctbuild.renameFileAfterPackagePhase>
-			</properties>
-		</profile>
-
-		<profile>
-			<id>weekly</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<timestamp>${maven.build.timestamp} (weekly)</timestamp>
-				<jct.isStableRelease>false</jct.isStableRelease>
-				<product.file.name>${maven.build.timestamp}</product.file.name>
+            </properties>
+        </profile>
+        <profile>
+            <id>weekly</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <timestamp>${maven.build.timestamp} (weekly)</timestamp>
+                <jct.isStableRelease>false</jct.isStableRelease>
+                <product.file.name>${maven.build.timestamp}</product.file.name>
                 <jctbuild.makeSourceJarsPhase>none</jctbuild.makeSourceJarsPhase>
                 <!-- <jctbuild.makeP2Phase>package</jctbuild.makeP2Phase> -->
                 <!-- <jctbuild.archiveP2Phase>package</jctbuild.archiveP2Phase> -->
                 <jctbuild.makeProductsPhase>package</jctbuild.makeProductsPhase>
                 <jctbuild.archiveProductsPhase>package</jctbuild.archiveProductsPhase>
                 <jctbuild.renameFileAfterPackagePhase>package</jctbuild.renameFileAfterPackagePhase>
-			</properties>
-		</profile>
-
-		<profile>
-			<!-- default build creates the weekly build, to create a release use: mvn clean package -P release -->
-			<id>release</id>
-			<properties>
-			<!--  by adding something between <timestamp> and </timestamp> you can adjust the name of the JCrypTool -->
-				<timestamp>${maven.build.timestamp} (stable)</timestamp>
-				<jct.isStableRelease>true</jct.isStableRelease>
-				<product.file.name>${product.version}</product.file.name>
+            </properties>
+        </profile>
+        <profile>
+            <!-- default build creates the weekly build, to create a release use: mvn clean package -P release -->
+            <id>release</id>
+            <properties>
+                <!--  by adding something between <timestamp> and </timestamp> you can adjust the name of the JCrypTool -->
+                <timestamp>${maven.build.timestamp} (stable)</timestamp>
+                <jct.isStableRelease>true</jct.isStableRelease>
+                <product.file.name>${product.version}</product.file.name>
                 <jctbuild.makeSourceJarsPhase>none</jctbuild.makeSourceJarsPhase>
                 <!-- <jctbuild.makeP2Phase>package</jctbuild.makeP2Phase> -->
                 <!-- <jctbuild.archiveP2Phase>package</jctbuild.archiveP2Phase> -->
                 <jctbuild.makeProductsPhase>package</jctbuild.makeProductsPhase>
                 <jctbuild.archiveProductsPhase>package</jctbuild.archiveProductsPhase>
                 <jctbuild.renameFileAfterPackagePhase>package</jctbuild.renameFileAfterPackagePhase>
-			</properties> 
-		</profile>
-
-		<profile>
-			<!-- release is only signed if jcryptool.keystore is given as runtime 
+            </properties>
+        </profile>
+        <profile>
+            <!-- release is only signed if jcryptool.keystore is given as runtime 
 				parameter (more parameters are required): mvn clean package -Djcryptool.keystore=[path 
 				to jks file] -Djcryptool.alias=[key alias] -Djcryptool.storepass=[store password] 
 				-Djcryptool.keypass=[key password] -->
-			<id>signRelease</id>
-			<activation>
-				<property>
-					<name>jcryptool.keystore</name>
-				</property>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-jarsigner-plugin</artifactId>
-						<version>3.0.0</version>
-						<executions>
-							<execution>
-								<id>sign</id>
-								<goals>
-									<goal>sign</goal>
-								</goals>
-							</execution>
-							<execution>
-								<id>verify</id>
-								<goals>
-									<goal>verify</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<!-- required parameters for signing -->
-							<keystore>${jcryptool.keystore}</keystore>
-							<alias>${jcryptool.alias}</alias>
-							<storepass>${jcryptool.storepass}</storepass>
-							<keypass>${jcryptool.keypass}</keypass>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-
-	</profiles>
-
-	<reporting>
-		<!-- execute with: mvn site -->
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>3.1.1</version>
-			</plugin>
-		</plugins>
-	</reporting>
-	<ciManagement>
-		<system>Travis CI</system>
-		<url>https://travis-ci.org/jcryptool/core</url>
-	</ciManagement>
-	<issueManagement>
-		<system>GitHub</system>
-		<url>https://github.com/jcryptool/core/issues</url>
-	</issueManagement>
-	<scm>
-		<url>https://github.com/jcryptool/core</url>
-		<connection>scm:git:git://github.com/jcryptool/core.git</connection>
-		<developerConnection>scm:git:git@github.com:jcryptool/core.git</developerConnection>
-	</scm>
+            <id>signRelease</id>
+            <activation>
+                <property>
+                    <name>jcryptool.keystore</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jarsigner-plugin</artifactId>
+                        <version>3.0.0</version>
+                        <executions>
+                            <execution>
+                                <id>sign</id>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>verify</id>
+                                <goals>
+                                    <goal>verify</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <!-- required parameters for signing -->
+                            <keystore>${jcryptool.keystore}</keystore>
+                            <alias>${jcryptool.alias}</alias>
+                            <storepass>${jcryptool.storepass}</storepass>
+                            <keypass>${jcryptool.keypass}</keypass>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    <reporting>
+        <!-- execute with: mvn site -->
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>3.1.1</version>
+            </plugin>
+        </plugins>
+    </reporting>
+    <ciManagement>
+        <system>Travis CI</system>
+        <url>https://travis-ci.org/jcryptool/core</url>
+    </ciManagement>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/jcryptool/core/issues</url>
+    </issueManagement>
+    <scm>
+        <url>https://github.com/jcryptool/core</url>
+        <connection>scm:git:git://github.com/jcryptool/core.git</connection>
+        <developerConnection>scm:git:git@github.com:jcryptool/core.git</developerConnection>
+    </scm>
 </project>
-
-<!-- how to echo something -->
-
-            <!-- <plugin> -->
-            <!--   <artifactId>maven-antrun-plugin</artifactId> -->
-            <!--   <version>1.7</version> -->
-            <!--   <executions> -->
-            <!--     <execution> -->
-            <!--       <id>echo</id> -->
-            <!--       <phase>initialize</phase> -->
-            <!--       <goals> -->
-            <!--         <goal>run</goal> -->
-            <!--       </goals> -->
-            <!--       <configuration> -->
-            <!--         <target> -->
-            <!--           <echo>TEEEST: ${relengDir}</echo> -->
-            <!--         </target> -->
-            <!--       </configuration> -->
-            <!--     </execution> -->
-            <!--   </executions> -->
-            <!-- </plugin> -->
-

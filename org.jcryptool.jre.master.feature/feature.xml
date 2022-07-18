@@ -1,20 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<feature id="org.jcryptool.jre.master.feature" label="OpenJDK/JLink JRE Feature" version="1.0.8" provider-name="jcryptool.org"> <description> <!-- keep this in one line --> <!-- version:this -->
-      Aggregates the JRE features from org.jcryptool.thirdparty.jre
-   </description>
-
-   <copyright>
-      No copyright is assumend by JCrypTool nor its maintaines for the JRE. Please refer to the information provided with the individual jre features.
-   </copyright>
-
-   <license>
-      The license under which the OpenJDK JRE is distributed stays untouched. Please refer to the information provided with the individual jre features.
-   </license>
-
-   <includes id="org.jcryptool.thirdparty.jre.linux64.feature" version="11.0.5.010" optional="true" os="linux" ws="gtk" arch="x86_64"/> <!-- version:jre:linux -->
-
-   <includes id="org.jcryptool.thirdparty.jre.win64.feature" version="11.0.5.010" optional="true" os="win32" ws="win32" arch="x86_64"/> <!-- version:jre:windows -->
-
-       <!-- <includes id="org.jcryptool.thirdparty.jre.macosx.feature" version="11.0.5.010" optional="true" os="macosx" ws="cocoa" arch="x86_64"/> --> <!-- version:jre:osx -->
-
+<feature 
+id="org.jcryptool.jre.master.feature" label="OpenJDK/JLink JRE Feature" version="1.0.8" provider-name="jcryptool.org">
+    <description>
+        <!-- keep this in one line -->
+        <!-- version:this -->
+        Aggregates the JRE features from org.jcryptool.thirdparty.jre
+    </description>
+    <copyright>
+        No copyright is assumend by JCrypTool nor its maintaines for the JRE. Please refer to the information provided with the individual jre features.
+    </copyright>
+    <license>
+        The license under which the OpenJDK JRE is distributed stays untouched. Please refer to the information provided with the individual jre features.
+    </license>
+    <includes 
+    id="org.jcryptool.thirdparty.jre.linux64.feature" version="1.0.8.1-20220718" optional="true" os="linux" ws="gtk" arch="x86_64">
+</includes>
+    <!-- version:jre:linux -->
+    <includes 
+    id="org.jcryptool.thirdparty.jre.win64.feature" version="1.0.8.1-20220718" optional="true" os="win32" ws="win32" arch="x86_64">
+</includes>
+    <!-- version:jre:windows -->
+    <!-- <includes id="org.jcryptool.thirdparty.jre.macosx.feature" version="11.0.5.010" optional="true" os="macosx" ws="cocoa" arch="x86_64"/> -->
+    <!-- version:jre:osx -->
 </feature>
