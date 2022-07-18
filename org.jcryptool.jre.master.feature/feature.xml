@@ -13,5 +13,5 @@ id="org.jcryptool.jre.master.feature" label="OpenJDK/JLink JRE Feature" version=
     </license>
     <includes id="org.jcryptool.thirdparty.jre.linux64.feature" version="1.0.8.1-20220718" optional="true" os="linux" ws="gtk" arch="x86_64" />
     <includes id="org.jcryptool.thirdparty.jre.win64.feature" version="1.0.8.1-20220718" optional="true" os="win32" ws="win32" arch="x86_64" />
-    <includes id="org.jcryptool.thirdparty.jre.macosx.feature" version="11.0.5.010" optional="true" os="macosx" ws="cocoa" arch="x86_64"/>
+    <!-- <includes id="org.jcryptool.thirdparty.jre.macosx.feature" version="11.0.5.010" optional="true" os="macosx" ws="cocoa" arch="x86_64"/> -->
 </feature>
