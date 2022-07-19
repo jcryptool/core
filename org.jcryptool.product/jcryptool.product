@@ -1,5 +1,5 @@
 <product 
-name="JCrypTool" uid="jcryptool" id="org.jcryptool.core.product" application="org.jcryptool.core.application" version="1.0.8.2-20220719" useFeatures="true" includeLaunchers="true">
+name="JCrypTool" uid="jcryptool" id="org.jcryptool.core.product" application="org.jcryptool.core.application" version="1.0.8.3-20220719" useFeatures="true" includeLaunchers="true">
     <!-- version:this -->
     <aboutInfo>
         <image path="/org.jcryptool.core/icons/about_dialog.gif"/>
@@ -92,7 +92,7 @@ Agreement more than one year after the cause of action arose. Each party waives 
     <features>
         <feature id="org.jcryptool.core.dependencies.feature"/>
         <feature id="org.jcryptool.core.dependencies.nl_de.feature"/>
-        <feature id="org.jcryptool.core.feature" version="1.0.8.2-20220719"/>
+        <feature id="org.jcryptool.core.feature" version="1.0.8.3-20220719"/>
         <feature id="org.jcryptool.views.feature"/>
         <feature id="org.jcryptool.crypto.feature"/>
         <feature id="org.jcryptool.providers.feature"/>
