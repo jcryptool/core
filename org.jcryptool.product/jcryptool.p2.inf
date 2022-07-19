@@ -4,8 +4,8 @@ instructions.configure=\
     org.eclipse.equinox.p2.touchpoint.natives.remove(path:${installFolder}/eclipsec.exe);\
     org.eclipse.equinox.p2.touchpoint.natives.remove(path:${installFolder}/epl-v10.html);\
     org.eclipse.equinox.p2.touchpoint.natives.remove(path:${installFolder}/notice.html);\
-    org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(type:0,location:https${#58}//cryptool.org/jct/update_weekly,name:JCrypToolUpdate);\
-    org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(type:1,location:https${#58}//cryptool.org/jct/update_weekly,name:JCrypToolUpdate);
+    org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(type:0,location:file{#58}///tmp/jctupdatesite,name:JCrypToolUpdate);\
+    org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(type:1,location:file{#58}///tmp/jctupdatesite,name:JCrypToolUpdate);
 
 
 instructions.install=mkdir(path:${installFolder}/dropins);
