@@ -17,5 +17,5 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
             </resource>
         </resources>
     </build>
-    <version>1.0.8.11-20220728</version>
+    <version>1.0.8.12-20220728</version>
 </project>
