@@ -59,6 +59,7 @@ public class ServerStartup implements IStartup {
 	
 	@Override
 	public void earlyStartup() {
+    System.out.println("Hello World 1");
 		StartupParsed helpAtStartupParsed = StartupParsed.parse();
 
 		if (helpAtStartupParsed.activated) {
