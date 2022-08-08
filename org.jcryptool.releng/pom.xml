@@ -35,7 +35,7 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
         <product.id>jcryptool</product.id>
-        <product.version>1.0.8.16-20220802</product.version>
+        <product.version>1.0.8.17-20220808</product.version>
         <!-- keep this comment-->
         <!-- version:this -->
         <timestamp>${maven.build.timestamp}</timestamp>

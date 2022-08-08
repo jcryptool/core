@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jcryptool.core;singleton:=true
-Bundle-Version: 1.0.8.16-20220802
+Bundle-Version: 1.0.8.17-20220808
 Bundle-Activator: org.jcryptool.core.CorePlugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
