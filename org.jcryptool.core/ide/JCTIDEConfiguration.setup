@@ -36,6 +36,8 @@
     <setupTask
         xsi:type="setup.p2:P2Task">
       <requirement
+          name="org.eclipse.m2e.sse.ui.feature.feature.group" />
+      <requirement
           name="org.sonatype.tycho.m2e.feature.feature.group" />
       <!-- <requirement -->
       <!--     name="org.jboss.tools.maven.apt.feature.feature.group" -->
