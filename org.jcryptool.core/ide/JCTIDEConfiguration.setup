@@ -13,6 +13,13 @@
   <installation
       name="jctide.installation"
       label="JCTIDE Installation">
+    <setupTask
+        xsi:type="setup.p2:P2Task">
+      <repository
+          url="https://download.eclipse.org/eclipse/updates/4.19"/>
+      <repository
+          url="https://download.eclipse.org/releases/latest/"/>
+    </setupTask>
     <productVersion
         href="index:/org.eclipse.setup#//@productCatalogs[name='org.eclipse.products']/@products[name='epp.package.rcp']/@versions[name='latest']"/>
     <description>The JCTIDE installation provides cool stuff.</description>
@@ -35,19 +42,12 @@
     </setupTask>
     <setupTask
         xsi:type="setup.p2:P2Task">
-      <!-- <requirement -->
-      <!--     name="org.eclipse.m2e.sse.ui.feature.feature.group" /> -->
-      <!-- <requirement -->
-      <!--     name="org.sonatype.tycho.m2e.feature.feature.group" /> -->
-      <!-- <requirement -->
-      <!--     name="org.jboss.tools.maven.apt.feature.feature.group" -->
-      <!--     versionRange="[1.5.3,2.0.0)"/> -->
-      <!-- <repository -->
-      <!--     url="https://repo1.maven.org/maven2/.m2e/connectors/m2eclipse-tycho/0.9.0/N/LATEST/"/> -->
       <repository
           url="https://download.eclipse.org/technology/m2e/releases/latest/"/>
-      <!-- <repository -->
-      <!--     url="https://download.jboss.org/jbosstools/updates/m2e-extensions/m2e-apt/1.5.3-2019-11-08_11-04-22-H22/"/> -->
+      <repository
+          url="https://download.eclipse.org/releases/latest/"/>
+      <repository
+          url="https://download.eclipse.org/eclipse/updates/4.19"/>
     </setupTask>
     <setupTask
         xsi:type="git:GitCloneTask"
