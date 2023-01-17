@@ -1,12 +1,16 @@
 package org.jcryptool.core.help;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -19,6 +23,10 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.NotHandledException;
 import org.eclipse.core.commands.common.NotDefinedException;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
@@ -90,20 +98,94 @@ public class ServerStartup implements IStartup {
 			return new LinkedList<String>();
 		}
 	}
-	public String getURLForId(String id) {
-		return "https://cryptool.org/jct/notifications/messages/" + id + ".html";
+	public static String getURLForId(String id, Optional<String> lang) {
+		return "https://cryptool.org/jct/notifications/messages/" + id + lang.map(l -> "." + l).orElseGet(() -> "") + ".html";
 	}
-	public String getHTMLForId(String id) {
+	public static Optional<String> getContentForURL(String url) {
 		try {
-			var content = readStringFromURL(getURLForId(id));
-			return content;
+			var content = readStringFromURL(url);
+			return Optional.of(content);
 		} catch (IOException e) {
-			return "<div>Failed to fetch message from " + "https://cryptool.org/jct/notifications/messages/" + id + ".html" + "</div>";
+			return Optional.empty();
 		}
 	}
 	
+	public List<String> getSeenMessages() {
+		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(new Path("notifications_seen.txt"));
+		if(! file.exists()) {
+			return new LinkedList<String>();
+		}
+		byte[] content;
+		try {
+			var stream = file.getContents();
+			content = stream.readAllBytes();
+			stream.close();
+		} catch (IOException | CoreException e) {
+			e.printStackTrace();
+			return new LinkedList<String>();
+		} 
+		List<String> contentLines = new String(content, StandardCharsets.UTF_8).lines().filter(l -> ! l.isBlank()).collect(Collectors.toList());
+		return contentLines;
+	}
+	public void writeSeenMessages(List<String> seenMessages) {
+		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(new Path("notifications_seen.txt"));
+		byte[] outBytes = seenMessages.stream().collect(Collectors.joining("\n")).getBytes(StandardCharsets.UTF_8);
+		try {
+			file.setContents(new ByteArrayInputStream(outBytes), false, false, null);
+		} catch (CoreException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static class Notification {
+		public Notification(String id, String channel, Optional<String> enContent, Optional<String> deContent,
+				Optional<String> fallbackContent, boolean critical) {
+			super();
+			this.id = id;
+			this.channel = channel;
+			this.enContent = enContent;
+			this.deContent = deContent;
+			this.fallbackContent = fallbackContent;
+			this.critical = critical;
+		}
+		public String id;
+		public String channel; // "all" or the version
+		public Optional<String> enContent;
+		public Optional<String> deContent;
+		public Optional<String> fallbackContent;
+		public Date date = new Date(2023, 01, 17);
+		public boolean critical = false;
+	}
+	public static int compareNotification(Notification n1, Notification n2) {
+		if(n1 == n2) return 0;
+		if(n1.critical == n2.critical) {
+			return n1.date.compareTo(n2.date);
+		}
+		if(n1.critical) {
+			return -1;
+		}
+		return 1;
+	}
+	public static Optional<Notification> retrieveNotification(String id, String channel) {
+		var enUrl = getURLForId(id, Optional.of("en")); 
+		var deUrl = getURLForId(id, Optional.of("de"));
+		var fallbackUrl = getURLForId(id, Optional.empty());
+		var enContent = getContentForURL(enUrl);
+		var deContent = getContentForURL(deUrl);
+		var fallbackContent = getContentForURL(fallbackUrl);
+		if(! enContent.isPresent() && ! deContent.isPresent() && ! fallbackContent.isPresent()) {
+			return Optional.empty();
+		}
+		return Optional.of( new Notification(id,  channel, enContent, deContent, fallbackContent, false) );
+	}
 	public void notificationChecker() {
 // 		var version = System.getProperty("")
+    	var v1 = Platform.getProduct().getDefiningBundle().getVersion();
+    	var locale = Locale.getDefault().getLanguage();
+    	System.out.println(String.format("DBG: v1=%s, locale=%s", v1, locale));
+    	// output: DBG: v1=1.0.8.24-20221010, locale=en
+		
+		
 		var version = "Weekly-Build--1.0.8.24-20221010";
 		var idsForVersion = getIdsForVersion(version);
 		var idsForAll = getIdsForVersion("all");
@@ -118,39 +200,48 @@ public class ServerStartup implements IStartup {
 			var delayed = new Thread() {
 				public void run() {
 					try {
-						Thread.sleep(5000);
+						Thread.sleep(2000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 					Display.getDefault().asyncExec(new Runnable() {
 						public void run() {
-							var url = getURLForId(unseenMessages.get(0));
-							System.out.println("DBG: opening shell: " + url);
+							var unseenNotificationsForVersion = unseenMessages.stream().map(id -> retrieveNotification(id, version)).flatMap(retrieved -> retrieved.stream()).collect(Collectors.toList()); 
+							var unseenNotificationsForAll = unseenMessages.stream().map(id -> retrieveNotification(id, "all")).flatMap(retrieved -> retrieved.stream()).collect(Collectors.toList()); 
+							var unseenNotifications = new LinkedList<Notification>();
+							unseenNotifications.sort(new Comparator<Notification>() {
+								@Override
+								public int compare(Notification o1, Notification o2) {
+									return compare(o1, o2);
+								}
+							});
 							var display = Display.getDefault();
 							var shell = new Shell(display);
 							shell.setLayout(new GridLayout());
 							var comp = new Composite(shell, SWT.NONE);
 							comp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 							comp.setLayout(new GridLayout());
-							var viewer = new Browser(comp, SWT.NONE);
-							viewer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-							viewer.setUrl(url);
-//							var w = display.getBounds().width / 2;
-//							var h = display.getBounds().height / 2;
-//							var x = display.getBounds().width / 4;
-//							var y = display.getBounds().height / 4;
-//							shell.setBounds(x, y, w, h);
-							shell.setSize(800,600);
-							shell.setText("A notification for users of JCrypTool version " + version);
-							shell.layout();
-// 							shell.pack();
-							shell.open();
-							while (!shell.isDisposed()) {
-								if (! display.isDisposed()) {
-							        if (!display.readAndDispatch()) {
-										display.sleep();
-							        }
-								}
+							if(! unseenNotifications.isEmpty()) {
+								var notificationComposite = new NotificationDisplayComposite(comp);
+								notificationComposite.setNotifications(unseenNotifications);
+								notificationComposite.setNotificationIdx(0);
+	//							var w = display.getBounds().width / 2;
+	//							var h = display.getBounds().height / 2;
+	//							var x = display.getBounds().width / 4;
+	//							var y = display.getBounds().height / 4;
+	//							shell.setBounds(x, y, w, h);
+								shell.setSize(800,600);
+								shell.setText("A notification for users of JCrypTool version " + version);
+								shell.layout();
+	// 							shell.pack();
+								shell.open();
+	//							while (!shell.isDisposed()) {
+	//								if (! display.isDisposed()) {
+	//							        if (!display.readAndDispatch()) {
+	//										display.sleep();
+	//							        }
+	//								}
+	//							}
 							}
 						}
 					});
@@ -164,7 +255,8 @@ public class ServerStartup implements IStartup {
 	public void earlyStartup() {
 		StartupParsed helpAtStartupParsed = StartupParsed.parse();
 
-// 		notificationChecker(); // TODO: reactivate
+ 		notificationChecker(); // TODO: reactivate
+
 		if (helpAtStartupParsed.activated) {
 			Display display = PlatformUI.getWorkbench().getWorkbenchWindows()[0].getShell().getDisplay();
 			display.syncExec(new Runnable() {
