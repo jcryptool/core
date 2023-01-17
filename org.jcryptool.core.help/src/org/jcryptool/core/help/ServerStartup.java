@@ -179,7 +179,7 @@ public class ServerStartup implements IStartup {
 		return Optional.of( new Notification(id,  channel, enContent, deContent, fallbackContent, false) );
 	}
 	public void notificationChecker() {
-// 		var version = System.getProperty("")
+		if(true) return; // TODO: disable
     	var v1 = Platform.getProduct().getDefiningBundle().getVersion();
     	var locale = Locale.getDefault().getLanguage();
     	System.out.println(String.format("DBG: v1=%s, locale=%s", v1, locale));
