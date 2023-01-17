@@ -16,11 +16,11 @@ Details
 =======
 
 - Der "Crypto Explorer" auf der rechten Seite zeigt alle Einträge aus den Menüs 
-  "Algorithmen", "Analysen", "Visualisierungen" und "Spiele".
+  "Algorithmen", "Analysen", "Visualisierungen" und "Spiele" in Form von Tabs.
 
-- Im "Algorithmen"-Tab führt ein Doppelklick zu einem Dialog, welcher Sie durch 
+- Im "Algorithmen"-Tab führt ein Doppelklick zu einem Dialog, der Sie durch 
   den Prozess schrittweise führt.
-- Die meisten Algorithmen erwarten einen geöffneten Editor, welcher als Eingabe 
+- Die meisten Algorithmen erwarten einen geöffneten Editor, dessen Inhalt als Eingabe 
   genommen wird.
 - Visualisierungen und Spiele sind normalerweise unabhängig von offenen Editoren.
 - Der Inhalt eines Editors bleibt unberührt, das Ergebnis wird in einem neuen Tab 

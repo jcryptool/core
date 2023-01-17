@@ -8,13 +8,13 @@ For instance,
 - apply one of the analysis methods in the 'Analysis' menu.
 
 The fast search helps to find 'actions' like particular algorithms,
-analyses, visualizations or games). Open it with the magnifying
+analyses, visualizations or games. Open it with the magnifying
 glass icon in the toolbar, or by pressing "Ctrl+3".
 
 Details
 =======
 - The 'Crypto Explorer' on the right side lists all the items
-  which are also in the menus 'Algorithms', 'Analysis', 'Visuals'
+  as tabs which are also in the menus 'Algorithms', 'Analysis', 'Visuals'
   and 'Games'.
 - A double click on an entry in the 'Algorithms' tab launches
   a wizard which guides you step by step through the process.
