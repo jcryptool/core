@@ -18,7 +18,8 @@
 	</location>
 
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-        <repository location="file:///home/snuc/git/JCT_bumpplat/thirdparty/releng/org.jcryptool.thirdparty.jre.p2/target/repository"/>
+        <repository location="https://cryptool.org/jct/thirdparty-p2/jre"/>
+        <!-- <repository location="file:///home/snuc/git/JCT_bumpplat/thirdparty/releng/org.jcryptool.thirdparty.jre.p2/target/repository"/> -->
 		<unit id="org.jcryptool.thirdparty.jre.linux64.feature.feature.group" version="0.0.0"/>
 		<unit id="org.jcryptool.thirdparty.jre.macosx.feature.feature.group" version="0.0.0"/>
 		<unit id="org.jcryptool.thirdparty.jre.win64.feature.feature.group" version="0.0.0"/>
@@ -30,7 +31,8 @@
 		<unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="0.0.0"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-        <repository location="file:///home/snuc/git/JCT_bumpplat/thirdparty/releng/org.jcryptool.thirdparty.libraries.p2/target/repository"/>
+        <repository location="https://cryptool.org/jct/thirdparty-p2/libraries"/>
+        <!-- <repository location="file:///home/snuc/git/JCT_bumpplat/thirdparty/releng/org.jcryptool.thirdparty.libraries.p2/target/repository"/> -->
 		<unit id="bcpkix" version="1.68.0"/>
 		<unit id="bcprov" version="1.68.0"/>
 
