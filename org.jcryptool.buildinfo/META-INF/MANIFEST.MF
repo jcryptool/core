@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Buildinfo
 Bundle-SymbolicName: org.jcryptool.buildinfo;singleton:=true
-Bundle-Version: 1.0.8.22-20220919
+Bundle-Version: 1.0.8.26-20230127
 Bundle-Activator: rsaelgamal.rcpImpl.RSAActivator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,

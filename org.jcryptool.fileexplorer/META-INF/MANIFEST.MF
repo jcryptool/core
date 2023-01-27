@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jcryptool.fileexplorer;singleton:=true
-Bundle-Version: 1.0.8
+Bundle-Version: 1.0.8.26-20230127
 Bundle-Vendor: %bundleProvider
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
@@ -31,5 +31,7 @@ Export-Package: org.jcryptool.fileexplorer,
  org.jcryptool.fileexplorer.properties,
  org.jcryptool.fileexplorer.tester,
  org.jcryptool.fileexplorer.views,
- org.jcryptool.fileexplorer.views.factories;uses:="org.eclipse.core.filesystem,org.eclipse.jface.resource,org.eclipse.core.runtime"
+ org.jcryptool.fileexplorer.views.factories;uses:="org.eclipse.core.filesystem,
+ org.eclipse.jface.resource,
+ org.eclipse.core.runtime"
 Automatic-Module-Name: org.jcryptool.fileexplorer

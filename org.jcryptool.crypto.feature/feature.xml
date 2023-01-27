@@ -1,23 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<feature id="org.jcryptool.crypto.feature" label="JCrypTool Crypto Feature" version="1.0.8" provider-name="jcryptool.org" plugin="org.jcryptool.core"> <description url="https://github.com/jcryptool/core"> <!-- keep this in one line --> <!-- version:this -->
-      The JCrypTool Crypto Feature contains all general crypto plug-ins of JCrypTool.
-   </description>
-
-   <copyright url="https://github.com/jcryptool/core">
-      Copyright (c) 2011, 2021 JCrypTool Team and Contributors
+<feature 
+id="org.jcryptool.crypto.feature" label="JCrypTool Crypto Feature" version="1.0.8.26-20230127" provider-name="jcryptool.org" plugin="org.jcryptool.core">
+    <description url="https://github.com/jcryptool/core">
+        <!-- keep this in one line -->
+        <!-- version:this -->
+        The JCrypTool Crypto Feature contains all general crypto plug-ins of JCrypTool.
+    </description>
+    <copyright url="https://github.com/jcryptool/core">
+        Copyright (c) 2011, 2021 JCrypTool Team and Contributors
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License
 v1.0 which accompanies this distribution, and is available at
 http://www.eclipse.org/legal/epl-v10.html
 Contributors:
 JCrypTool team and contributors - initial API and implementation
-   </copyright>
-
-   <license url="http://www.eclipse.org/legal/epl-v10.html">
-      Eclipse Public License - v 1.0
+    </copyright>
+    <license url="http://www.eclipse.org/legal/epl-v10.html">
+        Eclipse Public License - v 1.0
 THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS
 ECLIPSE PUBLIC LICENSE (&quot;AGREEMENT&quot;). ANY USE, REPRODUCTION OR
-DISTRIBUTION OF THE PROGRAM CONSTITUTES RECIPIENT&apos;S ACCEPTANCE
+DISTRIBUTION OF THE PROGRAM CONSTITUTES RECIPIENT'S ACCEPTANCE
 OF THIS AGREEMENT.
 1. DEFINITIONS
 &quot;Contribution&quot; means:
@@ -28,8 +29,8 @@ i) changes to the Program, and
 ii) additions to the Program;
 where such changes and/or additions to the Program originate
 from and are distributed by that particular Contributor. A Contribution
-&apos;originates&apos; from a Contributor if it was added to the Program
-by such Contributor itself or anyone acting on such Contributor&apos;s
+'originates' from a Contributor if it was added to the Program
+by such Contributor itself or anyone acting on such Contributor's
 behalf. Contributions do not include additions to the Program
 which: (i) are separate modules of software distributed in conjunction
 with the Program under their own license agreement, and (ii)
@@ -72,7 +73,7 @@ to exercising the rights and licenses granted hereunder, each
 Recipient hereby assumes sole responsibility to secure any other
 intellectual property rights needed, if any. For example, if
 a third party patent license is required to allow Recipient to
-distribute the Program, it is Recipient&apos;s responsibility to acquire
+distribute the Program, it is Recipient's responsibility to acquire
 that license before distributing the Program.
 d) Each Contributor represents that to its knowledge it has sufficient
 copyright rights in its Contribution, if any, to grant the copyright
@@ -134,7 +135,7 @@ For example, a Contributor might include the Program in a commercial
 product offering, Product X. That Contributor is then a Commercial
 Contributor. If that Commercial Contributor then makes performance
 claims, or offers warranties related to Product X, those performance
-claims and warranties are such Commercial Contributor&apos;s responsibility
+claims and warranties are such Commercial Contributor's responsibility
 alone. Under this section, the Commercial Contributor would have
 to defend claims against the other Contributors related to those
 performance claims and warranties, and if a court requires any
@@ -172,16 +173,16 @@ valid and enforceable.
 If Recipient institutes patent litigation against any entity
 (including a cross-claim or counterclaim in a lawsuit) alleging
 that the Program itself (excluding combinations of the Program
-with other software or hardware) infringes such Recipient&apos;s patent(s),
-then such Recipient&apos;s rights granted under Section 2(b) shall
+with other software or hardware) infringes such Recipient's patent(s),
+then such Recipient's rights granted under Section 2(b) shall
 terminate as of the date such litigation is filed.
-All Recipient&apos;s rights under this Agreement shall terminate if
+All Recipient's rights under this Agreement shall terminate if
 it fails to comply with any of the material terms or conditions
 of this Agreement and does not cure such failure in a reasonable
 period of time after becoming aware of such noncompliance. If
-all Recipient&apos;s rights under this Agreement terminate, Recipient
+all Recipient's rights under this Agreement terminate, Recipient
 agrees to cease use and distribution of the Program as soon as
-reasonably practicable. However, Recipient&apos;s obligations under
+reasonably practicable. However, Recipient's obligations under
 this Agreement and any licenses granted by Recipient relating
 to the Program shall continue and survive.
 Everyone is permitted to copy and distribute copies of this Agreement,
@@ -210,24 +211,12 @@ No party to this Agreement will bring a legal action under this
 Agreement more than one year after the cause of action arose.
 Each party waives its rights to a jury trial in any resulting
 litigation.
-   </license>
-
-   <!-- <url> -->
-   <!--    <update label="JCrypTool.org" url="https://www.cryptool.org/jct/update"/> -->
-   <!-- </url> -->
-
-   <plugin
-         id="org.jcryptool.crypto.keystore"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="net.sourceforge.codec"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
+    </license>
+    <!-- <url> -->
+    <!--    <update label="JCrypTool.org" url="https://www.cryptool.org/jct/update"/> -->
+    <!-- </url> -->
+    <plugin 
+    id="org.jcryptool.crypto.keystore" download-size="0" install-size="0" version="1.0.8.26-20230127" unpack="false">
+</plugin>
+    <plugin id="net.sourceforge.codec" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 </feature>

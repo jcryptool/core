@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jcryptool.core.views;singleton:=true
-Bundle-Version: 1.0.8
+Bundle-Version: 1.0.8.26-20230127
 Bundle-Activator: org.jcryptool.core.views.ViewsPlugin
 Bundle-Vendor: %bundleProvider
 Require-Bundle: org.eclipse.core.runtime,
@@ -11,18 +11,17 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.help,
  org.jcryptool.core.util
 Bundle-ActivationPolicy: lazy
-Export-Package: org.jcryptool.core.views;
-  uses:="org.eclipse.jface.viewers,
-   org.eclipse.swt.graphics,
-   org.osgi.framework,
-   org.eclipse.osgi.util,
-   org.eclipse.ui,
-   org.eclipse.ui.part,
-   org.jcryptool.core.operations,
-   org.eclipse.ui.plugin,
-   org.eclipse.jface.resource,
-   org.eclipse.swt.widgets,
-   org.eclipse.core.runtime",
+Export-Package: org.jcryptool.core.views;uses:="org.eclipse.jface.viewers,
+ org.eclipse.swt.graphics,
+ org.osgi.framework,
+ org.eclipse.osgi.util,
+ org.eclipse.ui,
+ org.eclipse.ui.part,
+ org.jcryptool.core.operations,
+ org.eclipse.ui.plugin,
+ org.eclipse.jface.resource,
+ org.eclipse.swt.widgets,
+ org.eclipse.core.runtime",
  org.jcryptool.core.views.content,
  org.jcryptool.core.views.content.palette,
  org.jcryptool.core.views.content.structure,

@@ -1,5 +1,5 @@
 <feature 
-id="org.jcryptool.core.feature" label="JCrypTool Core Feature" version="1.0.8.25-20230118" provider-name="jcryptool.org" plugin="org.jcryptool.core">
+id="org.jcryptool.core.feature" label="JCrypTool Core Feature" version="1.0.8.26-20230127" provider-name="jcryptool.org" plugin="org.jcryptool.core">
     <!-- keep this in one line -->
     <!-- version:this -->
     <description url="https://github.com/jcryptool/core">
@@ -216,21 +216,31 @@ litigation.
     <!-- <url> -->
     <!--     <update label="JCrypTool.org" url="https://www.cryptool.org/jct/update"/> -->
     <!-- </url> -->
-    <plugin id="org.jcryptool.core.nl" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
-    <plugin id="bcprov" download-size="0" install-size="0" version="0.0.0"/>
-    <plugin id="org.jcryptool.core.help" download-size="0" install-size="0" version="1.0.8.25-20230118" unpack="false"/>
-    <plugin id="org.jcryptool.core.logging" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
     <plugin 
-    id="org.jcryptool.core.operations" download-size="0" install-size="0" version="1.0.8.25-20230118" unpack="false">
+    id="org.jcryptool.core.nl" download-size="0" install-size="0" version="1.0.8.26-20230127" fragment="true" unpack="false">
 </plugin>
-    <plugin id="org.jcryptool.core.views" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-    <plugin id="org.jcryptool.core" download-size="0" install-size="0" version="1.0.8.25-20230118" unpack="false"/>
-    <plugin id="org.jcryptool.core.util" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-    <plugin id="org.jcryptool.core.cryptosystem" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-    <plugin id="org.jcryptool.functionlistgen" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+    <plugin id="bcprov" download-size="0" install-size="0" version="0.0.0"/>
+    <plugin id="org.jcryptool.core.help" download-size="0" install-size="0" version="1.0.8.26-20230127" unpack="false"/>
+    <plugin id="org.jcryptool.core.logging" download-size="0" install-size="0" version="1.0.8.26-20230127" unpack="false"/>
+    <plugin 
+    id="org.jcryptool.core.operations" download-size="0" install-size="0" version="1.0.8.26-20230127" unpack="false">
+</plugin>
+    <plugin id="org.jcryptool.core.views" download-size="0" install-size="0" version="1.0.8.26-20230127" unpack="false"/>
+    <plugin id="org.jcryptool.core" download-size="0" install-size="0" version="1.0.8.26-20230127" unpack="false"/>
+    <plugin id="org.jcryptool.core.util" download-size="0" install-size="0" version="1.0.8.26-20230127" unpack="false"/>
+    <plugin 
+    id="org.jcryptool.core.cryptosystem" download-size="0" install-size="0" version="1.0.8.26-20230127" unpack="false">
+</plugin>
+    <plugin 
+    id="org.jcryptool.functionlistgen" download-size="0" install-size="0" version="1.0.8.26-20230127" unpack="false">
+</plugin>
     <plugin id="org.jcryptool.thirdparty.m2bundle.jaxb" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-    <plugin id="org.jcryptool.core.introduction" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-    <plugin id="net.sourceforge.javahexeditor" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+    <plugin 
+    id="org.jcryptool.core.introduction" download-size="0" install-size="0" version="1.0.8.26-20230127" unpack="false">
+</plugin>
+    <plugin 
+    id="net.sourceforge.javahexeditor" download-size="0" install-size="0" version="1.0.8.26-20230127" unpack="false">
+</plugin>
     <plugin id="org.eclipse.ui.views" download-size="0" install-size="0" version="0.0.0"/>
     <plugin id="org.eclipse.ui.ide" download-size="0" install-size="0" version="0.0.0"/>
     <plugin id="org.eclipse.ui.navigator" download-size="0" install-size="0" version="0.0.0"/>
@@ -241,7 +251,9 @@ litigation.
     <plugin id="bcpkix" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
     <plugin id="org.apache.commons.codec" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
     <!-- <plugin id="org.jcryptool.bci" download-size="0" install-size="0" version="0.0.0" unpack="false"/> -->
-    <plugin id="org.jcryptool.core.splitpackages" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+    <plugin 
+    id="org.jcryptool.core.splitpackages" download-size="0" install-size="0" version="1.0.8.26-20230127" unpack="false">
+</plugin>
     <plugin id="com.diffplug.durian.collect" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
     <plugin id="com.diffplug.durian.concurrent" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
     <plugin id="com.diffplug.durian.core" download-size="0" install-size="0" version="0.0.0" unpack="false"/>

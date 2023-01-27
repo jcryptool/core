@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jcryptool.core.help;singleton:=true
-Bundle-Version: 1.0.8.25-20230118
+Bundle-Version: 1.0.8.26-20230127
 Bundle-Vendor: %bundleVendor
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Automatic-Module-Name: org.jcryptool.core.help
