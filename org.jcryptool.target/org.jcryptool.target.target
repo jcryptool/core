@@ -3,21 +3,25 @@
 <target name="JCrypTool RCP" sequenceNumber="40">
 <locations>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="http://download.eclipse.org/releases/2020-09"/>
-		<unit id="org.eclipse.equinox.core.sdk.feature.group" version="3.20.0.v20200828-1034"/>
-		<unit id="org.eclipse.equinox.executable.feature.group" version="3.8.900.v20200819-0940"/>
-		<unit id="org.eclipse.equinox.p2.sdk.feature.group" version="3.11.900.v20200828-0839"/>
-		<unit id="org.eclipse.gef.feature.group" version="3.11.0.201606061308"/>
-		<unit id="org.eclipse.platform.feature.group" version="4.17.0.v20200902-1800"/>
-		<unit id="org.eclipse.platform.source.feature.group" version="4.17.0.v20200902-1800"/>
-		<unit id="org.eclipse.rcp.feature.group" version="4.17.0.v20200902-1800"/>
-		<unit id="org.eclipse.rcp.source.feature.group" version="4.17.0.v20200902-1800"/>
-		<unit id="org.eclipse.rcp.sdk.id" version="4.17.0.I20200902-1800"/>
-		<unit id="org.eclipse.zest.sdk.feature.group" version="1.7.0.201606061308"/>
-		<!-- <unit id="org.eclipse.zest.source.feature.group" version="1.7.0.201606061308"/> -->
+		<repository location="https://download.eclipse.org/releases/2023-03"/>
+
+		<unit id="org.eclipse.equinox.core.sdk.feature.group" version="3.23.700.v20230103-1101"/>
+		<unit id="org.eclipse.equinox.executable.feature.group" version="3.8.2000.v20221201-0912"/>
+		<unit id="org.eclipse.equinox.p2.sdk.feature.group" version="3.11.1900.v20221214-0640"/>
+		<unit id="org.eclipse.gef.feature.group" version="3.15.0.202211301913"/>
+		<unit id="org.eclipse.platform.feature.group" version="4.27.0.v20230104-1800"/>
+		<unit id="org.eclipse.platform.source.feature.group" version="4.27.0.v20230104-1800"/>
+		<unit id="org.eclipse.rcp.feature.group" version="4.27.0.v20230104-1800"/>
+		<unit id="org.eclipse.rcp.source.feature.group" version="4.27.0.v20230104-1800"/>
+		<unit id="org.eclipse.rcp.sdk.id" version="4.27.0.I20230104-1800"/>
+		<unit id="org.eclipse.zest.sdk.feature.group" version="3.15.0.202211301913"/>
+		<unit id='jakarta.servlet-api' version='4.0.0' />
+
 	</location>
+
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="https://cryptool.org/jct/thirdparty-p2/jre"/>
+        <!-- <repository location="file:///home/snuc/sandbox/jct_weekly_ws/thirdparty/releng/org.jcryptool.thirdparty.jre.p2/target/repository"/> -->
 		<unit id="org.jcryptool.thirdparty.jre.linux64.feature.feature.group" version="0.0.0"/>
 		<unit id="org.jcryptool.thirdparty.jre.macosx.feature.feature.group" version="0.0.0"/>
 		<unit id="org.jcryptool.thirdparty.jre.win64.feature.feature.group" version="0.0.0"/>
@@ -28,14 +32,13 @@
 		<unit id="bcprov" version="1.68.0"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="https://download.eclipse.org/technology/babel/update-site/R0.19.0/2021-06/"/>
+		<repository location="https://download.eclipse.org/technology/babel/update-site/latest/"/>
 		<unit id="org.eclipse.babel.nls_datatools_de.feature.group" version="0.0.0"/>
 		<unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="0.0.0"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
         <repository location="https://cryptool.org/jct/thirdparty-p2/m2bundle/"/>
 		<unit id="org.jcryptool.thirdparty.m2bundle.jaxb" version="0.0.1"/>
-
 		<unit id="com.diffplug.durian.collect" version="1.2.0"/>
 		<unit id="com.diffplug.durian.collect.source" version="1.2.0"/>
 		<unit id="com.diffplug.durian.concurrent" version="1.2.0"/>

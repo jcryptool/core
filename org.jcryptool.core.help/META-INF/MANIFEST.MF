@@ -9,14 +9,15 @@ Automatic-Module-Name: org.jcryptool.core.help
 Require-Bundle: org.eclipse.help.webapp,
  org.eclipse.core.runtime,
  org.eclipse.help.webapp,
- javax.servlet,
  org.eclipse.equinox.common,
  org.eclipse.help.base,
+ org.eclipse.jetty.servlet,
  org.eclipse.jetty.server,
  org.eclipse.jetty.util,
  org.eclipse.ui,
  org.jcryptool.core.util,
- org.eclipse.core.resources
+ org.eclipse.core.resources,
+ jakarta.servlet-api
 Bundle-Activator: org.jcryptool.core.help.HelpPlugin
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.core.help

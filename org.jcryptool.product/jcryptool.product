@@ -105,6 +105,7 @@ Agreement more than one year after the cause of action arose. Each party waives 
         <feature id="org.jcryptool.jre.master.feature" version="1.0.8.15-20220802"/>
     </features>
     <configurations>
+        <!-- <plugin id="org.eclipse.equinox.p2.repository" autoStart="true" startLevel="1"/> -->
         <plugin id="org.apache.felix.scr" autoStart="true" startLevel="2"/>
         <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="4"/>
         <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2"/>
