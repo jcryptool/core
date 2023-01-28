@@ -9,7 +9,7 @@ Automatic-Module-Name: org.jcryptool.core.help
 Require-Bundle: org.eclipse.help.webapp,
  org.eclipse.core.runtime,
  org.eclipse.help.webapp,
- javax.servlet,
+ jakarta.servlet-api,
  org.eclipse.equinox.common,
  org.eclipse.help.base,
  org.eclipse.jetty.server,
