@@ -17,37 +17,10 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                 <artifactId>tycho-p2-extras-plugin</artifactId>
                 <version>${tycho.version}</version>
                 <executions>
+
                     <execution>
-                        <id>makeStrictTargetP2</id>
+                        <id>makeStrictTargetP2-platform</id>
                         <phase>${jctbuild.makeStrictTargetP2Phase}</phase>
-                        <goals>
-                            <goal>mirror</goal>
-                        </goals>
-                        <configuration>
-                            <!-- <source> -->
-                            <!--     <repository> -->
-                            <!--         <id>${eclipse-version}</id> -->
-                            <!--         <layout>p2</layout> -->
-                            <!--         <url>http://download.eclipse.org/releases/2020-09</url> -->
-                            <!--     </repository> -->
-                            <!-- </source> -->
-                            <!-- List of IUs to mirror. If omitted, allIUs will be mirrored. -->
-                            <!-- Omitted IU version element means latest version of the IU -->
-                            <targetPlatformAsSource>true</targetPlatformAsSource>
-                            <destination>${jctbuild.makeStrictTargetP2Dir}</destination>
-                            <!-- https://www.eclipse.org/tycho/sitedocs/tycho-extras/tycho-p2-extras-plugin/mirror-mojo.html -->
-                            <!-- see also filter: osgi.os, osgi.ws, osgi.arch -->
-                            <!-- see also <followOnlyFilteredRequirements> -->
-                            <!-- see also <targetPlatformAsSource> (bool)-->
-                            <includePacked>false</includePacked>
-                            <includeOptional>false</includeOptional>
-                            <latestVersionOnly>true</latestVersionOnly>
-                            <!-- TODO: does this work? website says sometimes not-->
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>makeTargetP2</id>
-                        <phase>${jctbuild.makeTargetP2Phase}</phase>
                         <goals>
                             <goal>mirror</goal>
                         </goals>
@@ -56,64 +29,99 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <repository>
                                     <id>${eclipse-version}</id>
                                     <layout>p2</layout>
-                                    <url>http://download.eclipse.org/releases/2020-09</url>
+                                    <url>http://download.eclipse.org/releases/2022-12</url>
                                 </repository>
                             </source>
-                            <!-- List of IUs to mirror. If omitted, allIUs will be mirrored. -->
-                            <!-- Omitted IU version element means latest version of the IU -->
+                            <!-- <targetPlatformAsSource>true</targetPlatformAsSource> -->
                             <ius>
                                 <iu>
                                     <id>org.eclipse.equinox.core.sdk.feature.group</id>
-                                    <version>3.20.0.v20200828-1034</version>
+                                    <version>3.23.600.v20221116-1440</version>
                                 </iu>
                                 <iu>
                                     <id>org.eclipse.equinox.executable.feature.group</id>
-                                    <version>3.8.900.v20200819-0940</version>
+                                    <version>3.8.1900.v20221108-1024</version>
                                 </iu>
                                 <iu>
                                     <id>org.eclipse.equinox.p2.sdk.feature.group</id>
-                                    <version>3.11.900.v20200828-0839</version>
+                                    <version>3.11.1800.v20221117-1044</version>
                                 </iu>
                                 <iu>
                                     <id>org.eclipse.gef.feature.group</id>
-                                    <version>3.11.0.201606061308</version>
+                                    <version>3.15.0.202211301913</version>
                                 </iu>
                                 <iu>
                                     <id>org.eclipse.platform.feature.group</id>
-                                    <version>4.17.0.v20200902-1800</version>
+                                    <version>4.26.0.v20221123-2302</version>
                                 </iu>
                                 <iu>
                                     <id>org.eclipse.platform.source.feature.group</id>
-                                    <version>4.17.0.v20200902-1800</version>
+                                    <version>4.26.0.v20221123-2302</version>
                                 </iu>
                                 <iu>
                                     <id>org.eclipse.rcp.feature.group</id>
-                                    <version>4.17.0.v20200902-1800</version>
+                                    <version>4.26.0.v20221123-2302</version>
                                 </iu>
                                 <iu>
                                     <id>org.eclipse.rcp.source.feature.group</id>
-                                    <version>4.17.0.v20200902-1800</version>
+                                    <version>4.26.0.v20221123-2302</version>
                                 </iu>
                                 <iu>
                                     <id>org.eclipse.rcp.sdk.id</id>
-                                    <version>4.17.0.I20200902-1800</version>
+                                    <version>4.26.0.I20221123-1800</version>
                                 </iu>
                                 <iu>
                                     <id>org.eclipse.zest.sdk.feature.group</id>
-                                    <version>1.7.0.201606061308</version>
+                                    <version>3.15.0.202211301913</version>
+                                </iu>
+                                <iu>
+                                    <id>jakarta.servlet-api</id>
+                                    <version>4.0.0</version>
                                 </iu>
                             </ius>
-                            <destination>${jctbuild.makeTargetP2Dir}</destination>
+                            <destination>${jctbuild.makeStrictTargetP2Dir}/platform</destination>
                             <!-- https://www.eclipse.org/tycho/sitedocs/tycho-extras/tycho-p2-extras-plugin/mirror-mojo.html -->
-                            <!-- see also filter: osgi.os, osgi.ws, osgi.arch -->
-                            <!-- see also <followOnlyFilteredRequirements> -->
-                            <!-- see also <targetPlatformAsSource> (bool)-->
                             <includePacked>false</includePacked>
+                            <includeNonGreedy>true</includePacked>
                             <includeOptional>false</includeOptional>
-                            <latestVersionOnly>true</latestVersionOnly>
-                            <!-- TODO: does this work? website says sometimes not-->
+                            <latestVersionOnly>false</latestVersionOnly>
                         </configuration>
                     </execution>
+
+                    <execution>
+                        <id>makeStrictTargetP2-babel</id>
+                        <phase>${jctbuild.makeStrictTargetP2Phase}</phase>
+                        <goals>
+                            <goal>mirror</goal>
+                        </goals>
+                        <configuration>
+                            <source>
+                                <repository>
+                                    <id>${eclipse-version}</id>
+                                    <layout>p2</layout>
+                                    <url>https://download.eclipse.org/technology/babel/update-site/latest/</url>
+                                </repository>
+                            </source>
+                            <!-- <targetPlatformAsSource>true</targetPlatformAsSource> -->
+                            <ius>
+                                <iu>
+                                    <id>org.eclipse.babel.nls_datatools_de.feature.group</id>
+                                    <version>4.22.0.v20211218020001</version>
+                                </iu>
+                                <iu>
+                                    <id>org.eclipse.babel.nls_eclipse_de.feature.group</id>
+                                    <version>4.22.0.v20211218020001</version>
+                                </iu>
+                            </ius>
+                            <destination>${jctbuild.makeStrictTargetP2Dir}/babel</destination>
+                            <!-- https://www.eclipse.org/tycho/sitedocs/tycho-extras/tycho-p2-extras-plugin/mirror-mojo.html -->
+                            <includePacked>false</includePacked>
+                            <includeNonGreedy>true</includePacked>
+                            <includeOptional>false</includeOptional>
+                            <latestVersionOnly>false</latestVersionOnly>
+                        </configuration>
+                    </execution>
+
                 </executions>
             </plugin>
             <!-- this plugin seems to be a dependency of another plugin and gets run even if this <plugin> tag is removed -->
