@@ -30,7 +30,7 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
         <module>../../crypto</module>
     </modules>
     <properties>
-        <tycho.version>2.7.0</tycho.version>
+        <tycho.version>2.7.5</tycho.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
@@ -188,17 +188,17 @@ Maven 3 and Java 8 are required for the build. See https://github.com/jcryptool/
                 <jctbuild.makeStrictTargetP2Phase>package</jctbuild.makeStrictTargetP2Phase>
             </properties>
         </profile>
-        <profile>
-            <id>makeTargetP2</id>
-            <activation>
-                <property>
-                    <name>jctbuild.makeTargetP2Dir</name>
-                </property>
-            </activation>
-            <properties>
-                <jctbuild.makeTargetP2Phase>package</jctbuild.makeTargetP2Phase>
-            </properties>
-        </profile>
+        <!-- <profile> -->
+        <!--     <id>makeTargetP2</id> -->
+        <!--     <activation> -->
+        <!--         <property> -->
+        <!--             <name>jctbuild.makeTargetP2Dir</name> -->
+        <!--         </property> -->
+        <!--     </activation> -->
+        <!--     <properties> -->
+        <!--         <jctbuild.makeTargetP2Phase>package</jctbuild.makeTargetP2Phase> -->
+        <!--     </properties> -->
+        <!-- </profile> -->
         <profile>
             <id>makeSourceJars</id>
             <activation>

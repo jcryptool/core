@@ -6,7 +6,7 @@ Bundle-Version: 1.0.8.26-20230127
 Bundle-Activator: org.bouncycastle.BouncyCastlePlugin
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.core.runtime,
- bcprov;bundle-version="1.68.0"
+ bcprov;bundle-version="[1.68.0,1.68.0]"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ClassPath: .
