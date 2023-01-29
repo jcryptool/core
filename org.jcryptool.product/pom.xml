@@ -82,7 +82,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <destination>${jctbuild.makeStrictTargetP2Dir}/platform</destination>
                             <!-- https://www.eclipse.org/tycho/sitedocs/tycho-extras/tycho-p2-extras-plugin/mirror-mojo.html -->
                             <includePacked>false</includePacked>
-                            <includeNonGreedy>true</includePacked>
+                            <includeNonGreedy>true</includeNonGreedy>
                             <includeOptional>false</includeOptional>
                             <latestVersionOnly>false</latestVersionOnly>
                         </configuration>
@@ -116,11 +116,29 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                             <destination>${jctbuild.makeStrictTargetP2Dir}/babel</destination>
                             <!-- https://www.eclipse.org/tycho/sitedocs/tycho-extras/tycho-p2-extras-plugin/mirror-mojo.html -->
                             <includePacked>false</includePacked>
-                            <includeNonGreedy>true</includePacked>
+                            <includeNonGreedy>true</includeNonGreedy>
                             <includeOptional>false</includeOptional>
                             <latestVersionOnly>false</latestVersionOnly>
                         </configuration>
                     </execution>
+
+                    <!--
+                    <execution>
+                        <id>makeStrictTargetP2-thistarget</id>
+                        <phase>${jctbuild.makeStrictTargetP2Phase}</phase>
+                        <goals>
+                            <goal>mirror</goal>
+                        </goals>
+                        <configuration>
+                            <targetPlatformAsSource>true</targetPlatformAsSource>
+                            <destination>${jctbuild.makeStrictTargetP2Dir}/thistarget</destination>
+                            <includePacked>false</includePacked>
+                            <includeNonGreedy>true</includeNonGreedy>
+                            <includeOptional>false</includeOptional>
+                            <latestVersionOnly>false</latestVersionOnly>
+                        </configuration>
+                    </execution>
+                    -->
 
                 </executions>
             </plugin>
