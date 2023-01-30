@@ -2,10 +2,10 @@
 <?pde version="3.8"?>
 <target name="JCrypTool RCP" sequenceNumber="40">
 <locations>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<!-- <repository location="http://download.eclipse.org/releases/2022-12"/> -->
-		<repository location="file:///home/snuc/sandbox/p2mirrors/jct202212/platform"/>
 
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+        <!-- <repository location="http://download.eclipse.org/releases/2022-12"/> -->
+        <repository location="file:///home/snuc/sandbox/p2mirrors/projects/platform_2022_12/target/platform_babel"/>
 		<unit id="org.eclipse.equinox.core.sdk.feature.group" version="3.23.600.v20221116-1440"/>
 		<unit id="org.eclipse.equinox.executable.feature.group" version="3.8.1900.v20221108-1024"/>
 		<unit id="org.eclipse.equinox.p2.sdk.feature.group" version="3.11.1800.v20221117-1044"/>
@@ -17,7 +17,10 @@
 		<unit id="org.eclipse.rcp.sdk.id" version="4.26.0.I20221123-1800"/>
 		<unit id="org.eclipse.zest.sdk.feature.group" version="3.15.0.202211301913"/>
 		<unit id="jakarta.servlet-api" version="4.0.0"/>
+		<unit id="org.eclipse.babel.nls_datatools_de.feature.group" version="4.22.0.v20211218020001"/>
+		<unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="4.22.0.v20211218020001"/>
 	</location>
+
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
         <!-- <repository location="http://cryptool.org/jct/thirdparty-p2/jre"/> -->
         <repository location="file:///home/snuc/sandbox/p2mirrors/jre"/>
@@ -27,20 +30,11 @@
 	</location>
 
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<!-- <repository location="https://download.eclipse.org/technology/babel/update-site/latest/"/> -->
-		<repository location="file:///home/snuc/sandbox/p2mirrors/jct202212/babel"/>
-		<unit id="org.eclipse.babel.nls_datatools_de.feature.group" version="4.22.0.v20211218020001"/>
-		<unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="4.22.0.v20211218020001"/>
-	</location>
-
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
         <!-- <repository location="http://cryptool.org/jct/thirdparty-p2/libraries"/> -->
         <repository location="file:///home/snuc/sandbox/p2mirrors/libraries"/>
 		<unit id="bcpkix" version="1.68.0"/>
 		<unit id="bcprov" version="1.68.0"/>
-
 		<unit id="org.jcryptool.thirdparty.m2bundle.jaxb" version="0.0.1"/>
-
 		<unit id="com.diffplug.durian.collect" version="1.2.0"/>
 		<unit id="com.diffplug.durian.collect.source" version="1.2.0"/>
 		<unit id="com.diffplug.durian.concurrent" version="1.2.0"/>
@@ -80,7 +74,9 @@
 		<unit id="org.reactivestreams.reactive-streams" version="1.0.0.release"/>
 		<unit id="org.reactivestreams.reactive-streams.source" version="1.0.0.release"/>
     </location>
+
 </locations>
+
 <launcherArgs>
 <vmArgs>-Xms40m -Xmx512m</vmArgs>
 </launcherArgs>
