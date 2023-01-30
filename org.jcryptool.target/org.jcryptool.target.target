@@ -4,7 +4,7 @@
 <locations>
 
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-        <!-- <repository location="http://download.eclipse.org/releases/2022-12"/> -->
+        <!-- <repository location="https://download.eclipse.org/releases/2022-12"/> -->
         <repository location="file:///home/snuc/sandbox/p2mirrors/projects/platform_2022_12/target/platform_babel"/>
 		<unit id="org.eclipse.equinox.core.sdk.feature.group" version="3.23.600.v20221116-1440"/>
 		<unit id="org.eclipse.equinox.executable.feature.group" version="3.8.1900.v20221108-1024"/>
@@ -22,7 +22,7 @@
 	</location>
 
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-        <repository location="http://cryptool.org/jct/thirdparty-p2/jre"/>
+        <repository location="https://cryptool.org/jct/thirdparty-p2/jre"/>
         <!-- <repository location="file:///home/snuc/sandbox/p2mirrors/jre"/> -->
 		<unit id="org.jcryptool.thirdparty.jre.linux64.feature.feature.group" version="0.0.0"/>
 		<unit id="org.jcryptool.thirdparty.jre.macosx.feature.feature.group" version="0.0.0"/>
@@ -30,7 +30,7 @@
 	</location>
 
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-        <!-- <repository location="http://cryptool.org/jct/thirdparty-p2/libraries"/> -->
+        <!-- <repository location="https://cryptool.org/jct/thirdparty-p2/libraries"/> -->
         <repository location="file:///home/snuc/sandbox/p2mirrors/libraries"/>
 		<unit id="bcpkix" version="1.68.0"/>
 		<unit id="bcprov" version="1.68.0"/>
