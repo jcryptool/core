@@ -22,8 +22,8 @@
 	</location>
 
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-        <!-- <repository location="http://cryptool.org/jct/thirdparty-p2/jre"/> -->
-        <repository location="file:///home/snuc/sandbox/p2mirrors/jre"/>
+        <repository location="http://cryptool.org/jct/thirdparty-p2/jre"/>
+        <!-- <repository location="file:///home/snuc/sandbox/p2mirrors/jre"/> -->
 		<unit id="org.jcryptool.thirdparty.jre.linux64.feature.feature.group" version="0.0.0"/>
 		<unit id="org.jcryptool.thirdparty.jre.macosx.feature.feature.group" version="0.0.0"/>
 		<unit id="org.jcryptool.thirdparty.jre.win64.feature.feature.group" version="0.0.0"/>
