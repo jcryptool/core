@@ -9,5 +9,5 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <modelVersion>4.0.0</modelVersion>
     <artifactId>org.jcryptool.core.nl</artifactId>
     <packaging>eclipse-plugin</packaging>
-    <version>1.0.8.26-20230127</version>
+    <version>1.0.8.27-20230130</version>
 </project>
