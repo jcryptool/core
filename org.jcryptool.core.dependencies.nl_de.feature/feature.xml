@@ -218,8 +218,8 @@ litigation.
     <!-- </url> -->
     <requires>
         <import feature="org.jcryptool.core.dependencies.feature"/>
-        <import feature="org.eclipse.rcp" version="4.2.2.v20130129-152330-7IARAABrMQkGSvMgQnUlz-DQz00h"/>
-        <import feature="org.eclipse.help" version="1.4.1.v20120912-144938-8R7xFOXFLWUl7PpNBh_HIGkb4"/>
+        <!-- <import feature="org.eclipse.rcp" version="4.2.2.v20130129-152330-7IARAABrMQkGSvMgQnUlz-DQz00h"/> -->
+        <!-- <import feature="org.eclipse.help" version="1.4.1.v20120912-144938-8R7xFOXFLWUl7PpNBh_HIGkb4"/> -->
     </requires>
     <plugin 
     id="org.eclipse.core.databinding.beans.nl_de" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false">
