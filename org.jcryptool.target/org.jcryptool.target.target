@@ -30,8 +30,9 @@
 	</location>
 
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-        <!-- <repository location="https://cryptool.org/jct/thirdparty-p2/libraries"/> -->
-        <repository location="file:///home/snuc/sandbox/p2mirrors/libraries"/>
+        <repository location="https://cryptool.org/jct/thirdparty-p2/libraries"/>
+        <!-- <repository location="file:///home/snuc/sandbox/jct_weekly_ws/thirdparty/releng/org.jcryptool.thirdparty.libraries.p2/target/repository"/> -->
+    <unit id="com.google.protobuf.java" version="3.22.0"/>
 		<unit id="bcpkix" version="1.68.0"/>
 		<unit id="bcprov" version="1.68.0"/>
 		<unit id="org.jcryptool.thirdparty.m2bundle.jaxb" version="0.0.1"/>
