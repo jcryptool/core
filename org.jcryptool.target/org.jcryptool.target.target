@@ -3,9 +3,10 @@
 <target name="JCrypTool RCP" sequenceNumber="40">
 <locations>
 
-        <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+    <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
         <!-- <repository location="https://download.eclipse.org/releases/2022-12"/> -->
-        <repository location="file:///home/snuc/sandbox/p2mirrors/projects/platform_2022_12/target/platform_babel"/>
+        <!-- <repository location="file:///home/snuc/sandbox/p2mirrors/projects/platform_2022_12/target/platform_babel"/> -->
+        <repository location="https://cryptool.org/jct/thirdparty-p2/platform_2022_12"/>
         <unit id="org.eclipse.equinox.core.sdk.feature.group" version="3.23.600.v20221116-1440"/>
         <unit id="org.eclipse.equinox.executable.feature.group" version="3.8.1900.v20221108-1024"/>
         <unit id="org.eclipse.equinox.p2.sdk.feature.group" version="3.11.1800.v20221117-1044"/>
@@ -19,15 +20,15 @@
         <unit id="jakarta.servlet-api" version="4.0.0"/>
         <unit id="org.eclipse.babel.nls_datatools_de.feature.group" version="4.22.0.v20211218020001"/>
         <unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="4.22.0.v20211218020001"/>
-       </location>
+   </location>
 
-       <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
             <repository location="https://cryptool.org/jct/thirdparty-p2/jre"/>
             <!-- <repository location="file:///home/snuc/sandbox/p2mirrors/jre"/> -->
         <unit id="org.jcryptool.thirdparty.jre.linux64.feature.feature.group" version="0.0.0"/>
         <unit id="org.jcryptool.thirdparty.jre.macosx.feature.feature.group" version="0.0.0"/>
         <unit id="org.jcryptool.thirdparty.jre.win64.feature.feature.group" version="0.0.0"/>
-       </location>
+   </location>
 
    <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
         <repository location="https://cryptool.org/jct/thirdparty-p2/libraries"/>
