@@ -3,6 +3,7 @@
 <target name="JCrypTool RCP" sequenceNumber="40">
 <locations>
 
+
     <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
         <!-- <repository location="https://download.eclipse.org/releases/2022-12"/> -->
         <!-- <repository location="file:///home/snuc/sandbox/p2mirrors/projects/platform_2022_12/target/platform_babel"/> -->
