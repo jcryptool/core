@@ -216,6 +216,13 @@ litigation.
     <!-- <url> -->
     <!--     <update label="JCrypTool.org" url="https://www.cryptool.org/jct/update"/> -->
     <!-- </url> -->
+        
+    <!--
+    <plugin 
+    id="org.jcryptool.core.splitpackages" download-size="0" install-size="0" version="1.0.8.27-20230130" unpack="false">
+</plugin>
+	-->
+    
     <plugin 
     id="org.jcryptool.core.nl" download-size="0" install-size="0" version="1.0.8.27-20230130" fragment="true" unpack="false">
 </plugin>

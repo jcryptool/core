@@ -72,8 +72,8 @@
         <unit id="org.immutables.value.source" version="2.8.2"/>
         <unit id="org.jcryptool.thirdparty.m2bundle.durian-swt" version="0.0.1"/>
         <unit id="org.jcryptool.thirdparty.m2bundle.durian-swt-os" version="0.0.1"/>
-        <unit id="org.jsr-305" version="3.0.2"/>
-        <unit id="org.jsr-305.source" version="3.0.2"/>
+<!--        <unit id="org.jsr-305" version="3.0.2"/>
+        <unit id="org.jsr-305.source" version="3.0.2"/> -->
         <unit id="org.reactivestreams.reactive-streams" version="1.0.0.release"/>
         <unit id="org.reactivestreams.reactive-streams.source" version="1.0.0.release"/>
     </location>
