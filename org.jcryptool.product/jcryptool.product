@@ -29,7 +29,7 @@ name="JCrypTool" uid="jcryptool" id="org.jcryptool.core.product" application="or
     <intro introId="org.jcryptool.intro"/>
     <vm>
         <windows include="false">
-            org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11
+            org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17
         </windows>
     </vm>
     <license>
