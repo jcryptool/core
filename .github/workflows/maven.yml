@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ '11', '11.0.3' ]
+        java: [ '17', '17.0.7' ]
     steps:
     - name: Checkout core repository
       uses: actions/checkout@v2
