@@ -4,7 +4,7 @@ Bundle-Name: %BundleName
 Bundle-SymbolicName: org.jcryptool.actions.core;singleton:=true
 Bundle-Version: 1.0.8.27-20230130
 Bundle-Vendor: %BundleVendor
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.actions.core,
  org.jcryptool.actions.core.registry,

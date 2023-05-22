@@ -13,7 +13,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.jcryptool.crypto.keystore,
  org.jcryptool.core.util
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.directories,
  org.jcryptool.crypto.flexiprovider.descriptors.meta.interfaces,

@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: JCrypTool Hex Editor Extensions
 Bundle-SymbolicName: org.jcryptool.editor.hex;singleton:=true
 Bundle-Version: 1.0.8.27-20230130
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Import-Package: org.eclipse.core.filesystem,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations,

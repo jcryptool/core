@@ -24,7 +24,7 @@ Export-Package: org.jcryptool.crypto.flexiprovider,
  org.jcryptool.crypto.flexiprovider.ui.nodes,
  org.jcryptool.crypto.flexiprovider.ui.perspective,
  org.jcryptool.crypto.flexiprovider.xml
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.crypto.keystore.keys
 Automatic-Module-Name: org.jcryptool.crypto.flexiprovider

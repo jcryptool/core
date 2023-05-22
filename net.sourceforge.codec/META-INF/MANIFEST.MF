@@ -17,6 +17,6 @@ Export-Package: codec,
  codec.x501,
  codec.x509,
  codec.x509.extensions
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: net.sourceforge.codec

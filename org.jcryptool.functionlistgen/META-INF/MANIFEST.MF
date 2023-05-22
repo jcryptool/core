@@ -12,7 +12,7 @@ Require-Bundle: org.eclipse.ui,
  org.jcryptool.core.operations,
  org.jcryptool.core.views,
  org.jcryptool.core
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Automatic-Module-Name: org.jcryptool.functionlistgen
 Import-Package: org.jcryptool.crypto.flexiprovider.ui.nodes
 Bundle-Vendor: %Bundle-Vendor

@@ -21,7 +21,7 @@ Bundle-Name: %Bundle-Name
 Bundle-DocURL: http://commons.apache.org/cli/
 Bundle-ManifestVersion: 2
 Bundle-Vendor: %Bundle-Vendor
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-SymbolicName: org.apache.commons.cli;singleton:=true
 Tool: Bnd-0.0.238
 Bundle-ActivationPolicy: lazy

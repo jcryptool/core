@@ -10,7 +10,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jface.text,
  org.eclipse.ui.console,
  org.apache.commons.cli;bundle-version="1.2.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ActivationPolicy: lazy
 Import-Package: org.jcryptool.commands.core.evaluator,
  org.jcryptool.core.logging.utils,

@@ -33,7 +33,7 @@ Export-Package: org.jcryptool.crypto.flexiprovider.operations,
  org.jcryptool.crypto.flexiprovider.operations.xml.io,
  org.jcryptool.crypto.flexiprovider.operations.xml.keys,
  org.jcryptool.crypto.flexiprovider.operations.xml.ops
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Import-Package: org.jcryptool.core.logging.dialogs,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations,

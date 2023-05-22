@@ -12,7 +12,7 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
  libs/FlexiProvider-1.7p7.signed.jar
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.providers
 Export-Package: de.flexiprovider,

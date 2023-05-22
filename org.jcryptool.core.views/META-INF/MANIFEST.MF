@@ -26,7 +26,7 @@ Export-Package: org.jcryptool.core.views;uses:="org.eclipse.jface.viewers,
  org.jcryptool.core.views.content.palette,
  org.jcryptool.core.views.content.structure,
  org.jcryptool.core.views.content.tree
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Import-Package: org.jcryptool.core,
  org.jcryptool.core.commands,
  org.jcryptool.core.logging.utils,

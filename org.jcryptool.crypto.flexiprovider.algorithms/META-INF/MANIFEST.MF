@@ -23,7 +23,7 @@ Export-Package: org.jcryptool.crypto.flexiprovider.algorithms,
  org.jcryptool.crypto.flexiprovider.algorithms.ui.wizards.blockcipher,
  org.jcryptool.crypto.flexiprovider.algorithms.ui.wizards.securerandom,
  org.jcryptool.crypto.flexiprovider.algorithms.ui.wizards.signature
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.crypto.flexiprovider.algorithms.listeners,
  org.jcryptool.crypto.flexiprovider.descriptors.algorithms,

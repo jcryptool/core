@@ -31,7 +31,7 @@ Export-Package: org.jcryptool.core.operations,
  org.jcryptool.core.operations.providers,
  org.jcryptool.core.operations.providers.preferences,
  org.jcryptool.core.operations.util
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Import-Package: org.jcryptool.actions.core.registry,
  org.jcryptool.actions.core.types,
  org.jcryptool.core.logging.utils,

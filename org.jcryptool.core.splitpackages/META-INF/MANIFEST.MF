@@ -4,7 +4,7 @@ Bundle-Name: Splitpackages
 Bundle-SymbolicName: org.jcryptool.core.splitpackages
 Bundle-Version: 1.0.8.27-20230130
 Automatic-Module-Name: org.jcryptool.core.splitpackages
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ClassPath: .,
  jsr305/jsr305-3.0.2.jar
 Export-Package: javax.annotation,
