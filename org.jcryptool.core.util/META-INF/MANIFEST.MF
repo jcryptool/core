@@ -24,4 +24,4 @@ Export-Package: org.jcryptool.core.util,
  org.jcryptool.core.util.ui.layout,
  org.jcryptool.core.util.units
 Automatic-Module-Name: org.jcryptool.core.util
-Bundle-Version: 1.0.9
+Bundle-Version: 1.0.9.1-20230722

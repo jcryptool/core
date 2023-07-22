@@ -26,4 +26,4 @@ Import-Package: org.jcryptool.core.commands,
  org.jcryptool.core.util.directories,
  org.jcryptool.core.views
 Automatic-Module-Name: org.jcryptool.editor.text
-Bundle-Version: 1.0.9
+Bundle-Version: 1.0.9.1-20230722

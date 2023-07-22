@@ -23,4 +23,4 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.directories,
  org.jcryptool.crypto.keystore.commands
 Automatic-Module-Name: org.jcryptool.core
-Bundle-Version: 1.0.9
+Bundle-Version: 1.0.9.1-20230722

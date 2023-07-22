@@ -35,4 +35,4 @@ Export-Package: org.jcryptool.actions.ui,
  org.jcryptool.actions.ui.views,
  org.jcryptool.actions.ui.views.provider
 Automatic-Module-Name: org.jcryptool.actions.ui
-Bundle-Version: 1.0.9
+Bundle-Version: 1.0.9.1-20230722

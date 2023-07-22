@@ -1,5 +1,5 @@
 <feature 
-id="org.jcryptool.crypto.feature" label="JCrypTool Crypto Feature" version="1.0.9" provider-name="jcryptool.org" plugin="org.jcryptool.core">
+id="org.jcryptool.crypto.feature" label="JCrypTool Crypto Feature" version="1.0.9.1-20230722" provider-name="jcryptool.org" plugin="org.jcryptool.core">
     <description url="https://github.com/jcryptool/core">
         <!-- keep this in one line -->
         <!-- version:this -->
@@ -215,6 +215,8 @@ litigation.
     <!-- <url> -->
     <!--    <update label="JCrypTool.org" url="https://www.cryptool.org/jct/update"/> -->
     <!-- </url> -->
-    <plugin id="org.jcryptool.crypto.keystore" download-size="0" install-size="0" version="1.0.9" unpack="false"> </plugin>
+    <plugin 
+    id="org.jcryptool.crypto.keystore" download-size="0" install-size="0" version="1.0.9.1-20230722" unpack="false">
+</plugin>
     <plugin id="net.sourceforge.codec" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 </feature>

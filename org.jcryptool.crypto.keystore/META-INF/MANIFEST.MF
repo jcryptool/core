@@ -46,4 +46,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ClassPath: .,
  swt-grouplayout.jar
 Automatic-Module-Name: org.jcryptool.crypto.keystore
-Bundle-Version: 1.0.9
+Bundle-Version: 1.0.9.1-20230722

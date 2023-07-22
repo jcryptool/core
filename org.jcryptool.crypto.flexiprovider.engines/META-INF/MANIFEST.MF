@@ -33,4 +33,4 @@ Export-Package: org.jcryptool.crypto.flexiprovider.engines,
  org.jcryptool.crypto.flexiprovider.engines.messagedigest,
  org.jcryptool.crypto.flexiprovider.engines.securerandom,
  org.jcryptool.crypto.flexiprovider.engines.signature
-Bundle-Version: 1.0.9
+Bundle-Version: 1.0.9.1-20230722

@@ -50,4 +50,4 @@ Import-Package: org.jcryptool.core.logging.dialogs,
  org.jcryptool.crypto.keystore.ui,
  org.jcryptool.crypto.keystore.ui.dialogs
 Automatic-Module-Name: org.jcryptool.crypto.flexiprovider.operations
-Bundle-Version: 1.0.9
+Bundle-Version: 1.0.9.1-20230722

@@ -19,4 +19,4 @@ Export-Package: org.jcryptool.commands.ui,
  org.jcryptool.commands.ui.commands,
  org.jcryptool.commands.ui.eclipseconsole,
  org.jcryptool.commands.ui.eclipseconsole.console
-Bundle-Version: 1.0.9
+Bundle-Version: 1.0.9.1-20230722

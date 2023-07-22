@@ -14,4 +14,4 @@ Import-Package: org.jcryptool.core,
  org.jcryptool.core.logging.utils
 Automatic-Module-Name: org.jcryptool.core.introduction
 Bundle-Vendor: %bundle.vendor
-Bundle-Version: 1.0.9
+Bundle-Version: 1.0.9.1-20230722
