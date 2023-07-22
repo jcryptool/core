@@ -1,5 +1,5 @@
 <feature 
-id="org.jcryptool.providers.feature" label="JCrypTool Crypto Providers Feature" version="1.0.8.27-20230130" provider-name="jcryptool.org" plugin="org.jcryptool.core">
+id="org.jcryptool.providers.feature" label="JCrypTool Crypto Providers Feature" version="1.0.9" provider-name="jcryptool.org" plugin="org.jcryptool.core">
     <description url="https://github.com/jcryptool/core">
         <!-- keep this in one line -->
         <!-- version:this -->
@@ -215,7 +215,7 @@ litigation.
     <!-- <url> -->
     <!--    <update label="JCrypTool.org" url="https://www.cryptool.org/jct/update"/> -->
     <!-- </url> -->
-    <plugin id="org.bouncycastle" download-size="0" install-size="0" version="1.0.8.27-20230130" unpack="false"/>
+    <plugin id="org.bouncycastle" download-size="0" install-size="0" version="1.0.9" unpack="false"/>
     <plugin id="de.flexiprovider" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
     <plugin id="net.sourceforge.codec" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
     <plugin id="org.jdom" download-size="0" install-size="0" version="0.0.0" unpack="false"/>

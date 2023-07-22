@@ -2,7 +2,6 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.bouncycastle;singleton:=true
-Bundle-Version: 1.0.8.27-20230130
 Bundle-Activator: org.bouncycastle.BouncyCastlePlugin
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.core.runtime,
@@ -14,3 +13,4 @@ Bundle-ClassPath: .
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.providers
 Automatic-Module-Name: org.bouncycastle
+Bundle-Version: 1.0.9

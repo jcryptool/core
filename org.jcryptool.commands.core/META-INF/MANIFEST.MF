@@ -2,7 +2,6 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.commands.core;singleton:=true
-Bundle-Version: 1.0.8.27-20230130
 Bundle-Vendor: %Bundle-Vendor
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ActivationPolicy: lazy
@@ -17,3 +16,4 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.constants
 Bundle-Activator: org.jcryptool.commands.core.CommandsCorePlugin
 Automatic-Module-Name: org.jcryptool.commands.core
+Bundle-Version: 1.0.9

@@ -1,5 +1,5 @@
 <feature 
-id="org.jcryptool.core.dependencies.feature" label="JCrypTool Core Dependencies Feature" version="1.0.8.27-20230130" provider-name="jcryptool.org" plugin="org.jcryptool.core">
+id="org.jcryptool.core.dependencies.feature" label="JCrypTool Core Dependencies Feature" version="1.0.9" provider-name="jcryptool.org" plugin="org.jcryptool.core">
     <description url="https://github.com/jcryptool/core">
         <!-- keep this in one line -->
         <!-- version:this -->

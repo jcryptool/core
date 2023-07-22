@@ -2,7 +2,6 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundle.name
 Bundle-SymbolicName: org.jcryptool.core.introduction;singleton:=true
-Bundle-Version: 1.0.8.27-20230130
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.jcryptool.core.util,
@@ -15,3 +14,4 @@ Import-Package: org.jcryptool.core,
  org.jcryptool.core.logging.utils
 Automatic-Module-Name: org.jcryptool.core.introduction
 Bundle-Vendor: %bundle.vendor
+Bundle-Version: 1.0.9

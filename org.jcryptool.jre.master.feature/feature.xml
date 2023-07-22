@@ -1,5 +1,5 @@
 <feature 
-id="org.jcryptool.jre.master.feature" label="OpenJDK/JLink JRE Feature" version="1.0.8.27-20230130" provider-name="jcryptool.org">
+id="org.jcryptool.jre.master.feature" label="OpenJDK/JLink JRE Feature" version="1.0.9" provider-name="jcryptool.org">
     <description>
         <!-- keep this in one line -->
         <!-- version:this -->
@@ -12,12 +12,12 @@ id="org.jcryptool.jre.master.feature" label="OpenJDK/JLink JRE Feature" version=
         The license under which the OpenJDK JRE is distributed stays untouched. Please refer to the information provided with the individual jre features.
     </license>
     <includes 
-    id="org.jcryptool.thirdparty.jre.linux64.feature" version="1.0.8.26-20230127" optional="true" os="linux" ws="gtk" arch="x86_64">
+    id="org.jcryptool.thirdparty.jre.linux64.feature" version="1.0.9" optional="true" os="linux" ws="gtk" arch="x86_64">
 </includes>
     <includes 
-    id="org.jcryptool.thirdparty.jre.win64.feature" version="1.0.8.26-20230127" optional="true" os="win32" ws="win32" arch="x86_64">
+    id="org.jcryptool.thirdparty.jre.win64.feature" version="1.0.9" optional="true" os="win32" ws="win32" arch="x86_64">
 </includes>
     <includes 
-    id="org.jcryptool.thirdparty.jre.macosx.feature" version="1.0.8.26-20230127" optional="true" os="macosx" ws="cocoa" arch="x86_64">
+    id="org.jcryptool.thirdparty.jre.macosx.feature" version="1.0.9" optional="true" os="macosx" ws="cocoa" arch="x86_64">
 </includes>
 </feature>
