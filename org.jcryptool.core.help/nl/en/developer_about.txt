@@ -1,8 +1,8 @@
-JCrypTool v1.0.8 is proudly presented by the core developer team:
+JCrypTool v1.0.9 is proudly presented by the core developer team:
 -----------------------------------------------------------------
 
 - Prof. Bernhard Esslinger 
-- Simon Leischnig (current project lead)
+- Simon Leischnig (former project lead)
 - Thorben Groos
 - Michael Altenhuber
 
