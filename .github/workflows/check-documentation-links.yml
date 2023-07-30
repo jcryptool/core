@@ -1,0 +1,38 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Python application
+
+on: 
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * 5'
+  
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout core repository
+      uses: actions/checkout@v3
+      with:
+          repository: jcryptool/core
+          path: core
+    
+    - name: Checkout crypto repository
+      uses: actions/checkout@v3
+      with:
+          repository: jcryptool/crypto
+          path: crypto
+    
+    - name: Run link checker
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+    - name: Check available links in documentation
+      run: 'python core/org.jcryptool.releng/helper/link_availability_checker.py --summary --results-dead --result-paths -i ignored_links.txt  core crypto'
