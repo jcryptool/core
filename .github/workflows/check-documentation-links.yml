@@ -35,4 +35,10 @@ jobs:
       with:
         python-version: "3.10"
     - name: Check available links in documentation
-      run: 'python core/org.jcryptool.releng/helper/link_availability_checker.py --summary --results-dead --result-paths -i ignored_links.txt  core crypto'
+      run: >-
+        python core/org.jcryptool.releng/helper/link_availability_checker.py
+        --summary
+        --results-dead
+        --result-paths -i core/org.jcryptool.releng/helper/ignored_links.txt
+        core
+        crypto
