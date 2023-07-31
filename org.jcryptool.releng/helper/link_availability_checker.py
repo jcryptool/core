@@ -10,6 +10,7 @@ import http.client
 import multiprocessing
 import os
 import re
+import ssl
 import socket
 import sys
 from abc import ABC
@@ -97,7 +98,12 @@ def send_request(context: PingContext) -> PingContext:
     """Send a request and save the return status code and possible errors."""
     req = Request(context.url, headers={"User-Agent": DefaultSettings.USER_AGENT.value})
     try:
-        _response = urlopen(req, timeout=context.timeout)
+        # There were cert issues, so disable cert checking completely
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+
+        _response = urlopen(req, timeout=context.timeout, context=ctx)
         context.status = Status.OK
         context.http_code = _response.getcode()
         context.error_reason = None
