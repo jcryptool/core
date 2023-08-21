@@ -115,7 +115,7 @@ public abstract class AbstractAlphabet {
 
     public abstract boolean contains(char e);
 
-    private static Map<Character, String> specialCharactersForPrinting = new HashMap<Character, String>();
+    public static Map<Character, String> specialCharactersForPrinting = new HashMap<Character, String>();
     static {
         specialCharactersForPrinting.put('\n', "\\n"); //$NON-NLS-1$
         specialCharactersForPrinting.put('\r', "\\r"); //$NON-NLS-1$
