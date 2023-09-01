@@ -76,6 +76,7 @@
         <unit id="org.jsr-305.source" version="3.0.2"/> -->
         <unit id="org.reactivestreams.reactive-streams" version="1.0.0.release"/>
         <unit id="org.reactivestreams.reactive-streams.source" version="1.0.0.release"/>
+        <unit id="xstream" version="1.4.20"/>
     </location>
 
 </locations>
