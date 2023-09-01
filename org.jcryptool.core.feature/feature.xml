@@ -1,5 +1,5 @@
 <feature 
-id="org.jcryptool.core.feature" label="JCrypTool Core Feature" version="1.0.9.2-20230730" provider-name="jcryptool.org" plugin="org.jcryptool.core">
+id="org.jcryptool.core.feature" label="JCrypTool Core Feature" version="1.0.9.3-20230901" provider-name="jcryptool.org" plugin="org.jcryptool.core">
     <!-- keep this in one line -->
     <!-- version:this -->
     <description url="https://github.com/jcryptool/core">
@@ -225,13 +225,13 @@ litigation.
     id="org.jcryptool.core.nl" download-size="0" install-size="0" version="1.0.9.1-20230722" fragment="true" unpack="false">
 </plugin>
     <plugin id="bcprov" download-size="0" install-size="0" version="0.0.0"/>
-    <plugin id="org.jcryptool.core.help" download-size="0" install-size="0" version="1.0.9.2-20230730" unpack="false"/>
+    <plugin id="org.jcryptool.core.help" download-size="0" install-size="0" version="1.0.9.3-20230901" unpack="false"/>
     <plugin id="org.jcryptool.core.logging" download-size="0" install-size="0" version="1.0.9.1-20230722" unpack="false"/>
     <plugin 
-    id="org.jcryptool.core.operations" download-size="0" install-size="0" version="1.0.9.1-20230722" unpack="false">
+    id="org.jcryptool.core.operations" download-size="0" install-size="0" version="1.0.9.3-20230901" unpack="false">
 </plugin>
     <plugin id="org.jcryptool.core.views" download-size="0" install-size="0" version="1.0.9.1-20230722" unpack="false"/>
-    <plugin id="org.jcryptool.core" download-size="0" install-size="0" version="1.0.9.2-20230730" unpack="false"/>
+    <plugin id="org.jcryptool.core" download-size="0" install-size="0" version="1.0.9.3-20230901" unpack="false"/>
     <plugin id="org.jcryptool.core.util" download-size="0" install-size="0" version="1.0.9.1-20230722" unpack="false"/>
     <plugin 
     id="org.jcryptool.core.cryptosystem" download-size="0" install-size="0" version="1.0.9.1-20230722" unpack="false">

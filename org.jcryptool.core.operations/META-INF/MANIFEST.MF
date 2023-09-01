@@ -38,4 +38,4 @@ Import-Package: org.jcryptool.actions.core.registry,
  org.jcryptool.core.util.directories,
  org.jcryptool.core.util.input
 Automatic-Module-Name: org.jcryptool.core.operations
-Bundle-Version: 1.0.9.1-20230722
+Bundle-Version: 1.0.9.3-20230901
