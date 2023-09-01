@@ -15,4 +15,4 @@ Require-Bundle: org.eclipse.core.runtime,
 Import-Package: org.jcryptool.core.logging.utils
 Bundle-Activator: org.jcryptool.actions.core.ActionsCorePlugin
 Automatic-Module-Name: org.jcryptool.actions.core
-Bundle-Version: 1.0.9
+Bundle-Version: 1.0.9.1-20230901

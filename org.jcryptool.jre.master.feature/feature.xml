@@ -1,5 +1,5 @@
 <feature 
-id="org.jcryptool.jre.master.feature" label="OpenJDK/JLink JRE Feature" version="1.0.9" provider-name="jcryptool.org">
+id="org.jcryptool.jre.master.feature" label="OpenJDK/JLink JRE Feature" version="1.0.9.1-20230901" provider-name="jcryptool.org">
     <description>
         <!-- keep this in one line -->
         <!-- version:this -->

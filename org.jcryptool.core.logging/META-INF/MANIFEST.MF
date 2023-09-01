@@ -13,4 +13,4 @@ Export-Package: org.jcryptool.core.logging,
  org.jcryptool.core.logging.dialogs,
  org.jcryptool.core.logging.preferences.pages,
  org.jcryptool.core.logging.utils
-Bundle-Version: 1.0.9
+Bundle-Version: 1.0.9.1-20230901

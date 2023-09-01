@@ -13,4 +13,4 @@ Bundle-ClassPath: .
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.providers
 Automatic-Module-Name: org.bouncycastle
-Bundle-Version: 1.0.9
+Bundle-Version: 1.0.9.1-20230901

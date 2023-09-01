@@ -30,4 +30,4 @@ Export-Package: net.sourceforge.javahexeditor,
 Import-Package: org.apache.commons.codec,
  org.apache.commons.codec.binary,
  org.jcryptool.core.logging.utils
-Bundle-Version: 1.0.9
+Bundle-Version: 1.0.9.1-20230901

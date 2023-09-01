@@ -17,4 +17,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-17
 Automatic-Module-Name: org.jcryptool.buildinfo
 Import-Package: javax.inject
 Bundle-ActivationPolicy: lazy
-Bundle-Version: 1.0.9
+Bundle-Version: 1.0.9.1-20230901

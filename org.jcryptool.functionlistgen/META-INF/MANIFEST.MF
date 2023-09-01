@@ -15,4 +15,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-17
 Automatic-Module-Name: org.jcryptool.functionlistgen
 Import-Package: org.jcryptool.crypto.flexiprovider.ui.nodes
 Bundle-Vendor: %Bundle-Vendor
-Bundle-Version: 1.0.9
+Bundle-Version: 1.0.9.1-20230901

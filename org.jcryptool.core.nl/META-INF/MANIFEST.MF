@@ -6,4 +6,4 @@ Bundle-Vendor: %bundleProvider
 Fragment-Host: org.jcryptool.core;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Automatic-Module-Name: org.jcryptool.core.nl
-Bundle-Version: 1.0.9
+Bundle-Version: 1.0.9.1-20230901

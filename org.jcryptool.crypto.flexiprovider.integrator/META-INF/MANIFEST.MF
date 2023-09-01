@@ -39,4 +39,4 @@ Export-Package: org.jcryptool.crypto.flexiprovider.integrator,
  org.jcryptool.crypto.flexiprovider.integrator.prng.sha1,
  org.jcryptool.crypto.flexiprovider.integrator.signature.dsa
 Automatic-Module-Name: org.jcryptool.crypto.flexiprovider.integrator
-Bundle-Version: 1.0.9
+Bundle-Version: 1.0.9.1-20230901
