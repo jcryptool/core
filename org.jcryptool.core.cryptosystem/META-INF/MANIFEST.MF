@@ -13,4 +13,4 @@ Export-Package: org.jcryptool.core.cryptosystem,
  org.jcryptool.core.cryptosystem.core.text,
  org.jcryptool.core.cryptosystem.vigenere
 Automatic-Module-Name: org.jcryptool.core.cryptosystem
-Bundle-Version: 1.0.9.1-20230722
+Bundle-Version: 1.0.9

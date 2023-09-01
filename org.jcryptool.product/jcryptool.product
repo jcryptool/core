@@ -1,5 +1,5 @@
 <product 
-name="JCrypTool" uid="jcryptool" id="org.jcryptool.core.product" application="org.jcryptool.core.application" version="1.0.9.3-20230901" useFeatures="true" includeLaunchers="true">
+name="JCrypTool" uid="jcryptool" id="org.jcryptool.core.product" application="org.jcryptool.core.application" version="1.0.9" useFeatures="true" includeLaunchers="true">
     <aboutInfo>
         <image path="/org.jcryptool.core/icons/about_dialog.gif"/>
         <text> %about.text </text>
@@ -89,20 +89,20 @@ Agreement more than one year after the cause of action arose. Each party waives 
     </license>
     <plugins> </plugins>
     <features>
-        <feature id="org.jcryptool.core.dependencies.feature" version="1.0.9.1-20230722"/>
-        <feature id="org.jcryptool.core.dependencies.nl_de.feature" version="1.0.9.1-20230722"/>
-        <feature id="org.jcryptool.core.feature" version="1.0.9.3-20230901"/>
-        <feature id="org.jcryptool.views.feature" version="1.0.9.1-20230722"/>
-        <feature id="org.jcryptool.crypto.feature" version="1.0.9.1-20230722"/>
-        <feature id="org.jcryptool.providers.feature" version="1.0.9.1-20230722"/>
-        <feature id="org.jcryptool.editors.feature" version="1.0.9.1-20230722"/>
-        <feature id="org.jcryptool.analysis.feature" version="1.0.9.1-20230722"/>
-        <feature id="org.jcryptool.crypto.classic.feature" version="1.0.9.3-20230901"/>
-        <feature id="org.jcryptool.crypto.flexiprovider.feature" version="1.0.9.1-20230722"/>
-        <feature id="org.jcryptool.crypto.modern.feature" version="1.0.9.1-20230722"/>
-        <feature id="org.jcryptool.games.feature" version="1.0.9.1-20230722"/>
-        <feature id="org.jcryptool.visual.feature" version="1.0.9.2-20230730"/>
-        <feature id="org.jcryptool.jre.master.feature" version="1.0.9.3-20230901"/>
+        <feature id="org.jcryptool.core.dependencies.feature" version="1.0.9"/>
+        <feature id="org.jcryptool.core.dependencies.nl_de.feature" version="1.0.9"/>
+        <feature id="org.jcryptool.core.feature" version="1.0.9"/>
+        <feature id="org.jcryptool.views.feature" version="1.0.9"/>
+        <feature id="org.jcryptool.crypto.feature" version="1.0.9"/>
+        <feature id="org.jcryptool.providers.feature" version="1.0.9"/>
+        <feature id="org.jcryptool.editors.feature" version="1.0.9"/>
+        <feature id="org.jcryptool.analysis.feature" version="1.0.9"/>
+        <feature id="org.jcryptool.crypto.classic.feature" version="1.0.9"/>
+        <feature id="org.jcryptool.crypto.flexiprovider.feature" version="1.0.9"/>
+        <feature id="org.jcryptool.crypto.modern.feature" version="1.0.9"/>
+        <feature id="org.jcryptool.games.feature" version="1.0.9"/>
+        <feature id="org.jcryptool.visual.feature" version="1.0.9"/>
+        <feature id="org.jcryptool.jre.master.feature" version="1.0.9"/>
     </features>
     <configurations>
         <plugin id="org.apache.felix.scr" autoStart="true" startLevel="2"/>

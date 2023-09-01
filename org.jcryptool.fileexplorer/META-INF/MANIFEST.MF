@@ -34,4 +34,4 @@ Export-Package: org.jcryptool.fileexplorer,
  org.eclipse.jface.resource,
  org.eclipse.core.runtime"
 Automatic-Module-Name: org.jcryptool.fileexplorer
-Bundle-Version: 1.0.9.1-20230722
+Bundle-Version: 1.0.9

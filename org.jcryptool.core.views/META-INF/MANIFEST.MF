@@ -33,4 +33,4 @@ Import-Package: org.jcryptool.core,
  org.jcryptool.core.operations.algorithm,
  org.jcryptool.core.operations.util
 Automatic-Module-Name: org.jcryptool.core.views
-Bundle-Version: 1.0.9.1-20230722
+Bundle-Version: 1.0.9

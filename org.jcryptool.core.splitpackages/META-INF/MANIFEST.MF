@@ -9,4 +9,4 @@ Bundle-ClassPath: .,
 Export-Package: javax.annotation,
  javax.annotation.concurrent,
  javax.annotation.meta
-Bundle-Version: 1.0.9.1-20230722
+Bundle-Version: 1.0.9

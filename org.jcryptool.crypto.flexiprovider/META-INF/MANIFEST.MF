@@ -27,4 +27,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-17
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.crypto.keystore.keys
 Automatic-Module-Name: org.jcryptool.crypto.flexiprovider
-Bundle-Version: 1.0.9.1-20230722
+Bundle-Version: 1.0.9

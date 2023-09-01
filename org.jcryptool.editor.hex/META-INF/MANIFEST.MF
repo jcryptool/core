@@ -18,4 +18,4 @@ Require-Bundle: org.eclipse.core.commands,
  org.eclipse.core.runtime,
  org.eclipse.jface,
  net.sourceforge.javahexeditor
-Bundle-Version: 1.0.9.1-20230722
+Bundle-Version: 1.0.9

@@ -28,4 +28,4 @@ Export-Package: org.jcryptool.crypto.flexiprovider.keystore,
  org.jcryptool.crypto.flexiprovider.keystore.actions,
  org.jcryptool.crypto.flexiprovider.keystore.wizards
 Automatic-Module-Name: org.jcryptool.crypto.flexiprovider.keystore
-Bundle-Version: 1.0.9.1-20230722
+Bundle-Version: 1.0.9

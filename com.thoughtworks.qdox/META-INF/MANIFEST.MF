@@ -16,4 +16,4 @@ Export-Package: com.thoughtworks.qdox,
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: com.thoughtworks.qdox
-Bundle-Version: 1.0.9.1-20230722
+Bundle-Version: 1.0.9

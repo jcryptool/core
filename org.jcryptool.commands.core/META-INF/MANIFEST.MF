@@ -16,4 +16,4 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.constants
 Bundle-Activator: org.jcryptool.commands.core.CommandsCorePlugin
 Automatic-Module-Name: org.jcryptool.commands.core
-Bundle-Version: 1.0.9.1-20230722
+Bundle-Version: 1.0.9
